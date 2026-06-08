@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09009f" android:layout_width="-1" android:layout_height="-1">
+  <include layout="@0x7f0c010d">
+  </include>
+  <RelativeLayout android:id="@0x7f09026a" android:background="@0x7f050119" android:layout_width="-1" android:layout_height="-1" android:layout_below="@0x7f0903d2">
+    <RelativeLayout android:background="@0x7f07029e" android:layout_width="-1" android:layout_height="0x00018601">
+    </RelativeLayout>
+    <TextView android:textSize="@0x7f0601e1" android:textStyle="0x00000001" android:textColor="@0x7f050023" android:id="@0x7f090452" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf" android:text="@0x7f10017f" android:layout_centerHorizontal="true" android:textAlignment="4" android:layout_marginStart="@0x7f0601bc" android:layout_marginEnd="@0x7f0601bc">
+    </TextView>
+    <RelativeLayout android:id="@0x7f090322" android:layout_width="0x00015401" android:layout_height="0x00015401" android:layout_marginTop="0x00002801" android:layout_below="@0x7f090452" android:layout_centerHorizontal="true">
+      <kurdi.leyzok.pirs.spin.LuckyWheelView android:id="@0x7f09023f" android:layout_width="-2" android:layout_height="-2" android:layout_margin="0x00000201" android:layout_centerInParent="true" app:lkwBackgroundColor="#901d6cba" app:lkwCenterImage="@0x7f070097" app:lkwCursor="@0x7f050117" app:lkwEdgeColor="@0x7f050119" app:lkwEdgeWidth="3" app:lkwSecondaryTextSize="0x00000e02" app:lkwTopTextColor="#ff263238">
+      </kurdi.leyzok.pirs.spin.LuckyWheelView>
+      <ImageView android:background="@0x7f07029d" android:layout_width="-2" android:layout_height="-2">
+      </ImageView>
+    </RelativeLayout>
+    <TextView android:textSize="@0x7f0601e4" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f0902ef" android:background="@0x7f0701da" android:paddingTop="@0x7f0601ba" android:paddingBottom="@0x7f0601ba" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="0x00002801" android:text="@0x7f1000e9" android:layout_below="@0x7f090322" android:layout_centerHorizontal="true" android:fontFamily="@0x7f080001" android:paddingStart="@0x7f0601bc" android:paddingEnd="@0x7f0601bc">
+    </TextView>
+    <LinearLayout android:orientation="1" android:id="@0x7f0900cc" android:layout_width="-1" android:layout_height="-2" android:layout_alignParentBottom="true" app:layout_constraintBottom_toBottomOf="0">
+    </LinearLayout>
+  </RelativeLayout>
+  <ProgressBar android:id="@0x7f0902fb" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:layout_centerInParent="true">
+  </ProgressBar>
+</RelativeLayout>

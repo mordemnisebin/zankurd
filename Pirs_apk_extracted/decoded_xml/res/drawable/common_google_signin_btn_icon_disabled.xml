@@ -1,0 +1,16 @@
+<layer-list>
+  <item android:left="0x00000301" android:top="0x00000301" android:right="0x00000301" android:bottom="0x00000301">
+    <shape android:shape="0">
+      <solid android:color="#ffebebeb">
+      </solid>
+      <corners android:radius="0x00000201">
+      </corners>
+      <padding android:left="0x00000701" android:top="0x00000701" android:right="0x00000701" android:bottom="0x00000701">
+      </padding>
+    </shape>
+  </item>
+  <item>
+    <bitmap android:gravity="0x00000011" android:src="@0x7f0701d7">
+    </bitmap>
+  </item>
+</layer-list>

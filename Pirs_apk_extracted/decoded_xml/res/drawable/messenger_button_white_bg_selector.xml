@@ -1,0 +1,18 @@
+<selector>
+  <item android:state_pressed="true">
+    <shape android:shape="0">
+      <corners android:radius="0x00000201">
+      </corners>
+      <solid android:color="#ffebebeb">
+      </solid>
+    </shape>
+  </item>
+  <item>
+    <shape android:shape="0">
+      <corners android:radius="0x00000201">
+      </corners>
+      <solid android:color="#ffffffff">
+      </solid>
+    </shape>
+  </item>
+</selector>

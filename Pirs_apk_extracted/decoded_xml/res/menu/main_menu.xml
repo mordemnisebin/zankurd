@@ -1,0 +1,8 @@
+<menu>
+  <item android:icon="@0x7f070246" android:id="@0x7f0900d5" android:title="@0x7f100047" app:showAsAction="0x00000002">
+  </item>
+  <item android:icon="@0x7f07023c" android:id="@0x7f090323" android:title="@0x7f1001a4" app:showAsAction="0x00000002">
+  </item>
+  <item android:icon="@0x7f070240" android:id="@0x7f09035a" android:title="@0x7f100026" app:showAsAction="0x00000002">
+  </item>
+</menu>

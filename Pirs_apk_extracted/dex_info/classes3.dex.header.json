@@ -1,0 +1,16 @@
+{
+  "file_size": 3295524,
+  "header_size": 112,
+  "string_ids_size": 26392,
+  "string_ids_off": 112,
+  "type_ids_size": 3142,
+  "type_ids_off": 105680,
+  "proto_ids_size": 4310,
+  "proto_ids_off": 118248,
+  "field_ids_size": 15463,
+  "field_ids_off": 169968,
+  "method_ids_size": 17578,
+  "method_ids_off": 293672,
+  "class_defs_size": 2354,
+  "class_defs_off": 434296
+}

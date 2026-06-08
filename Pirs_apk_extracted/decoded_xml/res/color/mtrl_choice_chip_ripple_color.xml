@@ -1,0 +1,12 @@
+<selector>
+  <item android:state_pressed="true" android:color="?0x7f030119" android:alpha="@0x7f060165">
+  </item>
+  <item android:state_focused="true" android:color="?0x7f030118" android:alpha="@0x7f060163" android:state_hovered="true">
+  </item>
+  <item android:state_focused="true" android:color="?0x7f030118" android:alpha="@0x7f060163">
+  </item>
+  <item android:color="?0x7f030118" android:alpha="@0x7f060164" android:state_hovered="true">
+  </item>
+  <item android:color="?0x7f030118" android:alpha="@0x7f060162">
+  </item>
+</selector>

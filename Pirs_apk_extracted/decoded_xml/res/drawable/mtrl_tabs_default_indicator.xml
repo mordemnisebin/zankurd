@@ -1,0 +1,10 @@
+<selector>
+  <item>
+    <shape android:shape="0">
+      <solid android:color="@0x0106000b">
+      </solid>
+      <size android:height="0x00000201">
+      </size>
+    </shape>
+  </item>
+</selector>

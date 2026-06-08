@@ -1,0 +1,8 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="-1" android:layout_height="-1" android:layout_marginTop="0x00003001" android:layout_marginBottom="0x00003001" android:overScrollMode="1">
+  <LinearLayout android:orientation="1" android:layout_width="-1" android:layout_height="-2">
+    <TextView android:textColor="?0x01010038" android:id="@0x0102000b" android:layout_width="-1" android:layout_height="-2" android:layout_marginLeft="0x00001801" android:layout_marginRight="0x00001801" android:layout_marginBottom="0x00003001" android:layout_marginStart="0x00001801" android:layout_marginEnd="0x00001801" style="?0x01010042">
+    </TextView>
+    <EditText android:id="@0x01020003" android:layout_width="-1" android:layout_height="-2" android:layout_marginLeft="0x00001401" android:layout_marginRight="0x00001401" android:layout_marginStart="0x00001401" android:layout_marginEnd="0x00001401">
+    </EditText>
+  </LinearLayout>
+</ScrollView>

@@ -1,0 +1,22 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f0902ce" android:layout_width="-1" android:layout_height="-2">
+  <include android:layout_width="@0x7f0601af" android:layout_height="@0x7f0601ae" layout="@0x7f0c00df">
+  </include>
+  <LinearLayout android:layout_gravity="0x00000030" android:orientation="1" android:layout_width="-1" android:layout_height="-2" android:layout_marginStart="@0x7f0601af">
+    <LinearLayout android:orientation="0" android:id="@0x7f0902d0" android:layout_width="-1" android:layout_height="-2" android:minHeight="@0x7f0601ae">
+      <FrameLayout android:id="@0x7f0902cf" android:layout_width="-1" android:layout_height="-2" android:layout_marginBottom="0x00000801" android:layout_weight="1.0" android:layout_marginEnd="0x00000801">
+      </FrameLayout>
+      <FrameLayout android:id="@0x7f090336" android:paddingTop="@0x7f0601b3" android:layout_width="-2" android:layout_height="-2" android:layout_marginEnd="0x00000801">
+        <ViewStub android:layout_gravity="0x00800035" android:id="@0x7f0903ca" android:visibility="2" android:layout="@0x7f0c00e4" android:layout_width="-2" android:layout_height="-2">
+        </ViewStub>
+        <ViewStub android:layout_gravity="0x00800035" android:id="@0x7f090122" android:visibility="2" android:layout="@0x7f0c00e3" android:layout_width="-2" android:layout_height="-2">
+        </ViewStub>
+        <TextView android:textAppearance="@0x7f110195" android:layout_gravity="0x00800055" android:id="@0x7f090206" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="0x00001401" android:singleLine="true">
+        </TextView>
+      </FrameLayout>
+    </LinearLayout>
+    <ImageView android:id="@0x7f090095" android:background="#29000000" android:visibility="2" android:layout_width="-1" android:layout_height="0x00000101">
+    </ImageView>
+    <LinearLayout android:orientation="0" android:id="@0x7f09009d" android:visibility="2" android:layout_width="-1" android:layout_height="-2" android:layout_marginStart="0xfffff801">
+    </LinearLayout>
+  </LinearLayout>
+</FrameLayout>

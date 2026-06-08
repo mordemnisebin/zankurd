@@ -1,0 +1,4 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="-1" android:layout_height="-1">
+  <ProgressBar android:id="@0x7f090131" android:visibility="2" android:layout_width="-2" android:layout_height="0x00003201" android:indeterminate="true" android:indeterminateOnly="true" android:layout_centerInParent="true">
+  </ProgressBar>
+</RelativeLayout>

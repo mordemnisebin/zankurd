@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09021e" android:background="@0x7f0701d9" android:fitsSystemWindows="true" android:layout_width="-1" android:layout_height="-1">
+  <androidx.core.widget.NestedScrollView android:layout_width="-1" android:layout_height="-1" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be">
+    <LinearLayout android:orientation="1" android:layout_width="-1" android:layout_height="-2">
+      <TextView android:textAppearance="@0x7f110169" android:textColor="@0x7f050119" android:gravity="0x00000011" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf" android:text="@0x7f100168">
+      </TextView>
+      <TextView android:textAppearance="@0x7f11016f" android:textColor="@0x7f050119" android:gravity="0x00000011" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600be" android:text="@0x7f100169">
+      </TextView>
+      <include layout="@0x7f0c0096">
+      </include>
+      <TextView android:textAppearance="@0x7f11016c" android:textStyle="0x00000001" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f09043c" android:visibility="2" android:layout_width="-1" android:layout_height="-2" android:text="01:00">
+      </TextView>
+      <LinearLayout android:orientation="0" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600c2" android:layout_marginBottom="@0x7f0600c2" android:weightSum="3.0">
+        <LinearLayout android:gravity="0x00000011" android:orientation="1" android:layout_width="0x00000001" android:layout_height="-2" android:layout_weight="1.0">
+          <kurdi.leyzok.pirs.helper.CircleImageView android:id="@0x7f0901ee" android:layout_width="0x00005001" android:layout_height="0x00005001" android:contentDescription="@0x7f100033" app:civ_border_color="@0x7f050119" app:civ_border_width="0x00000201" app:srcCompat="@0x7f070230">
+          </kurdi.leyzok.pirs.helper.CircleImageView>
+          <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f090447" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf" android:layout_marginBottom="0x00000401" android:text="@0x7f100182">
+          </TextView>
+        </LinearLayout>
+        <ImageView android:layout_gravity="0x00000010" android:id="@0x7f0901f6" android:layout_width="0x00000001" android:layout_height="-2" android:src="@0x7f070249" android:layout_weight="1.0" app:tint="@0x7f050119">
+        </ImageView>
+        <LinearLayout android:gravity="0x00000011" android:orientation="1" android:id="@0x7f090245" android:layout_width="0x00000001" android:layout_height="-2" android:layout_weight="1.0">
+          <kurdi.leyzok.pirs.helper.CircleImageView android:gravity="0x00000011" android:id="@0x7f0901ef" android:layout_width="0x00005001" android:layout_height="0x00005001" android:contentDescription="@0x7f100033" app:civ_border_color="@0x7f050119" app:civ_border_width="0x00000201" app:srcCompat="@0x7f070230">
+          </kurdi.leyzok.pirs.helper.CircleImageView>
+          <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f090448" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf" android:layout_marginBottom="0x00000401" android:text="@0x7f100183">
+          </TextView>
+        </LinearLayout>
+      </LinearLayout>
+      <TextView android:textAppearance="@0x7f11016f" android:textColor="@0x7f050023" android:layout_gravity="0x00000001" android:id="@0x7f090400" android:background="@0x7f070092" android:paddingTop="@0x7f0600be" android:paddingBottom="@0x7f0600be" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:layout_margin="@0x7f0600c2" android:text="@0x7f100001" android:paddingStart="@0x7f0600bf" android:paddingEnd="@0x7f0600bf">
+      </TextView>
+      <TextView android:textSize="@0x7f0600e6" android:textColor="@0x7f050118" android:gravity="0x00000011" android:id="@0x7f0903e3" android:visibility="2" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0601b9" android:text="@0x7f100152">
+      </TextView>
+    </LinearLayout>
+  </androidx.core.widget.NestedScrollView>
+  <RelativeLayout android:id="@0x7f09035c" android:background="@0x7f0702ac" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600be" android:layout_alignParentBottom="true">
+    <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050023" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0601bb" android:layout_marginBottom="@0x7f0601bb" android:text="@0x7f1001cd" android:layout_centerVertical="true" android:textAlignment="4" android:layout_marginStart="@0x7f0601bb" android:layout_marginEnd="@0x7f0601bb" android:layout_toStartOf="@0x7f0901a3">
+    </TextView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@0x7f0901a3" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600c2" android:layout_marginBottom="@0x7f0600c2" android:layout_centerVertical="true" android:onClick="ShareGameCode" android:layout_marginStart="@0x7f0600c2" android:layout_marginEnd="@0x7f0600c2" android:layout_alignParentEnd="true" app:fabSize="1" app:srcCompat="@0x7f070241">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+  </RelativeLayout>
+  <ImageView android:id="@0x7f0901e2" android:padding="0x00000501" android:layout_width="-2" android:layout_height="-1" android:src="@0x7f0702a6" android:layout_alignParentBottom="true" android:alpha="0.5" android:rotation="180.0" android:layout_alignParentEnd="true" app:tint="@0x7f050119">
+  </ImageView>
+</RelativeLayout>

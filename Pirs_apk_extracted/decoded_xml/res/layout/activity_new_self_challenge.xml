@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:background="@0x7f050022" android:layout_width="-1" android:layout_height="-1">
+  <include layout="@0x7f0c010d">
+  </include>
+  <ScrollView android:layout_width="-1" android:layout_height="-1" android:layout_below="@0x7f0903d2">
+    <LinearLayout android:orientation="1" android:layout_width="-1" android:layout_height="-2" android:layout_margin="0x00000501">
+      <RelativeLayout android:layout_width="-1" android:layout_height="-2">
+        <TextView android:textSize="@0x7f0601e1" android:textColor="@0x7f050023" android:id="@0x7f0903ed" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600c2" android:text="@0x7f1001c1" android:fontFamily="@0x7f080002" android:layout_marginStart="@0x7f0600c2">
+        </TextView>
+        <ProgressBar android:id="@0x7f0902fc" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:layout_centerVertical="true" android:layout_marginEnd="@0x7f0600be" android:layout_alignParentEnd="true" style="?0x01010079">
+        </ProgressBar>
+        <androidx.recyclerview.widget.RecyclerView android:id="@0x7f090110" android:visibility="2" android:layout_width="-1" android:layout_height="-2">
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView android:textSize="@0x7f0601e3" android:textColor="@0x7f050119" android:id="@0x7f0903ee" android:background="@0x7f0701da" android:padding="@0x7f0600bf" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600c2" android:text="@0x7f1001c1" android:layout_below="@0x7f0903ed" android:fontFamily="@0x7f080001" android:layout_marginStart="@0x7f0600c2" android:layout_marginEnd="@0x7f0600c2">
+        </TextView>
+        <Spinner android:id="@0x7f090111" android:visibility="1" android:layout_width="-2" android:layout_height="0x00000001" android:layout_below="@0x7f0903ee" android:layout_marginStart="@0x7f0600c2" android:layout_alignParentEnd="true">
+        </Spinner>
+      </RelativeLayout>
+      <RelativeLayout android:id="@0x7f090397" android:layout_width="-1" android:layout_height="-2">
+        <TextView android:textSize="@0x7f0601e1" android:textColor="@0x7f050023" android:id="@0x7f090438" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600c2" android:text="@0x7f1001c6" android:fontFamily="@0x7f080002" android:layout_marginStart="@0x7f0600c2">
+        </TextView>
+        <ProgressBar android:id="@0x7f0902fd" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:layout_centerVertical="true" android:layout_marginEnd="@0x7f0600be" android:layout_alignParentEnd="true" style="?0x01010079">
+        </ProgressBar>
+        <androidx.recyclerview.widget.RecyclerView android:id="@0x7f090399" android:visibility="2" android:layout_width="-1" android:layout_height="-2" android:layout_below="@0x7f090438">
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView android:textSize="@0x7f0601e3" android:textColor="@0x7f050119" android:id="@0x7f090439" android:background="@0x7f0701da" android:padding="@0x7f0600bf" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600c2" android:text="@0x7f1001c6" android:layout_below="@0x7f090438" android:fontFamily="@0x7f080001">
+        </TextView>
+        <Spinner android:id="@0x7f090398" android:visibility="1" android:layout_width="-2" android:layout_height="0x00000001" android:layout_below="@0x7f090439" android:layout_marginStart="@0x7f0600c2" android:layout_alignParentEnd="true">
+        </Spinner>
+      </RelativeLayout>
+      <LinearLayout android:orientation="1" android:background="@0x7f05001d" android:padding="@0x7f0600be" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600c2">
+        <TextView android:textSize="@0x7f0601e1" android:textColor="@0x7f050023" android:id="@0x7f090432" android:layout_width="-2" android:layout_height="-2" android:layout_marginBottom="@0x7f0600be" android:text="@0x7f1001c5" android:fontFamily="@0x7f080002">
+        </TextView>
+        <androidx.recyclerview.widget.RecyclerView android:id="@0x7f09030c" android:layout_width="-1" android:layout_height="-2">
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView android:textColor="@0x7f050118" android:gravity="0x00000011" android:id="@0x7f0903e3" android:visibility="2" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f10018d">
+        </TextView>
+      </LinearLayout>
+      <com.facebook.ads.NativeAdLayout android:id="@0x7f0902b6" android:layout_width="-1" android:layout_height="-2">
+      </com.facebook.ads.NativeAdLayout>
+      <FrameLayout android:id="@0x7f0900a0" android:layout_width="-1" android:layout_height="-2">
+      </FrameLayout>
+      <LinearLayout android:orientation="1" android:background="@0x7f05001d" android:padding="@0x7f0600c2" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600c2">
+        <TextView android:textSize="@0x7f0601e1" android:textColor="@0x7f050023" android:layout_width="-2" android:layout_height="-2" android:layout_marginBottom="@0x7f0600be" android:text="@0x7f1001c7" android:fontFamily="@0x7f080002">
+        </TextView>
+        <androidx.recyclerview.widget.RecyclerView android:id="@0x7f0903cb" android:layout_width="-1" android:layout_height="-2">
+        </androidx.recyclerview.widget.RecyclerView>
+      </LinearLayout>
+      <TextView android:textSize="@0x7f0601e4" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f090436" android:background="@0x7f0701da" android:padding="@0x7f0600bf" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0601b9" android:layout_marginBottom="@0x7f0601b9" android:text="@0x7f1000eb" android:onClick="StartChallenge" android:fontFamily="@0x7f080001" android:layout_marginStart="@0x7f0601c3" android:layout_marginEnd="@0x7f0601c3">
+      </TextView>
+    </LinearLayout>
+  </ScrollView>
+</RelativeLayout>

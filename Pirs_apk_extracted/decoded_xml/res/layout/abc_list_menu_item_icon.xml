@@ -1,0 +1,2 @@
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_gravity="0x00000010" android:id="@0x7f0901d1" android:duplicateParentState="true" android:layout_width="-2" android:layout_height="-2" android:layout_marginLeft="0x00000801" android:layout_marginTop="0x00000801" android:layout_marginRight="0xfffff801" android:layout_marginBottom="0x00000801" android:scaleType="7" android:layout_marginStart="0x00000801" android:layout_marginEnd="0xfffff801">
+</ImageView>

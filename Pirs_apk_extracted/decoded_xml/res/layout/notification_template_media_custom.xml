@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="0" android:id="@0x7f09038f" android:layout_width="-1" android:layout_height="0x00004001">
+  <include android:layout_width="@0x7f0601af" android:layout_height="@0x7f0601ae" layout="@0x7f0c00df">
+  </include>
+  <LinearLayout android:orientation="0" android:id="@0x7f0902d0" android:paddingTop="@0x7f0601b0" android:layout_width="0x00000001" android:layout_height="-2" android:minHeight="@0x7f0601ae" android:layout_weight="1.0" android:layout_toLeftOf="@0x7f090104" android:layout_toStartOf="@0x7f090104">
+    <FrameLayout android:id="@0x7f0902cf" android:layout_width="-1" android:layout_height="-2" android:layout_marginLeft="@0x7f0601ad" android:layout_marginRight="0x00000801" android:layout_marginBottom="0x00000801" android:layout_weight="1.0" android:layout_marginStart="@0x7f0601ad" android:layout_marginEnd="0x00000801">
+    </FrameLayout>
+    <FrameLayout android:id="@0x7f090336" android:paddingTop="@0x7f0601b3" android:layout_width="-2" android:layout_height="-2" android:layout_marginRight="0x00000801" android:layout_marginEnd="0x00000801">
+      <DateTimeView android:textAppearance="@0x7f11019b" android:layout_gravity="0x00800035" android:id="@0x7f0903ca" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:singleLine="true">
+      </DateTimeView>
+      <Chronometer android:textAppearance="@0x7f11019b" android:layout_gravity="0x00800035" android:id="@0x7f090122" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:singleLine="true">
+      </Chronometer>
+      <TextView android:textAppearance="@0x7f110196" android:layout_gravity="0x00800055" android:id="@0x7f090206" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="0x00001401" android:singleLine="true">
+      </TextView>
+    </FrameLayout>
+  </LinearLayout>
+  <LinearLayout android:layout_gravity="0x00800015" android:orientation="0" android:id="@0x7f090286" android:layout_width="-2" android:layout_height="-1" android:layoutDirection="0">
+  </LinearLayout>
+  <include android:layout_width="0x00003001" android:layout_height="-1" android:layout_marginRight="0x00000601" android:layout_marginEnd="0x00000601" layout="@0x7f0c00d9">
+  </include>
+  <ImageView android:id="@0x7f09019b" android:layout_width="0x00000601" android:layout_height="-1">
+  </ImageView>
+</LinearLayout>

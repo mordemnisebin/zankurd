@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f0903d4" android:paddingBottom="@0x7f0600bf" android:visibility="0" android:layout_width="-1" android:layout_height="-2">
+  <ImageView android:layout_width="-2" android:layout_height="-2" android:src="@0x7f0700dd" android:layout_centerInParent="true">
+  </ImageView>
+  <LinearLayout android:orientation="0" android:background="@0x7f070259" android:layout_width="-2" android:layout_height="-2" android:weightSum="3.0">
+    <RelativeLayout android:gravity="0x00000050" android:layout_gravity="0x00000050" android:id="@0x7f090253" android:visibility="1" android:layout_width="0x00000001" android:layout_height="-1" android:layout_marginBottom="@0x7f0600c2" android:layout_weight="1.0">
+      <androidx.constraintlayout.widget.ConstraintLayout android:id="@0x7f0900ff" android:layout_width="-2" android:layout_height="-2" android:layout_centerHorizontal="true">
+        <RelativeLayout android:id="@0x7f090243" android:background="@0x7f070251" android:layout_width="0x00005001" android:layout_height="0x00005001" android:layout_centerHorizontal="true" app:layout_constraintBottom_toTopOf="@0x7f090243" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0">
+          <kurdi.leyzok.pirs.helper.CircleImageView android:id="@0x7f0901f3" android:layout_width="-1" android:layout_height="-1" android:layout_margin="0x00000401" android:layout_centerInParent="true" app:srcCompat="@0x7f070231">
+          </kurdi.leyzok.pirs.helper.CircleImageView>
+        </RelativeLayout>
+        <ImageView android:gravity="0x00000011" android:id="@0x7f090421" android:layout_width="-2" android:layout_height="-2" android:layout_margin="0x00000501" android:src="@0x7f070237" android:layout_alignParentEnd="true" app:layout_constraintBottom_toBottomOf="@0x7f090243" app:layout_constraintStart_toStartOf="0">
+        </ImageView>
+      </androidx.constraintlayout.widget.ConstraintLayout>
+      <TextView android:textStyle="0x00000001" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f090425" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="0x00000301" android:text="@0x7f10014c" android:layout_below="@0x7f0900ff">
+      </TextView>
+      <TextView android:textStyle="0x00000001" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f09042c" android:layout_width="-1" android:layout_height="-2" android:text="000" android:layout_below="@0x7f090425">
+      </TextView>
+    </RelativeLayout>
+    <RelativeLayout android:gravity="0x00000011" android:layout_gravity="0x00000011" android:id="@0x7f090252" android:visibility="1" android:layout_width="0x00000001" android:layout_height="-2" android:layout_marginTop="@0x7f0600be" android:layout_marginBottom="@0x7f0600c2" android:layout_weight="1.0">
+      <ImageView android:id="@0x7f09014b" android:layout_width="-2" android:layout_height="-2" android:src="@0x7f0700cb" android:layout_centerHorizontal="true">
+      </ImageView>
+      <androidx.constraintlayout.widget.ConstraintLayout android:id="@0x7f0900fe" android:layout_width="-2" android:layout_height="-2" android:layout_below="@0x7f09014b" android:layout_centerHorizontal="true">
+        <RelativeLayout android:id="@0x7f090242" android:background="@0x7f070251" android:layout_width="0x00006401" android:layout_height="0x00006401" android:layout_centerHorizontal="true" app:layout_constraintBottom_toTopOf="@0x7f090242" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0">
+          <kurdi.leyzok.pirs.helper.CircleImageView android:id="@0x7f0901f2" android:layout_width="-1" android:layout_height="-1" android:layout_margin="0x00000401" android:layout_centerInParent="true" app:srcCompat="@0x7f070230">
+          </kurdi.leyzok.pirs.helper.CircleImageView>
+        </RelativeLayout>
+        <ImageView android:id="@0x7f090420" android:layout_width="-2" android:layout_height="-2" android:layout_margin="0x00000501" android:src="@0x7f070236" app:layout_constraintBottom_toBottomOf="@0x7f090242" app:layout_constraintStart_toStartOf="0">
+        </ImageView>
+      </androidx.constraintlayout.widget.ConstraintLayout>
+      <TextView android:textStyle="0x00000001" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f090424" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="0x00000301" android:text="@0x7f10014c" android:layout_below="@0x7f0900fe">
+      </TextView>
+      <TextView android:textStyle="0x00000001" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f09042b" android:layout_width="-1" android:layout_height="-2" android:layout_marginBottom="@0x7f0600c2" android:text="000" android:layout_below="@0x7f090424">
+      </TextView>
+    </RelativeLayout>
+    <RelativeLayout android:layout_gravity="0x00000050" android:id="@0x7f090254" android:visibility="1" android:layout_width="0x00000001" android:layout_height="-2" android:layout_marginBottom="@0x7f0600be" android:layout_weight="1.0">
+      <androidx.constraintlayout.widget.ConstraintLayout android:id="@0x7f090100" android:layout_width="-2" android:layout_height="-2" android:layout_centerHorizontal="true">
+        <RelativeLayout android:id="@0x7f090247" android:background="@0x7f070251" android:layout_width="0x00004b01" android:layout_height="0x00004b01" android:layout_centerHorizontal="true" app:layout_constraintBottom_toTopOf="@0x7f090247" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0">
+          <kurdi.leyzok.pirs.helper.CircleImageView android:id="@0x7f0901f4" android:layout_width="-1" android:layout_height="-1" android:layout_margin="0x00000401" android:layout_centerInParent="true">
+          </kurdi.leyzok.pirs.helper.CircleImageView>
+        </RelativeLayout>
+        <ImageView android:gravity="0x00000011" android:id="@0x7f090422" android:layout_width="-2" android:layout_height="-2" android:layout_margin="0x00000501" android:src="@0x7f070238" android:layout_alignParentEnd="true" app:layout_constraintBottom_toBottomOf="@0x7f090247" app:layout_constraintStart_toStartOf="0">
+        </ImageView>
+      </androidx.constraintlayout.widget.ConstraintLayout>
+      <TextView android:textStyle="0x00000001" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f090426" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="0x00000301" android:text="@0x7f10014c" android:layout_below="@0x7f090100">
+      </TextView>
+      <TextView android:textStyle="0x00000001" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f09042d" android:layout_width="-1" android:layout_height="-2" android:text="000" android:layout_below="@0x7f090426">
+      </TextView>
+    </RelativeLayout>
+  </LinearLayout>
+</RelativeLayout>

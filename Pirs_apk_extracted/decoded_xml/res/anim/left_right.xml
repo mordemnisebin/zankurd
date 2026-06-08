@@ -1,0 +1,4 @@
+<set>
+  <translate android:duration="1500" android:repeatCount="-1" android:fromXDelta="0.0" android:toXDelta="0x00000101">
+  </translate>
+</set>

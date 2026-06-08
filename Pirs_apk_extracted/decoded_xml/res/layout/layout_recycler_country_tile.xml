@@ -1,0 +1,12 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:clickable="true" android:layout_width="-1" android:layout_height="-2" android:foreground="?0x0101030e">
+  <LinearLayout android:gravity="0x00000011" android:id="@0x7f090232" android:visibility="2" android:layout_width="0x00002801" android:layout_height="0x00003201" android:layout_marginLeft="@0x7f0600b2" android:layout_marginStart="@0x7f0600b2">
+    <ImageView android:id="@0x7f0901db" android:layout_width="-2" android:layout_height="-2" android:adjustViewBounds="true" app:srcCompat="@0x7f07013f">
+    </ImageView>
+  </LinearLayout>
+  <TextView android:textColor="@0x01060007" android:gravity="0x00000010" android:id="@0x7f0903bc" android:layout_width="-1" android:layout_height="0x00003201" android:layout_marginLeft="@0x7f0600b2" android:text="India (IN)" android:layout_toLeftOf="@0x7f0903bb" android:layout_toRightOf="@0x7f090232" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600b2" android:layout_toStartOf="@0x7f0903bb" android:layout_toEndOf="@0x7f090232">
+  </TextView>
+  <TextView android:textColor="@0x01060007" android:gravity="0x00000010" android:id="@0x7f0903bb" android:paddingLeft="0x00000a01" android:paddingRight="0x00000a01" android:layout_width="-2" android:layout_height="0x00003201" android:layout_marginRight="0x00000801" android:text="+91" android:layout_alignParentRight="true" android:layout_centerVertical="true" android:textDirection="3" android:paddingStart="0x00000a01" android:paddingEnd="0x00000a01" android:layout_marginEnd="0x00000801" android:layout_alignParentEnd="true">
+  </TextView>
+  <View android:id="@0x7f0902f5" android:background="#ff898989" android:layout_width="-1" android:layout_height="0x00000201" android:layout_marginLeft="0x00000501" android:layout_marginRight="0x00000501" android:layout_alignParentTop="true" android:alpha="0.20000000298023224">
+  </View>
+</RelativeLayout>

@@ -1,0 +1,2 @@
+<rotate xmlns:android="http://schemas.android.com/apk/res/android" android:duration="100" android:fromDegrees="-7.0" android:toDegrees="7.0" android:pivotX="0x40000030" android:pivotY="0x40000030" android:repeatCount="12" android:repeatMode="2">
+</rotate>

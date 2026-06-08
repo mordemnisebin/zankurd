@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09010d" android:layout_width="-1" android:layout_height="-2" android:minHeight="0x0000c801">
+  <androidx.cardview.widget.CardView android:layout_gravity="0x00000001" android:id="@0x7f090107" android:clipChildren="false" android:clipToPadding="false" android:layout_width="-2" android:layout_height="-2" android:layout_margin="@0x7f0600be" android:divider="@0x0106000d" android:dividerHeight="0x00000000" android:elevation="0x00000801" card_view:cardCornerRadius="@0x7f0600c0" card_view:cardElevation="0x00000701" card_view:cardPreventCornerOverlap="false">
+    <RelativeLayout android:id="@0x7f0902b0" android:background="@0x7f07028d" android:padding="@0x7f0600be" android:layout_width="-1" android:layout_height="-2">
+      <ImageView android:id="@0x7f0901e2" android:layout_width="0x00005001" android:layout_height="0x00005001" android:src="@0x7f0702a6" android:alpha="0.5" android:rotation="45.0" android:layout_alignParentEnd="true" card_view:tint="@0x7f0500fc">
+      </ImageView>
+      <LinearLayout android:orientation="1" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf" android:layout_marginBottom="@0x7f0600bf">
+        <com.android.volley.toolbox.NetworkImageView android:id="@0x7f09010e" android:layout_width="0x00002801" android:layout_height="0x00002801" android:layout_marginTop="@0x7f0600bf" android:src="@0x7f070215" android:layout_marginEnd="@0x7f0600be">
+        </com.android.volley.toolbox.NetworkImageView>
+        <RelativeLayout android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf">
+          <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050023" android:ellipsize="3" android:gravity="0x00000010" android:id="@0x7f090215" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f1001e5" android:maxLines="2" android:fontFamily="@0x7f080002" android:layout_toStartOf="@0x7f0900bf">
+          </TextView>
+          <TextView android:textColor="@0x7f050057" android:id="@0x7f0902c8" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f10014c" android:layout_below="@0x7f090215">
+          </TextView>
+          <ImageView android:id="@0x7f0900bf" android:background="@0x7f0701f3" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:layout_centerVertical="true" android:layout_alignParentEnd="true">
+          </ImageView>
+        </RelativeLayout>
+      </LinearLayout>
+    </RelativeLayout>
+  </androidx.cardview.widget.CardView>
+</RelativeLayout>

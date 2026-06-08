@@ -1,0 +1,18 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="0x00000011" android:orientation="1" android:id="@0x7f090268" android:background="@0x7f050022" android:layout_width="-1" android:layout_height="-1">
+  <RelativeLayout android:id="@0x7f0903d2" android:padding="@0x7f0601ba" android:layout_width="-1" android:layout_height="-2">
+    <ImageView android:id="@0x7f0901e0" android:background="@0x7f0701f1" android:layout_width="-2" android:layout_height="-2">
+    </ImageView>
+    <TextView android:textColor="@0x7f050023" android:id="@0x7f09045f" android:layout_width="-2" android:layout_height="-2" android:text="Ferbûna Bi Video" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600bf" android:layout_toEndOf="@0x7f0901e0" style="@0x7f1101b4">
+    </TextView>
+  </RelativeLayout>
+  <View android:id="@0x7f09016c" android:background="@0x7f0700d5" android:layout_width="-1" android:layout_height="0x00000301" android:layout_below="@0x7f0903d2">
+  </View>
+  <com.google.android.youtube.player.YouTubePlayerView android:id="@0x7f0904a3" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600be" android:layout_below="@0x7f09016c">
+  </com.google.android.youtube.player.YouTubePlayerView>
+  <WebView android:id="@0x7f090496" android:visibility="0" android:layout_width="-1" android:layout_height="-1" android:layout_above="@0x7f090437" android:layout_below="@0x7f0904a3">
+  </WebView>
+  <ProgressBar android:id="@0x7f0902f7" android:layout_width="-2" android:layout_height="-2" android:layout_centerInParent="true" style="@0x7f110275">
+  </ProgressBar>
+  <TextView android:textAppearance="@0x7f11016f" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f090437" android:background="@0x7f0700cd" android:padding="@0x7f0601ba" android:visibility="2" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f1000eb" android:layout_alignParentBottom="true">
+  </TextView>
+</RelativeLayout>

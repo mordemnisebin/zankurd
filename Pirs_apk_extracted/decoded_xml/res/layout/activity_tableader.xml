@@ -1,0 +1,12 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09009f" android:background="@0x7f070259" android:layout_width="-1" android:layout_height="-1">
+  <include layout="@0x7f0c010d">
+  </include>
+  <RelativeLayout android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf" android:layout_below="@0x7f0903d2">
+    <com.google.android.material.tabs.TabLayout android:id="@0x7f0903a1" android:layout_width="-1" android:layout_height="-2" android:layout_centerHorizontal="true" android:layout_marginStart="@0x7f0600bf" android:layout_marginEnd="@0x7f0600bf" app:tabBackground="@0x0106000d" app:tabIndicatorColor="@0x7f050117" app:tabMode="1" app:tabRippleColor="@0x00000000" app:tabTextColor="@0x7f050117">
+    </com.google.android.material.tabs.TabLayout>
+    <View android:id="@0x7f09016c" android:background="@0x7f050092" android:layout_width="-1" android:layout_height="0x33333331" android:layout_below="@0x7f0903a1">
+    </View>
+    <androidx.viewpager.widget.ViewPager android:id="@0x7f0902e2" android:background="@0x7f05001d" android:layout_width="-1" android:layout_height="-1" android:layout_marginTop="@0x7f0601ba" android:layout_below="@0x7f0903a1">
+    </androidx.viewpager.widget.ViewPager>
+  </RelativeLayout>
+</RelativeLayout>

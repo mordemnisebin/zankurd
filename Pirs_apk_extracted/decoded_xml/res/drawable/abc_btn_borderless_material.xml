@@ -1,0 +1,8 @@
+<selector>
+  <item android:state_focused="true" android:drawable="@0x7f070032">
+  </item>
+  <item android:state_pressed="true" android:drawable="@0x7f070032">
+  </item>
+  <item android:drawable="@0x0106000d">
+  </item>
+</selector>

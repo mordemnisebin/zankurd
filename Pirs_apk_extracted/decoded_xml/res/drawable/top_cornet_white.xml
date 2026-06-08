@@ -1,0 +1,60 @@
+<layer-list>
+  <item>
+    <shape>
+      <padding android:bottom="0x00000101">
+      </padding>
+      <solid android:color="#00bbbdcb">
+      </solid>
+      <corners android:bottomLeftRadius="@0x7f0600c2" android:bottomRightRadius="@0x7f0600c2">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <padding android:bottom="0x00000101">
+      </padding>
+      <solid android:color="#05bbbdcb">
+      </solid>
+      <corners android:bottomLeftRadius="@0x7f0600c2" android:bottomRightRadius="@0x7f0600c2">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <padding android:bottom="0x00000101">
+      </padding>
+      <solid android:color="#0abbbdcb">
+      </solid>
+      <corners android:bottomLeftRadius="@0x7f0600c2" android:bottomRightRadius="@0x7f0600c2">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <padding android:bottom="0x00000101">
+      </padding>
+      <solid android:color="#0fbbbdcb">
+      </solid>
+      <corners android:bottomLeftRadius="@0x7f0600c2" android:bottomRightRadius="@0x7f0600c2">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <padding android:bottom="0x00000101">
+      </padding>
+      <solid android:color="#14bbbdcb">
+      </solid>
+      <corners android:bottomLeftRadius="@0x7f0600c2" android:bottomRightRadius="@0x7f0600c2">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <solid android:color="@0x7f050119">
+      </solid>
+      <corners android:bottomLeftRadius="@0x7f0600c2" android:bottomRightRadius="@0x7f0600c2">
+      </corners>
+    </shape>
+  </item>
+</layer-list>

@@ -1,0 +1,6 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="1" android:layout_width="-1" android:layout_height="-1">
+  <FrameLayout android:id="@0x0102003f" android:layout_width="-1" android:layout_height="0x00000001" android:layout_weight="1.0">
+  </FrameLayout>
+  <TextView android:gravity="0x00000011" android:id="@0x01020004" android:padding="0x00000801" android:visibility="2" android:layout_width="-1" android:layout_height="-1">
+  </TextView>
+</LinearLayout>

@@ -1,0 +1,12 @@
+<layer-list>
+  <item android:gravity="0x00000010" android:height="0x00002801" android:width="0x00002801" android:left="0x00000401">
+    <shape android:shape="1">
+      <solid android:color="@0x0106000b">
+      </solid>
+    </shape>
+  </item>
+  <item android:left="0x00000f01" android:top="0x00000101">
+    <bitmap android:gravity="0x00000013" android:src="@0x7f0701d8">
+    </bitmap>
+  </item>
+</layer-list>

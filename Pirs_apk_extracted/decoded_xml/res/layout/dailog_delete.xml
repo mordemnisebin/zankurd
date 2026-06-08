@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="1" android:background="@0x7f070258" android:paddingTop="0x00001e01" android:paddingBottom="0x00001e01" android:layout_width="-1" android:layout_height="-2" android:layout_marginStart="@0x7f0601ba" android:layout_marginEnd="@0x7f0601ba" android:backgroundTint="@0x7f050022">
+  <LinearLayout android:orientation="1" android:layout_width="-1" android:layout_height="-2">
+    <TextView android:textSize="0x00001602" android:textStyle="0x00000001" android:textColor="@0x7f050023" android:gravity="0x00000031" android:id="@0x7f09043d" android:padding="0x00000701" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100022" android:textAllCaps="true" android:fontFamily="@0x7f080001">
+    </TextView>
+    <ImageView android:layout_gravity="0x00000011" android:background="@0x7f07023f" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0601ba">
+    </ImageView>
+    <LinearLayout android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0601ba">
+      <TextView android:textSize="0x00001202" android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f090444" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600be" android:text="@0x7f100097">
+      </TextView>
+    </LinearLayout>
+    <LinearLayout android:orientation="0" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf" android:layout_marginBottom="0x00001401" android:weightSum="2.0">
+      <TextView android:textSize="0x00001002" android:textStyle="0x00000001" android:textColor="@0x7f050039" android:gravity="0x00000001" android:layout_gravity="0x00000001" android:id="@0x7f090442" android:background="@0x7f070257" android:padding="@0x7f0601ba" android:layout_width="0x00000001" android:layout_height="-2" android:text="@0x7f100206" android:layout_weight="1.0" android:layout_marginStart="@0x7f0601ba" android:layout_marginEnd="@0x7f0601ba">
+      </TextView>
+      <TextView android:textSize="0x00001002" android:textStyle="0x00000001" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f090412" android:background="@0x7f0701e2" android:padding="@0x7f0601ba" android:layout_width="0x00000001" android:layout_height="-2" android:text="@0x7f100151" android:layout_weight="1.0" android:layout_marginStart="@0x7f0601ba" android:layout_marginEnd="@0x7f0601ba">
+      </TextView>
+    </LinearLayout>
+  </LinearLayout>
+</LinearLayout>

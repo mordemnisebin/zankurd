@@ -1,0 +1,24 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="-2" android:layout_height="-2" app:cardBackgroundColor="@0x0106000d" app:cardElevation="0x00000a01">
+  <LinearLayout android:gravity="0x00000001" android:orientation="1" android:background="@0x7f07009b" android:layout_width="0x00025801" android:layout_height="-2">
+    <RelativeLayout android:orientation="0" android:background="@0x7f07009d" android:layout_width="-1" android:layout_height="0x00006e01">
+      <FrameLayout android:layout_width="-1" android:layout_height="-2">
+        <androidx.appcompat.widget.AppCompatImageView android:layout_width="0x00001201" android:layout_height="0x00001201" android:layout_marginLeft="0x00000c01" android:layout_marginTop="0x00000b01" android:layout_marginBottom="0x00000b01" android:scaleType="1" android:adjustViewBounds="false" android:layout_marginStart="0x00000c01" app:srcCompat="@0x7f0700a6">
+        </androidx.appcompat.widget.AppCompatImageView>
+      </FrameLayout>
+      <TextView android:textSize="0x00003402" android:typeface="1" android:textColor="@0x7f05004a" android:gravity="0x00000011" android:id="@0x7f090138" android:visibility="1" android:layout_width="-2" android:layout_height="-2" android:layout_centerInParent="true" android:fontFamily="sans-serif-light">
+      </TextView>
+      <ProgressBar android:id="@0x7f090304" android:layout_width="-2" android:layout_height="0x00000001" android:layout_alignTop="@0x7f090138" android:layout_alignBottom="@0x7f090138" android:layout_centerInParent="true" android:layout_centerHorizontal="true" android:layout_centerVertical="true">
+      </ProgressBar>
+    </RelativeLayout>
+    <TextView android:id="@0x7f090132" android:layout_marginLeft="0x00005a01" android:layout_marginTop="0x00001201" android:layout_marginRight="0x00005a01" android:text="@0x7f10006c" android:layout_marginStart="0x00005a01" android:layout_marginEnd="0x00005a01" style="@0x7f11030d">
+    </TextView>
+    <TextView android:textStyle="0x00000001" android:gravity="0x00000001" android:id="@0x7f090133" android:layout_width="-1" android:layout_marginTop="0x00000c01" android:text="@0x7f10006d" android:layout_marginStart="0x00000001" android:layout_marginEnd="0x00000001" style="@0x7f11030d">
+    </TextView>
+    <TextView android:id="@0x7f09012f" android:layout_marginTop="0x00000c01" style="@0x7f11030d">
+    </TextView>
+    <FrameLayout android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="0x00001101" android:layout_marginBottom="0x00001101">
+      <Button android:textSize="0x00001202" android:typeface="1" android:textStyle="0x00000001" android:textColor="@0x7f050041" android:layout_gravity="0x00000001" android:id="@0x7f090105" android:background="@0x7f07009c" android:focusable="true" android:clickable="true" android:layout_width="-2" android:layout_height="-2" android:minWidth="0x0000c801" android:text="@0x01040000" android:textAllCaps="true" android:fontFamily="sans-serif-medium">
+      </Button>
+    </FrameLayout>
+  </LinearLayout>
+</androidx.cardview.widget.CardView>

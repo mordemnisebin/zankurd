@@ -1,0 +1,10 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_gravity="0x00000001" android:id="@0x7f090238" android:clipChildren="false" android:clipToPadding="false" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf" android:layout_marginBottom="@0x7f0600be" android:divider="@0x0106000d" android:dividerHeight="0x00000000" android:layout_weight="1.0" android:layout_marginStart="@0x7f0601bb" android:layout_marginEnd="@0x7f0601bb" android:elevation="0x00000801" app:cardCornerRadius="@0x7f0600bf">
+  <RelativeLayout android:id="@0x7f090248" android:background="@0x7f0701df" android:layout_width="-1" android:layout_height="-2">
+    <ImageView android:id="@0x7f0901e5" android:background="@0x7f070201" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600be" android:layout_marginBottom="@0x7f0600be" android:layout_centerHorizontal="true">
+    </ImageView>
+    <TextView android:textSize="@0x7f0601e4" android:textStyle="0x00000001" android:textColor="@0x7f050119" android:id="@0x7f0903f2" android:layout_width="-2" android:layout_height="-2" android:layout_marginBottom="@0x7f0600be" android:text="100 Jeton" android:layout_below="@0x7f0901e5" android:layout_centerInParent="true">
+    </TextView>
+    <Button android:textStyle="0x00000001" android:textColor="@0x7f050023" android:id="@0x7f0900e6" android:background="@0x7f0701e0" android:layout_width="-2" android:layout_height="-2" android:layout_marginBottom="@0x7f0600bf" android:text="BIKIRE" android:layout_below="@0x7f0903f2" android:layout_centerHorizontal="true" android:layout_centerVertical="true" android:backgroundTint="@0x7f050119">
+    </Button>
+  </RelativeLayout>
+</androidx.cardview.widget.CardView>

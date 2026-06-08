@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="1" android:background="@0x7f070092" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600c2">
+  <LinearLayout android:orientation="0" android:layout_width="-1" android:layout_height="-2">
+    <RelativeLayout android:id="@0x7f0900a6" android:padding="0x00000201" android:layout_width="-2" android:layout_height="-2">
+    </RelativeLayout>
+    <TextView android:textSize="0x00000c02" android:textColor="@0x0106000c" android:ellipsize="3" android:layout_gravity="0x00000010" android:id="@0x7f0902b4" android:padding="0x00000201" android:layout_width="-2" android:layout_height="-2" android:lines="1">
+    </TextView>
+  </LinearLayout>
+  <RelativeLayout android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600c0">
+    <com.facebook.ads.MediaView android:gravity="0x00000011" android:id="@0x7f0902b7" android:layout_width="0x00003201" android:layout_height="0x00003201" android:layout_alignParentStart="true">
+    </com.facebook.ads.MediaView>
+    <LinearLayout android:orientation="1" android:layout_width="-1" android:layout_height="-2" android:layout_centerVertical="true" android:paddingStart="0x00003501" android:paddingEnd="0x00005301">
+      <TextView android:textSize="0x00000f02" android:textStyle="0x00000001" android:textColor="@0x0106000c" android:ellipsize="3" android:id="@0x7f0902b5" android:layout_width="-1" android:layout_height="-2" android:lines="1">
+      </TextView>
+      <TextView android:textSize="0x00000c02" android:textColor="@0x0106000c" android:ellipsize="3" android:id="@0x7f0902b3" android:layout_width="-1" android:layout_height="-2" android:lines="1">
+      </TextView>
+    </LinearLayout>
+    <Button android:textSize="0x00000c02" android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f0902b2" android:paddingLeft="0x00000301" android:paddingRight="0x00000301" android:visibility="0" android:layout_width="0x00005001" android:layout_height="0x00003201" android:layout_alignParentEnd="true" style="@0x7f11018c">
+    </Button>
+  </RelativeLayout>
+</LinearLayout>

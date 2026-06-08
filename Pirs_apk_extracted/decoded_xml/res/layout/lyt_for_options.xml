@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="1" android:id="@0x7f090250" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600c2">
+  <RelativeLayout android:id="@0x7f090064" android:background="@0x7f070092" android:layout_width="-1" android:layout_height="-2" android:minHeight="?0x7f030005" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be">
+    <TextView android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f0903e2" android:background="@0x7f070287" android:paddingTop="@0x7f0600c0" android:paddingBottom="@0x7f0600c0" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f100003" android:fontFamily="@0x7f080001" android:paddingStart="@0x7f0600c0" android:paddingEnd="@0x7f0600c0">
+    </TextView>
+    <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050118" android:id="@0x7f0900eb" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100031" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="0x00000501" android:layout_toStartOf="@0x7f0902ff" android:layout_toEndOf="@0x7f0903e2">
+    </TextView>
+    <kurdi.leyzok.pirs.helper.AudienceProgress android:id="@0x7f0902ff" android:visibility="2" android:layout_width="@0x7f06005a" android:layout_height="@0x7f06005a" android:layout_centerVertical="true" android:layout_marginEnd="0x00000301" android:layout_alignParentEnd="true" app:direction="0">
+    </kurdi.leyzok.pirs.helper.AudienceProgress>
+  </RelativeLayout>
+  <RelativeLayout android:id="@0x7f0900ca" android:background="@0x7f070092" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600c0" android:minHeight="?0x7f030005" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be">
+    <TextView android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f0903e9" android:background="@0x7f070287" android:paddingTop="@0x7f0600c0" android:paddingBottom="@0x7f0600c0" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f10003a" android:fontFamily="@0x7f080001" android:paddingStart="@0x7f0600c0" android:paddingEnd="@0x7f0600c0">
+    </TextView>
+    <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050118" android:id="@0x7f0900ec" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100031" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="0x00000501" android:layout_toStartOf="@0x7f090300" android:layout_toEndOf="@0x7f0903e9">
+    </TextView>
+    <kurdi.leyzok.pirs.helper.AudienceProgress android:id="@0x7f090300" android:visibility="2" android:layout_width="@0x7f06005a" android:layout_height="@0x7f06005a" android:layout_centerVertical="true" android:layout_marginEnd="0x00000301" android:layout_alignParentEnd="true" app:direction="0">
+    </kurdi.leyzok.pirs.helper.AudienceProgress>
+  </RelativeLayout>
+  <RelativeLayout android:id="@0x7f090101" android:background="@0x7f070092" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600c0" android:minHeight="?0x7f030005" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be">
+    <TextView android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f0903eb" android:background="@0x7f070287" android:paddingTop="@0x7f0600c0" android:paddingBottom="@0x7f0600c0" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f10004b" android:fontFamily="@0x7f080001" android:paddingStart="@0x7f0600c0" android:paddingEnd="@0x7f0600c0">
+    </TextView>
+    <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050118" android:id="@0x7f0900ed" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100031" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="0x00000501" android:layout_toStartOf="@0x7f090301" android:layout_toEndOf="@0x7f0903eb">
+    </TextView>
+    <kurdi.leyzok.pirs.helper.AudienceProgress android:id="@0x7f090301" android:visibility="2" android:layout_width="@0x7f06005a" android:layout_height="@0x7f06005a" android:layout_centerVertical="true" android:layout_marginEnd="0x00000301" android:layout_alignParentEnd="true" app:direction="0">
+    </kurdi.leyzok.pirs.helper.AudienceProgress>
+  </RelativeLayout>
+  <RelativeLayout android:id="@0x7f090153" android:background="@0x7f070092" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600c0" android:minHeight="?0x7f030005" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be">
+    <TextView android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f0903f8" android:background="@0x7f070287" android:paddingTop="@0x7f0600c0" android:paddingBottom="@0x7f0600c0" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f100092" android:fontFamily="@0x7f080001" android:paddingStart="@0x7f0600c0" android:paddingEnd="@0x7f0600c0">
+    </TextView>
+    <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050118" android:id="@0x7f0900ee" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100031" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="0x00000501" android:layout_toStartOf="@0x7f090302" android:layout_toEndOf="@0x7f0903f8">
+    </TextView>
+    <kurdi.leyzok.pirs.helper.AudienceProgress android:id="@0x7f090302" android:visibility="2" android:layout_width="@0x7f06005a" android:layout_height="@0x7f06005a" android:layout_centerVertical="true" android:layout_marginEnd="0x00000301" android:layout_alignParentEnd="true" app:direction="0">
+    </kurdi.leyzok.pirs.helper.AudienceProgress>
+  </RelativeLayout>
+  <RelativeLayout android:id="@0x7f090180" android:background="@0x7f070092" android:visibility="2" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600c0" android:minHeight="?0x7f030005" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be">
+    <TextView android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f0903fa" android:background="@0x7f070287" android:paddingTop="@0x7f0600c0" android:paddingBottom="@0x7f0600c0" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f10009e" android:fontFamily="@0x7f080001" android:paddingStart="@0x7f0600c0" android:paddingEnd="@0x7f0600c0">
+    </TextView>
+    <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050118" android:id="@0x7f0900ef" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100031" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="0x00000501" android:layout_toStartOf="@0x7f090303" android:layout_toEndOf="@0x7f0903fa">
+    </TextView>
+    <kurdi.leyzok.pirs.helper.AudienceProgress android:id="@0x7f090303" android:visibility="2" android:layout_width="@0x7f06005a" android:layout_height="@0x7f06005a" android:layout_centerVertical="true" android:layout_marginEnd="0x00000301" android:layout_alignParentEnd="true" app:direction="0">
+    </kurdi.leyzok.pirs.helper.AudienceProgress>
+  </RelativeLayout>
+</LinearLayout>

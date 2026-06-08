@@ -1,0 +1,34 @@
+<menu>
+  <group android:checkableBehavior="2">
+    <item android:icon="@0x7f070216" android:id="@0x7f090222" android:title="@0x7f1000df">
+    </item>
+    <item android:icon="@0x7f070243" android:id="@0x7f09038e" android:title="@0x7f1001d9">
+    </item>
+    <item android:icon="@0x7f0701fb" android:id="@0x7f0900d5" android:title="@0x7f100047">
+    </item>
+    <item android:icon="@0x7f070227" android:id="@0x7f0902cd" android:title="@0x7f10015f">
+    </item>
+  </group>
+  <group android:id="@0x7f090288" android:checkableBehavior="2">
+    <item android:icon="@0x7f070212" android:id="@0x7f090211" android:title="@0x7f1000da">
+    </item>
+    <item android:icon="@0x7f070211" android:id="@0x7f09020f" android:title="@0x7f1000d8">
+    </item>
+    <item android:icon="@0x7f070240" android:id="@0x7f09035a" android:title="@0x7f100026">
+    </item>
+    <item android:icon="@0x7f070214" android:id="@0x7f090016" android:visible="false" android:title="@0x7f10009a">
+    </item>
+    <item android:icon="@0x7f070241" android:id="@0x7f09035b" android:title="@0x7f1001ca">
+    </item>
+  </group>
+  <group android:id="@0x7f090287" android:checkableBehavior="2">
+    <item android:icon="@0x7f0701e9" android:id="@0x7f090065" android:title="@0x7f10001f">
+    </item>
+    <item android:icon="@0x7f070245" android:id="@0x7f0903af" android:title="@0x7f1001e1">
+    </item>
+    <item android:icon="@0x7f07022f" android:id="@0x7f0902f8" android:title="@0x7f100188">
+    </item>
+  </group>
+  <item android:icon="@0x7f070256" android:id="@0x7f09023b" android:title="@0x7f1000f4">
+  </item>
+</menu>

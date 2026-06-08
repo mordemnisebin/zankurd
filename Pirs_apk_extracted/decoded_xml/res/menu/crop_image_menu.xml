@@ -1,0 +1,16 @@
+<menu>
+  <item android:icon="@0x7f07023d" android:id="@0x7f0901cf" android:visible="false" android:title="@0x7f1000d3" app:showAsAction="0x00000001">
+  </item>
+  <item android:icon="@0x7f07023e" android:id="@0x7f0901d0" android:title="@0x7f1000d4" app:showAsAction="0x00000001">
+  </item>
+  <item android:icon="@0x7f07020b" android:id="@0x7f0901cc" android:title="@0x7f1000d0" app:showAsAction="0x00000001">
+    <menu>
+      <item android:id="@0x7f0901cd" android:title="@0x7f1000d1">
+      </item>
+      <item android:id="@0x7f0901ce" android:title="@0x7f1000d2">
+      </item>
+    </menu>
+  </item>
+  <item android:id="@0x7f09014a" android:title="@0x7f100091" app:showAsAction="0x00000002">
+  </item>
+</menu>

@@ -1,0 +1,6 @@
+<selector>
+  <item android:state_enabled="true" android:color="?0x7f030119">
+  </item>
+  <item android:color="?0x7f030118" android:alpha="0.3199999928474426">
+  </item>
+</selector>

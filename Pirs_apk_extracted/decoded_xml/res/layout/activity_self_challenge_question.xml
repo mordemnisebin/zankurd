@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:background="@0x7f050022" android:layout_width="-1" android:layout_height="-1">
+  <include layout="@0x7f0c010d">
+  </include>
+  <RelativeLayout android:id="@0x7f090269" android:layout_width="-1" android:layout_height="-1" android:layout_below="@0x7f0903d2">
+    <LinearLayout android:orientation="0" android:id="@0x7f0903d4" android:paddingTop="@0x7f0600bf" android:paddingBottom="@0x7f0601ba" android:layout_width="-1" android:layout_height="?0x7f030005" android:weightSum="3.0" android:paddingStart="@0x7f0601ba" android:paddingEnd="@0x7f0601ba">
+      <ImageView android:layout_gravity="0x00000011" android:id="@0x7f0901e1" android:padding="@0x7f0600be" android:visibility="2" android:layout_width="0x00000001" android:layout_height="-2" android:layout_weight="1.0" app:srcCompat="@0x7f070246">
+      </ImageView>
+      <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050023" android:gravity="0x00000011" android:layout_gravity="0x00000011" android:id="@0x7f09043b" android:layout_width="0x00000001" android:layout_height="-2" android:text="00:00" android:layout_weight="1.0">
+      </TextView>
+      <View android:background="@0x7f050039" android:layout_width="0x00000101" android:layout_height="-1">
+      </View>
+      <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050023" android:gravity="0x00000011" android:layout_gravity="0x00000011" android:id="@0x7f090407" android:layout_width="0x00000001" android:layout_height="-2" android:layout_weight="1.0">
+      </TextView>
+      <View android:background="@0x7f050039" android:layout_width="0x00000101" android:layout_height="-1">
+      </View>
+      <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050023" android:gravity="0x00000011" android:layout_gravity="0x00000011" android:layout_width="0x00000001" android:layout_height="-2" android:text="@0x7f1001dd" android:layout_weight="1.0" android:onClick="SubmitTest">
+      </TextView>
+    </LinearLayout>
+    <androidx.viewpager.widget.ViewPager android:id="@0x7f09048c" android:layout_width="-1" android:layout_height="-1" android:layout_marginBottom="@0x7f0601ba" android:layout_above="@0x7f0900d8" android:layout_below="@0x7f0903d4">
+    </androidx.viewpager.widget.ViewPager>
+    <RelativeLayout android:id="@0x7f0900d8" android:background="@0x7f0700cd" android:layout_width="-1" android:layout_height="?0x7f030005" android:layout_alignParentBottom="true">
+      <ImageView android:padding="0x00000501" android:layout_width="-2" android:layout_height="-2" android:layout_centerVertical="true" android:onClick="PreviousQuestion" android:layout_marginStart="@0x7f0600be" android:layout_alignParentStart="true" app:srcCompat="@0x7f07022e">
+      </ImageView>
+      <ImageView android:padding="@0x7f0600c2" android:layout_width="-2" android:layout_height="-2" android:layout_centerInParent="true" android:onClick="BottomResult" app:srcCompat="@0x7f07022a">
+      </ImageView>
+      <ImageView android:id="@0x7f0901ec" android:padding="0x00000501" android:layout_width="-2" android:layout_height="-2" android:layout_centerVertical="true" android:onClick="NextQuestion" android:layout_marginEnd="@0x7f0600be" android:layout_alignParentEnd="true" app:srcCompat="@0x7f070224">
+      </ImageView>
+    </RelativeLayout>
+  </RelativeLayout>
+  <ProgressBar android:id="@0x7f0902fb" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:layout_centerInParent="true">
+  </ProgressBar>
+</RelativeLayout>

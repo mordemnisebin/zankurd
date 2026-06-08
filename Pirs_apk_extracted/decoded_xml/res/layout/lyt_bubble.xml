@@ -1,0 +1,2 @@
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f0901e2" android:padding="0x00000501" android:layout_width="-2" android:layout_height="-1" android:src="@0x7f0702a6" android:layout_alignParentBottom="true" android:alpha="0.5" android:rotation="180.0" android:layout_alignParentEnd="true" app:tint="@0x7f050039">
+</ImageView>

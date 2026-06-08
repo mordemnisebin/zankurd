@@ -1,0 +1,8 @@
+<selector>
+  <item android:state_pressed="true" android:color="@0x7f050047">
+  </item>
+  <item android:state_enabled="false" android:color="@0x7f050046">
+  </item>
+  <item android:color="@0x7f050048">
+  </item>
+</selector>

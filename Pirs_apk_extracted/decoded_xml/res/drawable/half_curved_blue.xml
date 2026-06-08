@@ -1,0 +1,50 @@
+<layer-list>
+  <item>
+    <shape>
+      <solid android:color="#00bbbdcb">
+      </solid>
+      <corners android:bottomLeftRadius="@0x7f0600bf" android:bottomRightRadius="@0x7f0600bf">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <solid android:color="#05bbbdcb">
+      </solid>
+      <corners android:bottomLeftRadius="@0x7f0600bf" android:bottomRightRadius="@0x7f0600bf">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <solid android:color="#0abbbdcb">
+      </solid>
+      <corners android:bottomLeftRadius="@0x7f0600bf" android:bottomRightRadius="@0x7f0600bf">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <solid android:color="#0fbbbdcb">
+      </solid>
+      <corners android:bottomLeftRadius="@0x7f0600bf" android:bottomRightRadius="@0x7f0600bf">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <solid android:color="#14bbbdcb">
+      </solid>
+      <corners android:bottomLeftRadius="@0x7f0600bf" android:bottomRightRadius="@0x7f0600bf">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <gradient android:startColor="@0x7f050039" android:endColor="@0x7f050038" android:angle="45.0">
+      </gradient>
+      <corners android:bottomLeftRadius="@0x7f0600bf" android:bottomRightRadius="@0x7f0600bf">
+      </corners>
+    </shape>
+  </item>
+</layer-list>

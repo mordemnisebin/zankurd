@@ -1,0 +1,20 @@
+<layer-list>
+  <item>
+    <shape>
+      <solid android:color="?0x7f030120">
+      </solid>
+      <corners android:topLeftRadius="0x00000401" android:topRightRadius="0x00000401" android:bottomLeftRadius="0x00000401" android:bottomRightRadius="0x00000401">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <solid android:color="@0x7f0500dd">
+      </solid>
+      <corners android:topLeftRadius="0x00000401" android:topRightRadius="0x00000401" android:bottomLeftRadius="0x00000401" android:bottomRightRadius="0x00000401">
+      </corners>
+      <padding android:top="0x00000801" android:bottom="0x00000801">
+      </padding>
+    </shape>
+  </item>
+</layer-list>

@@ -1,0 +1,50 @@
+<layer-list>
+  <item>
+    <shape>
+      <padding android:left="0x00000101" android:top="0x00000101" android:right="0x00000101" android:bottom="0x00000101">
+      </padding>
+      <corners android:radius="@0x7f0601ba">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <padding android:left="0x00000101" android:top="0x00000101" android:right="0x00000101" android:bottom="0x00000101">
+      </padding>
+      <corners android:radius="@0x7f0601ba">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <padding android:left="0x00000101" android:top="0x00000101" android:right="0x00000101" android:bottom="0x00000101">
+      </padding>
+      <corners android:radius="@0x7f0601ba">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <padding android:left="0x00000101" android:top="0x00000101" android:right="0x00000101" android:bottom="0x00000101">
+      </padding>
+      <corners android:radius="@0x7f0601ba">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <padding android:left="0x00000101" android:top="0x00000101" android:right="0x00000101" android:bottom="0x00000101">
+      </padding>
+      <corners android:radius="0x00001401">
+      </corners>
+    </shape>
+  </item>
+  <item>
+    <shape>
+      <stroke android:width="0x00000101" android:color="@0x7f050023">
+      </stroke>
+      <corners android:radius="@0x7f0601ba">
+      </corners>
+    </shape>
+  </item>
+</layer-list>

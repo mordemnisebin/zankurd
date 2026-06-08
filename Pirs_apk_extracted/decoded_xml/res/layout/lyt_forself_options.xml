@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="1" android:id="@0x7f090250" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600be">
+  <androidx.cardview.widget.CardView android:layout_gravity="0x00000001" android:id="@0x7f09000b" android:clipChildren="false" android:clipToPadding="false" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600c0" android:divider="@0x0106000d" android:dividerHeight="0x00000000" android:layout_weight="1.0" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be" android:elevation="0x00000801" app:cardCornerRadius="@0x7f0600be">
+    <RelativeLayout android:id="@0x7f090064" android:padding="@0x7f0600be" android:layout_width="-1" android:layout_height="-2" android:minHeight="?0x7f030005">
+      <TextView android:textSize="@0x7f060075" android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f0903e2" android:background="@0x7f070286" android:paddingTop="0x00000401" android:paddingBottom="0x00000401" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f100003" android:layout_centerVertical="true" android:paddingStart="0x00000801" android:paddingEnd="0x00000801">
+      </TextView>
+      <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050023" android:id="@0x7f0900eb" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100031" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="0x00000501" android:layout_toStartOf="@0x7f0902ff" android:layout_toEndOf="@0x7f0903e2">
+      </TextView>
+      <kurdi.leyzok.pirs.helper.AudienceProgress android:id="@0x7f0902ff" android:visibility="2" android:layout_width="@0x7f06005a" android:layout_height="@0x7f06005a" android:layout_centerVertical="true" android:layout_marginEnd="0x00000301" android:layout_alignParentEnd="true" app:direction="0">
+      </kurdi.leyzok.pirs.helper.AudienceProgress>
+    </RelativeLayout>
+  </androidx.cardview.widget.CardView>
+  <androidx.cardview.widget.CardView android:layout_gravity="0x00000001" android:id="@0x7f09000c" android:clipChildren="false" android:clipToPadding="false" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600be" android:divider="@0x0106000d" android:dividerHeight="0x00000000" android:layout_weight="1.0" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be" android:elevation="0x00000801" app:cardCornerRadius="@0x7f0600be">
+    <RelativeLayout android:id="@0x7f0900ca" android:padding="@0x7f0600be" android:layout_width="-1" android:layout_height="-2" android:minHeight="?0x7f030005">
+      <TextView android:textSize="@0x7f060075" android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f0903e9" android:background="@0x7f070286" android:paddingTop="0x00000401" android:paddingBottom="0x00000401" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f10003a" android:layout_centerVertical="true" android:paddingStart="0x00000801" android:paddingEnd="0x00000801">
+      </TextView>
+      <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050023" android:id="@0x7f0900ec" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100031" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="0x00000501" android:layout_toStartOf="@0x7f090300" android:layout_toEndOf="@0x7f0903e9">
+      </TextView>
+      <kurdi.leyzok.pirs.helper.AudienceProgress android:id="@0x7f090300" android:visibility="2" android:layout_width="@0x7f06005a" android:layout_height="@0x7f06005a" android:layout_centerVertical="true" android:layout_marginEnd="0x00000301" android:layout_alignParentEnd="true" app:direction="0">
+      </kurdi.leyzok.pirs.helper.AudienceProgress>
+    </RelativeLayout>
+  </androidx.cardview.widget.CardView>
+  <androidx.cardview.widget.CardView android:layout_gravity="0x00000001" android:id="@0x7f09000d" android:clipChildren="false" android:clipToPadding="false" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600be" android:divider="@0x0106000d" android:dividerHeight="0x00000000" android:layout_weight="1.0" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be" android:elevation="0x00000801" app:cardCornerRadius="@0x7f0600be">
+    <RelativeLayout android:id="@0x7f090101" android:padding="@0x7f0600be" android:layout_width="-1" android:layout_height="-2" android:minHeight="?0x7f030005">
+      <TextView android:textSize="@0x7f060075" android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f0903eb" android:background="@0x7f070286" android:paddingTop="0x00000401" android:paddingBottom="0x00000401" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f10004b" android:layout_centerVertical="true" android:paddingStart="0x00000801" android:paddingEnd="0x00000801">
+      </TextView>
+      <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050023" android:id="@0x7f0900ed" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100031" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="0x00000501" android:layout_toStartOf="@0x7f090301" android:layout_toEndOf="@0x7f0903eb">
+      </TextView>
+      <kurdi.leyzok.pirs.helper.AudienceProgress android:id="@0x7f090301" android:visibility="2" android:layout_width="@0x7f06005a" android:layout_height="@0x7f06005a" android:layout_centerVertical="true" android:layout_marginEnd="0x00000301" android:layout_alignParentEnd="true" app:direction="0">
+      </kurdi.leyzok.pirs.helper.AudienceProgress>
+    </RelativeLayout>
+  </androidx.cardview.widget.CardView>
+  <androidx.cardview.widget.CardView android:layout_gravity="0x00000001" android:id="@0x7f09000e" android:clipChildren="false" android:clipToPadding="false" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600be" android:divider="@0x0106000d" android:dividerHeight="0x00000000" android:layout_weight="1.0" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be" android:elevation="0x00000801" app:cardCornerRadius="@0x7f0600be">
+    <RelativeLayout android:id="@0x7f090153" android:padding="@0x7f0600be" android:layout_width="-1" android:layout_height="-2" android:minHeight="?0x7f030005">
+      <TextView android:textSize="@0x7f060075" android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f0903f8" android:background="@0x7f070286" android:paddingTop="0x00000401" android:paddingBottom="0x00000401" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f100092" android:layout_centerVertical="true" android:paddingStart="0x00000801" android:paddingEnd="0x00000801">
+      </TextView>
+      <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050023" android:id="@0x7f0900ee" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100031" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="0x00000501" android:layout_toStartOf="@0x7f090302" android:layout_toEndOf="@0x7f0903f8">
+      </TextView>
+      <kurdi.leyzok.pirs.helper.AudienceProgress android:id="@0x7f090302" android:visibility="2" android:layout_width="@0x7f06005a" android:layout_height="@0x7f06005a" android:layout_centerVertical="true" android:layout_marginEnd="0x00000301" android:layout_alignParentEnd="true" app:direction="0">
+      </kurdi.leyzok.pirs.helper.AudienceProgress>
+    </RelativeLayout>
+  </androidx.cardview.widget.CardView>
+  <androidx.cardview.widget.CardView android:layout_gravity="0x00000001" android:id="@0x7f09000f" android:clipChildren="false" android:clipToPadding="false" android:layout_width="-2" android:layout_height="-2" android:layout_margin="@0x7f0600be" android:divider="@0x0106000d" android:dividerHeight="0x00000000" android:layout_weight="1.0" android:elevation="0x00000801" app:cardCornerRadius="@0x7f0600be">
+    <RelativeLayout android:id="@0x7f090180" android:padding="@0x7f0600be" android:visibility="2" android:layout_width="-1" android:layout_height="-2" android:minHeight="?0x7f030005">
+      <TextView android:textSize="@0x7f060075" android:textColor="@0x7f050023" android:gravity="0x00000011" android:id="@0x7f0903fa" android:background="@0x7f070286" android:paddingTop="0x00000401" android:paddingBottom="0x00000401" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f10009e" android:layout_centerVertical="true" android:paddingStart="0x00000801" android:paddingEnd="0x00000801">
+      </TextView>
+      <TextView android:textAppearance="@0x7f110175" android:textColor="@0x7f050023" android:id="@0x7f0900ef" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100031" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="0x00000501" android:layout_toStartOf="@0x7f090303" android:layout_toEndOf="@0x7f0903fa">
+      </TextView>
+      <kurdi.leyzok.pirs.helper.AudienceProgress android:id="@0x7f090303" android:visibility="2" android:layout_width="@0x7f06005a" android:layout_height="@0x7f06005a" android:layout_centerVertical="true" android:layout_marginEnd="0x00000301" android:layout_alignParentEnd="true" app:direction="0">
+      </kurdi.leyzok.pirs.helper.AudienceProgress>
+    </RelativeLayout>
+  </androidx.cardview.widget.CardView>
+</LinearLayout>

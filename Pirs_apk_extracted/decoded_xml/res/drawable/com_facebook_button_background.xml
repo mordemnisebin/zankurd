@@ -1,0 +1,26 @@
+<selector>
+  <item android:state_focused="false" android:state_enabled="false">
+    <shape android:shape="0">
+      <corners android:radius="@0x7f06005e">
+      </corners>
+      <solid android:color="@0x7f05003c">
+      </solid>
+    </shape>
+  </item>
+  <item android:state_pressed="true">
+    <shape android:shape="0">
+      <corners android:radius="@0x7f06005e">
+      </corners>
+      <solid android:color="@0x7f05003d">
+      </solid>
+    </shape>
+  </item>
+  <item>
+    <shape android:shape="0">
+      <corners android:radius="@0x7f06005e">
+      </corners>
+      <solid android:color="@0x7f05003b">
+      </solid>
+    </shape>
+  </item>
+</selector>

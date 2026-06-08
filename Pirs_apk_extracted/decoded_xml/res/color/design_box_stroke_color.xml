@@ -1,0 +1,10 @@
+<selector>
+  <item android:state_focused="true" android:color="@0x7f0500e8">
+  </item>
+  <item android:color="@0x7f0500e9" android:state_hovered="true">
+  </item>
+  <item android:state_enabled="false" android:color="@0x7f0500e6">
+  </item>
+  <item android:color="@0x7f0500e5">
+  </item>
+</selector>

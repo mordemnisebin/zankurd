@@ -1,0 +1,6 @@
+<set>
+  <scale android:interpolator="@0x010c000a" android:duration="300" android:pivotX="0x40000030" android:pivotY="0x40000030" android:repeatCount="-1" android:repeatMode="2" android:fromXScale="1.0" android:toXScale="0.75" android:fromYScale="1.0" android:toYScale="0.75">
+  </scale>
+  <scale android:interpolator="@0x010c000a" android:duration="100" android:pivotX="0x40000030" android:pivotY="0x40000030" android:repeatCount="-1" android:repeatMode="2" android:fromXScale="1.0" android:toXScale="1.25" android:fromYScale="1.0" android:toYScale="1.25">
+  </scale>
+</set>

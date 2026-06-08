@@ -1,0 +1,10 @@
+<selector>
+  <item android:state_focused="true" android:color="?0x7f030119">
+  </item>
+  <item android:color="?0x7f030118" android:alpha="0.46000000834465027" android:state_hovered="true">
+  </item>
+  <item android:state_enabled="false" android:color="?0x7f030118" android:alpha="0.3799999952316284">
+  </item>
+  <item android:color="?0x7f030118" android:alpha="0.41999998688697815">
+  </item>
+</selector>

@@ -1,0 +1,4 @@
+<merge>
+  <androidx.appcompat.widget.ContentFrameLayout android:id="@0x7f09008d" android:layout_width="-1" android:layout_height="-1" android:foreground="?0x01010059" android:foregroundGravity="0x00000037">
+  </androidx.appcompat.widget.ContentFrameLayout>
+</merge>

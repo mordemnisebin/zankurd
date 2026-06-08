@@ -1,0 +1,8 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09027f" android:layout_width="-2" android:layout_height="-2">
+  <include android:id="@0x7f090272" layout="@0x7f0c00a4">
+  </include>
+  <include android:id="@0x7f090277" layout="@0x7f0c00a6">
+  </include>
+  <com.google.android.material.timepicker.ClockFaceView android:layout_gravity="0x00000011" android:id="@0x7f090273" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="0x00002401" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toBottomOf="@0x7f090272">
+  </com.google.android.material.timepicker.ClockFaceView>
+</merge>

@@ -1,0 +1,8 @@
+<selector>
+  <item android:state_pressed="true" android:color="@0x7f05000f">
+  </item>
+  <item android:state_selected="true" android:color="@0x7f050010">
+  </item>
+  <item android:color="@0x7f05000e">
+  </item>
+</selector>

@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="-1" android:layout_height="-1">
+  <LinearLayout android:orientation="1" android:id="@0x7f090264" android:layout_width="-1" android:layout_height="-1" android:layout_above="@0x7f090311">
+    <androidx.recyclerview.widget.RecyclerView android:id="@0x7f090318" android:layout_width="-1" android:layout_height="-1" app:layout_behavior="@0x7f100034">
+    </androidx.recyclerview.widget.RecyclerView>
+  </LinearLayout>
+  <RelativeLayout android:id="@0x7f090311" android:background="@0x7f0700cd" android:visibility="0" android:layout_width="-1" android:layout_height="-2" android:layout_alignParentBottom="true">
+    <TextView android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f090423" android:padding="0x00000301" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f10020d" android:layout_centerVertical="true" android:paddingStart="0x00000401" android:paddingEnd="0x00000601" android:layout_marginStart="@0x7f0601ba">
+    </TextView>
+    <RelativeLayout android:id="@0x7f09025d" android:background="@0x7f070251" android:layout_width="@0x7f0601c3" android:layout_height="@0x7f0601c3" android:layout_margin="@0x7f0600be" android:layout_centerVertical="true" android:layoutDirection="0" android:layout_toEndOf="@0x7f090423">
+      <kurdi.leyzok.pirs.helper.CircleImageView android:id="@0x7f0901f0" android:layout_width="@0x7f0601c3" android:layout_height="@0x7f0601c3" android:layout_margin="0x00c00021" android:layout_centerInParent="true">
+      </kurdi.leyzok.pirs.helper.CircleImageView>
+    </RelativeLayout>
+    <TextView android:textColor="@0x7f0500ed" android:id="@0x7f090411" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f10014c" android:layout_centerVertical="true" android:layout_marginEnd="0x00000501" android:layout_toStartOf="@0x7f09042a" android:layout_toEndOf="@0x7f09025d">
+    </TextView>
+    <TextView android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f09042a" android:padding="0x00000301" android:layout_width="-2" android:layout_height="-2" android:minWidth="0x00004601" android:layout_centerVertical="true" android:layout_marginStart="@0x7f0601ba" android:layout_alignParentEnd="true">
+    </TextView>
+  </RelativeLayout>
+  <ProgressBar android:id="@0x7f0902fb" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:layout_centerInParent="true">
+  </ProgressBar>
+  <TextView android:textColor="@0x7f050039" android:gravity="0x00000011" android:id="@0x7f0903e3" android:visibility="2" android:layout_width="-1" android:layout_height="-2" android:layout_centerInParent="true">
+  </TextView>
+</RelativeLayout>

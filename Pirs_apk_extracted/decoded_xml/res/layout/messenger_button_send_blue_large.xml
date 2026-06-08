@@ -1,0 +1,4 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09028a" style="@0x7f1100fa">
+  <TextView android:text="@0x7f10010e" style="@0x7f110101">
+  </TextView>
+</FrameLayout>

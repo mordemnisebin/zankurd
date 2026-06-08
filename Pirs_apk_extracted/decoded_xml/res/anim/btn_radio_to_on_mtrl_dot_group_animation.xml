@@ -1,0 +1,18 @@
+<set>
+  <set android:ordering="1">
+    <objectAnimator android:interpolator="@0x7f0b0006" android:duration="166" android:valueFrom="0.0" android:valueTo="0.0" android:valueType="0" android:propertyName="scaleX">
+    </objectAnimator>
+    <objectAnimator android:interpolator="@0x7f0b0006" android:duration="16" android:valueFrom="0.0" android:valueTo="1.5" android:valueType="0" android:propertyName="scaleX">
+    </objectAnimator>
+    <objectAnimator android:interpolator="@0x7f0b0006" android:duration="316" android:valueFrom="1.5" android:valueTo="1.0" android:valueType="0" android:propertyName="scaleX">
+    </objectAnimator>
+  </set>
+  <set android:ordering="1">
+    <objectAnimator android:interpolator="@0x7f0b0006" android:duration="166" android:valueFrom="0.0" android:valueTo="0.0" android:valueType="0" android:propertyName="scaleY">
+    </objectAnimator>
+    <objectAnimator android:interpolator="@0x7f0b0006" android:duration="16" android:valueFrom="0.0" android:valueTo="1.5" android:valueType="0" android:propertyName="scaleY">
+    </objectAnimator>
+    <objectAnimator android:interpolator="@0x7f0b0006" android:duration="316" android:valueFrom="1.5" android:valueTo="1.0" android:valueType="0" android:propertyName="scaleY">
+    </objectAnimator>
+  </set>
+</set>

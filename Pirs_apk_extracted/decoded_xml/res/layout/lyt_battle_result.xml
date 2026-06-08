@@ -1,0 +1,16 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="0x00000010" android:orientation="0" android:id="@0x7f09031e" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600c0">
+  <androidx.cardview.widget.CardView android:layout_gravity="0x00000001" android:clipChildren="false" android:clipToPadding="false" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600be" android:layout_marginBottom="@0x7f0600be" android:divider="@0x0106000d" android:dividerHeight="0x00000000" android:layout_marginStart="@0x7f0601bb" android:layout_marginEnd="@0x7f0601bb" android:elevation="0x00000801" card_view:cardCornerRadius="@0x7f0600bf" card_view:cardElevation="0x00000701" card_view:cardPreventCornerOverlap="false">
+    <RelativeLayout android:background="@0x7f070086" android:layout_width="-2" android:layout_height="-2" android:layout_marginEnd="@0x7f0601ba">
+      <RelativeLayout android:id="@0x7f090241" android:background="@0x7f070094" android:layout_width="0x00002801" android:layout_height="0x00002801" android:layout_margin="@0x7f0600bf">
+        <kurdi.leyzok.pirs.helper.CircleImageView android:id="@0x7f0901d8" android:layout_width="0x00002701" android:layout_height="0x00002701" android:layout_centerInParent="true">
+        </kurdi.leyzok.pirs.helper.CircleImageView>
+      </RelativeLayout>
+      <TextView android:textColor="@0x7f050118" android:ellipsize="3" android:id="@0x7f090411" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f100033" android:maxLines="1" android:layout_centerVertical="true" android:layout_marginStart="0x00000301" android:layout_marginEnd="0x00000301" android:layout_toStartOf="@0x7f090429" android:layout_toEndOf="@0x7f090241">
+      </TextView>
+      <TextView android:textStyle="0x00000001" android:textColor="@0x7f050119" android:id="@0x7f090429" android:background="@0x7f0701db" android:paddingTop="@0x7f0600c0" android:paddingBottom="@0x7f0600c0" android:layout_width="-2" android:layout_height="-2" android:text="0" android:layout_centerVertical="true" android:paddingStart="@0x7f0600be" android:paddingEnd="@0x7f0600be" android:layout_toStartOf="@0x7f090441">
+      </TextView>
+      <TextView android:textStyle="0x00000001" android:textColor="@0x7f050119" android:id="@0x7f090441" android:background="@0x7f0701e1" android:paddingTop="@0x7f0600c0" android:paddingBottom="@0x7f0600c0" android:layout_width="-2" android:layout_height="-2" android:text="0" android:layout_centerVertical="true" android:paddingStart="@0x7f0600be" android:paddingEnd="@0x7f0600be" android:layout_marginStart="@0x7f0600c0" android:layout_alignParentEnd="true">
+      </TextView>
+    </RelativeLayout>
+  </androidx.cardview.widget.CardView>
+</RelativeLayout>

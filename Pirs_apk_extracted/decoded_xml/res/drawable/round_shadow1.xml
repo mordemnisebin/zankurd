@@ -1,0 +1,14 @@
+<layer-list>
+  <item>
+    <shape android:shape="1">
+      <gradient android:startColor="@0x7f050023" android:endColor="@0x7f050023" android:angle="45.0">
+      </gradient>
+    </shape>
+  </item>
+  <item android:left="0x00000401" android:top="0x00000401" android:right="0x00000401" android:bottom="0x00000401">
+    <shape android:shape="1">
+      <solid android:color="@0x7f050119">
+      </solid>
+    </shape>
+  </item>
+</layer-list>

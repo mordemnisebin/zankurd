@@ -1,0 +1,4 @@
+<set>
+  <scale android:duration="500" android:pivotX="0x40000030" android:pivotY="0x40000030" android:fromXScale="0.30000001192092896" android:toXScale="1.0" android:fromYScale="0.30000001192092896" android:toYScale="1.0">
+  </scale>
+</set>

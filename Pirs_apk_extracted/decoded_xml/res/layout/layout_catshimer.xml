@@ -1,0 +1,34 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09010d" android:layout_width="-1" android:layout_height="-2" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be">
+  <RelativeLayout android:id="@0x7f0902b0" android:background="@0x7f070092" android:padding="@0x7f0600be" android:layout_width="-1" android:layout_height="-2">
+    <ImageView android:id="@0x7f0901e2" android:layout_width="0x00005001" android:layout_height="0x00005001" android:src="@0x7f0702a6" android:rotation="45.0" android:layout_alignParentEnd="true" card_view:tint="@0x7f050093">
+    </ImageView>
+    <LinearLayout android:orientation="1" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf" android:layout_marginBottom="@0x7f0600bf">
+      <com.android.volley.toolbox.NetworkImageView android:id="@0x7f09010e" android:layout_width="0x00002801" android:layout_height="0x00002801" android:layout_marginTop="@0x7f0600bf" android:src="@0x7f070215" android:layout_marginEnd="@0x7f0600be">
+      </com.android.volley.toolbox.NetworkImageView>
+      <RelativeLayout android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf">
+        <View android:textSize="0x00001402" android:gravity="0x00000010" android:id="@0x7f090215" android:background="@0x7f050093" android:layout_width="0x00006401" android:layout_height="@0x7f0600be" android:text="@0x7f1001e5" android:maxLines="1" android:fontFamily="@0x7f080001">
+        </View>
+        <View android:textSize="0x00000e02" android:id="@0x7f0902c8" android:background="@0x7f050093" android:layout_width="0x00004601" android:layout_height="@0x7f0600be" android:layout_marginTop="@0x7f0600be" android:text="@0x7f10014c" android:layout_below="@0x7f090215">
+        </View>
+        <ImageView android:id="@0x7f0900bf" android:background="@0x7f0701f3" android:layout_width="-2" android:layout_height="-2" android:layout_centerVertical="true" android:layout_alignParentEnd="true">
+        </ImageView>
+      </RelativeLayout>
+    </LinearLayout>
+  </RelativeLayout>
+  <RelativeLayout android:id="@0x7f0902b1" android:background="@0x7f070092" android:padding="@0x7f0600be" android:visibility="2" android:layout_width="0x0000b401" android:layout_height="-2" android:layout_alignParentEnd="true">
+    <ImageView android:id="@0x7f0901e3" android:layout_width="0x00005001" android:layout_height="0x00005001" android:src="@0x7f0702a6" android:rotation="45.0" android:layout_alignParentEnd="true" card_view:tint="@0x7f050093">
+    </ImageView>
+    <LinearLayout android:orientation="1" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf" android:layout_marginBottom="@0x7f0600bf">
+      <com.android.volley.toolbox.NetworkImageView android:id="@0x7f09010f" android:layout_width="0x00002801" android:layout_height="0x00002801" android:layout_marginTop="@0x7f0600bf" android:src="@0x7f070215" android:layout_marginEnd="@0x7f0600be">
+      </com.android.volley.toolbox.NetworkImageView>
+      <RelativeLayout android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf">
+        <View android:textSize="0x00001402" android:gravity="0x00000010" android:id="@0x7f090216" android:background="@0x7f050093" android:layout_width="0x00006401" android:layout_height="@0x7f0600be" android:text="@0x7f1001e5" android:maxLines="1" android:fontFamily="@0x7f080001">
+        </View>
+        <View android:textSize="0x00000e02" android:id="@0x7f0902c9" android:background="@0x7f050093" android:layout_width="0x00004601" android:layout_height="@0x7f0600be" android:layout_marginTop="@0x7f0600be" android:text="@0x7f10014c" android:layout_below="@0x7f090216">
+        </View>
+        <ImageView android:id="@0x7f0900c0" android:background="@0x7f0701f3" android:layout_width="-2" android:layout_height="-2" android:layout_centerVertical="true" android:layout_alignParentEnd="true">
+        </ImageView>
+      </RelativeLayout>
+    </LinearLayout>
+  </RelativeLayout>
+</RelativeLayout>

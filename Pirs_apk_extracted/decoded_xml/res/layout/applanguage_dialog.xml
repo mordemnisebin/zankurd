@@ -1,0 +1,10 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="1" android:background="@0x7f07024f" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600bf" android:backgroundTint="@0x7f050022">
+  <TextView android:textSize="@0x7f0600e6" android:textStyle="0x00000001" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f09043d" android:background="@0x7f070250" android:padding="@0x7f0600be" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f1001c3">
+  </TextView>
+  <TextView android:textSize="@0x7f0601e1" android:textStyle="0x00000001" android:textColor="@0x7f050023" android:id="@0x7f09044e" android:background="@0x7f070086" android:padding="@0x7f0601bb" android:layout_width="-1" android:layout_height="-2" android:text="English" android:layout_below="@0x7f09043d" android:textAlignment="4">
+  </TextView>
+  <TextView android:textSize="@0x7f0601e1" android:textStyle="0x00000001" android:textColor="@0x7f050023" android:id="@0x7f090402" android:background="@0x7f070289" android:padding="@0x7f0601bb" android:layout_width="-1" android:layout_height="-2" android:text="Kurdî" android:layout_below="@0x7f09044e" android:textAlignment="4">
+  </TextView>
+  <TextView android:textSize="@0x7f0601e1" android:textStyle="0x00000001" android:textColor="@0x7f050023" android:id="@0x7f0903e7" android:background="@0x7f0701e4" android:padding="@0x7f0601bb" android:visibility="2" android:layout_width="-1" android:layout_height="-2" android:text="Arabic" android:layout_below="@0x7f090402" android:textAlignment="4">
+  </TextView>
+</RelativeLayout>

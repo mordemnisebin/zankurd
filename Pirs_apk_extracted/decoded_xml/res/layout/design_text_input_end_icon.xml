@@ -1,0 +1,2 @@
+<com.google.android.material.internal.CheckableImageButton xmlns:android="http://schemas.android.com/apk/res/android" android:layout_gravity="0x00800015" android:id="@0x7f0903c0" android:background="?0x7f030003" android:layout_width="-2" android:layout_height="-2" android:minWidth="0x00003001" android:minHeight="0x00003001" android:layout_marginStart="@0x7f0601a0">
+</com.google.android.material.internal.CheckableImageButton>

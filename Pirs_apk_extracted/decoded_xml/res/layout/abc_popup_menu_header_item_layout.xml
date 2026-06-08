@@ -1,0 +1,4 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:paddingLeft="0x00001001" android:paddingRight="0x00001001" android:layout_width="-1" android:layout_height="?0x7f0301ba" android:minWidth="0x0000c401">
+  <TextView android:textAppearance="?0x7f030457" android:ellipsize="4" android:layout_gravity="0x00000010" android:id="@0x01020016" android:fadingEdge="0x00001000" android:layout_width="-1" android:layout_height="-2" android:singleLine="true" android:textAlignment="5">
+  </TextView>
+</FrameLayout>

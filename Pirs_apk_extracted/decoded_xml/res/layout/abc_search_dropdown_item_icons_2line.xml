@@ -1,0 +1,12 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="-1" android:layout_height="0x00003a01" style="@0x7f11013c">
+  <ImageView android:id="@0x01020007" android:visibility="1" android:layout_width="@0x7f060029" android:layout_height="0x00003001" android:scaleType="7" android:layout_alignParentTop="true" android:layout_alignParentBottom="true" style="@0x7f11013d">
+  </ImageView>
+  <ImageView android:id="@0x7f090188" android:background="?0x7f0303c0" android:visibility="2" android:layout_width="0x00003001" android:layout_height="0x00003001" android:scaleType="7" android:layout_alignParentTop="true" android:layout_alignParentBottom="true" style="@0x7f11013f">
+  </ImageView>
+  <ImageView android:id="@0x01020008" android:visibility="2" android:layout_width="0x00003001" android:layout_height="0x00003001" android:scaleType="7" android:layout_alignParentTop="true" android:layout_alignParentBottom="true" android:layout_alignWithParentIfMissing="true" style="@0x7f11013e">
+  </ImageView>
+  <TextView android:textAppearance="?0x7f030458" android:gravity="0x00000030" android:id="@0x01020015" android:paddingBottom="0x00000401" android:visibility="2" android:layout_width="-1" android:layout_height="0x00001d01" android:singleLine="true" android:layout_alignParentBottom="true" android:layout_alignWithParentIfMissing="true" style="?0x01010086">
+  </TextView>
+  <TextView android:textAppearance="?0x7f030459" android:id="@0x01020014" android:layout_width="-1" android:layout_height="-2" android:singleLine="true" android:layout_above="@0x01020015" android:layout_centerVertical="true" style="?0x01010086">
+  </TextView>
+</RelativeLayout>

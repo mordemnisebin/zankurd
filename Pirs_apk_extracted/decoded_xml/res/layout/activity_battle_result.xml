@@ -1,0 +1,12 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:background="@0x7f050022" android:fitsSystemWindows="true" android:layout_width="-1" android:layout_height="-1">
+  <include layout="@0x7f0c010d">
+  </include>
+  <ScrollView android:scrollbars="0x00000000" android:layout_width="-1" android:layout_height="-2" android:layout_above="@0x7f090311" android:layout_below="@0x7f0903d2">
+    <LinearLayout android:orientation="1" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600be">
+      <androidx.recyclerview.widget.RecyclerView android:id="@0x7f090318" android:layout_width="-1" android:layout_height="-1" app:layout_behavior="@0x7f100034">
+      </androidx.recyclerview.widget.RecyclerView>
+      <TextView android:textAppearance="@0x7f110175" android:textStyle="0x00000001" android:textColor="@0x7f050119" android:gravity="0x00000011" android:id="@0x7f090403" android:background="@0x7f0700ce" android:paddingTop="@0x7f0600c2" android:paddingBottom="@0x7f0600c2" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0600bf" android:text="@0x7f1000c7" android:onClick="BackToHome">
+      </TextView>
+    </LinearLayout>
+  </ScrollView>
+</RelativeLayout>

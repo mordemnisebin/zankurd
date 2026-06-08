@@ -1,0 +1,2 @@
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09009b" android:paddingLeft="0x00000c01" android:focusable="true" android:clickable="true" android:layout_width="-2" android:layout_height="-1" android:layout_marginRight="0x00001001" android:contentDescription="?0x7f030014" android:paddingStart="0x00000c01" android:layout_marginEnd="0x00001001" app:srcCompat="?0x7f030015" style="?0x7f030013">
+</ImageView>

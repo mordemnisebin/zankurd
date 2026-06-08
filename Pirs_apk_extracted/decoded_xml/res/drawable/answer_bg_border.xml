@@ -1,0 +1,10 @@
+<layer-list>
+  <item>
+    <shape android:shape="0">
+      <stroke android:width="0x33333331" android:color="#ffbababa">
+      </stroke>
+      <corners android:radius="@0x7f0601ba">
+      </corners>
+    </shape>
+  </item>
+</layer-list>

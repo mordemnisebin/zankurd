@@ -1,0 +1,8 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="0x00000011" android:orientation="1" android:layout_width="-1" android:layout_height="-1">
+  <include layout="@0x7f0c00c0">
+  </include>
+  <View android:background="?0x7f030118" android:layout_width="-1" android:layout_height="0x00000101">
+  </View>
+  <include layout="@0x7f0c00c5">
+  </include>
+</LinearLayout>

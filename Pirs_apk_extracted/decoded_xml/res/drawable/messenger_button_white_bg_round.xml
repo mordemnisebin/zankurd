@@ -1,0 +1,24 @@
+<layer-list>
+  <item android:drawable="@0x7f07026b">
+  </item>
+  <item android:left="0x00000101" android:top="0x00000101" android:right="0x00000101" android:bottom="0x00000201">
+    <selector>
+      <item android:state_pressed="true">
+        <shape android:shape="1">
+          <solid android:color="#ffebebeb">
+          </solid>
+        </shape>
+      </item>
+      <item>
+        <shape android:shape="1">
+          <solid android:color="#ffffffff">
+          </solid>
+        </shape>
+      </item>
+    </selector>
+  </item>
+  <item android:left="0x00000101" android:top="0x00000101" android:right="0x00000101" android:bottom="0x00000201">
+    <bitmap android:gravity="0x00000011" android:src="@0x7f070265">
+    </bitmap>
+  </item>
+</layer-list>

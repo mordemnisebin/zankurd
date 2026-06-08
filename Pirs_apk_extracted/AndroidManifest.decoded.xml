@@ -1,0 +1,419 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="23" android:versionName="15" android:installLocation="0" android:compileSdkVersion="31" android:compileSdkVersionCodename="12" package="kurdi.leyzok.pirs" platformBuildVersionCode="31" platformBuildVersionName="12">
+  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="31">
+  </uses-sdk>
+  <uses-permission android:name="android.permission.VIBRATE">
+  </uses-permission>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE">
+  </uses-permission>
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE">
+  </uses-permission>
+  <uses-permission android:name="android.permission.INTERNET">
+  </uses-permission>
+  <uses-permission android:name="android.permission.CAMERA">
+  </uses-permission>
+  <uses-permission android:name="com.android.vending.BILLING">
+  </uses-permission>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE">
+  </uses-permission>
+  <queries>
+    <intent>
+      <action android:name="android.media.action.IMAGE_CAPTURE">
+      </action>
+    </intent>
+    <intent>
+      <action android:name="android.intent.action.GET_CONTENT">
+      </action>
+      <category android:name="android.intent.category.OPENABLE">
+      </category>
+      <data android:mimeType="*/*">
+      </data>
+    </intent>
+    <package android:name="com.facebook.katana">
+    </package>
+    <intent>
+      <action android:name="android.intent.action.VIEW">
+      </action>
+      <category android:name="android.intent.category.BROWSABLE">
+      </category>
+      <data android:scheme="https">
+      </data>
+    </intent>
+    <intent>
+      <action android:name="android.support.customtabs.action.CustomTabsService">
+      </action>
+    </intent>
+  </queries>
+  <queries>
+    <intent>
+      <action android:name="com.google.android.youtube.api.service.START">
+      </action>
+    </intent>
+  </queries>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE">
+  </uses-permission>
+  <uses-permission android:name="android.permission.READ_PHONE_STATE">
+  </uses-permission>
+  <uses-permission android:name="android.permission.WRITE_SETTINGS">
+  </uses-permission>
+  <uses-feature android:name="android.hardware.camera" android:required="true">
+  </uses-feature>
+  <supports-screens android:anyDensity="true" android:normalScreens="true" android:largeScreens="true" android:resizeable="true">
+  </supports-screens>
+  <uses-permission android:name="android.permission.WAKE_LOCK">
+  </uses-permission>
+  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE">
+  </uses-permission>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE">
+  </uses-permission>
+  <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE">
+  </uses-permission>
+  <uses-permission android:name="com.google.android.gms.permission.AD_ID">
+  </uses-permission>
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED">
+  </uses-permission>
+  <application android:theme="@0x7f110008" android:label="@0x7f100033" android:icon="@0x7f070215" android:name="kurdi.leyzok.pirs.helper.AppController" android:allowBackup="false" android:supportsRtl="true" android:usesCleartextTraffic="true" android:roundIcon="@0x7f070215" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:requestLegacyExternalStorage="true">
+    <receiver android:name="kurdi.leyzok.pirs.helper.PhoneStateBroadcastReceiver" android:enabled="true" android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.PHONE_STATE">
+        </action>
+      </intent-filter>
+    </receiver>
+    <provider android:name="androidx.core.content.FileProvider" android:exported="false" android:authorities="kurdi.leyzok.pirs.provider" android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@0x7f130001">
+      </meta-data>
+    </provider>
+    <activity android:name="kurdi.leyzok.pirs.activity.InviteFriendActivity">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.DrawerActivity">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.SplashActivity" android:exported="true" android:screenOrientation="1" android:windowSoftInputMode="0x00000003">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN">
+        </action>
+        <category android:name="android.intent.category.LAUNCHER">
+        </category>
+      </intent-filter>
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.LoginTabActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:theme="@0x7f1101cd" android:label="" android:name="kurdi.leyzok.pirs.activity.SettingActivity">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.InstructionActivity" android:launchMode="1" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.CoinStoreActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.ReviewActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.spin.SpinActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:theme="@0x7f11030b" android:label="@0x7f100033" android:name="com.facebook.FacebookActivity" android:configChanges="0x000005b0">
+    </activity>
+    <activity android:name="com.facebook.CustomTabActivity" android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW">
+        </action>
+        <category android:name="android.intent.category.DEFAULT">
+        </category>
+        <category android:name="android.intent.category.BROWSABLE">
+        </category>
+        <data android:scheme="@0x7f1000b7">
+        </data>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW">
+        </action>
+        <category android:name="android.intent.category.DEFAULT">
+        </category>
+        <category android:name="android.intent.category.BROWSABLE">
+        </category>
+        <data android:scheme="fbconnect" android:host="cct.kurdi.leyzok.pirs">
+        </data>
+      </intent-filter>
+    </activity>
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@0x7f1000b6">
+    </meta-data>
+    <activity android:name="kurdi.leyzok.pirs.activity.BookmarkList" android:launchMode="1" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.PrivacyPolicy" android:launchMode="1" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.LeaderboardTabActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.PlayActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.BookmarkPlay" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.MathSubcategoryActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.one_to_one.PlayOneToOne" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.LearningZoneActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.MathsReviewActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.LearningChapterActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.TournamentPlay" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.ContestActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.PracticeQuiz" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.MainActivity" android:screenOrientation="1" android:configChanges="0x00000084">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.CompleteActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.MathsPlayActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.LevelActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.SubcategoryActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.DailyCompleteActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.CategoryActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.ProfileActivity" android:screenOrientation="1" android:windowSoftInputMode="0x00000003">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.NotificationList" android:launchMode="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.UserStatistics" android:launchMode="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.NewSelfChallengeActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.BattlePlayActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.RobotPlayActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.CompleteActivityTournaments" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.RewardActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.SearchPlayerActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.ResultActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.activity.SelfChallengeQuestion" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.battle.BattleResultActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.battle.WaitingRoomActivity" android:screenOrientation="1">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.battle.MultiPlayerGame" android:screenOrientation="1">
+    </activity>
+    <meta-data android:name="com.google.android.gms.ads.AD_MANAGER_APP" android:value="true">
+    </meta-data>
+    <meta-data android:name="com.google.android.gms.version" android:value="@0x7f0a0008">
+    </meta-data>
+    <service android:name="kurdi.leyzok.pirs.service.MyFirebaseMessagingService" android:exported="true">
+      <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT">
+        </action>
+      </intent-filter>
+    </service>
+    <activity android:theme="@0x7f11004a" android:name="com.canhub.cropper.CropImageActivity">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.one_to_one.OneToOneBattle">
+    </activity>
+    <activity android:name="kurdi.leyzok.pirs.one_to_one.OneToOneWait">
+    </activity>
+    <provider android:name="com.canhub.cropper.CropFileProvider" android:exported="false" android:authorities="kurdi.leyzok.pirs.cropper.fileprovider" android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@0x7f130000">
+      </meta-data>
+    </provider>
+    <activity android:name="com.facebook.CustomTabMainActivity">
+    </activity>
+    <receiver android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver" android:permission="com.google.android.c2dm.permission.SEND" android:exported="true">
+      <intent-filter>
+        <action android:name="com.google.android.c2dm.intent.RECEIVE">
+        </action>
+      </intent-filter>
+    </receiver>
+    <service android:name="com.google.firebase.messaging.FirebaseMessagingService" android:exported="false" android:directBootAware="true">
+      <intent-filter android:priority="-500">
+        <action android:name="com.google.firebase.MESSAGING_EVENT">
+        </action>
+      </intent-filter>
+    </service>
+    <service android:name="com.google.firebase.components.ComponentDiscoveryService" android:exported="false" android:directBootAware="true">
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar" android:value="com.google.firebase.components.ComponentRegistrar">
+      </meta-data>
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar" android:value="com.google.firebase.components.ComponentRegistrar">
+      </meta-data>
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar" android:value="com.google.firebase.components.ComponentRegistrar">
+      </meta-data>
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar" android:value="com.google.firebase.components.ComponentRegistrar">
+      </meta-data>
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar" android:value="com.google.firebase.components.ComponentRegistrar">
+      </meta-data>
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar" android:value="com.google.firebase.components.ComponentRegistrar">
+      </meta-data>
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar" android:value="com.google.firebase.components.ComponentRegistrar">
+      </meta-data>
+    </service>
+    <activity android:theme="@0x01030010" android:name="com.google.firebase.auth.internal.GenericIdpActivity" android:exported="true" android:excludeFromRecents="true" android:launchMode="2">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW">
+        </action>
+        <category android:name="android.intent.category.DEFAULT">
+        </category>
+        <category android:name="android.intent.category.BROWSABLE">
+        </category>
+        <data android:scheme="genericidp" android:host="firebase.auth" android:path="/">
+        </data>
+      </intent-filter>
+    </activity>
+    <activity android:theme="@0x01030010" android:name="com.google.firebase.auth.internal.RecaptchaActivity" android:exported="true" android:excludeFromRecents="true" android:launchMode="2">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW">
+        </action>
+        <category android:name="android.intent.category.DEFAULT">
+        </category>
+        <category android:name="android.intent.category.BROWSABLE">
+        </category>
+        <data android:scheme="recaptcha" android:host="firebase.auth" android:path="/">
+        </data>
+      </intent-filter>
+    </activity>
+    <service android:name="com.google.firebase.auth.api.fallback.service.FirebaseAuthFallbackService" android:enabled="true" android:exported="false">
+      <intent-filter>
+        <action android:name="com.google.firebase.auth.api.gms.service.START">
+        </action>
+        <category android:name="android.intent.category.DEFAULT">
+        </category>
+      </intent-filter>
+    </service>
+    <activity android:theme="@0x01030010" android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" android:exported="false" android:excludeFromRecents="true">
+    </activity>
+    <service android:name="com.google.android.gms.auth.api.signin.RevocationBoundService" android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" android:exported="true" android:visibleToInstantApps="true">
+    </service>
+    <activity android:name="com.google.android.play.core.missingsplits.PlayCoreMissingSplitsActivity" android:enabled="false" android:exported="false" android:process=":playcore_missing_splits_activity" android:stateNotNeeded="true" android:launchMode="3">
+    </activity>
+    <activity android:theme="@0x7f11020b" android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity" android:exported="false" android:stateNotNeeded="true">
+    </activity>
+    <service android:name="com.google.android.play.core.assetpacks.AssetPackExtractionService" android:enabled="false" android:exported="true">
+      <meta-data android:name="com.google.android.play.core.assetpacks.versionCode" android:value="11002">
+      </meta-data>
+    </service>
+    <service android:name="com.google.android.play.core.assetpacks.ExtractionForegroundService" android:enabled="false" android:exported="false">
+    </service>
+    <meta-data android:name="com.google.android.play.billingclient.version" android:value="4.0.0">
+    </meta-data>
+    <activity android:theme="@0x01030010" android:name="com.android.billingclient.api.ProxyBillingActivity" android:exported="false" android:configChanges="0x000005b0">
+    </activity>
+    <activity android:theme="@0x01030010" android:name="com.facebook.ads.AudienceNetworkActivity" android:exported="false" android:configChanges="0x000004a0">
+    </activity>
+    <provider android:name="com.facebook.ads.AudienceNetworkContentProvider" android:exported="false" android:authorities="kurdi.leyzok.pirs.AudienceNetworkContentProvider">
+    </provider>
+    <provider android:name="com.google.firebase.provider.FirebaseInitProvider" android:exported="false" android:authorities="kurdi.leyzok.pirs.firebaseinitprovider" android:initOrder="100" android:directBootAware="true">
+    </provider>
+    <receiver android:name="com.google.android.gms.measurement.AppMeasurementReceiver" android:enabled="true" android:exported="false">
+    </receiver>
+    <service android:name="com.google.android.gms.measurement.AppMeasurementService" android:enabled="true" android:exported="false">
+    </service>
+    <service android:name="com.google.android.gms.measurement.AppMeasurementJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:enabled="true" android:exported="false">
+    </service>
+    <activity android:theme="@0x0103000f" android:name="com.google.android.gms.ads.AdActivity" android:exported="false" android:configChanges="0x00000fb0">
+    </activity>
+    <provider android:name="com.google.android.gms.ads.MobileAdsInitProvider" android:exported="false" android:authorities="kurdi.leyzok.pirs.mobileadsinitprovider" android:initOrder="100">
+    </provider>
+    <service android:name="com.google.android.gms.ads.AdService" android:enabled="true" android:exported="false">
+    </service>
+    <activity android:theme="@0x01030010" android:name="com.google.android.gms.common.api.GoogleApiActivity" android:exported="false">
+    </activity>
+    <provider android:name="com.facebook.internal.FacebookInitProvider" android:exported="false" android:authorities="kurdi.leyzok.pirs.FacebookInitProvider">
+    </provider>
+    <receiver android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver" android:exported="false">
+      <intent-filter>
+        <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED">
+        </action>
+      </intent-filter>
+    </receiver>
+    <provider android:name="androidx.startup.InitializationProvider" android:exported="false" android:authorities="kurdi.leyzok.pirs.androidx-startup">
+      <meta-data android:name="androidx.work.WorkManagerInitializer" android:value="androidx.startup">
+      </meta-data>
+    </provider>
+    <service android:name="androidx.work.impl.background.systemalarm.SystemAlarmService" android:enabled="@0x7f040003" android:exported="false" android:directBootAware="false">
+    </service>
+    <service android:name="androidx.work.impl.background.systemjob.SystemJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:enabled="@0x7f040005" android:exported="true" android:directBootAware="false">
+    </service>
+    <service android:name="androidx.work.impl.foreground.SystemForegroundService" android:enabled="@0x7f040004" android:exported="false" android:directBootAware="false">
+    </service>
+    <receiver android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver" android:enabled="true" android:exported="false" android:directBootAware="false">
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy" android:enabled="false" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="android.intent.action.ACTION_POWER_CONNECTED">
+        </action>
+        <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED">
+        </action>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy" android:enabled="false" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="android.intent.action.BATTERY_OKAY">
+        </action>
+        <action android:name="android.intent.action.BATTERY_LOW">
+        </action>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy" android:enabled="false" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="android.intent.action.DEVICE_STORAGE_LOW">
+        </action>
+        <action android:name="android.intent.action.DEVICE_STORAGE_OK">
+        </action>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy" android:enabled="false" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE">
+        </action>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver" android:enabled="false" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED">
+        </action>
+        <action android:name="android.intent.action.TIME_SET">
+        </action>
+        <action android:name="android.intent.action.TIMEZONE_CHANGED">
+        </action>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver" android:enabled="@0x7f040003" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies">
+        </action>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver" android:permission="android.permission.DUMP" android:enabled="true" android:exported="true" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS">
+        </action>
+      </intent-filter>
+    </receiver>
+    <provider android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer" android:exported="false" android:multiprocess="true" android:authorities="kurdi.leyzok.pirs.lifecycle-process">
+    </provider>
+    <service android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery" android:exported="false">
+      <meta-data android:name="backend:com.google.android.datatransport.cct.CctBackendFactory" android:value="cct">
+      </meta-data>
+    </service>
+    <service android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="false">
+    </service>
+    <receiver android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver" android:exported="false">
+    </receiver>
+    <service android:name="androidx.room.MultiInstanceInvalidationService" android:exported="false" android:directBootAware="true">
+    </service>
+    <meta-data android:name="com.android.dynamic.apk.fused.modules" android:value="base">
+    </meta-data>
+    <meta-data android:name="com.android.stamp.source" android:value="https://play.google.com/store">
+    </meta-data>
+    <meta-data android:name="com.android.stamp.type" android:value="STAMP_TYPE_STANDALONE_APK">
+    </meta-data>
+    <meta-data android:name="com.android.vending.splits" android:value="@0x7f130007">
+    </meta-data>
+    <meta-data android:name="com.android.vending.derived.apk.id" android:value="1">
+    </meta-data>
+  </application>
+</manifest>
+

@@ -1,0 +1,14 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="0" android:id="@0x7f090032" android:background="@0x7f07028a" android:layout_width="-1" android:layout_height="-2" android:layout_marginBottom="@0x7f0601ba" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be">
+  <androidx.cardview.widget.CardView android:id="@0x7f090106" android:clipChildren="false" android:clipToPadding="false" android:layout_width="-2" android:layout_height="-2" android:layout_margin="@0x7f0600bf" android:divider="@0x0106000d" android:dividerHeight="0x00000000" android:elevation="0x00000801" card_view:cardElevation="0x00000501" card_view:cardPreventCornerOverlap="false">
+    <TextView android:textAppearance="@0x7f110175" android:textStyle="0x00000001" android:textColor="@0x7f050023" android:gravity="0x00000011" android:layout_gravity="0x00000010" android:id="@0x7f09041b" android:layout_width="@0x7f06005a" android:layout_height="@0x7f06005a" android:layout_margin="@0x7f0600be" android:text="@0x7f10020d">
+    </TextView>
+  </androidx.cardview.widget.CardView>
+  <LinearLayout android:layout_gravity="0x00000010" android:orientation="1" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600be">
+    <com.android.volley.toolbox.NetworkImageView android:id="@0x7f0901dc" android:visibility="2" android:layout_width="-1" android:layout_height="0x00009601">
+    </com.android.volley.toolbox.NetworkImageView>
+    <TextView android:textSize="@0x7f0600e6" android:textColor="@0x7f050023" android:id="@0x7f09043d" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f1001e5">
+    </TextView>
+    <TextView android:textColor="@0x7f05008a" android:autoLink="0x0000000f" android:id="@0x7f0903f9" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="0x00000301" android:text="@0x7f1001e5">
+    </TextView>
+  </LinearLayout>
+</LinearLayout>

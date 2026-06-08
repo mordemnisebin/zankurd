@@ -1,0 +1,12 @@
+<layer-list>
+  <item>
+    <shape android:shape="0">
+      <corners android:topLeftRadius="@0x7f0600be" android:bottomRightRadius="@0x7f0600be">
+      </corners>
+      <gradient android:startColor="@0x7f050039" android:endColor="@0x7f050039" android:angle="0.0">
+      </gradient>
+      <size android:height="@0x7f0601b9" android:width="@0x7f0601b9">
+      </size>
+    </shape>
+  </item>
+</layer-list>

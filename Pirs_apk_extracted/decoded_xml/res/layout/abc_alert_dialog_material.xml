@@ -1,0 +1,26 @@
+<androidx.appcompat.widget.AlertDialogLayout xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="0x00800033" android:orientation="1" android:id="@0x7f0902e5" android:layout_width="-1" android:layout_height="-2">
+  <include layout="@0x7f0c000a">
+  </include>
+  <FrameLayout android:id="@0x7f09013d" android:layout_width="-1" android:layout_height="-2" android:minHeight="0x00003001">
+    <View android:layout_gravity="0x00000030" android:id="@0x7f090346" android:background="?0x7f030110" android:visibility="2" android:layout_width="-1" android:layout_height="0x00000101">
+    </View>
+    <androidx.core.widget.NestedScrollView android:id="@0x7f090347" android:clipToPadding="false" android:layout_width="-1" android:layout_height="-2">
+      <LinearLayout android:orientation="1" android:layout_width="-1" android:layout_height="-2">
+        <android.widget.Space android:id="@0x7f0903b8" android:visibility="2" android:layout_width="-1" android:layout_height="@0x7f060025">
+        </android.widget.Space>
+        <TextView android:id="@0x0102000b" android:paddingLeft="?0x7f03019e" android:paddingRight="?0x7f03019e" android:layout_width="-1" android:layout_height="-2" style="@0x7f11017c">
+        </TextView>
+        <android.widget.Space android:id="@0x7f0903b7" android:visibility="2" android:layout_width="-1" android:layout_height="@0x7f060025">
+        </android.widget.Space>
+      </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <View android:layout_gravity="0x00000050" android:id="@0x7f090345" android:background="?0x7f030110" android:visibility="2" android:layout_width="-1" android:layout_height="0x00000101">
+    </View>
+  </FrameLayout>
+  <FrameLayout android:id="@0x7f09014f" android:layout_width="-1" android:layout_height="-2" android:minHeight="0x00003001">
+    <FrameLayout android:id="@0x7f09014e" android:layout_width="-1" android:layout_height="-2">
+    </FrameLayout>
+  </FrameLayout>
+  <include android:layout_width="-1" android:layout_height="-2" layout="@0x7f0c0008">
+  </include>
+</androidx.appcompat.widget.AlertDialogLayout>

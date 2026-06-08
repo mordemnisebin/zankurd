@@ -1,0 +1,6 @@
+<selector>
+  <item android:color="@0x7f050021" android:state_accelerated="false">
+  </item>
+  <item android:color="@0x0106000d">
+  </item>
+</selector>

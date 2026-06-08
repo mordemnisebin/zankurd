@@ -1,0 +1,10 @@
+<layer-list>
+  <item>
+    <shape android:shape="1">
+      <solid android:color="@0x7f050119">
+      </solid>
+      <size android:height="@0x7f060059" android:width="@0x7f060059">
+      </size>
+    </shape>
+  </item>
+</layer-list>

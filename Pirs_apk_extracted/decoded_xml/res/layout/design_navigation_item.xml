@@ -1,0 +1,2 @@
+<com.google.android.material.internal.NavigationMenuItemView xmlns:android="http://schemas.android.com/apk/res/android" android:paddingLeft="?0x7f0302cd" android:paddingRight="?0x7f0302ce" android:focusable="true" android:layout_width="-1" android:layout_height="-2" android:foreground="?0x7f0303c0" android:minHeight="?0x7f0302cb">
+</com.google.android.material.internal.NavigationMenuItemView>

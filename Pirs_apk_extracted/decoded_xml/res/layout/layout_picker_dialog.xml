@@ -1,0 +1,22 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09010a" android:layout_width="-1" android:layout_height="-1">
+  <RelativeLayout android:orientation="1" android:padding="0x00000801" android:layout_width="-1" android:layout_height="-1">
+    <RelativeLayout android:id="@0x7f09033a" android:layout_width="-1" android:layout_height="-2">
+      <TextView android:textAppearance="?0x01010040" android:textColor="@0x01060007" android:id="@0x7f0903bf" android:layout_width="-1" android:layout_height="-2" android:layout_margin="0x00000a01" android:text="@0x7f1001c2" android:layout_toLeftOf="@0x7f0901fd" android:layout_toStartOf="@0x7f0901fd">
+      </TextView>
+      <ImageView android:id="@0x7f0901fd" android:padding="0x00000401" android:focusable="true" android:clickable="true" android:layout_width="0x00002401" android:layout_height="0x00002401" android:layout_alignParentRight="true" android:layout_centerVertical="true" android:contentDescription="@0x7f10009b" android:alpha="0.699999988079071" android:layout_alignParentEnd="true" app:srcCompat="@0x7f0701fe">
+      </ImageView>
+    </RelativeLayout>
+    <RelativeLayout android:id="@0x7f090339" android:layout_width="-1" android:layout_height="-2" android:layout_below="@0x7f09033a">
+      <EditText android:textColor="@0x01060004" android:id="@0x7f090187" android:layout_width="-1" android:layout_height="-2" android:hint="@0x7f1001bc" android:singleLine="true" android:layout_toLeftOf="@0x7f0901fc" android:inputType="0x00080001" android:imeOptions="0x00000003" android:layout_toStartOf="@0x7f0901fc">
+      </EditText>
+      <ImageView android:id="@0x7f0901fc" android:padding="0x00000a01" android:focusable="true" android:clickable="true" android:layout_width="0x00002401" android:layout_height="0x00002401" android:layout_alignParentRight="true" android:layout_centerVertical="true" android:contentDescription="@0x7f100054" android:alpha="0.699999988079071" android:layout_alignParentEnd="true" app:srcCompat="@0x7f0701f2">
+      </ImageView>
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView android:id="@0x7f090319" android:layout_width="-1" android:layout_height="-1" android:dividerHeight="0x00000201" android:layout_below="@0x7f090339">
+    </androidx.recyclerview.widget.RecyclerView>
+    <com.futuremind.recyclerviewfastscroll.FastScroller android:orientation="1" android:id="@0x7f0901a6" android:layout_width="-2" android:layout_height="-1" android:layout_alignTop="@0x7f090319" android:layout_alignRight="@0x7f090319" android:layout_alignBottom="@0x7f090319" android:layout_alignEnd="@0x7f090319">
+    </com.futuremind.recyclerviewfastscroll.FastScroller>
+    <TextView android:textColor="@0x01060003" android:id="@0x7f0903bd" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="0x00001001" android:text="@0x7f100157" android:layout_below="@0x7f090339" android:layout_centerHorizontal="true">
+    </TextView>
+  </RelativeLayout>
+</androidx.cardview.widget.CardView>

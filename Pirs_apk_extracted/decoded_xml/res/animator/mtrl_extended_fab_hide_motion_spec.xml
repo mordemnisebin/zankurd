@@ -1,0 +1,4 @@
+<set>
+  <objectAnimator android:interpolator="@0x7f0b0009" android:duration="75" android:startOffset="0" android:valueFrom="1.0" android:valueTo="0.0" android:valueType="0" android:propertyName="opacity">
+  </objectAnimator>
+</set>

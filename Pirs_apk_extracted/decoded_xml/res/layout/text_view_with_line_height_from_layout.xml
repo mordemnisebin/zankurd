@@ -1,0 +1,2 @@
+<com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android" android:textAppearance="@0x7f11015e" android:layout_width="-1" android:layout_height="-2" app:lineHeight="@0x7f0600df">
+</com.google.android.material.textview.MaterialTextView>

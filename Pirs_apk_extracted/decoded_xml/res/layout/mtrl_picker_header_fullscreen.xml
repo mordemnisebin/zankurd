@@ -1,0 +1,20 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="-1" android:layout_height="@0x7f060123">
+  <LinearLayout android:layout_gravity="0x00000031" android:orientation="0" android:paddingLeft="@0x7f060120" android:paddingTop="@0x7f060120" android:paddingRight="@0x7f060120" android:layout_width="-1" android:layout_height="@0x7f060123" android:paddingStart="@0x7f060120" android:paddingEnd="@0x7f060120" style="?0x7f0302f9">
+    <com.google.android.material.button.MaterialButton android:gravity="0x00000011" android:layout_gravity="0x00000030" android:id="@0x7f090105" android:padding="0x00000c01" android:layout_width="@0x7f060166" android:layout_height="@0x7f060166" android:insetTop="0x00000001" android:insetBottom="0x00000001" android:contentDescription="@0x7f10012f" app:icon="@0x7f07025c" app:rippleColor="@0x7f0500b8" style="?0x7f0302f6">
+    </com.google.android.material.button.MaterialButton>
+    <FrameLayout android:id="@0x7f0902a8" android:paddingLeft="@0x7f060125" android:layout_width="0x00000001" android:layout_height="-1" android:layout_weight="1.0" android:paddingStart="@0x7f060125">
+      <TextView android:gravity="0x00800053" android:layout_gravity="0x00800033" android:id="@0x7f0902ad" android:layout_width="-1" android:layout_height="-2" app:firstBaselineToTopHeight="@0x7f060136" style="?0x7f0302fb">
+      </TextView>
+      <TextView android:gravity="0x00800053" android:layout_gravity="0x00800033" android:id="@0x7f0902a7" android:paddingBottom="@0x7f06012f" android:layout_width="-1" android:layout_height="-2" app:firstBaselineToTopHeight="@0x7f060130" app:lineHeight="@0x7f060124" style="?0x7f0302fa">
+      </TextView>
+    </FrameLayout>
+    <LinearLayout android:orientation="@0x7f0a0014" android:layout_width="-2" android:layout_height="-2">
+      <com.google.android.material.button.MaterialButton android:layout_gravity="0x00800035" android:id="@0x7f090137" android:layout_width="-2" android:layout_height="@0x7f060166" android:text="@0x7f100140" android:contentDescription="@0x7f100140" style="?0x7f0302f7">
+      </com.google.android.material.button.MaterialButton>
+      <include layout="@0x7f0c00d2">
+      </include>
+    </LinearLayout>
+  </LinearLayout>
+  <View android:layout_gravity="0x00000050" android:layout_width="-1" android:layout_height="@0x7f060121" style="?0x7f0302f8">
+  </View>
+</merge>

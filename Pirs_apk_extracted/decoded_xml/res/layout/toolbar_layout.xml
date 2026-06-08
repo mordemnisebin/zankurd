@@ -1,0 +1,2 @@
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android" android:theme="@0x7f11000a" android:id="@0x7f0903d2" android:background="@0x7f050022" android:layout_width="-1" android:layout_height="-2" app:contentInsetLeft="0x00000001" app:contentInsetStart="0x00000001" app:contentInsetStartWithNavigation="0x00000001" app:layout_scrollFlags="0x00000005" app:titleTextColor="@0x7f050023">
+</androidx.appcompat.widget.Toolbar>

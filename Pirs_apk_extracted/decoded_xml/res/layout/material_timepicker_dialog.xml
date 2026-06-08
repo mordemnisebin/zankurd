@@ -1,0 +1,16 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" android:paddingBottom="0x00000201" android:layout_width="-2" android:layout_height="-2">
+  <TextView android:id="@0x7f0901c5" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="0x00001001" android:text="@0x7f100109" android:importantForAccessibility="2" android:layout_marginStart="0x00001801" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0" style="?0x7f030456">
+  </TextView>
+  <androidx.constraintlayout.widget.Barrier android:id="@0x7f0900cd" android:layout_width="-2" android:layout_height="-2" app:barrierDirection="3" app:barrierMargin="@0x7f0600e5" app:constraint_referenced_ids="material_textinput_timepicker, material_timepicker_view">
+  </androidx.constraintlayout.widget.Barrier>
+  <com.google.android.material.timepicker.TimePickerView android:id="@0x7f090283" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:layout_marginLeft="0x00001801" android:layout_marginTop="@0x7f0600c5" android:layout_marginRight="0x00001801" android:layout_marginBottom="0x00001801" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0">
+  </com.google.android.material.timepicker.TimePickerView>
+  <ViewStub android:id="@0x7f09027d" android:layout="@0x7f0c00ab" android:inflatedId="@0x7f09027d" android:layout_width="-2" android:layout_height="-2" android:layout_marginLeft="0x00001801" android:layout_marginTop="0x00002c01" android:layout_marginRight="0x00001801" android:layout_marginBottom="0x00001801" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0">
+  </ViewStub>
+  <com.google.android.material.button.MaterialButton android:id="@0x7f090281" android:layout_width="-2" android:layout_height="-2" android:layout_marginStart="0x00000c01" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toBottomOf="@0x7f0900cd" style="?0x7f030241">
+  </com.google.android.material.button.MaterialButton>
+  <Button android:id="@0x7f09027e" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="0x00000201" android:minWidth="0x00004801" android:text="@0x01040000" android:layout_marginEnd="0x00000801" app:layout_constraintEnd_toStartOf="@0x7f090282" app:layout_constraintTop_toTopOf="@0x7f090281" style="?0x7f03006a">
+  </Button>
+  <Button android:id="@0x7f090282" android:layout_width="-2" android:layout_height="-2" android:layout_marginTop="0x00000201" android:minWidth="0x00004001" android:text="@0x0104000a" android:layout_marginEnd="0x00000801" app:layout_constraintEnd_toEndOf="0" app:layout_constraintTop_toTopOf="@0x7f090281" style="?0x7f03006a">
+  </Button>
+</androidx.constraintlayout.widget.ConstraintLayout>

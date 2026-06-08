@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09021e" android:background="@0x7f050022" android:layout_width="-1" android:layout_height="-1">
+  <include layout="@0x7f0c010d">
+  </include>
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout android:id="@0x7f09039d" android:layout_width="-1" android:layout_height="-1" android:layout_above="@0x7f0900cc" android:layout_below="@0x7f0903d2">
+    <androidx.recyclerview.widget.RecyclerView android:id="@0x7f090318" android:layout_width="-1" android:layout_height="-1" android:layout_centerHorizontal="true">
+    </androidx.recyclerview.widget.RecyclerView>
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+  <ProgressBar android:id="@0x7f0902fb" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:layout_centerInParent="true">
+  </ProgressBar>
+  <com.facebook.shimmer.ShimmerFrameLayout android:layout_gravity="0x00000011" android:orientation="1" android:id="@0x7f09035f" android:layout_width="-2" android:layout_height="-2" android:layout_above="@0x7f0900cc" android:layout_below="@0x7f0903d2" shimmer:duration="800">
+    <LinearLayout android:orientation="1" android:layout_width="-1" android:layout_height="-2">
+      <include layout="@0x7f0c0080">
+      </include>
+      <include layout="@0x7f0c0080">
+      </include>
+      <include layout="@0x7f0c0080">
+      </include>
+      <include layout="@0x7f0c0080">
+      </include>
+      <include layout="@0x7f0c0080">
+      </include>
+      <include layout="@0x7f0c0080">
+      </include>
+      <include layout="@0x7f0c0080">
+      </include>
+    </LinearLayout>
+  </com.facebook.shimmer.ShimmerFrameLayout>
+  <TextView android:textSize="@0x7f0600e6" android:textColor="@0x7f050118" android:gravity="0x00000011" android:id="@0x7f090463" android:visibility="2" android:layout_width="-1" android:layout_height="-2" android:text="@0x7f100152" android:layout_centerInParent="true">
+  </TextView>
+  <LinearLayout android:orientation="1" android:id="@0x7f0900cc" android:layout_width="-1" android:layout_height="-2" android:layout_alignParentBottom="true" app:layout_constraintBottom_toBottomOf="0">
+  </LinearLayout>
+</RelativeLayout>

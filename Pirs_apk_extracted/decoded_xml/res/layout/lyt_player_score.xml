@@ -1,0 +1,10 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="0x00000010" android:orientation="0" android:id="@0x7f09031e" android:background="@0x7f0701da" android:layout_width="-1" android:layout_height="-2" android:layout_margin="@0x7f0600c0">
+  <kurdi.leyzok.pirs.helper.CircleImageView android:id="@0x7f0901d8" android:layout_width="0x00002301" android:layout_height="0x00002301" android:layout_margin="0x00000201">
+  </kurdi.leyzok.pirs.helper.CircleImageView>
+  <TextView android:textSize="@0x7f0601c5" android:textColor="@0x7f050119" android:ellipsize="3" android:id="@0x7f090411" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f100033" android:maxLines="1" android:layout_centerVertical="true" android:layout_marginStart="0x00000301" android:layout_marginEnd="0x00000301" android:layout_toStartOf="@0x7f090429" android:layout_toEndOf="@0x7f0901d8">
+  </TextView>
+  <TextView android:textSize="@0x7f0601c5" android:textStyle="0x00000001" android:textColor="@0x7f050119" android:id="@0x7f090429" android:background="@0x7f0701db" android:paddingTop="@0x7f0600c1" android:paddingBottom="@0x7f0600c1" android:layout_width="-2" android:layout_height="-2" android:text="0" android:layout_centerVertical="true" android:paddingStart="@0x7f0600be" android:paddingEnd="@0x7f0600be" android:layout_toStartOf="@0x7f090441">
+  </TextView>
+  <TextView android:textSize="@0x7f0601c5" android:textStyle="0x00000001" android:textColor="@0x7f050119" android:id="@0x7f090441" android:background="@0x7f0701e1" android:paddingTop="@0x7f0600c1" android:paddingBottom="@0x7f0600c1" android:layout_width="-2" android:layout_height="-2" android:text="0" android:layout_centerVertical="true" android:paddingStart="@0x7f0600be" android:paddingEnd="@0x7f0600be" android:layout_marginStart="@0x7f0600c0" android:layout_marginEnd="@0x7f0600c0" android:layout_alignParentEnd="true">
+  </TextView>
+</RelativeLayout>
