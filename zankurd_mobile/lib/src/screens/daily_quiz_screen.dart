@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../data/local_data_service.dart';
 import '../data/zankurd_repository.dart';
 import '../models/answer_record.dart';
 import '../models/quiz_question.dart';
@@ -23,6 +25,8 @@ class _DailyQuizScreenState extends State<DailyQuizScreen> {
   List<QuizQuestion>? _questions;
   bool _loading = true;
   bool _completed = false;
+  bool _alreadyDoneToday = false;
+  LocalDataService? _local;
 
   @override
   void initState() {
@@ -31,11 +35,37 @@ class _DailyQuizScreenState extends State<DailyQuizScreen> {
   }
 
   Future<void> _load() async {
+    final local = await LocalDataService.getInstance();
     try {
-      final questions = await widget.repository.loadQuestions(limit: 10);
-      if (mounted) setState(() { _questions = questions; _loading = false; });
+      final allQuestions = await widget.repository.loadQuestions(limit: 200)
+          .catchError((_) => widget.repository.questions);
+      // Date-seeded deterministic selection — same day → same 10 questions for all
+      final seed = local.dailySeed;
+      final rng = Random(seed);
+      final pool = List<QuizQuestion>.from(allQuestions);
+      pool.shuffle(rng);
+      final daily = pool.take(10).toList();
+      if (mounted) {
+        setState(() {
+          _local = local;
+          _questions = daily;
+          _alreadyDoneToday = local.hasCompletedDailyQuiz;
+          _completed = _alreadyDoneToday;
+          _loading = false;
+        });
+      }
     } catch (_) {
-      if (mounted) setState(() { _questions = widget.repository.questions; _loading = false; });
+      final pool = List<QuizQuestion>.from(widget.repository.questions);
+      pool.shuffle(Random(local.dailySeed));
+      if (mounted) {
+        setState(() {
+          _local = local;
+          _questions = pool.take(10).toList();
+          _alreadyDoneToday = local.hasCompletedDailyQuiz;
+          _completed = _alreadyDoneToday;
+          _loading = false;
+        });
+      }
     }
   }
 
@@ -79,7 +109,10 @@ class _DailyQuizScreenState extends State<DailyQuizScreen> {
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _completed
-          ? _CompletedBanner(onReplay: () => setState(() => _completed = false))
+          ? _CompletedBanner(
+              alreadyDone: _alreadyDoneToday,
+              onReplay: _alreadyDoneToday ? null : () => setState(() => _completed = false),
+            )
           : SafeArea(
               child: ListView(
                 padding: const EdgeInsets.all(18),
@@ -186,16 +219,21 @@ class _DailyQuizScreenState extends State<DailyQuizScreen> {
   }
 
   void _startQuiz(BuildContext context) {
-    final room = widget.repository.createRoom(category: 'Ziman');
-    Navigator.of(context).push(
+    final room = widget.repository.createRoom(category: 'Günlük');
+    final navigator = Navigator.of(context);
+    navigator.push(
       MaterialPageRoute(
         builder: (_) => _DailyPlayScreen(
           repository: widget.repository,
           questions: _questions!,
           room: room,
-          onCompleted: () {
-            Navigator.of(context).pop();
-            setState(() => _completed = true);
+          onCompleted: () async {
+            await _local?.markDailyQuizCompleted();
+            await _local?.addCoins(50); // daily completion reward
+            if (mounted) {
+              navigator.pop();
+              setState(() { _completed = true; _alreadyDoneToday = true; });
+            }
           },
         ),
       ),
@@ -204,8 +242,9 @@ class _DailyQuizScreenState extends State<DailyQuizScreen> {
 }
 
 class _CompletedBanner extends StatelessWidget {
-  const _CompletedBanner({required this.onReplay});
-  final VoidCallback onReplay;
+  const _CompletedBanner({required this.alreadyDone, this.onReplay});
+  final bool alreadyDone;
+  final VoidCallback? onReplay;
 
   @override
   Widget build(BuildContext context) {
@@ -225,23 +264,26 @@ class _CompletedBanner extends StatelessWidget {
               child: const Icon(Icons.check_circle_outline, color: AppTheme.green, size: 44),
             ),
             const SizedBox(height: 18),
-            const Text(
-              'Bugünkü quizi tamamladın!',
+            Text(
+              alreadyDone ? 'Bugün zaten tamamladın!' : 'Bugünkü quizi tamamladın!',
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 22),
+              style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 22),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Yarın yeni sorular gelecek. Skor tablosuna bak!',
+            Text(
+              alreadyDone
+                  ? 'Günlük ödülün verildi. Yarın yeni sorular gelecek!'
+                  : '🪙 +50 coin kazandın! Yarın yeni sorular gelecek.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: AppTheme.muted),
+              style: const TextStyle(color: AppTheme.muted),
             ),
             const SizedBox(height: 24),
-            OutlinedButton.icon(
-              onPressed: onReplay,
-              icon: const Icon(Icons.replay_outlined),
-              label: const Text('Tekrar Çöz'),
-            ),
+            if (onReplay != null)
+              OutlinedButton.icon(
+                onPressed: onReplay,
+                icon: const Icon(Icons.replay_outlined),
+                label: const Text('Tekrar Çöz'),
+              ),
           ],
         ),
       ),
