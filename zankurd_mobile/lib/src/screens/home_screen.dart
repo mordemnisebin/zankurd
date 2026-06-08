@@ -5,7 +5,6 @@ import '../data/zankurd_repository.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
-import '../widgets/app_panel.dart';
 import 'battle_screen.dart';
 import 'daily_quiz_screen.dart';
 import 'favorites_screen.dart';
@@ -315,20 +314,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class _LoadingPanel extends StatelessWidget {
   const _LoadingPanel();
-
   @override
   Widget build(BuildContext context) {
-    return const AppPanel(
-      child: Row(
-        children: [
-          SizedBox(
-            width: 22,
-            height: 22,
-            child: CircularProgressIndicator(strokeWidth: 2.4),
-          ),
-          SizedBox(width: 12),
-          Expanded(child: Text('Supabase soruları yükleniyor...')),
-        ],
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.all(24),
+        child: CircularProgressIndicator(color: AppTheme.primary),
       ),
     );
   }
@@ -336,18 +327,30 @@ class _LoadingPanel extends StatelessWidget {
 
 class _InfoPanel extends StatelessWidget {
   const _InfoPanel({required this.message});
-
   final String message;
-
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      color: const Color(0xFFFFF7E6),
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppTheme.primary.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppTheme.primary.withValues(alpha: 0.2)),
+      ),
       child: Row(
         children: [
-          const Icon(Icons.info_outline, color: Color(0xFFBD7B2B)),
+          const Icon(Icons.info_outline, color: AppTheme.primary, size: 18),
           const SizedBox(width: 10),
-          Expanded(child: Text(message)),
+          Expanded(
+            child: Text(
+              message,
+              style: const TextStyle(
+                color: AppTheme.primary,
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -356,7 +359,6 @@ class _InfoPanel extends StatelessWidget {
 
 class _Header extends StatelessWidget {
   const _Header({required this.coins, required this.onSettings});
-
   final int coins;
   final VoidCallback onSettings;
 
@@ -365,39 +367,82 @@ class _Header extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 46,
-          height: 46,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
-            color: AppTheme.green,
-            borderRadius: BorderRadius.circular(10),
+            gradient: AppTheme.heroGradient,
+            borderRadius: BorderRadius.circular(12),
           ),
           alignment: Alignment.center,
           child: const Text(
             'ZK',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w900,
+              fontSize: 15,
+            ),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 10),
         const Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'ZanKurd',
-                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 22),
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 18,
+                  color: AppTheme.ink,
+                ),
               ),
               Text(
                 'Pêşbirka Kurmancî',
-                style: TextStyle(color: AppTheme.muted),
+                style: TextStyle(fontSize: 11, color: AppTheme.muted),
               ),
             ],
           ),
         ),
-        IconButton(
-          onPressed: onSettings,
-          icon: const Icon(Icons.settings_outlined, color: AppTheme.muted),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFF8E1),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: const Color(0xFFF4C430).withValues(alpha: 0.4),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('🪙', style: TextStyle(fontSize: 15)),
+              const SizedBox(width: 4),
+              Text(
+                '$coins',
+                style: const TextStyle(
+                  color: Color(0xFF92600A),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
         ),
-        _CoinBadge(coins: coins),
+        const SizedBox(width: 8),
+        GestureDetector(
+          onTap: onSettings,
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppTheme.line),
+              boxShadow: AppTheme.softShadow,
+            ),
+            child: const Icon(Icons.settings_outlined, color: AppTheme.ink, size: 20),
+          ),
+        ),
       ],
     );
   }
@@ -408,26 +453,98 @@ class _HeroPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppPanel(
-      color: AppTheme.green,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      height: 150,
+      decoration: const BoxDecoration(
+        gradient: AppTheme.heroGradient,
+        borderRadius: BorderRadius.all(Radius.circular(24)),
+      ),
+      child: Stack(
         children: [
-          _StatusPill(),
-          SizedBox(height: 14),
-          Text(
-            'Kurmancî yarış merkezi.',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
-              fontSize: 31,
-              height: 1.05,
+          Positioned(
+            right: -30,
+            top: -30,
+            child: Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.07),
+              ),
             ),
           ),
-          SizedBox(height: 10),
-          Text(
-            'Kategori seç, seviye geç, arkadaşlarınla odada yarış ve liderlikte yüksel.',
-            style: TextStyle(color: Color(0xFFE6F1EB), fontSize: 15),
+          Positioned(
+            right: 30,
+            bottom: -40,
+            child: Container(
+              width: 90,
+              height: 90,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.05),
+              ),
+            ),
+          ),
+          Positioned(
+            left: -20,
+            bottom: -20,
+            child: Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.05),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(22),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Text(
+                    '🔥 Günlük Meydan Okuma',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Kurmancîyê hîn bibe,\nxwe biceribîne!',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
+                    height: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const Icon(Icons.star_rounded, color: Color(0xFFF4C430), size: 16),
+                    const SizedBox(width: 4),
+                    Text(
+                      '90+ soru · 6 kategori',
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.85),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -440,94 +557,69 @@ class _DashboardStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
       child: Row(
-        children: const [
-          Expanded(
-            child: _StatItem(
-              icon: Icons.quiz_outlined,
-              value: '2250+',
-              label: 'Soru',
-              color: AppTheme.green,
-            ),
-          ),
-          _StatDivider(),
-          Expanded(
-            child: _StatItem(
-              icon: Icons.layers_outlined,
-              value: '30',
-              label: 'Seviye',
-              color: Color(0xFF4059AD),
-            ),
-          ),
-          _StatDivider(),
-          Expanded(
-            child: _StatItem(
-              icon: Icons.image_outlined,
-              value: '72',
-              label: 'Görsel',
-              color: Color(0xFFBD7B2B),
-            ),
-          ),
+        children: [
+          _StatPill(icon: '🏆', label: 'Sıralama', value: '#1', color: const Color(0xFFF4C430)),
+          const SizedBox(width: 10),
+          _StatPill(icon: '🔥', label: 'Seri', value: '0', color: AppTheme.warning),
+          const SizedBox(width: 10),
+          _StatPill(icon: '✅', label: 'Doğru', value: '0', color: AppTheme.success),
+          const SizedBox(width: 10),
+          _StatPill(icon: '🎯', label: 'Puan', value: '0', color: AppTheme.primary),
         ],
       ),
     );
   }
 }
 
-class _StatDivider extends StatelessWidget {
-  const _StatDivider();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(width: 1, height: 44, color: AppTheme.line);
-  }
-}
-
-class _StatItem extends StatelessWidget {
-  const _StatItem({
+class _StatPill extends StatelessWidget {
+  const _StatPill({
     required this.icon,
-    required this.value,
     required this.label,
+    required this.value,
     required this.color,
   });
-
-  final IconData icon;
-  final String value;
-  final String label;
+  final String icon, label, value;
   final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, color: color, size: 22),
-        const SizedBox(width: 8),
-        Flexible(
-          child: Column(
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
+      ),
+      child: Row(
+        children: [
+          Text(icon, style: const TextStyle(fontSize: 18)),
+          const SizedBox(width: 8),
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 value,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w900,
-                  fontSize: 17,
+                  fontSize: 16,
+                  color: color,
                 ),
               ),
               Text(
                 label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: AppTheme.muted, fontSize: 12),
+                style: const TextStyle(
+                  fontSize: 10,
+                  color: AppTheme.muted,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -548,144 +640,278 @@ class _ActionGrid extends StatelessWidget {
   });
 
   final bool loading;
-  final VoidCallback onCreateRoom;
-  final VoidCallback onJoinRoom;
-  final VoidCallback onQuickMatch;
-  final VoidCallback onLearn;
-  final VoidCallback onLeaderboard;
-  final VoidCallback onFavorites;
-  final VoidCallback onProfile;
-  final VoidCallback onDailyQuiz;
-  final VoidCallback onBattle;
-  final VoidCallback onSpin;
+  final VoidCallback onCreateRoom,
+      onJoinRoom,
+      onQuickMatch,
+      onLearn,
+      onLeaderboard,
+      onFavorites,
+      onProfile,
+      onDailyQuiz,
+      onBattle,
+      onSpin;
 
   @override
   Widget build(BuildContext context) {
-    final actions = [
-      _HomeAction(
-        loading ? 'Açılıyor' : 'Oda Kur',
-        Icons.add_circle_outline,
-        AppTheme.red,
-        onCreateRoom,
-      ),
-      _HomeAction(
-        'Kodla Katıl',
-        Icons.meeting_room_outlined,
-        AppTheme.green,
-        onJoinRoom,
-      ),
-      _HomeAction(
-        'Günlük Quiz',
-        Icons.calendar_today_outlined,
-        const Color(0xFFBD7B2B),
-        onDailyQuiz,
-      ),
-      _HomeAction(
-        'Robot Battle',
-        Icons.smart_toy_outlined,
-        const Color(0xFF9C27B0),
-        onBattle,
-      ),
-      _HomeAction(
-        'Hızlı Yarış',
-        Icons.bolt_outlined,
-        AppTheme.brown,
-        onQuickMatch,
-      ),
-      _HomeAction(
-        'Öğren',
-        Icons.menu_book_outlined,
-        const Color(0xFF4059AD),
-        onLearn,
-      ),
-      _HomeAction(
-        'Kaydedilenler',
-        Icons.bookmark_outlined,
-        const Color(0xFF008891),
-        onFavorites,
-      ),
-      _HomeAction(
-        'Günlük Çark',
-        Icons.casino_outlined,
-        const Color(0xFFFF5722),
-        onSpin,
-      ),
-      _HomeAction(
-        'Liderlik',
-        Icons.emoji_events_outlined,
-        const Color(0xFF6B4F3C),
-        onLeaderboard,
-      ),
-      _HomeAction(
-        'Profil',
-        Icons.person_outlined,
-        const Color(0xFF1976D2),
-        onProfile,
-      ),
-    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Hızlı Erişim',
+          style: TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: 16,
+            color: AppTheme.ink,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _FeaturedCard(
+                gradient: const [Color(0xFFF59E0B), Color(0xFFEF4444)],
+                emoji: '📅',
+                title: 'Günlük Quiz',
+                subtitle: '+50 coin',
+                onTap: onDailyQuiz,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _FeaturedCard(
+                gradient: const [Color(0xFF8B5CF6), Color(0xFF3B82F6)],
+                emoji: '⚔️',
+                title: 'Robot Düello',
+                subtitle: 'Rakibe meydan oku',
+                onTap: onBattle,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        GridView.count(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          crossAxisCount: 4,
+          mainAxisSpacing: 12,
+          crossAxisSpacing: 12,
+          children: [
+            _GridAction(
+              emoji: '⚡',
+              label: 'Hızlı\nOyun',
+              color: AppTheme.primary,
+              onTap: onQuickMatch,
+            ),
+            _GridAction(
+              emoji: '🌐',
+              label: 'Oda\nAç',
+              color: const Color(0xFF0891B2),
+              onTap: loading ? () {} : onCreateRoom,
+            ),
+            _GridAction(
+              emoji: '🔗',
+              label: 'Odaya\nKatıl',
+              color: const Color(0xFF7C3AED),
+              onTap: onJoinRoom,
+            ),
+            _GridAction(
+              emoji: '🎡',
+              label: 'Günlük\nÇark',
+              color: const Color(0xFFE74C3C),
+              onTap: onSpin,
+            ),
+            _GridAction(
+              emoji: '📚',
+              label: 'Çalış',
+              color: const Color(0xFF059669),
+              onTap: onLearn,
+            ),
+            _GridAction(
+              emoji: '🏆',
+              label: 'Sıralama',
+              color: const Color(0xFFF59E0B),
+              onTap: onLeaderboard,
+            ),
+            _GridAction(
+              emoji: '❤️',
+              label: 'Favoriler',
+              color: const Color(0xFFEC4899),
+              onTap: onFavorites,
+            ),
+            _GridAction(
+              emoji: '👤',
+              label: 'Profil',
+              color: const Color(0xFF6366F1),
+              onTap: onProfile,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
 
-    return GridView.builder(
-      itemCount: actions.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        childAspectRatio: 1.75,
+class _FeaturedCard extends StatelessWidget {
+  const _FeaturedCard({
+    required this.gradient,
+    required this.emoji,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+  final List<Color> gradient;
+  final String emoji, title, subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 90,
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: gradient,
+          ),
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: gradient.first.withValues(alpha: 0.4),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(emoji, style: const TextStyle(fontSize: 24)),
+            const Spacer(),
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: 14,
+              ),
+            ),
+            Text(
+              subtitle,
+              style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.8),
+                fontSize: 11,
+              ),
+            ),
+          ],
+        ),
       ),
-      itemBuilder: (context, index) => _ActionTile(action: actions[index]),
+    );
+  }
+}
+
+class _GridAction extends StatelessWidget {
+  const _GridAction({
+    required this.emoji,
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
+  final String emoji, label;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: AppTheme.softShadow,
+          border: Border.all(color: AppTheme.line),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.12),
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(emoji, style: const TextStyle(fontSize: 18)),
+              ),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w800,
+                color: AppTheme.ink,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class _RoomPreview extends StatelessWidget {
   const _RoomPreview({required this.room, required this.onOpen});
-
   final GameRoom room;
   final VoidCallback onOpen;
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      room.name,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      'Oda kodu: ${room.code}',
-                      style: const TextStyle(color: AppTheme.muted),
-                    ),
-                  ],
-                ),
+    return GestureDetector(
+      onTap: onOpen,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppTheme.line),
+          boxShadow: AppTheme.softShadow,
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                gradient: AppTheme.heroGradient,
+                borderRadius: BorderRadius.circular(12),
               ),
-              FilledButton.icon(
-                onPressed: onOpen,
-                icon: const Icon(Icons.play_arrow_rounded),
-                label: const Text('Aç'),
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          for (final player in room.players.take(3))
-            _PlayerRow(
-              name: player.name,
-              score: player.score,
-              state: player.state,
+              child: const Icon(Icons.meeting_room_rounded, color: Colors.white, size: 22),
             ),
-        ],
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Oda: ${room.code}',
+                    style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                  ),
+                  Text(
+                    '${room.players.length} oyuncu · ${room.category}',
+                    style: const TextStyle(color: AppTheme.muted, fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppTheme.muted),
+          ],
+        ),
       ),
     );
   }
@@ -693,52 +919,105 @@ class _RoomPreview extends StatelessWidget {
 
 class _QuestionPreview extends StatelessWidget {
   const _QuestionPreview({required this.question, required this.onOpen});
-
   final QuizQuestion question;
   final VoidCallback onOpen;
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              _TinyTag(label: question.category),
-              const Spacer(),
-              const _TinyTag(label: '08 sn'),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            question.prompt,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w900,
-              height: 1.14,
+    return GestureDetector(
+      onTap: onOpen,
+      child: Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: AppTheme.softShadow,
+          border: Border.all(color: AppTheme.line),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    question.category,
+                    style: const TextStyle(
+                      color: AppTheme.primary,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                const Text(
+                  'Örnek Soru',
+                  style: TextStyle(color: AppTheme.muted, fontSize: 11),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 14),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton.icon(
-              onPressed: onOpen,
-              icon: const Icon(Icons.quiz_outlined),
-              label: const Text('Örnek soruyu çöz'),
+            const SizedBox(height: 12),
+            Text(
+              question.prompt,
+              style: const TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 15,
+                height: 1.4,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppTheme.bg,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      question.answers.isNotEmpty ? question.answers[0] : '',
+                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  decoration: BoxDecoration(
+                    gradient: AppTheme.heroGradient,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Text(
+                    'Oyna →',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
 class _CategoryStrip extends StatelessWidget {
-  const _CategoryStrip({required this.categories, required this.onCategoryTap});
-
+  const _CategoryStrip({
+    required this.categories,
+    required this.onCategoryTap,
+  });
   final List<String> categories;
-  final ValueChanged<String> onCategoryTap;
+  final void Function(String) onCategoryTap;
 
   @override
   Widget build(BuildContext context) {
@@ -747,312 +1026,47 @@ class _CategoryStrip extends StatelessWidget {
       children: [
         const Text(
           'Kategoriler',
-          style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
-        ),
-        const SizedBox(height: 4),
-        const Text(
-          'Her kategori 5 seviyeye ayrıldı.',
-          style: TextStyle(color: AppTheme.muted),
+          style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
         ),
         const SizedBox(height: 10),
-        GridView.builder(
-          itemCount: categories.length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: 1.35,
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: categories
+                .map(
+                  (c) => Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: GestureDetector(
+                      onTap: () => onCategoryTap(c),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppTheme.line),
+                          boxShadow: AppTheme.softShadow,
+                        ),
+                        child: Text(
+                          c,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
           ),
-          itemBuilder: (context, index) {
-            final category = categories[index];
-            final color = _categoryColor(index);
-            return _CategoryCard(
-              category: category,
-              color: color,
-              icon: _categoryIcon(category),
-              onTap: () => onCategoryTap(category),
-            );
-          },
         ),
       ],
     );
   }
-
-  Color _categoryColor(int index) {
-    const colors = [
-      AppTheme.green,
-      Color(0xFF4059AD),
-      AppTheme.red,
-      Color(0xFFBD7B2B),
-      AppTheme.brown,
-      Color(0xFF008891),
-    ];
-    return colors[index % colors.length];
-  }
-
-  IconData _categoryIcon(String category) {
-    return switch (category) {
-      'Ziman' => Icons.translate_outlined,
-      'Çand' => Icons.diversity_3_outlined,
-      'Dîrok' => Icons.account_balance_outlined,
-      'Edebiyat' => Icons.menu_book_outlined,
-      'Cografya' => Icons.public_outlined,
-      'Muzîk' => Icons.music_note_outlined,
-      _ => Icons.category_outlined,
-    };
-  }
 }
 
-class _CategoryCard extends StatelessWidget {
-  const _CategoryCard({
-    required this.category,
-    required this.color,
-    required this.icon,
-    required this.onTap,
-  });
 
-  final String category;
-  final Color color;
-  final IconData icon;
-  final VoidCallback onTap;
 
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          padding: const EdgeInsets.all(13),
-          decoration: BoxDecoration(
-            border: Border.all(color: AppTheme.line),
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.045),
-                blurRadius: 18,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      color: color.withValues(alpha: 0.12),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(icon, color: color, size: 21),
-                  ),
-                  const Spacer(),
-                  Icon(Icons.chevron_right_rounded, color: color),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    category,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  const Text(
-                    '5 seviye · yarış modu',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: AppTheme.muted, fontSize: 12),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ActionTile extends StatelessWidget {
-  const _ActionTile({required this.action});
-
-  final _HomeAction action;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: action.onTap,
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        backgroundColor: action.color,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.all(14),
-      ),
-      child: Row(
-        children: [
-          Icon(action.icon, size: 26),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              action.title,
-              style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PlayerRow extends StatelessWidget {
-  const _PlayerRow({
-    required this.name,
-    required this.score,
-    required this.state,
-  });
-
-  final String name;
-  final int score;
-  final String state;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: AppTheme.page,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 16,
-            backgroundColor: const Color(0xFFE8F3EE),
-            child: Text(
-              name.characters.first,
-              style: const TextStyle(color: AppTheme.green),
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(name, style: const TextStyle(fontWeight: FontWeight.w800)),
-                Text(
-                  state,
-                  style: const TextStyle(color: AppTheme.muted, fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-          Text('$score', style: const TextStyle(fontWeight: FontWeight.w900)),
-        ],
-      ),
-    );
-  }
-}
-
-class _CoinBadge extends StatelessWidget {
-  const _CoinBadge({required this.coins});
-
-  final int coins;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
-      decoration: BoxDecoration(
-        color: AppTheme.brown,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.monetization_on_outlined, color: Colors.white, size: 18),
-          const SizedBox(width: 5),
-          Text(
-            '$coins',
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  const _StatusPill();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.14),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: const Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.radio_button_checked, color: Colors.white, size: 16),
-          SizedBox(width: 7),
-          Text(
-            'Canlı oda açık',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TinyTag extends StatelessWidget {
-  const _TinyTag({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-      decoration: BoxDecoration(
-        color: const Color(0xFFE8F3EE),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(
-          color: AppTheme.green,
-          fontWeight: FontWeight.w900,
-          fontSize: 12,
-        ),
-      ),
-    );
-  }
-}
-
-class _HomeAction {
-  const _HomeAction(this.title, this.icon, this.color, this.onTap);
-
-  final String title;
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-}
