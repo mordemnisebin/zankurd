@@ -5,12 +5,15 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
+import 'battle_screen.dart';
+import 'daily_quiz_screen.dart';
 import 'favorites_screen.dart';
 import 'level_screen.dart';
 import 'leaderboard_screen.dart';
 import 'profile_screen.dart';
 import 'quiz_screen.dart';
 import 'room_screen.dart';
+import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({required this.repository, super.key});
@@ -88,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),
           children: [
-            _Header(coins: _coins),
+            _Header(coins: _coins, onSettings: () => _openSettings(context)),
             const SizedBox(height: 22),
             const _HeroPanel(),
             const SizedBox(height: 12),
@@ -103,6 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
               onLeaderboard: () => _openLeaderboard(context),
               onFavorites: () => _openFavorites(context),
               onProfile: () => _openProfile(context),
+              onDailyQuiz: () => _openDailyQuiz(context),
+              onBattle: () => _openBattle(context),
+              onSpin: () => _openSpin(context),
             ),
             const SizedBox(height: 16),
             _RoomPreview(room: room, onOpen: () => _openRoom(context, room)),
@@ -197,6 +203,37 @@ class _HomeScreenState extends State<HomeScreen> {
       MaterialPageRoute(
         builder: (_) => ProfileScreen(repository: repository),
       ),
+    );
+  }
+
+  void _openDailyQuiz(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => DailyQuizScreen(repository: repository),
+      ),
+    );
+  }
+
+  void _openBattle(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => BattleScreen(
+          repository: repository,
+          category: _categories.isNotEmpty ? _categories.first : 'Ziman',
+        ),
+      ),
+    );
+  }
+
+  void _openSpin(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const SpinWheelScreen()),
+    );
+  }
+
+  void _openSettings(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const SettingsScreen()),
     );
   }
 
@@ -311,9 +348,10 @@ class _InfoPanel extends StatelessWidget {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({required this.coins});
+  const _Header({required this.coins, required this.onSettings});
 
   final int coins;
+  final VoidCallback onSettings;
 
   @override
   Widget build(BuildContext context) {
@@ -347,6 +385,10 @@ class _Header extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        IconButton(
+          onPressed: onSettings,
+          icon: const Icon(Icons.settings_outlined, color: AppTheme.muted),
         ),
         _CoinBadge(coins: coins),
       ],
@@ -493,6 +535,9 @@ class _ActionGrid extends StatelessWidget {
     required this.onLeaderboard,
     required this.onFavorites,
     required this.onProfile,
+    required this.onDailyQuiz,
+    required this.onBattle,
+    required this.onSpin,
   });
 
   final bool loading;
@@ -503,6 +548,9 @@ class _ActionGrid extends StatelessWidget {
   final VoidCallback onLeaderboard;
   final VoidCallback onFavorites;
   final VoidCallback onProfile;
+  final VoidCallback onDailyQuiz;
+  final VoidCallback onBattle;
+  final VoidCallback onSpin;
 
   @override
   Widget build(BuildContext context) {
@@ -520,6 +568,18 @@ class _ActionGrid extends StatelessWidget {
         onJoinRoom,
       ),
       _HomeAction(
+        'Günlük Quiz',
+        Icons.calendar_today_outlined,
+        const Color(0xFFBD7B2B),
+        onDailyQuiz,
+      ),
+      _HomeAction(
+        'Robot Battle',
+        Icons.smart_toy_outlined,
+        const Color(0xFF9C27B0),
+        onBattle,
+      ),
+      _HomeAction(
         'Hızlı Yarış',
         Icons.bolt_outlined,
         AppTheme.brown,
@@ -528,25 +588,31 @@ class _ActionGrid extends StatelessWidget {
       _HomeAction(
         'Öğren',
         Icons.menu_book_outlined,
-        const Color(0xFFBD7B2B),
+        const Color(0xFF4059AD),
         onLearn,
       ),
       _HomeAction(
         'Kaydedilenler',
         Icons.bookmark_outlined,
-        const Color(0xFF4059AD),
+        const Color(0xFF008891),
         onFavorites,
+      ),
+      _HomeAction(
+        'Günlük Çark',
+        Icons.casino_outlined,
+        const Color(0xFFFF5722),
+        onSpin,
       ),
       _HomeAction(
         'Liderlik',
         Icons.emoji_events_outlined,
-        const Color(0xFF008891),
+        const Color(0xFF6B4F3C),
         onLeaderboard,
       ),
       _HomeAction(
         'Profil',
         Icons.person_outlined,
-        const Color(0xFF6B4F3C),
+        const Color(0xFF1976D2),
         onProfile,
       ),
     ];
