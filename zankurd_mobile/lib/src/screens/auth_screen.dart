@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/local_data_service.dart';
 import '../data/zankurd_repository.dart';
 import '../theme/app_theme.dart';
 import 'main_scaffold.dart';
@@ -36,8 +37,11 @@ class _AuthScreenState extends State<AuthScreen> {
     }
     setState(() { _loading = true; _error = null; });
     try {
-      await widget.repository.ensureProfile();
-      await widget.repository.updateProfileName(name);
+      final local = await LocalDataService.getInstance();
+      await local.savePlayerName(name);
+      await local.markLaunchDone();
+      await widget.repository.ensureProfile().catchError((_) {});
+      await widget.repository.updateProfileName(name).catchError((_) {});
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
@@ -45,7 +49,6 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       );
     } catch (_) {
-      // Even if Supabase fails, continue to main app with the name
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(

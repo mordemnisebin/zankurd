@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 
+import '../data/local_data_service.dart';
 import '../data/zankurd_repository.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
@@ -48,6 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
       profileReady = false;
     }
 
+    // Show local coins immediately
+    final local = await LocalDataService.getInstance();
+    if (mounted) setState(() => _coins = local.coins);
+
     try {
       final results = await Future.wait([
         repository.loadCategories(),
@@ -56,7 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ]);
       final categories = results[0] as List<String>;
       final questions = results[1] as List<QuizQuestion>;
-      final coins = results[2] as int;
+      final remoteCoins = results[2] as int;
+      final coins = remoteCoins > 0 ? remoteCoins : local.coins;
       if (!mounted) return;
       final message = questions.isEmpty
           ? 'Supabase bağlantısı var, onaylı soru bulunamadı.'
@@ -75,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _questions = repository.questions;
         _categories = repository.categories;
+        _coins = local.coins;
         _loading = false;
         _loadMessage =
             'Supabase verisi alınamadı, yerel örneklerle devam ediliyor.';

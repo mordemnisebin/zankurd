@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../data/local_data_service.dart';
 import '../data/zankurd_repository.dart';
 import '../theme/app_theme.dart';
 import 'auth_screen.dart';
+import 'main_scaffold.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({required this.repository, super.key});
@@ -34,16 +36,26 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _launch() async {
+    final local = await LocalDataService.getInstance();
     await Future.wait([
       Future.delayed(const Duration(milliseconds: 1800)),
       widget.repository.ensureProfile().catchError((_) {}),
     ]);
     if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => AuthScreen(repository: widget.repository),
-      ),
-    );
+    if (local.hasPlayerName) {
+      // Returning user — skip auth
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => MainScaffold(repository: widget.repository),
+        ),
+      );
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => AuthScreen(repository: widget.repository),
+        ),
+      );
+    }
   }
 
   @override

@@ -1,8 +1,9 @@
-import 'dart:math';
+﻿import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../data/local_data_service.dart';
 import '../theme/app_theme.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: 'Turnuva ve oyun bildirimleri',
             trailing: Switch.adaptive(
               value: _notificationsEnabled,
-              activeColor: AppTheme.green,
+              activeTrackColor: AppTheme.green,
               onChanged: (v) => setState(() => _notificationsEnabled = v),
             ),
           ),
@@ -48,7 +49,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: 'Doğru/yanlış ses efektleri',
             trailing: Switch.adaptive(
               value: _soundEnabled,
-              activeColor: AppTheme.green,
+              activeTrackColor: AppTheme.green,
               onChanged: (v) => setState(() => _soundEnabled = v),
             ),
           ),
@@ -59,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: 'Dokunsal geri bildirim',
             trailing: Switch.adaptive(
               value: _vibrationEnabled,
-              activeColor: AppTheme.green,
+              activeTrackColor: AppTheme.green,
               onChanged: (v) {
                 setState(() => _vibrationEnabled = v);
                 if (v) HapticFeedback.lightImpact();
@@ -245,7 +246,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   late Animation<double> _anim;
   bool _spinning = false;
   bool _done = false;
+  bool _alreadySpunToday = false;
   int? _prize;
+  LocalDataService? _local;
 
   static const List<int> _prizes = [50, 100, 25, 200, 75, 10, 150, 500];
   static const List<Color> _colors = [
@@ -258,6 +261,21 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     super.initState();
     _ctrl = AnimationController(vsync: this, duration: const Duration(seconds: 4));
     _anim = CurvedAnimation(parent: _ctrl, curve: Curves.decelerate);
+    _loadStatus();
+  }
+
+  Future<void> _loadStatus() async {
+    final local = await LocalDataService.getInstance();
+    if (mounted) {
+      setState(() {
+        _local = local;
+        _alreadySpunToday = local.hasSpunToday;
+        if (_alreadySpunToday) {
+          _done = true;
+          _prize = local.lastSpinPrize;
+        }
+      });
+    }
   }
 
   @override
@@ -267,17 +285,18 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   }
 
   void _spin() {
-    if (_spinning || _done) return;
+    if (_spinning || _done || _alreadySpunToday) return;
     final segment = Random().nextInt(_prizes.length);
     _prize = _prizes[segment];
 
     setState(() => _spinning = true);
-    // Rotate to the winning segment
     final targetAngle = (2 * pi * 3) + (segment / _prizes.length) * 2 * pi;
     _anim = Tween<double>(begin: 0, end: targetAngle).animate(
       CurvedAnimation(parent: _ctrl, curve: Curves.decelerate),
     );
-    _ctrl.forward(from: 0).then((_) {
+    _ctrl.forward(from: 0).then((_) async {
+      if (!mounted) return;
+      await _local?.recordSpin(_prize!);
       if (mounted) setState(() { _spinning = false; _done = true; });
       HapticFeedback.mediumImpact();
     });
@@ -302,7 +321,11 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
             ),
             const SizedBox(height: 6),
             Text(
-              _done ? '$_prize coin kazandın!' : 'Çarkı çevirerek coin kazan.',
+              _alreadySpunToday
+                  ? 'Bugün zaten çevirdin. Yarın tekrar dene!'
+                  : _done
+                  ? '$_prize coin kazandın!'
+                  : 'Çarkı çevirerek coin kazan.',
               style: const TextStyle(color: AppTheme.muted),
             ),
             const SizedBox(height: 32),
@@ -321,7 +344,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
               ),
             ),
             const SizedBox(height: 24),
-            if (!_done)
+            if (!_done && !_alreadySpunToday)
               SizedBox(
                 width: 180,
                 height: 52,
@@ -341,7 +364,12 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                 decoration: BoxDecoration(color: AppTheme.green, borderRadius: BorderRadius.circular(16)),
-                child: Text('🪙 $_prize Coin Hesabına Eklendi', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16)),
+                child: Text(
+                  _alreadySpunToday
+                      ? '🪙 Bugünkü ödül: $_prize coin (kazanıldı)'
+                      : '🪙 $_prize Coin Hesabına Eklendi',
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16),
+                ),
               ),
               const SizedBox(height: 12),
               TextButton(
