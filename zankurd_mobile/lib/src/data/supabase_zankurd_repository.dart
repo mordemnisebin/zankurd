@@ -64,22 +64,28 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     try {
       final user = client.auth.currentUser;
       if (user == null) return null;
-      
+
       final row = await client
           .from('leaderboard_entries')
           .select('*')
           .eq('player_id', user.id)
           .maybeSingle();
-      
+
       if (row == null) return null;
-      
+
       return LeaderboardEntry(
         rank: row['rank'] != null ? (row['rank'] as num).toInt() : 0,
         playerId: row['player_id'] as String,
         displayName: row['display_name'] as String,
-        totalScore: row['total_score'] != null ? (row['total_score'] as num).toInt() : 0,
-        bestStreak: row['best_streak'] != null ? (row['best_streak'] as num).toInt() : 0,
-        roomsPlayed: row['rooms_played'] != null ? (row['rooms_played'] as num).toInt() : 0,
+        totalScore: row['total_score'] != null
+            ? (row['total_score'] as num).toInt()
+            : 0,
+        bestStreak: row['best_streak'] != null
+            ? (row['best_streak'] as num).toInt()
+            : 0,
+        roomsPlayed: row['rooms_played'] != null
+            ? (row['rooms_played'] as num).toInt()
+            : 0,
       );
     } catch (_) {
       return null;
@@ -351,27 +357,10 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<int> getProfileCoins() async {
-    try {
-      final user = client.auth.currentUser;
-      if (user == null) return 0;
-      final profile = await client
-          .from('profiles')
-          .select('coins')
-          .eq('id', user.id)
-          .maybeSingle();
-      return profile?['coins'] as int? ?? 0;
-    } catch (_) {
-      return 0;
-    }
-  }
-
-  @override
   Future<Map<String, dynamic>> submitAnswer({
     required GameRoom room,
     required QuizQuestion question,
     required String selectedOptionOptionKey,
-    int responseMs = 2000,
   }) async {
     final roomId = room.id;
     if (roomId == null) {
@@ -388,7 +377,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
         'p_room_id': roomId,
         'p_question_id': question.id,
         'p_selected_option': selectedOptionOptionKey,
-        'p_response_ms': responseMs,
+        'p_response_ms': 2000, // Hardcoded for now
       },
     );
 

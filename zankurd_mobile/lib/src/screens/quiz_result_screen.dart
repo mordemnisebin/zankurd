@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/local_data_service.dart';
 import '../data/zankurd_repository.dart';
 import '../models/answer_record.dart';
 import '../models/room.dart';
@@ -8,7 +9,7 @@ import '../widgets/app_panel.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
 
-class QuizResultScreen extends StatelessWidget {
+class QuizResultScreen extends StatefulWidget {
   const QuizResultScreen({
     required this.repository,
     required this.room,
@@ -31,10 +32,41 @@ class QuizResultScreen extends StatelessWidget {
   final List<AnswerRecord>? answerRecords;
 
   @override
+  State<QuizResultScreen> createState() => _QuizResultScreenState();
+}
+
+class _QuizResultScreenState extends State<QuizResultScreen> {
+  int _coinsEarned = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _applyRewards();
+  }
+
+  Future<void> _applyRewards() async {
+    final local = await LocalDataService.getInstance();
+
+    // Calculate coin reward: 10 coins per correct answer, max 200
+    final coinReward = (widget.correctCount * 10).clamp(0, 200);
+
+    // Apply to local storage
+    await local.applyQuizResult(
+      score: widget.score,
+      correctCount: widget.correctCount,
+      streak: widget.bestStreak,
+    );
+
+    if (mounted) {
+      setState(() => _coinsEarned = coinReward);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final unanswered = (totalQuestions - correctCount - wrongCount).clamp(
+    final unanswered = (widget.totalQuestions - widget.correctCount - widget.wrongCount).clamp(
       0,
-      totalQuestions,
+      widget.totalQuestions,
     );
 
     return Scaffold(
@@ -63,7 +95,7 @@ class QuizResultScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 14),
                   Text(
-                    '$score',
+                    '${widget.score}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,
@@ -73,21 +105,54 @@ class QuizResultScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    '${room.category} · ${room.code}',
+                    '${widget.room.category} · ${widget.room.code}',
                     style: const TextStyle(color: Colors.white70),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
+            if (_coinsEarned > 0) ...[
+              AppPanel(
+                color: const Color(0xFFFFB800),
+                child: Row(
+                  children: [
+                    const Icon(Icons.monetization_on_outlined, color: Colors.white, size: 28),
+                    const SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Kazandığın Coinler',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          '+$_coinsEarned',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
             _ResultMetrics(
-              correctCount: correctCount,
-              wrongCount: wrongCount,
+              correctCount: widget.correctCount,
+              wrongCount: widget.wrongCount,
               unanswered: unanswered,
-              bestStreak: bestStreak,
+              bestStreak: widget.bestStreak,
             ),
             const SizedBox(height: 16),
-            if (answerRecords != null && answerRecords!.isNotEmpty) ...[
+            if (widget.answerRecords != null && widget.answerRecords!.isNotEmpty) ...[
               AppPanel(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,8 +180,8 @@ class QuizResultScreen extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (_) => ReviewScreen(
-                                records: answerRecords!,
-                                room: room,
+                                records: widget.answerRecords!,
+                                room: widget.room,
                               ),
                             ),
                           );
@@ -151,7 +216,7 @@ class QuizResultScreen extends StatelessWidget {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) =>
-                                LeaderboardScreen(repository: repository),
+                                LeaderboardScreen(repository: widget.repository),
                           ),
                         );
                       },
