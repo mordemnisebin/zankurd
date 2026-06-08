@@ -155,7 +155,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       hintText: 'Oyuncu adın...',
                       prefixIcon: const Icon(Icons.person_outline),
                       filled: true,
-                      fillColor: AppTheme.page,
+                      fillColor: AppTheme.bg,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide.none,
@@ -172,7 +172,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     child: FilledButton.icon(
                       onPressed: _loading ? null : _continueAnonymously,
                       style: FilledButton.styleFrom(
-                        backgroundColor: AppTheme.green,
+                        backgroundColor: AppTheme.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
                         ),

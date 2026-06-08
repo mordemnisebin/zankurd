@@ -7,7 +7,7 @@ class AppPanel extends StatelessWidget {
     required this.child,
     super.key,
     this.color = Colors.white,
-    this.padding = const EdgeInsets.all(16),
+    this.padding = const EdgeInsets.all(18),
   });
 
   final Widget child;
@@ -21,15 +21,9 @@ class AppPanel extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppTheme.line),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
-            blurRadius: 24,
-            offset: const Offset(0, 12),
-          ),
-        ],
+        boxShadow: AppTheme.softShadow,
       ),
       child: child,
     );

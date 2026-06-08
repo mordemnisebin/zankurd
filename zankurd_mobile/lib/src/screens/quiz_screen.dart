@@ -181,16 +181,17 @@ class _QuizScreenState extends State<QuizScreen> {
                     ),
                   ),
                   const SizedBox(height: 18),
-                  for (final answer in question.answers)
-                    if (!hiddenAnswers.contains(answer))
+                  for (var i = 0; i < question.answers.length; i++)
+                    if (!hiddenAnswers.contains(question.answers[i]))
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: _AnswerButton(
-                          answer: answer,
-                          selected: selectedAnswer == answer,
-                          correct: answered && answer == question.correctAnswer,
+                          answer: question.answers[i],
+                          index: i,
+                          selected: selectedAnswer == question.answers[i],
+                          correct: answered && question.answers[i] == question.correctAnswer,
                           disabled: answered,
-                          onTap: () => _answer(answer),
+                          onTap: () => _answer(question.answers[i]),
                         ),
                       ),
                   if (answered) ...[
@@ -604,6 +605,7 @@ class _Metric extends StatelessWidget {
 class _AnswerButton extends StatelessWidget {
   const _AnswerButton({
     required this.answer,
+    required this.index,
     required this.selected,
     required this.correct,
     required this.disabled,
@@ -611,6 +613,7 @@ class _AnswerButton extends StatelessWidget {
   });
 
   final String answer;
+  final int index;
   final bool selected;
   final bool correct;
   final bool disabled;
@@ -619,34 +622,77 @@ class _AnswerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final wrong = selected && !correct && disabled;
-    final color = correct
-        ? const Color(0xFFDFF2E9)
-        : wrong
-        ? const Color(0xFFFDECEA)
-        : AppTheme.page;
 
-    return InkWell(
+    final bgColor = correct
+        ? AppTheme.success
+        : wrong
+            ? AppTheme.error
+            : Colors.white;
+
+    final letterBgColor = (correct || wrong)
+        ? Colors.white.withValues(alpha: 0.25)
+        : AppTheme.primary.withValues(alpha: 0.1);
+
+    final textColor = (correct || wrong) ? Colors.white : AppTheme.ink;
+    final letterColor = (correct || wrong) ? Colors.white : AppTheme.primary;
+
+    const letters = ['A', 'B', 'C', 'D'];
+    final letter = index < letters.length ? letters[index] : '?';
+
+    return GestureDetector(
       onTap: disabled ? null : onTap,
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
         decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: AppTheme.line),
+          color: bgColor,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: correct
+                ? AppTheme.success
+                : wrong
+                    ? AppTheme.error
+                    : AppTheme.line,
+          ),
+          boxShadow: AppTheme.softShadow,
         ),
         child: Row(
           children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: letterBgColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text(
+                  letter,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 14,
+                    color: letterColor,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
             Expanded(
               child: Text(
                 answer,
-                style: const TextStyle(fontWeight: FontWeight.w800),
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
+                  color: textColor,
+                ),
               ),
             ),
             if (correct)
-              const Icon(Icons.check_circle_outline, color: AppTheme.green),
-            if (wrong) const Icon(Icons.cancel_outlined, color: AppTheme.red),
+              const Icon(Icons.check_circle_rounded, color: Colors.white, size: 22),
+            if (wrong)
+              const Icon(Icons.cancel_rounded, color: Colors.white, size: 22),
           ],
         ),
       ),
@@ -681,40 +727,51 @@ class _TinyTag extends StatelessWidget {
 
 class _TimerBar extends StatelessWidget {
   const _TimerBar({required this.remainingMs, required this.totalMs});
-
-  final int remainingMs;
-  final int totalMs;
+  final int remainingMs, totalMs;
 
   @override
   Widget build(BuildContext context) {
-    final fraction = totalMs > 0 ? (remainingMs / totalMs).clamp(0.0, 1.0) : 0.0;
-    final seconds = (remainingMs / 1000).ceil();
-    final isUrgent = fraction <= 0.33;
+    final pct = totalMs > 0 ? (remainingMs / totalMs).clamp(0.0, 1.0) : 0.0;
+    final color = pct > 0.5
+        ? AppTheme.success
+        : pct > 0.25
+            ? AppTheme.warning
+            : AppTheme.error;
+    final secs = (remainingMs / 1000).ceil();
 
     return Row(
       children: [
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: LinearProgressIndicator(
-              value: fraction,
-              minHeight: 8,
-              backgroundColor: AppTheme.line,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                isUrgent ? AppTheme.red : AppTheme.green,
+        Container(
+          width: 44,
+          height: 44,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: color, width: 3),
+          ),
+          child: Center(
+            child: Text(
+              '$secs',
+              style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 16,
+                color: color,
               ),
             ),
           ),
         ),
-        const SizedBox(width: 10),
-        SizedBox(
-          width: 30,
-          child: Text(
-            '${seconds}s',
-            style: TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 13,
-              color: isUrgent ? AppTheme.red : AppTheme.muted,
+        const SizedBox(width: 12),
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: TweenAnimationBuilder<double>(
+              tween: Tween(begin: 1.0, end: pct),
+              duration: const Duration(milliseconds: 100),
+              builder: (_, value, __) => LinearProgressIndicator(
+                value: value,
+                minHeight: 8,
+                backgroundColor: AppTheme.line,
+                valueColor: AlwaysStoppedAnimation(color),
+              ),
             ),
           ),
         ),
