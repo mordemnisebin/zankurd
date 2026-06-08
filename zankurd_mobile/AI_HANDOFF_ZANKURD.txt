@@ -1,0 +1,1172 @@
+ZanKurd AI Handoff Notes
+Generated: 2026-06-08
+
+Purpose
+-------
+This file is a handoff for another AI assistant or developer so the ZanKurd project can continue without reading the whole Codex chat.
+
+Project Goal
+------------
+The user wants a Kurdish/Kurmanci quiz app similar in spirit to the Play Store app "Pirs - Kurdish Online Quiz", but more comprehensive.
+
+Core target features:
+- Kurmanci-first quiz app.
+- Online rooms with room code.
+- Friends can create/join rooms.
+- Live multiplayer/waiting room flow.
+- Questions solved online.
+- Categories, learning mode, jokers/lifelines, leaderboard, coins, bookmarks, reports, tournaments later.
+- Supabase backend.
+- Flutter mobile app.
+
+Workspace / Important Paths
+---------------------------
+Main recommended development path:
+- C:\src\zankurd_mobile
+
+Desktop synced copy:
+- C:\Users\AMARGİ\Desktop\pirs kurmanci\zankurd_mobile
+
+Earlier React/Vite prototype:
+- C:\Users\AMARGİ\Desktop\pirs kurmanci\zankurd
+
+Pirs reference extraction added by user:
+- C:\Users\AMARGİ\Desktop\pirs kurmanci\Pirs_apk_extracted
+
+Important reason for using C:\src:
+- Windows/Flutter/Gradle/Pub had problems with Turkish characters in the user path "AMARGİ".
+- Flutter SDK, Pub cache, Android SDK, and active mobile development were moved to ASCII-only paths.
+
+Installed Tooling
+-----------------
+Flutter:
+- C:\src\flutter
+- Flutter 3.44.1 stable
+- Dart 3.12.1
+
+Pub cache:
+- C:\src\pub-cache
+
+Android SDK:
+- C:\src\android-sdk
+
+JDK:
+- C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot
+
+Android emulator:
+- AVD created: ZanKurd_Pixel
+
+Flutter doctor:
+- Last successful result: No issues found.
+- Windows desktop Flutter support was disabled because plugin symlink support requires Windows Developer Mode. Android/web development is fine.
+
+Supabase Project
+----------------
+User created a Supabase project named:
+- ZanKurd
+
+Public Supabase values provided by the user:
+- NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co
+- NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+
+Important:
+- This is a publishable/public key and is safe for client apps.
+- Do NOT put a Supabase service role key in the mobile app.
+
+Flutter app accepts both variable naming styles:
+- SUPABASE_URL
+- SUPABASE_ANON_KEY
+- NEXT_PUBLIC_SUPABASE_URL
+- NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+
+Example run/build commands:
+flutter run --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co --dart-define=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+
+flutter build apk --debug --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co --dart-define=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+
+Supabase SQL Already Run by User
+--------------------------------
+1. Main schema was run successfully in Supabase SQL Editor.
+   Source file from earlier React prototype:
+   C:\Users\AMARGİ\Desktop\pirs kurmanci\zankurd\supabase\schema.sql
+
+   It created:
+   - profiles
+   - categories
+   - questions
+   - rooms
+   - room_players
+   - room_questions
+   - player_answers
+   - question_reports
+   - favorite_questions
+   - coin_transactions
+   - RLS policies
+
+2. Seed categories and starter questions were run successfully.
+   Current known categories in Supabase:
+   - Ziman
+   - Çand
+   - Dîrok
+   - Edebiyat
+   - Cografya
+   - Muzîk
+
+   Current known approved starter questions:
+   - Di Kurmancî de peyva "zanîn" bi Tirkî çi ye?
+   - Newroz bi gelemperî kîjan rojê tê pîroz kirin?
+   - Mem û Zîn kimin eseri olarak bilinir?
+
+3. Public read policies for anon were run successfully:
+   Source file:
+   C:\src\zankurd_mobile\supabase\public_read_policies.sql
+
+   Purpose:
+   - anon can read active categories
+   - anon can read approved questions
+
+   REST API was verified after this:
+   - categories returned 6 rows
+   - questions returned 3 approved rows
+   - join select categories(name) worked
+
+Supabase SQL Still Needed / User Was Asked To Do
+------------------------------------------------
+The latest assistant asked the user to run:
+
+File:
+C:\src\zankurd_mobile\supabase\online_room_policies.sql
+
+Content:
+drop policy if exists "Users insert their own profile" on public.profiles;
+drop policy if exists "Players update their own room membership" on public.room_players;
+
+create policy "Users insert their own profile"
+  on public.profiles for insert
+  to authenticated
+  with check (id = auth.uid());
+
+create policy "Players update their own room membership"
+  on public.room_players for update
+  to authenticated
+  using (player_id = auth.uid())
+  with check (player_id = auth.uid());
+
+Also user was asked to enable:
+- Supabase Dashboard > Authentication > Providers > Anonymous sign-ins
+
+This is needed because the current app uses anonymous sign-in for fast testing before email/Google login is implemented.
+
+What Was Built In Flutter
+-------------------------
+The Flutter app is no longer just the default counter app. It has:
+
+1. App config:
+   - lib/src/config/app_config.dart
+   - Reads Supabase Dart defines.
+
+2. Theme:
+   - lib/src/theme/app_theme.dart
+
+3. Models:
+   - lib/src/models/player.dart
+   - lib/src/models/quiz_question.dart
+   - lib/src/models/room.dart
+
+4. Data/repository:
+   - lib/src/data/zankurd_repository.dart
+   - lib/src/data/mock_zankurd_repository.dart
+   - lib/src/data/supabase_zankurd_repository.dart
+
+5. Screens:
+   - lib/src/screens/home_screen.dart
+   - lib/src/screens/room_screen.dart
+   - lib/src/screens/quiz_screen.dart
+
+6. Shared widgets:
+   - lib/src/widgets/app_panel.dart
+
+Current Flutter App Behavior
+----------------------------
+On startup:
+- If Supabase URL/key are provided, app initializes Supabase.
+- If not, app runs in mock mode.
+- App attempts to ensure anonymous profile.
+- App loads categories from Supabase.
+- App loads approved questions from Supabase.
+- If Supabase fails, app falls back to local mock questions/categories.
+
+Home screen:
+- Shows ZanKurd branding.
+- Shows actions:
+  - Oda Kur
+  - Kodla Katıl
+  - Hızlı Yarış
+  - Öğren
+- Shows room preview.
+- Shows first loaded question.
+- Shows categories.
+
+Oda Kur:
+- Calls repository.createOnlineRoom().
+- Supabase implementation:
+  - anonymous sign-in if needed
+  - upsert profile
+  - find category ID
+  - insert row into rooms
+  - insert host into room_players
+  - return GameRoom with Supabase room ID/code/player list
+- If online creation fails, falls back to local mock room.
+
+Kodla Katıl:
+- Opens bottom sheet with room code.
+- Calls repository.joinOnlineRoom(code).
+- Supabase implementation:
+  - anonymous sign-in if needed
+  - upsert profile
+  - find room by code
+  - insert into room_players
+  - tolerate duplicate join error 23505
+  - return GameRoom with player list
+- If join fails, falls back to local mock join.
+
+Room screen:
+- Shows room code, category, player list.
+- Has "Hazırım" toggle.
+- Has "Yarışı Başlat".
+- Refreshes room players from Supabase every 4 seconds if room.id exists.
+- Start game loads questions from Supabase and opens QuizScreen.
+
+Quiz screen:
+- Shows score/streak/progress.
+- Shows current question and answers.
+- Shows correct/wrong after answering.
+- Local scoring:
+  - correct answer gives 100 + streak bonus capped by clamp logic.
+- Has bookmark and report UI stubs.
+- Has 50/50 UI stub.
+
+Current Verified Commands
+-------------------------
+These passed after latest changes:
+
+flutter analyze
+flutter test
+flutter build apk --debug --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co --dart-define=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+
+Latest APK:
+C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-debug.apk
+
+Pirs Reference Extraction Notes
+-------------------------------
+The user added a static extraction of the Pirs APK at:
+C:\Users\AMARGİ\Desktop\pirs kurmanci\Pirs_apk_extracted
+
+Important files:
+- README_TR.md
+- reports\APK_ANALYSIS_SUMMARY_TR.md
+- reports\resources_overview.md
+- reports\urls_and_endpoints.txt
+- decoded_xml\res\layout\...
+- databases\quiz_level_schema.sql
+- databases\quiz_bookmark_schema.sql
+
+Pirs observed feature map:
+- Login/profile
+- Main quiz
+- Category/subcategory/level flow
+- Practice quiz
+- Complete/review
+- Learning zone
+- Bookmarks
+- Leaderboards
+- Contests/tournaments
+- Battle play
+- One-to-one waiting/battle
+- Multiplayer game
+- Waiting room
+- Join room dialog
+- Game code layout
+- Coin store
+- Rewards
+- Spin wheel
+- Notifications/settings/privacy
+- Joker/lifeline dialogs
+- Report/submit dialogs
+- Firebase Auth/Realtime Database/Storage/Analytics
+- Google Play Billing
+- Ads
+
+Do not copy Pirs assets/code directly. Use it only as feature/UX reference.
+
+Immediate Next Steps
+--------------------
+1. Confirm user ran online_room_policies.sql and enabled Anonymous sign-ins.
+2. Test live online room:
+   - Build/run app with Supabase defines.
+   - Tap "Oda Kur".
+   - Confirm a row appears in Supabase rooms.
+   - Confirm a row appears in room_players.
+   - Copy room code.
+   - On second emulator/device/session, tap "Kodla Katıl" and use the code.
+   - Confirm room_players gets second player.
+   - Confirm room screen refresh shows both players.
+
+3. If profile insertion fails:
+   - Check anonymous auth enabled.
+   - Check "Users insert their own profile" policy exists.
+
+4. If room creation fails:
+   - Check authenticated insert policy on rooms exists from schema.
+   - Check categories have active rows.
+   - Check category name "Ziman" exists.
+
+5. If room player insert fails:
+   - Check room_players insert policy exists from schema.
+   - Check duplicate player handling.
+
+Recommended Next Implementation
+-------------------------------
+To make online rooms truly live:
+
+1. Replace 4-second polling with Supabase Realtime:
+   - Subscribe to room_players table changes filtered by room_id if supported in current package.
+   - Or use channel broadcast/presence.
+
+2. Add "ready" update:
+   - repository.updateReady(room, ready)
+   - Supabase update room_players set is_ready = ...
+   - UI sends toggle state to backend.
+
+3. Add start room backend action:
+   - update rooms.status = 'active'
+   - create room_questions rows by selected approved questions
+   - clients observe room status and navigate to quiz.
+
+4. Move answer validation to backend:
+   - client submits selected option
+   - Postgres function or Edge Function checks answer and computes score
+   - never trust client for score in production.
+
+5. Add leaderboard table/query:
+   - based on player_answers / matches.
+
+6. Add admin workflow:
+   - question approval
+   - report resolution
+   - category management
+
+7. Add auth UI:
+   - anonymous now for testing
+   - later email/Google login
+   - profile name/avatar setup
+
+Potential SQL Improvements
+--------------------------
+The current room code uses local millisecond-based mock code. For production:
+- Generate unique room codes server-side.
+- Use a Postgres function to create room with collision-safe code.
+- Example code format: ZK-4821 or 6 alphanumeric chars.
+
+Security Notes
+--------------
+- Public read is only for active categories and approved questions.
+- Writes should remain authenticated.
+- Score validation must be backend-side later.
+- Do not put service_role key in app.
+
+Summary of Conversation
+-----------------------
+The user initially wanted to build a Kurdish app similar to the Play Store app Pirs with online rooms and live question solving. We researched Pirs from the Play Store and identified room creation, invite code, random match, tournaments, jokers, leaderboards, question report/favorite, coins, and learning zone as key features.
+
+The user chose the app name "ZanKurd".
+
+We first built a React/Vite web prototype in:
+C:\Users\AMARGİ\Desktop\pirs kurmanci\zankurd
+
+Then the user asked to install required tools. Flutter was missing. We installed/configured:
+- Flutter
+- JDK 17
+- Android SDK command-line tools
+- Android emulator
+- Pub cache / SDK paths moved to C:\src to avoid Turkish character path issues.
+
+We created a Flutter project:
+C:\src\zankurd_mobile
+
+Then we built the mobile app screens and progressively connected Supabase:
+- schema
+- seed categories/questions
+- public read policies
+- Supabase publishable key config
+- real question/category fetch
+- initial online room create/join/player list refresh
+
+The user later added Pirs extracted APK content to the workspace. We inspected the extraction reports and used the feature map to guide the ZanKurd roadmap, especially online rooms and battle/waiting-room functionality.
+
+Current Status
+--------------
+ZanKurd has a working Flutter app, Supabase backend schema, public question/category read, and initial online room create/join code. The next developer/AI should continue from the online room flow, starting by confirming Supabase policies and Anonymous sign-ins.
+
+Latest Codex Session Summary - Leaderboard
+------------------------------------------
+Date:
+- 2026-06-08
+
+User request:
+- Continue from the latest handoff and start the next step: "Liderlik Tablosu" / leaderboard.
+
+Important note:
+- The user mentioned a "Latest Copilot Session Summary" heading, but this file did not contain that exact heading when read.
+- Code did contain newer live-room/answer-submit changes, so the session continued from the actual current code.
+
+Implemented Flutter files:
+- lib/src/models/leaderboard_entry.dart
+- lib/src/screens/leaderboard_screen.dart
+- lib/src/data/zankurd_repository.dart
+- lib/src/data/mock_zankurd_repository.dart
+- lib/src/data/supabase_zankurd_repository.dart
+- lib/src/screens/home_screen.dart
+- test/widget_test.dart
+
+Implemented behavior:
+- Added LeaderboardEntry model.
+- Added repository method:
+  Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50});
+- Mock repository now returns sample leaderboard entries.
+- Supabase repository now attempts to query public.leaderboard_entries ordered by total_score and best_streak.
+- If the Supabase leaderboard view is missing or fails, the app falls back to mock leaderboard data instead of crashing.
+- Added LeaderboardScreen with:
+  - loading state
+  - empty state
+  - retry/error state
+  - top-player highlight panel
+  - ranked player list with score, best streak, rooms played
+- Added "Liderlik" action tile on the home screen.
+- Added widget test for opening leaderboard from the home screen.
+
+New Supabase SQL file:
+- supabase/leaderboard_view.sql
+
+User/developer must run this in Supabase SQL Editor for real backend leaderboard:
+1. Open Supabase Dashboard > SQL Editor.
+2. Paste/run C:\src\zankurd_mobile\supabase\leaderboard_view.sql
+
+Leaderboard SQL behavior:
+- Creates public.leaderboard_entries view from room_players joined to profiles.
+- Aggregates:
+  - sum(room_players.score) as total_score
+  - max(room_players.streak) as best_streak
+  - count(distinct room_id) as rooms_played
+- Grants select to anon and authenticated.
+
+Also improved:
+- supabase/submit_answer_function.sql was updated to prevent duplicate scoring.
+- Previous version could update room_players score before player_answers conflict handling.
+- New version checks whether the player already answered the question first and returns existing score without adding points again.
+
+User/developer should re-run this SQL too:
+- C:\src\zankurd_mobile\supabase\submit_answer_function.sql
+
+Validation after this session:
+- dart format lib test: passed
+- flutter analyze: passed, no issues
+- flutter test: passed, 2 tests
+- flutter build apk --debug with Supabase dart-defines: passed
+
+Latest APK path:
+- C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-debug.apk
+
+Recommended next step:
+- Run leaderboard_view.sql and the updated submit_answer_function.sql in Supabase.
+- Then test an online room, answer questions, return to home, open Liderlik, and confirm real scores appear.
+- After that, implement a quiz result screen that links directly to Liderlik Tablosu after a match ends.
+
+Latest Codex Session Summary - Multi-Platform Prep
+--------------------------------------------------
+Date:
+- 2026-06-08
+
+User request:
+- Continue fixing missing parts and prepare the app for Android, iPhone/iOS, Windows, and all possible platforms.
+
+Implemented:
+- Enabled Flutter platform targets:
+  - web
+  - windows
+  - linux
+  - macos
+  - ios
+- Generated missing platform folders:
+  - ios
+  - macos
+  - linux
+- Existing folders remained:
+  - android
+  - web
+  - windows
+- Set public app name to "ZanKurd" across Android, iOS, Web, Linux, macOS, and Windows source files.
+- Set app/bundle/application ID to:
+  - com.zankurd.app
+- Dart package name remains:
+  - zankurd_mobile
+  This is intentional because Dart packages should be lowercase and underscore-safe.
+- Added release notes:
+  - docs/multi_platform_release.md
+
+Files changed in this step:
+- android/app/build.gradle.kts
+- android/app/src/main/AndroidManifest.xml
+- android/app/src/main/kotlin/com/zankurd/zankurd_mobile/MainActivity.kt
+- ios/Runner/Info.plist
+- ios/Runner.xcodeproj/project.pbxproj
+- linux/CMakeLists.txt
+- linux/runner/my_application.cc
+- macos/Runner/Configs/AppInfo.xcconfig
+- macos/Runner.xcodeproj/project.pbxproj
+- macos/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme
+- web/index.html
+- web/manifest.json
+- windows/CMakeLists.txt
+- windows/runner/main.cpp
+- windows/runner/Runner.rc
+- pubspec.yaml
+- docs/multi_platform_release.md
+
+Validation:
+- dart format lib test: passed
+- flutter test: passed
+- flutter analyze: passed
+- flutter build apk --debug with Supabase dart-defines: passed
+- flutter build web with Supabase dart-defines: passed
+
+Build outputs:
+- Android APK:
+  C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-debug.apk
+- Web build:
+  C:\src\zankurd_mobile\build\web
+
+Windows build status:
+- Initial flutter build windows attempt failed because Windows Developer Mode was not enabled.
+- The settings screen was opened with:
+  start ms-settings:developers
+- After Developer Mode was enabled, this passed:
+  flutter build windows --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co --dart-define=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+- Windows output:
+  C:\src\zankurd_mobile\build\windows\x64\runner\Release\zankurd.exe
+
+iOS/macOS status:
+- iOS and macOS project folders now exist.
+- They cannot be built directly on Windows because Apple requires Xcode on macOS.
+- Use a Mac or cloud macOS build service such as Codemagic/GitHub Actions macOS runners.
+
+Next recommended implementation after platform prep:
+- Add quiz result screen.
+- At the end of a match, show final score, correct/wrong count, ranking, and a button to open Liderlik Tablosu.
+- Then improve true live multiplayer synchronization so all players enter the same active quiz state with the same question sequence.
+
+Latest Codex Session Summary - Quiz Result Screen
+-------------------------------------------------
+Date:
+- 2026-06-08
+
+Implemented:
+- Added quiz result screen:
+  - lib/src/screens/quiz_result_screen.dart
+- Quiz completion now uses a full result screen instead of a small dialog.
+- Result screen shows:
+  - final score
+  - correct count
+  - wrong count
+  - unanswered count
+  - best streak
+  - room category/code
+  - button to open Liderlik Tablosu
+  - button to return to home
+- QuizScreen now tracks:
+  - correctCount
+  - wrongCount
+  - bestStreak
+- Backend duplicate-answer responses with already_answered=true do not inflate local correct/wrong counters.
+- Added widget test:
+  - finishes a quiz and opens the result screen
+
+Validation after result screen:
+- dart format lib test: passed
+- flutter test: passed, 3 tests
+- flutter analyze: passed
+- Android debug APK build: passed
+- Web build: passed
+- Windows build: passed
+
+Updated recommended next step:
+- Improve true live multiplayer synchronization:
+  - persist room_questions when host starts
+  - make every player load the same question sequence
+  - add room-level current question/progress state
+  - show live scoreboard during the quiz
+
+Latest Codex Session Summary - Live Multiplayer Sync Phase 1
+------------------------------------------------------------
+Date:
+- 2026-06-08
+
+User request:
+- Continue implementing true live multiplayer synchronization.
+
+Implemented Flutter/data changes:
+- Added repository method:
+  Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room);
+- Added repository method:
+  Future<void> finishGame(GameRoom room);
+- Mock repository implements both methods.
+- Supabase repository now:
+  - starts a room by calling RPC public.start_room_game
+  - loads the shared question order from public.room_questions
+  - falls back to approved questions if room_questions SQL/policy is not installed yet
+  - finishes a room by calling RPC public.finish_room_game
+- RoomScreen now:
+  - fixes host start navigation bug
+  - prevents duplicate quiz navigation with quizOpened flag
+  - loads questions with loadRoomQuestions(room), so all players use the same sequence
+- QuizScreen now:
+  - subscribes to room players during quiz
+  - shows "Canlı skor" panel
+  - calls finishGame(room) when the last question is completed
+
+New Supabase SQL file:
+- supabase/online_game_sync.sql
+
+User/developer must run this in Supabase SQL Editor:
+1. Open Supabase Dashboard > SQL Editor.
+2. Paste/run:
+   C:\src\zankurd_mobile\supabase\online_game_sync.sql
+
+What online_game_sync.sql does:
+- Creates public.start_room_game(uuid):
+  - checks authenticated user
+  - checks only host can start the room
+  - inserts a stable random ordered list into room_questions if not already present
+  - sets rooms.status = active
+  - sets rooms.current_question_index = 0
+  - sets rooms.started_at
+- Creates public.finish_room_game(uuid):
+  - checks authenticated user is in the room
+  - sets rooms.status = finished
+  - sets rooms.finished_at
+- Adds RLS select policy:
+  - "Room participants can read room questions"
+- Grants execute on both functions to authenticated.
+
+Validation:
+- dart format lib test: passed
+- flutter analyze: passed
+- flutter test: passed, 3 tests
+- flutter build web: passed
+- flutter build windows: passed
+- flutter build apk --debug: passed
+
+Build outputs:
+- Android APK:
+  C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-debug.apk
+- Web:
+  C:\src\zankurd_mobile\build\web
+- Windows:
+  C:\src\zankurd_mobile\build\windows\x64\runner\Release\zankurd.exe
+
+Important next manual step:
+- Run online_game_sync.sql in Supabase before expecting real online room start/same-question sync to work.
+
+Recommended next implementation after running SQL:
+- Test two clients in the same room.
+- Host starts the game.
+- Confirm both clients navigate to quiz.
+- Confirm both clients see the exact same first/second/third question order.
+- Confirm live score updates when either player answers.
+- Then add room-level current_question_index progression so later versions can force everyone to move question-by-question at the same time.
+
+Latest User Direction - Use Pirs As Product Reference
+-----------------------------------------------------
+Date:
+- 2026-06-08
+
+User emphasized:
+- The folder `Pirs_apk_extracted` contains the reference app files.
+- ZanKurd should definitely be based on Pirs' product structure and successful feature set.
+- It should not be a clone, but a modern, more comprehensive ZanKurd version.
+
+Reference folder:
+- C:\Users\AMARGİ\Desktop\pirs kurmanci\Pirs_apk_extracted
+
+New project documentation:
+- docs/pirs_reference_blueprint.md
+
+Important rule:
+- Do not copy Pirs proprietary code/assets/API keys/package identity.
+- Use it as feature/UX/product reference.
+
+Pirs-inspired backbone to follow:
+- Splash/login/profile
+- Category/subcategory/level
+- Quiz play/result/review
+- Bookmarks
+- Leaderboard
+- Contest/tournament
+- Battle/one-to-one/multiplayer waiting rooms
+- Room code/join dialog
+- Coin/reward/spin wheel
+- Notifications/settings/privacy/instructions
+- Question report/submit dialogs
+
+Next implementation should prioritize:
+- Category -> Level flow
+- Review screen
+- Real favorites/bookmarks
+- Profile/statistics
+
+Latest Codex Session Summary - Rich Question Types And Seed Bank
+----------------------------------------------------------------
+Date:
+- 2026-06-08
+
+User request:
+- Continue based on Pirs.
+- Make the question bank rich.
+- Include questions from every category.
+- Support multiple question forms:
+  - visual questions
+  - multiple-choice questions
+  - true/false questions
+- Do not add audio-like questions.
+
+Implemented Flutter changes:
+- QuizQuestion now supports:
+  - QuestionType.multipleChoice
+  - QuestionType.trueFalse
+  - QuestionType.visual
+  - imageUrl
+  - difficulty
+  - typeLabel
+- Quiz screen now shows:
+  - category tag
+  - question type tag
+  - difficulty tag
+  - image area for visual questions
+- Image loading has an error fallback so broken/slow URLs do not break the screen.
+- Mock question bank now includes all main categories:
+  - Ziman
+  - Çand
+  - Dîrok
+  - Edebiyat
+  - Cografya
+  - Muzîk
+- Mock data includes multiple-choice, true/false, and visual examples.
+
+Implemented Supabase changes:
+- Supabase repository reads rich question columns when available:
+  - question_type
+  - image_url
+  - difficulty
+- It falls back to old column selection if rich columns are not installed yet.
+- Room question loading also supports rich columns.
+
+New Supabase SQL file:
+- supabase/rich_question_bank_v1.sql
+
+User/developer must run this in Supabase SQL Editor:
+1. Open Supabase Dashboard > SQL Editor.
+2. Paste/run:
+   C:\src\zankurd_mobile\supabase\rich_question_bank_v1.sql
+
+What rich_question_bank_v1.sql does:
+- Adds questions.question_type if missing.
+- Adds questions.image_url if missing.
+- Adds check constraint to allow only:
+  - multiple_choice
+  - true_false
+  - visual
+- Explicitly does not add audio.
+- Ensures six main categories exist.
+- Deletes previous zankurd_seed_rich_v1 rows.
+- Inserts 30 approved starter questions:
+  - 5 per category
+  - mixed multiple-choice / true-false / visual
+  - visual questions currently use placeholder image URLs so the app has a working visual-question path.
+
+Validation:
+- dart format lib test: passed
+- flutter analyze: passed
+- flutter test: passed, 3 tests
+- flutter build apk --debug: passed
+- flutter build web: passed
+- flutter build windows: passed
+
+Latest Codex Session Summary - Polish, Wiring, And Current Next Steps
+---------------------------------------------------------------------
+Date:
+- 2026-06-08
+
+User feedback:
+- The app still looked too simple.
+- Some UI messages still said features would be connected later.
+- User wants a professional app and repeatedly emphasized using the local Pirs APK extraction as the product reference.
+- iOS can wait for now; focus on Android/Web/Windows.
+
+Important reference:
+- Pirs extraction remains at:
+  C:\Users\AMARGİ\Desktop\pirs kurmanci\Pirs_apk_extracted
+- Use it as product/flow reference only.
+- Do not copy proprietary source, assets, package IDs, API keys, or exact UI.
+
+Implemented in this latest session:
+1. Category -> Level flow
+   - Added:
+     - lib/src/models/quiz_level.dart
+     - lib/src/screens/level_screen.dart
+   - Home category cards now open a level screen.
+   - Each category has 5 levels:
+     - Level 1: difficulty 1
+     - Level 2: difficulty 1-2
+     - Level 3: difficulty 2-3
+     - Level 4: difficulty 3-4
+     - Level 5: difficulty 4-5
+   - Supabase repository now loads questions by category name and difficulty range.
+   - Mock repository supports the same interface.
+
+2. Rich question CSV import verified
+   - User imported:
+     C:\src\zankurd_mobile\supabase\rich_question_bank_v2_questions.csv
+   - REST verification showed:
+     - 2250 questions exist with source_url = zankurd_seed_rich_v2
+     - visual rows use asset://assets/question_images/*.png
+   - Therefore the large bank is now in Supabase and does not need manual SQL paste unless regenerating.
+
+3. Home screen design polish
+   - Home hero text changed to:
+     - "Kurmancî yarış merkezi."
+   - Added dashboard stats strip:
+     - 2250+ questions
+     - 30 levels
+     - 72 visual cards
+   - Replaced simple category chips with more professional category cards:
+     - category-specific icons
+     - color accents
+     - "5 seviye · yarış modu" label
+   - Learn button no longer shows a stub message.
+   - Learn now opens the first category's level flow.
+
+4. Removed/connected visible stub points
+   - Removed "backend aşamasında bağlanacak" behavior from Learn.
+   - Removed the room subtitle saying backend would be connected later.
+   - Room ready state now presents as live state:
+     - "Odadaki durumun diğer oyunculara canlı yansır."
+
+5. Quiz feature wiring
+   - 50/50 joker is now functional locally:
+     - hides two wrong answers for the current question.
+   - Favorite/bookmark icon now calls repository.toggleFavoriteQuestion().
+   - Supabase implementation writes/deletes from:
+     - public.favorite_questions
+   - Report icon now opens a dialog and calls repository.reportQuestion().
+   - Supabase implementation inserts into:
+     - public.question_reports
+   - Mock implementation supports these calls without network.
+
+6. Backend/API additions in Flutter repository layer
+   - Added to lib/src/data/zankurd_repository.dart:
+     - levelsForCategory(String category)
+     - loadLevelQuestions(...)
+     - toggleFavoriteQuestion(...)
+     - reportQuestion(...)
+   - Implemented in:
+     - lib/src/data/mock_zankurd_repository.dart
+     - lib/src/data/supabase_zankurd_repository.dart
+
+Validation after latest work:
+- dart format lib test: passed
+- flutter analyze: passed
+- flutter test: passed, 4 tests
+- flutter build windows with Supabase dart-defines: passed
+- flutter build apk --debug with Supabase dart-defines: passed
+
+Current launched desktop app:
+- Windows exe was rebuilt and launched from:
+  C:\src\zankurd_mobile\build\windows\x64\runner\Release\zankurd.exe
+
+Current Android APK:
+- C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-debug.apk
+
+Desktop sync:
+- Latest source was synced from:
+  C:\src\zankurd_mobile
+- To:
+  C:\Users\AMARGİ\Desktop\pirs kurmanci\zankurd_mobile
+- Excluded build/cache dirs.
+
+Known caveats:
+- Favorite/report Supabase writes require the RLS policies from the original schema to be active:
+  - "Users manage favorites"
+  - "Users report questions"
+- If user sees favorite/report write failures, verify anonymous auth is enabled and these policies exist.
+- Current app still uses anonymous "ZanKurd Oyuncusu" profile.
+- There is not yet a full profile editor.
+- There is not yet a favorites list screen.
+- There is not yet a post-quiz review screen.
+- Coins shown in UI are still static; coin_transactions are not wired to quiz results yet.
+- Daily contest/tournament/reward/spin screens are not implemented yet.
+
+Recommended next implementation order:
+1. Add post-quiz Review screen
+   - Show each question, selected answer, correct answer, explanation, and image if any.
+   - Pass answer history from QuizScreen into QuizResultScreen.
+
+2. Add Favorites/Bookmarks screen
+   - Supabase query should join favorite_questions -> questions -> categories.
+   - Add home action or profile menu entry.
+   - Allow replaying bookmarked questions.
+
+3. Add Profile/Stats screen
+   - Display/edit name in profiles.display_name.
+   - Show total score, best streak, rooms played from leaderboard_entries.
+
+4. Wire coins/rewards
+   - Award coin_transactions on quiz completion.
+   - Show coin balance from transactions sum instead of static 2450.
+
+5. Continue Pirs-inspired breadth
+   - Daily contest
+   - Tournament
+   - Room final ranking
+   - Settings/privacy/instructions
+   - Better app icon/splash and release signing
+
+Development reminders:
+- Work in:
+  C:\src\zankurd_mobile
+- Then sync to desktop copy if needed.
+- Use these env vars before Flutter commands:
+  PUB_CACHE=C:\src\pub-cache
+  JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot
+  ANDROID_HOME=C:\src\android-sdk
+  ANDROID_SDK_ROOT=C:\src\android-sdk
+- Do not run multiple Flutter commands in parallel on this project.
+
+Latest Codex Session Summary - Split Large Supabase Seed SQL
+------------------------------------------------------------
+Date:
+- 2026-06-08
+
+User issue:
+- Supabase SQL Editor cannot paste/run the full rich_question_bank_v2.sql because it is too large.
+
+Implemented:
+- Added split script:
+  - tools/split_question_bank_sql.py
+- Generated smaller SQL files:
+  - supabase/rich_question_bank_v2_parts/00_setup.sql
+  - supabase/rich_question_bank_v2_parts/01_insert.sql
+  - supabase/rich_question_bank_v2_parts/02_insert.sql
+  - supabase/rich_question_bank_v2_parts/03_insert.sql
+  - supabase/rich_question_bank_v2_parts/04_insert.sql
+  - supabase/rich_question_bank_v2_parts/05_insert.sql
+  - supabase/rich_question_bank_v2_parts/06_insert.sql
+  - supabase/rich_question_bank_v2_parts/07_insert.sql
+  - supabase/rich_question_bank_v2_parts/08_insert.sql
+  - supabase/rich_question_bank_v2_parts/09_insert.sql
+  - supabase/rich_question_bank_v2_parts/10_insert.sql
+  - supabase/rich_question_bank_v2_parts/README.txt
+
+Instructions:
+- Do not paste the huge rich_question_bank_v2.sql if the editor rejects it.
+- In Supabase SQL Editor, run each smaller file in order:
+  1. 00_setup.sql
+  2. 01_insert.sql
+  3. 02_insert.sql
+  4. 03_insert.sql
+  5. 04_insert.sql
+  6. 05_insert.sql
+  7. 06_insert.sql
+  8. 07_insert.sql
+  9. 08_insert.sql
+  10. 09_insert.sql
+  11. 10_insert.sql
+
+Notes:
+- 00_setup.sql deletes previous rows where source_url = 'zankurd_seed_rich_v2'.
+- Each insert chunk adds 225 questions.
+- Total remains 2250 questions.
+
+Latest Codex Session Summary - CSV Import Alternative
+-----------------------------------------------------
+Date:
+- 2026-06-08
+
+User issue:
+- Even split SQL files were inconvenient in Supabase SQL Editor.
+- User asked whether there is a direct file upload option.
+
+Implemented:
+- Added CSV exporter:
+  - tools/export_question_bank_csv.py
+- Generated CSV:
+  - supabase/rich_question_bank_v2_questions.csv
+
+CSV details:
+- 2250 rows.
+- Category UUIDs were fetched from Supabase REST API and embedded into the CSV.
+- CSV columns match public.questions insert columns:
+  - category_id
+  - language_code
+  - prompt
+  - option_a
+  - option_b
+  - option_c
+  - option_d
+  - correct_option
+  - explanation
+  - difficulty
+  - is_approved
+  - question_type
+  - image_url
+  - source_url
+
+Recommended user workflow:
+1. Run only the small setup SQL first:
+   C:\src\zankurd_mobile\supabase\rich_question_bank_v2_parts\00_setup.sql
+2. In Supabase Dashboard:
+   Table Editor > questions > Insert/Import data from CSV
+3. Upload:
+   C:\src\zankurd_mobile\supabase\rich_question_bank_v2_questions.csv
+4. Confirm column mapping and import.
+
+Important:
+- If v2 rows were partially inserted before, delete rows where source_url = 'zankurd_seed_rich_v2' before importing again.
+- A short delete query can be run:
+  delete from public.questions where source_url = 'zankurd_seed_rich_v2';
+
+Next recommended implementation:
+- Add Category -> Level flow, inspired by Pirs' Category/Subcategory/Level path.
+- Then add Review screen so players can inspect each answer after a quiz.
+
+Latest Codex Session Summary - 2250 Question Bank Generator
+-----------------------------------------------------------
+Date:
+- 2026-06-08
+
+User request:
+- 30 questions are not enough.
+- The app should have thousands of good questions.
+- Questions should cover all categories and all difficulty levels.
+- Question formats should include visual, multiple-choice, and true/false.
+- No audio question format.
+
+Implemented:
+- Added generator:
+  - tools/generate_rich_question_bank.py
+- Generated SQL:
+  - supabase/rich_question_bank_v2.sql
+
+Generated question bank details:
+- Total questions: 2250
+- Category distribution:
+  - Ziman: 375
+  - Çand: 375
+  - Dîrok: 375
+  - Edebiyat: 375
+  - Cografya: 375
+  - Muzîk: 375
+- Type distribution:
+  - multiple_choice: 900
+  - true_false: 900
+  - visual: 450
+- Difficulty distribution:
+  - all levels 1 through 5 are represented
+- Audio questions:
+  - intentionally not added
+
+Important SQL for user/developer to run:
+- C:\src\zankurd_mobile\supabase\rich_question_bank_v2.sql
+
+What v2 SQL does:
+- Adds rich question columns if missing:
+  - question_type
+  - image_url
+- Ensures main categories exist.
+- Deletes previous rows with source_url = 'zankurd_seed_rich_v2'.
+- Inserts 2250 approved starter questions.
+
+Important quality note:
+- This is a large structured starter bank generated from curated templates.
+- It is enough to make the app feel content-rich.
+- For store-grade factual quality, later add an admin review workflow and replace placeholder visual URLs with real licensed/original images.
+
+Next recommended implementation:
+- Category -> Level flow should use this bank by category and difficulty.
+- Example mapping:
+  - Level 1: difficulty 1
+  - Level 2: difficulty 1-2
+  - Level 3: difficulty 2-3
+  - Level 4: difficulty 3-4
+  - Level 5: difficulty 4-5
+
+Latest Codex Session Summary - Local Visual Assets And Stronger Kurdish Focus
+-----------------------------------------------------------------------------
+Date:
+- 2026-06-08
+
+User asked:
+- Add the real visual side now.
+- Confirm whether questions are mostly related to Kurds/Kurdistan.
+
+Important correction:
+- Before this step, the 2250-question bank had Kurdish/Kurmanci/culture coverage, but not enough explicit Kurdish/Kurdistan framing.
+- Visual questions used external placeholder URLs.
+
+Implemented:
+- Reworked tools/generate_rich_question_bank.py:
+  - Visual questions now use local asset URLs:
+    asset://assets/question_images/<slug>.png
+  - No external placeholder image URLs remain in rich_question_bank_v2.sql.
+  - Questions now more explicitly reference:
+    - Kürt kültürü
+    - Kürt ve Kürdistan tarihi
+    - Kürt edebiyatı
+    - Kürdistan coğrafyası
+    - Kürt müziği
+    - Kurmancî
+- Added image generator:
+  - tools/generate_question_images.py
+- Generated local visual assets:
+  - assets/question_images/*.png
+  - 72 original/generated educational image cards.
+- Updated pubspec.yaml:
+  - includes assets/question_images/
+- Updated QuizScreen:
+  - supports image_url values beginning with asset://
+  - keeps network URL support for future hosted images
+  - has fallback UI if image loading fails
+
+Current rich bank verification:
+- Total questions: 2250
+- Visual question rows: 450
+- Local image files: 72
+- External placeholder URLs: 0
+- Text contains strong Kurdish/Kurdistan/Kurmanci framing:
+  - Kürt appears 2325 times in generated prompts/explanations
+  - Kürdistan appears 900 times
+  - Kurmancî appears 300 times
+
+User/developer must rerun this SQL in Supabase:
+- C:\src\zankurd_mobile\supabase\rich_question_bank_v2.sql
+
+Why rerun:
+- The SQL now points visual questions to bundled asset:// images instead of placeholder.co.
+- The generated text is also more explicitly Kurdish/Kurdistan-focused.
+
+Validation:
+- dart format lib test: passed
+- flutter analyze: passed
+- flutter test: passed, 3 tests
+- flutter build apk --debug: passed
+- flutter build web: passed
+- flutter build windows: passed
