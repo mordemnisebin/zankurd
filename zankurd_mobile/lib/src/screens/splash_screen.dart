@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../theme/app_theme.dart';
-import 'home_screen.dart';
+import 'auth_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({required this.repository, super.key});
@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen>
     if (!mounted) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => HomeScreen(repository: widget.repository),
+        builder: (_) => AuthScreen(repository: widget.repository),
       ),
     );
   }
