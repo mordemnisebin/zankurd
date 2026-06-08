@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import '../models/answer_record.dart';
 import '../models/room.dart';
@@ -6,11 +6,7 @@ import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
 
 class ReviewScreen extends StatelessWidget {
-  const ReviewScreen({
-    required this.records,
-    required this.room,
-    super.key,
-  });
+  const ReviewScreen({required this.records, required this.room, super.key});
 
   final List<AnswerRecord> records;
   final GameRoom room;
@@ -18,19 +14,14 @@ class ReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cevaplar'),
-      ),
+      appBar: AppBar(title: const Text('Cevaplar')),
       body: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         itemCount: records.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 16),
+        separatorBuilder: (_, _) => const SizedBox(height: 16),
         itemBuilder: (context, index) {
           final record = records[index];
-          return _ReviewCard(
-            record: record,
-            index: index,
-          );
+          return _ReviewCard(record: record, index: index);
         },
       ),
     );
@@ -38,10 +29,7 @@ class ReviewScreen extends StatelessWidget {
 }
 
 class _ReviewCard extends StatelessWidget {
-  const _ReviewCard({
-    required this.record,
-    required this.index,
-  });
+  const _ReviewCard({required this.record, required this.index});
 
   final AnswerRecord record;
   final int index;
@@ -118,14 +106,14 @@ class _ReviewCard extends StatelessWidget {
                             width: double.infinity,
                             height: 180,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => const SizedBox(),
+                            errorBuilder: (_, _, _) => const SizedBox(),
                           )
                         : Image.network(
                             record.imageUrl!,
                             width: double.infinity,
                             height: 180,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => const SizedBox(),
+                            errorBuilder: (_, _, _) => const SizedBox(),
                           ),
                   ),
                   const SizedBox(height: 16),
@@ -141,23 +129,22 @@ class _ReviewCard extends StatelessWidget {
                 ...record.answers.map((answer) {
                   final isThisSelected = answer == record.selectedAnswer;
                   final isThisCorrect = answer == record.correctAnswer;
-                  
+
                   Color bgColor;
                   Color textColor;
                   IconData? icon;
 
                   if (isThisCorrect) {
-                     bgColor = AppTheme.green.withValues(alpha: 0.15);
-                     textColor = AppTheme.green;
-                     icon = Icons.check;
+                    bgColor = AppTheme.green.withValues(alpha: 0.15);
+                    textColor = AppTheme.green;
+                    icon = Icons.check;
                   } else if (isThisSelected && !isThisCorrect) {
-                     bgColor = AppTheme.red.withValues(alpha: 0.15);
-                     textColor = AppTheme.red;
-                     icon = Icons.close;
+                    bgColor = AppTheme.red.withValues(alpha: 0.15);
+                    textColor = AppTheme.red;
+                    icon = Icons.close;
                   } else {
-                     bgColor = AppTheme.page;
-                     textColor = AppTheme.ink;
-                     icon = null;
+                    bgColor = AppTheme.line;
+                    textColor = AppTheme.muted;
                   }
 
                   return Container(
@@ -170,9 +157,11 @@ class _ReviewCard extends StatelessWidget {
                       color: bgColor,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: (isThisCorrect || (isThisSelected && !isThisCorrect))
-                             ? textColor
-                             : Colors.transparent,
+                        color:
+                            (isThisCorrect ||
+                                (isThisSelected && !isThisCorrect))
+                            ? textColor
+                            : Colors.transparent,
                         width: 1.5,
                       ),
                     ),
@@ -194,13 +183,13 @@ class _ReviewCard extends StatelessWidget {
                       ],
                     ),
                   );
-                }).toList(),
+                }),
                 if (record.explanation.isNotEmpty) ...[
                   const SizedBox(height: 16),
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF4059AD).withValues(alpha: 0.1),
+                      color: AppTheme.green.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
@@ -208,7 +197,7 @@ class _ReviewCard extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.lightbulb_outline,
-                          color: Color(0xFF4059AD),
+                          color: AppTheme.green,
                           size: 20,
                         ),
                         const SizedBox(width: 10),
@@ -216,7 +205,7 @@ class _ReviewCard extends StatelessWidget {
                           child: Text(
                             record.explanation,
                             style: const TextStyle(
-                              color: Color(0xFF4059AD),
+                              color: AppTheme.green,
                               height: 1.4,
                             ),
                           ),

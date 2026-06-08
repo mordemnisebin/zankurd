@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../models/leaderboard_entry.dart';
@@ -34,7 +34,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _loadProfile() async {
-    setState(() => _loading = true);
+    setState(() {
+      _loading = true;
+    });
+
     try {
       final name = await widget.repository.getProfileName();
       final stats = await widget.repository.getPlayerStats();
@@ -47,14 +50,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
       }
     } catch (_) {
-      if (mounted) setState(() => _loading = false);
+      if (mounted) {
+        setState(() => _loading = false);
+      }
     }
   }
 
   Future<void> _saveProfile() async {
     final newName = _nameController.text.trim();
     if (newName.isEmpty || newName == _currentName) return;
+
     setState(() => _saving = true);
+
     try {
       await widget.repository.updateProfileName(newName);
       if (mounted) {
@@ -95,6 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
+                            color: AppTheme.green,
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -103,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           decoration: InputDecoration(
                             hintText: 'Adını gir...',
                             filled: true,
-                            fillColor: AppTheme.line,
+                            fillColor: AppTheme.page,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide.none,
@@ -141,6 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
+                            color: AppTheme.green,
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -155,22 +164,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               _StatRow(
                                 title: 'Sıralama',
                                 value: '#${_stats!.rank}',
-                                icon: Icons.leaderboard_outlined,
                               ),
+                              const Divider(),
                               _StatRow(
                                 title: 'Toplam Puan',
                                 value: '${_stats!.totalScore}',
-                                icon: Icons.star_outline,
                               ),
+                              const Divider(),
                               _StatRow(
                                 title: 'En İyi Seri',
                                 value: '${_stats!.bestStreak}',
-                                icon: Icons.local_fire_department_outlined,
                               ),
+                              const Divider(),
                               _StatRow(
-                                title: 'Oynanan Oda',
+                                title: 'Oynanan Oyun',
                                 value: '${_stats!.roomsPlayed}',
-                                icon: Icons.meeting_room_outlined,
                               ),
                             ],
                           ),
@@ -185,33 +193,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
 }
 
 class _StatRow extends StatelessWidget {
-  const _StatRow({
-    required this.title,
-    required this.value,
-    required this.icon,
-  });
+  const _StatRow({required this.title, required this.value});
 
   final String title;
   final String value;
-  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(icon, color: AppTheme.green, size: 20),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              title,
-              style: const TextStyle(color: AppTheme.muted),
-            ),
-          ),
+          Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
           Text(
             value,
-            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: AppTheme.green,
+              fontSize: 16,
+            ),
           ),
         ],
       ),

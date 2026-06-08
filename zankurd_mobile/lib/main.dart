@@ -5,7 +5,7 @@ import 'src/config/app_config.dart';
 import 'src/data/mock_zankurd_repository.dart';
 import 'src/data/supabase_zankurd_repository.dart';
 import 'src/data/zankurd_repository.dart';
-import 'src/screens/splash_screen.dart';
+import 'src/screens/home_screen.dart';
 import 'src/theme/app_theme.dart';
 
 Future<void> main() async {
@@ -36,7 +36,7 @@ class ZanKurdApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'ZanKurd',
       theme: AppTheme.light(),
-      home: SplashScreen(repository: repository),
+      home: HomeScreen(repository: repository),
     );
   }
 }

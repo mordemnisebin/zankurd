@@ -1,25 +1,28 @@
 class AnswerRecord {
   const AnswerRecord({
-    required this.questionId,
+    required this.id,
+    required this.category,
     required this.prompt,
     required this.answers,
     required this.correctAnswer,
     required this.selectedAnswer,
     required this.explanation,
-    required this.imageUrl,
-    required this.category,
+    this.imageUrl,
   });
 
-  final String questionId;
+  final String id;
+  final String category;
   final String prompt;
   final List<String> answers;
   final String correctAnswer;
-  final String selectedAnswer;
+  final String? selectedAnswer;
   final String explanation;
   final String? imageUrl;
-  final String category;
 
-  bool get isCorrect => selectedAnswer == correctAnswer;
-  bool get isUnanswered => selectedAnswer.isEmpty;
-  bool get hasImage => imageUrl != null && imageUrl!.trim().isNotEmpty;
+  bool get isCorrect =>
+      selectedAnswer == correctAnswer && selectedAnswer != null;
+
+  bool get isUnanswered => selectedAnswer == null || selectedAnswer!.isEmpty;
+
+  bool get hasImage => imageUrl != null && imageUrl!.isNotEmpty;
 }
