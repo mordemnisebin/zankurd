@@ -53,73 +53,60 @@ class _SkeletonLoaderState extends State<SkeletonLoader>
   }
 }
 
-class _ShimmerPlaceholder extends AnimatedBuilder {
-  _ShimmerPlaceholder({
-    required double height,
-    required double borderRadius,
-    required Animation<double> animation,
-  }) : super(
-          animation: animation,
-          child: _ShimmerChild(
-            height: height,
-            borderRadius: borderRadius,
-          ),
-        );
-
-  @override
-  Widget build(BuildContext context) {
-    final position = animation.value;
-
-    return Container(
-      height: (child as _ShimmerChild).height,
-      decoration: BoxDecoration(
-        borderRadius:
-            BorderRadius.circular((child as _ShimmerChild).borderRadius),
-        color: Colors.grey[300],
-      ),
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.circular((child as _ShimmerChild).borderRadius),
-                color: Colors.grey[200],
-              ),
-            ),
-          ),
-          Positioned(
-            left: -200 + (position * 400),
-            top: 0,
-            bottom: 0,
-            width: 200,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.grey[300]!,
-                    Colors.grey[100]!,
-                    Colors.grey[300]!,
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ShimmerChild extends StatelessWidget {
-  const _ShimmerChild({
+class _ShimmerPlaceholder extends StatelessWidget {
+  const _ShimmerPlaceholder({
     required this.height,
     required this.borderRadius,
+    required this.animation,
   });
 
   final double height;
   final double borderRadius;
+  final Animation<double> animation;
 
   @override
-  Widget build(BuildContext context) => const SizedBox();
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        final position = animation.value;
+        return Container(
+          height: height,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius),
+            color: Colors.grey[300],
+          ),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(borderRadius),
+                    color: Colors.grey[200],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: -200 + (position * 400),
+                top: 0,
+                bottom: 0,
+                width: 200,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.grey[300]!,
+                        Colors.grey[100]!,
+                        Colors.grey[300]!,
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }

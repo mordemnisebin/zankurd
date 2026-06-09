@@ -11,7 +11,6 @@ class GameRoom {
     required this.players,
     required this.status,
     required this.questionCount,
-    this.secondsPerQuestion = 15,
   });
 
   final String? id;
@@ -21,7 +20,6 @@ class GameRoom {
   final List<Player> players;
   final RoomStatus status;
   final int questionCount;
-  final int secondsPerQuestion;
 
   GameRoom copyWith({
     String? id,
@@ -31,7 +29,6 @@ class GameRoom {
     List<Player>? players,
     RoomStatus? status,
     int? questionCount,
-    int? secondsPerQuestion,
   }) {
     return GameRoom(
       id: id ?? this.id,
@@ -41,7 +38,6 @@ class GameRoom {
       players: players ?? this.players,
       status: status ?? this.status,
       questionCount: questionCount ?? this.questionCount,
-      secondsPerQuestion: secondsPerQuestion ?? this.secondsPerQuestion,
     );
   }
 }

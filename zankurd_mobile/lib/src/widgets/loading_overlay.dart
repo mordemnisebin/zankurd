@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 class LoadingOverlay {
   static void show(BuildContext context, {String? message}) {
     showDialog(
@@ -14,11 +16,12 @@ class LoadingOverlay {
             child: Container(
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppTheme.surface,
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppTheme.border),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.2),
+                    color: Colors.black.withValues(alpha: 0.4),
                     blurRadius: 16,
                     offset: const Offset(0, 8),
                   ),
@@ -30,7 +33,10 @@ class LoadingOverlay {
                   const SizedBox(
                     width: 64,
                     height: 64,
-                    child: CircularProgressIndicator(strokeWidth: 3),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3,
+                      color: AppTheme.accent,
+                    ),
                   ),
                   if (message != null) ...[
                     const SizedBox(height: 16),
@@ -39,7 +45,8 @@ class LoadingOverlay {
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.textPrimary,
                       ),
                     ),
                   ],

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
+import '../l10n/lang.dart';
 import '../models/player.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
@@ -35,24 +36,17 @@ class _RoomScreenState extends State<RoomScreen> {
   void initState() {
     super.initState();
     _startSubscriptions();
-
-    // Initial ready state will be sent
     widget.repository.updateReady(room, ready);
   }
 
   void _startSubscriptions() {
-    _playersSub = widget.repository.subscribeRoomPlayers(room).listen((
-      players,
-    ) {
+    _playersSub = widget.repository.subscribeRoomPlayers(room).listen((p) {
       if (!mounted) return;
-      setState(() => room = room.copyWith(players: players));
+      setState(() => room = room.copyWith(players: p));
     });
-
     _statusSub = widget.repository.subscribeRoomStatus(room).listen((status) {
       if (!mounted) return;
-      if (status == RoomStatus.active && !quizOpened) {
-        _navigateToQuiz();
-      }
+      if (status == RoomStatus.active && !quizOpened) _navigateToQuiz();
       setState(() => room = room.copyWith(status: status));
     });
   }
@@ -61,115 +55,196 @@ class _RoomScreenState extends State<RoomScreen> {
   void dispose() {
     _playersSub?.cancel();
     _statusSub?.cancel();
-    // Try to mark not ready when leaving
     widget.repository.updateReady(room, false).catchError((_) {});
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final sortedPlayers = [...room.players]
+    final ku = context.isKu;
+    final sorted = [...room.players]
       ..sort((a, b) => b.score.compareTo(a.score));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Oda'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('${room.code} kopyalandı.')),
-              );
-            },
-            icon: const Icon(Icons.copy_rounded),
+      body: Container(
+        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        child: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+            children: [
+              // Back + copy row
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(
+                      Icons.arrow_back_rounded,
+                      color: AppTheme.textSub,
+                    ),
+                  ),
+                  const Spacer(),
+                  TextButton.icon(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            '${room.code} ${ku ? "kopî kir" : "kopyalandı"}.',
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.copy_rounded, size: 16),
+                    label: Text(
+                      room.code,
+                      style: const TextStyle(fontWeight: FontWeight.w900),
+                    ),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppTheme.textSub,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+
+              // Room hero
+              AppPanel(
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Color(0xFF2563EB), Color(0xFF1D4ED8)],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      ku ? 'Jûra Taybet' : 'Özel Oda',
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.7),
+                        fontSize: 13,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      room.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 26,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        _Pill(label: room.code, icon: Icons.tag_rounded),
+                        const SizedBox(width: 8),
+                        _Pill(
+                          label: room.category,
+                          icon: Icons.category_outlined,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
+
+              // Players panel
+              AppPanel(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.group_outlined,
+                          color: AppTheme.textSub,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          ku ? 'Lîstikvan' : 'Oyuncular',
+                          style: const TextStyle(
+                            color: AppTheme.textPrimary,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 17,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          '${sorted.length}',
+                          style: const TextStyle(
+                            color: AppTheme.textMuted,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    for (var i = 0; i < sorted.length; i++)
+                      _PlayerTile(rank: i + 1, player: sorted[i], isKu: ku),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
+
+              // Ready + start panel
+              AppPanel(
+                child: Column(
+                  children: [
+                    Material(
+                      color: Colors.transparent,
+                      child: SwitchListTile(
+                        value: ready,
+                        onChanged: (v) {
+                          setState(() => ready = v);
+                          widget.repository.updateReady(room, v);
+                        },
+                        title: Text(
+                          ku ? 'Amade Me' : 'Hazırım',
+                          style: const TextStyle(
+                            color: AppTheme.textPrimary,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        subtitle: Text(
+                          ku
+                              ? 'Rewşa te ji lîstikvanên din re ciyê-rast nîşan dide.'
+                              : 'Odadaki durumun diğer oyunculara canlı yansır.',
+                          style: const TextStyle(
+                            color: AppTheme.textMuted,
+                            fontSize: 12,
+                          ),
+                        ),
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.icon(
+                        onPressed: ready && !starting ? _startGameHost : null,
+                        icon: starting
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Icon(Icons.play_arrow_rounded),
+                        label: Text(
+                          starting
+                              ? (ku ? 'Tê Amadekirin' : 'Hazırlanıyor')
+                              : (ku ? 'Yara Destpê Bike' : 'Yarışı Başlat'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-          children: [
-            AppPanel(
-              color: AppTheme.brown,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Özel oda',
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    room.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 28,
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  Row(
-                    children: [
-                      _InfoPill(label: room.code, icon: Icons.tag_rounded),
-                      const SizedBox(width: 8),
-                      _InfoPill(
-                        label: room.category,
-                        icon: Icons.category_outlined,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            AppPanel(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Oyuncular',
-                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
-                  ),
-                  const SizedBox(height: 12),
-                  for (var i = 0; i < sortedPlayers.length; i++)
-                    _PlayerTile(rank: i + 1, player: sortedPlayers[i]),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            AppPanel(
-              child: Column(
-                children: [
-                  Material(
-                    color: Colors.transparent,
-                    child: SwitchListTile(
-                      value: ready,
-                      onChanged: (value) {
-                        setState(() => ready = value);
-                        widget.repository.updateReady(room, value);
-                      },
-                      title: const Text(
-                        'Hazırım',
-                        style: TextStyle(fontWeight: FontWeight.w800),
-                      ),
-                      subtitle: const Text(
-                        'Odadaki durumun diğer oyunculara canlı yansır.',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton.icon(
-                      onPressed: ready && !starting ? _startGameHost : null,
-                      icon: const Icon(Icons.play_arrow_rounded),
-                      label: Text(starting ? 'Hazırlanıyor' : 'Yarışı Başlat'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -184,7 +259,13 @@ class _RoomScreenState extends State<RoomScreen> {
       if (!mounted) return;
       setState(() => starting = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Oyun başlatılamadı. Tekrar dene.')),
+        SnackBar(
+          content: Text(
+            context.isKu
+                ? 'Lîstik nehat destpêkirin. Dîsa bicerib.'
+                : 'Oyun başlatılamadı. Tekrar dene.',
+          ),
+        ),
       );
     }
   }
@@ -199,7 +280,6 @@ class _RoomScreenState extends State<RoomScreen> {
         .loadRoomQuestions(room)
         .catchError((_) => widget.repository.questions);
     if (!mounted) return;
-
     setState(() => starting = false);
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -215,8 +295,8 @@ class _RoomScreenState extends State<RoomScreen> {
   }
 }
 
-class _InfoPill extends StatelessWidget {
-  const _InfoPill({required this.label, required this.icon});
+class _Pill extends StatelessWidget {
+  const _Pill({required this.label, required this.icon});
 
   final String label;
   final IconData icon;
@@ -224,20 +304,22 @@ class _InfoPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.12),
+        color: Colors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: Colors.white, size: 16),
-          const SizedBox(width: 6),
+          Icon(icon, color: Colors.white, size: 15),
+          const SizedBox(width: 5),
           Text(
             label,
             style: const TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w800,
+              fontSize: 13,
             ),
           ),
         ],
@@ -247,10 +329,15 @@ class _InfoPill extends StatelessWidget {
 }
 
 class _PlayerTile extends StatelessWidget {
-  const _PlayerTile({required this.rank, required this.player});
+  const _PlayerTile({
+    required this.rank,
+    required this.player,
+    required this.isKu,
+  });
 
   final int rank;
   final Player player;
+  final bool isKu;
 
   @override
   Widget build(BuildContext context) {
@@ -258,19 +345,20 @@ class _PlayerTile extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppTheme.page,
-        borderRadius: BorderRadius.circular(10),
+        color: AppTheme.surfaceHi,
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
           CircleAvatar(
-            radius: 17,
-            backgroundColor: const Color(0xFFE8F3EE),
+            radius: 16,
+            backgroundColor: AppTheme.correct.withValues(alpha: 0.15),
             child: Text(
               '$rank',
               style: const TextStyle(
-                color: AppTheme.green,
+                color: AppTheme.correct,
                 fontWeight: FontWeight.w900,
+                fontSize: 13,
               ),
             ),
           ),
@@ -281,11 +369,17 @@ class _PlayerTile extends StatelessWidget {
               children: [
                 Text(
                   player.name,
-                  style: const TextStyle(fontWeight: FontWeight.w900),
+                  style: const TextStyle(
+                    color: AppTheme.textPrimary,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
                 Text(
                   player.state,
-                  style: const TextStyle(color: AppTheme.muted, fontSize: 12),
+                  style: const TextStyle(
+                    color: AppTheme.textMuted,
+                    fontSize: 12,
+                  ),
                 ),
               ],
             ),
@@ -295,11 +389,14 @@ class _PlayerTile extends StatelessWidget {
             children: [
               Text(
                 '${player.score}',
-                style: const TextStyle(fontWeight: FontWeight.w900),
+                style: const TextStyle(
+                  color: AppTheme.textPrimary,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
               Text(
-                '${player.streak} seri',
-                style: const TextStyle(color: AppTheme.muted, fontSize: 12),
+                '${player.streak} ${isKu ? "zincîr" : "seri"}',
+                style: const TextStyle(color: AppTheme.textMuted, fontSize: 11),
               ),
             ],
           ),

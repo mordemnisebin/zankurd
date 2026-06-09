@@ -22,8 +22,6 @@ migrate_working_dir/
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
 #.vscode/
-# But launch.json may contain secrets (Supabase keys) — keep it out of git:
-.vscode/launch.json
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -45,3 +43,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Android release signing secrets
+/android/key.properties
+/android/*.jks
+
+# Local release artifacts
+release_packages/

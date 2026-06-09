@@ -1,15 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'firebase_options.dart';
 import 'src/config/app_config.dart';
 import 'src/data/mock_zankurd_repository.dart';
 import 'src/data/supabase_zankurd_repository.dart';
 import 'src/data/zankurd_repository.dart';
-import 'src/screens/home_screen.dart';
+import 'src/l10n/lang.dart';
+import 'src/providers/auth_provider.dart';
+import 'src/screens/app_shell.dart';
 import 'src/theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final ZanKurdRepository repository;
   if (AppConfig.hasSupabaseConfig) {
@@ -26,17 +33,32 @@ Future<void> main() async {
 }
 
 class ZanKurdApp extends StatelessWidget {
-  const ZanKurdApp({required this.repository, super.key});
+  const ZanKurdApp({
+    required this.repository,
+    this.authProvider,
+    this.languageProvider,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
+  final AuthProvider? authProvider;
+  final LanguageProvider? languageProvider;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'ZanKurd',
-      theme: AppTheme.light(),
-      home: HomeScreen(repository: repository),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => languageProvider ?? LanguageProvider(),
+        ),
+        ChangeNotifierProvider(create: (_) => authProvider ?? AuthProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'ZanKurd',
+        theme: AppTheme.dark(),
+        home: AppShell(repository: repository),
+      ),
     );
   }
 }

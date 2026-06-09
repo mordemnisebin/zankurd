@@ -7,6 +7,7 @@ import '../models/answer_record.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
 import 'quiz_result_screen.dart';
@@ -36,16 +37,11 @@ class _QuizScreenState extends State<QuizScreen> {
   int wrongCount = 0;
   String selectedAnswer = '';
   bool favorite = false;
+  bool completing = false;
   Set<String> hiddenAnswers = const {};
+  final List<AnswerRecord> answerRecords = [];
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
-  final List<AnswerRecord> _answerRecords = [];
-
-  Timer? _countdownTimer;
-  int _remainingMs = 0;
-  DateTime? _questionStartTime;
-
-  int get _totalMs => widget.room.secondsPerQuestion * 1000;
 
   QuizQuestion get question => widget.questions[index];
   bool get answered => selectedAnswer.isNotEmpty;
@@ -60,68 +56,10 @@ class _QuizScreenState extends State<QuizScreen> {
       if (!mounted) return;
       setState(() => livePlayers = players);
     });
-    _startTimer();
-  }
-
-  void _startTimer() {
-    _countdownTimer?.cancel();
-    _questionStartTime = DateTime.now();
-    _remainingMs = _totalMs;
-    _countdownTimer = Timer.periodic(const Duration(milliseconds: 100), (_) {
-      if (!mounted) return;
-      setState(() {
-        _remainingMs = (_remainingMs - 100).clamp(0, _totalMs);
-      });
-      if (_remainingMs <= 0) {
-        _countdownTimer?.cancel();
-        if (!answered) _autoSkip();
-      }
-    });
-  }
-
-  void _autoSkip() {
-    _answerRecords.add(
-      AnswerRecord(
-        questionId: question.id,
-        prompt: question.prompt,
-        answers: question.answers,
-        correctAnswer: question.correctAnswer,
-        selectedAnswer: '',
-        explanation: question.explanation,
-        imageUrl: question.imageUrl,
-        category: question.category,
-      ),
-    );
-    if (isLastQuestion) {
-      widget.repository.finishGame(widget.room).catchError((_) {});
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => QuizResultScreen(
-            repository: widget.repository,
-            room: widget.room,
-            score: score,
-            correctCount: correctCount,
-            wrongCount: wrongCount,
-            totalQuestions: widget.questions.length,
-            bestStreak: bestStreak,
-            answerRecords: _answerRecords,
-          ),
-        ),
-      );
-      return;
-    }
-    setState(() {
-      index += 1;
-      selectedAnswer = '';
-      favorite = false;
-      hiddenAnswers = const {};
-    });
-    _startTimer();
   }
 
   @override
   void dispose() {
-    _countdownTimer?.cancel();
     _playersSub?.cancel();
     super.dispose();
   }
@@ -129,8 +67,9 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(widget.room.code),
+        title: Text('${context.s('Jûr', 'Oda')} ${widget.room.code}'),
         actions: [
           IconButton(
             onPressed: _toggleFavorite,
@@ -142,95 +81,142 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-          children: [
-            _ScoreHeader(
-              score: score,
-              streak: streak,
-              progress: '${index + 1}/${widget.questions.length}',
-            ),
-            const SizedBox(height: 10),
-            _TimerBar(remainingMs: _remainingMs, totalMs: _totalMs),
-            const SizedBox(height: 6),
-            AppPanel(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      _TinyTag(label: question.category),
-                      const SizedBox(width: 8),
-                      _TinyTag(label: question.typeLabel),
-                      const Spacer(),
-                      _TinyTag(label: '${question.difficulty}/5'),
-                    ],
-                  ),
-                  const SizedBox(height: 14),
-                  if (question.hasImage) ...[
-                    _QuestionImage(url: question.imageUrl!),
-                    const SizedBox(height: 14),
-                  ],
-                  Text(
-                    question.prompt,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900,
-                      height: 1.16,
+      body: Container(
+        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        child: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+            children: [
+              _ScoreHeader(
+                score: score,
+                streak: streak,
+                progress: '${index + 1}/${widget.questions.length}',
+              ),
+              const SizedBox(height: 16),
+              LinearProgressIndicator(
+                value: (index + 1) / widget.questions.length,
+                minHeight: 8,
+                borderRadius: BorderRadius.circular(99),
+                backgroundColor: AppTheme.surfaceHi,
+                color: AppTheme.accent,
+              ),
+              const SizedBox(height: 16),
+              AppPanel(
+                color: AppTheme.surfaceHi,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        _TinyTag(
+                          label: CategoryNames.localized(
+                            question.category,
+                            context.isKu,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        _TinyTag(label: question.typeLabel),
+                        const Spacer(),
+                        _TinyTag(
+                          label:
+                              '${context.s('Ast', 'Zorluk')} ${question.difficulty}/5',
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 18),
-                  for (var i = 0; i < question.answers.length; i++)
-                    if (!hiddenAnswers.contains(question.answers[i]))
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: _AnswerButton(
-                          answer: question.answers[i],
-                          index: i,
-                          selected: selectedAnswer == question.answers[i],
-                          correct: answered && question.answers[i] == question.correctAnswer,
-                          disabled: answered,
-                          onTap: () => _answer(question.answers[i]),
+                    const SizedBox(height: 14),
+                    if (question.hasImage) ...[
+                      _QuestionImage(url: question.imageUrl!),
+                      const SizedBox(height: 14),
+                    ],
+                    Text(
+                      question.prompt,
+                      style: const TextStyle(
+                        color: AppTheme.textPrimary,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w900,
+                        height: 1.16,
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    for (final answer in question.answers)
+                      if (!hiddenAnswers.contains(answer))
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: _AnswerButton(
+                            answer: answer,
+                            selected: selectedAnswer == answer,
+                            correct:
+                                answered && answer == question.correctAnswer,
+                            disabled: answered,
+                            onTap: () => _answer(answer),
+                          ),
+                        ),
+                    if (answered) ...[
+                      const SizedBox(height: 6),
+                      Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: AppTheme.bg.withValues(alpha: 0.45),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppTheme.border),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Icon(
+                              Icons.lightbulb_outline,
+                              color: AppTheme.gold,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                question.explanation,
+                                style: const TextStyle(
+                                  color: AppTheme.textSub,
+                                  height: 1.35,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                  if (answered) ...[
-                    const SizedBox(height: 6),
-                    Text(
-                      question.explanation,
-                      style: const TextStyle(color: AppTheme.muted),
-                    ),
+                    ],
                   ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: answered ? null : _useFiftyFifty,
+                      icon: const Icon(Icons.auto_awesome_outlined),
+                      label: const Text('50/50'),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: FilledButton.icon(
+                      onPressed: answered && !completing ? () => _next() : null,
+                      icon: Icon(
+                        isLastQuestion
+                            ? Icons.flag_outlined
+                            : Icons.arrow_forward_rounded,
+                      ),
+                      label: Text(
+                        isLastQuestion
+                            ? context.s('Qedandin', 'Bitir')
+                            : context.s('Ya piştî vê', 'Sonraki'),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: answered ? null : _useFiftyFifty,
-                    icon: const Icon(Icons.auto_awesome_outlined),
-                    label: const Text('50/50'),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: FilledButton.icon(
-                    onPressed: answered ? _next : null,
-                    icon: Icon(
-                      isLastQuestion
-                          ? Icons.flag_outlined
-                          : Icons.arrow_forward_rounded,
-                    ),
-                    label: Text(isLastQuestion ? 'Bitir' : 'Sonraki'),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _LiveScoreboard(players: livePlayers),
-          ],
+              const SizedBox(height: 16),
+              _LiveScoreboard(players: livePlayers),
+            ],
+          ),
         ),
       ),
     );
@@ -238,11 +224,6 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Future<void> _answer(String answer) async {
     if (answered) return;
-
-    _countdownTimer?.cancel();
-    final responseMs = _questionStartTime == null
-        ? 2000
-        : DateTime.now().difference(_questionStartTime!).inMilliseconds;
 
     // Optimistically select it to disable buttons immediately
     setState(() {
@@ -263,7 +244,6 @@ class _QuizScreenState extends State<QuizScreen> {
         room: widget.room,
         question: question,
         selectedOptionOptionKey: optionKey,
-        responseMs: responseMs,
       );
 
       if (!mounted) return;
@@ -283,6 +263,7 @@ class _QuizScreenState extends State<QuizScreen> {
             wrongCount += 1;
           }
         }
+        _recordAnswer(answer);
       });
     } catch (_) {
       // Fallback local logic if network fails during answer submit
@@ -298,27 +279,25 @@ class _QuizScreenState extends State<QuizScreen> {
           streak = 0;
           wrongCount += 1;
         }
+        _recordAnswer(answer);
       });
     }
   }
 
-  void _next() {
-    // Record the current question result
-    _answerRecords.add(
-      AnswerRecord(
-        questionId: question.id,
-        prompt: question.prompt,
-        answers: question.answers,
-        correctAnswer: question.correctAnswer,
-        selectedAnswer: selectedAnswer,
-        explanation: question.explanation,
-        imageUrl: question.imageUrl,
-        category: question.category,
-      ),
-    );
-
+  Future<void> _next() async {
     if (isLastQuestion) {
+      if (completing) return;
+      setState(() => completing = true);
       widget.repository.finishGame(widget.room).catchError((_) {});
+      final coinsAwarded = await widget.repository
+          .awardQuizCoins(
+            score: score,
+            correctCount: correctCount,
+            bestStreak: bestStreak,
+            totalQuestions: widget.questions.length,
+          )
+          .catchError((_) => 0);
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => QuizResultScreen(
@@ -329,7 +308,8 @@ class _QuizScreenState extends State<QuizScreen> {
             wrongCount: wrongCount,
             totalQuestions: widget.questions.length,
             bestStreak: bestStreak,
-            answerRecords: _answerRecords,
+            answerRecords: answerRecords,
+            coinsAwarded: coinsAwarded,
           ),
         ),
       );
@@ -340,9 +320,9 @@ class _QuizScreenState extends State<QuizScreen> {
       index += 1;
       selectedAnswer = '';
       favorite = false;
+      completing = false;
       hiddenAnswers = const {};
     });
-    _startTimer();
   }
 
   void _useFiftyFifty() {
@@ -351,6 +331,28 @@ class _QuizScreenState extends State<QuizScreen> {
         .take(2)
         .toSet();
     setState(() => hiddenAnswers = wrongAnswers);
+  }
+
+  void _recordAnswer(String answer) {
+    final existingIndex = answerRecords.indexWhere(
+      (record) => record.id == question.id,
+    );
+    final record = AnswerRecord(
+      id: question.id,
+      category: question.category,
+      prompt: question.prompt,
+      answers: question.answers,
+      correctAnswer: question.correctAnswer,
+      selectedAnswer: answer,
+      explanation: question.explanation,
+      imageUrl: question.imageUrl,
+    );
+
+    if (existingIndex == -1) {
+      answerRecords.add(record);
+    } else {
+      answerRecords[existingIndex] = record;
+    }
   }
 
   Future<void> _toggleFavorite() async {
@@ -365,42 +367,52 @@ class _QuizScreenState extends State<QuizScreen> {
       setState(() => favorite = saved);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(saved ? 'Soru kaydedildi.' : 'Kayıt kaldırıldı.'),
+          content: Text(
+            saved
+                ? context.s('Pirs hat tomarkirin.', 'Soru kaydedildi.')
+                : context.s('Tomar hate rakirin.', 'Kayıt kaldırıldı.'),
+          ),
         ),
       );
     } catch (_) {
       if (!mounted) return;
       setState(() => favorite = !nextFavorite);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Soru kaydedilemedi.')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.s('Pirs nehate tomarkirin.', 'Soru kaydedilemedi.'),
+          ),
+        ),
+      );
     }
   }
 
   Future<void> _reportQuestion() async {
-    final controller = TextEditingController(text: 'Cevap veya içerik hatası');
+    final controller = TextEditingController(
+      text: context.s('Şaşiya bersiv an naverokê', 'Cevap veya içerik hatası'),
+    );
     final reason = await showDialog<String>(
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: const Text('Soruyu bildir'),
+          title: Text(context.s('Pirsê ragihîne', 'Soruyu bildir')),
           content: TextField(
             controller: controller,
             minLines: 2,
             maxLines: 4,
-            decoration: const InputDecoration(
-              labelText: 'Neden',
+            decoration: InputDecoration(
+              labelText: context.s('Sedem', 'Neden'),
               border: OutlineInputBorder(),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Vazgeç'),
+              child: Text(context.s('Betal bike', 'Vazgeç')),
             ),
             FilledButton(
               onPressed: () => Navigator.of(dialogContext).pop(controller.text),
-              child: const Text('Gönder'),
+              child: Text(context.s('Bişîne', 'Gönder')),
             ),
           ],
         );
@@ -412,14 +424,22 @@ class _QuizScreenState extends State<QuizScreen> {
     try {
       await widget.repository.reportQuestion(question, reason);
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Soru raporu gönderildi.')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.s('Rapor hat şandin.', 'Soru raporu gönderildi.'),
+          ),
+        ),
+      );
     } catch (_) {
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Rapor gönderilemedi.')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.s('Rapor nehat şandin.', 'Rapor gönderilemedi.'),
+          ),
+        ),
+      );
     }
   }
 }
@@ -435,16 +455,20 @@ class _LiveScoreboard extends StatelessWidget {
       ..sort((a, b) => b.score.compareTo(a.score));
 
     return AppPanel(
+      color: AppTheme.surfaceHi,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.leaderboard_outlined, color: AppTheme.green),
-              SizedBox(width: 8),
+              const Icon(Icons.leaderboard_outlined, color: AppTheme.gold),
+              const SizedBox(width: 8),
               Text(
-                'Canlı skor',
-                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
+                context.s('Skora zindî', 'Canlı skor'),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 18,
+                ),
               ),
             ],
           ),
@@ -469,13 +493,24 @@ class _LiveScoreRow extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         children: [
-          SizedBox(
+          Container(
             width: 28,
+            height: 28,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppTheme.bg,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: AppTheme.border),
+            ),
             child: Text(
               '$rank',
-              style: const TextStyle(fontWeight: FontWeight.w900),
+              style: const TextStyle(
+                color: AppTheme.textPrimary,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
+          const SizedBox(width: 10),
           Expanded(
             child: Text(
               player.name,
@@ -487,7 +522,10 @@ class _LiveScoreRow extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             '${player.score}',
-            style: const TextStyle(fontWeight: FontWeight.w900),
+            style: const TextStyle(
+              color: AppTheme.gold,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ],
       ),
@@ -534,11 +572,11 @@ class _QuestionImageFallback extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFFE8F3EE),
+      color: AppTheme.surfaceHi,
       alignment: Alignment.center,
       child: const Icon(
         Icons.image_not_supported_outlined,
-        color: AppTheme.green,
+        color: AppTheme.textMuted,
         size: 36,
       ),
     );
@@ -561,15 +599,15 @@ class _ScoreHeader extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _Metric(label: 'Puan', value: '$score'),
+          child: _Metric(label: context.s('Pûan', 'Puan'), value: '$score'),
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: _Metric(label: 'Seri', value: '$streak'),
+          child: _Metric(label: context.s('Rêz', 'Seri'), value: '$streak'),
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: _Metric(label: 'Soru', value: progress),
+          child: _Metric(label: context.s('Pirs', 'Soru'), value: progress),
         ),
       ],
     );
@@ -590,11 +628,15 @@ class _Metric extends StatelessWidget {
         children: [
           Text(
             value,
-            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
+            style: const TextStyle(
+              color: AppTheme.textPrimary,
+              fontWeight: FontWeight.w900,
+              fontSize: 20,
+            ),
           ),
           Text(
             label,
-            style: const TextStyle(color: AppTheme.muted, fontSize: 12),
+            style: const TextStyle(color: AppTheme.textMuted, fontSize: 12),
           ),
         ],
       ),
@@ -605,7 +647,6 @@ class _Metric extends StatelessWidget {
 class _AnswerButton extends StatelessWidget {
   const _AnswerButton({
     required this.answer,
-    required this.index,
     required this.selected,
     required this.correct,
     required this.disabled,
@@ -613,7 +654,6 @@ class _AnswerButton extends StatelessWidget {
   });
 
   final String answer;
-  final int index;
   final bool selected;
   final bool correct;
   final bool disabled;
@@ -622,77 +662,42 @@ class _AnswerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final wrong = selected && !correct && disabled;
-
-    final bgColor = correct
-        ? AppTheme.success
+    final color = correct
+        ? AppTheme.correct.withValues(alpha: 0.15)
         : wrong
-            ? AppTheme.error
-            : Colors.white;
+        ? AppTheme.wrong.withValues(alpha: 0.15)
+        : AppTheme.bg.withValues(alpha: 0.45);
+    final borderColor = correct
+        ? AppTheme.correct
+        : wrong
+        ? AppTheme.wrong
+        : AppTheme.border;
 
-    final letterBgColor = (correct || wrong)
-        ? Colors.white.withValues(alpha: 0.25)
-        : AppTheme.primary.withValues(alpha: 0.1);
-
-    final textColor = (correct || wrong) ? Colors.white : AppTheme.ink;
-    final letterColor = (correct || wrong) ? Colors.white : AppTheme.primary;
-
-    const letters = ['A', 'B', 'C', 'D'];
-    final letter = index < letters.length ? letters[index] : '?';
-
-    return GestureDetector(
+    return InkWell(
       onTap: disabled ? null : onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
         decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: correct
-                ? AppTheme.success
-                : wrong
-                    ? AppTheme.error
-                    : AppTheme.line,
-          ),
-          boxShadow: AppTheme.softShadow,
+          color: color,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: borderColor, width: 1.4),
         ),
         child: Row(
           children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: letterBgColor,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Center(
-                child: Text(
-                  letter,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 14,
-                    color: letterColor,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
             Expanded(
               child: Text(
                 answer,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15,
-                  color: textColor,
+                style: const TextStyle(
+                  color: AppTheme.textPrimary,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
             if (correct)
-              const Icon(Icons.check_circle_rounded, color: Colors.white, size: 22),
-            if (wrong)
-              const Icon(Icons.cancel_rounded, color: Colors.white, size: 22),
+              const Icon(Icons.check_circle_outline, color: AppTheme.correct),
+            if (wrong) const Icon(Icons.cancel_outlined, color: AppTheme.wrong),
           ],
         ),
       ),
@@ -710,72 +715,18 @@ class _TinyTag extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       decoration: BoxDecoration(
-        color: const Color(0xFFE8F3EE),
+        color: AppTheme.bg.withValues(alpha: 0.55),
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppTheme.border),
       ),
       child: Text(
         label,
         style: const TextStyle(
-          color: AppTheme.green,
+          color: AppTheme.textSub,
           fontWeight: FontWeight.w900,
           fontSize: 12,
         ),
       ),
-    );
-  }
-}
-
-class _TimerBar extends StatelessWidget {
-  const _TimerBar({required this.remainingMs, required this.totalMs});
-  final int remainingMs, totalMs;
-
-  @override
-  Widget build(BuildContext context) {
-    final pct = totalMs > 0 ? (remainingMs / totalMs).clamp(0.0, 1.0) : 0.0;
-    final color = pct > 0.5
-        ? AppTheme.success
-        : pct > 0.25
-            ? AppTheme.warning
-            : AppTheme.error;
-    final secs = (remainingMs / 1000).ceil();
-
-    return Row(
-      children: [
-        Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: color, width: 3),
-          ),
-          child: Center(
-            child: Text(
-              '$secs',
-              style: TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 16,
-                color: color,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: TweenAnimationBuilder<double>(
-              tween: Tween(begin: 1.0, end: pct),
-              duration: const Duration(milliseconds: 100),
-              builder: (_, value, __) => LinearProgressIndicator(
-                value: value,
-                minHeight: 8,
-                backgroundColor: AppTheme.line,
-                valueColor: AlwaysStoppedAnimation(color),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

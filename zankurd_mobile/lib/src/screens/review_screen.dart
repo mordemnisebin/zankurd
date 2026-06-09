@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/lang.dart';
 import '../models/answer_record.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
@@ -13,16 +14,118 @@ class ReviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final correct = records.where((r) => r.isCorrect).length;
+    final wrong = records.where((r) => !r.isCorrect && !r.isUnanswered).length;
+    final empty = records.where((r) => r.isUnanswered).length;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Cevaplar')),
-      body: ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        itemCount: records.length,
-        separatorBuilder: (_, _) => const SizedBox(height: 16),
-        itemBuilder: (context, index) {
-          final record = records[index];
-          return _ReviewCard(record: record, index: index);
-        },
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(title: Text(context.s('Bersiv', 'Cevaplar'))),
+      body: Container(
+        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        child: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+            children: [
+              _SummaryStrip(correct: correct, wrong: wrong, empty: empty),
+              const SizedBox(height: 16),
+              for (var i = 0; i < records.length; i++) ...[
+                _ReviewCard(record: records[i], index: i),
+                if (i != records.length - 1) const SizedBox(height: 14),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SummaryStrip extends StatelessWidget {
+  const _SummaryStrip({
+    required this.correct,
+    required this.wrong,
+    required this.empty,
+  });
+
+  final int correct;
+  final int wrong;
+  final int empty;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _SummaryTile(
+            color: AppTheme.correct,
+            icon: Icons.check_circle_outline,
+            value: '$correct',
+            label: context.s('Rast', 'Doğru'),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: _SummaryTile(
+            color: AppTheme.wrong,
+            icon: Icons.cancel_outlined,
+            value: '$wrong',
+            label: context.s('Şaş', 'Yanlış'),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: _SummaryTile(
+            color: AppTheme.gold,
+            icon: Icons.hourglass_empty_rounded,
+            value: '$empty',
+            label: context.s('Vala', 'Boş'),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SummaryTile extends StatelessWidget {
+  const _SummaryTile({
+    required this.color,
+    required this.icon,
+    required this.value,
+    required this.label,
+  });
+
+  final Color color;
+  final IconData icon;
+  final String value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceHi,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: color.withValues(alpha: 0.45)),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, color: color, size: 20),
+          const SizedBox(height: 6),
+          Text(
+            value,
+            style: const TextStyle(
+              color: AppTheme.textPrimary,
+              fontWeight: FontWeight.w900,
+              fontSize: 20,
+            ),
+          ),
+          Text(
+            label,
+            style: const TextStyle(color: AppTheme.textMuted, fontSize: 12),
+          ),
+        ],
       ),
     );
   }
@@ -39,22 +142,22 @@ class _ReviewCard extends StatelessWidget {
     final bool isCorrect = record.isCorrect;
     final bool isUnanswered = record.isUnanswered;
 
-    Color headerColor;
-    IconData headerIcon;
-    String headerText;
+    final Color headerColor;
+    final IconData headerIcon;
+    final String headerText;
 
     if (isUnanswered) {
-      headerColor = Colors.orange;
+      headerColor = AppTheme.gold;
       headerIcon = Icons.help_outline;
-      headerText = 'BOŞ BIRAKILDI';
+      headerText = context.s('VALA MA', 'BOŞ BIRAKILDI');
     } else if (isCorrect) {
-      headerColor = AppTheme.green;
+      headerColor = AppTheme.correct;
       headerIcon = Icons.check_circle_outline;
-      headerText = 'DOĞRU';
+      headerText = context.s('RAST', 'DOĞRU');
     } else {
-      headerColor = AppTheme.red;
+      headerColor = AppTheme.wrong;
       headerIcon = Icons.cancel_outlined;
-      headerText = 'YANLIŞ';
+      headerText = context.s('ŞAŞ', 'YANLIŞ');
     }
 
     return AppPanel(
@@ -65,7 +168,7 @@ class _ReviewCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: headerColor.withValues(alpha: 0.15),
+              color: headerColor.withValues(alpha: 0.14),
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(16),
               ),
@@ -78,15 +181,27 @@ class _ReviewCard extends StatelessWidget {
                   headerText,
                   style: TextStyle(
                     color: headerColor,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 0.5,
                   ),
                 ),
                 const Spacer(),
-                Text(
-                  'Soru ${index + 1}',
-                  style: const TextStyle(
-                    color: AppTheme.muted,
-                    fontWeight: FontWeight.w600,
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppTheme.bg.withValues(alpha: 0.35),
+                    borderRadius: BorderRadius.circular(99),
+                  ),
+                  child: Text(
+                    context.s('Pirs ${index + 1}', 'Soru ${index + 1}'),
+                    style: const TextStyle(
+                      color: AppTheme.textSub,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
               ],
@@ -121,8 +236,10 @@ class _ReviewCard extends StatelessWidget {
                 Text(
                   record.prompt,
                   style: const TextStyle(
+                    color: AppTheme.textPrimary,
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w800,
+                    height: 1.35,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -130,21 +247,21 @@ class _ReviewCard extends StatelessWidget {
                   final isThisSelected = answer == record.selectedAnswer;
                   final isThisCorrect = answer == record.correctAnswer;
 
-                  Color bgColor;
-                  Color textColor;
+                  final Color bgColor;
+                  final Color textColor;
                   IconData? icon;
 
                   if (isThisCorrect) {
-                    bgColor = AppTheme.green.withValues(alpha: 0.15);
-                    textColor = AppTheme.green;
+                    bgColor = AppTheme.correct.withValues(alpha: 0.14);
+                    textColor = AppTheme.correct;
                     icon = Icons.check;
-                  } else if (isThisSelected && !isThisCorrect) {
-                    bgColor = AppTheme.red.withValues(alpha: 0.15);
-                    textColor = AppTheme.red;
+                  } else if (isThisSelected) {
+                    bgColor = AppTheme.wrong.withValues(alpha: 0.14);
+                    textColor = AppTheme.wrong;
                     icon = Icons.close;
                   } else {
-                    bgColor = AppTheme.line;
-                    textColor = AppTheme.muted;
+                    bgColor = AppTheme.surfaceHi;
+                    textColor = AppTheme.textMuted;
                   }
 
                   return Container(
@@ -157,12 +274,8 @@ class _ReviewCard extends StatelessWidget {
                       color: bgColor,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color:
-                            (isThisCorrect ||
-                                (isThisSelected && !isThisCorrect))
-                            ? textColor
-                            : Colors.transparent,
-                        width: 1.5,
+                        color: icon != null ? textColor : AppTheme.border,
+                        width: icon != null ? 1.5 : 1,
                       ),
                     ),
                     child: Row(
@@ -171,8 +284,10 @@ class _ReviewCard extends StatelessWidget {
                           child: Text(
                             answer,
                             style: TextStyle(
-                              color: textColor,
-                              fontWeight: FontWeight.w500,
+                              color: icon != null
+                                  ? textColor
+                                  : AppTheme.textSub,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
@@ -185,19 +300,22 @@ class _ReviewCard extends StatelessWidget {
                   );
                 }),
                 if (record.explanation.isNotEmpty) ...[
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppTheme.green.withValues(alpha: 0.1),
+                      color: AppTheme.violet.withValues(alpha: 0.14),
                       borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppTheme.violet.withValues(alpha: 0.4),
+                      ),
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Icon(
                           Icons.lightbulb_outline,
-                          color: AppTheme.green,
+                          color: Color(0xFFB794F6),
                           size: 20,
                         ),
                         const SizedBox(width: 10),
@@ -205,7 +323,7 @@ class _ReviewCard extends StatelessWidget {
                           child: Text(
                             record.explanation,
                             style: const TextStyle(
-                              color: AppTheme.green,
+                              color: AppTheme.textSub,
                               height: 1.4,
                             ),
                           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 class ErrorDialog {
   static void show(
     BuildContext context, {
@@ -12,13 +14,16 @@ class ErrorDialog {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: AppTheme.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: AppTheme.border),
+        ),
         title: Row(
           children: [
-            const Icon(Icons.error_outline, color: Colors.red, size: 28),
+            const Icon(Icons.error_outline, color: AppTheme.wrong, size: 28),
             const SizedBox(width: 12),
-            Expanded(
-              child: Text(title),
-            ),
+            Expanded(child: Text(title)),
           ],
         ),
         content: Text(message),
@@ -45,7 +50,8 @@ class ErrorDialog {
     show(
       context,
       title: 'Çevrimdışı Mod',
-      message: 'İnternet bağlantısı yok. Soruları çevrimdışı olarak yüklüyorum.',
+      message:
+          'İnternet bağlantısı yok. Soruları çevrimdışı olarak yüklüyorum.',
     );
   }
 }

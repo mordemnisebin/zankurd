@@ -37,16 +37,20 @@ abstract class ZanKurdRepository {
   Future<void> updateReady(GameRoom room, bool isReady);
   Future<void> startGame(GameRoom room);
   Future<void> finishGame(GameRoom room);
-  Future<int> getProfileCoins();
   Future<Map<String, dynamic>> submitAnswer({
     required GameRoom room,
     required QuizQuestion question,
     required String selectedOptionOptionKey,
-    int responseMs = 2000,
   });
   Future<bool> toggleFavoriteQuestion(QuizQuestion question, bool favorite);
   Future<void> reportQuestion(QuizQuestion question, String reason);
   Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50});
   Future<List<QuizQuestion>> loadFavoriteQuestions();
+  Future<int> loadCoinBalance();
+  Future<int> awardQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+  });
 }
-

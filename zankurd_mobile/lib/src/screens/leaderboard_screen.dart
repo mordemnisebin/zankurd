@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
+import '../l10n/lang.dart';
 import '../models/leaderboard_entry.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
@@ -15,92 +16,106 @@ class LeaderboardScreen extends StatefulWidget {
 }
 
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
-  late Future<List<LeaderboardEntry>> _leaderboardFuture;
+  late Future<List<LeaderboardEntry>> _future;
 
   @override
   void initState() {
     super.initState();
-    _leaderboardFuture = widget.repository.loadLeaderboard();
+    _future = widget.repository.loadLeaderboard();
   }
 
-  void _refresh() {
-    setState(() {
-      _leaderboardFuture = widget.repository.loadLeaderboard();
-    });
-  }
+  void _refresh() =>
+      setState(() => _future = widget.repository.loadLeaderboard());
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Liderlik Tablosu'),
-        actions: [
-          IconButton(
-            tooltip: 'Yenile',
-            onPressed: _refresh,
-            icon: const Icon(Icons.refresh_rounded),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: FutureBuilder<List<LeaderboardEntry>>(
-          future: _leaderboardFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const _LoadingLeaderboard();
-            }
+    final ku = context.isKu;
 
-            if (snapshot.hasError) {
-              return _LeaderboardMessage(
-                icon: Icons.error_outline,
-                title: 'Liderlik yüklenemedi',
-                message: 'Bağlantıyı kontrol edip tekrar dene.',
-                onRetry: _refresh,
-              );
-            }
-
-            final entries = snapshot.data ?? const [];
-            if (entries.isEmpty) {
-              return _LeaderboardMessage(
-                icon: Icons.emoji_events_outlined,
-                title: 'Henüz puan yok',
-                message: 'İlk online yarıştan sonra sıralama burada görünür.',
-                onRetry: _refresh,
-              );
-            }
-
-            return ListView(
-              padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-              children: [
-                _LeaderboardHero(entries: entries),
-                const SizedBox(height: 16),
-                for (final entry in entries) _LeaderboardRow(entry: entry),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class _LoadingLeaderboard extends StatelessWidget {
-  const _LoadingLeaderboard();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(18),
-      child: AppPanel(
-        child: Row(
+    return Container(
+      decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+      child: SafeArea(
+        child: Column(
           children: [
-            SizedBox(
-              width: 22,
-              height: 22,
-              child: CircularProgressIndicator(strokeWidth: 2.4),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          ku ? 'Tabloya Pêşderiyan' : 'Liderlik Tablosu',
+                          style: const TextStyle(
+                            color: AppTheme.textPrimary,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 26,
+                          ),
+                        ),
+                        Text(
+                          ku ? 'Baştirîn lîstikvan' : 'En iyi oyuncular',
+                          style: const TextStyle(
+                            color: AppTheme.textMuted,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: _refresh,
+                    icon: const Icon(
+                      Icons.refresh_rounded,
+                      color: AppTheme.textSub,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(width: 12),
-            Expanded(child: Text('Liderlik tablosu yükleniyor...')),
+            Expanded(
+              child: FutureBuilder<List<LeaderboardEntry>>(
+                future: _future,
+                builder: (ctx, snap) {
+                  if (snap.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: AppTheme.accent),
+                    );
+                  }
+                  if (snap.hasError) {
+                    return _Empty(
+                      icon: Icons.error_outline,
+                      title: ku ? 'Tabloya barnekirî' : 'Liderlik yüklenemedi',
+                      message: ku
+                          ? 'Girêdanê kontrol bike û dîsa bicerib.'
+                          : 'Bağlantıyı kontrol edip tekrar dene.',
+                      onRetry: _refresh,
+                      isKu: ku,
+                    );
+                  }
+                  final entries = snap.data ?? [];
+                  if (entries.isEmpty) {
+                    return _Empty(
+                      icon: Icons.emoji_events_outlined,
+                      title: ku ? 'Hîn xal tune' : 'Henüz puan yok',
+                      message: ku
+                          ? 'Piştî yekem yara serhêl sîralama li vir xuya dike.'
+                          : 'İlk online yarıştan sonra sıralama burada görünür.',
+                      onRetry: _refresh,
+                      isKu: ku,
+                    );
+                  }
+                  return ListView(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                    children: [
+                      _Podium(entries: entries.take(3).toList(), isKu: ku),
+                      const SizedBox(height: 16),
+                      for (final e in entries.skip(3))
+                        _RankRow(entry: e, isKu: ku),
+                    ],
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -108,52 +123,44 @@ class _LoadingLeaderboard extends StatelessWidget {
   }
 }
 
-class _LeaderboardHero extends StatelessWidget {
-  const _LeaderboardHero({required this.entries});
+class _Podium extends StatelessWidget {
+  const _Podium({required this.entries, required this.isKu});
 
   final List<LeaderboardEntry> entries;
+  final bool isKu;
 
   @override
   Widget build(BuildContext context) {
-    final leader = entries.first;
-    final totalPlayers = entries.length;
+    final first = entries.isNotEmpty ? entries[0] : null;
+    final second = entries.length > 1 ? entries[1] : null;
+    final third = entries.length > 2 ? entries[2] : null;
 
     return AppPanel(
-      color: AppTheme.green,
+      gradient: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFF1E2A45), Color(0xFF243357)],
+      ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
-            children: [
-              Icon(Icons.emoji_events_outlined, color: Colors.white),
-              SizedBox(width: 8),
-              Text(
-                'Haftanın zirvesi',
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
           Text(
-            leader.displayName,
+            isKu ? 'Sê Pêşderian' : 'İlk 3',
             style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
-              fontSize: 30,
-              height: 1.06,
+              color: AppTheme.textMuted,
+              fontWeight: FontWeight.w700,
+              fontSize: 12,
             ),
           ),
-          const SizedBox(height: 10),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
+          const SizedBox(height: 16),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              _HeroMetric(label: 'Puan', value: '${leader.totalScore}'),
-              _HeroMetric(label: 'En iyi seri', value: '${leader.bestStreak}'),
-              _HeroMetric(label: 'Oyuncu', value: '$totalPlayers'),
+              if (second != null)
+                Expanded(child: _PodiumSlot(entry: second, height: 80)),
+              if (first != null)
+                Expanded(child: _PodiumSlot(entry: first, height: 110)),
+              if (third != null)
+                Expanded(child: _PodiumSlot(entry: third, height: 60)),
             ],
           ),
         ],
@@ -162,68 +169,125 @@ class _LeaderboardHero extends StatelessWidget {
   }
 }
 
-class _HeroMetric extends StatelessWidget {
-  const _HeroMetric({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.13),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            value,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-          const SizedBox(width: 6),
-          Text(label, style: const TextStyle(color: Colors.white70)),
-        ],
-      ),
-    );
-  }
-}
-
-class _LeaderboardRow extends StatelessWidget {
-  const _LeaderboardRow({required this.entry});
+class _PodiumSlot extends StatelessWidget {
+  const _PodiumSlot({required this.entry, required this.height});
 
   final LeaderboardEntry entry;
+  final double height;
+
+  static const _medals = {1: '🥇', 2: '🥈', 3: '🥉'};
+  static const _colors = {
+    1: Color(0xFFFFB800),
+    2: Color(0xFF7C8794),
+    3: Color(0xFFB66A3A),
+  };
 
   @override
   Widget build(BuildContext context) {
-    final rankColor = switch (entry.rank) {
-      1 => const Color(0xFFD49A2A),
-      2 => const Color(0xFF7C8794),
-      3 => const Color(0xFFB66A3A),
-      _ => AppTheme.green,
-    };
+    final color = _colors[entry.rank] ?? AppTheme.accent;
+    final medal = _medals[entry.rank] ?? '${entry.rank}';
 
+    return Column(
+      children: [
+        Text(medal, style: const TextStyle(fontSize: 22)),
+        const SizedBox(height: 6),
+        CircleAvatar(
+          radius: 22,
+          backgroundColor: color.withValues(alpha: 0.2),
+          child: Text(
+            entry.displayName.isNotEmpty
+                ? entry.displayName[0].toUpperCase()
+                : '?',
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.w900,
+              fontSize: 18,
+            ),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          entry.displayName,
+          style: const TextStyle(
+            color: AppTheme.textPrimary,
+            fontWeight: FontWeight.w800,
+            fontSize: 12,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          '${entry.totalScore}',
+          style: TextStyle(
+            color: color,
+            fontWeight: FontWeight.w900,
+            fontSize: 14,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          height: height,
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.15),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+            border: Border(
+              top: BorderSide(color: color.withValues(alpha: 0.4)),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _RankRow extends StatelessWidget {
+  const _RankRow({required this.entry, required this.isKu});
+
+  final LeaderboardEntry entry;
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: AppTheme.line),
-        borderRadius: BorderRadius.circular(10),
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppTheme.border),
       ),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: rankColor.withValues(alpha: 0.12),
+          Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: AppTheme.surfaceHi,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            alignment: Alignment.center,
             child: Text(
-              '${entry.rank}',
-              style: TextStyle(color: rankColor, fontWeight: FontWeight.w900),
+              '#${entry.rank}',
+              style: const TextStyle(
+                color: AppTheme.textMuted,
+                fontWeight: FontWeight.w900,
+                fontSize: 13,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          CircleAvatar(
+            radius: 18,
+            backgroundColor: AppTheme.accent.withValues(alpha: 0.15),
+            child: Text(
+              entry.displayName.isNotEmpty
+                  ? entry.displayName[0].toUpperCase()
+                  : '?',
+              style: const TextStyle(
+                color: AppTheme.accent,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
           const SizedBox(width: 12),
@@ -233,21 +297,30 @@ class _LeaderboardRow extends StatelessWidget {
               children: [
                 Text(
                   entry.displayName,
+                  style: const TextStyle(
+                    color: AppTheme.textPrimary,
+                    fontWeight: FontWeight.w800,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.w900),
                 ),
                 Text(
-                  '${entry.roomsPlayed} oda · ${entry.bestStreak} seri',
-                  style: const TextStyle(color: AppTheme.muted, fontSize: 12),
+                  '${entry.roomsPlayed} ${isKu ? "jûr" : "oda"} · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}',
+                  style: const TextStyle(
+                    color: AppTheme.textMuted,
+                    fontSize: 12,
+                  ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 8),
           Text(
             '${entry.totalScore}',
-            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
+            style: const TextStyle(
+              color: AppTheme.gold,
+              fontWeight: FontWeight.w900,
+              fontSize: 18,
+            ),
           ),
         ],
       ),
@@ -255,52 +328,55 @@ class _LeaderboardRow extends StatelessWidget {
   }
 }
 
-class _LeaderboardMessage extends StatelessWidget {
-  const _LeaderboardMessage({
+class _Empty extends StatelessWidget {
+  const _Empty({
     required this.icon,
     required this.title,
     required this.message,
     required this.onRetry,
+    required this.isKu,
   });
 
   final IconData icon;
   final String title;
   final String message;
   final VoidCallback onRetry;
+  final bool isKu;
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-      children: [
-        AppPanel(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(icon, color: AppTheme.green, size: 32),
-              const SizedBox(height: 12),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 21,
-                ),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: AppTheme.textMuted, size: 48),
+            const SizedBox(height: 14),
+            Text(
+              title,
+              style: const TextStyle(
+                color: AppTheme.textPrimary,
+                fontWeight: FontWeight.w900,
+                fontSize: 20,
               ),
-              const SizedBox(height: 6),
-              Text(message, style: const TextStyle(color: AppTheme.muted)),
-              const SizedBox(height: 14),
-              SizedBox(
-                width: double.infinity,
-                child: OutlinedButton.icon(
-                  onPressed: onRetry,
-                  icon: const Icon(Icons.refresh_rounded),
-                  label: const Text('Tekrar dene'),
-                ),
-              ),
-            ],
-          ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              message,
+              style: const TextStyle(color: AppTheme.textMuted),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            OutlinedButton.icon(
+              onPressed: onRetry,
+              icon: const Icon(Icons.refresh_rounded),
+              label: Text(isKu ? 'Dîsa Bicerib' : 'Tekrar Dene'),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
