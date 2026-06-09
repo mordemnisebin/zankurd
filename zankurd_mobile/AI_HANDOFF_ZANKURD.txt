@@ -1737,3 +1737,66 @@ Addendum (same session, 2026-06-09):
   - flutter build web --release: passed
   - flutter build windows --release: passed
 - flutter analyze: clean; flutter test: 14/14 after the change.
+
+Latest Claude Session Summary - Daily Quiz, Settings, New Brand Icons, Content Cleanup
+----------------------------------------------------------------------------------------
+Date:
+- 2026-06-09 (second session of the day)
+
+Context:
+- User confirmed: online_room_policies.sql and coin_policies.sql were run in Supabase,
+  Anonymous sign-ins enabled.
+- Supabase verified live via REST: 6 active categories, 2283 approved questions readable,
+  450 visual questions with asset:// URLs.
+
+Implemented:
+1. Daily Quiz ("Pesbirka Roje" / "Gunun Yarismasi")
+   - New repository method: loadDailyQuestions({int limit = 10})
+   - Date-seeded (UTC yyyymmdd) deterministic selection: every player gets the
+     same 10 questions per day.
+   - Supabase impl: counts questions, picks a day-seeded window of 60 ordered by id,
+     seeded-shuffles, takes 10. Falls back to mock on any failure.
+   - Gold gradient card on home screen between stats row and room actions.
+   - Widget test added: opens the daily quiz from the home screen.
+
+2. Settings screen (lib/src/screens/settings_screen.dart)
+   - Language switch (KU/TR), "How to play" and "Privacy" expandable sections,
+     About card with version. All bilingual, dark theme.
+   - Entry point: ProfileScreen "Miheng / Ayarlar" row (between favorites and sign-out).
+
+3. New brand icons (tools/generate_app_icons.py rewritten)
+   - Dark navy gradient base (#1A1A2E -> #16213E), coral gradient ZK badge
+     (#E94560 -> #BD1E3B), gold spark, subtle deco circles. 4x supersampled.
+   - Regenerated: Android mipmaps, web favicon/PWA icons, windows app_icon.ico,
+     and ALL iOS AppIcon set PNGs (sizes parsed from filenames, opaque navy bg).
+
+4. Content cleanup
+   - Mock repository placeholder URLs replaced with bundled asset:// images.
+   - NEW SQL for user to run: supabase/cleanup_seed_v1.sql
+     Deletes the 30 old zankurd_seed_rich_v1 questions and any remaining
+     placehold.co image rows (7 found via REST). v2 bank (2250) stays.
+
+5. Language extension hardening (lib/src/l10n/lang.dart)
+   - context.isKu previously crashed (debug assertion) when called from event
+     handlers/async code (Provider listen:true outside build). Now it falls back
+     to listen:false automatically. context.langProvider is now listen:false.
+   - This fixes latent crashes in: join-room sheet, online-room error snackbar,
+     sign-in/sign-up/reset handlers, favorites remove, profile sign-out dialog.
+
+6. Version bump: pubspec.yaml 1.0.0+1 -> 1.1.0+2
+
+Validation:
+- dart format lib test: passed
+- flutter analyze: No issues found
+- flutter test: 15/15 passed
+- flutter build apk/web/windows --release with Supabase defines: passed (v1.1.0+2)
+
+Remaining manual Supabase step:
+- Run C:\src\zankurd_mobile\supabase\cleanup_seed_v1.sql in SQL Editor
+  (removes 30 stale v1 questions with placeholder images).
+
+Recommended next:
+1. Real-device APK test (install app-release.apk).
+2. Tournament / contest with rewards (Pirs-inspired), spin wheel, coin store.
+3. Play Console internal testing upload (AAB), store screenshots/metadata.
+4. Replace generated question-image cards with real licensed photos over time.

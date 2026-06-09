@@ -26,6 +26,9 @@ abstract class ZanKurdRepository {
   });
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room);
 
+  /// Aynı gün içinde herkese aynı soru setini verir (tarih tohumlu seçim).
+  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10});
+
   GameRoom createRoom({String category = 'Ziman'});
   GameRoom joinRoom(String code);
   Future<GameRoom> createOnlineRoom({String category = 'Ziman'});

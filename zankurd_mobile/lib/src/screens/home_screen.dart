@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<String> _categories = widget.repository.categories;
   bool _loading = true;
   bool _roomActionLoading = false;
+  bool _dailyLoading = false;
   int _coinBalance = 0;
 
   ZanKurdRepository get repo => widget.repository;
@@ -76,6 +77,12 @@ class _HomeScreenState extends State<HomeScreen> {
             _HeroCard(isKu: ku, onQuickMatch: () => _openQuiz(context, room)),
             const SizedBox(height: 12),
             _StatsRow(isKu: ku),
+            const SizedBox(height: 12),
+            _DailyQuizCard(
+              isKu: ku,
+              loading: _dailyLoading,
+              onPlay: () => _openDailyQuiz(context, ku),
+            ),
             const SizedBox(height: 16),
             _RoomActions(
               loading: _roomActionLoading,
@@ -139,6 +146,31 @@ class _HomeScreenState extends State<HomeScreen> {
       _openRoom(context, repo.createRoom());
     } finally {
       if (mounted) setState(() => _roomActionLoading = false);
+    }
+  }
+
+  Future<void> _openDailyQuiz(BuildContext context, bool ku) async {
+    if (_dailyLoading) return;
+    setState(() => _dailyLoading = true);
+    try {
+      final dailyQuestions = await repo.loadDailyQuestions(limit: 10);
+      if (!context.mounted) return;
+      final dailyRoom = repo.createRoom().copyWith(
+        name: ku ? 'Pêşbirka Rojê' : 'Günün Yarışması',
+        questionCount: dailyQuestions.length,
+      );
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => QuizScreen(
+            repository: repo,
+            room: dailyRoom,
+            questions: dailyQuestions,
+          ),
+        ),
+      );
+      _refreshCoins();
+    } finally {
+      if (mounted) setState(() => _dailyLoading = false);
     }
   }
 
@@ -865,6 +897,89 @@ class _Tag extends StatelessWidget {
           color: color == AppTheme.textMuted ? AppTheme.textMuted : color,
           fontWeight: FontWeight.w700,
           fontSize: 12,
+        ),
+      ),
+    );
+  }
+}
+
+class _DailyQuizCard extends StatelessWidget {
+  const _DailyQuizCard({
+    required this.isKu,
+    required this.loading,
+    required this.onPlay,
+  });
+
+  final bool isKu;
+  final bool loading;
+  final VoidCallback onPlay;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppPanel(
+      gradient: AppTheme.goldGradient,
+      padding: EdgeInsets.zero,
+      child: InkWell(
+        onTap: loading ? null : onPlay,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                width: 52,
+                height: 52,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: loading
+                    ? const Padding(
+                        padding: EdgeInsets.all(14),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.5,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Icon(
+                        Icons.today_rounded,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      isKu ? 'Pêşbirka Rojê' : 'Günün Yarışması',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 17,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      isKu
+                          ? 'Her roj 10 pirsên nû — îro bilîze!'
+                          : 'Her gün 10 yeni soru — bugün oyna!',
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.85),
+                        fontSize: 12.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.play_circle_fill_rounded,
+                color: Colors.white,
+                size: 34,
+              ),
+            ],
+          ),
         ),
       ),
     );

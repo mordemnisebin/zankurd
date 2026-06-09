@@ -34,8 +34,12 @@ void main() {
     await tester.pump();
 
     expect(find.text('ZanKurd'), findsOneWidget);
-    expect(find.text('Oda Kur'), findsOneWidget);
     expect(find.textContaining('Kurmancî Yarış'), findsOneWidget);
+    expect(find.text('Günün Yarışması'), findsOneWidget);
+
+    await tester.scrollUntilVisible(find.text('Oda Kur'), 120);
+    await tester.pumpAndSettle();
+    expect(find.text('Oda Kur'), findsOneWidget);
 
     await tester.tap(find.text('Oda Kur'));
     await tester.pumpAndSettle();
@@ -52,6 +56,22 @@ void main() {
       find.text('Di Kurmancî de peyva "zanîn" bi Tirkî çi ye?'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('opens the daily quiz from the home screen', (tester) async {
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _FakeAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pump();
+
+    await tester.tap(find.text('Günün Yarışması'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(QuizScreen), findsOneWidget);
   });
 
   testWidgets('opens the leaderboard from the home screen', (tester) async {
