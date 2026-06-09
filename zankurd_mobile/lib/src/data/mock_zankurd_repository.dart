@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import '../models/leaderboard_entry.dart';
 import '../models/player.dart';
@@ -39,7 +40,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       correctAnswer: '21 Adar',
       explanation: 'Newroz baharın gelişini simgeleyen 21 Mart günüdür.',
       type: QuestionType.visual,
-      imageUrl: 'https://placehold.co/900x520/png?text=Newroz',
+      imageUrl: 'asset://assets/question_images/newroz.png',
       difficulty: 1,
     ),
     QuizQuestion(
@@ -69,7 +70,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       correctAnswer: 'Çiya',
       explanation: 'Çiya Kurmancîde dağ anlamına gelir.',
       type: QuestionType.visual,
-      imageUrl: 'https://placehold.co/900x520/png?text=%C3%87iya',
+      imageUrl: 'asset://assets/question_images/ciya.png',
       difficulty: 1,
     ),
     QuizQuestion(
@@ -209,6 +210,18 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
     return questions.take(room.questionCount).toList();
+  }
+
+  /// Gün bazlı sabit tohum: aynı gün herkes aynı sırayı görür.
+  static int dailySeed() {
+    final now = DateTime.now().toUtc();
+    return now.year * 10000 + now.month * 100 + now.day;
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
+    final pool = [...questions]..shuffle(Random(dailySeed()));
+    return pool.take(limit).toList();
   }
 
   @override

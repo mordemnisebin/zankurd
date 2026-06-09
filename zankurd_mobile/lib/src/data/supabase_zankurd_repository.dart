@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/leaderboard_entry.dart';
@@ -176,6 +178,40 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     }
 
     return loadQuestions(limit: room.questionCount);
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
+    try {
+      final seed = MockZanKurdRepository.dailySeed();
+
+      // Soru sayısını öğren, gün tohumlu pencereden çek.
+      final countResponse = await client
+          .from('questions')
+          .count(CountOption.exact);
+      final total = countResponse;
+      if (total <= 0) return super.loadDailyQuestions(limit: limit);
+
+      const windowSize = 60;
+      final maxOffset = total > windowSize ? total - windowSize : 0;
+      final offset = maxOffset == 0 ? 0 : (seed * 37) % maxOffset;
+
+      final rows = await client
+          .from('questions')
+          .select(
+            'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, question_type, image_url, difficulty',
+          )
+          .eq('is_approved', true)
+          .order('id')
+          .range(offset, offset + windowSize - 1);
+
+      final pool = rows.map(_questionFromRow).toList()..shuffle(Random(seed));
+      final selected = pool.take(limit).toList();
+      if (selected.isNotEmpty) return selected;
+    } catch (_) {
+      // Şema/politika eksikse yerel soru bankasına düş.
+    }
+    return super.loadDailyQuestions(limit: limit);
   }
 
   Future<List<QuizQuestion>> fetchApprovedQuestions({

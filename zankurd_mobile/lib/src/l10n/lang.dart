@@ -16,11 +16,21 @@ class LanguageProvider extends ChangeNotifier {
   void toggle() => setLang(isKu ? 'tr' : 'ku');
 }
 
-/// Helper to get bilingual string — call from build() only.
+/// Helper to get bilingual strings.
 extension LangContext on BuildContext {
-  LanguageProvider get langProvider => Provider.of<LanguageProvider>(this);
+  /// Eylem çağrıları (toggle/setLang) için: abonelik kurmaz.
+  LanguageProvider get langProvider =>
+      Provider.of<LanguageProvider>(this, listen: false);
 
-  bool get isKu => Provider.of<LanguageProvider>(this).isKu;
+  /// build() içinde dinleyerek okur; event handler/async kodda
+  /// dinleme yasak olduğundan otomatik olarak dinlemeden okumaya düşer.
+  bool get isKu {
+    try {
+      return Provider.of<LanguageProvider>(this).isKu;
+    } on Object {
+      return Provider.of<LanguageProvider>(this, listen: false).isKu;
+    }
+  }
 
   /// Returns [ku] if Kurdish is active, [tr] if Turkish.
   String s(String ku, String tr) => isKu ? ku : tr;
