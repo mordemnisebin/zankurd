@@ -85,6 +85,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
   ];
 
   String _mockName = 'ZanKurd Oyuncusu';
+  int _mockCoins = 2450;
 
   final List<LeaderboardEntry> _mockLeaderboard = [
     const LeaderboardEntry(
@@ -301,6 +302,39 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<QuizQuestion>> loadFavoriteQuestions() async {
     return questions.take(3).toList();
+  }
+
+  @override
+  Future<int> loadCoinBalance() async => _mockCoins;
+
+  @override
+  Future<int> awardQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+  }) async {
+    final earned = _calculateCoinAward(
+      score: score,
+      correctCount: correctCount,
+      bestStreak: bestStreak,
+      totalQuestions: totalQuestions,
+    );
+    _mockCoins += earned;
+    return earned;
+  }
+
+  int _calculateCoinAward({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+  }) {
+    final completionBonus = totalQuestions >= 10 ? 20 : 8;
+    return completionBonus +
+        (correctCount * 6) +
+        (bestStreak * 2) +
+        score ~/ 80;
   }
 
   @override

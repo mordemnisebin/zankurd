@@ -1,123 +1,173 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class AppTheme {
-  // Core colors
-  static const bg = Color(0xFFF0F4F8);
-  static const surface = Color(0xFFFFFFFF);
-  static const card = Color(0xFFFFFFFF);
-  static const ink = Color(0xFF0D1B2A);
-  static const muted = Color(0xFF8899AA);
-  static const line = Color(0xFFE2EAF0);
+  // Core palette
+  static const bg = Color(0xFF1A1A2E);
+  static const bgDeep = Color(0xFF16213E);
+  static const surface = Color(0xFF1E2A45);
+  static const surfaceHi = Color(0xFF243357);
+  static const border = Color(0xFF2A3B5C);
+  static const accent = Color(0xFFE94560);
+  static const violet = Color(0xFF7C3AED);
+  static const gold = Color(0xFFFFB800);
+  static const correct = Color(0xFF00D68F);
+  static const wrong = Color(0xFFFF3D71);
+  static const textPrimary = Colors.white;
+  static const textSub = Color(0xFFB0BCDB);
+  static const textMuted = Color(0xFF6B7A9B);
 
-  // Brand
-  static const primary = Color(0xFF1AA366);
-  static const primaryDark = Color(0xFF0D7C4E);
-  static const primaryLight = Color(0xFF22C87A);
-
-  // Semantic
-  static const success = Color(0xFF22C87A);
-  static const error = Color(0xFFE74C3C);
-  static const warning = Color(0xFFF59E0B);
-  static const gold = Color(0xFFF4C430);
-
-  // Backward-compat aliases
-  static const green = primary;
-  static const red = error;
-  static const brown = Color(0xFF241C15);
+  // Compat aliases for screens not yet migrated
   static const page = bg;
+  static const ink = textPrimary;
+  static const muted = textMuted;
+  static const green = correct;
+  static const red = accent;
+  static const brown = gold;
+  static const line = border;
 
   // Gradients
-  static const LinearGradient heroGradient = LinearGradient(
+  static const bgGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF0D7C4E), Color(0xFF1AA366), Color(0xFF22C87A)],
+    colors: [bg, bgDeep],
   );
 
-  static const LinearGradient cardGradient = LinearGradient(
+  static const accentGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF1A2332), Color(0xFF243447)],
+    colors: [Color(0xFFE94560), Color(0xFFBD1E3B)],
   );
 
-  // Category gradients
+  static const goldGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFFFFB800), Color(0xFFE08C00)],
+  );
+
+  static const correctGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFF00D68F), Color(0xFF009E6A)],
+  );
+
+  // Per-category gradients (index matches category list order)
   static const List<List<Color>> categoryGradients = [
-    [Color(0xFF1AA366), Color(0xFF22C87A)],
-    [Color(0xFF4059AD), Color(0xFF6B7FD4)],
-    [Color(0xFFE74C3C), Color(0xFFFF6B6B)],
-    [Color(0xFFF59E0B), Color(0xFFFBBF24)],
-    [Color(0xFF8B5CF6), Color(0xFFA78BFA)],
-    [Color(0xFF0891B2), Color(0xFF22D3EE)],
+    [Color(0xFF7C3AED), Color(0xFF5B21B6)], // Ziman - purple
+    [Color(0xFFE94560), Color(0xFFF97316)], // Çand - coral-orange
+    [Color(0xFF2563EB), Color(0xFF1D4ED8)], // Dîrok - blue
+    [Color(0xFF10B981), Color(0xFF059669)], // Edebiyat - green
+    [Color(0xFF06B6D4), Color(0xFF0891B2)], // Cografya - teal
+    [Color(0xFFF59E0B), Color(0xFFD97706)], // Muzîk - amber
   ];
 
-  static ThemeData light() {
-    return ThemeData(
-      useMaterial3: true,
-      scaffoldBackgroundColor: bg,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: primary,
-        brightness: Brightness.light,
-        surface: bg,
-      ),
-      appBarTheme: const AppBarTheme(
-        backgroundColor: bg,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-        titleTextStyle: TextStyle(
-          color: ink,
-          fontWeight: FontWeight.w900,
-          fontSize: 20,
-        ),
-        iconTheme: IconThemeData(color: ink),
-      ),
-      filledButtonTheme: FilledButtonThemeData(
-        style: FilledButton.styleFrom(
-          backgroundColor: primary,
-          foregroundColor: Colors.white,
-          minimumSize: const Size.fromHeight(52),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          textStyle: const TextStyle(
-            fontWeight: FontWeight.w900,
-            fontSize: 16,
-            letterSpacing: 0.3,
-          ),
-        ),
-      ),
-      textTheme: const TextTheme(
-        displayLarge: TextStyle(fontWeight: FontWeight.w900, color: ink, fontSize: 32),
-        headlineLarge: TextStyle(fontWeight: FontWeight.w900, color: ink, fontSize: 28),
-        headlineMedium: TextStyle(fontWeight: FontWeight.w900, color: ink, fontSize: 24),
-        headlineSmall: TextStyle(fontWeight: FontWeight.w900, color: ink, fontSize: 20),
-        titleLarge: TextStyle(fontWeight: FontWeight.w800, color: ink, fontSize: 18),
-        titleMedium: TextStyle(fontWeight: FontWeight.w700, color: ink, fontSize: 16),
-        bodyLarge: TextStyle(color: ink, fontSize: 16),
-        bodyMedium: TextStyle(color: ink, fontSize: 14),
-      ),
+  static LinearGradient categoryGradient(int index) {
+    final colors = categoryGradients[index % categoryGradients.length];
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: colors,
     );
   }
 
-  // Shadow helpers
-  static List<BoxShadow> get softShadow => [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.06),
-          blurRadius: 20,
-          offset: const Offset(0, 8),
+  static ThemeData dark() {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: bg,
+      colorScheme: const ColorScheme(
+        brightness: Brightness.dark,
+        primary: accent,
+        onPrimary: Colors.white,
+        secondary: violet,
+        onSecondary: Colors.white,
+        error: wrong,
+        onError: Colors.white,
+        surface: surface,
+        onSurface: textPrimary,
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        foregroundColor: textPrimary,
+        titleTextStyle: TextStyle(
+          color: textPrimary,
+          fontWeight: FontWeight.w900,
+          fontSize: 20,
         ),
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.03),
-          blurRadius: 6,
-          offset: const Offset(0, 2),
+        iconTheme: IconThemeData(color: textPrimary),
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: surface,
+        selectedItemColor: accent,
+        unselectedItemColor: textMuted,
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: accent,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
         ),
-      ];
-
-  static List<BoxShadow> get coloredShadow => [
-        BoxShadow(
-          color: primary.withValues(alpha: 0.25),
-          blurRadius: 20,
-          offset: const Offset(0, 8),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: textPrimary,
+          side: const BorderSide(color: border),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
         ),
-      ];
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? accent : textMuted,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected)
+              ? accent.withValues(alpha: 0.4)
+              : border,
+        ),
+      ),
+      dividerTheme: const DividerThemeData(color: border, thickness: 1),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: surfaceHi,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: border),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: border),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: accent, width: 2),
+        ),
+        hintStyle: const TextStyle(color: textMuted),
+      ),
+      textTheme: const TextTheme(
+        headlineSmall: TextStyle(
+          fontWeight: FontWeight.w900,
+          color: textPrimary,
+        ),
+        titleLarge: TextStyle(fontWeight: FontWeight.w900, color: textPrimary),
+        titleMedium: TextStyle(fontWeight: FontWeight.w800, color: textPrimary),
+        bodyMedium: TextStyle(color: textSub),
+        bodySmall: TextStyle(color: textMuted),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: surfaceHi,
+        contentTextStyle: const TextStyle(color: textPrimary),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
 }

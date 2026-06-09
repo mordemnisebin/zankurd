@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthProvider extends ChangeNotifier {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth? _auth;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   User? _currentUser;
@@ -15,12 +15,15 @@ class AuthProvider extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   bool get isAuthenticated => _currentUser != null;
 
-  AuthProvider() {
-    _auth.authStateChanges().listen((User? user) {
+  AuthProvider() : _auth = FirebaseAuth.instance {
+    _auth!.authStateChanges().listen((User? user) {
       _currentUser = user;
       notifyListeners();
     });
   }
+
+  /// Test constructor — Firebase başlatılmadan kullanım için.
+  AuthProvider.test() : _auth = null;
 
   Future<bool> signUpWithEmail({
     required String email,
@@ -32,7 +35,8 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final credential = await _auth.createUserWithEmailAndPassword(
+      final auth = _auth!;
+      final credential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -40,7 +44,7 @@ class AuthProvider extends ChangeNotifier {
       await credential.user?.updateDisplayName(displayName);
       await credential.user?.reload();
 
-      _currentUser = _auth.currentUser;
+      _currentUser = auth.currentUser;
       _isLoading = false;
       notifyListeners();
       return true;
@@ -66,8 +70,9 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      _currentUser = _auth.currentUser;
+      final auth = _auth!;
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+      _currentUser = auth.currentUser;
       _isLoading = false;
       notifyListeners();
       return true;
@@ -103,8 +108,9 @@ class AuthProvider extends ChangeNotifier {
         idToken: googleAuth.idToken,
       );
 
-      await _auth.signInWithCredential(credential);
-      _currentUser = _auth.currentUser;
+      final auth = _auth!;
+      await auth.signInWithCredential(credential);
+      _currentUser = auth.currentUser;
       _isLoading = false;
       notifyListeners();
       return true;
@@ -127,9 +133,9 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await _auth.sendPasswordResetEmail(email: email);
+      await _auth!.sendPasswordResetEmail(email: email);
       _isLoading = false;
-      _errorMessage = 'Şifre sıfırlama e-postası gönderildi.';
+      _errorMessage = null;
       notifyListeners();
       return true;
     } on FirebaseAuthException catch (e) {
@@ -137,11 +143,16 @@ class AuthProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
       return false;
+    } catch (e) {
+      _errorMessage = 'Şifre sıfırlama başarısız: $e';
+      _isLoading = false;
+      notifyListeners();
+      return false;
     }
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
+    await _auth!.signOut();
     await _googleSignIn.signOut();
     _currentUser = null;
     _errorMessage = null;

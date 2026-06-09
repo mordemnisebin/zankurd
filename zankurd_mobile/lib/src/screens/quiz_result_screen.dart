@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../data/local_data_service.dart';
 import '../data/zankurd_repository.dart';
+import '../l10n/lang.dart';
 import '../models/answer_record.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
@@ -9,7 +9,7 @@ import '../widgets/app_panel.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
 
-class QuizResultScreen extends StatefulWidget {
+class QuizResultScreen extends StatelessWidget {
   const QuizResultScreen({
     required this.repository,
     required this.room,
@@ -18,7 +18,8 @@ class QuizResultScreen extends StatefulWidget {
     required this.wrongCount,
     required this.totalQuestions,
     required this.bestStreak,
-    this.answerRecords,
+    required this.answerRecords,
+    required this.coinsAwarded,
     super.key,
   });
 
@@ -29,113 +30,97 @@ class QuizResultScreen extends StatefulWidget {
   final int wrongCount;
   final int totalQuestions;
   final int bestStreak;
-  final List<AnswerRecord>? answerRecords;
-
-  @override
-  State<QuizResultScreen> createState() => _QuizResultScreenState();
-}
-
-class _QuizResultScreenState extends State<QuizResultScreen> {
-  int _coinsEarned = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _applyRewards();
-  }
-
-  Future<void> _applyRewards() async {
-    final local = await LocalDataService.getInstance();
-
-    // Calculate coin reward: 10 coins per correct answer, max 200
-    final coinReward = (widget.correctCount * 10).clamp(0, 200);
-
-    // Apply to local storage
-    await local.applyQuizResult(
-      score: widget.score,
-      correctCount: widget.correctCount,
-      streak: widget.bestStreak,
-    );
-
-    if (mounted) {
-      setState(() => _coinsEarned = coinReward);
-    }
-  }
+  final List<AnswerRecord> answerRecords;
+  final int coinsAwarded;
 
   @override
   Widget build(BuildContext context) {
-    final unanswered = (widget.totalQuestions - widget.correctCount - widget.wrongCount).clamp(
+    final unanswered = (totalQuestions - correctCount - wrongCount).clamp(
       0,
-      widget.totalQuestions,
+      totalQuestions,
     );
+    final accuracy = totalQuestions == 0
+        ? 0
+        : ((correctCount / totalQuestions) * 100).round();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Sonuç')),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-          children: [
-            AppPanel(
-              color: AppTheme.green,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Row(
-                    children: [
-                      Icon(Icons.flag_outlined, color: Colors.white),
-                      SizedBox(width: 8),
-                      Text(
-                        'Yarış tamamlandı',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontWeight: FontWeight.w800,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(title: Text(context.s('Encam', 'Sonuç'))),
+      body: Container(
+        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        child: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+            children: [
+              AppPanel(
+                gradient: AppTheme.accentGradient,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      right: -26,
+                      top: -32,
+                      child: Container(
+                        width: 120,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withValues(alpha: 0.12),
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 14),
-                  Text(
-                    '${widget.score}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 48,
-                      height: 1,
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    '${widget.room.category} · ${widget.room.code}',
-                    style: const TextStyle(color: Colors.white70),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            if (_coinsEarned > 0) ...[
-              AppPanel(
-                color: const Color(0xFFFFB800),
-                child: Row(
-                  children: [
-                    const Icon(Icons.monetization_on_outlined, color: Colors.white, size: 28),
-                    const SizedBox(width: 12),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Kazandığın Coinler',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.flag_outlined,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              context.s('Pêşbirk qediya', 'Yarış tamamlandı'),
+                              style: const TextStyle(
+                                color: Colors.white70,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
                         ),
+                        const SizedBox(height: 14),
                         Text(
-                          '+$_coinsEarned',
+                          '$score',
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w900,
-                            fontSize: 24,
+                            fontSize: 52,
+                            height: 1,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          '${CategoryNames.localized(room.category, context.isKu)} · ${room.code}',
+                          style: const TextStyle(color: Colors.white70),
+                        ),
+                        const SizedBox(height: 14),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.14),
+                            borderRadius: BorderRadius.circular(99),
+                          ),
+                          child: Text(
+                            context.s(
+                              'Rastbûn: %$accuracy',
+                              'Doğruluk: %$accuracy',
+                            ),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                            ),
                           ),
                         ),
                       ],
@@ -144,103 +129,140 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-            ],
-            _ResultMetrics(
-              correctCount: widget.correctCount,
-              wrongCount: widget.wrongCount,
-              unanswered: unanswered,
-              bestStreak: widget.bestStreak,
-            ),
-            const SizedBox(height: 16),
-            if (widget.answerRecords != null && widget.answerRecords!.isNotEmpty) ...[
+              _ResultMetrics(
+                correctCount: correctCount,
+                wrongCount: wrongCount,
+                unanswered: unanswered,
+                bestStreak: bestStreak,
+              ),
+              const SizedBox(height: 16),
+              if (coinsAwarded > 0) ...[
+                AppPanel(
+                  gradient: AppTheme.goldGradient,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 46,
+                        height: 46,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.18),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(
+                          Icons.monetization_on_outlined,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.s(
+                                '+$coinsAwarded coin stendî',
+                                '+$coinsAwarded coin kazandın',
+                              ),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 18,
+                              ),
+                            ),
+                            Text(
+                              context.s(
+                                'Xelata te di malperê de tê nûkirin.',
+                                'Ödül bakiyen ana ekranda güncellenir.',
+                              ),
+                              style: const TextStyle(color: Colors.white70),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
               AppPanel(
+                color: AppTheme.surfaceHi,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.replay_outlined, color: AppTheme.green),
-                        SizedBox(width: 8),
-                        Text(
-                          'Cevapları gözden geçir',
-                          style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
-                        ),
-                      ],
+                    Text(
+                      context.s('Rêzbendiyê bişopîne', 'Sıralamaya devam et'),
+                      style: const TextStyle(
+                        color: AppTheme.textPrimary,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 20,
+                      ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Her soruyu, senin cevabını ve doğru yanıtı incele.',
-                      style: TextStyle(color: AppTheme.muted),
+                    Text(
+                      context.s(
+                        'Pûanên te li jûrên online di tabloya pêşderçûnê de xuya dibin.',
+                        'Puanların online odalarda liderlik tablosuna yansır.',
+                      ),
+                      style: const TextStyle(color: AppTheme.textMuted),
                     ),
                     const SizedBox(height: 14),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.icon(
+                        onPressed: answerRecords.isEmpty
+                            ? null
+                            : () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => ReviewScreen(
+                                      records: answerRecords,
+                                      room: room,
+                                    ),
+                                  ),
+                                );
+                              },
+                        icon: const Icon(Icons.fact_check_outlined),
+                        label: Text(
+                          context.s('Bersivan Bibîne', 'Cevapları İncele'),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     SizedBox(
                       width: double.infinity,
                       child: OutlinedButton.icon(
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (_) => ReviewScreen(
-                                records: widget.answerRecords!,
-                                room: widget.room,
-                              ),
+                              builder: (_) =>
+                                  LeaderboardScreen(repository: repository),
                             ),
                           );
                         },
-                        icon: const Icon(Icons.visibility_outlined),
-                        label: const Text('Cevapları Gör'),
+                        icon: const Icon(Icons.emoji_events_outlined),
+                        label: Text(
+                          context.s('Tabloya Pêşderçûnê', 'Liderlik Tablosu'),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          Navigator.of(
+                            context,
+                          ).popUntil((route) => route.isFirst);
+                        },
+                        icon: const Icon(Icons.home_outlined),
+                        label: Text(context.s('Vegere malê', 'Ana ekrana dön')),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
             ],
-            AppPanel(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Sıralamaya devam et',
-                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Puanların online odalarda liderlik tablosuna yansır.',
-                    style: TextStyle(color: AppTheme.muted),
-                  ),
-                  const SizedBox(height: 14),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton.icon(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                LeaderboardScreen(repository: widget.repository),
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.emoji_events_outlined),
-                      label: const Text('Liderlik Tablosu'),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton.icon(
-                      onPressed: () {
-                        Navigator.of(
-                          context,
-                        ).popUntil((route) => route.isFirst);
-                      },
-                      icon: const Icon(Icons.home_outlined),
-                      label: const Text('Ana ekrana dön'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -272,27 +294,27 @@ class _ResultMetrics extends StatelessWidget {
       children: [
         _MetricTile(
           icon: Icons.check_circle_outline,
-          label: 'Doğru',
+          label: context.s('Rast', 'Doğru'),
           value: '$correctCount',
-          color: AppTheme.green,
+          color: AppTheme.correct,
         ),
         _MetricTile(
           icon: Icons.cancel_outlined,
-          label: 'Yanlış',
+          label: context.s('Şaş', 'Yanlış'),
           value: '$wrongCount',
-          color: AppTheme.red,
+          color: AppTheme.wrong,
         ),
         _MetricTile(
           icon: Icons.hourglass_empty_rounded,
-          label: 'Boş',
+          label: context.s('Vala', 'Boş'),
           value: '$unanswered',
-          color: const Color(0xFFBD7B2B),
+          color: AppTheme.gold,
         ),
         _MetricTile(
           icon: Icons.local_fire_department_outlined,
-          label: 'En iyi seri',
+          label: context.s('Rêza herî baş', 'En iyi seri'),
           value: '$bestStreak',
-          color: const Color(0xFF4059AD),
+          color: AppTheme.violet,
         ),
       ],
     );
@@ -317,9 +339,9 @@ class _MetricTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: AppTheme.line),
-        borderRadius: BorderRadius.circular(10),
+        color: AppTheme.surfaceHi,
+        border: Border.all(color: AppTheme.border),
+        borderRadius: BorderRadius.circular(14),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -328,9 +350,13 @@ class _MetricTile extends StatelessWidget {
           Icon(icon, color: color),
           Text(
             value,
-            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 24),
+            style: const TextStyle(
+              color: AppTheme.textPrimary,
+              fontWeight: FontWeight.w900,
+              fontSize: 24,
+            ),
           ),
-          Text(label, style: const TextStyle(color: AppTheme.muted)),
+          Text(label, style: const TextStyle(color: AppTheme.textMuted)),
         ],
       ),
     );

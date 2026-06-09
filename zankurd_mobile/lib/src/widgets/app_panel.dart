@@ -6,24 +6,36 @@ class AppPanel extends StatelessWidget {
   const AppPanel({
     required this.child,
     super.key,
-    this.color = Colors.white,
-    this.padding = const EdgeInsets.all(18),
+    this.padding = const EdgeInsets.all(16),
+    this.gradient,
+    this.color,
+    this.borderRadius,
   });
 
   final Widget child;
-  final Color color;
   final EdgeInsetsGeometry padding;
+  final Gradient? gradient;
+  final Color? color;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
+    final br = borderRadius ?? BorderRadius.circular(16);
     return Container(
       width: double.infinity,
       padding: padding,
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppTheme.line),
-        boxShadow: AppTheme.softShadow,
+        color: gradient == null ? (color ?? AppTheme.surface) : null,
+        gradient: gradient,
+        borderRadius: br,
+        border: gradient == null ? Border.all(color: AppTheme.border) : null,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.2),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: child,
     );

@@ -801,6 +801,265 @@ Validation:
 - flutter build web: passed
 - flutter build windows: passed
 
+Latest Codex Session Summary - Password Reset + Quiz Dark/Bilingual Polish
+---------------------------------------------------------------------------
+Date:
+- 2026-06-09
+
+Implemented:
+- Completed the password reset flow:
+  - lib/src/screens/sign_in_screen.dart
+  - lib/src/providers/auth_provider.dart
+- "Parolayı unuttun mu?" now validates email, shows loading, calls Firebase password reset, and shows snackbar feedback.
+- AuthProvider.resetPassword now clears error on success and has a generic catch so loading cannot remain stuck.
+- Reworked quiz_screen.dart to match the new dark/gradient design:
+  - bgGradient page background
+  - dark answer buttons
+  - green/red correct-wrong states
+  - progress bar
+  - dark live scoreboard
+  - bilingual labels through context.s(...)
+  - category localization through CategoryNames.localized(...)
+- Reworked quiz_result_screen.dart:
+  - accent gradient result hero
+  - accuracy percentage
+  - dark metric tiles
+  - gold gradient coin reward card
+  - bilingual action text
+- Updated test/widget_test.dart:
+  - Direct QuizScreen test now provides LanguageProvider.
+  - Quiz flow test uses scroll/icon interaction instead of brittle text-only button lookups.
+
+Validation:
+- From C:\src\zankurd_mobile:
+  - flutter analyze: passed, no issues
+  - flutter test: passed, 14/14
+- Web smoke test:
+  - Served locally at http://127.0.0.1:8091
+  - In-app browser screenshot confirmed dark auth screen renders.
+  - Port 8080 was blocked by Windows socket permission/port restriction, so 8091 was used.
+- Android debug APK:
+  - Build command hit the 5-minute tool timeout after Flutter printed success.
+  - APK file was verified at:
+    C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-debug.apk
+  - Last write time: 2026-06-09 18:24:29
+
+Sync:
+- Primary edits were made in:
+  C:\src\zankurd_mobile
+- Changed files were copied back to:
+  C:\Users\AMARGİ\Desktop\pirs kurmanci\zankurd_mobile
+
+Important note:
+- Do Flutter commands in C:\src\zankurd_mobile.
+- The Desktop path can make flutter analyze crash because of Turkish/path characters.
+
+Updated recommended next steps:
+1. Rewrite review_screen.dart with the same dark/bilingual visual language.
+2. Rewrite favorite_questions_screen.dart and ensure it has a clear entry point.
+3. Fully modernize sign_in_screen.dart and sign_up_screen.dart; functionality works, but layout is still simpler than the new main screens.
+4. In Supabase Dashboard, enable Anonymous sign-ins and run online_room_policies.sql if not already done.
+5. Run coin_policies.sql if coin writes fail.
+6. Test the generated APK on a real Android device/emulator.
+7. Continue release readiness: signing, version bump, store metadata/screenshots.
+
+Latest Codex Session Summary - Review/Favorites/Profile Wiring
+---------------------------------------------------------------
+Date:
+- 2026-06-08
+
+User request:
+- User returned from another AI and asked to read this handoff to see what was done, then continue from here.
+
+What was found in the code from the other AI:
+- New model:
+  - lib/src/models/answer_record.dart
+- New screen:
+  - lib/src/screens/review_screen.dart
+- New profile/auth related files:
+  - lib/src/screens/profile_screen.dart
+  - lib/src/screens/sign_in_screen.dart
+  - lib/src/screens/sign_up_screen.dart
+  - lib/src/providers/auth_provider.dart
+  - lib/src/widgets/error_dialog.dart
+  - lib/src/widgets/loading_overlay.dart
+  - lib/src/widgets/skeleton_loader.dart
+- Repository additions already existed:
+  - getProfileName()
+  - updateProfileName()
+  - getPlayerStats()
+  - loadFavoriteQuestions()
+- Supabase repository had favorite loading support.
+
+Important issue discovered:
+- ReviewScreen existed but was not wired into the quiz/result flow.
+- QuizScreen did not keep answer history.
+- QuizResultScreen had no "Cevapları İncele" action.
+- loadFavoriteQuestions existed but there was no favorites/bookmark list screen.
+- ProfileScreen existed but HomeScreen did not expose it.
+- skeleton_loader.dart had analyzer errors because it incorrectly extended AnimatedBuilder.
+
+Implemented in this session:
+1. Post-quiz review flow is now connected
+   - QuizScreen now records each answered question into:
+     - List<AnswerRecord> answerRecords
+   - QuizResultScreen now receives:
+     - answerRecords
+   - QuizResultScreen now shows:
+     - "Cevapları İncele"
+   - Tapping it opens:
+     - ReviewScreen(records: answerRecords, room: room)
+   - Review screen shows:
+     - selected answer
+     - correct answer
+     - explanation
+     - image if present
+
+2. Favorites/bookmarks screen added
+   - Added:
+     - lib/src/screens/favorite_questions_screen.dart
+   - It calls:
+     - repository.loadFavoriteQuestions()
+   - It lists saved questions with category/type badges.
+   - Tapping a saved question starts a quiz from saved questions.
+
+3. Home screen navigation updated
+   - Added "Kaydedilenler" home action.
+   - Added profile icon button in header.
+   - Profile icon opens:
+     - ProfileScreen(repository: repository)
+   - Kaydedilenler opens:
+     - FavoriteQuestionsScreen(repository: repository)
+
+4. Fixed analyzer issues from the other AI's code
+   - lib/src/widgets/skeleton_loader.dart rewritten to use AnimatedBuilder composition correctly.
+   - Removed unused import from sign_in_screen.dart.
+
+5. Tests updated
+   - Existing result-flow widget test now also taps:
+     - "Cevapları İncele"
+   - It verifies:
+     - "Cevaplar"
+     - "Soru 1"
+     - "DOĞRU"
+
+Validation after this session:
+- dart format lib test: passed
+- flutter analyze: passed
+- flutter test: passed, 14 tests
+- flutter build windows with Supabase dart-defines: passed
+- flutter build apk --debug with Supabase dart-defines: passed
+
+Current build outputs:
+- Windows:
+  C:\src\zankurd_mobile\build\windows\x64\runner\Release\zankurd.exe
+- Android debug APK:
+  C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-debug.apk
+
+Current recommended next implementation:
+1. Make coin balance real
+   - Add repository method to load coin balance from coin_transactions.
+   - Add award coins on quiz completion.
+   - Replace static "2450" in _CoinBadge.
+
+2. Improve auth integration
+   - AuthProvider/sign-in screens exist, but main.dart still goes directly to HomeScreen.
+   - Decide whether to keep anonymous-first flow or add optional login/profile menu.
+   - Google sign-in may need platform-specific Supabase OAuth setup before exposing strongly.
+
+3. Improve favorites UX
+   - Add remove/unfavorite from FavoriteQuestionsScreen.
+   - Add empty state that distinguishes "not logged in/auth policy problem" from truly empty.
+
+4. Continue Pirs-inspired breadth
+   - Daily contest
+   - Tournament
+   - Reward/spin/coin history
+   - Settings/privacy/instructions
+   - App icon/splash polish
+
+Latest Codex Session Summary - Release Readiness And Real Coins
+----------------------------------------------------------------
+Date:
+- 2026-06-08
+
+User request:
+- Continue developing missing sides until the app is ready to share.
+
+Implemented:
+1. Real coin system in Flutter
+   - Added repository methods:
+     - loadCoinBalance()
+     - awardQuizCoins(...)
+   - Mock repository tracks local coin balance.
+   - Supabase repository reads from and inserts into:
+     - public.coin_transactions
+   - Home _CoinBadge no longer shows static 2450.
+   - Home loads the coin balance from the repository.
+   - Quiz completion awards coins based on score/correct count/best streak/total questions.
+   - Result screen shows "+N coin kazandın" after quiz completion.
+
+2. Supabase coin policies
+   - Added:
+     - supabase/coin_policies.sql
+   - User should run this once in Supabase SQL Editor for persistent coin reads/writes:
+     - C:\src\zankurd_mobile\supabase\coin_policies.sql
+
+3. App icons
+   - Added icon generator:
+     - tools/generate_app_icons.py
+   - Generated ZanKurd ZK icons for:
+     - Android mipmap launcher icons
+     - Web favicon and PWA icons
+     - Windows app_icon.ico
+
+4. Android release signing
+   - Updated:
+     - android/app/build.gradle.kts
+   - Added:
+     - android/key.properties.template
+   - Generated local ignored signing files:
+     - android/key.properties
+     - android/upload-keystore.jks
+   - Updated .gitignore to ignore signing secrets.
+   - APK signature verified with apksigner:
+     - Verified using v2 scheme: true
+
+5. Release docs
+   - Added:
+     - docs/release_readiness.md
+
+Release build outputs:
+- Android release APK:
+  C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-release.apk
+- Android Play Store AAB:
+  C:\src\zankurd_mobile\build\app\outputs\bundle\release\app-release.aab
+- Web:
+  C:\src\zankurd_mobile\build\web
+- Windows exe:
+  C:\src\zankurd_mobile\build\windows\x64\runner\Release\zankurd.exe
+- Windows ZIP:
+  C:\src\zankurd_mobile\build\release_packages\zankurd-windows-x64-release.zip
+
+Validation:
+- dart format lib test: passed
+- flutter analyze: passed
+- flutter test: passed, 14 tests
+- flutter build appbundle --release: passed
+- flutter build apk --release: passed
+- apksigner verify app-release.apk: passed
+- flutter build web --release: passed
+- flutter build windows --release: passed
+
+Important caution:
+- The local upload keystore and key.properties are needed for future Android updates.
+- Keep them backed up and private.
+- They are intentionally ignored by git.
+
+Recommended next step:
+- Run supabase/coin_policies.sql in Supabase.
+- Then install/share app-release.apk for Android testing or upload app-release.aab to Play Console internal testing.
+
 Latest Codex Session Summary - Polish, Wiring, And Current Next Steps
 ---------------------------------------------------------------------
 Date:
@@ -1109,6 +1368,239 @@ Next recommended implementation:
   - Level 4: difficulty 3-4
   - Level 5: difficulty 4-5
 
+Latest Session Summary - Full UI Redesign + Bilingual + Dark Theme
+-------------------------------------------------------------------
+Date:
+- 2026-06-09
+
+User feedback:
+- The old design was too plain/primitive. "Ben şuankinin tasarımını hiç beğenmedim çok ilkel modern ve profesyonel değil."
+- Saw a Supabase warning banner in the app ("Sorular Supabase'den geldi, profil için anonim giriş ayarı gerekiyor.") — wanted it gone.
+- Category cards were visually empty (white background, tiny icon, lots of empty space).
+- Wanted the app to be bilingual: both Kurdish (Kurmancî) and Turkish switchable.
+
+User's design choices (confirmed in previous session, now implemented):
+- Style: Gradient / Canlı — dark navy background, coral red accent, colorful gradient cards
+- Scope: Full rewrite of every screen
+- Navigation: Add bottom navigation bar (4 tabs)
+
+What was found when session started:
+- All the previous session's writes had NOT persisted to C:\src\zankurd_mobile
+- app_theme.dart still had the old light beige theme
+- app_shell.dart and categories_tab.dart did not exist
+- All screens still had old plain design
+
+Everything was rewritten/created from scratch in this session.
+
+NEW files created:
+- lib/src/l10n/lang.dart          — bilingual support (Kurdish/Turkish)
+- lib/src/screens/app_shell.dart  — bottom navigation shell (4 tabs)
+- lib/src/screens/categories_tab.dart — full-screen gradient categories grid
+
+REWRITTEN files:
+- lib/src/theme/app_theme.dart
+- lib/src/widgets/app_panel.dart
+- lib/main.dart
+- lib/src/screens/home_screen.dart
+- lib/src/screens/leaderboard_screen.dart
+- lib/src/screens/level_screen.dart
+- lib/src/screens/profile_screen.dart
+- lib/src/screens/room_screen.dart
+
+--- NEW DARK THEME (app_theme.dart) ---
+Color palette:
+  bg           = 0xFF1A1A2E  (deep navy)
+  bgDeep       = 0xFF16213E
+  surface      = 0xFF1E2A45
+  surfaceHi    = 0xFF243357
+  border       = 0xFF2A3B5C
+  accent       = 0xFFE94560  (coral red)
+  violet       = 0xFF7C3AED
+  gold         = 0xFFFFB800
+  correct      = 0xFF00D68F
+  wrong        = 0xFFFF3D71
+  textPrimary  = white
+  textSub      = 0xFFB0BCDB
+  textMuted    = 0xFF6B7A9B
+
+Compat aliases (for any old code not yet rewritten):
+  page  = bg
+  ink   = textPrimary
+  muted = textMuted
+  green = correct
+  red   = accent
+  brown = gold
+  line  = border
+
+Gradients defined in AppTheme:
+  bgGradient      = navy top-left → deep navy bottom-right
+  accentGradient  = coral → dark red
+  goldGradient    = gold → amber
+  correctGradient = green → darker green
+  categoryGradients[6] — one per category:
+    index 0 (Ziman)     → purple-violet  [0xFF7C3AED, 0xFF5B21B6]
+    index 1 (Çand)      → coral-orange   [0xFFE94560, 0xFFF97316]
+    index 2 (Dîrok)     → blue           [0xFF2563EB, 0xFF1D4ED8]
+    index 3 (Edebiyat)  → green          [0xFF10B981, 0xFF059669]
+    index 4 (Cografya)  → teal           [0xFF06B6D4, 0xFF0891B2]
+    index 5 (Muzîk)     → amber          [0xFFF59E0B, 0xFFD97706]
+  AppTheme.categoryGradient(index) helper available
+
+ThemeData uses dark() factory (NOT light()).
+Transparent AppBar, dark BottomNavBar, accent FilledButton, dark Switch.
+
+--- BILINGUAL SYSTEM (lib/src/l10n/lang.dart) ---
+Class: LanguageProvider extends ChangeNotifier
+  String lang = 'ku'   ('ku' or 'tr')
+  bool get isKu
+  void toggle()
+  void setLang(String)
+
+BuildContext extension:
+  context.isKu          → bool, subscribes to changes (watch)
+  context.langProvider  → LanguageProvider instance
+  context.s('ku text', 'tr text') → localized string
+
+Category name mapping (CategoryNames class):
+  Ziman    → Dil
+  Çand     → Kültür
+  Dîrok    → Tarih
+  Edebiyat → Edebiyat
+  Cografya → Coğrafya
+  Muzîk    → Müzik
+  CategoryNames.localized(kuName, isKu) helper
+
+LanguageProvider is registered in main.dart via ChangeNotifierProvider
+wrapping MaterialApp.
+
+--- NAVIGATION (app_shell.dart) ---
+AppShell wraps 4 tabs with IndexedStack:
+  0 → HomeScreen
+  1 → CategoriesTab
+  2 → LeaderboardScreen
+  3 → ProfileScreen
+
+BottomNavigationBar labels switch language with context.isKu:
+  KU: Sereke / Kategorî / Pêşderçûn / Profîl
+  TR: Ana Sayfa / Kategoriler / Liderlik / Profil
+
+main.dart now uses home: AppShell(...) instead of HomeScreen.
+
+--- CATEGORIES TAB (categories_tab.dart) ---
+Full-screen gradient category grid (2 columns).
+Each card:
+  - Full gradient background (AppTheme.categoryGradient(index))
+  - Glow shadow matching gradient color
+  - Frosted icon container (white 20% alpha)
+  - Category name in selected language
+  - Badge: "5 ast · pêşbaz" / "5 seviye · yarış"
+  - Decorative circle in top-right corner
+  - Navigates to LevelScreen on tap
+
+--- HOME SCREEN (home_screen.dart) ---
+Structure (no AppBar, dark gradient background):
+  _Header        — ZK badge (accentGradient) + Pêşbirka Kurmancî + CoinBadge
+  _HeroCard      — Purple→violet→coral gradient card, live-room pill,
+                   bilingual title + subtitle, white ElevatedButton "Hızlı Yarış"
+  _StatsRow      — 3 dark surface tiles: 2250+ pirs/soru, 30 ast/seviye, 72 wêne/görsel
+  _RoomActions   — 2 gradient buttons:
+                     "Jûr Ava Bike/Oda Kur" (accentGradient)
+                     "Bi Kodê Tevlî Bibe/Kodla Katıl" (blue gradient)
+  _CategoryGrid  — Same gradient cards as categories_tab.dart
+  _QuestionCard  — Dark surface preview card
+Supabase warning banner REMOVED entirely.
+Join room bottom sheet uses dark AppTheme.surface background.
+
+--- LEADERBOARD SCREEN ---
+No AppBar, custom header (title + refresh button).
+Podium for top-3: medal emoji, colored circle avatar, colored bar chart columns.
+Rank rows for 4+: dark surface card, # badge, circle avatar, gold score.
+Empty/error state with retry.
+All text bilingual.
+
+--- LEVEL SCREEN ---
+200px gradient hero (uses AppTheme.categoryGradient matching category index).
+Custom back button overlay (no AppBar).
+Level cards: colored number badge, title, question count + difficulty, play icon.
+Navigates to QuizScreen.
+
+--- PROFILE SCREEN ---
+Dark gradient container (no AppBar).
+Avatar card: purple gradient, initial letter circle.
+Name editor: dark surface, TextField, FilledButton "Tomar Bike/Kaydet".
+Language toggle: KU / TR animated toggle (coral active, dark inactive).
+Stats grid: 2×2 colored tiles (gold rank, coral score, violet streak, green games).
+
+--- ROOM SCREEN ---
+Dark gradient background.
+Back button + room code copy button row.
+Room hero: blue gradient card with room name, code pill, category pill.
+Players panel: surfaceHi tiles with rank circle, name, state, score, streak.
+Ready switch + start button.
+All text bilingual.
+
+--- APP_PANEL WIDGET UPDATE ---
+New signature:
+  AppPanel({child, padding, gradient, color, borderRadius})
+  color defaults to AppTheme.surface (not white)
+  gradient optional — removes border when used
+  No more white border on dark panels
+
+--- MAIN.DART ---
+ChangeNotifierProvider(create: LanguageProvider) wraps MaterialApp.
+theme: AppTheme.dark()
+home: AppShell(repository: repository)
+
+Validation after this session:
+- flutter analyze: No issues found
+- flutter test: 14/14 passed (test/widget_test.dart updated to use AppTheme.dark())
+- App running in Chrome at http://localhost:8080
+
+Run command (use this to start the app):
+  Set-Location "C:\src\zankurd_mobile"
+  $env:PUB_CACHE="C:\src\pub-cache"
+  $env:JAVA_HOME="C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot"
+  $env:ANDROID_HOME="C:\src\android-sdk"
+  C:\src\flutter\bin\flutter.bat run -d chrome --web-port=8080
+    --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co
+    --dart-define=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+
+Screens NOT yet rewritten in dark theme (still functional via compat aliases):
+- lib/src/screens/review_screen.dart
+- lib/src/screens/favorite_questions_screen.dart
+- lib/src/screens/sign_in_screen.dart
+- lib/src/screens/sign_up_screen.dart
+- lib/src/widgets/skeleton_loader.dart
+- lib/src/widgets/loading_overlay.dart
+- lib/src/screens/quiz_screen.dart
+- lib/src/screens/quiz_result_screen.dart
+
+These still compile and work. The dark theme compat aliases ensure they don't crash:
+  AppTheme.page  → AppTheme.bg
+  AppTheme.ink   → AppTheme.textPrimary
+  AppTheme.muted → AppTheme.textMuted
+  AppTheme.green → AppTheme.correct
+  AppTheme.red   → AppTheme.accent
+  AppTheme.brown → AppTheme.gold
+  AppTheme.line  → AppTheme.border
+
+Recommended next steps:
+1. Rewrite quiz_screen.dart with dark theme (progress bar, dark answer buttons, correct=green/wrong=red)
+2. Rewrite quiz_result_screen.dart with dark theme (gradient result hero, gold coin card)
+3. Add bilingual text to quiz_screen and quiz_result_screen using context.isKu
+4. Enable Supabase anonymous auth (Dashboard > Authentication > Providers > Anonymous sign-ins)
+5. Run C:\src\zankurd_mobile\supabase\online_room_policies.sql if not done yet
+6. Test the app on Android device with release APK
+
+IMPORTANT CODING RULES for next AI:
+- Always use AppTheme.dark() not AppTheme.light()
+- Always wrap new screens in Container(decoration: BoxDecoration(gradient: AppTheme.bgGradient))
+- Import lang.dart and use context.isKu / context.s('ku', 'tr') for bilingual text
+- Category cards MUST use AppTheme.categoryGradient(index) — no white backgrounds
+- Do not show Supabase error/warning banners to users — degrade silently
+- LanguageProvider is already provided at the root — do not wrap again
+- Work in C:\src\zankurd_mobile (not the Desktop copy)
+
 Latest Codex Session Summary - Local Visual Assets And Stronger Kurdish Focus
 -----------------------------------------------------------------------------
 Date:
@@ -1170,3 +1662,78 @@ Validation:
 - flutter build apk --debug: passed
 - flutter build web: passed
 - flutter build windows: passed
+
+Latest Claude Session Summary - Dark/Bilingual Completion: Review, Favorites, Auth Screens
+-------------------------------------------------------------------------------------------
+Date:
+- 2026-06-09
+
+User request:
+- Read this handoff, see what the previous AI did, continue development and finish everything recommended.
+
+Implemented (all in C:\src\zankurd_mobile, synced to Desktop copy):
+1. review_screen.dart fully rewritten in dark/gradient/bilingual style:
+   - bgGradient page background, extendBodyBehindAppBar
+   - Summary strip at top: correct / wrong / unanswered counts in colored tiles
+   - Status header per card (RAST/DOGRU, SAS/YANLIS, VALA MA/BOS BIRAKILDI) with color coding
+   - Dark answer rows: green correct, red wrong-selected, surfaceHi neutral
+   - Violet explanation box with lightbulb icon
+   - All labels bilingual via context.s(...)
+2. favorite_questions_screen.dart fully rewritten:
+   - Dark gradient background, gold-gradient bookmark badges
+   - Category badge localized via CategoryNames.localized
+   - NEW: remove-from-favorites button per tile (calls toggleFavoriteQuestion(question, false) and reloads)
+   - Bilingual empty state with gold circle icon
+3. sign_in_screen.dart fully modernized:
+   - Dark gradient page, ZK logo badge with accent glow
+   - KU/TR language toggle at top right (sign-in shows before profile tab, so language can be chosen pre-login)
+   - Gradient sign-in button with glow shadow
+   - All text/validators/snackbars bilingual
+   - Kept all existing functionality: email sign-in, Google sign-in, password reset
+4. sign_up_screen.dart fully modernized:
+   - Same dark/gradient visual language, icon hero, gradient submit button
+   - All text/validators bilingual
+5. loading_overlay.dart: white box replaced with AppTheme.surface dark panel, accent spinner
+6. error_dialog.dart: dark surface AlertDialog with border, AppTheme.wrong icon
+
+Important environment fix discovered this session:
+- flutter build apk failed with: java.io.IOException: Unable to establish loopback connection
+  Caused by: java.net.SocketException: Invalid argument: connect (sun.nio.ch.UnixDomainSockets)
+- Root cause: JDK NIO pipes use Unix domain sockets in java.io.tmpdir; the AI-harness TEMP path is
+  too long for the ~104 char Unix socket path limit.
+- Fix: before any flutter build / gradlew command set:
+    $env:TMP="C:\src\tmp"; $env:TEMP="C:\src\tmp"
+  (C:\src\tmp must exist). ALWAYS do this in future sessions.
+
+Validation:
+- dart format lib test: passed
+- flutter analyze: No issues found
+- flutter test: passed, 14/14
+- flutter build apk --release with Supabase dart-defines: passed
+  C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-release.apk (53.2MB)
+- flutter build web --release and flutter build windows --release: run after APK (see build outputs)
+
+Sync:
+- lib/ and test/ copied to C:\Users\AMARGI\Desktop\pirs kurmanci\zankurd_mobile (non-destructive robocopy)
+
+Remaining manual Supabase steps for the user (unchanged from before):
+1. Enable Anonymous sign-ins (Dashboard > Authentication > Providers)
+2. Run supabase/online_room_policies.sql
+3. Run supabase/coin_policies.sql if coin writes fail
+
+Recommended next implementation:
+1. Test app-release.apk on a real Android device
+2. Wire ProfileScreen sign-out to AuthProvider.signOut (verify it exists and is reachable)
+3. Daily contest / tournament / spin-wheel screens (Pirs-inspired breadth)
+4. Store metadata, screenshots, Play Console internal testing upload
+
+Addendum (same session, 2026-06-09):
+- profile_screen.dart also updated:
+  - Added "Kaydedilen Sorular / Pirsen Tomarkiri" shortcut row that opens FavoriteQuestionsScreen.
+  - Added "Cikis Yap / Derkeve" row with confirm dialog that calls AuthProvider.signOut();
+    AppShell automatically returns to SignInScreen when auth state clears.
+- All three release targets rebuilt AFTER these changes so binaries match sources:
+  - flutter build apk --release: passed
+  - flutter build web --release: passed
+  - flutter build windows --release: passed
+- flutter analyze: clean; flutter test: 14/14 after the change.

@@ -2,7 +2,6 @@ drop view if exists public.leaderboard_entries;
 
 create view public.leaderboard_entries as
 select
-  row_number() over (order by coalesce(sum(rp.score), 0) desc, coalesce(max(rp.streak), 0) desc)::integer as rank,
   rp.player_id,
   coalesce(p.display_name, 'Oyuncu') as display_name,
   coalesce(sum(rp.score), 0)::integer as total_score,

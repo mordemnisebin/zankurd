@@ -445,6 +445,53 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<int> loadCoinBalance() async {
+    try {
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      final rows = await client
+          .from('coin_transactions')
+          .select('amount')
+          .eq('player_id', user.id);
+
+      return rows.fold<int>(
+        0,
+        (sum, row) => sum + ((row['amount'] as num?)?.toInt() ?? 0),
+      );
+    } catch (_) {
+      return super.loadCoinBalance();
+    }
+  }
+
+  @override
+  Future<int> awardQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+  }) async {
+    final earned = await super.awardQuizCoins(
+      score: score,
+      correctCount: correctCount,
+      bestStreak: bestStreak,
+      totalQuestions: totalQuestions,
+    );
+
+    try {
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      await upsertProfile(displayName: 'ZanKurd Oyuncusu');
+      await client.from('coin_transactions').insert({
+        'player_id': user.id,
+        'amount': earned,
+        'reason':
+            'quiz_complete:score=$score,correct=$correctCount,streak=$bestStreak,total=$totalQuestions',
+      });
+      return earned;
+    } catch (_) {
+      return earned;
+    }
+  }
+
+  @override
   Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50}) async {
     try {
       final rows = await client

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
+import '../l10n/lang.dart';
 import '../models/quiz_level.dart';
 import '../theme/app_theme.dart';
-import '../widgets/app_panel.dart';
 import 'quiz_screen.dart';
 
 class LevelScreen extends StatefulWidget {
@@ -25,25 +25,41 @@ class _LevelScreenState extends State<LevelScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ku = context.isKu;
     final levels = widget.repository.levelsForCategory(widget.category);
+    final catIndex = widget.repository.categories.indexOf(widget.category);
+    final gradient = AppTheme.categoryGradient(catIndex >= 0 ? catIndex : 0);
 
     return Scaffold(
-      appBar: AppBar(title: Text(widget.category)),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-          children: [
-            _CategoryHero(category: widget.category),
-            const SizedBox(height: 16),
-            for (final level in levels) ...[
-              _LevelTile(
-                level: level,
-                disabled: _loading,
-                onTap: () => _openLevel(level),
+      body: Container(
+        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        child: SafeArea(
+          child: ListView(
+            children: [
+              _CategoryHero(
+                category: widget.category,
+                gradient: gradient,
+                isKu: ku,
+                onBack: () => Navigator.of(context).pop(),
               ),
-              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+                child: Column(
+                  children: [
+                    for (final level in levels) ...[
+                      _LevelCard(
+                        level: level,
+                        disabled: _loading,
+                        isKu: ku,
+                        onTap: () => _openLevel(level),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+                  ],
+                ),
+              ),
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -52,7 +68,6 @@ class _LevelScreenState extends State<LevelScreen> {
   Future<void> _openLevel(QuizLevel level) async {
     if (_loading) return;
     setState(() => _loading = true);
-
     try {
       final questions = await widget.repository.loadLevelQuestions(
         category: level.category,
@@ -60,15 +75,14 @@ class _LevelScreenState extends State<LevelScreen> {
         difficultyMax: level.difficultyMax,
         limit: level.questionCount,
       );
-
       if (!mounted) return;
       final room = widget.repository
           .createRoom(category: level.category)
           .copyWith(
-            name: '${level.category} ${level.number}. Seviye',
+            name:
+                '${level.category} ${level.number}. ${context.isKu ? "Ast" : "Seviye"}',
             questionCount: questions.length,
           );
-
       await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => QuizScreen(
@@ -81,7 +95,13 @@ class _LevelScreenState extends State<LevelScreen> {
     } catch (_) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Bu seviyenin soruları yüklenemedi.')),
+        SnackBar(
+          content: Text(
+            context.isKu
+                ? 'Pirsên vê astê neyên barkirin.'
+                : 'Bu seviyenin soruları yüklenemedi.',
+          ),
+        ),
       );
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -90,40 +110,79 @@ class _LevelScreenState extends State<LevelScreen> {
 }
 
 class _CategoryHero extends StatelessWidget {
-  const _CategoryHero({required this.category});
+  const _CategoryHero({
+    required this.category,
+    required this.gradient,
+    required this.isKu,
+    required this.onBack,
+  });
 
   final String category;
+  final LinearGradient gradient;
+  final bool isKu;
+  final VoidCallback onBack;
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      color: AppTheme.green,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      height: 200,
+      decoration: BoxDecoration(gradient: gradient),
+      child: Stack(
         children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.16),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Icon(Icons.school_outlined, color: Colors.white),
-          ),
-          const SizedBox(height: 14),
-          Text(
-            category,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
-              fontSize: 32,
-              height: 1.05,
+          Positioned(
+            right: -40,
+            top: -40,
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.07),
+                shape: BoxShape.circle,
+              ),
             ),
           ),
-          const SizedBox(height: 8),
-          const Text(
-            'Kolaydan zora doğru ilerle, puan topla ve liderliğe yüksel.',
-            style: TextStyle(color: Color(0xFFE6F1EB), fontSize: 15),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: onBack,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_back_rounded,
+                      color: Colors.white,
+                      size: 22,
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  CategoryNames.localized(category, isKu),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 34,
+                    height: 1.05,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  isKu
+                      ? 'Ji hêsan ber bi dijwar ve, xalên xwe bicivîne.'
+                      : 'Kolaydan zora doğru ilerle, puan topla.',
+                  style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.8),
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -131,80 +190,100 @@ class _CategoryHero extends StatelessWidget {
   }
 }
 
-class _LevelTile extends StatelessWidget {
-  const _LevelTile({
+class _LevelCard extends StatelessWidget {
+  const _LevelCard({
     required this.level,
     required this.disabled,
+    required this.isKu,
     required this.onTap,
   });
 
   final QuizLevel level;
   final bool disabled;
+  final bool isKu;
   final VoidCallback onTap;
+
+  Color _badgeColor(int n) => switch (n) {
+    1 => AppTheme.correct,
+    2 => const Color(0xFF4059AD),
+    3 => AppTheme.gold,
+    4 => AppTheme.accent,
+    _ => AppTheme.violet,
+  };
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      padding: EdgeInsets.zero,
-      child: InkWell(
-        onTap: disabled ? null : onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Row(
-            children: [
-              Container(
-                width: 46,
-                height: 46,
-                decoration: BoxDecoration(
-                  color: _levelColor(level.number),
-                  borderRadius: BorderRadius.circular(10),
+    final badgeColor = _badgeColor(level.number);
+
+    return GestureDetector(
+      onTap: disabled ? null : onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppTheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppTheme.border),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: badgeColor.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: badgeColor.withValues(alpha: 0.4)),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                '${level.number}',
+                style: TextStyle(
+                  color: badgeColor,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 20,
                 ),
-                alignment: Alignment.center,
-                child: Text(
-                  '${level.number}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 18,
+              ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    level.title,
+                    style: const TextStyle(
+                      color: AppTheme.textPrimary,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 17,
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      level.title,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                      ),
+                  const SizedBox(height: 3),
+                  Text(
+                    '${level.questionCount} ${isKu ? "pirs" : "soru"} · ${isKu ? "Zehmetî" : "Zorluk"} ${level.difficultyLabel}',
+                    style: const TextStyle(
+                      color: AppTheme.textMuted,
+                      fontSize: 13,
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      '${level.questionCount} soru · Zorluk ${level.difficultyLabel}',
-                      style: const TextStyle(color: AppTheme.muted),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const Icon(Icons.chevron_right_rounded, color: AppTheme.muted),
-            ],
-          ),
+            ),
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: badgeColor.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                Icons.play_arrow_rounded,
+                color: badgeColor,
+                size: 22,
+              ),
+            ),
+          ],
         ),
       ),
     );
-  }
-
-  Color _levelColor(int number) {
-    return switch (number) {
-      1 => AppTheme.green,
-      2 => const Color(0xFF4059AD),
-      3 => const Color(0xFFBD7B2B),
-      4 => AppTheme.red,
-      _ => AppTheme.brown,
-    };
   }
 }

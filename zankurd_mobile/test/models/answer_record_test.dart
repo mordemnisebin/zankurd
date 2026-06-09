@@ -17,20 +17,22 @@ void main() {
       expect(testRecord.isCorrect, true);
     });
 
-    test('isCorrect returns false when selectedAnswer differs from correctAnswer',
-        () {
-      const incorrectRecord = AnswerRecord(
-        id: 'q_001',
-        category: 'Ziman',
-        prompt: 'Test?',
-        answers: ['A', 'B', 'C'],
-        correctAnswer: 'A',
-        selectedAnswer: 'B',
-        explanation: 'Exp',
-      );
+    test(
+      'isCorrect returns false when selectedAnswer differs from correctAnswer',
+      () {
+        const incorrectRecord = AnswerRecord(
+          id: 'q_001',
+          category: 'Ziman',
+          prompt: 'Test?',
+          answers: ['A', 'B', 'C'],
+          correctAnswer: 'A',
+          selectedAnswer: 'B',
+          explanation: 'Exp',
+        );
 
-      expect(incorrectRecord.isCorrect, false);
-    });
+        expect(incorrectRecord.isCorrect, false);
+      },
+    );
 
     test('isUnanswered returns true when selectedAnswer is null', () {
       const unansweredRecord = AnswerRecord(
