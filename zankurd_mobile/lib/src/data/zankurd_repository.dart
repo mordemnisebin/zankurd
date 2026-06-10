@@ -50,10 +50,20 @@ abstract class ZanKurdRepository {
   Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50});
   Future<List<QuizQuestion>> loadFavoriteQuestions();
   Future<int> loadCoinBalance();
+
+  /// Günlük çark: bugün çevrilebilir mi?
+  Future<bool> canSpinToday();
+
+  /// Günlük çark ödülünü coin olarak yazar, kazanılan miktarı döner.
+  ///
+  /// Gerçek backend bu miktarı sunucuda belirlemelidir; istemci yalnızca
+  /// dönen miktara göre animasyonu hedefler.
+  Future<int> awardSpinCoins();
   Future<int> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
+    GameRoom? room,
   });
 }

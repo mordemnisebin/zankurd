@@ -18,10 +18,87 @@ class _FakeAuthProvider extends AuthProvider {
   bool get isLoading => false;
 }
 
+class _GateAuthProvider extends AuthProvider {
+  _GateAuthProvider() : super.test();
+
+  bool _authenticated = false;
+
+  @override
+  bool get isAuthenticated => _authenticated;
+
+  @override
+  bool get isLoading => false;
+
+  @override
+  Future<bool> signInAsGuest() async {
+    _authenticated = true;
+    notifyListeners();
+    return true;
+  }
+}
+
 LanguageProvider _turkishLang() => LanguageProvider()..setLang('tr');
 
 void main() {
   final repository = MockZanKurdRepository();
+
+  testWidgets('shows auth screen before guest sign in', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _GateAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
+    expect(find.text('Misafir olarak devam et'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('guest sign in opens the app shell', (tester) async {
+    final authProvider = _GateAuthProvider();
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: authProvider,
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Misafir olarak devam et'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Misafir olarak devam et'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('ZanKurd'), findsOneWidget);
+    expect(find.text('Günün Yarışması'), findsOneWidget);
+  });
+
+  testWidgets('language toggle works on the auth screen', (tester) async {
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _GateAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('KU'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Bi xêr hatî ZanKurdê'), findsOneWidget);
+    expect(find.text('Wek mêvan bidomîne'), findsOneWidget);
+  });
 
   testWidgets('creates a room and opens the quiz flow', (tester) async {
     await tester.pumpWidget(
@@ -72,6 +149,24 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(QuizScreen), findsOneWidget);
+  });
+
+  testWidgets('opens the spin wheel from the home screen', (tester) async {
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _FakeAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pump();
+
+    await tester.scrollUntilVisible(find.text('Günün Çarkı'), 120);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Günün Çarkı'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Çevir!'), findsOneWidget);
   });
 
   testWidgets('opens the leaderboard from the home screen', (tester) async {

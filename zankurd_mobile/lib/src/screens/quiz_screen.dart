@@ -295,6 +295,7 @@ class _QuizScreenState extends State<QuizScreen> {
             correctCount: correctCount,
             bestStreak: bestStreak,
             totalQuestions: widget.questions.length,
+            room: widget.room,
           )
           .catchError((_) => 0);
       if (!mounted) return;
