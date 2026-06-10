@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZanKurd — Gizlilik Politikası / Polîtîkaya Nepeniyê</title>
+  <style>
+    :root {
+      --bg: #1A1A2E; --bg2: #16213E; --surface: #1E2A45;
+      --accent: #E94560; --text: #FFFFFF; --sub: #B0BCDB; --muted: #6B7A9B;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--bg), var(--bg2));
+      color: var(--sub); min-height: 100vh; line-height: 1.7;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .badge {
+      width: 64px; height: 64px; border-radius: 18px;
+      background: linear-gradient(135deg, #E94560, #BD1E3B);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 900; font-size: 24px; margin-bottom: 20px;
+    }
+    h1 { color: var(--text); font-size: 28px; margin-bottom: 6px; }
+    .updated { color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+    h2 {
+      color: var(--text); font-size: 19px; margin: 36px 0 10px;
+      padding-top: 24px; border-top: 1px solid #2A3B5C;
+    }
+    h2:first-of-type { border-top: none; padding-top: 0; }
+    p, li { margin-bottom: 10px; }
+    ul { padding-left: 22px; }
+    .lang-tag {
+      display: inline-block; background: var(--surface); color: var(--accent);
+      font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 99px;
+      margin-bottom: 8px; letter-spacing: 0.5px;
+    }
+    a { color: var(--accent); }
+    .card {
+      background: var(--surface); border: 1px solid #2A3B5C;
+      border-radius: 14px; padding: 18px 20px; margin: 14px 0;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="badge">ZK</div>
+  <h1>Gizlilik Politikası · Polîtîkaya Nepeniyê</h1>
+  <p class="updated">Son güncelleme / Nûvekirina dawî: 9 Hezîran / Haziran 2026</p>
+
+  <span class="lang-tag">TÜRKÇE</span>
+
+  <h2>1. Hangi verileri topluyoruz?</h2>
+  <ul>
+    <li><strong>Hesap bilgileri:</strong> E-posta ile kayıt olursan e-posta adresin; misafir girişinde yalnızca anonim bir kimlik numarası.</li>
+    <li><strong>Oyuncu profili:</strong> Seçtiğin oyuncu adı.</li>
+    <li><strong>Oyun verileri:</strong> Yarışma skorların, doğru/yanlış istatistiklerin, coin bakiyen, kaydettiğin ve raporladığın sorular.</li>
+    <li><strong>Çökme kayıtları:</strong> Uygulama hatalarında anonim teknik kayıt (cihaz modeli, işletim sistemi sürümü, hata izi) Firebase Crashlytics aracılığıyla toplanır.</li>
+  </ul>
+
+  <h2>2. Verilerin nerede saklanıyor?</h2>
+  <p>Hesap ve oyun verilerin <strong>Supabase</strong> altyapısında, çökme kayıtları <strong>Google Firebase</strong> altyapısında saklanır. Veriler şifreli bağlantı (HTTPS) ile iletilir.</p>
+
+  <h2>3. Verilerin kimlerle paylaşılıyor?</h2>
+  <p>Verilerin satılmaz ve üçüncü taraflarla pazarlama amacıyla paylaşılmaz. Oyuncu adın ve skorların yalnızca liderlik tablosunda diğer oyunculara görünür.</p>
+
+  <h2>4. Verilerini nasıl silebilirsin?</h2>
+  <p>Profil ekranından çıkış yapabilirsin. Hesabının ve tüm verilerinin kalıcı silinmesi için <a href="mailto:nisebinbawer47@gmail.com">nisebinbawer47@gmail.com</a> adresine e-posta gönder; talep en geç 30 gün içinde yerine getirilir.</p>
+
+  <h2>5. Çocukların gizliliği</h2>
+  <p>ZanKurd genel kitleye yönelik bir bilgi yarışması uygulamasıdır ve çocuklardan bilerek kişisel veri toplamaz.</p>
+
+  <h2>6. Değişiklikler</h2>
+  <p>Bu politika güncellendiğinde bu sayfadaki tarih yenilenir.</p>
+
+  <div class="card">
+    <span class="lang-tag">KURMANCÎ</span>
+
+    <h2>1. Em kîjan daneyan berhev dikin?</h2>
+    <ul>
+      <li><strong>Agahiyên hesabê:</strong> Heke bi e-peyamê tomar bibî navnîşana e-peyama te; di têketina mêvan de tenê nasnameyeke anonîm.</li>
+      <li><strong>Profîla lîstikvan:</strong> Navê lîstikvanê ku te hilbijartiye.</li>
+      <li><strong>Daneyên lîstikê:</strong> Pûanên te, statîstîkên rast/şaş, hejmara coinan, pirsên tomarkirî û raporkirî.</li>
+      <li><strong>Tomarên hilweşînê:</strong> Di xetayên sepanê de tomarên teknîkî yên anonîm bi rêya Firebase Crashlytics tên berhevkirin.</li>
+    </ul>
+
+    <h2>2. Daneyên te li ku tên tomarkirin?</h2>
+    <p>Daneyên hesab û lîstikê li ser <strong>Supabase</strong>, tomarên hilweşînê li ser <strong>Google Firebase</strong> tên tomarkirin. Dane bi girêdana şîfrekirî (HTTPS) tên şandin.</p>
+
+    <h2>3. Dane bi kê re tên parvekirin?</h2>
+    <p>Daneyên te nayên firotin û ji bo reklamê bi kesên sêyemîn re nayên parvekirin. Navê te û pûanên te tenê di tabloya pêşderçûnê de ji lîstikvanên din re xuya dibin.</p>
+
+    <h2>4. Tu çawa dikarî daneyên xwe jê bibî?</h2>
+    <p>Ji bo jêbirina hesabê û hemû daneyan, e-peyamekê bişîne <a href="mailto:nisebinbawer47@gmail.com">nisebinbawer47@gmail.com</a>; daxwaz herî dereng di 30 rojan de tê bicihanîn.</p>
+
+    <h2>5. Nepeniya zarokan</h2>
+    <p>ZanKurd sepaneke pêşbirka zanînê ya ji bo girseya giştî ye û bi zanebûn daneyên kesane ji zarokan berhev nake.</p>
+  </div>
+</div>
+</body>
+</html>
