@@ -137,49 +137,63 @@ class QuizResultScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               if (coinsAwarded > 0) ...[
-                AppPanel(
-                  gradient: AppTheme.goldGradient,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 46,
-                        height: 46,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.18),
-                          borderRadius: BorderRadius.circular(12),
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0, end: 1),
+                  duration: const Duration(milliseconds: 450),
+                  curve: Curves.easeOutCubic,
+                  builder: (context, t, child) => Transform.scale(
+                    scale: 0.92 + 0.08 * t,
+                    child: Opacity(opacity: t, child: child),
+                  ),
+                  child: AppPanel(
+                    gradient: AppTheme.goldGradient,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 46,
+                          height: 46,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.18),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(
+                            Icons.monetization_on_outlined,
+                            color: Colors.white,
+                          ),
                         ),
-                        child: const Icon(
-                          Icons.monetization_on_outlined,
-                          color: Colors.white,
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TweenAnimationBuilder<int>(
+                                tween: IntTween(begin: 0, end: coinsAwarded),
+                                duration: const Duration(milliseconds: 800),
+                                curve: Curves.easeOut,
+                                builder: (context, value, _) => Text(
+                                  context.s(
+                                    '+$value coin stendî',
+                                    '+$value coin kazandın',
+                                  ),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                context.s(
+                                  'Xelata te di malperê de tê nûkirin.',
+                                  'Ödül bakiyen ana ekranda güncellenir.',
+                                ),
+                                style: const TextStyle(color: Colors.white70),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              context.s(
-                                '+$coinsAwarded coin stendî',
-                                '+$coinsAwarded coin kazandın',
-                              ),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 18,
-                              ),
-                            ),
-                            Text(
-                              context.s(
-                                'Xelata te di malperê de tê nûkirin.',
-                                'Ödül bakiyen ana ekranda güncellenir.',
-                              ),
-                              style: const TextStyle(color: Colors.white70),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
