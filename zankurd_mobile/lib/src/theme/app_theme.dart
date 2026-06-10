@@ -73,6 +73,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      fontFamily: 'Rubik',
       scaffoldBackgroundColor: bg,
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
@@ -92,8 +93,10 @@ class AppTheme {
         foregroundColor: textPrimary,
         titleTextStyle: TextStyle(
           color: textPrimary,
+          fontFamily: 'Rubik',
           fontWeight: FontWeight.w900,
           fontSize: 20,
+          letterSpacing: -0.2,
         ),
         iconTheme: IconThemeData(color: textPrimary),
       ),
@@ -156,11 +159,24 @@ class AppTheme {
         headlineSmall: TextStyle(
           fontWeight: FontWeight.w900,
           color: textPrimary,
+          letterSpacing: -0.3,
+          height: 1.2,
         ),
-        titleLarge: TextStyle(fontWeight: FontWeight.w900, color: textPrimary),
-        titleMedium: TextStyle(fontWeight: FontWeight.w800, color: textPrimary),
-        bodyMedium: TextStyle(color: textSub),
-        bodySmall: TextStyle(color: textMuted),
+        titleLarge: TextStyle(
+          fontWeight: FontWeight.w900,
+          color: textPrimary,
+          letterSpacing: -0.2,
+          height: 1.25,
+        ),
+        titleMedium: TextStyle(
+          fontWeight: FontWeight.w700,
+          color: textPrimary,
+          height: 1.3,
+        ),
+        bodyLarge: TextStyle(color: textSub, height: 1.45),
+        bodyMedium: TextStyle(color: textSub, height: 1.4),
+        bodySmall: TextStyle(color: textMuted, height: 1.35),
+        labelLarge: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 0.2),
       ),
       snackBarTheme: SnackBarThemeData(
         backgroundColor: surfaceHi,
