@@ -69,13 +69,25 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       if (profile != null && profile['display_name'] != null) {
         return profile['display_name'] as String;
       }
-    } catch (_) {}
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'getProfileName failed');
+    }
     return 'ZanKurd Oyuncusu';
   }
 
   @override
   Future<void> updateProfileName(String name) async {
     await upsertProfile(displayName: name);
+  }
+
+  @override
+  Future<void> deleteMyAccount() async {
+    try {
+      await client.rpc('delete_my_account');
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'delete_my_account failed');
+      rethrow;
+    }
   }
 
   @override
@@ -106,7 +118,8 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
             ? (row['rooms_played'] as num).toInt()
             : 0,
       );
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'getPlayerStats failed');
       return null;
     }
   }
@@ -125,7 +138,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   Future<List<QuizQuestion>> loadQuestions({
     String? categoryId,
     int limit = 10,
-  }) {
+  }) async {
     return fetchApprovedQuestions(categoryId: categoryId, limit: limit);
   }
 
@@ -145,6 +158,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
             includeRichColumns: true,
             difficultyMin: difficultyMin,
             difficultyMax: difficultyMax,
+            randomize: true,
           ).catchError(
             (_) => _selectApprovedQuestions(
               categoryId: categoryId,
@@ -152,10 +166,17 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
               includeRichColumns: false,
               difficultyMin: difficultyMin,
               difficultyMax: difficultyMax,
+              randomize: true,
             ),
           );
 
-      final questions = rows.map(_questionFromRow).toList();
+      final questions = await _withRemoteVisualBlend(
+        rows.map(_questionFromRow).toList(),
+        categoryId: categoryId,
+        limit: limit,
+        difficultyMin: difficultyMin,
+        difficultyMax: difficultyMax,
+      );
       if (questions.isNotEmpty) return questions;
     } catch (_) {
       // Fall through to local examples if the rich schema is unavailable.
@@ -240,14 +261,20 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
           categoryId: categoryId,
           limit: limit,
           includeRichColumns: true,
+          randomize: true,
         ).catchError(
           (_) => _selectApprovedQuestions(
             categoryId: categoryId,
             limit: limit,
             includeRichColumns: false,
+            randomize: true,
           ),
         );
-    return rows.map(_questionFromRow).toList();
+    return _withRemoteVisualBlend(
+      rows.map(_questionFromRow).toList(),
+      categoryId: categoryId,
+      limit: limit,
+    );
   }
 
   Future<List<Map<String, dynamic>>> _selectApprovedQuestions({
@@ -256,6 +283,8 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     required bool includeRichColumns,
     int? difficultyMin,
     int? difficultyMax,
+    bool randomize = false,
+    String? questionType,
   }) async {
     final columns = includeRichColumns
         ? 'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, question_type, image_url, difficulty'
@@ -274,9 +303,70 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     if (difficultyMax != null) {
       filteredQuery = filteredQuery.lte('difficulty', difficultyMax);
     }
+    if (questionType != null) {
+      filteredQuery = filteredQuery.eq('question_type', questionType);
+    }
 
-    final rows = await filteredQuery.order('difficulty').limit(limit);
+    if (randomize) {
+      final total = await client.from('questions').count(CountOption.exact);
+      const windowSize = 120;
+      final maxOffset = total > windowSize ? total - windowSize : 0;
+      final offset = maxOffset == 0 ? 0 : Random().nextInt(maxOffset);
+      final rows = await filteredQuery
+          .order('id')
+          .range(offset, offset + windowSize - 1);
+      if (rows.isNotEmpty) {
+        return (rows..shuffle()).take(limit).toList(growable: false);
+      }
+    }
+
+    final rows = await filteredQuery.order('id').limit(limit);
     return rows;
+  }
+
+  Future<List<QuizQuestion>> _withRemoteVisualBlend(
+    List<QuizQuestion> selected, {
+    required String? categoryId,
+    required int limit,
+    int? difficultyMin,
+    int? difficultyMax,
+  }) async {
+    const minVisualQuestions = 2;
+    if (selected.where((question) => question.hasImage).length >=
+        minVisualQuestions) {
+      return selected.take(limit).toList(growable: false);
+    }
+
+    try {
+      final visualRows = await _selectApprovedQuestions(
+        categoryId: categoryId,
+        limit: minVisualQuestions,
+        includeRichColumns: true,
+        difficultyMin: difficultyMin,
+        difficultyMax: difficultyMax,
+        randomize: true,
+        questionType: 'visual',
+      );
+      final ids = selected.map((question) => question.id).toSet();
+      final blended = [...selected];
+      for (final question in visualRows.map(_questionFromRow)) {
+        if (ids.contains(question.id)) continue;
+        if (blended.where((q) => q.hasImage).length >= minVisualQuestions) {
+          break;
+        }
+        if (blended.length >= limit) {
+          final replaceAt = blended.lastIndexWhere((q) => !q.hasImage);
+          if (replaceAt == -1) break;
+          blended[replaceAt] = question;
+        } else {
+          blended.add(question);
+        }
+      }
+      return (blended.take(limit).toList(growable: false)..shuffle());
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'visual question blend failed');
+      return selected.take(limit).toList(growable: false);
+    }
   }
 
   @override
@@ -491,7 +581,8 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
           .toList();
 
       if (questions.isNotEmpty) return questions;
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadFavoriteQuestions failed');
       // Fallback if favorites view/policy is not installed yet
     }
     return super.loadFavoriteQuestions();
@@ -510,7 +601,8 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
         0,
         (sum, row) => sum + ((row['amount'] as num?)?.toInt() ?? 0),
       );
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadCoinBalance failed');
       return super.loadCoinBalance();
     }
   }
@@ -587,7 +679,8 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       return last.year != now.year ||
           last.month != now.month ||
           last.day != now.day;
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'canSpinToday failed');
       return super.canSpinToday();
     }
   }
@@ -611,7 +704,8 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
         }
       }
       throw StateError('Daily spin RPC returned no reward for ${user.id}.');
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'claim_daily_spin failed');
       return super.awardSpinCoins();
     }
   }
@@ -640,7 +734,8 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
           roomsPlayed: row['rooms_played'] as int? ?? 0,
         );
       }).toList();
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadLeaderboard failed');
       return super.loadLeaderboard(limit: limit);
     }
   }

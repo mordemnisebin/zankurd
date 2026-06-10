@@ -5,6 +5,7 @@ import '../l10n/lang.dart';
 import '../models/quiz_question.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/app_state.dart';
 import 'quiz_screen.dart';
 
 class FavoriteQuestionsScreen extends StatefulWidget {
@@ -67,6 +68,21 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
               if (snapshot.connectionState != ConnectionState.done) {
                 return const Center(
                   child: CircularProgressIndicator(color: AppTheme.accent),
+                );
+              }
+
+              if (snapshot.hasError) {
+                return AppErrorState(
+                  title: context.s(
+                    'Pirsên tomarkirî nehatin barkirin',
+                    'Kaydedilen sorular yüklenemedi',
+                  ),
+                  message: context.s(
+                    'Girêdanê kontrol bike û dîsa bicerib.',
+                    'Bağlantıyı kontrol edip tekrar dene.',
+                  ),
+                  retryLabel: context.s('Dîsa Bicerib', 'Tekrar Dene'),
+                  onRetry: _reload,
                 );
               }
 
@@ -228,51 +244,15 @@ class _EmptyFavorites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: AppPanel(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 64,
-                height: 64,
-                decoration: BoxDecoration(
-                  gradient: AppTheme.goldGradient,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.bookmark_border,
-                  color: Colors.white,
-                  size: 32,
-                ),
-              ),
-              const SizedBox(height: 14),
-              Text(
-                context.s(
-                  'Hîn pirsên tomarkirî tune.',
-                  'Henüz kaydedilmiş soru yok.',
-                ),
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: AppTheme.textPrimary,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                context.s(
-                  'Di dema pêşbirkê de bişkoka nîşankirinê bitikîne û pirsan li vir zêde bike.',
-                  'Quiz sırasında yer imi simgesine basarak soruları buraya ekleyebilirsin.',
-                ),
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: AppTheme.textMuted),
-              ),
-            ],
-          ),
-        ),
+    return AppEmptyState(
+      icon: Icons.bookmark_border,
+      title: context.s(
+        'Hîn pirsên tomarkirî tune.',
+        'Henüz kaydedilmiş soru yok.',
+      ),
+      message: context.s(
+        'Di dema pêşbirkê de bişkoka nîşankirinê bitikîne û pirsan li vir zêde bike.',
+        'Quiz sırasında yer imi simgesine basarak soruları buraya ekleyebilirsin.',
       ),
     );
   }

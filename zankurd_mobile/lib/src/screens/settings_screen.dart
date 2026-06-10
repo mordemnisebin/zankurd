@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({required this.repository, super.key});
 
-  static const appVersion = '1.1.0';
+  final ZanKurdRepository repository;
+  static const appVersion = '1.2.0+3';
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool _deleting = false;
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +101,65 @@ class SettingsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 14),
 
+              AppPanel(
+                padding: EdgeInsets.zero,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(16),
+                  onTap: _deleting ? null : _confirmDeleteAccount,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        _deleting
+                            ? const SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: AppTheme.wrong,
+                                ),
+                              )
+                            : const Icon(
+                                Icons.delete_forever_outlined,
+                                color: AppTheme.wrong,
+                                size: 22,
+                              ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                ku ? 'Hesabê Min Jê Bibe' : 'Hesabımı Sil',
+                                style: const TextStyle(
+                                  color: AppTheme.wrong,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              const SizedBox(height: 3),
+                              Text(
+                                ku
+                                    ? 'Profîl, coin û pirsên tomarkirî tên jêbirin.'
+                                    : 'Profil, coin ve kaydedilen soru verilerin silinir.',
+                                style: const TextStyle(
+                                  color: AppTheme.textMuted,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Icon(
+                          Icons.chevron_right_rounded,
+                          color: AppTheme.textMuted,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+
               // About
               AppPanel(
                 child: Column(
@@ -128,7 +198,7 @@ class SettingsScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${ku ? 'Guherto' : 'Sürüm'} $appVersion',
+                              '${ku ? 'Guherto' : 'Sürüm'} ${SettingsScreen.appVersion}',
                               style: const TextStyle(
                                 color: AppTheme.textMuted,
                                 fontSize: 12,
@@ -158,6 +228,121 @@ class SettingsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _confirmDeleteAccount() async {
+    final ku = context.isKu;
+    final continueDelete = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppTheme.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: AppTheme.border),
+        ),
+        title: Text(
+          ku ? 'Hesabê bi dawî jê bibî?' : 'Hesabı kalıcı olarak sil?',
+        ),
+        content: Text(
+          ku
+              ? 'Ev çalakî venagere. Profîl, coin, pirsên tomarkirî û daneyên kesane yên hesabê te tên jêbirin.'
+              : 'Bu işlem geri alınamaz. Profil, coin, kaydedilen sorular ve hesabına bağlı kişisel veriler silinir.',
+        ),
+        actions: [
+          OutlinedButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(ku ? 'Betal' : 'Vazgeç'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(ku ? 'Berdewam Bike' : 'Devam Et'),
+          ),
+        ],
+      ),
+    );
+
+    if (continueDelete != true || !mounted) return;
+    final confirmed = await _showFinalDeleteConfirmation();
+    if (confirmed != true || !mounted) return;
+    await _deleteAccount();
+  }
+
+  Future<bool?> _showFinalDeleteConfirmation() {
+    final controller = TextEditingController();
+    final ku = context.isKu;
+    return showDialog<bool>(
+      context: context,
+      builder: (dialogContext) {
+        var canDelete = false;
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              backgroundColor: AppTheme.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: const BorderSide(color: AppTheme.border),
+              ),
+              title: Text(ku ? 'Erêkirina dawî' : 'Son onay'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    ku
+                        ? 'Ji bo jêbirina hesabê "SIL" binivîse.'
+                        : 'Hesabını silmek için "SIL" yaz.',
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    key: const ValueKey('delete-confirm-field'),
+                    controller: controller,
+                    textCapitalization: TextCapitalization.characters,
+                    decoration: const InputDecoration(hintText: 'SIL'),
+                    onChanged: (value) {
+                      setDialogState(() => canDelete = value.trim() == 'SIL');
+                    },
+                  ),
+                ],
+              ),
+              actions: [
+                OutlinedButton(
+                  onPressed: () => Navigator.pop(dialogContext, false),
+                  child: Text(ku ? 'Betal' : 'Vazgeç'),
+                ),
+                FilledButton(
+                  onPressed: canDelete
+                      ? () => Navigator.pop(dialogContext, true)
+                      : null,
+                  child: Text(ku ? 'Bi Dawî Jê Bibe' : 'Kalıcı Olarak Sil'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> _deleteAccount() async {
+    setState(() => _deleting = true);
+    try {
+      await widget.repository.deleteMyAccount();
+      if (!mounted) return;
+      await context.read<AuthProvider>().signOut();
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _deleting = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.s(
+              'Hesab nehat jêbirin. Ji kerema xwe dîsa biceribîne.',
+              'Hesap silinemedi. Lütfen tekrar deneyin.',
+            ),
+          ),
+        ),
+      );
+    }
   }
 }
 
@@ -245,27 +430,30 @@ class _ExpandableSection extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: ExpansionTile(
-          leading: Icon(icon, color: iconColor),
-          iconColor: AppTheme.textSub,
-          collapsedIconColor: AppTheme.textMuted,
-          title: Text(
-            title,
-            style: const TextStyle(
-              color: AppTheme.textPrimary,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          childrenPadding: const EdgeInsets.fromLTRB(18, 0, 18, 16),
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                body,
-                style: const TextStyle(color: AppTheme.textSub, height: 1.55),
+        child: Material(
+          color: Colors.transparent,
+          child: ExpansionTile(
+            leading: Icon(icon, color: iconColor),
+            iconColor: AppTheme.textSub,
+            collapsedIconColor: AppTheme.textMuted,
+            title: Text(
+              title,
+              style: const TextStyle(
+                color: AppTheme.textPrimary,
+                fontWeight: FontWeight.w800,
               ),
             ),
-          ],
+            childrenPadding: const EdgeInsets.fromLTRB(18, 0, 18, 16),
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  body,
+                  style: const TextStyle(color: AppTheme.textSub, height: 1.55),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
