@@ -73,6 +73,28 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
+  Future<void> _signInAsGuest(AuthProvider authProvider) async {
+    LoadingOverlay.show(
+      context,
+      message: context.s(
+        'Wek mêvan tê têketin...',
+        'Misafir olarak giriliyor...',
+      ),
+    );
+
+    final success = await authProvider.signInAsGuest();
+
+    if (mounted) {
+      LoadingOverlay.hide(context);
+
+      if (!success && authProvider.errorMessage != null) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(authProvider.errorMessage!)));
+      }
+    }
+  }
+
   Future<void> _resetPassword(AuthProvider authProvider) async {
     final email = _emailController.text.trim();
     if (!_isValidEmail(email)) {
@@ -127,12 +149,11 @@ class _SignInScreenState extends State<SignInScreen> {
       body: Container(
         decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
         child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
+          child: _AuthScrollFrame(
             child: Consumer<AuthProvider>(
               builder: (context, authProvider, _) {
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Align(
                       alignment: Alignment.centerRight,
@@ -330,9 +351,30 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: authProvider.isLoading
+                            ? null
+                            : () => _signInAsGuest(authProvider),
+                        icon: const Icon(
+                          Icons.person_outline,
+                          size: 20,
+                          color: AppTheme.textSub,
+                        ),
+                        label: Text(
+                          context.s(
+                            'Wek mêvan bidomîne',
+                            'Misafir olarak devam et',
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Text(
                           context.s('Hesabê te tune? ', 'Hesabın yok mu? '),
@@ -364,6 +406,35 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _AuthScrollFrame extends StatelessWidget {
+  const _AuthScrollFrame({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final horizontalPadding = constraints.maxWidth < 380 ? 16.0 : 24.0;
+        return SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(
+            horizontalPadding,
+            16,
+            horizontalPadding,
+            24,
+          ),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 420),
+              child: child,
+            ),
+          ),
+        );
+      },
     );
   }
 }

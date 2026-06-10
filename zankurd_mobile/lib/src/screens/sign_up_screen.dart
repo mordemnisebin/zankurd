@@ -63,6 +63,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
       LoadingOverlay.hide(context);
 
       if (success) {
+        if (authProvider.needsEmailConfirmation) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                context.s(
+                  'Hesab hat afirandin! Ji bo pejirandinê e-peyama xwe kontrol bike.',
+                  'Hesap oluşturuldu! Doğrulamak için e-postanı kontrol et.',
+                ),
+              ),
+              duration: const Duration(seconds: 5),
+            ),
+          );
+        }
         Navigator.of(context).pop();
       } else if (authProvider.errorMessage != null) {
         ScaffoldMessenger.of(
@@ -80,8 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: Container(
         decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
         child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
+          child: _AuthScrollFrame(
             child: Consumer<AuthProvider>(
               builder: (context, authProvider, _) {
                 return Form(
@@ -352,8 +364,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Text(
                             context.s(
@@ -382,6 +395,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _AuthScrollFrame extends StatelessWidget {
+  const _AuthScrollFrame({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final horizontalPadding = constraints.maxWidth < 380 ? 16.0 : 24.0;
+        return SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(
+            horizontalPadding,
+            16,
+            horizontalPadding,
+            24,
+          ),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 420),
+              child: child,
+            ),
+          ),
+        );
+      },
     );
   }
 }
