@@ -11,6 +11,7 @@ abstract class ZanKurdRepository {
   Future<void> ensureProfile();
   Future<String> getProfileName();
   Future<void> updateProfileName(String name);
+  Future<void> deleteMyAccount();
   Future<LeaderboardEntry?> getPlayerStats();
   Future<List<String>> loadCategories();
   Future<List<QuizQuestion>> loadQuestions({

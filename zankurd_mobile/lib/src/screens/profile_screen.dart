@@ -7,6 +7,7 @@ import '../models/leaderboard_entry.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/app_state.dart';
 import 'favorite_questions_screen.dart';
 import 'settings_screen.dart';
 
@@ -23,6 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _nameCtrl = TextEditingController();
   bool _loading = true;
   bool _saving = false;
+  bool _loadFailed = false;
   String? _currentName;
   LeaderboardEntry? _stats;
 
@@ -49,10 +51,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _nameCtrl.text = name;
           _stats = stats;
           _loading = false;
+          _loadFailed = false;
         });
       }
     } catch (_) {
-      if (mounted) setState(() => _loading = false);
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _loadFailed = true;
+        });
+      }
     }
   }
 
@@ -93,6 +101,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: _loading
             ? const Center(
                 child: CircularProgressIndicator(color: AppTheme.accent),
+              )
+            : _loadFailed
+            ? AppErrorState(
+                title: ku ? 'Profîl nehat barkirin' : 'Profil yüklenemedi',
+                message: ku
+                    ? 'Girêdanê kontrol bike û dîsa bicerib.'
+                    : 'Bağlantıyı kontrol edip tekrar dene.',
+                retryLabel: ku ? 'Dîsa Bicerib' : 'Tekrar Dene',
+                onRetry: _load,
               )
             : ListView(
                 padding: const EdgeInsets.all(16),
@@ -358,7 +375,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (_) => const SettingsScreen(),
+                            builder: (_) =>
+                                SettingsScreen(repository: widget.repository),
                           ),
                         );
                       },

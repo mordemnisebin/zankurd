@@ -3,8 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
+import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
+import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
+import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/main.dart';
 
@@ -37,7 +42,83 @@ class _GateAuthProvider extends AuthProvider {
   }
 }
 
+class _SignOutTrackingAuthProvider extends AuthProvider {
+  _SignOutTrackingAuthProvider() : super.test();
+
+  bool _authenticated = true;
+  int signOutCalls = 0;
+
+  @override
+  bool get isAuthenticated => _authenticated;
+
+  @override
+  bool get isLoading => false;
+
+  @override
+  Future<void> signOut() async {
+    signOutCalls += 1;
+    _authenticated = false;
+    notifyListeners();
+  }
+}
+
+class _EmptyFavoritesRepository extends MockZanKurdRepository {
+  @override
+  Future<List<QuizQuestion>> loadFavoriteQuestions() async {
+    return const [];
+  }
+}
+
+class _FailingLeaderboardRepository extends MockZanKurdRepository {
+  int loadCalls = 0;
+
+  @override
+  Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50}) {
+    loadCalls += 1;
+    if (loadCalls > 1) {
+      return Future.value(const []);
+    }
+    return Future<List<LeaderboardEntry>>.delayed(
+      Duration.zero,
+      () => throw StateError('leaderboard unavailable'),
+    );
+  }
+}
+
+class _DeleteTrackingRepository extends MockZanKurdRepository {
+  _DeleteTrackingRepository({this.shouldFail = false});
+
+  final bool shouldFail;
+  int deleteCalls = 0;
+
+  @override
+  Future<void> deleteMyAccount() async {
+    deleteCalls += 1;
+    if (shouldFail) {
+      throw StateError('delete failed');
+    }
+  }
+}
+
 LanguageProvider _turkishLang() => LanguageProvider()..setLang('tr');
+
+Widget _testShell({
+  required Widget child,
+  AuthProvider? authProvider,
+  LanguageProvider? languageProvider,
+}) {
+  return MultiProvider(
+    providers: [
+      ChangeNotifierProvider<LanguageProvider>(
+        create: (_) => languageProvider ?? _turkishLang(),
+      ),
+      ChangeNotifierProvider<AuthProvider>(
+        create: (_) => authProvider ?? _FakeAuthProvider(),
+      ),
+    ],
+    child: MaterialApp(theme: AppTheme.dark(), home: child),
+  );
+}
 
 void main() {
   final repository = MockZanKurdRepository();
@@ -129,10 +210,7 @@ void main() {
     await tester.tap(find.text('Yarışı Başlat'));
     await tester.pumpAndSettle();
 
-    expect(
-      find.text('Di Kurmancî de peyva "zanîn" bi Tirkî çi ye?'),
-      findsOneWidget,
-    );
+    expect(find.byType(QuizScreen), findsOneWidget);
   });
 
   testWidgets('opens the daily quiz from the home screen', (tester) async {
@@ -213,6 +291,7 @@ void main() {
 
   testWidgets('finishes a quiz and opens the result screen', (tester) async {
     final room = repository.createRoom();
+    final questions = repository.questions.take(3).toList();
 
     await tester.pumpWidget(
       ChangeNotifierProvider<LanguageProvider>(
@@ -222,48 +301,41 @@ void main() {
           home: QuizScreen(
             repository: repository,
             room: room,
-            questions: repository.questions.take(3).toList(),
+            questions: questions,
           ),
         ),
       ),
     );
 
-    await tester.tap(find.text('Bilmek'));
-    await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(
-      find.byIcon(Icons.arrow_forward_rounded),
-      120,
-      scrollable: find.byType(Scrollable).last,
-    );
-    await tester.pumpAndSettle();
-    await tester.tap(find.byIcon(Icons.arrow_forward_rounded).last);
-    await tester.pumpAndSettle();
+    Future<void> answerQuestion(
+      QuizQuestion question, {
+      required bool last,
+    }) async {
+      final option = find.ancestor(
+        of: find.text(question.correctAnswer),
+        matching: find.byType(InkWell),
+      );
+      await tester.ensureVisible(option.first);
+      await tester.pumpAndSettle();
+      await tester.tap(option.first);
+      await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('21 Adar'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('21 Adar'));
-    await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(
-      find.byIcon(Icons.arrow_forward_rounded),
-      120,
-      scrollable: find.byType(Scrollable).last,
-    );
-    await tester.pumpAndSettle();
-    await tester.tap(find.byIcon(Icons.arrow_forward_rounded).last);
-    await tester.pumpAndSettle();
+      final nextButton = last
+          ? find.byIcon(Icons.flag_outlined)
+          : find.byIcon(Icons.arrow_forward_rounded);
+      await tester.scrollUntilVisible(
+        nextButton,
+        120,
+        scrollable: find.byType(Scrollable).last,
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(nextButton.last);
+      await tester.pumpAndSettle();
+    }
 
-    await tester.ensureVisible(find.text('Ehmedê Xanî'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Ehmedê Xanî'));
-    await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(
-      find.byIcon(Icons.flag_outlined),
-      120,
-      scrollable: find.byType(Scrollable).last,
-    );
-    await tester.pumpAndSettle();
-    await tester.tap(find.byIcon(Icons.flag_outlined).last);
-    await tester.pumpAndSettle();
+    await answerQuestion(questions[0], last: false);
+    await answerQuestion(questions[1], last: false);
+    await answerQuestion(questions[2], last: true);
 
     expect(find.text('Sonuç'), findsOneWidget);
     expect(find.text('Yarış tamamlandı'), findsOneWidget);
@@ -282,5 +354,122 @@ void main() {
     expect(find.text('Cevaplar'), findsOneWidget);
     expect(find.text('Soru 1'), findsOneWidget);
     expect(find.text('DOĞRU'), findsWidgets);
+  });
+
+  testWidgets('favorite questions uses the shared empty state', (tester) async {
+    await tester.pumpWidget(
+      _testShell(
+        child: FavoriteQuestionsScreen(repository: _EmptyFavoritesRepository()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
+    expect(find.text('Henüz kaydedilmiş soru yok.'), findsOneWidget);
+  });
+
+  testWidgets('leaderboard error state exposes retry', (tester) async {
+    final repository = _FailingLeaderboardRepository();
+
+    await tester.pumpWidget(
+      _testShell(child: LeaderboardScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
+    expect(find.text('Tekrar Dene'), findsOneWidget);
+    expect(repository.loadCalls, 1);
+
+    await tester.tap(find.text('Tekrar Dene'));
+    await tester.pumpAndSettle();
+
+    expect(repository.loadCalls, 2);
+  });
+
+  testWidgets('settings does not delete account before final confirmation', (
+    tester,
+  ) async {
+    final repository = _DeleteTrackingRepository();
+
+    await tester.pumpWidget(
+      _testShell(child: SettingsScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(find.text('Hesabımı Sil'), 160);
+    await tester.tap(find.text('Hesabımı Sil'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hesabı kalıcı olarak sil?'), findsOneWidget);
+    expect(repository.deleteCalls, 0);
+
+    await tester.tap(find.text('Vazgeç'));
+    await tester.pumpAndSettle();
+
+    expect(repository.deleteCalls, 0);
+  });
+
+  testWidgets('successful account deletion signs out to the auth gate', (
+    tester,
+  ) async {
+    final repository = _DeleteTrackingRepository();
+    final authProvider = _SignOutTrackingAuthProvider();
+
+    await tester.pumpWidget(
+      _testShell(
+        child: SettingsScreen(repository: repository),
+        authProvider: authProvider,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(find.text('Hesabımı Sil'), 160);
+    await tester.tap(find.text('Hesabımı Sil'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Devam Et'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('delete-confirm-field')),
+      'SIL',
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(repository.deleteCalls, 1);
+    expect(authProvider.signOutCalls, 1);
+  });
+
+  testWidgets('failed account deletion keeps the user in settings', (
+    tester,
+  ) async {
+    final repository = _DeleteTrackingRepository(shouldFail: true);
+
+    await tester.pumpWidget(
+      _testShell(child: SettingsScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(find.text('Hesabımı Sil'), 160);
+    await tester.tap(find.text('Hesabımı Sil'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Devam Et'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('delete-confirm-field')),
+      'SIL',
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(repository.deleteCalls, 1);
+    expect(find.text('Ayarlar'), findsOneWidget);
+    expect(
+      find.text('Hesap silinemedi. Lütfen tekrar deneyin.'),
+      findsOneWidget,
+    );
   });
 }

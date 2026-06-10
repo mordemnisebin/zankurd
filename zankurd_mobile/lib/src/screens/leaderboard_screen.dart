@@ -5,6 +5,7 @@ import '../l10n/lang.dart';
 import '../models/leaderboard_entry.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/app_state.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({required this.repository, super.key});
@@ -24,8 +25,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     _future = widget.repository.loadLeaderboard();
   }
 
-  void _refresh() =>
-      setState(() => _future = widget.repository.loadLeaderboard());
+  void _refresh() {
+    setState(() {
+      _future = widget.repository.loadLeaderboard();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,26 +86,25 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                     );
                   }
                   if (snap.hasError) {
-                    return _Empty(
-                      icon: Icons.error_outline,
+                    return AppErrorState(
                       title: ku ? 'Tabloya barnekirî' : 'Liderlik yüklenemedi',
                       message: ku
                           ? 'Girêdanê kontrol bike û dîsa bicerib.'
                           : 'Bağlantıyı kontrol edip tekrar dene.',
+                      retryLabel: ku ? 'Dîsa Bicerib' : 'Tekrar Dene',
                       onRetry: _refresh,
-                      isKu: ku,
                     );
                   }
                   final entries = snap.data ?? [];
                   if (entries.isEmpty) {
-                    return _Empty(
+                    return AppEmptyState(
                       icon: Icons.emoji_events_outlined,
                       title: ku ? 'Hîn xal tune' : 'Henüz puan yok',
                       message: ku
                           ? 'Piştî yekem yara serhêl sîralama li vir xuya dike.'
                           : 'İlk online yarıştan sonra sıralama burada görünür.',
-                      onRetry: _refresh,
-                      isKu: ku,
+                      actionLabel: ku ? 'Dîsa Bicerib' : 'Tekrar Dene',
+                      onAction: _refresh,
                     );
                   }
                   return ListView(
@@ -323,59 +326,6 @@ class _RankRow extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _Empty extends StatelessWidget {
-  const _Empty({
-    required this.icon,
-    required this.title,
-    required this.message,
-    required this.onRetry,
-    required this.isKu,
-  });
-
-  final IconData icon;
-  final String title;
-  final String message;
-  final VoidCallback onRetry;
-  final bool isKu;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: AppTheme.textMuted, size: 48),
-            const SizedBox(height: 14),
-            Text(
-              title,
-              style: const TextStyle(
-                color: AppTheme.textPrimary,
-                fontWeight: FontWeight.w900,
-                fontSize: 20,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              message,
-              style: const TextStyle(color: AppTheme.textMuted),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            OutlinedButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh_rounded),
-              label: Text(isKu ? 'Dîsa Bicerib' : 'Tekrar Dene'),
-            ),
-          ],
-        ),
       ),
     );
   }
