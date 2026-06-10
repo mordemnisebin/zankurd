@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "419853194959",
+    "project_id": "zankurd-eb5f9",
+    "storage_bucket": "zankurd-eb5f9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419853194959:android:5bc65b029a53abad1289ba",
+        "android_client_info": {
+          "package_name": "com.zankurd.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419853194959-7s176cj22617ndra8l4bctbuqnvgr8q3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrQ6z8J1FlCQyCAjcXJ-OfAtsM87JD2wQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419853194959-7s176cj22617ndra8l4bctbuqnvgr8q3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

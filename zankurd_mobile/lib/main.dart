@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -16,20 +20,38 @@ import 'src/theme/app_theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // Crash raporlama (web'de Crashlytics desteklenmez).
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    if (!kIsWeb) {
+      FlutterError.onError =
+          FirebaseCrashlytics.instance.recordFlutterFatalError;
+      PlatformDispatcher.instance.onError = (error, stack) {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        return true;
+      };
+    }
+  } catch (_) {
+    // Firebase yapılandırması olmayan platformlarda sessizce devam et.
+  }
 
   final ZanKurdRepository repository;
+  final AuthProvider authProvider;
   if (AppConfig.hasSupabaseConfig) {
     await Supabase.initialize(
       url: AppConfig.supabaseUrl,
       publishableKey: AppConfig.supabaseAnonKey,
     );
     repository = SupabaseZanKurdRepository(Supabase.instance.client);
+    authProvider = AuthProvider(Supabase.instance.client);
   } else {
     repository = MockZanKurdRepository();
+    authProvider = AuthProvider.test();
   }
 
-  runApp(ZanKurdApp(repository: repository));
+  runApp(ZanKurdApp(repository: repository, authProvider: authProvider));
 }
 
 class ZanKurdApp extends StatelessWidget {
@@ -51,7 +73,9 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => languageProvider ?? LanguageProvider(),
         ),
-        ChangeNotifierProvider(create: (_) => authProvider ?? AuthProvider()),
+        ChangeNotifierProvider(
+          create: (_) => authProvider ?? AuthProvider.test(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

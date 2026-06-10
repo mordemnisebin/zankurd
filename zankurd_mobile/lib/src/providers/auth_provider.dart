@@ -1,178 +1,169 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+/// Supabase tabanlı kimlik sağlayıcı.
+///
+/// Giriş yapan kullanıcı ile skor/profil verisinin yazıldığı Supabase
+/// kimliği aynıdır; böylece liderlik/coin ilerlemesi hesaba bağlanır.
+/// Misafir modu Supabase anonim oturumu kullanır ve daha sonra e-posta
+/// ile kalıcı hesaba yükseltilebilir.
 class AuthProvider extends ChangeNotifier {
-  final FirebaseAuth? _auth;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final SupabaseClient? _client;
+  StreamSubscription<AuthState>? _authSub;
 
   User? _currentUser;
   bool _isLoading = false;
   String? _errorMessage;
+  bool _needsEmailConfirmation = false;
 
   User? get currentUser => _currentUser;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
-  bool get isAuthenticated => _currentUser != null;
+  bool get needsEmailConfirmation => _needsEmailConfirmation;
 
-  AuthProvider() : _auth = FirebaseAuth.instance {
-    _auth!.authStateChanges().listen((User? user) {
-      _currentUser = user;
+  /// Misafir (anonim) oturum da kimlikli sayılır.
+  /// Supabase yapılandırması yoksa (mock/masaüstü) kapı tutulmaz.
+  bool get isAuthenticated => _client == null || _currentUser != null;
+
+  bool get isGuest => _currentUser?.isAnonymous ?? false;
+
+  AuthProvider(SupabaseClient client) : _client = client {
+    _currentUser = client.auth.currentUser;
+    _authSub = client.auth.onAuthStateChange.listen((state) {
+      _currentUser = state.session?.user;
       notifyListeners();
     });
   }
 
-  /// Test constructor — Firebase başlatılmadan kullanım için.
-  AuthProvider.test() : _auth = null;
+  /// Test/mock constructor — Supabase başlatılmadan kullanım için.
+  AuthProvider.test() : _client = null;
+
+  @override
+  void dispose() {
+    _authSub?.cancel();
+    super.dispose();
+  }
+
+  Future<bool> _run(Future<void> Function(SupabaseClient auth) body) async {
+    final client = _client;
+    if (client == null) return true;
+
+    _isLoading = true;
+    _errorMessage = null;
+    _needsEmailConfirmation = false;
+    notifyListeners();
+
+    try {
+      await body(client);
+      _currentUser = client.auth.currentUser;
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } on AuthException catch (e) {
+      _errorMessage = _translateError(e);
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    } catch (e) {
+      _errorMessage = 'Beklenmeyen bir hata oluştu.';
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
 
   Future<bool> signUpWithEmail({
     required String email,
     required String password,
     required String displayName,
-  }) async {
-    _isLoading = true;
-    _errorMessage = null;
-    notifyListeners();
-
-    try {
-      final auth = _auth!;
-      final credential = await auth.createUserWithEmailAndPassword(
+  }) {
+    return _run((client) async {
+      final response = await client.auth.signUp(
         email: email,
         password: password,
+        data: {'display_name': displayName},
       );
-
-      await credential.user?.updateDisplayName(displayName);
-      await credential.user?.reload();
-
-      _currentUser = auth.currentUser;
-      _isLoading = false;
-      notifyListeners();
-      return true;
-    } on FirebaseAuthException catch (e) {
-      _errorMessage = _getErrorMessage(e.code);
-      _isLoading = false;
-      notifyListeners();
-      return false;
-    } catch (e) {
-      _errorMessage = 'Bir hata oluştu: $e';
-      _isLoading = false;
-      notifyListeners();
-      return false;
-    }
+      // E-posta doğrulaması açıksa oturum hemen başlamaz.
+      _needsEmailConfirmation =
+          response.session == null && response.user != null;
+    });
   }
 
   Future<bool> signInWithEmail({
     required String email,
     required String password,
-  }) async {
-    _isLoading = true;
-    _errorMessage = null;
-    notifyListeners();
-
-    try {
-      final auth = _auth!;
-      await auth.signInWithEmailAndPassword(email: email, password: password);
-      _currentUser = auth.currentUser;
-      _isLoading = false;
-      notifyListeners();
-      return true;
-    } on FirebaseAuthException catch (e) {
-      _errorMessage = _getErrorMessage(e.code);
-      _isLoading = false;
-      notifyListeners();
-      return false;
-    } catch (e) {
-      _errorMessage = 'Bir hata oluştu: $e';
-      _isLoading = false;
-      notifyListeners();
-      return false;
-    }
+  }) {
+    return _run(
+      (client) =>
+          client.auth.signInWithPassword(email: email, password: password),
+    );
   }
 
-  Future<bool> signInWithGoogle() async {
-    _isLoading = true;
-    _errorMessage = null;
-    notifyListeners();
+  /// Misafir olarak devam et — anonim Supabase oturumu.
+  Future<bool> signInAsGuest() {
+    return _run((client) async {
+      if (client.auth.currentSession != null) return;
+      await client.auth.signInAnonymously();
+    });
+  }
 
-    try {
-      final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        _isLoading = false;
-        notifyListeners();
-        return false;
-      }
-
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
+  /// Google ile giriş, Supabase OAuth üzerinden tarayıcı açar.
+  /// Çalışması için Supabase Dashboard'da Google sağlayıcısının
+  /// yapılandırılmış olması gerekir.
+  Future<bool> signInWithGoogle() {
+    return _run((client) async {
+      final launched = await client.auth.signInWithOAuth(
+        OAuthProvider.google,
+        authScreenLaunchMode: LaunchMode.externalApplication,
       );
-
-      final auth = _auth!;
-      await auth.signInWithCredential(credential);
-      _currentUser = auth.currentUser;
-      _isLoading = false;
-      notifyListeners();
-      return true;
-    } on FirebaseAuthException catch (e) {
-      _errorMessage = _getErrorMessage(e.code);
-      _isLoading = false;
-      notifyListeners();
-      return false;
-    } catch (e) {
-      _errorMessage = 'Google ile giriş başarısız: $e';
-      _isLoading = false;
-      notifyListeners();
-      return false;
-    }
+      if (!launched) {
+        throw const AuthException('Google girişi başlatılamadı.');
+      }
+    });
   }
 
-  Future<bool> resetPassword(String email) async {
-    _isLoading = true;
-    _errorMessage = null;
-    notifyListeners();
-
-    try {
-      await _auth!.sendPasswordResetEmail(email: email);
-      _isLoading = false;
-      _errorMessage = null;
-      notifyListeners();
-      return true;
-    } on FirebaseAuthException catch (e) {
-      _errorMessage = _getErrorMessage(e.code);
-      _isLoading = false;
-      notifyListeners();
-      return false;
-    } catch (e) {
-      _errorMessage = 'Şifre sıfırlama başarısız: $e';
-      _isLoading = false;
-      notifyListeners();
-      return false;
-    }
+  Future<bool> resetPassword(String email) {
+    return _run((client) => client.auth.resetPasswordForEmail(email));
   }
 
   Future<void> signOut() async {
-    await _auth!.signOut();
-    await _googleSignIn.signOut();
-    _currentUser = null;
+    final client = _client;
+    if (client == null) return;
+    try {
+      await client.auth.signOut();
+    } catch (_) {}
+    _currentUser = client.auth.currentUser;
     _errorMessage = null;
     notifyListeners();
   }
 
-  String _getErrorMessage(String code) {
-    switch (code) {
-      case 'weak-password':
-        return 'Parola çok zayıf.';
-      case 'email-already-in-use':
-        return 'Bu e-posta zaten kullanılıyor.';
-      case 'invalid-email':
-        return 'Geçersiz e-posta adresi.';
-      case 'user-not-found':
-        return 'Kullanıcı bulunamadı.';
-      case 'wrong-password':
-        return 'Yanlış parola.';
-      default:
-        return 'Bir hata oluştu. Lütfen tekrar deneyin.';
+  String _translateError(AuthException e) {
+    final message = e.message.toLowerCase();
+    if (message.contains('invalid login credentials')) {
+      return 'E-posta veya parola hatalı.';
     }
+    if (message.contains('already registered') ||
+        message.contains('already been registered')) {
+      return 'Bu e-posta zaten kullanılıyor.';
+    }
+    if (message.contains('password should be')) {
+      return 'Parola çok zayıf (en az 6 karakter).';
+    }
+    if (message.contains('invalid email') ||
+        message.contains('unable to validate email')) {
+      return 'Geçersiz e-posta adresi.';
+    }
+    if (message.contains('email not confirmed')) {
+      return 'E-posta adresin henüz doğrulanmamış. Gelen kutunu kontrol et.';
+    }
+    if (message.contains('rate limit')) {
+      return 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.';
+    }
+    if (message.contains('anonymous')) {
+      return 'Misafir girişi şu anda kapalı.';
+    }
+    return 'Bir hata oluştu. Lütfen tekrar deneyin.';
   }
 }
