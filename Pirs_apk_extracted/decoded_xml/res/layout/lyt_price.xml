@@ -1,6 +1,0 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="@0x7f0601ba" android:layout_marginStart="@0x7f0600be" android:layout_marginEnd="@0x7f0600be">
-  <TextView android:textSize="@0x7f0600e6" android:textColor="@0x7f050119" android:id="@0x7f090440" android:layout_width="-1" android:layout_height="-2" android:layout_toStartOf="@0x7f09041c">
-  </TextView>
-  <TextView android:textSize="@0x7f0600e6" android:textColor="@0x7f050119" android:id="@0x7f09041c" android:layout_width="-2" android:layout_height="-2" android:layout_alignParentEnd="true">
-  </TextView>
-</RelativeLayout>

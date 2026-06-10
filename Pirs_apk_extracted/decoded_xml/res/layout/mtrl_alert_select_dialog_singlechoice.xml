@@ -1,2 +1,0 @@
-<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android" android:ellipsize="4" android:gravity="0x00000013" android:id="@0x01020014" android:paddingLeft="@0x7f06003a" android:paddingRight="?0x7f03019e" android:layout_width="-1" android:layout_height="-2" android:minHeight="?0x7f0302cb" android:drawablePadding="0x00001401" android:textAlignment="5" android:paddingStart="@0x7f06003a" android:paddingEnd="?0x7f03019e" app:drawableLeftCompat="?0x01010219" app:drawableStartCompat="?0x01010219">
-</CheckedTextView>

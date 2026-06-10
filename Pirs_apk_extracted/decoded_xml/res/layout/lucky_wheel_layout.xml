@@ -1,6 +1,0 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="-1" android:layout_height="-1">
-  <kurdi.leyzok.pirs.spin.PielView android:id="@0x7f0902ed" android:layout_width="-1" android:layout_height="-1">
-  </kurdi.leyzok.pirs.spin.PielView>
-  <com.android.volley.toolbox.NetworkImageView android:layout_gravity="0x00000001" android:id="@0x7f09014d" android:layout_width="0x00001801" android:layout_height="0x00001801">
-  </com.android.volley.toolbox.NetworkImageView>
-</FrameLayout>

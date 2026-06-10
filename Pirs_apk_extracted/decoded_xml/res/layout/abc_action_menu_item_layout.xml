@@ -1,2 +1,0 @@
-<androidx.appcompat.view.menu.ActionMenuItemView xmlns:android="http://schemas.android.com/apk/res/android" android:textAppearance="?0x7f030010" android:textColor="?0x7f030011" android:gravity="0x00000011" android:layout_gravity="0x00000011" android:paddingLeft="0x00000801" android:paddingTop="0x00000401" android:paddingRight="0x00000801" android:paddingBottom="0x00000401" android:focusable="true" android:layout_width="-2" android:layout_height="-2" style="?0x7f03000d">
-</androidx.appcompat.view.menu.ActionMenuItemView>

@@ -1,8 +1,0 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:paddingTop="0x00000801" android:layout_width="-2" android:layout_height="-2">
-  <include android:id="@0x7f090278" layout="@0x7f0c00a3">
-  </include>
-  <include layout="@0x7f0c00a5">
-  </include>
-  <include android:id="@0x7f09027b" layout="@0x7f0c00a3">
-  </include>
-</LinearLayout>

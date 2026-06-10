@@ -1,4 +1,0 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="-1" android:layout_height="-2">
-  <View android:background="?0x01010214" android:layout_width="-1" android:layout_height="0x00000101">
-  </View>
-</FrameLayout>

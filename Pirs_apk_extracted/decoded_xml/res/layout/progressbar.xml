@@ -1,4 +1,0 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="1" android:layout_width="-1" android:layout_height="-2">
-  <ProgressBar android:layout_gravity="0x00000001" android:id="@0x7f0902fc" android:layout_width="-2" android:layout_height="-2">
-  </ProgressBar>
-</LinearLayout>

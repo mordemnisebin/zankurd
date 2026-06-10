@@ -1,8 +1,0 @@
-<com.google.android.material.chip.ChipGroup xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f090120" android:layout_width="-1" android:layout_height="-2" android:layout_margin="0x00001001">
-  <com.google.android.material.chip.Chip android:ellipsize="3" android:id="@0x7f09011d" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f100053" style="@0x7f1102b8">
-  </com.google.android.material.chip.Chip>
-  <com.google.android.material.chip.Chip android:ellipsize="3" android:id="@0x7f09011e" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f100053" style="@0x7f1102b8">
-  </com.google.android.material.chip.Chip>
-  <com.google.android.material.chip.Chip android:ellipsize="3" android:id="@0x7f09011f" android:layout_width="-2" android:layout_height="-2" android:text="@0x7f100053" style="@0x7f1102b8">
-  </com.google.android.material.chip.Chip>
-</com.google.android.material.chip.ChipGroup>

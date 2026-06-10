@@ -1,8 +1,0 @@
-<set>
-  <objectAnimator android:interpolator="@0x7f0b000a" android:duration="200" android:startOffset="0" android:propertyName="opacity">
-  </objectAnimator>
-  <objectAnimator android:interpolator="@0x7f0b000a" android:duration="200" android:startOffset="0" android:propertyName="scale">
-  </objectAnimator>
-  <objectAnimator android:interpolator="@0x7f0b0008" android:duration="0" android:startOffset="0" android:propertyName="iconScale">
-  </objectAnimator>
-</set>

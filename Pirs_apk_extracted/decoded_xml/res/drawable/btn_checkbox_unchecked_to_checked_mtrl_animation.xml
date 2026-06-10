@@ -1,8 +1,0 @@
-<animated-vector xmlns:android="http://schemas.android.com/apk/res/android" android:drawable="@0x7f07008b">
-  <target android:name="icon_null" android:animation="@0x7f01001a">
-  </target>
-  <target android:name="box_outer_merged" android:animation="@0x7f010019">
-  </target>
-  <target android:name="box_inner_merged" android:animation="@0x7f010018">
-  </target>
-</animated-vector>

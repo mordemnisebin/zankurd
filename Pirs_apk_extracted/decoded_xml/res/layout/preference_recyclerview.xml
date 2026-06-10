@@ -1,2 +1,0 @@
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09031a" android:paddingTop="0x00000001" android:paddingBottom="0x00000001" android:clipToPadding="false" android:layout_width="-1" android:layout_height="-1" style="?0x7f03037c">
-</androidx.recyclerview.widget.RecyclerView>

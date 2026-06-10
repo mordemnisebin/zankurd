@@ -1,6 +1,0 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="1" android:background="@0x7f0700c7" android:layout_width="-1" android:layout_height="-2">
-  <ImageView android:layout_gravity="0x00800005" android:id="@0x7f0901e4" android:padding="0x00000501" android:layout_width="-2" android:layout_height="-2" android:src="@0x7f070200" app:tint="@0x7f050119">
-  </ImageView>
-  <androidx.recyclerview.widget.RecyclerView android:id="@0x7f090318" android:padding="0x00000501" android:layout_width="-1" android:layout_height="-2" android:layout_marginBottom="@0x7f0600be">
-  </androidx.recyclerview.widget.RecyclerView>
-</LinearLayout>

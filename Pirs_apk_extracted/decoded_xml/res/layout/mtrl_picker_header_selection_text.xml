@@ -1,2 +1,0 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="0x00800053" android:layout_gravity="0x00800033" android:id="@0x7f0902a7" android:paddingBottom="@0x7f06012f" android:layout_width="-1" android:layout_height="-2" app:firstBaselineToTopHeight="@0x7f060133" app:lineHeight="@0x7f060124" style="?0x7f0302fa">
-</TextView>

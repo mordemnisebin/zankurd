@@ -1,6 +1,0 @@
-<shape>
-  <solid android:color="#fffafafa">
-  </solid>
-  <corners android:topLeftRadius="@0x7f06005c" android:topRightRadius="@0x7f06005c" android:bottomLeftRadius="0x00000001" android:bottomRightRadius="0x00000001">
-  </corners>
-</shape>

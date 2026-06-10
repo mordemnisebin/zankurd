@@ -1,4 +1,0 @@
-<set>
-  <translate android:interpolator="@0x010a0005" android:duration="600" android:fromXDelta="0.0" android:toXDelta="0x00000101">
-  </translate>
-</set>

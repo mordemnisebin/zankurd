@@ -1,8 +1,0 @@
-<merge>
-  <ImageView android:id="@0x7f090025" android:layout_width="-1" android:layout_height="-1" android:scaleType="7" android:adjustViewBounds="true">
-  </ImageView>
-  <com.canhub.cropper.CropOverlayView android:id="@0x7f090012" android:visibility="1" android:layout_width="-1" android:layout_height="-1">
-  </com.canhub.cropper.CropOverlayView>
-  <ProgressBar android:layout_gravity="0x00000011" android:id="@0x7f090013" android:layout_width="-2" android:layout_height="-2">
-  </ProgressBar>
-</merge>

@@ -1,7 +1,0 @@
-<set xmlns:android="http://schemas.android.com/apk/res/android" android:shareInterpolator="false">
-  <translate android:duration="600" android:fromXDelta="0x00000100" android:toXDelta="0x00000000">
-  </translate>
-  <alpha android:duration="600" android:fromAlpha="0.0" android:toAlpha="1.0">
-  </alpha>
-</set>
-

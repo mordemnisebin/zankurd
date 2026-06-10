@@ -1,6 +1,0 @@
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09017e" android:background="@0x7f0701d9" android:layout_width="-1" android:layout_height="-1">
-  <FrameLayout android:id="@0x7f09013e" android:layout_width="-1" android:layout_height="-1">
-  </FrameLayout>
-  <kurdi.leyzok.pirs.helper.ArcNavigationView android:layout_gravity="0x00800003" android:id="@0x7f0902b8" android:background="@0x7f05001d" android:fitsSystemWindows="true" android:layout_width="-2" android:layout_height="-1" app:headerLayout="@0x7f0c007a" app:itemBackground="@0x7f05001d" app:itemIconTint="@0x7f050023" app:itemTextColor="@0x7f050023" app:menu="@0x7f0d0002">
-  </kurdi.leyzok.pirs.helper.ArcNavigationView>
-</androidx.drawerlayout.widget.DrawerLayout>

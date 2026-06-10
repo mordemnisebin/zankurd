@@ -1,8 +1,0 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="1" android:id="@0x7f09021e" android:padding="0x00000301" android:layout_width="-1" android:layout_height="-2" android:layout_marginTop="0x00000201">
-  <RelativeLayout android:layout_gravity="0x00000011" android:id="@0x7f0901d9" android:layout_width="-2" android:layout_height="-2" android:layout_margin="@0x7f0600c0">
-    <kurdi.leyzok.pirs.helper.CircleImageView android:layout_gravity="0x00000011" android:id="@0x7f0901d8" android:padding="0x00c00021" android:layout_width="0x00006401" android:layout_height="0x00006401" android:layout_margin="0x00000201" android:src="@0x7f070215" android:layout_centerHorizontal="true">
-    </kurdi.leyzok.pirs.helper.CircleImageView>
-  </RelativeLayout>
-  <TextView android:textSize="@0x7f0601d6" android:textColor="@0x7f050119" android:layout_gravity="0x00000011" android:id="@0x7f090411" android:layout_width="-2" android:layout_height="-2" android:layout_margin="0x00000501" android:text="@0x7f1001e5" android:textAlignment="4">
-  </TextView>
-</LinearLayout>

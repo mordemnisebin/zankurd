@@ -1,6 +1,0 @@
-<selector>
-  <item android:state_focused="true" android:state_enabled="true" android:drawable="@0x7f0700a3">
-  </item>
-  <item android:drawable="@0x7f0700a4">
-  </item>
-</selector>

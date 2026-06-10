@@ -1,2 +1,0 @@
-<rotate xmlns:android="http://schemas.android.com/apk/res/android" android:duration="500" android:fromDegrees="-1.0" android:toDegrees="1.0" android:pivotX="0x0ccccd30" android:pivotY="0x0ccccd30" android:repeatCount="-1" android:repeatMode="2">
-</rotate>

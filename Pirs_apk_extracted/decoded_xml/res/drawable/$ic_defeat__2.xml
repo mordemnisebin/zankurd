@@ -1,6 +1,0 @@
-<gradient xmlns:android="http://schemas.android.com/apk/res/android" android:angle="0.0" android:type="0" android:startX="63.76156234741211" android:startY="-0.16445744037628174" android:endX="121.94950866699219" android:endY="115.0025405883789">
-  <item android:color="#ff545454" android:offset="0.0">
-  </item>
-  <item android:color="#ff9b9b9b" android:offset="1.0">
-  </item>
-</gradient>

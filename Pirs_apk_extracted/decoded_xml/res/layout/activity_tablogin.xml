@@ -1,8 +1,0 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@0x7f09009f" android:background="@0x7f050094" android:layout_width="-1" android:layout_height="-1">
-  <RelativeLayout android:layout_width="-1" android:layout_height="-1" android:layout_marginTop="0x00003201">
-    <com.google.android.material.tabs.TabLayout android:id="@0x7f0903a1" android:layout_width="-1" android:layout_height="-2" android:layout_centerHorizontal="true" android:layout_marginStart="@0x7f0601ba" android:layout_marginEnd="@0x7f0601ba" app:tabGravity="0" app:tabIndicatorColor="@0x7f050023" app:tabMode="1" app:tabRippleColor="@0x00000000" app:tabSelectedTextColor="@0x7f050023" app:tabTextColor="@0x7f05008a">
-    </com.google.android.material.tabs.TabLayout>
-    <androidx.viewpager.widget.ViewPager android:id="@0x7f0902e2" android:layout_width="-1" android:layout_height="-1" android:layout_marginTop="0x00000701" android:layout_below="@0x7f0903a1">
-    </androidx.viewpager.widget.ViewPager>
-  </RelativeLayout>
-</RelativeLayout>

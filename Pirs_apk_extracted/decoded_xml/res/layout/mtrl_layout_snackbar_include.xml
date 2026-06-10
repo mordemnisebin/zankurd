@@ -1,6 +1,0 @@
-<view xmlns:android="http://schemas.android.com/apk/res/android" android:layout_gravity="0x00000050" android:layout_width="-1" android:layout_height="-2" class="com.google.android.material.snackbar.SnackbarContentLayout">
-  <TextView android:layout_gravity="0x00800013" android:id="@0x7f090371" android:layout_width="-2" android:layout_height="-2" android:layout_weight="1.0" style="?0x7f0303f2">
-  </TextView>
-  <Button android:layout_gravity="0x00800015" android:id="@0x7f090370" android:visibility="2" android:layout_width="-2" android:layout_height="-2" android:minWidth="0x00003001" style="?0x7f0303f0">
-  </Button>
-</view>

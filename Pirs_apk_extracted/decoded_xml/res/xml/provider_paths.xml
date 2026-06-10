@@ -1,6 +1,0 @@
-<paths>
-  <external-path name="external_files" path=".">
-  </external-path>
-  <cache-path name="shared_images" path="images/">
-  </cache-path>
-</paths>

@@ -1,6 +1,0 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:enabled="false" android:orientation="0" android:id="@0x7f090093" android:background="@0x00000000" android:layout_width="0x00000001" android:layout_height="0x00003001" android:layout_weight="1.0" android:paddingStart="0x00000401" style="@0x7f110286">
-  <ImageView android:enabled="false" android:layout_gravity="0x00800013" android:id="@0x7f090096" android:layout_width="@0x7f0601aa" android:layout_height="@0x7f0601aa" android:scaleType="7" android:alpha="0.5">
-  </ImageView>
-  <TextView android:enabled="false" android:ellipsize="3" android:layout_gravity="0x00800013" android:id="@0x7f09009c" android:clickable="false" android:layout_width="-2" android:layout_height="-2" android:singleLine="true" android:alpha="0.5" android:paddingStart="0x00000401" style="@0x7f110287">
-  </TextView>
-</LinearLayout>

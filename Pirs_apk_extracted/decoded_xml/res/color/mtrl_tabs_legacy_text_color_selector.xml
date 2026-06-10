@@ -1,6 +1,0 @@
-<selector>
-  <item android:state_selected="true" android:color="?0x01010036">
-  </item>
-  <item android:color="?0x01010038">
-  </item>
-</selector>
