@@ -70,12 +70,23 @@ class SettingsScreen extends StatelessWidget {
                 iconColor: AppTheme.gold,
                 title: ku ? 'Nepenî' : 'Gizlilik',
                 body: ku
-                    ? 'ZanKurd tenê navê lîstikvanê te û encamên pêşbirkan tomar dike. '
-                          'Daneyên te bi kesên sêyemîn re nayên parvekirin. '
-                          'Hesabê xwe her dem dikarî ji profîlê derkevî.'
-                    : 'ZanKurd yalnızca oyuncu adını ve yarışma sonuçlarını saklar. '
-                          'Verilerin üçüncü taraflarla paylaşılmaz. '
-                          'Hesabından dilediğin zaman profil ekranından çıkabilirsin.',
+                    ? 'ZanKurd ev dane tomar dike: navê lîstikvan, '
+                          'navnîşana e-peyamê (heke tomar bibî), pûan û statîstîkên '
+                          'lîstikê, hejmara coinan û pirsên tomarkirî. Di xetayan de '
+                          'tomarên teknîkî yên anonîm tên berhevkirin.\n\n'
+                          'Daneyên te nayên firotin û ji bo reklamê bi kesên sêyemîn '
+                          're nayên parvekirin. Navê te tenê di tabloya pêşderçûnê de '
+                          'xuya dibe.\n\n'
+                          'Ji bo jêbirina hesabê û hemû daneyan: '
+                          'nisebinbawer47@gmail.com'
+                    : 'ZanKurd şu verileri saklar: oyuncu adı, e-posta adresi '
+                          '(kayıt olursan), oyun puanları ve istatistikleri, coin '
+                          'bakiyesi ve kaydedilen sorular. Hatalarda anonim teknik '
+                          'çökme kayıtları toplanır.\n\n'
+                          'Verilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı '
+                          'paylaşılmaz. Adın yalnızca liderlik tablosunda görünür.\n\n'
+                          'Hesabını ve tüm verilerini kalıcı sildirmek için: '
+                          'nisebinbawer47@gmail.com',
               ),
               const SizedBox(height: 14),
 
