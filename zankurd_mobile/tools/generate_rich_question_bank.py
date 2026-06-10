@@ -1,12 +1,16 @@
 from __future__ import annotations
 
 from pathlib import Path
+import csv
 import re
 
 
 SOURCE = "zankurd_seed_rich_v2"
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "supabase" / "rich_question_bank_v2.sql"
+CSV_OUTPUT = ROOT / "supabase" / "rich_question_bank_v2_questions.csv"
+PARTS_DIR = ROOT / "supabase" / "rich_question_bank_v2_parts"
+FILLER_OPTIONS = {"", "-"}
 
 
 def esc(value: str | None) -> str:
@@ -199,7 +203,7 @@ def build_questions() -> list[dict[str, object]]:
         questions.append(row("Edebiyat", f"{band}: Kürt edebiyatında {term} ne anlama gelir?", [desc, "coğrafi yön", "matematik sembolü", "maden türü"], 0, f"{term}, Kürt edebiyatı alanında {desc} anlamında kullanılır.", difficulty))
         questions.append(tf("Edebiyat", f"{band}: {term.capitalize()} Kürt edebiyatıyla ilgili bir kavramdır.", True, f"{term} edebi metinleri anlamada kullanılan bir kavramdır.", difficulty))
         questions.append(tf("Edebiyat", f"{band}: Mem û Zîn genellikle Ehmedê Xanî ve Kürt edebiyatı ile ilişkilendirilir.", True, "Mem û Zîn, Ehmedê Xanî ile özdeşleşmiş klasik bir eserdir.", 2))
-        questions.append(visual("Edebiyat", f"{band}: Görseldeki '{term}' etiketi Kürt edebiyatında hangi kategoriye girer?", ["Edebiyat", "Cografya", "Muzîk", "Kimya"], 0, f"{term} Kürt edebiyatı kategorisinde değerlendirilir.", difficulty, term))
+        questions.append(visual("Edebiyat", f"{band}: Görseldeki '{term}' etiketi hangi öğrenme kategorisine girer?", ["Edebiyat", "Cografya", "Muzîk", "Kimya"], 0, f"{term} Kürt edebiyatı kategorisinde değerlendirilir.", difficulty, term))
         questions.append(row("Edebiyat", f"{band}: Aşağıdakilerden hangisi Kürt edebiyatıyla ilişkilendirilen bir isimdir?", [authors[i % len(authors)], "Galileo Galilei", "Isaac Newton", "Napoleon"], 0, "Seçilen isim Kürt edebiyatı bağlamında bilinen isimlerdendir.", difficulty))
 
     geography = [
@@ -249,30 +253,48 @@ def build_questions() -> list[dict[str, object]]:
     return questions
 
 
-def main() -> None:
-    questions = build_questions()
-    values: list[str] = []
-    for q in questions:
-        values.append(
-            "("
-            f"(select id from public.categories where name = {esc(q['category'])}), "
-            "'ku-kmr', "
-            f"{esc(q['prompt'])}, "
-            f"{esc(q['a'])}, "
-            f"{esc(q['b'])}, "
-            f"{esc(q['c'])}, "
-            f"{esc(q['d'])}, "
-            f"{esc(q['correct'])}, "
-            f"{esc(q['explanation'])}, "
-            f"{q['difficulty']}, "
-            "true, "
-            f"{esc(q['question_type'])}, "
-            f"{esc(q['image'])}, "
-            f"{esc(SOURCE)}"
-            ")"
+def dedupe_questions(questions: list[dict[str, object]]) -> list[dict[str, object]]:
+    unique: list[dict[str, object]] = []
+    seen: set[str] = set()
+    for question in questions:
+        prompt = str(question["prompt"]).strip().casefold()
+        if prompt in seen:
+            continue
+        seen.add(prompt)
+        unique.append(question)
+    return unique
+
+
+def generated_questions() -> list[dict[str, object]]:
+    return dedupe_questions(build_questions())
+
+
+def answer_leaks(questions: list[dict[str, object]]) -> list[dict[str, object]]:
+    leaks: list[dict[str, object]] = []
+    for question in questions:
+        correct_key = str(question["correct"]).strip().lower()
+        correct_text = str(question.get(correct_key, "")).strip().casefold()
+        prompt = str(question["prompt"]).strip().casefold()
+        if correct_text in FILLER_OPTIONS:
+            continue
+        if len(correct_text) >= 6 and correct_text in prompt:
+            leaks.append(question)
+    return leaks
+
+
+def assert_quality(questions: list[dict[str, object]]) -> None:
+    leaks = answer_leaks(questions)
+    if leaks:
+        examples = "\n".join(
+            f"- {question['category']}: {question['prompt']}" for question in leaks[:10]
+        )
+        raise SystemExit(
+            f"Generated question bank has {len(leaks)} answer leaks:\n{examples}"
         )
 
-    sql = f"""alter table public.questions
+
+def setup_sql() -> str:
+    return f"""alter table public.questions
   add column if not exists question_type text not null default 'multiple_choice';
 
 alter table public.questions
@@ -304,8 +326,11 @@ on conflict (name) do update set is_active = excluded.is_active;
 
 delete from public.questions
 where source_url = '{SOURCE}';
+"""
 
-insert into public.questions (
+
+def insert_sql(values: list[str]) -> str:
+    return f"""insert into public.questions (
   category_id,
   language_code,
   prompt,
@@ -324,8 +349,83 @@ insert into public.questions (
 values
 {",\n".join(values)};
 """
+
+
+def question_values(questions: list[dict[str, object]]) -> list[str]:
+    values: list[str] = []
+    for q in questions:
+        values.append(
+            "("
+            f"(select id from public.categories where name = {esc(q['category'])}), "
+            "'ku-kmr', "
+            f"{esc(q['prompt'])}, "
+            f"{esc(q['a'])}, "
+            f"{esc(q['b'])}, "
+            f"{esc(q['c'])}, "
+            f"{esc(q['d'])}, "
+            f"{esc(q['correct'])}, "
+            f"{esc(q['explanation'])}, "
+            f"{q['difficulty']}, "
+            "true, "
+            f"{esc(q['question_type'])}, "
+            f"{esc(q['image'])}, "
+            f"{esc(SOURCE)}"
+            ")"
+        )
+    return values
+
+
+def write_csv(questions: list[dict[str, object]]) -> None:
+    with CSV_OUTPUT.open("w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(
+            file,
+            fieldnames=[
+                "category",
+                "prompt",
+                "a",
+                "b",
+                "c",
+                "d",
+                "correct",
+                "explanation",
+                "difficulty",
+                "question_type",
+                "image",
+            ],
+        )
+        writer.writeheader()
+        writer.writerows(questions)
+
+
+def write_parts(values: list[str]) -> None:
+    PARTS_DIR.mkdir(parents=True, exist_ok=True)
+    for path in PARTS_DIR.glob("*.sql"):
+        path.unlink(missing_ok=True)
+
+    (PARTS_DIR / "00_setup.sql").write_text(setup_sql(), encoding="utf-8")
+    chunk_size = 125
+    for index, start in enumerate(range(0, len(values), chunk_size), start=1):
+        chunk = values[start : start + chunk_size]
+        (PARTS_DIR / f"{index:02d}_insert.sql").write_text(
+            insert_sql(chunk),
+            encoding="utf-8",
+        )
+    (PARTS_DIR / "README.txt").write_text(
+        "Run 00_setup.sql first, then run the numbered insert files in order.\n"
+        "These files are generated from tools/generate_rich_question_bank.py.\n",
+        encoding="utf-8",
+    )
+
+
+def main() -> None:
+    questions = generated_questions()
+    assert_quality(questions)
+    values = question_values(questions)
+    sql = setup_sql() + "\n" + insert_sql(values)
     OUTPUT.write_text(sql, encoding="utf-8")
-    print(f"Wrote {len(questions)} questions to {OUTPUT}")
+    write_csv(questions)
+    write_parts(values)
+    print(f"Wrote {len(questions)} unique questions to {OUTPUT}")
 
 
 if __name__ == "__main__":
