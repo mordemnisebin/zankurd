@@ -44,36 +44,30 @@ class _AppShellState extends State<AppShell> {
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-          color: AppTheme.surface,
           border: Border(top: BorderSide(color: AppTheme.border)),
         ),
-        child: BottomNavigationBar(
-          currentIndex: _tab,
-          onTap: (i) => setState(() => _tab = i),
-          backgroundColor: AppTheme.surface,
-          selectedItemColor: AppTheme.accent,
-          unselectedItemColor: AppTheme.textMuted,
-          type: BottomNavigationBarType.fixed,
-          elevation: 0,
-          items: [
-            BottomNavigationBarItem(
+        child: NavigationBar(
+          selectedIndex: _tab,
+          onDestinationSelected: (i) => setState(() => _tab = i),
+          destinations: [
+            NavigationDestination(
               icon: const Icon(Icons.home_outlined),
-              activeIcon: const Icon(Icons.home),
+              selectedIcon: const Icon(Icons.home),
               label: ku ? 'Sereke' : 'Ana Sayfa',
             ),
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: const Icon(Icons.grid_view_outlined),
-              activeIcon: const Icon(Icons.grid_view),
+              selectedIcon: const Icon(Icons.grid_view),
               label: ku ? 'Kategorî' : 'Kategoriler',
             ),
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: const Icon(Icons.leaderboard_outlined),
-              activeIcon: const Icon(Icons.leaderboard),
+              selectedIcon: const Icon(Icons.leaderboard),
               label: ku ? 'Pêşderçûn' : 'Liderlik',
             ),
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: const Icon(Icons.person_outline),
-              activeIcon: const Icon(Icons.person),
+              selectedIcon: const Icon(Icons.person),
               label: ku ? 'Profîl' : 'Profil',
             ),
           ],
