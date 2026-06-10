@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../data/zankurd_repository.dart';
 import '../models/answer_record.dart';
@@ -93,96 +94,39 @@ class _QuizScreenState extends State<QuizScreen> {
                 progress: '${index + 1}/${widget.questions.length}',
               ),
               const SizedBox(height: 16),
-              LinearProgressIndicator(
-                value: (index + 1) / widget.questions.length,
-                minHeight: 8,
-                borderRadius: BorderRadius.circular(99),
-                backgroundColor: AppTheme.surfaceHi,
-                color: AppTheme.accent,
+              TweenAnimationBuilder<double>(
+                tween: Tween(
+                  begin: 0,
+                  end: (index + 1) / widget.questions.length,
+                ),
+                duration: const Duration(milliseconds: 350),
+                curve: Curves.easeOutCubic,
+                builder: (_, value, _) => LinearProgressIndicator(
+                  value: value,
+                  minHeight: 8,
+                  borderRadius: BorderRadius.circular(99),
+                  backgroundColor: AppTheme.surfaceHi,
+                  color: AppTheme.accent,
+                ),
               ),
               const SizedBox(height: 16),
-              AppPanel(
-                color: AppTheme.surfaceHi,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        _TinyTag(
-                          label: CategoryNames.localized(
-                            question.category,
-                            context.isKu,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        _TinyTag(label: question.typeLabel),
-                        const Spacer(),
-                        _TinyTag(
-                          label:
-                              '${context.s('Ast', 'Zorluk')} ${question.difficulty}/5',
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 14),
-                    if (question.hasImage) ...[
-                      _QuestionImage(url: question.imageUrl!),
-                      const SizedBox(height: 14),
-                    ],
-                    Text(
-                      question.prompt,
-                      style: const TextStyle(
-                        color: AppTheme.textPrimary,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900,
-                        height: 1.16,
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    for (final answer in question.answers)
-                      if (!hiddenAnswers.contains(answer))
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: _AnswerButton(
-                            answer: answer,
-                            selected: selectedAnswer == answer,
-                            correct:
-                                answered && answer == question.correctAnswer,
-                            disabled: answered,
-                            onTap: () => _answer(answer),
-                          ),
-                        ),
-                    if (answered) ...[
-                      const SizedBox(height: 6),
-                      Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          color: AppTheme.bg.withValues(alpha: 0.45),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: AppTheme.border),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Icon(
-                              Icons.lightbulb_outline,
-                              color: AppTheme.gold,
-                              size: 20,
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                question.explanation,
-                                style: const TextStyle(
-                                  color: AppTheme.textSub,
-                                  height: 1.35,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ],
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 280),
+                switchInCurve: Curves.easeOutCubic,
+                switchOutCurve: Curves.easeIn,
+                transitionBuilder: (child, animation) => FadeTransition(
+                  opacity: animation,
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0.06, 0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  ),
+                ),
+                child: KeyedSubtree(
+                  key: ValueKey(index),
+                  child: _buildQuestionPanel(context),
                 ),
               ),
               const SizedBox(height: 16),
@@ -222,8 +166,98 @@ class _QuizScreenState extends State<QuizScreen> {
     );
   }
 
+  Widget _buildQuestionPanel(BuildContext context) {
+    return AppPanel(
+      color: AppTheme.surfaceHi,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              _TinyTag(
+                label: CategoryNames.localized(question.category, context.isKu),
+              ),
+              const SizedBox(width: 8),
+              _TinyTag(label: question.typeLabel),
+              const Spacer(),
+              _TinyTag(
+                label: '${context.s('Ast', 'Zorluk')} ${question.difficulty}/5',
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          if (question.hasImage) ...[
+            _QuestionImage(url: question.imageUrl!),
+            const SizedBox(height: 14),
+          ],
+          Text(
+            question.prompt,
+            style: const TextStyle(
+              color: AppTheme.textPrimary,
+              fontSize: 24,
+              fontWeight: FontWeight.w900,
+              height: 1.16,
+            ),
+          ),
+          const SizedBox(height: 18),
+          for (final answer in question.answers)
+            AnimatedOpacity(
+              duration: const Duration(milliseconds: 250),
+              opacity: hiddenAnswers.contains(answer) ? 0.25 : 1,
+              child: IgnorePointer(
+                ignoring: hiddenAnswers.contains(answer),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: _AnswerButton(
+                    answer: answer,
+                    selected: selectedAnswer == answer,
+                    correct: answered && answer == question.correctAnswer,
+                    disabled: answered,
+                    onTap: () => _answer(answer),
+                  ),
+                ),
+              ),
+            ),
+          if (answered) ...[
+            const SizedBox(height: 6),
+            Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: AppTheme.bg.withValues(alpha: 0.45),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppTheme.border),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.lightbulb_outline,
+                    color: AppTheme.gold,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      question.explanation,
+                      style: const TextStyle(
+                        color: AppTheme.textSub,
+                        height: 1.35,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
   Future<void> _answer(String answer) async {
     if (answered) return;
+
+    HapticFeedback.lightImpact();
 
     // Optimistically select it to disable buttons immediately
     setState(() {
@@ -248,6 +282,12 @@ class _QuizScreenState extends State<QuizScreen> {
 
       if (!mounted) return;
 
+      if (result['is_correct'] == true) {
+        HapticFeedback.mediumImpact();
+      } else {
+        HapticFeedback.heavyImpact();
+      }
+
       setState(() {
         score =
             result['new_score'] as int? ??
@@ -269,6 +309,11 @@ class _QuizScreenState extends State<QuizScreen> {
       // Fallback local logic if network fails during answer submit
       if (!mounted) return;
       final correct = answer == question.correctAnswer;
+      if (correct) {
+        HapticFeedback.mediumImpact();
+      } else {
+        HapticFeedback.heavyImpact();
+      }
       setState(() {
         if (correct) {
           streak += 1;
@@ -327,6 +372,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void _useFiftyFifty() {
+    HapticFeedback.selectionClick();
     final wrongAnswers = question.answers
         .where((answer) => answer != question.correctAnswer)
         .take(2)
@@ -600,11 +646,23 @@ class _ScoreHeader extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _Metric(label: context.s('Pûan', 'Puan'), value: '$score'),
+          child: TweenAnimationBuilder<int>(
+            tween: IntTween(begin: 0, end: score),
+            duration: const Duration(milliseconds: 450),
+            curve: Curves.easeOutCubic,
+            builder: (context, value, _) =>
+                _Metric(label: context.s('Pûan', 'Puan'), value: '$value'),
+          ),
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: _Metric(label: context.s('Rêz', 'Seri'), value: '$streak'),
+          child: TweenAnimationBuilder<int>(
+            tween: IntTween(begin: 0, end: streak),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOutCubic,
+            builder: (context, value, _) =>
+                _Metric(label: context.s('Rêz', 'Seri'), value: '$value'),
+          ),
         ),
         const SizedBox(width: 10),
         Expanded(
@@ -677,29 +735,37 @@ class _AnswerButton extends StatelessWidget {
     return InkWell(
       onTap: disabled ? null : onTap,
       borderRadius: BorderRadius.circular(12),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: borderColor, width: 1.4),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                answer,
-                style: const TextStyle(
-                  color: AppTheme.textPrimary,
-                  fontWeight: FontWeight.w800,
+      child: AnimatedScale(
+        scale: selected ? 0.98 : 1,
+        duration: const Duration(milliseconds: 150),
+        curve: Curves.easeOut,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOutCubic,
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: borderColor, width: 1.4),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  answer,
+                  style: const TextStyle(
+                    color: AppTheme.textPrimary,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ),
-            ),
-            if (correct)
-              const Icon(Icons.check_circle_outline, color: AppTheme.correct),
-            if (wrong) const Icon(Icons.cancel_outlined, color: AppTheme.wrong),
-          ],
+              if (correct)
+                const Icon(Icons.check_circle_outline, color: AppTheme.correct),
+              if (wrong)
+                const Icon(Icons.cancel_outlined, color: AppTheme.wrong),
+            ],
+          ),
         ),
       ),
     );
