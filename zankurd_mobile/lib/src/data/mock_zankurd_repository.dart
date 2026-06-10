@@ -320,12 +320,34 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<int> loadCoinBalance() async => _mockCoins;
 
+  DateTime? _lastSpin;
+
+  @override
+  Future<bool> canSpinToday() async {
+    final last = _lastSpin;
+    if (last == null) return true;
+    final now = DateTime.now().toUtc();
+    return last.year != now.year ||
+        last.month != now.month ||
+        last.day != now.day;
+  }
+
+  @override
+  Future<int> awardSpinCoins() async {
+    const rewards = [10, 25, 50, 15, 75, 20, 100, 30];
+    final amount = rewards[Random().nextInt(rewards.length)];
+    _lastSpin = DateTime.now().toUtc();
+    _mockCoins += amount;
+    return amount;
+  }
+
   @override
   Future<int> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
+    GameRoom? room,
   }) async {
     final earned = _calculateCoinAward(
       score: score,

@@ -24,7 +24,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
 
   Future<void> upsertProfile({
     required String displayName,
-    String avatarColor = '#177A56',
+    String avatarColor = '#E94560',
   }) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
     await client.from('profiles').upsert({
@@ -34,9 +34,24 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     });
   }
 
+  /// Profil satırı yoksa oluşturur; varsa adı EZMEZ.
+  /// Yeni profil adı, kayıt sırasında verilen display_name'den gelir.
   @override
-  Future<void> ensureProfile() {
-    return upsertProfile(displayName: 'ZanKurd Oyuncusu');
+  Future<void> ensureProfile() async {
+    final user = client.auth.currentUser ?? await signInAnonymously();
+    final existing = await client
+        .from('profiles')
+        .select('id')
+        .eq('id', user.id)
+        .maybeSingle();
+    if (existing != null) return;
+
+    final metadataName = user.userMetadata?['display_name'];
+    await upsertProfile(
+      displayName: metadataName is String && metadataName.trim().isNotEmpty
+          ? metadataName.trim()
+          : 'ZanKurd Oyuncusu',
+    );
   }
 
   @override
@@ -265,7 +280,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   @override
   Future<GameRoom> createOnlineRoom({String category = 'Ziman'}) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
-    await upsertProfile(displayName: 'ZanKurd Oyuncusu');
+    await ensureProfile();
 
     final localRoom = createRoom(category: category);
     final categoryId = await _categoryIdByName(category);
@@ -299,7 +314,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   @override
   Future<GameRoom> joinOnlineRoom(String code) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
-    await upsertProfile(displayName: 'ZanKurd Oyuncusu');
+    await ensureProfile();
 
     final room = await client
         .from('rooms')
@@ -426,7 +441,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     bool favorite,
   ) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
-    await upsertProfile(displayName: 'ZanKurd Oyuncusu');
+    await ensureProfile();
 
     if (favorite) {
       await client.from('favorite_questions').upsert({
@@ -447,7 +462,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   @override
   Future<void> reportQuestion(QuizQuestion question, String reason) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
-    await upsertProfile(displayName: 'ZanKurd Oyuncusu');
+    await ensureProfile();
     await client.from('question_reports').insert({
       'question_id': question.id,
       'reporter_id': user.id,
@@ -504,17 +519,55 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
+    GameRoom? room,
   }) async {
     final earned = await super.awardQuizCoins(
       score: score,
       correctCount: correctCount,
       bestStreak: bestStreak,
       totalQuestions: totalQuestions,
+      room: room,
     );
 
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
-      await upsertProfile(displayName: 'ZanKurd Oyuncusu');
+      await ensureProfile();
+      final response = await client.rpc(
+        'claim_quiz_reward',
+        params: {
+          'p_room_id': room?.id,
+          'p_score': score,
+          'p_correct_count': correctCount,
+          'p_best_streak': bestStreak,
+          'p_total_questions': totalQuestions,
+        },
+      );
+      final amount = _amountFromRpcResponse(response);
+      if (amount != null) return amount;
+      throw StateError('Quiz reward RPC returned no amount for ${user.id}.');
+    } catch (_) {
+      return _insertQuizCoinsFallback(
+        earned: earned,
+        score: score,
+        correctCount: correctCount,
+        bestStreak: bestStreak,
+        totalQuestions: totalQuestions,
+      );
+    }
+  }
+
+  Future<int> _insertQuizCoinsFallback({
+    required int earned,
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+  }) async {
+    if (earned <= 0) return 0;
+
+    try {
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
       await client.from('coin_transactions').insert({
         'player_id': user.id,
         'amount': earned,
@@ -524,6 +577,65 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       return earned;
     } catch (_) {
       return earned;
+    }
+  }
+
+  int? _amountFromRpcResponse(Object? response) {
+    if (response is Map<String, dynamic>) {
+      return (response['amount'] as num?)?.toInt();
+    }
+    if (response is List && response.isNotEmpty) {
+      final first = response.first;
+      if (first is Map<String, dynamic>) {
+        return (first['amount'] as num?)?.toInt();
+      }
+    }
+    return null;
+  }
+
+  @override
+  Future<bool> canSpinToday() async {
+    try {
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      final rows = await client
+          .from('coin_transactions')
+          .select('created_at')
+          .eq('player_id', user.id)
+          .like('reason', 'daily_spin%')
+          .order('created_at', ascending: false)
+          .limit(1);
+      if (rows.isEmpty) return true;
+      final last = DateTime.parse(rows.first['created_at'] as String).toUtc();
+      final now = DateTime.now().toUtc();
+      return last.year != now.year ||
+          last.month != now.month ||
+          last.day != now.day;
+    } catch (_) {
+      return super.canSpinToday();
+    }
+  }
+
+  @override
+  Future<int> awardSpinCoins() async {
+    try {
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+
+      final response = await client.rpc('claim_daily_spin');
+      if (response is Map<String, dynamic>) {
+        final amount = (response['amount'] as num?)?.toInt() ?? 0;
+        if (amount >= 0) return amount;
+      }
+      if (response is List && response.isNotEmpty) {
+        final first = response.first;
+        if (first is Map<String, dynamic>) {
+          final amount = (first['amount'] as num?)?.toInt() ?? 0;
+          if (amount >= 0) return amount;
+        }
+      }
+      throw StateError('Daily spin RPC returned no reward for ${user.id}.');
+    } catch (_) {
+      return super.awardSpinCoins();
     }
   }
 

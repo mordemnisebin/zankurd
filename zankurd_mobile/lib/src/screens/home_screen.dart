@@ -9,6 +9,7 @@ import '../widgets/app_panel.dart';
 import 'level_screen.dart';
 import 'quiz_screen.dart';
 import 'room_screen.dart';
+import 'spin_wheel_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({required this.repository, super.key});
@@ -83,6 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
               loading: _dailyLoading,
               onPlay: () => _openDailyQuiz(context, ku),
             ),
+            const SizedBox(height: 12),
+            _SpinWheelCard(isKu: ku, onOpen: () => _openSpinWheel(context)),
             const SizedBox(height: 16),
             _RoomActions(
               loading: _roomActionLoading,
@@ -190,6 +193,13 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (_) => RoomScreen(repository: repo, initialRoom: room),
       ),
     );
+  }
+
+  Future<void> _openSpinWheel(BuildContext context) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => SpinWheelScreen(repository: repo)),
+    );
+    _refreshCoins();
   }
 
   void _openCategory(BuildContext context, String category) {
@@ -977,6 +987,80 @@ class _DailyQuizCard extends StatelessWidget {
                 Icons.play_circle_fill_rounded,
                 color: Colors.white,
                 size: 34,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SpinWheelCard extends StatelessWidget {
+  const _SpinWheelCard({required this.isKu, required this.onOpen});
+
+  final bool isKu;
+  final VoidCallback onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppPanel(
+      gradient: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFF7C3AED), Color(0xFF5B21B6)],
+      ),
+      padding: EdgeInsets.zero,
+      child: InkWell(
+        onTap: onOpen,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                width: 52,
+                height: 52,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: const Icon(
+                  Icons.casino_outlined,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      isKu ? 'Çerxa Rojê' : 'Günün Çarkı',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 17,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      isKu
+                          ? 'Bizivirîne, heta 100 coin qezenc bike!'
+                          : 'Çevir, 100 coine kadar kazan!',
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.85),
+                        fontSize: 12.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: Colors.white,
+                size: 30,
               ),
             ],
           ),
