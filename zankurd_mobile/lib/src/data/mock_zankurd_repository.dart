@@ -6,6 +6,7 @@ import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import 'offline_question_bank.dart';
 import 'zankurd_repository.dart';
 
 class MockZanKurdRepository implements ZanKurdRepository {
@@ -22,68 +23,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
   ];
 
   @override
-  List<QuizQuestion> get questions => const [
-    QuizQuestion(
-      id: 'q_001',
-      category: 'Ziman',
-      prompt: 'Di Kurmancî de peyva "zanîn" bi Tirkî çi ye?',
-      answers: ['Bilmek', 'Gitmek', 'Okumak', 'Yazmak'],
-      correctAnswer: 'Bilmek',
-      explanation: '"Zanîn" bilgi ve bilmek anlamına gelir.',
-      difficulty: 1,
-    ),
-    QuizQuestion(
-      id: 'q_002',
-      category: 'Çand',
-      prompt: 'Newroz bi gelemperî kîjan rojê tê pîroz kirin?',
-      answers: ['21 Adar', '1 Gulan', '15 Hezîran', '29 Cotmeh'],
-      correctAnswer: '21 Adar',
-      explanation: 'Newroz baharın gelişini simgeleyen 21 Mart günüdür.',
-      type: QuestionType.visual,
-      imageUrl: 'asset://assets/question_images/newroz.png',
-      difficulty: 1,
-    ),
-    QuizQuestion(
-      id: 'q_003',
-      category: 'Edebiyat',
-      prompt: 'Mem û Zîn kimin eseri olarak bilinir?',
-      answers: ['Ehmedê Xanî', 'Cegerxwîn', 'Melayê Cizîrî', 'Feqiyê Teyran'],
-      correctAnswer: 'Ehmedê Xanî',
-      explanation: 'Mem û Zîn, Ehmedê Xanî ile özdeşleşmiş klasik eserdir.',
-      difficulty: 2,
-    ),
-    QuizQuestion(
-      id: 'q_004',
-      category: 'Dîrok',
-      prompt: 'Medler Mezopotamya tarihinde önemli bir halktır.',
-      answers: ['Rast', 'Şaş'],
-      correctAnswer: 'Rast',
-      explanation: 'Medler bölge tarihinin önemli siyasi topluluklarındandır.',
-      type: QuestionType.trueFalse,
-      difficulty: 2,
-    ),
-    QuizQuestion(
-      id: 'q_005',
-      category: 'Cografya',
-      prompt: 'Görseldeki dağlık coğrafya en çok hangi bölge tipini anlatır?',
-      answers: ['Çiya', 'Deşt', 'Gol', 'Daristan'],
-      correctAnswer: 'Çiya',
-      explanation: 'Çiya Kurmancîde dağ anlamına gelir.',
-      type: QuestionType.visual,
-      imageUrl: 'asset://assets/question_images/ciya.png',
-      difficulty: 1,
-    ),
-    QuizQuestion(
-      id: 'q_006',
-      category: 'Muzîk',
-      prompt: 'Dengbêj geleneği daha çok sözlü anlatım ve ezgiyle ilişkilidir.',
-      answers: ['Rast', 'Şaş'],
-      correctAnswer: 'Rast',
-      explanation: 'Dengbêjlik sözlü kültür ve ezgili anlatım geleneğidir.',
-      type: QuestionType.trueFalse,
-      difficulty: 1,
-    ),
-  ];
+  List<QuizQuestion> get questions => offlineQuestionBank;
+
+  int _questionCursor = 0;
 
   String _mockName = 'ZanKurd Oyuncusu';
   int _mockCoins = 2450;
@@ -127,6 +69,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<void> deleteMyAccount() async {
+    _mockName = 'ZanKurd Oyuncusu';
+    _mockCoins = 0;
+  }
+
+  @override
   Future<LeaderboardEntry?> getPlayerStats() async {
     return _mockLeaderboard.first;
   }
@@ -139,7 +87,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
     String? categoryId,
     int limit = 10,
   }) async {
-    return questions.take(limit).toList();
+    final pool = categoryId == null
+        ? questions
+        : questions
+              .where((question) => question.category == categoryId)
+              .toList(growable: false);
+    return _rotatingSelection(pool.isEmpty ? questions : pool, limit);
   }
 
   @override
@@ -204,12 +157,18 @@ class MockZanKurdRepository implements ZanKurdRepository {
         )
         .toList();
 
-    return (filtered.isEmpty ? questions : filtered).take(limit).toList();
+    return _rotatingSelection(filtered.isEmpty ? questions : filtered, limit);
   }
 
   @override
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
-    return questions.take(room.questionCount).toList();
+    final pool = questions
+        .where((question) => question.category == room.category)
+        .toList(growable: false);
+    return _rotatingSelection(
+      pool.isEmpty ? questions : pool,
+      room.questionCount,
+    );
   }
 
   /// Gün bazlı sabit tohum: aynı gün herkes aynı sırayı görür.
@@ -221,7 +180,45 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
     final pool = [...questions]..shuffle(Random(dailySeed()));
-    return pool.take(limit).toList();
+    return _withVisualBlend(pool.take(limit).toList(), questions, limit);
+  }
+
+  List<QuizQuestion> _rotatingSelection(List<QuizQuestion> pool, int limit) {
+    if (pool.isEmpty || limit <= 0) return const [];
+    final start = _questionCursor % pool.length;
+    _questionCursor = (_questionCursor + limit + 7) % pool.length;
+    final selected = <QuizQuestion>[];
+    for (var i = 0; selected.length < limit && i < pool.length; i++) {
+      selected.add(pool[(start + i) % pool.length]);
+    }
+    return _withVisualBlend(selected, pool, limit);
+  }
+
+  List<QuizQuestion> _withVisualBlend(
+    List<QuizQuestion> selected,
+    List<QuizQuestion> pool,
+    int limit,
+  ) {
+    if (selected.length >= limit &&
+        selected.where((q) => q.hasImage).length >= 2) {
+      return selected;
+    }
+    final ids = selected.map((question) => question.id).toSet();
+    final visualCandidates = pool.where(
+      (question) => question.hasImage && !ids.contains(question.id),
+    );
+    final blended = [...selected];
+    for (final question in visualCandidates) {
+      if (blended.where((q) => q.hasImage).length >= 2) break;
+      if (blended.length >= limit) {
+        final replaceAt = blended.lastIndexWhere((q) => !q.hasImage);
+        if (replaceAt == -1) break;
+        blended[replaceAt] = question;
+      } else {
+        blended.add(question);
+      }
+    }
+    return blended.take(limit).toList(growable: false);
   }
 
   @override

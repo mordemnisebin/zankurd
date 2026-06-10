@@ -9,7 +9,7 @@ import runpy
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "supabase" / "rich_question_bank_v2_questions.csv"
+OUTPUT = ROOT / "supabase" / "questions_import_ready.csv"
 SUPABASE_URL = "https://hupivnxgjtsfafulzspo.supabase.co"
 SUPABASE_KEY = "sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s"
 
@@ -29,7 +29,8 @@ def load_category_ids() -> dict[str, str]:
 
 def main() -> None:
     ns = runpy.run_path(str(ROOT / "tools" / "generate_rich_question_bank.py"))
-    questions = ns["build_questions"]()
+    questions = ns["generated_questions"]()
+    ns["assert_quality"](questions)
     category_ids = load_category_ids()
 
     missing = sorted({str(q["category"]) for q in questions} - set(category_ids))
