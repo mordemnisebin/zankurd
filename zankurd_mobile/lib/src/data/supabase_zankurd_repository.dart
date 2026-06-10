@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/leaderboard_entry.dart';
@@ -521,14 +523,9 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     required int totalQuestions,
     GameRoom? room,
   }) async {
-    final earned = await super.awardQuizCoins(
-      score: score,
-      correctCount: correctCount,
-      bestStreak: bestStreak,
-      totalQuestions: totalQuestions,
-      room: room,
-    );
-
+    // Ödül miktarını yalnızca sunucu belirler (claim_quiz_reward RPC).
+    // İstemciden coin_transactions'a yazma yolu yoktur; RPC başarısızsa
+    // coin kazanılmamış sayılır.
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
@@ -545,38 +542,18 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       final amount = _amountFromRpcResponse(response);
       if (amount != null) return amount;
       throw StateError('Quiz reward RPC returned no amount for ${user.id}.');
-    } catch (_) {
-      return _insertQuizCoinsFallback(
-        earned: earned,
-        score: score,
-        correctCount: correctCount,
-        bestStreak: bestStreak,
-        totalQuestions: totalQuestions,
-      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'claim_quiz_reward failed');
+      return 0;
     }
   }
 
-  Future<int> _insertQuizCoinsFallback({
-    required int earned,
-    required int score,
-    required int correctCount,
-    required int bestStreak,
-    required int totalQuestions,
-  }) async {
-    if (earned <= 0) return 0;
-
+  void _recordError(Object error, StackTrace stack, {String? reason}) {
+    if (kIsWeb) return;
     try {
-      final user = client.auth.currentUser ?? await signInAnonymously();
-      await ensureProfile();
-      await client.from('coin_transactions').insert({
-        'player_id': user.id,
-        'amount': earned,
-        'reason':
-            'quiz_complete:score=$score,correct=$correctCount,streak=$bestStreak,total=$totalQuestions',
-      });
-      return earned;
+      FirebaseCrashlytics.instance.recordError(error, stack, reason: reason);
     } catch (_) {
-      return earned;
+      // Crashlytics yapılandırılmamış olabilir (masaüstü/test ortamı).
     }
   }
 
