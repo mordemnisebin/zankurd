@@ -1,6 +1,6 @@
 # ZanKurd Release Readiness
 
-Last updated: 2026-06-11
+Last updated: 2026-06-12 (v1.3.0+4)
 
 ## Current Build Outputs
 
@@ -15,15 +15,16 @@ Last updated: 2026-06-11
 - Windows release ZIP:
   - `C:\src\zankurd_mobile\build\release_packages\zankurd-windows-x64-release.zip`
 
-## Validation
+## Validation (fresh run, 2026-06-12, v1.3.0+4)
 
-- `flutter analyze`: passed
-- `flutter test`: passed, 26 tests
-- Android release APK build: passed
-- Android release AAB build: passed
-- APK signing verification: passed with APK Signature Scheme v2
-- Web release build: passed
-- Windows release build: passed
+- `flutter analyze`: passed, 0 issues
+- `flutter test`: passed, 26/26 tests
+- Android release APK build: passed (54.4 MB), signing verified with apksigner (CN=ZanKurd upload key)
+- Android release AAB build: passed (52.9 MB, versionCode 4 / versionName 1.3.0 verified in merged manifest), `jarsigner -verify`: jar verified
+- INTERNET permission: now declared explicitly in main AndroidManifest.xml (previously only injected by plugin manifest merge)
+- Web release build: passed (`build/web/version.json` = 1.3.0+4)
+- Windows release build: passed (`build/windows/x64/runner/Release/zankurd.exe`)
+- `release_packages/` refreshed with all 1.3.0 artifacts + regenerated SHA256SUMS.txt
 
 ## Supabase Steps Before Wider Sharing
 

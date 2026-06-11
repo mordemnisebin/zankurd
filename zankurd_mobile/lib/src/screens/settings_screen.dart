@@ -11,7 +11,7 @@ class SettingsScreen extends StatefulWidget {
   const SettingsScreen({required this.repository, super.key});
 
   final ZanKurdRepository repository;
-  static const appVersion = '1.2.0+3';
+  static const appVersion = '1.3.0+4';
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();

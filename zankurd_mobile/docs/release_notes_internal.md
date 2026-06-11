@@ -3,6 +3,15 @@
 Bu surum Kurmanci quiz deneyimini, misafir girisini, gunluk yarisma ve gunluk
 cark akisini test etmek icin hazirlandi.
 
+## 1.3.0 (versionCode 4) yenilikleri
+
+- Rubik tipografi sistemi (yerel font, Kurmanci karakter destegi)
+- Material 3 NavigationBar alt gezinme
+- Quiz mikro-animasyonlari ve dokunsal geri bildirim (haptics)
+- Ortak bos/hata durumu ekranlari ve "tekrar dene" akisi
+- Uygulama ici hesap silme (Ayarlar > onayli akis, Play politika geregi)
+- Yenilenen cevrimdisi soru bankasi
+
 ## Bu surumde kontrol edilecekler
 
 - Misafir olarak devam etme
