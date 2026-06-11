@@ -1,6 +1,6 @@
 # ZanKurd Release Readiness
 
-Last updated: 2026-06-08
+Last updated: 2026-06-11
 
 ## Current Build Outputs
 
@@ -18,7 +18,7 @@ Last updated: 2026-06-08
 ## Validation
 
 - `flutter analyze`: passed
-- `flutter test`: passed, 14 tests
+- `flutter test`: passed, 26 tests
 - Android release APK build: passed
 - Android release AAB build: passed
 - APK signing verification: passed with APK Signature Scheme v2
