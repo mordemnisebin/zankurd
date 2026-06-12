@@ -8,6 +8,7 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../utils/error_reporter.dart';
 import 'mock_zankurd_repository.dart';
+import 'seen_question_store.dart';
 
 class SupabaseZanKurdRepository extends MockZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
@@ -169,8 +170,13 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
             ),
           );
 
-      final questions = await _withRemoteVisualBlend(
+      final store = await SeenQuestionStore.load();
+      final selected = store.preferUnseen(
         rows.map(_questionFromRow).toList(),
+        limit,
+      );
+      final questions = await _withRemoteVisualBlend(
+        selected,
         categoryId: categoryId,
         limit: limit,
         difficultyMin: difficultyMin,
@@ -269,8 +275,13 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
             randomize: true,
           ),
         );
-    return _withRemoteVisualBlend(
+    final store = await SeenQuestionStore.load();
+    final selected = store.preferUnseen(
       rows.map(_questionFromRow).toList(),
+      limit,
+    );
+    return _withRemoteVisualBlend(
+      selected,
       categoryId: categoryId,
       limit: limit,
     );
@@ -315,7 +326,9 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
           .order('id')
           .range(offset, offset + windowSize - 1);
       if (rows.isNotEmpty) {
-        return (rows..shuffle()).take(limit).toList(growable: false);
+        // Pencereyi olduğu gibi döndür; tekrar-önleyici seçim üst katmanda
+        // (SeenQuestionStore.preferUnseen) limit'e indirger.
+        return (rows..shuffle()).toList(growable: false);
       }
     }
 

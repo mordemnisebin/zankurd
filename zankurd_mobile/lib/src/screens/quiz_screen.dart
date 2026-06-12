@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
 import '../models/answer_record.dart';
 import '../models/player.dart';
@@ -58,6 +59,13 @@ class _QuizScreenState extends State<QuizScreen> {
       if (!mounted) return;
       setState(() => livePlayers = players);
     });
+    _markQuestionSeen();
+  }
+
+  /// Gösterilen soruyu tekrar-önleme deposuna işler.
+  void _markQuestionSeen() {
+    final id = question.id;
+    SeenQuestionStore.load().then((store) => store.markSeen([id]));
   }
 
   @override
@@ -393,6 +401,7 @@ class _QuizScreenState extends State<QuizScreen> {
       completing = false;
       hiddenAnswers = const {};
     });
+    _markQuestionSeen();
   }
 
   void _useFiftyFifty() {
