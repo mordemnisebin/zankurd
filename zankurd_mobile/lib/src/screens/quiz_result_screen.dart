@@ -4,6 +4,7 @@ import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/answer_record.dart';
+import '../models/player.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
@@ -21,6 +22,7 @@ class QuizResultScreen extends StatefulWidget {
     required this.bestStreak,
     required this.answerRecords,
     required this.coinsAwarded,
+    this.opponents = const [],
     super.key,
   });
 
@@ -33,6 +35,9 @@ class QuizResultScreen extends StatefulWidget {
   final int bestStreak;
   final List<AnswerRecord> answerRecords;
   final int coinsAwarded;
+
+  /// Bot yarışındaki rakiplerin son durumu; boşsa panel gizlenir.
+  final List<Player> opponents;
 
   @override
   State<QuizResultScreen> createState() => _QuizResultScreenState();
@@ -48,6 +53,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   int get bestStreak => widget.bestStreak;
   List<AnswerRecord> get answerRecords => widget.answerRecords;
   int get coinsAwarded => widget.coinsAwarded;
+  List<Player> get opponents => widget.opponents;
 
   int _dailyStreak = 0;
 
@@ -165,6 +171,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 unanswered: unanswered,
                 bestStreak: bestStreak,
               ),
+              if (opponents.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                _RaceStandings(userScore: score, opponents: opponents),
+              ],
               if (_dailyStreak > 0) ...[
                 const SizedBox(height: 16),
                 AppPanel(
@@ -446,6 +456,148 @@ class _MetricTile extends StatelessWidget {
             ),
           ),
           Text(label, style: const TextStyle(color: AppTheme.textMuted)),
+        ],
+      ),
+    );
+  }
+}
+
+class _RaceStandings extends StatelessWidget {
+  const _RaceStandings({required this.userScore, required this.opponents});
+
+  final int userScore;
+  final List<Player> opponents;
+
+  @override
+  Widget build(BuildContext context) {
+    final standings = [
+      Player(name: context.s('Tu', 'Tu'), score: userScore, state: 'Player'),
+      ...opponents,
+    ]..sort((a, b) => b.score.compareTo(a.score));
+    final userRank =
+        standings.indexWhere((player) => player.state == 'Player') + 1;
+    final leader = standings.first;
+    final title = context.s(
+      'Bi reqîban re beramber bike',
+      'Rakiplerle Karşılaştırma',
+    );
+    final summary = leader.state == 'Player'
+        ? context.s(
+            'Te yarış di rêza $userRank. de qedand.',
+            'Yarışı $userRank. sırada tamamladın.',
+          )
+        : context.s(
+            '${leader.name} pêşî qediya; tu di rêza $userRank. de yî.',
+            '${leader.name} önde bitirdi; sen $userRank. sıradasın.',
+          );
+
+    return AppPanel(
+      color: AppTheme.surfaceHi,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.groups_2_outlined, color: AppTheme.accent),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    color: AppTheme.textPrimary,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(summary, style: const TextStyle(color: AppTheme.textMuted)),
+          const SizedBox(height: 12),
+          for (var i = 0; i < standings.length; i++)
+            _RaceStandingRow(rank: i + 1, player: standings[i]),
+        ],
+      ),
+    );
+  }
+}
+
+class _RaceStandingRow extends StatelessWidget {
+  const _RaceStandingRow({required this.rank, required this.player});
+
+  final int rank;
+  final Player player;
+
+  @override
+  Widget build(BuildContext context) {
+    final isUser = player.state == 'Player';
+    final color = isUser ? AppTheme.accent : AppTheme.gold;
+
+    return Container(
+      margin: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: isUser
+            ? AppTheme.accent.withValues(alpha: 0.12)
+            : AppTheme.bg.withValues(alpha: 0.35),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isUser
+              ? AppTheme.accent.withValues(alpha: 0.45)
+              : AppTheme.border,
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 30,
+            height: 30,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.16),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              '$rank',
+              style: TextStyle(color: color, fontWeight: FontWeight.w900),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              player.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: AppTheme.textPrimary,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
+          if (player.streak > 0) ...[
+            const Icon(
+              Icons.local_fire_department_outlined,
+              color: AppTheme.gold,
+              size: 18,
+            ),
+            const SizedBox(width: 4),
+            Text(
+              '${player.streak}',
+              style: const TextStyle(
+                color: AppTheme.gold,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(width: 12),
+          ],
+          Text(
+            '${player.score}',
+            style: const TextStyle(
+              color: AppTheme.textPrimary,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
         ],
       ),
     );

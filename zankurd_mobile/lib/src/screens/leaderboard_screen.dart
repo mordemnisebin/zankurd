@@ -44,6 +44,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           repository: widget.repository,
           room: widget.repository.createRoom(),
           questions: raceQuestions,
+          botRace: true,
         ),
       ),
     );
