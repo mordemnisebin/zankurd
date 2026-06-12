@@ -7,6 +7,7 @@ import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import 'offline_question_bank.dart';
+import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
 
 class MockZanKurdRepository implements ZanKurdRepository {
@@ -24,8 +25,6 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   List<QuizQuestion> get questions => offlineQuestionBank;
-
-  int _questionCursor = 0;
 
   String _mockName = 'ZanKurd Oyuncusu';
   int _mockCoins = 2450;
@@ -92,7 +91,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         : questions
               .where((question) => question.category == categoryId)
               .toList(growable: false);
-    return _rotatingSelection(pool.isEmpty ? questions : pool, limit);
+    return _selectFresh(pool.isEmpty ? questions : pool, limit);
   }
 
   @override
@@ -157,7 +156,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         )
         .toList();
 
-    return _rotatingSelection(filtered.isEmpty ? questions : filtered, limit);
+    return _selectFresh(filtered.isEmpty ? questions : filtered, limit);
   }
 
   @override
@@ -165,10 +164,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
     final pool = questions
         .where((question) => question.category == room.category)
         .toList(growable: false);
-    return _rotatingSelection(
-      pool.isEmpty ? questions : pool,
-      room.questionCount,
-    );
+    return _selectFresh(pool.isEmpty ? questions : pool, room.questionCount);
   }
 
   /// Gün bazlı sabit tohum: aynı gün herkes aynı sırayı görür.
@@ -183,14 +179,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return _withVisualBlend(pool.take(limit).toList(), questions, limit);
   }
 
-  List<QuizQuestion> _rotatingSelection(List<QuizQuestion> pool, int limit) {
+  /// Görülmemiş soruları öne alan tekrar-önleyici seçim.
+  Future<List<QuizQuestion>> _selectFresh(
+    List<QuizQuestion> pool,
+    int limit,
+  ) async {
     if (pool.isEmpty || limit <= 0) return const [];
-    final start = _questionCursor % pool.length;
-    _questionCursor = (_questionCursor + limit + 7) % pool.length;
-    final selected = <QuizQuestion>[];
-    for (var i = 0; selected.length < limit && i < pool.length; i++) {
-      selected.add(pool[(start + i) % pool.length]);
-    }
+    final store = await SeenQuestionStore.load();
+    final selected = store.preferUnseen(pool, limit);
     return _withVisualBlend(selected, pool, limit);
   }
 
