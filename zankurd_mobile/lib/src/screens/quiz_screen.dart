@@ -24,6 +24,7 @@ class QuizScreen extends StatefulWidget {
     required this.questions,
     this.practice = false,
     this.botRace = false,
+    this.dailyQuiz = false,
     super.key,
   });
 
@@ -36,6 +37,9 @@ class QuizScreen extends StatefulWidget {
 
   /// Tek kişilik yarışta simüle bot rakipler etkinleşir.
   final bool botRace;
+
+  /// Günün yarışması akışından açıldıysa daily quiz sayacı işler.
+  final bool dailyQuiz;
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -441,6 +445,8 @@ class _QuizScreenState extends State<QuizScreen> {
             answerRecords: answerRecords,
             coinsAwarded: coinsAwarded,
             opponents: _botRace?.toPlayers() ?? const [],
+            practice: widget.practice,
+            dailyQuiz: widget.dailyQuiz,
           ),
         ),
       );

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../data/achievement_store.dart';
+import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../models/achievement.dart';
 import '../models/answer_record.dart';
 import '../models/player.dart';
 import '../models/room.dart';
@@ -23,6 +26,8 @@ class QuizResultScreen extends StatefulWidget {
     required this.answerRecords,
     required this.coinsAwarded,
     this.opponents = const [],
+    this.practice = false,
+    this.dailyQuiz = false,
     super.key,
   });
 
@@ -38,6 +43,8 @@ class QuizResultScreen extends StatefulWidget {
 
   /// Bot yarışındaki rakiplerin son durumu; boşsa panel gizlenir.
   final List<Player> opponents;
+  final bool practice;
+  final bool dailyQuiz;
 
   @override
   State<QuizResultScreen> createState() => _QuizResultScreenState();
@@ -54,19 +61,41 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   List<AnswerRecord> get answerRecords => widget.answerRecords;
   int get coinsAwarded => widget.coinsAwarded;
   List<Player> get opponents => widget.opponents;
+  bool get practice => widget.practice;
+  bool get dailyQuiz => widget.dailyQuiz;
 
   int _dailyStreak = 0;
+  List<Achievement> _newAchievements = const [];
 
   @override
   void initState() {
     super.initState();
-    _recordDailyStreak();
+    _recordProgress();
   }
 
-  Future<void> _recordDailyStreak() async {
-    final store = await StreakStore.load();
-    final streak = await store.recordPlay();
-    if (mounted) setState(() => _dailyStreak = streak);
+  Future<void> _recordProgress() async {
+    final streakStore = await StreakStore.load();
+    final streak = await streakStore.recordPlay();
+    final mistakeStore = await MistakeStore.load();
+    final achievementStore = await AchievementStore.load();
+    final newAchievements = await achievementStore.recordQuizResult(
+      category: room.category,
+      totalQuestions: totalQuestions,
+      correctCount: correctCount,
+      bestStreak: bestStreak,
+      dailyStreak: streak,
+      userScore: score,
+      practice: practice,
+      dailyQuiz: dailyQuiz,
+      remainingMistakes: mistakeStore.count,
+      opponents: opponents,
+    );
+    if (mounted) {
+      setState(() {
+        _dailyStreak = streak;
+        _newAchievements = newAchievements;
+      });
+    }
   }
 
   @override
@@ -174,6 +203,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               if (opponents.isNotEmpty) ...[
                 const SizedBox(height: 16),
                 _RaceStandings(userScore: score, opponents: opponents),
+              ],
+              if (_newAchievements.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                _AchievementUnlocks(achievements: _newAchievements),
               ],
               if (_dailyStreak > 0) ...[
                 const SizedBox(height: 16),
@@ -517,6 +550,79 @@ class _RaceStandings extends StatelessWidget {
           const SizedBox(height: 12),
           for (var i = 0; i < standings.length; i++)
             _RaceStandingRow(rank: i + 1, player: standings[i]),
+        ],
+      ),
+    );
+  }
+}
+
+class _AchievementUnlocks extends StatelessWidget {
+  const _AchievementUnlocks({required this.achievements});
+
+  final List<Achievement> achievements;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppPanel(
+      gradient: AppTheme.goldGradient,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.workspace_premium_outlined, color: Colors.white),
+              const SizedBox(width: 8),
+              Text(
+                context.s('Rozeta Nû', 'Yeni Rozet'),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          for (final achievement in achievements)
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Row(
+                children: [
+                  Container(
+                    width: 38,
+                    height: 38,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.18),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(achievement.icon, color: Colors.white),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          achievement.title(context.isKu),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        Text(
+                          achievement.description(context.isKu),
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

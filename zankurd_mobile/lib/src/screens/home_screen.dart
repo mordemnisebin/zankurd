@@ -189,6 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
             repository: repo,
             room: dailyRoom,
             questions: dailyQuestions,
+            dailyQuiz: true,
           ),
         ),
       );
