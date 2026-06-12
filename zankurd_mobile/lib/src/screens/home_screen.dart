@@ -5,6 +5,7 @@ import '../l10n/lang.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import 'level_screen.dart';
 import 'quiz_screen.dart';
@@ -39,7 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _bootstrap() async {
     try {
       await repo.ensureProfile();
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home ensureProfile failed');
+    }
 
     try {
       final cats = await repo.loadCategories();
@@ -52,7 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _coinBalance = coins;
         _loading = false;
       });
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home bootstrap load failed');
       if (!mounted) return;
       setState(() {
         _questions = repo.questions;
@@ -135,7 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
       final room = await repo.createOnlineRoom();
       if (!context.mounted) return;
       _openRoom(context, room);
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'createOnlineRoom failed');
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -214,7 +219,9 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final coins = await repo.loadCoinBalance();
       if (mounted) setState(() => _coinBalance = coins);
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'coin refresh failed');
+    }
   }
 
   void _showJoinSheet(BuildContext context) {
@@ -267,7 +274,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.of(sheetCtx).pop();
                       if (!context.mounted) return;
                       _openRoom(context, room);
-                    } catch (_) {
+                    } catch (error, stack) {
+                      ErrorReporter.record(
+                        error,
+                        stack,
+                        reason: 'joinOnlineRoom failed',
+                      );
                       if (!sheetCtx.mounted) return;
                       Navigator.of(sheetCtx).pop();
                       if (!context.mounted) return;

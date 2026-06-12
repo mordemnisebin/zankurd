@@ -10,6 +10,7 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import 'quiz_result_screen.dart';
 
@@ -327,7 +328,8 @@ class _QuizScreenState extends State<QuizScreen> {
         }
         _recordAnswer(answer);
       });
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'submitAnswer failed');
       // Fallback local logic if network fails during answer submit
       if (!mounted) return;
       final correct = answer == question.correctAnswer;
@@ -443,7 +445,8 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
         ),
       );
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'toggleFavorite failed');
       if (!mounted) return;
       setState(() => favorite = !nextFavorite);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -500,7 +503,8 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
         ),
       );
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'reportQuestion failed');
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

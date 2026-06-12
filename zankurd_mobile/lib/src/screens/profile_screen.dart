@@ -6,6 +6,7 @@ import '../l10n/lang.dart';
 import '../models/leaderboard_entry.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import 'favorite_questions_screen.dart';
@@ -54,7 +55,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _loadFailed = false;
         });
       }
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'profile load failed');
       if (mounted) {
         setState(() {
           _loading = false;
@@ -85,7 +87,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         );
       }
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'profile name save failed');
       if (mounted) setState(() => _saving = false);
     }
   }

@@ -7,6 +7,7 @@ import '../l10n/lang.dart';
 import '../models/player.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import 'quiz_screen.dart';
 
@@ -255,7 +256,8 @@ class _RoomScreenState extends State<RoomScreen> {
     try {
       await widget.repository.startGame(room);
       _navigateToQuiz();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'startGame failed');
       if (!mounted) return;
       setState(() => starting = false);
       ScaffoldMessenger.of(context).showSnackBar(

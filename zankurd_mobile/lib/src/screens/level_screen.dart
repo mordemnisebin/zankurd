@@ -4,6 +4,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/quiz_level.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import 'quiz_screen.dart';
 
 class LevelScreen extends StatefulWidget {
@@ -92,7 +93,8 @@ class _LevelScreenState extends State<LevelScreen> {
           ),
         ),
       );
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'level questions load failed');
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
