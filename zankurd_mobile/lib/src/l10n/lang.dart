@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageProvider extends ChangeNotifier {
-  String _lang = 'ku';
+  LanguageProvider({String initialLang = 'ku', SharedPreferences? preferences})
+    : this._(initialLang, preferences);
+
+  LanguageProvider._(String initialLang, this._preferences)
+    : _lang = _normalize(initialLang);
+
+  static const _storageKey = 'zankurd.language';
+
+  static Future<LanguageProvider> load() async {
+    final preferences = await SharedPreferences.getInstance();
+    return LanguageProvider(
+      initialLang: preferences.getString(_storageKey) ?? 'ku',
+      preferences: preferences,
+    );
+  }
+
+  static String _normalize(String lang) => lang == 'tr' ? 'tr' : 'ku';
+
+  String _lang;
+  final SharedPreferences? _preferences;
+
   String get lang => _lang;
   bool get isKu => _lang == 'ku';
 
   void setLang(String lang) {
-    if (_lang != lang) {
-      _lang = lang;
+    final nextLang = _normalize(lang);
+    if (_lang != nextLang) {
+      _lang = nextLang;
+      _preferences?.setString(_storageKey, nextLang);
       notifyListeners();
     }
   }

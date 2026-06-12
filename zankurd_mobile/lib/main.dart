@@ -51,7 +51,15 @@ Future<void> main() async {
     authProvider = AuthProvider.test();
   }
 
-  runApp(ZanKurdApp(repository: repository, authProvider: authProvider));
+  final languageProvider = await LanguageProvider.load();
+
+  runApp(
+    ZanKurdApp(
+      repository: repository,
+      authProvider: authProvider,
+      languageProvider: languageProvider,
+    ),
+  );
 }
 
 class ZanKurdApp extends StatelessWidget {

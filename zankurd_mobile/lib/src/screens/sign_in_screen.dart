@@ -155,11 +155,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: _LangToggle(),
-                    ),
-                    const SizedBox(height: 16),
                     Center(
                       child: Container(
                         width: 84,
@@ -187,7 +182,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 20),
+                    _LanguageChoiceCard(),
+                    const SizedBox(height: 22),
                     Center(
                       child: Text(
                         context.s(
@@ -439,29 +436,66 @@ class _AuthScrollFrame extends StatelessWidget {
   }
 }
 
-class _LangToggle extends StatelessWidget {
+class _LanguageChoiceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isKu = context.isKu;
     return Container(
-      padding: const EdgeInsets.all(4),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(99),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppTheme.border),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _LangChip(
-            label: 'KU',
-            active: isKu,
-            onTap: () => context.langProvider.setLang('ku'),
+          Row(
+            children: [
+              const Icon(Icons.language, color: AppTheme.violet, size: 20),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  isKu ? 'Zimanê xwe hilbijêre' : 'Dilini seç',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: AppTheme.textPrimary,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
           ),
-          _LangChip(
-            label: 'TR',
-            active: !isKu,
-            onTap: () => context.langProvider.setLang('tr'),
+          const SizedBox(height: 4),
+          Text(
+            isKu
+                ? 'Dikarî paşê ji mîhengê biguherînî.'
+                : 'Daha sonra ayarlardan değiştirebilirsin.',
+            style: const TextStyle(color: AppTheme.textMuted, fontSize: 12),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: _LangChip(
+                  shortLabel: 'KU',
+                  label: 'Kurmancî',
+                  active: isKu,
+                  onTap: () => context.langProvider.setLang('ku'),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: _LangChip(
+                  shortLabel: 'TR',
+                  label: 'Türkçe',
+                  active: !isKu,
+                  onTap: () => context.langProvider.setLang('tr'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -471,11 +505,13 @@ class _LangToggle extends StatelessWidget {
 
 class _LangChip extends StatelessWidget {
   const _LangChip({
+    required this.shortLabel,
     required this.label,
     required this.active,
     required this.onTap,
   });
 
+  final String shortLabel;
   final String label;
   final bool active;
   final VoidCallback onTap;
@@ -486,18 +522,37 @@ class _LangChip extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
-          color: active ? AppTheme.accent : Colors.transparent,
-          borderRadius: BorderRadius.circular(99),
+          color: active ? AppTheme.accent : AppTheme.surfaceHi,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: active ? AppTheme.accent : AppTheme.border),
         ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: active ? Colors.white : AppTheme.textMuted,
-            fontWeight: FontWeight.w900,
-            fontSize: 12,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              shortLabel,
+              style: TextStyle(
+                color: active ? Colors.white : AppTheme.textMuted,
+                fontWeight: FontWeight.w900,
+                fontSize: 11,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: active ? Colors.white : AppTheme.textSub,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
