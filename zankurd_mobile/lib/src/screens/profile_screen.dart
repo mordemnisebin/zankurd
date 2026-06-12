@@ -9,7 +9,9 @@ import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../data/mistake_store.dart';
 import 'favorite_questions_screen.dart';
+import 'quiz_screen.dart';
 import 'settings_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -26,6 +28,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _loading = true;
   bool _saving = false;
   bool _loadFailed = false;
+  bool _practiceLoading = false;
+  int _mistakeCount = 0;
   String? _currentName;
   LeaderboardEntry? _stats;
 
@@ -33,6 +37,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _load();
+    _refreshMistakes();
+  }
+
+  Future<void> _refreshMistakes() async {
+    final store = await MistakeStore.load();
+    if (mounted) setState(() => _mistakeCount = store.count);
+  }
+
+  Future<void> _startMistakePractice() async {
+    final ku = context.isKu;
+    final store = await MistakeStore.load();
+    if (!mounted) return;
+    final mistakeIds = store.ids;
+    final questions = widget.repository.questions
+        .where((question) => mistakeIds.contains(question.id))
+        .toList();
+    if (questions.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            ku
+                ? 'Pirsên şaş tune. Pêşî pêşbirkekê bilîze!'
+                : 'Tekrar edilecek yanlış yok. Önce bir yarış oyna!',
+          ),
+        ),
+      );
+      return;
+    }
+    setState(() => _practiceLoading = true);
+    final practiceRoom = widget.repository
+        .createRoom()
+        .copyWith(
+          name: ku ? 'Şaşiyên Min' : 'Yanlışlarım',
+          questionCount: questions.length,
+        );
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => QuizScreen(
+          repository: widget.repository,
+          room: practiceRoom,
+          questions: questions,
+          practice: true,
+        ),
+      ),
+    );
+    if (!mounted) return;
+    setState(() => _practiceLoading = false);
+    _refreshMistakes();
   }
 
   @override
@@ -357,6 +409,70 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   color: AppTheme.textPrimary,
                                   fontWeight: FontWeight.w800,
                                 ),
+                              ),
+                            ),
+                            const Icon(
+                              Icons.chevron_right_rounded,
+                              color: AppTheme.textMuted,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+
+                  // Mistake practice shortcut
+                  AppPanel(
+                    padding: EdgeInsets.zero,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(16),
+                      onTap: _practiceLoading ? null : _startMistakePractice,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            _practiceLoading
+                                ? const SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: AppTheme.accent,
+                                    ),
+                                  )
+                                : const Icon(
+                                    Icons.school_outlined,
+                                    color: AppTheme.accent,
+                                    size: 22,
+                                  ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    ku ? 'Şaşiyên Min' : 'Yanlışlarım',
+                                    style: const TextStyle(
+                                      color: AppTheme.textPrimary,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    _mistakeCount == 0
+                                        ? (ku
+                                              ? 'Şaşiyek tune — aferîn!'
+                                              : 'Hiç yanlışın yok — aferin!')
+                                        : (ku
+                                              ? '$_mistakeCount pirs li benda dubarekirinê'
+                                              : '$_mistakeCount soru tekrar bekliyor'),
+                                    style: const TextStyle(
+                                      color: AppTheme.textMuted,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             const Icon(

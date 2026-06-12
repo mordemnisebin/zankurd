@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/seen_question_store.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -139,6 +140,7 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     SeenQuestionStore.resetInstance();
     StreakStore.resetInstance();
+    MistakeStore.resetInstance();
   });
 
   test('language provider persists selected language', () async {
