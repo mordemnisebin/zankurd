@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../data/mistake_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
 import '../models/answer_record.dart';
@@ -20,12 +21,16 @@ class QuizScreen extends StatefulWidget {
     required this.repository,
     required this.room,
     required this.questions,
+    this.practice = false,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final GameRoom room;
   final List<QuizQuestion> questions;
+
+  /// Yanlışlardan çalışma modu: coin ödülü verilmez.
+  final bool practice;
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -66,6 +71,14 @@ class _QuizScreenState extends State<QuizScreen> {
   void _markQuestionSeen() {
     final id = question.id;
     SeenQuestionStore.load().then((store) => store.markSeen([id]));
+  }
+
+  /// Yanlış cevabı yanlış defterine ekler, doğru cevap kaydı düşürür.
+  void _trackMistake(bool correct) {
+    final id = question.id;
+    MistakeStore.load().then(
+      (store) => correct ? store.markResolved(id) : store.markMistake(id),
+    );
   }
 
   @override
@@ -324,11 +337,13 @@ class _QuizScreenState extends State<QuizScreen> {
         HapticFeedback.heavyImpact();
       }
 
+      final isCorrect = result['is_correct'] == true;
+      _trackMistake(isCorrect);
       setState(() {
         score =
             result['new_score'] as int? ??
             (score + (result['points'] as int? ?? 0));
-        final correct = result['is_correct'] == true;
+        final correct = isCorrect;
         final alreadyAnswered = result['already_answered'] == true;
         streak = result['new_streak'] as int? ?? (correct ? streak + 1 : 0);
         bestStreak = bestStreak < streak ? streak : bestStreak;
@@ -346,6 +361,7 @@ class _QuizScreenState extends State<QuizScreen> {
       // Fallback local logic if network fails during answer submit
       if (!mounted) return;
       final correct = answer == question.correctAnswer;
+      _trackMistake(correct);
       if (correct) {
         HapticFeedback.mediumImpact();
       } else {
@@ -371,15 +387,17 @@ class _QuizScreenState extends State<QuizScreen> {
       if (completing) return;
       setState(() => completing = true);
       widget.repository.finishGame(widget.room).catchError((_) {});
-      final coinsAwarded = await widget.repository
-          .awardQuizCoins(
-            score: score,
-            correctCount: correctCount,
-            bestStreak: bestStreak,
-            totalQuestions: widget.questions.length,
-            room: widget.room,
-          )
-          .catchError((_) => 0);
+      final coinsAwarded = widget.practice
+          ? 0
+          : await widget.repository
+                .awardQuizCoins(
+                  score: score,
+                  correctCount: correctCount,
+                  bestStreak: bestStreak,
+                  totalQuestions: widget.questions.length,
+                  room: widget.room,
+                )
+                .catchError((_) => 0);
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
