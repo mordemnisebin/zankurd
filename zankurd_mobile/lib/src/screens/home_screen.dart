@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/quiz_question.dart';
@@ -36,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _roomActionLoading = false;
   bool _dailyLoading = false;
   int _coinBalance = 0;
+  int _streak = 0;
 
   ZanKurdRepository get repo => widget.repository;
 
@@ -43,6 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _bootstrap();
+    _refreshStreak();
+  }
+
+  Future<void> _refreshStreak() async {
+    final store = await StreakStore.load();
+    if (mounted) setState(() => _streak = store.effectiveStreak());
   }
 
   Future<void> _bootstrap() async {
@@ -85,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),
           children: [
-            HomeHeader(coinBalance: _coinBalance, isKu: ku),
+            HomeHeader(coinBalance: _coinBalance, isKu: ku, streak: _streak),
             const SizedBox(height: 20),
             HeroCard(isKu: ku, onQuickMatch: () => _openQuiz(context, room)),
             const SizedBox(height: 12),
