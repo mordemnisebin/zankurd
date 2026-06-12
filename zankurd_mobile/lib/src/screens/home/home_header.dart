@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
 
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({required this.coinBalance, required this.isKu, super.key});
+  const HomeHeader({
+    required this.coinBalance,
+    required this.isKu,
+    this.streak = 0,
+    super.key,
+  });
 
   final int coinBalance;
   final bool isKu;
+  final int streak;
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +55,48 @@ class HomeHeader extends StatelessWidget {
             ],
           ),
         ),
+        if (streak > 0) ...[
+          _StreakBadge(value: streak),
+          const SizedBox(width: 8),
+        ],
         _CoinBadge(value: coinBalance),
       ],
+    );
+  }
+}
+
+class _StreakBadge extends StatelessWidget {
+  const _StreakBadge({required this.value});
+
+  final int value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppTheme.accent.withValues(alpha: 0.16),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppTheme.accent.withValues(alpha: 0.5)),
+      ),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.local_fire_department,
+            color: AppTheme.accent,
+            size: 17,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            '$value',
+            style: const TextStyle(
+              color: AppTheme.accent,
+              fontWeight: FontWeight.w900,
+              fontSize: 14,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

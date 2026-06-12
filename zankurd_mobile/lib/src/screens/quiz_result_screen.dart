@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/answer_record.dart';
@@ -9,7 +10,7 @@ import '../widgets/app_panel.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
 
-class QuizResultScreen extends StatelessWidget {
+class QuizResultScreen extends StatefulWidget {
   const QuizResultScreen({
     required this.repository,
     required this.room,
@@ -32,6 +33,35 @@ class QuizResultScreen extends StatelessWidget {
   final int bestStreak;
   final List<AnswerRecord> answerRecords;
   final int coinsAwarded;
+
+  @override
+  State<QuizResultScreen> createState() => _QuizResultScreenState();
+}
+
+class _QuizResultScreenState extends State<QuizResultScreen> {
+  ZanKurdRepository get repository => widget.repository;
+  GameRoom get room => widget.room;
+  int get score => widget.score;
+  int get correctCount => widget.correctCount;
+  int get wrongCount => widget.wrongCount;
+  int get totalQuestions => widget.totalQuestions;
+  int get bestStreak => widget.bestStreak;
+  List<AnswerRecord> get answerRecords => widget.answerRecords;
+  int get coinsAwarded => widget.coinsAwarded;
+
+  int _dailyStreak = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _recordDailyStreak();
+  }
+
+  Future<void> _recordDailyStreak() async {
+    final store = await StreakStore.load();
+    final streak = await store.recordPlay();
+    if (mounted) setState(() => _dailyStreak = streak);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +165,51 @@ class QuizResultScreen extends StatelessWidget {
                 unanswered: unanswered,
                 bestStreak: bestStreak,
               ),
+              if (_dailyStreak > 0) ...[
+                const SizedBox(height: 16),
+                AppPanel(
+                  color: AppTheme.surfaceHi,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.local_fire_department,
+                        color: AppTheme.accent,
+                        size: 30,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.s(
+                                'Seriya rojane: $_dailyStreak roj',
+                                'Günlük seri: $_dailyStreak gün',
+                              ),
+                              style: const TextStyle(
+                                color: AppTheme.textPrimary,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              context.s(
+                                'Sibê jî bilîze û seriyê bidomîne!',
+                                'Yarın da oyna, seriyi sürdür!',
+                              ),
+                              style: const TextStyle(
+                                color: AppTheme.textMuted,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
               const SizedBox(height: 16),
               if (coinsAwarded > 0) ...[
                 TweenAnimationBuilder<double>(

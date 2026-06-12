@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/seen_question_store.dart';
+import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
@@ -137,6 +138,7 @@ void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
     SeenQuestionStore.resetInstance();
+    StreakStore.resetInstance();
   });
 
   test('language provider persists selected language', () async {
