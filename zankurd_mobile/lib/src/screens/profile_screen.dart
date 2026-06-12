@@ -26,9 +26,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final _nameCtrl = TextEditingController();
   bool _loading = true;
-  bool _saving = false;
   bool _loadFailed = false;
   bool _practiceLoading = false;
   int _mistakeCount = 0;
@@ -88,12 +86,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _refreshMistakes();
   }
 
-  @override
-  void dispose() {
-    _nameCtrl.dispose();
-    super.dispose();
-  }
-
   Future<void> _load() async {
     setState(() => _loading = true);
     try {
@@ -103,7 +95,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (mounted) {
         setState(() {
           _currentName = name;
-          _nameCtrl.text = name;
           _stats = stats;
           _achievements = achievementStore.unlockedAchievements;
           _loading = false;
@@ -118,33 +109,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _loadFailed = true;
         });
       }
-    }
-  }
-
-  Future<void> _save() async {
-    final name = _nameCtrl.text.trim();
-    if (name.isEmpty || name == _currentName) return;
-    setState(() => _saving = true);
-    try {
-      await widget.repository.updateProfileName(name);
-      if (mounted) {
-        setState(() {
-          _currentName = name;
-          _saving = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              context.isKu
-                  ? 'Profîl bi serketî hat nûve kirin.'
-                  : 'Profil başarıyla güncellendi.',
-            ),
-          ),
-        );
-      }
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'profile name save failed');
-      if (mounted) setState(() => _saving = false);
     }
   }
 
@@ -226,60 +190,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               Text(
                                 ku
-                                    ? 'Navê te biguhêze'
-                                    : 'İsmini değiştirebilirsin',
+                                    ? 'Navê xwe ji mîhengan biguhêze'
+                                    : 'İsmini ayarlardan değiştirebilirsin',
                                 style: TextStyle(
                                   color: Colors.white.withValues(alpha: 0.7),
                                   fontSize: 13,
                                 ),
                               ),
                             ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-
-                  // Name editor
-                  AppPanel(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          ku ? 'Navê Lîstikvanê' : 'Oyuncu Adı',
-                          style: const TextStyle(
-                            color: AppTheme.textSub,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        TextField(
-                          controller: _nameCtrl,
-                          style: const TextStyle(color: AppTheme.textPrimary),
-                          decoration: InputDecoration(
-                            hintText: ku
-                                ? 'Navê xwe binivîse...'
-                                : 'Adını gir...',
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        SizedBox(
-                          width: double.infinity,
-                          child: FilledButton.icon(
-                            onPressed: _saving ? null : _save,
-                            icon: _saving
-                                ? const SizedBox(
-                                    width: 16,
-                                    height: 16,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : const Icon(Icons.save_outlined),
-                            label: Text(ku ? 'Tomar Bike' : 'Kaydet'),
                           ),
                         ),
                       ],

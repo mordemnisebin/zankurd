@@ -19,7 +19,42 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  final _nameController = TextEditingController();
   bool _deleting = false;
+  bool _loadingName = true;
+  bool _savingName = false;
+  String _currentName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPlayerName();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadPlayerName() async {
+    try {
+      final name = await widget.repository.getProfileName();
+      if (!mounted) return;
+      setState(() {
+        _currentName = name;
+        _nameController.text = name;
+        _loadingName = false;
+      });
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'settings profile name load failed',
+      );
+      if (mounted) setState(() => _loadingName = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +87,69 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                     _LangSwitch(),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
+
+              AppPanel(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.badge_outlined,
+                          color: AppTheme.accent,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            ku ? 'Navê lîstikê' : 'Oyuncu Adı',
+                            style: TextStyle(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      key: const ValueKey('settings-player-name-field'),
+                      controller: _nameController,
+                      enabled: !_loadingName && !_savingName,
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(context),
+                      ),
+                      decoration: InputDecoration(
+                        hintText: ku
+                            ? 'Navê xwe binivîse...'
+                            : 'Oyundaki adını gir...',
+                      ),
+                      textInputAction: TextInputAction.done,
+                      onSubmitted: (_) => _savePlayerName(),
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.icon(
+                        onPressed: _loadingName || _savingName
+                            ? null
+                            : _savePlayerName,
+                        icon: _savingName
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Icon(Icons.save_outlined),
+                        label: Text(ku ? 'Tomar Bike' : 'Kaydet'),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -138,6 +236,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     const SizedBox(height: 12),
                     InkWell(
+                      key: const ValueKey('delete-account-action'),
                       borderRadius: BorderRadius.circular(12),
                       onTap: _deleting ? null : _confirmDeleteAccount,
                       child: Container(
@@ -308,6 +407,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final confirmed = await _showFinalDeleteConfirmation();
     if (confirmed != true || !mounted) return;
     await _deleteAccount();
+  }
+
+  Future<void> _savePlayerName() async {
+    final name = _nameController.text.trim();
+    if (name.isEmpty || name == _currentName) return;
+    setState(() => _savingName = true);
+    try {
+      await widget.repository.updateProfileName(name);
+      if (!mounted) return;
+      setState(() {
+        _currentName = name;
+        _savingName = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.s(
+              'Navê lîstikvan hate nûvekirin.',
+              'Oyuncu adı güncellendi.',
+            ),
+          ),
+        ),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'settings profile name save failed',
+      );
+      if (!mounted) return;
+      setState(() => _savingName = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.s(
+              'Navê lîstikvan nehat tomar kirin.',
+              'Oyuncu adı kaydedilemedi.',
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   Future<bool?> _showFinalDeleteConfirmation() {
