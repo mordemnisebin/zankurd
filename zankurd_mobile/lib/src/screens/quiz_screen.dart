@@ -183,11 +183,16 @@ class _QuizScreenState extends State<QuizScreen> {
         children: [
           Row(
             children: [
-              _TinyTag(
-                label: CategoryNames.localized(question.category, context.isKu),
+              Flexible(
+                child: _TinyTag(
+                  label: CategoryNames.localized(
+                    question.category,
+                    context.isKu,
+                  ),
+                ),
               ),
               const SizedBox(width: 8),
-              _TinyTag(label: question.typeLabel),
+              Flexible(child: _TinyTag(label: question.typeLabel)),
               const Spacer(),
               _TinyTag(
                 label: '${context.s('Ast', 'Zorluk')} ${question.difficulty}/5',
@@ -823,6 +828,8 @@ class _TinyTag extends StatelessWidget {
       ),
       child: Text(
         label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         style: const TextStyle(
           color: AppTheme.textSub,
           fontWeight: FontWeight.w900,

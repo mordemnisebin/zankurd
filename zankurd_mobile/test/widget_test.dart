@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/seen_question_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
@@ -130,6 +131,13 @@ Widget _testShell({
 
 void main() {
   final repository = MockZanKurdRepository();
+
+  // SharedPreferences mock'lanmazsa getInstance() widget testinde askıda
+  // kalır; tüm testler için deterministik temiz durum kur.
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+    SeenQuestionStore.resetInstance();
+  });
 
   test('language provider persists selected language', () async {
     SharedPreferences.setMockInitialValues({});
