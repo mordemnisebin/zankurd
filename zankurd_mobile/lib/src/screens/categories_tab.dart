@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import 'level_screen.dart';
 
 class CategoriesTab extends StatefulWidget {
@@ -29,7 +30,9 @@ class _CategoriesTabState extends State<CategoriesTab> {
     try {
       final cats = await widget.repository.loadCategories();
       if (mounted && cats.isNotEmpty) setState(() => _categories = cats);
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'categories load failed');
+    }
     if (mounted) setState(() => _loading = false);
   }
 

@@ -5,6 +5,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -369,7 +370,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       await widget.repository.deleteMyAccount();
       if (!mounted) return;
       await context.read<AuthProvider>().signOut();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'deleteAccount failed');
       if (!mounted) return;
       setState(() => _deleting = false);
       ScaffoldMessenger.of(context).showSnackBar(

@@ -1,13 +1,12 @@
 import 'dart:math';
 
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/leaderboard_entry.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../utils/error_reporter.dart';
 import 'mock_zankurd_repository.dart';
 
 class SupabaseZanKurdRepository extends MockZanKurdRepository {
@@ -641,12 +640,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }
 
   void _recordError(Object error, StackTrace stack, {String? reason}) {
-    if (kIsWeb) return;
-    try {
-      FirebaseCrashlytics.instance.recordError(error, stack, reason: reason);
-    } catch (_) {
-      // Crashlytics yapılandırılmamış olabilir (masaüstü/test ortamı).
-    }
+    ErrorReporter.record(error, stack, reason: reason);
   }
 
   int? _amountFromRpcResponse(Object? response) {

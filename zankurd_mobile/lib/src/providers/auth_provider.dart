@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../utils/error_reporter.dart';
+
 /// Supabase tabanlı kimlik sağlayıcı.
 ///
 /// Giriş yapan kullanıcı ile skor/profil verisinin yazıldığı Supabase
@@ -133,7 +135,9 @@ class AuthProvider extends ChangeNotifier {
     if (client == null) return;
     try {
       await client.auth.signOut();
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'signOut failed');
+    }
     _currentUser = client.auth.currentUser;
     _errorMessage = null;
     notifyListeners();

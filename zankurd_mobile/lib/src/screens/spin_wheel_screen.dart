@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 
 class SpinWheelScreen extends StatefulWidget {
@@ -42,7 +43,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     bool can = false;
     try {
       can = await widget.repository.canSpinToday();
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'canSpinToday failed');
+    }
     if (mounted) {
       setState(() {
         _canSpin = can;
@@ -68,7 +71,8 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     int won;
     try {
       won = await widget.repository.awardSpinCoins();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'awardSpinCoins failed');
       if (!mounted) return;
       setState(() {
         _spinning = false;
