@@ -12,6 +12,18 @@ const loginScreenshotPath = fileURLToPath(
 const homeScreenshotPath = fileURLToPath(
   new URL('playwright-home.png', screenshotDir),
 );
+const categoriesScreenshotPath = fileURLToPath(
+  new URL('playwright-categories.png', screenshotDir),
+);
+const leaderboardScreenshotPath = fileURLToPath(
+  new URL('playwright-leaderboard.png', screenshotDir),
+);
+const profileScreenshotPath = fileURLToPath(
+  new URL('playwright-profile.png', screenshotDir),
+);
+const settingsScreenshotPath = fileURLToPath(
+  new URL('playwright-settings.png', screenshotDir),
+);
 
 await mkdir(screenshotDir, { recursive: true });
 
@@ -40,10 +52,38 @@ await page.screenshot({
 
 // Flutter web paints most text on canvas, so text selectors are unreliable.
 // This coordinate targets the guest sign-in button on the fixed smoke viewport.
-await page.mouse.click(195, 632);
+await page.mouse.click(195, 718);
 await page.waitForTimeout(3500);
 await page.screenshot({
   path: homeScreenshotPath,
+  fullPage: true,
+});
+
+await page.mouse.click(145, 805);
+await page.waitForTimeout(900);
+await page.screenshot({
+  path: categoriesScreenshotPath,
+  fullPage: true,
+});
+
+await page.mouse.click(245, 805);
+await page.waitForTimeout(900);
+await page.screenshot({
+  path: leaderboardScreenshotPath,
+  fullPage: true,
+});
+
+await page.mouse.click(340, 805);
+await page.waitForTimeout(900);
+await page.screenshot({
+  path: profileScreenshotPath,
+  fullPage: true,
+});
+
+await page.mouse.click(190, 674);
+await page.waitForTimeout(900);
+await page.screenshot({
+  path: settingsScreenshotPath,
   fullPage: true,
 });
 
