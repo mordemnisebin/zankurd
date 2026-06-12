@@ -595,9 +595,9 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       if (questions.isNotEmpty) return questions;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadFavoriteQuestions failed');
-      // Fallback if favorites view/policy is not installed yet
+      return const [];
     }
-    return super.loadFavoriteQuestions();
+    return const [];
   }
 
   @override
@@ -615,7 +615,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadCoinBalance failed');
-      return super.loadCoinBalance();
+      return 0;
     }
   }
 
@@ -713,7 +713,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       throw StateError('Daily spin RPC returned no reward for ${user.id}.');
     } catch (error, stack) {
       _recordError(error, stack, reason: 'claim_daily_spin failed');
-      return super.awardSpinCoins();
+      return 0;
     }
   }
 
@@ -743,7 +743,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       }).toList();
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadLeaderboard failed');
-      return super.loadLeaderboard(limit: limit);
+      return const [];
     }
   }
 

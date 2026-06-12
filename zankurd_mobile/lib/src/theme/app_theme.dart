@@ -198,4 +198,27 @@ class AppTheme {
       ),
     );
   }
+
+  static ThemeData light() {
+    final base = dark();
+    return base.copyWith(
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: const Color(0xFFF5F7FB),
+      colorScheme: const ColorScheme(
+        brightness: Brightness.light,
+        primary: accent,
+        onPrimary: Colors.white,
+        secondary: violet,
+        onSecondary: Colors.white,
+        error: wrong,
+        onError: Colors.white,
+        surface: Color(0xFFFFFFFF),
+        onSurface: Color(0xFF172033),
+      ),
+      snackBarTheme: base.snackBarTheme.copyWith(
+        backgroundColor: const Color(0xFFFFFFFF),
+        contentTextStyle: const TextStyle(color: Color(0xFF172033)),
+      ),
+    );
+  }
 }

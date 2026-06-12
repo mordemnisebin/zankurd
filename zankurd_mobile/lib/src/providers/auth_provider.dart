@@ -19,6 +19,7 @@ class AuthProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _errorMessage;
   bool _needsEmailConfirmation = false;
+  bool _mockAuthenticated = false;
 
   User? get currentUser => _currentUser;
   bool get isLoading => _isLoading;
@@ -26,8 +27,9 @@ class AuthProvider extends ChangeNotifier {
   bool get needsEmailConfirmation => _needsEmailConfirmation;
 
   /// Misafir (anonim) oturum da kimlikli sayılır.
-  /// Supabase yapılandırması yoksa (mock/masaüstü) kapı tutulmaz.
-  bool get isAuthenticated => _client == null || _currentUser != null;
+  /// Supabase yapılandırması yoksa test/mock kapısı yine kullanıcı seçimini bekler.
+  bool get isAuthenticated =>
+      _client == null ? _mockAuthenticated : _currentUser != null;
 
   bool get isGuest => _currentUser?.isAnonymous ?? false;
 
@@ -40,7 +42,9 @@ class AuthProvider extends ChangeNotifier {
   }
 
   /// Test/mock constructor — Supabase başlatılmadan kullanım için.
-  AuthProvider.test() : _client = null;
+  AuthProvider.test({bool authenticated = false})
+    : _client = null,
+      _mockAuthenticated = authenticated;
 
   @override
   void dispose() {
@@ -105,6 +109,12 @@ class AuthProvider extends ChangeNotifier {
 
   /// Misafir olarak devam et — anonim Supabase oturumu.
   Future<bool> signInAsGuest() {
+    if (_client == null) {
+      _mockAuthenticated = true;
+      _errorMessage = null;
+      notifyListeners();
+      return Future.value(true);
+    }
     return _run((client) async {
       if (client.auth.currentSession != null) return;
       await client.auth.signInAnonymously();
@@ -132,7 +142,12 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> signOut() async {
     final client = _client;
-    if (client == null) return;
+    if (client == null) {
+      _mockAuthenticated = false;
+      _errorMessage = null;
+      notifyListeners();
+      return;
+    }
     try {
       await client.auth.signOut();
     } catch (error, stack) {

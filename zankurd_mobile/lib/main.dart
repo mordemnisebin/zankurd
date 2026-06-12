@@ -14,6 +14,7 @@ import 'src/data/supabase_zankurd_repository.dart';
 import 'src/data/zankurd_repository.dart';
 import 'src/l10n/lang.dart';
 import 'src/providers/auth_provider.dart';
+import 'src/providers/theme_provider.dart';
 import 'src/screens/app_shell.dart';
 import 'src/theme/app_theme.dart';
 
@@ -52,12 +53,14 @@ Future<void> main() async {
   }
 
   final languageProvider = await LanguageProvider.load();
+  final themeProvider = await ThemeProvider.load();
 
   runApp(
     ZanKurdApp(
       repository: repository,
       authProvider: authProvider,
       languageProvider: languageProvider,
+      themeProvider: themeProvider,
     ),
   );
 }
@@ -67,12 +70,14 @@ class ZanKurdApp extends StatelessWidget {
     required this.repository,
     this.authProvider,
     this.languageProvider,
+    this.themeProvider,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final AuthProvider? authProvider;
   final LanguageProvider? languageProvider;
+  final ThemeProvider? themeProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -84,12 +89,17 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => authProvider ?? AuthProvider.test(),
         ),
+        ChangeNotifierProvider(create: (_) => themeProvider ?? ThemeProvider()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'ZanKurd',
-        theme: AppTheme.dark(),
-        home: AppShell(repository: repository),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'ZanKurd',
+          theme: AppTheme.light(),
+          darkTheme: AppTheme.dark(),
+          themeMode: themeProvider.mode,
+          home: AppShell(repository: repository),
+        ),
       ),
     );
   }
