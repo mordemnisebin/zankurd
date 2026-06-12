@@ -12,12 +12,34 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends State<OnboardingScreen>
+    with SingleTickerProviderStateMixin {
   final _controller = PageController();
   int _page = 0;
+  late final AnimationController _brandController;
+  late final Animation<double> _brandScale;
+  late final Animation<double> _brandOpacity;
+
+  @override
+  void initState() {
+    super.initState();
+    _brandController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 900),
+    )..forward();
+    _brandScale = CurvedAnimation(
+      parent: _brandController,
+      curve: Curves.easeOutBack,
+    );
+    _brandOpacity = CurvedAnimation(
+      parent: _brandController,
+      curve: Curves.easeOut,
+    );
+  }
 
   @override
   void dispose() {
+    _brandController.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -37,15 +59,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Row(
                   children: [
-                    const Text(
-                      'ZanKurd',
-                      style: TextStyle(
-                        color: AppTheme.textPrimary,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 24,
+                    Expanded(
+                      child: _AnimatedBrandLockup(
+                        scale: _brandScale,
+                        opacity: _brandOpacity,
                       ),
                     ),
-                    const Spacer(),
                     TextButton(
                       onPressed: widget.onComplete,
                       child: Text(context.s('Derbas bike', 'Atla')),
@@ -135,6 +154,79 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
       ),
     ];
+  }
+}
+
+class _AnimatedBrandLockup extends StatelessWidget {
+  const _AnimatedBrandLockup({required this.scale, required this.opacity});
+
+  final Animation<double> scale;
+  final Animation<double> opacity;
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: opacity,
+      child: ScaleTransition(
+        scale: scale,
+        child: Row(
+          children: [
+            Container(
+              width: 46,
+              height: 46,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                gradient: AppTheme.accentGradient,
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppTheme.accent.withValues(alpha: 0.38),
+                    blurRadius: 18,
+                    offset: const Offset(0, 7),
+                  ),
+                ],
+              ),
+              child: const Text(
+                'ZK',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 17,
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'ZanKurd',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: AppTheme.textPrimary,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 24,
+                    ),
+                  ),
+                  Text(
+                    context.s('Hîn bibe, pêş bike', 'Öğren, yarış, ilerle'),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: AppTheme.textMuted,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

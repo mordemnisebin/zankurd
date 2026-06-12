@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../l10n/lang.dart';
+import '../../providers/theme_provider.dart';
 import '../../theme/app_theme.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -60,7 +63,79 @@ class HomeHeader extends StatelessWidget {
           const SizedBox(width: 8),
         ],
         _CoinBadge(value: coinBalance),
+        const SizedBox(width: 8),
+        _LanguageQuickToggle(isKu: isKu),
+        const SizedBox(width: 8),
+        const _ThemeQuickToggle(),
       ],
+    );
+  }
+}
+
+class _LanguageQuickToggle extends StatelessWidget {
+  const _LanguageQuickToggle({required this.isKu});
+
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: isKu ? 'Ziman' : 'Dil',
+      child: InkWell(
+        onTap: context.langProvider.toggle,
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          width: 42,
+          height: 36,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceHi,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: AppTheme.border),
+          ),
+          child: Text(
+            isKu ? 'KU' : 'TR',
+            style: const TextStyle(
+              color: AppTheme.textPrimary,
+              fontWeight: FontWeight.w900,
+              fontSize: 12,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ThemeQuickToggle extends StatelessWidget {
+  const _ThemeQuickToggle();
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = context.watch<ThemeProvider>();
+    return Tooltip(
+      message: 'Tema',
+      child: InkWell(
+        onTap: themeProvider.toggleDarkLight,
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          width: 38,
+          height: 36,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceHi,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: AppTheme.border),
+          ),
+          child: Icon(
+            themeProvider.isDark
+                ? Icons.dark_mode_outlined
+                : Icons.light_mode_outlined,
+            color: AppTheme.gold,
+            size: 18,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -178,6 +178,19 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('default mock auth starts signed out', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(repository: repository, languageProvider: _turkishLang()),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
+    expect(find.text('Günün Yarışması'), findsNothing);
+  });
+
   testWidgets('first launch shows onboarding before auth screen', (
     tester,
   ) async {
@@ -251,6 +264,26 @@ void main() {
 
     expect(find.text('ZanKurd'), findsOneWidget);
     expect(find.text('Günün Yarışması'), findsOneWidget);
+  });
+
+  testWidgets('home header exposes language and theme quick controls', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _FakeAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('ZanKurd'), findsOneWidget);
+    expect(find.text('TR'), findsOneWidget);
+    expect(find.byTooltip('Tema'), findsOneWidget);
   });
 
   testWidgets('language toggle works on the auth screen', (tester) async {
