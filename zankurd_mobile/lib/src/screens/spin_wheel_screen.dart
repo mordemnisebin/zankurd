@@ -129,7 +129,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       extendBodyBehindAppBar: true,
       appBar: AppBar(title: Text(ku ? 'Çerxa Rojê' : 'Günün Çarkı')),
       body: Container(
-        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        decoration: BoxDecoration(
+          gradient: AppTheme.backgroundGradient(context),
+        ),
         child: SafeArea(
           child: _loading
               ? const Center(

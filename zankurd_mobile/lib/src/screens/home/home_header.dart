@@ -43,17 +43,20 @@ class HomeHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'ZanKurd',
                 style: TextStyle(
-                  color: AppTheme.textPrimary,
+                  color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w900,
                   fontSize: 22,
                 ),
               ),
               Text(
                 isKu ? 'Pêşbirka Kurmancî' : 'Kürtçe Yarışması',
-                style: const TextStyle(color: AppTheme.textMuted, fontSize: 13),
+                style: TextStyle(
+                  color: AppTheme.textMutedColor(context),
+                  fontSize: 13,
+                ),
               ),
             ],
           ),
@@ -89,14 +92,14 @@ class _LanguageQuickToggle extends StatelessWidget {
           height: 36,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppTheme.surfaceHi,
+            color: AppTheme.surfaceHiColor(context),
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppTheme.border),
+            border: Border.all(color: AppTheme.borderColor(context)),
           ),
           child: Text(
             isKu ? 'KU' : 'TR',
-            style: const TextStyle(
-              color: AppTheme.textPrimary,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w900,
               fontSize: 12,
             ),
@@ -123,9 +126,9 @@ class _ThemeQuickToggle extends StatelessWidget {
           height: 36,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppTheme.surfaceHi,
+            color: AppTheme.surfaceHiColor(context),
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppTheme.border),
+            border: Border.all(color: AppTheme.borderColor(context)),
           ),
           child: Icon(
             themeProvider.isDark

@@ -147,7 +147,9 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        decoration: BoxDecoration(
+          gradient: AppTheme.backgroundGradient(context),
+        ),
         child: SafeArea(
           child: _AuthScrollFrame(
             child: Consumer<AuthProvider>(

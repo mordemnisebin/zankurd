@@ -25,13 +25,19 @@ class AppPanel extends StatelessWidget {
       width: double.infinity,
       padding: padding,
       decoration: BoxDecoration(
-        color: gradient == null ? (color ?? AppTheme.surface) : null,
+        color: gradient == null
+            ? (color ?? AppTheme.surfaceColor(context))
+            : null,
         gradient: gradient,
         borderRadius: br,
-        border: gradient == null ? Border.all(color: AppTheme.border) : null,
+        border: gradient == null
+            ? Border.all(color: AppTheme.borderColor(context))
+            : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
+            color: Colors.black.withValues(
+              alpha: AppTheme.isLight(context) ? 0.08 : 0.2,
+            ),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),

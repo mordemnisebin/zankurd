@@ -55,9 +55,9 @@ class _StatTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: AppTheme.surface,
+          color: AppTheme.surfaceColor(context),
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: AppTheme.border),
+          border: Border.all(color: AppTheme.borderColor(context)),
         ),
         child: Column(
           children: [
@@ -65,15 +65,18 @@ class _StatTile extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               value,
-              style: const TextStyle(
-                color: AppTheme.textPrimary,
+              style: TextStyle(
+                color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w900,
                 fontSize: 17,
               ),
             ),
             Text(
               label,
-              style: const TextStyle(color: AppTheme.textMuted, fontSize: 11),
+              style: TextStyle(
+                color: AppTheme.textMutedColor(context),
+                fontSize: 11,
+              ),
             ),
           ],
         ),

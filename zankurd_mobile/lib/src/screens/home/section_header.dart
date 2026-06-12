@@ -15,15 +15,18 @@ class SectionHeader extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            color: AppTheme.textPrimary,
+          style: TextStyle(
+            color: AppTheme.textPrimaryColor(context),
             fontWeight: FontWeight.w900,
             fontSize: 20,
           ),
         ),
         Text(
           subtitle,
-          style: const TextStyle(color: AppTheme.textMuted, fontSize: 13),
+          style: TextStyle(
+            color: AppTheme.textMutedColor(context),
+            fontSize: 13,
+          ),
         ),
       ],
     );

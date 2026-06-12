@@ -112,7 +112,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(title: Text(context.s('Encam', 'Sonuç'))),
       body: Container(
-        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        decoration: BoxDecoration(
+          gradient: AppTheme.backgroundGradient(context),
+        ),
         child: SafeArea(
           child: ListView(
             padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),

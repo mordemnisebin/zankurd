@@ -16,6 +16,15 @@ class AppTheme {
   static const textSub = Color(0xFFB0BCDB);
   static const textMuted = Color(0xFF6B7A9B);
 
+  static const lightBg = Color(0xFFF5F7FB);
+  static const lightBgDeep = Color(0xFFE8EDF7);
+  static const lightSurface = Color(0xFFFFFFFF);
+  static const lightSurfaceHi = Color(0xFFF0F3FA);
+  static const lightBorder = Color(0xFFD9E1EF);
+  static const lightTextPrimary = Color(0xFF172033);
+  static const lightTextSub = Color(0xFF4B5874);
+  static const lightTextMuted = Color(0xFF78849D);
+
   // Compat aliases for screens not yet migrated
   static const page = bg;
   static const ink = textPrimary;
@@ -31,6 +40,37 @@ class AppTheme {
     end: Alignment.bottomRight,
     colors: [bg, bgDeep],
   );
+
+  static bool isLight(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light;
+  }
+
+  static LinearGradient backgroundGradient(BuildContext context) {
+    if (!isLight(context)) return bgGradient;
+    return const LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [lightBg, lightBgDeep],
+    );
+  }
+
+  static Color surfaceColor(BuildContext context) =>
+      isLight(context) ? lightSurface : surface;
+
+  static Color surfaceHiColor(BuildContext context) =>
+      isLight(context) ? lightSurfaceHi : surfaceHi;
+
+  static Color borderColor(BuildContext context) =>
+      isLight(context) ? lightBorder : border;
+
+  static Color textPrimaryColor(BuildContext context) =>
+      isLight(context) ? lightTextPrimary : textPrimary;
+
+  static Color textSubColor(BuildContext context) =>
+      isLight(context) ? lightTextSub : textSub;
+
+  static Color textMutedColor(BuildContext context) =>
+      isLight(context) ? lightTextMuted : textMuted;
 
   static const accentGradient = LinearGradient(
     begin: Alignment.topLeft,
@@ -214,6 +254,56 @@ class AppTheme {
         onError: Colors.white,
         surface: Color(0xFFFFFFFF),
         onSurface: Color(0xFF172033),
+      ),
+      appBarTheme: base.appBarTheme.copyWith(
+        foregroundColor: lightTextPrimary,
+        titleTextStyle: base.appBarTheme.titleTextStyle?.copyWith(
+          color: lightTextPrimary,
+        ),
+        iconTheme: const IconThemeData(color: lightTextPrimary),
+      ),
+      navigationBarTheme: base.navigationBarTheme.copyWith(
+        backgroundColor: lightSurface,
+        iconTheme: WidgetStateProperty.resolveWith(
+          (s) => IconThemeData(
+            color: s.contains(WidgetState.selected) ? accent : lightTextMuted,
+          ),
+        ),
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (s) => TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: s.contains(WidgetState.selected) ? accent : lightTextMuted,
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: lightTextPrimary,
+          side: const BorderSide(color: lightBorder),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+        ),
+      ),
+      inputDecorationTheme: base.inputDecorationTheme.copyWith(
+        fillColor: lightSurfaceHi,
+        hintStyle: const TextStyle(color: lightTextMuted),
+      ),
+      textTheme: base.textTheme.copyWith(
+        headlineSmall: base.textTheme.headlineSmall?.copyWith(
+          color: lightTextPrimary,
+        ),
+        titleLarge: base.textTheme.titleLarge?.copyWith(
+          color: lightTextPrimary,
+        ),
+        titleMedium: base.textTheme.titleMedium?.copyWith(
+          color: lightTextPrimary,
+        ),
+        bodyLarge: base.textTheme.bodyLarge?.copyWith(color: lightTextSub),
+        bodyMedium: base.textTheme.bodyMedium?.copyWith(color: lightTextSub),
+        bodySmall: base.textTheme.bodySmall?.copyWith(color: lightTextMuted),
       ),
       snackBarTheme: base.snackBarTheme.copyWith(
         backgroundColor: const Color(0xFFFFFFFF),
