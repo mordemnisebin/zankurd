@@ -6,6 +6,7 @@ import '../models/leaderboard_entry.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import 'quiz_screen.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({required this.repository, super.key});
@@ -29,6 +30,23 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     setState(() {
       _future = widget.repository.loadLeaderboard();
     });
+  }
+
+  Future<void> _startQuickRace() async {
+    final questions = await widget.repository.loadQuestions(limit: 10);
+    if (!mounted) return;
+    final raceQuestions = questions.isEmpty
+        ? widget.repository.questions
+        : questions;
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => QuizScreen(
+          repository: widget.repository,
+          room: widget.repository.createRoom(),
+          questions: raceQuestions,
+        ),
+      ),
+    );
   }
 
   @override
@@ -101,10 +119,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                       icon: Icons.emoji_events_outlined,
                       title: ku ? 'Hîn xal tune' : 'Henüz puan yok',
                       message: ku
-                          ? 'Piştî yekem yara serhêl sîralama li vir xuya dike.'
-                          : 'İlk online yarıştan sonra sıralama burada görünür.',
-                      actionLabel: ku ? 'Dîsa Bicerib' : 'Tekrar Dene',
-                      onAction: _refresh,
+                          ? 'Pêşbirkekê dest pê bike; xalên te piştî lîstinê li vir xuya dibin.'
+                          : 'Bir yarış başlat; puanların oynadıktan sonra burada görünür.',
+                      actionLabel: ku
+                          ? 'Pêşbirkê Dest Pê Bike'
+                          : 'Yarışa Başla',
+                      actionIcon: Icons.bolt_rounded,
+                      onAction: _startQuickRace,
                     );
                   }
                   return ListView(

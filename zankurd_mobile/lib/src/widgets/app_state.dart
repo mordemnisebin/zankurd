@@ -11,6 +11,7 @@ class AppEmptyState extends StatelessWidget {
     super.key = const ValueKey('app-empty-state'),
     this.actionLabel,
     this.onAction,
+    this.actionIcon,
   });
 
   final IconData icon;
@@ -18,6 +19,7 @@ class AppEmptyState extends StatelessWidget {
   final String message;
   final String? actionLabel;
   final VoidCallback? onAction;
+  final IconData? actionIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class AppEmptyState extends StatelessWidget {
       message: message,
       actionLabel: actionLabel,
       onAction: onAction,
+      actionIcon: actionIcon,
     );
   }
 }
@@ -69,6 +72,7 @@ class _AppStateScaffold extends StatelessWidget {
     required this.message,
     this.actionLabel,
     this.onAction,
+    this.actionIcon,
   });
 
   final IconData icon;
@@ -77,6 +81,7 @@ class _AppStateScaffold extends StatelessWidget {
   final String message;
   final String? actionLabel;
   final VoidCallback? onAction;
+  final IconData? actionIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +132,7 @@ class _AppStateScaffold extends StatelessWidget {
                       const SizedBox(height: 18),
                       OutlinedButton.icon(
                         onPressed: onAction,
-                        icon: const Icon(Icons.refresh_rounded),
+                        icon: Icon(actionIcon ?? Icons.refresh_rounded),
                         label: Text(actionLabel),
                       ),
                     ],
