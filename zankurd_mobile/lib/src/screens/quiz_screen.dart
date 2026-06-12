@@ -150,8 +150,8 @@ class _QuizScreenState extends State<QuizScreen> {
                       ),
                       label: Text(
                         isLastQuestion
-                            ? context.s('Qedandin', 'Bitir')
-                            : context.s('Ya piştî vê', 'Sonraki'),
+                            ? context.s('Qediya', 'Bitir')
+                            : context.s('Piştî vê', 'Sonraki'),
                       ),
                     ),
                   ),
@@ -237,12 +237,34 @@ class _QuizScreenState extends State<QuizScreen> {
                   ),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: Text(
-                      question.explanation,
-                      style: const TextStyle(
-                        color: AppTheme.textSub,
-                        height: 1.35,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          context.s('Bersiva rast', 'Doğru cevap'),
+                          style: const TextStyle(
+                            color: AppTheme.gold,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          question.correctAnswer,
+                          style: const TextStyle(
+                            color: AppTheme.textPrimary,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          question.explanation,
+                          style: const TextStyle(
+                            color: AppTheme.textSub,
+                            height: 1.35,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
