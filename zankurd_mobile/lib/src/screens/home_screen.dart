@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final room = repo.createRoom();
 
     return Container(
-      decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+      decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),

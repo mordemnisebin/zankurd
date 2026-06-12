@@ -60,7 +60,9 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
         ],
       ),
       body: Container(
-        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        decoration: BoxDecoration(
+          gradient: AppTheme.backgroundGradient(context),
+        ),
         child: SafeArea(
           child: FutureBuilder<List<QuizQuestion>>(
             future: _favoritesFuture,

@@ -55,7 +55,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     final ku = context.isKu;
 
     return Container(
-      decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+      decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: SafeArea(
         child: Column(
           children: [

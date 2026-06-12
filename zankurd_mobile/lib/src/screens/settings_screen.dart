@@ -29,7 +29,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(title: Text(ku ? 'Mîheng' : 'Ayarlar')),
       body: Container(
-        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        decoration: BoxDecoration(
+          gradient: AppTheme.backgroundGradient(context),
+        ),
         child: SafeArea(
           child: ListView(
             padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),

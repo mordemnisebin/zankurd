@@ -12,6 +12,8 @@ import '../utils/error_reporter.dart';
 /// Misafir modu Supabase anonim oturumu kullanır ve daha sonra e-posta
 /// ile kalıcı hesaba yükseltilebilir.
 class AuthProvider extends ChangeNotifier {
+  static const authRedirectUri = 'com.zankurd.app://login-callback/';
+
   final SupabaseClient? _client;
   StreamSubscription<AuthState>? _authSub;
 
@@ -89,6 +91,7 @@ class AuthProvider extends ChangeNotifier {
       final response = await client.auth.signUp(
         email: email,
         password: password,
+        emailRedirectTo: authRedirectUri,
         data: {'display_name': displayName},
       );
       // E-posta doğrulaması açıksa oturum hemen başlamaz.
@@ -128,6 +131,7 @@ class AuthProvider extends ChangeNotifier {
     return _run((client) async {
       final launched = await client.auth.signInWithOAuth(
         OAuthProvider.google,
+        redirectTo: authRedirectUri,
         authScreenLaunchMode: LaunchMode.externalApplication,
       );
       if (!launched) {
@@ -137,7 +141,10 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<bool> resetPassword(String email) {
-    return _run((client) => client.auth.resetPasswordForEmail(email));
+    return _run(
+      (client) =>
+          client.auth.resetPasswordForEmail(email, redirectTo: authRedirectUri),
+    );
   }
 
   Future<void> signOut() async {
@@ -158,8 +165,20 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  @visibleForTesting
+  String debugTranslateAuthError(AuthException e) => _translateError(e);
+
   String _translateError(AuthException e) {
     final message = e.message.toLowerCase();
+    if (message.contains('unsupported provider') ||
+        message.contains('provider is not enabled')) {
+      return 'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.';
+    }
+    if (message.contains('validation_failed') ||
+        message.contains('redirect') ||
+        message.contains('uri')) {
+      return 'Giriş bağlantısı doğrulanamadı. Uygulama yönlendirme ayarlarını kontrol et.';
+    }
     if (message.contains('invalid login credentials')) {
       return 'E-posta veya parola hatalı.';
     }

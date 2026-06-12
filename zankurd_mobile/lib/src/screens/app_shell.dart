@@ -10,6 +10,7 @@ import 'categories_tab.dart';
 import 'home_screen.dart';
 import 'leaderboard_screen.dart';
 import 'onboarding_screen.dart';
+import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
 import 'sign_in_screen.dart';
 
@@ -24,10 +25,15 @@ class AppShell extends StatefulWidget {
 
 class _AppShellState extends State<AppShell> {
   static const _onboardingSeenKey = 'zankurd.onboarding.seen';
+  static const _profileNameCompletedKey = 'zankurd.profileName.completed';
 
   int _tab = 0;
   bool _checkingOnboarding = true;
   bool _showOnboarding = false;
+  bool _checkingProfileName = false;
+  bool _profileNameComplete = false;
+  String? _profileName;
+  bool _profileCheckStarted = false;
 
   @override
   void initState() {
@@ -67,7 +73,30 @@ class _AppShellState extends State<AppShell> {
     }
 
     if (!authProvider.isAuthenticated) {
+      _profileCheckStarted = false;
       return const SignInScreen();
+    }
+
+    if (!_profileCheckStarted) {
+      _profileCheckStarted = true;
+      _checkingProfileName = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _loadProfileNameState();
+      });
+    }
+
+    if (_checkingProfileName) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator(color: AppTheme.accent)),
+      );
+    }
+
+    if (!_profileNameComplete) {
+      return ProfileNameGateScreen(
+        repository: widget.repository,
+        initialName: _profileName,
+        onCompleted: _completeProfileName,
+      );
     }
 
     return Scaffold(
@@ -81,8 +110,8 @@ class _AppShellState extends State<AppShell> {
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          border: Border(top: BorderSide(color: AppTheme.border)),
+        decoration: BoxDecoration(
+          border: Border(top: BorderSide(color: AppTheme.borderColor(context))),
         ),
         child: NavigationBar(
           selectedIndex: _tab,
@@ -112,5 +141,33 @@ class _AppShellState extends State<AppShell> {
         ),
       ),
     );
+  }
+
+  Future<void> _loadProfileNameState() async {
+    setState(() => _checkingProfileName = true);
+    final preferences = await SharedPreferences.getInstance();
+    final completed = preferences.getBool(_profileNameCompletedKey) == true;
+    String? name;
+    try {
+      name = await widget.repository.getProfileName();
+    } catch (_) {
+      name = null;
+    }
+    if (!mounted) return;
+    setState(() {
+      _profileName = name;
+      _profileNameComplete = completed;
+      _checkingProfileName = false;
+    });
+  }
+
+  Future<void> _completeProfileName() async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(_profileNameCompletedKey, true);
+    if (!mounted) return;
+    setState(() {
+      _profileNameComplete = true;
+      _profileCheckStarted = true;
+    });
   }
 }

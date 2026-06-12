@@ -154,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final langProvider = context.langProvider;
 
     return Container(
-      decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+      decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: SafeArea(
         child: _loading
             ? const Center(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
@@ -13,6 +14,7 @@ import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
+import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
@@ -115,6 +117,18 @@ class _DeleteTrackingRepository extends MockZanKurdRepository {
   }
 }
 
+class _NeedsNameRepository extends MockZanKurdRepository {
+  String savedName = '';
+
+  @override
+  Future<String> getProfileName() async => savedName;
+
+  @override
+  Future<void> updateProfileName(String name) async {
+    savedName = name;
+  }
+}
+
 LanguageProvider _turkishLang() => LanguageProvider()..setLang('tr');
 
 Widget _testShell({
@@ -141,7 +155,10 @@ void main() {
   // SharedPreferences mock'lanmazsa getInstance() widget testinde askıda
   // kalır; tüm testler için deterministik temiz durum kur.
   setUp(() {
-    SharedPreferences.setMockInitialValues({'zankurd.onboarding.seen': true});
+    SharedPreferences.setMockInitialValues({
+      'zankurd.onboarding.seen': true,
+      'zankurd.profileName.completed': true,
+    });
     AchievementStore.resetInstance();
     SeenQuestionStore.resetInstance();
     StreakStore.resetInstance();
@@ -286,6 +303,92 @@ void main() {
     expect(find.byTooltip('Tema'), findsOneWidget);
   });
 
+  testWidgets('theme toggle changes visible home surface colors', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _FakeAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      Theme.of(tester.element(find.byType(HomeScreen))).brightness,
+      Brightness.dark,
+    );
+
+    await tester.tap(find.byTooltip('Tema'));
+    await tester.pumpAndSettle();
+
+    expect(
+      Theme.of(tester.element(find.byType(HomeScreen))).brightness,
+      Brightness.light,
+    );
+    final home = tester.widget<Container>(
+      find
+          .descendant(
+            of: find.byType(HomeScreen),
+            matching: find.byType(Container),
+          )
+          .first,
+    );
+    final decoration = home.decoration as BoxDecoration;
+    final gradient = decoration.gradient as LinearGradient;
+    expect(gradient.colors.first, isNot(AppTheme.bg));
+  });
+
+  testWidgets('auth requires player name before home', (tester) async {
+    SharedPreferences.setMockInitialValues({'zankurd.onboarding.seen': true});
+    final repository = _NeedsNameRepository();
+
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _FakeAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
+    expect(find.text('Günün Yarışması'), findsNothing);
+
+    await tester.enterText(
+      find.byKey(const ValueKey('player-name-field')),
+      'Rojda Test',
+    );
+    await tester.tap(find.text('Oyuna Başla'));
+    await tester.pumpAndSettle();
+
+    expect(repository.savedName, 'Rojda Test');
+    expect(find.text('Günün Yarışması'), findsOneWidget);
+  });
+
+  test('unsupported provider auth error is user friendly', () {
+    final provider = AuthProvider.test();
+
+    final message = provider.debugTranslateAuthError(
+      const AuthException(
+        'validation_failed: Unsupported provider is not enabled',
+        statusCode: '400',
+      ),
+    );
+
+    expect(
+      message,
+      'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.',
+    );
+  });
+
   testWidgets('language toggle works on the auth screen', (tester) async {
     await tester.pumpWidget(
       ZanKurdApp(
@@ -311,7 +414,7 @@ void main() {
         languageProvider: _turkishLang(),
       ),
     );
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd'), findsOneWidget);
     expect(find.textContaining('Kurmancî Yarış'), findsOneWidget);
@@ -343,7 +446,7 @@ void main() {
         languageProvider: _turkishLang(),
       ),
     );
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     await tester.tap(find.text('Günün Yarışması'));
     await tester.pumpAndSettle();
@@ -359,7 +462,7 @@ void main() {
         languageProvider: _turkishLang(),
       ),
     );
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(find.text('Günün Çarkı'), 120);
     await tester.pumpAndSettle();
@@ -398,7 +501,7 @@ void main() {
         languageProvider: _turkishLang(),
       ),
     );
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.text('Liderlik'));
     await tester.pumpAndSettle();
@@ -417,7 +520,7 @@ void main() {
         languageProvider: _turkishLang(),
       ),
     );
-    await tester.pump();
+    await tester.pumpAndSettle();
     await tester.pumpAndSettle();
 
     await tester.drag(find.byType(ListView).first, const Offset(0, -900));

@@ -41,7 +41,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
     final ku = context.isKu;
 
     return Container(
-      decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+      decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: SafeArea(
         child: Column(
           children: [

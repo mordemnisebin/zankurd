@@ -35,8 +35,8 @@ class QuestionCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             question.prompt,
-            style: const TextStyle(
-              color: AppTheme.textPrimary,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
               fontSize: 20,
               fontWeight: FontWeight.w900,
               height: 1.2,
@@ -74,7 +74,9 @@ class _Tag extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          color: color == AppTheme.textMuted ? AppTheme.textMuted : color,
+          color: color == AppTheme.textMuted
+              ? AppTheme.textMutedColor(context)
+              : color,
           fontWeight: FontWeight.w700,
           fontSize: 12,
         ),

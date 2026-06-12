@@ -91,7 +91,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(title: Text(context.s('Tomar bibe', 'Kaydol'))),
       body: Container(
-        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        decoration: BoxDecoration(
+          gradient: AppTheme.backgroundGradient(context),
+        ),
         child: SafeArea(
           child: _AuthScrollFrame(
             child: Consumer<AuthProvider>(

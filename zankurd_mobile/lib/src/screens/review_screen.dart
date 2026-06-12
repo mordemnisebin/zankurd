@@ -22,7 +22,9 @@ class ReviewScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(title: Text(context.s('Bersiv', 'Cevaplar'))),
       body: Container(
-        decoration: const BoxDecoration(gradient: AppTheme.bgGradient),
+        decoration: BoxDecoration(
+          gradient: AppTheme.backgroundGradient(context),
+        ),
         child: SafeArea(
           child: ListView(
             padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
