@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../data/mistake_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
+import '../game/bot_opponent.dart';
 import '../models/answer_record.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
@@ -22,6 +23,7 @@ class QuizScreen extends StatefulWidget {
     required this.room,
     required this.questions,
     this.practice = false,
+    this.botRace = false,
     super.key,
   });
 
@@ -31,6 +33,9 @@ class QuizScreen extends StatefulWidget {
 
   /// Yanlışlardan çalışma modu: coin ödülü verilmez.
   final bool practice;
+
+  /// Tek kişilik yarışta simüle bot rakipler etkinleşir.
+  final bool botRace;
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -50,6 +55,7 @@ class _QuizScreenState extends State<QuizScreen> {
   final List<AnswerRecord> answerRecords = [];
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
+  BotRace? _botRace;
 
   QuizQuestion get question => widget.questions[index];
   bool get answered => selectedAnswer.isNotEmpty;
@@ -58,13 +64,34 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
-    _playersSub = widget.repository.subscribeRoomPlayers(widget.room).listen((
-      players,
-    ) {
-      if (!mounted) return;
-      setState(() => livePlayers = players);
-    });
+    if (widget.botRace) {
+      _botRace = BotRace.standard();
+      livePlayers = _composeBotRacePlayers();
+    } else {
+      _playersSub = widget.repository.subscribeRoomPlayers(widget.room).listen((
+        players,
+      ) {
+        if (!mounted) return;
+        setState(() => livePlayers = players);
+      });
+    }
     _markQuestionSeen();
+  }
+
+  List<Player> _composeBotRacePlayers() {
+    final players = [
+      Player(name: 'Tu', score: score, state: '—', streak: streak),
+      ...?_botRace?.toPlayers(),
+    ]..sort((a, b) => b.score.compareTo(a.score));
+    return players;
+  }
+
+  /// Bot rakipler de güncel soruya cevap verir ve tablo tazelenir.
+  void _advanceBots() {
+    final race = _botRace;
+    if (race == null) return;
+    race.answerAll(question.difficulty);
+    livePlayers = _composeBotRacePlayers();
   }
 
   /// Gösterilen soruyu tekrar-önleme deposuna işler.
@@ -355,6 +382,7 @@ class _QuizScreenState extends State<QuizScreen> {
           }
         }
         _recordAnswer(answer);
+        _advanceBots();
       });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'submitAnswer failed');
@@ -378,6 +406,7 @@ class _QuizScreenState extends State<QuizScreen> {
           wrongCount += 1;
         }
         _recordAnswer(answer);
+        _advanceBots();
       });
     }
   }
@@ -411,6 +440,7 @@ class _QuizScreenState extends State<QuizScreen> {
             bestStreak: bestStreak,
             answerRecords: answerRecords,
             coinsAwarded: coinsAwarded,
+            opponents: _botRace?.toPlayers() ?? const [],
           ),
         ),
       );

@@ -8,10 +8,12 @@ import 'package:zankurd_mobile/src/data/seen_question_store.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
+import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -433,6 +435,43 @@ void main() {
     expect(find.text('DOĞRU'), findsWidgets);
   });
 
+  testWidgets('result screen compares the player with bot opponents', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _testShell(
+        child: QuizResultScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          score: 230,
+          correctCount: 2,
+          wrongCount: 1,
+          totalQuestions: 3,
+          bestStreak: 2,
+          answerRecords: const [],
+          coinsAwarded: 0,
+          opponents: const [
+            Player(name: 'Rojda', score: 320, state: 'Bot', streak: 3),
+            Player(name: 'Baran', score: 100, state: 'Bot', streak: 1),
+          ],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Rakiplerle Karşılaştırma'),
+      120,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Rakiplerle Karşılaştırma'), findsOneWidget);
+    expect(find.text('Tu'), findsOneWidget);
+    expect(find.text('Rojda'), findsOneWidget);
+    expect(find.text('Baran'), findsOneWidget);
+  });
+
   testWidgets('quiz answer feedback labels the correct answer', (tester) async {
     final room = repository.createRoom();
     final question = repository.questions.first;
@@ -512,6 +551,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(QuizScreen), findsOneWidget);
+    expect(find.text('1240'), findsNothing);
   });
 
   testWidgets('settings does not delete account before final confirmation', (
