@@ -102,60 +102,100 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 14),
 
               AppPanel(
-                padding: EdgeInsets.zero,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(16),
-                  onTap: _deleting ? null : _confirmDeleteAccount,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
+                color: AppTheme.surface.withValues(alpha: 0.92),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        _deleting
-                            ? const SizedBox(
-                                width: 22,
-                                height: 22,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: AppTheme.wrong,
-                                ),
-                              )
-                            : const Icon(
-                                Icons.delete_forever_outlined,
-                                color: AppTheme.wrong,
-                                size: 22,
-                              ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                ku ? 'Hesabê Min Jê Bibe' : 'Hesabımı Sil',
-                                style: const TextStyle(
-                                  color: AppTheme.wrong,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                              const SizedBox(height: 3),
-                              Text(
-                                ku
-                                    ? 'Profîl, coin û pirsên tomarkirî tên jêbirin.'
-                                    : 'Profil, coin ve kaydedilen soru verilerin silinir.',
-                                style: const TextStyle(
-                                  color: AppTheme.textMuted,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                         const Icon(
-                          Icons.chevron_right_rounded,
-                          color: AppTheme.textMuted,
+                          Icons.warning_amber_rounded,
+                          color: AppTheme.wrong,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          ku ? 'Karên Hesabê' : 'Hesap İşlemleri',
+                          style: const TextStyle(
+                            color: AppTheme.textPrimary,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 17,
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                    const SizedBox(height: 6),
+                    Text(
+                      ku
+                          ? 'Ev kar nayên vegerandin.'
+                          : 'Bu alandaki işlemler geri alınamaz.',
+                      style: const TextStyle(
+                        color: AppTheme.textMuted,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: _deleting ? null : _confirmDeleteAccount,
+                      child: Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: AppTheme.wrong.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: AppTheme.wrong.withValues(alpha: 0.28),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            _deleting
+                                ? const SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: AppTheme.wrong,
+                                    ),
+                                  )
+                                : const Icon(
+                                    Icons.delete_forever_outlined,
+                                    color: AppTheme.wrong,
+                                    size: 22,
+                                  ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    ku ? 'Hesabê Min Jê Bibe' : 'Hesabımı Sil',
+                                    style: const TextStyle(
+                                      color: AppTheme.wrong,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 3),
+                                  Text(
+                                    ku
+                                        ? 'Profîl, coin û pirsên tomarkirî tên jêbirin.'
+                                        : 'Profil, coin ve kaydedilen soru verilerin silinir.',
+                                    style: const TextStyle(
+                                      color: AppTheme.textMuted,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Icon(
+                              Icons.chevron_right_rounded,
+                              color: AppTheme.textMuted,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 14),
