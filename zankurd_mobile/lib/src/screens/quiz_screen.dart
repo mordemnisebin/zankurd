@@ -160,7 +160,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   value: value,
                   minHeight: 8,
                   borderRadius: BorderRadius.circular(99),
-                  backgroundColor: AppTheme.surfaceHi,
+                  backgroundColor: AppTheme.surfaceHiColor(context),
                   color: AppTheme.accent,
                 ),
               ),
@@ -223,7 +223,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Widget _buildQuestionPanel(BuildContext context) {
     return AppPanel(
-      color: AppTheme.surfaceHi,
+      color: AppTheme.surfaceHiColor(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -252,8 +252,8 @@ class _QuizScreenState extends State<QuizScreen> {
           ],
           Text(
             question.prompt,
-            style: const TextStyle(
-              color: AppTheme.textPrimary,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
               fontSize: 24,
               fontWeight: FontWeight.w900,
               height: 1.16,
@@ -283,9 +283,9 @@ class _QuizScreenState extends State<QuizScreen> {
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: AppTheme.bg.withValues(alpha: 0.45),
+                color: AppTheme.surfaceColor(context).withValues(alpha: 0.72),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppTheme.border),
+                border: Border.all(color: AppTheme.borderColor(context)),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,16 +311,16 @@ class _QuizScreenState extends State<QuizScreen> {
                         const SizedBox(height: 3),
                         Text(
                           question.correctAnswer,
-                          style: const TextStyle(
-                            color: AppTheme.textPrimary,
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w900,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           question.explanation,
-                          style: const TextStyle(
-                            color: AppTheme.textSub,
+                          style: TextStyle(
+                            color: AppTheme.textSubColor(context),
                             height: 1.35,
                           ),
                         ),
@@ -598,7 +598,7 @@ class _LiveScoreboard extends StatelessWidget {
       ..sort((a, b) => b.score.compareTo(a.score));
 
     return AppPanel(
-      color: AppTheme.surfaceHi,
+      color: AppTheme.surfaceHiColor(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -608,7 +608,8 @@ class _LiveScoreboard extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 context.s('Skora zindî', 'Canlı skor'),
-                style: const TextStyle(
+                style: TextStyle(
+                  color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w900,
                   fontSize: 18,
                 ),
@@ -641,14 +642,14 @@ class _LiveScoreRow extends StatelessWidget {
             height: 28,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: AppTheme.bg,
+              color: AppTheme.surfaceColor(context),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: AppTheme.border),
+              border: Border.all(color: AppTheme.borderColor(context)),
             ),
             child: Text(
               '$rank',
-              style: const TextStyle(
-                color: AppTheme.textPrimary,
+              style: TextStyle(
+                color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -659,7 +660,10 @@ class _LiveScoreRow extends StatelessWidget {
               player.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontWeight: FontWeight.w800),
+              style: TextStyle(
+                color: AppTheme.textPrimaryColor(context),
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ),
           const SizedBox(width: 8),
@@ -715,11 +719,11 @@ class _QuestionImageFallback extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppTheme.surfaceHi,
+      color: AppTheme.surfaceHiColor(context),
       alignment: Alignment.center,
-      child: const Icon(
+      child: Icon(
         Icons.image_not_supported_outlined,
-        color: AppTheme.textMuted,
+        color: AppTheme.textMutedColor(context),
         size: 36,
       ),
     );
@@ -783,15 +787,18 @@ class _Metric extends StatelessWidget {
         children: [
           Text(
             value,
-            style: const TextStyle(
-              color: AppTheme.textPrimary,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w900,
               fontSize: 20,
             ),
           ),
           Text(
             label,
-            style: const TextStyle(color: AppTheme.textMuted, fontSize: 12),
+            style: TextStyle(
+              color: AppTheme.textMutedColor(context),
+              fontSize: 12,
+            ),
           ),
         ],
       ),
@@ -821,12 +828,12 @@ class _AnswerButton extends StatelessWidget {
         ? AppTheme.correct.withValues(alpha: 0.15)
         : wrong
         ? AppTheme.wrong.withValues(alpha: 0.15)
-        : AppTheme.bg.withValues(alpha: 0.45);
+        : AppTheme.surfaceColor(context).withValues(alpha: 0.72);
     final borderColor = correct
         ? AppTheme.correct
         : wrong
         ? AppTheme.wrong
-        : AppTheme.border;
+        : AppTheme.borderColor(context);
 
     return InkWell(
       onTap: disabled ? null : onTap,
@@ -850,8 +857,8 @@ class _AnswerButton extends StatelessWidget {
               Expanded(
                 child: Text(
                   answer,
-                  style: const TextStyle(
-                    color: AppTheme.textPrimary,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -878,16 +885,16 @@ class _TinyTag extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       decoration: BoxDecoration(
-        color: AppTheme.bg.withValues(alpha: 0.55),
+        color: AppTheme.surfaceColor(context).withValues(alpha: 0.72),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppTheme.border),
+        border: Border.all(color: AppTheme.borderColor(context)),
       ),
       child: Text(
         label,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: const TextStyle(
-          color: AppTheme.textSub,
+        style: TextStyle(
+          color: AppTheme.textSubColor(context),
           fontWeight: FontWeight.w900,
           fontSize: 12,
         ),

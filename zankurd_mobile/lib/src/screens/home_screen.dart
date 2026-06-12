@@ -162,12 +162,11 @@ class _HomeScreenState extends State<HomeScreen> {
         SnackBar(
           content: Text(
             context.isKu
-                ? 'Jûra serhêl nehate vekirin, cihêreng berdewam dike.'
-                : 'Online oda açılamadı, yerel oda ile devam ediliyor.',
+                ? 'Jûra serhêl nehate vekirin. Ji kerema xwe dîsa biceribîne.'
+                : 'Online oda açılamadı. Lütfen tekrar deneyin.',
           ),
         ),
       );
-      _openRoom(context, repo.createRoom());
     } finally {
       if (mounted) setState(() => _roomActionLoading = false);
     }

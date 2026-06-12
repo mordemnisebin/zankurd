@@ -12,13 +12,16 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
+import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/main.dart';
@@ -117,6 +120,13 @@ class _DeleteTrackingRepository extends MockZanKurdRepository {
   }
 }
 
+class _FailingRoomRepository extends MockZanKurdRepository {
+  @override
+  Future<GameRoom> createOnlineRoom({String category = 'Ziman'}) {
+    return Future<GameRoom>.error(StateError('online room unavailable'));
+  }
+}
+
 class _NeedsNameRepository extends MockZanKurdRepository {
   String savedName = '';
 
@@ -135,6 +145,7 @@ Widget _testShell({
   required Widget child,
   AuthProvider? authProvider,
   LanguageProvider? languageProvider,
+  ThemeProvider? themeProvider,
 }) {
   return MultiProvider(
     providers: [
@@ -144,8 +155,18 @@ Widget _testShell({
       ChangeNotifierProvider<AuthProvider>(
         create: (_) => authProvider ?? _FakeAuthProvider(),
       ),
+      ChangeNotifierProvider<ThemeProvider>(
+        create: (_) => themeProvider ?? ThemeProvider(),
+      ),
     ],
-    child: MaterialApp(theme: AppTheme.dark(), home: child),
+    child: Consumer<ThemeProvider>(
+      builder: (context, theme, _) => MaterialApp(
+        theme: AppTheme.light(),
+        darkTheme: AppTheme.dark(),
+        themeMode: theme.mode,
+        home: child,
+      ),
+    ),
   );
 }
 
@@ -788,14 +809,18 @@ void main() {
     tester,
   ) async {
     final repository = _DeleteTrackingRepository();
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(
       _testShell(child: SettingsScreen(repository: repository)),
     );
     await tester.pumpAndSettle();
 
-    await tester.scrollUntilVisible(find.text('Hesabımı Sil'), 160);
-    await tester.tap(find.text('Hesabımı Sil'));
+    final deleteAction = find
+        .byKey(const ValueKey('delete-account-action'))
+        .first;
+    await tester.tap(deleteAction);
     await tester.pumpAndSettle();
 
     expect(find.text('Hesabı kalıcı olarak sil?'), findsOneWidget);
@@ -828,6 +853,8 @@ void main() {
   ) async {
     final repository = _DeleteTrackingRepository();
     final authProvider = _SignOutTrackingAuthProvider();
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(
       _testShell(
@@ -837,8 +864,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.scrollUntilVisible(find.text('Hesabımı Sil'), 160);
-    await tester.tap(find.text('Hesabımı Sil'));
+    final deleteAction = find
+        .byKey(const ValueKey('delete-account-action'))
+        .first;
+    await tester.tap(deleteAction);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Devam Et'));
     await tester.pumpAndSettle();
@@ -859,14 +888,18 @@ void main() {
     tester,
   ) async {
     final repository = _DeleteTrackingRepository(shouldFail: true);
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(
       _testShell(child: SettingsScreen(repository: repository)),
     );
     await tester.pumpAndSettle();
 
-    await tester.scrollUntilVisible(find.text('Hesabımı Sil'), 160);
-    await tester.tap(find.text('Hesabımı Sil'));
+    final deleteAction = find
+        .byKey(const ValueKey('delete-account-action'))
+        .first;
+    await tester.tap(deleteAction);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Devam Et'));
     await tester.pumpAndSettle();
@@ -884,6 +917,76 @@ void main() {
     expect(
       find.text('Hesap silinemedi. Lütfen tekrar deneyin.'),
       findsOneWidget,
+    );
+  });
+
+  testWidgets(
+    'home does not open a demo room when online room creation fails',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 1200));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      await tester.pumpWidget(
+        _testShell(
+          child: Scaffold(
+            body: HomeScreen(repository: _FailingRoomRepository()),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.ensureVisible(find.text('Oda Kur'));
+      await tester.tap(find.text('Oda Kur'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(RoomScreen), findsNothing);
+      expect(find.text('Rojda'), findsNothing);
+      expect(find.text('Baran'), findsNothing);
+      expect(
+        find.text('Online oda açılamadı. Lütfen tekrar deneyin.'),
+        findsOneWidget,
+      );
+    },
+  );
+
+  testWidgets('settings updates the online player name', (tester) async {
+    final repository = _NeedsNameRepository()..savedName = 'Eski Ad';
+
+    await tester.pumpWidget(
+      _testShell(child: SettingsScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Oyuncu Adı'), findsOneWidget);
+
+    await tester.enterText(
+      find.byKey(const ValueKey('settings-player-name-field')),
+      'Yeni Ad',
+    );
+    await tester.tap(find.text('Kaydet'));
+    await tester.pumpAndSettle();
+
+    expect(repository.savedName, 'Yeni Ad');
+    expect(find.text('Oyuncu adı güncellendi.'), findsOneWidget);
+  });
+
+  testWidgets('profile shows player name without inline editing', (
+    tester,
+  ) async {
+    final repository = _NeedsNameRepository()..savedName = 'Zana';
+
+    await tester.pumpWidget(
+      _testShell(
+        child: Scaffold(body: ProfileScreen(repository: repository)),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Zana'), findsOneWidget);
+    expect(find.text('Oyuncu Adı'), findsNothing);
+    expect(
+      find.byKey(const ValueKey('profile-player-name-field')),
+      findsNothing,
     );
   });
 }
