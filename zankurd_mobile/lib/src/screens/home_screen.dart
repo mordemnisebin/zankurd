@@ -457,7 +457,7 @@ class _HeroCard extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 isKu
-                    ? 'Kategoriyekê hilbijêre, ast bide ser ast û li leaderboard bilind bibe.'
+                    ? 'Kategoriyekê hilbijêre, astan derbas bike û di tabloya pêşderçûnê de bilind bibe.'
                     : 'Kategori seç, seviye geç ve liderlik tablosuna yüksel.',
                 style: const TextStyle(color: Color(0xFFE0D0FF), fontSize: 13),
               ),
@@ -600,7 +600,7 @@ class _RoomActions extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(
           child: _GradientButton(
-            label: isKu ? 'Bi Kodê Tevlî Bibe' : 'Kodla Katıl',
+            label: isKu ? 'Bi Kodê Bikeve' : 'Kodla Katıl',
             icon: Icons.meeting_room_outlined,
             gradient: const LinearGradient(
               colors: [Color(0xFF2563EB), Color(0xFF1D4ED8)],
@@ -648,7 +648,7 @@ class _GradientButton extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                   fontSize: 14,
                 ),
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
