@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
@@ -85,6 +86,13 @@ class _FailingLeaderboardRepository extends MockZanKurdRepository {
   }
 }
 
+class _EmptyLeaderboardRepository extends MockZanKurdRepository {
+  @override
+  Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50}) async {
+    return const [];
+  }
+}
+
 class _DeleteTrackingRepository extends MockZanKurdRepository {
   _DeleteTrackingRepository({this.shouldFail = false});
 
@@ -123,6 +131,18 @@ Widget _testShell({
 void main() {
   final repository = MockZanKurdRepository();
 
+  test('language provider persists selected language', () async {
+    SharedPreferences.setMockInitialValues({});
+
+    final provider = await LanguageProvider.load();
+    expect(provider.lang, 'ku');
+
+    provider.setLang('tr');
+
+    final restored = await LanguageProvider.load();
+    expect(restored.lang, 'tr');
+  });
+
   testWidgets('shows auth screen before guest sign in', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -139,6 +159,30 @@ void main() {
     expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
     expect(find.text('Misafir olarak devam et'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('auth screen asks for language before sign in', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _GateAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Dilini seç'), findsOneWidget);
+    expect(find.text('Türkçe'), findsOneWidget);
+    expect(find.text('Kurmancî'), findsOneWidget);
+
+    await tester.tap(find.text('Kurmancî'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Zimanê xwe hilbijêre'), findsOneWidget);
+    expect(find.text('Bi xêr hatî ZanKurdê'), findsOneWidget);
   });
 
   testWidgets('guest sign in opens the app shell', (tester) async {
@@ -245,6 +289,27 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Çevir!'), findsOneWidget);
+  });
+
+  testWidgets('kurdish home room join action uses compact label', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _FakeAuthProvider(),
+        languageProvider: LanguageProvider(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(find.text('Bi Kodê Bikeve'), 120);
+    await tester.pumpAndSettle();
+    expect(find.text('Bi Kodê Bikeve'), findsOneWidget);
+    expect(find.text('Bi Kodê Tevlî Bibe'), findsNothing);
   });
 
   testWidgets('opens the leaderboard from the home screen', (tester) async {
@@ -356,6 +421,36 @@ void main() {
     expect(find.text('DOĞRU'), findsWidgets);
   });
 
+  testWidgets('quiz answer feedback labels the correct answer', (tester) async {
+    final room = repository.createRoom();
+    final question = repository.questions.first;
+
+    await tester.pumpWidget(
+      ChangeNotifierProvider<LanguageProvider>(
+        create: (_) => _turkishLang(),
+        child: MaterialApp(
+          theme: AppTheme.dark(),
+          home: QuizScreen(
+            repository: repository,
+            room: room,
+            questions: [question],
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final option = find.ancestor(
+      of: find.text(question.correctAnswer),
+      matching: find.byType(InkWell),
+    );
+    await tester.tap(option.first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Doğru cevap'), findsOneWidget);
+    expect(find.textContaining(question.explanation), findsOneWidget);
+  });
+
   testWidgets('favorite questions uses the shared empty state', (tester) async {
     await tester.pumpWidget(
       _testShell(
@@ -386,6 +481,27 @@ void main() {
     expect(repository.loadCalls, 2);
   });
 
+  testWidgets('leaderboard empty state can start a quick race', (tester) async {
+    final repository = _EmptyLeaderboardRepository();
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(child: LeaderboardScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
+    expect(find.text('Yarışa Başla'), findsOneWidget);
+
+    await tester.ensureVisible(find.text('Yarışa Başla'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Yarışa Başla'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(QuizScreen), findsOneWidget);
+  });
+
   testWidgets('settings does not delete account before final confirmation', (
     tester,
   ) async {
@@ -407,6 +523,22 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.deleteCalls, 0);
+  });
+
+  testWidgets('settings separates dangerous account actions', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: SettingsScreen(repository: _DeleteTrackingRepository()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hesap İşlemleri'), findsOneWidget);
+    expect(find.text('Bu alandaki işlemler geri alınamaz.'), findsOneWidget);
+    expect(find.text('Hesabımı Sil'), findsOneWidget);
   });
 
   testWidgets('successful account deletion signs out to the auth gate', (
