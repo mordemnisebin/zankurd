@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../data/achievement_store.dart';
+import '../data/mistake_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../models/achievement.dart';
 import '../models/leaderboard_entry.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
-import '../data/mistake_store.dart';
 import 'favorite_questions_screen.dart';
 import 'quiz_screen.dart';
 import 'settings_screen.dart';
@@ -32,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int _mistakeCount = 0;
   String? _currentName;
   LeaderboardEntry? _stats;
+  List<Achievement> _achievements = const [];
 
   @override
   void initState() {
@@ -66,12 +69,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return;
     }
     setState(() => _practiceLoading = true);
-    final practiceRoom = widget.repository
-        .createRoom()
-        .copyWith(
-          name: ku ? 'Şaşiyên Min' : 'Yanlışlarım',
-          questionCount: questions.length,
-        );
+    final practiceRoom = widget.repository.createRoom().copyWith(
+      name: ku ? 'Şaşiyên Min' : 'Yanlışlarım',
+      questionCount: questions.length,
+    );
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => QuizScreen(
@@ -98,11 +99,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       final name = await widget.repository.getProfileName();
       final stats = await widget.repository.getPlayerStats();
+      final achievementStore = await AchievementStore.load();
       if (mounted) {
         setState(() {
           _currentName = name;
           _nameCtrl.text = name;
           _stats = stats;
+          _achievements = achievementStore.unlockedAchievements;
           _loading = false;
           _loadFailed = false;
         });
@@ -376,6 +379,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 14),
+
+                  _AchievementShowcase(achievements: _achievements, isKu: ku),
                   const SizedBox(height: 14),
 
                   // Saved questions shortcut
@@ -698,6 +704,100 @@ class _StatTile extends StatelessWidget {
           Text(
             label,
             style: const TextStyle(color: AppTheme.textMuted, fontSize: 11),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AchievementShowcase extends StatelessWidget {
+  const _AchievementShowcase({required this.achievements, required this.isKu});
+
+  final List<Achievement> achievements;
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppPanel(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.workspace_premium_outlined,
+                color: AppTheme.gold,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                isKu ? 'Rozet' : 'Rozetler',
+                style: const TextStyle(
+                  color: AppTheme.textPrimary,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 17,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '${achievements.length}/${AchievementStore.definitions.length}',
+                style: const TextStyle(
+                  color: AppTheme.textMuted,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          if (achievements.isEmpty)
+            Text(
+              isKu
+                  ? 'Pêşbirkekê biqedîne û rozeta yekem veke.'
+                  : 'Bir yarış tamamla ve ilk rozetini aç.',
+              style: const TextStyle(color: AppTheme.textMuted),
+            )
+          else
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final achievement in achievements)
+                  _AchievementChip(achievement: achievement, isKu: isKu),
+              ],
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AchievementChip extends StatelessWidget {
+  const _AchievementChip({required this.achievement, required this.isKu});
+
+  final Achievement achievement;
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppTheme.gold.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppTheme.gold.withValues(alpha: 0.24)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(achievement.icon, color: AppTheme.gold, size: 18),
+          const SizedBox(width: 6),
+          Text(
+            achievement.title(isKu),
+            style: const TextStyle(
+              color: AppTheme.textPrimary,
+              fontWeight: FontWeight.w800,
+              fontSize: 12,
+            ),
           ),
         ],
       ),

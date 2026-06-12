@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/seen_question_store.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
@@ -13,6 +14,7 @@ import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
+import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
@@ -140,6 +142,7 @@ void main() {
   // kalır; tüm testler için deterministik temiz durum kur.
   setUp(() {
     SharedPreferences.setMockInitialValues({});
+    AchievementStore.resetInstance();
     SeenQuestionStore.resetInstance();
     StreakStore.resetInstance();
     MistakeStore.resetInstance();
@@ -424,7 +427,7 @@ void main() {
     await tester.scrollUntilVisible(
       find.text('Cevapları İncele'),
       120,
-      scrollable: find.byType(Scrollable).last,
+      scrollable: find.byType(Scrollable).first,
     );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Cevapları İncele'));
@@ -472,6 +475,38 @@ void main() {
     expect(find.text('Baran'), findsOneWidget);
   });
 
+  testWidgets('result screen announces newly unlocked achievements', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _testShell(
+        child: QuizResultScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          score: 1200,
+          correctCount: 10,
+          wrongCount: 0,
+          totalQuestions: 10,
+          bestStreak: 10,
+          answerRecords: const [],
+          coinsAwarded: 0,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Yeni Rozet'),
+      120,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Yeni Rozet'), findsOneWidget);
+    expect(find.text('İlk Oyun'), findsOneWidget);
+    expect(find.text('10 Doğru Üst Üste'), findsOneWidget);
+  });
+
   testWidgets('quiz answer feedback labels the correct answer', (tester) async {
     final room = repository.createRoom();
     final question = repository.questions.first;
@@ -512,6 +547,37 @@ void main() {
 
     expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
     expect(find.text('Henüz kaydedilmiş soru yok.'), findsOneWidget);
+  });
+
+  testWidgets('profile screen shows unlocked achievement showcase', (
+    tester,
+  ) async {
+    final store = await AchievementStore.load();
+    await store.recordQuizResult(
+      category: 'Ziman',
+      totalQuestions: 3,
+      correctCount: 2,
+      bestStreak: 2,
+      dailyStreak: 1,
+      userScore: 230,
+    );
+
+    await tester.pumpWidget(
+      _testShell(
+        child: Scaffold(body: ProfileScreen(repository: repository)),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Rozetler'),
+      120,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Rozetler'), findsOneWidget);
+    expect(find.text('İlk Oyun'), findsOneWidget);
   });
 
   testWidgets('leaderboard error state exposes retry', (tester) async {
