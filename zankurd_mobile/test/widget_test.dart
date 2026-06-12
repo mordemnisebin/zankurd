@@ -141,7 +141,7 @@ void main() {
   // SharedPreferences mock'lanmazsa getInstance() widget testinde askıda
   // kalır; tüm testler için deterministik temiz durum kur.
   setUp(() {
-    SharedPreferences.setMockInitialValues({});
+    SharedPreferences.setMockInitialValues({'zankurd.onboarding.seen': true});
     AchievementStore.resetInstance();
     SeenQuestionStore.resetInstance();
     StreakStore.resetInstance();
@@ -176,6 +176,34 @@ void main() {
     expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
     expect(find.text('Misafir olarak devam et'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('first launch shows onboarding before auth screen', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _GateAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('ZanKurd'), findsOneWidget);
+    expect(find.text('Atla'), findsOneWidget);
+
+    await tester.tap(find.text('Atla'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
+    final preferences = await SharedPreferences.getInstance();
+    expect(preferences.getBool('zankurd.onboarding.seen'), isTrue);
   });
 
   testWidgets('auth screen asks for language before sign in', (tester) async {
