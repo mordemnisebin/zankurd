@@ -86,29 +86,34 @@ class _CategoriesTabState extends State<CategoriesTab> {
               ),
             ),
             Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-                itemCount: _categories.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 1.0,
-                ),
-                itemBuilder: (context, index) {
-                  final cat = _categories[index];
-                  return _CategoryCard(
-                    category: cat,
-                    index: index,
-                    isKu: ku,
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => LevelScreen(
-                          repository: widget.repository,
-                          category: cat,
-                        ),
-                      ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final crossCount = constraints.maxWidth > 600 ? 3 : 2;
+                  return GridView.builder(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                    itemCount: _categories.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossCount,
+                      mainAxisSpacing: 12,
+                      crossAxisSpacing: 12,
+                      childAspectRatio: 1.0,
                     ),
+                    itemBuilder: (context, index) {
+                      final cat = _categories[index];
+                      return _CategoryCard(
+                        category: cat,
+                        index: index,
+                        isKu: ku,
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => LevelScreen(
+                              repository: widget.repository,
+                              category: cat,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
               ),

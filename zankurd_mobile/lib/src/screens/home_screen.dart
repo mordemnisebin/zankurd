@@ -118,118 +118,118 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(18, 12, 18, 24),
             sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  if (index == 0) {
-                    return _buildAnimatedCard(
-                      _heroFadeAnimation(0),
-                      HeroCard(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                if (index == 0) {
+                  return _buildAnimatedCard(
+                    _heroFadeAnimation(0),
+                    HeroCard(
+                      isKu: ku,
+                      onQuickMatch: () => _openQuiz(context, _room),
+                    ),
+                  );
+                }
+                if (index == 1) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: _buildAnimatedCard(
+                      _heroFadeAnimation(1),
+                      StatsRow(isKu: ku),
+                    ),
+                  );
+                }
+                if (index == 2) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: _buildAnimatedCard(
+                      _heroFadeAnimation(2),
+                      DailyQuizCard(
                         isKu: ku,
-                        onQuickMatch: () => _openQuiz(context, _room),
+                        loading: _dailyLoading,
+                        onPlay: () => _openDailyQuiz(context, ku),
                       ),
-                    );
-                  }
-                  if (index == 1) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 12),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(1),
-                        StatsRow(isKu: ku),
-                      ),
-                    );
-                  }
-                  if (index == 2) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 12),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(2),
-                        DailyQuizCard(
-                          isKu: ku,
-                          loading: _dailyLoading,
-                          onPlay: () => _openDailyQuiz(context, ku),
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 3) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 12),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(3),
-                        SpinWheelCard(isKu: ku, onOpen: () => _openSpinWheel(context)),
-                      ),
-                    );
-                  }
-                  if (index == 4) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(4),
-                        RoomActions(
-                          loading: _roomActionLoading,
-                          isKu: ku,
-                          onCreateRoom: () => _createOnlineRoom(context),
-                          onJoinRoom: () => _showJoinSheet(context),
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 5) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(5),
-                        SectionHeader(
-                          title: ku ? 'Kategorî' : 'Kategoriler',
-                          subtitle: ku
-                              ? 'Her kategoriyê 5 ast hene'
-                              : 'Her kategori 5 seviyeye ayrıldı',
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 6) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: CategoryGrid(
-                        categories: _categories,
+                    ),
+                  );
+                }
+                if (index == 3) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: _buildAnimatedCard(
+                      _heroFadeAnimation(3),
+                      SpinWheelCard(
                         isKu: ku,
-                        loading: _loading,
-                        onTap: (cat) => _openCategory(context, cat),
+                        onOpen: () => _openSpinWheel(context),
                       ),
-                    );
-                  }
-                  if (index == 7 && !_loading && _questions.isNotEmpty) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(7),
-                        SectionHeader(
-                          title: ku ? 'Pirsa Nimûne' : 'Örnek Soru',
-                          subtitle: ku
-                              ? 'Destpêbike û pratîkê bike'
-                              : 'Hemen başla ve pratik yap',
-                        ),
+                    ),
+                  );
+                }
+                if (index == 4) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: _buildAnimatedCard(
+                      _heroFadeAnimation(4),
+                      RoomActions(
+                        loading: _roomActionLoading,
+                        isKu: ku,
+                        onCreateRoom: () => _createOnlineRoom(context),
+                        onJoinRoom: () => _showJoinSheet(context),
                       ),
-                    );
-                  }
-                  if (index == 8 && !_loading && _questions.isNotEmpty) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(8),
-                        QuestionCard(
-                          question: _questions.first,
-                          isKu: ku,
-                          onOpen: () => _openQuiz(context, _room),
-                        ),
+                    ),
+                  );
+                }
+                if (index == 5) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: _buildAnimatedCard(
+                      _heroFadeAnimation(5),
+                      SectionHeader(
+                        title: ku ? 'Kategorî' : 'Kategoriler',
+                        subtitle: ku
+                            ? 'Her kategoriyê 5 ast hene'
+                            : 'Her kategori 5 seviyeye ayrıldı',
                       ),
-                    );
-                  }
-                  return null;
-                },
-                childCount: _loading || _questions.isEmpty ? 7 : 9,
-              ),
+                    ),
+                  );
+                }
+                if (index == 6) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: CategoryGrid(
+                      categories: _categories,
+                      isKu: ku,
+                      loading: _loading,
+                      onTap: (cat) => _openCategory(context, cat),
+                    ),
+                  );
+                }
+                if (index == 7 && !_loading && _questions.isNotEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: _buildAnimatedCard(
+                      _heroFadeAnimation(7),
+                      SectionHeader(
+                        title: ku ? 'Pirsa Nimûne' : 'Örnek Soru',
+                        subtitle: ku
+                            ? 'Destpêbike û pratîkê bike'
+                            : 'Hemen başla ve pratik yap',
+                      ),
+                    ),
+                  );
+                }
+                if (index == 8 && !_loading && _questions.isNotEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: _buildAnimatedCard(
+                      _heroFadeAnimation(8),
+                      QuestionCard(
+                        question: _questions.first,
+                        isKu: ku,
+                        onOpen: () => _openQuiz(context, _room),
+                      ),
+                    ),
+                  );
+                }
+                return null;
+              }, childCount: _loading || _questions.isEmpty ? 7 : 9),
             ),
           ),
         ],
@@ -255,10 +255,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   width: 280,
                   height: 280,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 3,
-                    ),
+                    border: Border.all(color: Colors.white, width: 3),
                   ),
                 ),
               ),
@@ -319,17 +316,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
           // Streak hexagon badge (pulsing animation) on the top right
           if (_streak > 0)
-            Positioned(
-              top: 16,
-              right: 18,
-              child: _buildStreakHexagon(_streak),
-            ),
+            Positioned(top: 16, right: 18, child: _buildStreakHexagon(_streak)),
           // Coins/gems on bottom left
-          Positioned(
-            left: 18,
-            top: 16,
-            child: _buildCoinGemRow(_coinBalance),
-          ),
+          Positioned(left: 18, top: 16, child: _buildCoinGemRow(_coinBalance)),
         ],
       ),
     );
@@ -338,7 +327,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// Build animated streak hexagon badge with pulse animation
   Widget _buildStreakHexagon(int streak) {
     final pulseAnim = Tween<double>(begin: 1.0, end: 1.08).animate(
-      CurvedAnimation(parent: _loadAnimationController, curve: Curves.easeInOut),
+      CurvedAnimation(
+        parent: _loadAnimationController,
+        curve: Curves.easeInOut,
+      ),
     );
 
     return AnimatedBuilder(
@@ -442,10 +434,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget _buildAnimatedCard(Animation<double> animation, Widget child) {
     return ScaleTransition(
       scale: animation,
-      child: FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
+      child: FadeTransition(opacity: animation, child: child),
     );
   }
 
@@ -455,11 +444,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _loadAnimationController,
-        curve: Interval(
-          startTime,
-          startTime + 0.3,
-          curve: Curves.easeOut,
-        ),
+        curve: Interval(startTime, startTime + 0.3, curve: Curves.easeOut),
       ),
     );
   }

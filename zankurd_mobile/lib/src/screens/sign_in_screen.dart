@@ -176,7 +176,9 @@ class _SignInScreenState extends State<SignInScreen>
             top: -60,
             right: -80,
             child: ScaleTransition(
-              scale: LoadAnimationSequence.logoScaleAnimation(_animationController),
+              scale: LoadAnimationSequence.logoScaleAnimation(
+                _animationController,
+              ),
               child: Container(
                 width: 280,
                 height: 280,
@@ -203,7 +205,9 @@ class _SignInScreenState extends State<SignInScreen>
             bottom: -100,
             left: -100,
             child: ScaleTransition(
-              scale: LoadAnimationSequence.logoScaleAnimation(_animationController),
+              scale: LoadAnimationSequence.logoScaleAnimation(
+                _animationController,
+              ),
               child: Container(
                 width: 300,
                 height: 300,
@@ -259,8 +263,9 @@ class _SignInScreenState extends State<SignInScreen>
                               borderRadius: BorderRadius.circular(24),
                               boxShadow: [
                                 BoxShadow(
-                                  color:
-                                      AppTheme.accent.withValues(alpha: 0.45),
+                                  color: AppTheme.accent.withValues(
+                                    alpha: 0.45,
+                                  ),
                                   blurRadius: 24,
                                   offset: const Offset(0, 8),
                                 ),
@@ -357,10 +362,10 @@ class _SignInScreenState extends State<SignInScreen>
                               ),
                               const SizedBox(height: 20),
                               FadeTransition(
-                                opacity: LoadAnimationSequence
-                                    .formField2FadeAnimation(
-                                  _animationController,
-                                ),
+                                opacity:
+                                    LoadAnimationSequence.formField2FadeAnimation(
+                                      _animationController,
+                                    ),
                                 child: StyledInputField(
                                   label: context.s('Şîfre', 'Parola'),
                                   controller: _passwordController,
@@ -370,8 +375,10 @@ class _SignInScreenState extends State<SignInScreen>
                                       ? Icons.visibility_off
                                       : Icons.visibility,
                                   onSuffixIconPressed: () {
-                                    setState(() =>
-                                        _obscurePassword = !_obscurePassword);
+                                    setState(
+                                      () =>
+                                          _obscurePassword = !_obscurePassword,
+                                    );
                                   },
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -416,8 +423,7 @@ class _SignInScreenState extends State<SignInScreen>
                       const SizedBox(height: 28),
                       // Sign In Button with animations
                       FadeTransition(
-                        opacity:
-                            LoadAnimationSequence.buttonFadeAnimation(
+                        opacity: LoadAnimationSequence.buttonFadeAnimation(
                           _animationController,
                         ),
                         child: ScaleTransition(
@@ -445,9 +451,7 @@ class _SignInScreenState extends State<SignInScreen>
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
                               context.s('AN JÎ', 'VEYA'),
                               style: const TextStyle(
@@ -517,10 +521,7 @@ class _SignInScreenState extends State<SignInScreen>
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Text(
-                            context.s(
-                              'Hesabê te tune? ',
-                              'Hesabın yok mu? ',
-                            ),
+                            context.s('Hesabê te tune? ', 'Hesabın yok mu? '),
                             style: const TextStyle(
                               color: AppTheme.textSub,
                               fontSize: 14,
@@ -637,10 +638,7 @@ class _LanguageChip extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 6,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
           color: active ? AppTheme.accent : Colors.transparent,
           borderRadius: BorderRadius.circular(16),

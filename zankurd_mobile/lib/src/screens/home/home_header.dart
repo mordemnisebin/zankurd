@@ -13,7 +13,7 @@ class HomeHeader extends StatelessWidget {
     super.key,
   });
 
-  final int coinBalance;
+  final int? coinBalance;
   final bool isKu;
   final int streak;
 
@@ -65,7 +65,7 @@ class HomeHeader extends StatelessWidget {
           _StreakBadge(value: streak),
           const SizedBox(width: 8),
         ],
-        _CoinBadge(value: coinBalance),
+        _CoinBadge(value: coinBalance), // null → shows ···
         const SizedBox(width: 8),
         _LanguageQuickToggle(isKu: isKu),
         const SizedBox(width: 8),
@@ -182,7 +182,7 @@ class _StreakBadge extends StatelessWidget {
 class _CoinBadge extends StatelessWidget {
   const _CoinBadge({required this.value});
 
-  final int value;
+  final int? value;
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +197,7 @@ class _CoinBadge extends StatelessWidget {
           const Icon(Icons.monetization_on, color: Colors.white, size: 17),
           const SizedBox(width: 5),
           Text(
-            '$value',
+            value != null ? '$value' : '···',
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w900,

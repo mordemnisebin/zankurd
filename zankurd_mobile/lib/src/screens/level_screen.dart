@@ -32,18 +32,26 @@ class _LevelScreenState extends State<LevelScreen> {
     final gradient = AppTheme.categoryGradient(catIndex >= 0 ? catIndex : 0);
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
         ),
         child: SafeArea(
+          top: false,
           child: ListView(
+            // Üstte status bar payı bırakılmaz; hero en üste kadar uzanır.
+            padding: EdgeInsets.zero,
             children: [
               _CategoryHero(
                 category: widget.category,
                 gradient: gradient,
                 isKu: ku,
-                onBack: () => Navigator.of(context).pop(),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
@@ -118,18 +126,18 @@ class _CategoryHero extends StatelessWidget {
     required this.category,
     required this.gradient,
     required this.isKu,
-    required this.onBack,
   });
 
   final String category;
   final LinearGradient gradient;
   final bool isKu;
-  final VoidCallback onBack;
 
   @override
   Widget build(BuildContext context) {
+    // Hero status bar'ın arkasına uzandığı için yüksekliğe payı eklenir.
+    final topInset = MediaQuery.of(context).padding.top;
     return Container(
-      height: 200,
+      height: 200 + topInset,
       decoration: BoxDecoration(gradient: gradient),
       child: Stack(
         children: [
@@ -150,21 +158,6 @@ class _CategoryHero extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: onBack,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back_rounded,
-                      color: Colors.white,
-                      size: 22,
-                    ),
-                  ),
-                ),
                 const Spacer(),
                 Text(
                   CategoryNames.localized(category, isKu),

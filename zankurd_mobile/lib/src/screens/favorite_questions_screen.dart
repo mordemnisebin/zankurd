@@ -181,12 +181,14 @@ class _FavoriteQuestionTile extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 6),
-                        _TinyBadge(label: question.typeLabel),
+                        _TinyBadge(
+                          label: question.typeLabelLocalized(context.isKu),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      question.prompt,
+                      question.promptText,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
