@@ -30,7 +30,7 @@ class _SignInScreenState extends State<SignInScreen>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 3500),
+      duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
     _animationController.forward();
