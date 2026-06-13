@@ -25,7 +25,7 @@ class AppTheme {
   // Dark mode text
   static const textPrimary = Color(0xFFE8E8E8);
   static const textSub = Color(0xFFA8A8A8);
-  static const textMuted = Color(0xFF757575);
+  static const textMuted = Color(0xFF909090);
 
   // Borders
   static const border = Color(0xFF2A3B5C);
@@ -37,14 +37,14 @@ class AppTheme {
   static const wrong = Color(0xFFFF3D71);
 
   // ============ Light Mode Palette ============
-  static const lightBg = Color(0xFFF5F7FB);
+  static const lightBg = Color(0xFFF5F5F5);
   static const lightBgDeep = Color(0xFFE8EDF7);
   static const lightSurface = Color(0xFFFFFFFF);
   static const lightSurfaceHi = Color(0xFFF0F3FA);
   static const lightBorder = Color(0xFFD9E1EF);
   static const lightTextPrimary = Color(0xFF1A1A2E);
   static const lightTextSub = Color(0xFF666666);
-  static const lightTextMuted = Color(0xFF999999);
+  static const lightTextMuted = Color(0xFF656565);
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
