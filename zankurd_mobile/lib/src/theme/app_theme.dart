@@ -1,29 +1,50 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Core palette
+  // ============ Dark Mode Palette ============
+  // Primary gradient: Coral/Orange
+  static const primaryGradientStart = Color(0xFFFF6B6B);
+  static const primaryGradientEnd = Color(0xFFFF9F4A);
+
+  // Secondary accent: Indigo
+  static const secondaryAccent = Color(0xFF6366F1);
+
+  // Gold accent
+  static const gold = Color(0xFFFFD700);
+
+  // Cyan accent
+  static const cyan = Color(0xFF00D9FF);
+
+  // Dark backgrounds
   static const bg = Color(0xFF1A1A2E);
   static const bgDeep = Color(0xFF16213E);
-  static const surface = Color(0xFF1E2A45);
-  static const surfaceHi = Color(0xFF243357);
+  static const surface = Color(0xFF1F1F2E);
+  static const surfaceHi = Color(0xFF2A2A3E);
+  static const darkBg = Color(0xFF0F0F1A);
+
+  // Dark mode text
+  static const textPrimary = Color(0xFFE8E8E8);
+  static const textSub = Color(0xFFA8A8A8);
+  static const textMuted = Color(0xFF757575);
+
+  // Borders
   static const border = Color(0xFF2A3B5C);
-  static const accent = Color(0xFFE94560);
-  static const violet = Color(0xFF7C3AED);
-  static const gold = Color(0xFFFFB800);
+
+  // Status colors
+  static const accent = Color(0xFFFF6B6B); // Primary coral red
+  static const violet = Color(0xFF6366F1); // Indigo secondary
   static const correct = Color(0xFF00D68F);
   static const wrong = Color(0xFFFF3D71);
-  static const textPrimary = Colors.white;
-  static const textSub = Color(0xFFB0BCDB);
-  static const textMuted = Color(0xFF6B7A9B);
 
+  // ============ Light Mode Palette ============
   static const lightBg = Color(0xFFF5F7FB);
   static const lightBgDeep = Color(0xFFE8EDF7);
   static const lightSurface = Color(0xFFFFFFFF);
   static const lightSurfaceHi = Color(0xFFF0F3FA);
   static const lightBorder = Color(0xFFD9E1EF);
-  static const lightTextPrimary = Color(0xFF172033);
-  static const lightTextSub = Color(0xFF4B5874);
-  static const lightTextMuted = Color(0xFF78849D);
+  static const lightTextPrimary = Color(0xFF1A1A2E);
+  static const lightTextSub = Color(0xFF666666);
+  static const lightTextMuted = Color(0xFF999999);
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -34,12 +55,30 @@ class AppTheme {
   static const brown = gold;
   static const line = border;
 
-  // Gradients
-  static const bgGradient = LinearGradient(
+  // ============ Gradient Constants ============
+  // Primary accent gradient: Coral to Orange
+  static const accentGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [primaryGradientStart, primaryGradientEnd],
+  );
+
+  // Dark auth gradient
+  static const darkAuthGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [bg, bgDeep],
   );
+
+  // Home header gradient
+  static const homeHeaderGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [primaryGradientStart, secondaryAccent],
+  );
+
+  // Legacy gradient aliases for backwards compatibility
+  static const bgGradient = darkAuthGradient;
 
   static bool isLight(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light;
@@ -72,22 +111,17 @@ class AppTheme {
   static Color textMutedColor(BuildContext context) =>
       isLight(context) ? lightTextMuted : textMuted;
 
-  static const accentGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [Color(0xFFE94560), Color(0xFFBD1E3B)],
-  );
-
+  // Legacy gradients for backwards compatibility
   static const goldGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFFFFB800), Color(0xFFE08C00)],
+    colors: [gold, Color(0xFFFFC700)],
   );
 
   static const correctGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF00D68F), Color(0xFF009E6A)],
+    colors: [correct, Color(0xFF009E6A)],
   );
 
   // Per-category gradients (index matches category list order)
@@ -114,13 +148,14 @@ class AppTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       fontFamily: 'Rubik',
-      scaffoldBackgroundColor: bg,
+      scaffoldBackgroundColor: darkBg,
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
         primary: accent,
         onPrimary: Colors.white,
         secondary: violet,
         onSecondary: Colors.white,
+        tertiary: cyan,
         error: wrong,
         onError: Colors.white,
         surface: surface,
@@ -243,17 +278,18 @@ class AppTheme {
     final base = dark();
     return base.copyWith(
       brightness: Brightness.light,
-      scaffoldBackgroundColor: const Color(0xFFF5F7FB),
+      scaffoldBackgroundColor: lightBg,
       colorScheme: const ColorScheme(
         brightness: Brightness.light,
         primary: accent,
         onPrimary: Colors.white,
         secondary: violet,
         onSecondary: Colors.white,
+        tertiary: cyan,
         error: wrong,
         onError: Colors.white,
-        surface: Color(0xFFFFFFFF),
-        onSurface: Color(0xFF172033),
+        surface: lightSurface,
+        onSurface: lightTextPrimary,
       ),
       appBarTheme: base.appBarTheme.copyWith(
         foregroundColor: lightTextPrimary,
