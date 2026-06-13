@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../animations/load_animations.dart';
 import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
+import '../widgets/geometric_shapes.dart';
 import '../widgets/loading_overlay.dart';
+import '../widgets/styled_button.dart';
+import '../widgets/styled_input.dart';
 import 'sign_up_screen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -14,16 +18,29 @@ class SignInScreen extends StatefulWidget {
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInScreenState extends State<SignInScreen>
+    with TickerProviderStateMixin {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    );
+    _animationController.forward();
+  }
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -146,264 +163,396 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
-        child: SafeArea(
-          child: _AuthScrollFrame(
-            child: Consumer<AuthProvider>(
-              builder: (context, authProvider, _) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Center(
-                      child: Container(
-                        width: 84,
-                        height: 84,
-                        decoration: BoxDecoration(
-                          gradient: AppTheme.accentGradient,
-                          borderRadius: BorderRadius.circular(24),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppTheme.accent.withValues(alpha: 0.45),
-                              blurRadius: 24,
-                              offset: const Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'ZK',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 32,
-                            ),
+      body: Stack(
+        children: [
+          // Dark gradient background
+          Container(
+            decoration: const BoxDecoration(
+              gradient: AppTheme.darkAuthGradient,
+            ),
+          ),
+          // Geometric shape overlays
+          Positioned(
+            top: -60,
+            right: -80,
+            child: ScaleTransition(
+              scale: LoadAnimationSequence.logoScaleAnimation(_animationController),
+              child: Container(
+                width: 280,
+                height: 280,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      AppTheme.accent.withValues(alpha: 0.08),
+                      AppTheme.violet.withValues(alpha: 0.04),
+                    ],
+                  ),
+                ),
+                child: ClipPath(
+                  clipper: OctagonClipper(),
+                  child: Container(
+                    color: AppTheme.accent.withValues(alpha: 0.05),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -100,
+            left: -100,
+            child: ScaleTransition(
+              scale: LoadAnimationSequence.logoScaleAnimation(_animationController),
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomRight,
+                    end: Alignment.topLeft,
+                    colors: [
+                      AppTheme.violet.withValues(alpha: 0.08),
+                      AppTheme.accent.withValues(alpha: 0.04),
+                    ],
+                  ),
+                ),
+                child: ClipPath(
+                  clipper: DiamondClipper(),
+                  child: Container(
+                    color: AppTheme.violet.withValues(alpha: 0.05),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // Main content
+          SafeArea(
+            child: _AuthScrollFrame(
+              child: Consumer<AuthProvider>(
+                builder: (context, authProvider, _) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Language toggle - top right
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: ScaleTransition(
+                          scale: LoadAnimationSequence.logoScaleAnimation(
+                            _animationController,
                           ),
+                          child: _LanguageToggle(),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    _LanguageChoiceCard(),
-                    const SizedBox(height: 22),
-                    Center(
-                      child: Text(
-                        context.s(
-                          'Bi xêr hatî ZanKurdê',
-                          'ZanKurd\'a Hoş Geldin',
+                      const SizedBox(height: 16),
+                      // Logo
+                      ScaleTransition(
+                        scale: LoadAnimationSequence.logoScaleAnimation(
+                          _animationController,
                         ),
-                        style: const TextStyle(
-                          color: AppTheme.textPrimary,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 26,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Center(
-                      child: Text(
-                        context.s(
-                          'Kurmancî hîn bibe û pêşbirkê bike',
-                          'Kurmancî öğren ve yarışmaya katıl',
-                        ),
-                        style: const TextStyle(color: AppTheme.textSub),
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            controller: _emailController,
-                            decoration: InputDecoration(
-                              hintText: context.s(
-                                'Navnîşana e-peyamê',
-                                'E-posta adresi',
-                              ),
-                              prefixIcon: const Icon(
-                                Icons.email_outlined,
-                                color: AppTheme.textMuted,
-                              ),
-                            ),
-                            style: const TextStyle(color: AppTheme.textPrimary),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return context.s(
-                                  'E-peyam pêwîst e',
-                                  'E-posta gerekli',
-                                );
-                              }
-                              if (!value.contains('@')) {
-                                return context.s(
-                                  'E-peyameke derbasdar binivîse',
-                                  'Geçerli bir e-posta gir',
-                                );
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 16),
-                          TextFormField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                              hintText: context.s('Şîfre', 'Parola'),
-                              prefixIcon: const Icon(
-                                Icons.lock_outlined,
-                                color: AppTheme.textMuted,
-                              ),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: AppTheme.textMuted,
+                        child: Center(
+                          child: Container(
+                            width: 84,
+                            height: 84,
+                            decoration: BoxDecoration(
+                              gradient: AppTheme.accentGradient,
+                              borderRadius: BorderRadius.circular(24),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      AppTheme.accent.withValues(alpha: 0.45),
+                                  blurRadius: 24,
+                                  offset: const Offset(0, 8),
                                 ),
-                                onPressed: () {
-                                  setState(
-                                    () => _obscurePassword = !_obscurePassword,
-                                  );
+                              ],
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'ZK',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 32,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      // Title and subtitle with animations
+                      FadeTransition(
+                        opacity: LoadAnimationSequence.titleFadeAnimation(
+                          _animationController,
+                        ),
+                        child: Transform.translate(
+                          offset: Offset(
+                            0,
+                            LoadAnimationSequence.titleSlideAnimation(
+                              _animationController,
+                            ).value,
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                context.s(
+                                  'Bi xêr hatî ZanKurdê',
+                                  'ZanKurd\'a Hoş Geldin',
+                                ),
+                                style: const TextStyle(
+                                  color: AppTheme.textPrimary,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 26,
+                                  letterSpacing: -0.5,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                context.s(
+                                  'Kurmancî hîn bibe û pêşbirkê bike',
+                                  'Kurmancî öğren ve yarışmaya katıl',
+                                ),
+                                style: const TextStyle(
+                                  color: AppTheme.textSub,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      // Form fields with fade animations
+                      FadeTransition(
+                        opacity: LoadAnimationSequence.formField1FadeAnimation(
+                          _animationController,
+                        ),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              StyledInputField(
+                                label: context.s(
+                                  'Navnîşana e-peyamê',
+                                  'E-posta adresi',
+                                ),
+                                controller: _emailController,
+                                keyboardType: TextInputType.emailAddress,
+                                prefixIcon: Icons.email_outlined,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context.s(
+                                      'E-peyam pêwîst e',
+                                      'E-posta gerekli',
+                                    );
+                                  }
+                                  if (!value.contains('@')) {
+                                    return context.s(
+                                      'E-peyameke derbasdar binivîse',
+                                      'Geçerli bir e-posta gir',
+                                    );
+                                  }
+                                  return null;
                                 },
                               ),
-                            ),
-                            style: const TextStyle(color: AppTheme.textPrimary),
-                            obscureText: _obscurePassword,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return context.s(
-                                  'Şîfre pêwîst e',
-                                  'Parola gerekli',
-                                );
-                              }
-                              if (value.length < 6) {
-                                return context.s(
-                                  'Şîfre divê herî kêm 6 tîp be',
-                                  'Parola en az 6 karakter olmalı',
-                                );
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 8),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: authProvider.isLoading
-                                  ? null
-                                  : () => _resetPassword(authProvider),
-                              child: Text(
-                                context.s(
-                                  'Şîfre ji bîr kir?',
-                                  'Parolayı unuttun mu?',
+                              const SizedBox(height: 20),
+                              FadeTransition(
+                                opacity: LoadAnimationSequence
+                                    .formField2FadeAnimation(
+                                  _animationController,
                                 ),
-                                style: const TextStyle(color: AppTheme.textSub),
+                                child: StyledInputField(
+                                  label: context.s('Şîfre', 'Parola'),
+                                  controller: _passwordController,
+                                  obscureText: _obscurePassword,
+                                  prefixIcon: Icons.lock_outlined,
+                                  suffixIcon: _obscurePassword
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  onSuffixIconPressed: () {
+                                    setState(() =>
+                                        _obscurePassword = !_obscurePassword);
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return context.s(
+                                        'Şîfre pêwîst e',
+                                        'Parola gerekli',
+                                      );
+                                    }
+                                    if (value.length < 6) {
+                                      return context.s(
+                                        'Şîfre divê herî kêm 6 tîp be',
+                                        'Parola en az 6 karakter olmalı',
+                                      );
+                                    }
+                                    return null;
+                                  },
+                                ),
                               ),
-                            ),
+                              const SizedBox(height: 12),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: authProvider.isLoading
+                                      ? null
+                                      : () => _resetPassword(authProvider),
+                                  child: Text(
+                                    context.s(
+                                      'Şîfre ji bîr kir?',
+                                      'Parolayı unuttun mu?',
+                                    ),
+                                    style: const TextStyle(
+                                      color: AppTheme.textSub,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 20),
-                          _GradientButton(
+                        ),
+                      ),
+                      const SizedBox(height: 28),
+                      // Sign In Button with animations
+                      FadeTransition(
+                        opacity:
+                            LoadAnimationSequence.buttonFadeAnimation(
+                          _animationController,
+                        ),
+                        child: ScaleTransition(
+                          scale: LoadAnimationSequence.buttonScaleAnimation(
+                            _animationController,
+                          ),
+                          child: GeometricGradientButton(
+                            label: context.s('Têkeve', 'Giriş Yap'),
+                            icon: Icons.login,
+                            isLoading: authProvider.isLoading,
                             onPressed: authProvider.isLoading
                                 ? null
                                 : () => _signIn(authProvider),
-                            icon: Icons.login,
-                            label: context.s('Têkeve', 'Giriş Yap'),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 28),
+                      // Divider
+                      Row(
+                        children: [
+                          const Expanded(
+                            child: Divider(
+                              color: AppTheme.border,
+                              thickness: 1,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                            ),
+                            child: Text(
+                              context.s('AN JÎ', 'VEYA'),
+                              style: const TextStyle(
+                                color: AppTheme.textMuted,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                          const Expanded(
+                            child: Divider(
+                              color: AppTheme.border,
+                              thickness: 1,
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 28),
-                    Row(
-                      children: [
-                        const Expanded(child: Divider()),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            context.s('AN JÎ', 'VEYA'),
-                            style: const TextStyle(
-                              color: AppTheme.textMuted,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        const Expanded(child: Divider()),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton.icon(
-                        onPressed: authProvider.isLoading
-                            ? null
-                            : () => _signInWithGoogle(authProvider),
-                        icon: const Text(
-                          'G',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 18,
-                            color: AppTheme.gold,
-                          ),
-                        ),
-                        label: Text(
-                          context.s('Bi Google têkeve', 'Google ile giriş yap'),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton.icon(
-                        onPressed: authProvider.isLoading
-                            ? null
-                            : () => _signInAsGuest(authProvider),
-                        icon: const Icon(
-                          Icons.person_outline,
-                          size: 20,
-                          color: AppTheme.textSub,
-                        ),
-                        label: Text(
-                          context.s(
-                            'Wek mêvan bidomîne',
-                            'Misafir olarak devam et',
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text(
-                          context.s('Hesabê te tune? ', 'Hesabın yok mu? '),
-                          style: const TextStyle(color: AppTheme.textSub),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const SignUpScreen(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            context.s('Tomar bibe', 'Kaydol'),
-                            style: const TextStyle(
-                              color: AppTheme.accent,
+                      const SizedBox(height: 20),
+                      // Google Sign In
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          onPressed: authProvider.isLoading
+                              ? null
+                              : () => _signInWithGoogle(authProvider),
+                          icon: const Text(
+                            'G',
+                            style: TextStyle(
                               fontWeight: FontWeight.w900,
+                              fontSize: 18,
+                              color: AppTheme.gold,
+                            ),
+                          ),
+                          label: Text(
+                            context.s(
+                              'Bi Google têkeve',
+                              'Google ile giriş yap',
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 32),
-                  ],
-                );
-              },
+                      ),
+                      const SizedBox(height: 12),
+                      // Guest Sign In
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          onPressed: authProvider.isLoading
+                              ? null
+                              : () => _signInAsGuest(authProvider),
+                          icon: const Icon(
+                            Icons.person_outline,
+                            size: 20,
+                            color: AppTheme.textSub,
+                          ),
+                          label: Text(
+                            context.s(
+                              'Wek mêvan bidomîne',
+                              'Misafir olarak devam et',
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      // Sign Up link
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Text(
+                            context.s(
+                              'Hesabê te tune? ',
+                              'Hesabın yok mu? ',
+                            ),
+                            style: const TextStyle(
+                              color: AppTheme.textSub,
+                              fontSize: 14,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const SignUpScreen(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              context.s('Tomar bibe', 'Kaydol'),
+                              style: const TextStyle(
+                                color: AppTheme.accent,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -422,7 +571,7 @@ class _AuthScrollFrame extends StatelessWidget {
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(
             horizontalPadding,
-            16,
+            0,
             horizontalPadding,
             24,
           ),
@@ -438,66 +587,32 @@ class _AuthScrollFrame extends StatelessWidget {
   }
 }
 
-class _LanguageChoiceCard extends StatelessWidget {
+class _LanguageToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isKu = context.isKu;
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
-        color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppTheme.border),
+        color: AppTheme.surfaceHi.withValues(alpha: 0.8),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppTheme.border.withValues(alpha: 0.5),
+          width: 1,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              const Icon(Icons.language, color: AppTheme.violet, size: 20),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  isKu ? 'Zimanê xwe hilbijêre' : 'Dilini seç',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: AppTheme.textPrimary,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ],
+          _LanguageChip(
+            label: 'KU',
+            active: isKu,
+            onTap: () => context.langProvider.setLang('ku'),
           ),
-          const SizedBox(height: 4),
-          Text(
-            isKu
-                ? 'Dikarî paşê ji mîhengê biguherînî.'
-                : 'Daha sonra ayarlardan değiştirebilirsin.',
-            style: const TextStyle(color: AppTheme.textMuted, fontSize: 12),
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                child: _LangChip(
-                  shortLabel: 'KU',
-                  label: 'Kurmancî',
-                  active: isKu,
-                  onTap: () => context.langProvider.setLang('ku'),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: _LangChip(
-                  shortLabel: 'TR',
-                  label: 'Türkçe',
-                  active: !isKu,
-                  onTap: () => context.langProvider.setLang('tr'),
-                ),
-              ),
-            ],
+          _LanguageChip(
+            label: 'TR',
+            active: !isKu,
+            onTap: () => context.langProvider.setLang('tr'),
           ),
         ],
       ),
@@ -505,15 +620,13 @@ class _LanguageChoiceCard extends StatelessWidget {
   }
 }
 
-class _LangChip extends StatelessWidget {
-  const _LangChip({
-    required this.shortLabel,
+class _LanguageChip extends StatelessWidget {
+  const _LanguageChip({
     required this.label,
     required this.active,
     required this.onTap,
   });
 
-  final String shortLabel;
   final String label;
   final bool active;
   final VoidCallback onTap;
@@ -523,95 +636,22 @@ class _LangChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 6,
+        ),
         decoration: BoxDecoration(
-          color: active ? AppTheme.accent : AppTheme.surfaceHi,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: active ? AppTheme.accent : AppTheme.border),
+          color: active ? AppTheme.accent : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              shortLabel,
-              style: TextStyle(
-                color: active ? Colors.white : AppTheme.textMuted,
-                fontWeight: FontWeight.w900,
-                fontSize: 11,
-              ),
-            ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: active ? Colors.white : AppTheme.textSub,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _GradientButton extends StatelessWidget {
-  const _GradientButton({
-    required this.onPressed,
-    required this.icon,
-    required this.label,
-  });
-
-  final VoidCallback? onPressed;
-  final IconData icon;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 52,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: onPressed == null ? null : AppTheme.accentGradient,
-          color: onPressed == null ? AppTheme.surfaceHi : null,
-          borderRadius: BorderRadius.circular(14),
-          boxShadow: onPressed == null
-              ? null
-              : [
-                  BoxShadow(
-                    color: AppTheme.accent.withValues(alpha: 0.35),
-                    blurRadius: 16,
-                    offset: const Offset(0, 6),
-                  ),
-                ],
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onPressed,
-            borderRadius: BorderRadius.circular(14),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, color: Colors.white, size: 20),
-                const SizedBox(width: 10),
-                Text(
-                  label,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 16,
-                  ),
-                ),
-              ],
-            ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: active ? Colors.white : AppTheme.textMuted,
+            fontWeight: FontWeight.w900,
+            fontSize: 12,
+            letterSpacing: 0.5,
           ),
         ),
       ),
