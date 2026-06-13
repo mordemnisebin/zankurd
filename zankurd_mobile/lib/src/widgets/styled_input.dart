@@ -54,8 +54,12 @@ class _StyledInputFieldState extends State<StyledInputField> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDarkMode ? AppTheme.surface : AppTheme.lightSurface;
-    final borderColor = isDarkMode ? const Color(0xFF404050) : const Color(0xFFE0E0E0);
+    final backgroundColor = isDarkMode
+        ? AppTheme.surface
+        : AppTheme.lightSurface;
+    final borderColor = isDarkMode
+        ? const Color(0xFF404050)
+        : const Color(0xFFE0E0E0);
     final textStyle = Theme.of(context).textTheme.bodyLarge;
 
     return ValueListenableBuilder<bool>(
@@ -71,9 +75,9 @@ class _StyledInputFieldState extends State<StyledInputField> {
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Text(
                   widget.label,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
                 ),
               ),
             // Input field with left accent bar
@@ -83,10 +87,11 @@ class _StyledInputFieldState extends State<StyledInputField> {
                 boxShadow: isFocused
                     ? [
                         BoxShadow(
-                          color: (isFocused
-                                  ? AppTheme.primaryGradientStart
-                                  : AppTheme.primaryGradientEnd)
-                              .withValues(alpha: 0.15),
+                          color:
+                              (isFocused
+                                      ? AppTheme.primaryGradientStart
+                                      : AppTheme.primaryGradientEnd)
+                                  .withValues(alpha: 0.15),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),

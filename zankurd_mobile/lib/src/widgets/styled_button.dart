@@ -118,11 +118,7 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton>
                           )
                         else ...[
                           if (widget.icon != null) ...[
-                            Icon(
-                              widget.icon,
-                              color: Colors.white,
-                              size: 20,
-                            ),
+                            Icon(widget.icon, color: Colors.white, size: 20),
                             const SizedBox(width: 10),
                           ],
                           Text(

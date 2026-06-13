@@ -11,6 +11,7 @@ import '../models/answer_record.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../l10n/explanation_ku.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
@@ -60,6 +61,7 @@ class _QuizScreenState extends State<QuizScreen> {
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
   BotRace? _botRace;
+  bool _isKu = true;
 
   QuizQuestion get question => widget.questions[index];
   bool get answered => selectedAnswer.isNotEmpty;
@@ -68,6 +70,7 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
+    _isKu = context.langProvider.isKu;
     if (widget.botRace) {
       _botRace = BotRace.standard();
       livePlayers = _composeBotRacePlayers();
@@ -84,7 +87,12 @@ class _QuizScreenState extends State<QuizScreen> {
 
   List<Player> _composeBotRacePlayers() {
     final players = [
-      Player(name: 'Tu', score: score, state: '—', streak: streak),
+      Player(
+        name: _isKu ? 'Tu' : 'Sen',
+        score: score,
+        state: '—',
+        streak: streak,
+      ),
       ...?_botRace?.toPlayers(),
     ]..sort((a, b) => b.score.compareTo(a.score));
     return players;
@@ -118,110 +126,158 @@ class _QuizScreenState extends State<QuizScreen> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: Text('${context.s('Jûr', 'Oda')} ${widget.room.code}'),
-        actions: [
-          IconButton(
-            onPressed: _toggleFavorite,
-            icon: Icon(favorite ? Icons.bookmark : Icons.bookmark_border),
+  /// İlerleme varken geri tuşunda onay sorar; yanlışlıkla çıkışı önler.
+  Future<void> _confirmExit() async {
+    final leave = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(context.s('Ji pêşbirkê derkevî?', 'Yarıştan çıkılsın mı?')),
+        content: Text(
+          context.s(
+            'Pêşketina te ya vê pêşbirkê winda dibe.',
+            'Bu yarıştaki ilerlemen kaybolur.',
           ),
-          IconButton(
-            onPressed: _reportQuestion,
-            icon: const Icon(Icons.report_gmailerrorred_outlined),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(context.s('Bidomîne', 'Devam Et')),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(context.s('Derkeve', 'Çık')),
           ),
         ],
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
+    );
+    if (leave == true && mounted) Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final hasProgress = index > 0 || answered;
+    return PopScope(
+      canPop: !hasProgress,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _confirmExit();
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          title: Text('${context.s('Jûr', 'Oda')} ${widget.room.code}'),
+          actions: [
+            IconButton(
+              onPressed: _toggleFavorite,
+              icon: Icon(favorite ? Icons.bookmark : Icons.bookmark_border),
+            ),
+            IconButton(
+              onPressed: _reportQuestion,
+              icon: const Icon(Icons.report_gmailerrorred_outlined),
+            ),
+          ],
         ),
-        child: SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-            children: [
-              _ScoreHeader(
-                score: score,
-                streak: streak,
-                progress: '${index + 1}/${widget.questions.length}',
-              ),
-              const SizedBox(height: 16),
-              TweenAnimationBuilder<double>(
-                tween: Tween(
-                  begin: 0,
-                  end: (index + 1) / widget.questions.length,
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: AppTheme.backgroundGradient(context),
+          ),
+          child: SafeArea(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+              children: [
+                _ScoreHeader(
+                  score: score,
+                  streak: streak,
+                  progress: '${index + 1}/${widget.questions.length}',
                 ),
-                duration: const Duration(milliseconds: 350),
-                curve: Curves.easeOutCubic,
-                builder: (_, value, _) => LinearProgressIndicator(
-                  value: value,
-                  minHeight: 8,
-                  borderRadius: BorderRadius.circular(99),
-                  backgroundColor: AppTheme.surfaceHiColor(context),
-                  color: AppTheme.accent,
-                ),
-              ),
-              const SizedBox(height: 16),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 280),
-                switchInCurve: Curves.easeOutCubic,
-                switchOutCurve: Curves.easeIn,
-                transitionBuilder: (child, animation) => FadeTransition(
-                  opacity: animation,
-                  child: SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0.06, 0),
-                      end: Offset.zero,
-                    ).animate(animation),
-                    child: child,
+                const SizedBox(height: 16),
+                TweenAnimationBuilder<double>(
+                  tween: Tween(
+                    begin: 0,
+                    end: (index + 1) / widget.questions.length,
+                  ),
+                  duration: const Duration(milliseconds: 350),
+                  curve: Curves.easeOutCubic,
+                  builder: (_, value, _) => LinearProgressIndicator(
+                    value: value,
+                    minHeight: 8,
+                    borderRadius: BorderRadius.circular(99),
+                    backgroundColor: AppTheme.surfaceHiColor(context),
+                    color: AppTheme.accent,
                   ),
                 ),
-                child: KeyedSubtree(
-                  key: ValueKey(index),
-                  child: _buildQuestionPanel(context),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: answered ? null : _useFiftyFifty,
-                      icon: const Icon(Icons.auto_awesome_outlined),
-                      label: const Text('50/50'),
+                const SizedBox(height: 16),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 280),
+                  switchInCurve: Curves.easeOutCubic,
+                  switchOutCurve: Curves.easeIn,
+                  transitionBuilder: (child, animation) => FadeTransition(
+                    opacity: animation,
+                    child: SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(0.06, 0),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: FilledButton.icon(
-                      onPressed: answered && !completing ? () => _next() : null,
-                      icon: Icon(
-                        isLastQuestion
-                            ? Icons.flag_outlined
-                            : Icons.arrow_forward_rounded,
-                      ),
-                      label: Text(
-                        isLastQuestion
-                            ? context.s('Qediya', 'Bitir')
-                            : context.s('Piştî vê', 'Sonraki'),
+                  child: KeyedSubtree(
+                    key: ValueKey(index),
+                    child: _buildQuestionPanel(context),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: answered ? null : _useFiftyFifty,
+                        icon: const Icon(Icons.auto_awesome_outlined),
+                        label: const Text('50/50'),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              _LiveScoreboard(players: livePlayers),
-            ],
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: FilledButton.icon(
+                        onPressed: answered && !completing
+                            ? () => _next()
+                            : null,
+                        icon: Icon(
+                          isLastQuestion
+                              ? Icons.flag_outlined
+                              : Icons.arrow_forward_rounded,
+                        ),
+                        label: Text(
+                          isLastQuestion
+                              ? context.s('Qediya', 'Bitir')
+                              : context.s('Piştî vê', 'Sonraki'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                _LiveScoreboard(players: livePlayers),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  /// Seviye öneki yerelleştirilmiş etiket metnine çevrilir.
+  String? _levelTagLabel() {
+    return switch (question.levelPrefix) {
+      'Temel' => context.s('Bingehîn', 'Temel'),
+      'Pekiştirme' => context.s('Xurtkirin', 'Pekiştirme'),
+      'Ustalık' => context.s('Hosteyî', 'Ustalık'),
+      _ => null,
+    };
+  }
+
   Widget _buildQuestionPanel(BuildContext context) {
+    final levelTag = _levelTagLabel();
+    final promptText = question.promptText;
     return AppPanel(
       color: AppTheme.surfaceHiColor(context),
       child: Column(
@@ -238,7 +294,15 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
               ),
               const SizedBox(width: 8),
-              Flexible(child: _TinyTag(label: question.typeLabel)),
+              Flexible(
+                child: _TinyTag(
+                  label: question.typeLabelLocalized(context.isKu),
+                ),
+              ),
+              if (levelTag != null) ...[
+                const SizedBox(width: 8),
+                Flexible(child: _TinyTag(label: levelTag)),
+              ],
               const Spacer(),
               _TinyTag(
                 label: '${context.s('Ast', 'Zorluk')} ${question.difficulty}/5',
@@ -251,7 +315,7 @@ class _QuizScreenState extends State<QuizScreen> {
             const SizedBox(height: 14),
           ],
           Text(
-            question.prompt,
+            promptText,
             style: TextStyle(
               color: AppTheme.textPrimaryColor(context),
               fontSize: 24,
@@ -318,7 +382,9 @@ class _QuizScreenState extends State<QuizScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          question.explanation,
+                          context.isKu
+                              ? explanationToKu(question.explanation)
+                              : question.explanation,
                           style: TextStyle(
                             color: AppTheme.textSubColor(context),
                             height: 1.35,
@@ -481,7 +547,7 @@ class _QuizScreenState extends State<QuizScreen> {
     final record = AnswerRecord(
       id: question.id,
       category: question.category,
-      prompt: question.prompt,
+      prompt: question.promptText,
       answers: question.answers,
       correctAnswer: question.correctAnswer,
       selectedAnswer: answer,

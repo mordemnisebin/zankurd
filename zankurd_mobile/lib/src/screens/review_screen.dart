@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/explanation_ku.dart';
 import '../l10n/lang.dart';
 import '../models/answer_record.dart';
 import '../models/room.dart';
@@ -323,7 +324,9 @@ class _ReviewCard extends StatelessWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
-                            record.explanation,
+                            context.isKu
+                                ? explanationToKu(record.explanation)
+                                : record.explanation,
                             style: const TextStyle(
                               color: AppTheme.textSub,
                               height: 1.4,

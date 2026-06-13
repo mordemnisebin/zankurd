@@ -454,6 +454,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<bool?> _showFinalDeleteConfirmation() {
     final controller = TextEditingController();
     final ku = context.isKu;
+    final confirmWord = ku ? 'JÊ BIBE' : 'SIL';
     return showDialog<bool>(
       context: context,
       builder: (dialogContext) {
@@ -473,17 +474,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: [
                   Text(
                     ku
-                        ? 'Ji bo jêbirina hesabê "SIL" binivîse.'
-                        : 'Hesabını silmek için "SIL" yaz.',
+                        ? 'Ji bo jêbirina hesabê "$confirmWord" binivîse.'
+                        : 'Hesabını silmek için "$confirmWord" yaz.',
                   ),
                   const SizedBox(height: 12),
                   TextField(
                     key: const ValueKey('delete-confirm-field'),
                     controller: controller,
                     textCapitalization: TextCapitalization.characters,
-                    decoration: const InputDecoration(hintText: 'SIL'),
+                    decoration: InputDecoration(hintText: confirmWord),
                     onChanged: (value) {
-                      setDialogState(() => canDelete = value.trim() == 'SIL');
+                      setDialogState(
+                        () => canDelete = value.trim() == confirmWord,
+                      );
                     },
                   ),
                 ],

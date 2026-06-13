@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/lang.dart';
 import '../../models/quiz_question.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_panel.dart';
@@ -24,7 +25,10 @@ class QuestionCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              _Tag(label: question.category, color: AppTheme.violet),
+              _Tag(
+                label: CategoryNames.localized(question.category, isKu),
+                color: AppTheme.violet,
+              ),
               const Spacer(),
               _Tag(
                 label: isKu ? '08 çirke' : '08 sn',
@@ -34,7 +38,7 @@ class QuestionCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            question.prompt,
+            question.promptText,
             style: TextStyle(
               color: AppTheme.textPrimaryColor(context),
               fontSize: 20,

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -62,6 +63,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 
   Future<void> _spin() async {
     if (_spinning || !_canSpin) return;
+    HapticFeedback.mediumImpact();
     setState(() {
       _spinning = true;
       _wonAmount = null;

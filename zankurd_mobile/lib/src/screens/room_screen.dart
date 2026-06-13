@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -87,7 +88,9 @@ class _RoomScreenState extends State<RoomScreen> {
                   ),
                   const Spacer(),
                   TextButton.icon(
-                    onPressed: () {
+                    onPressed: () async {
+                      await Clipboard.setData(ClipboardData(text: room.code));
+                      if (!context.mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
@@ -343,6 +346,17 @@ class _PlayerTile extends StatelessWidget {
   final Player player;
   final bool isKu;
 
+  /// Depodan gelen durum metni Türkçe sabittir; KU modunda burada çevrilir.
+  String _localizedState(String state) {
+    if (!isKu) return state;
+    return switch (state) {
+      'Hazır' => 'Amade',
+      'Bekliyor' => 'Li bendê',
+      'Cevapladı' => 'Bersivand',
+      _ => state,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -379,7 +393,7 @@ class _PlayerTile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  player.state,
+                  _localizedState(player.state),
                   style: const TextStyle(
                     color: AppTheme.textMuted,
                     fontSize: 12,

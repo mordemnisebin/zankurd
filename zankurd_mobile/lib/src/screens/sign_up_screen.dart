@@ -55,61 +55,53 @@ class _SignUpScreenState extends State<SignUpScreen>
     if (_currentStep == 0) {
       // Validate step 1: Email & Password
       if (_emailController.text.isEmpty) {
-        _showError(context.s(
-          'E-peyam pêwîst e',
-          'E-posta gerekli',
-        ));
+        _showError(context.s('E-peyam pêwîst e', 'E-posta gerekli'));
         return;
       }
       if (!_emailController.text.contains('@')) {
-        _showError(context.s(
-          'E-peyameke derbasdar binivîse',
-          'Geçerli bir e-posta gir',
-        ));
+        _showError(
+          context.s('E-peyameke derbasdar binivîse', 'Geçerli bir e-posta gir'),
+        );
         return;
       }
       if (_passwordController.text.isEmpty) {
-        _showError(context.s(
-          'Şîfre pêwîst e',
-          'Parola gerekli',
-        ));
+        _showError(context.s('Şîfre pêwîst e', 'Parola gerekli'));
         return;
       }
       if (_passwordController.text.length < 6) {
-        _showError(context.s(
-          'Şîfre divê herî kêm 6 tîp be',
-          'Parola en az 6 karakter olmalı',
-        ));
+        _showError(
+          context.s(
+            'Şîfre divê herî kêm 6 tîp be',
+            'Parola en az 6 karakter olmalı',
+          ),
+        );
         return;
       }
       if (_confirmPasswordController.text.isEmpty) {
-        _showError(context.s(
-          'Piştrastkirina şîfreyê pêwîst e',
-          'Parola onayı gerekli',
-        ));
+        _showError(
+          context.s('Piştrastkirina şîfreyê pêwîst e', 'Parola onayı gerekli'),
+        );
         return;
       }
       if (_passwordController.text != _confirmPasswordController.text) {
-        _showError(context.s(
-          'Şîfre li hev nakin',
-          'Parolalar eşleşmiyor',
-        ));
+        _showError(context.s('Şîfre li hev nakin', 'Parolalar eşleşmiyor'));
         return;
       }
     } else if (_currentStep == 1) {
       // Validate step 2: Username
       if (_usernameController.text.isEmpty) {
-        _showError(context.s(
-          'Navê bikarhêner pêwîst e',
-          'Kullanıcı adı gerekli',
-        ));
+        _showError(
+          context.s('Navê bikarhêner pêwîst e', 'Kullanıcı adı gerekli'),
+        );
         return;
       }
       if (_usernameController.text.length < 2) {
-        _showError(context.s(
-          'Navê bikarhêner divê herî kêm 2 tîp be',
-          'Kullanıcı adı en az 2 karakter olmalı',
-        ));
+        _showError(
+          context.s(
+            'Navê bikarhêner divê herî kêm 2 tîp be',
+            'Kullanıcı adı en az 2 karakter olmalı',
+          ),
+        );
         return;
       }
     }
@@ -130,9 +122,9 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
   void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _signUp(AuthProvider authProvider) async {
@@ -140,10 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen>
     if (_emailController.text.isEmpty ||
         _passwordController.text.isEmpty ||
         _usernameController.text.isEmpty) {
-      _showError(context.s(
-        'Hemû zelatên pêwîst in',
-        'Tüm alanlar gerekli',
-      ));
+      _showError(context.s('Hemû zelatên pêwîst in', 'Tüm alanlar gerekli'));
       return;
     }
 
@@ -200,7 +189,9 @@ class _SignUpScreenState extends State<SignUpScreen>
             top: -60,
             right: -80,
             child: ScaleTransition(
-              scale: LoadAnimationSequence.logoScaleAnimation(_animationController),
+              scale: LoadAnimationSequence.logoScaleAnimation(
+                _animationController,
+              ),
               child: Container(
                 width: 280,
                 height: 280,
@@ -227,7 +218,9 @@ class _SignUpScreenState extends State<SignUpScreen>
             bottom: -100,
             left: -100,
             child: ScaleTransition(
-              scale: LoadAnimationSequence.logoScaleAnimation(_animationController),
+              scale: LoadAnimationSequence.logoScaleAnimation(
+                _animationController,
+              ),
               child: Container(
                 width: 300,
                 height: 300,
@@ -282,7 +275,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                           child: Column(
                             children: [
                               Text(
-                                context.s('Hesabê xwe biafirîne', 'Hesabını oluştur'),
+                                context.s(
+                                  'Hesabê xwe biafirîne',
+                                  'Hesabını oluştur',
+                                ),
                                 style: const TextStyle(
                                   color: AppTheme.textPrimary,
                                   fontWeight: FontWeight.w900,
@@ -327,7 +323,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                           Expanded(
                             child: GeometricGradientButton(
                               label: _currentStep == 2
-                                  ? context.s('Hesab Biafirîne', 'Hesap Oluştur')
+                                  ? context.s(
+                                      'Hesab Biafirîne',
+                                      'Hesap Oluştur',
+                                    )
                                   : context.s('Pêş', 'İleri'),
                               icon: _currentStep == 2
                                   ? Icons.check_circle_outline
@@ -336,8 +335,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                               onPressed: authProvider.isLoading
                                   ? null
                                   : (_currentStep == 2
-                                      ? () => _signUp(authProvider)
-                                      : _nextStep),
+                                        ? () => _signUp(authProvider)
+                                        : _nextStep),
                             ),
                           ),
                         ],
@@ -411,19 +410,13 @@ class _SignUpScreenState extends State<SignUpScreen>
         return Column(
           children: [
             StyledInputField(
-              label: context.s(
-                'Navnîşana e-peyamê',
-                'E-posta adresi',
-              ),
+              label: context.s('Navnîşana e-peyamê', 'E-posta adresi'),
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               prefixIcon: Icons.email_outlined,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return context.s(
-                    'E-peyam pêwîst e',
-                    'E-posta gerekli',
-                  );
+                  return context.s('E-peyam pêwîst e', 'E-posta gerekli');
                 }
                 if (!value.contains('@')) {
                   return context.s(
@@ -452,10 +445,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return context.s(
-                      'Şîfre pêwîst e',
-                      'Parola gerekli',
-                    );
+                    return context.s('Şîfre pêwîst e', 'Parola gerekli');
                   }
                   if (value.length < 6) {
                     return context.s(
@@ -469,10 +459,7 @@ class _SignUpScreenState extends State<SignUpScreen>
             ),
             const SizedBox(height: 20),
             StyledInputField(
-              label: context.s(
-                'Şîfreyê piştrast bike',
-                'Parolayı Onayla',
-              ),
+              label: context.s('Şîfreyê piştrast bike', 'Parolayı Onayla'),
               controller: _confirmPasswordController,
               obscureText: _obscureConfirmPassword,
               prefixIcon: Icons.lock_outlined,
@@ -481,7 +468,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                   : Icons.visibility,
               onSuffixIconPressed: () {
                 setState(
-                    () => _obscureConfirmPassword = !_obscureConfirmPassword);
+                  () => _obscureConfirmPassword = !_obscureConfirmPassword,
+                );
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -505,10 +493,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         return Column(
           children: [
             StyledInputField(
-              label: context.s(
-                'Navê bikarhêner',
-                'Kullanıcı adı',
-              ),
+              label: context.s('Navê bikarhêner', 'Kullanıcı adı'),
               controller: _usernameController,
               prefixIcon: Icons.person_outline,
               validator: (value) {
@@ -578,20 +563,11 @@ class _ProgressIndicator extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _ProgressHexagon(
-          number: 1,
-          isActive: currentStep >= 0,
-        ),
+        _ProgressHexagon(number: 1, isActive: currentStep >= 0),
         const SizedBox(width: 8),
-        _ProgressHexagon(
-          number: 2,
-          isActive: currentStep >= 1,
-        ),
+        _ProgressHexagon(number: 2, isActive: currentStep >= 1),
         const SizedBox(width: 8),
-        _ProgressHexagon(
-          number: 3,
-          isActive: currentStep >= 2,
-        ),
+        _ProgressHexagon(number: 3, isActive: currentStep >= 2),
       ],
     );
   }
@@ -601,10 +577,7 @@ class _ProgressHexagon extends StatelessWidget {
   final int number;
   final bool isActive;
 
-  const _ProgressHexagon({
-    required this.number,
-    required this.isActive,
-  });
+  const _ProgressHexagon({required this.number, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
@@ -613,12 +586,7 @@ class _ProgressHexagon extends StatelessWidget {
       height: 44,
       decoration: BoxDecoration(
         gradient: isActive ? AppTheme.accentGradient : null,
-        border: isActive
-            ? null
-            : Border.all(
-                color: AppTheme.border,
-                width: 2,
-              ),
+        border: isActive ? null : Border.all(color: AppTheme.border, width: 2),
         borderRadius: BorderRadius.circular(8),
         boxShadow: isActive
             ? [
@@ -648,10 +616,7 @@ class _ReviewItem extends StatelessWidget {
   final String label;
   final String value;
 
-  const _ReviewItem({
-    required this.label,
-    required this.value,
-  });
+  const _ReviewItem({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

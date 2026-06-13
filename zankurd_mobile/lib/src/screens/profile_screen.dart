@@ -112,6 +112,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  /// Sunucudaki varsayılan ad Türkçedir; KU modunda görünümde çevrilir.
+  String _displayName(bool ku) {
+    final name = _currentName;
+    if (name == null || name.isEmpty || name == 'ZanKurd Oyuncusu') {
+      return ku ? 'Lîstikvanê ZanKurd' : 'ZanKurd Oyuncusu';
+    }
+    return name;
+  }
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
@@ -133,361 +142,374 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 retryLabel: ku ? 'Dîsa Bicerib' : 'Tekrar Dene',
                 onRetry: _load,
               )
-            : ListView(
-                padding: const EdgeInsets.all(16),
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(4, 8, 4, 16),
-                    child: Text(
-                      ku ? 'Profîl' : 'Profil',
-                      style: const TextStyle(
-                        color: AppTheme.textPrimary,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 28,
+            : RefreshIndicator(
+                color: AppTheme.accent,
+                onRefresh: () async {
+                  await Future.wait([_load(), _refreshMistakes()]);
+                },
+                child: ListView(
+                  padding: const EdgeInsets.all(16),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(4, 8, 4, 16),
+                      child: Text(
+                        ku ? 'Profîl' : 'Profil',
+                        style: const TextStyle(
+                          color: AppTheme.textPrimary,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 28,
+                        ),
                       ),
                     ),
-                  ),
 
-                  // Avatar card
-                  AppPanel(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Color(0xFF7C3AED), Color(0xFF4F1EB8)],
-                    ),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 34,
-                          backgroundColor: Colors.white.withValues(alpha: 0.2),
-                          child: Text(
-                            (_currentName?.isNotEmpty == true
-                                    ? _currentName![0]
-                                    : 'Z')
-                                .toUpperCase(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 28,
+                    // Avatar card
+                    AppPanel(
+                      gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Color(0xFF7C3AED), Color(0xFF4F1EB8)],
+                      ),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 34,
+                            backgroundColor: Colors.white.withValues(
+                              alpha: 0.2,
+                            ),
+                            child: Text(
+                              (_currentName?.isNotEmpty == true
+                                      ? _currentName![0]
+                                      : 'Z')
+                                  .toUpperCase(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 28,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _currentName ??
-                                    (ku
-                                        ? 'ZanKurd Lîstikvan'
-                                        : 'ZanKurd Oyuncusu'),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 18,
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _displayName(ku),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 18,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                ku
-                                    ? 'Navê xwe ji mîhengan biguhêze'
-                                    : 'İsmini ayarlardan değiştirebilirsin',
-                                style: TextStyle(
-                                  color: Colors.white.withValues(alpha: 0.7),
-                                  fontSize: 13,
+                                Text(
+                                  ku
+                                      ? 'Di tabloya pêşderçûnê de ev nav xuya dike'
+                                      : 'Liderlik tablosunda bu isim görünür',
+                                  style: TextStyle(
+                                    color: Colors.white.withValues(alpha: 0.7),
+                                    fontSize: 13,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 14),
+                    const SizedBox(height: 14),
 
-                  // Language toggle
-                  AppPanel(
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.language,
-                          color: AppTheme.violet,
-                          size: 22,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                ku ? 'Ziman' : 'Dil',
-                                style: const TextStyle(
-                                  color: AppTheme.textPrimary,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                              Text(
-                                ku ? 'Kurdî / Tirkî' : 'Kürtçe / Türkçe',
-                                style: const TextStyle(
-                                  color: AppTheme.textMuted,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
+                    // Language toggle
+                    AppPanel(
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.language,
+                            color: AppTheme.violet,
+                            size: 22,
                           ),
-                        ),
-                        _LangToggle(isKu: ku, onToggle: langProvider.toggle),
-                      ],
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  ku ? 'Ziman' : 'Dil',
+                                  style: const TextStyle(
+                                    color: AppTheme.textPrimary,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                Text(
+                                  ku ? 'Kurdî / Tirkî' : 'Kürtçe / Türkçe',
+                                  style: const TextStyle(
+                                    color: AppTheme.textMuted,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          _LangToggle(isKu: ku, onToggle: langProvider.toggle),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 14),
+                    const SizedBox(height: 14),
 
-                  // Stats
-                  AppPanel(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          ku ? 'Statîstîkên Min' : 'İstatistiklerim',
-                          style: const TextStyle(
-                            color: AppTheme.textPrimary,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 17,
-                          ),
-                        ),
-                        const SizedBox(height: 14),
-                        if (_stats == null)
+                    // Stats
+                    AppPanel(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                           Text(
-                            ku
-                                ? 'Hîn dîroka lîstikê ya serhêl tune.\nBi yekê re bikevin an yek çêbikin.'
-                                : 'Henüz çevrimiçi oyun geçmişin yok.\nBir odaya katıl veya oluştur.',
-                            style: const TextStyle(color: AppTheme.textMuted),
-                          )
-                        else
-                          GridView.count(
-                            crossAxisCount: 2,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                            childAspectRatio: 2.2,
-                            children: [
-                              _StatTile(
-                                label: ku ? 'Rêze' : 'Sıralama',
-                                value: '#${_stats!.rank}',
-                                color: AppTheme.gold,
-                              ),
-                              _StatTile(
-                                label: ku ? 'Tevayî Xal' : 'Toplam Puan',
-                                value: '${_stats!.totalScore}',
-                                color: AppTheme.accent,
-                              ),
-                              _StatTile(
-                                label: ku ? 'Baştirîn Zincîr' : 'En İyi Seri',
-                                value: '${_stats!.bestStreak}',
-                                color: AppTheme.violet,
-                              ),
-                              _StatTile(
-                                label: ku ? 'Lîstik' : 'Oyun',
-                                value: '${_stats!.roomsPlayed}',
-                                color: AppTheme.correct,
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-
-                  _AchievementShowcase(achievements: _achievements, isKu: ku),
-                  const SizedBox(height: 14),
-
-                  // Saved questions shortcut
-                  AppPanel(
-                    padding: EdgeInsets.zero,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(16),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => FavoriteQuestionsScreen(
-                              repository: widget.repository,
+                            ku ? 'Statîstîkên Min' : 'İstatistiklerim',
+                            style: const TextStyle(
+                              color: AppTheme.textPrimary,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 17,
                             ),
                           ),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.bookmark_outline,
-                              color: AppTheme.gold,
-                              size: 22,
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Text(
-                                ku ? 'Pirsên Tomarkirî' : 'Kaydedilen Sorular',
-                                style: const TextStyle(
-                                  color: AppTheme.textPrimary,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ),
-                            const Icon(
-                              Icons.chevron_right_rounded,
-                              color: AppTheme.textMuted,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-
-                  // Mistake practice shortcut
-                  AppPanel(
-                    padding: EdgeInsets.zero,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(16),
-                      onTap: _practiceLoading ? null : _startMistakePractice,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            _practiceLoading
-                                ? const SizedBox(
-                                    width: 22,
-                                    height: 22,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: AppTheme.accent,
-                                    ),
-                                  )
-                                : const Icon(
-                                    Icons.school_outlined,
-                                    color: AppTheme.accent,
-                                    size: 22,
-                                  ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                          const SizedBox(height: 14),
+                          if (_stats == null)
+                            Text(
+                              ku
+                                  ? 'Hîn dîroka lîstikê ya serhêl tune.\nBi yekê re bikevin an yek çêbikin.'
+                                  : 'Henüz çevrimiçi oyun geçmişin yok.\nBir odaya katıl veya oluştur.',
+                              style: const TextStyle(color: AppTheme.textMuted),
+                            )
+                          else
+                            LayoutBuilder(
+                              builder: (context, constraints) => GridView.count(
+                                crossAxisCount: constraints.maxWidth > 600
+                                    ? 4
+                                    : 2,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                                childAspectRatio: 2.2,
                                 children: [
-                                  Text(
-                                    ku ? 'Şaşiyên Min' : 'Yanlışlarım',
-                                    style: const TextStyle(
-                                      color: AppTheme.textPrimary,
-                                      fontWeight: FontWeight.w800,
-                                    ),
+                                  _StatTile(
+                                    label: ku ? 'Rêze' : 'Sıralama',
+                                    value: '#${_stats!.rank}',
+                                    color: AppTheme.gold,
                                   ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    _mistakeCount == 0
-                                        ? (ku
-                                              ? 'Şaşiyek tune — aferîn!'
-                                              : 'Hiç yanlışın yok — aferin!')
-                                        : (ku
-                                              ? '$_mistakeCount pirs li benda dubarekirinê'
-                                              : '$_mistakeCount soru tekrar bekliyor'),
-                                    style: const TextStyle(
-                                      color: AppTheme.textMuted,
-                                      fontSize: 12,
-                                    ),
+                                  _StatTile(
+                                    label: ku ? 'Tevayî Xal' : 'Toplam Puan',
+                                    value: '${_stats!.totalScore}',
+                                    color: AppTheme.accent,
+                                  ),
+                                  _StatTile(
+                                    label: ku
+                                        ? 'Baştirîn Zincîr'
+                                        : 'En İyi Seri',
+                                    value: '${_stats!.bestStreak}',
+                                    color: AppTheme.violet,
+                                  ),
+                                  _StatTile(
+                                    label: ku ? 'Lîstik' : 'Oyun',
+                                    value: '${_stats!.roomsPlayed}',
+                                    color: AppTheme.correct,
                                   ),
                                 ],
                               ),
                             ),
-                            const Icon(
-                              Icons.chevron_right_rounded,
-                              color: AppTheme.textMuted,
-                            ),
-                          ],
-                        ),
+                        ],
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 14),
+                    const SizedBox(height: 14),
 
-                  // Settings shortcut
-                  AppPanel(
-                    padding: EdgeInsets.zero,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(16),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                SettingsScreen(repository: widget.repository),
+                    _AchievementShowcase(achievements: _achievements, isKu: ku),
+                    const SizedBox(height: 14),
+
+                    // Saved questions shortcut
+                    AppPanel(
+                      padding: EdgeInsets.zero,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => FavoriteQuestionsScreen(
+                                repository: widget.repository,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.bookmark_outline,
+                                color: AppTheme.gold,
+                                size: 22,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  ku
+                                      ? 'Pirsên Tomarkirî'
+                                      : 'Kaydedilen Sorular',
+                                  style: const TextStyle(
+                                    color: AppTheme.textPrimary,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                              const Icon(
+                                Icons.chevron_right_rounded,
+                                color: AppTheme.textMuted,
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.settings_outlined,
-                              color: AppTheme.violet,
-                              size: 22,
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Text(
-                                ku ? 'Mîheng' : 'Ayarlar',
-                                style: const TextStyle(
-                                  color: AppTheme.textPrimary,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ),
-                            const Icon(
-                              Icons.chevron_right_rounded,
-                              color: AppTheme.textMuted,
-                            ),
-                          ],
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 14),
+                    const SizedBox(height: 14),
 
-                  // Sign out
-                  AppPanel(
-                    padding: EdgeInsets.zero,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(16),
-                      onTap: () => _confirmSignOut(context),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.logout_rounded,
-                              color: AppTheme.wrong,
-                              size: 22,
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Text(
-                                ku ? 'Derkeve' : 'Çıkış Yap',
-                                style: const TextStyle(
-                                  color: AppTheme.wrong,
-                                  fontWeight: FontWeight.w800,
+                    // Mistake practice shortcut
+                    AppPanel(
+                      padding: EdgeInsets.zero,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: _practiceLoading ? null : _startMistakePractice,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            children: [
+                              _practiceLoading
+                                  ? const SizedBox(
+                                      width: 22,
+                                      height: 22,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: AppTheme.accent,
+                                      ),
+                                    )
+                                  : const Icon(
+                                      Icons.school_outlined,
+                                      color: AppTheme.accent,
+                                      size: 22,
+                                    ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      ku ? 'Şaşiyên Min' : 'Yanlışlarım',
+                                      style: const TextStyle(
+                                        color: AppTheme.textPrimary,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      _mistakeCount == 0
+                                          ? (ku
+                                                ? 'Şaşiyek tune — aferîn!'
+                                                : 'Hiç yanlışın yok — aferin!')
+                                          : (ku
+                                                ? '$_mistakeCount pirs li benda dubarekirinê'
+                                                : '$_mistakeCount soru tekrar bekliyor'),
+                                      style: const TextStyle(
+                                        color: AppTheme.textMuted,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ),
-                            const Icon(
-                              Icons.chevron_right_rounded,
-                              color: AppTheme.textMuted,
-                            ),
-                          ],
+                              const Icon(
+                                Icons.chevron_right_rounded,
+                                color: AppTheme.textMuted,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 14),
+
+                    // Settings shortcut
+                    AppPanel(
+                      padding: EdgeInsets.zero,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  SettingsScreen(repository: widget.repository),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.settings_outlined,
+                                color: AppTheme.violet,
+                                size: 22,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  ku ? 'Mîheng' : 'Ayarlar',
+                                  style: const TextStyle(
+                                    color: AppTheme.textPrimary,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                              const Icon(
+                                Icons.chevron_right_rounded,
+                                color: AppTheme.textMuted,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+
+                    // Sign out
+                    AppPanel(
+                      padding: EdgeInsets.zero,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: () => _confirmSignOut(context),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.logout_rounded,
+                                color: AppTheme.wrong,
+                                size: 22,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  ku ? 'Derkeve' : 'Çıkış Yap',
+                                  style: const TextStyle(
+                                    color: AppTheme.wrong,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                              const Icon(
+                                Icons.chevron_right_rounded,
+                                color: AppTheme.textMuted,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
       ),
     );
