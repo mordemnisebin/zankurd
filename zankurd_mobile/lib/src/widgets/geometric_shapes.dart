@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Creates a hexagonal clip path (6 vertices).
 class HexagonClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -22,22 +23,23 @@ class HexagonClipper extends CustomClipper<Path> {
   bool shouldReclip(HexagonClipper oldClipper) => false;
 }
 
+/// Creates an octagonal clip path (8 vertices, 30% corner offset).
 class OctagonClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final path = Path();
     final width = size.width;
     final height = size.height;
-    final offset = 0.3;
+    final cornerOffset = 0.3; // 30% inset for octagon corners
 
-    path.moveTo(width * offset, 0);
-    path.lineTo(width * (1 - offset), 0);
-    path.lineTo(width, height * offset);
-    path.lineTo(width, height * (1 - offset));
-    path.lineTo(width * (1 - offset), height);
-    path.lineTo(width * offset, height);
-    path.lineTo(0, height * (1 - offset));
-    path.lineTo(0, height * offset);
+    path.moveTo(width * cornerOffset, 0);
+    path.lineTo(width * (1 - cornerOffset), 0);
+    path.lineTo(width, height * cornerOffset);
+    path.lineTo(width, height * (1 - cornerOffset));
+    path.lineTo(width * (1 - cornerOffset), height);
+    path.lineTo(width * cornerOffset, height);
+    path.lineTo(0, height * (1 - cornerOffset));
+    path.lineTo(0, height * cornerOffset);
     path.close();
 
     return path;
@@ -47,6 +49,7 @@ class OctagonClipper extends CustomClipper<Path> {
   bool shouldReclip(OctagonClipper oldClipper) => false;
 }
 
+/// Creates a diamond/rotated square clip path (4 vertices at 45° angles).
 class DiamondClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -67,22 +70,5 @@ class DiamondClipper extends CustomClipper<Path> {
   bool shouldReclip(DiamondClipper oldClipper) => false;
 }
 
-class RotatedSquareClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    final width = size.width;
-    final height = size.height;
-
-    path.moveTo(width * 0.5, 0);
-    path.lineTo(width, height * 0.5);
-    path.lineTo(width * 0.5, height);
-    path.lineTo(0, height * 0.5);
-    path.close();
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(RotatedSquareClipper oldClipper) => false;
-}
+/// Alias for DiamondClipper (same geometry, semantic distinction)
+typedef RotatedSquareClipper = DiamondClipper;
