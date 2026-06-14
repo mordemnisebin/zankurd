@@ -6,6 +6,7 @@ import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../utils/coin_calculator.dart';
 import 'offline_question_bank.dart';
 import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
@@ -357,13 +358,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
-  }) {
-    final completionBonus = totalQuestions >= 10 ? 20 : 8;
-    return completionBonus +
-        (correctCount * 6) +
-        (bestStreak * 2) +
-        score ~/ 80;
-  }
+  }) =>
+      CoinCalculator.award(
+        score: score,
+        correctCount: correctCount,
+        bestStreak: bestStreak,
+        totalQuestions: totalQuestions,
+      );
 
   @override
   Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50}) async {
