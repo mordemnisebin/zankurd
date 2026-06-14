@@ -195,7 +195,7 @@ class _ReviewCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: AppTheme.bg.withValues(alpha: 0.35),
+                    color: AppTheme.bgOf(context).withValues(alpha: 0.35),
                     borderRadius: BorderRadius.circular(99),
                   ),
                   child: Text(

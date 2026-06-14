@@ -644,7 +644,7 @@ class _RaceStandingRow extends StatelessWidget {
       decoration: BoxDecoration(
         color: isUser
             ? AppTheme.accent.withValues(alpha: 0.12)
-            : AppTheme.bg.withValues(alpha: 0.35),
+            : AppTheme.bgOf(context).withValues(alpha: 0.35),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isUser

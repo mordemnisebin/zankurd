@@ -514,7 +514,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppTheme.surface,
+        backgroundColor: AppTheme.surfaceOf(context),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: AppTheme.border),
@@ -559,7 +559,7 @@ class _LangToggle extends StatelessWidget {
       onTap: onToggle,
       child: Container(
         decoration: BoxDecoration(
-          color: AppTheme.surfaceHi,
+          color: AppTheme.surfaceHiOf(context),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: AppTheme.border),
         ),

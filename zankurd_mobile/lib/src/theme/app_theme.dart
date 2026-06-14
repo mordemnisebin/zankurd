@@ -274,6 +274,28 @@ class AppTheme {
     );
   }
 
+  // ============ Context-Aware Helpers ============
+  static bool _isDark(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark;
+
+  static Color bgOf(BuildContext context) =>
+      _isDark(context) ? bg : lightBg;
+
+  static Color surfaceOf(BuildContext context) =>
+      _isDark(context) ? surface : lightSurface;
+
+  static Color surfaceHiOf(BuildContext context) =>
+      _isDark(context) ? surfaceHi : lightSurfaceHi;
+
+  static Color textPrimaryOf(BuildContext context) =>
+      _isDark(context) ? textPrimary : lightTextPrimary;
+
+  static Color textSubOf(BuildContext context) =>
+      _isDark(context) ? textSub : lightTextSub;
+
+  static Color borderOf(BuildContext context) =>
+      _isDark(context) ? border : lightBorder;
+
   static ThemeData light() {
     final base = dark();
     return base.copyWith(

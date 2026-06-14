@@ -276,7 +276,7 @@ class _RankRow extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppTheme.surface,
+        color: AppTheme.surfaceOf(context),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: AppTheme.border),
       ),
@@ -286,7 +286,7 @@ class _RankRow extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: AppTheme.surfaceHi,
+              color: AppTheme.surfaceHiOf(context),
               borderRadius: BorderRadius.circular(10),
             ),
             alignment: Alignment.center,
