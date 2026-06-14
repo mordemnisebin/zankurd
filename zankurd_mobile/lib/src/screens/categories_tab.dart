@@ -106,10 +106,12 @@ class _CategoriesTabState extends State<CategoriesTab> {
                         index: index,
                         isKu: ku,
                         onTap: () => Navigator.of(context).push(
-                          AppRoute.to(LevelScreen(
-                            repository: widget.repository,
-                            category: cat,
-                          )),
+                          AppRoute.to(
+                            LevelScreen(
+                              repository: widget.repository,
+                              category: cat,
+                            ),
+                          ),
                         ),
                       );
                     },

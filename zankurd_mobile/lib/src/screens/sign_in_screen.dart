@@ -530,9 +530,9 @@ class _SignInScreenState extends State<SignInScreen>
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(
-                                AppRoute.to(const SignUpScreen()),
-                              );
+                              Navigator.of(
+                                context,
+                              ).push(AppRoute.to(const SignUpScreen()));
                             },
                             child: Text(
                               context.s('Tomar bibe', 'Kaydol'),

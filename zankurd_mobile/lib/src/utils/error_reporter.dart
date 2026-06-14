@@ -11,11 +11,7 @@ class ErrorReporter {
   static void record(Object error, StackTrace stack, {String? reason}) {
     if (kIsWeb) return;
     try {
-      FirebaseCrashlytics.instance.recordError(
-        error,
-        stack,
-        reason: reason,
-      );
+      FirebaseCrashlytics.instance.recordError(error, stack, reason: reason);
     } catch (_) {
       // Crashlytics yapılandırılmamış olabilir (masaüstü/test ortamı).
     }

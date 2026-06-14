@@ -502,20 +502,22 @@ class _QuizScreenState extends State<QuizScreen> {
                 .catchError((_) => 0);
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
-        AppRoute.replace(QuizResultScreen(
-          repository: widget.repository,
-          room: widget.room,
-          score: score,
-          correctCount: correctCount,
-          wrongCount: wrongCount,
-          totalQuestions: widget.questions.length,
-          bestStreak: bestStreak,
-          answerRecords: answerRecords,
-          coinsAwarded: coinsAwarded,
-          opponents: _botRace?.toPlayers() ?? const [],
-          practice: widget.practice,
-          dailyQuiz: widget.dailyQuiz,
-        )),
+        AppRoute.replace(
+          QuizResultScreen(
+            repository: widget.repository,
+            room: widget.room,
+            score: score,
+            correctCount: correctCount,
+            wrongCount: wrongCount,
+            totalQuestions: widget.questions.length,
+            bestStreak: bestStreak,
+            answerRecords: answerRecords,
+            coinsAwarded: coinsAwarded,
+            opponents: _botRace?.toPlayers() ?? const [],
+            practice: widget.practice,
+            dailyQuiz: widget.dailyQuiz,
+          ),
+        ),
       );
       return;
     }

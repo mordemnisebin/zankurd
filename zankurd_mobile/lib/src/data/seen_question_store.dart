@@ -75,10 +75,7 @@ class SeenQuestionStore {
 
     final seenFill = pool.where((q) => _seen.contains(q.id)).toList()
       ..shuffle(random);
-    return [
-      ...unseen,
-      ...seenFill.take(limit - unseen.length),
-    ];
+    return [...unseen, ...seenFill.take(limit - unseen.length)];
   }
 
   Future<void> _persist() async {

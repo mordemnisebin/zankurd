@@ -40,11 +40,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
         ? widget.repository.questions
         : questions;
     Navigator.of(context).push(
-      AppRoute.to(QuizScreen(
-        repository: widget.repository,
-        room: widget.repository.createRoom(),
-        questions: raceQuestions,
-      )),
+      AppRoute.to(
+        QuizScreen(
+          repository: widget.repository,
+          room: widget.repository.createRoom(),
+          questions: raceQuestions,
+        ),
+      ),
     );
   }
 

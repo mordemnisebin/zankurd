@@ -485,12 +485,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         questionCount: dailyQuestions.length,
       );
       await Navigator.of(context).push(
-        AppRoute.to(QuizScreen(
-          repository: repo,
-          room: dailyRoom,
-          questions: dailyQuestions,
-          dailyQuiz: true,
-        )),
+        AppRoute.to(
+          QuizScreen(
+            repository: repo,
+            room: dailyRoom,
+            questions: dailyQuestions,
+            dailyQuiz: true,
+          ),
+        ),
       );
       _refreshCoins();
     } finally {
@@ -500,28 +502,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Future<void> _openQuiz(BuildContext context, GameRoom room) async {
     await Navigator.of(context).push(
-      AppRoute.to(QuizScreen(repository: repo, room: room, questions: _questions)),
+      AppRoute.to(
+        QuizScreen(repository: repo, room: room, questions: _questions),
+      ),
     );
     _refreshCoins();
   }
 
   void _openRoom(BuildContext context, GameRoom room) {
-    Navigator.of(context).push(
-      AppRoute.to(RoomScreen(repository: repo, initialRoom: room)),
-    );
+    Navigator.of(
+      context,
+    ).push(AppRoute.to(RoomScreen(repository: repo, initialRoom: room)));
   }
 
   Future<void> _openSpinWheel(BuildContext context) async {
-    await Navigator.of(context).push(
-      AppRoute.to(SpinWheelScreen(repository: repo)),
-    );
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(SpinWheelScreen(repository: repo)));
     _refreshCoins();
   }
 
   void _openCategory(BuildContext context, String category) {
-    Navigator.of(context).push(
-      AppRoute.to(LevelScreen(repository: repo, category: category)),
-    );
+    Navigator.of(
+      context,
+    ).push(AppRoute.to(LevelScreen(repository: repo, category: category)));
   }
 
   Future<void> _refreshCoins() async {

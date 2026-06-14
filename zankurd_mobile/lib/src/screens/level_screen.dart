@@ -96,11 +96,13 @@ class _LevelScreenState extends State<LevelScreen> {
             questionCount: questions.length,
           );
       await Navigator.of(context).push(
-        AppRoute.to(QuizScreen(
-          repository: widget.repository,
-          room: room,
-          questions: questions,
-        )),
+        AppRoute.to(
+          QuizScreen(
+            repository: widget.repository,
+            room: room,
+            questions: questions,
+          ),
+        ),
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'level questions load failed');

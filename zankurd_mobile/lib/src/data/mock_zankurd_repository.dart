@@ -358,13 +358,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
-  }) =>
-      CoinCalculator.award(
-        score: score,
-        correctCount: correctCount,
-        bestStreak: bestStreak,
-        totalQuestions: totalQuestions,
-      );
+  }) => CoinCalculator.award(
+    score: score,
+    correctCount: correctCount,
+    bestStreak: bestStreak,
+    totalQuestions: totalQuestions,
+  );
 
   @override
   Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50}) async {

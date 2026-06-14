@@ -348,10 +348,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             ? null
                             : () {
                                 Navigator.of(context).push(
-                                  AppRoute.to(ReviewScreen(
-                                    records: answerRecords,
-                                    room: room,
-                                  )),
+                                  AppRoute.to(
+                                    ReviewScreen(
+                                      records: answerRecords,
+                                      room: room,
+                                    ),
+                                  ),
                                 );
                               },
                         icon: const Icon(Icons.fact_check_outlined),
@@ -366,7 +368,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       child: OutlinedButton.icon(
                         onPressed: () {
                           Navigator.of(context).push(
-                            AppRoute.to(LeaderboardScreen(repository: repository)),
+                            AppRoute.to(
+                              LeaderboardScreen(repository: repository),
+                            ),
                           );
                         },
                         icon: const Icon(Icons.emoji_events_outlined),

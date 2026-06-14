@@ -278,8 +278,7 @@ class AppTheme {
   static bool _isDark(BuildContext context) =>
       Theme.of(context).brightness == Brightness.dark;
 
-  static Color bgOf(BuildContext context) =>
-      _isDark(context) ? bg : lightBg;
+  static Color bgOf(BuildContext context) => _isDark(context) ? bg : lightBg;
 
   static Color surfaceOf(BuildContext context) =>
       _isDark(context) ? surface : lightSurface;
