@@ -290,13 +290,15 @@ class _RoomScreenState extends State<RoomScreen> {
     if (!mounted) return;
     setState(() => starting = false);
     Navigator.of(context).push(
-      AppRoute.to(QuizScreen(
-        repository: widget.repository,
-        room: room,
-        questions: questions.isEmpty
-            ? widget.repository.questions
-            : questions,
-      )),
+      AppRoute.to(
+        QuizScreen(
+          repository: widget.repository,
+          room: room,
+          questions: questions.isEmpty
+              ? widget.repository.questions
+              : questions,
+        ),
+      ),
     );
   }
 }

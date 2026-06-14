@@ -3,17 +3,20 @@ import 'package:zankurd_mobile/src/utils/coin_calculator.dart';
 
 void main() {
   group('CoinCalculator.award', () {
-    test('sıfır doğru, sıfır streak → yalnızca completionBonus (10 soruda)', () {
-      expect(
-        CoinCalculator.award(
-          score: 0,
-          correctCount: 0,
-          bestStreak: 0,
-          totalQuestions: 10,
-        ),
-        20,
-      );
-    });
+    test(
+      'sıfır doğru, sıfır streak → yalnızca completionBonus (10 soruda)',
+      () {
+        expect(
+          CoinCalculator.award(
+            score: 0,
+            correctCount: 0,
+            bestStreak: 0,
+            totalQuestions: 10,
+          ),
+          20,
+        );
+      },
+    );
 
     test('10 doğru, streak 5, score 800, 10 soru → 100', () {
       // completionBonus=20 + 10*6=60 + 5*2=10 + 800~/80=10 → 100

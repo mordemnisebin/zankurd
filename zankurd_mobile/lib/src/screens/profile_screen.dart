@@ -73,12 +73,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       questionCount: questions.length,
     );
     await Navigator.of(context).push(
-      AppRoute.to(QuizScreen(
-        repository: widget.repository,
-        room: practiceRoom,
-        questions: questions,
-        practice: true,
-      )),
+      AppRoute.to(
+        QuizScreen(
+          repository: widget.repository,
+          room: practiceRoom,
+          questions: questions,
+          practice: true,
+        ),
+      ),
     );
     if (!mounted) return;
     setState(() => _practiceLoading = false);
@@ -327,9 +329,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         borderRadius: BorderRadius.circular(16),
                         onTap: () {
                           Navigator.of(context).push(
-                            AppRoute.to(FavoriteQuestionsScreen(
-                              repository: widget.repository,
-                            )),
+                            AppRoute.to(
+                              FavoriteQuestionsScreen(
+                                repository: widget.repository,
+                              ),
+                            ),
                           );
                         },
                         child: Padding(
@@ -435,7 +439,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         borderRadius: BorderRadius.circular(16),
                         onTap: () {
                           Navigator.of(context).push(
-                            AppRoute.to(SettingsScreen(repository: widget.repository)),
+                            AppRoute.to(
+                              SettingsScreen(repository: widget.repository),
+                            ),
                           );
                         },
                         child: Padding(

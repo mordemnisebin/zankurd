@@ -43,7 +43,9 @@ class LoadAnimationSequence {
   }
 
   /// Form field 1 fade animation: 0 → 1, interval 0.5-0.75 (1000-1500ms in 2000ms controller)
-  static Animation<double> formField1FadeAnimation(AnimationController controller) {
+  static Animation<double> formField1FadeAnimation(
+    AnimationController controller,
+  ) {
     return Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,
@@ -53,7 +55,9 @@ class LoadAnimationSequence {
   }
 
   /// Form field 2 fade animation: 0 → 1, interval 0.55-0.8 (1100-1600ms in 2000ms controller)
-  static Animation<double> formField2FadeAnimation(AnimationController controller) {
+  static Animation<double> formField2FadeAnimation(
+    AnimationController controller,
+  ) {
     return Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,
@@ -63,7 +67,9 @@ class LoadAnimationSequence {
   }
 
   /// Button scale animation: 0.95 → 1.0, interval 0.6-0.95 (1200-1900ms in 2000ms controller)
-  static Animation<double> buttonScaleAnimation(AnimationController controller) {
+  static Animation<double> buttonScaleAnimation(
+    AnimationController controller,
+  ) {
     return Tween<double>(begin: 0.95, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,

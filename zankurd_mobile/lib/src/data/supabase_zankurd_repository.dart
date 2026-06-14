@@ -144,7 +144,10 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     final key = '${categoryId ?? "all"}_$limit';
     final cached = _cache.get(key);
     if (cached != null) return cached;
-    final result = await fetchApprovedQuestions(categoryId: categoryId, limit: limit);
+    final result = await fetchApprovedQuestions(
+      categoryId: categoryId,
+      limit: limit,
+    );
     _cache.set(key, result);
     return result;
   }

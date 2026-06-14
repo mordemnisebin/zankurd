@@ -126,11 +126,13 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
         );
 
     Navigator.of(context).push(
-      AppRoute.to(QuizScreen(
-        repository: widget.repository,
-        room: room,
-        questions: selected,
-      )),
+      AppRoute.to(
+        QuizScreen(
+          repository: widget.repository,
+          room: room,
+          questions: selected,
+        ),
+      ),
     );
   }
 }

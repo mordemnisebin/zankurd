@@ -61,11 +61,10 @@ void main() {
     for (final question in offlineQuestionBank.where(
       (q) => q.type == QuestionType.trueFalse,
     )) {
-      expect(
-        question.answers,
-        ['Rast', 'Şaş'],
-        reason: '${question.id}: unexpected true/false options',
-      );
+      expect(question.answers, [
+        'Rast',
+        'Şaş',
+      ], reason: '${question.id}: unexpected true/false options');
     }
   });
 
