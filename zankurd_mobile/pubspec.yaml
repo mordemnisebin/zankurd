@@ -114,3 +114,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+dependency_overrides:
+  # objective_c >= 6.0 adds native asset build hooks that fail when the
+  # project path contains spaces on Windows (URL-encoded path resolution bug).
+  objective_c: '>=0.1.0 <6.0.0'
