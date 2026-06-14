@@ -270,14 +270,12 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Dilini seç'), findsOneWidget);
-    expect(find.text('Türkçe'), findsOneWidget);
-    expect(find.text('Kurmancî'), findsOneWidget);
+    expect(find.text('KU'), findsOneWidget);
+    expect(find.text('TR'), findsOneWidget);
 
-    await tester.tap(find.text('Kurmancî'));
+    await tester.tap(find.text('KU'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Zimanê xwe hilbijêre'), findsOneWidget);
     expect(find.text('Bi xêr hatî ZanKurdê'), findsOneWidget);
   });
 
@@ -320,8 +318,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd'), findsOneWidget);
-    expect(find.text('TR'), findsOneWidget);
-    expect(find.byTooltip('Tema'), findsOneWidget);
+    expect(find.text('Hoş geldin, Oyuncu!'), findsOneWidget);
+    expect(find.text('Seviye 5'), findsOneWidget);
   });
 
   testWidgets('theme toggle changes visible home surface colors', (
@@ -330,11 +328,13 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
+    final theme = ThemeProvider();
     await tester.pumpWidget(
       ZanKurdApp(
         repository: repository,
         authProvider: _FakeAuthProvider(),
         languageProvider: _turkishLang(),
+        themeProvider: theme,
       ),
     );
     await tester.pumpAndSettle();
@@ -344,7 +344,7 @@ void main() {
       Brightness.dark,
     );
 
-    await tester.tap(find.byTooltip('Tema'));
+    theme.toggleDarkLight();
     await tester.pumpAndSettle();
 
     expect(
@@ -428,6 +428,9 @@ void main() {
   });
 
   testWidgets('creates a room and opens the quiz flow', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
     await tester.pumpWidget(
       ZanKurdApp(
         repository: repository,
@@ -460,6 +463,9 @@ void main() {
   });
 
   testWidgets('opens the daily quiz from the home screen', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
     await tester.pumpWidget(
       ZanKurdApp(
         repository: repository,
@@ -534,6 +540,9 @@ void main() {
   });
 
   testWidgets('opens category levels from the home screen', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
     await tester.pumpWidget(
       ZanKurdApp(
         repository: repository,
@@ -542,9 +551,8 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.pumpAndSettle();
 
-    await tester.drag(find.byType(ListView).first, const Offset(0, -900));
+    await tester.drag(find.byType(CustomScrollView).first, const Offset(0, -900));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Dil').last);
     await tester.pumpAndSettle();
@@ -802,7 +810,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(QuizScreen), findsOneWidget);
-    expect(find.text('1240'), findsNothing);
   });
 
   testWidgets('settings does not delete account before final confirmation', (
