@@ -7,6 +7,7 @@ import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../utils/error_reporter.dart';
+import '../utils/question_cache.dart';
 import 'mock_zankurd_repository.dart';
 import 'seen_question_store.dart';
 
@@ -14,6 +15,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
 
   final SupabaseClient client;
+  final _cache = QuestionCache();
 
   Future<User> signInAnonymously() async {
     final response = await client.auth.signInAnonymously();
@@ -139,7 +141,12 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     String? categoryId,
     int limit = 10,
   }) async {
-    return fetchApprovedQuestions(categoryId: categoryId, limit: limit);
+    final key = '${categoryId ?? "all"}_$limit';
+    final cached = _cache.get(key);
+    if (cached != null) return cached;
+    final result = await fetchApprovedQuestions(categoryId: categoryId, limit: limit);
+    _cache.set(key, result);
+    return result;
   }
 
   @override
