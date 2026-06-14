@@ -10,6 +10,7 @@ import '../models/answer_record.dart';
 import '../models/player.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
@@ -347,12 +348,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             ? null
                             : () {
                                 Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => ReviewScreen(
-                                      records: answerRecords,
-                                      room: room,
-                                    ),
-                                  ),
+                                  AppRoute.to(ReviewScreen(
+                                    records: answerRecords,
+                                    room: room,
+                                  )),
                                 );
                               },
                         icon: const Icon(Icons.fact_check_outlined),
@@ -367,10 +366,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       child: OutlinedButton.icon(
                         onPressed: () {
                           Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) =>
-                                  LeaderboardScreen(repository: repository),
-                            ),
+                            AppRoute.to(LeaderboardScreen(repository: repository)),
                           );
                         },
                         icon: const Icon(Icons.emoji_events_outlined),

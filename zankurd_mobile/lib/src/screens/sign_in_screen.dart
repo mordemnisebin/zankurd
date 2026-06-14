@@ -5,6 +5,7 @@ import '../animations/load_animations.dart';
 import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../widgets/geometric_shapes.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/styled_button.dart';
@@ -530,9 +531,7 @@ class _SignInScreenState extends State<SignInScreen>
                           GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen(),
-                                ),
+                                AppRoute.to(const SignUpScreen()),
                               );
                             },
                             child: Text(

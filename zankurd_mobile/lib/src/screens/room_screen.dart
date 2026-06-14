@@ -8,6 +8,7 @@ import '../l10n/lang.dart';
 import '../models/player.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import 'quiz_screen.dart';
@@ -289,15 +290,13 @@ class _RoomScreenState extends State<RoomScreen> {
     if (!mounted) return;
     setState(() => starting = false);
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => QuizScreen(
-          repository: widget.repository,
-          room: room,
-          questions: questions.isEmpty
-              ? widget.repository.questions
-              : questions,
-        ),
-      ),
+      AppRoute.to(QuizScreen(
+        repository: widget.repository,
+        room: room,
+        questions: questions.isEmpty
+            ? widget.repository.questions
+            : questions,
+      )),
     );
   }
 }

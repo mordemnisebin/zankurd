@@ -4,6 +4,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/quiz_level.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'quiz_screen.dart';
 
@@ -95,13 +96,11 @@ class _LevelScreenState extends State<LevelScreen> {
             questionCount: questions.length,
           );
       await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => QuizScreen(
-            repository: widget.repository,
-            room: room,
-            questions: questions,
-          ),
-        ),
+        AppRoute.to(QuizScreen(
+          repository: widget.repository,
+          room: room,
+          questions: questions,
+        )),
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'level questions load failed');

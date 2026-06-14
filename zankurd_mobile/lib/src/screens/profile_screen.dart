@@ -9,6 +9,7 @@ import '../models/achievement.dart';
 import '../models/leaderboard_entry.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
@@ -72,14 +73,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       questionCount: questions.length,
     );
     await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => QuizScreen(
-          repository: widget.repository,
-          room: practiceRoom,
-          questions: questions,
-          practice: true,
-        ),
-      ),
+      AppRoute.to(QuizScreen(
+        repository: widget.repository,
+        room: practiceRoom,
+        questions: questions,
+        practice: true,
+      )),
     );
     if (!mounted) return;
     setState(() => _practiceLoading = false);
@@ -328,11 +327,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         borderRadius: BorderRadius.circular(16),
                         onTap: () {
                           Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => FavoriteQuestionsScreen(
-                                repository: widget.repository,
-                              ),
-                            ),
+                            AppRoute.to(FavoriteQuestionsScreen(
+                              repository: widget.repository,
+                            )),
                           );
                         },
                         child: Padding(
@@ -438,10 +435,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         borderRadius: BorderRadius.circular(16),
                         onTap: () {
                           Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) =>
-                                  SettingsScreen(repository: widget.repository),
-                            ),
+                            AppRoute.to(SettingsScreen(repository: widget.repository)),
                           );
                         },
                         child: Padding(

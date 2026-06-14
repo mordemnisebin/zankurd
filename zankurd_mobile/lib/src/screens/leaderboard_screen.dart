@@ -4,6 +4,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/leaderboard_entry.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import 'quiz_screen.dart';
@@ -39,13 +40,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
         ? widget.repository.questions
         : questions;
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => QuizScreen(
-          repository: widget.repository,
-          room: widget.repository.createRoom(),
-          questions: raceQuestions,
-        ),
-      ),
+      AppRoute.to(QuizScreen(
+        repository: widget.repository,
+        room: widget.repository.createRoom(),
+        questions: raceQuestions,
+      )),
     );
   }
 
