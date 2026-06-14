@@ -203,7 +203,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 14),
 
               AppPanel(
-                color: AppTheme.surface.withValues(alpha: 0.92),
+                color: AppTheme.surfaceOf(context).withValues(alpha: 0.92),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -377,7 +377,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final continueDelete = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppTheme.surface,
+        backgroundColor: AppTheme.surfaceOf(context),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: AppTheme.border),
@@ -462,7 +462,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
-              backgroundColor: AppTheme.surface,
+              backgroundColor: AppTheme.surfaceOf(context),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
                 side: const BorderSide(color: AppTheme.border),
