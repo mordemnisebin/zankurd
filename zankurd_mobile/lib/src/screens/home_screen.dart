@@ -6,6 +6,7 @@ import '../l10n/lang.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'home/category_grid.dart';
 import 'home/daily_quiz_card.dart';
@@ -484,14 +485,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         questionCount: dailyQuestions.length,
       );
       await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => QuizScreen(
-            repository: repo,
-            room: dailyRoom,
-            questions: dailyQuestions,
-            dailyQuiz: true,
-          ),
-        ),
+        AppRoute.to(QuizScreen(
+          repository: repo,
+          room: dailyRoom,
+          questions: dailyQuestions,
+          dailyQuiz: true,
+        )),
       );
       _refreshCoins();
     } finally {
@@ -501,34 +500,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Future<void> _openQuiz(BuildContext context, GameRoom room) async {
     await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) =>
-            QuizScreen(repository: repo, room: room, questions: _questions),
-      ),
+      AppRoute.to(QuizScreen(repository: repo, room: room, questions: _questions)),
     );
     _refreshCoins();
   }
 
   void _openRoom(BuildContext context, GameRoom room) {
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => RoomScreen(repository: repo, initialRoom: room),
-      ),
+      AppRoute.to(RoomScreen(repository: repo, initialRoom: room)),
     );
   }
 
   Future<void> _openSpinWheel(BuildContext context) async {
     await Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => SpinWheelScreen(repository: repo)),
+      AppRoute.to(SpinWheelScreen(repository: repo)),
     );
     _refreshCoins();
   }
 
   void _openCategory(BuildContext context, String category) {
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => LevelScreen(repository: repo, category: category),
-      ),
+      AppRoute.to(LevelScreen(repository: repo, category: category)),
     );
   }
 

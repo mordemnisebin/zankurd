@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'level_screen.dart';
 
@@ -105,12 +106,10 @@ class _CategoriesTabState extends State<CategoriesTab> {
                         index: index,
                         isKu: ku,
                         onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => LevelScreen(
-                              repository: widget.repository,
-                              category: cat,
-                            ),
-                          ),
+                          AppRoute.to(LevelScreen(
+                            repository: widget.repository,
+                            category: cat,
+                          )),
                         ),
                       );
                     },

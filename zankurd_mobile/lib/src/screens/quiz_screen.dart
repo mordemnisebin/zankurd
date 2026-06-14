@@ -14,6 +14,7 @@ import '../models/room.dart';
 import '../l10n/explanation_ku.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import 'quiz_result_screen.dart';
@@ -501,22 +502,20 @@ class _QuizScreenState extends State<QuizScreen> {
                 .catchError((_) => 0);
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => QuizResultScreen(
-            repository: widget.repository,
-            room: widget.room,
-            score: score,
-            correctCount: correctCount,
-            wrongCount: wrongCount,
-            totalQuestions: widget.questions.length,
-            bestStreak: bestStreak,
-            answerRecords: answerRecords,
-            coinsAwarded: coinsAwarded,
-            opponents: _botRace?.toPlayers() ?? const [],
-            practice: widget.practice,
-            dailyQuiz: widget.dailyQuiz,
-          ),
-        ),
+        AppRoute.replace(QuizResultScreen(
+          repository: widget.repository,
+          room: widget.room,
+          score: score,
+          correctCount: correctCount,
+          wrongCount: wrongCount,
+          totalQuestions: widget.questions.length,
+          bestStreak: bestStreak,
+          answerRecords: answerRecords,
+          coinsAwarded: coinsAwarded,
+          opponents: _botRace?.toPlayers() ?? const [],
+          practice: widget.practice,
+          dailyQuiz: widget.dailyQuiz,
+        )),
       );
       return;
     }

@@ -4,6 +4,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/quiz_question.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import 'quiz_screen.dart';
@@ -125,13 +126,11 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
         );
 
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => QuizScreen(
-          repository: widget.repository,
-          room: room,
-          questions: selected,
-        ),
-      ),
+      AppRoute.to(QuizScreen(
+        repository: widget.repository,
+        room: room,
+        questions: selected,
+      )),
     );
   }
 }
