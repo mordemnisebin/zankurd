@@ -15,7 +15,6 @@ import 'home/question_card.dart';
 import 'home/room_actions.dart';
 import 'home/section_header.dart';
 import 'home/spin_wheel_card.dart';
-import 'home/stats_row.dart';
 import 'level_screen.dart';
 import 'quiz_screen.dart';
 import 'room_screen.dart';
@@ -130,13 +129,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   );
                 }
                 if (index == 1) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: _buildAnimatedCard(
-                      _heroFadeAnimation(1),
-                      StatsRow(isKu: ku),
-                    ),
-                  );
+                  // Teknik istatistikler (toplam soru/seviye/görsel sayısı)
+                  // kullanıcıya gösterilmiyor.
+                  return const SizedBox.shrink();
                 }
                 if (index == 2) {
                   return Padding(

@@ -266,18 +266,7 @@ class _QuizScreenState extends State<QuizScreen> {
     );
   }
 
-  /// Seviye öneki yerelleştirilmiş etiket metnine çevrilir.
-  String? _levelTagLabel() {
-    return switch (question.levelPrefix) {
-      'Temel' => context.s('Bingehîn', 'Temel'),
-      'Pekiştirme' => context.s('Xurtkirin', 'Pekiştirme'),
-      'Ustalık' => context.s('Hosteyî', 'Ustalık'),
-      _ => null,
-    };
-  }
-
   Widget _buildQuestionPanel(BuildContext context) {
-    final levelTag = _levelTagLabel();
     final promptText = question.promptText;
     return AppPanel(
       color: AppTheme.surfaceHiColor(context),
@@ -299,14 +288,6 @@ class _QuizScreenState extends State<QuizScreen> {
                 child: _TinyTag(
                   label: question.typeLabelLocalized(context.isKu),
                 ),
-              ),
-              if (levelTag != null) ...[
-                const SizedBox(width: 8),
-                Flexible(child: _TinyTag(label: levelTag)),
-              ],
-              const Spacer(),
-              _TinyTag(
-                label: '${context.s('Ast', 'Zorluk')} ${question.difficulty}/5',
               ),
             ],
           ),
