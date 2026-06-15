@@ -9,7 +9,6 @@ import '../widgets/geometric_shapes.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/styled_button.dart';
 import '../widgets/styled_input.dart';
-import 'sign_in_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -24,7 +23,6 @@ class _SignUpScreenState extends State<SignUpScreen>
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _usernameController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;

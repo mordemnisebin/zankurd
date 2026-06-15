@@ -119,3 +119,6 @@ dependency_overrides:
   # objective_c >= 6.0 adds native asset build hooks that fail when the
   # project path contains spaces on Windows (URL-encoded path resolution bug).
   objective_c: '>=0.1.0 <6.0.0'
+  # path_provider_foundation >= 2.6.0 introduces native asset FFI bindings
+  # (ffi_bindings.g.dart) that reference ObjC types and fail to compile on Windows.
+  path_provider_foundation: '>=0.0.1 <2.6.0'

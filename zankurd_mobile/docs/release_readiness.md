@@ -1,62 +1,108 @@
 # ZanKurd Release Readiness
 
-Last updated: 2026-06-12 (v1.3.0+4)
+Last updated: 2026-06-15
 
-## Current Build Outputs
+## Current Release Target
 
-- Android release APK:
-  - `C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-release.apk`
-- Android Play Store bundle:
-  - `C:\src\zankurd_mobile\build\app\outputs\bundle\release\app-release.aab`
-- Web release:
-  - `C:\src\zankurd_mobile\build\web`
-- Windows release executable:
-  - `C:\src\zankurd_mobile\build\windows\x64\runner\Release\zankurd.exe`
-- Windows release ZIP:
-  - `C:\src\zankurd_mobile\build\release_packages\zankurd-windows-x64-release.zip`
+- App name: `ZanKurd`
+- Android package: `com.zankurd.app`
+- Flutter version: `3.44.1`
+- Dart version: `3.12.1`
+- App version: `1.3.0+4`
+- Play artifact: `build/app/outputs/bundle/release/app-release.aab`
+- Upload copy: `release_packages/zankurd-playstore-release.aab`
 
-## Validation (fresh run, 2026-06-12, v1.3.0+4)
+Google Play currently requires new Android apps and updates to target Android 15 / API level 35 or higher. The 2026-06-15 release build targets API level 36.
 
-- `flutter analyze`: passed, 0 issues
-- `flutter test`: passed, 26/26 tests
-- Android release APK build: passed (54.4 MB), signing verified with apksigner (CN=ZanKurd upload key)
-- Android release AAB build: passed (52.9 MB, versionCode 4 / versionName 1.3.0 verified in merged manifest), `jarsigner -verify`: jar verified
-- INTERNET permission: now declared explicitly in main AndroidManifest.xml (previously only injected by plugin manifest merge)
-- Web release build: passed (`build/web/version.json` = 1.3.0+4)
-- Windows release build: passed (`build/windows/x64/runner/Release/zankurd.exe`)
-- `release_packages/` refreshed with all 1.3.0 artifacts + regenerated SHA256SUMS.txt
+## Local Signing State
 
-## Supabase Steps Before Wider Sharing
+Release signing is configured through ignored local files:
 
-Run this SQL once so coin balance and quiz rewards persist for signed-in/anonymous users:
+- `android/key.properties`
+- `android/upload-keystore.jks`
 
-- `C:\src\zankurd_mobile\supabase\coin_policies.sql`
-
-Already required policies/features:
-
-- Anonymous auth enabled in Supabase Authentication settings.
-- Public read policies for categories/questions.
-- Room policies and RPC files installed.
-- Leaderboard view installed.
-- `submit_answer` RPC installed.
-
-## Android Signing
-
-Release signing support is now wired through:
-
-- `android\key.properties`
-- `android\upload-keystore.jks`
-
-These files are intentionally ignored by git and must be kept private and backed up. Losing the upload keystore can block future app updates unless Play App Signing recovery is used.
+These files must stay private and backed up. Losing the upload key can block future updates unless Play App Signing key recovery is used.
 
 Template:
 
-- `android\key.properties.template`
+- `android/key.properties.template`
 
-## Remaining Store-Quality Work
+## Verified Build: 2026-06-15
 
-- Create final store screenshots and feature graphic.
-- Add privacy policy URL.
-- Add app icon/splash polish if a designer later provides final brand assets.
-- Decide whether to keep anonymous-first flow or expose email/Google auth.
-- Add daily contest/tournament/reward screens for fuller Pirs-like breadth.
+The release was verified from the ASCII build path `C:\src\zankurd_mobile` because the Windows analyzer/build tools can fail when the project path contains Turkish characters or a drive substitution.
+
+- `dart analyze`: passed, no issues found
+- `flutter test`: passed, 83/83 tests
+- `flutter build appbundle --release`: passed
+- AAB size: 56,099,994 bytes / 53.5 MB
+- AAB path: `C:\src\zankurd_mobile\build\app\outputs\bundle\release\app-release.aab`
+- Workspace upload copy: `release_packages/zankurd-playstore-release.aab`
+- `jarsigner -verify -verbose -certs`: `jar verified`
+- Package: `com.zankurd.app`
+- Version code: `4`
+- Version name: `1.3.0`
+- Min SDK: `24`
+- Target SDK: `36`
+- SHA256 list: `release_packages/SHA256SUMS.txt`
+
+`jarsigner` reports that the upload certificate is self-signed and has no timestamp. This is normal for Android upload keys; Play App Signing validates the uploaded AAB and manages distribution signing.
+
+## Verification Commands
+
+Run from `C:\src\zankurd_mobile` after syncing the workspace copy.
+
+```powershell
+New-Item -ItemType Directory -Force -Path 'C:\src\tmp'
+$env:TMP='C:\src\tmp'
+$env:TEMP='C:\src\tmp'
+flutter analyze
+flutter test
+flutter build appbundle --release
+jarsigner -verify -verbose -certs 'build/app/outputs/bundle/release/app-release.aab'
+```
+
+Expected results:
+
+- `dart analyze`: no issues
+- `flutter test`: all tests pass
+- App bundle exists at `build/app/outputs/bundle/release/app-release.aab`
+- `jarsigner`: `jar verified`
+- Merged release manifest shows target SDK API 35 or higher
+
+## Supabase Steps Before Wider Sharing
+
+The live Supabase project should have these SQL files applied before internal testing or production rollout:
+
+1. `supabase/public_read_policies.sql`
+2. `supabase/online_room_policies.sql`
+3. `supabase/online_game_sync.sql`
+4. `supabase/leaderboard_view.sql`
+5. `supabase/submit_answer_function.sql`
+6. `supabase/daily_spin_rpc.sql`
+7. `supabase/quiz_reward_rpc.sql`
+8. `supabase/coin_policies.sql`
+9. `supabase/delete_my_account_rpc.sql`
+
+Anonymous auth must be enabled in Supabase Authentication settings if the app is shipped with anonymous-first onboarding.
+
+## Play Console Manual Items
+
+These cannot be completed from the local repository and must be filled in Play Console:
+
+- Upload `app-release.aab` to Internal testing first.
+- Complete App access. If reviewers can use anonymous login, state that no test credentials are required.
+- Complete Ads declaration. Current app should be marked as no ads unless an ad SDK is added.
+- Complete Content rating questionnaire for an education/trivia quiz app.
+- Complete Target audience and content. Do not mark as child-directed unless the product is intentionally prepared for the Families policy.
+- Complete Data Safety based on Supabase account/game data and Firebase Crashlytics diagnostics.
+- Publish `docs/privacy_policy.html` at a public HTTPS URL and enter that URL in Play Console.
+- Upload phone screenshots and feature graphic.
+- Add release notes from `docs/release_notes_internal.md`.
+
+## Recommended First Rollout
+
+1. Upload to Internal testing.
+2. Install from the Play internal testing link on at least one real Android device.
+3. Test anonymous login, profile name, daily quiz, category quiz, daily spin, leaderboard, question report, and account deletion request.
+4. Fix any Play Console pre-launch report issue.
+5. Promote to Closed testing or Production only after the internal track is clean.

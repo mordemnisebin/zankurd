@@ -1,33 +1,40 @@
-# ZanKurd
+# ZanKurd Web Prototype
 
-Kurmanci-first live quiz app prototype.
+This folder contains the React + Vite web prototype for ZanKurd. It is not the Google Play deliverable.
 
-## What is included
+The production mobile app lives in:
 
-- React + Vite + TypeScript frontend.
-- Responsive dashboard-style MVP screen.
-- Private room, player list, active question, joker, category, and tournament UI.
-- Product plan in `docs/PRODUCT_PLAN.md`.
-- Supabase starter schema in `supabase/schema.sql`.
+```text
+../zankurd_mobile
+```
 
-## Local development
+## Current Role
 
-```bash
+- Prototype dashboard for the quiz product direction.
+- Useful reference for room, player, question, joker, category, and tournament UI ideas.
+- Future candidate for an admin/moderation panel where questions and reports can be reviewed.
+
+## Local Development
+
+```powershell
 npm install
 npm run dev
 ```
 
-## Production build
+## Build
 
-```bash
+```powershell
 npm run build
 ```
 
-## Next implementation steps
+## Product Direction
 
-- Add Supabase client and environment variables.
-- Implement auth and profile creation.
-- Replace mock questions with approved questions from Supabase.
-- Implement room creation, join by code, and Realtime Presence.
-- Move answer validation and scoring into backend functions.
-- Add admin panel for question moderation.
+Do not prioritize this web app as a parallel consumer quiz product while preparing the Play Store release. Keep the mobile app as the main user-facing product.
+
+The most useful future web scope is:
+
+- Question moderation
+- Reported-question review
+- Category and difficulty management
+- Basic analytics for quiz completion and flagged content
+- Release/support dashboard for the mobile app
