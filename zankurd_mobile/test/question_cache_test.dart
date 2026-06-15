@@ -35,4 +35,29 @@ void main() {
     cache.set('Ziman_10', [q]);
     expect(cache.get('Cografya_10'), isNull);
   });
+
+  const q2 = QuizQuestion(
+    id: 'q2',
+    category: 'Ziman',
+    prompt: 'test2',
+    answers: ['c', 'd'],
+    correctAnswer: 'c',
+    explanation: 'y',
+  );
+
+  test('set sonrası kaynak listenin değişmesi cache\'i bozmaz', () {
+    final source = [q];
+    cache.set('Ziman_10', source);
+    source.add(q2); // çağıran kendi listesini değiştirir
+    expect(cache.get('Ziman_10'), [q]);
+  });
+
+  test('get çıktısının değiştirilmesi cache\'i bozmaz', () {
+    cache.set('Ziman_10', [q]);
+    expect(
+      () => cache.get('Ziman_10')!.add(q2),
+      throwsUnsupportedError,
+    );
+    expect(cache.get('Ziman_10'), [q]);
+  });
 }
