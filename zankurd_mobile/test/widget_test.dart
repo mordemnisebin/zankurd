@@ -24,6 +24,7 @@ import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/main.dart';
 
 class _FakeAuthProvider extends AuthProvider {
@@ -250,7 +251,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd'), findsOneWidget);
+    // Marka artık metin yerine logo görseliyle gösteriliyor.
+    expect(find.byType(AppLogo), findsOneWidget);
     expect(find.text('Atla'), findsOneWidget);
 
     await tester.tap(find.text('Atla'));

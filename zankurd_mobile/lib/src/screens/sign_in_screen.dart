@@ -6,6 +6,7 @@ import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../widgets/app_logo.dart';
 import '../widgets/geometric_shapes.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/styled_button.dart';
@@ -255,34 +256,8 @@ class _SignInScreenState extends State<SignInScreen>
                         scale: LoadAnimationSequence.logoScaleAnimation(
                           _animationController,
                         ),
-                        child: Center(
-                          child: Container(
-                            width: 84,
-                            height: 84,
-                            decoration: BoxDecoration(
-                              gradient: AppTheme.accentGradient,
-                              borderRadius: BorderRadius.circular(24),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppTheme.accent.withValues(
-                                    alpha: 0.45,
-                                  ),
-                                  blurRadius: 24,
-                                  offset: const Offset(0, 8),
-                                ),
-                              ],
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'ZK',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 32,
-                                ),
-                              ),
-                            ),
-                          ),
+                        child: const Center(
+                          child: AppLogo(width: 200, onCard: true),
                         ),
                       ),
                       const SizedBox(height: 32),
