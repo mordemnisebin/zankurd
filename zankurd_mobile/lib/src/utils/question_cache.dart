@@ -22,8 +22,10 @@ class QuestionCache {
   }
 
   void set(String key, List<QuizQuestion> questions) {
+    // Değiştirilemez kopya sakla: çağıranın kaynak listeyi sonradan
+    // değiştirmesi ya da get() çıktısını mutasyona uğratması önbelleği bozmasın.
     _store[key] = _CacheEntry(
-      questions: questions,
+      questions: List<QuizQuestion>.unmodifiable(questions),
       expiresAt: DateTime.now().add(ttl),
     );
   }
