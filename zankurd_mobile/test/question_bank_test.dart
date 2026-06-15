@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/offline_question_bank.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
@@ -70,5 +71,31 @@ void main() {
 
   test('bank grew past 1100 questions', () {
     expect(offlineQuestionBank.length, greaterThan(1100));
+  });
+
+  // Her kategori, tanımlı 5 seviyenin her birini farklı sorularla
+  // doldurabilmeli; aksi halde seviye quizi sessizce soruları tekrar eder.
+  test('every category can fill all its quiz levels with distinct questions', () {
+    final repository = MockZanKurdRepository();
+    for (final category in repository.categories) {
+      for (final level in repository.levelsForCategory(category)) {
+        final pool = offlineQuestionBank
+            .where(
+              (q) =>
+                  q.category == category &&
+                  q.difficulty >= level.difficultyMin &&
+                  q.difficulty <= level.difficultyMax,
+            )
+            .length;
+        expect(
+          pool,
+          greaterThanOrEqualTo(level.questionCount),
+          reason:
+              '$category / ${level.title}: needs ${level.questionCount} '
+              'distinct questions at difficulty '
+              '${level.difficultyMin}-${level.difficultyMax}, has $pool',
+        );
+      }
+    }
   });
 }
