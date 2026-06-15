@@ -84,40 +84,42 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   ),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     for (var i = 0; i < pages.length; i++)
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 180),
                         width: i == _page ? 28 : 8,
                         height: 8,
-                        margin: const EdgeInsets.only(right: 8),
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
                         decoration: BoxDecoration(
                           color: i == _page ? AppTheme.accent : AppTheme.border,
                           borderRadius: BorderRadius.circular(99),
                         ),
                       ),
-                    const Spacer(),
-                    FilledButton.icon(
-                      onPressed: last
-                          ? widget.onComplete
-                          : () {
-                              _controller.nextPage(
-                                duration: const Duration(milliseconds: 250),
-                                curve: Curves.easeOutCubic,
-                              );
-                            },
-                      icon: Icon(
-                        last
-                            ? Icons.check_rounded
-                            : Icons.arrow_forward_rounded,
-                      ),
-                      label: Text(
-                        last
-                            ? context.s('Dest pê bike', 'Başla')
-                            : context.s('Piştî vê', 'Sonraki'),
-                      ),
-                    ),
                   ],
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    onPressed: last
+                        ? widget.onComplete
+                        : () {
+                            _controller.nextPage(
+                              duration: const Duration(milliseconds: 250),
+                              curve: Curves.easeOutCubic,
+                            );
+                          },
+                    icon: Icon(
+                      last ? Icons.check_rounded : Icons.arrow_forward_rounded,
+                    ),
+                    label: Text(
+                      last
+                          ? context.s('Dest pê bike', 'Başla')
+                          : context.s('Piştî vê', 'Sonraki'),
+                    ),
+                  ),
                 ),
               ],
             ),
