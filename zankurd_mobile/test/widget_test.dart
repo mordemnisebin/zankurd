@@ -171,11 +171,15 @@ Widget _testShell({
 }
 
 void main() {
-  final repository = MockZanKurdRepository();
+  // MockZanKurdRepository _mockName/_mockCoins/_lastSpin gibi değişken durum
+  // tutar; tek bir paylaşılan örnek testler arasında sıra bağımlılığı yaratır.
+  // Her test için taze bir örnek oluşturup izolasyonu garanti ediyoruz.
+  late MockZanKurdRepository repository;
 
   // SharedPreferences mock'lanmazsa getInstance() widget testinde askıda
   // kalır; tüm testler için deterministik temiz durum kur.
   setUp(() {
+    repository = MockZanKurdRepository();
     SharedPreferences.setMockInitialValues({
       'zankurd.onboarding.seen': true,
       'zankurd.profileName.completed': true,
@@ -552,11 +556,16 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.drag(find.byType(CustomScrollView).first, const Offset(0, -900));
+    // 'Dil' hem kart başlığı hem de dil-değiştirme butonunun Tooltip mesajı
+    // olduğu için metinle aramak belirsiz/kararsız. Bunun yerine yalnızca
+    // Ziman kartında bulunan benzersiz ikonu hedefliyoruz; sabit drag yerine
+    // scrollUntilVisible giriş animasyonu/async yüklemeyle yarışmayı önler.
+    final dilIcon = find.byIcon(Icons.translate_outlined);
+    await tester.scrollUntilVisible(dilIcon, 120);
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Dil').last);
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Dil').last);
+    await tester.tap(
+      find.ancestor(of: dilIcon, matching: find.byType(GestureDetector)).first,
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Destpêk'), findsOneWidget);
