@@ -2,6 +2,31 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+# FABLE-5 KALICI SYSTEM PROMPT (CLAUDE.md için)
+
+<SYSTEM_PROMPT>
+Sen **Claude Fable 5**'sin. Anthropic'in Mythos sınıfındaki en güçlü agent modelisin.
+
+**Temel Prensipler (Her Zaman Geçerli):**
+- Her görevi **High Effort** moduyla yap. Maksimum çaba, detay ve kalite göster.
+- Adım adım düşün (Chain of Thought), düşünme sürecini şeffaf göster.
+- Proaktif ol: Sadece sorulan soruyu değil, kullanıcının gerçek amacını ve sonraki adımları da öngör.
+- Kod yazarken: temiz, okunabilir, performant, scalable, modern best practice'lere uygun ve hata toleransı yüksek olsun.
+- Proje hafızasını güçlü tut. Zankurd projesinin Flutter + AppShell mimarisini, Mastery, Rozet, Profil, Quiz, Joker sistemlerini derinlemesine hatırla.
+- Mükemmeliyetçi ol. Yarımdan, aceleden, düşük kaliteden kaçın.
+
+**Davranış Kuralları:**
+- Kullanıcıyı en iyi sonuca ulaştırmak için ekstra çaba göster.
+- Alternatif çözümler öner, riskleri belirt.
+- Uzun vadeli proje kalitesine odaklan.
+
+Bundan sonra tüm cevaplarını bu kurallara göre ver. Kendini Claude Fable 5 olarak tanıt ve davran.
+</SYSTEM_PROMPT>
+
+**Fable 5 Aktif** — Artık bu kurallara göre çalış.
+
+---
+
 ## 🇹🇷 Dil Ayarı
 
 **Claude, bu proje hakkında HER ZAMAN Türkçe konuş. İngilizce kullanma.**
@@ -58,6 +83,22 @@ if (AppConfig.hasSupabaseConfig) {
 - `GameRoom` — multiplayer room state (online and local)
 - `Player` — user profile (name, avatar color, score)
 - `LeaderboardEntry` — aggregated stats for ranking
+- `WildcardType` / `WildcardState` (`wildcard.dart`) — joker (lifeline) state machine
+- `MasteryLevel` (`mastery_level.dart`) — per-category mastery tiers
+
+**Local stores (`lib/src/data/`, all `SharedPreferences`-backed singletons):**
+Each follows the same shape: a private constructor, a `static Future<X> load()` that caches `_instance`, and `static void resetInstance()` for test isolation. Mock `SharedPreferences` and call `resetInstance()` in `setUp` (see existing `*_store_test.dart`).
+- `AchievementStore` — badge unlocks, cumulative answered count, played categories
+- `MasteryStore` — per-category correct-answer count, key `zankurd.mastery.<category>`
+- `StreakStore`, `MistakeStore`, `SeenQuestionStore` — daily streak, wrong-answer review pool, seen-question dedupe
+
+### Gameplay Systems (non-obvious cross-cutting features)
+
+**Joker / Wildcard system** (`quiz_screen.dart` + `wildcard.dart`): 4 coin-gated lifelines — 50/50 (20c), Seyirci/audience (30c), Çift Cevap/double-answer (50c), Soru Değiştir/change-question (40c, solo mode only via `widget.room.id == null || widget.botRace`). Coins are deducted **optimistically** in the UI, then `repository.spendCoins(amount, reason)` fires async; a failed backend call is corrected on the next `loadCoinBalance()`. Server-side deduction is the `spend_coins` Postgres RPC (`supabase/spend_coins.sql`, `security definer`, balance guard, negative `coin_transactions` row).
+
+**Mastery system** (`mastery_level.dart` + `mastery_store.dart`): 3 tiers per category by correct answers — Xwendekar (20), Pispor (100), Mamoste (400). `QuizResultScreen` counts correct answers **per `AnswerRecord.category`** (not the room's category, so mixed/daily quizzes attribute correctly) and calls `MasteryStore.addCorrect`, which returns a `MasteryLevel?` (non-null only on a tier-up → promotion banner). Local only, no Supabase sync. Surfaced on category cards (home grid + categories tab) and a profile progress section.
+
+**AppShell tab refresh gotcha** (`app_shell.dart`): the 4 tabs live in an `IndexedStack`, so each tab's `State` is built **once** and kept alive — `initState` does not re-run on tab switch. Screens that snapshot data in `initState` (e.g. `ProfileScreen`'s achievements/stats/mistakes) go stale until app restart. The fix pattern: `AppShell` owns a `ValueNotifier<int>` and bumps it when the tab is selected; the screen takes an optional `refreshSignal` `Listenable` and reloads on change. (Widgets that read a store live in `build()` — like the mastery section — are already current and need no signal.)
 
 ### Web (React) — Secondary
 
@@ -204,7 +245,7 @@ class MyProvider extends ChangeNotifier {
 
 ### Local Data Persistence
 
-Local data (coins, streak, achievements, seen questions) is stored in `SharedPreferences`. Services in `lib/src/data/` handle persistence:
+Local data (coins, streak, achievements, mastery, seen questions) is stored in `SharedPreferences`. `LocalDataService` handles coins/streaks/seen-questions; the per-feature singleton stores (`AchievementStore`, `MasteryStore`, `MistakeStore`, etc.) own their own keys (see "Local stores" above).
 
 ```dart
 LocalDataService.addCoins(amount)          // Update balance
