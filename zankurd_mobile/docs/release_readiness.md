@@ -1,6 +1,6 @@
 # ZanKurd Release Readiness
 
-Last updated: 2026-06-15
+Last updated: 2026-06-16
 
 ## Current Release Target
 
@@ -8,9 +8,10 @@ Last updated: 2026-06-15
 - Android package: `com.zankurd.app`
 - Flutter version: `3.44.1`
 - Dart version: `3.12.1`
-- App version: `1.3.0+4`
-- Play artifact: final AAB not regenerated after the latest online-room and
-  real-image changes.
+- App version: `1.4.0+5` (bumped from `1.3.0+4`; new user-facing coin jokers
+  and category-mastery features warrant a minor version bump)
+- Play artifact: final AAB not regenerated after the latest online-room,
+  real-image, coin-joker, and mastery changes.
 - Upload copy: `release_packages/zankurd-playstore-release.aab` is a previous
   build and must not be treated as the final Play upload.
 
@@ -53,15 +54,26 @@ only after the current source verification passes.
 
 `jarsigner` reports that the upload certificate is self-signed and has no timestamp. This is normal for Android upload keys; Play App Signing validates the uploaded AAB and manages distribution signing.
 
-## Current Source Verification: 2026-06-15
+## Current Source Verification: 2026-06-17
 
-After the latest online-room fallback fixes and real-image import:
+After the coin-joker system (`spend_coins` RPC), category-mastery system
+(`MasteryStore`), the profile tab-refresh fix (`refreshSignal`), real-image
+import, and release UI polish:
 
 - `dart analyze`: passed, no issues found
-- `flutter test`: passed, 99/99 tests
+- `flutter test`: passed, 140/140 tests
+- `flutter build web --release`: passed (previous run)
+- Local Playwright web audit: passed end-to-end — onboarding, guest auth,
+  home/categories, quiz with jokers + coin header, result screen, profile
+  mastery section, and leaderboard all verified with no console errors
+- Pending before final AAB: bump applied to `1.4.0+5`; regenerate signed
+  appbundle from the ASCII build path and re-run `jarsigner -verify`
+- Latest polish audit covered local room-code validation, leaderboard podium,
+  landscape quiz layout, and centered high-quality onboarding logo rendering.
+- Live Supabase multiplayer check: passed. The check creates two anonymous
+  users, creates a room, joins by code, starts the game, submits answers, and
+  verifies leaderboard visibility.
 - Final AAB: not regenerated yet
-- Live Supabase multiplayer check: blocked until
-  `supabase/online_multiplayer_ready.sql` is applied in the Supabase SQL editor.
 
 ## Verification Commands
 
@@ -104,8 +116,8 @@ For the current mobile build, also apply:
 10. `supabase/online_multiplayer_ready.sql`
 
 This patch creates the `join_room_by_code`, `start_room_game`, `finish_room_game`,
-and `submit_answer` RPCs expected by the app. The live check currently fails with
-`PGRST202` until that patch is installed.
+and `submit_answer` RPCs expected by the app. It has been applied to the live
+Supabase project and verified by `tools/check_live_supabase.py`.
 
 Anonymous auth must be enabled in Supabase Authentication settings if the app is shipped with anonymous-first onboarding.
 

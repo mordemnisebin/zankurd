@@ -1,2 +1,8 @@
 # Third-party APK analysis output (reference only, not part of the product)
 Pirs_apk_extracted/
+
+# Tooling / ephemeral artifacts (Playwright, audits, temp)
+.playwright-mcp/
+output/
+zankurd-page-snapshot.md
+zankurd_mobile/.tmp/
