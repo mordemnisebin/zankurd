@@ -22,6 +22,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
     'Edebiyat',
     'Cografya',
     'Muzîk',
+    'Siyaset',
+    'Paradigma',
   ];
 
   @override
@@ -333,6 +335,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
     _lastSpin = DateTime.now().toUtc();
     _mockCoins += amount;
     return amount;
+  }
+
+  @override
+  Future<bool> spendCoins(int amount, String reason) async {
+    if (_mockCoins < amount) return false;
+    _mockCoins -= amount;
+    return true;
   }
 
   @override

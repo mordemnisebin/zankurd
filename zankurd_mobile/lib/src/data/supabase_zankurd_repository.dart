@@ -392,6 +392,18 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  GameRoom createRoom({String category = 'Ziman'}) {
+    return GameRoom(
+      name: 'Hevalên Zanînê',
+      code: 'ZK-${DateTime.now().millisecond.toString().padLeft(3, '0')}',
+      category: category,
+      questionCount: 10,
+      status: RoomStatus.lobby,
+      players: const [Player(name: 'Tu', score: 0, state: 'Hazır', streak: 0)],
+    );
+  }
+
+  @override
   Future<GameRoom> createOnlineRoom({String category = 'Ziman'}) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();
@@ -421,38 +433,28 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     return localRoom.copyWith(
       id: room['id'] as String,
       code: room['code'] as String,
-      players: players.isEmpty ? localRoom.players : players,
+      players: players,
     );
   }
 
   @override
   Future<GameRoom> joinOnlineRoom(String code) async {
-    final user = client.auth.currentUser ?? await signInAnonymously();
+    client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();
 
-    final room = await client
-        .from('rooms')
-        .select('id, code, question_count, categories(name)')
-        .eq('code', code.trim().toUpperCase())
-        .single();
-
-    try {
-      await client.from('room_players').insert({
-        'room_id': room['id'],
-        'player_id': user.id,
-        'is_ready': false,
-      });
-    } on PostgrestException catch (error) {
-      if (error.code != '23505') rethrow;
-    }
-
-    final players = await _loadRoomPlayersById(room['id'] as String);
-    final category = room['categories'] is Map<String, dynamic>
-        ? (room['categories'] as Map<String, dynamic>)['name'] as String
-        : 'Ziman';
+    final response = await client.rpc(
+      'join_room_by_code',
+      params: {'p_code': code.trim().toUpperCase()},
+    );
+    final room = response is Map<String, dynamic>
+        ? response
+        : (response as List).first as Map<String, dynamic>;
+    final roomId = room['room_id'] as String;
+    final players = await _loadRoomPlayersById(roomId);
+    final category = room['category_name'] as String? ?? 'Ziman';
 
     return createRoom(category: category).copyWith(
-      id: room['id'] as String,
+      id: roomId,
       code: room['code'] as String,
       questionCount: room['question_count'] as int? ?? 10,
       players: players,
@@ -626,6 +628,25 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadCoinBalance failed');
       return 0;
+    }
+  }
+
+  @override
+  Future<bool> spendCoins(int amount, String reason) async {
+    try {
+      final _ = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      final response = await client.rpc(
+        'spend_coins',
+        params: {'p_amount': amount, 'p_reason': reason},
+      );
+      if (response is Map<String, dynamic>) {
+        return response['success'] as bool? ?? false;
+      }
+      return false;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'spendCoins failed');
+      return false;
     }
   }
 
