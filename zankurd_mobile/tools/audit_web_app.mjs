@@ -51,6 +51,12 @@ async function tapText(page, text, options = {}) {
   await locator.click();
 }
 
+async function shotAfter(page, action, name) {
+  await action();
+  await waitAndShot(page, name);
+  return `${name}.png`;
+}
+
 async function main() {
   const port = 5139;
   await listen(port);
@@ -74,33 +80,52 @@ async function main() {
   await waitAndShot(page, '01-first-load');
   report.screens.push('01-first-load.png');
 
-  const coordinateSteps = [
-    { name: '02-after-skip', x: 317, y: 100 },
-    { name: '03-auth-scrolled', wheel: 520 },
-    { name: '04-after-guest-tap', x: 195, y: 735 },
-    { name: '05-after-profile-name-field', x: 195, y: 505, text: 'Codex Denetim' },
-    { name: '06-after-profile-submit', x: 195, y: 570 },
-    { name: '07-after-scroll-home', wheel: 620 },
-    { name: '08-after-join-tap', x: 284, y: 430 },
-    { name: '08-after-escape', key: 'Escape' },
-    { name: '09-after-create-room', x: 104, y: 430 },
-  ];
+  try {
+    report.screens.push(
+      await shotAfter(page, () => page.mouse.click(317, 100), '02-after-skip'),
+    );
 
-  for (const step of coordinateSteps) {
-    try {
-      if (step.wheel) {
-        await page.mouse.wheel(0, step.wheel);
-      } else if (step.key) {
-        await page.keyboard.press(step.key);
-      } else {
-        await page.mouse.click(step.x, step.y);
-        if (step.text) await page.keyboard.type(step.text);
-      }
-      await waitAndShot(page, step.name);
-      report.screens.push(`${step.name}.png`);
-    } catch (error) {
-      report.observations.push({ step: step.name, error: error.message });
-    }
+    report.screens.push(
+      await shotAfter(page, () => page.mouse.wheel(0, 560), '03-auth-scrolled'),
+    );
+
+    report.screens.push(
+      await shotAfter(page, () => page.mouse.click(195, 675), '04-after-guest-tap'),
+    );
+
+    report.screens.push(
+      await shotAfter(
+        page,
+        async () => {
+          await page.mouse.click(150, 349);
+          await page.waitForTimeout(250);
+          await page.keyboard.insertText('Codex Denetim');
+        },
+        '05-after-profile-name-field',
+      ),
+    );
+
+    report.screens.push(
+      await shotAfter(page, () => page.mouse.click(195, 416), '06-after-profile-submit'),
+    );
+
+    report.screens.push(
+      await shotAfter(page, () => page.mouse.wheel(0, 620), '07-after-scroll-home'),
+    );
+
+    report.screens.push(
+      await shotAfter(page, () => page.mouse.click(284, 320), '08-after-join-tap'),
+    );
+
+    report.screens.push(
+      await shotAfter(page, () => page.keyboard.press('Escape'), '08-after-escape'),
+    );
+
+    report.screens.push(
+      await shotAfter(page, () => page.mouse.click(104, 276), '09-after-create-room'),
+    );
+  } catch (error) {
+    report.observations.push({ step: 'main-flow', error: error.message });
   }
 
   try {
