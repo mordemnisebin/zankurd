@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../data/mastery_store.dart';
 import '../../l10n/lang.dart';
+import '../../models/mastery_level.dart';
 import '../../theme/app_theme.dart';
 
-class CategoryGrid extends StatelessWidget {
+class CategoryGrid extends StatefulWidget {
   const CategoryGrid({
     required this.categories,
     required this.isKu,
@@ -18,8 +20,31 @@ class CategoryGrid extends StatelessWidget {
   final ValueChanged<String> onTap;
 
   @override
+  State<CategoryGrid> createState() => _CategoryGridState();
+}
+
+class _CategoryGridState extends State<CategoryGrid> {
+  Map<String, MasteryLevel> _masteryLevels = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMastery();
+  }
+
+  Future<void> _loadMastery() async {
+    final store = await MasteryStore.load();
+    if (!mounted) return;
+    final levels = <String, MasteryLevel>{};
+    for (final cat in widget.categories) {
+      levels[cat] = store.levelFor(cat);
+    }
+    setState(() => _masteryLevels = levels);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (loading) {
+    if (widget.loading) {
       return const Center(
         child: Padding(
           padding: EdgeInsets.all(24),
@@ -29,7 +54,7 @@ class CategoryGrid extends StatelessWidget {
     }
 
     return GridView.builder(
-      itemCount: categories.length,
+      itemCount: widget.categories.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -39,12 +64,13 @@ class CategoryGrid extends StatelessWidget {
         childAspectRatio: 1.1,
       ),
       itemBuilder: (context, index) {
-        final cat = categories[index];
+        final cat = widget.categories[index];
         return _CategoryCard(
           category: cat,
           index: index,
-          isKu: isKu,
-          onTap: () => onTap(cat),
+          isKu: widget.isKu,
+          masteryLevel: _masteryLevels[cat] ?? MasteryLevel.none,
+          onTap: () => widget.onTap(cat),
         );
       },
     );
@@ -56,12 +82,14 @@ class _CategoryCard extends StatelessWidget {
     required this.category,
     required this.index,
     required this.isKu,
+    required this.masteryLevel,
     required this.onTap,
   });
 
   final String category;
   final int index;
   final bool isKu;
+  final MasteryLevel masteryLevel;
   final VoidCallback onTap;
 
   IconData _icon(String cat) => switch (cat) {
@@ -71,6 +99,8 @@ class _CategoryCard extends StatelessWidget {
     'Edebiyat' => Icons.menu_book_outlined,
     'Cografya' => Icons.public_outlined,
     'Muzîk' => Icons.music_note_outlined,
+    'Siyaset' => Icons.how_to_vote_outlined,
+    'Paradigma' => Icons.psychology_outlined,
     _ => Icons.category_outlined,
   };
 
@@ -142,6 +172,28 @@ class _CategoryCard extends StatelessWidget {
                       fontSize: 11,
                     ),
                   ),
+                  if (masteryLevel != MasteryLevel.none) ...[
+                    const SizedBox(height: 2),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          masteryLevel.icon,
+                          color: Colors.white.withValues(alpha: 0.85),
+                          size: 10,
+                        ),
+                        const SizedBox(width: 3),
+                        Text(
+                          isKu ? masteryLevel.titleKu : masteryLevel.titleTr,
+                          style: TextStyle(
+                            color: Colors.white.withValues(alpha: 0.85),
+                            fontSize: 9,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
             ),
