@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../data/achievement_store.dart';
+import '../data/mastery_store.dart';
+import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
@@ -67,6 +69,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   int _dailyStreak = 0;
   List<Achievement> _newAchievements = const [];
+  Map<String, MasteryLevel> _promotions = const {};
 
   @override
   void initState() {
@@ -91,10 +94,26 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       remainingMistakes: mistakeStore.count,
       opponents: opponents,
     );
+
+    final masteryStore = await MasteryStore.load();
+    final correctByCategory = <String, int>{};
+    for (final record in answerRecords) {
+      if (record.isCorrect) {
+        correctByCategory[record.category] =
+            (correctByCategory[record.category] ?? 0) + 1;
+      }
+    }
+    final promotions = <String, MasteryLevel>{};
+    for (final entry in correctByCategory.entries) {
+      final newLevel = await masteryStore.addCorrect(entry.key, entry.value);
+      if (newLevel != null) promotions[entry.key] = newLevel;
+    }
+
     if (mounted) {
       setState(() {
         _dailyStreak = streak;
         _newAchievements = newAchievements;
+        _promotions = promotions;
       });
     }
   }
@@ -210,6 +229,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               if (_newAchievements.isNotEmpty) ...[
                 const SizedBox(height: 16),
                 _AchievementUnlocks(achievements: _newAchievements),
+              ],
+              if (_promotions.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                _MasteryPromotions(promotions: _promotions),
               ],
               if (_dailyStreak > 0) ...[
                 const SizedBox(height: 16),
@@ -627,6 +650,67 @@ class _AchievementUnlocks extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+class _MasteryPromotions extends StatelessWidget {
+  const _MasteryPromotions({required this.promotions});
+
+  final Map<String, MasteryLevel> promotions;
+
+  @override
+  Widget build(BuildContext context) {
+    final ku = context.isKu;
+    return Column(
+      children: [
+        for (final entry in promotions.entries)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: AppPanel(
+              color: entry.value.badgeColor.withValues(alpha: 0.12),
+              child: Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: entry.value.badgeColor.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(entry.value.icon, color: entry.value.badgeColor),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          ku
+                              ? '${CategoryNames.localized(entry.key, true)} — ${entry.value.titleKu}!'
+                              : '${CategoryNames.localized(entry.key, false)} — ${entry.value.titleTr}!',
+                          style: TextStyle(
+                            color: entry.value.badgeColor,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          ku ? 'Unvana nû stend!' : 'Yeni unvan kazandın!',
+                          style: const TextStyle(
+                            color: AppTheme.textMuted,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
