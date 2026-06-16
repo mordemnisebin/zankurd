@@ -60,19 +60,29 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             padding: const EdgeInsets.fromLTRB(20, 14, 20, 20),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: _AnimatedBrandLockup(
-                        scale: _brandScale,
-                        opacity: _brandOpacity,
+                SizedBox(
+                  height: 220,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 28),
+                          child: _AnimatedBrandLockup(
+                            scale: _brandScale,
+                            opacity: _brandOpacity,
+                          ),
+                        ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: widget.onComplete,
-                      child: Text(context.s('Derbas bike', 'Atla')),
-                    ),
-                  ],
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: TextButton(
+                          onPressed: widget.onComplete,
+                          child: Text(context.s('Derbas bike', 'Atla')),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: PageView.builder(
@@ -175,15 +185,16 @@ class _AnimatedBrandLockup extends StatelessWidget {
       child: ScaleTransition(
         scale: scale,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const AppLogo(width: 116, onCard: true),
+            const AppLogo(width: 132, onCard: true),
             const SizedBox(height: 10),
             Text(
               context.s('Hîn bibe, pêş bike', 'Öğren, yarış, ilerle'),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 color: AppTheme.textMuted,
                 fontSize: 12,

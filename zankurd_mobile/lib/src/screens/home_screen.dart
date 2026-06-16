@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: CustomScrollView(
         slivers: [
-          // Geometric header with player info, streak badge, and stats
+          // Geometric header with player info and live account badges
           SliverAppBar(
             expandedHeight: 200,
             floating: false,
@@ -275,28 +275,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       height: 1.0,
                     ),
                   ),
-                  const SizedBox(height: 6),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.18),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.3),
-                      ),
-                    ),
-                    child: Text(
-                      ku ? 'Seviyê 5' : 'Seviye 5',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -304,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // Streak hexagon badge (pulsing animation) on the top right
           if (_streak > 0)
             Positioned(top: 16, right: 18, child: _buildStreakHexagon(_streak)),
-          // Coins/gems on bottom left
+          // Real coin balance; hidden while loading to avoid placeholder badges.
           Positioned(left: 18, top: 16, child: _buildCoinGemRow(_coinBalance)),
         ],
       ),
@@ -366,6 +344,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   /// Build coin and gem display row
   Widget _buildCoinGemRow(int? coinBalance) {
+    if (coinBalance == null) return const SizedBox.shrink();
+
     return Row(
       children: [
         Container(
@@ -380,31 +360,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               const Icon(Icons.monetization_on, color: Colors.white, size: 16),
               const SizedBox(width: 5),
               Text(
-                coinBalance != null ? '$coinBalance' : '···',
+                '$coinBalance',
                 style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 13,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(width: 8),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
-          ),
-          child: const Row(
-            children: [
-              Icon(Icons.diamond, color: Colors.white, size: 16),
-              SizedBox(width: 5),
-              Text(
-                '···',
-                style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
                   fontSize: 13,
@@ -525,6 +482,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   void _showJoinSheet(BuildContext context) {
     final controller = TextEditingController();
+    final formKey = GlobalKey<FormState>();
     final ku = context.isKu;
     showModalBottomSheet<void>(
       context: context,
@@ -541,63 +499,75 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             20,
             MediaQuery.viewInsetsOf(sheetCtx).bottom + 20,
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                ku ? 'Tevlî Jûrê Bibe' : 'Odaya Katıl',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 22,
-                  color: AppTheme.textPrimary,
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  ku ? 'Tevlî Jûrê Bibe' : 'Odaya Katıl',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 22,
+                    color: AppTheme.textPrimary,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 14),
-              TextField(
-                controller: controller,
-                textCapitalization: TextCapitalization.characters,
-                style: const TextStyle(color: AppTheme.textPrimary),
-                decoration: InputDecoration(
-                  labelText: ku ? 'Koda jûrê' : 'Oda kodu',
-                ),
-              ),
-              const SizedBox(height: 14),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  onPressed: () async {
-                    try {
-                      final room = await repo.joinOnlineRoom(controller.text);
-                      if (!sheetCtx.mounted) return;
-                      Navigator.of(sheetCtx).pop();
-                      if (!context.mounted) return;
-                      _openRoom(context, room);
-                    } catch (error, stack) {
-                      ErrorReporter.record(
-                        error,
-                        stack,
-                        reason: 'joinOnlineRoom failed',
-                      );
-                      if (!sheetCtx.mounted) return;
-                      Navigator.of(sheetCtx).pop();
-                      if (!context.mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            context.isKu
-                                ? 'Tevlî jûra serhêl nebû. Ji kerema xwe kodê kontrol bike.'
-                                : 'Online odaya katılınamadı. Lütfen kodu kontrol edin.',
-                          ),
-                        ),
-                      );
+                const SizedBox(height: 14),
+                TextFormField(
+                  controller: controller,
+                  textCapitalization: TextCapitalization.characters,
+                  style: const TextStyle(color: AppTheme.textPrimary),
+                  decoration: InputDecoration(
+                    labelText: ku ? 'Koda jûrê' : 'Oda kodu',
+                  ),
+                  validator: (value) {
+                    if ((value ?? '').trim().isEmpty) {
+                      return ku ? 'Koda jûrê pêwîst e.' : 'Oda kodu gerekli.';
                     }
+                    return null;
                   },
-                  icon: const Icon(Icons.meeting_room_outlined),
-                  label: Text(ku ? 'Tevlî Bibe' : 'Katıl'),
                 ),
-              ),
-            ],
+                const SizedBox(height: 14),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    onPressed: () async {
+                      if (!formKey.currentState!.validate()) return;
+                      try {
+                        final room = await repo.joinOnlineRoom(
+                          controller.text.trim(),
+                        );
+                        if (!sheetCtx.mounted) return;
+                        Navigator.of(sheetCtx).pop();
+                        if (!context.mounted) return;
+                        _openRoom(context, room);
+                      } catch (error, stack) {
+                        ErrorReporter.record(
+                          error,
+                          stack,
+                          reason: 'joinOnlineRoom failed',
+                        );
+                        if (!sheetCtx.mounted) return;
+                        Navigator.of(sheetCtx).pop();
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              context.isKu
+                                  ? 'Tevlî jûra serhêl nebû. Ji kerema xwe kodê kontrol bike.'
+                                  : 'Online odaya katılınamadı. Lütfen kodu kontrol edin.',
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.meeting_room_outlined),
+                    label: Text(ku ? 'Tevlî Bibe' : 'Katıl'),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
