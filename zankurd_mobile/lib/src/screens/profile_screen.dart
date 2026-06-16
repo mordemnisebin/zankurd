@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data/achievement_store.dart';
+import '../data/mastery_store.dart';
+import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -34,6 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? _currentName;
   LeaderboardEntry? _stats;
   List<Achievement> _achievements = const [];
+  MasteryStore? _masteryStore;
 
   @override
   void initState() {
@@ -93,11 +96,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final name = await widget.repository.getProfileName();
       final stats = await widget.repository.getPlayerStats();
       final achievementStore = await AchievementStore.load();
+      final masteryStore = await MasteryStore.load();
       if (mounted) {
         setState(() {
           _currentName = name;
           _stats = stats;
           _achievements = achievementStore.unlockedAchievements;
+          _masteryStore = masteryStore;
           _loading = false;
           _loadFailed = false;
         });
@@ -321,6 +326,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     _AchievementShowcase(achievements: _achievements, isKu: ku),
                     const SizedBox(height: 14),
+
+                    if (_masteryStore != null) ...[
+                      _MasterySection(store: _masteryStore!, isKu: ku),
+                      const SizedBox(height: 14),
+                    ],
 
                     // Saved questions shortcut
                     AppPanel(
@@ -705,6 +715,144 @@ class _AchievementShowcase extends StatelessWidget {
                   _AchievementChip(achievement: achievement, isKu: isKu),
               ],
             ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MasterySection extends StatelessWidget {
+  const _MasterySection({required this.store, required this.isKu});
+
+  final MasteryStore store;
+  final bool isKu;
+
+  static const _categories = [
+    'Ziman',
+    'Çand',
+    'Dîrok',
+    'Edebiyat',
+    'Cografya',
+    'Muzîk',
+    'Siyaset',
+    'Paradigma',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return AppPanel(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.workspace_premium_outlined,
+                color: AppTheme.violet,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                isKu ? 'Ustalîya Kategoriyê' : 'Kategori Ustalığı',
+                style: const TextStyle(
+                  color: AppTheme.textPrimary,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 17,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          for (final cat in _categories)
+            _MasteryRow(category: cat, store: store, isKu: isKu),
+        ],
+      ),
+    );
+  }
+}
+
+class _MasteryRow extends StatelessWidget {
+  const _MasteryRow({
+    required this.category,
+    required this.store,
+    required this.isKu,
+  });
+
+  final String category;
+  final MasteryStore store;
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    final level = store.levelFor(category);
+    final count = store.correctCount(category);
+    final threshold = store.nextThreshold(category);
+    final isMamoste = level == MasteryLevel.mamoste;
+    final progress =
+        isMamoste ? 1.0 : (count / threshold).clamp(0.0, 1.0);
+    final badgeColor =
+        level == MasteryLevel.none ? AppTheme.textMuted : level.badgeColor;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 76,
+            child: Text(
+              CategoryNames.localized(category, isKu),
+              style: const TextStyle(
+                color: AppTheme.textPrimary,
+                fontWeight: FontWeight.w700,
+                fontSize: 13,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+            decoration: BoxDecoration(
+              color: badgeColor.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: badgeColor.withValues(alpha: 0.3)),
+            ),
+            child: Text(
+              level == MasteryLevel.none
+                  ? (isKu ? 'Destpêkirin' : 'Başlangıç')
+                  : (isKu ? level.titleKu : level.titleTr),
+              style: TextStyle(
+                color: badgeColor,
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(3),
+                  child: LinearProgressIndicator(
+                    value: progress,
+                    backgroundColor: AppTheme.border,
+                    valueColor: AlwaysStoppedAnimation<Color>(badgeColor),
+                    minHeight: 5,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  isMamoste ? '✓' : '$count/$threshold',
+                  style: const TextStyle(
+                    color: AppTheme.textMuted,
+                    fontSize: 9,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
