@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../data/mastery_store.dart';
 import '../data/zankurd_repository.dart';
+import '../models/mastery_level.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -19,6 +21,7 @@ class CategoriesTab extends StatefulWidget {
 class _CategoriesTabState extends State<CategoriesTab> {
   late List<String> _categories = widget.repository.categories;
   bool _loading = false;
+  Map<String, MasteryLevel> _masteryLevels = {};
 
   @override
   void initState() {
@@ -35,6 +38,17 @@ class _CategoriesTabState extends State<CategoriesTab> {
       ErrorReporter.record(error, stack, reason: 'categories load failed');
     }
     if (mounted) setState(() => _loading = false);
+    await _loadMastery();
+  }
+
+  Future<void> _loadMastery() async {
+    final store = await MasteryStore.load();
+    if (!mounted) return;
+    final levels = <String, MasteryLevel>{};
+    for (final cat in _categories) {
+      levels[cat] = store.levelFor(cat);
+    }
+    setState(() => _masteryLevels = levels);
   }
 
   @override
@@ -105,6 +119,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                         category: cat,
                         index: index,
                         isKu: ku,
+                        masteryLevel: _masteryLevels[cat] ?? MasteryLevel.none,
                         onTap: () => Navigator.of(context).push(
                           AppRoute.to(
                             LevelScreen(
@@ -131,12 +146,14 @@ class _CategoryCard extends StatelessWidget {
     required this.category,
     required this.index,
     required this.isKu,
+    required this.masteryLevel,
     required this.onTap,
   });
 
   final String category;
   final int index;
   final bool isKu;
+  final MasteryLevel masteryLevel;
   final VoidCallback onTap;
 
   @override
@@ -220,6 +237,28 @@ class _CategoryCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if (masteryLevel != MasteryLevel.none) ...[
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          masteryLevel.icon,
+                          color: Colors.white.withValues(alpha: 0.9),
+                          size: 11,
+                        ),
+                        const SizedBox(width: 3),
+                        Text(
+                          isKu ? masteryLevel.titleKu : masteryLevel.titleTr,
+                          style: TextStyle(
+                            color: Colors.white.withValues(alpha: 0.9),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
             ),
