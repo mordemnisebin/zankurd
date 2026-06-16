@@ -52,6 +52,10 @@ abstract class ZanKurdRepository {
   Future<List<QuizQuestion>> loadFavoriteQuestions();
   Future<int> loadCoinBalance();
 
+  /// Oyuncunun coin bakiyesinden [amount] kadar düşer.
+  /// Bakiye yeterli değilse false, başarılıysa true döner.
+  Future<bool> spendCoins(int amount, String reason);
+
   /// Günlük çark: bugün çevrilebilir mi?
   Future<bool> canSpinToday();
 
