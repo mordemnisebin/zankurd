@@ -57,6 +57,50 @@ void main() {
 
       expect(question.typeLabel, 'Doğru/Yanlış');
     });
+
+    test('displayAnswers moves stored first answer for multiple choice', () {
+      const question = QuizQuestion(
+        id: 'q_shuffle',
+        category: 'Ziman',
+        prompt: 'Test question?',
+        answers: ['Correct', 'Wrong 1', 'Wrong 2', 'Wrong 3'],
+        correctAnswer: 'Correct',
+        explanation: 'This is correct',
+      );
+
+      expect(question.displayAnswers.toSet(), question.answers.toSet());
+      expect(question.displayAnswers.first, isNot(question.answers.first));
+    });
+
+    test('optionKeyForAnswer keeps backend option keys tied to stored answers', () {
+      const question = QuizQuestion(
+        id: 'q_shuffle',
+        category: 'Ziman',
+        prompt: 'Test question?',
+        answers: ['Correct', 'Wrong 1', 'Wrong 2', 'Wrong 3'],
+        correctAnswer: 'Correct',
+        explanation: 'This is correct',
+      );
+
+      expect(question.optionKeyForAnswer('Correct'), 'A');
+      expect(question.optionKeyForAnswer('Wrong 1'), 'B');
+      expect(question.optionKeyForAnswer('Wrong 2'), 'C');
+      expect(question.optionKeyForAnswer('Wrong 3'), 'D');
+    });
+
+    test('true false display order stays stable', () {
+      const question = QuizQuestion(
+        id: 'q_tf',
+        category: 'Ziman',
+        prompt: 'Test question?',
+        answers: ['Rast', 'Şaş'],
+        correctAnswer: 'Rast',
+        explanation: 'This is correct',
+        type: QuestionType.trueFalse,
+      );
+
+      expect(question.displayAnswers, ['Rast', 'Şaş']);
+    });
   });
 
   group('MockZanKurdRepository question bank', () {

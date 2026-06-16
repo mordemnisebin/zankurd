@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 
 class HeroCard extends StatelessWidget {
-  const HeroCard({required this.isKu, required this.onQuickMatch, super.key});
+  const HeroCard({
+    required this.isKu,
+    required this.loading,
+    required this.onCreateRoom,
+    required this.onJoinRoom,
+    required this.onQuickMatch,
+    super.key,
+  });
 
   final bool isKu;
+  final bool loading;
+  final VoidCallback onCreateRoom;
+  final VoidCallback onJoinRoom;
   final VoidCallback onQuickMatch;
 
   @override
@@ -74,7 +84,9 @@ class HeroCard extends StatelessWidget {
               ),
               const SizedBox(height: 14),
               Text(
-                isKu ? 'Navenda Pêşbirka\nKurmancî' : 'Kurmancî Yarış\nMerkezi',
+                isKu
+                    ? 'Bi hevalan re\npêşbikeve'
+                    : 'Arkadaşlarınla\ncanlı yarış',
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
@@ -85,34 +97,101 @@ class HeroCard extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 isKu
-                    ? 'Kategoriyekê hilbijêre, astan derbas bike û di tabloya pêşderçûnê de bilind bibe.'
-                    : 'Kategori seç, seviye geç ve liderlik tablosuna yüksel.',
+                    ? 'Jûrekê ava bike an bi kodê bikeve. Pirs, skor û rêzbendî bi awayekî zindî nû dibin.'
+                    : 'Oda kur veya kodla katıl. Sorular, skorlar ve sıralama canlı güncellenir.',
                 style: const TextStyle(color: Color(0xFFE0D0FF), fontSize: 13),
               ),
               const SizedBox(height: 18),
-              ElevatedButton.icon(
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final stacked = constraints.maxWidth < 340;
+                  final createButton = _HeroActionButton(
+                    label: loading
+                        ? (isKu ? 'Tê Vekirin...' : 'Açılıyor...')
+                        : (isKu ? 'Jûr Ava Bike' : 'Oda Kur'),
+                    icon: Icons.add_circle_outline,
+                    primary: true,
+                    onPressed: loading ? null : onCreateRoom,
+                  );
+                  final joinButton = _HeroActionButton(
+                    label: isKu ? 'Bi Kodê Bikeve' : 'Kodla Katıl',
+                    icon: Icons.meeting_room_outlined,
+                    primary: false,
+                    onPressed: onJoinRoom,
+                  );
+
+                  if (stacked) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        createButton,
+                        const SizedBox(height: 10),
+                        joinButton,
+                      ],
+                    );
+                  }
+
+                  return Row(
+                    children: [
+                      Expanded(child: createButton),
+                      const SizedBox(width: 10),
+                      Expanded(child: joinButton),
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(height: 10),
+              TextButton.icon(
                 onPressed: onQuickMatch,
-                icon: const Icon(Icons.bolt, size: 18),
-                label: Text(
-                  isKu ? 'Pêşbirka Bilez' : 'Hızlı Yarış',
-                  style: const TextStyle(fontWeight: FontWeight.w800),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: const Color(0xFF7C3AED),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                    vertical: 10,
-                  ),
-                  elevation: 0,
+                icon: const Icon(Icons.bolt, size: 17),
+                label: Text(isKu ? 'Tenê pratîk bike' : 'Tek başına pratik'),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  textStyle: const TextStyle(fontWeight: FontWeight.w800),
                 ),
               ),
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _HeroActionButton extends StatelessWidget {
+  const _HeroActionButton({
+    required this.label,
+    required this.icon,
+    required this.primary,
+    required this.onPressed,
+  });
+
+  final String label;
+  final IconData icon;
+  final bool primary;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final background = primary
+        ? Colors.white
+        : Colors.white.withValues(alpha: 0.16);
+    final foreground = primary ? const Color(0xFF7C3AED) : Colors.white;
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      icon: Icon(icon, size: 18),
+      label: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: background,
+        foregroundColor: foreground,
+        disabledBackgroundColor: Colors.white.withValues(alpha: 0.48),
+        disabledForegroundColor: const Color(
+          0xFF7C3AED,
+        ).withValues(alpha: 0.72),
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        textStyle: const TextStyle(fontWeight: FontWeight.w900),
       ),
     );
   }

@@ -66,7 +66,8 @@ Minimal Vite + TypeScript setup in `zankurd/`. Currently just a prototype dashbo
 ## Linting & Type Checking
 
 **Flutter:**
-- `flutter analyze` — runs the Dart analyzer (Linting rules in `analysis_options.yaml` use package:flutter_lints)
+- `dart analyze` — runs the Dart analyzer (Linting rules in `analysis_options.yaml` use package:flutter_lints). **Use this, not `flutter analyze`.**
+- ⚠️ `flutter analyze` **crashes in this environment** with an LSP byte-stream error (`FormatException: Unexpected end of input`). The cause is the Turkish dotted-İ in the home path `C:\Users\AMARGİ\…`: that character is 2 bytes in UTF-8, which desyncs the LSP `Content-Length` header and truncates the analysis-server `initialize` message. `dart analyze` does not use the LSP channel, so it works correctly (reports "No issues found!"). Prefer `dart analyze` everywhere (local + CI) until the path issue is resolved.
 - `dart format .` — code formatting
 - No dedicated tests runner command; use `flutter test` for unit tests
 

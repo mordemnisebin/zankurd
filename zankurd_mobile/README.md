@@ -37,7 +37,14 @@ flutter run -d windows
 flutter run -d emulator-5554
 ```
 
-Supabase ile çalıştırmak için:
+Varsayılan build ZanKurd production Supabase projesine bağlanır; ekstra parametre gerekmez:
+
+```powershell
+flutter run
+flutter build appbundle --release
+```
+
+Farklı bir Supabase projesiyle çalıştırmak için build-time override verilebilir:
 
 ```powershell
 flutter run `

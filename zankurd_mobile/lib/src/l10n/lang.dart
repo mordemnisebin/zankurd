@@ -68,6 +68,8 @@ class CategoryNames {
     'Edebiyat': 'Edebiyat',
     'Cografya': 'Coğrafya',
     'Muzîk': 'Müzik',
+    'Siyaset': 'Siyaset',
+    'Paradigma': 'Paradigma',
   };
 
   static String tr(String kuName) => _kuToTr[kuName] ?? kuName;

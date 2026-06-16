@@ -5,10 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/seen_question_store.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
-QuizQuestion _question(String id) => QuizQuestion(
+QuizQuestion _question(String id, {String? prompt}) => QuizQuestion(
   id: id,
   category: 'Ziman',
-  prompt: 'Pirs $id',
+  prompt: prompt ?? 'Pirs $id',
   answers: const ['a', 'b', 'c', 'd'],
   correctAnswer: 'a',
   explanation: 'rave',
@@ -72,5 +72,44 @@ void main() {
     final store = await SeenQuestionStore.load();
     expect(store.preferUnseen(const [], 5), isEmpty);
     expect(store.preferUnseen([_question('q1')], 0), isEmpty);
+  });
+
+  test('never returns the same prompt twice in one selection', () async {
+    final store = await SeenQuestionStore.load();
+    // Aynı prompt, farklı id/zorluk (zorluk katmanı kopyaları gibi).
+    final pool = [
+      _question('a1', prompt: 'roj nedir?'),
+      _question('a2', prompt: 'roj nedir?'),
+      _question('a3', prompt: 'roj nedir?'),
+      _question('b1', prompt: 'av nedir?'),
+      _question('b2', prompt: 'av nedir?'),
+      _question('c1', prompt: 'mal nedir?'),
+    ];
+
+    final selected = store.preferUnseen(pool, 6, random: Random(3));
+    final prompts = selected.map((q) => q.prompt).toList();
+    expect(
+      prompts.toSet().length,
+      prompts.length,
+      reason: 'Seçimde tekrar eden prompt olmamalı: $prompts',
+    );
+    // Yalnızca 3 benzersiz prompt var; limit 6 olsa da 3 dönmeli.
+    expect(selected.length, 3);
+  });
+
+  test('prompt dedupe still recycles when all prompts have been seen',
+      () async {
+    final store = await SeenQuestionStore.load();
+    final pool = [
+      _question('a1', prompt: 'roj nedir?'),
+      _question('a2', prompt: 'roj nedir?'),
+      _question('b1', prompt: 'av nedir?'),
+    ];
+    await store.markSeen(['a1', 'a2', 'b1']);
+
+    final selected = store.preferUnseen(pool, 3, random: Random(1));
+    final prompts = selected.map((q) => q.prompt).toList();
+    expect(prompts.toSet().length, prompts.length);
+    expect(selected.length, 2); // 'roj nedir?' ve 'av nedir?'
   });
 }
