@@ -28,6 +28,7 @@ class _AppShellState extends State<AppShell> {
   static const _profileNameCompletedKey = 'zankurd.profileName.completed';
 
   int _tab = 0;
+  final ValueNotifier<int> _profileRefresh = ValueNotifier<int>(0);
   bool _checkingOnboarding = true;
   bool _showOnboarding = false;
   bool _checkingProfileName = false;
@@ -39,6 +40,12 @@ class _AppShellState extends State<AppShell> {
   void initState() {
     super.initState();
     _loadOnboardingState();
+  }
+
+  @override
+  void dispose() {
+    _profileRefresh.dispose();
+    super.dispose();
   }
 
   Future<void> _loadOnboardingState() async {
@@ -106,7 +113,10 @@ class _AppShellState extends State<AppShell> {
           HomeScreen(repository: widget.repository),
           CategoriesTab(repository: widget.repository),
           LeaderboardScreen(repository: widget.repository),
-          ProfileScreen(repository: widget.repository),
+          ProfileScreen(
+            repository: widget.repository,
+            refreshSignal: _profileRefresh,
+          ),
         ],
       ),
       bottomNavigationBar: Container(
@@ -115,7 +125,12 @@ class _AppShellState extends State<AppShell> {
         ),
         child: NavigationBar(
           selectedIndex: _tab,
-          onDestinationSelected: (i) => setState(() => _tab = i),
+          onDestinationSelected: (i) {
+            // Profil tabı IndexedStack içinde canlı kaldığı için sekmeye her
+            // dönüşte rozet/istatistik/yanlış verilerini tazelemesi gerekir.
+            if (i == 3) _profileRefresh.value++;
+            setState(() => _tab = i);
+          },
           destinations: [
             NavigationDestination(
               icon: const Icon(Icons.home_outlined),

@@ -20,9 +20,16 @@ import 'quiz_screen.dart';
 import 'settings_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({required this.repository, super.key});
+  const ProfileScreen({
+    required this.repository,
+    this.refreshSignal,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
+
+  /// Profil tabı yeniden gösterildiğinde tetiklenir; veriler tazelenir.
+  final Listenable? refreshSignal;
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -41,6 +48,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    _load();
+    _refreshMistakes();
+    widget.refreshSignal?.addListener(_handleRefreshSignal);
+  }
+
+  @override
+  void dispose() {
+    widget.refreshSignal?.removeListener(_handleRefreshSignal);
+    super.dispose();
+  }
+
+  /// Profil tabına dönüldüğünde rozet/istatistik/yanlış verilerini tazeler.
+  void _handleRefreshSignal() {
+    if (!mounted) return;
     _load();
     _refreshMistakes();
   }
