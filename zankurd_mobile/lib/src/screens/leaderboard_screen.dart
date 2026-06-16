@@ -214,51 +214,78 @@ class _PodiumSlot extends StatelessWidget {
 
     return Column(
       children: [
-        Text(medal, style: const TextStyle(fontSize: 22)),
-        const SizedBox(height: 6),
-        CircleAvatar(
-          radius: 22,
-          backgroundColor: color.withValues(alpha: 0.2),
-          child: Text(
-            entry.displayName.isNotEmpty
-                ? entry.displayName[0].toUpperCase()
-                : '?',
-            style: TextStyle(
-              color: color,
-              fontWeight: FontWeight.w900,
-              fontSize: 18,
-            ),
+        Container(
+          key: ValueKey('podium-slot-${entry.rank}'),
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: color.withValues(alpha: 0.35)),
           ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          entry.displayName,
-          style: const TextStyle(
-            color: AppTheme.textPrimary,
-            fontWeight: FontWeight.w800,
-            fontSize: 12,
-          ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
-        ),
-        Text(
-          '${entry.totalScore}',
-          style: TextStyle(
-            color: color,
-            fontWeight: FontWeight.w900,
-            fontSize: 14,
+          child: Column(
+            children: [
+              Text(medal, style: const TextStyle(fontSize: 20)),
+              const SizedBox(height: 5),
+              CircleAvatar(
+                radius: 21,
+                backgroundColor: color.withValues(alpha: 0.28),
+                child: Text(
+                  entry.displayName.isNotEmpty
+                      ? entry.displayName[0].toUpperCase()
+                      : '?',
+                  style: TextStyle(
+                    color: color,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                '#${entry.rank}',
+                style: TextStyle(
+                  color: color,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 12,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                entry.displayName,
+                style: const TextStyle(
+                  color: AppTheme.textPrimary,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 12,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                '${entry.totalScore}',
+                style: TextStyle(
+                  color: color,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 14,
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 8),
         Container(
           height: height,
           decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.15),
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
-            border: Border(
-              top: BorderSide(color: color.withValues(alpha: 0.4)),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                color.withValues(alpha: 0.52),
+                color.withValues(alpha: 0.18),
+              ],
             ),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+            border: Border.all(color: color.withValues(alpha: 0.38)),
           ),
         ),
       ],

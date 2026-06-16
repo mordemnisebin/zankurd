@@ -200,79 +200,128 @@ class _QuizScreenState extends State<QuizScreen> {
             gradient: AppTheme.backgroundGradient(context),
           ),
           child: SafeArea(
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-              children: [
-                _ScoreHeader(
-                  score: score,
-                  streak: streak,
-                  progress: '${index + 1}/${widget.questions.length}',
-                  coinBalance: _coinBalance,
-                ),
-                const SizedBox(height: 16),
-                TweenAnimationBuilder<double>(
-                  tween: Tween(
-                    begin: 0,
-                    end: (index + 1) / widget.questions.length,
-                  ),
-                  duration: const Duration(milliseconds: 350),
-                  curve: Curves.easeOutCubic,
-                  builder: (_, value, _) => LinearProgressIndicator(
-                    value: value,
-                    minHeight: 8,
-                    borderRadius: BorderRadius.circular(99),
-                    backgroundColor: AppTheme.surfaceHiColor(context),
-                    color: AppTheme.accent,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 280),
-                  switchInCurve: Curves.easeOutCubic,
-                  switchOutCurve: Curves.easeIn,
-                  transitionBuilder: (child, animation) => FadeTransition(
-                    opacity: animation,
-                    child: SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0.06, 0),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: child,
-                    ),
-                  ),
-                  child: KeyedSubtree(
-                    key: ValueKey(index),
-                    child: _buildQuestionPanel(context),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Column(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final landscape = constraints.maxWidth >= 700;
+                if (!landscape) {
+                  return ListView(
+                    padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+                    children: [
+                      _buildScoreHeader(),
+                      const SizedBox(height: 16),
+                      _buildProgressBar(context),
+                      const SizedBox(height: 16),
+                      _buildQuestionSwitcher(context),
+                      const SizedBox(height: 16),
+                      _buildActionControls(),
+                      const SizedBox(height: 16),
+                      _LiveScoreboard(players: livePlayers),
+                    ],
+                  );
+                }
+
+                return Row(
+                  key: const ValueKey('quiz-landscape-layout'),
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _buildWildcardRow(),
-                    const SizedBox(height: 8),
-                    FilledButton.icon(
-                      onPressed: answered && !completing ? () => _next() : null,
-                      icon: Icon(
-                        isLastQuestion
-                            ? Icons.flag_outlined
-                            : Icons.arrow_forward_rounded,
+                    Expanded(
+                      flex: 7,
+                      child: ListView(
+                        padding: const EdgeInsets.fromLTRB(18, 8, 10, 18),
+                        children: [
+                          _buildScoreHeader(),
+                          const SizedBox(height: 12),
+                          _buildProgressBar(context),
+                          const SizedBox(height: 12),
+                          _buildQuestionSwitcher(context),
+                        ],
                       ),
-                      label: Text(
-                        isLastQuestion
-                            ? context.s('Qediya', 'Bitir')
-                            : context.s('Piştî vê', 'Sonraki'),
+                    ),
+                    SizedBox(
+                      width: 280,
+                      child: ListView(
+                        padding: const EdgeInsets.fromLTRB(8, 8, 18, 18),
+                        children: [
+                          _buildActionControls(),
+                          const SizedBox(height: 12),
+                          _LiveScoreboard(players: livePlayers),
+                        ],
                       ),
                     ),
                   ],
-                ),
-                const SizedBox(height: 16),
-                _LiveScoreboard(players: livePlayers),
-              ],
+                );
+              },
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildScoreHeader() {
+    return _ScoreHeader(
+      score: score,
+      streak: streak,
+      progress: '${index + 1}/${widget.questions.length}',
+      coinBalance: _coinBalance,
+    );
+  }
+
+  Widget _buildProgressBar(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: (index + 1) / widget.questions.length),
+      duration: const Duration(milliseconds: 350),
+      curve: Curves.easeOutCubic,
+      builder: (_, value, _) => LinearProgressIndicator(
+        value: value,
+        minHeight: 8,
+        borderRadius: BorderRadius.circular(99),
+        backgroundColor: AppTheme.surfaceHiColor(context),
+        color: AppTheme.accent,
+      ),
+    );
+  }
+
+  Widget _buildQuestionSwitcher(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 280),
+      switchInCurve: Curves.easeOutCubic,
+      switchOutCurve: Curves.easeIn,
+      transitionBuilder: (child, animation) => FadeTransition(
+        opacity: animation,
+        child: SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0.06, 0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child,
+        ),
+      ),
+      child: KeyedSubtree(
+        key: ValueKey(index),
+        child: _buildQuestionPanel(context),
+      ),
+    );
+  }
+
+  Widget _buildActionControls() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _buildWildcardRow(),
+        const SizedBox(height: 8),
+        FilledButton.icon(
+          onPressed: answered && !completing ? () => _next() : null,
+          icon: Icon(
+            isLastQuestion ? Icons.flag_outlined : Icons.arrow_forward_rounded,
+          ),
+          label: Text(
+            isLastQuestion
+                ? context.s('Qediya', 'Bitir')
+                : context.s('Piştî vê', 'Sonraki'),
+          ),
+        ),
+      ],
     );
   }
 
@@ -312,9 +361,9 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void _onWildcardTap(WildcardType type) => switch (type) {
-    WildcardType.fiftyFifty     => _useFiftyFifty(),
-    WildcardType.audience       => _useAudience(),
-    WildcardType.doubleAnswer   => _activateDoubleAnswer(),
+    WildcardType.fiftyFifty => _useFiftyFifty(),
+    WildcardType.audience => _useAudience(),
+    WildcardType.doubleAnswer => _activateDoubleAnswer(),
     WildcardType.changeQuestion => _changeQuestion(),
   };
 
@@ -1237,10 +1286,7 @@ class _WildcardButton extends StatelessWidget {
             const SizedBox(height: 2),
             Text(
               '${type.coinCost}c',
-              style: const TextStyle(
-                fontSize: 9,
-                fontWeight: FontWeight.w900,
-              ),
+              style: const TextStyle(fontSize: 9, fontWeight: FontWeight.w900),
             ),
           ],
         ),

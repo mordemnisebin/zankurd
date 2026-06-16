@@ -16,7 +16,8 @@ class AppLogo extends StatelessWidget {
       'assets/zankurd.png',
       width: width,
       fit: BoxFit.contain,
-      filterQuality: FilterQuality.medium,
+      filterQuality: FilterQuality.high,
+      isAntiAlias: true,
     );
     if (!onCard) return image;
     return Container(

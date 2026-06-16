@@ -164,6 +164,15 @@ class _SignInScreenState extends State<SignInScreen>
 
   @override
   Widget build(BuildContext context) {
+    final compact = MediaQuery.sizeOf(context).height < 900;
+    final logoWidth = compact ? 118.0 : 200.0;
+    final topGap = compact ? 0.0 : 16.0;
+    final titleGap = compact ? 12.0 : 32.0;
+    final formGap = compact ? 16.0 : 40.0;
+    final actionGap = compact ? 12.0 : 28.0;
+    final altGap = compact ? 8.0 : 20.0;
+    final bottomGap = compact ? 14.0 : 32.0;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -250,17 +259,17 @@ class _SignInScreenState extends State<SignInScreen>
                           child: _LanguageToggle(),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: topGap),
                       // Logo
                       ScaleTransition(
                         scale: LoadAnimationSequence.logoScaleAnimation(
                           _animationController,
                         ),
-                        child: const Center(
-                          child: AppLogo(width: 200, onCard: true),
+                        child: Center(
+                          child: AppLogo(width: logoWidth, onCard: true),
                         ),
                       ),
-                      const SizedBox(height: 32),
+                      SizedBox(height: titleGap),
                       // Title and subtitle with animations
                       FadeTransition(
                         opacity: LoadAnimationSequence.titleFadeAnimation(
@@ -302,7 +311,7 @@ class _SignInScreenState extends State<SignInScreen>
                           ),
                         ),
                       ),
-                      const SizedBox(height: 40),
+                      SizedBox(height: formGap),
                       // Form fields with fade animations
                       FadeTransition(
                         opacity: LoadAnimationSequence.formField1FadeAnimation(
@@ -396,7 +405,7 @@ class _SignInScreenState extends State<SignInScreen>
                           ),
                         ),
                       ),
-                      const SizedBox(height: 28),
+                      SizedBox(height: actionGap),
                       // Sign In Button with animations
                       FadeTransition(
                         opacity: LoadAnimationSequence.buttonFadeAnimation(
@@ -416,7 +425,7 @@ class _SignInScreenState extends State<SignInScreen>
                           ),
                         ),
                       ),
-                      const SizedBox(height: 28),
+                      SizedBox(height: actionGap),
                       // Divider
                       Row(
                         children: [
@@ -445,7 +454,7 @@ class _SignInScreenState extends State<SignInScreen>
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: altGap),
                       // Google Sign In
                       SizedBox(
                         width: double.infinity,
@@ -490,7 +499,7 @@ class _SignInScreenState extends State<SignInScreen>
                           ),
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: compact ? 16 : 24),
                       // Sign Up link
                       Wrap(
                         alignment: WrapAlignment.center,
@@ -520,7 +529,7 @@ class _SignInScreenState extends State<SignInScreen>
                           ),
                         ],
                       ),
-                      const SizedBox(height: 32),
+                      SizedBox(height: bottomGap),
                     ],
                   );
                 },

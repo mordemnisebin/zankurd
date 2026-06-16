@@ -83,9 +83,10 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
           gradient: AppTheme.backgroundGradient(context),
         ),
         child: SafeArea(
-          child: Center(
+          child: Align(
+            alignment: Alignment.topCenter,
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.fromLTRB(24, 84, 24, 24),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 430),
                 child: Form(
