@@ -129,8 +129,11 @@ class _FailingRoomRepository extends MockZanKurdRepository {
 }
 
 class _FailingJoinRoomRepository extends MockZanKurdRepository {
+  int joinCalls = 0;
+
   @override
   Future<GameRoom> joinOnlineRoom(String code) {
+    joinCalls += 1;
     return Future<GameRoom>.error(StateError('online room join unavailable'));
   }
 }
@@ -228,6 +231,26 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('guest sign in is reachable in the first mobile auth viewport', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _GateAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final guestButton = find.text('Misafir olarak devam et');
+    expect(guestButton, findsOneWidget);
+    expect(tester.getBottomRight(guestButton).dy, lessThan(844));
+  });
+
   testWidgets('default mock auth starts signed out', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -260,6 +283,8 @@ void main() {
 
     // Marka artık metin yerine logo görseliyle gösteriliyor.
     expect(find.byType(AppLogo), findsOneWidget);
+    final logoCenter = tester.getCenter(find.byType(AppLogo));
+    expect(logoCenter.dx, closeTo(195, 4));
     expect(find.text('Atla'), findsOneWidget);
 
     await tester.tap(find.text('Atla'));
@@ -268,6 +293,15 @@ void main() {
     expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
     final preferences = await SharedPreferences.getInstance();
     expect(preferences.getBool('zankurd.onboarding.seen'), isTrue);
+  });
+
+  testWidgets('app logo uses high quality image filtering', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(home: Scaffold(body: AppLogo(width: 160))),
+    );
+
+    final image = tester.widget<Image>(find.byType(Image));
+    expect(image.filterQuality, FilterQuality.high);
   });
 
   testWidgets('auth screen asks for language before sign in', (tester) async {
@@ -332,7 +366,8 @@ void main() {
 
     expect(find.text('ZanKurd'), findsOneWidget);
     expect(find.text('Hoş geldin, Oyuncu!'), findsOneWidget);
-    expect(find.text('Seviye 5'), findsOneWidget);
+    expect(find.text('Seviye 5'), findsNothing);
+    expect(find.byIcon(Icons.diamond), findsNothing);
   });
 
   testWidgets('theme toggle changes visible home surface colors', (
@@ -395,6 +430,10 @@ void main() {
 
     expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
     expect(find.text('Günün Yarışması'), findsNothing);
+    expect(
+      tester.getTopLeft(find.byIcon(Icons.sports_esports_outlined)).dy,
+      lessThan(180),
+    );
 
     await tester.enterText(
       find.byKey(const ValueKey('player-name-field')),
@@ -616,6 +655,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(question.prompt), findsOneWidget);
+    expect(find.byKey(const ValueKey('quiz-landscape-layout')), findsOneWidget);
     expect(find.text(question.displayAnswers.first), findsWidgets);
 
     await tester.ensureVisible(find.text(question.displayAnswers.first).first);
@@ -636,6 +676,25 @@ void main() {
 
     expect(find.text('Liderlik Tablosu'), findsOneWidget);
     expect(find.byIcon(Icons.refresh_rounded), findsOneWidget);
+  });
+
+  testWidgets('leaderboard podium renders polished ranked slots', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(child: LeaderboardScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('podium-slot-1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('podium-slot-2')), findsOneWidget);
+    expect(find.byKey(const ValueKey('podium-slot-3')), findsOneWidget);
+    expect(find.text('#1'), findsOneWidget);
+    expect(find.text('#2'), findsOneWidget);
+    expect(find.text('#3'), findsOneWidget);
   });
 
   testWidgets('profile screen remains usable in landscape', (tester) async {
@@ -918,6 +977,47 @@ void main() {
     expect(find.text('İlk Oyun'), findsOneWidget);
   });
 
+  testWidgets('profile reloads achievements when refresh signal fires', (
+    tester,
+  ) async {
+    final refresh = ValueNotifier<int>(0);
+    addTearDown(refresh.dispose);
+
+    await tester.pumpWidget(
+      _testShell(
+        child: Scaffold(
+          body: ProfileScreen(repository: repository, refreshSignal: refresh),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Profil açıldığında henüz rozet yok.
+    expect(find.text('İlk Oyun'), findsNothing);
+
+    // Profil tabı dışındayken bir quiz tamamlanıp rozet açılmış gibi yap.
+    final store = await AchievementStore.load();
+    await store.recordQuizResult(
+      category: 'Ziman',
+      totalQuestions: 3,
+      correctCount: 2,
+      bestStreak: 2,
+      dailyStreak: 1,
+      userScore: 230,
+    );
+
+    // Profil tabına geri dönüş sinyali tetikleyince veriler tazelenmeli.
+    refresh.value++;
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('İlk Oyun'),
+      120,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('İlk Oyun'), findsOneWidget);
+  });
+
   testWidgets('leaderboard error state exposes retry', (tester) async {
     final repository = _FailingLeaderboardRepository();
 
@@ -1129,6 +1229,30 @@ void main() {
       find.text('Online odaya katılınamadı. Lütfen kodu kontrol edin.'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('empty room code is validated locally before online join', (
+    tester,
+  ) async {
+    final repository = _FailingJoinRoomRepository();
+    await tester.binding.setSurfaceSize(const Size(390, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: Scaffold(body: HomeScreen(repository: repository)),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Kodla Katıl'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Katıl'));
+    await tester.pumpAndSettle();
+
+    expect(repository.joinCalls, 0);
+    expect(find.text('Oda kodu gerekli.'), findsOneWidget);
+    expect(find.byType(RoomScreen), findsNothing);
   });
 
   testWidgets('settings updates the online player name', (tester) async {
