@@ -54,11 +54,17 @@ class SeenQuestionStore {
   /// tamamlanır. Havuzun tamamı görülmüşse havuza ait izler silinir
   /// ve havuzdan rastgele seçim yapılır.
   List<QuizQuestion> preferUnseen(
-    List<QuizQuestion> pool,
+    List<QuizQuestion> rawPool,
     int limit, {
     Random? random,
   }) {
-    if (pool.isEmpty || limit <= 0) return const [];
+    if (rawPool.isEmpty || limit <= 0) return const [];
+
+    // Soru bankası, aynı sorunun farklı zorluk katmanlarını ayrı kayıt
+    // (farklı id) olarak tutar. Aynı prompt'un birden çok kopyası tek bir
+    // seçimde/quizde tekrar olarak görünmesin diye prompt'a göre tekilleştir;
+    // her benzersiz prompt'tan ilk kopyayı koru.
+    final pool = _dedupeByPrompt(rawPool);
 
     final unseen = pool.where((q) => !_seen.contains(q.id)).toList();
     if (unseen.isEmpty) {
@@ -76,6 +82,18 @@ class SeenQuestionStore {
     final seenFill = pool.where((q) => _seen.contains(q.id)).toList()
       ..shuffle(random);
     return [...unseen, ...seenFill.take(limit - unseen.length)];
+  }
+
+  /// Aynı prompt'a sahip kopyalardan yalnızca ilkini tutar; sıra korunur.
+  static List<QuizQuestion> _dedupeByPrompt(List<QuizQuestion> pool) {
+    final seenPrompts = <String>{};
+    final result = <QuizQuestion>[];
+    for (final question in pool) {
+      if (seenPrompts.add(question.prompt.trim())) {
+        result.add(question);
+      }
+    }
+    return result;
   }
 
   Future<void> _persist() async {

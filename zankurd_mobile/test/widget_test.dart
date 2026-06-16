@@ -128,6 +128,13 @@ class _FailingRoomRepository extends MockZanKurdRepository {
   }
 }
 
+class _FailingJoinRoomRepository extends MockZanKurdRepository {
+  @override
+  Future<GameRoom> joinOnlineRoom(String code) {
+    return Future<GameRoom>.error(StateError('online room join unavailable'));
+  }
+}
+
 class _NeedsNameRepository extends MockZanKurdRepository {
   String savedName = '';
 
@@ -447,12 +454,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd'), findsOneWidget);
-    expect(find.textContaining('Kurmancî Yarış'), findsOneWidget);
-    expect(find.text('Günün Yarışması'), findsOneWidget);
-
-    await tester.scrollUntilVisible(find.text('Oda Kur'), 120);
-    await tester.pumpAndSettle();
+    expect(find.textContaining('Arkadaşlarınla'), findsOneWidget);
     expect(find.text('Oda Kur'), findsOneWidget);
+    expect(find.text('Kodla Katıl'), findsOneWidget);
+    expect(find.text('Günün Yarışması'), findsOneWidget);
 
     await tester.tap(find.text('Oda Kur'));
     await tester.pumpAndSettle();
@@ -520,10 +525,139 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.scrollUntilVisible(find.text('Bi Kodê Bikeve'), 120);
-    await tester.pumpAndSettle();
     expect(find.text('Bi Kodê Bikeve'), findsOneWidget);
     expect(find.text('Bi Kodê Tevlî Bibe'), findsNothing);
+  });
+
+  testWidgets('join by code opens the room code sheet from the hero', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _FakeAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Kodla Katıl'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Odaya Katıl'), findsOneWidget);
+    expect(find.text('Oda kodu'), findsOneWidget);
+    expect(find.text('Katıl'), findsOneWidget);
+  });
+
+  testWidgets('home hero keeps multiplayer actions visible in landscape', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _FakeAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Arkadaşlarınla'), findsOneWidget);
+    expect(find.text('Oda Kur'), findsOneWidget);
+    expect(find.text('Kodla Katıl'), findsOneWidget);
+  });
+
+  testWidgets('room lobby remains usable in landscape', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.createRoom(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Özel Oda'), findsOneWidget);
+    expect(find.text('Oyuncular'), findsOneWidget);
+
+    await tester.scrollUntilVisible(
+      find.text('Yarışı Başlat'),
+      120,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Yarışı Başlat'), findsOneWidget);
+  });
+
+  testWidgets('quiz screen remains usable in landscape', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      _testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text(question.prompt), findsOneWidget);
+    expect(find.text(question.displayAnswers.first), findsWidgets);
+
+    await tester.ensureVisible(find.text(question.displayAnswers.first).first);
+    await tester.tap(find.text(question.displayAnswers.first).first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Doğru cevap'), findsOneWidget);
+  });
+
+  testWidgets('leaderboard screen remains usable in landscape', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(child: LeaderboardScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Liderlik Tablosu'), findsOneWidget);
+    expect(find.byIcon(Icons.refresh_rounded), findsOneWidget);
+  });
+
+  testWidgets('profile screen remains usable in landscape', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: Scaffold(body: ProfileScreen(repository: repository)),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Profil'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.byIcon(Icons.settings_outlined),
+      120,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byIcon(Icons.settings_outlined), findsOneWidget);
   });
 
   testWidgets('opens the leaderboard from the home screen', (tester) async {
@@ -966,6 +1100,36 @@ void main() {
       );
     },
   );
+
+  testWidgets('home does not open a demo room when online room join fails', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: Scaffold(
+          body: HomeScreen(repository: _FailingJoinRoomRepository()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Kodla Katıl'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).last, 'ABCD12');
+    await tester.tap(find.text('Katıl'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(RoomScreen), findsNothing);
+    expect(find.text('Rojda'), findsNothing);
+    expect(find.text('Baran'), findsNothing);
+    expect(
+      find.text('Online odaya katılınamadı. Lütfen kodu kontrol edin.'),
+      findsOneWidget,
+    );
+  });
 
   testWidgets('settings updates the online player name', (tester) async {
     final repository = _NeedsNameRepository()..savedName = 'Eski Ad';

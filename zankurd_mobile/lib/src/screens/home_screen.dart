@@ -12,7 +12,6 @@ import 'home/category_grid.dart';
 import 'home/daily_quiz_card.dart';
 import 'home/hero_card.dart';
 import 'home/question_card.dart';
-import 'home/room_actions.dart';
 import 'home/section_header.dart';
 import 'home/spin_wheel_card.dart';
 import 'level_screen.dart';
@@ -124,6 +123,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     _heroFadeAnimation(0),
                     HeroCard(
                       isKu: ku,
+                      loading: _roomActionLoading,
+                      onCreateRoom: () => _createOnlineRoom(context),
+                      onJoinRoom: () => _showJoinSheet(context),
                       onQuickMatch: () => _openQuiz(context, _room),
                     ),
                   );
@@ -159,18 +161,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   );
                 }
                 if (index == 4) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: _buildAnimatedCard(
-                      _heroFadeAnimation(4),
-                      RoomActions(
-                        loading: _roomActionLoading,
-                        isKu: ku,
-                        onCreateRoom: () => _createOnlineRoom(context),
-                        onJoinRoom: () => _showJoinSheet(context),
-                      ),
-                    ),
-                  );
+                  return const SizedBox.shrink();
                 }
                 if (index == 5) {
                   return Padding(
@@ -591,7 +582,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       if (!sheetCtx.mounted) return;
                       Navigator.of(sheetCtx).pop();
                       if (!context.mounted) return;
-                      _openRoom(context, repo.joinRoom(controller.text));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            context.isKu
+                                ? 'Tevlî jûra serhêl nebû. Ji kerema xwe kodê kontrol bike.'
+                                : 'Online odaya katılınamadı. Lütfen kodu kontrol edin.',
+                          ),
+                        ),
+                      );
                     }
                   },
                   icon: const Icon(Icons.meeting_room_outlined),
