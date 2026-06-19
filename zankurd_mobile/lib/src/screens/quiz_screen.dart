@@ -631,8 +631,6 @@ class _QuizScreenState extends State<QuizScreen> {
       return;
     }
 
-    HapticFeedback.lightImpact();
-
     // Optimistically select it to disable buttons immediately
     setState(() {
       selectedAnswer = answer;
@@ -650,7 +648,7 @@ class _QuizScreenState extends State<QuizScreen> {
       if (!mounted) return;
 
       if (result['is_correct'] == true) {
-        HapticFeedback.mediumImpact();
+        HapticFeedback.lightImpact();
       } else {
         HapticFeedback.heavyImpact();
       }
@@ -682,7 +680,7 @@ class _QuizScreenState extends State<QuizScreen> {
       final correct = answer == question.correctAnswer;
       _trackMistake(correct);
       if (correct) {
-        HapticFeedback.mediumImpact();
+        HapticFeedback.lightImpact();
       } else {
         HapticFeedback.heavyImpact();
       }
