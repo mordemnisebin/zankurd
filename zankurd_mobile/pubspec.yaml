@@ -44,14 +44,14 @@ dependencies:
   provider: ^6.1.0
   shared_preferences: ^2.5.5
 
-  # Ses efektleri
+  # Ses efektleri (Sprint 1)
   audioplayers: ^6.1.0
 
-  # Shimmer skeleton loading
+  # Shimmer skeleton loading (Sprint 1)
   shimmer: ^3.0.0
 
   # Lottie animasyonları (Sprint 4'te kullanılacak)
-  lottie: ^3.1.2
+  lottie: ^3.3.0
 
   # Paylaşım (Sprint 5'te kullanılacak)
   share_plus: ^10.0.3
