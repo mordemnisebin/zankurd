@@ -44,6 +44,24 @@ dependencies:
   provider: ^6.1.0
   shared_preferences: ^2.5.5
 
+  # Ses efektleri
+  audioplayers: ^6.1.0
+
+  # Shimmer skeleton loading
+  shimmer: ^3.0.0
+
+  # Lottie animasyonları (Sprint 4'te kullanılacak)
+  lottie: ^3.1.2
+
+  # Paylaşım (Sprint 5'te kullanılacak)
+  share_plus: ^10.0.3
+
+  # Mağaza değerlendirmesi (Sprint 5'te kullanılacak)
+  in_app_review: ^2.0.9
+
+  # Bağlantı durumu (Sprint 6'da kullanılacak)
+  connectivity_plus: ^6.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -73,6 +91,8 @@ flutter:
   assets:
     - assets/question_images/
     - assets/zankurd.png
+    - assets/sounds/
+    - assets/animations/
 
   fonts:
     - family: Rubik
