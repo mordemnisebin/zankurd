@@ -651,6 +651,21 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<void> addCoins(int amount, String reason) async {
+    if (amount <= 0) return;
+    try {
+      final _ = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      await client.rpc(
+        'award_coins',
+        params: {'p_amount': amount, 'p_reason': reason},
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'addCoins failed');
+    }
+  }
+
+  @override
   Future<int> awardQuizCoins({
     required int score,
     required int correctCount,

@@ -345,6 +345,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<void> addCoins(int amount, String reason) async {
+    if (amount > 0) _mockCoins += amount;
+  }
+
+  @override
   Future<int> awardQuizCoins({
     required int score,
     required int correctCount,
