@@ -20,9 +20,14 @@ import 'room_screen.dart';
 import 'spin_wheel_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({required this.repository, super.key});
+  const HomeScreen({
+    required this.repository,
+    this.displayName,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
+  final String? displayName;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -258,7 +263,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    ku ? 'Salam, Lîstikvan!' : 'Hoş geldin, Oyuncu!',
+                    ku
+                        ? 'Salam, ${widget.displayName ?? 'Lîstikvan'}!'
+                        : 'Hoş geldin, ${widget.displayName ?? 'Oyuncu'}!',
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 13,
