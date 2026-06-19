@@ -110,7 +110,10 @@ class _AppShellState extends State<AppShell> {
       body: IndexedStack(
         index: _tab,
         children: [
-          HomeScreen(repository: widget.repository),
+          HomeScreen(
+            repository: widget.repository,
+            displayName: _profileName,
+          ),
           CategoriesTab(repository: widget.repository),
           LeaderboardScreen(repository: widget.repository),
           ProfileScreen(

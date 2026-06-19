@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
-class SkeletonLoader extends StatefulWidget {
+import '../theme/app_theme.dart';
+
+({Color base, Color highlight}) _shimmerColors(BuildContext context) {
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+  return (
+    base: isDark ? AppTheme.surfaceHi : const Color(0xFFE0E0E0),
+    highlight: isDark ? const Color(0xFF3A3A50) : const Color(0xFFF5F5F5),
+  );
+}
+
+/// Tam genişlikte yükleniyor kartları için shimmer liste.
+class SkeletonLoader extends StatelessWidget {
   const SkeletonLoader({
     this.count = 3,
     this.height = 80,
@@ -13,100 +25,59 @@ class SkeletonLoader extends StatefulWidget {
   final double borderRadius;
 
   @override
-  State<SkeletonLoader> createState() => _SkeletonLoaderState();
-}
-
-class _SkeletonLoaderState extends State<SkeletonLoader>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final colors = _shimmerColors(context);
+
     return ListView.builder(
-      itemCount: widget.count,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: _ShimmerPlaceholder(
-            height: widget.height,
-            borderRadius: widget.borderRadius,
-            animation: _controller,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: count,
+      itemBuilder: (context, index) => Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: Shimmer.fromColors(
+          baseColor: colors.base,
+          highlightColor: colors.highlight,
+          child: Container(
+            height: height,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
 
-class _ShimmerPlaceholder extends StatelessWidget {
-  const _ShimmerPlaceholder({
-    required this.height,
-    required this.borderRadius,
-    required this.animation,
+/// Tek satır metin için shimmer placeholder.
+class SkeletonLine extends StatelessWidget {
+  const SkeletonLine({
+    this.width = double.infinity,
+    this.height = 16,
+    this.borderRadius = 8,
+    super.key,
   });
 
+  final double width;
   final double height;
   final double borderRadius;
-  final Animation<double> animation;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (context, child) {
-        final position = animation.value;
-        return Container(
-          height: height,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
-            color: Colors.grey[300],
-          ),
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(borderRadius),
-                    color: Colors.grey[200],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: -200 + (position * 400),
-                top: 0,
-                bottom: 0,
-                width: 200,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.grey[300]!,
-                        Colors.grey[100]!,
-                        Colors.grey[300]!,
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+    final colors = _shimmerColors(context);
+
+    return Shimmer.fromColors(
+      baseColor: colors.base,
+      highlightColor: colors.highlight,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
+      ),
     );
   }
 }

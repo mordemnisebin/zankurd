@@ -14,6 +14,7 @@ import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
+import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
@@ -168,6 +169,9 @@ Widget _testShell({
       ),
       ChangeNotifierProvider<ThemeProvider>(
         create: (_) => themeProvider ?? ThemeProvider(),
+      ),
+      ChangeNotifierProvider<SoundProvider>(
+        create: (_) => SoundProvider(),
       ),
     ],
     child: Consumer<ThemeProvider>(
@@ -365,7 +369,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd'), findsOneWidget);
-    expect(find.text('Hoş geldin, Oyuncu!'), findsOneWidget);
+    expect(find.text('Hoş geldin, ZanKurd Oyuncusu!'), findsOneWidget);
     expect(find.text('Seviye 5'), findsNothing);
     expect(find.byIcon(Icons.diamond), findsNothing);
   });
@@ -773,8 +777,15 @@ void main() {
     final questions = repository.questions.take(3).toList();
 
     await tester.pumpWidget(
-      ChangeNotifierProvider<LanguageProvider>(
-        create: (_) => _turkishLang(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<LanguageProvider>(
+            create: (_) => _turkishLang(),
+          ),
+          ChangeNotifierProvider<SoundProvider>(
+            create: (_) => SoundProvider(),
+          ),
+        ],
         child: MaterialApp(
           theme: AppTheme.dark(),
           home: QuizScreen(
@@ -909,8 +920,15 @@ void main() {
     final question = repository.questions.first;
 
     await tester.pumpWidget(
-      ChangeNotifierProvider<LanguageProvider>(
-        create: (_) => _turkishLang(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<LanguageProvider>(
+            create: (_) => _turkishLang(),
+          ),
+          ChangeNotifierProvider<SoundProvider>(
+            create: (_) => SoundProvider(),
+          ),
+        ],
         child: MaterialApp(
           theme: AppTheme.dark(),
           home: QuizScreen(
