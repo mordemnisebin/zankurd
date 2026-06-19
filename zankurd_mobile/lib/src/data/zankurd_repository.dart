@@ -56,6 +56,9 @@ abstract class ZanKurdRepository {
   /// Bakiye yeterli değilse false, başarılıysa true döner.
   Future<bool> spendCoins(int amount, String reason);
 
+  /// Oyuncunun coin bakiyesine [amount] kadar ekler (görev ödülü vb.).
+  Future<void> addCoins(int amount, String reason);
+
   /// Günlük çark: bugün çevrilebilir mi?
   Future<bool> canSpinToday();
 
