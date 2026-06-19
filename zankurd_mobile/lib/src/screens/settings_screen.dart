@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
+import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
@@ -88,6 +89,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     _LangSwitch(),
                   ],
+                ),
+              ),
+              const SizedBox(height: 14),
+
+              Consumer<SoundProvider>(
+                builder: (context, sound, _) => AppPanel(
+                  child: Row(
+                    children: [
+                      Icon(
+                        sound.enabled
+                            ? Icons.volume_up_outlined
+                            : Icons.volume_off_outlined,
+                        color: AppTheme.accent,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          ku ? 'Deng û mûzîk' : 'Ses efektleri',
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                      Switch(
+                        value: sound.enabled,
+                        onChanged: (_) { sound.toggle(); },
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 14),
