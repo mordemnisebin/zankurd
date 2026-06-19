@@ -369,7 +369,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd'), findsOneWidget);
-    expect(find.text('Hoş geldin, Oyuncu!'), findsOneWidget);
+    expect(find.text('Hoş geldin, ZanKurd Oyuncusu!'), findsOneWidget);
     expect(find.text('Seviye 5'), findsNothing);
     expect(find.byIcon(Icons.diamond), findsNothing);
   });
