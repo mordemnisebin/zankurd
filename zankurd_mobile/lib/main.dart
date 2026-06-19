@@ -14,6 +14,7 @@ import 'src/data/supabase_zankurd_repository.dart';
 import 'src/data/zankurd_repository.dart';
 import 'src/l10n/lang.dart';
 import 'src/providers/auth_provider.dart';
+import 'src/providers/sound_provider.dart';
 import 'src/providers/theme_provider.dart';
 import 'src/screens/app_shell.dart';
 import 'src/theme/app_theme.dart';
@@ -54,6 +55,7 @@ Future<void> main() async {
 
   final languageProvider = await LanguageProvider.load();
   final themeProvider = await ThemeProvider.load();
+  final soundProvider = await SoundProvider.load();
 
   runApp(
     ZanKurdApp(
@@ -61,6 +63,7 @@ Future<void> main() async {
       authProvider: authProvider,
       languageProvider: languageProvider,
       themeProvider: themeProvider,
+      soundProvider: soundProvider,
     ),
   );
 }
@@ -71,6 +74,7 @@ class ZanKurdApp extends StatelessWidget {
     this.authProvider,
     this.languageProvider,
     this.themeProvider,
+    this.soundProvider,
     super.key,
   });
 
@@ -78,6 +82,7 @@ class ZanKurdApp extends StatelessWidget {
   final AuthProvider? authProvider;
   final LanguageProvider? languageProvider;
   final ThemeProvider? themeProvider;
+  final SoundProvider? soundProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +95,9 @@ class ZanKurdApp extends StatelessWidget {
           create: (_) => authProvider ?? AuthProvider.test(),
         ),
         ChangeNotifierProvider(create: (_) => themeProvider ?? ThemeProvider()),
+        ChangeNotifierProvider(
+          create: (_) => soundProvider ?? SoundProvider(),
+        ),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) => MaterialApp(

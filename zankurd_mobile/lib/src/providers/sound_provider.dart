@@ -1,0 +1,56 @@
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class SoundProvider extends ChangeNotifier {
+  // Sync default constructor — MultiProvider fallback ve testler için.
+  SoundProvider() : _enabled = true, _player = null;
+
+  SoundProvider._({required this._enabled, this._player});
+
+  static const _enabledKey = 'zankurd.sound.enabled';
+
+  final AudioPlayer? _player;
+  bool _enabled;
+
+  bool get enabled => _enabled;
+
+  /// SharedPreferences'ten önceki ayarı okuyarak başlatır.
+  static Future<SoundProvider> load({AudioPlayer? player}) async {
+    final prefs = await SharedPreferences.getInstance();
+    return SoundProvider._(
+      enabled: prefs.getBool(_enabledKey) ?? true,
+      player: player,
+    );
+  }
+
+  /// Ses ayarını tersine çevirir ve kalıcı olarak kaydeder.
+  Future<void> toggle() async {
+    _enabled = !_enabled;
+    notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_enabledKey, _enabled);
+  }
+
+  Future<void> playCorrect() => _play('sounds/correct.mp3');
+  Future<void> playWrong() => _play('sounds/wrong.mp3');
+  Future<void> playWin() => _play('sounds/win.mp3');
+  Future<void> playCoin() => _play('sounds/coin.mp3');
+  Future<void> playWildcard() => _play('sounds/wildcard.mp3');
+
+  Future<void> _play(String asset) async {
+    if (!_enabled) return;
+    if (_player == null) return;
+    try {
+      await _player.play(AssetSource(asset));
+    } catch (_) {
+      // Platform ses desteği yoksa veya dosya eksikse sessizce geç.
+    }
+  }
+
+  @override
+  void dispose() {
+    _player?.dispose();
+    super.dispose();
+  }
+}
