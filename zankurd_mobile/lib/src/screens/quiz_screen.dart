@@ -3,8 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../data/mistake_store.dart';
+import '../providers/sound_provider.dart';
 import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
 import '../game/bot_opponent.dart';
@@ -375,6 +377,7 @@ class _QuizScreenState extends State<QuizScreen> {
     const cost = 20;
     if (_wildcard.fiftyFiftyUsed || _coinBalance < cost || answered) return;
     HapticFeedback.selectionClick();
+    context.read<SoundProvider>().playWildcard();
     setState(() {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(fiftyFiftyUsed: true);
@@ -392,6 +395,7 @@ class _QuizScreenState extends State<QuizScreen> {
     const cost = 30;
     if (_wildcard.audienceUsed || _coinBalance < cost || answered) return;
     HapticFeedback.selectionClick();
+    context.read<SoundProvider>().playWildcard();
     setState(() {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(audienceUsed: true);
@@ -439,6 +443,7 @@ class _QuizScreenState extends State<QuizScreen> {
       return;
     }
     HapticFeedback.selectionClick();
+    context.read<SoundProvider>().playWildcard();
     setState(() {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(doubleAnswerActivated: true);
@@ -481,6 +486,7 @@ class _QuizScreenState extends State<QuizScreen> {
     if (candidates.isEmpty) return; // değiştirilecek soru bulunamadı
 
     HapticFeedback.selectionClick();
+    context.read<SoundProvider>().playWildcard();
     final replacement = candidates[Random().nextInt(candidates.length)];
 
     setState(() {
@@ -649,8 +655,10 @@ class _QuizScreenState extends State<QuizScreen> {
 
       if (result['is_correct'] == true) {
         HapticFeedback.lightImpact();
+        context.read<SoundProvider>().playCorrect();
       } else {
         HapticFeedback.heavyImpact();
+        context.read<SoundProvider>().playWrong();
       }
 
       final isCorrect = result['is_correct'] == true;
@@ -681,8 +689,10 @@ class _QuizScreenState extends State<QuizScreen> {
       _trackMistake(correct);
       if (correct) {
         HapticFeedback.lightImpact();
+        context.read<SoundProvider>().playCorrect();
       } else {
         HapticFeedback.heavyImpact();
+        context.read<SoundProvider>().playWrong();
       }
       setState(() {
         if (correct) {
@@ -717,6 +727,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 )
                 .catchError((_) => 0);
       if (!mounted) return;
+      context.read<SoundProvider>().playWin();
       Navigator.of(context).pushReplacement(
         AppRoute.replace(
           QuizResultScreen(
