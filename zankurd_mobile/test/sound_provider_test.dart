@@ -30,7 +30,7 @@ void main() {
 
     test('toggle() SharedPreferences\'e false yazar', () async {
       final provider = await SoundProvider.load();
-      provider.toggle();
+      await provider.toggle();
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getBool('zankurd.sound.enabled'), isFalse);
     });
@@ -39,6 +39,15 @@ void main() {
       SharedPreferences.setMockInitialValues({'zankurd.sound.enabled': false});
       final provider = await SoundProvider.load();
       expect(provider.enabled, isFalse);
+    });
+
+    test('enabled=false iken play metotları erken döner', () async {
+      SharedPreferences.setMockInitialValues({'zankurd.sound.enabled': false});
+      final provider = await SoundProvider.load();
+      expect(provider.enabled, isFalse);
+      // Ses kapalıyken play metotları exception fırlatmamalı.
+      await expectLater(provider.playCorrect(), completes);
+      await expectLater(provider.playWrong(), completes);
     });
   });
 }

@@ -25,12 +25,11 @@ class SoundProvider extends ChangeNotifier {
   }
 
   /// Ses ayarını tersine çevirir ve kalıcı olarak kaydeder.
-  void toggle() {
+  Future<void> toggle() async {
     _enabled = !_enabled;
-    SharedPreferences.getInstance().then(
-      (prefs) => prefs.setBool(_enabledKey, _enabled),
-    );
     notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_enabledKey, _enabled);
   }
 
   Future<void> playCorrect() => _play('sounds/correct.mp3');
