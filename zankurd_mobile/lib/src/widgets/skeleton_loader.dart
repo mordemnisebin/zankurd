@@ -3,6 +3,14 @@ import 'package:shimmer/shimmer.dart';
 
 import '../theme/app_theme.dart';
 
+({Color base, Color highlight}) _shimmerColors(BuildContext context) {
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+  return (
+    base: isDark ? AppTheme.surfaceHi : const Color(0xFFE0E0E0),
+    highlight: isDark ? const Color(0xFF3A3A50) : const Color(0xFFF5F5F5),
+  );
+}
+
 /// Tam genişlikte yükleniyor kartları için shimmer liste.
 class SkeletonLoader extends StatelessWidget {
   const SkeletonLoader({
@@ -18,11 +26,7 @@ class SkeletonLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor =
-        isDark ? AppTheme.surfaceHi : const Color(0xFFE0E0E0);
-    final highlightColor =
-        isDark ? const Color(0xFF3A3A50) : const Color(0xFFF5F5F5);
+    final colors = _shimmerColors(context);
 
     return ListView.builder(
       shrinkWrap: true,
@@ -31,8 +35,8 @@ class SkeletonLoader extends StatelessWidget {
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child: Shimmer.fromColors(
-          baseColor: baseColor,
-          highlightColor: highlightColor,
+          baseColor: colors.base,
+          highlightColor: colors.highlight,
           child: Container(
             height: height,
             decoration: BoxDecoration(
@@ -61,15 +65,11 @@ class SkeletonLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor =
-        isDark ? AppTheme.surfaceHi : const Color(0xFFE0E0E0);
-    final highlightColor =
-        isDark ? const Color(0xFF3A3A50) : const Color(0xFFF5F5F5);
+    final colors = _shimmerColors(context);
 
     return Shimmer.fromColors(
-      baseColor: baseColor,
-      highlightColor: highlightColor,
+      baseColor: colors.base,
+      highlightColor: colors.highlight,
       child: Container(
         width: width,
         height: height,
