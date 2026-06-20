@@ -9,11 +9,14 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'home/category_grid.dart';
+import 'home/daily_missions_card.dart';
 import 'home/daily_quiz_card.dart';
 import 'home/hero_card.dart';
 import 'home/question_card.dart';
 import 'home/section_header.dart';
 import 'home/spin_wheel_card.dart';
+import '../data/daily_mission_store.dart';
+import '../models/daily_mission.dart';
 import 'level_screen.dart';
 import 'quiz_screen.dart';
 import 'room_screen.dart';
@@ -41,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool _dailyLoading = false;
   int? _coinBalance;
   int _streak = 0;
+  List<DailyMission> _missions = [];
+  bool _missionsLoading = true;
   late GameRoom _room;
   late AnimationController _loadAnimationController;
 
@@ -57,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _room = repo.createRoom();
     _bootstrap();
     _refreshStreak();
+    _loadMissions();
   }
 
   @override
@@ -68,6 +74,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _refreshStreak() async {
     final store = await StreakStore.load();
     if (mounted) setState(() => _streak = store.effectiveStreak());
+  }
+
+  Future<void> _loadMissions() async {
+    final store = await DailyMissionStore.load();
+    if (mounted) {
+      setState(() {
+        _missions = List.from(store.missions);
+        _missionsLoading = false;
+      });
+    }
   }
 
   Future<void> _bootstrap() async {
@@ -166,7 +182,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   );
                 }
                 if (index == 4) {
-                  return const SizedBox.shrink();
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: _buildAnimatedCard(
+                      _heroFadeAnimation(4),
+                      DailyMissionsCard(
+                        isKu: ku,
+                        missions: _missions,
+                        loading: _missionsLoading,
+                      ),
+                    ),
+                  );
                 }
                 if (index == 5) {
                   return Padding(
@@ -445,6 +471,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
       );
       _refreshCoins();
+      _loadMissions();
     } finally {
       if (mounted) setState(() => _dailyLoading = false);
     }
@@ -457,6 +484,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ),
     );
     _refreshCoins();
+    _loadMissions();
   }
 
   void _openRoom(BuildContext context, GameRoom room) {
