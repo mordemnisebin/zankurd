@@ -17,13 +17,13 @@ import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/wildcard.dart';
-import '../l10n/explanation_ku.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/mission_toast.dart';
+import '../widgets/confetti_overlay.dart';
 import 'quiz_result_screen.dart';
 
 part 'quiz/quiz_widgets.dart';
@@ -36,6 +36,7 @@ class QuizScreen extends StatefulWidget {
     this.practice = false,
     this.botRace = false,
     this.dailyQuiz = false,
+    this.enableTimer = true,
     super.key,
   });
 
@@ -52,11 +53,13 @@ class QuizScreen extends StatefulWidget {
   /// Günün yarışması akışından açıldıysa daily quiz sayacı işler.
   final bool dailyQuiz;
 
+  final bool enableTimer;
+
   @override
   State<QuizScreen> createState() => _QuizScreenState();
 }
 
-class _QuizScreenState extends State<QuizScreen> {
+class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   int index = 0;
   int score = 0;
   int streak = 0;
@@ -80,6 +83,12 @@ class _QuizScreenState extends State<QuizScreen> {
   Map<String, double>? _audiencePoll;
   int _coinBalance = 0;
 
+  // Timer ve animasyon durumları
+  late final AnimationController _timerController;
+  Timer? _explanationTimer;
+  bool _showExplanation = false;
+  bool _showConfetti = false;
+
   QuizQuestion get question => _questions[index];
   bool get answered => selectedAnswer.isNotEmpty;
   bool get isLastQuestion => index == widget.questions.length - 1;
@@ -91,6 +100,22 @@ class _QuizScreenState extends State<QuizScreen> {
     _isKu = context.langProvider.isKu;
     _questions = List.of(widget.questions);
     _loadCoinBalance();
+    
+    _timerController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 15),
+      value: 1.0,
+    );
+    if (widget.enableTimer) {
+      _timerController.addStatusListener((status) {
+        if (status == AnimationStatus.dismissed) {
+          if (!answered) {
+            _answer('TIMEOUT');
+          }
+        }
+      });
+    }
+
     if (widget.botRace) {
       _botRace = BotRace.standard();
       livePlayers = _composeBotRacePlayers();
@@ -103,6 +128,14 @@ class _QuizScreenState extends State<QuizScreen> {
       });
     }
     _markQuestionSeen();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    if (widget.enableTimer) {
+      _timerController.reset();
+      _timerController.reverse(from: 1.0);
+    }
   }
 
   void _loadCoinBalance() {
@@ -149,6 +182,8 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void dispose() {
     _playersSub?.cancel();
+    _timerController.dispose();
+    _explanationTimer?.cancel();
     super.dispose();
   }
 
@@ -206,59 +241,71 @@ class _QuizScreenState extends State<QuizScreen> {
           decoration: BoxDecoration(
             gradient: AppTheme.backgroundGradient(context),
           ),
-          child: SafeArea(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final landscape = constraints.maxWidth >= 700;
-                if (!landscape) {
-                  return ListView(
-                    padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-                    children: [
-                      _buildScoreHeader(),
-                      const SizedBox(height: 16),
-                      _buildProgressBar(context),
-                      const SizedBox(height: 16),
-                      _buildQuestionSwitcher(context),
-                      const SizedBox(height: 16),
-                      _buildActionControls(),
-                      const SizedBox(height: 16),
-                      _LiveScoreboard(players: livePlayers),
-                    ],
-                  );
-                }
-
-                return Row(
-                  key: const ValueKey('quiz-landscape-layout'),
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      flex: 7,
-                      child: ListView(
-                        padding: const EdgeInsets.fromLTRB(18, 8, 10, 18),
+          child: Stack(
+            children: [
+              SafeArea(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final landscape = constraints.maxWidth >= 700;
+                    if (!landscape) {
+                      return ListView(
+                        padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
                         children: [
                           _buildScoreHeader(),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 16),
                           _buildProgressBar(context),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 16),
                           _buildQuestionSwitcher(context),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 280,
-                      child: ListView(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 18, 18),
-                        children: [
+                          const SizedBox(height: 16),
                           _buildActionControls(),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 16),
                           _LiveScoreboard(players: livePlayers),
                         ],
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
+                      );
+                    }
+
+                    return Row(
+                      key: const ValueKey('quiz-landscape-layout'),
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          flex: 7,
+                          child: ListView(
+                            padding: const EdgeInsets.fromLTRB(18, 8, 10, 18),
+                            children: [
+                              _buildScoreHeader(),
+                              const SizedBox(height: 12),
+                              _buildProgressBar(context),
+                              const SizedBox(height: 12),
+                              _buildQuestionSwitcher(context),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 280,
+                          child: ListView(
+                            padding: const EdgeInsets.fromLTRB(8, 8, 18, 18),
+                            children: [
+                              _buildActionControls(),
+                              const SizedBox(height: 12),
+                              _LiveScoreboard(players: livePlayers),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              if (_showConfetti)
+                ConfettiOverlay(
+                  onFinished: () {
+                    setState(() {
+                      _showConfetti = false;
+                    });
+                  },
+                ),
+            ],
           ),
         ),
       ),
@@ -537,6 +584,7 @@ class _QuizScreenState extends State<QuizScreen> {
       _audiencePoll = null;
     });
     _markQuestionSeen();
+    _startTimer();
     widget.repository
         .spendCoins(cost, 'wildcard_change_question')
         .catchError((_) => false);
@@ -552,20 +600,32 @@ class _QuizScreenState extends State<QuizScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
-                child: _TinyTag(
-                  label: CategoryNames.localized(
-                    question.category,
-                    context.isKu,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: _TinyTag(
+                      label: CategoryNames.localized(
+                        question.category,
+                        context.isKu,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: _TinyTag(
+                      label: question.typeLabelLocalized(context.isKu),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 8),
-              Flexible(
-                child: _TinyTag(
-                  label: question.typeLabelLocalized(context.isKu),
-                ),
+              _CircularTimer(
+                key: const ValueKey('quiz-circular-timer'),
+                animation: _timerController,
+                maxSeconds: 15,
+                isPaused: answered,
               ),
             ],
           ),
@@ -605,61 +665,11 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
               ),
             ),
-          if (answered) ...[
-            const SizedBox(height: 6),
-            Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: AppTheme.surfaceColor(context).withValues(alpha: 0.72),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppTheme.borderColor(context)),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Icon(
-                    Icons.lightbulb_outline,
-                    color: AppTheme.gold,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.s('Bersiva rast', 'Doğru cevap'),
-                          style: const TextStyle(
-                            color: AppTheme.gold,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        Text(
-                          question.correctAnswer,
-                          style: TextStyle(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          context.isKu
-                              ? explanationToKu(question.explanation)
-                              : question.explanation,
-                          style: TextStyle(
-                            color: AppTheme.textSubColor(context),
-                            height: 1.35,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+          _ExplanationBox(
+            question: question,
+            isKu: context.isKu,
+            visible: _showExplanation,
+          ),
         ],
       ),
     );
@@ -667,6 +677,14 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Future<void> _answer(String answer) async {
     if (answered) return;
+
+    _timerController.stop();
+
+    _explanationTimer = Timer(const Duration(milliseconds: 800), () {
+      if (mounted) {
+        setState(() => _showExplanation = true);
+      }
+    });
 
     // Çift Cevap aktifse ve ilk deneme yanlışsa: göster ama kilitleme
     if (_wildcard.doubleAnswerActivated &&
@@ -718,6 +736,9 @@ class _QuizScreenState extends State<QuizScreen> {
             wrongCount += 1;
           }
         }
+        if (correct && streak >= 5 && streak % 5 == 0) {
+          _showConfetti = true;
+        }
         _recordAnswer(answer);
         _advanceBots();
       });
@@ -740,6 +761,9 @@ class _QuizScreenState extends State<QuizScreen> {
           bestStreak = bestStreak < streak ? streak : bestStreak;
           correctCount += 1;
           score += 100 + (streak * 10).clamp(0, 50);
+          if (streak >= 5 && streak % 5 == 0) {
+            _showConfetti = true;
+          }
         } else {
           streak = 0;
           wrongCount += 1;
@@ -789,6 +813,7 @@ class _QuizScreenState extends State<QuizScreen> {
       return;
     }
 
+    _explanationTimer?.cancel();
     setState(() {
       index += 1;
       selectedAnswer = '';
@@ -798,8 +823,10 @@ class _QuizScreenState extends State<QuizScreen> {
       _firstAttemptAnswer = '';
       _audiencePoll = null;
       hiddenAnswers = const {};
+      _showExplanation = false;
     });
     _markQuestionSeen();
+    _startTimer();
   }
 
   void _recordAnswer(String answer) {

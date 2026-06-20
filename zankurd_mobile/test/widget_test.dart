@@ -653,6 +653,7 @@ void main() {
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
+          enableTimer: false,
         ),
       ),
     );
@@ -792,6 +793,7 @@ void main() {
             repository: repository,
             room: room,
             questions: questions,
+            enableTimer: false,
           ),
         ),
       ),
@@ -935,6 +937,7 @@ void main() {
             repository: repository,
             room: room,
             questions: [question],
+            enableTimer: false,
           ),
         ),
       ),
@@ -1312,5 +1315,51 @@ void main() {
       find.byKey(const ValueKey('profile-player-name-field')),
       findsNothing,
     );
+  });
+
+  testWidgets('quiz screen shows circular timer', (tester) async {
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      _testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('quiz-circular-timer')), findsOneWidget);
+    expect(find.text('15'), findsOneWidget);
+  });
+
+  testWidgets('explanation box is displayed after 800ms delay', (tester) async {
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      _testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final answerText = question.displayAnswers.first;
+    await tester.ensureVisible(find.text(answerText).first);
+    await tester.tap(find.text(answerText).first);
+    await tester.pump();
+
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.text(question.explanation), findsNothing);
+
+    await tester.pump(const Duration(milliseconds: 600));
+    await tester.pumpAndSettle();
+
+    expect(find.text(question.explanation), findsOneWidget);
   });
 }

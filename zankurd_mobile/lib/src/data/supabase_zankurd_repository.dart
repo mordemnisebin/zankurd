@@ -214,7 +214,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       final rows = await client
           .from('room_questions')
           .select(
-            'question_index, questions(id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, question_type, image_url, difficulty)',
+            'question_index, questions(id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, explanation_ku, explanation_tr, question_type, image_url, difficulty)',
           )
           .eq('room_id', roomId)
           .order('question_index');
@@ -252,7 +252,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       final rows = await client
           .from('questions')
           .select(
-            'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, question_type, image_url, difficulty',
+            'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, explanation_ku, explanation_tr, question_type, image_url, difficulty',
           )
           .eq('is_approved', true)
           .order('id')
@@ -307,7 +307,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     String? questionType,
   }) async {
     final columns = includeRichColumns
-        ? 'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, question_type, image_url, difficulty'
+        ? 'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, explanation_ku, explanation_tr, question_type, image_url, difficulty'
         : 'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, difficulty';
     final query = client
         .from('questions')
@@ -883,6 +883,8 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       answers: answers,
       correctAnswer: answerMap[correctOption] ?? answers.first,
       explanation: row['explanation'] as String? ?? '',
+      explanationKu: row['explanation_ku'] as String?,
+      explanationTr: row['explanation_tr'] as String?,
       type: _questionTypeFromRow(row),
       imageUrl: row['image_url'] as String?,
       difficulty: row['difficulty'] as int? ?? 2,
