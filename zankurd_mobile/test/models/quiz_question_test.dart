@@ -101,6 +101,37 @@ void main() {
 
       expect(question.displayAnswers, ['Rast', 'Şaş']);
     });
+
+    test('getLocalizedExplanation returns localized explanations correctly', () {
+      const question = QuizQuestion(
+        id: 'q_explanation_test',
+        category: 'Ziman',
+        prompt: 'Test?',
+        answers: ['A', 'B'],
+        correctAnswer: 'A',
+        explanation: 'Default explanation',
+        explanationKu: 'Kurdish explanation',
+        explanationTr: 'Turkish explanation',
+      );
+
+      expect(question.getLocalizedExplanation(true), 'Kurdish explanation');
+      expect(question.getLocalizedExplanation(false), 'Turkish explanation');
+    });
+
+    test('getLocalizedExplanation falls back to base explanation or local translation function', () {
+      const question = QuizQuestion(
+        id: 'q_explanation_fallback',
+        category: 'Ziman',
+        prompt: 'Test?',
+        answers: ['A', 'B'],
+        correctAnswer: 'A',
+        explanation: '"av" kelimesi "su" anlamına gelir.',
+      );
+
+      // Kurdish mode uses local translation mapping (explanationToKu) on the base explanation
+      expect(question.getLocalizedExplanation(true), 'Peyva "av" tê wateya "su".');
+      expect(question.getLocalizedExplanation(false), '"av" kelimesi "su" anlamına gelir.');
+    });
   });
 
   group('MockZanKurdRepository question bank', () {

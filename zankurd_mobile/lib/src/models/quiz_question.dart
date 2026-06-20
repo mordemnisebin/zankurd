@@ -1,3 +1,5 @@
+import '../l10n/explanation_ku.dart';
+
 enum QuestionType { multipleChoice, trueFalse, visual }
 
 class QuizQuestion {
@@ -8,6 +10,8 @@ class QuizQuestion {
     required this.answers,
     required this.correctAnswer,
     required this.explanation,
+    this.explanationKu,
+    this.explanationTr,
     this.type = QuestionType.multipleChoice,
     this.imageUrl,
     this.difficulty = 2,
@@ -19,6 +23,8 @@ class QuizQuestion {
   final List<String> answers;
   final String correctAnswer;
   final String explanation;
+  final String? explanationKu;
+  final String? explanationTr;
   final QuestionType type;
   final String? imageUrl;
   final int difficulty;
@@ -80,5 +86,19 @@ class QuizQuestion {
       QuestionType.trueFalse => isKu ? 'Rast/Xelet' : 'Doğru/Yanlış',
       QuestionType.visual => isKu ? 'Entık' : 'Görselli',
     };
+  }
+
+  String getLocalizedExplanation(bool isKu) {
+    if (isKu) {
+      if (explanationKu != null && explanationKu!.trim().isNotEmpty) {
+        return explanationKu!;
+      }
+      return explanationToKu(explanation);
+    } else {
+      if (explanationTr != null && explanationTr!.trim().isNotEmpty) {
+        return explanationTr!;
+      }
+      return explanation;
+    }
   }
 }
