@@ -11,6 +11,7 @@ import 'firebase_options.dart';
 import 'src/config/app_config.dart';
 import 'src/data/mock_zankurd_repository.dart';
 import 'src/data/supabase_zankurd_repository.dart';
+import 'src/data/sync_manager.dart';
 import 'src/data/zankurd_repository.dart';
 import 'src/l10n/lang.dart';
 import 'src/providers/auth_provider.dart';
@@ -52,6 +53,8 @@ Future<void> main() async {
     repository = MockZanKurdRepository();
     authProvider = AuthProvider.test();
   }
+
+  await SyncManager.initialize(repository);
 
   final languageProvider = await LanguageProvider.load();
   final themeProvider = await ThemeProvider.load();
@@ -106,6 +109,8 @@ class ZanKurdApp extends StatelessWidget {
           theme: AppTheme.light(),
           darkTheme: AppTheme.dark(),
           themeMode: themeProvider.mode,
+          themeAnimationDuration: const Duration(milliseconds: 600),
+          themeAnimationCurve: Curves.easeInOutCubic,
           home: AppShell(repository: repository),
         ),
       ),
