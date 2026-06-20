@@ -39,6 +39,7 @@ class StreakStore {
   String? _lastDay;
 
   int get best => _best;
+  String? get lastDay => _lastDay;
 
   static String _dayKey(DateTime day) =>
       '${day.year.toString().padLeft(4, '0')}-'

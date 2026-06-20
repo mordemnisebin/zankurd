@@ -666,6 +666,17 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<void> updateProfileXP(int xp) async {
+    try {
+      final user = client.auth.currentUser;
+      if (user == null) return;
+      await client.from('profiles').update({'xp': xp}).eq('id', user.id);
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'updateProfileXP failed');
+    }
+  }
+
+  @override
   Future<int> awardQuizCoins({
     required int score,
     required int correctCount,

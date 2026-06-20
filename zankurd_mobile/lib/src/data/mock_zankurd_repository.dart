@@ -350,6 +350,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<void> updateProfileXP(int xp) async {
+    // Mock modunda yerel XPStore güncelleniyor, sunucu güncellemesine gerek yok.
+  }
+
+  @override
   Future<int> awardQuizCoins({
     required int score,
     required int correctCount,
