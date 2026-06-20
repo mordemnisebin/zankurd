@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../data/mistake_store.dart';
+import '../data/sync_manager.dart';
 import '../providers/sound_provider.dart';
 import '../data/daily_mission_store.dart';
 import '../data/xp_store.dart';
@@ -114,6 +115,18 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           }
         }
       });
+      int lastTickSecond = 15;
+      _timerController.addListener(() {
+        if (_timerController.isAnimating) {
+          final remaining = (_timerController.value * 15).ceil();
+          if (remaining != lastTickSecond) {
+            lastTickSecond = remaining;
+            if (remaining > 0 && remaining <= 5) {
+              HapticFeedback.lightImpact();
+            }
+          }
+        }
+      });
     }
 
     if (widget.botRace) {
@@ -174,9 +187,22 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   /// Yanlış cevabı yanlış defterine ekler, doğru cevap kaydı düşürür.
   void _trackMistake(bool correct) {
     final id = question.id;
+    if (widget.practice && correct) {
+      // In mistake practice, correct reviews are handled by the rating buttons
+      return;
+    }
     MistakeStore.load().then(
-      (store) => correct ? store.markResolved(id) : store.markMistake(id),
+      (store) => correct
+          ? store.markResolved(id)
+          : store.markMistake(id, category: question.category),
     );
+  }
+
+  Future<void> _submitPracticeRating(int score) async {
+    final id = question.id;
+    final store = await MistakeStore.load();
+    await store.markResolvedSM2(id, score);
+    await _next();
   }
 
   @override
@@ -359,22 +385,87 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildActionControls() {
+    final bool showRatingBar = widget.practice &&
+        answered &&
+        selectedAnswer == question.correctAnswer &&
+        !completing;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildWildcardRow(),
         const SizedBox(height: 8),
-        FilledButton.icon(
-          onPressed: answered && !completing ? () => _next() : null,
-          icon: Icon(
-            isLastQuestion ? Icons.flag_outlined : Icons.arrow_forward_rounded,
-          ),
-          label: Text(
-            isLastQuestion
-                ? context.s('Qediya', 'Bitir')
-                : context.s('Piştî vê', 'Sonraki'),
-          ),
-        ),
+        showRatingBar
+            ? Row(
+                children: [
+                  Expanded(
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () => _submitPracticeRating(3),
+                      child: Text(
+                        context.s('Zor', 'Zor'),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: AppTheme.accent,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () => _submitPracticeRating(4),
+                      child: Text(
+                        context.s('Navîn', 'Orta'),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: AppTheme.correct,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () => _submitPracticeRating(5),
+                      child: Text(
+                        context.s('Hêsan', 'Kolay'),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : FilledButton.icon(
+                onPressed: answered && !completing ? () => _next() : null,
+                icon: Icon(
+                  isLastQuestion
+                      ? Icons.flag_outlined
+                      : Icons.arrow_forward_rounded,
+                ),
+                label: Text(
+                  isLastQuestion
+                      ? context.s('Qediya', 'Bitir')
+                      : context.s('Piştî vê', 'Sonraki'),
+                ),
+              ),
       ],
     );
   }
@@ -430,7 +521,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           widget.repository.addCoins(completed.coinReward, 'daily_mission_reward');
           XPStore.load().then((xpStore) {
             xpStore.addXP(100).then((leveledUp) {
-              widget.repository.updateProfileXP(xpStore.totalXP);
+              widget.repository.updateProfileXP(xpStore.totalXP).catchError((_) {
+                SyncManager.instance.queueXP(xpStore.totalXP);
+              });
               if (mounted) {
                 MissionToast.show(context, completed);
                 if (leveledUp) {

@@ -16,6 +16,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../widgets/weekly_performance_chart.dart';
 import 'favorite_questions_screen.dart';
 import 'quiz_screen.dart';
 import 'settings_screen.dart';
@@ -41,6 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _loadFailed = false;
   bool _practiceLoading = false;
   int _mistakeCount = 0;
+  int _readyMistakeCount = 0;
   String? _currentName;
   LeaderboardEntry? _stats;
   List<Achievement> _achievements = const [];
@@ -73,14 +75,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _refreshMistakes() async {
     final store = await MistakeStore.load();
-    if (mounted) setState(() => _mistakeCount = store.count);
+    if (mounted) {
+      setState(() {
+        _mistakeCount = store.count;
+        _readyMistakeCount = store.readyCount;
+      });
+    }
   }
 
   Future<void> _startMistakePractice() async {
     final ku = context.isKu;
     final store = await MistakeStore.load();
     if (!mounted) return;
-    final mistakeIds = store.ids;
+    final mistakeIds = store.readyIds;
     final questions = widget.repository.questions
         .where((question) => mistakeIds.contains(question.id))
         .toList();
@@ -88,9 +95,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            ku
-                ? 'Pirsên şaş tune. Pêşî pêşbirkekê bilîze!'
-                : 'Tekrar edilecek yanlış yok. Önce bir yarış oyna!',
+            store.count > 0
+                ? (ku
+                    ? 'Hemû pirsên şaş li benda dema dubarekirinê ne. Paşê biceribîne!'
+                    : 'Tüm yanlışlarınızın tekrar süreleri bekleniyor. Daha sonra tekrar deneyin!')
+                : (ku
+                    ? 'Pirsên şaş tune. Pêşî pêşbirkekê bilîze!'
+                    : 'Tekrar edilecek yanlış yok. Önce bir yarış oyna!'),
           ),
         ),
       );
@@ -402,9 +413,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ],
                               ),
                             ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            child: Divider(color: AppTheme.surfaceHi),
+                          ),
+                          Text(
+                            ku ? 'Performansa Heftane' : 'Haftalık Performans',
+                            style: const TextStyle(
+                              color: AppTheme.textPrimary,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 15,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          FutureBuilder<MistakeStore>(
+                            future: MistakeStore.load(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const SizedBox(
+                                  height: 160,
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppTheme.accent,
+                                    ),
+                                  ),
+                                );
+                              }
+                              final history = snapshot.data!.getLast7DaysHistory();
+                              return WeeklyPerformanceChart(
+                                history: history,
+                                isKu: ku,
+                              );
+                            },
+                          ),
                         ],
                       ),
                     ),
+                    const SizedBox(height: 14),
+
+                    _PedagogicalAnalyticsSection(isKu: ku),
                     const SizedBox(height: 14),
 
                     _AchievementShowcase(achievements: _achievements, isKu: ku),
@@ -504,8 +551,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 ? 'Şaşiyek tune — aferîn!'
                                                 : 'Hiç yanlışın yok — aferin!')
                                           : (ku
-                                                ? '$_mistakeCount pirs li benda dubarekirinê'
-                                                : '$_mistakeCount soru tekrar bekliyor'),
+                                                ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
+                                                : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
                                       style: const TextStyle(
                                         color: AppTheme.textMuted,
                                         fontSize: 12,
@@ -972,6 +1019,193 @@ class _AchievementChip extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _PedagogicalAnalyticsSection extends StatelessWidget {
+  const _PedagogicalAnalyticsSection({required this.isKu});
+
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<dynamic>>(
+      future: Future.wait([
+        MistakeStore.load(),
+        MasteryStore.load(),
+      ]),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const SizedBox.shrink();
+        }
+
+        final mistakeStore = snapshot.data![0] as MistakeStore;
+        final masteryStore = snapshot.data![1] as MasteryStore;
+
+        final mistakesByCategory = mistakeStore.getMistakesCountByCategory();
+
+        // Find strongest category (highest correctCount in MasteryStore)
+        String? strongestCat;
+        int maxCorrect = -1;
+
+        // Find weakest category (highest active mistakes in MistakeStore)
+        String? weakestCat;
+        int maxMistakes = -1;
+
+        const categories = [
+          'Ziman',
+          'Çand',
+          'Dîrok',
+          'Edebiyat',
+          'Cografya',
+          'Muzîk',
+          'Siyaset',
+          'Paradigma',
+        ];
+
+        for (final cat in categories) {
+          final corrects = masteryStore.correctCount(cat);
+          if (corrects > maxCorrect && corrects > 0) {
+            maxCorrect = corrects;
+            strongestCat = cat;
+          }
+
+          final mistakes = mistakesByCategory[cat] ?? 0;
+          if (mistakes > maxMistakes && mistakes > 0) {
+            maxMistakes = mistakes;
+            weakestCat = cat;
+          }
+        }
+
+        if (strongestCat == null && weakestCat == null) {
+          return const SizedBox.shrink();
+        }
+
+        return AppPanel(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.analytics_outlined,
+                    color: AppTheme.accent,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    isKu ? 'Analîza Performansê' : 'Performans Analizi',
+                    style: const TextStyle(
+                      color: AppTheme.textPrimary,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 17,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              if (strongestCat != null) ...[
+                Text(
+                  isKu
+                      ? 'Kategoriya te ya herî bihêz:'
+                      : 'En güçlü olduğun kategori:',
+                  style: TextStyle(
+                    color: AppTheme.textMutedColor(context),
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTheme.correct.withValues(alpha: 0.16),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          color: AppTheme.correct.withValues(alpha: 0.5),
+                        ),
+                      ),
+                      child: Text(
+                        strongestCat,
+                        style: const TextStyle(
+                          color: AppTheme.correct,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      isKu
+                          ? '$maxCorrect bersivên rast'
+                          : '$maxCorrect doğru cevap',
+                      style: const TextStyle(
+                        color: AppTheme.textPrimary,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+              if (strongestCat != null && weakestCat != null)
+                const SizedBox(height: 14),
+              if (weakestCat != null) ...[
+                Text(
+                  isKu
+                      ? 'Kategoriya ku divê tu pêş bixî (Zayıf):'
+                      : 'Geliştirilmesi gereken alan (Zayıf):',
+                  style: TextStyle(
+                    color: AppTheme.textMutedColor(context),
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.orange.withValues(alpha: 0.16),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          color: Colors.orange.withValues(alpha: 0.5),
+                        ),
+                      ),
+                      child: Text(
+                        weakestCat,
+                        style: const TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      isKu
+                          ? '$maxMistakes pirsên şaş ên çalak'
+                          : '$maxMistakes aktif yanlış soru',
+                      style: const TextStyle(
+                        color: AppTheme.textPrimary,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -128,12 +128,14 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
 
   @override
   Future<List<String>> loadCategories() async {
-    final rows = await client
-        .from('categories')
-        .select('name')
-        .eq('is_active', true)
-        .order('name');
-    return rows.map((row) => row['name'] as String).toList();
+    return _retryOnNetworkFailure(() async {
+      final rows = await client
+          .from('categories')
+          .select('name')
+          .eq('is_active', true)
+          .order('name');
+      return rows.map((row) => row['name'] as String).toList();
+    });
   }
 
   @override
@@ -144,12 +146,16 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     final key = '${categoryId ?? "all"}_$limit';
     final cached = _cache.get(key);
     if (cached != null) return cached;
-    final result = await fetchApprovedQuestions(
-      categoryId: categoryId,
-      limit: limit,
-    );
-    _cache.set(key, result);
-    return result;
+    try {
+      final result = await fetchApprovedQuestions(
+        categoryId: categoryId,
+        limit: limit,
+      );
+      _cache.set(key, result);
+      return result;
+    } catch (_) {
+      return super.loadQuestions(categoryId: categoryId, limit: limit);
+    }
   }
 
   @override
@@ -306,44 +312,46 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     bool randomize = false,
     String? questionType,
   }) async {
-    final columns = includeRichColumns
-        ? 'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, explanation_ku, explanation_tr, question_type, image_url, difficulty'
-        : 'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, difficulty';
-    final query = client
-        .from('questions')
-        .select(columns)
-        .eq('is_approved', true);
+    return _retryOnNetworkFailure(() async {
+      final columns = includeRichColumns
+          ? 'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, explanation_ku, explanation_tr, question_type, image_url, difficulty'
+          : 'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, difficulty';
+      final query = client
+          .from('questions')
+          .select(columns)
+          .eq('is_approved', true);
 
-    var filteredQuery = categoryId == null
-        ? query
-        : query.eq('category_id', categoryId);
-    if (difficultyMin != null) {
-      filteredQuery = filteredQuery.gte('difficulty', difficultyMin);
-    }
-    if (difficultyMax != null) {
-      filteredQuery = filteredQuery.lte('difficulty', difficultyMax);
-    }
-    if (questionType != null) {
-      filteredQuery = filteredQuery.eq('question_type', questionType);
-    }
-
-    if (randomize) {
-      final total = await client.from('questions').count(CountOption.exact);
-      const windowSize = 120;
-      final maxOffset = total > windowSize ? total - windowSize : 0;
-      final offset = maxOffset == 0 ? 0 : Random().nextInt(maxOffset);
-      final rows = await filteredQuery
-          .order('id')
-          .range(offset, offset + windowSize - 1);
-      if (rows.isNotEmpty) {
-        // Pencereyi olduğu gibi döndür; tekrar-önleyici seçim üst katmanda
-        // (SeenQuestionStore.preferUnseen) limit'e indirger.
-        return (rows..shuffle()).toList(growable: false);
+      var filteredQuery = categoryId == null
+          ? query
+          : query.eq('category_id', categoryId);
+      if (difficultyMin != null) {
+        filteredQuery = filteredQuery.gte('difficulty', difficultyMin);
       }
-    }
+      if (difficultyMax != null) {
+        filteredQuery = filteredQuery.lte('difficulty', difficultyMax);
+      }
+      if (questionType != null) {
+        filteredQuery = filteredQuery.eq('question_type', questionType);
+      }
 
-    final rows = await filteredQuery.order('id').limit(limit);
-    return rows;
+      if (randomize) {
+        final total = await client.from('questions').count(CountOption.exact);
+        const windowSize = 120;
+        final maxOffset = total > windowSize ? total - windowSize : 0;
+        final offset = maxOffset == 0 ? 0 : Random().nextInt(maxOffset);
+        final rows = await filteredQuery
+            .order('id')
+            .range(offset, offset + windowSize - 1);
+        if (rows.isNotEmpty) {
+          // Pencereyi olduğu gibi döndür; tekrar-önleyici seçim üst katmanda
+          // (SeenQuestionStore.preferUnseen) limit'e indirger.
+          return (rows..shuffle()).toList(growable: false);
+        }
+      }
+
+      final rows = await filteredQuery.order('id').limit(limit);
+      return rows;
+    });
   }
 
   Future<List<QuizQuestion>> _withRemoteVisualBlend(
@@ -673,6 +681,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       await client.from('profiles').update({'xp': xp}).eq('id', user.id);
     } catch (error, stack) {
       _recordError(error, stack, reason: 'updateProfileXP failed');
+      rethrow;
     }
   }
 
@@ -898,5 +907,21 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       'visual' => QuestionType.visual,
       _ => QuestionType.multipleChoice,
     };
+  }
+
+  Future<T> _retryOnNetworkFailure<T>(Future<T> Function() operation) async {
+    int attempts = 0;
+    while (true) {
+      try {
+        return await operation();
+      } catch (error) {
+        attempts++;
+        if (attempts >= 3) {
+          rethrow;
+        }
+        final delay = Duration(milliseconds: 500 * (1 << (attempts - 1)));
+        await Future.delayed(delay);
+      }
+    }
   }
 }
