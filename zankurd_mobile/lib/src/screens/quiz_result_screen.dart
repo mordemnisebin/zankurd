@@ -6,6 +6,7 @@ import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
+import '../data/sync_manager.dart';
 import '../l10n/lang.dart';
 import '../models/achievement.dart';
 import '../models/answer_record.dart';
@@ -137,7 +138,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     final xpStore = await XPStore.load();
     final leveledUp = await xpStore.addXP(earnedXP);
-    await repository.updateProfileXP(xpStore.totalXP);
+    try {
+      await repository.updateProfileXP(xpStore.totalXP);
+    } catch (_) {
+      SyncManager.instance.queueXP(xpStore.totalXP);
+    }
 
     if (mounted) {
       setState(() {

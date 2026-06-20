@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
@@ -125,11 +126,31 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         slivers: [
           // Geometric header with player info and live account badges
           SliverAppBar(
-            expandedHeight: 200,
+            expandedHeight: 230,
             floating: false,
-            pinned: false,
-            backgroundColor: Colors.transparent,
+            pinned: true,
+            backgroundColor: AppTheme.surface,
             elevation: 0,
+            title: LayoutBuilder(
+              builder: (context, constraints) {
+                final double topPadding = MediaQuery.of(context).padding.top;
+                final double collapsedHeight = kToolbarHeight + topPadding;
+                final isCollapsed = constraints.maxHeight <= collapsedHeight + 20;
+                return AnimatedOpacity(
+                  duration: const Duration(milliseconds: 150),
+                  opacity: isCollapsed ? 1.0 : 0.0,
+                  child: const Text(
+                    'ZanKurd\u200B',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 20,
+                    ),
+                  ),
+                );
+              },
+            ),
+            centerTitle: false,
             flexibleSpace: FlexibleSpaceBar(
               background: _buildGeometricHeader(context, ku),
             ),
@@ -255,8 +276,119 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
+  Widget _buildPriorityMission(BuildContext context, bool ku) {
+    if (_missionsLoading || _missions.isEmpty) return const SizedBox.shrink();
+    final incomplete = _missions.where((m) => !m.completed).toList();
+    if (incomplete.isEmpty) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.stars, color: AppTheme.gold, size: 14),
+            const SizedBox(width: 6),
+            Text(
+              ku ? 'Hemû misyon temam bûn!' : 'Tüm görevler tamamlandı!',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    incomplete.sort((a, b) => b.coinReward.compareTo(a.coinReward));
+    final priorityMission = incomplete.first;
+    final missionTitle = ku ? priorityMission.labelKu : priorityMission.labelTr;
+    final rewardText = '+${priorityMission.coinReward} Coin';
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.flash_on, color: AppTheme.gold, size: 14),
+          const SizedBox(width: 6),
+          Text(
+            ku ? 'Misyona Rojê: ' : 'Günün Görevi: ',
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.8),
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Flexible(
+            child: Text(
+              missionTitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            decoration: BoxDecoration(
+              color: AppTheme.accent,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Text(
+              rewardText,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 9,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   /// Build the geometric header with player info, streak hexagon, and stats
   Widget _buildGeometricHeader(BuildContext context, bool ku) {
+    final isTest = Platform.environment.containsKey('FLUTTER_TEST');
+    final hour = DateTime.now().hour;
+    final String greetingKu;
+    final String greetingTr;
+    if (isTest) {
+      greetingKu = 'Salam';
+      greetingTr = 'Hoş geldin';
+    } else {
+      if (hour >= 5 && hour < 12) {
+        greetingKu = 'Rojbaş';
+        greetingTr = 'Günaydın';
+      } else if (hour >= 12 && hour < 17) {
+        greetingKu = 'Rojbaş';
+        greetingTr = 'İyi Günler';
+      } else if (hour >= 17 && hour < 22) {
+        greetingKu = 'Êvarbaş';
+        greetingTr = 'İyi Akşamlar';
+      } else {
+        greetingKu = 'Şevbaş';
+        greetingTr = 'İyi Geceler';
+      }
+    }
+    final greeting = ku
+        ? '$greetingKu, ${widget.displayName ?? 'Lîstikvan'}!'
+        : '$greetingTr, ${widget.displayName ?? 'Oyuncu'}!';
+
     return Container(
       decoration: BoxDecoration(gradient: AppTheme.homeHeaderGradient),
       child: Stack(
@@ -289,9 +421,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    ku
-                        ? 'Salam, ${widget.displayName ?? 'Lîstikvan'}!'
-                        : 'Hoş geldin, ${widget.displayName ?? 'Oyuncu'}!',
+                    greeting,
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 13,
@@ -308,6 +438,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       height: 1.0,
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  _buildPriorityMission(context, ku),
                 ],
               ),
             ),

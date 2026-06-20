@@ -137,52 +137,58 @@ class _CategoryHero extends StatelessWidget {
   Widget build(BuildContext context) {
     // Hero status bar'ın arkasına uzandığı için yüksekliğe payı eklenir.
     final topInset = MediaQuery.of(context).padding.top;
-    return Container(
-      height: 200 + topInset,
-      decoration: BoxDecoration(gradient: gradient),
-      child: Stack(
-        children: [
-          Positioned(
-            right: -40,
-            top: -40,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.07),
-                shape: BoxShape.circle,
+    return Hero(
+      tag: 'category_hero_$category',
+      child: Material(
+        type: MaterialType.transparency,
+        child: Container(
+          height: 200 + topInset,
+          decoration: BoxDecoration(gradient: gradient),
+          child: Stack(
+            children: [
+              Positioned(
+                right: -40,
+                top: -40,
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.07),
+                    shape: BoxShape.circle,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Spacer(),
-                Text(
-                  CategoryNames.localized(category, isKu),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 34,
-                    height: 1.05,
-                  ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Spacer(),
+                    Text(
+                      CategoryNames.localized(category, isKu),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 34,
+                        height: 1.05,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      isKu
+                          ? 'Ji hêsan ber bi dijwar ve, xalên xwe bicivîne.'
+                          : 'Kolaydan zora doğru ilerle, puan topla.',
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.8),
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 6),
-                Text(
-                  isKu
-                      ? 'Ji hêsan ber bi dijwar ve, xalên xwe bicivîne.'
-                      : 'Kolaydan zora doğru ilerle, puan topla.',
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.8),
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
