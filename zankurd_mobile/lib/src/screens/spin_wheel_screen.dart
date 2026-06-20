@@ -28,6 +28,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   bool _loading = true;
   bool _spinning = false;
   int? _wonAmount;
+  int _lastPlayedSegment = -1;
 
   @override
   void initState() {
@@ -37,6 +38,17 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       duration: const Duration(milliseconds: 3600),
     );
     _rotation = AlwaysStoppedAnimation(0);
+    _controller.addListener(() {
+      if (_controller.isAnimating) {
+        final angle = _rotation.value;
+        final segmentAngle = 2 * math.pi / SpinWheelScreen.rewards.length;
+        final currentSegment = (angle / segmentAngle).floor();
+        if (currentSegment != _lastPlayedSegment) {
+          _lastPlayedSegment = currentSegment;
+          HapticFeedback.selectionClick();
+        }
+      }
+    });
     _checkSpin();
   }
 
@@ -112,7 +124,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       end: target,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutQuart));
     _controller.reset();
+    _lastPlayedSegment = -1;
     await _controller.forward();
+    HapticFeedback.mediumImpact();
 
     if (mounted) {
       setState(() {
