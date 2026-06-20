@@ -14,6 +14,8 @@ import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
+import '../data/daily_mission_store.dart';
+import '../widgets/mission_toast.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
 
@@ -109,11 +111,26 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       if (newLevel != null) promotions[entry.key] = newLevel;
     }
 
+    final missionStore = await DailyMissionStore.load();
+    final completedMissions = await missionStore.reportQuizCompleted(
+      correctAnswers: correctCount,
+      category: room.category,
+      streakAlive: streak > 0,
+    );
+    for (final mission in completedMissions) {
+      await repository.addCoins(mission.coinReward, 'daily_mission_reward');
+    }
+
     if (mounted) {
       setState(() {
         _dailyStreak = streak;
         _newAchievements = newAchievements;
         _promotions = promotions;
+      });
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        for (final mission in completedMissions) {
+          MissionToast.show(context, mission);
+        }
       });
     }
   }
