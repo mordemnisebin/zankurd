@@ -97,16 +97,11 @@ class DailyMissionStore {
 
   Future<DailyMission?> reportWildcardUsed() async {
     for (final mission in _missions) {
-      if (mission.completed) continue;
-      if (mission.type != MissionType.useWildcard) continue;
+      if (mission.completed || mission.type != MissionType.useWildcard) continue;
       mission.progress = (mission.progress + 1).clamp(0, mission.target);
-      if (mission.progress >= mission.target) {
-        mission.completed = true;
-        await _persist();
-        return mission;
-      }
+      if (mission.progress >= mission.target) mission.completed = true;
       await _persist();
-      return null;
+      return mission.completed ? mission : null;
     }
     return null;
   }
