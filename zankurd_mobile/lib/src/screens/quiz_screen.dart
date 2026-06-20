@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../data/mistake_store.dart';
 import '../providers/sound_provider.dart';
 import '../data/daily_mission_store.dart';
+import '../data/xp_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
 import '../game/bot_opponent.dart';
@@ -379,7 +380,30 @@ class _QuizScreenState extends State<QuizScreen> {
     DailyMissionStore.load().then((store) {
       store.reportWildcardUsed().then((completed) {
         if (completed != null && mounted) {
-          MissionToast.show(context, completed);
+          widget.repository.addCoins(completed.coinReward, 'daily_mission_reward');
+          XPStore.load().then((xpStore) {
+            xpStore.addXP(100).then((leveledUp) {
+              widget.repository.updateProfileXP(xpStore.totalXP);
+              if (mounted) {
+                MissionToast.show(context, completed);
+                if (leveledUp) {
+                  final isKu = context.isKu;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        isKu
+                            ? 'Asta Te Bilind Bû! Ast Nû: ${xpStore.currentLevel}'
+                            : 'Tebrikler, seviye atladın! Yeni Seviye: ${xpStore.currentLevel}',
+                      ),
+                      backgroundColor: AppTheme.secondaryAccent,
+                      behavior: SnackBarBehavior.floating,
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                }
+              }
+            });
+          });
         }
       });
     });

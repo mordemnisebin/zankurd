@@ -15,6 +15,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import '../data/daily_mission_store.dart';
+import '../data/xp_store.dart';
 import '../widgets/mission_toast.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
@@ -72,6 +73,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   int _dailyStreak = 0;
   List<Achievement> _newAchievements = const [];
   Map<String, MasteryLevel> _promotions = const {};
+  int _earnedXP = 0;
 
   @override
   void initState() {
@@ -81,6 +83,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   Future<void> _recordProgress() async {
     final streakStore = await StreakStore.load();
+    final today = DateTime.now();
+    final todayKey = '${today.year.toString().padLeft(4, '0')}-'
+        '${today.month.toString().padLeft(2, '0')}-'
+        '${today.day.toString().padLeft(2, '0')}';
+    final isNewDay = streakStore.lastDay != todayKey;
+
     final streak = await streakStore.recordPlay();
     final mistakeStore = await MistakeStore.load();
     final achievementStore = await AchievementStore.load();
@@ -121,18 +129,160 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       await repository.addCoins(mission.coinReward, 'daily_mission_reward');
     }
 
+    // XP ve Seviye Hesaplaması
+    int earnedXP = (correctCount * 10) + 50;
+    if (isNewDay) earnedXP += 30;
+    earnedXP += completedMissions.length * 100;
+    earnedXP += promotions.length * 200;
+
+    final xpStore = await XPStore.load();
+    final leveledUp = await xpStore.addXP(earnedXP);
+    await repository.updateProfileXP(xpStore.totalXP);
+
     if (mounted) {
       setState(() {
         _dailyStreak = streak;
         _newAchievements = newAchievements;
         _promotions = promotions;
+        _earnedXP = earnedXP;
       });
       WidgetsBinding.instance.addPostFrameCallback((_) {
         for (final mission in completedMissions) {
           MissionToast.show(context, mission);
         }
+        if (leveledUp) {
+          _showLevelUpDialog(context, xpStore.currentLevel);
+        }
       });
     }
+  }
+
+  void _showLevelUpDialog(BuildContext context, int newLevel) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: 'Level Up',
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (context, anim1, anim2) {
+        return const SizedBox.shrink();
+      },
+      transitionBuilder: (context, anim1, anim2, child) {
+        final curve = CurvedAnimation(parent: anim1, curve: Curves.easeOutBack);
+        return ScaleTransition(
+          scale: curve,
+          child: FadeTransition(
+            opacity: anim1,
+            child: Dialog(
+              backgroundColor: Colors.transparent,
+              insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [AppTheme.surfaceHi, AppTheme.surface],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(color: AppTheme.gold, width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppTheme.gold.withValues(alpha: 0.3),
+                      blurRadius: 20,
+                      spreadRadius: 5,
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: AppTheme.gold.withValues(alpha: 0.15),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.military_tech_rounded,
+                        color: AppTheme.gold,
+                        size: 50,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      context.isKu ? 'Asta Te Bilind Bû!' : 'Tebrikler!',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                        color: AppTheme.gold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      context.isKu
+                          ? 'Te asteke nû bi dest xist!'
+                          : 'Yeni bir seviyeye ulaştın!',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppTheme.textSub,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: AppTheme.gold,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppTheme.gold.withValues(alpha: 0.3),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        context.isKu ? 'Ast $newLevel' : 'Seviye $newLevel',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 48,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppTheme.gold,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 0,
+                        ),
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text(
+                          context.isKu ? 'Berdawam bike' : 'Devam Et',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -349,6 +499,72 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   'Ödül bakiyen ana ekranda güncellenir.',
                                 ),
                                 style: const TextStyle(color: Colors.white70),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
+              if (_earnedXP > 0) ...[
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0, end: 1),
+                  duration: const Duration(milliseconds: 450),
+                  curve: Curves.easeOutCubic,
+                  builder: (context, t, child) => Transform.scale(
+                    scale: 0.92 + 0.08 * t,
+                    child: Opacity(opacity: t, child: child),
+                  ),
+                  child: AppPanel(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Color(0xFF6366F1), Color(0xFF4F46E5)],
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 46,
+                          height: 46,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.18),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(
+                            Icons.bolt_rounded,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TweenAnimationBuilder<int>(
+                                tween: IntTween(begin: 0, end: _earnedXP),
+                                duration: const Duration(milliseconds: 800),
+                                curve: Curves.easeOut,
+                                builder: (context, value, _) => Text(
+                                  context.s(
+                                    '+$value XP bi dest xist',
+                                    '+$value XP kazandın',
+                                  ),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                context.s(
+                                  'Asta te li ser profîlê tê nûkirin.',
+                                  'Seviyen profil sayfasında güncellenir.',
+                                ),
+                                style: const TextStyle(color: Colors.white70, fontSize: 12),
                               ),
                             ],
                           ),

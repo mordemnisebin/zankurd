@@ -59,6 +59,9 @@ abstract class ZanKurdRepository {
   /// Oyuncunun coin bakiyesine [amount] kadar ekler (görev ödülü vb.).
   Future<void> addCoins(int amount, String reason);
 
+  /// Oyuncunun profil XP değerini sunucuda günceller.
+  Future<void> updateProfileXP(int xp);
+
   /// Günlük çark: bugün çevrilebilir mi?
   Future<bool> canSpinToday();
 

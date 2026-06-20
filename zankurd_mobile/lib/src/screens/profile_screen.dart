@@ -5,6 +5,7 @@ import '../data/achievement_store.dart';
 import '../data/mastery_store.dart';
 import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
+import '../data/xp_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/achievement.dart';
@@ -44,6 +45,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   LeaderboardEntry? _stats;
   List<Achievement> _achievements = const [];
   MasteryStore? _masteryStore;
+  int _level = 1;
+  int _xpInLevel = 0;
+  int _xpNeeded = 1000;
+  double _levelProgress = 0.0;
 
   @override
   void initState() {
@@ -118,12 +123,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final stats = await widget.repository.getPlayerStats();
       final achievementStore = await AchievementStore.load();
       final masteryStore = await MasteryStore.load();
+      final xpStore = await XPStore.load();
       if (mounted) {
         setState(() {
           _currentName = name;
           _stats = stats;
           _achievements = achievementStore.unlockedAchievements;
           _masteryStore = masteryStore;
+          _level = xpStore.currentLevel;
+          _xpInLevel = xpStore.xpInCurrentLevel;
+          _xpNeeded = xpStore.xpNeededForNextLevel;
+          _levelProgress = xpStore.levelProgress;
           _loading = false;
           _loadFailed = false;
         });
@@ -189,55 +199,107 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
 
-                    // Avatar card
+                     // Avatar card
                     AppPanel(
                       gradient: const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [Color(0xFF7C3AED), Color(0xFF4F1EB8)],
                       ),
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            radius: 34,
-                            backgroundColor: Colors.white.withValues(
-                              alpha: 0.2,
-                            ),
-                            child: Text(
-                              (_currentName?.isNotEmpty == true
-                                      ? _currentName![0]
-                                      : 'Z')
-                                  .toUpperCase(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 28,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _displayName(ku),
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 34,
+                                backgroundColor: Colors.white.withValues(
+                                  alpha: 0.2,
+                                ),
+                                child: Text(
+                                  (_currentName?.isNotEmpty == true
+                                          ? _currentName![0]
+                                          : 'Z')
+                                      .toUpperCase(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w900,
-                                    fontSize: 18,
+                                    fontSize: 28,
                                   ),
                                 ),
-                                Text(
-                                  ku
-                                      ? 'Di tabloya pêşderçûnê de ev nav xuya dike'
-                                      : 'Liderlik tablosunda bu isim görünür',
-                                  style: TextStyle(
-                                    color: Colors.white.withValues(alpha: 0.7),
-                                    fontSize: 13,
-                                  ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _displayName(ku),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    Text(
+                                      ku
+                                          ? 'Di tabloya pêşderçûnê de ev nav xuya dike'
+                                          : 'Liderlik tablosunda bu isim görünür',
+                                      style: TextStyle(
+                                        color: Colors.white.withValues(alpha: 0.7),
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          Divider(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            height: 1,
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.military_tech_rounded,
+                                    color: AppTheme.gold,
+                                    size: 22,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    ku ? 'Ast $_level' : 'Seviye $_level',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                '$_xpInLevel / $_xpNeeded XP',
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: LinearProgressIndicator(
+                              value: _levelProgress,
+                              backgroundColor: Colors.white.withValues(alpha: 0.15),
+                              color: AppTheme.gold,
+                              minHeight: 8,
                             ),
                           ),
                         ],

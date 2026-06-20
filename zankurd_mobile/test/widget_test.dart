@@ -716,7 +716,7 @@ void main() {
     await tester.scrollUntilVisible(
       find.byIcon(Icons.settings_outlined),
       120,
-      scrollable: find.byType(Scrollable).last,
+      scrollable: find.byType(Scrollable).first,
     );
     await tester.pumpAndSettle();
 
