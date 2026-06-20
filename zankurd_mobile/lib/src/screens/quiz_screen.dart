@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../data/mistake_store.dart';
 import '../providers/sound_provider.dart';
+import '../data/daily_mission_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
 import '../game/bot_opponent.dart';
@@ -21,6 +22,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/mission_toast.dart';
 import 'quiz_result_screen.dart';
 
 part 'quiz/quiz_widgets.dart';
@@ -373,11 +375,22 @@ class _QuizScreenState extends State<QuizScreen> {
 
   // ─── Joker mekanikleri ───────────────────────────────────────────────────
 
+  void _trackWildcardMission() {
+    DailyMissionStore.load().then((store) {
+      store.reportWildcardUsed().then((completed) {
+        if (completed != null && mounted) {
+          MissionToast.show(context, completed);
+        }
+      });
+    });
+  }
+
   void _useFiftyFifty() {
     const cost = 20;
     if (_wildcard.fiftyFiftyUsed || _coinBalance < cost || answered) return;
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
+    _trackWildcardMission();
     setState(() {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(fiftyFiftyUsed: true);
@@ -396,6 +409,7 @@ class _QuizScreenState extends State<QuizScreen> {
     if (_wildcard.audienceUsed || _coinBalance < cost || answered) return;
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
+    _trackWildcardMission();
     setState(() {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(audienceUsed: true);
@@ -444,6 +458,7 @@ class _QuizScreenState extends State<QuizScreen> {
     }
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
+    _trackWildcardMission();
     setState(() {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(doubleAnswerActivated: true);
@@ -487,6 +502,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
+    _trackWildcardMission();
     final replacement = candidates[Random().nextInt(candidates.length)];
 
     setState(() {
