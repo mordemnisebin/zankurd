@@ -30,7 +30,7 @@ class DailyMission {
         MissionType.completeQuiz => '$target pêşbirk biqedîne',
         MissionType.useWildcard => '$target joker bikar bîne',
         MissionType.keepStreak => 'Seriya xwe biparêze',
-        MissionType.playCategory => 'Di ${category ?? ''} de bilîze',
+        MissionType.playCategory => 'Di ${category ?? '?'} de bilîze',
       };
 
   String get labelTr => switch (type) {
@@ -38,7 +38,7 @@ class DailyMission {
         MissionType.completeQuiz => '$target quiz tamamla',
         MissionType.useWildcard => '$target joker kullan',
         MissionType.keepStreak => 'Serisini koru',
-        MissionType.playCategory => '${category ?? ''} kategorisinde oyna',
+        MissionType.playCategory => '${category ?? '?'} kategorisinde oyna',
       };
 }
 

@@ -9,7 +9,7 @@ class MissionToast {
     if (!context.mounted) return;
     final isKu = context.isKu;
     final label = isKu ? mission.labelKu : mission.labelTr;
-    final heading = isKu ? 'Erkek pêkhat!' : 'Görev tamamlandı!';
+    final heading = isKu ? 'Erkên pêkhat!' : 'Görev tamamlandı!';
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
