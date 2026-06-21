@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeProvider({ThemeMode initialMode = ThemeMode.dark}) : _mode = initialMode;
+  ThemeProvider({ThemeMode initialMode = ThemeMode.light}) : _mode = initialMode;
 
   static const _storageKey = 'zankurd.themeMode';
 
@@ -16,7 +16,7 @@ class ThemeProvider extends ChangeNotifier {
   ThemeMode _mode;
 
   ThemeMode get mode => _mode;
-  bool get isDark => _mode != ThemeMode.light;
+  bool get isDark => _mode == ThemeMode.dark;
 
   Future<void> toggleDarkLight() async {
     final next = isDark ? ThemeMode.light : ThemeMode.dark;
@@ -33,9 +33,9 @@ class ThemeProvider extends ChangeNotifier {
 
   static ThemeMode _decode(String? value) {
     return switch (value) {
-      'light' => ThemeMode.light,
+      'dark' => ThemeMode.dark,
       'system' => ThemeMode.system,
-      _ => ThemeMode.dark,
+      _ => ThemeMode.light,
     };
   }
 

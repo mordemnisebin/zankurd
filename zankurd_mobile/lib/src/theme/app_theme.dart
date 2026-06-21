@@ -36,15 +36,17 @@ class AppTheme {
   static const correct = Color(0xFF00D68F);
   static const wrong = Color(0xFFFF3D71);
 
-  // ============ Light Mode Palette ============
-  static const lightBg = Color(0xFFF5F5F5);
-  static const lightBgDeep = Color(0xFFE8EDF7);
+  // ============ Light Mode Palette (parlak/canlı — TRT tarzı) ============
+  // Düz gri yerine markanın mercan→lavanta tonlarının çok hafif hâli;
+  // renkli kartlar bu aydınlık zeminde belirginleşir.
+  static const lightBg = Color(0xFFFFF6F0); // yumuşak şeftali-beyaz
+  static const lightBgDeep = Color(0xFFEFF0FF); // yumuşak lavanta
   static const lightSurface = Color(0xFFFFFFFF);
-  static const lightSurfaceHi = Color(0xFFF0F3FA);
-  static const lightBorder = Color(0xFFD9E1EF);
+  static const lightSurfaceHi = Color(0xFFF6F2FF);
+  static const lightBorder = Color(0xFFE7DEEF);
   static const lightTextPrimary = Color(0xFF1A1A2E);
-  static const lightTextSub = Color(0xFF666666);
-  static const lightTextMuted = Color(0xFF656565);
+  static const lightTextSub = Color(0xFF5B5B6B);
+  static const lightTextMuted = Color(0xFF8A8A99);
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -123,6 +125,22 @@ class AppTheme {
     end: Alignment.bottomRight,
     colors: [correct, Color(0xFF009E6A)],
   );
+
+  static const wrongGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [wrong, Color(0xFFD61A4C)],
+  );
+
+  static List<BoxShadow> shadow3D(Color color) {
+    return [
+      BoxShadow(
+        color: color.withValues(alpha: 0.6),
+        offset: const Offset(0, 4),
+        blurRadius: 0,
+      ),
+    ];
+  }
 
   // Per-category gradients (index matches category list order)
   static const List<List<Color>> categoryGradients = [
