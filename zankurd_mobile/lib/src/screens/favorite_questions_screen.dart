@@ -56,7 +56,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
         actions: [
           IconButton(
             onPressed: _reload,
-            icon: const Icon(Icons.refresh_rounded),
+            icon: Icon(Icons.refresh_rounded),
           ),
         ],
       ),
@@ -166,7 +166,7 @@ class _FavoriteQuestionTile extends StatelessWidget {
                   gradient: AppTheme.goldGradient,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(Icons.bookmark, color: Colors.white),
+                child: Icon(Icons.bookmark, color: Colors.white),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -192,8 +192,8 @@ class _FavoriteQuestionTile extends StatelessWidget {
                       question.promptText,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: AppTheme.textPrimary,
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(context),
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -204,12 +204,12 @@ class _FavoriteQuestionTile extends StatelessWidget {
               IconButton(
                 onPressed: onRemove,
                 tooltip: context.s('Rake', 'Kaldır'),
-                icon: const Icon(
+                icon: Icon(
                   Icons.bookmark_remove_outlined,
-                  color: AppTheme.textMuted,
+                  color: AppTheme.textMutedColor(context),
                 ),
               ),
-              const Icon(Icons.play_arrow_rounded, color: AppTheme.accent),
+              Icon(Icons.play_arrow_rounded, color: AppTheme.accent),
             ],
           ),
         ),
@@ -234,8 +234,8 @@ class _TinyBadge extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: const TextStyle(
-          color: AppTheme.textSub,
+        style: TextStyle(
+          color: AppTheme.textSubColor(context),
           fontSize: 11,
           fontWeight: FontWeight.w800,
         ),

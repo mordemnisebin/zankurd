@@ -166,7 +166,7 @@ class _CategoryHero extends StatelessWidget {
                     const Spacer(),
                     Text(
                       CategoryNames.localized(category, isKu),
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
                         fontSize: 34,
@@ -255,8 +255,8 @@ class _LevelCard extends StatelessWidget {
                 children: [
                   Text(
                     level.title,
-                    style: const TextStyle(
-                      color: AppTheme.textPrimary,
+                    style: TextStyle(
+                      color: AppTheme.textPrimaryColor(context),
                       fontWeight: FontWeight.w900,
                       fontSize: 17,
                     ),
@@ -264,8 +264,8 @@ class _LevelCard extends StatelessWidget {
                   const SizedBox(height: 3),
                   Text(
                     '${level.questionCount} ${isKu ? "pirs" : "soru"} · ${isKu ? "Zehmetî" : "Zorluk"} ${level.difficultyLabel}',
-                    style: const TextStyle(
-                      color: AppTheme.textMuted,
+                    style: TextStyle(
+                      color: AppTheme.textMutedColor(context),
                       fontSize: 13,
                     ),
                   ),

@@ -203,8 +203,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.fromLTRB(4, 8, 4, 16),
                       child: Text(
                         ku ? 'Profîl' : 'Profil',
-                        style: const TextStyle(
-                          color: AppTheme.textPrimary,
+                        style: TextStyle(
+                          color: AppTheme.textPrimaryColor(context),
                           fontWeight: FontWeight.w900,
                           fontSize: 28,
                         ),
@@ -233,7 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ? _currentName![0]
                                           : 'Z')
                                       .toUpperCase(),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w900,
                                     fontSize: 28,
@@ -247,7 +247,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     Text(
                                       _displayName(ku),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w900,
                                         fontSize: 18,
@@ -278,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Row(
                                 children: [
-                                  const Icon(
+                                  Icon(
                                     Icons.military_tech_rounded,
                                     color: AppTheme.gold,
                                     size: 22,
@@ -286,7 +286,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   const SizedBox(width: 4),
                                   Text(
                                     ku ? 'Ast $_level' : 'Seviye $_level',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w900,
                                       fontSize: 15,
@@ -296,7 +296,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               Text(
                                 '$_xpInLevel / $_xpNeeded XP',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: Colors.white70,
                                   fontWeight: FontWeight.w800,
                                   fontSize: 13,
@@ -323,7 +323,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     AppPanel(
                       child: Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.language,
                             color: AppTheme.violet,
                             size: 22,
@@ -335,15 +335,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 Text(
                                   ku ? 'Ziman' : 'Dil',
-                                  style: const TextStyle(
-                                    color: AppTheme.textPrimary,
+                                  style: TextStyle(
+                                    color: AppTheme.textPrimaryColor(context),
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
                                 Text(
                                   ku ? 'Kurdî / Tirkî' : 'Kürtçe / Türkçe',
-                                  style: const TextStyle(
-                                    color: AppTheme.textMuted,
+                                  style: TextStyle(
+                                    color: AppTheme.textMutedColor(context),
                                     fontSize: 12,
                                   ),
                                 ),
@@ -363,8 +363,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Text(
                             ku ? 'Statîstîkên Min' : 'İstatistiklerim',
-                            style: const TextStyle(
-                              color: AppTheme.textPrimary,
+                            style: TextStyle(
+                              color: AppTheme.textPrimaryColor(context),
                               fontWeight: FontWeight.w900,
                               fontSize: 17,
                             ),
@@ -375,7 +375,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ku
                                   ? 'Hîn dîroka lîstikê ya serhêl tune.\nBi yekê re bikevin an yek çêbikin.'
                                   : 'Henüz çevrimiçi oyun geçmişin yok.\nBir odaya katıl veya oluştur.',
-                              style: const TextStyle(color: AppTheme.textMuted),
+                              style: TextStyle(color: AppTheme.textMuted),
                             )
                           else
                             LayoutBuilder(
@@ -420,8 +420,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           Text(
                             ku ? 'Performansa Heftane' : 'Haftalık Performans',
-                            style: const TextStyle(
-                              color: AppTheme.textPrimary,
+                            style: TextStyle(
+                              color: AppTheme.textPrimaryColor(context),
                               fontWeight: FontWeight.w800,
                               fontSize: 15,
                             ),
@@ -488,7 +488,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           padding: const EdgeInsets.all(16),
                           child: Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.bookmark_outline,
                                 color: AppTheme.gold,
                                 size: 22,
@@ -499,15 +499,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ku
                                       ? 'Pirsên Tomarkirî'
                                       : 'Kaydedilen Sorular',
-                                  style: const TextStyle(
-                                    color: AppTheme.textPrimary,
+                                  style: TextStyle(
+                                    color: AppTheme.textPrimaryColor(context),
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.chevron_right_rounded,
-                                color: AppTheme.textMuted,
+                                color: AppTheme.textMutedColor(context),
                               ),
                             ],
                           ),
@@ -535,7 +535,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         color: AppTheme.accent,
                                       ),
                                     )
-                                  : const Icon(
+                                  : Icon(
                                       Icons.school_outlined,
                                       color: AppTheme.accent,
                                       size: 22,
@@ -547,8 +547,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     Text(
                                       ku ? 'Şaşiyên Min' : 'Yanlışlarım',
-                                      style: const TextStyle(
-                                        color: AppTheme.textPrimary,
+                                      style: TextStyle(
+                                        color: AppTheme.textPrimaryColor(context),
                                         fontWeight: FontWeight.w800,
                                       ),
                                     ),
@@ -561,17 +561,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           : (ku
                                                 ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
                                                 : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
-                                      style: const TextStyle(
-                                        color: AppTheme.textMuted,
+                                      style: TextStyle(
+                                        color: AppTheme.textMutedColor(context),
                                         fontSize: 12,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.chevron_right_rounded,
-                                color: AppTheme.textMuted,
+                                color: AppTheme.textMutedColor(context),
                               ),
                             ],
                           ),
@@ -596,7 +596,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           padding: const EdgeInsets.all(16),
                           child: Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.settings_outlined,
                                 color: AppTheme.violet,
                                 size: 22,
@@ -605,15 +605,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Expanded(
                                 child: Text(
                                   ku ? 'Mîheng' : 'Ayarlar',
-                                  style: const TextStyle(
-                                    color: AppTheme.textPrimary,
+                                  style: TextStyle(
+                                    color: AppTheme.textPrimaryColor(context),
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.chevron_right_rounded,
-                                color: AppTheme.textMuted,
+                                color: AppTheme.textMutedColor(context),
                               ),
                             ],
                           ),
@@ -632,7 +632,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           padding: const EdgeInsets.all(16),
                           child: Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.logout_rounded,
                                 color: AppTheme.wrong,
                                 size: 22,
@@ -641,15 +641,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Expanded(
                                 child: Text(
                                   ku ? 'Derkeve' : 'Çıkış Yap',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: AppTheme.wrong,
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.chevron_right_rounded,
-                                color: AppTheme.textMuted,
+                                color: AppTheme.textMutedColor(context),
                               ),
                             ],
                           ),
@@ -748,7 +748,7 @@ class _Tab extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          color: active ? Colors.white : AppTheme.textMuted,
+          color: active ? Colors.white : AppTheme.textMutedColor(context),
           fontWeight: FontWeight.w800,
           fontSize: 13,
         ),
@@ -791,7 +791,7 @@ class _StatTile extends StatelessWidget {
           ),
           Text(
             label,
-            style: const TextStyle(color: AppTheme.textMuted, fontSize: 11),
+            style: TextStyle(color: AppTheme.textMutedColor(context), fontSize: 11),
           ),
         ],
       ),
@@ -813,15 +813,15 @@ class _AchievementShowcase extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.workspace_premium_outlined,
                 color: AppTheme.gold,
               ),
               const SizedBox(width: 8),
               Text(
                 isKu ? 'Rozet' : 'Rozetler',
-                style: const TextStyle(
-                  color: AppTheme.textPrimary,
+                style: TextStyle(
+                  color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w900,
                   fontSize: 17,
                 ),
@@ -829,8 +829,8 @@ class _AchievementShowcase extends StatelessWidget {
               const Spacer(),
               Text(
                 '${achievements.length}/${AchievementStore.definitions.length}',
-                style: const TextStyle(
-                  color: AppTheme.textMuted,
+                style: TextStyle(
+                  color: AppTheme.textMutedColor(context),
                   fontWeight: FontWeight.w800,
                 ),
               ),
@@ -842,7 +842,7 @@ class _AchievementShowcase extends StatelessWidget {
               isKu
                   ? 'Pêşbirkekê biqedîne û rozeta yekem veke.'
                   : 'Bir yarış tamamla ve ilk rozetini aç.',
-              style: const TextStyle(color: AppTheme.textMuted),
+              style: TextStyle(color: AppTheme.textMuted),
             )
           else
             Wrap(
@@ -884,15 +884,15 @@ class _MasterySection extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.workspace_premium_outlined,
                 color: AppTheme.violet,
               ),
               const SizedBox(width: 8),
               Text(
                 isKu ? 'Ustalîya Kategoriyê' : 'Kategori Ustalığı',
-                style: const TextStyle(
-                  color: AppTheme.textPrimary,
+                style: TextStyle(
+                  color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w900,
                   fontSize: 17,
                 ),
@@ -938,8 +938,8 @@ class _MasteryRow extends StatelessWidget {
             width: 76,
             child: Text(
               CategoryNames.localized(category, isKu),
-              style: const TextStyle(
-                color: AppTheme.textPrimary,
+              style: TextStyle(
+                color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w700,
                 fontSize: 13,
               ),
@@ -983,8 +983,8 @@ class _MasteryRow extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   isMamoste ? '✓' : '$count/$threshold',
-                  style: const TextStyle(
-                    color: AppTheme.textMuted,
+                  style: TextStyle(
+                    color: AppTheme.textMutedColor(context),
                     fontSize: 9,
                   ),
                 ),
@@ -1019,8 +1019,8 @@ class _AchievementChip extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             achievement.title(isKu),
-            style: const TextStyle(
-              color: AppTheme.textPrimary,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w800,
               fontSize: 12,
             ),
@@ -1096,15 +1096,15 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.analytics_outlined,
                     color: AppTheme.accent,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     isKu ? 'Analîza Performansê' : 'Performans Analizi',
-                    style: const TextStyle(
-                      color: AppTheme.textPrimary,
+                    style: TextStyle(
+                      color: AppTheme.textPrimaryColor(context),
                       fontWeight: FontWeight.w900,
                       fontSize: 17,
                     ),
@@ -1139,7 +1139,7 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                       ),
                       child: Text(
                         strongestCat,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppTheme.correct,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -1151,8 +1151,8 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                       isKu
                           ? '$maxCorrect bersivên rast'
                           : '$maxCorrect doğru cevap',
-                      style: const TextStyle(
-                        color: AppTheme.textPrimary,
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(context),
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
                       ),
@@ -1189,7 +1189,7 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                       ),
                       child: Text(
                         weakestCat,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.orange,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -1201,8 +1201,8 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                       isKu
                           ? '$maxMistakes pirsên şaş ên çalak'
                           : '$maxMistakes aktif yanlış soru',
-                      style: const TextStyle(
-                        color: AppTheme.textPrimary,
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(context),
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
                       ),

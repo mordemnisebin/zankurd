@@ -182,8 +182,13 @@ class _AppShellState extends State<AppShell> {
   Future<void> _completeProfileName() async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setBool(_profileNameCompletedKey, true);
+    String? name;
+    try {
+      name = await widget.repository.getProfileName();
+    } catch (_) {}
     if (!mounted) return;
     setState(() {
+      _profileName = name;
       _profileNameComplete = true;
       _profileCheckStarted = true;
     });

@@ -82,13 +82,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               AppPanel(
                 child: Row(
                   children: [
-                    const Icon(Icons.language, color: AppTheme.violet),
+                    Icon(Icons.language, color: AppTheme.violet),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
                         ku ? 'Zimanê sepanê' : 'Uygulama dili',
-                        style: const TextStyle(
-                          color: AppTheme.textPrimary,
+                        style: TextStyle(
+                          color: AppTheme.textPrimaryColor(context),
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -190,8 +190,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ku
                                     ? 'Her roj di demjimêr $_notificationTime de'
                                     : 'Her gün saat $_notificationTime',
-                                style: const TextStyle(
-                                  color: AppTheme.textMuted,
+                                style: TextStyle(
+                                  color: AppTheme.textMutedColor(context),
                                   fontSize: 12,
                                 ),
                               ),
@@ -224,7 +224,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.access_time_outlined,
                                 color: AppTheme.cyan,
                                 size: 18,
@@ -255,7 +255,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.badge_outlined,
                           color: AppTheme.accent,
                         ),
@@ -303,7 +303,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   color: Colors.white,
                                 ),
                               )
-                            : const Icon(Icons.save_outlined),
+                            : Icon(Icons.save_outlined),
                         label: Text(ku ? 'Tomar Bike' : 'Kaydet'),
                       ),
                     ),
@@ -366,15 +366,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.warning_amber_rounded,
                           color: AppTheme.wrong,
                         ),
                         const SizedBox(width: 10),
                         Text(
                           ku ? 'Karên Hesabê' : 'Hesap İşlemleri',
-                          style: const TextStyle(
-                            color: AppTheme.textPrimary,
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w900,
                             fontSize: 17,
                           ),
@@ -386,8 +386,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ku
                           ? 'Ev kar nayên vegerandin.'
                           : 'Bu alandaki işlemler geri alınamaz.',
-                      style: const TextStyle(
-                        color: AppTheme.textMuted,
+                      style: TextStyle(
+                        color: AppTheme.textMutedColor(context),
                         fontSize: 12,
                       ),
                     ),
@@ -416,7 +416,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       color: AppTheme.wrong,
                                     ),
                                   )
-                                : const Icon(
+                                : Icon(
                                     Icons.delete_forever_outlined,
                                     color: AppTheme.wrong,
                                     size: 22,
@@ -428,7 +428,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 children: [
                                   Text(
                                     ku ? 'Hesabê Min Jê Bibe' : 'Hesabımı Sil',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: AppTheme.wrong,
                                       fontWeight: FontWeight.w900,
                                     ),
@@ -438,17 +438,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ku
                                         ? 'Profîl, coin û pirsên tomarkirî tên jêbirin.'
                                         : 'Profil, coin ve kaydedilen soru verilerin silinir.',
-                                    style: const TextStyle(
-                                      color: AppTheme.textMuted,
+                                    style: TextStyle(
+                                      color: AppTheme.textMutedColor(context),
                                       fontSize: 12,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            const Icon(
+                            Icon(
                               Icons.chevron_right_rounded,
-                              color: AppTheme.textMuted,
+                              color: AppTheme.textMutedColor(context),
                             ),
                           ],
                         ),
@@ -488,18 +488,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'ZanKurd',
                               style: TextStyle(
-                                color: AppTheme.textPrimary,
+                                color: AppTheme.textPrimaryColor(context),
                                 fontWeight: FontWeight.w900,
                                 fontSize: 17,
                               ),
                             ),
                             Text(
                               '${ku ? 'Guherto' : 'Sürüm'} ${SettingsScreen.appVersion}',
-                              style: const TextStyle(
-                                color: AppTheme.textMuted,
+                              style: TextStyle(
+                                color: AppTheme.textMutedColor(context),
                                 fontSize: 12,
                               ),
                             ),
@@ -514,8 +514,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 'edebiyat, cografya û muzîka Kurdî hîn bibe û pêşbirkê bike.'
                           : 'Kurmancî bilgi yarışması uygulaması — Kürt dili, kültürü, '
                                 'tarihi, edebiyatı, coğrafyası ve müziğini öğren, yarış.',
-                      style: const TextStyle(
-                        color: AppTheme.textSub,
+                      style: TextStyle(
+                        color: AppTheme.textSubColor(context),
                         height: 1.45,
                       ),
                     ),
@@ -787,7 +787,7 @@ class _LangChip extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            color: active ? Colors.white : AppTheme.textMuted,
+            color: active ? Colors.white : AppTheme.textMutedColor(context),
             fontWeight: FontWeight.w900,
             fontSize: 12,
           ),
@@ -820,12 +820,12 @@ class _ExpandableSection extends StatelessWidget {
           color: Colors.transparent,
           child: ExpansionTile(
             leading: Icon(icon, color: iconColor),
-            iconColor: AppTheme.textSub,
-            collapsedIconColor: AppTheme.textMuted,
+            iconColor: AppTheme.textSubColor(context),
+            collapsedIconColor: AppTheme.textMutedColor(context),
             title: Text(
               title,
-              style: const TextStyle(
-                color: AppTheme.textPrimary,
+              style: TextStyle(
+                color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -835,7 +835,7 @@ class _ExpandableSection extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   body,
-                  style: const TextStyle(color: AppTheme.textSub, height: 1.55),
+                  style: TextStyle(color: AppTheme.textSubColor(context), height: 1.55),
                 ),
               ),
             ],

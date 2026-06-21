@@ -70,8 +70,8 @@ class _CategoriesTabState extends State<CategoriesTab> {
                       children: [
                         Text(
                           ku ? 'Kategorî' : 'Kategoriler',
-                          style: const TextStyle(
-                            color: AppTheme.textPrimary,
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w900,
                             fontSize: 28,
                           ),
@@ -80,8 +80,8 @@ class _CategoriesTabState extends State<CategoriesTab> {
                           ku
                               ? 'Kategoriyekê hilbijêre û dest pê bike'
                               : 'Bir kategori seç ve başla',
-                          style: const TextStyle(
-                            color: AppTheme.textMuted,
+                          style: TextStyle(
+                            color: AppTheme.textMutedColor(context),
                             fontSize: 14,
                           ),
                         ),
@@ -210,7 +210,7 @@ class _CategoryCard extends StatelessWidget {
                   const Spacer(),
                   Text(
                     CategoryNames.localized(category, isKu),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,
                       fontSize: 18,
@@ -230,7 +230,7 @@ class _CategoryCard extends StatelessWidget {
                     ),
                     child: Text(
                       isKu ? '5 ast · pêşbaz' : '5 seviye · yarış',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
