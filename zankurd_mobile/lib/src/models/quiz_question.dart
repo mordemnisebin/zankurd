@@ -1,4 +1,5 @@
 import '../l10n/explanation_ku.dart';
+import '../l10n/explanation_overrides.dart';
 
 enum QuestionType { multipleChoice, trueFalse, visual }
 
@@ -89,15 +90,20 @@ class QuizQuestion {
   }
 
   String getLocalizedExplanation(bool isKu) {
+    // Öncelik: soruya özel açıklama (DB) > elle yazılmış override > şablon.
     if (isKu) {
       if (explanationKu != null && explanationKu!.trim().isNotEmpty) {
         return explanationKu!;
       }
+      final override = explanationOverrides[id];
+      if (override != null) return override.ku;
       return explanationToKu(explanation);
     } else {
       if (explanationTr != null && explanationTr!.trim().isNotEmpty) {
         return explanationTr!;
       }
+      final override = explanationOverrides[id];
+      if (override != null) return override.tr;
       return explanation;
     }
   }
