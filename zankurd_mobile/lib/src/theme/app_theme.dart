@@ -368,4 +368,61 @@ class AppTheme {
       ),
     );
   }
+
+  // ============ Glassmorphism Helpers ============
+
+  /// Glassmorphism efektli dekorasyon oluşturur.
+  static BoxDecoration glassDecoration(BuildContext context, {
+    double borderRadius = 16,
+    double opacity = 0.12,
+  }) {
+    final isDark = _isDark(context);
+    return BoxDecoration(
+      color: isDark
+          ? Colors.white.withValues(alpha: opacity)
+          : Colors.white.withValues(alpha: opacity + 0.4),
+      borderRadius: BorderRadius.circular(borderRadius),
+      border: Border.all(
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.15)
+            : Colors.white.withValues(alpha: 0.6),
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
+          blurRadius: 24,
+          offset: const Offset(0, 8),
+        ),
+      ],
+    );
+  }
+
+  /// Shimmer efekti için gradient.
+  static const shimmerGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0x33FFFFFF),
+      Color(0x11FFFFFF),
+      Color(0x33FFFFFF),
+    ],
+    stops: [0.0, 0.5, 1.0],
+  );
+
+  // ============ Ek Gradient Tanımları ============
+
+  /// Profil ekranı rozet bölümü arka plan gradient'i.
+  static const badgeGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFF7C3AED), Color(0xFF6366F1)],
+  );
+
+  /// Streak göstergesi gradient'i.
+  static const streakGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFFFF6B6B), Color(0xFFFFD700)],
+  );
 }
+

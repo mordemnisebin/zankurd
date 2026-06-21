@@ -16,6 +16,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../widgets/badge_collection_section.dart';
 import '../widgets/weekly_performance_chart.dart';
 import 'favorite_questions_screen.dart';
 import 'quiz_screen.dart';
@@ -455,6 +456,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(height: 14),
 
                     _AchievementShowcase(achievements: _achievements, isKu: ku),
+                    const SizedBox(height: 14),
+
+                    // Rozet Koleksiyonu
+                    AppPanel(
+                      child: const BadgeCollectionSection(),
+                    ),
                     const SizedBox(height: 14),
 
                     if (_masteryStore != null) ...[
