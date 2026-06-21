@@ -226,7 +226,7 @@ class _LevelCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppTheme.surfaceOf(context),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppTheme.border),
+          border: Border.all(color: AppTheme.borderColor(context)),
         ),
         child: Row(
           children: [

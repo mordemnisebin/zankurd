@@ -191,8 +191,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               insetPadding: const EdgeInsets.symmetric(horizontal: 24),
               child: Container(
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [AppTheme.surfaceHi, AppTheme.surface],
+                  gradient: LinearGradient(
+                    colors: [
+                      AppTheme.surfaceHiColor(context),
+                      AppTheme.surfaceColor(context),
+                    ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -421,7 +424,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               if (_dailyStreak > 0) ...[
                 const SizedBox(height: 16),
                 AppPanel(
-                  color: AppTheme.surfaceHi,
+                  color: AppTheme.surfaceHiColor(context),
                   child: Row(
                     children: [
                       Icon(
@@ -593,7 +596,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 const SizedBox(height: 16),
               ],
               AppPanel(
-                color: AppTheme.surfaceHi,
+                color: AppTheme.surfaceHiColor(context),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -769,8 +772,8 @@ class _MetricTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceHi,
-        border: Border.all(color: AppTheme.border),
+        color: AppTheme.surfaceHiColor(context),
+        border: Border.all(color: AppTheme.borderColor(context)),
         borderRadius: BorderRadius.circular(14),
       ),
       child: Column(
@@ -823,7 +826,7 @@ class _RaceStandings extends StatelessWidget {
           );
 
     return AppPanel(
-      color: AppTheme.surfaceHi,
+      color: AppTheme.surfaceHiColor(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1010,7 +1013,7 @@ class _RaceStandingRow extends StatelessWidget {
         border: Border.all(
           color: isUser
               ? AppTheme.accent.withValues(alpha: 0.45)
-              : AppTheme.border,
+              : AppTheme.borderColor(context),
         ),
       ),
       child: Row(

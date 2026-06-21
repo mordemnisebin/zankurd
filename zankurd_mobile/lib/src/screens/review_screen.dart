@@ -108,7 +108,7 @@ class _SummaryTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceHi,
+        color: AppTheme.surfaceHiColor(context),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: color.withValues(alpha: 0.45)),
       ),
@@ -277,7 +277,7 @@ class _ReviewCard extends StatelessWidget {
                       color: bgColor,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: icon != null ? textColor : AppTheme.border,
+                        color: icon != null ? textColor : AppTheme.borderColor(context),
                         width: icon != null ? 1.5 : 1,
                       ),
                     ),

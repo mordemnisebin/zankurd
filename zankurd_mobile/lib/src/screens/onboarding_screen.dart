@@ -103,7 +103,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                         height: 8,
                         margin: const EdgeInsets.symmetric(horizontal: 4),
                         decoration: BoxDecoration(
-                          color: i == _page ? AppTheme.accent : AppTheme.border,
+                          color: i == _page ? AppTheme.accent : AppTheme.borderColor(context),
                           borderRadius: BorderRadius.circular(99),
                         ),
                       ),

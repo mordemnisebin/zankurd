@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             expandedHeight: 230,
             floating: false,
             pinned: true,
-            backgroundColor: AppTheme.surface,
+            backgroundColor: AppTheme.surfaceColor(context),
             elevation: 0,
             title: LayoutBuilder(
               builder: (context, constraints) {

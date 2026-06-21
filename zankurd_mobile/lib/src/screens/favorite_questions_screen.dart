@@ -228,9 +228,9 @@ class _TinyBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceHi,
+        color: AppTheme.surfaceHiColor(context),
         borderRadius: BorderRadius.circular(7),
-        border: Border.all(color: AppTheme.border),
+        border: Border.all(color: AppTheme.borderColor(context)),
       ),
       child: Text(
         label,
