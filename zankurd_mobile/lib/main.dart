@@ -18,6 +18,7 @@ import 'src/providers/auth_provider.dart';
 import 'src/providers/sound_provider.dart';
 import 'src/providers/theme_provider.dart';
 import 'src/screens/app_shell.dart';
+import 'src/screens/splash_screen.dart';
 import 'src/services/analytics_service.dart';
 import 'src/theme/app_theme.dart';
 
@@ -115,7 +116,7 @@ class ZanKurdApp extends StatelessWidget {
           themeMode: themeProvider.mode,
           themeAnimationDuration: const Duration(milliseconds: 600),
           themeAnimationCurve: Curves.easeInOutCubic,
-          home: AppShell(repository: repository),
+          home: SplashScreen(next: AppShell(repository: repository)),
         ),
       ),
     );
