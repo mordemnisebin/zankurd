@@ -737,7 +737,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             ),
           ),
           const SizedBox(height: 18),
-          for (final answer in question.displayAnswers)
+          for (final (index, answer) in question.displayAnswers.indexed)
             AnimatedOpacity(
               duration: const Duration(milliseconds: 250),
               opacity: hiddenAnswers.contains(answer) ? 0.25 : 1,
@@ -746,6 +746,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: _AnswerButton(
+                    index: index,
                     answer: answer,
                     selected: selectedAnswer == answer,
                     correct: answered && answer == question.correctAnswer,
