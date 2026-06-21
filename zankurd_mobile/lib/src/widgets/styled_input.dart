@@ -10,6 +10,8 @@ class StyledInputField extends StatefulWidget {
   final IconData? suffixIcon;
   final VoidCallback? onSuffixIconPressed;
   final String? Function(String?)? validator;
+  final TextStyle? labelStyle;
+  final TextStyle? inputTextStyle;
 
   const StyledInputField({
     super.key,
@@ -21,6 +23,8 @@ class StyledInputField extends StatefulWidget {
     this.suffixIcon,
     this.onSuffixIconPressed,
     this.validator,
+    this.labelStyle,
+    this.inputTextStyle,
   });
 
   @override
@@ -60,7 +64,8 @@ class _StyledInputFieldState extends State<StyledInputField> {
     final borderColor = isDarkMode
         ? const Color(0xFF404050)
         : const Color(0xFFE0E0E0);
-    final textStyle = Theme.of(context).textTheme.bodyLarge;
+    final textStyle =
+        widget.inputTextStyle ?? Theme.of(context).textTheme.bodyLarge;
 
     return ValueListenableBuilder<bool>(
       valueListenable: _isFocused,
@@ -75,9 +80,11 @@ class _StyledInputFieldState extends State<StyledInputField> {
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Text(
                   widget.label,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
+                  style:
+                      widget.labelStyle ??
+                      Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
               ),
             // Input field with left accent bar

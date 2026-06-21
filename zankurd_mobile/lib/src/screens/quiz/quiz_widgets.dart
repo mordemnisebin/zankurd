@@ -107,25 +107,31 @@ class _QuestionImage extends StatelessWidget {
     final assetPath = url.startsWith('asset://')
         ? url.replaceFirst('asset://', '')
         : null;
+    final size = MediaQuery.sizeOf(context);
+    final isLandscapeTablet = size.width >= 700 && size.width > size.height;
+    final maxHeight = isLandscapeTablet
+        ? (size.height * 0.24).clamp(84.0, 150.0)
+        : double.infinity;
+
+    final image = assetPath == null
+        ? Image.network(
+            url,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) =>
+                const _QuestionImageFallback(),
+          )
+        : Image.asset(
+            assetPath,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) =>
+                const _QuestionImageFallback(),
+          );
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
-      child: AspectRatio(
-        aspectRatio: 16 / 9,
-        child: assetPath == null
-            ? Image.network(
-                url,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    const _QuestionImageFallback(),
-              )
-            : Image.asset(
-                assetPath,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    const _QuestionImageFallback(),
-              ),
-      ),
+      child: isLandscapeTablet
+          ? SizedBox(width: double.infinity, height: maxHeight, child: image)
+          : AspectRatio(aspectRatio: 16 / 9, child: image),
     );
   }
 }
@@ -143,6 +149,77 @@ class _QuestionImageFallback extends StatelessWidget {
         color: AppTheme.textMutedColor(context),
         size: 36,
       ),
+    );
+  }
+}
+
+class _QuestionTextAndAnswers extends StatelessWidget {
+  const _QuestionTextAndAnswers({
+    required this.promptText,
+    required this.promptFontSize,
+    required this.question,
+    required this.selectedAnswer,
+    required this.answered,
+    required this.hiddenAnswers,
+    required this.firstAttemptAnswer,
+    required this.showExplanation,
+    required this.onAnswer,
+    this.audiencePoll,
+  });
+
+  final String promptText;
+  final double promptFontSize;
+  final QuizQuestion question;
+  final String selectedAnswer;
+  final bool answered;
+  final Set<String> hiddenAnswers;
+  final String firstAttemptAnswer;
+  final Map<String, double>? audiencePoll;
+  final bool showExplanation;
+  final ValueChanged<String> onAnswer;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          promptText,
+          style: TextStyle(
+            color: AppTheme.textPrimaryColor(context),
+            fontSize: promptFontSize,
+            fontWeight: FontWeight.w900,
+            height: 1.16,
+          ),
+        ),
+        const SizedBox(height: 14),
+        for (final (index, answer) in question.displayAnswers.indexed)
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 250),
+            opacity: hiddenAnswers.contains(answer) ? 0.25 : 1,
+            child: IgnorePointer(
+              ignoring: hiddenAnswers.contains(answer),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: _AnswerButton(
+                  index: index,
+                  answer: answer,
+                  selected: selectedAnswer == answer,
+                  correct: answered && answer == question.correctAnswer,
+                  disabled: answered || answer == firstAttemptAnswer,
+                  firstAttemptWrong: !answered && answer == firstAttemptAnswer,
+                  audiencePercent: audiencePoll?[answer],
+                  onTap: () => onAnswer(answer),
+                ),
+              ),
+            ),
+          ),
+        _ExplanationBox(
+          question: question,
+          isKu: context.isKu,
+          visible: showExplanation,
+        ),
+      ],
     );
   }
 }
@@ -355,10 +432,7 @@ class _AnswerButton extends StatelessWidget {
                     ),
                   ),
                   if (correct)
-                    const Icon(
-                      Icons.check_circle_outline,
-                      color: Colors.white,
-                    ),
+                    const Icon(Icons.check_circle_outline, color: Colors.white),
                   if (wrong)
                     const Icon(Icons.cancel_outlined, color: Colors.white),
                 ],
@@ -447,11 +521,7 @@ class _OptionBadge extends StatelessWidget {
       ),
       child: Text(
         letter,
-        style: TextStyle(
-          color: fg,
-          fontWeight: FontWeight.w900,
-          fontSize: 17,
-        ),
+        style: TextStyle(color: fg, fontWeight: FontWeight.w900, fontSize: 17),
       ),
     );
   }
@@ -732,10 +802,7 @@ class _ExplanationBox extends StatelessWidget {
               builder: (context, value, child) {
                 return Transform.translate(
                   offset: Offset(0, 20 * (1 - value)),
-                  child: Opacity(
-                    opacity: value.clamp(0.0, 1.0),
-                    child: child,
-                  ),
+                  child: Opacity(opacity: value.clamp(0.0, 1.0), child: child),
                 );
               },
               child: Container(

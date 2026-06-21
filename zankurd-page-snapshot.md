@@ -1,0 +1,117 @@
+- main [ref=e3]:
+  - navigation "Ana gezinme" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: ZK
+      - generic [ref=e7]:
+        - strong [ref=e8]: ZanKurd
+        - generic [ref=e9]: Pêşbirka Kurmancî
+    - generic [ref=e10]:
+      - button "Bildirimler" [ref=e11] [cursor=pointer]:
+        - img [ref=e12]
+      - button "2.450" [ref=e15] [cursor=pointer]:
+        - img [ref=e16]
+        - text: "2.450"
+  - generic [ref=e21]:
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - img [ref=e24]
+        - text: Canlı oda açık
+      - heading "Kurmancî bilgi yarışmasını odalarda canlı çöz." [level=1] [ref=e30]
+      - paragraph [ref=e31]: Arkadaş daveti, rastgele eşleşme, jokerler, günlük turnuvalar ve öğrenme alanı tek oyun akışında.
+    - generic "Hızlı işlemler" [ref=e32]:
+      - button "Oda Kur" [ref=e33] [cursor=pointer]:
+        - img [ref=e34]
+        - text: Oda Kur
+      - button "Kodla Katıl" [ref=e35] [cursor=pointer]:
+        - img [ref=e36]
+        - text: Kodla Katıl
+      - button "Rastgele" [ref=e39] [cursor=pointer]:
+        - img [ref=e40]
+        - text: Rastgele
+  - generic [ref=e42]:
+    - complementary "Oda bilgileri" [ref=e43]:
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e46]: Özel oda
+          - heading "Hevalên Zanînê" [level=2] [ref=e47]
+        - button "Oda kodunu kopyala" [ref=e48] [cursor=pointer]:
+          - img [ref=e49]
+      - generic [ref=e52]:
+        - generic [ref=e53]: Oda kodu
+        - strong [ref=e54]: ZK-4821
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - generic [ref=e57]: "1"
+          - generic [ref=e58]
+          - generic [ref=e61]
+        - generic [ref=e64]:
+          - generic [ref=e65]: "2"
+          - generic [ref=e66]
+          - generic [ref=e69]
+        - generic [ref=e72]:
+          - generic [ref=e73]: "3"
+          - generic [ref=e74]
+          - generic [ref=e77]
+        - generic [ref=e80]:
+          - generic [ref=e81]: "4"
+          - generic [ref=e82]
+          - generic [ref=e85]
+      - button "Yarışı Başlat" [ref=e88] [cursor=pointer]:
+        - img [ref=e89]
+        - text: Yarışı Başlat
+    - region "Aktif soru" [ref=e91]:
+      - generic [ref=e92]:
+        - generic [ref=e93]: Ziman
+        - strong [ref=e94]: "08"
+      - heading "Di Kurmancî de peyva \"zanîn\" bi Tirkî çi ye?" [level=2] [ref=e95]
+      - generic [ref=e96]:
+        - button "Bilmek" [ref=e97] [cursor=pointer]:
+          - generic [ref=e98]: Bilmek
+        - button "Gitmek" [ref=e99] [cursor=pointer]:
+          - generic [ref=e100]: Gitmek
+        - button "Okumak" [ref=e101] [cursor=pointer]:
+          - generic [ref=e102]: Okumak
+        - button "Yazmak" [ref=e103] [cursor=pointer]:
+          - generic [ref=e104]: Yazmak
+      - generic "Jokerler" [ref=e105]:
+        - button "50/50" [ref=e106] [cursor=pointer]:
+          - img [ref=e107]
+          - text: 50/50
+        - button "Seyirci" [ref=e110] [cursor=pointer]:
+          - img [ref=e111]
+          - text: Seyirci
+        - button "Değiştir" [ref=e116] [cursor=pointer]:
+          - img [ref=e117]
+          - text: Değiştir
+    - complementary "Turnuva ve istatistik" [ref=e120]:
+      - generic [ref=e121]:
+        - img [ref=e122]
+        - generic [ref=e128]:
+          - text: Günün turnuvası
+          - strong [ref=e129]: 21:00 - Ziman gecesi
+      - generic [ref=e130]:
+        - generic [ref=e131]:
+          - img [ref=e132]
+          - strong [ref=e134]: 73%
+          - generic [ref=e135]: Başarı
+        - generic [ref=e136]:
+          - img [ref=e137]
+          - strong [ref=e139]: "128"
+          - generic [ref=e140]: Maç
+      - generic [ref=e141]:
+        - generic [ref=e142]:
+          - generic [ref=e143]
+          - img [ref=e146]
+        - generic [ref=e148]:
+          - button "Ziman" [ref=e149] [cursor=pointer]
+          - button "Çand" [ref=e150] [cursor=pointer]
+          - button "Dîrok" [ref=e151] [cursor=pointer]
+          - button "Edebiyat" [ref=e152] [cursor=pointer]
+          - button "Cografya" [ref=e153] [cursor=pointer]
+          - button "Muzîk" [ref=e154] [cursor=pointer]
+      - button "Soruyu Bildir" [ref=e155] [cursor=pointer]:
+        - img [ref=e156]
+        - text: Soruyu Bildir
+      - generic [ref=e158]:
+        - img [ref=e159]
+        - text: Puan ve cevap doğrulama backend tarafında yapılacak.

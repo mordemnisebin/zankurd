@@ -1,38 +1,122 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'zankurd_repository.dart';
 import 'supabase_zankurd_repository.dart';
 
+abstract class ConnectivityMonitor {
+  Stream<List<ConnectivityResult>> get onConnectivityChanged;
+  Future<List<ConnectivityResult>> checkConnectivity();
+}
+
+class PluginConnectivityMonitor implements ConnectivityMonitor {
+  PluginConnectivityMonitor([Connectivity? connectivity])
+    : _connectivity = connectivity ?? Connectivity();
+
+  final Connectivity _connectivity;
+
+  @override
+  Stream<List<ConnectivityResult>> get onConnectivityChanged =>
+      _connectivity.onConnectivityChanged;
+
+  @override
+  Future<List<ConnectivityResult>> checkConnectivity() =>
+      _connectivity.checkConnectivity();
+}
+
+class AlwaysOnlineConnectivityMonitor implements ConnectivityMonitor {
+  const AlwaysOnlineConnectivityMonitor();
+
+  @override
+  Stream<List<ConnectivityResult>> get onConnectivityChanged =>
+      const Stream.empty();
+
+  @override
+  Future<List<ConnectivityResult>> checkConnectivity() async => const [
+    ConnectivityResult.wifi,
+  ];
+}
+
 class SyncManager {
-  SyncManager._(this._repository) {
-    Connectivity().onConnectivityChanged.listen((result) {
-      if (result.isNotEmpty && result.first != ConnectivityResult.none) {
-        developer.log('Network back online. Triggering synchronization...', name: 'SyncManager');
-        sync();
-      }
-    });
+  SyncManager._(this._repository, this._connectivityMonitor) {
+    _startConnectivityListener();
   }
 
   static const _queueKey = 'zankurd.syncQueue';
   static SyncManager? _instance;
 
   final ZanKurdRepository _repository;
+  final ConnectivityMonitor _connectivityMonitor;
   final List<Map<String, dynamic>> _queue = [];
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
 
-  static Future<SyncManager> initialize(ZanKurdRepository repository) async {
+  static Future<SyncManager> initialize(
+    ZanKurdRepository repository, {
+    ConnectivityMonitor? connectivityMonitor,
+  }) async {
     if (_instance != null) return _instance!;
-    final manager = SyncManager._(repository);
+    final manager = SyncManager._(
+      repository,
+      connectivityMonitor ?? _defaultConnectivityMonitor(),
+    );
     await manager._loadQueue();
     manager.sync();
     return _instance = manager;
   }
 
+  static ConnectivityMonitor _defaultConnectivityMonitor() {
+    if (kIsWeb) return const AlwaysOnlineConnectivityMonitor();
+    return PluginConnectivityMonitor();
+  }
+
+  @visibleForTesting
+  static Future<void> resetForTesting() async {
+    await _instance?._connectivitySubscription?.cancel();
+    _instance = null;
+  }
+
+  void _startConnectivityListener() {
+    try {
+      _connectivitySubscription = _connectivityMonitor.onConnectivityChanged
+          .listen(
+            (result) {
+              if (result.isNotEmpty &&
+                  result.first != ConnectivityResult.none) {
+                developer.log(
+                  'Network back online. Triggering synchronization...',
+                  name: 'SyncManager',
+                );
+                sync();
+              }
+            },
+            onError: (Object error, StackTrace stack) {
+              developer.log(
+                'Connectivity listener unavailable: $error',
+                name: 'SyncManager',
+                error: error,
+                stackTrace: stack,
+              );
+            },
+          );
+    } catch (error, stack) {
+      developer.log(
+        'Connectivity listener unavailable: $error',
+        name: 'SyncManager',
+        error: error,
+        stackTrace: stack,
+      );
+    }
+  }
+
   static SyncManager get instance {
     final inst = _instance;
     if (inst == null) {
-      throw StateError('SyncManager has not been initialized. Call initialize first.');
+      throw StateError(
+        'SyncManager has not been initialized. Call initialize first.',
+      );
     }
     return inst;
   }
@@ -84,13 +168,16 @@ class SyncManager {
       return;
     }
 
-    final connectivity = await Connectivity().checkConnectivity();
+    final connectivity = await _checkConnectivity();
     if (connectivity.isEmpty || connectivity.first == ConnectivityResult.none) {
       developer.log('Device is offline. Skipping sync.', name: 'SyncManager');
       return;
     }
 
-    developer.log('Syncing ${_queue.length} pending updates to Supabase...', name: 'SyncManager');
+    developer.log(
+      'Syncing ${_queue.length} pending updates to Supabase...',
+      name: 'SyncManager',
+    );
     final List<Map<String, dynamic>> failedItems = [];
 
     for (final item in _queue) {
@@ -102,7 +189,10 @@ class SyncManager {
           developer.log('Successfully synced XP: $xp', name: 'SyncManager');
         }
       } catch (e) {
-        developer.log('Failed to sync item ($item): $e. Keeping in queue.', name: 'SyncManager');
+        developer.log(
+          'Failed to sync item ($item): $e. Keeping in queue.',
+          name: 'SyncManager',
+        );
         failedItems.add(item);
       }
     }
@@ -110,5 +200,19 @@ class SyncManager {
     _queue.clear();
     _queue.addAll(failedItems);
     await _saveQueue();
+  }
+
+  Future<List<ConnectivityResult>> _checkConnectivity() async {
+    try {
+      return await _connectivityMonitor.checkConnectivity();
+    } catch (error, stack) {
+      developer.log(
+        'Connectivity check unavailable; continuing as online: $error',
+        name: 'SyncManager',
+        error: error,
+        stackTrace: stack,
+      );
+      return const [ConnectivityResult.wifi];
+    }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Bildirim ayarlarını yöneten servis.
@@ -17,6 +19,7 @@ class NotificationService {
   static const _nextFireKey = 'zankurd.notifications.nextFireAt';
 
   static NotificationService? _instance;
+  Timer? _mockTimer;
 
   static Future<NotificationService> load() async {
     final cached = _instance;
@@ -27,16 +30,23 @@ class NotificationService {
     } catch (_) {
       preferences = null;
     }
-    return _instance = NotificationService._(
+    final service = NotificationService._(
       preferences,
       preferences?.getBool(_enabledKey) ?? false,
       preferences?.getInt(_hourKey) ?? 19,
       preferences?.getInt(_minuteKey) ?? 0,
     );
+    if (service.enabled) {
+      service.startMockScheduler();
+    }
+    return _instance = service;
   }
 
   /// Testlerde tekil örneği sıfırlamak için.
-  static void resetInstance() => _instance = null;
+  static void resetInstance() {
+    _instance?._mockTimer?.cancel();
+    _instance = null;
+  }
 
   final SharedPreferences? _preferences;
   bool _enabled;
@@ -68,13 +78,28 @@ class NotificationService {
     return raw == null ? null : DateTime.tryParse(raw);
   }
 
+  /// Yerel zamanlayıcı ile bildirim simülasyonunu başlatır.
+  void startMockScheduler() {
+    _mockTimer?.cancel();
+    _mockTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      if (!_enabled) return;
+      final target = nextFireAt;
+      if (target != null && DateTime.now().isAfter(target)) {
+        debugPrint('[NOTIFICATION_SIMULATION] Hatırlatıcı: ZanKurd\'a hoş geldiniz! Günlük yarışmanızı tamamlamayı unutmayın!');
+        _scheduleDaily();
+      }
+    });
+  }
+
   Future<void> setEnabled(bool value) async {
     _enabled = value;
     await _preferences?.setBool(_enabledKey, value);
     if (value) {
       await _scheduleDaily();
+      startMockScheduler();
     } else {
       await _cancelAll();
+      _mockTimer?.cancel();
     }
   }
 
@@ -85,6 +110,7 @@ class NotificationService {
     await _preferences?.setInt(_minuteKey, minute);
     if (_enabled) {
       await _scheduleDaily();
+      startMockScheduler();
     }
   }
 

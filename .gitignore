@@ -1,8 +1,14 @@
-# Third-party APK analysis output (reference only, not part of the product)
+# Büyük medya ve çıktı klasörleri
+görseller/
 Pirs_apk_extracted/
-
-# Tooling / ephemeral artifacts (Playwright, audits, temp)
-.playwright-mcp/
 output/
-zankurd-page-snapshot.md
-zankurd_mobile/.tmp/
+
+# Mobil ve test araçlarının bağımlılıkları/önbellekleri
+.playwright-mcp/
+.agents/
+.claude/
+.vscode/
+
+# Eğer varsa sanal ortam klasörleri
+venv/
+.env

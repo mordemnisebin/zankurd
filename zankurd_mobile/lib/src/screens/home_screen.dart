@@ -127,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final bottomContentPadding = MediaQuery.paddingOf(context).bottom + 112;
 
     return Container(
       decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
@@ -292,6 +293,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               }, childCount: _loading || _questions.isEmpty ? 8 : 10),
             ),
           ),
+          SliverToBoxAdapter(child: SizedBox(height: bottomContentPadding)),
         ],
       ),
     );
@@ -548,11 +550,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.monetization_on,
-                    color: Colors.white,
-                    size: 16,
-                  ),
+                  Icon(Icons.monetization_on, color: Colors.white, size: 16),
                   const SizedBox(width: 5),
                   AnimatedCounter(
                     value: coinBalance,

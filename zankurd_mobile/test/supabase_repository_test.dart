@@ -25,7 +25,10 @@ void main() {
     ).readAsStringSync();
 
     expect(source, contains("'join_room_by_code'"));
-    expect(source, isNot(contains(".from('rooms')\n        .select('id, code")));
+    expect(
+      source,
+      isNot(contains(".from('rooms')\n        .select('id, code")),
+    );
   });
 
   test('online multiplayer SQL patch defines required live RPCs', () {
@@ -38,5 +41,29 @@ void main() {
     expect(sql, contains('function public.finish_room_game'));
     expect(sql, contains('function public.submit_answer'));
     expect(sql, contains('grant execute on function public.join_room_by_code'));
+  });
+
+  test('question queries avoid optional localized explanation columns', () {
+    final source = File(
+      'lib/src/data/supabase_zankurd_repository.dart',
+    ).readAsStringSync();
+
+    final selectStatements = RegExp(
+      r"\.select\(\s*'([^']*)'",
+      multiLine: true,
+    ).allMatches(source).map((match) => match.group(1)!);
+
+    final questionSelects = selectStatements.where(
+      (select) =>
+          select.contains('prompt') && select.contains('correct_option'),
+    );
+
+    expect(questionSelects, isNotEmpty);
+    for (final select in questionSelects) {
+      expect(select, isNot(contains('explanation_ku')));
+      expect(select, isNot(contains('explanation_tr')));
+      expect(select, contains('question_type'));
+      expect(select, contains('image_url'));
+    }
   });
 }

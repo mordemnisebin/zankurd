@@ -14,6 +14,11 @@ import 'seen_question_store.dart';
 class SupabaseZanKurdRepository extends MockZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
 
+  static const _questionColumns =
+      'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, question_type, image_url, difficulty';
+  static const _roomQuestionColumns =
+      'question_index, questions($_questionColumns)';
+
   final SupabaseClient client;
   final _cache = QuestionCache();
 
@@ -167,24 +172,13 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }) async {
     try {
       final categoryId = await _categoryIdByName(category);
-      final rows =
-          await _selectApprovedQuestions(
-            categoryId: categoryId,
-            limit: limit,
-            includeRichColumns: true,
-            difficultyMin: difficultyMin,
-            difficultyMax: difficultyMax,
-            randomize: true,
-          ).catchError(
-            (_) => _selectApprovedQuestions(
-              categoryId: categoryId,
-              limit: limit,
-              includeRichColumns: false,
-              difficultyMin: difficultyMin,
-              difficultyMax: difficultyMax,
-              randomize: true,
-            ),
-          );
+      final rows = await _selectApprovedQuestions(
+        categoryId: categoryId,
+        limit: limit,
+        difficultyMin: difficultyMin,
+        difficultyMax: difficultyMax,
+        randomize: true,
+      );
 
       final store = await SeenQuestionStore.load();
       final selected = store.preferUnseen(
@@ -219,9 +213,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     try {
       final rows = await client
           .from('room_questions')
-          .select(
-            'question_index, questions(id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, explanation_ku, explanation_tr, question_type, image_url, difficulty)',
-          )
+          .select(_roomQuestionColumns)
           .eq('room_id', roomId)
           .order('question_index');
 
@@ -257,9 +249,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
 
       final rows = await client
           .from('questions')
-          .select(
-            'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, explanation_ku, explanation_tr, question_type, image_url, difficulty',
-          )
+          .select(_questionColumns)
           .eq('is_approved', true)
           .order('id')
           .range(offset, offset + windowSize - 1);
@@ -277,20 +267,11 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     String? categoryId,
     int limit = 10,
   }) async {
-    final rows =
-        await _selectApprovedQuestions(
-          categoryId: categoryId,
-          limit: limit,
-          includeRichColumns: true,
-          randomize: true,
-        ).catchError(
-          (_) => _selectApprovedQuestions(
-            categoryId: categoryId,
-            limit: limit,
-            includeRichColumns: false,
-            randomize: true,
-          ),
-        );
+    final rows = await _selectApprovedQuestions(
+      categoryId: categoryId,
+      limit: limit,
+      randomize: true,
+    );
     final store = await SeenQuestionStore.load();
     final selected = store.preferUnseen(
       rows.map(_questionFromRow).toList(),
@@ -306,19 +287,15 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   Future<List<Map<String, dynamic>>> _selectApprovedQuestions({
     required String? categoryId,
     required int limit,
-    required bool includeRichColumns,
     int? difficultyMin,
     int? difficultyMax,
     bool randomize = false,
     String? questionType,
   }) async {
     return _retryOnNetworkFailure(() async {
-      final columns = includeRichColumns
-          ? 'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, explanation_ku, explanation_tr, question_type, image_url, difficulty'
-          : 'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, difficulty';
       final query = client
           .from('questions')
-          .select(columns)
+          .select(_questionColumns)
           .eq('is_approved', true);
 
       var filteredQuery = categoryId == null
@@ -371,7 +348,6 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       final visualRows = await _selectApprovedQuestions(
         categoryId: categoryId,
         limit: minVisualQuestions,
-        includeRichColumns: true,
         difficultyMin: difficultyMin,
         difficultyMax: difficultyMax,
         randomize: true,
