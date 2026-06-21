@@ -241,6 +241,7 @@ class _Metric extends StatelessWidget {
 
 class _AnswerButton extends StatelessWidget {
   const _AnswerButton({
+    required this.index,
     required this.answer,
     required this.selected,
     required this.correct,
@@ -250,6 +251,8 @@ class _AnswerButton extends StatelessWidget {
     this.audiencePercent,
   });
 
+  /// Görünüm sırası — A/B/C/D rozeti ve şık rengi için kullanılır.
+  final int index;
   final String answer;
   final bool selected;
   final bool correct;
@@ -261,33 +264,73 @@ class _AnswerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final wrong = (selected && !correct && disabled) || firstAttemptWrong;
-    final color = correct
-        ? AppTheme.correct.withValues(alpha: 0.15)
+    final isChecking = selected && !disabled;
+
+    // Gradient belirleme
+    final Gradient? gradient = correct
+        ? AppTheme.correctGradient
         : wrong
-        ? AppTheme.wrong.withValues(alpha: 0.15)
+        ? AppTheme.wrongGradient
+        : isChecking
+        ? AppTheme.accentGradient
+        : null;
+
+    final Color color = gradient != null
+        ? Colors.transparent
         : AppTheme.surfaceColor(context).withValues(alpha: 0.72);
-    final borderColor = correct
+
+    final Color borderColor = correct
         ? AppTheme.correct
         : wrong
         ? AppTheme.wrong
+        : isChecking
+        ? AppTheme.accent
         : AppTheme.borderColor(context);
 
-    return InkWell(
-      onTap: disabled ? null : onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: AnimatedScale(
-        scale: selected ? 0.98 : 1,
-        duration: const Duration(milliseconds: 150),
-        curve: Curves.easeOut,
+    // Metin rengi
+    final Color textColor = (correct || wrong || isChecking)
+        ? Colors.white
+        : AppTheme.textPrimaryColor(context);
+
+    // 3D Gölge rengi
+    final Color shadowColor = correct
+        ? const Color(0xFF009E6A)
+        : wrong
+        ? const Color(0xFFD61A4C)
+        : isChecking
+        ? const Color(0xFFFF6B6B)
+        : AppTheme.borderColor(context);
+
+    final isPressed = selected;
+
+    return AnimatedPadding(
+      duration: const Duration(milliseconds: 100),
+      padding: EdgeInsets.only(
+        top: isPressed ? 4 : 0,
+        bottom: isPressed ? 0 : 4,
+      ),
+      child: InkWell(
+        onTap: disabled ? null : onTap,
+        borderRadius: BorderRadius.circular(16),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 220),
+          duration: const Duration(milliseconds: 150),
           curve: Curves.easeOutCubic,
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: borderColor, width: 1.4),
+            gradient: gradient,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: borderColor, width: 1.5),
+            boxShadow: isPressed
+                ? []
+                : [
+                    BoxShadow(
+                      color: shadowColor.withValues(alpha: 0.5),
+                      offset: const Offset(0, 4),
+                      blurRadius: 0,
+                    ),
+                  ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,46 +338,53 @@ class _AnswerButton extends StatelessWidget {
             children: [
               Row(
                 children: [
+                  _OptionBadge(
+                    index: index,
+                    stateActive: gradient != null,
+                    stateColor: borderColor,
+                  ),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       answer,
                       style: TextStyle(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w800,
+                        color: textColor,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 16,
                       ),
                     ),
                   ),
                   if (correct)
                     const Icon(
                       Icons.check_circle_outline,
-                      color: AppTheme.correct,
+                      color: Colors.white,
                     ),
                   if (wrong)
-                    const Icon(Icons.cancel_outlined, color: AppTheme.wrong),
+                    const Icon(Icons.cancel_outlined, color: Colors.white),
                 ],
               ),
               if (audiencePercent != null) ...[
-                const SizedBox(height: 6),
+                const SizedBox(height: 8),
                 Row(
                   children: [
                     Expanded(
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(2),
+                        borderRadius: BorderRadius.circular(3),
                         child: LinearProgressIndicator(
                           value: audiencePercent!.clamp(0.0, 1.0),
-                          minHeight: 4,
-                          backgroundColor: AppTheme.borderColor(context),
-                          color: AppTheme.accent,
+                          minHeight: 5,
+                          backgroundColor: Colors.white.withValues(alpha: 0.24),
+                          color: Colors.white,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 6),
+                    const SizedBox(width: 8),
                     Text(
                       '${(audiencePercent! * 100).round()}%',
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 11,
                         fontWeight: FontWeight.w900,
-                        color: AppTheme.textSubColor(context),
+                        color: textColor.withValues(alpha: 0.9),
                       ),
                     ),
                   ],
@@ -342,6 +392,65 @@ class _AnswerButton extends StatelessWidget {
               ],
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Şık rozeti (A/B/C/D) ────────────────────────────────────────────────────
+
+class _OptionBadge extends StatelessWidget {
+  const _OptionBadge({
+    required this.index,
+    required this.stateActive,
+    required this.stateColor,
+  });
+
+  final int index;
+
+  /// Buton bir durumda (doğru/yanlış/seçili) ise rozet beyaza döner.
+  final bool stateActive;
+  final Color stateColor;
+
+  /// TRT tarzı çok-renkli şıklar: A kırmızı, B mavi, C yeşil, D amber.
+  static const _palette = [
+    Color(0xFFE94560),
+    Color(0xFF2563EB),
+    Color(0xFF10B981),
+    Color(0xFFF59E0B),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final letter = String.fromCharCode(65 + (index % 26));
+    final base = _palette[index % _palette.length];
+    final bg = stateActive ? Colors.white : base;
+    final fg = stateActive ? stateColor : Colors.white;
+
+    return Container(
+      width: 34,
+      height: 34,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: stateActive
+            ? null
+            : [
+                BoxShadow(
+                  color: base.withValues(alpha: 0.45),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+      ),
+      child: Text(
+        letter,
+        style: TextStyle(
+          color: fg,
+          fontWeight: FontWeight.w900,
+          fontSize: 17,
         ),
       ),
     );
@@ -459,10 +568,10 @@ class _CircularTimerState extends State<_CircularTimer>
     super.initState();
     _pulseController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 400),
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.3).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.elasticOut),
     );
 
     widget.animation.addListener(_handleAnimationTick);
