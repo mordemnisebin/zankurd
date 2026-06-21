@@ -193,4 +193,64 @@ const Map<String, ExplanationOverride> explanationOverrides = {
     tr: 'Kürt müziğinde "tembûr" telli bir çalgıdır. Özellikle dinî ve âşık '
         'müziğinde kullanılır ve derin tınısıyla bilinir.',
   ),
+  // ---- Siyaset / Paradigma (nötr, terim/tanım odaklı) ----
+  'offline_2290': ExplanationOverride(
+    ku: '"Jin, Jiyan, Azadî" dirûşmeke navdar e; tê de "jin" tê wateya "kadın". '
+        'Peyv bi "jiyan" (hayat) û "azadî" (özgürlük) re tê bikaranîn.',
+    tr: '"Jin, Jiyan, Azadî" bilinen bir slogandır; buradaki "jin" Kürtçede '
+        '"kadın" demektir. Söz "jiyan" (hayat) ve "azadî" (özgürlük) '
+        'sözcükleriyle birlikte kullanılır.',
+  ),
+  'offline_2291': ExplanationOverride(
+    ku: 'Peyva "azadî" di Kurmancî de tê wateya "özgürlük". Di gelek dirûşm û '
+        'stranan de wek nirxeke bingehîn derbas dibe.',
+    tr: '"Azadî" sözcüğü Kürtçede "özgürlük" anlamına gelir. Birçok slogan ve '
+        'şarkıda temel bir değer olarak geçer.',
+  ),
+  'offline_2292': ExplanationOverride(
+    ku: '"Jineolojî" wek "zanista jinê" tê pênasekirin; li dora zanîna jinê û '
+        'rexneya baviksalariyê (patriyarka) ava dibe.',
+    tr: '"Jineolojî" en kısa biçimde "kadın bilimi" olarak açıklanır; kadın '
+        'bilgisi ve patriarka eleştirisi etrafında kurulan bir kavramdır.',
+  ),
+  'offline_2298': ExplanationOverride(
+    ku: 'Peyva "hevaltî" tê wateya "yoldaşlık/arkadaşlık". Çanda hevaltiyê li '
+        'ser hevgirtin û piştevaniya hevdû ava dibe.',
+    tr: '"Hevaltî" sözcüğü "yoldaşlık/arkadaşlık" anlamına gelir. Hevaltî '
+        'kültürü dayanışma ve karşılıklı destek üzerine kuruludur.',
+  ),
+  'offline_2326': ExplanationOverride(
+    ku: 'Têgîna "konfederalîzma demokratîk" ji aliyê Abdullah Ocalan ve hatiye '
+        'pêşxistin. Ev têgîn li ser demokrasiya herêmî, parastina jinê û '
+        'ekolojiyê disekine.',
+    tr: '"Demokratik konfederalizm" kavramı Abdullah Öcalan tarafından '
+        'geliştirilmiştir. Yerel demokrasi, kadın özgürlüğü ve ekoloji '
+        'vurgusuyla tanımlanan bir kavramdır.',
+  ),
+  'offline_2327': ExplanationOverride(
+    ku: 'Wek alternatîfa "modernîteya kapîtalîst", têgîna "modernîteya '
+        'demokratîk" tê pêşniyarkirin. Ew rexneya navend-dewlet û pergala '
+        'kapîtalîst dike.',
+    tr: '"Kapitalist modernite"ye alternatif olarak önerilen kavram '
+        '"demokratik modernite"dir. Merkezî ulus-devlet ve kapitalist sisteme '
+        'yönelik bir eleştiri içerir.',
+  ),
+  'offline_2282': ExplanationOverride(
+    ku: 'Pergala "hevserokatî" nûnertiya wekhev a jin û mêr û birêvebirina '
+        'hevpar kurumsal dike. Armanc wekheviya zayendî ye di rêvebirinê de.',
+    tr: '"Eşbaşkanlık" sistemi kadın-erkek eşit temsili ve ortak yönetimi '
+        'kurumsallaştırmayı hedefler. Amaç, yönetimde cinsiyet eşitliğidir.',
+  ),
+  'offline_2334': ExplanationOverride(
+    ku: 'Daxwaza "xweseriya demokratîk" tê wateya ku civak karûbarên xwe yên '
+        'herêmî bi xwe birêve bibin. Li ser xwe-birêvebirina herêmî disekine.',
+    tr: '"Demokratik özerklik" talebi, toplulukların yerel işlerini '
+        'kendilerinin yönetmesini ifade eder. Yerel öz-yönetim vurgusu taşır.',
+  ),
+  'offline_2335': ExplanationOverride(
+    ku: 'Daxwaza "perwerdeya bi zimanê dayikê" dikeve kategoriya mafên çandî û '
+        'zimanî. Parastina zimanê kêmaniyan armanc dike.',
+    tr: '"Anadilde eğitim" talebi, kültürel ve dilsel haklar kategorisine '
+        'girer. Azınlık dillerinin korunmasını hedefler.',
+  ),
 };
