@@ -128,4 +128,69 @@ const Map<String, ExplanationOverride> explanationOverrides = {
     tr: 'Urmiye Gölü (Gola Urmiyê), İran\'da yer alır. İran\'ın en büyük '
         'gölüydü; son yıllarda büyük ölçüde kurumuştur.',
   ),
+  // ---- Edebiyat ----
+  'offline_0649': ExplanationOverride(
+    ku: 'Di edebiyata kurdî de "çîrok" çîroka kurt a pexşan e. Bûyer, karakter '
+        'û peyamekê di forma kurt de digihîne; kevneşopiya devkî ya kurdî '
+        'dewlemend e bi çîrokên gelêrî.',
+    tr: 'Kürt edebiyatında "çîrok" kısa öykü/hikâye demektir. Olay, karakter ve '
+        'bir mesajı kısa biçimde aktarır; Kürt sözlü geleneği halk '
+        'hikâyeleriyle zengindir.',
+  ),
+  'offline_0654': ExplanationOverride(
+    ku: 'Di edebiyata kurdî de "helbest" tê wateya şiîrê. Bi pîvan, kafiye û '
+        'hestan ve girêdayî ye; helbestvanên klasîk wek Melayê Cizîrî û Ehmedê '
+        'Xanî ev huner bilind kirine.',
+    tr: 'Kürt edebiyatında "helbest" şiir anlamına gelir. Ölçü, kafiye ve '
+        'duyguyla ilişkilidir; Melayê Cizîrî ve Ehmedê Xanî gibi klasik şairler '
+        'bu sanatı yükseltmiştir.',
+  ),
+  'offline_0660': ExplanationOverride(
+    ku: 'Di edebiyata kurdî de "destan" çîroka dirêj a qehremanî ye. Bûyerên '
+        'mezin, şer û lehengan vedibêje; "Memê Alan" yek ji destanên navdar ên '
+        'kurdî ye.',
+    tr: 'Kürt edebiyatında "destan", kahramanlık anlatan uzun bir anlatıdır. '
+        'Büyük olayları, savaşları ve kahramanları anlatır; "Memê Alan" ünlü '
+        'Kürt destanlarından biridir.',
+  ),
+  'offline_0669': ExplanationOverride(
+    ku: 'Di edebiyatê de "mecaz" wateya rast a peyvê nayê, wateyeke veguhêz '
+        'bikar tîne. Wek gotina "şêr" ji bo mirovê wêrek; ji bo hêz û bandorê '
+        'tê xebitandin.',
+    tr: 'Edebiyatta "mecaz", bir sözcüğün gerçek anlamını değil aktarılmış '
+        'anlamını kullanmaktır. "Aslan" sözünü yiğit biri için kullanmak gibi; '
+        'anlatıma güç ve etki katar.',
+  ),
+  'offline_0672': ExplanationOverride(
+    ku: 'Di helbestê de "kafiye" lihevhatina dengan e li dawiya rêzan. Awaz û '
+        'ahenga şiîrê xurt dike û di bîra mirovan de hêsantir dimîne.',
+    tr: 'Şiirde "kafiye", dize sonlarındaki ses uyumudur. Şiirin ahengini '
+        'güçlendirir ve akılda kalmasını kolaylaştırır.',
+  ),
+  // ---- Muzîk ----
+  'offline_0881': ExplanationOverride(
+    ku: 'Di muzîka kurdî de "stran" tê wateya kilam/stranê. Dikare evînî, '
+        'qehremanî an gelêrî be; dengbêj û hunermend wan ji nifşê re davêjin.',
+    tr: 'Kürt müziğinde "stran" şarkı/türkü demektir. Aşk, kahramanlık ya da '
+        'halk temalı olabilir; dengbêjler ve sanatçılar bunları kuşaklara '
+        'aktarır.',
+  ),
+  'offline_0885': ExplanationOverride(
+    ku: 'Di muzîka kurdî de "def" sazeke lêdanê ye (def/bendîr). Di govend û '
+        'şahiyan de ritmê dide û pirî caran bi erbaneyê re tê xebitandin.',
+    tr: 'Kürt müziğinde "def" vurmalı bir çalgıdır (bendir/tef). Halaylarda ve '
+        'şenliklerde ritmi verir, çoğu zaman erbane ile birlikte kullanılır.',
+  ),
+  'offline_0889': ExplanationOverride(
+    ku: 'Di muzîka kurdî de "erbane" sazeke lêdanê ya dor e (def a mezin). Di '
+        'dawet û dîlanan de ritma bingehîn peyda dike.',
+    tr: 'Kürt müziğinde "erbane", yuvarlak vurmalı bir çalgıdır (büyük tef). '
+        'Düğün ve halaylarda temel ritmi sağlar.',
+  ),
+  'offline_0892': ExplanationOverride(
+    ku: 'Di muzîka kurdî de "tembûr" sazeke bi têl e. Bi taybetî di muzîka olî '
+        'û aşiqî de tê bikaranîn û dengê wê yê kûr navdar e.',
+    tr: 'Kürt müziğinde "tembûr" telli bir çalgıdır. Özellikle dinî ve âşık '
+        'müziğinde kullanılır ve derin tınısıyla bilinir.',
+  ),
 };

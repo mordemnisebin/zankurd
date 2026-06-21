@@ -45,4 +45,13 @@ void main() {
       expect(entry.value.tr.trim(), isNotEmpty, reason: '${entry.key} tr boş');
     }
   });
+
+  test('en az 25 elle yazılmış açıklama mevcut', () {
+    expect(explanationOverrides.length, greaterThanOrEqualTo(25));
+  });
+
+  test('Edebiyat/Muzîk partisi eklendi (helbest, tembûr)', () {
+    expect(explanationOverrides['offline_0654']?.tr, contains('şiir'));
+    expect(explanationOverrides['offline_0892']?.tr, contains('telli'));
+  });
 }
