@@ -171,7 +171,7 @@ class _Podium extends StatelessWidget {
           Text(
             isKu ? 'Sê Pêşderian' : 'İlk 3',
             style: TextStyle(
-              color: AppTheme.textMutedColor(context),
+              color: AppTheme.textSub,
               fontWeight: FontWeight.w700,
               fontSize: 12,
             ),
@@ -180,12 +180,9 @@ class _Podium extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              if (second != null)
-                Expanded(child: _PodiumSlot(entry: second, height: 80)),
-              if (first != null)
-                Expanded(child: _PodiumSlot(entry: first, height: 110)),
-              if (third != null)
-                Expanded(child: _PodiumSlot(entry: third, height: 60)),
+              if (second != null) Expanded(child: _PodiumSlot(entry: second)),
+              if (first != null) Expanded(child: _PodiumSlot(entry: first)),
+              if (third != null) Expanded(child: _PodiumSlot(entry: third)),
             ],
           ),
         ],
@@ -195,10 +192,9 @@ class _Podium extends StatelessWidget {
 }
 
 class _PodiumSlot extends StatelessWidget {
-  const _PodiumSlot({required this.entry, required this.height});
+  const _PodiumSlot({required this.entry});
 
   final LeaderboardEntry entry;
-  final double height;
 
   static const _colors = {
     1: Color(0xFFFFB800), // Altın
@@ -214,18 +210,10 @@ class _PodiumSlot extends StatelessWidget {
           color: Color(0x22FFB800),
           shape: BoxShape.circle,
         ),
-        child: Icon(
-          Icons.emoji_events,
-          color: Color(0xFFFFB800),
-          size: 26,
-        ),
+        child: Icon(Icons.emoji_events, color: Color(0xFFFFB800), size: 26),
       );
     }
-    return Icon(
-      Icons.military_tech,
-      color: color,
-      size: 26,
-    );
+    return Icon(Icons.military_tech, color: color, size: 26);
   }
 
   @override
@@ -273,7 +261,7 @@ class _PodiumSlot extends StatelessWidget {
               Text(
                 entry.displayName,
                 style: TextStyle(
-                  color: AppTheme.textPrimaryColor(context),
+                  color: AppTheme.textPrimary,
                   fontWeight: FontWeight.w900,
                   fontSize: 12.5,
                 ),
@@ -290,25 +278,6 @@ class _PodiumSlot extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-        const SizedBox(height: 8),
-        ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          child: Container(
-            height: height,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  color.withValues(alpha: 0.45),
-                  color.withValues(alpha: 0.05),
-                ],
-              ),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-              border: Border.all(color: color.withValues(alpha: 0.32), width: 1.5),
-            ),
           ),
         ),
       ],
@@ -347,7 +316,10 @@ class _RankRow extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppTheme.surfaceHiColor(context),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppTheme.borderColor(context), width: 1),
+              border: Border.all(
+                color: AppTheme.borderColor(context),
+                width: 1,
+              ),
             ),
             alignment: Alignment.center,
             child: Text(

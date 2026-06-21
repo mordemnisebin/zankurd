@@ -1,6 +1,6 @@
 # ZanKurd Release Readiness
 
-Last updated: 2026-06-16
+Last updated: 2026-06-21
 
 ## Current Release Target
 
@@ -8,8 +8,7 @@ Last updated: 2026-06-16
 - Android package: `com.zankurd.app`
 - Flutter version: `3.44.1`
 - Dart version: `3.12.1`
-- App version: `1.4.0+5` (bumped from `1.3.0+4`; new user-facing coin jokers
-  and category-mastery features warrant a minor version bump)
+- App version: `1.5.0+6`
 - Play artifact: final AAB not regenerated after the latest online-room,
   real-image, coin-joker, and mastery changes.
 - Upload copy: `release_packages/zankurd-playstore-release.aab` is a previous
@@ -54,25 +53,41 @@ only after the current source verification passes.
 
 `jarsigner` reports that the upload certificate is self-signed and has no timestamp. This is normal for Android upload keys; Play App Signing validates the uploaded AAB and manages distribution signing.
 
-## Current Source Verification: 2026-06-17
+## Current Source Verification: 2026-06-21
 
 After the coin-joker system (`spend_coins` RPC), category-mastery system
 (`MasteryStore`), the profile tab-refresh fix (`refreshSignal`), real-image
-import, and release UI polish:
+import, release UI polish, web runtime fixes, mobile OAuth redirect fix, and
+tablet release-device audit:
 
 - `dart analyze`: passed, no issues found
-- `flutter test`: passed, 140/140 tests
-- `flutter build web --release`: passed (previous run)
+- `flutter test`: passed, 225/225 tests
+- `flutter build web --release`: passed
+- `flutter build apk --release`: passed; test APK path
+  `C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-release.apk`
+  updated at 2026-06-21 19:01:35
 - Local Playwright web audit: passed end-to-end — onboarding, guest auth,
-  home/categories, quiz with jokers + coin header, result screen, profile
-  mastery section, and leaderboard all verified with no console errors
-- Pending before final AAB: bump applied to `1.4.0+5`; regenerate signed
+  profile-name gate, home, categories, leaderboard, and profile all verified
+  with no runtime console errors
+- Pending before final AAB: bump applied to `1.5.0+6`; regenerate signed
   appbundle from the ASCII build path and re-run `jarsigner -verify`
 - Latest polish audit covered local room-code validation, leaderboard podium,
-  landscape quiz layout, and centered high-quality onboarding logo rendering.
+  landscape quiz layout, centered high-quality onboarding logo rendering,
+  web-safe home header runtime, web-safe sync connectivity handling, and
+  Supabase question queries that avoid missing optional localized columns.
+- Tablet release APK audit covered onboarding logo placement, auth contrast,
+  Google OAuth deep-link return, online room creation, and live leaderboard
+  loading. The final leaderboard text-contrast fix and landscape quiz layout
+  were verified on the tablet after reinstalling the release APK.
+- Supabase Auth redirect configuration is set for mobile:
+  `site_url = com.zankurd.app://login-callback/` and allow-list contains the
+  same deep link. Google OAuth returned from Chrome into the app on the tablet.
 - Live Supabase multiplayer check: passed. The check creates two anonymous
   users, creates a room, joins by code, starts the game, submits answers, and
   verifies leaderboard visibility.
+- Live leaderboard cleanup: passed. Test/demo profiles and associated rooms,
+  room players, answers, coin rows, profiles, and auth users were removed after
+  verification.
 - Final AAB: not regenerated yet
 
 ## Verification Commands

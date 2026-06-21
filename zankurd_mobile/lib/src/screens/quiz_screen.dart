@@ -101,7 +101,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _isKu = context.langProvider.isKu;
     _questions = List.of(widget.questions);
     _loadCoinBalance();
-    
+
     _timerController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 15),
@@ -299,11 +299,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                           child: ListView(
                             padding: const EdgeInsets.fromLTRB(18, 8, 10, 18),
                             children: [
-                              _buildScoreHeader(),
+                              _buildQuestionSwitcher(context),
                               const SizedBox(height: 12),
                               _buildProgressBar(context),
                               const SizedBox(height: 12),
-                              _buildQuestionSwitcher(context),
+                              _buildScoreHeader(),
                             ],
                           ),
                         ),
@@ -385,7 +385,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildActionControls() {
-    final bool showRatingBar = widget.practice &&
+    final bool showRatingBar =
+        widget.practice &&
         answered &&
         selectedAnswer == question.correctAnswer &&
         !completing;
@@ -518,10 +519,15 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     DailyMissionStore.load().then((store) {
       store.reportWildcardUsed().then((completed) {
         if (completed != null && mounted) {
-          widget.repository.addCoins(completed.coinReward, 'daily_mission_reward');
+          widget.repository.addCoins(
+            completed.coinReward,
+            'daily_mission_reward',
+          );
           XPStore.load().then((xpStore) {
             xpStore.addXP(100).then((leveledUp) {
-              widget.repository.updateProfileXP(xpStore.totalXP).catchError((_) {
+              widget.repository.updateProfileXP(xpStore.totalXP).catchError((
+                _,
+              ) {
                 SyncManager.instance.queueXP(xpStore.totalXP);
               });
               if (mounted) {
@@ -687,6 +693,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   Widget _buildQuestionPanel(BuildContext context) {
     final promptText = question.promptText;
+    final size = MediaQuery.sizeOf(context);
+    final compactLandscape = size.width >= 700 && size.width > size.height;
     return AppPanel(
       color: AppTheme.surfaceHiColor(context),
       child: Column(
@@ -723,47 +731,49 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             ],
           ),
           const SizedBox(height: 14),
-          if (question.hasImage) ...[
-            _QuestionImage(url: question.imageUrl!),
-            const SizedBox(height: 14),
-          ],
-          Text(
-            promptText,
-            style: TextStyle(
-              color: AppTheme.textPrimaryColor(context),
-              fontSize: 24,
-              fontWeight: FontWeight.w900,
-              height: 1.16,
-            ),
-          ),
-          const SizedBox(height: 18),
-          for (final (index, answer) in question.displayAnswers.indexed)
-            AnimatedOpacity(
-              duration: const Duration(milliseconds: 250),
-              opacity: hiddenAnswers.contains(answer) ? 0.25 : 1,
-              child: IgnorePointer(
-                ignoring: hiddenAnswers.contains(answer),
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: _AnswerButton(
-                    index: index,
-                    answer: answer,
-                    selected: selectedAnswer == answer,
-                    correct: answered && answer == question.correctAnswer,
-                    disabled: answered || answer == _firstAttemptAnswer,
-                    firstAttemptWrong:
-                        !answered && answer == _firstAttemptAnswer,
-                    audiencePercent: _audiencePoll?[answer],
-                    onTap: () => _answer(answer),
+          if (compactLandscape && question.hasImage)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 164,
+                  child: _QuestionImage(url: question.imageUrl!),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _QuestionTextAndAnswers(
+                    promptText: promptText,
+                    promptFontSize: 20,
+                    question: question,
+                    selectedAnswer: selectedAnswer,
+                    answered: answered,
+                    hiddenAnswers: hiddenAnswers,
+                    firstAttemptAnswer: _firstAttemptAnswer,
+                    audiencePoll: _audiencePoll,
+                    showExplanation: _showExplanation,
+                    onAnswer: _answer,
                   ),
                 ),
-              ),
+              ],
+            )
+          else ...[
+            if (question.hasImage) ...[
+              _QuestionImage(url: question.imageUrl!),
+              const SizedBox(height: 14),
+            ],
+            _QuestionTextAndAnswers(
+              promptText: promptText,
+              promptFontSize: compactLandscape ? 20 : 24,
+              question: question,
+              selectedAnswer: selectedAnswer,
+              answered: answered,
+              hiddenAnswers: hiddenAnswers,
+              firstAttemptAnswer: _firstAttemptAnswer,
+              audiencePoll: _audiencePoll,
+              showExplanation: _showExplanation,
+              onAnswer: _answer,
             ),
-          _ExplanationBox(
-            question: question,
-            isKu: context.isKu,
-            visible: _showExplanation,
-          ),
+          ],
         ],
       ),
     );
@@ -1035,4 +1045,3 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     }
   }
 }
-

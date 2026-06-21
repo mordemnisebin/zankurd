@@ -4,13 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SoundProvider extends ChangeNotifier {
   // Sync default constructor — MultiProvider fallback ve testler için.
-  SoundProvider() : _enabled = true, _player = null;
+  SoundProvider() : _enabled = true, _playerFactory = null;
 
-  SoundProvider._({required this._enabled, this._player});
+  SoundProvider._({required this._enabled, this._playerFactory});
 
   static const _enabledKey = 'zankurd.sound.enabled';
 
-  final AudioPlayer? _player;
+  AudioPlayer? _player;
+  final AudioPlayer Function()? _playerFactory;
   bool _enabled;
 
   bool get enabled => _enabled;
@@ -20,7 +21,7 @@ class SoundProvider extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     return SoundProvider._(
       enabled: prefs.getBool(_enabledKey) ?? true,
-      player: player,
+      playerFactory: () => player ?? AudioPlayer(),
     );
   }
 
@@ -40,9 +41,14 @@ class SoundProvider extends ChangeNotifier {
 
   Future<void> _play(String asset) async {
     if (!_enabled) return;
-    if (_player == null) return;
     try {
-      await _player.play(AssetSource(asset));
+      final playerFactory = _playerFactory;
+      if (_player == null && playerFactory != null) {
+        _player = playerFactory();
+      }
+      if (_player != null) {
+        await _player!.play(AssetSource(asset));
+      }
     } catch (_) {
       // Platform ses desteği yoksa veya dosya eksikse sessizce geç.
     }

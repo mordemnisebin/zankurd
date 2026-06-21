@@ -24,6 +24,7 @@ import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/main.dart';
@@ -107,6 +108,22 @@ class _EmptyLeaderboardRepository extends MockZanKurdRepository {
   }
 }
 
+class _SingleWinnerRepository extends MockZanKurdRepository {
+  @override
+  Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50}) async {
+    return const [
+      LeaderboardEntry(
+        rank: 1,
+        playerId: 'winner',
+        displayName: 'Bawer',
+        totalScore: 110,
+        bestStreak: 4,
+        roomsPlayed: 1,
+      ),
+    ];
+  }
+}
+
 class _DeleteTrackingRepository extends MockZanKurdRepository {
   _DeleteTrackingRepository({this.shouldFail = false});
 
@@ -170,9 +187,7 @@ Widget _testShell({
       ChangeNotifierProvider<ThemeProvider>(
         create: (_) => themeProvider ?? ThemeProvider(),
       ),
-      ChangeNotifierProvider<SoundProvider>(
-        create: (_) => SoundProvider(),
-      ),
+      ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
     ],
     child: Consumer<ThemeProvider>(
       builder: (context, theme, _) => MaterialApp(
@@ -233,6 +248,64 @@ void main() {
     expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
     expect(find.text('Misafir olarak devam et'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('auth alternative buttons stay readable on dark background', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: const SignInScreen(),
+        authProvider: _GateAuthProvider(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final googleButton = tester.widget<OutlinedButton>(
+      find.ancestor(
+        of: find.text('Google ile giriş yap'),
+        matching: find.byType(OutlinedButton),
+      ),
+    );
+    final guestButton = tester.widget<OutlinedButton>(
+      find.ancestor(
+        of: find.text('Misafir olarak devam et'),
+        matching: find.byType(OutlinedButton),
+      ),
+    );
+
+    expect(
+      googleButton.style?.foregroundColor?.resolve({}),
+      equals(Colors.white),
+    );
+    expect(
+      guestButton.style?.foregroundColor?.resolve({}),
+      equals(Colors.white),
+    );
+  });
+
+  testWidgets('auth form text stays readable on the dark auth background', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: const SignInScreen(),
+        authProvider: _GateAuthProvider(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final title = tester.widget<Text>(find.text('ZanKurd\'a Hoş Geldin'));
+    final emailLabel = tester.widget<Text>(find.text('E-posta adresi'));
+
+    expect(title.style?.color?.computeLuminance(), greaterThan(0.75));
+    expect(emailLabel.style?.color?.computeLuminance(), greaterThan(0.75));
   });
 
   testWidgets('guest sign in is reachable in the first mobile auth viewport', (
@@ -393,7 +466,7 @@ void main() {
 
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
 
     theme.toggleDarkLight();
@@ -401,7 +474,7 @@ void main() {
 
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
     final home = tester.widget<Container>(
       find
@@ -413,7 +486,7 @@ void main() {
     );
     final decoration = home.decoration as BoxDecoration;
     final gradient = decoration.gradient as LinearGradient;
-    expect(gradient.colors.first, isNot(AppTheme.bg));
+    expect(gradient.colors.first, AppTheme.bg);
   });
 
   testWidgets('auth requires player name before home', (tester) async {
@@ -670,6 +743,40 @@ void main() {
     expect(find.text('Doğru cevap'), findsOneWidget);
   });
 
+  testWidgets('visual quiz keeps the first answer visible in landscape', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    const question = QuizQuestion(
+      id: 'visual-landscape-fit',
+      category: 'Çand',
+      prompt: 'Görseldeki etkinlik hangi kültürel kategoriyle ilgilidir?',
+      answers: ['Coğrafya', 'Ziman', 'Müzik', 'Edebiyat'],
+      correctAnswer: 'Müzik',
+      explanation: 'Govend kültürel bir dans ve müzik etkinliğidir.',
+      type: QuestionType.visual,
+      imageUrl: 'asset://assets/zankurd.png',
+    );
+
+    await tester.pumpWidget(
+      _testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: const [question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final firstAnswer = find.text(question.displayAnswers.first).first;
+    expect(firstAnswer, findsOneWidget);
+    expect(tester.getBottomLeft(firstAnswer).dy, lessThan(390));
+  });
+
   testWidgets('leaderboard screen remains usable in landscape', (tester) async {
     await tester.binding.setSurfaceSize(const Size(844, 390));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -700,6 +807,43 @@ void main() {
     expect(find.text('#1'), findsOneWidget);
     expect(find.text('#2'), findsOneWidget);
     expect(find.text('#3'), findsOneWidget);
+  });
+
+  testWidgets('leaderboard podium text stays readable on dark panel', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: LeaderboardScreen(repository: _SingleWinnerRepository()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final nameText = tester.widget<Text>(find.text('Bawer'));
+
+    expect(nameText.style?.color, equals(AppTheme.textPrimary));
+  });
+
+  testWidgets('leaderboard single winner does not stretch across landscape', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: LeaderboardScreen(repository: _SingleWinnerRepository()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final slotRect = tester.getRect(
+      find.byKey(const ValueKey('podium-slot-1')),
+    );
+    expect(slotRect.width, lessThan(260));
   });
 
   testWidgets('profile screen remains usable in landscape', (tester) async {
@@ -783,9 +927,7 @@ void main() {
           ChangeNotifierProvider<LanguageProvider>(
             create: (_) => _turkishLang(),
           ),
-          ChangeNotifierProvider<SoundProvider>(
-            create: (_) => SoundProvider(),
-          ),
+          ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
         ],
         child: MaterialApp(
           theme: AppTheme.dark(),
@@ -927,9 +1069,7 @@ void main() {
           ChangeNotifierProvider<LanguageProvider>(
             create: (_) => _turkishLang(),
           ),
-          ChangeNotifierProvider<SoundProvider>(
-            create: (_) => SoundProvider(),
-          ),
+          ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
         ],
         child: MaterialApp(
           theme: AppTheme.dark(),
