@@ -7,26 +7,35 @@ Web prototipi `../zankurd` altında durur; Play Console'a yüklenecek paket bu p
 ## Ürün Kapsamı
 
 - Misafir/anonim giriş ve profil adı akışı
-- Kurmanci/Türkçe arayüz geçişi
+- Kurmanci/Türkçe arayüz geçişi (çift dilli ARB dosyaları)
+- Aydınlık/Karanlık tema geçişi
 - Kategori ve seviye bazlı quiz
 - Günlük yarışma
 - Günlük çark ve coin ödülleri
 - Favori sorular, yanlışlardan tekrar ve soru bildirme
 - Online oda, canlı oyuncu listesi ve liderlik tablosu
+- Rozet & Streak sistemi (30 gün, 500/1000 soru, mükemmel oyun, hız)
+- SM-2 aralıklı tekrar algoritması ile yanlış soru takibi
+- Günlük push hatırlatıcı bildirimleri (saat seçimi ile)
+- Anonim kullanım analitikleri (Firebase Analytics)
+- Glassmorphism efektli modern UI bileşenleri
 - Uygulama içinden hesap silme isteği
 - Firebase Crashlytics ile çökme raporlama
+- Offline XP senkronizasyonu
 
 ## Mimari
 
-- `lib/main.dart`: Firebase/Crashlytics ve Supabase başlangıcı, repository seçimi
-- `lib/src/data/`: `ZanKurdRepository` soyutlaması, Supabase ve mock uygulamaları
-- `lib/src/screens/`: Ana ekran, quiz, liderlik, profil, ayarlar ve oda akışları
-- `lib/src/widgets/`: Ortak panel, buton, giriş, hata ve yükleme bileşenleri
-- `lib/src/theme/`: Material 3 tema ve renk sistemi
-- `lib/src/l10n/`: Kurmanci/Türkçe dil yardımcıları
-- `supabase/`: Play sürümü için gereken SQL/RPC/policy dosyaları
+Detaylı mimari belgeler için [ARCHITECTURE.md](ARCHITECTURE.md) dosyasına bakınız.
 
-Supabase canlı backend için kullanılır. Supabase yapılandırması yoksa uygulama mock/offline repository ile açılır. Firebase bu sürümde Crashlytics ve platform başlangıcı için kullanılır.
+- `lib/main.dart`: Firebase/Crashlytics, Analytics ve Supabase başlangıcı
+- `lib/src/data/`: Repository, SM-2, Streak, Badge, XP ve Sync veri katmanı
+- `lib/src/screens/`: Ana ekran, quiz, liderlik, profil, ayarlar ve oda akışları
+- `lib/src/widgets/`: Ortak panel, badge widget, glass panel, chart bileşenleri
+- `lib/src/theme/`: Material 3 tema, glassmorphism ve renk sistemi
+- `lib/src/l10n/`: Kurmanci/Türkçe çeviri dosyaları (ARB) ve dil yardımcıları
+- `lib/src/services/`: Analitik, bildirim ve rozet servisleri
+- `lib/src/providers/`: Auth, Theme, Language ve Sound state management
+- `supabase/`: Play sürümü için gereken SQL/RPC/policy dosyaları
 
 ## Geliştirme
 
