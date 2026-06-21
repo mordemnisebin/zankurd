@@ -143,3 +143,7 @@ dependency_overrides:
   # path_provider_foundation >= 2.6.0 introduces native asset FFI bindings
   # (ffi_bindings.g.dart) that reference ObjC types and fail to compile on Windows.
   path_provider_foundation: '>=0.0.1 <2.6.0'
+  # path_provider_android >= 2.3.0 migrated to package:jni, whose CMake native
+  # build (libdartjni.so) fails when the project path contains spaces / non-ASCII
+  # (Turkish İ) on Windows. Pin to the pre-jni platform-channel implementation.
+  path_provider_android: '>=2.2.0 <2.3.0'
