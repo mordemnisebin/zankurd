@@ -17,6 +17,8 @@ import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import '../data/daily_mission_store.dart';
 import '../data/xp_store.dart';
+import '../services/review_service.dart';
+import '../utils/result_sharer.dart';
 import '../widgets/mission_toast.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
@@ -143,6 +145,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     } catch (_) {
       SyncManager.instance.queueXP(xpStore.totalXP);
     }
+
+    // Doğru anda (yeterli quiz + iyi skor) bir kez mağaza değerlendirmesi iste.
+    final accuracyPercent = totalQuestions == 0
+        ? 0
+        : ((correctCount / totalQuestions) * 100).round();
+    final reviewService = await ReviewService.load();
+    await reviewService.recordQuizCompletion(accuracyPercent: accuracyPercent);
 
     if (mounted) {
       setState(() {
@@ -602,6 +611,29 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       style: const TextStyle(color: AppTheme.textMuted),
                     ),
                     const SizedBox(height: 14),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.icon(
+                        style: FilledButton.styleFrom(
+                          backgroundColor: AppTheme.gold,
+                          foregroundColor: Colors.black87,
+                        ),
+                        onPressed: () => ResultSharer.share(
+                          context,
+                          isKu: context.isKu,
+                          score: score,
+                          correctCount: correctCount,
+                          totalQuestions: totalQuestions,
+                          bestStreak: bestStreak,
+                          category: room.category,
+                        ),
+                        icon: const Icon(Icons.share_rounded),
+                        label: Text(
+                          context.s('Encamê Parve Bike', 'Sonucu Paylaş'),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton.icon(
