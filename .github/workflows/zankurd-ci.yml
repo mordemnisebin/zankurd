@@ -1,0 +1,42 @@
+name: ZanKurd CI
+
+on:
+  pull_request:
+    paths:
+      - 'zankurd/**'
+      - '.github/workflows/zankurd-ci.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'zankurd/**'
+      - '.github/workflows/zankurd-ci.yml'
+
+jobs:
+  web:
+    name: Lint and build web app
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: zankurd
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: zankurd/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
