@@ -67,3 +67,74 @@ body {
 ::selection {
   background: rgba(23, 122, 86, 0.22);
 }
+
+.hero-product-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 690px;
+  margin-top: 18px;
+}
+
+.hero-product-strip div,
+.schema-list span,
+.csv-template {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+}
+
+.hero-product-strip div {
+  display: grid;
+  gap: 5px;
+  padding: 14px;
+}
+
+.hero-product-strip span,
+.schema-list small,
+.csv-template {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.hero-product-strip strong {
+  color: var(--brand);
+  font-size: 15px;
+}
+
+.schema-list {
+  display: grid;
+  gap: 8px;
+}
+
+.schema-list span {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 8px;
+  align-items: center;
+  padding: 10px;
+}
+
+.schema-list svg {
+  grid-row: span 2;
+  color: var(--brand);
+}
+
+.csv-template {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.csv-template code {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .hero-product-strip {
+    grid-template-columns: 1fr;
+  }
+}
