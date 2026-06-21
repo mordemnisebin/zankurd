@@ -666,12 +666,38 @@ class _ExplanationBox extends StatelessWidget {
                               fontWeight: FontWeight.w900,
                             ),
                           ),
+                          const SizedBox(height: 10),
+                          Divider(
+                            height: 1,
+                            thickness: 1,
+                            color: AppTheme.borderColor(context),
+                          ),
                           const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.menu_book_outlined,
+                                size: 14,
+                                color: AppTheme.textSubColor(context),
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                isKu ? 'Şîrove' : 'Açıklama',
+                                style: TextStyle(
+                                  color: AppTheme.textSubColor(context),
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 11,
+                                  letterSpacing: 0.3,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
                           Text(
                             question.getLocalizedExplanation(isKu),
                             style: TextStyle(
                               color: AppTheme.textSubColor(context),
-                              height: 1.35,
+                              height: 1.4,
                             ),
                           ),
                         ],
