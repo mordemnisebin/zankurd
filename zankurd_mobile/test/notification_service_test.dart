@@ -14,7 +14,7 @@ void main() {
       expect(service.enabled, false);
     });
 
-    test('varsayılan saat 19:00'dır', () async {
+    test("varsayılan saat 19:00'dır", () async {
       final service = await NotificationService.load();
       expect(service.hour, 19);
       expect(service.minute, 0);
