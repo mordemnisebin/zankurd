@@ -62,6 +62,53 @@ void main() {
     }
   });
 
+  test('question text fields are trimmed and non-empty', () {
+    for (final question in offlineQuestionBank) {
+      expect(
+        question.prompt.trim(),
+        isNotEmpty,
+        reason: '${question.id}: prompt must not be empty',
+      );
+      expect(
+        question.prompt,
+        question.prompt.trim(),
+        reason: '${question.id}: prompt has leading/trailing whitespace',
+      );
+      expect(
+        question.correctAnswer.trim(),
+        isNotEmpty,
+        reason: '${question.id}: correct answer must not be empty',
+      );
+      expect(
+        question.correctAnswer,
+        question.correctAnswer.trim(),
+        reason: '${question.id}: correct answer has extra whitespace',
+      );
+      expect(
+        question.explanation.trim(),
+        isNotEmpty,
+        reason: '${question.id}: explanation must not be empty',
+      );
+      expect(
+        question.explanation,
+        question.explanation.trim(),
+        reason: '${question.id}: explanation has leading/trailing whitespace',
+      );
+      for (final answer in question.answers) {
+        expect(
+          answer.trim(),
+          isNotEmpty,
+          reason: '${question.id}: answer option must not be empty',
+        );
+        expect(
+          answer,
+          answer.trim(),
+          reason: '${question.id}: answer option has extra whitespace',
+        );
+      }
+    }
+  });
+
   test('true/false questions use Rast/Şaş options', () {
     for (final question in offlineQuestionBank.where(
       (q) => q.type == QuestionType.trueFalse,
@@ -112,6 +159,36 @@ void main() {
     final easy = pool.where((q) => q.difficulty <= 1).length;
     return pool.length >= ladderMaturityThreshold && easy >= 10;
   }
+
+  test('every category has a stable minimum pool size', () {
+    final repository = MockZanKurdRepository();
+    for (final category in repository.categories) {
+      final count = offlineQuestionBank
+          .where((q) => q.category == category)
+          .length;
+      expect(
+        count,
+        greaterThanOrEqualTo(40),
+        reason: '$category should keep at least 40 questions, has $count',
+      );
+    }
+  });
+
+  test('mature categories cover all difficulty tiers (1..5)', () {
+    final repository = MockZanKurdRepository();
+    for (final category in repository.categories.where(isMature)) {
+      final difficulties = offlineQuestionBank
+          .where((q) => q.category == category)
+          .map((q) => q.difficulty)
+          .toSet();
+      expect(
+        difficulties,
+        containsAll([1, 2, 3, 4, 5]),
+        reason:
+            '$category mature category should include all tiers, has $difficulties',
+      );
+    }
+  });
 
   test('each level band has enough prompt-distinct questions', () {
     final repository = MockZanKurdRepository();

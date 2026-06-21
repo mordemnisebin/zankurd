@@ -145,7 +145,7 @@ flutter build windows          # Windows desktop (release)
 
 **Code Quality:**
 ```bash
-flutter analyze                # Static analysis
+dart analyze                   # Static analysis
 dart format lib/ test/         # Auto-format Dart code
 ```
 
@@ -186,7 +186,9 @@ flutter run \
 
 Or set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` env vars (fallback).
 
-Without these, the app defaults to `MockZanKurdRepository` (offline mode with hardcoded test data).
+Uygulama ordinary build'lerde varsayılan publishable key ile production Supabase
+projesine bağlanır. Override verirken yalnızca istemci-güvenli publishable/anon
+anahtar kullanın; `service_role`/`sb_secret_*` anahtarlarını istemciye koymayın.
 
 ### Firebase Configuration
 
@@ -255,15 +257,14 @@ LocalDataService.applyQuizResult(...)      // Update on quiz completion
 
 ## Release State & Important Notes
 
-**Current Release:** v1.3.0+4 (tagged v1.3.0-internal.1 on 2026-06-12)
-- The build is validated and ready for Play Console submission
-- Only user-facing Play Console configuration steps remain
+**Current Release durumu:** Tek doğru kaynak `zankurd_mobile/docs/release_readiness.md`
+dosyasıdır. Sürüm/artefact bilgisini her zaman bu dosyadan takip edin.
 
 **Known Issues:**
 - Windows Profile-tab navigation can hang on some debug builds (pre-existing, not related to fonts or recent changes — don't investigate without explicit request)
 
 **Testing Before Release:**
-- Run `flutter analyze` to catch linting issues
+- Run `dart analyze` to catch linting issues
 - Run `flutter test` to validate question bank and data structures
 - Test on both Android emulator and real device before building APK
 
@@ -304,7 +305,7 @@ test/               # Unit and widget tests
 | Build APK | `flutter build apk` (after setting TMP/TEMP) |
 | Run all tests | `flutter test` |
 | Run one test file | `flutter test test/streak_store_test.dart` |
-| Lint Dart | `flutter analyze` |
+| Lint Dart | `dart analyze` |
 | Format Dart | `dart format lib/ test/` |
 | Check pub dependencies | `flutter pub outdated` |
 | Upgrade dependencies | `flutter pub upgrade` |

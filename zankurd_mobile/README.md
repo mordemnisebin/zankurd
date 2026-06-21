@@ -64,7 +64,7 @@ flutter run `
 ## Doğrulama
 
 ```powershell
-flutter analyze
+dart analyze
 flutter test
 ```
 
@@ -105,6 +105,17 @@ Play Console'a yüklemeden önce şu dosyaları kontrol edin:
 - `docs/release_notes_internal.md`
 
 Google Play'de gizlilik politikası için `docs/privacy_policy.html` dosyası herkese açık bir HTTPS URL'de yayınlanmalı ve aynı URL Play Console'daki Privacy Policy alanına girilmelidir.
+
+Ek kalite ve yayın kontrolü için:
+
+- `docs/quality_release_checklist.md`
+- `docs/question_bank_quality_standard.md`
+
+## Güvenlik Notu (Supabase Anahtarları)
+
+- Uygulamada yalnızca `publishable/anon` istemci anahtarı kullanılmalıdır.
+- `service_role` veya `sb_secret_*` anahtarları **asla** mobil istemciye verilmemelidir.
+- `SUPABASE_ANON_KEY` override edilirken istemci-güvenli anahtar kullanın.
 
 ## Canlı Backend SQL Sırası
 

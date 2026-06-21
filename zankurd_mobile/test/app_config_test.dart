@@ -10,4 +10,15 @@ void main() {
     );
     expect(AppConfig.hasSupabaseConfig, isTrue);
   });
+
+  test('accepts only safe client Supabase keys', () {
+    expect(AppConfig.isSafeClientSupabaseKey('sb_publishable_abc123'), isTrue);
+    expect(AppConfig.isSafeClientSupabaseKey(' SB_PUBLISHABLE_XYZ '), isTrue);
+    expect(AppConfig.isSafeClientSupabaseKey('sb_secret_prod_key'), isFalse);
+    expect(
+      AppConfig.isSafeClientSupabaseKey('eyJ...service_role...token'),
+      isFalse,
+    );
+    expect(AppConfig.isSafeClientSupabaseKey(''), isFalse);
+  });
 }
