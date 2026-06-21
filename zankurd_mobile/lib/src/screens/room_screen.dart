@@ -82,9 +82,9 @@ class _RoomScreenState extends State<RoomScreen> {
                 children: [
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_rounded,
-                      color: AppTheme.textSub,
+                      color: AppTheme.textSubColor(context),
                     ),
                   ),
                   const Spacer(),
@@ -100,13 +100,13 @@ class _RoomScreenState extends State<RoomScreen> {
                         ),
                       );
                     },
-                    icon: const Icon(Icons.copy_rounded, size: 16),
+                    icon: Icon(Icons.copy_rounded, size: 16),
                     label: Text(
                       room.code,
-                      style: const TextStyle(fontWeight: FontWeight.w900),
+                      style: TextStyle(fontWeight: FontWeight.w900),
                     ),
                     style: TextButton.styleFrom(
-                      foregroundColor: AppTheme.textSub,
+                      foregroundColor: AppTheme.textSubColor(context),
                     ),
                   ),
                 ],
@@ -133,7 +133,7 @@ class _RoomScreenState extends State<RoomScreen> {
                     const SizedBox(height: 6),
                     Text(
                       room.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
                         fontSize: 26,
@@ -162,16 +162,16 @@ class _RoomScreenState extends State<RoomScreen> {
                   children: [
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.group_outlined,
-                          color: AppTheme.textSub,
+                          color: AppTheme.textSubColor(context),
                           size: 20,
                         ),
                         const SizedBox(width: 8),
                         Text(
                           ku ? 'Lîstikvan' : 'Oyuncular',
-                          style: const TextStyle(
-                            color: AppTheme.textPrimary,
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w900,
                             fontSize: 17,
                           ),
@@ -179,8 +179,8 @@ class _RoomScreenState extends State<RoomScreen> {
                         const Spacer(),
                         Text(
                           '${sorted.length}',
-                          style: const TextStyle(
-                            color: AppTheme.textMuted,
+                          style: TextStyle(
+                            color: AppTheme.textMutedColor(context),
                             fontSize: 13,
                           ),
                         ),
@@ -208,8 +208,8 @@ class _RoomScreenState extends State<RoomScreen> {
                         },
                         title: Text(
                           ku ? 'Amade Me' : 'Hazırım',
-                          style: const TextStyle(
-                            color: AppTheme.textPrimary,
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w800,
                           ),
                         ),
@@ -217,8 +217,8 @@ class _RoomScreenState extends State<RoomScreen> {
                           ku
                               ? 'Rewşa te ji lîstikvanên din re ciyê-rast nîşan dide.'
                               : 'Odadaki durumun diğer oyunculara canlı yansır.',
-                          style: const TextStyle(
-                            color: AppTheme.textMuted,
+                          style: TextStyle(
+                            color: AppTheme.textMutedColor(context),
                             fontSize: 12,
                           ),
                         ),
@@ -226,10 +226,24 @@ class _RoomScreenState extends State<RoomScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
+                    if (room.players.length < 2) ...[
+                      Text(
+                        ku
+                            ? 'Ji bo destpêkirina pêşbirkê herî kêm 2 lîstikvan divên.'
+                            : 'Yarışı başlatmak için en az 2 oyuncu olmalıdır.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppTheme.wrong,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                    ],
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton.icon(
-                        onPressed: ready && !starting ? _startGameHost : null,
+                        onPressed: ready && !starting && room.players.length >= 2 ? _startGameHost : null,
                         icon: starting
                             ? const SizedBox(
                                 width: 16,
@@ -239,7 +253,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                   color: Colors.white,
                                 ),
                               )
-                            : const Icon(Icons.play_arrow_rounded),
+                            : Icon(Icons.play_arrow_rounded),
                         label: Text(
                           starting
                               ? (ku ? 'Tê Amadekirin' : 'Hazırlanıyor')
@@ -324,7 +338,7 @@ class _Pill extends StatelessWidget {
           const SizedBox(width: 5),
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w800,
               fontSize: 13,
@@ -374,7 +388,7 @@ class _PlayerTile extends StatelessWidget {
             backgroundColor: AppTheme.correct.withValues(alpha: 0.15),
             child: Text(
               '$rank',
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.correct,
                 fontWeight: FontWeight.w900,
                 fontSize: 13,
@@ -388,15 +402,15 @@ class _PlayerTile extends StatelessWidget {
               children: [
                 Text(
                   player.name,
-                  style: const TextStyle(
-                    color: AppTheme.textPrimary,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w800,
                   ),
                 ),
                 Text(
                   _localizedState(player.state),
-                  style: const TextStyle(
-                    color: AppTheme.textMuted,
+                  style: TextStyle(
+                    color: AppTheme.textMutedColor(context),
                     fontSize: 12,
                   ),
                 ),
@@ -408,14 +422,14 @@ class _PlayerTile extends StatelessWidget {
             children: [
               Text(
                 '${player.score}',
-                style: const TextStyle(
-                  color: AppTheme.textPrimary,
+                style: TextStyle(
+                  color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w900,
                 ),
               ),
               Text(
                 '${player.streak} ${isKu ? "zincîr" : "seri"}',
-                style: const TextStyle(color: AppTheme.textMuted, fontSize: 11),
+                style: TextStyle(color: AppTheme.textMutedColor(context), fontSize: 11),
               ),
             ],
           ),

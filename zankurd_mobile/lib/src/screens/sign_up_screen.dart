@@ -277,8 +277,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                                   'Hesabê xwe biafirîne',
                                   'Hesabını oluştur',
                                 ),
-                                style: const TextStyle(
-                                  color: AppTheme.textPrimary,
+                                style: TextStyle(
+                                  color: AppTheme.textPrimaryColor(context),
                                   fontWeight: FontWeight.w900,
                                   fontSize: 24,
                                   letterSpacing: -0.5,
@@ -287,8 +287,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                               const SizedBox(height: 8),
                               Text(
                                 _getStepSubtitle(context),
-                                style: const TextStyle(
-                                  color: AppTheme.textSub,
+                                style: TextStyle(
+                                  color: AppTheme.textSubColor(context),
                                   fontSize: 14,
                                 ),
                               ),
@@ -350,8 +350,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                               'Hesabê te jixwe heye? ',
                               'Zaten hesabın var mı? ',
                             ),
-                            style: const TextStyle(
-                              color: AppTheme.textSub,
+                            style: TextStyle(
+                              color: AppTheme.textSubColor(context),
                               fontSize: 14,
                             ),
                           ),
@@ -359,7 +359,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                             onTap: () => Navigator.of(context).pop(),
                             child: Text(
                               context.s('Têkeve', 'Giriş Yap'),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: AppTheme.accent,
                                 fontWeight: FontWeight.w900,
                                 fontSize: 14,
@@ -600,7 +600,7 @@ class _ProgressHexagon extends StatelessWidget {
         child: Text(
           '$number',
           style: TextStyle(
-            color: isActive ? Colors.white : AppTheme.textMuted,
+            color: isActive ? Colors.white : AppTheme.textMutedColor(context),
             fontWeight: FontWeight.w900,
             fontSize: 18,
           ),
@@ -623,8 +623,8 @@ class _ReviewItem extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            color: AppTheme.textSub,
+          style: TextStyle(
+            color: AppTheme.textSubColor(context),
             fontWeight: FontWeight.w600,
             fontSize: 13,
           ),
@@ -633,8 +633,8 @@ class _ReviewItem extends StatelessWidget {
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(
-              color: AppTheme.textPrimary,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w500,
               fontSize: 13,
             ),

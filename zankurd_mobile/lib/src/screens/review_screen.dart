@@ -118,15 +118,15 @@ class _SummaryTile extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             value,
-            style: const TextStyle(
-              color: AppTheme.textPrimary,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w900,
               fontSize: 20,
             ),
           ),
           Text(
             label,
-            style: const TextStyle(color: AppTheme.textMuted, fontSize: 12),
+            style: TextStyle(color: AppTheme.textMutedColor(context), fontSize: 12),
           ),
         ],
       ),
@@ -200,8 +200,8 @@ class _ReviewCard extends StatelessWidget {
                   ),
                   child: Text(
                     context.s('Pirs ${index + 1}', 'Soru ${index + 1}'),
-                    style: const TextStyle(
-                      color: AppTheme.textSub,
+                    style: TextStyle(
+                      color: AppTheme.textSubColor(context),
                       fontWeight: FontWeight.w700,
                       fontSize: 12,
                     ),
@@ -238,8 +238,8 @@ class _ReviewCard extends StatelessWidget {
                 ],
                 Text(
                   record.prompt,
-                  style: const TextStyle(
-                    color: AppTheme.textPrimary,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
                     height: 1.35,
@@ -289,7 +289,7 @@ class _ReviewCard extends StatelessWidget {
                             style: TextStyle(
                               color: icon != null
                                   ? textColor
-                                  : AppTheme.textSub,
+                                  : AppTheme.textSubColor(context),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -316,7 +316,7 @@ class _ReviewCard extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.lightbulb_outline,
                           color: Color(0xFFB794F6),
                           size: 20,
@@ -327,8 +327,8 @@ class _ReviewCard extends StatelessWidget {
                             context.isKu
                                 ? explanationToKu(record.explanation)
                                 : record.explanation,
-                            style: const TextStyle(
-                              color: AppTheme.textSub,
+                            style: TextStyle(
+                              color: AppTheme.textSubColor(context),
                               height: 1.4,
                             ),
                           ),

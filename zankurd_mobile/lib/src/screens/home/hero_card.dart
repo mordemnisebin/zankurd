@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/shimmer_glow.dart';
 
 class HeroCard extends StatelessWidget {
   const HeroCard({
@@ -152,6 +153,7 @@ class HeroCard extends StatelessWidget {
               ),
             ],
           ),
+          const ShimmerGlow(),
         ],
       ),
     );

@@ -289,8 +289,8 @@ class _SignInScreenState extends State<SignInScreen>
                                   'Bi xêr hatî ZanKurdê',
                                   'ZanKurd\'a Hoş Geldin',
                                 ),
-                                style: const TextStyle(
-                                  color: AppTheme.textPrimary,
+                                style: TextStyle(
+                                  color: AppTheme.textPrimaryColor(context),
                                   fontWeight: FontWeight.w900,
                                   fontSize: 26,
                                   letterSpacing: -0.5,
@@ -302,8 +302,8 @@ class _SignInScreenState extends State<SignInScreen>
                                   'Kurmancî hîn bibe û pêşbirkê bike',
                                   'Kurmancî öğren ve yarışmaya katıl',
                                 ),
-                                style: const TextStyle(
-                                  color: AppTheme.textSub,
+                                style: TextStyle(
+                                  color: AppTheme.textSubColor(context),
                                   fontSize: 14,
                                 ),
                               ),
@@ -394,8 +394,8 @@ class _SignInScreenState extends State<SignInScreen>
                                       'Şîfre ji bîr kir?',
                                       'Parolayı unuttun mu?',
                                     ),
-                                    style: const TextStyle(
-                                      color: AppTheme.textSub,
+                                    style: TextStyle(
+                                      color: AppTheme.textSubColor(context),
                                       fontSize: 13,
                                     ),
                                   ),
@@ -439,8 +439,8 @@ class _SignInScreenState extends State<SignInScreen>
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
                               context.s('AN JÎ', 'VEYA'),
-                              style: const TextStyle(
-                                color: AppTheme.textMuted,
+                              style: TextStyle(
+                                color: AppTheme.textMutedColor(context),
                                 fontWeight: FontWeight.w700,
                                 fontSize: 12,
                               ),
@@ -486,10 +486,10 @@ class _SignInScreenState extends State<SignInScreen>
                           onPressed: authProvider.isLoading
                               ? null
                               : () => _signInAsGuest(authProvider),
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.person_outline,
                             size: 20,
-                            color: AppTheme.textSub,
+                            color: AppTheme.textSubColor(context),
                           ),
                           label: Text(
                             context.s(
@@ -507,8 +507,8 @@ class _SignInScreenState extends State<SignInScreen>
                         children: [
                           Text(
                             context.s('Hesabê te tune? ', 'Hesabın yok mu? '),
-                            style: const TextStyle(
-                              color: AppTheme.textSub,
+                            style: TextStyle(
+                              color: AppTheme.textSubColor(context),
                               fontSize: 14,
                             ),
                           ),
@@ -520,7 +520,7 @@ class _SignInScreenState extends State<SignInScreen>
                             },
                             child: Text(
                               context.s('Tomar bibe', 'Kaydol'),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: AppTheme.accent,
                                 fontWeight: FontWeight.w900,
                                 fontSize: 14,
@@ -629,7 +629,7 @@ class _LanguageChip extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            color: active ? Colors.white : AppTheme.textMuted,
+            color: active ? Colors.white : AppTheme.textMutedColor(context),
             fontWeight: FontWeight.w900,
             fontSize: 12,
             letterSpacing: 0.5,

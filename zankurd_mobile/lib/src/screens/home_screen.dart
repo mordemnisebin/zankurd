@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -11,6 +10,7 @@ import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/test_environment.dart';
 import 'home/category_grid.dart';
 import 'home/daily_missions_card.dart';
 import 'home/daily_quiz_card.dart';
@@ -18,6 +18,7 @@ import 'home/hero_card.dart';
 import 'home/question_card.dart';
 import 'home/section_header.dart';
 import 'home/spin_wheel_card.dart';
+import 'home/tournament_card.dart';
 import '../widgets/animated_counter.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
@@ -25,13 +26,10 @@ import 'level_screen.dart';
 import 'quiz_screen.dart';
 import 'room_screen.dart';
 import 'spin_wheel_screen.dart';
+import 'tournament_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({
-    required this.repository,
-    this.displayName,
-    super.key,
-  });
+  const HomeScreen({required this.repository, this.displayName, super.key});
 
   final ZanKurdRepository repository;
   final String? displayName;
@@ -52,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool _missionsLoading = true;
   late GameRoom _room;
   late AnimationController _loadAnimationController;
+  String? _displayName;
 
   ZanKurdRepository get repo => widget.repository;
 
@@ -93,6 +92,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _bootstrap() async {
     try {
       await repo.ensureProfile();
+      final name = await repo.getProfileName();
+      if (mounted) {
+        setState(() {
+          _displayName = name;
+        });
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home ensureProfile failed');
     }
@@ -138,7 +143,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               builder: (context, constraints) {
                 final double topPadding = MediaQuery.of(context).padding.top;
                 final double collapsedHeight = kToolbarHeight + topPadding;
-                final isCollapsed = constraints.maxHeight <= collapsedHeight + 20;
+                final isCollapsed =
+                    constraints.maxHeight <= collapsedHeight + 20;
                 return AnimatedOpacity(
                   duration: const Duration(milliseconds: 150),
                   opacity: isCollapsed ? 1.0 : 0.0,
@@ -210,6 +216,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     padding: const EdgeInsets.only(top: 12),
                     child: _buildAnimatedCard(
                       _heroFadeAnimation(4),
+                      TournamentCard(
+                        isKu: ku,
+                        onOpen: () => _openTournament(context),
+                      ),
+                    ),
+                  );
+                }
+                if (index == 5) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: _buildAnimatedCard(
+                      _heroFadeAnimation(5),
                       DailyMissionsCard(
                         isKu: ku,
                         missions: _missions,
@@ -218,11 +236,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                   );
                 }
-                if (index == 5) {
+                if (index == 6) {
                   return Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: _buildAnimatedCard(
-                      _heroFadeAnimation(5),
+                      _heroFadeAnimation(6),
                       SectionHeader(
                         title: ku ? 'Kategorî' : 'Kategoriler',
                         subtitle: ku
@@ -232,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                   );
                 }
-                if (index == 6) {
+                if (index == 7) {
                   return Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: CategoryGrid(
@@ -243,11 +261,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                   );
                 }
-                if (index == 7 && !_loading && _questions.isNotEmpty) {
+                if (index == 8 && !_loading && _questions.isNotEmpty) {
                   return Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: _buildAnimatedCard(
-                      _heroFadeAnimation(7),
+                      _heroFadeAnimation(8),
                       SectionHeader(
                         title: ku ? 'Pirsa Nimûne' : 'Örnek Soru',
                         subtitle: ku
@@ -257,11 +275,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                   );
                 }
-                if (index == 8 && !_loading && _questions.isNotEmpty) {
+                if (index == 9 && !_loading && _questions.isNotEmpty) {
                   return Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: _buildAnimatedCard(
-                      _heroFadeAnimation(8),
+                      _heroFadeAnimation(9),
                       QuestionCard(
                         question: _questions.first,
                         isKu: ku,
@@ -271,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   );
                 }
                 return null;
-              }, childCount: _loading || _questions.isEmpty ? 7 : 9),
+              }, childCount: _loading || _questions.isEmpty ? 8 : 10),
             ),
           ),
         ],
@@ -292,11 +310,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.stars, color: AppTheme.gold, size: 14),
+            Icon(Icons.stars, color: AppTheme.gold, size: 14),
             const SizedBox(width: 6),
             Text(
               ku ? 'Hemû misyon temam bûn!' : 'Tüm görevler tamamlandı!',
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 11,
                 fontWeight: FontWeight.bold,
@@ -321,7 +339,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.flash_on, color: AppTheme.gold, size: 14),
+          Icon(Icons.flash_on, color: AppTheme.gold, size: 14),
           const SizedBox(width: 6),
           Text(
             ku ? 'Misyona Rojê: ' : 'Günün Görevi: ',
@@ -336,7 +354,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               missionTitle,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 11,
                 fontWeight: FontWeight.bold,
@@ -352,7 +370,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
             child: Text(
               rewardText,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 9,
                 fontWeight: FontWeight.bold,
@@ -366,7 +384,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   /// Build the geometric header with player info, streak hexagon, and stats
   Widget _buildGeometricHeader(BuildContext context, bool ku) {
-    final isTest = Platform.environment.containsKey('FLUTTER_TEST');
+    final isTest = isFlutterTestEnvironment;
     final hour = DateTime.now().hour;
     final String greetingKu;
     final String greetingTr;
@@ -388,9 +406,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         greetingTr = 'İyi Geceler';
       }
     }
+    final currentName = _displayName ?? widget.displayName;
     final greeting = ku
-        ? '$greetingKu, ${widget.displayName ?? 'Lîstikvan'}!'
-        : '$greetingTr, ${widget.displayName ?? 'Oyuncu'}!';
+        ? '$greetingKu, ${currentName ?? 'Lîstikvan'}!'
+        : '$greetingTr, ${currentName ?? 'Oyuncu'}!';
 
     return Container(
       decoration: BoxDecoration(gradient: AppTheme.homeHeaderGradient),
@@ -425,7 +444,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 children: [
                   Text(
                     greeting,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white70,
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
@@ -434,7 +453,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   const SizedBox(height: 4),
                   Text(
                     'ZanKurd',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,
                       fontSize: 28,
@@ -488,7 +507,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   Icons.local_fire_department,
                   color: Colors.white,
                   size: 22,
@@ -496,7 +515,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 const SizedBox(height: 2),
                 Text(
                   '$streak',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
                     fontSize: 14,
@@ -529,7 +548,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.monetization_on,
                     color: Colors.white,
                     size: 16,
@@ -537,7 +556,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   const SizedBox(width: 5),
                   AnimatedCounter(
                     value: coinBalance,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,
                       fontSize: 13,
@@ -645,6 +664,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _refreshCoins();
   }
 
+  Future<void> _openTournament(BuildContext context) async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(TournamentScreen(repository: repo)));
+    _refreshCoins();
+  }
+
   void _openCategory(BuildContext context, String category) {
     Navigator.of(
       context,
@@ -687,17 +713,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               children: [
                 Text(
                   ku ? 'Tevlî Jûrê Bibe' : 'Odaya Katıl',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 22,
-                    color: AppTheme.textPrimary,
+                    color: AppTheme.textPrimaryColor(context),
                   ),
                 ),
                 const SizedBox(height: 14),
                 TextFormField(
                   controller: controller,
                   textCapitalization: TextCapitalization.characters,
-                  style: const TextStyle(color: AppTheme.textPrimary),
+                  style: TextStyle(color: AppTheme.textPrimary),
                   decoration: InputDecoration(
                     labelText: ku ? 'Koda jûrê' : 'Oda kodu',
                   ),
@@ -742,7 +768,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         );
                       }
                     },
-                    icon: const Icon(Icons.meeting_room_outlined),
+                    icon: Icon(Icons.meeting_room_outlined),
                     label: Text(ku ? 'Tevlî Bibe' : 'Katıl'),
                   ),
                 ),

@@ -32,7 +32,7 @@ class QuestionCard extends StatelessWidget {
               const Spacer(),
               _Tag(
                 label: isKu ? '08 çirke' : '08 sn',
-                color: AppTheme.textMuted,
+                color: AppTheme.textMutedColor(context),
               ),
             ],
           ),
@@ -51,7 +51,7 @@ class QuestionCard extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton.icon(
               onPressed: onOpen,
-              icon: const Icon(Icons.quiz_outlined),
+              icon: Icon(Icons.quiz_outlined),
               label: Text(isKu ? 'Pirs Çareser Bike' : 'Soruyu Çöz'),
             ),
           ),

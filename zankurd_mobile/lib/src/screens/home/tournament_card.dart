@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/app_theme.dart';
 import '../../widgets/app_panel.dart';
 import '../../widgets/shimmer_glow.dart';
 
-class DailyQuizCard extends StatelessWidget {
-  const DailyQuizCard({
-    required this.isKu,
-    required this.loading,
-    required this.onPlay,
-    super.key,
-  });
+class TournamentCard extends StatelessWidget {
+  const TournamentCard({required this.isKu, required this.onOpen, super.key});
 
   final bool isKu;
-  final bool loading;
-  final VoidCallback onPlay;
+  final VoidCallback onOpen;
 
   @override
   Widget build(BuildContext context) {
     return AppPanel(
-      gradient: AppTheme.goldGradient,
+      gradient: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
+      ),
       padding: EdgeInsets.zero,
       child: Stack(
         children: [
           InkWell(
-            onTap: loading ? null : onPlay,
+            onTap: onOpen,
             borderRadius: BorderRadius.circular(16),
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -37,19 +34,11 @@ class DailyQuizCard extends StatelessWidget {
                       color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(14),
                     ),
-                    child: loading
-                        ? const Padding(
-                            padding: EdgeInsets.all(14),
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.5,
-                              color: Colors.white,
-                            ),
-                          )
-                        : const Icon(
-                            Icons.today_rounded,
-                            color: Colors.white,
-                            size: 28,
-                          ),
+                    child: const Icon(
+                      Icons.emoji_events_outlined,
+                      color: Colors.white,
+                      size: 28,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -57,7 +46,7 @@ class DailyQuizCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          isKu ? 'Pêşbirka Rojê' : 'Günün Yarışması',
+                          isKu ? 'Turnuva' : 'Turnuva Modu',
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w900,
@@ -67,8 +56,8 @@ class DailyQuizCard extends StatelessWidget {
                         const SizedBox(height: 3),
                         Text(
                           isKu
-                              ? 'Her roj 10 pirsên nû — îro bilîze!'
-                              : 'Her gün 10 yeni soru — bugün oyna!',
+                              ? 'Botan eledar bike û kûpayê qezenc bike!'
+                              : 'Bot rakipleri ele, kupayı kaldır!',
                           style: TextStyle(
                             color: Colors.white.withValues(alpha: 0.85),
                             fontSize: 12.5,
@@ -78,9 +67,9 @@ class DailyQuizCard extends StatelessWidget {
                     ),
                   ),
                   const Icon(
-                    Icons.play_circle_fill_rounded,
+                    Icons.chevron_right_rounded,
                     color: Colors.white,
-                    size: 34,
+                    size: 30,
                   ),
                 ],
               ),

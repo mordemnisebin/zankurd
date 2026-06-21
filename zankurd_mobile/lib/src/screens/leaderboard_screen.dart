@@ -69,16 +69,16 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                       children: [
                         Text(
                           ku ? 'Tabloya Pêşderiyan' : 'Liderlik Tablosu',
-                          style: const TextStyle(
-                            color: AppTheme.textPrimary,
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w900,
                             fontSize: 26,
                           ),
                         ),
                         Text(
                           ku ? 'Baştirîn lîstikvan' : 'En iyi oyuncular',
-                          style: const TextStyle(
-                            color: AppTheme.textMuted,
+                          style: TextStyle(
+                            color: AppTheme.textMutedColor(context),
                             fontSize: 13,
                           ),
                         ),
@@ -87,9 +87,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   ),
                   IconButton(
                     onPressed: _refresh,
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.refresh_rounded,
-                      color: AppTheme.textSub,
+                      color: AppTheme.textSubColor(context),
                     ),
                   ),
                 ],
@@ -170,8 +170,8 @@ class _Podium extends StatelessWidget {
         children: [
           Text(
             isKu ? 'Sê Pêşderian' : 'İlk 3',
-            style: const TextStyle(
-              color: AppTheme.textMuted,
+            style: TextStyle(
+              color: AppTheme.textMutedColor(context),
               fontWeight: FontWeight.w700,
               fontSize: 12,
             ),
@@ -200,17 +200,37 @@ class _PodiumSlot extends StatelessWidget {
   final LeaderboardEntry entry;
   final double height;
 
-  static const _medals = {1: '🥇', 2: '🥈', 3: '🥉'};
   static const _colors = {
-    1: Color(0xFFFFB800),
-    2: Color(0xFF7C8794),
-    3: Color(0xFFB66A3A),
+    1: Color(0xFFFFB800), // Altın
+    2: Color(0xFF7C8794), // Gümüş
+    3: Color(0xFFB66A3A), // Bronz
   };
+
+  Widget _buildPodiumMedal(int rank, Color color) {
+    if (rank == 1) {
+      return Container(
+        padding: const EdgeInsets.all(4),
+        decoration: const BoxDecoration(
+          color: Color(0x22FFB800),
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          Icons.emoji_events,
+          color: Color(0xFFFFB800),
+          size: 26,
+        ),
+      );
+    }
+    return Icon(
+      Icons.military_tech,
+      color: color,
+      size: 26,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final color = _colors[entry.rank] ?? AppTheme.accent;
-    final medal = _medals[entry.rank] ?? '${entry.rank}';
 
     return Column(
       children: [
@@ -218,17 +238,17 @@ class _PodiumSlot extends StatelessWidget {
           key: ValueKey('podium-slot-${entry.rank}'),
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: color.withValues(alpha: 0.35)),
+            color: color.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
           ),
           child: Column(
             children: [
-              Text(medal, style: const TextStyle(fontSize: 20)),
-              const SizedBox(height: 5),
+              _buildPodiumMedal(entry.rank, color),
+              const SizedBox(height: 6),
               CircleAvatar(
-                radius: 21,
-                backgroundColor: color.withValues(alpha: 0.28),
+                radius: 22,
+                backgroundColor: color.withValues(alpha: 0.24),
                 child: Text(
                   entry.displayName.isNotEmpty
                       ? entry.displayName[0].toUpperCase()
@@ -252,10 +272,10 @@ class _PodiumSlot extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 entry.displayName,
-                style: const TextStyle(
-                  color: AppTheme.textPrimary,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 12,
+                style: TextStyle(
+                  color: AppTheme.textPrimaryColor(context),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 12.5,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -266,26 +286,29 @@ class _PodiumSlot extends StatelessWidget {
                 style: TextStyle(
                   color: color,
                   fontWeight: FontWeight.w900,
-                  fontSize: 14,
+                  fontSize: 13.5,
                 ),
               ),
             ],
           ),
         ),
         const SizedBox(height: 8),
-        Container(
-          height: height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                color.withValues(alpha: 0.52),
-                color.withValues(alpha: 0.18),
-              ],
+        ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+          child: Container(
+            height: height,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  color.withValues(alpha: 0.45),
+                  color.withValues(alpha: 0.05),
+                ],
+              ),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              border: Border.all(color: color.withValues(alpha: 0.32), width: 1.5),
             ),
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-            border: Border.all(color: color.withValues(alpha: 0.38)),
           ),
         ),
       ],
@@ -303,26 +326,34 @@ class _RankRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceOf(context),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppTheme.border),
+        color: AppTheme.surfaceColor(context),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppTheme.borderColor(context), width: 1.2),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.03),
+            offset: const Offset(0, 3),
+            blurRadius: 6,
+          ),
+        ],
       ),
       child: Row(
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: 38,
+            height: 38,
             decoration: BoxDecoration(
-              color: AppTheme.surfaceHiOf(context),
-              borderRadius: BorderRadius.circular(10),
+              color: AppTheme.surfaceHiColor(context),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppTheme.borderColor(context), width: 1),
             ),
             alignment: Alignment.center,
             child: Text(
               '#${entry.rank}',
-              style: const TextStyle(
-                color: AppTheme.textMuted,
+              style: TextStyle(
+                color: AppTheme.textSubColor(context),
                 fontWeight: FontWeight.w900,
                 fontSize: 13,
               ),
@@ -330,15 +361,16 @@ class _RankRow extends StatelessWidget {
           ),
           const SizedBox(width: 12),
           CircleAvatar(
-            radius: 18,
-            backgroundColor: AppTheme.accent.withValues(alpha: 0.15),
+            radius: 19,
+            backgroundColor: AppTheme.accent.withValues(alpha: 0.12),
             child: Text(
               entry.displayName.isNotEmpty
                   ? entry.displayName[0].toUpperCase()
                   : '?',
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.accent,
                 fontWeight: FontWeight.w900,
+                fontSize: 15,
               ),
             ),
           ),
@@ -349,18 +381,21 @@ class _RankRow extends StatelessWidget {
               children: [
                 Text(
                   entry.displayName,
-                  style: const TextStyle(
-                    color: AppTheme.textPrimary,
-                    fontWeight: FontWeight.w800,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w900,
+                    fontSize: 14.5,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
+                const SizedBox(height: 2),
                 Text(
                   '${entry.roomsPlayed} ${isKu ? "jûr" : "oda"} · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}',
-                  style: const TextStyle(
-                    color: AppTheme.textMuted,
-                    fontSize: 12,
+                  style: TextStyle(
+                    color: AppTheme.textMutedColor(context),
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
@@ -368,10 +403,10 @@ class _RankRow extends StatelessWidget {
           ),
           Text(
             '${entry.totalScore}',
-            style: const TextStyle(
+            style: TextStyle(
               color: AppTheme.gold,
               fontWeight: FontWeight.w900,
-              fontSize: 18,
+              fontSize: 17,
             ),
           ),
         ],

@@ -217,7 +217,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         color: AppTheme.gold.withValues(alpha: 0.15),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.military_tech_rounded,
                         color: AppTheme.gold,
                         size: 50,
@@ -226,7 +226,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     const SizedBox(height: 16),
                     Text(
                       context.isKu ? 'Asta Te Bilind Bû!' : 'Tebrikler!',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w900,
                         color: AppTheme.gold,
@@ -238,9 +238,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           ? 'Te asteke nû bi dest xist!'
                           : 'Yeni bir seviyeye ulaştın!',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
-                        color: AppTheme.textSub,
+                        color: AppTheme.textSubColor(context),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -259,7 +259,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       ),
                       child: Text(
                         context.isKu ? 'Ast $newLevel' : 'Seviye $newLevel',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
                           color: Colors.white,
@@ -279,10 +279,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           ),
                           elevation: 0,
                         ),
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: () => Navigator.of(context).pop({
+                          'score': score,
+                          'correct': correctCount,
+                        }),
                         child: Text(
                           context.isKu ? 'Berdawam bike' : 'Devam Et',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
                           ),
@@ -341,14 +344,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       children: [
                         Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.flag_outlined,
                               color: Colors.white,
                             ),
                             const SizedBox(width: 8),
                             Text(
                               context.s('Pêşbirk qediya', 'Yarış tamamlandı'),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white70,
                                 fontWeight: FontWeight.w800,
                               ),
@@ -358,7 +361,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         const SizedBox(height: 14),
                         Text(
                           '$score',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w900,
                             fontSize: 52,
@@ -368,7 +371,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         const SizedBox(height: 8),
                         Text(
                           '${CategoryNames.localized(room.category, context.isKu)} · ${room.code}',
-                          style: const TextStyle(color: Colors.white70),
+                          style: TextStyle(color: Colors.white70),
                         ),
                         const SizedBox(height: 14),
                         Container(
@@ -385,7 +388,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               'Rastbûn: %$accuracy',
                               'Doğruluk: %$accuracy',
                             ),
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w900,
                             ),
@@ -421,7 +424,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   color: AppTheme.surfaceHi,
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.local_fire_department,
                         color: AppTheme.accent,
                         size: 30,
@@ -436,8 +439,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 'Seriya rojane: $_dailyStreak roj',
                                 'Günlük seri: $_dailyStreak gün',
                               ),
-                              style: const TextStyle(
-                                color: AppTheme.textPrimary,
+                              style: TextStyle(
+                                color: AppTheme.textPrimaryColor(context),
                                 fontWeight: FontWeight.w900,
                                 fontSize: 16,
                               ),
@@ -448,8 +451,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 'Sibê jî bilîze û seriyê bidomîne!',
                                 'Yarın da oyna, seriyi sürdür!',
                               ),
-                              style: const TextStyle(
-                                color: AppTheme.textMuted,
+                              style: TextStyle(
+                                color: AppTheme.textMutedColor(context),
                                 fontSize: 12,
                               ),
                             ),
@@ -481,7 +484,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             color: Colors.white.withValues(alpha: 0.18),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.monetization_on_outlined,
                             color: Colors.white,
                           ),
@@ -500,7 +503,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     '+$value coin stendî',
                                     '+$value coin kazandın',
                                   ),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w900,
                                     fontSize: 18,
@@ -512,7 +515,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   'Xelata te di malperê de tê nûkirin.',
                                   'Ödül bakiyen ana ekranda güncellenir.',
                                 ),
-                                style: const TextStyle(color: Colors.white70),
+                                style: TextStyle(color: Colors.white70),
                               ),
                             ],
                           ),
@@ -547,7 +550,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             color: Colors.white.withValues(alpha: 0.18),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.bolt_rounded,
                             color: Colors.white,
                           ),
@@ -566,7 +569,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     '+$value XP bi dest xist',
                                     '+$value XP kazandın',
                                   ),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w900,
                                     fontSize: 18,
@@ -578,7 +581,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   'Asta te li ser profîlê tê nûkirin.',
                                   'Seviyen profil sayfasında güncellenir.',
                                 ),
-                                style: const TextStyle(color: Colors.white70, fontSize: 12),
+                                style: TextStyle(color: Colors.white70, fontSize: 12),
                               ),
                             ],
                           ),
@@ -596,8 +599,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   children: [
                     Text(
                       context.s('Rêzbendiyê bişopîne', 'Sıralamaya devam et'),
-                      style: const TextStyle(
-                        color: AppTheme.textPrimary,
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(context),
                         fontWeight: FontWeight.w900,
                         fontSize: 20,
                       ),
@@ -608,7 +611,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         'Pûanên te li jûrên online di tabloya pêşderçûnê de xuya dibin.',
                         'Puanların online odalarda liderlik tablosuna yansır.',
                       ),
-                      style: const TextStyle(color: AppTheme.textMuted),
+                      style: TextStyle(color: AppTheme.textMuted),
                     ),
                     const SizedBox(height: 14),
                     SizedBox(
@@ -627,7 +630,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           bestStreak: bestStreak,
                           category: room.category,
                         ),
-                        icon: const Icon(Icons.share_rounded),
+                        icon: Icon(Icons.share_rounded),
                         label: Text(
                           context.s('Encamê Parve Bike', 'Sonucu Paylaş'),
                         ),
@@ -649,7 +652,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 );
                               },
-                        icon: const Icon(Icons.fact_check_outlined),
+                        icon: Icon(Icons.fact_check_outlined),
                         label: Text(
                           context.s('Bersivan Bibîne', 'Cevapları İncele'),
                         ),
@@ -666,7 +669,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             ),
                           );
                         },
-                        icon: const Icon(Icons.emoji_events_outlined),
+                        icon: Icon(Icons.emoji_events_outlined),
                         label: Text(
                           context.s('Tabloya Pêşderçûnê', 'Liderlik Tablosu'),
                         ),
@@ -681,7 +684,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             context,
                           ).popUntil((route) => route.isFirst);
                         },
-                        icon: const Icon(Icons.home_outlined),
+                        icon: Icon(Icons.home_outlined),
                         label: Text(context.s('Vegere malê', 'Ana ekrana dön')),
                       ),
                     ),
@@ -777,13 +780,13 @@ class _MetricTile extends StatelessWidget {
           Icon(icon, color: color),
           Text(
             value,
-            style: const TextStyle(
-              color: AppTheme.textPrimary,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w900,
               fontSize: 24,
             ),
           ),
-          Text(label, style: const TextStyle(color: AppTheme.textMuted)),
+          Text(label, style: TextStyle(color: AppTheme.textMuted)),
         ],
       ),
     );
@@ -826,13 +829,13 @@ class _RaceStandings extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.groups_2_outlined, color: AppTheme.accent),
+              Icon(Icons.groups_2_outlined, color: AppTheme.accent),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    color: AppTheme.textPrimary,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w900,
                     fontSize: 18,
                   ),
@@ -841,7 +844,7 @@ class _RaceStandings extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          Text(summary, style: const TextStyle(color: AppTheme.textMuted)),
+          Text(summary, style: TextStyle(color: AppTheme.textMuted)),
           const SizedBox(height: 12),
           for (var i = 0; i < standings.length; i++)
             _RaceStandingRow(rank: i + 1, player: standings[i]),
@@ -865,11 +868,11 @@ class _AchievementUnlocks extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.workspace_premium_outlined, color: Colors.white),
+              Icon(Icons.workspace_premium_outlined, color: Colors.white),
               const SizedBox(width: 8),
               Text(
                 context.s('Rozeta Nû', 'Yeni Rozet'),
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
                   fontSize: 18,
@@ -900,14 +903,14 @@ class _AchievementUnlocks extends StatelessWidget {
                       children: [
                         Text(
                           achievement.title(context.isKu),
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w900,
                           ),
                         ),
                         Text(
                           achievement.description(context.isKu),
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white70,
                             fontSize: 12,
                           ),
@@ -968,8 +971,8 @@ class _MasteryPromotions extends StatelessWidget {
                         ),
                         Text(
                           ku ? 'Unvana nû stend!' : 'Yeni unvan kazandın!',
-                          style: const TextStyle(
-                            color: AppTheme.textMuted,
+                          style: TextStyle(
+                            color: AppTheme.textMutedColor(context),
                             fontSize: 12,
                           ),
                         ),
@@ -1031,14 +1034,14 @@ class _RaceStandingRow extends StatelessWidget {
               player.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: AppTheme.textPrimary,
+              style: TextStyle(
+                color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w900,
               ),
             ),
           ),
           if (player.streak > 0) ...[
-            const Icon(
+            Icon(
               Icons.local_fire_department_outlined,
               color: AppTheme.gold,
               size: 18,
@@ -1046,7 +1049,7 @@ class _RaceStandingRow extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
               '${player.streak}',
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.gold,
                 fontWeight: FontWeight.w800,
               ),
@@ -1055,8 +1058,8 @@ class _RaceStandingRow extends StatelessWidget {
           ],
           Text(
             '${player.score}',
-            style: const TextStyle(
-              color: AppTheme.textPrimary,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w900,
             ),
           ),

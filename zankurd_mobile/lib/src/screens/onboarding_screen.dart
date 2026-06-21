@@ -195,8 +195,8 @@ class _AnimatedBrandLockup extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppTheme.textMuted,
+              style: TextStyle(
+                color: AppTheme.textMutedColor(context),
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
               ),
@@ -249,8 +249,8 @@ class _OnboardingPage extends StatelessWidget {
             Text(
               data.title,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppTheme.textPrimary,
+              style: TextStyle(
+                color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w900,
                 fontSize: 30,
               ),
@@ -259,8 +259,8 @@ class _OnboardingPage extends StatelessWidget {
             Text(
               data.body,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppTheme.textSub,
+              style: TextStyle(
+                color: AppTheme.textSubColor(context),
                 fontSize: 16,
                 height: 1.35,
               ),
