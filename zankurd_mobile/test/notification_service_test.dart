@@ -42,5 +42,39 @@ void main() {
       final service2 = await NotificationService.load();
       expect(identical(service1, service2), true);
     });
+
+    group('nextFireTime', () {
+      test('hedef saat bugün geçmemişse bugünü döner', () async {
+        final service = await NotificationService.load();
+        await service.setTime(19, 0);
+        final from = DateTime(2026, 6, 21, 10, 0);
+        final next = service.nextFireTime(from: from);
+        expect(next, DateTime(2026, 6, 21, 19, 0));
+      });
+
+      test('hedef saat bugün geçmişse yarını döner', () async {
+        final service = await NotificationService.load();
+        await service.setTime(19, 0);
+        final from = DateTime(2026, 6, 21, 20, 0);
+        final next = service.nextFireTime(from: from);
+        expect(next, DateTime(2026, 6, 22, 19, 0));
+      });
+
+      test('hedef saate tam denk gelirse yarını döner', () async {
+        final service = await NotificationService.load();
+        await service.setTime(19, 0);
+        final from = DateTime(2026, 6, 21, 19, 0);
+        final next = service.nextFireTime(from: from);
+        expect(next, DateTime(2026, 6, 22, 19, 0));
+      });
+
+      test('dakikalı hedef saat doğru hesaplanır', () async {
+        final service = await NotificationService.load();
+        await service.setTime(8, 30);
+        final from = DateTime(2026, 6, 21, 7, 0);
+        final next = service.nextFireTime(from: from);
+        expect(next, DateTime(2026, 6, 21, 8, 30));
+      });
+    });
   });
 }

@@ -14,6 +14,7 @@ class NotificationService {
   static const _enabledKey = 'zankurd.notifications.enabled';
   static const _hourKey = 'zankurd.notifications.hour';
   static const _minuteKey = 'zankurd.notifications.minute';
+  static const _nextFireKey = 'zankurd.notifications.nextFireAt';
 
   static NotificationService? _instance;
 
@@ -48,6 +49,25 @@ class NotificationService {
   String get timeDisplay =>
       '${_hour.toString().padLeft(2, '0')}:${_minute.toString().padLeft(2, '0')}';
 
+  /// Ayarlı saat/dakikaya göre bir sonraki bildirim anını hesaplar.
+  /// [from] verilmezse şu an kullanılır. Hedef saat bugün için geçmişse
+  /// (veya tam denk gelmişse) ertesi güne kayar.
+  DateTime nextFireTime({DateTime? from}) {
+    final now = from ?? DateTime.now();
+    var candidate = DateTime(now.year, now.month, now.day, _hour, _minute);
+    if (!candidate.isAfter(now)) {
+      candidate = candidate.add(const Duration(days: 1));
+    }
+    return candidate;
+  }
+
+  /// Hesaplanan bir sonraki bildirim anı (kalıcı). Native bildirim katmanı
+  /// (flutter_local_notifications) eklendiğinde bu değer okunup zamanlanır.
+  DateTime? get nextFireAt {
+    final raw = _preferences?.getString(_nextFireKey);
+    return raw == null ? null : DateTime.tryParse(raw);
+  }
+
   Future<void> setEnabled(bool value) async {
     _enabled = value;
     await _preferences?.setBool(_enabledKey, value);
@@ -68,16 +88,17 @@ class NotificationService {
     }
   }
 
-  /// Günlük hatırlatıcıyı zamanlar.
-  /// Firebase Messaging entegrasyonu yapıldığında bu metod
-  /// gerçek FCM topic subscription ve local notification kullanır.
+  /// Günlük hatırlatıcının bir sonraki anını hesaplayıp kalıcı saklar.
+  ///
+  /// Native bildirim katmanı (flutter_local_notifications) eklendiğinde,
+  /// burada hesaplanan [nextFireAt] değeri `zonedSchedule` ile işletim
+  /// sistemine bildirilir. Cihaz adımları için bkz. docs/bildirim-entegrasyonu.md
   Future<void> _scheduleDaily() async {
-    // TODO: firebase_messaging veya flutter_local_notifications
-    // entegrasyonu yapıldığında burada gerçek zamanlama yapılacak.
-    // Şimdilik ayarlar sadece kalıcı olarak saklanıyor.
+    final next = nextFireTime();
+    await _preferences?.setString(_nextFireKey, next.toIso8601String());
   }
 
   Future<void> _cancelAll() async {
-    // TODO: Mevcut zamanlanmış bildirimleri iptal et.
+    await _preferences?.remove(_nextFireKey);
   }
 }
