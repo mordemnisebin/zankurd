@@ -1,4 +1,4 @@
-import { BookOpen, Crown, Gamepad2, LockKeyhole, MessageCircleWarning, Trophy } from 'lucide-react'
+import { BookOpen, Crown, Database, FileSpreadsheet, Gamepad2, LockKeyhole, MessageCircleWarning, Settings, Trophy } from 'lucide-react'
 
 type InsightPanelProps = {
   categories: string[]
@@ -10,6 +10,13 @@ type InsightPanelProps = {
   bestStreak: number
   onSelectCategory: (category: string) => void
 }
+
+const backendSteps = [
+  { label: 'questions', detail: 'Soru bankası' },
+  { label: 'rooms', detail: 'Canlı oda' },
+  { label: 'scores', detail: 'Puan geçmişi' },
+  { label: 'progress', detail: 'Yanlışlarım' },
+]
 
 export function InsightPanel({
   categories,
@@ -77,6 +84,29 @@ export function InsightPanel({
               {category}
             </button>
           ))}
+        </div>
+      </div>
+
+      <div className="category-panel product-ready-card">
+        <div className="panel-heading compact">
+          <div>
+            <span className="section-label">Ürünleşme</span>
+            <h2>Admin + backend planı</h2>
+          </div>
+          <Settings size={20} />
+        </div>
+        <div className="schema-list compact-schema">
+          {backendSteps.map((step) => (
+            <span key={step.label}>
+              <Database size={14} />
+              <strong>{step.label}</strong>
+              <small>{step.detail}</small>
+            </span>
+          ))}
+        </div>
+        <div className="csv-template">
+          <FileSpreadsheet size={18} />
+          <code>category,dialect,difficulty,prompt,correct,tags</code>
         </div>
       </div>
 
