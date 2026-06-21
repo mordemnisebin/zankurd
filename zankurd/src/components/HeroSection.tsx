@@ -7,6 +7,12 @@ type HeroSectionProps = {
   onSelectMode: (mode: QuizMode) => void
 }
 
+const productHighlights = [
+  { label: 'Günlük 10 soru', value: 'Seri + XP' },
+  { label: 'Admin panel', value: 'Soru ekleme' },
+  { label: 'Supabase', value: 'Backend hazır' },
+]
+
 export function HeroSection({ activeMode, onSelectMode }: HeroSectionProps) {
   const activeModeCopy = studyModes.find((mode) => mode.mode === activeMode) ?? studyModes[0]
 
@@ -29,6 +35,15 @@ export function HeroSection({ activeMode, onSelectMode }: HeroSectionProps) {
             <strong>{activeModeCopy.title}</strong>
             <span>{activeModeCopy.description}</span>
           </div>
+        </div>
+
+        <div className="hero-product-strip" aria-label="Ürünleşme planı">
+          {productHighlights.map((item) => (
+            <div key={item.label}>
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </div>
+          ))}
         </div>
       </div>
 
