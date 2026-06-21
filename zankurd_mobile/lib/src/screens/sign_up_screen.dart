@@ -519,9 +519,9 @@ class _SignUpScreenState extends State<SignUpScreen>
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppTheme.surfaceHi,
+                color: AppTheme.surfaceHiColor(context),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppTheme.border),
+                border: Border.all(color: AppTheme.borderColor(context)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -584,7 +584,7 @@ class _ProgressHexagon extends StatelessWidget {
       height: 44,
       decoration: BoxDecoration(
         gradient: isActive ? AppTheme.accentGradient : null,
-        border: isActive ? null : Border.all(color: AppTheme.border, width: 2),
+        border: isActive ? null : Border.all(color: AppTheme.borderColor(context), width: 2),
         borderRadius: BorderRadius.circular(8),
         boxShadow: isActive
             ? [

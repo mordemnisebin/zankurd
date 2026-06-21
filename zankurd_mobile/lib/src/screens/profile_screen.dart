@@ -414,9 +414,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ],
                               ),
                             ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 16),
-                            child: Divider(color: AppTheme.surfaceHi),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: Divider(color: AppTheme.surfaceHiColor(context)),
                           ),
                           Text(
                             ku ? 'Performansa Heftane' : 'Haftalık Performans',
@@ -671,7 +671,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: AppTheme.surfaceOf(context),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: AppTheme.border),
+          side: BorderSide(color: AppTheme.borderColor(context)),
         ),
         title: Text(ku ? 'Derkeve' : 'Çıkış Yap'),
         content: Text(
@@ -715,7 +715,7 @@ class _LangToggle extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppTheme.surfaceHiOf(context),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppTheme.border),
+          border: Border.all(color: AppTheme.borderColor(context)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -975,7 +975,7 @@ class _MasteryRow extends StatelessWidget {
                   borderRadius: BorderRadius.circular(3),
                   child: LinearProgressIndicator(
                     value: progress,
-                    backgroundColor: AppTheme.border,
+                    backgroundColor: AppTheme.borderColor(context),
                     valueColor: AlwaysStoppedAnimation<Color>(badgeColor),
                     minHeight: 5,
                   ),

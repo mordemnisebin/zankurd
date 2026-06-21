@@ -578,7 +578,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         backgroundColor: AppTheme.surfaceOf(context),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: AppTheme.border),
+          side: BorderSide(color: AppTheme.borderColor(context)),
         ),
         title: Text(
           ku ? 'Hesabê bi dawî jê bibî?' : 'Hesabı kalıcı olarak sil?',
@@ -663,7 +663,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               backgroundColor: AppTheme.surfaceOf(context),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
-                side: const BorderSide(color: AppTheme.border),
+                side: BorderSide(color: AppTheme.borderColor(context)),
               ),
               title: Text(ku ? 'Erêkirina dawî' : 'Son onay'),
               content: Column(
@@ -739,9 +739,9 @@ class _LangSwitch extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceHi,
+        color: AppTheme.surfaceHiColor(context),
         borderRadius: BorderRadius.circular(99),
-        border: Border.all(color: AppTheme.border),
+        border: Border.all(color: AppTheme.borderColor(context)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

@@ -378,7 +378,7 @@ class _PlayerTile extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceHi,
+        color: AppTheme.surfaceHiColor(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(

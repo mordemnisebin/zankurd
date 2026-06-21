@@ -429,9 +429,9 @@ class _SignInScreenState extends State<SignInScreen>
                       // Divider
                       Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Divider(
-                              color: AppTheme.border,
+                              color: AppTheme.borderColor(context),
                               thickness: 1,
                             ),
                           ),
@@ -446,9 +446,9 @@ class _SignInScreenState extends State<SignInScreen>
                               ),
                             ),
                           ),
-                          const Expanded(
+                          Expanded(
                             child: Divider(
-                              color: AppTheme.border,
+                              color: AppTheme.borderColor(context),
                               thickness: 1,
                             ),
                           ),
