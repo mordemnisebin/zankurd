@@ -18,6 +18,7 @@ import 'src/providers/auth_provider.dart';
 import 'src/providers/sound_provider.dart';
 import 'src/providers/theme_provider.dart';
 import 'src/screens/app_shell.dart';
+import 'src/services/analytics_service.dart';
 import 'src/theme/app_theme.dart';
 
 Future<void> main() async {
@@ -55,6 +56,9 @@ Future<void> main() async {
   }
 
   await SyncManager.initialize(repository);
+
+  // Anonim analitik servisi başlat
+  await AnalyticsService.instance.initialize();
 
   final languageProvider = await LanguageProvider.load();
   final themeProvider = await ThemeProvider.load();

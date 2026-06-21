@@ -5,6 +5,8 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../providers/sound_provider.dart';
+import '../providers/theme_provider.dart';
+import '../services/notification_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
@@ -25,11 +27,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _loadingName = true;
   bool _savingName = false;
   String _currentName = '';
+  NotificationService? _notificationService;
+  bool _notificationsEnabled = false;
+  String _notificationTime = '19:00';
 
   @override
   void initState() {
     super.initState();
     _loadPlayerName();
+    _loadNotificationSettings();
   }
 
   @override
@@ -93,6 +99,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const SizedBox(height: 14),
 
+              // Tema geçişi
+              Consumer<ThemeProvider>(
+                builder: (context, themeProvider, _) => AppPanel(
+                  child: Row(
+                    children: [
+                      Icon(
+                        themeProvider.isDark
+                            ? Icons.dark_mode_outlined
+                            : Icons.light_mode_outlined,
+                        color: AppTheme.gold,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          ku ? 'Modê tarî/ronahî' : 'Karanlık/Aydınlık mod',
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                      Switch(
+                        value: themeProvider.isDark,
+                        onChanged: (_) {
+                          themeProvider.toggleDarkLight();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+
               Consumer<SoundProvider>(
                 builder: (context, sound, _) => AppPanel(
                   child: Row(
@@ -119,6 +158,93 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ],
                   ),
+                ),
+              ),
+              const SizedBox(height: 14),
+
+              // Bildirim ayarları
+              AppPanel(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          _notificationsEnabled
+                              ? Icons.notifications_active_outlined
+                              : Icons.notifications_off_outlined,
+                          color: AppTheme.cyan,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                ku ? 'Bîranîna rojane' : 'Günlük hatırlatıcı',
+                                style: TextStyle(
+                                  color: AppTheme.textPrimaryColor(context),
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              Text(
+                                ku
+                                    ? 'Her roj di demjimêr $_notificationTime de'
+                                    : 'Her gün saat $_notificationTime',
+                                style: const TextStyle(
+                                  color: AppTheme.textMuted,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Switch(
+                          value: _notificationsEnabled,
+                          onChanged: (value) => _toggleNotifications(value),
+                        ),
+                      ],
+                    ),
+                    if (_notificationsEnabled) ...[
+                      const SizedBox(height: 8),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(8),
+                        onTap: _pickNotificationTime,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppTheme.surfaceHiColor(context),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: AppTheme.borderColor(context),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.access_time_outlined,
+                                color: AppTheme.cyan,
+                                size: 18,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                ku
+                                    ? 'Demê biguherîne: $_notificationTime'
+                                    : 'Saati değiştir: $_notificationTime',
+                                style: TextStyle(
+                                  color: AppTheme.textPrimaryColor(context),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
               const SizedBox(height: 14),
@@ -401,6 +527,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _loadNotificationSettings() async {
+    try {
+      final service = await NotificationService.load();
+      if (mounted) {
+        setState(() {
+          _notificationService = service;
+          _notificationsEnabled = service.enabled;
+          _notificationTime = service.timeDisplay;
+        });
+      }
+    } catch (_) {
+      // Bildirim servisi başlatılamazsa sessizce devam et.
+    }
+  }
+
+  Future<void> _toggleNotifications(bool value) async {
+    final service = _notificationService;
+    if (service == null) return;
+    await service.setEnabled(value);
+    if (mounted) {
+      setState(() {
+        _notificationsEnabled = value;
+      });
+    }
+  }
+
+  Future<void> _pickNotificationTime() async {
+    final service = _notificationService;
+    if (service == null) return;
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(hour: service.hour, minute: service.minute),
+    );
+    if (picked != null && mounted) {
+      await service.setTime(picked.hour, picked.minute);
+      setState(() {
+        _notificationTime = service.timeDisplay;
+      });
+    }
   }
 
   Future<void> _confirmDeleteAccount() async {
