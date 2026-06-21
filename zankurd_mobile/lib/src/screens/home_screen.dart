@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
 
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
@@ -16,6 +18,7 @@ import 'home/hero_card.dart';
 import 'home/question_card.dart';
 import 'home/section_header.dart';
 import 'home/spin_wheel_card.dart';
+import '../widgets/animated_counter.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
 import 'level_screen.dart';
@@ -513,26 +516,36 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     return Row(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
-          ),
-          child: Row(
-            children: [
-              const Icon(Icons.monetization_on, color: Colors.white, size: 16),
-              const SizedBox(width: 5),
-              Text(
-                '$coinBalance',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 13,
-                ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
               ),
-            ],
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.monetization_on,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                  const SizedBox(width: 5),
+                  AnimatedCounter(
+                    value: coinBalance,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ],

@@ -22,6 +22,7 @@ class DailyMissionsCard extends StatelessWidget {
     final completedCount = missions.where((m) => m.completed).length;
 
     return AppPanel(
+      glass: true,
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

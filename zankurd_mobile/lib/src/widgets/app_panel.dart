@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
@@ -10,6 +12,7 @@ class AppPanel extends StatelessWidget {
     this.gradient,
     this.color,
     this.borderRadius,
+    this.glass = false,
   });
 
   final Widget child;
@@ -18,9 +21,31 @@ class AppPanel extends StatelessWidget {
   final Color? color;
   final BorderRadius? borderRadius;
 
+  /// true ise arkasını bulanıklaştıran glassmorphism görünümü kullanır.
+  final bool glass;
+
   @override
   Widget build(BuildContext context) {
     final br = borderRadius ?? BorderRadius.circular(16);
+
+    if (glass) {
+      return ClipRRect(
+        borderRadius: br,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+          child: Container(
+            width: double.infinity,
+            padding: padding,
+            decoration: AppTheme.glassDecoration(
+              context,
+              borderRadius: br.topLeft.x,
+            ),
+            child: child,
+          ),
+        ),
+      );
+    }
+
     return Container(
       width: double.infinity,
       padding: padding,
