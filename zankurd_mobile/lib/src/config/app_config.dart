@@ -23,6 +23,13 @@ class AppConfig {
       ? _nextPublicSupabasePublishableKey
       : _defaultSupabasePublishableKey;
 
+  static bool isSafeClientSupabaseKey(String key) {
+    final normalized = key.trim().toLowerCase();
+    if (normalized.isEmpty) return false;
+    return !normalized.startsWith('sb_secret_') &&
+        !normalized.contains('service_role');
+  }
+
   static bool get hasSupabaseConfig =>
-      supabaseUrl.isNotEmpty && supabaseAnonKey.isNotEmpty;
+      supabaseUrl.isNotEmpty && isSafeClientSupabaseKey(supabaseAnonKey);
 }
