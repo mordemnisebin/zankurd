@@ -1,22 +1,41 @@
 import 'package:flutter/foundation.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 /// Anonim kullanım istatistikleri servisi.
-/// Firebase Analytics entegrasyonu yapıldığında gerçek olay kaydı burada yapılır.
-/// Şu anda yalnızca debug logları üretir.
+/// Firebase Analytics entegrasyonu kullanılarak gerçek olay kaydı burada yapılır.
 class AnalyticsService {
   AnalyticsService._();
   static final AnalyticsService instance = AnalyticsService._();
 
+  FirebaseAnalytics? _analytics;
+
   /// Uygulama başlatıldığında çağrılır.
   Future<void> initialize() async {
-    // TODO: FirebaseAnalytics.instance başlatma
-    debugPrint('[Analytics] Servis başlatıldı');
+    if (kIsWeb || defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS) {
+      try {
+        _analytics = FirebaseAnalytics.instance;
+        debugPrint('[Analytics] Firebase Analytics başlatıldı');
+      } catch (e) {
+        debugPrint('[Analytics] Firebase Analytics başlatılamadı: $e');
+      }
+    } else {
+      debugPrint('[Analytics] Bu platformda Firebase Analytics desteklenmiyor');
+    }
   }
 
   /// Özel olay kaydeder.
-  Future<void> logEvent(String name, [Map<String, dynamic>? parameters]) async {
-    // TODO: FirebaseAnalytics.instance.logEvent
+  Future<void> logEvent(String name, [Map<String, Object>? parameters]) async {
     debugPrint('[Analytics] $name ${parameters ?? ''}');
+    try {
+      if (_analytics != null) {
+        await _analytics!.logEvent(
+          name: name,
+          parameters: parameters,
+        );
+      }
+    } catch (e) {
+      debugPrint('[Analytics] Olay gönderilemedi: $e');
+    }
   }
 
   /// Quiz başlatma olayı.
