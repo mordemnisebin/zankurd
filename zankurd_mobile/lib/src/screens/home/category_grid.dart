@@ -195,7 +195,6 @@ class _CategoryCard extends StatelessWidget {
       tag: 'category_hero_$category',
       child: PressableCard(
         onTap: onTap,
-        borderRadius: AppTheme.cardRadius,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppTheme.cardRadius),

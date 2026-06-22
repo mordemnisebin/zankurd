@@ -5,13 +5,11 @@ class PressableCard extends StatefulWidget {
   const PressableCard({
     required this.child,
     required this.onTap,
-    this.borderRadius = 20,
     super.key,
   });
 
   final Widget child;
   final VoidCallback onTap;
-  final double borderRadius;
 
   @override
   State<PressableCard> createState() => _PressableCardState();
@@ -27,6 +25,7 @@ class _PressableCardState extends State<PressableCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTapDown: (_) => _set(true),
       onTapUp: (_) => _set(false),
       onTapCancel: () => _set(false),
