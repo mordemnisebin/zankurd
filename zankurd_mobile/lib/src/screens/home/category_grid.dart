@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../config/category_visuals.dart';
 import '../../data/mastery_store.dart';
 import '../../l10n/lang.dart';
 import '../../models/mastery_level.dart';
@@ -123,18 +124,6 @@ class _CompactCategoryButton extends StatelessWidget {
   final MasteryLevel masteryLevel;
   final VoidCallback onTap;
 
-  IconData _icon(String cat) => switch (cat) {
-    'Ziman' => Icons.translate_outlined,
-    'Çand' => Icons.diversity_3_outlined,
-    'Dîrok' => Icons.account_balance_outlined,
-    'Edebiyat' => Icons.menu_book_outlined,
-    'Cografya' => Icons.public_outlined,
-    'Muzîk' => Icons.music_note_outlined,
-    'Siyaset' => Icons.how_to_vote_outlined,
-    'Paradigma' => Icons.psychology_outlined,
-    _ => Icons.category_outlined,
-  };
-
   @override
   Widget build(BuildContext context) {
     final gradient = AppTheme.categoryGradient(index);
@@ -152,7 +141,7 @@ class _CompactCategoryButton extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(_icon(category), color: Colors.white, size: 20),
+              Icon(CategoryVisuals.icon(category), color: Colors.white, size: 20),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -193,37 +182,13 @@ class _CategoryCard extends StatelessWidget {
   final MasteryLevel masteryLevel;
   final VoidCallback onTap;
 
-  IconData _icon(String cat) => switch (cat) {
-    'Ziman' => Icons.translate_outlined,
-    'Çand' => Icons.diversity_3_outlined,
-    'Dîrok' => Icons.account_balance_outlined,
-    'Edebiyat' => Icons.menu_book_outlined,
-    'Cografya' => Icons.public_outlined,
-    'Muzîk' => Icons.music_note_outlined,
-    'Siyaset' => Icons.how_to_vote_outlined,
-    'Paradigma' => Icons.psychology_outlined,
-    _ => Icons.category_outlined,
-  };
-
-  String _imagePath(String cat) => switch (cat) {
-    'Ziman' => 'assets/question_images/cat_ziman.png',
-    'Çand' => 'assets/question_images/cat_cand.png',
-    'Dîrok' => 'assets/question_images/cat_dirok.png',
-    'Edebiyat' => 'assets/question_images/cat_edebiyat.png',
-    'Cografya' => 'assets/question_images/cat_cografya.png',
-    'Muzîk' => 'assets/question_images/cat_muzik.png',
-    'Siyaset' => 'assets/question_images/cat_siyaset.png',
-    'Paradigma' => 'assets/question_images/cat_paradigma.png',
-    _ => 'assets/question_images/cat_ziman.png',
-  };
-
   @override
   Widget build(BuildContext context) {
     final gradient = AppTheme.categoryGradient(index);
     final glowColor = AppTheme
         .categoryGradients[index % AppTheme.categoryGradients.length]
         .first;
-    final image = _imagePath(category);
+    final image = CategoryVisuals.imagePath(category);
 
     return Hero(
       tag: 'category_hero_$category',
@@ -231,18 +196,12 @@ class _CategoryCard extends StatelessWidget {
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(AppTheme.cardRadius),
             border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
-            boxShadow: [
-              BoxShadow(
-                color: glowColor.withValues(alpha: 0.35),
-                blurRadius: 18,
-                offset: const Offset(0, 6),
-              ),
-            ],
+            boxShadow: AppTheme.elevatedShadow(glowColor),
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(AppTheme.cardRadius),
             child: Stack(
               children: [
                 Positioned.fill(child: Image.asset(image, fit: BoxFit.cover)),
@@ -272,6 +231,43 @@ class _CategoryCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (masteryLevel != MasteryLevel.none)
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.45),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.15),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            masteryLevel.icon,
+                            color: AppTheme.gold,
+                            size: 11,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            isKu ? masteryLevel.titleKu : masteryLevel.titleTr,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 9,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 Padding(
                   padding: const EdgeInsets.all(14),
                   child: Column(
@@ -285,7 +281,7 @@ class _CategoryCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Icon(
-                          _icon(category),
+                          CategoryVisuals.icon(category),
                           color: Colors.white,
                           size: 24,
                         ),
@@ -316,30 +312,6 @@ class _CategoryCard extends StatelessWidget {
                           fontSize: 11,
                         ),
                       ),
-                      if (masteryLevel != MasteryLevel.none) ...[
-                        const SizedBox(height: 2),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              masteryLevel.icon,
-                              color: Colors.white.withValues(alpha: 0.85),
-                              size: 10,
-                            ),
-                            const SizedBox(width: 3),
-                            Text(
-                              isKu
-                                  ? masteryLevel.titleKu
-                                  : masteryLevel.titleTr,
-                              style: TextStyle(
-                                color: Colors.white.withValues(alpha: 0.85),
-                                fontSize: 9,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
                     ],
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../config/category_visuals.dart';
 import '../data/mastery_store.dart';
 import '../data/zankurd_repository.dart';
 import '../models/mastery_level.dart';
@@ -7,7 +8,7 @@ import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
-import 'level_screen.dart';
+import 'subcategory_screen.dart';
 
 class CategoriesTab extends StatefulWidget {
   const CategoriesTab({
@@ -135,7 +136,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                         masteryLevel: _masteryLevels[cat] ?? MasteryLevel.none,
                         onTap: () => Navigator.of(context).push(
                           AppRoute.to(
-                            LevelScreen(
+                            SubcategoryScreen(
                               repository: widget.repository,
                               category: cat,
                             ),
@@ -169,43 +170,25 @@ class _CategoryCard extends StatelessWidget {
   final MasteryLevel masteryLevel;
   final VoidCallback onTap;
 
-  String _imagePath(String cat) => switch (cat) {
-    'Ziman' => 'assets/question_images/cat_ziman.png',
-    'Çand' => 'assets/question_images/cat_cand.png',
-    'Dîrok' => 'assets/question_images/cat_dirok.png',
-    'Edebiyat' => 'assets/question_images/cat_edebiyat.png',
-    'Cografya' => 'assets/question_images/cat_cografya.png',
-    'Muzîk' => 'assets/question_images/cat_muzik.png',
-    'Siyaset' => 'assets/question_images/cat_siyaset.png',
-    'Paradigma' => 'assets/question_images/cat_paradigma.png',
-    _ => 'assets/question_images/cat_ziman.png',
-  };
-
   @override
   Widget build(BuildContext context) {
     final gradient = AppTheme.categoryGradient(index);
     final glowColor = AppTheme
         .categoryGradients[index % AppTheme.categoryGradients.length]
         .first;
-    final image = _imagePath(category);
-    final icon = _icon(category);
+    final image = CategoryVisuals.imagePath(category);
+    final icon = CategoryVisuals.icon(category);
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(AppTheme.cardRadius),
           border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
-          boxShadow: [
-            BoxShadow(
-              color: glowColor.withValues(alpha: 0.35),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-            ),
-          ],
+          boxShadow: AppTheme.elevatedShadow(glowColor),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(AppTheme.cardRadius),
           child: Stack(
             children: [
               Positioned.fill(child: Image.asset(image, fit: BoxFit.cover)),
@@ -236,6 +219,43 @@ class _CategoryCard extends StatelessWidget {
                   ),
                 ),
               ),
+              if (masteryLevel != MasteryLevel.none)
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.45),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.15),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          masteryLevel.icon,
+                          color: AppTheme.gold,
+                          size: 11,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          isKu ? masteryLevel.titleKu : masteryLevel.titleTr,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 9,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -287,32 +307,6 @@ class _CategoryCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (masteryLevel != MasteryLevel.none) ...[
-                      const SizedBox(height: 4),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            masteryLevel.icon,
-                            color: Colors.white.withValues(alpha: 0.9),
-                            size: 11,
-                          ),
-                          const SizedBox(width: 3),
-                          Expanded(
-                            child: Text(
-                              isKu ? masteryLevel.titleKu : masteryLevel.titleTr,
-                              style: TextStyle(
-                                color: Colors.white.withValues(alpha: 0.9),
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
                   ],
                 ),
               ),
@@ -321,19 +315,5 @@ class _CategoryCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  IconData _icon(String cat) {
-    return switch (cat) {
-      'Ziman' => Icons.translate_outlined,
-      'Çand' => Icons.diversity_3_outlined,
-      'Dîrok' => Icons.account_balance_outlined,
-      'Edebiyat' => Icons.menu_book_outlined,
-      'Cografya' => Icons.public_outlined,
-      'Muzîk' => Icons.music_note_outlined,
-      'Siyaset' => Icons.how_to_vote_outlined,
-      'Paradigma' => Icons.psychology_outlined,
-      _ => Icons.category_outlined,
-    };
   }
 }
