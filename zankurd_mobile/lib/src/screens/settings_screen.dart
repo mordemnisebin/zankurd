@@ -276,7 +276,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         themeProvider.isDark
                             ? Icons.dark_mode_outlined
                             : Icons.light_mode_outlined,
-                        color: AppTheme.gold,
+                        color: AppTheme.violet,
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -342,7 +342,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           _notificationsEnabled
                               ? Icons.notifications_active_outlined
                               : Icons.notifications_off_outlined,
-                          color: AppTheme.cyan,
+                          color: AppTheme.violet,
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -396,7 +396,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             children: [
                               Icon(
                                 Icons.access_time_outlined,
-                                color: AppTheme.cyan,
+                                color: AppTheme.violet,
                                 size: 18,
                               ),
                               const SizedBox(width: 8),
@@ -445,7 +445,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Privacy
               _ExpandableSection(
                 icon: Icons.privacy_tip_outlined,
-                iconColor: AppTheme.gold,
+                iconColor: AppTheme.violet,
                 title: ku ? 'Nepenî' : 'Gizlilik',
                 body: ku
                     ? 'ZanKurd ev dane tomar dike: navê lîstikvan, '

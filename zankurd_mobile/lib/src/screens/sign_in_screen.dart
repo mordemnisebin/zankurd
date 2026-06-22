@@ -498,7 +498,7 @@ class _SignInScreenState extends State<SignInScreen>
                                       style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 18,
-                                        color: AppTheme.gold,
+                                        color: AppTheme.accent,
                                       ),
                                     ),
                                     label: Text(
@@ -795,7 +795,7 @@ class _SignInScreenState extends State<SignInScreen>
                               style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 18,
-                                color: AppTheme.gold,
+                                color: AppTheme.accent,
                               ),
                             ),
                             label: Text(

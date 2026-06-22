@@ -25,7 +25,7 @@ class AppEmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return _AppStateScaffold(
       icon: icon,
-      iconColor: AppTheme.gold,
+      iconColor: AppTheme.violet,
       title: title,
       message: message,
       actionLabel: actionLabel,

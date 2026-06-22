@@ -58,17 +58,17 @@ class AppTheme {
   }
 
   // ============ Dark Mode Palette ============
-  // Primary gradient: Neon Violet/Coral/Orange
+  // Primary CTA / marka gradyanı — ana eylem butonları ve marka vurgusu.
   static const primaryGradientStart = Color(0xFFFF4B91); // Canlı neon pembe
   static const primaryGradientEnd = Color(0xFFFF7B54); // Canlı neon turuncu
 
-  // Secondary accent: Electric Indigo/Neon Mavi
-  static const secondaryAccent = Color(0xFF6F61C0); 
+  // İkincil aksan — ikincil vurgu / yardımcı renk.
+  static const secondaryAccent = Color(0xFF6F61C0);
 
-  // Gold accent
+  // Ödül rengi — YALNIZCA coin / ödül / streak / ustalık rozeti göstergelerinde kullan.
   static const gold = Color(0xFFFFD23F); // Parlak neon altın sarısı
 
-  // Cyan accent
+  // Bilgi/ipucu vurgusu — nadir kullan (ör. joker ipucu). Genel aksan için kullanma.
   static const cyan = Color(0xFF00F0FF); // Parlak neon mavi/turkuaz
 
   // Dark backgrounds (Derin Gece Mavisi / Kozmik Mor geçişleri)
@@ -87,9 +87,13 @@ class AppTheme {
   static const border = Color(0xFF2E2A52); 
 
   // Status colors
+  // Primary neon pembe — ana aksan / vurgu rengi.
   static const accent = Color(0xFFFF4B91); // Neon Pembe
+  // İkincil mor aksan — yardımcı vurgu rengi.
   static const violet = Color(0xFF8E8FFA); // Pastel Neon Mor
+  // Doğru cevap rengi — YALNIZCA doğru cevap geri bildiriminde kullan.
   static const correct = Color(0xFF00E676); // Parlak Neon Yeşil
+  // Yanlış cevap rengi — YALNIZCA yanlış cevap geri bildiriminde kullan.
   static const wrong = Color(0xFFFF1744); // Parlak Neon Kırmızı
 
   // ============ Light Mode Palette (Premium, TRT Tarzı Canlı/Parlak) ============

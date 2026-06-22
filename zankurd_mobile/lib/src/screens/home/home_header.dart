@@ -134,7 +134,7 @@ class _ThemeQuickToggle extends StatelessWidget {
             themeProvider.isDark
                 ? Icons.dark_mode_outlined
                 : Icons.light_mode_outlined,
-            color: AppTheme.gold,
+            color: AppTheme.violet,
             size: 18,
           ),
         ),

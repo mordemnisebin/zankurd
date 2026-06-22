@@ -1060,7 +1060,7 @@ class _ExplanationBox extends StatelessWidget {
                   children: [
                     const Icon(
                       Icons.lightbulb_outline,
-                      color: AppTheme.gold,
+                      color: AppTheme.correct,
                       size: 20,
                     ),
                     const SizedBox(width: 10),
@@ -1071,7 +1071,7 @@ class _ExplanationBox extends StatelessWidget {
                           Text(
                             isKu ? 'Bersiva rast' : 'Doğru cevap',
                             style: const TextStyle(
-                              color: AppTheme.gold,
+                              color: AppTheme.correct,
                               fontWeight: FontWeight.w700,
                               fontSize: 12,
                             ),
