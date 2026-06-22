@@ -281,6 +281,189 @@ class _ScoreHeader extends StatelessWidget {
   }
 }
 
+class _DuelScoreHeader extends StatelessWidget {
+  const _DuelScoreHeader({
+    required this.playerName,
+    required this.playerScore,
+    required this.playerStreak,
+    required this.opponentName,
+    required this.opponentScore,
+    required this.opponentStreak,
+    required this.progress,
+  });
+
+  final String playerName;
+  final int playerScore;
+  final int playerStreak;
+  final String opponentName;
+  final int opponentScore;
+  final int opponentStreak;
+  final String progress;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppPanel(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Player info
+              Expanded(
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 16,
+                      backgroundColor: AppTheme.accent.withValues(alpha: 0.15),
+                      child: const Icon(Icons.person, color: AppTheme.accent, size: 18),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            playerName,
+                            style: TextStyle(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 13,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            '$playerScore pts',
+                            style: const TextStyle(
+                              color: AppTheme.gold,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // VS & Progress
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppTheme.surfaceColor(context),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppTheme.borderColor(context)),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      progress,
+                      style: TextStyle(
+                        color: AppTheme.textSubColor(context),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const Text(
+                      'VS',
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 10,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Opponent info
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            opponentName,
+                            style: TextStyle(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 13,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            '$opponentScore pts',
+                            style: const TextStyle(
+                              color: AppTheme.gold,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    CircleAvatar(
+                      radius: 16,
+                      backgroundColor: Colors.redAccent.withValues(alpha: 0.15),
+                      child: const Icon(Icons.android, color: Colors.redAccent, size: 18),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (playerStreak > 0 || opponentStreak > 0) ...[
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (playerStreak > 0)
+                  Row(
+                    children: [
+                      const Icon(Icons.local_fire_department, color: Colors.orange, size: 14),
+                      Text(
+                        'x$playerStreak',
+                        style: const TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ],
+                  )
+                else
+                  const SizedBox.shrink(),
+                if (opponentStreak > 0)
+                  Row(
+                    children: [
+                      Text(
+                        'x$opponentStreak',
+                        style: const TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 11,
+                        ),
+                      ),
+                      const Icon(Icons.local_fire_department, color: Colors.orange, size: 14),
+                    ],
+                  )
+                else
+                  const SizedBox.shrink(),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
 class _Metric extends StatelessWidget {
   const _Metric({required this.label, required this.value});
 
@@ -343,7 +526,7 @@ class _AnswerButton extends StatelessWidget {
     Color(0xFFE94560), // A — kırmızı
     Color(0xFF2563EB), // B — mavi
     Color(0xFF10B981), // C — yeşil
-    Color(0xFFF59E0B), // D — amber
+    Color(0xFFD97706), // D — koyu amber (WCAG kontrast için)
   ];
 
   @override
@@ -441,10 +624,29 @@ class _AnswerButton extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (correct)
-                    const Icon(Icons.check_circle_outline, color: Colors.white),
-                  if (wrong)
-                    const Icon(Icons.cancel_outlined, color: Colors.white),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    transitionBuilder: (child, animation) => ScaleTransition(
+                      scale: animation,
+                      child: FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      ),
+                    ),
+                    child: correct
+                        ? const Icon(
+                            Icons.check_circle_outline,
+                            key: ValueKey('correct_icon'),
+                            color: Colors.white,
+                          )
+                        : wrong
+                            ? const Icon(
+                                Icons.cancel_outlined,
+                                key: ValueKey('wrong_icon'),
+                                color: Colors.white,
+                              )
+                            : const SizedBox.shrink(key: ValueKey('empty_icon')),
+                  ),
                 ],
               ),
               if (audiencePercent != null) ...[

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -33,6 +34,8 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   int? _wonAmount;
   int _lastPlayedSegment = -1;
   bool _showConfetti = false;
+  Timer? _countdownTimer;
+  Duration _timeUntilNextSpin = Duration.zero;
 
   @override
   void initState() {
@@ -54,6 +57,25 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       }
     });
     _checkSpin();
+    _startCountdown();
+  }
+
+  void _startCountdown() {
+    _countdownTimer?.cancel();
+    _updateCountdown();
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      _updateCountdown();
+    });
+  }
+
+  void _updateCountdown() {
+    final now = DateTime.now().toUtc();
+    final nextMidnight = DateTime.utc(now.year, now.month, now.day + 1);
+    if (mounted) {
+      setState(() {
+        _timeUntilNextSpin = nextMidnight.difference(now);
+      });
+    }
   }
 
   Future<void> _checkSpin() async {
@@ -74,6 +96,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   @override
   void dispose() {
     _controller.dispose();
+    _countdownTimer?.cancel();
     super.dispose();
   }
 
@@ -144,6 +167,13 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         context.read<SoundProvider>().playCoin();
       } catch (_) {}
     }
+  }
+
+  String _formatDuration(Duration d) {
+    final hours = d.inHours.toString().padLeft(2, '0');
+    final minutes = (d.inMinutes % 60).toString().padLeft(2, '0');
+    final seconds = (d.inSeconds % 60).toString().padLeft(2, '0');
+    return '$hours:$minutes:$seconds';
   }
 
   @override
@@ -297,6 +327,32 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                             ),
                           ),
                         ),
+                        if (!_canSpin && !_spinning) ...[
+                          const SizedBox(height: 16),
+                          Center(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                              decoration: AppTheme.glassDecoration(context),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.access_time_rounded, color: AppTheme.gold, size: 16),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    ku
+                                        ? 'Dizivirîna nû di: ${_formatDuration(_timeUntilNextSpin)}'
+                                        : 'Yeni çevirme hakkı: ${_formatDuration(_timeUntilNextSpin)}',
+                                    style: TextStyle(
+                                      color: AppTheme.textPrimaryColor(context),
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                         const SizedBox(height: 10),
                         Text(
                           ku
@@ -392,7 +448,6 @@ class _WheelPainter extends CustomPainter {
     // Dönen LED Işıkları (Chasing Lights)
     final ledCount = 16;
     final ledRadius = radius + 6.0;
-    final timeFactor = DateTime.now().millisecondsSinceEpoch / 200.0;
 
     for (var i = 0; i < ledCount; i++) {
       final currentLedAngle = i * (2 * math.pi / ledCount);
@@ -401,9 +456,9 @@ class _WheelPainter extends CustomPainter {
         center.dy + math.sin(currentLedAngle) * ledRadius,
       );
 
-      // Sinüs dalgası ile kovalayan ışık yoğunluğu
-      final intensity = math.sin(i * (2 * math.pi / ledCount) * 2 - angle * 4 + timeFactor);
-      final isLit = intensity > 0.1;
+      // Sinüs dalgası ile kovalayan ışık yoğunluğu (tamamen dönme açısına bağlı)
+      final intensity = math.sin(i * (2 * math.pi / ledCount) * 2 - angle * 5);
+      final isLit = intensity > 0.0;
 
       final ledPaint = Paint()
         ..color = isLit ? const Color(0xFFFFD700) : const Color(0x33FFD700)
@@ -423,7 +478,8 @@ class _WheelPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _WheelPainter oldDelegate) => true;
+  bool shouldRepaint(covariant _WheelPainter oldDelegate) =>
+      angle != oldDelegate.angle;
 }
 
 class _PointerPainter extends CustomPainter {

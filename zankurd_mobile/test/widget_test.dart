@@ -928,6 +928,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    // Tap the subcategory card to open LevelScreen
+    await tester.tap(find.text('Dilbilgisi / Gramer'));
+    await tester.pumpAndSettle();
+
     expect(find.text('Destpêk'), findsOneWidget);
     expect(find.text('Bingeh'), findsOneWidget);
     expect(find.text('10 soru · Zorluk 1/5'), findsOneWidget);
@@ -988,7 +992,7 @@ void main() {
     await answerQuestion(questions[2], last: true);
 
     expect(find.text('Sonuç'), findsOneWidget);
-    expect(find.text('Yarış tamamlandı'), findsOneWidget);
+    expect(find.text('YARIŞ TAMAMLANDI'), findsOneWidget);
     expect(find.text('Doğru'), findsOneWidget);
     expect(find.text('Yanlış'), findsOneWidget);
 

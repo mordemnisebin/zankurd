@@ -66,4 +66,13 @@ void main() {
       expect(select, contains('image_url'));
     }
   });
+
+  test('MockZanKurdRepository implements subscribeRoomBroadcast and sendRoomBroadcast', () async {
+    final repository = SupabaseZanKurdRepository(
+      SupabaseClient('https://example.supabase.co', 'sb_publishable_test_key'),
+    );
+
+    expect(() => repository.subscribeRoomBroadcast('room_123'), returnsNormally);
+    await expectLater(repository.sendRoomBroadcast('room_123', {'test': 'data'}), completes);
+  });
 }

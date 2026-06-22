@@ -110,12 +110,14 @@ class _TournamentScreenState extends State<TournamentScreen> {
   }
 
   String _stageLabel(bool ku) {
+    if (_stage.startsWith('lost')) {
+      return ku ? 'Tû elendî!' : 'Elendin!';
+    }
     return switch (_stage) {
       'quarter' => ku ? 'Çaryek Fînal' : 'Çeyrek Final',
       'semi' => ku ? 'Nîv Fînal' : 'Yarı Final',
       'final' => ku ? 'Fînal' : 'Final',
       'won' => ku ? 'Şampiyon!' : 'Şampiyon!',
-      'lost' => ku ? 'Tû elendî' : 'Elendin',
       _ => '',
     };
   }
@@ -181,7 +183,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
           widget.repository.addCoins(200, 'tournament_champion');
         }
       } else {
-        _stage = 'lost';
+        _stage = 'lost_$_stage';
         context.read<SoundProvider>().playWrong();
       }
     });
@@ -244,7 +246,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             ku ? 'Kûpa Zanînê' : 'ZanKurd Kupası',
             style: TextStyle(
               fontSize: 24,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: AppTheme.textPrimaryColor(context),
             ),
           ),
@@ -294,7 +296,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
 
   Widget _buildBracket(bool ku) {
     final opponent = _currentOpponent;
-    final isFinished = _stage == 'won' || _stage == 'lost';
+    final isFinished = _stage == 'won' || _stage.startsWith('lost');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -327,7 +329,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
                   ku ? 'Te +200 Coin qezenc kir.' : '+200 Coin kazandın.',
                   style: TextStyle(color: AppTheme.gold, fontWeight: FontWeight.bold),
                 ),
-              ] else if (_stage == 'lost') ...[
+              ] else if (_stage.startsWith('lost')) ...[
                 Icon(Icons.sentiment_very_dissatisfied_rounded, color: AppTheme.wrong, size: 64),
                 const SizedBox(height: 8),
                 Text(
@@ -340,7 +342,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
                 ),
                 Text(
                   '${ku ? "Skora Te" : "Skorun"}: $_userScore | $opponent: $_opponentScore',
-                  style: TextStyle(color: AppTheme.textSub),
+                  style: TextStyle(color: AppTheme.textSubOf(context)),
                 ),
               ] else ...[
                 Row(
@@ -404,71 +406,166 @@ class _TournamentScreenState extends State<TournamentScreen> {
   }
 
   Widget _buildBracketVisual(bool ku) {
-    final q1 = ku ? 'Tu vs ${_bots[0]}' : 'Sen vs ${_bots[0]}';
-    final q2 = '${_bots[1]} vs ${_bots[2]}';
-    final q3 = '${_bots[3]} vs ${_bots[4]}';
-    final q4 = '${_bots[5]} vs ${_bots[6]}';
+    // Quarter Finals
+    final userOpponent = _bots[0];
+    final q1Player1 = ku ? 'Tu' : 'Sen';
+    final q1Player2 = userOpponent;
+    int? q1Score1;
+    int? q1Score2;
+    if (_stage != 'quarter' && _stage != 'lobby') {
+      q1Score1 = _userScore;
+      q1Score2 = _opponentScore;
+    }
 
-    final s1Winner = _stage == 'quarter'
+    final q2Player1 = _bots[1];
+    final q2Player2 = _bots[2];
+    final q2Winner = _botWinners.isNotEmpty ? _botWinners[0] : '';
+    final q2Score1 = q2Winner == q2Player1 ? 820 : 680;
+    final q2Score2 = q2Winner == q2Player2 ? 820 : 680;
+
+    final q3Player1 = _bots[3];
+    final q3Player2 = _bots[4];
+    final q3Winner = _botWinners.length >= 2 ? _botWinners[1] : '';
+    final q3Score1 = q3Winner == q3Player1 ? 790 : 710;
+    final q3Score2 = q3Winner == q3Player2 ? 790 : 710;
+
+    final q4Player1 = _bots[5];
+    final q4Player2 = _bots[6];
+    final q4Winner = _botWinners.length >= 3 ? _botWinners[2] : '';
+    final q4Score1 = q4Winner == q4Player1 ? 850 : 640;
+    final q4Score2 = q4Winner == q4Player2 ? 850 : 640;
+
+    // Semi Finals
+    final s1Player1 = (_stage == 'quarter' || _stage == 'lobby') ? '?' : (_stage == 'lost_quarter' ? userOpponent : (ku ? 'Tu' : 'Sen'));
+    final s1Player2 = (_stage == 'quarter' || _stage == 'lobby') ? '?' : q2Winner;
+    int? s1Score1;
+    int? s1Score2;
+    if (_stage != 'quarter' && _stage != 'lobby' && _stage != 'lost_quarter' && _stage != 'semi') {
+      s1Score1 = _userScore;
+      s1Score2 = _opponentScore;
+    }
+
+    final s2Player1 = (_stage == 'quarter' || _stage == 'lobby') ? '?' : q3Winner;
+    final s2Player2 = (_stage == 'quarter' || _stage == 'lobby') ? '?' : q4Winner;
+    final s2Winner = (_stage != 'quarter' && _stage != 'lobby' && _stage != 'lost_quarter' && _botWinners.length >= 2) ? _botWinners[1] : '';
+    final s2Score1 = s2Winner == s2Player1 ? 840 : 730;
+    final s2Score2 = s2Winner == s2Player2 ? 840 : 730;
+
+    // Final
+    final f1Player1 = (_stage == 'quarter' || _stage == 'semi' || _stage == 'lost_quarter' || _stage == 'lost_semi' || _stage == 'lobby') 
+        ? '?' 
+        : (ku ? 'Tu' : 'Sen');
+    final f1Player2 = (_stage == 'quarter' || _stage == 'semi' || _stage == 'lost_quarter' || _stage == 'lost_semi' || _stage == 'lobby')
         ? '?'
-        : (_stage == 'semi' || _stage == 'final' || _stage == 'won' ? (ku ? 'Tu' : 'Sen') : _bots[0]);
-    final s2Winner = _stage == 'quarter' ? '?' : _botWinners[0];
-    final s3Winner = _stage == 'quarter' ? '?' : _botWinners[1];
-    final s4Winner = _stage == 'quarter' ? '?' : _botWinners[2];
+        : s2Winner;
+    int? fScore1;
+    int? fScore2;
+    if (_stage == 'won' || _stage == 'lost_final') {
+      fScore1 = _userScore;
+      fScore2 = _opponentScore;
+    }
 
-    final f1Winner = (_stage == 'quarter' || _stage == 'semi')
-        ? '?'
-        : (_stage == 'final' || _stage == 'won' ? (ku ? 'Tu' : 'Sen') : (ku ? 'Elendî' : 'Elendin'));
-    final f2Winner = (_stage == 'quarter' || _stage == 'semi')
-        ? '?'
-        : (_botWinners.length >= 2 ? _botWinners[1] : '?');
+    final champion = _stage == 'won' 
+        ? (ku ? 'Tu' : 'Sen') 
+        : (_stage == 'lost_final' ? f1Player2 : '?');
 
-    final champion = _stage == 'won' ? (ku ? 'Tu' : 'Sen') : (_stage == 'lost' ? (ku ? 'Lîstikvanê din' : 'Diğer Oyuncu') : '?');
-
-    return AppPanel(
-      child: Column(
-        children: [
-          _BracketRoundRow(
-            round: ku ? 'Çaryek Fînal' : 'Çeyrek Final',
-            matches: [q1, q2, q3, q4],
-          ),
-          Icon(Icons.arrow_downward, color: AppTheme.textMutedColor(context), size: 16),
-          _BracketRoundRow(
-            round: ku ? 'Nîv Fînal' : 'Yarı Final',
-            matches: [
-              s1Winner != '?' && s2Winner != '?' ? '$s1Winner vs $s2Winner' : '?',
-              s3Winner != '?' && s4Winner != '?' ? '$s3Winner vs $s4Winner' : '?'
-            ],
-          ),
-          Icon(Icons.arrow_downward, color: AppTheme.textMutedColor(context), size: 16),
-          _BracketRoundRow(
-            round: ku ? 'Fînal' : 'Final',
-            matches: [
-              f1Winner != '?' && f2Winner != '?' ? '$f1Winner vs $f2Winner' : '?'
-            ],
-          ),
-          Icon(Icons.arrow_downward, color: AppTheme.textMutedColor(context), size: 16),
-          AppPanel(
-            color: champion == (ku ? 'Tu' : 'Sen')
-                ? AppTheme.gold.withValues(alpha: 0.15)
-                : AppTheme.surfaceColor(context),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+        height: 340,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Column 1: Quarter Finals
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(Icons.emoji_events, color: AppTheme.gold, size: 24),
-                const SizedBox(width: 8),
-                Text(
-                  '${ku ? "Şampiyon" : "Şampiyon"}: $champion',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    color: champion == (ku ? 'Tu' : 'Sen') ? AppTheme.gold : AppTheme.textPrimaryColor(context),
+                _MatchCard(player1: q1Player1, player2: q1Player2, score1: q1Score1, score2: q1Score2, isActive: _stage == 'quarter', isKu: ku),
+                const SizedBox(height: 20),
+                _MatchCard(player1: q2Player1, player2: q2Player2, score1: _stage != 'quarter' && _stage != 'lobby' ? q2Score1 : null, score2: _stage != 'quarter' && _stage != 'lobby' ? q2Score2 : null, isKu: ku),
+                const SizedBox(height: 20),
+                _MatchCard(player1: q3Player1, player2: q3Player2, score1: _stage != 'quarter' && _stage != 'lobby' ? q3Score1 : null, score2: _stage != 'quarter' && _stage != 'lobby' ? q3Score2 : null, isKu: ku),
+                const SizedBox(height: 20),
+                _MatchCard(player1: q4Player1, player2: q4Player2, score1: _stage != 'quarter' && _stage != 'lobby' ? q4Score1 : null, score2: _stage != 'quarter' && _stage != 'lobby' ? q4Score2 : null, isKu: ku),
+              ],
+            ),
+            // Connector 1
+            CustomPaint(
+              size: const Size(40, 300),
+              painter: BracketConnectorPainter(type: 1, color: AppTheme.borderColor(context)),
+            ),
+            // Column 2: Semi Finals
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 40),
+                _MatchCard(player1: s1Player1, player2: s1Player2, score1: s1Score1, score2: s1Score2, isActive: _stage == 'semi', isKu: ku),
+                const SizedBox(height: 100),
+                _MatchCard(player1: s2Player1, player2: s2Player2, score1: _stage != 'quarter' && _stage != 'lobby' && _stage != 'lost_quarter' && _stage != 'semi' ? s2Score1 : null, score2: _stage != 'quarter' && _stage != 'lobby' && _stage != 'lost_quarter' && _stage != 'semi' ? s2Score2 : null, isKu: ku),
+              ],
+            ),
+            // Connector 2
+            CustomPaint(
+              size: const Size(40, 300),
+              painter: BracketConnectorPainter(type: 2, color: AppTheme.borderColor(context)),
+            ),
+            // Column 3: Final
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 120),
+                _MatchCard(player1: f1Player1, player2: f1Player2, score1: fScore1, score2: fScore2, isActive: _stage == 'final', isKu: ku),
+              ],
+            ),
+            // Connector 3
+            CustomPaint(
+              size: const Size(40, 300),
+              painter: BracketConnectorPainter(type: 3, color: AppTheme.borderColor(context)),
+            ),
+            // Column 4: Champion
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 120),
+                Container(
+                  width: 140,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: champion == (ku ? 'Tu' : 'Sen')
+                        ? AppTheme.gold.withValues(alpha: 0.12)
+                        : AppTheme.surfaceColor(context),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: champion == (ku ? 'Tu' : 'Sen') ? AppTheme.gold : AppTheme.borderColor(context),
+                      width: champion == (ku ? 'Tu' : 'Sen') ? 1.8 : 1,
+                    ),
+                    boxShadow: champion == (ku ? 'Tu' : 'Sen') ? AppTheme.elevatedShadow(AppTheme.gold) : AppTheme.cardShadow(context),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.emoji_events, color: AppTheme.gold, size: 20),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
+                          champion,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: champion == (ku ? 'Tu' : 'Sen') ? AppTheme.gold : AppTheme.textPrimaryColor(context),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -505,52 +602,134 @@ class _PlayerCard extends StatelessWidget {
   }
 }
 
-class _BracketRoundRow extends StatelessWidget {
-  const _BracketRoundRow({required this.round, required this.matches});
+class _MatchCard extends StatelessWidget {
+  const _MatchCard({
+    required this.player1,
+    required this.player2,
+    this.score1,
+    this.score2,
+    this.isActive = false,
+    this.isKu = false,
+  });
 
-  final String round;
-  final List<String> matches;
+  final String player1;
+  final String player2;
+  final int? score1;
+  final int? score2;
+  final bool isActive;
+  final bool isKu;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+    final borderCol = isActive ? AppTheme.accent : AppTheme.borderColor(context);
+    final bgCol = isActive
+        ? AppTheme.accent.withValues(alpha: 0.06)
+        : AppTheme.surfaceColor(context);
+
+    final isWinner1 = score1 != null && score2 != null && score1! >= score2!;
+    final isWinner2 = score1 != null && score2 != null && score2! > score1!;
+
+    return Container(
+      width: 140,
+      height: 60,
+      decoration: BoxDecoration(
+        color: bgCol,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: borderCol, width: isActive ? 1.8 : 1),
+        boxShadow: isActive ? AppTheme.elevatedShadow(AppTheme.accent) : AppTheme.cardShadow(context),
+      ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            round,
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppTheme.textMuted),
-          ),
-          const SizedBox(height: 6),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              for (final match in matches)
-                Flexible(
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppTheme.surfaceColor(context),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: AppTheme.borderColor(context)),
-                    ),
-                    child: Text(
-                      match,
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w800,
-                        color: AppTheme.textPrimaryColor(context),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-            ],
-          ),
+          _buildPlayerRow(context, player1, score1, isWinner1, isWinner2),
+          Divider(height: 1, color: AppTheme.borderColor(context).withValues(alpha: 0.5)),
+          _buildPlayerRow(context, player2, score2, isWinner2, isWinner1),
         ],
       ),
     );
   }
+
+  Widget _buildPlayerRow(BuildContext context, String name, int? score, bool isWinner, bool isOpponentWinner) {
+    final style = TextStyle(
+      fontSize: 10,
+      fontWeight: isWinner ? FontWeight.w700 : FontWeight.w600,
+      color: isWinner
+          ? AppTheme.textPrimaryColor(context)
+          : (isOpponentWinner ? AppTheme.textMutedColor(context) : AppTheme.textSubColor(context)),
+    );
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Text(
+              name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: style,
+            ),
+          ),
+          if (score != null) ...[
+            const SizedBox(width: 4),
+            Text(
+              '$score',
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: isWinner ? AppTheme.gold : AppTheme.textMutedColor(context),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class BracketConnectorPainter extends CustomPainter {
+  BracketConnectorPainter({required this.type, required this.color});
+  final int type; // 1: double fork (quarter to semi), 2: single large fork (semi to final), 3: straight line (final to champion)
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0;
+
+    final w = size.width;
+    
+    if (type == 1) {
+      // Two forks.
+      // Fork 1: starts at y=30 and y=110, connects to y=70.
+      _drawFork(canvas, paint, 0.0, 30.0, 110.0, 70.0, w);
+      // Fork 2: starts at y=190 and y=270, connects to y=230.
+      _drawFork(canvas, paint, 0.0, 190.0, 270.0, 230.0, w);
+    } else if (type == 2) {
+      // One large fork.
+      // Starts at y=70 and y=230, connects to y=150.
+      _drawFork(canvas, paint, 0.0, 70.0, 230.0, 150.0, w);
+    } else if (type == 3) {
+      // Straight line at y=150
+      canvas.drawLine(const Offset(0, 150), Offset(w, 150), paint);
+    }
+  }
+
+  void _drawFork(Canvas canvas, Paint paint, double xStart, double y1, double y2, double yMid, double width) {
+    final halfW = width / 2;
+    // Draw two horizontal lines from start to half width
+    canvas.drawLine(Offset(xStart, y1), Offset(xStart + halfW, y1), paint);
+    canvas.drawLine(Offset(xStart, y2), Offset(xStart + halfW, y2), paint);
+    // Draw vertical line connecting them
+    canvas.drawLine(Offset(xStart + halfW, y1), Offset(xStart + halfW, y2), paint);
+    // Draw horizontal line from midpoint to end
+    canvas.drawLine(Offset(xStart + halfW, yMid), Offset(xStart + width, yMid), paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant BracketConnectorPainter oldDelegate) =>
+      type != oldDelegate.type || color != oldDelegate.color;
 }

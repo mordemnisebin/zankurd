@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_theme.dart';
 import '../../widgets/app_panel.dart';
 import '../../widgets/shimmer_glow.dart';
 
@@ -12,11 +13,7 @@ class TournamentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppPanel(
-      gradient: const LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
-      ),
+      glass: true,
       padding: EdgeInsets.zero,
       child: Stack(
         children: [
@@ -31,12 +28,15 @@ class TournamentCard extends StatelessWidget {
                     width: 52,
                     height: 52,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
+                      color: AppTheme.gold.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: AppTheme.gold.withValues(alpha: 0.25),
+                      ),
                     ),
                     child: const Icon(
                       Icons.emoji_events_outlined,
-                      color: Colors.white,
+                      color: AppTheme.gold,
                       size: 28,
                     ),
                   ),
@@ -47,8 +47,8 @@ class TournamentCard extends StatelessWidget {
                       children: [
                         Text(
                           isKu ? 'Turnuva' : 'Turnuva Modu',
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w700,
                             fontSize: 17,
                           ),
@@ -59,16 +59,16 @@ class TournamentCard extends StatelessWidget {
                               ? 'Botan eledar bike û kûpayê qezenc bike!'
                               : 'Bot rakipleri ele, kupayı kaldır!',
                           style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.85),
+                            color: AppTheme.textSubColor(context),
                             fontSize: 12.5,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const Icon(
+                  Icon(
                     Icons.chevron_right_rounded,
-                    color: Colors.white,
+                    color: AppTheme.textMutedColor(context),
                     size: 30,
                   ),
                 ],

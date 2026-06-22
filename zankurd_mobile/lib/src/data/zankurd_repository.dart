@@ -24,6 +24,7 @@ abstract class ZanKurdRepository {
     required String category,
     required int difficultyMin,
     required int difficultyMax,
+    String? subCategory,
     int limit = 10,
   });
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room);
@@ -60,6 +61,9 @@ abstract class ZanKurdRepository {
   /// Bakiye yeterli değilse false, başarılıysa true döner.
   Future<bool> spendCoins(int amount, String reason);
 
+  /// Belirli bir ürün kimliğinin daha önce satın alınıp alınmadığını kontrol eder.
+  Future<bool> hasPurchased(String itemId);
+
   /// Oyuncunun coin bakiyesine [amount] kadar ekler (görev ödülü vb.).
   Future<void> addCoins(int amount, String reason);
 
@@ -81,4 +85,10 @@ abstract class ZanKurdRepository {
     required int totalQuestions,
     GameRoom? room,
   });
+
+  Future<Map<String, dynamic>> joinMatchmaking(String categoryName);
+  Future<void> cancelMatchmaking();
+  Stream<Map<String, dynamic>?> subscribeMatchmakingQueue();
+  Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId);
+  Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload);
 }

@@ -6,6 +6,7 @@ import '../models/answer_record.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/app_state.dart';
 
 class ReviewScreen extends StatelessWidget {
   const ReviewScreen({required this.records, required this.room, super.key});
@@ -27,17 +28,29 @@ class ReviewScreen extends StatelessWidget {
           gradient: AppTheme.backgroundGradient(context),
         ),
         child: SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-            children: [
-              _SummaryStrip(correct: correct, wrong: wrong, empty: empty),
-              const SizedBox(height: 16),
-              for (var i = 0; i < records.length; i++) ...[
-                _ReviewCard(record: records[i], index: i),
-                if (i != records.length - 1) const SizedBox(height: 14),
-              ],
-            ],
-          ),
+          child: records.isEmpty
+              ? AppEmptyState(
+                  icon: Icons.checklist_outlined,
+                  title: context.s(
+                    'Tu bersiv tune ne.',
+                    'Hiç cevap kaydı yok.',
+                  ),
+                  message: context.s(
+                    'Pirsên çareserkirî dê li vir xuya bibin.',
+                    'Çözülen sorular burada görünecektir.',
+                  ),
+                )
+              : ListView(
+                  padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+                  children: [
+                    _SummaryStrip(correct: correct, wrong: wrong, empty: empty),
+                    const SizedBox(height: 16),
+                    for (var i = 0; i < records.length; i++) ...[
+                      _ReviewCard(record: records[i], index: i),
+                      if (i != records.length - 1) const SizedBox(height: 14),
+                    ],
+                  ],
+                ),
         ),
       ),
     );

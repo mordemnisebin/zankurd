@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/shimmer_glow.dart';
 
 class HeroCard extends StatelessWidget {
@@ -26,16 +27,11 @@ class HeroCard extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF7C3AED), Color(0xFF4F1EB8), Color(0xFFE94560)],
+          colors: [Color(0xFF8E8FFA), Color(0xFF6F61C0), Color(0xFFFF4B91)],
         ),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF7C3AED).withValues(alpha: 0.4),
-            blurRadius: 24,
-            offset: const Offset(0, 10),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.20), width: 1.2),
+        boxShadow: AppTheme.elevatedShadow(const Color(0xFF6F61C0)),
       ),
       child: Stack(
         children: [

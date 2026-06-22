@@ -7,16 +7,19 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'quiz_screen.dart';
+import '../config/subcategory_config.dart';
 
 class LevelScreen extends StatefulWidget {
   const LevelScreen({
     required this.repository,
     required this.category,
+    this.subCategory,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final String category;
+  final String? subCategory;
 
   @override
   State<LevelScreen> createState() => _LevelScreenState();
@@ -51,6 +54,7 @@ class _LevelScreenState extends State<LevelScreen> {
             children: [
               _CategoryHero(
                 category: widget.category,
+                subCategory: widget.subCategory,
                 gradient: gradient,
                 isKu: ku,
               ),
@@ -85,6 +89,7 @@ class _LevelScreenState extends State<LevelScreen> {
         category: level.category,
         difficultyMin: level.difficultyMin,
         difficultyMax: level.difficultyMax,
+        subCategory: widget.subCategory,
         limit: level.questionCount,
       );
       if (!mounted) return;
@@ -125,11 +130,13 @@ class _LevelScreenState extends State<LevelScreen> {
 class _CategoryHero extends StatelessWidget {
   const _CategoryHero({
     required this.category,
+    this.subCategory,
     required this.gradient,
     required this.isKu,
   });
 
   final String category;
+  final String? subCategory;
   final LinearGradient gradient;
   final bool isKu;
 
@@ -137,8 +144,32 @@ class _CategoryHero extends StatelessWidget {
   Widget build(BuildContext context) {
     // Hero status bar'ın arkasına uzandığı için yüksekliğe payı eklenir.
     final topInset = MediaQuery.of(context).padding.top;
+    
+    String title = CategoryNames.localized(category, isKu);
+    String subtitle = isKu
+        ? 'Ji hêsan ber bi dijwar ve, xalên xwe bicivîne.'
+        : 'Kolaydan zora doğru ilerle, puan topla.';
+
+    if (subCategory != null) {
+      final list = SubcategoryConfig.subcategories[category] ?? const [];
+      final sub = list.firstWhere(
+        (element) => element.id == subCategory,
+        orElse: () => const SubcategoryInfo(
+          id: '',
+          nameKu: '',
+          nameTr: '',
+          descriptionKu: '',
+          descriptionTr: '',
+        ),
+      );
+      if (sub.id.isNotEmpty) {
+        title = isKu ? '${CategoryNames.localized(category, isKu)} · ${sub.nameKu}' : '${CategoryNames.localized(category, isKu)} · ${sub.nameTr}';
+        subtitle = isKu ? sub.descriptionKu : sub.descriptionTr;
+      }
+    }
+
     return Hero(
-      tag: 'category_hero_$category',
+      tag: 'category_hero_${category}_$subCategory',
       child: Material(
         type: MaterialType.transparency,
         child: Container(
@@ -165,19 +196,17 @@ class _CategoryHero extends StatelessWidget {
                   children: [
                     const Spacer(),
                     Text(
-                      CategoryNames.localized(category, isKu),
-                      style: TextStyle(
+                      title,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w800,
-                        fontSize: 34,
+                        fontSize: 28,
                         height: 1.05,
                       ),
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      isKu
-                          ? 'Ji hêsan ber bi dijwar ve, xalên xwe bicivîne.'
-                          : 'Kolaydan zora doğru ilerle, puan topla.',
+                      subtitle,
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.8),
                         fontSize: 14,

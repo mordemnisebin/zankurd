@@ -1,6 +1,62 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
+  // ============ Design Tokens ============
+  /// Standard card corner radius used across all cards.
+  static const double cardRadius = 20;
+
+  /// Standard small card corner radius for inner elements.
+  static const double cardRadiusSmall = 12;
+
+  /// Vertical gap between sections (e.g., section header → content).
+  static const double sectionGap = 24;
+
+  /// Vertical gap between cards within the same section.
+  static const double cardGap = 12;
+
+  /// Standard horizontal page padding.
+  static const double pagePadding = 18;
+
+  /// Standard card shadow for normal cards.
+  static List<BoxShadow> cardShadow(BuildContext context) {
+    final isDark = _isDark(context);
+    return [
+      BoxShadow(
+        color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
+        blurRadius: 16,
+        offset: const Offset(0, 6),
+      ),
+    ];
+  }
+
+  /// Elevated shadow for hero/primary cards.
+  static List<BoxShadow> elevatedShadow(Color tint) {
+    return [
+      BoxShadow(
+        color: tint.withValues(alpha: 0.35),
+        blurRadius: 24,
+        offset: const Offset(0, 10),
+      ),
+    ];
+  }
+
+  /// Standard card decoration helper.
+  static BoxDecoration cardDecoration(BuildContext context, {
+    LinearGradient? gradient,
+    Color? color,
+    double radius = cardRadius,
+  }) {
+    return BoxDecoration(
+      gradient: gradient,
+      color: gradient == null ? (color ?? surfaceColor(context)) : null,
+      borderRadius: BorderRadius.circular(radius),
+      border: gradient == null
+          ? Border.all(color: borderColor(context).withValues(alpha: 0.5))
+          : null,
+      boxShadow: cardShadow(context),
+    );
+  }
+
   // ============ Dark Mode Palette ============
   // Primary gradient: Neon Violet/Coral/Orange
   static const primaryGradientStart = Color(0xFFFF4B91); // Canlı neon pembe

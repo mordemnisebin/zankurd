@@ -21,6 +21,7 @@ import 'src/screens/app_shell.dart';
 import 'src/screens/splash_screen.dart';
 import 'src/services/analytics_service.dart';
 import 'src/theme/app_theme.dart';
+import 'src/widgets/responsive_wrapper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -114,56 +115,11 @@ class ZanKurdApp extends StatelessWidget {
           themeMode: themeProvider.mode,
           themeAnimationDuration: const Duration(milliseconds: 600),
           themeAnimationCurve: Curves.easeInOutCubic,
-          home: _MobileFrame(
-            child: SplashScreen(next: AppShell(repository: repository)),
-          ),
+          home: SplashScreen(next: AppShell(repository: repository)),
+          builder: (context, child) =>
+              ResponsiveWrapper(child: child ?? const SizedBox.shrink()),
         ),
       ),
-    );
-  }
-}
-
-// Geniş ekranlarda (web/Chrome/Windows) uygulamayı mobil genişliğine kıstlar
-// ve ortalar. Mobil cihazlarda (< 500px genişlik) tamamen şeffaf davranır.
-class _MobileFrame extends StatelessWidget {
-  const _MobileFrame({required this.child});
-
-  final Widget child;
-
-  static const _mobileWidth = 430.0;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth <= 500) return child;
-
-        // Geniş ekran: çerçevelenmiş mobil görünüm
-        final isDark =
-            MediaQuery.platformBrightnessOf(context) == Brightness.dark;
-        return ColoredBox(
-          color: isDark ? AppTheme.bgDeep : AppTheme.lightBgDeep,
-          child: Center(
-            child: SizedBox(
-              width: _mobileWidth,
-              child: ClipRect(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.4),
-                        blurRadius: 40,
-                        spreadRadius: 4,
-                      ),
-                    ],
-                  ),
-                  child: child,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }

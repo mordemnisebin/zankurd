@@ -22,11 +22,14 @@ import 'home/tournament_card.dart';
 import '../widgets/animated_counter.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
-import 'level_screen.dart';
+import 'subcategory_screen.dart';
 import 'quiz_screen.dart';
 import 'room_screen.dart';
+import 'home/battle_1v1_card.dart';
+import 'matchmaking_screen.dart';
 import 'spin_wheel_screen.dart';
 import 'tournament_screen.dart';
+import 'shop_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -64,10 +67,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _loadAnimationController = AnimationController(
-      duration: Duration(milliseconds: 4000),
+      duration: const Duration(milliseconds: 4000),
       vsync: this,
     );
-    _loadAnimationController.forward();
+    if (isFlutterTestEnvironment) {
+      _loadAnimationController.value = 1.0;
+    } else {
+      _loadAnimationController.forward();
+    }
     _room = repo.createRoom();
     _bootstrap();
     _refreshStreak();
@@ -199,6 +206,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           ),
                           const SizedBox(height: 12),
                           _buildAnimatedCard(
+                            _heroFadeAnimation(1),
+                            Battle1v1Card(
+                              isKu: ku,
+                              onTap: () => Navigator.of(context).push(
+                                AppRoute.to(MatchmakingScreen(repository: repo)),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          _buildAnimatedCard(
                             _heroFadeAnimation(2),
                             DailyQuizCard(
                               isKu: ku,
@@ -302,9 +319,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     );
                   }
                   if (index == 1) {
-                    // Teknik istatistikler (toplam soru/seviye/görsel sayısı)
-                    // kullanıcıya gösterilmiyor.
-                    return const SizedBox.shrink();
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(1),
+                        Battle1v1Card(
+                          isKu: ku,
+                          onTap: () => Navigator.of(context).push(
+                            AppRoute.to(MatchmakingScreen(repository: repo)),
+                          ),
+                        ),
+                      ),
+                    );
                   }
                   if (index == 2) {
                     return Padding(
@@ -656,30 +682,35 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     return Row(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.monetization_on, color: Colors.white, size: 16),
-                  const SizedBox(width: 5),
-                  AnimatedCounter(
-                    value: coinBalance,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 13,
+        GestureDetector(
+          onTap: () => Navigator.of(context).push(
+            AppRoute.to(ShopScreen(repository: repo)),
+          ).then((_) => _refreshCoins()),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.monetization_on, color: Colors.white, size: 16),
+                    const SizedBox(width: 5),
+                    AnimatedCounter(
+                      value: coinBalance,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -792,7 +823,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void _openCategory(BuildContext context, String category) {
     Navigator.of(
       context,
-    ).push(AppRoute.to(LevelScreen(repository: repo, category: category)));
+    ).push(AppRoute.to(SubcategoryScreen(repository: repo, category: category)));
   }
 
   Future<void> _refreshCoins() async {

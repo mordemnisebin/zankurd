@@ -26,7 +26,7 @@ class AppPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final br = borderRadius ?? BorderRadius.circular(16);
+    final br = borderRadius ?? BorderRadius.circular(AppTheme.cardRadius);
 
     if (glass) {
       return ClipRRect(
@@ -58,15 +58,7 @@ class AppPanel extends StatelessWidget {
         border: gradient == null
             ? Border.all(color: AppTheme.borderColor(context))
             : null,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(
-              alpha: AppTheme.isLight(context) ? 0.08 : 0.2,
-            ),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
+        boxShadow: AppTheme.cardShadow(context),
       ),
       child: child,
     );

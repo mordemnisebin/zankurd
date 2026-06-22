@@ -21,6 +21,7 @@ import '../widgets/weekly_performance_chart.dart';
 import 'favorite_questions_screen.dart';
 import 'quiz_screen.dart';
 import 'settings_screen.dart';
+import 'shop_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
@@ -505,6 +506,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               style: TextStyle(color: AppTheme.textMutedColor(context), fontSize: 12),
                             ),
                           ],
+                        ),
+                      ),
+                      Icon(Icons.chevron_right_rounded, color: AppTheme.textMutedColor(context)),
+                    ],
+                  ),
+                ),
+              ),
+              Divider(height: 1, indent: 50, color: AppTheme.borderColor(context)),
+              InkWell(
+                borderRadius: BorderRadius.zero,
+                onTap: () {
+                  Navigator.of(context).push(
+                    AppRoute.to(ShopScreen(repository: widget.repository)),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.storefront_outlined, color: AppTheme.gold, size: 22),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          ku ? 'Dukan' : 'Mağaza',
+                          style: TextStyle(color: AppTheme.textPrimaryColor(context), fontWeight: FontWeight.w800),
                         ),
                       ),
                       Icon(Icons.chevron_right_rounded, color: AppTheme.textMutedColor(context)),
@@ -1148,6 +1174,115 @@ class _AchievementShowcase extends StatelessWidget {
   final List<Achievement> achievements;
   final bool isKu;
 
+  void _showAllAchievementsSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppTheme.surfaceColor(context),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (sheetContext) {
+        return Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceColor(context),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    isKu ? 'Hemû Rozet' : 'Tüm Rozetler',
+                    style: TextStyle(
+                      color: AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(sheetContext),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 2.8,
+                  ),
+                  itemCount: AchievementStore.definitions.length,
+                  itemBuilder: (context, index) {
+                    final definition = AchievementStore.definitions[index];
+                    final isUnlocked = achievements.any((a) => a.id == definition.id);
+                    final color = isUnlocked ? AppTheme.gold : AppTheme.textMutedColor(context);
+                    return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: isUnlocked
+                            ? AppTheme.gold.withValues(alpha: 0.08)
+                            : AppTheme.surfaceHiColor(context).withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: isUnlocked
+                              ? AppTheme.gold.withValues(alpha: 0.25)
+                              : AppTheme.borderColor(context),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(definition.icon, color: color, size: 20),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  definition.title(isKu),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: isUnlocked
+                                        ? AppTheme.textPrimaryColor(context)
+                                        : AppTheme.textMutedColor(context),
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  definition.description(isKu),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: AppTheme.textMutedColor(context),
+                                    fontSize: 9,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppPanel(
@@ -1170,11 +1305,30 @@ class _AchievementShowcase extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Text(
-                '${achievements.length}/${AchievementStore.definitions.length}',
-                style: TextStyle(
-                  color: AppTheme.textMutedColor(context),
-                  fontWeight: FontWeight.w800,
+              TextButton(
+                onPressed: () => _showAllAchievementsSheet(context),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '${achievements.length}/${AchievementStore.definitions.length}',
+                      style: TextStyle(
+                        color: AppTheme.textMutedColor(context),
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppTheme.textMutedColor(context),
+                      size: 16,
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -1188,13 +1342,19 @@ class _AchievementShowcase extends StatelessWidget {
               style: TextStyle(color: AppTheme.textMuted),
             )
           else
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                for (final achievement in achievements)
-                  _AchievementChip(achievement: achievement, isKu: isKu),
-              ],
+            SizedBox(
+              height: 38,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: achievements.length,
+                itemBuilder: (context, index) {
+                  final achievement = achievements[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: _AchievementChip(achievement: achievement, isKu: isKu),
+                  );
+                },
+              ),
             ),
         ],
       ),
@@ -1315,12 +1475,12 @@ class _MasteryRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(3),
+                  borderRadius: BorderRadius.circular(4),
                   child: LinearProgressIndicator(
                     value: progress,
                     backgroundColor: AppTheme.borderColor(context),
                     valueColor: AlwaysStoppedAnimation<Color>(badgeColor),
-                    minHeight: 5,
+                    minHeight: 6,
                   ),
                 ),
                 const SizedBox(height: 2),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_theme.dart';
 import '../../widgets/app_panel.dart';
 import '../../widgets/shimmer_glow.dart';
 
@@ -12,11 +13,7 @@ class SpinWheelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppPanel(
-      gradient: const LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Color(0xFF7C3AED), Color(0xFF5B21B6)],
-      ),
+      glass: true,
       padding: EdgeInsets.zero,
       child: Stack(
         children: [
@@ -31,12 +28,15 @@ class SpinWheelCard extends StatelessWidget {
                     width: 52,
                     height: 52,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
+                      color: AppTheme.violet.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: AppTheme.violet.withValues(alpha: 0.25),
+                      ),
                     ),
                     child: const Icon(
                       Icons.casino_outlined,
-                      color: Colors.white,
+                      color: AppTheme.violet,
                       size: 28,
                     ),
                   ),
@@ -47,8 +47,8 @@ class SpinWheelCard extends StatelessWidget {
                       children: [
                         Text(
                           isKu ? 'Çerxa Rojê' : 'Günün Çarkı',
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w700,
                             fontSize: 17,
                           ),
@@ -59,16 +59,16 @@ class SpinWheelCard extends StatelessWidget {
                               ? 'Bizivirîne, heta 100 coin qezenc bike!'
                               : 'Çevir, 100 coine kadar kazan!',
                           style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.85),
+                            color: AppTheme.textSubColor(context),
                             fontSize: 12.5,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const Icon(
+                  Icon(
                     Icons.chevron_right_rounded,
-                    color: Colors.white,
+                    color: AppTheme.textMutedColor(context),
                     size: 30,
                   ),
                 ],

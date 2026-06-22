@@ -94,15 +94,21 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
                 return const _EmptyFavorites();
               }
 
-              return ListView.separated(
+              return ListView.builder(
                 padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-                itemCount: questions.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 10),
+                itemCount: questions.length + 1,
                 itemBuilder: (context, index) {
-                  return _FavoriteQuestionTile(
-                    question: questions[index],
-                    onPlay: () => _playFrom(index, questions),
-                    onRemove: () => _removeFavorite(questions[index]),
+                  if (index == 0) {
+                    return _buildPlayAllButton(context, questions);
+                  }
+                  final question = questions[index - 1];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: _FavoriteQuestionTile(
+                      question: question,
+                      onPlay: () => _playFrom(index - 1, questions),
+                      onRemove: () => _removeFavorite(question),
+                    ),
                   );
                 },
               );
@@ -131,6 +137,49 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
           repository: widget.repository,
           room: room,
           questions: selected,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlayAllButton(BuildContext context, List<QuizQuestion> questions) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      width: double.infinity,
+      child: ElevatedButton.icon(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppTheme.accent,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 2,
+        ),
+        onPressed: () {
+          final room = widget.repository
+              .createRoom(category: 'Tomarkirî')
+              .copyWith(
+                name: context.s('Pirsên Tomarkirî', 'Kaydedilen Sorular'),
+                questionCount: questions.length,
+              );
+          Navigator.of(context).push(
+            AppRoute.to(
+              QuizScreen(
+                repository: widget.repository,
+                room: room,
+                questions: questions,
+              ),
+            ),
+          );
+        },
+        icon: const Icon(Icons.play_circle_fill, size: 22),
+        label: Text(
+          context.s('Pirsên Tomarkirî Bilîze', 'Kaydedilen Soruları Oyna'),
+          style: const TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 16,
+          ),
         ),
       ),
     );

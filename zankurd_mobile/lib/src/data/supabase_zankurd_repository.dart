@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -11,6 +12,7 @@ import '../utils/error_reporter.dart';
 import '../utils/question_cache.dart';
 import 'mock_zankurd_repository.dart';
 import 'seen_question_store.dart';
+import '../config/subcategory_config.dart';
 
 class SupabaseZanKurdRepository extends MockZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
@@ -169,21 +171,30 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     required String category,
     required int difficultyMin,
     required int difficultyMax,
+    String? subCategory,
     int limit = 10,
   }) async {
     try {
       final categoryId = await _categoryIdByName(category);
+      final fetchLimit = subCategory != null ? limit * 3 : limit;
       final rows = await _selectApprovedQuestions(
         categoryId: categoryId,
-        limit: limit,
+        limit: fetchLimit,
         difficultyMin: difficultyMin,
         difficultyMax: difficultyMax,
         randomize: true,
       );
 
+      var parsedQuestions = rows.map(_questionFromRow).toList();
+      if (subCategory != null) {
+        parsedQuestions = parsedQuestions
+            .where((q) => SubcategoryConfig.getSubcategoryId(q) == subCategory)
+            .toList();
+      }
+
       final store = await SeenQuestionStore.load();
       final selected = store.preferUnseen(
-        rows.map(_questionFromRow).toList(),
+        parsedQuestions,
         limit,
       );
       final questions = await _withRemoteVisualBlend(
@@ -202,6 +213,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       category: category,
       difficultyMin: difficultyMin,
       difficultyMax: difficultyMax,
+      subCategory: subCategory,
       limit: limit,
     );
   }
@@ -636,6 +648,22 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<bool> hasPurchased(String itemId) async {
+    try {
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      final rows = await client
+          .from('coin_transactions')
+          .select('id')
+          .eq('player_id', user.id)
+          .eq('reason', 'purchase_$itemId')
+          .limit(1);
+      return rows.isNotEmpty;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  @override
   Future<void> addCoins(int amount, String reason) async {
     if (amount <= 0) return;
     try {
@@ -716,6 +744,8 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   Future<bool> canSpinToday() async {
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
+      
+      // 1. Check free spin today
       final rows = await client
           .from('coin_transactions')
           .select('created_at')
@@ -723,12 +753,31 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
           .like('reason', 'daily_spin%')
           .order('created_at', ascending: false)
           .limit(1);
-      if (rows.isEmpty) return true;
-      final last = DateTime.parse(rows.first['created_at'] as String).toUtc();
-      final now = DateTime.now().toUtc();
-      return last.year != now.year ||
-          last.month != now.month ||
-          last.day != now.day;
+      
+      bool freeSpinAvailable = true;
+      if (rows.isNotEmpty) {
+        final last = DateTime.parse(rows.first['created_at'] as String).toUtc();
+        final now = DateTime.now().toUtc();
+        freeSpinAvailable = last.year != now.year ||
+            last.month != now.month ||
+            last.day != now.day;
+      }
+      if (freeSpinAvailable) return true;
+
+      // 2. Check purchased extra spins
+      final purchases = await client
+          .from('coin_transactions')
+          .select('amount')
+          .eq('player_id', user.id)
+          .eq('reason', 'purchase_spin_wheel_extra');
+
+      final usedSpins = await client
+          .from('coin_transactions')
+          .select('amount')
+          .eq('player_id', user.id)
+          .eq('reason', 'daily_spin:extra_purchase');
+
+      return purchases.length > usedSpins.length;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'canSpinToday failed');
       return super.canSpinToday();
@@ -741,21 +790,46 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       final user = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
 
-      final response = await client.rpc('claim_daily_spin');
-      if (response is Map<String, dynamic>) {
-        final amount = (response['amount'] as num?)?.toInt() ?? 0;
-        if (amount >= 0) return amount;
+      // Check if free spin specifically is available
+      final rows = await client
+          .from('coin_transactions')
+          .select('created_at')
+          .eq('player_id', user.id)
+          .like('reason', 'daily_spin%')
+          .order('created_at', ascending: false)
+          .limit(1);
+      
+      bool freeSpinAvailable = true;
+      if (rows.isNotEmpty) {
+        final last = DateTime.parse(rows.first['created_at'] as String).toUtc();
+        final now = DateTime.now().toUtc();
+        freeSpinAvailable = last.year != now.year ||
+            last.month != now.month ||
+            last.day != now.day;
       }
-      if (response is List && response.isNotEmpty) {
-        final first = response.first;
-        if (first is Map<String, dynamic>) {
-          final amount = (first['amount'] as num?)?.toInt() ?? 0;
+
+      if (freeSpinAvailable) {
+        final response = await client.rpc('claim_daily_spin');
+        if (response is Map<String, dynamic>) {
+          final amount = (response['amount'] as num?)?.toInt() ?? 0;
           if (amount >= 0) return amount;
         }
+        if (response is List && response.isNotEmpty) {
+          final first = response.first;
+          if (first is Map<String, dynamic>) {
+            final amount = (first['amount'] as num?)?.toInt() ?? 0;
+            if (amount >= 0) return amount;
+          }
+        }
+        throw StateError('Daily spin RPC returned no reward for ${user.id}.');
+      } else {
+        const rewards = [10, 25, 50, 15, 75, 20, 100, 30];
+        final amount = rewards[Random().nextInt(rewards.length)];
+        await addCoins(amount, 'daily_spin:extra_purchase');
+        return amount;
       }
-      throw StateError('Daily spin RPC returned no reward for ${user.id}.');
     } catch (error, stack) {
-      _recordError(error, stack, reason: 'claim_daily_spin failed');
+      _recordError(error, stack, reason: 'awardSpinCoins/claim_daily_spin failed');
       return 0;
     }
   }
@@ -920,5 +994,69 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
         await Future.delayed(delay);
       }
     }
+  }
+
+  @override
+  Future<Map<String, dynamic>> joinMatchmaking(String categoryName) async {
+    final response = await client.rpc(
+      'join_matchmaking',
+      params: {'p_category_name': categoryName},
+    );
+    return response as Map<String, dynamic>;
+  }
+
+  @override
+  Future<void> cancelMatchmaking() async {
+    final user = client.auth.currentUser;
+    if (user == null) return;
+    await client
+        .from('matchmaking_queue')
+        .delete()
+        .eq('player_id', user.id);
+  }
+
+  @override
+  Stream<Map<String, dynamic>?> subscribeMatchmakingQueue() {
+    final user = client.auth.currentUser;
+    if (user == null) return Stream.value(null);
+    return client
+        .from('matchmaking_queue')
+        .stream(primaryKey: ['player_id'])
+        .eq('player_id', user.id)
+        .map((rows) {
+          if (rows.isEmpty) return null;
+          return rows.first;
+        });
+  }
+
+  @override
+  Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) {
+    final controller = StreamController<Map<String, dynamic>>();
+    final channel = client.channel('room:$roomId');
+
+    channel.onBroadcast(
+      event: 'game_event',
+      callback: (payload) {
+        if (!controller.isClosed) {
+          controller.add(payload);
+        }
+      },
+    ).subscribe();
+
+    controller.onCancel = () async {
+      await client.removeChannel(channel);
+      await controller.close();
+    };
+
+    return controller.stream;
+  }
+
+  @override
+  Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload) async {
+    final channel = client.channel('room:$roomId');
+    await channel.sendBroadcastMessage(
+      event: 'game_event',
+      payload: payload,
+    );
   }
 }

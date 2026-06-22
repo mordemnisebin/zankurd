@@ -38,6 +38,7 @@ class QuizScreen extends StatefulWidget {
     this.botRace = false,
     this.dailyQuiz = false,
     this.enableTimer = true,
+    this.is1v1 = false,
     super.key,
   });
 
@@ -55,6 +56,7 @@ class QuizScreen extends StatefulWidget {
   final bool dailyQuiz;
 
   final bool enableTimer;
+  final bool is1v1;
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -74,8 +76,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   final List<AnswerRecord> answerRecords = [];
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
+  StreamSubscription<Map<String, dynamic>>? _realtimeSub;
   BotRace? _botRace;
   bool _isKu = true;
+  String _myName = '';
 
   // Joker sistemi
   late List<QuizQuestion> _questions;
@@ -93,7 +97,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   QuizQuestion get question => _questions[index];
   bool get answered => selectedAnswer.isNotEmpty;
   bool get isLastQuestion => index == widget.questions.length - 1;
-  bool get _isSoloMode => widget.room.id == null || widget.botRace;
+  bool get _isSoloMode => widget.room.id == null;
 
   @override
   void initState() {
@@ -129,17 +133,61 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       });
     }
 
-    if (widget.botRace) {
-      _botRace = BotRace.standard();
-      livePlayers = _composeBotRacePlayers();
-    } else {
-      _playersSub = widget.repository.subscribeRoomPlayers(widget.room).listen((
-        players,
-      ) {
-        if (!mounted) return;
-        setState(() => livePlayers = players);
+    widget.repository.getProfileName().then((name) {
+      if (!mounted) return;
+      setState(() {
+        _myName = name;
       });
-    }
+
+      if (widget.is1v1) {
+        if (widget.room.id != null) {
+          // Real online 1v1 match: subscribe to realtime channel updates
+          livePlayers = List.of(widget.room.players);
+          _realtimeSub = widget.repository.subscribeRoomBroadcast(widget.room.id!).listen((payload) {
+            if (!mounted) return;
+            final senderName = payload['sender'] as String?;
+            if (senderName != null && senderName != name) {
+              setState(() {
+                final opponentIdx = livePlayers.indexWhere((p) => p.name == senderName);
+                final updatedOpponent = Player(
+                  name: senderName,
+                  score: (payload['score'] as num?)?.toInt() ?? 0,
+                  streak: (payload['streak'] as num?)?.toInt() ?? 0,
+                  state: payload['answered'] == true
+                      ? (_isKu ? 'Bersiv da' : 'Cevapladı')
+                      : (_isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor'),
+                );
+                if (opponentIdx != -1) {
+                  livePlayers[opponentIdx] = updatedOpponent;
+                } else {
+                  livePlayers.add(updatedOpponent);
+                }
+                livePlayers.sort((a, b) => b.score.compareTo(a.score));
+              });
+            }
+          });
+        } else {
+          // Bot fallback 1v1 match
+          final rng = Random();
+          final botNames = const ['Rojda', 'Baran', 'Dilan', 'Hogir', 'Azad', 'Berfin', 'Narin', 'Sero', 'Çiçek', 'Welat'];
+          final botName = botNames[rng.nextInt(botNames.length)];
+          final botSkill = 0.65 + rng.nextDouble() * 0.25;
+          _botRace = BotRace([BotOpponent(name: botName, skill: botSkill, random: rng)]);
+          livePlayers = _composeBotRacePlayers();
+        }
+      } else if (widget.botRace) {
+        _botRace = BotRace.standard();
+        livePlayers = _composeBotRacePlayers();
+      } else {
+        _playersSub = widget.repository.subscribeRoomPlayers(widget.room).listen((
+          players,
+        ) {
+          if (!mounted) return;
+          setState(() => livePlayers = players);
+        });
+      }
+    });
+
     _markQuestionSeen();
     _startTimer();
   }
@@ -209,6 +257,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   @override
   void dispose() {
     _playersSub?.cancel();
+    _realtimeSub?.cancel();
     _timerController.dispose();
     _explanationTimer?.cancel();
     super.dispose();
@@ -340,6 +389,26 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildScoreHeader() {
+    if (widget.is1v1) {
+      final myName = widget.room.id != null ? _myName : (_isKu ? 'Tu' : 'Sen');
+      final player = livePlayers.firstWhere(
+        (p) => p.name == myName,
+        orElse: () => Player(name: myName, score: score, state: '', streak: streak),
+      );
+      final opponent = livePlayers.firstWhere(
+        (p) => p.name != myName,
+        orElse: () => Player(name: _isKu ? 'Hevrik' : 'Rakip', score: 0, state: ''),
+      );
+      return _DuelScoreHeader(
+        playerName: player.name,
+        playerScore: player.score,
+        playerStreak: player.streak,
+        opponentName: opponent.name,
+        opponentScore: opponent.score,
+        opponentStreak: opponent.streak,
+        progress: '${index + 1}/${widget.questions.length}',
+      );
+    }
     return _ScoreHeader(
       score: score,
       streak: streak,
@@ -355,7 +424,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       curve: Curves.easeOutCubic,
       builder: (_, value, _) => LinearProgressIndicator(
         value: value,
-        minHeight: 8,
+        minHeight: 6,
         borderRadius: BorderRadius.circular(99),
         backgroundColor: AppTheme.surfaceHiColor(context),
         color: AppTheme.accent,
@@ -705,25 +774,28 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Flexible(
-                    child: _TinyTag(
-                      label: CategoryNames.localized(
-                        question.category,
-                        context.isKu,
+              Expanded(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: _TinyTag(
+                        label: CategoryNames.localized(
+                          question.category,
+                          context.isKu,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Flexible(
-                    child: _TinyTag(
-                      label: question.typeLabelLocalized(context.isKu),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: _TinyTag(
+                        label: question.typeLabelLocalized(context.isKu),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
               _CircularTimer(
                 key: const ValueKey('quiz-circular-timer'),
                 animation: _timerController,
@@ -847,6 +919,25 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         }
         _recordAnswer(answer);
         _advanceBots();
+
+        if (widget.is1v1 && widget.room.id != null) {
+          final myIdx = livePlayers.indexWhere((p) => p.name == _myName);
+          if (myIdx != -1) {
+            livePlayers[myIdx] = Player(
+              name: _myName,
+              score: score,
+              streak: streak,
+              state: _isKu ? 'Bersiv da' : 'Cevapladı',
+            );
+          }
+          widget.repository.sendRoomBroadcast(widget.room.id!, {
+            'sender': _myName,
+            'score': score,
+            'streak': streak,
+            'question_index': index,
+            'answered': true,
+          }).catchError((_) {});
+        }
       });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'submitAnswer failed');
@@ -876,6 +967,25 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         }
         _recordAnswer(answer);
         _advanceBots();
+
+        if (widget.is1v1 && widget.room.id != null) {
+          final myIdx = livePlayers.indexWhere((p) => p.name == _myName);
+          if (myIdx != -1) {
+            livePlayers[myIdx] = Player(
+              name: _myName,
+              score: score,
+              streak: streak,
+              state: _isKu ? 'Bersiv da' : 'Cevapladı',
+            );
+          }
+          widget.repository.sendRoomBroadcast(widget.room.id!, {
+            'sender': _myName,
+            'score': score,
+            'streak': streak,
+            'question_index': index,
+            'answered': true,
+          }).catchError((_) {});
+        }
       });
     }
   }
@@ -885,6 +995,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       if (completing) return;
       setState(() => completing = true);
       widget.repository.finishGame(widget.room).catchError((_) {});
+      if (widget.is1v1 && widget.room.id != null) {
+        widget.repository.sendRoomBroadcast(widget.room.id!, {
+          'sender': _myName,
+          'score': score,
+          'streak': streak,
+          'question_index': index,
+          'answered': true,
+          'finished': true,
+        }).catchError((_) {});
+      }
       final coinsAwarded = widget.practice
           ? 0
           : await widget.repository
@@ -910,7 +1030,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             bestStreak: bestStreak,
             answerRecords: answerRecords,
             coinsAwarded: coinsAwarded,
-            opponents: _botRace?.toPlayers() ?? const [],
+            opponents: widget.is1v1 && widget.room.id != null
+                ? livePlayers.where((p) => p.name != _myName).toList()
+                : (_botRace?.toPlayers() ?? const []),
             practice: widget.practice,
             dailyQuiz: widget.dailyQuiz,
           ),
@@ -930,6 +1052,25 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _audiencePoll = null;
       hiddenAnswers = const {};
       _showExplanation = false;
+
+      if (widget.is1v1 && widget.room.id != null) {
+        final myIdx = livePlayers.indexWhere((p) => p.name == _myName);
+        if (myIdx != -1) {
+          livePlayers[myIdx] = Player(
+            name: _myName,
+            score: score,
+            streak: streak,
+            state: _isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor',
+          );
+        }
+        widget.repository.sendRoomBroadcast(widget.room.id!, {
+          'sender': _myName,
+          'score': score,
+          'streak': streak,
+          'question_index': index,
+          'answered': false,
+        }).catchError((_) {});
+      }
     });
     _markQuestionSeen();
     _startTimer();

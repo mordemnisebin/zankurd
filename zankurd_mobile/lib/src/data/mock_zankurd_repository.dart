@@ -11,6 +11,7 @@ import '../utils/coin_calculator.dart';
 import 'offline_question_bank.dart';
 import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
+import '../config/subcategory_config.dart';
 
 class MockZanKurdRepository implements ZanKurdRepository {
   MockZanKurdRepository();
@@ -32,6 +33,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   String _mockName = 'ZanKurd Oyuncusu';
   int _mockCoins = 2450;
+  int _mockExtraSpins = 0;
+  int _mockUsedExtraSpins = 0;
+  final Set<String> _mockPurchases = {};
 
   final List<LeaderboardEntry> _mockLeaderboard = [
     const LeaderboardEntry(
@@ -149,6 +153,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
     required String category,
     required int difficultyMin,
     required int difficultyMax,
+    String? subCategory,
     int limit = 10,
   }) async {
     final filtered = questions
@@ -156,7 +161,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
           (question) =>
               question.category == category &&
               question.difficulty >= difficultyMin &&
-              question.difficulty <= difficultyMax,
+              question.difficulty <= difficultyMax &&
+              (subCategory == null ||
+                  SubcategoryConfig.getSubcategoryId(question) == subCategory),
         )
         .toList();
 
@@ -322,18 +329,34 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<bool> canSpinToday() async {
     final last = _lastSpin;
-    if (last == null) return true;
     final now = DateTime.now().toUtc();
-    return last.year != now.year ||
+    final freeSpinAvailable = last == null ||
+        last.year != now.year ||
         last.month != now.month ||
         last.day != now.day;
+    if (freeSpinAvailable) return true;
+
+    return _mockExtraSpins > _mockUsedExtraSpins;
   }
 
   @override
   Future<int> awardSpinCoins() async {
     const rewards = [10, 25, 50, 15, 75, 20, 100, 30];
     final amount = rewards[Random().nextInt(rewards.length)];
-    _lastSpin = DateTime.now().toUtc();
+    final now = DateTime.now().toUtc();
+    
+    final last = _lastSpin;
+    final freeSpinAvailable = last == null ||
+        last.year != now.year ||
+        last.month != now.month ||
+        last.day != now.day;
+
+    if (freeSpinAvailable) {
+      _lastSpin = now;
+    } else if (_mockExtraSpins > _mockUsedExtraSpins) {
+      _mockUsedExtraSpins++;
+    }
+    
     _mockCoins += amount;
     return amount;
   }
@@ -342,7 +365,18 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<bool> spendCoins(int amount, String reason) async {
     if (_mockCoins < amount) return false;
     _mockCoins -= amount;
+    if (reason == 'purchase_spin_wheel_extra') {
+      _mockExtraSpins++;
+    }
+    if (reason.startsWith('purchase_')) {
+      _mockPurchases.add(reason.replaceFirst('purchase_', ''));
+    }
     return true;
+  }
+
+  @override
+  Future<bool> hasPurchased(String itemId) async {
+    return _mockPurchases.contains(itemId);
   }
 
   @override
@@ -429,4 +463,25 @@ class MockZanKurdRepository implements ZanKurdRepository {
     ];
     return all.take(limit).toList();
   }
+
+  @override
+  Future<Map<String, dynamic>> joinMatchmaking(String categoryName) async {
+    return const {'status': 'waiting'};
+  }
+
+  @override
+  Future<void> cancelMatchmaking() async {}
+
+  @override
+  Stream<Map<String, dynamic>?> subscribeMatchmakingQueue() {
+    return const Stream.empty();
+  }
+
+  @override
+  Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) {
+    return const Stream.empty();
+  }
+
+  @override
+  Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload) async {}
 }

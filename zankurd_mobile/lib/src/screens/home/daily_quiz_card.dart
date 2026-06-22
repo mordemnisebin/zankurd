@@ -19,7 +19,7 @@ class DailyQuizCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppPanel(
-      gradient: AppTheme.goldGradient,
+      glass: true,
       padding: EdgeInsets.zero,
       child: Stack(
         children: [
@@ -34,20 +34,23 @@ class DailyQuizCard extends StatelessWidget {
                     width: 52,
                     height: 52,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
+                      color: AppTheme.gold.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: AppTheme.gold.withValues(alpha: 0.25),
+                      ),
                     ),
                     child: loading
                         ? const Padding(
                             padding: EdgeInsets.all(14),
                             child: CircularProgressIndicator(
                               strokeWidth: 2.5,
-                              color: Colors.white,
+                              color: AppTheme.gold,
                             ),
                           )
                         : const Icon(
                             Icons.today_rounded,
-                            color: Colors.white,
+                            color: AppTheme.gold,
                             size: 28,
                           ),
                   ),
@@ -58,8 +61,8 @@ class DailyQuizCard extends StatelessWidget {
                       children: [
                         Text(
                           isKu ? 'Pêşbirka Rojê' : 'Günün Yarışması',
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w700,
                             fontSize: 17,
                           ),
@@ -70,7 +73,7 @@ class DailyQuizCard extends StatelessWidget {
                               ? 'Her roj 10 pirsên nû — îro bilîze!'
                               : 'Her gün 10 yeni soru — bugün oyna!',
                           style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.85),
+                            color: AppTheme.textSubColor(context),
                             fontSize: 12.5,
                           ),
                         ),
@@ -79,7 +82,7 @@ class DailyQuizCard extends StatelessWidget {
                   ),
                   const Icon(
                     Icons.play_circle_fill_rounded,
-                    color: Colors.white,
+                    color: AppTheme.gold,
                     size: 34,
                   ),
                 ],

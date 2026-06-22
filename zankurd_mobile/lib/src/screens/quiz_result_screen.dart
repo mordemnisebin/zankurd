@@ -20,6 +20,7 @@ import '../data/xp_store.dart';
 import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
 import '../widgets/mission_toast.dart';
+import '../widgets/confetti_overlay.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
 
@@ -77,6 +78,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   List<Achievement> _newAchievements = const [];
   Map<String, MasteryLevel> _promotions = const {};
   int _earnedXP = 0;
+  bool _showConfetti = false;
 
   @override
   void initState() {
@@ -159,6 +161,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         _newAchievements = newAchievements;
         _promotions = promotions;
         _earnedXP = earnedXP;
+        _showConfetti = promotions.isNotEmpty;
       });
       WidgetsBinding.instance.addPostFrameCallback((_) {
         for (final mission in completedMissions) {
@@ -231,7 +234,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       context.isKu ? 'Asta Te Bilind Bû!' : 'Tebrikler!',
                       style: TextStyle(
                         fontSize: 22,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: AppTheme.gold,
                       ),
                     ),
@@ -315,6 +318,44 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
 
+    final is1v1 = opponents.length == 1;
+    bool isWinner = false;
+    bool isDraw = false;
+    if (is1v1) {
+      final opp = opponents.first;
+      if (score > opp.score) {
+        isWinner = true;
+      } else if (score == opp.score) {
+        isDraw = true;
+      }
+    }
+
+    final headerGradient = is1v1
+        ? (isWinner
+            ? AppTheme.correctGradient
+            : isDraw
+                ? const LinearGradient(
+                    colors: [Color(0xFF6B7280), Color(0xFF4B5563)],
+                  )
+                : AppTheme.wrongGradient)
+        : AppTheme.accentGradient;
+
+    final headerTitle = is1v1
+        ? (isWinner
+            ? context.s('Te bi ser ketî!', 'Kazandın!')
+            : isDraw
+                ? context.s('Beramberî!', 'Berabere!')
+                : context.s('Te winda kir...', 'Kaybettin...'))
+        : context.s('Pêşbirk qediya', 'Yarış tamamlandı');
+
+    final headerIcon = is1v1
+        ? (isWinner
+            ? Icons.emoji_events_outlined
+            : isDraw
+                ? Icons.balance_outlined
+                : Icons.sentiment_very_dissatisfied_outlined)
+        : Icons.flag_outlined;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(title: Text(context.s('Encam', 'Sonuç'))),
@@ -323,128 +364,165 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           gradient: AppTheme.backgroundGradient(context),
         ),
         child: SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+          child: Stack(
             children: [
-              AppPanel(
-                gradient: AppTheme.accentGradient,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      right: -26,
-                      top: -32,
-                      child: Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white.withValues(alpha: 0.12),
-                        ),
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              ListView(
+                padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+                children: [
+                  AppPanel(
+                    gradient: headerGradient,
+                    padding: const EdgeInsets.all(20),
+                    child: Stack(
                       children: [
-                        Row(
+                        Positioned(
+                          right: -10,
+                          top: -10,
+                          child: Icon(
+                            headerIcon,
+                            size: 90,
+                            color: Colors.white.withValues(alpha: 0.12),
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.flag_outlined,
-                              color: Colors.white,
+                            Row(
+                              children: [
+                                Icon(
+                                  headerIcon,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  headerTitle.toUpperCase(),
+                                  style: const TextStyle(
+                                    color: Colors.white70,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 11,
+                                    letterSpacing: 1.2,
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(height: 14),
                             Text(
-                              context.s('Pêşbirk qediya', 'Yarış tamamlandı'),
-                              style: TextStyle(
-                                color: Colors.white70,
+                              '$score',
+                              style: const TextStyle(
+                                color: Colors.white,
                                 fontWeight: FontWeight.w800,
+                                fontSize: 52,
+                                height: 1,
                               ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              '${CategoryNames.localized(room.category, context.isKu)} · ${room.code}',
+                              style: const TextStyle(
+                                color: Colors.white70,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 14),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.15),
+                                borderRadius: BorderRadius.circular(99),
+                              ),
+                              child: Text(
+                                context.s(
+                                  'Rastbûn: %$accuracy',
+                                  'Doğruluk: %$accuracy',
+                                ),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                            if (coinsAwarded > 0) ...[
+                              const SizedBox(height: 12),
+                              Row(
+                                children: [
+                                  _ResultRewardChip(
+                                    icon: Icons.monetization_on_outlined,
+                                    label: '+${coinsAwarded}c',
+                                  ),
+                                  if (_earnedXP > 0) ...[
+                                    const SizedBox(width: 8),
+                                    _ResultRewardChip(
+                                      icon: Icons.bolt_rounded,
+                                      label: '+$_earnedXP XP',
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            ],
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              child: Divider(
+                                color: Colors.white.withValues(alpha: 0.25),
+                                height: 1,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _MetricItemCompact(
+                                  icon: Icons.check_circle_outline,
+                                  label: context.s('Rast', 'Doğru'),
+                                  value: '$correctCount',
+                                  iconColor: Colors.white,
+                                ),
+                                _MetricItemCompact(
+                                  icon: Icons.cancel_outlined,
+                                  label: context.s('Şaş', 'Yanlış'),
+                                  value: '$wrongCount',
+                                  iconColor: Colors.white.withValues(alpha: 0.8),
+                                ),
+                                _MetricItemCompact(
+                                  icon: Icons.hourglass_empty_rounded,
+                                  label: context.s('Vala', 'Boş'),
+                                  value: '$unanswered',
+                                  iconColor: Colors.white.withValues(alpha: 0.8),
+                                ),
+                                _MetricItemCompact(
+                                  icon: Icons.local_fire_department_outlined,
+                                  label: context.s('Baştirîn', 'En İyi'),
+                                  value: '$bestStreak',
+                                  iconColor: Colors.white,
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        const SizedBox(height: 14),
-                        Text(
-                          '$score',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 52,
-                            height: 1,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '${CategoryNames.localized(room.category, context.isKu)} · ${room.code}',
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                        const SizedBox(height: 14),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.14),
-                            borderRadius: BorderRadius.circular(99),
-                          ),
-                          child: Text(
-                            context.s(
-                              'Rastbûn: %$accuracy',
-                              'Doğruluk: %$accuracy',
-                            ),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        if (coinsAwarded > 0) ...[
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              _ResultRewardChip(
-                                icon: Icons.monetization_on_outlined,
-                                label: '+${coinsAwarded}c',
-                              ),
-                              if (_earnedXP > 0) ...[
-                                const SizedBox(width: 8),
-                                _ResultRewardChip(
-                                  icon: Icons.bolt_rounded,
-                                  label: '+$_earnedXP XP',
-                                ),
-                              ],
-                            ],
-                          ),
-                        ],
                       ],
                     ),
+                  ),
+                  if (opponents.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    _RaceStandings(userScore: score, opponents: opponents),
                   ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              _ResultMetrics(
-                correctCount: correctCount,
-                wrongCount: wrongCount,
-                unanswered: unanswered,
-                bestStreak: bestStreak,
-              ),
-              if (opponents.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                _RaceStandings(userScore: score, opponents: opponents),
-              ],
-              if (_newAchievements.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                _AchievementUnlocks(achievements: _newAchievements),
-              ],
-              if (_promotions.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                _MasteryPromotions(promotions: _promotions),
-              ],
-              if (_dailyStreak > 0) ...[
-                const SizedBox(height: 16),
-                AppPanel(
-                  color: AppTheme.surfaceHiColor(context),
-                  child: Row(
-                    children: [
+                  if (_newAchievements.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    _AchievementUnlocks(achievements: _newAchievements),
+                  ],
+                  if (_promotions.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    _MasteryPromotions(promotions: _promotions),
+                  ],
+                  if (_dailyStreak > 0) ...[
+                    const SizedBox(height: 16),
+                    AppPanel(
+                      color: AppTheme.surfaceHiColor(context),
+                      child: Row(
+                        children: [
                       Icon(
                         Icons.local_fire_department,
                         color: AppTheme.accent,
@@ -712,120 +790,23 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               ),
             ],
           ),
-        ),
+          if (_showConfetti)
+            ConfettiOverlay(
+              onFinished: () {
+                setState(() {
+                  _showConfetti = false;
+                });
+              },
+            ),
+        ],
       ),
-    );
+    ),
+  ),
+);
   }
 }
 
-class _ResultMetrics extends StatelessWidget {
-  const _ResultMetrics({
-    required this.correctCount,
-    required this.wrongCount,
-    required this.unanswered,
-    required this.bestStreak,
-  });
 
-  final int correctCount;
-  final int wrongCount;
-  final int unanswered;
-  final int bestStreak;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppPanel(
-      color: AppTheme.surfaceHiColor(context),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _MetricItem(
-              icon: Icons.check_circle_outline,
-              label: context.s('Rast', 'Doğru'),
-              value: '$correctCount',
-              color: AppTheme.correct,
-            ),
-            _VerticalDivider(),
-            _MetricItem(
-              icon: Icons.cancel_outlined,
-              label: context.s('Şaş', 'Yanlış'),
-              value: '$wrongCount',
-              color: AppTheme.wrong,
-            ),
-            _VerticalDivider(),
-            _MetricItem(
-              icon: Icons.hourglass_empty_rounded,
-              label: context.s('Vala', 'Boş'),
-              value: '$unanswered',
-              color: AppTheme.gold,
-            ),
-            _VerticalDivider(),
-            _MetricItem(
-              icon: Icons.local_fire_department_outlined,
-              label: context.s('Baştirîn', 'En İyi'),
-              value: '$bestStreak',
-              color: AppTheme.violet,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _VerticalDivider extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 1,
-      height: 36,
-      color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-    );
-  }
-}
-
-class _MetricItem extends StatelessWidget {
-  const _MetricItem({
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: color, size: 20),
-        const SizedBox(height: 6),
-        Text(
-          value,
-          style: TextStyle(
-            color: AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.w700,
-            fontSize: 20,
-          ),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          label,
-          style: TextStyle(
-            color: AppTheme.textMutedColor(context),
-            fontSize: 11,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 class _RaceStandings extends StatelessWidget {
   const _RaceStandings({required this.userScore, required this.opponents});
@@ -999,7 +980,7 @@ class _MasteryPromotions extends StatelessWidget {
                               : '${CategoryNames.localized(entry.key, false)} — ${entry.value.titleTr}!',
                           style: TextStyle(
                             color: entry.value.badgeColor,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             fontSize: 16,
                           ),
                         ),
@@ -1133,6 +1114,48 @@ class _RaceStandingRow extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _MetricItemCompact extends StatelessWidget {
+  const _MetricItemCompact({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.iconColor,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color iconColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: iconColor, size: 18),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: 1),
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.white.withValues(alpha: 0.7),
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
     );
   }
 }

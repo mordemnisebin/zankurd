@@ -78,7 +78,174 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: ListView(
             padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
             children: [
-              _SectionLabel(ku ? 'Dîmen û Deng' : 'Görünüm & Ses'),
+              // ============ HESAP / ACCOUNT ============
+              _SectionLabel(ku ? 'Hesap' : 'Hesap'),
+              AppPanel(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.badge_outlined,
+                          color: AppTheme.accent,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            ku ? 'Navê lîstikê' : 'Oyuncu Adı',
+                            style: TextStyle(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      key: const ValueKey('settings-player-name-field'),
+                      controller: _nameController,
+                      enabled: !_loadingName && !_savingName,
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(context),
+                      ),
+                      decoration: InputDecoration(
+                        hintText: ku
+                            ? 'Navê xwe binivîse...'
+                            : 'Oyundaki adını gir...',
+                      ),
+                      textInputAction: TextInputAction.done,
+                      onSubmitted: (_) => _savePlayerName(),
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.icon(
+                        onPressed: _loadingName || _savingName
+                            ? null
+                            : _savePlayerName,
+                        icon: _savingName
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Icon(Icons.save_outlined),
+                        label: Text(ku ? 'Tomar Bike' : 'Kaydet'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
+
+              // Hesap Silme (kırmızı/uyarı stili ile ayrı görselleştirme, Hesap grubunun altında)
+              AppPanel(
+                color: AppTheme.surfaceOf(context).withValues(alpha: 0.92),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.warning_amber_rounded,
+                          color: AppTheme.wrong,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          ku ? 'Karên Hesabê' : 'Hesap İşlemleri',
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      ku
+                          ? 'Ev kar nayên vegerandin.'
+                          : 'Bu alandaki işlemler geri alınamaz.',
+                      style: TextStyle(
+                        color: AppTheme.textMutedColor(context),
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    InkWell(
+                      key: const ValueKey('delete-account-action'),
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: _deleting ? null : _confirmDeleteAccount,
+                      child: Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: AppTheme.wrong.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: AppTheme.wrong.withValues(alpha: 0.28),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            _deleting
+                                ? const SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: AppTheme.wrong,
+                                    ),
+                                  )
+                                : Icon(
+                                    Icons.delete_forever_outlined,
+                                    color: AppTheme.wrong,
+                                    size: 22,
+                                  ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    ku ? 'Hesabê Min Jê Bibe' : 'Hesabımı Sil',
+                                    style: TextStyle(
+                                      color: AppTheme.wrong,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 3),
+                                  Text(
+                                    ku
+                                        ? 'Profîl, coin û pirsên tomarkirî tên jêbirin.'
+                                        : 'Profil, coin ve kaydedilen soru verilerin silinir.',
+                                    style: TextStyle(
+                                      color: AppTheme.textMutedColor(context),
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Icon(
+                              Icons.chevron_right_rounded,
+                              color: AppTheme.textMutedColor(context),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
+
+              // ============ GÖRÜNÜM / APPEARANCE ============
+              _SectionLabel(ku ? 'Dîmen' : 'Görünüm'),
               // Language
               AppPanel(
                 child: Row(
@@ -133,6 +300,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const SizedBox(height: 14),
 
+              // ============ SES & BİLDİRİM / SOUND & NOTIFICATIONS ============
+              _SectionLabel(ku ? 'Deng û Agahdarî' : 'Ses & Bildirim'),
               Consumer<SoundProvider>(
                 builder: (context, sound, _) => AppPanel(
                   child: Row(
@@ -249,70 +418,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               const SizedBox(height: 14),
-              _SectionLabel(ku ? 'Agahiyên Hesabê' : 'Hesap'),
-              AppPanel(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.badge_outlined,
-                          color: AppTheme.accent,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            ku ? 'Navê lîstikê' : 'Oyuncu Adı',
-                            style: TextStyle(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      key: const ValueKey('settings-player-name-field'),
-                      controller: _nameController,
-                      enabled: !_loadingName && !_savingName,
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryColor(context),
-                      ),
-                      decoration: InputDecoration(
-                        hintText: ku
-                            ? 'Navê xwe binivîse...'
-                            : 'Oyundaki adını gir...',
-                      ),
-                      textInputAction: TextInputAction.done,
-                      onSubmitted: (_) => _savePlayerName(),
-                    ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton.icon(
-                        onPressed: _loadingName || _savingName
-                            ? null
-                            : _savePlayerName,
-                        icon: _savingName
-                            ? const SizedBox(
-                                width: 16,
-                                height: 16,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Icon(Icons.save_outlined),
-                        label: Text(ku ? 'Tomar Bike' : 'Kaydet'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 14),
-              _SectionLabel(ku ? 'Zanyarî' : 'Bilgi'),
+
+              // ============ HAKKINDA / ABOUT ============
+              _SectionLabel(ku ? 'Derbarê Sepanê' : 'Uygulama Hakkında'),
               // How to play
               _ExpandableSection(
                 icon: Icons.help_outline_rounded,
@@ -359,108 +467,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           'nisebinbawer47@gmail.com',
               ),
               const SizedBox(height: 14),
-              _SectionLabel(ku ? 'Karên Hesabê' : 'Hesap İşlemleri'),
-              AppPanel(
-                color: AppTheme.surfaceOf(context).withValues(alpha: 0.92),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.warning_amber_rounded,
-                          color: AppTheme.wrong,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          ku ? 'Karên Hesabê' : 'Hesap İşlemleri',
-                          style: TextStyle(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      ku
-                          ? 'Ev kar nayên vegerandin.'
-                          : 'Bu alandaki işlemler geri alınamaz.',
-                      style: TextStyle(
-                        color: AppTheme.textMutedColor(context),
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    InkWell(
-                      key: const ValueKey('delete-account-action'),
-                      borderRadius: BorderRadius.circular(12),
-                      onTap: _deleting ? null : _confirmDeleteAccount,
-                      child: Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          color: AppTheme.wrong.withValues(alpha: 0.08),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: AppTheme.wrong.withValues(alpha: 0.28),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            _deleting
-                                ? const SizedBox(
-                                    width: 22,
-                                    height: 22,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: AppTheme.wrong,
-                                    ),
-                                  )
-                                : Icon(
-                                    Icons.delete_forever_outlined,
-                                    color: AppTheme.wrong,
-                                    size: 22,
-                                  ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    ku ? 'Hesabê Min Jê Bibe' : 'Hesabımı Sil',
-                                    style: TextStyle(
-                                      color: AppTheme.wrong,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 3),
-                                  Text(
-                                    ku
-                                        ? 'Profîl, coin û pirsên tomarkirî tên jêbirin.'
-                                        : 'Profil, coin ve kaydedilen soru verilerin silinir.',
-                                    style: TextStyle(
-                                      color: AppTheme.textMutedColor(context),
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Icon(
-                              Icons.chevron_right_rounded,
-                              color: AppTheme.textMutedColor(context),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 14),
-              _SectionLabel(ku ? 'Derbarê Sepanê' : 'Uygulama Hakkında'),
-              // About
+
+              // About (includes version)
               AppPanel(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -493,7 +501,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               'ZanKurd',
                               style: TextStyle(
                                 color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 fontSize: 17,
                               ),
                             ),
