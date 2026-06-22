@@ -47,6 +47,25 @@ app.*.map.json
 # Android release signing secrets
 /android/key.properties
 /android/*.jks
+*.jks
+*.keystore
+*.p12
+*.pem
+
+# Environment / secrets
+.env
+.env.*
+
+# Native build/cache dirs
+.gradle/
+/android/.gradle/
+/android/build/
+/ios/Pods/
+
+# Build artifacts (binaries should never be committed)
+*.apk
+*.aab
+*.ipa
 
 # Local release artifacts
 release_packages/

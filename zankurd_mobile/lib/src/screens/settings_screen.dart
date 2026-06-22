@@ -15,7 +15,7 @@ class SettingsScreen extends StatefulWidget {
   const SettingsScreen({required this.repository, super.key});
 
   final ZanKurdRepository repository;
-  static const appVersion = '1.3.0+4';
+  static const appVersion = '1.5.0+6';
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -321,13 +321,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ? '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n'
                           '• Pêşbirka Rojê: her roj ji bo hemû lîstikvanan heman 10 pirs.\n'
                           '• Jûr Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n'
-                          '• Kategorî û Ast: ji 6 kategoriyan û 5 astan hilbijêre.\n'
+                          '• Kategorî û Ast: ji 8 kategoriyan û 5 astan hilbijêre.\n'
                           '• Joker 50/50: du bersivên şaş radike.\n'
                           '• Bersiva rast pûan û coin dide; rêza rast bonus zêde dike.'
                     : '• Hızlı Yarış: hemen 10 soru cevapla.\n'
                           '• Günün Yarışması: her gün tüm oyunculara aynı 10 soru.\n'
                           '• Oda Kur: kodu arkadaşlarına ver, birlikte yarışın.\n'
-                          '• Kategori ve Seviye: 6 kategori, 5 seviye arasından seç.\n'
+                          '• Kategori ve Seviye: 8 kategori, 5 seviye arasından seç.\n'
                           '• 50/50 jokeri iki yanlış cevabı eler.\n'
                           '• Doğru cevap puan ve coin kazandırır; seri bonusu artırır.',
               ),
