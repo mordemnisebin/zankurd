@@ -25,4 +25,8 @@ void main() {
       expect(CategoryVisuals.imagePath(cat), endsWith('.png'));
     }
   });
+
+  test('bilinmeyen kategori imagePath fallback döner', () {
+    expect(CategoryVisuals.imagePath('Yok'), 'assets/question_images/cat_ziman.png');
+  });
 }
