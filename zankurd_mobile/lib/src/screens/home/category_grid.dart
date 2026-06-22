@@ -5,6 +5,7 @@ import '../../data/mastery_store.dart';
 import '../../l10n/lang.dart';
 import '../../models/mastery_level.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/pressable_card.dart';
 
 class CategoryGrid extends StatefulWidget {
   const CategoryGrid({
@@ -192,8 +193,9 @@ class _CategoryCard extends StatelessWidget {
 
     return Hero(
       tag: 'category_hero_$category',
-      child: GestureDetector(
+      child: PressableCard(
         onTap: onTap,
+        borderRadius: AppTheme.cardRadius,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppTheme.cardRadius),
