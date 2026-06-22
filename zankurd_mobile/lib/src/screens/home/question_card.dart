@@ -25,11 +25,13 @@ class QuestionCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              _Tag(
-                label: CategoryNames.localized(question.category, isKu),
-                color: AppTheme.violet,
+              Expanded(
+                child: _Tag(
+                  label: CategoryNames.localized(question.category, isKu),
+                  color: AppTheme.violet,
+                ),
               ),
-              const Spacer(),
+              const SizedBox(width: 8),
               _Tag(
                 label: isKu ? '08 çirke' : '08 sn',
                 color: AppTheme.textMutedColor(context),
@@ -77,6 +79,8 @@ class _Tag extends StatelessWidget {
       ),
       child: Text(
         label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(
           color: color == AppTheme.textMuted
               ? AppTheme.textMutedColor(context)

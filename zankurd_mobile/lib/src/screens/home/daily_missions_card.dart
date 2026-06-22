@@ -31,14 +31,18 @@ class DailyMissionsCard extends StatelessWidget {
             children: [
               Icon(Icons.task_alt_rounded, color: AppTheme.gold, size: 20),
               const SizedBox(width: 8),
-              Text(
-                isKu ? 'Erkên Rojane' : 'Günlük Görevler',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 16,
+              Expanded(
+                child: Text(
+                  isKu ? 'Erkên Rojane' : 'Günlük Görevler',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 16,
+                  ),
                 ),
               ),
-              const Spacer(),
+              const SizedBox(width: 8),
               if (!loading)
                 Text(
                   '$completedCount/${missions.length}',

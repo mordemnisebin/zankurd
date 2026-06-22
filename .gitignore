@@ -2,6 +2,7 @@
 görseller/
 Pirs_apk_extracted/
 output/
+*.zip
 
 # Mobil ve test araçlarının bağımlılıkları/önbellekleri
 .playwright-mcp/

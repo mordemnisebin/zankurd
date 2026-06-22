@@ -78,6 +78,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: ListView(
             padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
             children: [
+              _SectionLabel(ku ? 'Dîmen û Deng' : 'Görünüm & Ses'),
               // Language
               AppPanel(
                 child: Row(
@@ -248,7 +249,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               const SizedBox(height: 14),
-
+              _SectionLabel(ku ? 'Agahiyên Hesabê' : 'Hesap'),
               AppPanel(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,7 +312,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               const SizedBox(height: 14),
-
+              _SectionLabel(ku ? 'Zanyarî' : 'Bilgi'),
               // How to play
               _ExpandableSection(
                 icon: Icons.help_outline_rounded,
@@ -358,7 +359,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           'nisebinbawer47@gmail.com',
               ),
               const SizedBox(height: 14),
-
+              _SectionLabel(ku ? 'Karên Hesabê' : 'Hesap İşlemleri'),
               AppPanel(
                 color: AppTheme.surfaceOf(context).withValues(alpha: 0.92),
                 child: Column(
@@ -458,7 +459,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               const SizedBox(height: 14),
-
+              _SectionLabel(ku ? 'Derbarê Sepanê' : 'Uygulama Hakkında'),
               // About
               AppPanel(
                 child: Column(
@@ -791,6 +792,28 @@ class _LangChip extends StatelessWidget {
             fontWeight: FontWeight.w900,
             fontSize: 12,
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SectionLabel extends StatelessWidget {
+  const _SectionLabel(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 4, 4, 6),
+      child: Text(
+        label.toUpperCase(),
+        style: TextStyle(
+          color: AppTheme.textMutedColor(context),
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.8,
         ),
       ),
     );

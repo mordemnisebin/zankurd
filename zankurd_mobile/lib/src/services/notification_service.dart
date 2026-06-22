@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 /// Bildirim ayarlarını yöneten servis.
-/// Firebase Messaging bağımlılığı projeye eklendiğinde
-/// gerçek push bildirimleri burada yapılandırılır.
+/// flutter_local_notifications kullanılarak yerel günlük hatırlatıcılar zamanlanır.
 class NotificationService {
   NotificationService._(
     this._preferences,
@@ -19,7 +21,8 @@ class NotificationService {
   static const _nextFireKey = 'zankurd.notifications.nextFireAt';
 
   static NotificationService? _instance;
-  Timer? _mockTimer;
+  static final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   static Future<NotificationService> load() async {
     final cached = _instance;
@@ -36,15 +39,15 @@ class NotificationService {
       preferences?.getInt(_hourKey) ?? 19,
       preferences?.getInt(_minuteKey) ?? 0,
     );
+    await service._initNotifications();
     if (service.enabled) {
-      service.startMockScheduler();
+      await service._scheduleDaily();
     }
     return _instance = service;
   }
 
   /// Testlerde tekil örneği sıfırlamak için.
   static void resetInstance() {
-    _instance?._mockTimer?.cancel();
     _instance = null;
   }
 
@@ -71,35 +74,62 @@ class NotificationService {
     return candidate;
   }
 
-  /// Hesaplanan bir sonraki bildirim anı (kalıcı). Native bildirim katmanı
-  /// (flutter_local_notifications) eklendiğinde bu değer okunup zamanlanır.
+  /// Hesaplanan bir sonraki bildirim anı (kalıcı).
   DateTime? get nextFireAt {
     final raw = _preferences?.getString(_nextFireKey);
     return raw == null ? null : DateTime.tryParse(raw);
   }
 
-  /// Yerel zamanlayıcı ile bildirim simülasyonunu başlatır.
-  void startMockScheduler() {
-    _mockTimer?.cancel();
-    _mockTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      if (!_enabled) return;
-      final target = nextFireAt;
-      if (target != null && DateTime.now().isAfter(target)) {
-        debugPrint('[NOTIFICATION_SIMULATION] Hatırlatıcı: ZanKurd\'a hoş geldiniz! Günlük yarışmanızı tamamlamayı unutmayın!');
-        _scheduleDaily();
-      }
-    });
+  Future<void> _initNotifications() async {
+    if (kIsWeb) return;
+    try {
+      tz.initializeTimeZones();
+      try {
+        tz.setLocalLocation(tz.getLocation('Europe/Istanbul'));
+      } catch (_) {}
+
+      const AndroidInitializationSettings initializationSettingsAndroid =
+          AndroidInitializationSettings('@mipmap/ic_launcher');
+      const InitializationSettings initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid,
+        iOS: DarwinInitializationSettings(),
+      );
+
+      await _localNotificationsPlugin.initialize(initializationSettings);
+    } catch (e) {
+      debugPrint('Failed to initialize local notifications: $e');
+    }
+  }
+
+  Future<void> _requestPermissions() async {
+    if (kIsWeb) return;
+    try {
+      await _localNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+      
+      await _localNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+    } catch (e) {
+      debugPrint('Failed to request notifications permission: $e');
+    }
   }
 
   Future<void> setEnabled(bool value) async {
     _enabled = value;
     await _preferences?.setBool(_enabledKey, value);
     if (value) {
+      await _requestPermissions();
       await _scheduleDaily();
-      startMockScheduler();
     } else {
       await _cancelAll();
-      _mockTimer?.cancel();
     }
   }
 
@@ -110,21 +140,55 @@ class NotificationService {
     await _preferences?.setInt(_minuteKey, minute);
     if (_enabled) {
       await _scheduleDaily();
-      startMockScheduler();
     }
   }
 
-  /// Günlük hatırlatıcının bir sonraki anını hesaplayıp kalıcı saklar.
-  ///
-  /// Native bildirim katmanı (flutter_local_notifications) eklendiğinde,
-  /// burada hesaplanan [nextFireAt] değeri `zonedSchedule` ile işletim
-  /// sistemine bildirilir. Cihaz adımları için bkz. docs/bildirim-entegrasyonu.md
+  /// Günlük hatırlatıcının bir sonraki anını hesaplayıp zamanlar.
   Future<void> _scheduleDaily() async {
     final next = nextFireTime();
     await _preferences?.setString(_nextFireKey, next.toIso8601String());
+
+    if (kIsWeb) return;
+    try {
+      await _localNotificationsPlugin.cancel(0); // Cancel previous daily notification
+      
+      const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+        'zankurd_daily_reminder',
+        'ZanKurd Bîranîna Rojane',
+        channelDescription: 'Bîranîna pêşbirka rojane ya ZanKurd',
+        importance: Importance.max,
+        priority: Priority.high,
+      );
+      const DarwinNotificationDetails iosDetails = DarwinNotificationDetails();
+      const NotificationDetails details = NotificationDetails(
+        android: androidDetails,
+        iOS: iosDetails,
+      );
+
+      final scheduledTime = tz.TZDateTime.from(next, tz.local);
+      await _localNotificationsPlugin.zonedSchedule(
+        0,
+        'ZanKurd',
+        'Pêşbirka rojê li benda te ye! Hêza hişê xwe biceribîne! / Günün yarışması seni bekliyor! Zihnini test et!',
+        scheduledTime,
+        details,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+    } catch (e) {
+      debugPrint('Failed to schedule local notification: $e');
+    }
   }
 
   Future<void> _cancelAll() async {
     await _preferences?.remove(_nextFireKey);
+    if (kIsWeb) return;
+    try {
+      await _localNotificationsPlugin.cancelAll();
+    } catch (e) {
+      debugPrint('Failed to cancel notifications: $e');
+    }
   }
 }

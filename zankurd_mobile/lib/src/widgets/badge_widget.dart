@@ -44,7 +44,7 @@ class BadgeWidget extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOutCubic,
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       decoration: BoxDecoration(
         color: isUnlocked
             ? (isDark
@@ -73,12 +73,13 @@ class BadgeWidget extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Rozet ikonu
           AnimatedContainer(
             duration: const Duration(milliseconds: 400),
-            width: 48,
-            height: 48,
+            width: 40,
+            height: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: isUnlocked
@@ -101,10 +102,10 @@ class BadgeWidget extends StatelessWidget {
                   : (isDark
                       ? const Color(0xFF909090)
                       : const Color(0xFF656565)),
-              size: 24,
+              size: 20,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
 
           // Rozet başlığı
           Text(
@@ -113,7 +114,7 @@ class BadgeWidget extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: FontWeight.w700,
               color: isUnlocked
                   ? (isDark
@@ -129,7 +130,7 @@ class BadgeWidget extends StatelessWidget {
           // Rozet durumu
           if (isUnlocked)
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
               decoration: BoxDecoration(
                 color: const Color(0xFF00D68F).withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(6),
@@ -137,7 +138,7 @@ class BadgeWidget extends StatelessWidget {
               child: Text(
                 isKu ? '✓ Vekirî' : '✓ Kazanıldı',
                 style: const TextStyle(
-                  fontSize: 9,
+                  fontSize: 8.5,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF00D68F),
                 ),
@@ -146,7 +147,7 @@ class BadgeWidget extends StatelessWidget {
           else
             Icon(
               Icons.lock_outline,
-              size: 14,
+              size: 12,
               color: isDark
                   ? const Color(0xFF909090)
                   : const Color(0xFF656565),

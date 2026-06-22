@@ -338,10 +338,20 @@ class _AnswerButton extends StatelessWidget {
   final bool firstAttemptWrong;
   final double? audiencePercent;
 
+  // A/B/C/D rozetleriyle eşleşen kenarlık renkleri
+  static const _badgePalette = [
+    Color(0xFFE94560), // A — kırmızı
+    Color(0xFF2563EB), // B — mavi
+    Color(0xFF10B981), // C — yeşil
+    Color(0xFFF59E0B), // D — amber
+  ];
+
   @override
   Widget build(BuildContext context) {
     final wrong = (selected && !correct && disabled) || firstAttemptWrong;
     final isChecking = selected && !disabled;
+
+    final badgeColor = _badgePalette[index % _badgePalette.length];
 
     // Gradient belirleme
     final Gradient? gradient = correct
@@ -354,7 +364,7 @@ class _AnswerButton extends StatelessWidget {
 
     final Color color = gradient != null
         ? Colors.transparent
-        : AppTheme.surfaceColor(context).withValues(alpha: 0.72);
+        : AppTheme.surfaceColor(context).withValues(alpha: 0.96);
 
     final Color borderColor = correct
         ? AppTheme.correct
@@ -362,7 +372,7 @@ class _AnswerButton extends StatelessWidget {
         ? AppTheme.wrong
         : isChecking
         ? AppTheme.accent
-        : AppTheme.borderColor(context);
+        : badgeColor.withValues(alpha: 0.40);
 
     // Metin rengi
     final Color textColor = (correct || wrong || isChecking)
@@ -376,7 +386,7 @@ class _AnswerButton extends StatelessWidget {
         ? const Color(0xFFD61A4C)
         : isChecking
         ? const Color(0xFFFF6B6B)
-        : AppTheme.borderColor(context);
+        : badgeColor;
 
     final isPressed = selected;
 
@@ -398,12 +408,12 @@ class _AnswerButton extends StatelessWidget {
             color: color,
             gradient: gradient,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: borderColor, width: 1.5),
+            border: Border.all(color: borderColor, width: 2.0),
             boxShadow: isPressed
                 ? []
                 : [
                     BoxShadow(
-                      color: shadowColor.withValues(alpha: 0.5),
+                      color: shadowColor.withValues(alpha: 0.30),
                       offset: const Offset(0, 4),
                       blurRadius: 0,
                     ),
@@ -566,29 +576,55 @@ class _WildcardButton extends StatelessWidget {
     required this.isEnabled,
     required this.isActive,
     required this.onTap,
+    this.cantAfford = false,
   });
 
   final WildcardType type;
   final bool isKu;
   final bool isEnabled;
   final bool isActive;
+  final bool cantAfford;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final baseColor = type.themeColor;
+
+    final opacity = (isEnabled || isActive) ? 1.0 : cantAfford ? 0.45 : 0.35;
+
+    final borderColor = isActive
+        ? AppTheme.accent
+        : cantAfford
+        ? AppTheme.wrong.withValues(alpha: 0.5)
+        : isEnabled
+        ? baseColor.withValues(alpha: 0.75)
+        : AppTheme.borderColor(context);
+
+    final bgColor = isActive
+        ? AppTheme.accent.withValues(alpha: 0.15)
+        : cantAfford
+        ? AppTheme.wrong.withValues(alpha: 0.05)
+        : isEnabled
+        ? baseColor.withValues(alpha: 0.12)
+        : null;
+
+    final iconColor = isActive
+        ? AppTheme.accent
+        : cantAfford
+        ? AppTheme.wrong
+        : isEnabled
+        ? baseColor
+        : AppTheme.textMutedColor(context);
+
     return Opacity(
-      opacity: (isEnabled || isActive) ? 1.0 : 0.35,
+      opacity: opacity,
       child: OutlinedButton(
         onPressed: isEnabled ? onTap : null,
         style: OutlinedButton.styleFrom(
-          backgroundColor: isActive
-              ? AppTheme.accent.withValues(alpha: 0.15)
-              : null,
-          side: isActive
-              ? const BorderSide(color: AppTheme.accent)
-              : BorderSide(color: AppTheme.borderColor(context)),
+          backgroundColor: bgColor,
+          side: BorderSide(color: borderColor, width: 1.5),
           padding: const EdgeInsets.symmetric(vertical: 6),
-          minimumSize: const Size(0, 42),
+          minimumSize: const Size(0, 50),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -597,11 +633,15 @@ class _WildcardButton extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(type.icon, size: 16),
+            Icon(cantAfford ? Icons.lock_outline : type.icon, size: 20, color: iconColor),
             const SizedBox(height: 2),
             Text(
               '${type.coinCost}c',
-              style: const TextStyle(fontSize: 9, fontWeight: FontWeight.w900),
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w900,
+                color: iconColor,
+              ),
             ),
           ],
         ),

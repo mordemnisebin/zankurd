@@ -1,7 +1,8 @@
+import '../models/leaderboard_entry.dart';
+import '../models/leaderboard_period.dart';
 import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
-import '../models/leaderboard_entry.dart';
 import '../models/room.dart';
 
 abstract class ZanKurdRepository {
@@ -48,7 +49,10 @@ abstract class ZanKurdRepository {
   });
   Future<bool> toggleFavoriteQuestion(QuizQuestion question, bool favorite);
   Future<void> reportQuestion(QuizQuestion question, String reason);
-  Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50});
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 10,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  });
   Future<List<QuizQuestion>> loadFavoriteQuestions();
   Future<int> loadCoinBalance();
 

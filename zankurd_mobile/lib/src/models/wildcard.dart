@@ -23,6 +23,13 @@ extension WildcardTypeDetails on WildcardType {
     WildcardType.doubleAnswer   => isKu ? 'Du Bersiv'          : 'Çift Cevap',
     WildcardType.changeQuestion => isKu ? 'Pirsê Biguhere'     : 'Soru Değiştir',
   };
+
+  Color get themeColor => switch (this) {
+    WildcardType.fiftyFifty     => const Color(0xFFFFB300), // Altın
+    WildcardType.audience       => const Color(0xFF00BFA5), // Zümrüt yeşil
+    WildcardType.doubleAnswer   => const Color(0xFF00C853), // Neon yeşil
+    WildcardType.changeQuestion => const Color(0xFF7C4DFF), // Derin mor
+  };
 }
 
 class WildcardState {

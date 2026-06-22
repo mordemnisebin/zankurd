@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/leaderboard_entry.dart';
+import '../models/leaderboard_period.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
@@ -760,32 +761,52 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50}) async {
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 10,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async {
     try {
-      final rows = await client
-          .from('leaderboard_entries')
-          .select(
-            'player_id, display_name, total_score, best_streak, rooms_played',
-          )
-          .order('total_score', ascending: false)
-          .order('best_streak', ascending: false)
-          .limit(limit);
-
+      final rows = await client.rpc<List<dynamic>>(
+        'get_leaderboard',
+        params: {'p_days': period.days, 'p_limit': limit},
+      );
       return rows.indexed.map((item) {
         final index = item.$1;
-        final row = item.$2;
+        final row = item.$2 as Map<String, dynamic>;
         return LeaderboardEntry(
           rank: index + 1,
           playerId: row['player_id'] as String? ?? '',
           displayName: row['display_name'] as String? ?? 'Oyuncu',
-          totalScore: row['total_score'] as int? ?? 0,
-          bestStreak: row['best_streak'] as int? ?? 0,
-          roomsPlayed: row['rooms_played'] as int? ?? 0,
+          totalScore: (row['total_score'] as num?)?.toInt() ?? 0,
+          bestStreak: (row['best_streak'] as num?)?.toInt() ?? 0,
+          roomsPlayed: (row['rooms_played'] as num?)?.toInt() ?? 0,
         );
       }).toList();
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'loadLeaderboard failed');
-      return const [];
+    } catch (_) {
+      // RPC henüz kurulu değilse all-time view'a geri dön
+      try {
+        final rows = await client
+            .from('leaderboard_entries')
+            .select('player_id, display_name, total_score, best_streak, rooms_played')
+            .order('total_score', ascending: false)
+            .order('best_streak', ascending: false)
+            .limit(limit);
+        return rows.indexed.map((item) {
+          final index = item.$1;
+          final row = item.$2;
+          return LeaderboardEntry(
+            rank: index + 1,
+            playerId: row['player_id'] as String? ?? '',
+            displayName: row['display_name'] as String? ?? 'Oyuncu',
+            totalScore: row['total_score'] as int? ?? 0,
+            bestStreak: row['best_streak'] as int? ?? 0,
+            roomsPlayed: row['rooms_played'] as int? ?? 0,
+          );
+        }).toList();
+      } catch (error, stack) {
+        _recordError(error, stack, reason: 'loadLeaderboard failed');
+        return const [];
+      }
     }
   }
 

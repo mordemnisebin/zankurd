@@ -113,8 +113,8 @@ class _AppStateScaffold extends StatelessWidget {
                     Text(
                       title,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: AppTheme.textPrimary,
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(context),
                         fontWeight: FontWeight.w900,
                         fontSize: 18,
                       ),
@@ -123,8 +123,8 @@ class _AppStateScaffold extends StatelessWidget {
                     Text(
                       message,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: AppTheme.textMuted,
+                      style: TextStyle(
+                        color: AppTheme.textMutedColor(context),
                         height: 1.4,
                       ),
                     ),

@@ -146,8 +146,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   void _startTimer() {
     if (widget.enableTimer) {
-      _timerController.reset();
-      _timerController.reverse(from: 1.0);
+      _timerController.stop();
+      _timerController.value = 1.0;
+      _timerController.reverse();
     }
   }
 
@@ -502,6 +503,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       isKu: _isKu,
       isEnabled: isEnabled,
       isActive: isActive,
+      cantAfford: !used && !canAfford && !answered,
       onTap: () => _onWildcardTap(type),
     );
   }

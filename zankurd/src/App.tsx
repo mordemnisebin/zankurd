@@ -21,7 +21,8 @@ import {
   Users,
   Zap,
 } from 'lucide-react'
-import './App.css'
+import './App.css';
+import { ThemeToggle } from './ThemeToggle';
 
 type Question = {
   category: string
@@ -92,7 +93,7 @@ function App() {
             <span>Pêşbirka Kurmancî</span>
           </div>
         </div>
-
+        <ThemeToggle />
         <div className="top-actions">
           <button type="button" className="icon-button" aria-label="Bildirimler">
             <Bell size={19} />

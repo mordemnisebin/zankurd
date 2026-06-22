@@ -41,6 +41,7 @@ class SoundProvider extends ChangeNotifier {
 
   Future<void> _play(String asset) async {
     if (!_enabled) return;
+    if (kIsWeb) return;
     try {
       final playerFactory = _playerFactory;
       if (_player == null && playerFactory != null) {

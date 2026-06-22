@@ -397,6 +397,24 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             ),
                           ),
                         ),
+                        if (coinsAwarded > 0) ...[
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              _ResultRewardChip(
+                                icon: Icons.monetization_on_outlined,
+                                label: '+${coinsAwarded}c',
+                              ),
+                              if (_earnedXP > 0) ...[
+                                const SizedBox(width: 8),
+                                _ResultRewardChip(
+                                  icon: Icons.bolt_rounded,
+                                  label: '+$_earnedXP XP',
+                                ),
+                              ],
+                            ],
+                          ),
+                        ],
                       ],
                     ),
                   ],
@@ -620,46 +638,57 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton.icon(
-                        style: FilledButton.styleFrom(
-                          backgroundColor: AppTheme.gold,
-                          foregroundColor: Colors.black87,
-                        ),
-                        onPressed: () => ResultSharer.share(
-                          context,
-                          isKu: context.isKu,
-                          score: score,
-                          correctCount: correctCount,
-                          totalQuestions: totalQuestions,
-                          bestStreak: bestStreak,
-                          category: room.category,
-                        ),
-                        icon: Icon(Icons.share_rounded),
-                        label: Text(
-                          context.s('Encamê Parve Bike', 'Sonucu Paylaş'),
-                        ),
+                        onPressed: () {
+                          Navigator.of(
+                            context,
+                          ).popUntil((route) => route.isFirst);
+                        },
+                        icon: const Icon(Icons.home_outlined),
+                        label: Text(context.s('Vegere malê', 'Ana ekrana dön')),
                       ),
                     ),
                     const SizedBox(height: 10),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton.icon(
-                        onPressed: answerRecords.isEmpty
-                            ? null
-                            : () {
-                                Navigator.of(context).push(
-                                  AppRoute.to(
-                                    ReviewScreen(
-                                      records: answerRecords,
-                                      room: room,
-                                    ),
-                                  ),
-                                );
-                              },
-                        icon: Icon(Icons.fact_check_outlined),
-                        label: Text(
-                          context.s('Bersivan Bibîne', 'Cevapları İncele'),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: answerRecords.isEmpty
+                                ? null
+                                : () {
+                                    Navigator.of(context).push(
+                                      AppRoute.to(
+                                        ReviewScreen(
+                                          records: answerRecords,
+                                          room: room,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                            icon: const Icon(Icons.fact_check_outlined),
+                            label: Text(
+                              context.s('Bersivan Bibîne', 'Cevapları İncele'),
+                            ),
+                          ),
                         ),
-                      ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: () => ResultSharer.share(
+                              context,
+                              isKu: context.isKu,
+                              score: score,
+                              correctCount: correctCount,
+                              totalQuestions: totalQuestions,
+                              bestStreak: bestStreak,
+                              category: room.category,
+                            ),
+                            icon: const Icon(Icons.share_rounded),
+                            label: Text(
+                              context.s('Parve Bike', 'Paylaş'),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 10),
                     SizedBox(
@@ -672,23 +701,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             ),
                           );
                         },
-                        icon: Icon(Icons.emoji_events_outlined),
+                        icon: const Icon(Icons.emoji_events_outlined),
                         label: Text(
                           context.s('Tabloya Pêşderçûnê', 'Liderlik Tablosu'),
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          Navigator.of(
-                            context,
-                          ).popUntil((route) => route.isFirst);
-                        },
-                        icon: Icon(Icons.home_outlined),
-                        label: Text(context.s('Vegere malê', 'Ana ekrana dön')),
                       ),
                     ),
                   ],
@@ -717,45 +733,60 @@ class _ResultMetrics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 10,
-      crossAxisSpacing: 10,
-      childAspectRatio: 1.55,
-      children: [
-        _MetricTile(
-          icon: Icons.check_circle_outline,
-          label: context.s('Rast', 'Doğru'),
-          value: '$correctCount',
-          color: AppTheme.correct,
+    return AppPanel(
+      color: AppTheme.surfaceHiColor(context),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _MetricItem(
+              icon: Icons.check_circle_outline,
+              label: context.s('Rast', 'Doğru'),
+              value: '$correctCount',
+              color: AppTheme.correct,
+            ),
+            _VerticalDivider(),
+            _MetricItem(
+              icon: Icons.cancel_outlined,
+              label: context.s('Şaş', 'Yanlış'),
+              value: '$wrongCount',
+              color: AppTheme.wrong,
+            ),
+            _VerticalDivider(),
+            _MetricItem(
+              icon: Icons.hourglass_empty_rounded,
+              label: context.s('Vala', 'Boş'),
+              value: '$unanswered',
+              color: AppTheme.gold,
+            ),
+            _VerticalDivider(),
+            _MetricItem(
+              icon: Icons.local_fire_department_outlined,
+              label: context.s('Baştirîn', 'En İyi'),
+              value: '$bestStreak',
+              color: AppTheme.violet,
+            ),
+          ],
         ),
-        _MetricTile(
-          icon: Icons.cancel_outlined,
-          label: context.s('Şaş', 'Yanlış'),
-          value: '$wrongCount',
-          color: AppTheme.wrong,
-        ),
-        _MetricTile(
-          icon: Icons.hourglass_empty_rounded,
-          label: context.s('Vala', 'Boş'),
-          value: '$unanswered',
-          color: AppTheme.gold,
-        ),
-        _MetricTile(
-          icon: Icons.local_fire_department_outlined,
-          label: context.s('Rêza herî baş', 'En iyi seri'),
-          value: '$bestStreak',
-          color: AppTheme.violet,
-        ),
-      ],
+      ),
     );
   }
 }
 
-class _MetricTile extends StatelessWidget {
-  const _MetricTile({
+class _VerticalDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 1,
+      height: 36,
+      color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+    );
+  }
+}
+
+class _MetricItem extends StatelessWidget {
+  const _MetricItem({
     required this.icon,
     required this.label,
     required this.value,
@@ -769,29 +800,29 @@ class _MetricTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context),
-        border: Border.all(color: AppTheme.borderColor(context)),
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(icon, color: color),
-          Text(
-            value,
-            style: TextStyle(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w900,
-              fontSize: 24,
-            ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: color, size: 20),
+        const SizedBox(height: 6),
+        Text(
+          value,
+          style: TextStyle(
+            color: AppTheme.textPrimaryColor(context),
+            fontWeight: FontWeight.w900,
+            fontSize: 20,
           ),
-          Text(label, style: TextStyle(color: AppTheme.textMuted)),
-        ],
-      ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          label,
+          style: TextStyle(
+            color: AppTheme.textMutedColor(context),
+            fontSize: 11,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -987,6 +1018,40 @@ class _MasteryPromotions extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+class _ResultRewardChip extends StatelessWidget {
+  const _ResultRewardChip({required this.icon, required this.label});
+
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.18),
+        borderRadius: BorderRadius.circular(99),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: Colors.white, size: 14),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w900,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -2,51 +2,50 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   // ============ Dark Mode Palette ============
-  // Primary gradient: Coral/Orange
-  static const primaryGradientStart = Color(0xFFFF6B6B);
-  static const primaryGradientEnd = Color(0xFFFF9F4A);
+  // Primary gradient: Neon Violet/Coral/Orange
+  static const primaryGradientStart = Color(0xFFFF4B91); // Canlı neon pembe
+  static const primaryGradientEnd = Color(0xFFFF7B54); // Canlı neon turuncu
 
-  // Secondary accent: Indigo
-  static const secondaryAccent = Color(0xFF6366F1);
+  // Secondary accent: Electric Indigo/Neon Mavi
+  static const secondaryAccent = Color(0xFF6F61C0); 
 
   // Gold accent
-  static const gold = Color(0xFFFFD700);
+  static const gold = Color(0xFFFFD23F); // Parlak neon altın sarısı
 
   // Cyan accent
-  static const cyan = Color(0xFF00D9FF);
+  static const cyan = Color(0xFF00F0FF); // Parlak neon mavi/turkuaz
 
-  // Dark backgrounds
-  static const bg = Color(0xFF1A1A2E);
-  static const bgDeep = Color(0xFF16213E);
-  static const surface = Color(0xFF1F1F2E);
-  static const surfaceHi = Color(0xFF2A2A3E);
-  static const darkBg = Color(0xFF0F0F1A);
+  // Dark backgrounds (Derin Gece Mavisi / Kozmik Mor geçişleri)
+  static const bg = Color(0xFF0F0C20); 
+  static const bgDeep = Color(0xFF080711); 
+  static const surface = Color(0xFF16132D); 
+  static const surfaceHi = Color(0xFF221E42); 
+  static const darkBg = Color(0xFF05040B); 
 
   // Dark mode text
-  static const textPrimary = Color(0xFFE8E8E8);
-  static const textSub = Color(0xFFA8A8A8);
-  static const textMuted = Color(0xFF909090);
+  static const textPrimary = Color(0xFFF5F4FA); 
+  static const textSub = Color(0xFFB8B5D0); 
+  static const textMuted = Color(0xFF7F7A9C); 
 
   // Borders
-  static const border = Color(0xFF2A3B5C);
+  static const border = Color(0xFF2E2A52); 
 
   // Status colors
-  static const accent = Color(0xFFFF6B6B); // Primary coral red
-  static const violet = Color(0xFF6366F1); // Indigo secondary
-  static const correct = Color(0xFF00D68F);
-  static const wrong = Color(0xFFFF3D71);
+  static const accent = Color(0xFFFF4B91); // Neon Pembe
+  static const violet = Color(0xFF8E8FFA); // Pastel Neon Mor
+  static const correct = Color(0xFF00E676); // Parlak Neon Yeşil
+  static const wrong = Color(0xFFFF1744); // Parlak Neon Kırmızı
 
-  // ============ Light Mode Palette (parlak/canlı — TRT tarzı) ============
-  // Düz gri yerine markanın mercan→lavanta tonlarının çok hafif hâli;
-  // renkli kartlar bu aydınlık zeminde belirginleşir.
-  static const lightBg = Color(0xFFFFF6F0); // yumuşak şeftali-beyaz
-  static const lightBgDeep = Color(0xFFEFF0FF); // yumuşak lavanta
-  static const lightSurface = Color(0xFFFFFFFF);
-  static const lightSurfaceHi = Color(0xFFF6F2FF);
-  static const lightBorder = Color(0xFFE7DEEF);
-  static const lightTextPrimary = Color(0xFF1A1A2E);
-  static const lightTextSub = Color(0xFF5B5B6B);
-  static const lightTextMuted = Color(0xFF8A8A99);
+  // ============ Light Mode Palette (Premium, TRT Tarzı Canlı/Parlak) ============
+  // Yumuşak, modern ve göz yormayan, aynı zamanda renkleri patlatan arka planlar
+  static const lightBg = Color(0xFFF3F2F9); // Yumuşak lavanta grisi
+  static const lightBgDeep = Color(0xFFE5E3F1); 
+  static const lightSurface = Color(0xFFFFFFFF); 
+  static const lightSurfaceHi = Color(0xFFF7F6FB); 
+  static const lightBorder = Color(0xFFDDD9EC); 
+  static const lightTextPrimary = Color(0xFF140D33); 
+  static const lightTextSub = Color(0xFF4A4468); 
+  static const lightTextMuted = Color(0xFF8882A3); 
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -76,7 +75,7 @@ class AppTheme {
   static const homeHeaderGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [primaryGradientStart, secondaryAccent],
+    colors: [Color(0xFF6F61C0), Color(0xFFFF4B91)],
   );
 
   // Legacy gradient aliases for backwards compatibility
@@ -117,19 +116,19 @@ class AppTheme {
   static const goldGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [gold, Color(0xFFFFC700)],
+    colors: [gold, Color(0xFFFFB300)],
   );
 
   static const correctGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [correct, Color(0xFF009E6A)],
+    colors: [correct, Color(0xFF00C853)],
   );
 
   static const wrongGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [wrong, Color(0xFFD61A4C)],
+    colors: [wrong, Color(0xFFD50000)],
   );
 
   static List<BoxShadow> shadow3D(Color color) {
@@ -150,6 +149,8 @@ class AppTheme {
     [Color(0xFF10B981), Color(0xFF059669)], // Edebiyat - green
     [Color(0xFF06B6D4), Color(0xFF0891B2)], // Cografya - teal
     [Color(0xFFF59E0B), Color(0xFFD97706)], // Muzîk - amber
+    [Color(0xFFFF2E93), Color(0xFFFF8E53)], // Siyaset - hot pink to neon orange
+    [Color(0xFF00F2FE), Color(0xFF4FACFE)], // Paradigma - bright cyan to neon blue
   ];
 
   static LinearGradient categoryGradient(int index) {

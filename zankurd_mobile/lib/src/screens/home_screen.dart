@@ -29,10 +29,16 @@ import 'spin_wheel_screen.dart';
 import 'tournament_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({required this.repository, this.displayName, super.key});
+  const HomeScreen({
+    required this.repository,
+    this.displayName,
+    this.scrollController,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
   final String? displayName;
+  final ScrollController? scrollController;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -128,10 +134,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     final bottomContentPadding = MediaQuery.paddingOf(context).bottom + 112;
+    final width = MediaQuery.sizeOf(context).width;
+    final isWide = width > 720;
 
     return Container(
       decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: CustomScrollView(
+        controller: widget.scrollController,
         slivers: [
           // Geometric header with player info and live account badges
           SliverAppBar(
@@ -166,133 +175,243 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ),
           // Main content with cards and grid
-          SliverPadding(
-            padding: const EdgeInsets.fromLTRB(18, 12, 18, 24),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                if (index == 0) {
-                  return _buildAnimatedCard(
-                    _heroFadeAnimation(0),
-                    HeroCard(
-                      isKu: ku,
-                      loading: _roomActionLoading,
-                      onCreateRoom: () => _createOnlineRoom(context),
-                      onJoinRoom: () => _showJoinSheet(context),
-                      onQuickMatch: () => _openQuiz(context, _room),
+          if (isWide)
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 24),
+              sliver: SliverToBoxAdapter(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(0),
+                            HeroCard(
+                              isKu: ku,
+                              loading: _roomActionLoading,
+                              onCreateRoom: () => _createOnlineRoom(context),
+                              onJoinRoom: () => _showJoinSheet(context),
+                              onQuickMatch: () => _openQuiz(context, _room),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(2),
+                            DailyQuizCard(
+                              isKu: ku,
+                              loading: _dailyLoading,
+                              onPlay: () => _openDailyQuiz(context, ku),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(5),
+                            DailyMissionsCard(
+                              isKu: ku,
+                              missions: _missions,
+                              loading: _missionsLoading,
+                            ),
+                          ),
+                          if (!_loading && _questions.isNotEmpty) ...[
+                            const SizedBox(height: 20),
+                            _buildAnimatedCard(
+                              _heroFadeAnimation(8),
+                              SectionHeader(
+                                title: ku ? 'Pirsa Nimûne' : 'Örnek Soru',
+                                subtitle: ku
+                                    ? 'Destpêlike û pratîkê bike'
+                                    : 'Hemen başla ve pratik yap',
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            _buildAnimatedCard(
+                              _heroFadeAnimation(9),
+                              QuestionCard(
+                                question: _questions.first,
+                                isKu: ku,
+                                onOpen: () => _openQuiz(context, _room),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
                     ),
-                  );
-                }
-                if (index == 1) {
-                  // Teknik istatistikler (toplam soru/seviye/görsel sayısı)
-                  // kullanıcıya gösterilmiyor.
-                  return const SizedBox.shrink();
-                }
-                if (index == 2) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: _buildAnimatedCard(
-                      _heroFadeAnimation(2),
-                      DailyQuizCard(
+                    const SizedBox(width: 16),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(3),
+                            SpinWheelCard(
+                              isKu: ku,
+                              onOpen: () => _openSpinWheel(context),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(4),
+                            TournamentCard(
+                              isKu: ku,
+                              onOpen: () => _openTournament(context),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(6),
+                            SectionHeader(
+                              title: ku ? 'Kategorî' : 'Kategoriler',
+                              subtitle: ku
+                                  ? 'Her kategoriyê 5 ast hene'
+                                  : 'Her kategori 5 seviyeye ayrıldı',
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          CategoryGrid(
+                            categories: _categories,
+                            isKu: ku,
+                            loading: _loading,
+                            onTap: (cat) => _openCategory(context, cat),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          else
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 24),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  if (index == 0) {
+                    return _buildAnimatedCard(
+                      _heroFadeAnimation(0),
+                      HeroCard(
                         isKu: ku,
-                        loading: _dailyLoading,
-                        onPlay: () => _openDailyQuiz(context, ku),
+                        loading: _roomActionLoading,
+                        onCreateRoom: () => _createOnlineRoom(context),
+                        onJoinRoom: () => _showJoinSheet(context),
+                        onQuickMatch: () => _openQuiz(context, _room),
                       ),
-                    ),
-                  );
-                }
-                if (index == 3) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: _buildAnimatedCard(
-                      _heroFadeAnimation(3),
-                      SpinWheelCard(
+                    );
+                  }
+                  if (index == 1) {
+                    // Teknik istatistikler (toplam soru/seviye/görsel sayısı)
+                    // kullanıcıya gösterilmiyor.
+                    return const SizedBox.shrink();
+                  }
+                  if (index == 2) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(2),
+                        DailyQuizCard(
+                          isKu: ku,
+                          loading: _dailyLoading,
+                          onPlay: () => _openDailyQuiz(context, ku),
+                        ),
+                      ),
+                    );
+                  }
+                  if (index == 3) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(3),
+                        SpinWheelCard(
+                          isKu: ku,
+                          onOpen: () => _openSpinWheel(context),
+                        ),
+                      ),
+                    );
+                  }
+                  if (index == 4) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(4),
+                        TournamentCard(
+                          isKu: ku,
+                          onOpen: () => _openTournament(context),
+                        ),
+                      ),
+                    );
+                  }
+                  if (index == 5) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(5),
+                        DailyMissionsCard(
+                          isKu: ku,
+                          missions: _missions,
+                          loading: _missionsLoading,
+                        ),
+                      ),
+                    );
+                  }
+                  if (index == 6) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(6),
+                        SectionHeader(
+                          title: ku ? 'Kategorî' : 'Kategoriler',
+                          subtitle: ku
+                              ? 'Her kategoriyê 5 ast hene'
+                              : 'Her kategori 5 seviyeye ayrıldı',
+                        ),
+                      ),
+                    );
+                  }
+                  if (index == 7) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: CategoryGrid(
+                        categories: _categories,
                         isKu: ku,
-                        onOpen: () => _openSpinWheel(context),
+                        loading: _loading,
+                        onTap: (cat) => _openCategory(context, cat),
                       ),
-                    ),
-                  );
-                }
-                if (index == 4) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: _buildAnimatedCard(
-                      _heroFadeAnimation(4),
-                      TournamentCard(
-                        isKu: ku,
-                        onOpen: () => _openTournament(context),
+                    );
+                  }
+                  if (index == 8 && !_loading && _questions.isNotEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(8),
+                        SectionHeader(
+                          title: ku ? 'Pirsa Nimûne' : 'Örnek Soru',
+                          subtitle: ku
+                              ? 'Destpêlike û pratîkê bike'
+                              : 'Hemen başla ve pratik yap',
+                        ),
                       ),
-                    ),
-                  );
-                }
-                if (index == 5) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: _buildAnimatedCard(
-                      _heroFadeAnimation(5),
-                      DailyMissionsCard(
-                        isKu: ku,
-                        missions: _missions,
-                        loading: _missionsLoading,
+                    );
+                  }
+                  if (index == 9 && !_loading && _questions.isNotEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(9),
+                        QuestionCard(
+                          question: _questions.first,
+                          isKu: ku,
+                          onOpen: () => _openQuiz(context, _room),
+                        ),
                       ),
-                    ),
-                  );
-                }
-                if (index == 6) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: _buildAnimatedCard(
-                      _heroFadeAnimation(6),
-                      SectionHeader(
-                        title: ku ? 'Kategorî' : 'Kategoriler',
-                        subtitle: ku
-                            ? 'Her kategoriyê 5 ast hene'
-                            : 'Her kategori 5 seviyeye ayrıldı',
-                      ),
-                    ),
-                  );
-                }
-                if (index == 7) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: CategoryGrid(
-                      categories: _categories,
-                      isKu: ku,
-                      loading: _loading,
-                      onTap: (cat) => _openCategory(context, cat),
-                    ),
-                  );
-                }
-                if (index == 8 && !_loading && _questions.isNotEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: _buildAnimatedCard(
-                      _heroFadeAnimation(8),
-                      SectionHeader(
-                        title: ku ? 'Pirsa Nimûne' : 'Örnek Soru',
-                        subtitle: ku
-                            ? 'Destpêbike û pratîkê bike'
-                            : 'Hemen başla ve pratik yap',
-                      ),
-                    ),
-                  );
-                }
-                if (index == 9 && !_loading && _questions.isNotEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: _buildAnimatedCard(
-                      _heroFadeAnimation(9),
-                      QuestionCard(
-                        question: _questions.first,
-                        isKu: ku,
-                        onOpen: () => _openQuiz(context, _room),
-                      ),
-                    ),
-                  );
-                }
-                return null;
-              }, childCount: _loading || _questions.isEmpty ? 8 : 10),
+                    );
+                  }
+                  return null;
+                }, childCount: _loading || _questions.isEmpty ? 8 : 10),
+              ),
             ),
-          ),
           SliverToBoxAdapter(child: SizedBox(height: bottomContentPadding)),
         ],
       ),
@@ -579,11 +698,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   /// Generate hero fade animation for a specific index
   Animation<double> _heroFadeAnimation(int index) {
-    final startTime = index * 0.1;
+    final startTime = (index * 0.1).clamp(0.0, 1.0).toDouble();
+    final endTime = (startTime + 0.3).clamp(startTime, 1.0).toDouble();
     return Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _loadAnimationController,
-        curve: Interval(startTime, startTime + 0.3, curve: Curves.easeOut),
+        curve: Interval(startTime, endTime, curve: Curves.easeOut),
       ),
     );
   }

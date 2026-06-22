@@ -21,6 +21,7 @@ class SectionHeader extends StatelessWidget {
             fontSize: 20,
           ),
         ),
+        const SizedBox(height: 2),
         Text(
           subtitle,
           style: TextStyle(

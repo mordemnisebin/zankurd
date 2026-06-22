@@ -1,44 +1,87 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/leaderboard_entry.dart';
+import '../models/leaderboard_period.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
-import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import 'quiz_screen.dart';
 
 class LeaderboardScreen extends StatefulWidget {
-  const LeaderboardScreen({required this.repository, super.key});
+  const LeaderboardScreen({
+    required this.repository,
+    this.scrollController,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
+  final ScrollController? scrollController;
 
   @override
   State<LeaderboardScreen> createState() => _LeaderboardScreenState();
 }
 
-class _LeaderboardScreenState extends State<LeaderboardScreen> {
+class _LeaderboardScreenState extends State<LeaderboardScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   late Future<List<LeaderboardEntry>> _future;
+  Timer? _refreshTimer;
+  LeaderboardPeriod _period = LeaderboardPeriod.weekly;
 
   @override
   void initState() {
     super.initState();
-    _future = widget.repository.loadLeaderboard();
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
+    _tabController.addListener(_onTabChanged);
+    _loadData();
+    _startAutoRefresh();
   }
 
-  void _refresh() {
+  void _onTabChanged() {
+    if (_tabController.indexIsChanging) return;
+    final periods = [
+      LeaderboardPeriod.daily,
+      LeaderboardPeriod.weekly,
+      LeaderboardPeriod.monthly,
+    ];
     setState(() {
-      _future = widget.repository.loadLeaderboard();
+      _period = periods[_tabController.index];
     });
+    _loadData();
+  }
+
+  void _loadData() {
+    setState(() {
+      _future = widget.repository.loadLeaderboard(
+        limit: 10,
+        period: _period,
+      );
+    });
+  }
+
+  void _startAutoRefresh() {
+    _refreshTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+      if (mounted) _loadData();
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.removeListener(_onTabChanged);
+    _tabController.dispose();
+    _refreshTimer?.cancel();
+    super.dispose();
   }
 
   Future<void> _startQuickRace() async {
     final questions = await widget.repository.loadQuestions(limit: 10);
     if (!mounted) return;
-    final raceQuestions = questions.isEmpty
-        ? widget.repository.questions
-        : questions;
+    final raceQuestions =
+        questions.isEmpty ? widget.repository.questions : questions;
     Navigator.of(context).push(
       AppRoute.to(
         QuizScreen(
@@ -55,63 +98,36 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     final ku = context.isKu;
 
     return Container(
-      decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
+      decoration:
+          BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          ku ? 'Tabloya Pêşderiyan' : 'Liderlik Tablosu',
-                          style: TextStyle(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w900,
-                            fontSize: 26,
-                          ),
-                        ),
-                        Text(
-                          ku ? 'Baştirîn lîstikvan' : 'En iyi oyuncular',
-                          style: TextStyle(
-                            color: AppTheme.textMutedColor(context),
-                            fontSize: 13,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: _refresh,
-                    icon: Icon(
-                      Icons.refresh_rounded,
-                      color: AppTheme.textSubColor(context),
-                    ),
-                  ),
-                ],
-              ),
+            _Header(
+              ku: ku,
+              onRefresh: _loadData,
             ),
+            _PeriodTabs(controller: _tabController, ku: ku),
             Expanded(
               child: FutureBuilder<List<LeaderboardEntry>>(
                 future: _future,
                 builder: (ctx, snap) {
                   if (snap.connectionState == ConnectionState.waiting) {
                     return const Center(
-                      child: CircularProgressIndicator(color: AppTheme.accent),
+                      child: CircularProgressIndicator(
+                        color: AppTheme.accent,
+                        strokeWidth: 2.5,
+                      ),
                     );
                   }
                   if (snap.hasError) {
                     return AppErrorState(
-                      title: ku ? 'Tabloya barnekirî' : 'Liderlik yüklenemedi',
+                      title: ku ? 'Tabloya barnekirî' : 'Yüklenemedi',
                       message: ku
                           ? 'Girêdanê kontrol bike û dîsa bicerib.'
                           : 'Bağlantıyı kontrol edip tekrar dene.',
                       retryLabel: ku ? 'Dîsa Bicerib' : 'Tekrar Dene',
-                      onRetry: _refresh,
+                      onRetry: _loadData,
                     );
                   }
                   final entries = snap.data ?? [];
@@ -120,20 +136,23 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                       icon: Icons.emoji_events_outlined,
                       title: ku ? 'Hîn xal tune' : 'Henüz puan yok',
                       message: ku
-                          ? 'Pêşbirkekê dest pê bike; xalên te piştî lîstinê li vir xuya dibin.'
-                          : 'Bir yarış başlat; puanların oynadıktan sonra burada görünür.',
-                      actionLabel: ku
-                          ? 'Pêşbirkê Dest Pê Bike'
-                          : 'Yarışa Başla',
+                          ? 'Pêşbirkekê dest pê bike.'
+                          : 'Bir yarış başlat; puanların burada görünür.',
+                      actionLabel:
+                          ku ? 'Pêşbirkê Dest Pê Bike' : 'Yarışa Başla',
                       actionIcon: Icons.bolt_rounded,
                       onAction: _startQuickRace,
                     );
                   }
                   return ListView(
-                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                    controller: widget.scrollController,
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
                     children: [
-                      _Podium(entries: entries.take(3).toList(), isKu: ku),
-                      const SizedBox(height: 16),
+                      _Podium(
+                        entries: entries.take(3).toList(),
+                        isKu: ku,
+                      ),
+                      const SizedBox(height: 12),
                       for (final e in entries.skip(3))
                         _RankRow(entry: e, isKu: ku),
                     ],
@@ -148,6 +167,113 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   }
 }
 
+// ─── Header ──────────────────────────────────────────────────────────────────
+
+class _Header extends StatelessWidget {
+  const _Header({required this.ku, required this.onRefresh});
+
+  final bool ku;
+  final VoidCallback onRefresh;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 20, 16, 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  ku ? 'Tabloya Pêşderiyan' : 'Liderlik Tablosu',
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w900,
+                    fontSize: 24,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  ku ? 'Her 30 çirkeyî nûve dibe' : 'Her 30 saniyede güncellenir',
+                  style: TextStyle(
+                    color: AppTheme.textMutedColor(context),
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            onPressed: onRefresh,
+            icon: Icon(
+              Icons.refresh_rounded,
+              color: AppTheme.textSubColor(context),
+              size: 22,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Period Tabs ─────────────────────────────────────────────────────────────
+
+class _PeriodTabs extends StatelessWidget {
+  const _PeriodTabs({required this.controller, required this.ku});
+
+  final TabController controller;
+  final bool ku;
+
+  @override
+  Widget build(BuildContext context) {
+    final labels = ku
+        ? ['Roj', 'Heft', 'Meh']
+        : ['Günlük', 'Haftalık', 'Aylık'];
+
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+      height: 42,
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceColor(context),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppTheme.borderColor(context), width: 1),
+      ),
+      child: TabBar(
+        controller: controller,
+        labelColor: AppTheme.textPrimaryColor(context),
+        unselectedLabelColor: AppTheme.textMutedColor(context),
+        labelStyle: const TextStyle(
+          fontWeight: FontWeight.w800,
+          fontSize: 13.5,
+        ),
+        unselectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 13.5,
+        ),
+        indicator: BoxDecoration(
+          color: AppTheme.accent.withValues(alpha: 0.15),
+          borderRadius: BorderRadius.circular(11),
+          border: Border.all(
+            color: AppTheme.accent.withValues(alpha: 0.45),
+            width: 1.2,
+          ),
+        ),
+        indicatorSize: TabBarIndicatorSize.tab,
+        dividerColor: Colors.transparent,
+        tabs: [
+          for (final label in labels) Tab(text: label),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Podium (top 3) ──────────────────────────────────────────────────────────
+
 class _Podium extends StatelessWidget {
   const _Podium({required this.entries, required this.isKu});
 
@@ -160,83 +286,89 @@ class _Podium extends StatelessWidget {
     final second = entries.length > 1 ? entries[1] : null;
     final third = entries.length > 2 ? entries[2] : null;
 
-    return AppPanel(
-      gradient: const LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Color(0xFF1E2A45), Color(0xFF243357)],
-      ),
-      child: Column(
-        children: [
-          Text(
-            isKu ? 'Sê Pêşderian' : 'İlk 3',
-            style: TextStyle(
-              color: AppTheme.textSub,
-              fontWeight: FontWeight.w700,
-              fontSize: 12,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              if (second != null) Expanded(child: _PodiumSlot(entry: second)),
-              if (first != null) Expanded(child: _PodiumSlot(entry: first)),
-              if (third != null) Expanded(child: _PodiumSlot(entry: third)),
-            ],
+    // Yerleşim: 2. sol, 1. orta (daha büyük), 3. sağ
+    final slots = [
+      if (second != null) _PodiumSlot(entry: second, isCenter: false),
+      if (first != null) _PodiumSlot(entry: first, isCenter: true),
+      if (third != null) _PodiumSlot(entry: third, isCenter: false),
+    ];
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF1A243C), Color(0xFF1F2D4A)],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFF2A3A5C), width: 1.2),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.18),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
           ),
         ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: slots.map((s) => Expanded(child: s)).toList(),
       ),
     );
   }
 }
 
 class _PodiumSlot extends StatelessWidget {
-  const _PodiumSlot({required this.entry});
+  const _PodiumSlot({required this.entry, required this.isCenter});
 
   final LeaderboardEntry entry;
+  final bool isCenter;
 
-  static const _colors = {
-    1: Color(0xFFFFB800), // Altın
-    2: Color(0xFF7C8794), // Gümüş
-    3: Color(0xFFB66A3A), // Bronz
-  };
+  static const _gold = Color(0xFFFFB800);
+  static const _silver = Color(0xFF9AA6B4);
+  static const _bronze = Color(0xFFB66A3A);
 
-  Widget _buildPodiumMedal(int rank, Color color) {
-    if (rank == 1) {
-      return Container(
-        padding: const EdgeInsets.all(4),
-        decoration: const BoxDecoration(
-          color: Color(0x22FFB800),
-          shape: BoxShape.circle,
-        ),
-        child: Icon(Icons.emoji_events, color: Color(0xFFFFB800), size: 26),
-      );
+  Color get _color {
+    switch (entry.rank) {
+      case 1:
+        return _gold;
+      case 2:
+        return _silver;
+      default:
+        return _bronze;
     }
-    return Icon(Icons.military_tech, color: color, size: 26);
+  }
+
+  IconData get _medalIcon {
+    if (entry.rank == 1) return Icons.emoji_events_rounded;
+    return Icons.military_tech_rounded;
   }
 
   @override
   Widget build(BuildContext context) {
-    final color = _colors[entry.rank] ?? AppTheme.accent;
+    final color = _color;
+    final avatarR = isCenter ? 26.0 : 21.0;
+    final nameFontSz = isCenter ? 13.5 : 12.0;
+    final scoreFontSz = isCenter ? 15.5 : 13.5;
 
+    // Outer Column uses center alignment so the inner Container shrink-wraps
+    // to intrinsic width (required by the landscape-width test).
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           key: ValueKey('podium-slot-${entry.rank}'),
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.08),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
-          ),
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              _buildPodiumMedal(entry.rank, color),
+              Icon(_medalIcon, color: color, size: isCenter ? 28 : 22),
               const SizedBox(height: 6),
               CircleAvatar(
-                radius: 22,
-                backgroundColor: color.withValues(alpha: 0.24),
+                radius: avatarR,
+                backgroundColor: color.withValues(alpha: 0.2),
                 child: Text(
                   entry.displayName.isNotEmpty
                       ? entry.displayName[0].toUpperCase()
@@ -244,38 +376,49 @@ class _PodiumSlot extends StatelessWidget {
                   style: TextStyle(
                     color: color,
                     fontWeight: FontWeight.w900,
-                    fontSize: 18,
+                    fontSize: isCenter ? 20 : 16,
                   ),
                 ),
               ),
               const SizedBox(height: 6),
               Text(
-                '#${entry.rank}',
-                style: TextStyle(
-                  color: color,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 12,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
                 entry.displayName,
                 style: TextStyle(
                   color: AppTheme.textPrimary,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 12.5,
+                  fontWeight: FontWeight.w800,
+                  fontSize: nameFontSz,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
-              Text(
-                '${entry.totalScore}',
-                style: TextStyle(
-                  color: color,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 13.5,
+              const SizedBox(height: 2),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(20),
                 ),
+                child: Text(
+                  '${entry.totalScore}',
+                  style: TextStyle(
+                    color: color,
+                    fontWeight: FontWeight.w900,
+                    fontSize: scoreFontSz,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              const SizedBox(height: 4),
+              Text(
+                '#${entry.rank}',
+                style: TextStyle(
+                  color: color.withValues(alpha: 0.8),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 13,
+                ),
+                textAlign: TextAlign.center,
               ),
             ],
           ),
@@ -284,6 +427,8 @@ class _PodiumSlot extends StatelessWidget {
     );
   }
 }
+
+// ─── Rank Row (4-10) ─────────────────────────────────────────────────────────
 
 class _RankRow extends StatelessWidget {
   const _RankRow({required this.entry, required this.isKu});
@@ -295,15 +440,15 @@ class _RankRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
       decoration: BoxDecoration(
         color: AppTheme.surfaceColor(context),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.borderColor(context), width: 1.2),
+        border: Border.all(color: AppTheme.borderColor(context), width: 1),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
-            offset: const Offset(0, 3),
+            offset: const Offset(0, 2),
             blurRadius: 6,
           ),
         ],
@@ -311,29 +456,26 @@ class _RankRow extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 38,
-            height: 38,
+            width: 36,
+            height: 36,
             decoration: BoxDecoration(
               color: AppTheme.surfaceHiColor(context),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: AppTheme.borderColor(context),
-                width: 1,
-              ),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: AppTheme.borderColor(context), width: 1),
             ),
             alignment: Alignment.center,
             child: Text(
-              '#${entry.rank}',
+              '${entry.rank}',
               style: TextStyle(
                 color: AppTheme.textSubColor(context),
                 fontWeight: FontWeight.w900,
-                fontSize: 13,
+                fontSize: 14,
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 10),
           CircleAvatar(
-            radius: 19,
+            radius: 18,
             backgroundColor: AppTheme.accent.withValues(alpha: 0.12),
             child: Text(
               entry.displayName.isNotEmpty
@@ -342,11 +484,11 @@ class _RankRow extends StatelessWidget {
               style: TextStyle(
                 color: AppTheme.accent,
                 fontWeight: FontWeight.w900,
-                fontSize: 15,
+                fontSize: 14,
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -355,30 +497,32 @@ class _RankRow extends StatelessWidget {
                   entry.displayName,
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w900,
-                    fontSize: 14.5,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 14,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 1),
                 Text(
-                  '${entry.roomsPlayed} ${isKu ? "jûr" : "oda"} · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}',
+                  '${entry.roomsPlayed} ${isKu ? "jûr" : "oda"}'
+                  ' · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}',
                   style: TextStyle(
                     color: AppTheme.textMutedColor(context),
-                    fontSize: 11.5,
+                    fontSize: 11,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
             ),
           ),
+          const SizedBox(width: 8),
           Text(
             '${entry.totalScore}',
-            style: TextStyle(
+            style: const TextStyle(
               color: AppTheme.gold,
               fontWeight: FontWeight.w900,
-              fontSize: 17,
+              fontSize: 16,
             ),
           ),
         ],

@@ -10,9 +10,14 @@ import '../utils/error_reporter.dart';
 import 'level_screen.dart';
 
 class CategoriesTab extends StatefulWidget {
-  const CategoriesTab({required this.repository, super.key});
+  const CategoriesTab({
+    required this.repository,
+    this.scrollController,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
+  final ScrollController? scrollController;
 
   @override
   State<CategoriesTab> createState() => _CategoriesTabState();
@@ -103,15 +108,23 @@ class _CategoriesTabState extends State<CategoriesTab> {
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final crossCount = constraints.maxWidth > 600 ? 3 : 2;
+                  int crossCount = 2;
+                  if (constraints.maxWidth > 1200) {
+                    crossCount = 5;
+                  } else if (constraints.maxWidth > 900) {
+                    crossCount = 4;
+                  } else if (constraints.maxWidth > 600) {
+                    crossCount = 3;
+                  }
                   return GridView.builder(
+                    controller: widget.scrollController,
                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                     itemCount: _categories.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossCount,
                       mainAxisSpacing: 12,
                       crossAxisSpacing: 12,
-                      childAspectRatio: 1.0,
+                      childAspectRatio: 0.88,
                     ),
                     itemBuilder: (context, index) {
                       final cat = _categories[index];
@@ -156,113 +169,155 @@ class _CategoryCard extends StatelessWidget {
   final MasteryLevel masteryLevel;
   final VoidCallback onTap;
 
+  String _imagePath(String cat) => switch (cat) {
+    'Ziman' => 'assets/question_images/cat_ziman.png',
+    'Çand' => 'assets/question_images/cat_cand.png',
+    'Dîrok' => 'assets/question_images/cat_dirok.png',
+    'Edebiyat' => 'assets/question_images/cat_edebiyat.png',
+    'Cografya' => 'assets/question_images/cat_cografya.png',
+    'Muzîk' => 'assets/question_images/cat_muzik.png',
+    'Siyaset' => 'assets/question_images/cat_siyaset.png',
+    'Paradigma' => 'assets/question_images/cat_paradigma.png',
+    _ => 'assets/question_images/cat_ziman.png',
+  };
+
   @override
   Widget build(BuildContext context) {
     final gradient = AppTheme.categoryGradient(index);
+    final glowColor = AppTheme
+        .categoryGradients[index % AppTheme.categoryGradients.length]
+        .first;
+    final image = _imagePath(category);
     final icon = _icon(category);
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          gradient: gradient,
           borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
           boxShadow: [
             BoxShadow(
-              color: AppTheme
-                  .categoryGradients[index % AppTheme.categoryGradients.length]
-                  .first
-                  .withValues(alpha: 0.4),
+              color: glowColor.withValues(alpha: 0.35),
               blurRadius: 20,
               offset: const Offset(0, 8),
             ),
           ],
         ),
-        child: Stack(
-          children: [
-            // Background circle decoration
-            Positioned(
-              right: -20,
-              top: -20,
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.08),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 52,
-                    height: 52,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: Icon(icon, color: Colors.white, size: 28),
-                  ),
-                  const Spacer(),
-                  Text(
-                    CategoryNames.localized(category, isKu),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 18,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 3,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Text(
-                      isKu ? '5 ast · pêşbaz' : '5 seviye · yarış',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  if (masteryLevel != MasteryLevel.none) ...[
-                    const SizedBox(height: 4),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          masteryLevel.icon,
-                          color: Colors.white.withValues(alpha: 0.9),
-                          size: 11,
-                        ),
-                        const SizedBox(width: 3),
-                        Text(
-                          isKu ? masteryLevel.titleKu : masteryLevel.titleTr,
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.9),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Stack(
+            children: [
+              Positioned.fill(child: Image.asset(image, fit: BoxFit.cover)),
+              Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        gradient.colors.first.withValues(alpha: 0.30),
+                        gradient.colors.last.withValues(alpha: 0.88),
                       ],
                     ),
-                  ],
-                ],
+                  ),
+                ),
               ),
-            ),
-          ],
+              // Background circle decoration
+              Positioned(
+                right: -20,
+                top: -20,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.08),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 52,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Icon(icon, color: Colors.white, size: 28),
+                    ),
+                    const Spacer(),
+                    Text(
+                      CategoryNames.localized(category, isKu),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black45,
+                            blurRadius: 6,
+                            offset: Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        isKu ? '5 ast · pêşbaz' : '5 seviye · yarış',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    if (masteryLevel != MasteryLevel.none) ...[
+                      const SizedBox(height: 4),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            masteryLevel.icon,
+                            color: Colors.white.withValues(alpha: 0.9),
+                            size: 11,
+                          ),
+                          const SizedBox(width: 3),
+                          Expanded(
+                            child: Text(
+                              isKu ? masteryLevel.titleKu : masteryLevel.titleTr,
+                              style: TextStyle(
+                                color: Colors.white.withValues(alpha: 0.9),
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -276,6 +331,8 @@ class _CategoryCard extends StatelessWidget {
       'Edebiyat' => Icons.menu_book_outlined,
       'Cografya' => Icons.public_outlined,
       'Muzîk' => Icons.music_note_outlined,
+      'Siyaset' => Icons.how_to_vote_outlined,
+      'Paradigma' => Icons.psychology_outlined,
       _ => Icons.category_outlined,
     };
   }

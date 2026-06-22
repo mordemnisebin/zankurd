@@ -10,6 +10,7 @@ import 'package:zankurd_mobile/src/data/seen_question_store.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
@@ -89,7 +90,10 @@ class _FailingLeaderboardRepository extends MockZanKurdRepository {
   int loadCalls = 0;
 
   @override
-  Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50}) {
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 10,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) {
     loadCalls += 1;
     if (loadCalls > 1) {
       return Future.value(const []);
@@ -103,14 +107,20 @@ class _FailingLeaderboardRepository extends MockZanKurdRepository {
 
 class _EmptyLeaderboardRepository extends MockZanKurdRepository {
   @override
-  Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50}) async {
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 10,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async {
     return const [];
   }
 }
 
 class _SingleWinnerRepository extends MockZanKurdRepository {
   @override
-  Future<List<LeaderboardEntry>> loadLeaderboard({int limit = 50}) async {
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 10,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async {
     return const [
       LeaderboardEntry(
         rank: 1,
@@ -575,6 +585,8 @@ void main() {
     expect(find.text('Kodla Katıl'), findsOneWidget);
     expect(find.text('Günün Yarışması'), findsOneWidget);
 
+    await tester.ensureVisible(find.text('Oda Kur'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Oda Kur'));
     await tester.pumpAndSettle();
 
@@ -602,6 +614,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.text('Günün Yarışması'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Günün Yarışması'));
     await tester.pumpAndSettle();
 
@@ -618,7 +632,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.scrollUntilVisible(find.text('Günün Çarkı'), 120);
+    await tester.ensureVisible(find.text('Günün Çarkı'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Günün Çarkı'));
     await tester.pumpAndSettle();
@@ -660,6 +674,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.text('Kodla Katıl'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Kodla Katıl'));
     await tester.pumpAndSettle();
 
@@ -1246,7 +1262,7 @@ void main() {
   });
 
   testWidgets('settings separates dangerous account actions', (tester) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
+    await tester.binding.setSurfaceSize(const Size(390, 1200));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(
@@ -1256,6 +1272,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.text('Hesap İşlemleri'));
+    await tester.pumpAndSettle();
     expect(find.text('Hesap İşlemleri'), findsOneWidget);
     expect(find.text('Bu alandaki işlemler geri alınamaz.'), findsOneWidget);
     expect(find.text('Hesabımı Sil'), findsOneWidget);
@@ -1430,6 +1448,8 @@ void main() {
       find.byKey(const ValueKey('settings-player-name-field')),
       'Yeni Ad',
     );
+    await tester.ensureVisible(find.text('Kaydet'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Kaydet'));
     await tester.pumpAndSettle();
 

@@ -103,7 +103,7 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton>
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         if (widget.isLoading)
                           SizedBox(
@@ -121,13 +121,17 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton>
                             Icon(widget.icon, color: Colors.white, size: 20),
                             const SizedBox(width: 10),
                           ],
-                          Text(
-                            widget.label,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.5,
+                          Flexible(
+                            child: Text(
+                              widget.label,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0,
+                              ),
                             ),
                           ),
                         ],

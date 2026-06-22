@@ -36,14 +36,27 @@ class _AppShellState extends State<AppShell> {
   String? _profileName;
   bool _profileCheckStarted = false;
 
+  late final ScrollController _homeScrollController;
+  late final ScrollController _categoriesScrollController;
+  late final ScrollController _leaderboardScrollController;
+  late final ScrollController _profileScrollController;
+
   @override
   void initState() {
     super.initState();
+    _homeScrollController = ScrollController();
+    _categoriesScrollController = ScrollController();
+    _leaderboardScrollController = ScrollController();
+    _profileScrollController = ScrollController();
     _loadOnboardingState();
   }
 
   @override
   void dispose() {
+    _homeScrollController.dispose();
+    _categoriesScrollController.dispose();
+    _leaderboardScrollController.dispose();
+    _profileScrollController.dispose();
     _profileRefresh.dispose();
     super.dispose();
   }
@@ -113,12 +126,20 @@ class _AppShellState extends State<AppShell> {
           HomeScreen(
             repository: widget.repository,
             displayName: _profileName,
+            scrollController: _homeScrollController,
           ),
-          CategoriesTab(repository: widget.repository),
-          LeaderboardScreen(repository: widget.repository),
+          CategoriesTab(
+            repository: widget.repository,
+            scrollController: _categoriesScrollController,
+          ),
+          LeaderboardScreen(
+            repository: widget.repository,
+            scrollController: _leaderboardScrollController,
+          ),
           ProfileScreen(
             repository: widget.repository,
             refreshSignal: _profileRefresh,
+            scrollController: _profileScrollController,
           ),
         ],
       ),
@@ -129,10 +150,27 @@ class _AppShellState extends State<AppShell> {
         child: NavigationBar(
           selectedIndex: _tab,
           onDestinationSelected: (i) {
-            // Profil tabı IndexedStack içinde canlı kaldığı için sekmeye her
-            // dönüşte rozet/istatistik/yanlış verilerini tazelemesi gerekir.
-            if (i == 3) _profileRefresh.value++;
-            setState(() => _tab = i);
+            if (_tab == i) {
+              final controller = switch (i) {
+                0 => _homeScrollController,
+                1 => _categoriesScrollController,
+                2 => _leaderboardScrollController,
+                3 => _profileScrollController,
+                _ => null,
+              };
+              if (controller != null && controller.hasClients) {
+                controller.animateTo(
+                  0.0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                );
+              }
+            } else {
+              // Profil tabı IndexedStack içinde canlı kaldığı için sekmeye her
+              // dönüşte rozet/istatistik/yanlış verilerini tazelemesi gerekir.
+              if (i == 3) _profileRefresh.value++;
+              setState(() => _tab = i);
+            }
           },
           destinations: [
             NavigationDestination(
