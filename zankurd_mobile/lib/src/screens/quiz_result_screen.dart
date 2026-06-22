@@ -231,7 +231,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       context.isKu ? 'Asta Te Bilind Bû!' : 'Tebrikler!',
                       style: TextStyle(
                         fontSize: 22,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w800,
                         color: AppTheme.gold,
                       ),
                     ),
@@ -264,7 +264,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         context.isKu ? 'Ast $newLevel' : 'Seviye $newLevel',
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
                       ),
@@ -366,7 +366,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           '$score',
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w800,
                             fontSize: 52,
                             height: 1,
                           ),
@@ -393,7 +393,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             ),
                             style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
@@ -462,7 +462,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               ),
                               style: TextStyle(
                                 color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.w700,
                                 fontSize: 16,
                               ),
                             ),
@@ -526,7 +526,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.w700,
                                     fontSize: 18,
                                   ),
                                 ),
@@ -592,7 +592,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.w700,
                                     fontSize: 18,
                                   ),
                                 ),
@@ -622,7 +622,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       context.s('Rêzbendiyê bişopîne', 'Sıralamaya devam et'),
                       style: TextStyle(
                         color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w700,
                         fontSize: 20,
                       ),
                     ),
@@ -809,7 +809,7 @@ class _MetricItem extends StatelessWidget {
           value,
           style: TextStyle(
             color: AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w700,
             fontSize: 20,
           ),
         ),
@@ -870,7 +870,7 @@ class _RaceStandings extends StatelessWidget {
                   title,
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w700,
                     fontSize: 18,
                   ),
                 ),
@@ -908,7 +908,7 @@ class _AchievementUnlocks extends StatelessWidget {
                 context.s('Rozeta Nû', 'Yeni Rozet'),
                 style: TextStyle(
                   color: Colors.white,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w700,
                   fontSize: 18,
                 ),
               ),
@@ -939,7 +939,7 @@ class _AchievementUnlocks extends StatelessWidget {
                           achievement.title(context.isKu),
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         Text(
@@ -999,7 +999,7 @@ class _MasteryPromotions extends StatelessWidget {
                               : '${CategoryNames.localized(entry.key, false)} — ${entry.value.titleTr}!',
                           style: TextStyle(
                             color: entry.value.badgeColor,
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w800,
                             fontSize: 16,
                           ),
                         ),
@@ -1046,7 +1046,7 @@ class _ResultRewardChip extends StatelessWidget {
             label,
             style: const TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
               fontSize: 12,
             ),
           ),
@@ -1093,7 +1093,7 @@ class _RaceStandingRow extends StatelessWidget {
             ),
             child: Text(
               '$rank',
-              style: TextStyle(color: color, fontWeight: FontWeight.w900),
+              style: TextStyle(color: color, fontWeight: FontWeight.w700),
             ),
           ),
           const SizedBox(width: 10),
@@ -1104,7 +1104,7 @@ class _RaceStandingRow extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -1128,7 +1128,7 @@ class _RaceStandingRow extends StatelessWidget {
             '${player.score}',
             style: TextStyle(
               color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],

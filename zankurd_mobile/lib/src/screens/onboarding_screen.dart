@@ -251,7 +251,7 @@ class _OnboardingPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w800,
                 fontSize: 30,
               ),
             ),

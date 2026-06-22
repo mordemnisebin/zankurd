@@ -25,7 +25,7 @@ class _LiveScoreboard extends StatelessWidget {
                 context.s('Skora zindî', 'Canlı skor'),
                 style: TextStyle(
                   color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w700,
                   fontSize: 18,
                 ),
               ),
@@ -65,7 +65,7 @@ class _LiveScoreRow extends StatelessWidget {
               '$rank',
               style: TextStyle(
                 color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -86,7 +86,7 @@ class _LiveScoreRow extends StatelessWidget {
             '${player.score}',
             style: const TextStyle(
               color: AppTheme.gold,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],
@@ -188,7 +188,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
           style: TextStyle(
             color: AppTheme.textPrimaryColor(context),
             fontSize: promptFontSize,
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w700,
             height: 1.16,
           ),
         ),
@@ -297,7 +297,7 @@ class _Metric extends StatelessWidget {
             value,
             style: TextStyle(
               color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
               fontSize: 20,
             ),
           ),
@@ -436,7 +436,7 @@ class _AnswerButton extends StatelessWidget {
                       answer,
                       style: TextStyle(
                         color: textColor,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w700,
                         fontSize: 16,
                       ),
                     ),
@@ -467,7 +467,7 @@ class _AnswerButton extends StatelessWidget {
                       '${(audiencePercent! * 100).round()}%',
                       style: TextStyle(
                         fontSize: 11,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w700,
                         color: textColor.withValues(alpha: 0.9),
                       ),
                     ),
@@ -531,7 +531,7 @@ class _OptionBadge extends StatelessWidget {
       ),
       child: Text(
         letter,
-        style: TextStyle(color: fg, fontWeight: FontWeight.w900, fontSize: 17),
+        style: TextStyle(color: fg, fontWeight: FontWeight.w700, fontSize: 17),
       ),
     );
   }
@@ -559,7 +559,7 @@ class _TinyTag extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           color: AppTheme.textSubColor(context),
-          fontWeight: FontWeight.w900,
+          fontWeight: FontWeight.w700,
           fontSize: 12,
         ),
       ),
@@ -639,7 +639,7 @@ class _WildcardButton extends StatelessWidget {
               '${type.coinCost}c',
               style: TextStyle(
                 fontSize: 11,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
                 color: iconColor,
               ),
             ),
@@ -763,7 +763,7 @@ class _CircularTimerState extends State<_CircularTimer>
                       '$seconds',
                       style: TextStyle(
                         color: color,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w700,
                         fontSize: 13,
                       ),
                     ),
@@ -870,7 +870,7 @@ class _ExplanationBox extends StatelessWidget {
                             isKu ? 'Bersiva rast' : 'Doğru cevap',
                             style: const TextStyle(
                               color: AppTheme.gold,
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w700,
                               fontSize: 12,
                             ),
                           ),
@@ -879,7 +879,7 @@ class _ExplanationBox extends StatelessWidget {
                             question.correctAnswer,
                             style: TextStyle(
                               color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                           const SizedBox(height: 10),

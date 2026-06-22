@@ -244,7 +244,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             ku ? 'Kûpa Zanînê' : 'ZanKurd Kupası',
             style: TextStyle(
               fontSize: 24,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w800,
               color: AppTheme.textPrimaryColor(context),
             ),
           ),
@@ -307,7 +307,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
                 isFinished ? (ku ? 'Turnuva Qediya' : 'Turnuva Bitti') : _stageLabel(ku),
                 style: TextStyle(
                   color: AppTheme.accent,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w700,
                   fontSize: 18,
                 ),
               ),
@@ -319,7 +319,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
                   ku ? 'Şampiyonê Turnuvayê!' : 'Turnuva Şampiyonu!',
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w700,
                     color: AppTheme.textPrimaryColor(context),
                   ),
                 ),
@@ -347,7 +347,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _PlayerCard(name: ku ? 'Tu' : 'Sen', isUser: true),
-                    const Text('VS', style: TextStyle(fontWeight: FontWeight.w900, color: AppTheme.textMuted)),
+                    const Text('VS', style: TextStyle(fontWeight: FontWeight.w700, color: AppTheme.textMuted)),
                     _PlayerCard(name: opponent, isUser: false),
                   ],
                 ),
@@ -372,7 +372,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
           ku ? 'Braketa Turnuvayê' : 'Turnuva Şeması',
           style: TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w700,
             color: AppTheme.textPrimaryColor(context),
           ),
         ),
@@ -461,7 +461,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
                 Text(
                   '${ku ? "Şampiyon" : "Şampiyon"}: $champion',
                   style: TextStyle(
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w700,
                     color: champion == (ku ? 'Tu' : 'Sen') ? AppTheme.gold : AppTheme.textPrimaryColor(context),
                   ),
                 ),
@@ -497,7 +497,7 @@ class _PlayerCard extends StatelessWidget {
       child: Text(
         name,
         style: TextStyle(
-          fontWeight: FontWeight.w900,
+          fontWeight: FontWeight.w700,
           color: isUser ? AppTheme.accent : AppTheme.textPrimaryColor(context),
         ),
       ),

@@ -299,7 +299,7 @@ class _SignInScreenState extends State<SignInScreen>
                                             ),
                                             style: TextStyle(
                                               color: AppTheme.textPrimaryColor(context),
-                                              fontWeight: FontWeight.w900,
+                                              fontWeight: FontWeight.w800,
                                               fontSize: 28,
                                               letterSpacing: 0,
                                             ),
@@ -496,7 +496,7 @@ class _SignInScreenState extends State<SignInScreen>
                                     icon: const Text(
                                       'G',
                                       style: TextStyle(
-                                        fontWeight: FontWeight.w900,
+                                        fontWeight: FontWeight.w700,
                                         fontSize: 18,
                                         color: AppTheme.gold,
                                       ),
@@ -552,7 +552,7 @@ class _SignInScreenState extends State<SignInScreen>
                                         context.s('Tomar bibe', 'Kaydol'),
                                         style: TextStyle(
                                           color: AppTheme.accent,
-                                          fontWeight: FontWeight.w900,
+                                          fontWeight: FontWeight.w700,
                                           fontSize: 14,
                                         ),
                                       ),
@@ -611,7 +611,7 @@ class _SignInScreenState extends State<SignInScreen>
                                   ),
                                   style: TextStyle(
                                     color: AppTheme.textPrimaryColor(context),
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.w800,
                                     fontSize: 26,
                                     letterSpacing: 0,
                                   ),
@@ -793,7 +793,7 @@ class _SignInScreenState extends State<SignInScreen>
                             icon: const Text(
                               'G',
                               style: TextStyle(
-                                fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.w700,
                                 fontSize: 18,
                                 color: AppTheme.gold,
                               ),
@@ -851,7 +851,7 @@ class _SignInScreenState extends State<SignInScreen>
                                 context.s('Tomar bibe', 'Kaydol'),
                                 style: TextStyle(
                                   color: AppTheme.accent,
-                                  fontWeight: FontWeight.w900,
+                                  fontWeight: FontWeight.w700,
                                   fontSize: 14,
                                 ),
                               ),
@@ -971,7 +971,7 @@ class _LanguageChip extends StatelessWidget {
           label,
           style: TextStyle(
             color: active ? Colors.white : AppTheme.textMutedColor(context),
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w700,
             fontSize: 12,
             letterSpacing: 0.5,
           ),

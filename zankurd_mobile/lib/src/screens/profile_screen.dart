@@ -206,7 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           .toUpperCase(),
                       style: const TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w800,
                         fontSize: 28,
                       ),
                     ),
@@ -220,7 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           _displayName(ku),
                           style: const TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w700,
                             fontSize: 18,
                           ),
                         ),
@@ -259,7 +259,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ku ? 'Ast $_level' : 'Seviye $_level',
                         style: const TextStyle(
                           color: Colors.white,
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.w700,
                           fontSize: 15,
                         ),
                       ),
@@ -336,7 +336,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ku ? 'Statîstîkên Min' : 'İstatistiklerim',
                 style: TextStyle(
                   color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w700,
                   fontSize: 17,
                 ),
               ),
@@ -595,7 +595,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ku ? 'Profîl' : 'Profil',
                         style: TextStyle(
                           color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.w800,
                           fontSize: 28,
                         ),
                       ),
@@ -640,7 +640,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         .toUpperCase(),
                                     style: const TextStyle(
                                       color: Colors.white,
-                                      fontWeight: FontWeight.w900,
+                                      fontWeight: FontWeight.w800,
                                       fontSize: 28,
                                     ),
                                   ),
@@ -654,7 +654,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         _displayName(ku),
                                         style: const TextStyle(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.w900,
+                                          fontWeight: FontWeight.w700,
                                           fontSize: 18,
                                         ),
                                       ),
@@ -693,7 +693,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ku ? 'Ast $_level' : 'Seviye $_level',
                                       style: const TextStyle(
                                         color: Colors.white,
-                                        fontWeight: FontWeight.w900,
+                                        fontWeight: FontWeight.w700,
                                         fontSize: 15,
                                       ),
                                     ),
@@ -770,7 +770,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ku ? 'Statîstîkên Min' : 'İstatistiklerim',
                               style: TextStyle(
                                 color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.w700,
                                 fontSize: 17,
                               ),
                             ),
@@ -1128,7 +1128,7 @@ class _StatTile extends StatelessWidget {
             value,
             style: TextStyle(
               color: color,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
               fontSize: 18,
             ),
           ),
@@ -1165,7 +1165,7 @@ class _AchievementShowcase extends StatelessWidget {
                 isKu ? 'Rozet' : 'Rozetler',
                 style: TextStyle(
                   color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w700,
                   fontSize: 17,
                 ),
               ),
@@ -1236,7 +1236,7 @@ class _MasterySection extends StatelessWidget {
                 isKu ? 'Ustalîya Kategoriyê' : 'Kategori Ustalığı',
                 style: TextStyle(
                   color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w700,
                   fontSize: 17,
                 ),
               ),
@@ -1448,7 +1448,7 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                     isKu ? 'Analîza Performansê' : 'Performans Analizi',
                     style: TextStyle(
                       color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w700,
                       fontSize: 17,
                     ),
                   ),

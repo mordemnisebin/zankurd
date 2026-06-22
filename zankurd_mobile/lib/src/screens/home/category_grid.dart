@@ -151,7 +151,7 @@ class _CompactCategoryButton extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ),
@@ -261,7 +261,7 @@ class _CategoryCard extends StatelessWidget {
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 9,
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ],
@@ -291,7 +291,7 @@ class _CategoryCard extends StatelessWidget {
                         CategoryNames.localized(category, isKu),
                         style: const TextStyle(
                           color: Colors.white,
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.w800,
                           fontSize: 16,
                           shadows: [
                             Shadow(

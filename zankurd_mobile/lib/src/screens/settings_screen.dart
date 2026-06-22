@@ -376,7 +376,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ku ? 'Karên Hesabê' : 'Hesap İşlemleri',
                           style: TextStyle(
                             color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w700,
                             fontSize: 17,
                           ),
                         ),
@@ -431,7 +431,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ku ? 'Hesabê Min Jê Bibe' : 'Hesabımı Sil',
                                     style: TextStyle(
                                       color: AppTheme.wrong,
-                                      fontWeight: FontWeight.w900,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                   const SizedBox(height: 3),
@@ -479,7 +479,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               'ZK',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.w700,
                                 fontSize: 18,
                               ),
                             ),
@@ -493,7 +493,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               'ZanKurd',
                               style: TextStyle(
                                 color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.w800,
                                 fontSize: 17,
                               ),
                             ),
@@ -789,7 +789,7 @@ class _LangChip extends StatelessWidget {
           label,
           style: TextStyle(
             color: active ? Colors.white : AppTheme.textMutedColor(context),
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w700,
             fontSize: 12,
           ),
         ),

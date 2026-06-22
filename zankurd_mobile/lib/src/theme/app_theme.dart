@@ -188,7 +188,7 @@ class AppTheme {
         titleTextStyle: TextStyle(
           color: textPrimary,
           fontFamily: 'Rubik',
-          fontWeight: FontWeight.w900,
+          fontWeight: FontWeight.w800,
           fontSize: 20,
           letterSpacing: -0.2,
         ),
@@ -263,13 +263,13 @@ class AppTheme {
       ),
       textTheme: const TextTheme(
         headlineSmall: TextStyle(
-          fontWeight: FontWeight.w900,
+          fontWeight: FontWeight.w800,
           color: textPrimary,
           letterSpacing: -0.3,
           height: 1.2,
         ),
         titleLarge: TextStyle(
-          fontWeight: FontWeight.w900,
+          fontWeight: FontWeight.w700,
           color: textPrimary,
           letterSpacing: -0.2,
           height: 1.25,

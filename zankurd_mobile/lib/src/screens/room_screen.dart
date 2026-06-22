@@ -103,7 +103,7 @@ class _RoomScreenState extends State<RoomScreen> {
                     icon: Icon(Icons.copy_rounded, size: 16),
                     label: Text(
                       room.code,
-                      style: TextStyle(fontWeight: FontWeight.w900),
+                      style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     style: TextButton.styleFrom(
                       foregroundColor: AppTheme.textSubColor(context),
@@ -135,7 +135,7 @@ class _RoomScreenState extends State<RoomScreen> {
                       room.name,
                       style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w800,
                         fontSize: 26,
                       ),
                     ),
@@ -172,7 +172,7 @@ class _RoomScreenState extends State<RoomScreen> {
                           ku ? 'Lîstikvan' : 'Oyuncular',
                           style: TextStyle(
                             color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w700,
                             fontSize: 17,
                           ),
                         ),
@@ -390,7 +390,7 @@ class _PlayerTile extends StatelessWidget {
               '$rank',
               style: TextStyle(
                 color: AppTheme.correct,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
                 fontSize: 13,
               ),
             ),
@@ -424,7 +424,7 @@ class _PlayerTile extends StatelessWidget {
                 '${player.score}',
                 style: TextStyle(
                   color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               Text(

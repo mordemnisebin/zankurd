@@ -168,7 +168,7 @@ class _CategoryHero extends StatelessWidget {
                       CategoryNames.localized(category, isKu),
                       style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w800,
                         fontSize: 34,
                         height: 1.05,
                       ),
@@ -243,7 +243,7 @@ class _LevelCard extends StatelessWidget {
                 '${level.number}',
                 style: TextStyle(
                   color: badgeColor,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w700,
                   fontSize: 20,
                 ),
               ),
@@ -257,7 +257,7 @@ class _LevelCard extends StatelessWidget {
                     level.title,
                     style: TextStyle(
                       color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w700,
                       fontSize: 17,
                     ),
                   ),

@@ -122,7 +122,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                             : 'Oyundaki adın ne olsun?',
                         style: TextStyle(
                           color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.w800,
                           fontSize: 27,
                           height: 1.15,
                         ),

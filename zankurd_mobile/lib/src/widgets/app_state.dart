@@ -115,7 +115,7 @@ class _AppStateScaffold extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w700,
                         fontSize: 18,
                       ),
                     ),

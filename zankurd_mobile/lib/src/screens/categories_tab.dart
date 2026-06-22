@@ -78,7 +78,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                           ku ? 'Kategorî' : 'Kategoriler',
                           style: TextStyle(
                             color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w800,
                             fontSize: 28,
                           ),
                         ),
@@ -249,7 +249,7 @@ class _CategoryCard extends StatelessWidget {
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 9,
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ],
@@ -275,7 +275,7 @@ class _CategoryCard extends StatelessWidget {
                       CategoryNames.localized(category, isKu),
                       style: const TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w800,
                         fontSize: 18,
                         shadows: [
                           Shadow(

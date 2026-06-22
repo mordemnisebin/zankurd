@@ -279,7 +279,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                                 ),
                                 style: TextStyle(
                                   color: AppTheme.textPrimaryColor(context),
-                                  fontWeight: FontWeight.w900,
+                                  fontWeight: FontWeight.w800,
                                   fontSize: 24,
                                   letterSpacing: -0.5,
                                 ),
@@ -361,7 +361,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                               context.s('Têkeve', 'Giriş Yap'),
                               style: TextStyle(
                                 color: AppTheme.accent,
-                                fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.w700,
                                 fontSize: 14,
                               ),
                             ),
@@ -601,7 +601,7 @@ class _ProgressHexagon extends StatelessWidget {
           '$number',
           style: TextStyle(
             color: isActive ? Colors.white : AppTheme.textMutedColor(context),
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w700,
             fontSize: 18,
           ),
         ),

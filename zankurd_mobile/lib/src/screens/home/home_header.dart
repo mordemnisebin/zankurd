@@ -33,7 +33,7 @@ class HomeHeader extends StatelessWidget {
             'ZK',
             style: TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
               fontSize: 16,
             ),
           ),
@@ -47,7 +47,7 @@ class HomeHeader extends StatelessWidget {
                 'ZanKurd',
                 style: TextStyle(
                   color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w800,
                   fontSize: 22,
                 ),
               ),
@@ -100,7 +100,7 @@ class _LanguageQuickToggle extends StatelessWidget {
             isKu ? 'KU' : 'TR',
             style: TextStyle(
               color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
               fontSize: 12,
             ),
           ),
@@ -169,7 +169,7 @@ class _StreakBadge extends StatelessWidget {
             '$value',
             style: const TextStyle(
               color: AppTheme.accent,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
               fontSize: 14,
             ),
           ),
@@ -200,7 +200,7 @@ class _CoinBadge extends StatelessWidget {
             value != null ? '$value' : '···',
             style: const TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
               fontSize: 14,
             ),
           ),

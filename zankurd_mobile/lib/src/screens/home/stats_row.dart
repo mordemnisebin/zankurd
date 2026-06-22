@@ -67,7 +67,7 @@ class _StatTile extends StatelessWidget {
               value,
               style: TextStyle(
                 color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
                 fontSize: 17,
               ),
             ),

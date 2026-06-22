@@ -120,7 +120,7 @@ class _SummaryTile extends StatelessWidget {
             value,
             style: TextStyle(
               color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
               fontSize: 20,
             ),
           ),
@@ -184,7 +184,7 @@ class _ReviewCard extends StatelessWidget {
                   headerText,
                   style: TextStyle(
                     color: headerColor,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w700,
                     letterSpacing: 0.5,
                   ),
                 ),

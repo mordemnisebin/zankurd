@@ -101,7 +101,7 @@ class HeroCard extends StatelessWidget {
                     : 'Arkadaşlarınla\ncanlı yarış',
                 style: const TextStyle(
                   color: Colors.white,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w800,
                   fontSize: 28,
                   height: 1.1,
                 ),
@@ -204,7 +204,7 @@ class _HeroActionButton extends StatelessWidget {
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        textStyle: const TextStyle(fontWeight: FontWeight.w900),
+        textStyle: const TextStyle(fontWeight: FontWeight.w700),
       ),
     );
   }

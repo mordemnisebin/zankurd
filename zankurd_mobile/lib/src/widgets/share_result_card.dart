@@ -52,7 +52,7 @@ class ShareResultCard extends StatelessWidget {
                 'ZanKurd',
                 style: TextStyle(
                   color: Colors.white,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w800,
                   fontSize: 24,
                   letterSpacing: 0.5,
                 ),
@@ -76,7 +76,7 @@ class ShareResultCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: AppTheme.gold,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w800,
               fontSize: 64,
               height: 1.0,
             ),
@@ -145,7 +145,7 @@ class ShareResultCard extends StatelessWidget {
           value,
           style: const TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w800,
             fontSize: 22,
           ),
         ),

@@ -190,7 +190,7 @@ class _Header extends StatelessWidget {
                   ku ? 'Tabloya Pêşderiyan' : 'Liderlik Tablosu',
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w800,
                     fontSize: 24,
                     letterSpacing: -0.5,
                   ),
@@ -375,7 +375,7 @@ class _PodiumSlot extends StatelessWidget {
                       : '?',
                   style: TextStyle(
                     color: color,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w700,
                     fontSize: isCenter ? 20 : 16,
                   ),
                 ),
@@ -404,7 +404,7 @@ class _PodiumSlot extends StatelessWidget {
                   '${entry.totalScore}',
                   style: TextStyle(
                     color: color,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w700,
                     fontSize: scoreFontSz,
                   ),
                 ),
@@ -415,7 +415,7 @@ class _PodiumSlot extends StatelessWidget {
                 '#${entry.rank}',
                 style: TextStyle(
                   color: color.withValues(alpha: 0.8),
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w700,
                   fontSize: 13,
                 ),
                 textAlign: TextAlign.center,
@@ -468,7 +468,7 @@ class _RankRow extends StatelessWidget {
               '${entry.rank}',
               style: TextStyle(
                 color: AppTheme.textSubColor(context),
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
                 fontSize: 14,
               ),
             ),
@@ -483,7 +483,7 @@ class _RankRow extends StatelessWidget {
                   : '?',
               style: TextStyle(
                 color: AppTheme.accent,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
                 fontSize: 14,
               ),
             ),
@@ -521,7 +521,7 @@ class _RankRow extends StatelessWidget {
             '${entry.totalScore}',
             style: const TextStyle(
               color: AppTheme.gold,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
               fontSize: 16,
             ),
           ),

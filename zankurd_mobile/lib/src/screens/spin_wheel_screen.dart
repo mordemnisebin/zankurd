@@ -224,7 +224,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                     'ZK',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontWeight: FontWeight.w900,
+                                      fontWeight: FontWeight.w700,
                                       fontSize: 18,
                                     ),
                                   ),
@@ -260,7 +260,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                         : 'Tebrikler! +$_wonAmount coin kazandın!',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontWeight: FontWeight.w900,
+                                      fontWeight: FontWeight.w700,
                                       fontSize: 17,
                                     ),
                                   ),
@@ -291,7 +291,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                   ? (ku ? 'Bizivirîne!' : 'Çevir!')
                                   : (ku ? 'Sibê dîsa were!' : 'Yarın tekrar gel!'),
                               style: TextStyle(
-                                fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.w700,
                                 fontSize: 16,
                               ),
                             ),
@@ -366,7 +366,7 @@ class _WheelPainter extends CustomPainter {
           text: '${rewards[i]}',
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w700,
             fontSize: 16,
           ),
         ),
