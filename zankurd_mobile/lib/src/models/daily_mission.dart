@@ -25,21 +25,37 @@ class DailyMission {
   int progress;
   bool completed;
 
+  /// Sunucu tarifesiyle (claim_mission_reward RPC) anlaşılan anahtar.
+  /// Kategori adları SQL'de ASCII kalması için slug'lanır.
+  String get missionKey => type == MissionType.playCategory
+      ? 'playCategory:${_categorySlug(category ?? '')}'
+      : '${type.name}:$target';
+
+  static String _categorySlug(String category) => switch (category) {
+    'Ziman' => 'ziman',
+    'Çand' => 'cand',
+    'Dîrok' => 'dirok',
+    'Edebiyat' => 'edebiyat',
+    'Cografya' => 'cografya',
+    'Muzîk' => 'muzik',
+    _ => category.toLowerCase(),
+  };
+
   String get labelKu => switch (type) {
-        MissionType.answerCorrect => '$target bersivên rast bide',
-        MissionType.completeQuiz => '$target pêşbirk biqedîne',
-        MissionType.useWildcard => '$target joker bikar bîne',
-        MissionType.keepStreak => 'Seriya xwe biparêze',
-        MissionType.playCategory => 'Di ${category ?? '?'} de bilîze',
-      };
+    MissionType.answerCorrect => '$target bersivên rast bide',
+    MissionType.completeQuiz => '$target pêşbirk biqedîne',
+    MissionType.useWildcard => '$target joker bikar bîne',
+    MissionType.keepStreak => 'Seriya xwe biparêze',
+    MissionType.playCategory => 'Di ${category ?? '?'} de bilîze',
+  };
 
   String get labelTr => switch (type) {
-        MissionType.answerCorrect => '$target doğru cevap ver',
-        MissionType.completeQuiz => '$target quiz tamamla',
-        MissionType.useWildcard => '$target joker kullan',
-        MissionType.keepStreak => 'Serisini koru',
-        MissionType.playCategory => '${category ?? '?'} kategorisinde oyna',
-      };
+    MissionType.answerCorrect => '$target doğru cevap ver',
+    MissionType.completeQuiz => '$target quiz tamamla',
+    MissionType.useWildcard => '$target joker kullan',
+    MissionType.keepStreak => 'Serisini koru',
+    MissionType.playCategory => '${category ?? '?'} kategorisinde oyna',
+  };
 }
 
 class MissionDef {

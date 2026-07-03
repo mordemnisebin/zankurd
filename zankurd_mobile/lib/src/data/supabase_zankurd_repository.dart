@@ -6,17 +6,42 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
+import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../utils/error_reporter.dart';
 import '../utils/question_cache.dart';
 import 'mock_zankurd_repository.dart';
 import 'seen_question_store.dart';
+import 'zankurd_repository.dart';
 import '../config/subcategory_config.dart';
 
-class SupabaseZanKurdRepository extends MockZanKurdRepository {
+/// Supabase destekli üretim deposu.
+///
+/// Çevrimdışı/şema-eksik durumlarda [_offline] (yerel soru bankası) devreye
+/// girer. Bu ilişki bilinçli olarak kalıtım değil kompozisyondur: mock'a
+/// eklenen sahte davranışların sessizce üretime sızmasını önler.
+class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
 
+  final MockZanKurdRepository _offline = MockZanKurdRepository();
+
+  @override
+  List<String> get categories => _offline.categories;
+
+  @override
+  List<QuizQuestion> get questions => _offline.questions;
+
+  @override
+  List<QuizLevel> levelsForCategory(String category) =>
+      _offline.levelsForCategory(category);
+
+  @override
+  GameRoom joinRoom(String code) => _offline.joinRoom(code);
+
+  // TODO(migration): 2026-07-03_reward_hardening.sql canliya uygulandiktan
+  // sonra listeye 'explanation_ku, explanation_tr' eklenecek — kolonlar su an
+  // canli DB'de yok, eklemek tum soru SELECT'lerini kirar.
   static const _questionColumns =
       'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, question_type, image_url, difficulty';
   static const _roomQuestionColumns =
@@ -24,6 +49,25 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
 
   final SupabaseClient client;
   final _cache = QuestionCache();
+
+  /// Oda başına tek realtime kanalı; gönderme ve dinleme paylaşır.
+  /// Eskiden her broadcast'te yeni kanal açılıyordu (nesne sızıntısı).
+  final Map<String, RealtimeChannel> _roomChannels = {};
+
+  RealtimeChannel _roomChannel(String roomId) {
+    return _roomChannels.putIfAbsent(roomId, () {
+      final channel = client.channel('room:$roomId');
+      channel.subscribe();
+      return channel;
+    });
+  }
+
+  Future<void> _releaseRoomChannel(String roomId) async {
+    final channel = _roomChannels.remove(roomId);
+    if (channel != null) {
+      await client.removeChannel(channel);
+    }
+  }
 
   Future<User> signInAnonymously() async {
     final response = await client.auth.signInAnonymously();
@@ -162,7 +206,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       _cache.set(key, result);
       return result;
     } catch (_) {
-      return super.loadQuestions(categoryId: categoryId, limit: limit);
+      return _offline.loadQuestions(categoryId: categoryId, limit: limit);
     }
   }
 
@@ -206,7 +250,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       // Fall through to local examples if the rich schema is unavailable.
     }
 
-    return super.loadLevelQuestions(
+    return _offline.loadLevelQuestions(
       category: category,
       difficultyMin: difficultyMin,
       difficultyMax: difficultyMax,
@@ -218,7 +262,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   @override
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
     final roomId = room.id;
-    if (roomId == null) return super.loadRoomQuestions(room);
+    if (roomId == null) return _offline.loadRoomQuestions(room);
 
     try {
       final rows = await client
@@ -246,12 +290,13 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     try {
       final seed = MockZanKurdRepository.dailySeed();
 
-      // Soru sayısını öğren, gün tohumlu pencereden çek.
-      final countResponse = await client
+      // Soru sayısını öğren (SELECT ile aynı onay filtresiyle),
+      // gün tohumlu pencereden çek.
+      final total = await client
           .from('questions')
-          .count(CountOption.exact);
-      final total = countResponse;
-      if (total <= 0) return super.loadDailyQuestions(limit: limit);
+          .count(CountOption.exact)
+          .eq('is_approved', true);
+      if (total <= 0) return _offline.loadDailyQuestions(limit: limit);
 
       const windowSize = 60;
       final maxOffset = total > windowSize ? total - windowSize : 0;
@@ -270,7 +315,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     } catch (_) {
       // Şema/politika eksikse yerel soru bankasına düş.
     }
-    return super.loadDailyQuestions(limit: limit);
+    return _offline.loadDailyQuestions(limit: limit);
   }
 
   Future<List<QuizQuestion>> fetchApprovedQuestions({
@@ -322,7 +367,26 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       }
 
       if (randomize) {
-        final total = await client.from('questions').count(CountOption.exact);
+        // Pencere kaydırması, SELECT ile AYNI filtrelerle sayılan toplam
+        // üzerinden hesaplanmalı; yoksa küçük kategorilerde offset filtreli
+        // sonucun dışına düşer ve seçim hep aynı ilk kayıtlara sabitlenir.
+        var countQuery = client
+            .from('questions')
+            .count(CountOption.exact)
+            .eq('is_approved', true);
+        if (categoryId != null) {
+          countQuery = countQuery.eq('category_id', categoryId);
+        }
+        if (difficultyMin != null) {
+          countQuery = countQuery.gte('difficulty', difficultyMin);
+        }
+        if (difficultyMax != null) {
+          countQuery = countQuery.lte('difficulty', difficultyMax);
+        }
+        if (questionType != null) {
+          countQuery = countQuery.eq('question_type', questionType);
+        }
+        final total = await countQuery;
         const windowSize = 120;
         final maxOffset = total > windowSize ? total - windowSize : 0;
         final offset = maxOffset == 0 ? 0 : Random().nextInt(maxOffset);
@@ -389,7 +453,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   GameRoom createRoom({String category = 'Ziman'}) {
     return GameRoom(
       name: 'Hevalên Zanînê',
-      code: 'ZK-${DateTime.now().millisecond.toString().padLeft(3, '0')}',
+      code: generateRoomCode(),
       category: category,
       questionCount: 10,
       status: RoomStatus.lobby,
@@ -405,17 +469,32 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     final localRoom = createRoom(category: category);
     final categoryId = await _categoryIdByName(category);
 
-    final room = await client
-        .from('rooms')
-        .insert({
-          'code': localRoom.code,
-          'host_id': user.id,
-          'category_id': categoryId,
-          'question_count': localRoom.questionCount,
-          'seconds_per_question': 15,
-        })
-        .select('id, code')
-        .single();
+    // Kod çakışırsa (unique ihlali) yeni kodla birkaç kez dene.
+    Map<String, dynamic>? room;
+    var code = localRoom.code;
+    for (var attempt = 0; attempt < 3; attempt++) {
+      try {
+        room = await client
+            .from('rooms')
+            .insert({
+              'code': code,
+              'host_id': user.id,
+              'category_id': categoryId,
+              'question_count': localRoom.questionCount,
+              'seconds_per_question': 15,
+            })
+            .select('id, code')
+            .single();
+        break;
+      } on PostgrestException catch (error) {
+        final isUniqueViolation = error.code == '23505';
+        if (!isUniqueViolation || attempt == 2) rethrow;
+        code = generateRoomCode();
+      }
+    }
+    if (room == null) {
+      throw StateError('Room insert failed after retries.');
+    }
 
     await client.from('room_players').insert({
       'room_id': room['id'],
@@ -526,7 +605,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }) async {
     final roomId = room.id;
     if (roomId == null) {
-      return super.submitAnswer(
+      return _offline.submitAnswer(
         room: room,
         question: question,
         selectedOptionOptionKey: selectedOptionOptionKey,
@@ -572,6 +651,24 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<bool> isFavoriteQuestion(QuizQuestion question) async {
+    try {
+      final user = client.auth.currentUser;
+      if (user == null) return false;
+      final rows = await client
+          .from('favorite_questions')
+          .select('question_id')
+          .eq('player_id', user.id)
+          .eq('question_id', question.id)
+          .limit(1);
+      return rows.isNotEmpty;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'isFavoriteQuestion failed');
+      return false;
+    }
+  }
+
+  @override
   Future<void> reportQuestion(QuizQuestion question, String reason) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();
@@ -588,9 +685,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       final user = client.auth.currentUser ?? await signInAnonymously();
       final rows = await client
           .from('favorite_questions')
-          .select(
-            'questions(id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, question_type, image_url, difficulty)',
-          )
+          .select('questions($_questionColumns)')
           .eq('player_id', user.id)
           .order('created_at', ascending: false);
 
@@ -663,17 +758,36 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<void> addCoins(int amount, String reason) async {
-    if (amount <= 0) return;
+  Future<int> claimMissionReward({
+    required String missionKey,
+    required int fallbackReward,
+  }) async {
+    // Miktarı yalnızca sunucu tarifesi belirler; RPC başarısızsa
+    // ödül verilmemiş sayılır (0 döner).
     try {
       final _ = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
-      await client.rpc(
-        'award_coins',
-        params: {'p_amount': amount, 'p_reason': reason},
+      final response = await client.rpc(
+        'claim_mission_reward',
+        params: {'p_mission_key': missionKey},
       );
+      return _amountFromRpcResponse(response) ?? 0;
     } catch (error, stack) {
-      _recordError(error, stack, reason: 'addCoins failed');
+      _recordError(error, stack, reason: 'claim_mission_reward failed');
+      return 0;
+    }
+  }
+
+  @override
+  Future<int> claimTournamentReward() async {
+    try {
+      final _ = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      final response = await client.rpc('claim_tournament_reward');
+      return _amountFromRpcResponse(response) ?? 0;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'claim_tournament_reward failed');
+      return 0;
     }
   }
 
@@ -739,30 +853,30 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     return null;
   }
 
+  static bool _isSameUtcDay(DateTime a, DateTime b) =>
+      a.year == b.year && a.month == b.month && a.day == b.day;
+
+  /// Bugün ücretsiz çark hakkı kaldı mı? (Son 'daily_spin%' işlemi bugüne
+  /// ait değilse hak vardır.)
+  Future<bool> _freeSpinAvailable(User user) async {
+    final rows = await client
+        .from('coin_transactions')
+        .select('created_at')
+        .eq('player_id', user.id)
+        .like('reason', 'daily_spin%')
+        .order('created_at', ascending: false)
+        .limit(1);
+    if (rows.isEmpty) return true;
+    final last = DateTime.parse(rows.first['created_at'] as String).toUtc();
+    return !_isSameUtcDay(last, DateTime.now().toUtc());
+  }
+
   @override
   Future<bool> canSpinToday() async {
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
 
-      // 1. Check free spin today
-      final rows = await client
-          .from('coin_transactions')
-          .select('created_at')
-          .eq('player_id', user.id)
-          .like('reason', 'daily_spin%')
-          .order('created_at', ascending: false)
-          .limit(1);
-
-      bool freeSpinAvailable = true;
-      if (rows.isNotEmpty) {
-        final last = DateTime.parse(rows.first['created_at'] as String).toUtc();
-        final now = DateTime.now().toUtc();
-        freeSpinAvailable =
-            last.year != now.year ||
-            last.month != now.month ||
-            last.day != now.day;
-      }
-      if (freeSpinAvailable) return true;
+      if (await _freeSpinAvailable(user)) return true;
 
       // 2. Check purchased extra spins
       final purchases = await client
@@ -771,16 +885,20 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
           .eq('player_id', user.id)
           .eq('reason', 'purchase_spin_wheel_extra');
 
+      // 'daily_spin:extra_purchase' eski istemcilerin yazdığı mirastır.
       final usedSpins = await client
           .from('coin_transactions')
           .select('amount')
           .eq('player_id', user.id)
-          .eq('reason', 'daily_spin:extra_purchase');
+          .inFilter('reason', [
+            'extra_spin:server',
+            'daily_spin:extra_purchase',
+          ]);
 
       return purchases.length > usedSpins.length;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'canSpinToday failed');
-      return super.canSpinToday();
+      return _offline.canSpinToday();
     }
   }
 
@@ -790,26 +908,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       final user = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
 
-      // Check if free spin specifically is available
-      final rows = await client
-          .from('coin_transactions')
-          .select('created_at')
-          .eq('player_id', user.id)
-          .like('reason', 'daily_spin%')
-          .order('created_at', ascending: false)
-          .limit(1);
-
-      bool freeSpinAvailable = true;
-      if (rows.isNotEmpty) {
-        final last = DateTime.parse(rows.first['created_at'] as String).toUtc();
-        final now = DateTime.now().toUtc();
-        freeSpinAvailable =
-            last.year != now.year ||
-            last.month != now.month ||
-            last.day != now.day;
-      }
-
-      if (freeSpinAvailable) {
+      if (await _freeSpinAvailable(user)) {
         final response = await client.rpc('claim_daily_spin');
         if (response is Map<String, dynamic>) {
           final amount = (response['amount'] as num?)?.toInt() ?? 0;
@@ -824,10 +923,9 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
         }
         throw StateError('Daily spin RPC returned no reward for ${user.id}.');
       } else {
-        const rewards = [10, 25, 50, 15, 75, 20, 100, 30];
-        final amount = rewards[Random().nextInt(rewards.length)];
-        await addCoins(amount, 'daily_spin:extra_purchase');
-        return amount;
+        // Ekstra çark: hak kontrolü ve ödül seçimi sunucudadır.
+        final response = await client.rpc('claim_extra_spin');
+        return _amountFromRpcResponse(response) ?? 0;
       }
     } catch (error, stack) {
       _recordError(
@@ -889,20 +987,6 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
         return const [];
       }
     }
-  }
-
-  RealtimeChannel subscribeToRoom({
-    required String roomId,
-    required void Function(Map<String, dynamic> payload) onBroadcast,
-  }) {
-    final channel = client.channel('room:$roomId');
-    channel
-        .onBroadcast(
-          event: 'room_state',
-          callback: (payload) => onBroadcast(payload),
-        )
-        .subscribe();
-    return channel;
   }
 
   Future<String> _categoryIdByName(String categoryName) async {
@@ -1036,21 +1120,17 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   @override
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) {
     final controller = StreamController<Map<String, dynamic>>();
-    final channel = client.channel('room:$roomId');
-
-    channel
-        .onBroadcast(
-          event: 'game_event',
-          callback: (payload) {
-            if (!controller.isClosed) {
-              controller.add(payload);
-            }
-          },
-        )
-        .subscribe();
+    _roomChannel(roomId).onBroadcast(
+      event: 'game_event',
+      callback: (payload) {
+        if (!controller.isClosed) {
+          controller.add(payload);
+        }
+      },
+    );
 
     controller.onCancel = () async {
-      await client.removeChannel(channel);
+      await _releaseRoomChannel(roomId);
       await controller.close();
     };
 
@@ -1062,7 +1142,8 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     String roomId,
     Map<String, dynamic> payload,
   ) async {
-    final channel = client.channel('room:$roomId');
-    await channel.sendBroadcastMessage(event: 'game_event', payload: payload);
+    await _roomChannel(
+      roomId,
+    ).sendBroadcastMessage(event: 'game_event', payload: payload);
   }
 }

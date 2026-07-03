@@ -50,6 +50,9 @@ abstract class ZanKurdRepository {
     required int responseMs,
   });
   Future<bool> toggleFavoriteQuestion(QuizQuestion question, bool favorite);
+
+  /// Sorunun oyuncunun favorilerinde olup olmadığını döner.
+  Future<bool> isFavoriteQuestion(QuizQuestion question);
   Future<void> reportQuestion(QuizQuestion question, String reason);
   Future<List<LeaderboardEntry>> loadLeaderboard({
     int limit = 10,
@@ -65,8 +68,17 @@ abstract class ZanKurdRepository {
   /// Belirli bir ürün kimliğinin daha önce satın alınıp alınmadığını kontrol eder.
   Future<bool> hasPurchased(String itemId);
 
-  /// Oyuncunun coin bakiyesine [amount] kadar ekler (görev ödülü vb.).
-  Future<void> addCoins(int amount, String reason);
+  /// Günlük görev ödülünü talep eder; kazanılan miktarı döner.
+  ///
+  /// Miktarı sunucu tarifesi belirler ([missionKey] üzerinden);
+  /// [fallbackReward] yalnızca çevrimdışı/mock modda kullanılır.
+  Future<int> claimMissionReward({
+    required String missionKey,
+    required int fallbackReward,
+  });
+
+  /// Turnuva şampiyonluğu ödülünü talep eder (sunucuda günde 1 kez).
+  Future<int> claimTournamentReward();
 
   /// Oyuncunun profil XP değerini sunucuda günceller.
   Future<void> updateProfileXP(int xp);

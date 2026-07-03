@@ -1,3 +1,6 @@
+-- NOT: Bu fonksiyonun guncel surumu 2026-07-03_reward_hardening.sql
+-- icindedir (solo odul gunluk limiti eklendi). Bu dosya tarihsel
+-- referans olarak durur; yeni degisiklikleri hardening dosyasina yaz.
 create or replace function public.claim_quiz_reward(
   p_room_id uuid default null,
   p_score integer default 0,

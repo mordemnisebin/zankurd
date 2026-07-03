@@ -128,7 +128,12 @@ class _TournamentScreenState extends State<TournamentScreen> {
 
     // Turnuva için 10 adet orta/zor soru yükle
     final questions = await widget.repository
-        .loadLevelQuestions(category: 'Ziman', difficultyMin: 2, difficultyMax: 4, limit: 10)
+        .loadLevelQuestions(
+          category: 'Ziman',
+          difficultyMin: 2,
+          difficultyMax: 4,
+          limit: 10,
+        )
         .catchError((_) => widget.repository.questions.take(10).toList());
 
     final room = GameRoom(
@@ -180,7 +185,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
           _stage = 'won';
           _showConfetti = true;
           context.read<SoundProvider>().playWin();
-          widget.repository.addCoins(200, 'tournament_champion');
+          widget.repository.claimTournamentReward();
         }
       } else {
         _stage = 'lost_$_stage';
@@ -196,9 +201,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
     final ku = context.isKu;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(ku ? 'Turnuva' : 'Turnuva Modu'),
-      ),
+      appBar: AppBar(title: Text(ku ? 'Turnuva' : 'Turnuva Modu')),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -214,7 +217,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
                   children: [
-                    if (_stage == 'lobby') _buildLobby(ku) else _buildBracket(ku),
+                    if (_stage == 'lobby')
+                      _buildLobby(ku)
+                    else
+                      _buildBracket(ku),
                   ],
                 ),
               ),
@@ -236,11 +242,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
     return AppPanel(
       child: Column(
         children: [
-          Icon(
-            Icons.emoji_events_rounded,
-            color: AppTheme.gold,
-            size: 80,
-          ),
+          Icon(Icons.emoji_events_rounded, color: AppTheme.gold, size: 80),
           const SizedBox(height: 16),
           Text(
             ku ? 'Kûpa Zanînê' : 'ZanKurd Kupası',
@@ -306,7 +308,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
           child: Column(
             children: [
               Text(
-                isFinished ? (ku ? 'Turnuva Qediya' : 'Turnuva Bitti') : _stageLabel(ku),
+                isFinished
+                    ? (ku ? 'Turnuva Qediya' : 'Turnuva Bitti')
+                    : _stageLabel(ku),
                 style: TextStyle(
                   color: AppTheme.accent,
                   fontWeight: FontWeight.w700,
@@ -315,7 +319,11 @@ class _TournamentScreenState extends State<TournamentScreen> {
               ),
               const SizedBox(height: 12),
               if (_stage == 'won') ...[
-                Icon(Icons.emoji_events_rounded, color: AppTheme.gold, size: 64),
+                Icon(
+                  Icons.emoji_events_rounded,
+                  color: AppTheme.gold,
+                  size: 64,
+                ),
                 const SizedBox(height: 8),
                 Text(
                   ku ? 'Şampiyonê Turnuvayê!' : 'Turnuva Şampiyonu!',
@@ -327,13 +335,22 @@ class _TournamentScreenState extends State<TournamentScreen> {
                 ),
                 Text(
                   ku ? 'Te +200 Coin qezenc kir.' : '+200 Coin kazandın.',
-                  style: TextStyle(color: AppTheme.gold, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: AppTheme.gold,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ] else if (_stage.startsWith('lost')) ...[
-                Icon(Icons.sentiment_very_dissatisfied_rounded, color: AppTheme.wrong, size: 64),
+                Icon(
+                  Icons.sentiment_very_dissatisfied_rounded,
+                  color: AppTheme.wrong,
+                  size: 64,
+                ),
                 const SizedBox(height: 8),
                 Text(
-                  ku ? 'Te li hember $opponent winda kir.' : '$opponent karşısında elendin.',
+                  ku
+                      ? 'Te li hember $opponent winda kir.'
+                      : '$opponent karşısında elendin.',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
@@ -349,7 +366,13 @@ class _TournamentScreenState extends State<TournamentScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _PlayerCard(name: ku ? 'Tu' : 'Sen', isUser: true),
-                    const Text('VS', style: TextStyle(fontWeight: FontWeight.w700, color: AppTheme.textMuted)),
+                    const Text(
+                      'VS',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.textMuted,
+                      ),
+                    ),
                     _PlayerCard(name: opponent, isUser: false),
                   ],
                 ),
@@ -436,26 +459,53 @@ class _TournamentScreenState extends State<TournamentScreen> {
     final q4Score2 = q4Winner == q4Player2 ? 850 : 640;
 
     // Semi Finals
-    final s1Player1 = (_stage == 'quarter' || _stage == 'lobby') ? '?' : (_stage == 'lost_quarter' ? userOpponent : (ku ? 'Tu' : 'Sen'));
-    final s1Player2 = (_stage == 'quarter' || _stage == 'lobby') ? '?' : q2Winner;
+    final s1Player1 = (_stage == 'quarter' || _stage == 'lobby')
+        ? '?'
+        : (_stage == 'lost_quarter' ? userOpponent : (ku ? 'Tu' : 'Sen'));
+    final s1Player2 = (_stage == 'quarter' || _stage == 'lobby')
+        ? '?'
+        : q2Winner;
     int? s1Score1;
     int? s1Score2;
-    if (_stage != 'quarter' && _stage != 'lobby' && _stage != 'lost_quarter' && _stage != 'semi') {
+    if (_stage != 'quarter' &&
+        _stage != 'lobby' &&
+        _stage != 'lost_quarter' &&
+        _stage != 'semi') {
       s1Score1 = _userScore;
       s1Score2 = _opponentScore;
     }
 
-    final s2Player1 = (_stage == 'quarter' || _stage == 'lobby') ? '?' : q3Winner;
-    final s2Player2 = (_stage == 'quarter' || _stage == 'lobby') ? '?' : q4Winner;
-    final s2Winner = (_stage != 'quarter' && _stage != 'lobby' && _stage != 'lost_quarter' && _botWinners.length >= 2) ? _botWinners[1] : '';
+    final s2Player1 = (_stage == 'quarter' || _stage == 'lobby')
+        ? '?'
+        : q3Winner;
+    final s2Player2 = (_stage == 'quarter' || _stage == 'lobby')
+        ? '?'
+        : q4Winner;
+    final s2Winner =
+        (_stage != 'quarter' &&
+            _stage != 'lobby' &&
+            _stage != 'lost_quarter' &&
+            _botWinners.length >= 2)
+        ? _botWinners[1]
+        : '';
     final s2Score1 = s2Winner == s2Player1 ? 840 : 730;
     final s2Score2 = s2Winner == s2Player2 ? 840 : 730;
 
     // Final
-    final f1Player1 = (_stage == 'quarter' || _stage == 'semi' || _stage == 'lost_quarter' || _stage == 'lost_semi' || _stage == 'lobby') 
-        ? '?' 
+    final f1Player1 =
+        (_stage == 'quarter' ||
+            _stage == 'semi' ||
+            _stage == 'lost_quarter' ||
+            _stage == 'lost_semi' ||
+            _stage == 'lobby')
+        ? '?'
         : (ku ? 'Tu' : 'Sen');
-    final f1Player2 = (_stage == 'quarter' || _stage == 'semi' || _stage == 'lost_quarter' || _stage == 'lost_semi' || _stage == 'lobby')
+    final f1Player2 =
+        (_stage == 'quarter' ||
+            _stage == 'semi' ||
+            _stage == 'lost_quarter' ||
+            _stage == 'lost_semi' ||
+            _stage == 'lobby')
         ? '?'
         : s2Winner;
     int? fScore1;
@@ -465,8 +515,8 @@ class _TournamentScreenState extends State<TournamentScreen> {
       fScore2 = _opponentScore;
     }
 
-    final champion = _stage == 'won' 
-        ? (ku ? 'Tu' : 'Sen') 
+    final champion = _stage == 'won'
+        ? (ku ? 'Tu' : 'Sen')
         : (_stage == 'lost_final' ? f1Player2 : '?');
 
     return SingleChildScrollView(
@@ -481,47 +531,125 @@ class _TournamentScreenState extends State<TournamentScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _MatchCard(player1: q1Player1, player2: q1Player2, score1: q1Score1, score2: q1Score2, isActive: _stage == 'quarter', isKu: ku),
+                _MatchCard(
+                  player1: q1Player1,
+                  player2: q1Player2,
+                  score1: q1Score1,
+                  score2: q1Score2,
+                  isActive: _stage == 'quarter',
+                  isKu: ku,
+                ),
                 const SizedBox(height: 20),
-                _MatchCard(player1: q2Player1, player2: q2Player2, score1: _stage != 'quarter' && _stage != 'lobby' ? q2Score1 : null, score2: _stage != 'quarter' && _stage != 'lobby' ? q2Score2 : null, isKu: ku),
+                _MatchCard(
+                  player1: q2Player1,
+                  player2: q2Player2,
+                  score1: _stage != 'quarter' && _stage != 'lobby'
+                      ? q2Score1
+                      : null,
+                  score2: _stage != 'quarter' && _stage != 'lobby'
+                      ? q2Score2
+                      : null,
+                  isKu: ku,
+                ),
                 const SizedBox(height: 20),
-                _MatchCard(player1: q3Player1, player2: q3Player2, score1: _stage != 'quarter' && _stage != 'lobby' ? q3Score1 : null, score2: _stage != 'quarter' && _stage != 'lobby' ? q3Score2 : null, isKu: ku),
+                _MatchCard(
+                  player1: q3Player1,
+                  player2: q3Player2,
+                  score1: _stage != 'quarter' && _stage != 'lobby'
+                      ? q3Score1
+                      : null,
+                  score2: _stage != 'quarter' && _stage != 'lobby'
+                      ? q3Score2
+                      : null,
+                  isKu: ku,
+                ),
                 const SizedBox(height: 20),
-                _MatchCard(player1: q4Player1, player2: q4Player2, score1: _stage != 'quarter' && _stage != 'lobby' ? q4Score1 : null, score2: _stage != 'quarter' && _stage != 'lobby' ? q4Score2 : null, isKu: ku),
+                _MatchCard(
+                  player1: q4Player1,
+                  player2: q4Player2,
+                  score1: _stage != 'quarter' && _stage != 'lobby'
+                      ? q4Score1
+                      : null,
+                  score2: _stage != 'quarter' && _stage != 'lobby'
+                      ? q4Score2
+                      : null,
+                  isKu: ku,
+                ),
               ],
             ),
             // Connector 1
             CustomPaint(
               size: const Size(40, 300),
-              painter: BracketConnectorPainter(type: 1, color: AppTheme.borderColor(context)),
+              painter: BracketConnectorPainter(
+                type: 1,
+                color: AppTheme.borderColor(context),
+              ),
             ),
             // Column 2: Semi Finals
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 40),
-                _MatchCard(player1: s1Player1, player2: s1Player2, score1: s1Score1, score2: s1Score2, isActive: _stage == 'semi', isKu: ku),
+                _MatchCard(
+                  player1: s1Player1,
+                  player2: s1Player2,
+                  score1: s1Score1,
+                  score2: s1Score2,
+                  isActive: _stage == 'semi',
+                  isKu: ku,
+                ),
                 const SizedBox(height: 100),
-                _MatchCard(player1: s2Player1, player2: s2Player2, score1: _stage != 'quarter' && _stage != 'lobby' && _stage != 'lost_quarter' && _stage != 'semi' ? s2Score1 : null, score2: _stage != 'quarter' && _stage != 'lobby' && _stage != 'lost_quarter' && _stage != 'semi' ? s2Score2 : null, isKu: ku),
+                _MatchCard(
+                  player1: s2Player1,
+                  player2: s2Player2,
+                  score1:
+                      _stage != 'quarter' &&
+                          _stage != 'lobby' &&
+                          _stage != 'lost_quarter' &&
+                          _stage != 'semi'
+                      ? s2Score1
+                      : null,
+                  score2:
+                      _stage != 'quarter' &&
+                          _stage != 'lobby' &&
+                          _stage != 'lost_quarter' &&
+                          _stage != 'semi'
+                      ? s2Score2
+                      : null,
+                  isKu: ku,
+                ),
               ],
             ),
             // Connector 2
             CustomPaint(
               size: const Size(40, 300),
-              painter: BracketConnectorPainter(type: 2, color: AppTheme.borderColor(context)),
+              painter: BracketConnectorPainter(
+                type: 2,
+                color: AppTheme.borderColor(context),
+              ),
             ),
             // Column 3: Final
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 120),
-                _MatchCard(player1: f1Player1, player2: f1Player2, score1: fScore1, score2: fScore2, isActive: _stage == 'final', isKu: ku),
+                _MatchCard(
+                  player1: f1Player1,
+                  player2: f1Player2,
+                  score1: fScore1,
+                  score2: fScore2,
+                  isActive: _stage == 'final',
+                  isKu: ku,
+                ),
               ],
             ),
             // Connector 3
             CustomPaint(
               size: const Size(40, 300),
-              painter: BracketConnectorPainter(type: 3, color: AppTheme.borderColor(context)),
+              painter: BracketConnectorPainter(
+                type: 3,
+                color: AppTheme.borderColor(context),
+              ),
             ),
             // Column 4: Champion
             Column(
@@ -537,10 +665,14 @@ class _TournamentScreenState extends State<TournamentScreen> {
                         : AppTheme.surfaceColor(context),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: champion == (ku ? 'Tu' : 'Sen') ? AppTheme.gold : AppTheme.borderColor(context),
+                      color: champion == (ku ? 'Tu' : 'Sen')
+                          ? AppTheme.gold
+                          : AppTheme.borderColor(context),
                       width: champion == (ku ? 'Tu' : 'Sen') ? 1.8 : 1,
                     ),
-                    boxShadow: champion == (ku ? 'Tu' : 'Sen') ? AppTheme.elevatedShadow(AppTheme.gold) : AppTheme.cardShadow(context),
+                    boxShadow: champion == (ku ? 'Tu' : 'Sen')
+                        ? AppTheme.elevatedShadow(AppTheme.gold)
+                        : AppTheme.cardShadow(context),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -555,7 +687,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
-                            color: champion == (ku ? 'Tu' : 'Sen') ? AppTheme.gold : AppTheme.textPrimaryColor(context),
+                            color: champion == (ku ? 'Tu' : 'Sen')
+                                ? AppTheme.gold
+                                : AppTheme.textPrimaryColor(context),
                           ),
                         ),
                       ),
@@ -621,7 +755,9 @@ class _MatchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderCol = isActive ? AppTheme.accent : AppTheme.borderColor(context);
+    final borderCol = isActive
+        ? AppTheme.accent
+        : AppTheme.borderColor(context);
     final bgCol = isActive
         ? AppTheme.accent.withValues(alpha: 0.06)
         : AppTheme.surfaceColor(context);
@@ -636,26 +772,39 @@ class _MatchCard extends StatelessWidget {
         color: bgCol,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: borderCol, width: isActive ? 1.8 : 1),
-        boxShadow: isActive ? AppTheme.elevatedShadow(AppTheme.accent) : AppTheme.cardShadow(context),
+        boxShadow: isActive
+            ? AppTheme.elevatedShadow(AppTheme.accent)
+            : AppTheme.cardShadow(context),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildPlayerRow(context, player1, score1, isWinner1, isWinner2),
-          Divider(height: 1, color: AppTheme.borderColor(context).withValues(alpha: 0.5)),
+          Divider(
+            height: 1,
+            color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+          ),
           _buildPlayerRow(context, player2, score2, isWinner2, isWinner1),
         ],
       ),
     );
   }
 
-  Widget _buildPlayerRow(BuildContext context, String name, int? score, bool isWinner, bool isOpponentWinner) {
+  Widget _buildPlayerRow(
+    BuildContext context,
+    String name,
+    int? score,
+    bool isWinner,
+    bool isOpponentWinner,
+  ) {
     final style = TextStyle(
       fontSize: 10,
       fontWeight: isWinner ? FontWeight.w700 : FontWeight.w600,
       color: isWinner
           ? AppTheme.textPrimaryColor(context)
-          : (isOpponentWinner ? AppTheme.textMutedColor(context) : AppTheme.textSubColor(context)),
+          : (isOpponentWinner
+                ? AppTheme.textMutedColor(context)
+                : AppTheme.textSubColor(context)),
     );
 
     return Padding(
@@ -678,7 +827,9 @@ class _MatchCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
-                color: isWinner ? AppTheme.gold : AppTheme.textMutedColor(context),
+                color: isWinner
+                    ? AppTheme.gold
+                    : AppTheme.textMutedColor(context),
               ),
             ),
           ],
@@ -690,7 +841,8 @@ class _MatchCard extends StatelessWidget {
 
 class BracketConnectorPainter extends CustomPainter {
   BracketConnectorPainter({required this.type, required this.color});
-  final int type; // 1: double fork (quarter to semi), 2: single large fork (semi to final), 3: straight line (final to champion)
+  final int
+  type; // 1: double fork (quarter to semi), 2: single large fork (semi to final), 3: straight line (final to champion)
   final Color color;
 
   @override
@@ -701,7 +853,7 @@ class BracketConnectorPainter extends CustomPainter {
       ..strokeWidth = 2.0;
 
     final w = size.width;
-    
+
     if (type == 1) {
       // Two forks.
       // Fork 1: starts at y=30 and y=110, connects to y=70.
@@ -718,15 +870,31 @@ class BracketConnectorPainter extends CustomPainter {
     }
   }
 
-  void _drawFork(Canvas canvas, Paint paint, double xStart, double y1, double y2, double yMid, double width) {
+  void _drawFork(
+    Canvas canvas,
+    Paint paint,
+    double xStart,
+    double y1,
+    double y2,
+    double yMid,
+    double width,
+  ) {
     final halfW = width / 2;
     // Draw two horizontal lines from start to half width
     canvas.drawLine(Offset(xStart, y1), Offset(xStart + halfW, y1), paint);
     canvas.drawLine(Offset(xStart, y2), Offset(xStart + halfW, y2), paint);
     // Draw vertical line connecting them
-    canvas.drawLine(Offset(xStart + halfW, y1), Offset(xStart + halfW, y2), paint);
+    canvas.drawLine(
+      Offset(xStart + halfW, y1),
+      Offset(xStart + halfW, y2),
+      paint,
+    );
     // Draw horizontal line from midpoint to end
-    canvas.drawLine(Offset(xStart + halfW, yMid), Offset(xStart + width, yMid), paint);
+    canvas.drawLine(
+      Offset(xStart + halfW, yMid),
+      Offset(xStart + width, yMid),
+      paint,
+    );
   }
 
   @override

@@ -89,7 +89,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   Future<void> _recordProgress() async {
     final streakStore = await StreakStore.load();
     final today = DateTime.now();
-    final todayKey = '${today.year.toString().padLeft(4, '0')}-'
+    final todayKey =
+        '${today.year.toString().padLeft(4, '0')}-'
         '${today.month.toString().padLeft(2, '0')}-'
         '${today.day.toString().padLeft(2, '0')}';
     final isNewDay = streakStore.lastDay != todayKey;
@@ -131,7 +132,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       streakAlive: streak > 0,
     );
     for (final mission in completedMissions) {
-      await repository.addCoins(mission.coinReward, 'daily_mission_reward');
+      await repository.claimMissionReward(
+        missionKey: mission.missionKey,
+        fallbackReward: mission.coinReward,
+      );
     }
 
     // XP ve Seviye Hesaplaması
@@ -251,7 +255,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     ),
                     const SizedBox(height: 20),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
                       decoration: BoxDecoration(
                         color: AppTheme.gold,
                         borderRadius: BorderRadius.circular(16),
@@ -285,10 +292,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           ),
                           elevation: 0,
                         ),
-                        onPressed: () => Navigator.of(context).pop({
-                          'score': score,
-                          'correct': correctCount,
-                        }),
+                        onPressed: () => Navigator.of(
+                          context,
+                        ).pop({'score': score, 'correct': correctCount}),
                         child: Text(
                           context.isKu ? 'Berdawam bike' : 'Devam Et',
                           style: TextStyle(
@@ -332,28 +338,28 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     final headerGradient = is1v1
         ? (isWinner
-            ? AppTheme.correctGradient
-            : isDraw
-                ? const LinearGradient(
-                    colors: [Color(0xFF6B7280), Color(0xFF4B5563)],
-                  )
-                : AppTheme.wrongGradient)
+              ? AppTheme.correctGradient
+              : isDraw
+              ? const LinearGradient(
+                  colors: [Color(0xFF6B7280), Color(0xFF4B5563)],
+                )
+              : AppTheme.wrongGradient)
         : AppTheme.accentGradient;
 
     final headerTitle = is1v1
         ? (isWinner
-            ? context.s('Te bi ser ketî!', 'Kazandın!')
-            : isDraw
-                ? context.s('Beramberî!', 'Berabere!')
-                : context.s('Te winda kir...', 'Kaybettin...'))
+              ? context.s('Te bi ser ketî!', 'Kazandın!')
+              : isDraw
+              ? context.s('Beramberî!', 'Berabere!')
+              : context.s('Te winda kir...', 'Kaybettin...'))
         : context.s('Pêşbirk qediya', 'Yarış tamamlandı');
 
     final headerIcon = is1v1
         ? (isWinner
-            ? Icons.emoji_events_outlined
-            : isDraw
-                ? Icons.balance_outlined
-                : Icons.sentiment_very_dissatisfied_outlined)
+              ? Icons.emoji_events_outlined
+              : isDraw
+              ? Icons.balance_outlined
+              : Icons.sentiment_very_dissatisfied_outlined)
         : Icons.flag_outlined;
 
     return Scaffold(
@@ -388,11 +394,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           children: [
                             Row(
                               children: [
-                                Icon(
-                                  headerIcon,
-                                  color: Colors.white,
-                                  size: 16,
-                                ),
+                                Icon(headerIcon, color: Colors.white, size: 16),
                                 const SizedBox(width: 8),
                                 Text(
                                   headerTitle.toUpperCase(),
@@ -484,13 +486,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   icon: Icons.cancel_outlined,
                                   label: context.s('Şaş', 'Yanlış'),
                                   value: '$wrongCount',
-                                  iconColor: Colors.white.withValues(alpha: 0.8),
+                                  iconColor: Colors.white.withValues(
+                                    alpha: 0.8,
+                                  ),
                                 ),
                                 _MetricItemCompact(
                                   icon: Icons.hourglass_empty_rounded,
                                   label: context.s('Vala', 'Boş'),
                                   value: '$unanswered',
-                                  iconColor: Colors.white.withValues(alpha: 0.8),
+                                  iconColor: Colors.white.withValues(
+                                    alpha: 0.8,
+                                  ),
                                 ),
                                 _MetricItemCompact(
                                   icon: Icons.local_fire_department_outlined,
@@ -523,290 +529,303 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       color: AppTheme.surfaceHiColor(context),
                       child: Row(
                         children: [
-                      Icon(
-                        Icons.local_fire_department,
-                        color: AppTheme.accent,
-                        size: 30,
+                          Icon(
+                            Icons.local_fire_department,
+                            color: AppTheme.accent,
+                            size: 30,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  context.s(
+                                    'Seriya rojane: $_dailyStreak roj',
+                                    'Günlük seri: $_dailyStreak gün',
+                                  ),
+                                  style: TextStyle(
+                                    color: AppTheme.textPrimaryColor(context),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  context.s(
+                                    'Sibê jî bilîze û seriyê bidomîne!',
+                                    'Yarın da oyna, seriyi sürdür!',
+                                  ),
+                                  style: TextStyle(
+                                    color: AppTheme.textMutedColor(context),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  ],
+                  const SizedBox(height: 16),
+                  if (coinsAwarded > 0) ...[
+                    TweenAnimationBuilder<double>(
+                      tween: Tween(begin: 0, end: 1),
+                      duration: const Duration(milliseconds: 450),
+                      curve: Curves.easeOutCubic,
+                      builder: (context, t, child) => Transform.scale(
+                        scale: 0.92 + 0.08 * t,
+                        child: Opacity(opacity: t, child: child),
+                      ),
+                      child: AppPanel(
+                        gradient: AppTheme.goldGradient,
+                        child: Row(
                           children: [
-                            Text(
-                              context.s(
-                                'Seriya rojane: $_dailyStreak roj',
-                                'Günlük seri: $_dailyStreak gün',
+                            Container(
+                              width: 46,
+                              height: 46,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.18),
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              style: TextStyle(
-                                color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16,
+                              child: Icon(
+                                Icons.monetization_on_outlined,
+                                color: Colors.white,
                               ),
                             ),
-                            const SizedBox(height: 2),
-                            Text(
-                              context.s(
-                                'Sibê jî bilîze û seriyê bidomîne!',
-                                'Yarın da oyna, seriyi sürdür!',
-                              ),
-                              style: TextStyle(
-                                color: AppTheme.textMutedColor(context),
-                                fontSize: 12,
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TweenAnimationBuilder<int>(
+                                    tween: IntTween(
+                                      begin: 0,
+                                      end: coinsAwarded,
+                                    ),
+                                    duration: const Duration(milliseconds: 800),
+                                    curve: Curves.easeOut,
+                                    builder: (context, value, _) => Text(
+                                      context.s(
+                                        '+$value coin stendî',
+                                        '+$value coin kazandın',
+                                      ),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    context.s(
+                                      'Xelata te di malperê de tê nûkirin.',
+                                      'Ödül bakiyen ana ekranda güncellenir.',
+                                    ),
+                                    style: TextStyle(color: Colors.white70),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ],
-              const SizedBox(height: 16),
-              if (coinsAwarded > 0) ...[
-                TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0, end: 1),
-                  duration: const Duration(milliseconds: 450),
-                  curve: Curves.easeOutCubic,
-                  builder: (context, t, child) => Transform.scale(
-                    scale: 0.92 + 0.08 * t,
-                    child: Opacity(opacity: t, child: child),
-                  ),
-                  child: AppPanel(
-                    gradient: AppTheme.goldGradient,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 46,
-                          height: 46,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.18),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(
-                            Icons.monetization_on_outlined,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TweenAnimationBuilder<int>(
-                                tween: IntTween(begin: 0, end: coinsAwarded),
-                                duration: const Duration(milliseconds: 800),
-                                curve: Curves.easeOut,
-                                builder: (context, value, _) => Text(
-                                  context.s(
-                                    '+$value coin stendî',
-                                    '+$value coin kazandın',
-                                  ),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                context.s(
-                                  'Xelata te di malperê de tê nûkirin.',
-                                  'Ödül bakiyen ana ekranda güncellenir.',
-                                ),
-                                style: TextStyle(color: Colors.white70),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
                     ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-              ],
-              if (_earnedXP > 0) ...[
-                TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0, end: 1),
-                  duration: const Duration(milliseconds: 450),
-                  curve: Curves.easeOutCubic,
-                  builder: (context, t, child) => Transform.scale(
-                    scale: 0.92 + 0.08 * t,
-                    child: Opacity(opacity: t, child: child),
-                  ),
-                  child: AppPanel(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Color(0xFF6366F1), Color(0xFF4F46E5)],
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 46,
-                          height: 46,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.18),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(
-                            Icons.bolt_rounded,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TweenAnimationBuilder<int>(
-                                tween: IntTween(begin: 0, end: _earnedXP),
-                                duration: const Duration(milliseconds: 800),
-                                curve: Curves.easeOut,
-                                builder: (context, value, _) => Text(
-                                  context.s(
-                                    '+$value XP bi dest xist',
-                                    '+$value XP kazandın',
-                                  ),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                context.s(
-                                  'Asta te li ser profîlê tê nûkirin.',
-                                  'Seviyen profil sayfasında güncellenir.',
-                                ),
-                                style: TextStyle(color: Colors.white70, fontSize: 12),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-              ],
-              AppPanel(
-                color: AppTheme.surfaceHiColor(context),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.s('Rêzbendiyê bişopîne', 'Sıralamaya devam et'),
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      context.s(
-                        'Pûanên te li jûrên online di tabloya pêşderçûnê de xuya dibin.',
-                        'Puanların online odalarda liderlik tablosuna yansır.',
-                      ),
-                      style: TextStyle(color: AppTheme.textMuted),
-                    ),
-                    const SizedBox(height: 14),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton.icon(
-                        onPressed: () {
-                          Navigator.of(
-                            context,
-                          ).popUntil((route) => route.isFirst);
-                        },
-                        icon: const Icon(Icons.home_outlined),
-                        label: Text(context.s('Vegere malê', 'Ana ekrana dön')),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: OutlinedButton.icon(
-                            onPressed: answerRecords.isEmpty
-                                ? null
-                                : () {
-                                    Navigator.of(context).push(
-                                      AppRoute.to(
-                                        ReviewScreen(
-                                          records: answerRecords,
-                                          room: room,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                            icon: const Icon(Icons.fact_check_outlined),
-                            label: Text(
-                              context.s('Bersivan Bibîne', 'Cevapları İncele'),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: OutlinedButton.icon(
-                            onPressed: () => ResultSharer.share(
-                              context,
-                              isKu: context.isKu,
-                              score: score,
-                              correctCount: correctCount,
-                              totalQuestions: totalQuestions,
-                              bestStreak: bestStreak,
-                              category: room.category,
-                            ),
-                            icon: const Icon(Icons.share_rounded),
-                            label: Text(
-                              context.s('Parve Bike', 'Paylaş'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            AppRoute.to(
-                              LeaderboardScreen(repository: repository),
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.emoji_events_outlined),
-                        label: Text(
-                          context.s('Tabloya Pêşderçûnê', 'Liderlik Tablosu'),
-                        ),
-                      ),
-                    ),
+                    const SizedBox(height: 16),
                   ],
-                ),
+                  if (_earnedXP > 0) ...[
+                    TweenAnimationBuilder<double>(
+                      tween: Tween(begin: 0, end: 1),
+                      duration: const Duration(milliseconds: 450),
+                      curve: Curves.easeOutCubic,
+                      builder: (context, t, child) => Transform.scale(
+                        scale: 0.92 + 0.08 * t,
+                        child: Opacity(opacity: t, child: child),
+                      ),
+                      child: AppPanel(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Color(0xFF6366F1), Color(0xFF4F46E5)],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 46,
+                              height: 46,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.18),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Icon(
+                                Icons.bolt_rounded,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TweenAnimationBuilder<int>(
+                                    tween: IntTween(begin: 0, end: _earnedXP),
+                                    duration: const Duration(milliseconds: 800),
+                                    curve: Curves.easeOut,
+                                    builder: (context, value, _) => Text(
+                                      context.s(
+                                        '+$value XP bi dest xist',
+                                        '+$value XP kazandın',
+                                      ),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    context.s(
+                                      'Asta te li ser profîlê tê nûkirin.',
+                                      'Seviyen profil sayfasında güncellenir.',
+                                    ),
+                                    style: TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                  AppPanel(
+                    color: AppTheme.surfaceHiColor(context),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          context.s(
+                            'Rêzbendiyê bişopîne',
+                            'Sıralamaya devam et',
+                          ),
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          context.s(
+                            'Pûanên te li jûrên online di tabloya pêşderçûnê de xuya dibin.',
+                            'Puanların online odalarda liderlik tablosuna yansır.',
+                          ),
+                          style: TextStyle(color: AppTheme.textMuted),
+                        ),
+                        const SizedBox(height: 14),
+                        SizedBox(
+                          width: double.infinity,
+                          child: FilledButton.icon(
+                            onPressed: () {
+                              Navigator.of(
+                                context,
+                              ).popUntil((route) => route.isFirst);
+                            },
+                            icon: const Icon(Icons.home_outlined),
+                            label: Text(
+                              context.s('Vegere malê', 'Ana ekrana dön'),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: OutlinedButton.icon(
+                                onPressed: answerRecords.isEmpty
+                                    ? null
+                                    : () {
+                                        Navigator.of(context).push(
+                                          AppRoute.to(
+                                            ReviewScreen(
+                                              records: answerRecords,
+                                              room: room,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                icon: const Icon(Icons.fact_check_outlined),
+                                label: Text(
+                                  context.s(
+                                    'Bersivan Bibîne',
+                                    'Cevapları İncele',
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: OutlinedButton.icon(
+                                onPressed: () => ResultSharer.share(
+                                  context,
+                                  isKu: context.isKu,
+                                  score: score,
+                                  correctCount: correctCount,
+                                  totalQuestions: totalQuestions,
+                                  bestStreak: bestStreak,
+                                  category: room.category,
+                                ),
+                                icon: const Icon(Icons.share_rounded),
+                                label: Text(context.s('Parve Bike', 'Paylaş')),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                AppRoute.to(
+                                  LeaderboardScreen(repository: repository),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.emoji_events_outlined),
+                            label: Text(
+                              context.s(
+                                'Tabloya Pêşderçûnê',
+                                'Liderlik Tablosu',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
+              if (_showConfetti)
+                ConfettiOverlay(
+                  onFinished: () {
+                    setState(() {
+                      _showConfetti = false;
+                    });
+                  },
+                ),
             ],
           ),
-          if (_showConfetti)
-            ConfettiOverlay(
-              onFinished: () {
-                setState(() {
-                  _showConfetti = false;
-                });
-              },
-            ),
-        ],
+        ),
       ),
-    ),
-  ),
-);
+    );
   }
 }
-
-
 
 class _RaceStandings extends StatelessWidget {
   const _RaceStandings({required this.userScore, required this.opponents});
@@ -925,10 +944,7 @@ class _AchievementUnlocks extends StatelessWidget {
                         ),
                         Text(
                           achievement.description(context.isKu),
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 12,
-                          ),
+                          style: TextStyle(color: Colors.white70, fontSize: 12),
                         ),
                       ],
                     ),
@@ -967,7 +983,10 @@ class _MasteryPromotions extends StatelessWidget {
                       color: entry.value.badgeColor.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Icon(entry.value.icon, color: entry.value.badgeColor),
+                    child: Icon(
+                      entry.value.icon,
+                      color: entry.value.badgeColor,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(

@@ -71,6 +71,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   int wrongCount = 0;
   String selectedAnswer = '';
   bool favorite = false;
+  bool _favoriteTouched = false;
   bool completing = false;
   Set<String> hiddenAnswers = const {};
   final List<AnswerRecord> answerRecords = [];
@@ -226,8 +227,31 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       }
     });
 
-    _markQuestionSeen();
-    _startTimer();
+    // Boş listeyle açılırsa question getter'ı patlar; build'deki boş
+    // durum ekranı gösterilir, sayaç ve tekrar-kaydı hiç başlatılmaz.
+    if (_questions.isNotEmpty) {
+      _markQuestionSeen();
+      _loadFavoriteState();
+      _startTimer();
+    }
+  }
+
+  /// Gösterilen sorunun gerçek favori durumunu yükler. Soru değiştiyse
+  /// ya da kullanıcı bu arada kendisi işaretlediyse geç gelen yanıt
+  /// yok sayılır.
+  void _loadFavoriteState() {
+    final id = question.id;
+    widget.repository
+        .isFavoriteQuestion(question)
+        .then((saved) {
+          if (mounted &&
+              !_favoriteTouched &&
+              question.id == id &&
+              favorite != saved) {
+            setState(() => favorite = saved);
+          }
+        })
+        .catchError((_) {});
   }
 
   void _startTimer() {
@@ -333,6 +357,29 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    if (_questions.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: AppTheme.backgroundGradient(context),
+          ),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Text(
+                context.s(
+                  'Pirs nehatin barkirin. Ji kerema xwe dîsa biceribîne.',
+                  'Sorular yüklenemedi. Lütfen tekrar dene.',
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     final hasProgress = index > 0 || answered;
     return PopScope(
       canPop: !hasProgress,
@@ -634,48 +681,45 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   // ─── Joker mekanikleri ───────────────────────────────────────────────────
 
-  void _trackWildcardMission() {
-    DailyMissionStore.load().then((store) {
-      store.reportWildcardUsed().then((completed) {
-        if (completed != null && mounted) {
-          widget.repository.addCoins(
-            completed.coinReward,
-            'daily_mission_reward',
-          );
-          XPStore.load().then((xpStore) {
-            xpStore.addXP(100).then((leveledUp) {
-              widget.repository.updateProfileXP(xpStore.totalXP).catchError((
-                _,
-              ) {
-                SyncManager.instance.queueXP(xpStore.totalXP);
-              });
-              if (mounted) {
-                MissionToast.show(context, completed);
-                if (leveledUp) {
-                  final isKu = context.isKu;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        isKu
-                            ? 'Asta Te Bilind Bû! Ast Nû: ${xpStore.currentLevel}'
-                            : 'Tebrikler, seviye atladın! Yeni Seviye: ${xpStore.currentLevel}',
-                      ),
-                      backgroundColor: AppTheme.secondaryAccent,
-                      behavior: SnackBarBehavior.floating,
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
-                }
-              }
-            });
-          });
-        }
-      });
-    });
+  Future<void> _trackWildcardMission() async {
+    final store = await DailyMissionStore.load();
+    final completed = await store.reportWildcardUsed();
+    if (completed == null || !mounted) return;
+
+    await widget.repository.claimMissionReward(
+      missionKey: completed.missionKey,
+      fallbackReward: completed.coinReward,
+    );
+
+    final xpStore = await XPStore.load();
+    final leveledUp = await xpStore.addXP(100);
+    try {
+      await widget.repository.updateProfileXP(xpStore.totalXP);
+    } catch (_) {
+      SyncManager.instance.queueXP(xpStore.totalXP);
+    }
+
+    if (!mounted) return;
+    MissionToast.show(context, completed);
+    if (leveledUp) {
+      final isKu = context.isKu;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            isKu
+                ? 'Asta Te Bilind Bû! Ast Nû: ${xpStore.currentLevel}'
+                : 'Tebrikler, seviye atladın! Yeni Seviye: ${xpStore.currentLevel}',
+          ),
+          backgroundColor: AppTheme.secondaryAccent,
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   void _useFiftyFifty() {
-    const cost = 20;
+    final cost = WildcardType.fiftyFifty.coinCost;
     if (_wildcard.fiftyFiftyUsed || _coinBalance < cost || answered) return;
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
@@ -683,10 +727,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     setState(() {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(fiftyFiftyUsed: true);
-      hiddenAnswers = question.answers
-          .where((a) => a != question.correctAnswer)
-          .take(2)
-          .toSet();
+      // Gizlenecek yanlışlar rastgele seçilir; hep ilk ikisi gizlenirse
+      // dikkatli oyuncu örüntüyü ezberler.
+      hiddenAnswers =
+          (question.answers.where((a) => a != question.correctAnswer).toList()
+                ..shuffle())
+              .take(2)
+              .toSet();
     });
     widget.repository
         .spendCoins(cost, 'wildcard_fifty_fifty')
@@ -694,7 +741,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   void _useAudience() {
-    const cost = 30;
+    final cost = WildcardType.audience.coinCost;
     if (_wildcard.audienceUsed || _coinBalance < cost || answered) return;
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
@@ -738,7 +785,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   void _activateDoubleAnswer() {
-    const cost = 50;
+    final cost = WildcardType.doubleAnswer.coinCost;
     if (_wildcard.doubleAnswerActivated ||
         _coinBalance < cost ||
         answered ||
@@ -758,7 +805,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   void _changeQuestion() {
-    const cost = 40;
+    final cost = WildcardType.changeQuestion.coinCost;
     if (!_isSoloMode ||
         _wildcard.changeQuestionUsed ||
         _coinBalance < cost ||
@@ -800,8 +847,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _questions[index] = replacement;
       hiddenAnswers = const {};
       _audiencePoll = null;
+      favorite = false;
+      _favoriteTouched = false;
     });
     _markQuestionSeen();
+    _loadFavoriteState();
     _startTimer();
     widget.repository
         .spendCoins(cost, 'wildcard_change_question')
@@ -901,6 +951,37 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     );
   }
 
+  /// 1v1 çevrimiçi maçta kendi skor satırını tazeler ve rakibe yayınlar.
+  /// Cevap verme, sonraki soru ve bitiş akışları bu tek bloğu paylaşır.
+  void _syncMyDuelState({required bool answeredNow, bool finished = false}) {
+    if (!widget.is1v1 || widget.room.id == null) return;
+    final myIdx = livePlayers.indexWhere(
+      (p) => _myId != null ? p.id == _myId : p.name == _myName,
+    );
+    if (myIdx != -1) {
+      livePlayers[myIdx] = Player(
+        id: _myId,
+        name: _myName,
+        score: score,
+        streak: streak,
+        state: answeredNow
+            ? (_isKu ? 'Bersiv da' : 'Cevapladı')
+            : (_isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor'),
+      );
+    }
+    widget.repository
+        .sendRoomBroadcast(widget.room.id!, {
+          'sender': _myName,
+          'sender_id': _myId,
+          'score': score,
+          'streak': streak,
+          'question_index': index,
+          'answered': answeredNow,
+          if (finished) 'finished': true,
+        })
+        .catchError((_) {});
+  }
+
   Future<void> _answer(String answer) async {
     if (answered) return;
 
@@ -969,31 +1050,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         }
         _recordAnswer(answer);
         _advanceBots();
-
-        if (widget.is1v1 && widget.room.id != null) {
-          final myIdx = livePlayers.indexWhere(
-            (p) => _myId != null ? p.id == _myId : p.name == _myName,
-          );
-          if (myIdx != -1) {
-            livePlayers[myIdx] = Player(
-              id: _myId,
-              name: _myName,
-              score: score,
-              streak: streak,
-              state: _isKu ? 'Bersiv da' : 'Cevapladı',
-            );
-          }
-          widget.repository
-              .sendRoomBroadcast(widget.room.id!, {
-                'sender': _myName,
-                'sender_id': _myId,
-                'score': score,
-                'streak': streak,
-                'question_index': index,
-                'answered': true,
-              })
-              .catchError((_) {});
-        }
+        _syncMyDuelState(answeredNow: true);
       });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'submitAnswer failed');
@@ -1023,31 +1080,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         }
         _recordAnswer(answer);
         _advanceBots();
-
-        if (widget.is1v1 && widget.room.id != null) {
-          final myIdx = livePlayers.indexWhere(
-            (p) => _myId != null ? p.id == _myId : p.name == _myName,
-          );
-          if (myIdx != -1) {
-            livePlayers[myIdx] = Player(
-              id: _myId,
-              name: _myName,
-              score: score,
-              streak: streak,
-              state: _isKu ? 'Bersiv da' : 'Cevapladı',
-            );
-          }
-          widget.repository
-              .sendRoomBroadcast(widget.room.id!, {
-                'sender': _myName,
-                'sender_id': _myId,
-                'score': score,
-                'streak': streak,
-                'question_index': index,
-                'answered': true,
-              })
-              .catchError((_) {});
-        }
+        _syncMyDuelState(answeredNow: true);
       });
     }
   }
@@ -1057,19 +1090,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       if (completing) return;
       setState(() => completing = true);
       widget.repository.finishGame(widget.room).catchError((_) {});
-      if (widget.is1v1 && widget.room.id != null) {
-        widget.repository
-            .sendRoomBroadcast(widget.room.id!, {
-              'sender': _myName,
-              'sender_id': _myId,
-              'score': score,
-              'streak': streak,
-              'question_index': index,
-              'answered': true,
-              'finished': true,
-            })
-            .catchError((_) {});
-      }
+      _syncMyDuelState(answeredNow: true, finished: true);
       final coinsAwarded = widget.practice
           ? 0
           : await widget.repository
@@ -1111,39 +1132,17 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       index += 1;
       selectedAnswer = '';
       favorite = false;
+      _favoriteTouched = false;
       completing = false;
       _wildcard = const WildcardState();
       _firstAttemptAnswer = '';
       _audiencePoll = null;
       hiddenAnswers = const {};
       _showExplanation = false;
-
-      if (widget.is1v1 && widget.room.id != null) {
-        final myIdx = livePlayers.indexWhere(
-          (p) => _myId != null ? p.id == _myId : p.name == _myName,
-        );
-        if (myIdx != -1) {
-          livePlayers[myIdx] = Player(
-            id: _myId,
-            name: _myName,
-            score: score,
-            streak: streak,
-            state: _isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor',
-          );
-        }
-        widget.repository
-            .sendRoomBroadcast(widget.room.id!, {
-              'sender': _myName,
-              'sender_id': _myId,
-              'score': score,
-              'streak': streak,
-              'question_index': index,
-              'answered': false,
-            })
-            .catchError((_) {});
-      }
+      _syncMyDuelState(answeredNow: false);
     });
     _markQuestionSeen();
+    _loadFavoriteState();
     _startTimer();
   }
 
@@ -1171,6 +1170,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   Future<void> _toggleFavorite() async {
     final nextFavorite = !favorite;
+    _favoriteTouched = true;
     setState(() => favorite = nextFavorite);
     try {
       final saved = await widget.repository.toggleFavoriteQuestion(

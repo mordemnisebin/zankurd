@@ -44,26 +44,25 @@ void main() {
   });
 
   test('question queries avoid optional localized explanation columns', () {
+    // Soru kolon listeleri artık tek sabitte (_questionColumns) toplandığı
+    // için select literal'leri yerine dosyadaki tüm kolon-listesi
+    // string'leri taranır. explanation_ku/tr kolonları canlı DB'ye
+    // eklenene kadar SELECT'e girmemeli (migration TODO'suna bak).
     final source = File(
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
 
-    final selectStatements = RegExp(
-      r"\.select\(\s*'([^']*)'",
-      multiLine: true,
-    ).allMatches(source).map((match) => match.group(1)!);
+    final columnLists = RegExp(r"'([^']*correct_option[^']*)'")
+        .allMatches(source)
+        .map((match) => match.group(1)!)
+        .where((columns) => columns.contains('prompt'));
 
-    final questionSelects = selectStatements.where(
-      (select) =>
-          select.contains('prompt') && select.contains('correct_option'),
-    );
-
-    expect(questionSelects, isNotEmpty);
-    for (final select in questionSelects) {
-      expect(select, isNot(contains('explanation_ku')));
-      expect(select, isNot(contains('explanation_tr')));
-      expect(select, contains('question_type'));
-      expect(select, contains('image_url'));
+    expect(columnLists, isNotEmpty);
+    for (final columns in columnLists) {
+      expect(columns, isNot(contains('explanation_ku')));
+      expect(columns, isNot(contains('explanation_tr')));
+      expect(columns, contains('question_type'));
+      expect(columns, contains('image_url'));
     }
   });
 

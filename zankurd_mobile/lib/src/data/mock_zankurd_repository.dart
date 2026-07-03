@@ -232,7 +232,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
   GameRoom createRoom({String category = 'Ziman'}) {
     return GameRoom(
       name: 'Hevalên Zanînê',
-      code: 'ZK-${DateTime.now().millisecond.toString().padLeft(3, '0')}',
+      code: generateRoomCode(),
       category: category,
       questionCount: 10,
       status: RoomStatus.lobby,
@@ -306,12 +306,24 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return {'is_correct': isCorrect, 'points': isCorrect ? 100 : 0};
   }
 
+  final Set<String> _mockFavorites = {};
+
   @override
   Future<bool> toggleFavoriteQuestion(
     QuizQuestion question,
     bool favorite,
   ) async {
+    if (favorite) {
+      _mockFavorites.add(question.id);
+    } else {
+      _mockFavorites.remove(question.id);
+    }
     return favorite;
+  }
+
+  @override
+  Future<bool> isFavoriteQuestion(QuizQuestion question) async {
+    return _mockFavorites.contains(question.id);
   }
 
   @override
@@ -383,8 +395,18 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<void> addCoins(int amount, String reason) async {
-    if (amount > 0) _mockCoins += amount;
+  Future<int> claimMissionReward({
+    required String missionKey,
+    required int fallbackReward,
+  }) async {
+    if (fallbackReward > 0) _mockCoins += fallbackReward;
+    return fallbackReward;
+  }
+
+  @override
+  Future<int> claimTournamentReward() async {
+    _mockCoins += 200;
+    return 200;
   }
 
   @override
