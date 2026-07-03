@@ -292,6 +292,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
     required GameRoom room,
     required QuizQuestion question,
     required String selectedOptionOptionKey,
+    required int responseMs,
   }) async {
     final correctIndex = question.answers.indexOf(question.correctAnswer);
     final correctOptionKey = switch (correctIndex) {
@@ -330,7 +331,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<bool> canSpinToday() async {
     final last = _lastSpin;
     final now = DateTime.now().toUtc();
-    final freeSpinAvailable = last == null ||
+    final freeSpinAvailable =
+        last == null ||
         last.year != now.year ||
         last.month != now.month ||
         last.day != now.day;
@@ -344,9 +346,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     const rewards = [10, 25, 50, 15, 75, 20, 100, 30];
     final amount = rewards[Random().nextInt(rewards.length)];
     final now = DateTime.now().toUtc();
-    
+
     final last = _lastSpin;
-    final freeSpinAvailable = last == null ||
+    final freeSpinAvailable =
+        last == null ||
         last.year != now.year ||
         last.month != now.month ||
         last.day != now.day;
@@ -356,7 +359,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
     } else if (_mockExtraSpins > _mockUsedExtraSpins) {
       _mockUsedExtraSpins++;
     }
-    
+
     _mockCoins += amount;
     return amount;
   }
@@ -427,38 +430,248 @@ class MockZanKurdRepository implements ZanKurdRepository {
     await Future.delayed(const Duration(milliseconds: 300));
     final all = [
       if (period == LeaderboardPeriod.daily) ...[
-        const LeaderboardEntry(rank: 1, playerId: 'm1', displayName: 'Berfin',   totalScore: 1240, bestStreak: 8,  roomsPlayed: 3),
-        const LeaderboardEntry(rank: 2, playerId: 'm2', displayName: 'Azad',     totalScore: 980,  bestStreak: 6,  roomsPlayed: 2),
-        const LeaderboardEntry(rank: 3, playerId: 'm3', displayName: 'Rojda',    totalScore: 870,  bestStreak: 5,  roomsPlayed: 2),
-        const LeaderboardEntry(rank: 4, playerId: 'm4', displayName: 'Baran',    totalScore: 760,  bestStreak: 4,  roomsPlayed: 2),
-        const LeaderboardEntry(rank: 5, playerId: 'm5', displayName: 'Dilan',    totalScore: 640,  bestStreak: 3,  roomsPlayed: 1),
-        const LeaderboardEntry(rank: 6, playerId: 'm6', displayName: 'Sero',     totalScore: 580,  bestStreak: 3,  roomsPlayed: 1),
-        const LeaderboardEntry(rank: 7, playerId: 'm7', displayName: 'Narin',    totalScore: 520,  bestStreak: 2,  roomsPlayed: 1),
-        const LeaderboardEntry(rank: 8, playerId: 'm8', displayName: 'Hogir',    totalScore: 480,  bestStreak: 2,  roomsPlayed: 1),
-        const LeaderboardEntry(rank: 9, playerId: 'm9', displayName: 'Çiçek',    totalScore: 420,  bestStreak: 2,  roomsPlayed: 1),
-        const LeaderboardEntry(rank:10, playerId: 'ma', displayName: 'Welat',    totalScore: 380,  bestStreak: 1,  roomsPlayed: 1),
+        const LeaderboardEntry(
+          rank: 1,
+          playerId: 'm1',
+          displayName: 'Berfin',
+          totalScore: 1240,
+          bestStreak: 8,
+          roomsPlayed: 3,
+        ),
+        const LeaderboardEntry(
+          rank: 2,
+          playerId: 'm2',
+          displayName: 'Azad',
+          totalScore: 980,
+          bestStreak: 6,
+          roomsPlayed: 2,
+        ),
+        const LeaderboardEntry(
+          rank: 3,
+          playerId: 'm3',
+          displayName: 'Rojda',
+          totalScore: 870,
+          bestStreak: 5,
+          roomsPlayed: 2,
+        ),
+        const LeaderboardEntry(
+          rank: 4,
+          playerId: 'm4',
+          displayName: 'Baran',
+          totalScore: 760,
+          bestStreak: 4,
+          roomsPlayed: 2,
+        ),
+        const LeaderboardEntry(
+          rank: 5,
+          playerId: 'm5',
+          displayName: 'Dilan',
+          totalScore: 640,
+          bestStreak: 3,
+          roomsPlayed: 1,
+        ),
+        const LeaderboardEntry(
+          rank: 6,
+          playerId: 'm6',
+          displayName: 'Sero',
+          totalScore: 580,
+          bestStreak: 3,
+          roomsPlayed: 1,
+        ),
+        const LeaderboardEntry(
+          rank: 7,
+          playerId: 'm7',
+          displayName: 'Narin',
+          totalScore: 520,
+          bestStreak: 2,
+          roomsPlayed: 1,
+        ),
+        const LeaderboardEntry(
+          rank: 8,
+          playerId: 'm8',
+          displayName: 'Hogir',
+          totalScore: 480,
+          bestStreak: 2,
+          roomsPlayed: 1,
+        ),
+        const LeaderboardEntry(
+          rank: 9,
+          playerId: 'm9',
+          displayName: 'Çiçek',
+          totalScore: 420,
+          bestStreak: 2,
+          roomsPlayed: 1,
+        ),
+        const LeaderboardEntry(
+          rank: 10,
+          playerId: 'ma',
+          displayName: 'Welat',
+          totalScore: 380,
+          bestStreak: 1,
+          roomsPlayed: 1,
+        ),
       ] else if (period == LeaderboardPeriod.weekly) ...[
-        const LeaderboardEntry(rank: 1, playerId: 'm1', displayName: 'Rojda',    totalScore: 8420, bestStreak: 11, roomsPlayed: 14),
-        const LeaderboardEntry(rank: 2, playerId: 'm2', displayName: 'Baran',    totalScore: 7190, bestStreak: 9,  roomsPlayed: 12),
-        const LeaderboardEntry(rank: 3, playerId: 'm3', displayName: 'Dilan',    totalScore: 6540, bestStreak: 8,  roomsPlayed: 10),
-        const LeaderboardEntry(rank: 4, playerId: 'm4', displayName: 'Azad',     totalScore: 5870, bestStreak: 7,  roomsPlayed: 9),
-        const LeaderboardEntry(rank: 5, playerId: 'm5', displayName: 'Berfin',   totalScore: 5320, bestStreak: 6,  roomsPlayed: 8),
-        const LeaderboardEntry(rank: 6, playerId: 'm6', displayName: 'Narin',    totalScore: 4760, bestStreak: 5,  roomsPlayed: 7),
-        const LeaderboardEntry(rank: 7, playerId: 'm7', displayName: 'Sero',     totalScore: 4180, bestStreak: 5,  roomsPlayed: 6),
-        const LeaderboardEntry(rank: 8, playerId: 'm8', displayName: 'Hogir',    totalScore: 3640, bestStreak: 4,  roomsPlayed: 5),
-        const LeaderboardEntry(rank: 9, playerId: 'm9', displayName: 'Çiçek',    totalScore: 3120, bestStreak: 3,  roomsPlayed: 4),
-        const LeaderboardEntry(rank:10, playerId: 'ma', displayName: 'Welat',    totalScore: 2680, bestStreak: 3,  roomsPlayed: 4),
+        const LeaderboardEntry(
+          rank: 1,
+          playerId: 'm1',
+          displayName: 'Rojda',
+          totalScore: 8420,
+          bestStreak: 11,
+          roomsPlayed: 14,
+        ),
+        const LeaderboardEntry(
+          rank: 2,
+          playerId: 'm2',
+          displayName: 'Baran',
+          totalScore: 7190,
+          bestStreak: 9,
+          roomsPlayed: 12,
+        ),
+        const LeaderboardEntry(
+          rank: 3,
+          playerId: 'm3',
+          displayName: 'Dilan',
+          totalScore: 6540,
+          bestStreak: 8,
+          roomsPlayed: 10,
+        ),
+        const LeaderboardEntry(
+          rank: 4,
+          playerId: 'm4',
+          displayName: 'Azad',
+          totalScore: 5870,
+          bestStreak: 7,
+          roomsPlayed: 9,
+        ),
+        const LeaderboardEntry(
+          rank: 5,
+          playerId: 'm5',
+          displayName: 'Berfin',
+          totalScore: 5320,
+          bestStreak: 6,
+          roomsPlayed: 8,
+        ),
+        const LeaderboardEntry(
+          rank: 6,
+          playerId: 'm6',
+          displayName: 'Narin',
+          totalScore: 4760,
+          bestStreak: 5,
+          roomsPlayed: 7,
+        ),
+        const LeaderboardEntry(
+          rank: 7,
+          playerId: 'm7',
+          displayName: 'Sero',
+          totalScore: 4180,
+          bestStreak: 5,
+          roomsPlayed: 6,
+        ),
+        const LeaderboardEntry(
+          rank: 8,
+          playerId: 'm8',
+          displayName: 'Hogir',
+          totalScore: 3640,
+          bestStreak: 4,
+          roomsPlayed: 5,
+        ),
+        const LeaderboardEntry(
+          rank: 9,
+          playerId: 'm9',
+          displayName: 'Çiçek',
+          totalScore: 3120,
+          bestStreak: 3,
+          roomsPlayed: 4,
+        ),
+        const LeaderboardEntry(
+          rank: 10,
+          playerId: 'ma',
+          displayName: 'Welat',
+          totalScore: 2680,
+          bestStreak: 3,
+          roomsPlayed: 4,
+        ),
       ] else ...[
-        const LeaderboardEntry(rank: 1, playerId: 'm1', displayName: 'Rojda',    totalScore: 32840, bestStreak: 18, roomsPlayed: 54),
-        const LeaderboardEntry(rank: 2, playerId: 'm2', displayName: 'Baran',    totalScore: 28720, bestStreak: 15, roomsPlayed: 48),
-        const LeaderboardEntry(rank: 3, playerId: 'm3', displayName: 'Dilan',    totalScore: 24490, bestStreak: 13, roomsPlayed: 42),
-        const LeaderboardEntry(rank: 4, playerId: 'm4', displayName: 'Azad',     totalScore: 21360, bestStreak: 12, roomsPlayed: 38),
-        const LeaderboardEntry(rank: 5, playerId: 'm5', displayName: 'Berfin',   totalScore: 18840, bestStreak: 10, roomsPlayed: 34),
-        const LeaderboardEntry(rank: 6, playerId: 'm6', displayName: 'Narin',    totalScore: 16200, bestStreak: 9,  roomsPlayed: 30),
-        const LeaderboardEntry(rank: 7, playerId: 'm7', displayName: 'Sero',     totalScore: 14100, bestStreak: 8,  roomsPlayed: 26),
-        const LeaderboardEntry(rank: 8, playerId: 'm8', displayName: 'Hogir',    totalScore: 12400, bestStreak: 7,  roomsPlayed: 22),
-        const LeaderboardEntry(rank: 9, playerId: 'm9', displayName: 'Çiçek',    totalScore: 10800, bestStreak: 6,  roomsPlayed: 18),
-        const LeaderboardEntry(rank:10, playerId: 'ma', displayName: 'Welat',    totalScore:  9300, bestStreak: 5,  roomsPlayed: 16),
+        const LeaderboardEntry(
+          rank: 1,
+          playerId: 'm1',
+          displayName: 'Rojda',
+          totalScore: 32840,
+          bestStreak: 18,
+          roomsPlayed: 54,
+        ),
+        const LeaderboardEntry(
+          rank: 2,
+          playerId: 'm2',
+          displayName: 'Baran',
+          totalScore: 28720,
+          bestStreak: 15,
+          roomsPlayed: 48,
+        ),
+        const LeaderboardEntry(
+          rank: 3,
+          playerId: 'm3',
+          displayName: 'Dilan',
+          totalScore: 24490,
+          bestStreak: 13,
+          roomsPlayed: 42,
+        ),
+        const LeaderboardEntry(
+          rank: 4,
+          playerId: 'm4',
+          displayName: 'Azad',
+          totalScore: 21360,
+          bestStreak: 12,
+          roomsPlayed: 38,
+        ),
+        const LeaderboardEntry(
+          rank: 5,
+          playerId: 'm5',
+          displayName: 'Berfin',
+          totalScore: 18840,
+          bestStreak: 10,
+          roomsPlayed: 34,
+        ),
+        const LeaderboardEntry(
+          rank: 6,
+          playerId: 'm6',
+          displayName: 'Narin',
+          totalScore: 16200,
+          bestStreak: 9,
+          roomsPlayed: 30,
+        ),
+        const LeaderboardEntry(
+          rank: 7,
+          playerId: 'm7',
+          displayName: 'Sero',
+          totalScore: 14100,
+          bestStreak: 8,
+          roomsPlayed: 26,
+        ),
+        const LeaderboardEntry(
+          rank: 8,
+          playerId: 'm8',
+          displayName: 'Hogir',
+          totalScore: 12400,
+          bestStreak: 7,
+          roomsPlayed: 22,
+        ),
+        const LeaderboardEntry(
+          rank: 9,
+          playerId: 'm9',
+          displayName: 'Çiçek',
+          totalScore: 10800,
+          bestStreak: 6,
+          roomsPlayed: 18,
+        ),
+        const LeaderboardEntry(
+          rank: 10,
+          playerId: 'ma',
+          displayName: 'Welat',
+          totalScore: 9300,
+          bestStreak: 5,
+          roomsPlayed: 16,
+        ),
       ],
     ];
     return all.take(limit).toList();
@@ -483,5 +696,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload) async {}
+  Future<void> sendRoomBroadcast(
+    String roomId,
+    Map<String, dynamic> payload,
+  ) async {}
 }

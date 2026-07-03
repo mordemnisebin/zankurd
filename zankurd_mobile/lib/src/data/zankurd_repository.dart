@@ -47,6 +47,7 @@ abstract class ZanKurdRepository {
     required GameRoom room,
     required QuizQuestion question,
     required String selectedOptionOptionKey,
+    required int responseMs,
   });
   Future<bool> toggleFavoriteQuestion(QuizQuestion question, bool favorite);
   Future<void> reportQuestion(QuizQuestion question, String reason);

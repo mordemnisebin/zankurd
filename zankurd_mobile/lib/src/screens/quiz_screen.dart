@@ -80,6 +80,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   BotRace? _botRace;
   bool _isKu = true;
   String _myName = '';
+  String? _myId;
 
   // Joker sistemi
   late List<QuizQuestion> _questions;
@@ -90,6 +91,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   // Timer ve animasyon durumları
   late final AnimationController _timerController;
+  final Stopwatch _questionStopwatch = Stopwatch();
   Timer? _explanationTimer;
   bool _showExplanation = false;
   bool _showConfetti = false;
@@ -143,48 +145,84 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         if (widget.room.id != null) {
           // Real online 1v1 match: subscribe to realtime channel updates
           livePlayers = List.of(widget.room.players);
-          _realtimeSub = widget.repository.subscribeRoomBroadcast(widget.room.id!).listen((payload) {
-            if (!mounted) return;
-            final senderName = payload['sender'] as String?;
-            if (senderName != null && senderName != name) {
-              setState(() {
-                final opponentIdx = livePlayers.indexWhere((p) => p.name == senderName);
-                final updatedOpponent = Player(
-                  name: senderName,
-                  score: (payload['score'] as num?)?.toInt() ?? 0,
-                  streak: (payload['streak'] as num?)?.toInt() ?? 0,
-                  state: payload['answered'] == true
-                      ? (_isKu ? 'Bersiv da' : 'Cevapladı')
-                      : (_isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor'),
-                );
-                if (opponentIdx != -1) {
-                  livePlayers[opponentIdx] = updatedOpponent;
-                } else {
-                  livePlayers.add(updatedOpponent);
+          _myId = livePlayers
+              .firstWhere(
+                (p) => p.name == name,
+                orElse: () => const Player(name: '', score: 0, state: ''),
+              )
+              .id;
+          _realtimeSub = widget.repository
+              .subscribeRoomBroadcast(widget.room.id!)
+              .listen((payload) {
+                if (!mounted) return;
+                final senderId = payload['sender_id'] as String?;
+                final senderName = payload['sender'] as String?;
+                // Kimlik varsa id ile eşleştir; aynı isimli oyuncularda skor
+                // karışmasını önler. Kimlik yoksa (eski payload) isme düş.
+                final isSelf = _myId != null && senderId != null
+                    ? senderId == _myId
+                    : senderName == name;
+                if (senderName != null && !isSelf) {
+                  setState(() {
+                    final opponentIdx = livePlayers.indexWhere(
+                      (p) => senderId != null
+                          ? p.id == senderId
+                          : p.name == senderName,
+                    );
+                    final updatedOpponent = Player(
+                      id:
+                          senderId ??
+                          (opponentIdx != -1
+                              ? livePlayers[opponentIdx].id
+                              : null),
+                      name: senderName,
+                      score: (payload['score'] as num?)?.toInt() ?? 0,
+                      streak: (payload['streak'] as num?)?.toInt() ?? 0,
+                      state: payload['answered'] == true
+                          ? (_isKu ? 'Bersiv da' : 'Cevapladı')
+                          : (_isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor'),
+                    );
+                    if (opponentIdx != -1) {
+                      livePlayers[opponentIdx] = updatedOpponent;
+                    } else {
+                      livePlayers.add(updatedOpponent);
+                    }
+                    livePlayers.sort((a, b) => b.score.compareTo(a.score));
+                  });
                 }
-                livePlayers.sort((a, b) => b.score.compareTo(a.score));
               });
-            }
-          });
         } else {
           // Bot fallback 1v1 match
           final rng = Random();
-          final botNames = const ['Rojda', 'Baran', 'Dilan', 'Hogir', 'Azad', 'Berfin', 'Narin', 'Sero', 'Çiçek', 'Welat'];
+          final botNames = const [
+            'Rojda',
+            'Baran',
+            'Dilan',
+            'Hogir',
+            'Azad',
+            'Berfin',
+            'Narin',
+            'Sero',
+            'Çiçek',
+            'Welat',
+          ];
           final botName = botNames[rng.nextInt(botNames.length)];
           final botSkill = 0.65 + rng.nextDouble() * 0.25;
-          _botRace = BotRace([BotOpponent(name: botName, skill: botSkill, random: rng)]);
+          _botRace = BotRace([
+            BotOpponent(name: botName, skill: botSkill, random: rng),
+          ]);
           livePlayers = _composeBotRacePlayers();
         }
       } else if (widget.botRace) {
         _botRace = BotRace.standard();
         livePlayers = _composeBotRacePlayers();
       } else {
-        _playersSub = widget.repository.subscribeRoomPlayers(widget.room).listen((
-          players,
-        ) {
-          if (!mounted) return;
-          setState(() => livePlayers = players);
-        });
+        _playersSub = widget.repository
+            .subscribeRoomPlayers(widget.room)
+            .listen((players) {
+              if (!mounted) return;
+              setState(() => livePlayers = players);
+            });
       }
     });
 
@@ -193,6 +231,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   void _startTimer() {
+    _questionStopwatch
+      ..reset()
+      ..start();
     if (widget.enableTimer) {
       _timerController.stop();
       _timerController.value = 1.0;
@@ -392,12 +433,19 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     if (widget.is1v1) {
       final myName = widget.room.id != null ? _myName : (_isKu ? 'Tu' : 'Sen');
       final player = livePlayers.firstWhere(
-        (p) => p.name == myName,
-        orElse: () => Player(name: myName, score: score, state: '', streak: streak),
+        (p) => _myId != null ? p.id == _myId : p.name == myName,
+        orElse: () => Player(
+          id: _myId,
+          name: myName,
+          score: score,
+          state: '',
+          streak: streak,
+        ),
       );
       final opponent = livePlayers.firstWhere(
-        (p) => p.name != myName,
-        orElse: () => Player(name: _isKu ? 'Hevrik' : 'Rakip', score: 0, state: ''),
+        (p) => _myId != null ? p.id != _myId : p.name != myName,
+        orElse: () =>
+            Player(name: _isKu ? 'Hevrik' : 'Rakip', score: 0, state: ''),
       );
       return _DuelScoreHeader(
         playerName: player.name,
@@ -879,12 +927,14 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     });
 
     final optionKey = question.optionKeyForAnswer(answer);
+    final responseMs = _questionStopwatch.elapsedMilliseconds;
 
     try {
       final result = await widget.repository.submitAnswer(
         room: widget.room,
         question: question,
         selectedOptionOptionKey: optionKey,
+        responseMs: responseMs,
       );
 
       if (!mounted) return;
@@ -921,22 +971,28 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         _advanceBots();
 
         if (widget.is1v1 && widget.room.id != null) {
-          final myIdx = livePlayers.indexWhere((p) => p.name == _myName);
+          final myIdx = livePlayers.indexWhere(
+            (p) => _myId != null ? p.id == _myId : p.name == _myName,
+          );
           if (myIdx != -1) {
             livePlayers[myIdx] = Player(
+              id: _myId,
               name: _myName,
               score: score,
               streak: streak,
               state: _isKu ? 'Bersiv da' : 'Cevapladı',
             );
           }
-          widget.repository.sendRoomBroadcast(widget.room.id!, {
-            'sender': _myName,
-            'score': score,
-            'streak': streak,
-            'question_index': index,
-            'answered': true,
-          }).catchError((_) {});
+          widget.repository
+              .sendRoomBroadcast(widget.room.id!, {
+                'sender': _myName,
+                'sender_id': _myId,
+                'score': score,
+                'streak': streak,
+                'question_index': index,
+                'answered': true,
+              })
+              .catchError((_) {});
         }
       });
     } catch (error, stack) {
@@ -969,22 +1025,28 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         _advanceBots();
 
         if (widget.is1v1 && widget.room.id != null) {
-          final myIdx = livePlayers.indexWhere((p) => p.name == _myName);
+          final myIdx = livePlayers.indexWhere(
+            (p) => _myId != null ? p.id == _myId : p.name == _myName,
+          );
           if (myIdx != -1) {
             livePlayers[myIdx] = Player(
+              id: _myId,
               name: _myName,
               score: score,
               streak: streak,
               state: _isKu ? 'Bersiv da' : 'Cevapladı',
             );
           }
-          widget.repository.sendRoomBroadcast(widget.room.id!, {
-            'sender': _myName,
-            'score': score,
-            'streak': streak,
-            'question_index': index,
-            'answered': true,
-          }).catchError((_) {});
+          widget.repository
+              .sendRoomBroadcast(widget.room.id!, {
+                'sender': _myName,
+                'sender_id': _myId,
+                'score': score,
+                'streak': streak,
+                'question_index': index,
+                'answered': true,
+              })
+              .catchError((_) {});
         }
       });
     }
@@ -996,14 +1058,17 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       setState(() => completing = true);
       widget.repository.finishGame(widget.room).catchError((_) {});
       if (widget.is1v1 && widget.room.id != null) {
-        widget.repository.sendRoomBroadcast(widget.room.id!, {
-          'sender': _myName,
-          'score': score,
-          'streak': streak,
-          'question_index': index,
-          'answered': true,
-          'finished': true,
-        }).catchError((_) {});
+        widget.repository
+            .sendRoomBroadcast(widget.room.id!, {
+              'sender': _myName,
+              'sender_id': _myId,
+              'score': score,
+              'streak': streak,
+              'question_index': index,
+              'answered': true,
+              'finished': true,
+            })
+            .catchError((_) {});
       }
       final coinsAwarded = widget.practice
           ? 0
@@ -1054,22 +1119,28 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _showExplanation = false;
 
       if (widget.is1v1 && widget.room.id != null) {
-        final myIdx = livePlayers.indexWhere((p) => p.name == _myName);
+        final myIdx = livePlayers.indexWhere(
+          (p) => _myId != null ? p.id == _myId : p.name == _myName,
+        );
         if (myIdx != -1) {
           livePlayers[myIdx] = Player(
+            id: _myId,
             name: _myName,
             score: score,
             streak: streak,
             state: _isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor',
           );
         }
-        widget.repository.sendRoomBroadcast(widget.room.id!, {
-          'sender': _myName,
-          'score': score,
-          'streak': streak,
-          'question_index': index,
-          'answered': false,
-        }).catchError((_) {});
+        widget.repository
+            .sendRoomBroadcast(widget.room.id!, {
+              'sender': _myName,
+              'sender_id': _myId,
+              'score': score,
+              'streak': streak,
+              'question_index': index,
+              'answered': false,
+            })
+            .catchError((_) {});
       }
     });
     _markQuestionSeen();

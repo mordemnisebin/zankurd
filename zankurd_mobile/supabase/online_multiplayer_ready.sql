@@ -196,6 +196,11 @@ begin
     raise exception 'Not authenticated';
   end if;
 
+  -- Client-reported response time is not trustworthy input; clamp it to a
+  -- sane range (0-120s) so a manipulated/garbage value can't corrupt
+  -- analytics or overflow downstream consumers.
+  p_response_ms := greatest(0, least(coalesce(p_response_ms, 2000), 120000));
+
   select correct_option into v_correct_option
   from public.questions
   where id = p_question_id;

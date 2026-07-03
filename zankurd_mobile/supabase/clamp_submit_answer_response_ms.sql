@@ -1,9 +1,24 @@
+-- Migration: clamp client-reported response_ms in submit_answer.
+--
+-- quiz_screen.dart now sends the real elapsed time instead of the old
+-- hardcoded 2000ms placeholder. Since it comes straight from the client,
+-- it must not be trusted as-is (a modified client could send a negative
+-- value or an absurdly large one). This re-creates submit_answer with the
+-- value clamped to 0-120000ms before it is stored or used.
+--
+-- Idempotent: safe to run multiple times against the live project via the
+-- Supabase SQL editor / management API.
+
 create or replace function public.submit_answer(
   p_room_id uuid,
   p_question_id uuid,
   p_selected_option text,
   p_response_ms integer default 2000
-) returns json language plpgsql security definer as $$
+) returns json
+language plpgsql
+security definer
+set search_path = public
+as $$
 declare
   v_player_id uuid;
   v_is_correct boolean;
@@ -13,7 +28,6 @@ declare
   v_current_score integer;
   v_existing_answer record;
 begin
-  -- Authenticate
   v_player_id := auth.uid();
   if v_player_id is null then
     raise exception 'Not authenticated';
@@ -24,7 +38,6 @@ begin
   -- analytics or overflow downstream consumers.
   p_response_ms := greatest(0, least(coalesce(p_response_ms, 2000), 120000));
 
-  -- Get correct option
   select correct_option into v_correct_option
   from public.questions
   where id = p_question_id;
@@ -33,13 +46,12 @@ begin
     raise exception 'Question not found';
   end if;
 
-  -- Check correctness
   v_is_correct := (p_selected_option = v_correct_option);
 
-  -- Get current player score/streak from room
   select score, streak into v_current_score, v_current_streak
   from public.room_players
-  where room_id = p_room_id and player_id = v_player_id;
+  where room_id = p_room_id
+    and player_id = v_player_id;
 
   if not found then
     raise exception 'Player is not in the room';
@@ -62,32 +74,40 @@ begin
     );
   end if;
 
-  -- Calculate points and streak
   if v_is_correct then
     v_current_streak := v_current_streak + 1;
-    -- Base 100 points + combo points (max 50 based on streak)
-    v_points := 100 + (case when v_current_streak * 10 > 50 then 50 else v_current_streak * 10 end);
+    v_points := 100 + least(v_current_streak * 10, 50);
     v_current_score := v_current_score + v_points;
   else
     v_current_streak := 0;
     v_points := 0;
   end if;
 
-  -- Insert answer record before score update, so duplicate submits cannot add points twice.
   insert into public.player_answers (
-    room_id, question_id, player_id, selected_option, is_correct, response_ms, points_awarded
+    room_id,
+    question_id,
+    player_id,
+    selected_option,
+    is_correct,
+    response_ms,
+    points_awarded
   ) values (
-    p_room_id, p_question_id, v_player_id, p_selected_option, v_is_correct, p_response_ms, v_points
+    p_room_id,
+    p_question_id,
+    v_player_id,
+    p_selected_option,
+    v_is_correct,
+    p_response_ms,
+    v_points
   );
 
-  -- Update player's score and streak in the room
   update public.room_players
   set
     score = v_current_score,
     streak = v_current_streak
-  where room_id = p_room_id and player_id = v_player_id;
+  where room_id = p_room_id
+    and player_id = v_player_id;
 
-  -- Return the result
   return json_build_object(
     'is_correct', v_is_correct,
     'points', v_points,
@@ -98,3 +118,5 @@ begin
   );
 end;
 $$;
+
+grant execute on function public.submit_answer(uuid, uuid, text, integer) to authenticated;

@@ -67,12 +67,33 @@ void main() {
     }
   });
 
-  test('MockZanKurdRepository implements subscribeRoomBroadcast and sendRoomBroadcast', () async {
-    final repository = SupabaseZanKurdRepository(
-      SupabaseClient('https://example.supabase.co', 'sb_publishable_test_key'),
-    );
+  test('submit answer forwards measured response time to the RPC', () {
+    final source = File(
+      'lib/src/data/supabase_zankurd_repository.dart',
+    ).readAsStringSync();
 
-    expect(() => repository.subscribeRoomBroadcast('room_123'), returnsNormally);
-    await expectLater(repository.sendRoomBroadcast('room_123', {'test': 'data'}), completes);
+    expect(source, contains("'p_response_ms': responseMs"));
+    expect(source, isNot(contains("'p_response_ms': 2000")));
   });
+
+  test(
+    'MockZanKurdRepository implements subscribeRoomBroadcast and sendRoomBroadcast',
+    () async {
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+        ),
+      );
+
+      expect(
+        () => repository.subscribeRoomBroadcast('room_123'),
+        returnsNormally,
+      );
+      await expectLater(
+        repository.sendRoomBroadcast('room_123', {'test': 'data'}),
+        completes,
+      );
+    },
+  );
 }

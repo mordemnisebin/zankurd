@@ -193,10 +193,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       }
 
       final store = await SeenQuestionStore.load();
-      final selected = store.preferUnseen(
-        parsedQuestions,
-        limit,
-      );
+      final selected = store.preferUnseen(parsedQuestions, limit);
       final questions = await _withRemoteVisualBlend(
         selected,
         categoryId: categoryId,
@@ -525,6 +522,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     required GameRoom room,
     required QuizQuestion question,
     required String selectedOptionOptionKey,
+    required int responseMs,
   }) async {
     final roomId = room.id;
     if (roomId == null) {
@@ -532,6 +530,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
         room: room,
         question: question,
         selectedOptionOptionKey: selectedOptionOptionKey,
+        responseMs: responseMs,
       );
     }
 
@@ -541,7 +540,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
         'p_room_id': roomId,
         'p_question_id': question.id,
         'p_selected_option': selectedOptionOptionKey,
-        'p_response_ms': 2000, // Hardcoded for now
+        'p_response_ms': responseMs,
       },
     );
 
@@ -744,7 +743,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   Future<bool> canSpinToday() async {
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
-      
+
       // 1. Check free spin today
       final rows = await client
           .from('coin_transactions')
@@ -753,12 +752,13 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
           .like('reason', 'daily_spin%')
           .order('created_at', ascending: false)
           .limit(1);
-      
+
       bool freeSpinAvailable = true;
       if (rows.isNotEmpty) {
         final last = DateTime.parse(rows.first['created_at'] as String).toUtc();
         final now = DateTime.now().toUtc();
-        freeSpinAvailable = last.year != now.year ||
+        freeSpinAvailable =
+            last.year != now.year ||
             last.month != now.month ||
             last.day != now.day;
       }
@@ -798,12 +798,13 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
           .like('reason', 'daily_spin%')
           .order('created_at', ascending: false)
           .limit(1);
-      
+
       bool freeSpinAvailable = true;
       if (rows.isNotEmpty) {
         final last = DateTime.parse(rows.first['created_at'] as String).toUtc();
         final now = DateTime.now().toUtc();
-        freeSpinAvailable = last.year != now.year ||
+        freeSpinAvailable =
+            last.year != now.year ||
             last.month != now.month ||
             last.day != now.day;
       }
@@ -829,7 +830,11 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
         return amount;
       }
     } catch (error, stack) {
-      _recordError(error, stack, reason: 'awardSpinCoins/claim_daily_spin failed');
+      _recordError(
+        error,
+        stack,
+        reason: 'awardSpinCoins/claim_daily_spin failed',
+      );
       return 0;
     }
   }
@@ -861,7 +866,9 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
       try {
         final rows = await client
             .from('leaderboard_entries')
-            .select('player_id, display_name, total_score, best_streak, rooms_played')
+            .select(
+              'player_id, display_name, total_score, best_streak, rooms_played',
+            )
             .order('total_score', ascending: false)
             .order('best_streak', ascending: false)
             .limit(limit);
@@ -1009,10 +1016,7 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   Future<void> cancelMatchmaking() async {
     final user = client.auth.currentUser;
     if (user == null) return;
-    await client
-        .from('matchmaking_queue')
-        .delete()
-        .eq('player_id', user.id);
+    await client.from('matchmaking_queue').delete().eq('player_id', user.id);
   }
 
   @override
@@ -1034,14 +1038,16 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
     final controller = StreamController<Map<String, dynamic>>();
     final channel = client.channel('room:$roomId');
 
-    channel.onBroadcast(
-      event: 'game_event',
-      callback: (payload) {
-        if (!controller.isClosed) {
-          controller.add(payload);
-        }
-      },
-    ).subscribe();
+    channel
+        .onBroadcast(
+          event: 'game_event',
+          callback: (payload) {
+            if (!controller.isClosed) {
+              controller.add(payload);
+            }
+          },
+        )
+        .subscribe();
 
     controller.onCancel = () async {
       await client.removeChannel(channel);
@@ -1052,11 +1058,11 @@ class SupabaseZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload) async {
+  Future<void> sendRoomBroadcast(
+    String roomId,
+    Map<String, dynamic> payload,
+  ) async {
     final channel = client.channel('room:$roomId');
-    await channel.sendBroadcastMessage(
-      event: 'game_event',
-      payload: payload,
-    );
+    await channel.sendBroadcastMessage(event: 'game_event', payload: payload);
   }
 }
