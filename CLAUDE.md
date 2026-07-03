@@ -250,7 +250,7 @@ Local data (streak, achievements, mastery, seen questions, missions, XP) is stor
 ## Release State & Important Notes
 
 **Current Version:** 1.5.0+6 (pubspec.yaml) — last tagged release v1.3.0-internal.1 (2026-06-12)
-- Bekleyen migration: `supabase/2026-07-03_reward_hardening.sql` canlıya uygulanınca `_questionColumns`'a `explanation_ku, explanation_tr` eklenecek (repository'deki TODO'ya ve `supabase_repository_test.dart`'taki ilgili teste bak)
+- `supabase/2026-07-03_reward_hardening.sql` canlıya uygulandı (2026-07-03): claim_* ödül RPC'leri, profiles.xp, questions.explanation_ku/tr, skor/XP guard trigger'ları canlıda aktif
 
 **Known Issues:**
 - Windows Profile-tab navigation can hang on some debug builds (pre-existing, not related to fonts or recent changes — don't investigate without explicit request)

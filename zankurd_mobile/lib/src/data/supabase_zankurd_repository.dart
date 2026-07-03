@@ -39,11 +39,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   GameRoom joinRoom(String code) => _offline.joinRoom(code);
 
-  // TODO(migration): 2026-07-03_reward_hardening.sql canliya uygulandiktan
-  // sonra listeye 'explanation_ku, explanation_tr' eklenecek — kolonlar su an
-  // canli DB'de yok, eklemek tum soru SELECT'lerini kirar.
   static const _questionColumns =
-      'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, question_type, image_url, difficulty';
+      'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, explanation_ku, explanation_tr, question_type, image_url, difficulty';
   static const _roomQuestionColumns =
       'question_index, questions($_questionColumns)';
 

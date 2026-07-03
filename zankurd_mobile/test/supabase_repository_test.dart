@@ -43,11 +43,11 @@ void main() {
     expect(sql, contains('grant execute on function public.join_room_by_code'));
   });
 
-  test('question queries avoid optional localized explanation columns', () {
-    // Soru kolon listeleri artık tek sabitte (_questionColumns) toplandığı
-    // için select literal'leri yerine dosyadaki tüm kolon-listesi
-    // string'leri taranır. explanation_ku/tr kolonları canlı DB'ye
-    // eklenene kadar SELECT'e girmemeli (migration TODO'suna bak).
+  test('question queries include localized explanation columns', () {
+    // explanation_ku/tr kolonları 2026-07-03_reward_hardening.sql ile
+    // canlı DB'ye eklendi; soru kolon listeleri (tek sabit:
+    // _questionColumns) artık ikisini de SEÇMELİ ki DB'ye girilen
+    // dile özel açıklamalar kullanıcıya ulaşsın.
     final source = File(
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
@@ -59,8 +59,8 @@ void main() {
 
     expect(columnLists, isNotEmpty);
     for (final columns in columnLists) {
-      expect(columns, isNot(contains('explanation_ku')));
-      expect(columns, isNot(contains('explanation_tr')));
+      expect(columns, contains('explanation_ku'));
+      expect(columns, contains('explanation_tr'));
       expect(columns, contains('question_type'));
       expect(columns, contains('image_url'));
     }
