@@ -1,6 +1,6 @@
 # ZanKurd Release Readiness
 
-Last updated: 2026-06-21
+Last updated: 2026-07-03
 
 ## Current Release Target
 
@@ -9,10 +9,18 @@ Last updated: 2026-06-21
 - Flutter version: `3.44.1`
 - Dart version: `3.12.1`
 - App version: `1.5.0+6`
-- Play artifact: final AAB not regenerated after the latest online-room,
-  real-image, coin-joker, and mastery changes.
-- Upload copy: `release_packages/zankurd-playstore-release.aab` is a previous
-  build and must not be treated as the final Play upload.
+- Play artifact: final AAB regenerated from the ASCII build path after the
+  latest onboarding, auth, response-time, and Play-policy readiness fixes.
+- Upload copy: `release_packages/zankurd-playstore-release.aab` matches the
+  build described below, **but not** the source as of this commit — see
+  "Pending before next AAB" below.
+- Pending before next AAB: source has moved since the AAB was built
+  (real player_id opponent matching in 1v1 duels, `submit_answer`
+  response_ms server-side clamp, expanded question explanations). The
+  `clamp_submit_answer_response_ms.sql` migration also still needs to be
+  applied to the live Supabase project — it has not been run against
+  production from this session. Regenerate and re-verify the AAB before
+  the next Play upload.
 
 Google Play currently requires new Android apps and updates to target Android 15 / API level 35 or higher. The 2026-06-15 release build targets API level 36.
 
@@ -53,7 +61,7 @@ only after the current source verification passes.
 
 `jarsigner` reports that the upload certificate is self-signed and has no timestamp. This is normal for Android upload keys; Play App Signing validates the uploaded AAB and manages distribution signing.
 
-## Current Source Verification: 2026-06-21
+## Current Source Verification: 2026-07-03
 
 After the coin-joker system (`spend_coins` RPC), category-mastery system
 (`MasteryStore`), the profile tab-refresh fix (`refreshSignal`), real-image
@@ -61,7 +69,7 @@ import, release UI polish, web runtime fixes, mobile OAuth redirect fix, and
 tablet release-device audit:
 
 - `dart analyze`: passed, no issues found
-- `flutter test`: passed, 225/225 tests
+- `flutter test`: passed, 240/240 tests from `C:\src\zankurd_mobile`
 - `flutter build web --release`: passed
 - `flutter build apk --release`: passed; test APK path
   `C:\src\zankurd_mobile\build\app\outputs\flutter-apk\app-release.apk`
@@ -69,8 +77,16 @@ tablet release-device audit:
 - Local Playwright web audit: passed end-to-end — onboarding, guest auth,
   profile-name gate, home, categories, leaderboard, and profile all verified
   with no runtime console errors
-- Pending before final AAB: bump applied to `1.5.0+6`; regenerate signed
-  appbundle from the ASCII build path and re-run `jarsigner -verify`
+- Final AAB: regenerated from `C:\src\zankurd_mobile`
+- AAB path: `C:\src\zankurd_mobile\build\app\outputs\bundle\release\app-release.aab`
+- Workspace upload copy: `release_packages/zankurd-playstore-release.aab`
+- AAB size: 111,467,387 bytes / 106.3 MB
+- AAB SHA256: `0FD6D81F6B1CD578F5B051EEDFB984386AC811B6A5D8355E14BB9D3B6D9F7681`
+- `jarsigner -verify`: `jar verified`
+- Merged release manifest: package `com.zankurd.app`, versionCode `6`,
+  versionName `1.5.0`, targetSdkVersion `36`
+- Daily reminders now use inexact scheduling; `SCHEDULE_EXACT_ALARM` is not
+  present in the merged release manifest.
 - Latest polish audit covered local room-code validation, leaderboard podium,
   landscape quiz layout, centered high-quality onboarding logo rendering,
   web-safe home header runtime, web-safe sync connectivity handling, and
