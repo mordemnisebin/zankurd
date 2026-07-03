@@ -228,22 +228,34 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     await Future.delayed(const Duration(milliseconds: 1500));
     if (_isCancelled || !mounted) return;
 
-    final room = widget.repository.createRoom(category: category).copyWith(
+    var room = widget.repository.createRoom(category: category).copyWith(
           id: roomId,
           name: ku ? 'Şerê 1v1' : '1v1 Savaş',
-          questionCount: questions.length,
           players: [
             Player(name: _myName, score: 0, state: 'Hazır', streak: 0),
             Player(name: matchedName, score: 0, state: 'Hazır', streak: 0),
           ],
         );
 
+    // Gerçek online eşleşmede iki oyuncu da AYNI soruları görmeli:
+    // start_room_game odaya soru seti yazar, buradan okunur. Yerelde
+    // yüklenen sorular yalnızca bot maçında / oda seti yoksa kullanılır.
+    var matchQuestions = questions;
+    if (roomId != null) {
+      try {
+        final roomQuestions = await widget.repository.loadRoomQuestions(room);
+        if (roomQuestions.isNotEmpty) matchQuestions = roomQuestions;
+      } catch (_) {}
+      if (_isCancelled || !mounted) return;
+    }
+    room = room.copyWith(questionCount: matchQuestions.length);
+
     Navigator.of(context).pushReplacement(
       AppRoute.to(
         QuizScreen(
           repository: widget.repository,
           room: room,
-          questions: questions,
+          questions: matchQuestions,
           is1v1: true,
         ),
       ),
