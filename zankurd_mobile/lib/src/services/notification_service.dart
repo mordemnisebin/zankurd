@@ -90,10 +90,11 @@ class NotificationService {
 
       const AndroidInitializationSettings initializationSettingsAndroid =
           AndroidInitializationSettings('@mipmap/ic_launcher');
-      const InitializationSettings initializationSettings = InitializationSettings(
-        android: initializationSettingsAndroid,
-        iOS: DarwinInitializationSettings(),
-      );
+      const InitializationSettings initializationSettings =
+          InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: DarwinInitializationSettings(),
+          );
 
       await _localNotificationsPlugin.initialize(initializationSettings);
     } catch (e) {
@@ -106,17 +107,15 @@ class NotificationService {
     try {
       await _localNotificationsPlugin
           .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin
+          >()
           ?.requestNotificationsPermission();
-      
+
       await _localNotificationsPlugin
           .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(
-            alert: true,
-            badge: true,
-            sound: true,
-          );
+            IOSFlutterLocalNotificationsPlugin
+          >()
+          ?.requestPermissions(alert: true, badge: true, sound: true);
     } catch (e) {
       debugPrint('Failed to request notifications permission: $e');
     }
@@ -150,15 +149,18 @@ class NotificationService {
 
     if (kIsWeb) return;
     try {
-      await _localNotificationsPlugin.cancel(0); // Cancel previous daily notification
-      
-      const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-        'zankurd_daily_reminder',
-        'ZanKurd Bîranîna Rojane',
-        channelDescription: 'Bîranîna pêşbirka rojane ya ZanKurd',
-        importance: Importance.max,
-        priority: Priority.high,
-      );
+      await _localNotificationsPlugin.cancel(
+        0,
+      ); // Cancel previous daily notification
+
+      const AndroidNotificationDetails androidDetails =
+          AndroidNotificationDetails(
+            'zankurd_daily_reminder',
+            'ZanKurd Bîranîna Rojane',
+            channelDescription: 'Bîranîna pêşbirka rojane ya ZanKurd',
+            importance: Importance.max,
+            priority: Priority.high,
+          );
       const DarwinNotificationDetails iosDetails = DarwinNotificationDetails();
       const NotificationDetails details = NotificationDetails(
         android: androidDetails,
@@ -172,7 +174,7 @@ class NotificationService {
         'Pêşbirka rojê li benda te ye! Hêza hişê xwe biceribîne! / Günün yarışması seni bekliyor! Zihnini test et!',
         scheduledTime,
         details,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,

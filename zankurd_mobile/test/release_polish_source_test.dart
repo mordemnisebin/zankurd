@@ -18,6 +18,25 @@ void main() {
     expect(source, contains('android:host="login-callback"'));
   });
 
+  test('daily reminders avoid exact alarm Play policy risk', () {
+    final manifest = File(
+      'android/app/src/main/AndroidManifest.xml',
+    ).readAsStringSync();
+    final notificationService = File(
+      'lib/src/services/notification_service.dart',
+    ).readAsStringSync();
+
+    expect(manifest, isNot(contains('SCHEDULE_EXACT_ALARM')));
+    expect(
+      notificationService,
+      contains('AndroidScheduleMode.inexactAllowWhileIdle'),
+    );
+    expect(
+      notificationService,
+      isNot(contains('AndroidScheduleMode.exactAllowWhileIdle')),
+    );
+  });
+
   test('leaderboard podium does not render a large empty pedestal block', () {
     final source = File(
       'lib/src/screens/leaderboard_screen.dart',
