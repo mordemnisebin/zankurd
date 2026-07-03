@@ -56,83 +56,119 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           gradient: AppTheme.backgroundGradient(context),
         ),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 14, 20, 20),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 220,
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 28),
-                          child: _AnimatedBrandLockup(
-                            scale: _brandScale,
-                            opacity: _brandOpacity,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final compact = constraints.maxHeight < 560;
+              final wide = constraints.maxWidth >= 720;
+              final wideCompact = compact && wide;
+              final horizontalPadding = wide ? 32.0 : 20.0;
+              final verticalPadding = compact ? 10.0 : 14.0;
+              final headerHeight = compact
+                  ? 130.0
+                  : (constraints.maxHeight < 720 ? 150.0 : 220.0);
+              final buttonMaxWidth = wide ? 520.0 : double.infinity;
+
+              return Padding(
+                padding: EdgeInsets.fromLTRB(
+                  horizontalPadding,
+                  verticalPadding,
+                  horizontalPadding,
+                  compact ? 12 : 20,
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: headerHeight,
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: wideCompact
+                                ? Alignment.centerLeft
+                                : Alignment.topCenter,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                top: compact ? 0 : 28,
+                                left: wideCompact ? 4 : 0,
+                              ),
+                              child: _AnimatedBrandLockup(
+                                scale: _brandScale,
+                                opacity: _brandOpacity,
+                                logoWidth: compact ? 60 : 132,
+                                showTagline: !wideCompact,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: TextButton(
+                              onPressed: widget.onComplete,
+                              child: Text(context.s('Derbas bike', 'Atla')),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: PageView.builder(
+                        controller: _controller,
+                        itemCount: pages.length,
+                        onPageChanged: (value) => setState(() => _page = value),
+                        itemBuilder: (context, index) => _OnboardingPage(
+                          data: pages[index],
+                          compact: compact,
+                          wideCompact: wideCompact,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (var i = 0; i < pages.length; i++)
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 180),
+                            width: i == _page ? 28 : 8,
+                            height: 8,
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            decoration: BoxDecoration(
+                              color: i == _page
+                                  ? AppTheme.accent
+                                  : AppTheme.borderColor(context),
+                              borderRadius: BorderRadius.circular(99),
+                            ),
+                          ),
+                      ],
+                    ),
+                    SizedBox(height: compact ? 10 : 16),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: buttonMaxWidth),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: FilledButton.icon(
+                          onPressed: last
+                              ? widget.onComplete
+                              : () {
+                                  _controller.nextPage(
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeOutCubic,
+                                  );
+                                },
+                          icon: Icon(
+                            last
+                                ? Icons.check_rounded
+                                : Icons.arrow_forward_rounded,
+                          ),
+                          label: Text(
+                            last
+                                ? context.s('Dest pê bike', 'Başla')
+                                : context.s('Piştî vê', 'Sonraki'),
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: TextButton(
-                          onPressed: widget.onComplete,
-                          child: Text(context.s('Derbas bike', 'Atla')),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: PageView.builder(
-                    controller: _controller,
-                    itemCount: pages.length,
-                    onPageChanged: (value) => setState(() => _page = value),
-                    itemBuilder: (context, index) =>
-                        _OnboardingPage(data: pages[index]),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (var i = 0; i < pages.length; i++)
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 180),
-                        width: i == _page ? 28 : 8,
-                        height: 8,
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        decoration: BoxDecoration(
-                          color: i == _page ? AppTheme.accent : AppTheme.borderColor(context),
-                          borderRadius: BorderRadius.circular(99),
-                        ),
-                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                    onPressed: last
-                        ? widget.onComplete
-                        : () {
-                            _controller.nextPage(
-                              duration: const Duration(milliseconds: 250),
-                              curve: Curves.easeOutCubic,
-                            );
-                          },
-                    icon: Icon(
-                      last ? Icons.check_rounded : Icons.arrow_forward_rounded,
-                    ),
-                    label: Text(
-                      last
-                          ? context.s('Dest pê bike', 'Başla')
-                          : context.s('Piştî vê', 'Sonraki'),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),
@@ -173,10 +209,17 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 }
 
 class _AnimatedBrandLockup extends StatelessWidget {
-  const _AnimatedBrandLockup({required this.scale, required this.opacity});
+  const _AnimatedBrandLockup({
+    required this.scale,
+    required this.opacity,
+    this.logoWidth = 132,
+    this.showTagline = true,
+  });
 
   final Animation<double> scale;
   final Animation<double> opacity;
+  final double logoWidth;
+  final bool showTagline;
 
   @override
   Widget build(BuildContext context) {
@@ -188,19 +231,21 @@ class _AnimatedBrandLockup extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const AppLogo(width: 132, onCard: true),
-            const SizedBox(height: 10),
-            Text(
-              context.s('Hîn bibe, pêş bike', 'Öğren, yarış, ilerle'),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppTheme.textMutedColor(context),
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
+            AppLogo(width: logoWidth, onCard: true),
+            if (showTagline) ...[
+              const SizedBox(height: 10),
+              Text(
+                context.s('Hîn bibe, pêş bike', 'Öğren, yarış, ilerle'),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppTheme.textMutedColor(context),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
+            ],
           ],
         ),
       ),
@@ -223,51 +268,95 @@ class _OnboardingData {
 }
 
 class _OnboardingPage extends StatelessWidget {
-  const _OnboardingPage({required this.data});
+  const _OnboardingPage({
+    required this.data,
+    required this.compact,
+    required this.wideCompact,
+  });
 
   final _OnboardingData data;
+  final bool compact;
+  final bool wideCompact;
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 440),
+    final iconSize = compact ? 84.0 : 118.0;
+    final iconGlyphSize = compact ? 36.0 : 48.0;
+    final titleSize = compact ? 24.0 : 30.0;
+    final bodySize = compact ? 14.0 : 16.0;
+    final content = [
+      _OnboardingIcon(data: data, size: iconSize, iconSize: iconGlyphSize),
+      SizedBox(height: compact ? 16 : 28, width: wideCompact ? 24 : 0),
+      Flexible(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: wideCompact
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.center,
           children: [
-            Container(
-              width: 118,
-              height: 118,
-              decoration: BoxDecoration(
-                color: data.color.withValues(alpha: 0.16),
-                shape: BoxShape.circle,
-                border: Border.all(color: data.color.withValues(alpha: 0.35)),
-              ),
-              child: Icon(data.icon, color: data.color, size: 48),
-            ),
-            const SizedBox(height: 28),
             Text(
               data.title,
-              textAlign: TextAlign.center,
+              textAlign: wideCompact ? TextAlign.start : TextAlign.center,
               style: TextStyle(
                 color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w800,
-                fontSize: 30,
+                fontSize: titleSize,
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: compact ? 8 : 12),
             Text(
               data.body,
-              textAlign: TextAlign.center,
+              textAlign: wideCompact ? TextAlign.start : TextAlign.center,
               style: TextStyle(
                 color: AppTheme.textSubColor(context),
-                fontSize: 16,
+                fontSize: bodySize,
                 height: 1.35,
               ),
             ),
           ],
         ),
       ),
+    ];
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: wideCompact ? 720 : 440),
+        child: wideCompact
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: content,
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: content,
+              ),
+      ),
+    );
+  }
+}
+
+class _OnboardingIcon extends StatelessWidget {
+  const _OnboardingIcon({
+    required this.data,
+    required this.size,
+    required this.iconSize,
+  });
+
+  final _OnboardingData data;
+  final double size;
+  final double iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: data.color.withValues(alpha: 0.16),
+        shape: BoxShape.circle,
+        border: Border.all(color: data.color.withValues(alpha: 0.35)),
+      ),
+      child: Icon(data.icon, color: data.color, size: iconSize),
     );
   }
 }
