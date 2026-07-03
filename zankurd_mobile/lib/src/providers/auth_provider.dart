@@ -75,7 +75,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return false;
     } catch (e) {
-      _errorMessage = 'Beklenmeyen bir hata oluştu.';
+      _errorMessage = _translateUnexpectedError(e);
       _isLoading = false;
       notifyListeners();
       return false;
@@ -168,8 +168,23 @@ class AuthProvider extends ChangeNotifier {
   @visibleForTesting
   String debugTranslateAuthError(AuthException e) => _translateError(e);
 
+  @visibleForTesting
+  String debugTranslateUnexpectedAuthError(Object error) =>
+      _translateUnexpectedError(error);
+
+  String _translateUnexpectedError(Object error) {
+    final message = error.toString().toLowerCase();
+    if (_isNetworkErrorMessage(message)) {
+      return 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.';
+    }
+    return 'Beklenmeyen bir hata oluştu.';
+  }
+
   String _translateError(AuthException e) {
     final message = e.message.toLowerCase();
+    if (_isNetworkErrorMessage(message)) {
+      return 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.';
+    }
     if (message.contains('unsupported provider') ||
         message.contains('provider is not enabled')) {
       return 'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.';
@@ -203,5 +218,16 @@ class AuthProvider extends ChangeNotifier {
       return 'Misafir girişi şu anda kapalı.';
     }
     return 'Bir hata oluştu. Lütfen tekrar deneyin.';
+  }
+
+  bool _isNetworkErrorMessage(String message) {
+    return message.contains('failed host lookup') ||
+        message.contains('name_not_resolved') ||
+        message.contains('err_name_not_resolved') ||
+        message.contains('failed to fetch') ||
+        message.contains('network') ||
+        message.contains('socket') ||
+        message.contains('clientexception') ||
+        message.contains('xmlhttprequest');
   }
 }
