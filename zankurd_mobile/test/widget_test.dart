@@ -20,6 +20,7 @@ import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
+import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
@@ -373,13 +374,73 @@ void main() {
     final logoCenter = tester.getCenter(find.byType(AppLogo));
     expect(logoCenter.dx, closeTo(195, 4));
     expect(find.text('Atla'), findsOneWidget);
+    expect(tester.takeException(), isNull);
 
     await tester.tap(find.text('Atla'));
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
+    expect(tester.takeException(), isNull);
     final preferences = await SharedPreferences.getInstance();
     expect(preferences.getBool('zankurd.onboarding.seen'), isTrue);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+  });
+
+  testWidgets('onboarding fits a landscape phone viewport', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    tester.takeException();
+
+    await tester.pumpWidget(
+      _testShell(child: OnboardingScreen(onComplete: () {})),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Sonraki'), findsOneWidget);
+    expect(
+      tester.getBottomRight(find.text('Sonraki')).dy,
+      lessThanOrEqualTo(390),
+    );
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('onboarding fits a portrait phone viewport', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    tester.takeException();
+
+    await tester.pumpWidget(
+      _testShell(child: OnboardingScreen(onComplete: () {})),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Sonraki'), findsOneWidget);
+    expect(
+      tester.getBottomRight(find.text('Sonraki')).dy,
+      lessThanOrEqualTo(844),
+    );
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('onboarding fits a tablet and web viewport', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(1200, 800));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    tester.takeException();
+
+    await tester.pumpWidget(
+      _testShell(child: OnboardingScreen(onComplete: () {})),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(AppLogo), findsOneWidget);
+    expect(find.text('Sonraki'), findsOneWidget);
+    expect(
+      tester.getBottomRight(find.text('Sonraki')).dy,
+      lessThanOrEqualTo(800),
+    );
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('app logo uses high quality image filtering', (tester) async {
@@ -547,6 +608,71 @@ void main() {
       message,
       'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.',
     );
+  });
+
+  test('network auth error points to connection or DNS', () {
+    final provider = AuthProvider.test();
+
+    final message = provider.debugTranslateUnexpectedAuthError(
+      Exception('ClientException: Failed host lookup'),
+    );
+
+    expect(message, 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.');
+  });
+
+  test('network auth exception points to connection or DNS', () {
+    final provider = AuthProvider.test();
+
+    final message = provider.debugTranslateAuthError(
+      const AuthException('net::ERR_NAME_NOT_RESOLVED'),
+    );
+
+    expect(message, 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.');
+  });
+
+  testWidgets('landscape auth actions can be scrolled into view', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: const SignInScreen(),
+        authProvider: _GateAuthProvider(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final guestButton = find.text('Misafir olarak devam et');
+    expect(guestButton, findsOneWidget);
+
+    await tester.drag(
+      find.byType(SingleChildScrollView),
+      const Offset(0, -260),
+    );
+    await tester.pumpAndSettle();
+
+    expect(tester.getBottomRight(guestButton).dy, lessThan(390));
+  });
+
+  testWidgets('landscape auth keeps guest action in the first viewport', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: const SignInScreen(),
+        authProvider: _GateAuthProvider(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final guestButton = find.text('Misafir olarak devam et');
+    expect(guestButton, findsOneWidget);
+    expect(tester.getBottomRight(guestButton).dy, lessThan(390));
   });
 
   testWidgets('language toggle works on the auth screen', (tester) async {
