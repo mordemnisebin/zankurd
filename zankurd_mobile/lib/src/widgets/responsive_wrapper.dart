@@ -42,7 +42,7 @@ class ResponsiveWrapper extends StatelessWidget {
                       child: Opacity(
                         opacity: isDark ? 0.05 : 0.08,
                         child: Image.asset(
-                          'assets/zankurd.png',
+                          'assets/zankurd.webp',
                           width: 400,
                           height: 400,
                           errorBuilder: (context, error, stackTrace) => const Icon(

@@ -51,7 +51,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "av" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/av.png',
+    imageUrl: 'asset://assets/question_images/av.webp',
   ),
   QuizQuestion(
     id: 'offline_0006',
@@ -103,7 +103,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "roj" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/roj.png',
+    imageUrl: 'asset://assets/question_images/roj.webp',
   ),
   QuizQuestion(
     id: 'offline_0011',
@@ -155,7 +155,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "mal" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mal.png',
+    imageUrl: 'asset://assets/question_images/mal.webp',
   ),
   QuizQuestion(
     id: 'offline_0016',
@@ -208,7 +208,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "pirtûk" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/pirtuk.png',
+    imageUrl: 'asset://assets/question_images/pirtuk.webp',
   ),
   QuizQuestion(
     id: 'offline_0021',
@@ -261,7 +261,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "zanîn" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/zanin.png',
+    imageUrl: 'asset://assets/question_images/zanin.webp',
   ),
   QuizQuestion(
     id: 'offline_0026',
@@ -314,7 +314,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "hatin" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/hatin.png',
+    imageUrl: 'asset://assets/question_images/hatin.webp',
   ),
   QuizQuestion(
     id: 'offline_0031',
@@ -366,7 +366,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "çiya" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ciya.png',
+    imageUrl: 'asset://assets/question_images/ciya.webp',
   ),
   QuizQuestion(
     id: 'offline_0036',
@@ -418,7 +418,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "dil" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dil.png',
+    imageUrl: 'asset://assets/question_images/dil.webp',
   ),
   QuizQuestion(
     id: 'offline_0041',
@@ -471,7 +471,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "heval" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/heval.png',
+    imageUrl: 'asset://assets/question_images/heval.webp',
   ),
   QuizQuestion(
     id: 'offline_0046',
@@ -523,7 +523,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "bajar" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bajar.png',
+    imageUrl: 'asset://assets/question_images/bajar.webp',
   ),
   QuizQuestion(
     id: 'offline_0051',
@@ -575,7 +575,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "nan" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nan.png',
+    imageUrl: 'asset://assets/question_images/nan.webp',
   ),
   QuizQuestion(
     id: 'offline_0056',
@@ -627,7 +627,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "rê" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/re.png',
+    imageUrl: 'asset://assets/question_images/re.webp',
   ),
   QuizQuestion(
     id: 'offline_0061',
@@ -680,7 +680,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "spas" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/spas.png',
+    imageUrl: 'asset://assets/question_images/spas.webp',
   ),
   QuizQuestion(
     id: 'offline_0066',
@@ -733,7 +733,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "xweş" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/xwes.png',
+    imageUrl: 'asset://assets/question_images/xwes.webp',
   ),
   QuizQuestion(
     id: 'offline_0071',
@@ -785,7 +785,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "sar" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sar.png',
+    imageUrl: 'asset://assets/question_images/sar.webp',
   ),
   QuizQuestion(
     id: 'offline_0076',
@@ -837,7 +837,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "biçûk" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bicuk.png',
+    imageUrl: 'asset://assets/question_images/bicuk.webp',
   ),
   QuizQuestion(
     id: 'offline_0081',
@@ -889,7 +889,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "kevin" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kevin.png',
+    imageUrl: 'asset://assets/question_images/kevin.webp',
   ),
   QuizQuestion(
     id: 'offline_0086',
@@ -941,7 +941,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "îro" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/iro.png',
+    imageUrl: 'asset://assets/question_images/iro.webp',
   ),
   QuizQuestion(
     id: 'offline_0091',
@@ -993,7 +993,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "duh" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/duh.png',
+    imageUrl: 'asset://assets/question_images/duh.webp',
   ),
   QuizQuestion(
     id: 'offline_0096',
@@ -1045,7 +1045,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "nav" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nav.png',
+    imageUrl: 'asset://assets/question_images/nav.webp',
   ),
   QuizQuestion(
     id: 'offline_0101',
@@ -1098,7 +1098,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "zarok" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/zarok.png',
+    imageUrl: 'asset://assets/question_images/zarok.webp',
   ),
   QuizQuestion(
     id: 'offline_0106',
@@ -1151,7 +1151,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "xwendekar" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/xwendekar.png',
+    imageUrl: 'asset://assets/question_images/xwendekar.webp',
   ),
   QuizQuestion(
     id: 'offline_0111',
@@ -1203,7 +1203,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "rast" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/rast.png',
+    imageUrl: 'asset://assets/question_images/rast.webp',
   ),
   QuizQuestion(
     id: 'offline_0116',
@@ -1255,7 +1255,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "pir" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/pir.png',
+    imageUrl: 'asset://assets/question_images/pir.webp',
   ),
   QuizQuestion(
     id: 'offline_0121',
@@ -1308,7 +1308,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "destpêk" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/destpek.png',
+    imageUrl: 'asset://assets/question_images/destpek.webp',
   ),
   QuizQuestion(
     id: 'offline_0126',
@@ -1360,7 +1360,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "av" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/av.png',
+    imageUrl: 'asset://assets/question_images/av.webp',
   ),
   QuizQuestion(
     id: 'offline_0131',
@@ -1413,7 +1413,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "roj" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/roj.png',
+    imageUrl: 'asset://assets/question_images/roj.webp',
   ),
   QuizQuestion(
     id: 'offline_0136',
@@ -1465,7 +1465,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "mal" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mal.png',
+    imageUrl: 'asset://assets/question_images/mal.webp',
   ),
   QuizQuestion(
     id: 'offline_0141',
@@ -1518,7 +1518,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "pirtûk" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/pirtuk.png',
+    imageUrl: 'asset://assets/question_images/pirtuk.webp',
   ),
   QuizQuestion(
     id: 'offline_0146',
@@ -1571,7 +1571,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "zanîn" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/zanin.png',
+    imageUrl: 'asset://assets/question_images/zanin.webp',
   ),
   QuizQuestion(
     id: 'offline_0151',
@@ -1624,7 +1624,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "hatin" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/hatin.png',
+    imageUrl: 'asset://assets/question_images/hatin.webp',
   ),
   QuizQuestion(
     id: 'offline_0156',
@@ -1676,7 +1676,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "çiya" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ciya.png',
+    imageUrl: 'asset://assets/question_images/ciya.webp',
   ),
   QuizQuestion(
     id: 'offline_0161',
@@ -1728,7 +1728,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "dil" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dil.png',
+    imageUrl: 'asset://assets/question_images/dil.webp',
   ),
   QuizQuestion(
     id: 'offline_0166',
@@ -1781,7 +1781,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "heval" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/heval.png',
+    imageUrl: 'asset://assets/question_images/heval.webp',
   ),
   QuizQuestion(
     id: 'offline_0171',
@@ -1833,7 +1833,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "bajar" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bajar.png',
+    imageUrl: 'asset://assets/question_images/bajar.webp',
   ),
   QuizQuestion(
     id: 'offline_0176',
@@ -1885,7 +1885,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "nan" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nan.png',
+    imageUrl: 'asset://assets/question_images/nan.webp',
   ),
   QuizQuestion(
     id: 'offline_0181',
@@ -1937,7 +1937,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "rê" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/re.png',
+    imageUrl: 'asset://assets/question_images/re.webp',
   ),
   QuizQuestion(
     id: 'offline_0186',
@@ -1990,7 +1990,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "spas" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/spas.png',
+    imageUrl: 'asset://assets/question_images/spas.webp',
   ),
   QuizQuestion(
     id: 'offline_0191',
@@ -2044,7 +2044,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "xweş" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/xwes.png',
+    imageUrl: 'asset://assets/question_images/xwes.webp',
   ),
   QuizQuestion(
     id: 'offline_0196',
@@ -2096,7 +2096,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "sar" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sar.png',
+    imageUrl: 'asset://assets/question_images/sar.webp',
   ),
   QuizQuestion(
     id: 'offline_0201',
@@ -2148,7 +2148,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "biçûk" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bicuk.png',
+    imageUrl: 'asset://assets/question_images/bicuk.webp',
   ),
   QuizQuestion(
     id: 'offline_0206',
@@ -2200,7 +2200,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "kevin" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kevin.png',
+    imageUrl: 'asset://assets/question_images/kevin.webp',
   ),
   QuizQuestion(
     id: 'offline_0211',
@@ -2252,7 +2252,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "îro" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/iro.png',
+    imageUrl: 'asset://assets/question_images/iro.webp',
   ),
   QuizQuestion(
     id: 'offline_0216',
@@ -2304,7 +2304,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "duh" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/duh.png',
+    imageUrl: 'asset://assets/question_images/duh.webp',
   ),
   QuizQuestion(
     id: 'offline_0221',
@@ -2356,7 +2356,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "nav" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nav.png',
+    imageUrl: 'asset://assets/question_images/nav.webp',
   ),
   QuizQuestion(
     id: 'offline_0226',
@@ -2409,7 +2409,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "zarok" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/zarok.png',
+    imageUrl: 'asset://assets/question_images/zarok.webp',
   ),
   QuizQuestion(
     id: 'offline_0231',
@@ -2462,7 +2462,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "xwendekar" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/xwendekar.png',
+    imageUrl: 'asset://assets/question_images/xwendekar.webp',
   ),
   QuizQuestion(
     id: 'offline_0236',
@@ -2514,7 +2514,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "rast" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/rast.png',
+    imageUrl: 'asset://assets/question_images/rast.webp',
   ),
   QuizQuestion(
     id: 'offline_0241',
@@ -2566,7 +2566,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "pir" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/pir.png',
+    imageUrl: 'asset://assets/question_images/pir.webp',
   ),
   QuizQuestion(
     id: 'offline_0246',
@@ -2620,7 +2620,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "destpêk" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/destpek.png',
+    imageUrl: 'asset://assets/question_images/destpek.webp',
   ),
   QuizQuestion(
     id: 'offline_0251',
@@ -2672,7 +2672,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "av" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/av.png',
+    imageUrl: 'asset://assets/question_images/av.webp',
   ),
   QuizQuestion(
     id: 'offline_0256',
@@ -2724,7 +2724,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "roj" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/roj.png',
+    imageUrl: 'asset://assets/question_images/roj.webp',
   ),
   QuizQuestion(
     id: 'offline_0261',
@@ -2776,7 +2776,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "mal" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mal.png',
+    imageUrl: 'asset://assets/question_images/mal.webp',
   ),
   QuizQuestion(
     id: 'offline_0266',
@@ -2829,7 +2829,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "pirtûk" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/pirtuk.png',
+    imageUrl: 'asset://assets/question_images/pirtuk.webp',
   ),
   QuizQuestion(
     id: 'offline_0271',
@@ -2882,7 +2882,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "zanîn" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/zanin.png',
+    imageUrl: 'asset://assets/question_images/zanin.webp',
   ),
   QuizQuestion(
     id: 'offline_0276',
@@ -2935,7 +2935,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "hatin" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/hatin.png',
+    imageUrl: 'asset://assets/question_images/hatin.webp',
   ),
   QuizQuestion(
     id: 'offline_0281',
@@ -2987,7 +2987,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "çiya" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ciya.png',
+    imageUrl: 'asset://assets/question_images/ciya.webp',
   ),
   QuizQuestion(
     id: 'offline_0286',
@@ -3039,7 +3039,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "dil" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dil.png',
+    imageUrl: 'asset://assets/question_images/dil.webp',
   ),
   QuizQuestion(
     id: 'offline_0291',
@@ -3092,7 +3092,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "heval" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/heval.png',
+    imageUrl: 'asset://assets/question_images/heval.webp',
   ),
   QuizQuestion(
     id: 'offline_0296',
@@ -3144,7 +3144,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "bajar" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bajar.png',
+    imageUrl: 'asset://assets/question_images/bajar.webp',
   ),
   QuizQuestion(
     id: 'offline_0301',
@@ -3196,7 +3196,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "nan" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nan.png',
+    imageUrl: 'asset://assets/question_images/nan.webp',
   ),
   QuizQuestion(
     id: 'offline_0306',
@@ -3248,7 +3248,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "rê" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/re.png',
+    imageUrl: 'asset://assets/question_images/re.webp',
   ),
   QuizQuestion(
     id: 'offline_0311',
@@ -3301,7 +3301,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "spas" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/spas.png',
+    imageUrl: 'asset://assets/question_images/spas.webp',
   ),
   QuizQuestion(
     id: 'offline_0316',
@@ -3354,7 +3354,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "xweş" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/xwes.png',
+    imageUrl: 'asset://assets/question_images/xwes.webp',
   ),
   QuizQuestion(
     id: 'offline_0321',
@@ -3406,7 +3406,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "sar" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sar.png',
+    imageUrl: 'asset://assets/question_images/sar.webp',
   ),
   QuizQuestion(
     id: 'offline_0326',
@@ -3458,7 +3458,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "biçûk" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bicuk.png',
+    imageUrl: 'asset://assets/question_images/bicuk.webp',
   ),
   QuizQuestion(
     id: 'offline_0331',
@@ -3510,7 +3510,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "kevin" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kevin.png',
+    imageUrl: 'asset://assets/question_images/kevin.webp',
   ),
   QuizQuestion(
     id: 'offline_0336',
@@ -3562,7 +3562,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "îro" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/iro.png',
+    imageUrl: 'asset://assets/question_images/iro.webp',
   ),
   QuizQuestion(
     id: 'offline_0341',
@@ -3614,7 +3614,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "duh" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/duh.png',
+    imageUrl: 'asset://assets/question_images/duh.webp',
   ),
   QuizQuestion(
     id: 'offline_0346',
@@ -3666,7 +3666,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "nav" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nav.png',
+    imageUrl: 'asset://assets/question_images/nav.webp',
   ),
   QuizQuestion(
     id: 'offline_0351',
@@ -3719,7 +3719,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "zarok" kelimesini pekiştirir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/zarok.png',
+    imageUrl: 'asset://assets/question_images/zarok.webp',
   ),
   QuizQuestion(
     id: 'offline_0356',
@@ -3772,7 +3772,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "xwendekar" kelimesini pekiştirir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/xwendekar.png',
+    imageUrl: 'asset://assets/question_images/xwendekar.webp',
   ),
   QuizQuestion(
     id: 'offline_0361',
@@ -3824,7 +3824,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "rast" kelimesini pekiştirir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/rast.png',
+    imageUrl: 'asset://assets/question_images/rast.webp',
   ),
   QuizQuestion(
     id: 'offline_0366',
@@ -3876,7 +3876,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "pir" kelimesini pekiştirir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/pir.png',
+    imageUrl: 'asset://assets/question_images/pir.webp',
   ),
   QuizQuestion(
     id: 'offline_0371',
@@ -3929,7 +3929,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel soru "destpêk" kelimesini pekiştirir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/destpek.png',
+    imageUrl: 'asset://assets/question_images/destpek.webp',
   ),
   QuizQuestion(
     id: 'offline_0376',
@@ -3978,7 +3978,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Newroz Kürt kültürü kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/newroz.png',
+    imageUrl: 'asset://assets/question_images/newroz.webp',
   ),
   QuizQuestion(
     id: 'offline_0380',
@@ -4043,7 +4043,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'govend Kürt kültürü kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/govend.png',
+    imageUrl: 'asset://assets/question_images/govend.webp',
   ),
   QuizQuestion(
     id: 'offline_0385',
@@ -4109,7 +4109,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'dengbêj Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dengbej.png',
+    imageUrl: 'asset://assets/question_images/dengbej.webp',
   ),
   QuizQuestion(
     id: 'offline_0390',
@@ -4177,7 +4177,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'kilim motifleri Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kilim_motifleri.png',
+    imageUrl: 'asset://assets/question_images/kilim_motifleri.webp',
   ),
   QuizQuestion(
     id: 'offline_0395',
@@ -4246,7 +4246,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'misafirperverlik Kürt kültürü kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/misafirperverlik.png',
+    imageUrl: 'asset://assets/question_images/misafirperverlik.webp',
   ),
   QuizQuestion(
     id: 'offline_0400',
@@ -4315,7 +4315,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'yerel kıyafetler Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/yerel_kiyafetler.png',
+    imageUrl: 'asset://assets/question_images/yerel_kiyafetler.webp',
   ),
   QuizQuestion(
     id: 'offline_0405',
@@ -4381,7 +4381,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'ağıt Kürt kültürü kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/agit.png',
+    imageUrl: 'asset://assets/question_images/agit.webp',
   ),
   QuizQuestion(
     id: 'offline_0410',
@@ -4448,7 +4448,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'masal anlatımı Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/masal_anlatimi.png',
+    imageUrl: 'asset://assets/question_images/masal_anlatimi.webp',
   ),
   QuizQuestion(
     id: 'offline_0415',
@@ -4517,7 +4517,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'bayramlaşma Kürt kültürü kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bayramlasma.png',
+    imageUrl: 'asset://assets/question_images/bayramlasma.webp',
   ),
   QuizQuestion(
     id: 'offline_0420',
@@ -4585,7 +4585,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'halk mutfağı Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/halk_mutfagi.png',
+    imageUrl: 'asset://assets/question_images/halk_mutfagi.webp',
   ),
   QuizQuestion(
     id: 'offline_0425',
@@ -4653,7 +4653,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Newroz Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/newroz.png',
+    imageUrl: 'asset://assets/question_images/newroz.webp',
   ),
   QuizQuestion(
     id: 'offline_0430',
@@ -4721,7 +4721,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'govend Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/govend.png',
+    imageUrl: 'asset://assets/question_images/govend.webp',
   ),
   QuizQuestion(
     id: 'offline_0435',
@@ -4790,7 +4790,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'dengbêj Kürt kültürü kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dengbej.png',
+    imageUrl: 'asset://assets/question_images/dengbej.webp',
   ),
   QuizQuestion(
     id: 'offline_0440',
@@ -4859,7 +4859,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'kilim motifleri Kürt kültürü kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kilim_motifleri.png',
+    imageUrl: 'asset://assets/question_images/kilim_motifleri.webp',
   ),
   QuizQuestion(
     id: 'offline_0445',
@@ -4928,7 +4928,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'misafirperverlik Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/misafirperverlik.png',
+    imageUrl: 'asset://assets/question_images/misafirperverlik.webp',
   ),
   QuizQuestion(
     id: 'offline_0450',
@@ -4997,7 +4997,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'yerel kıyafetler Kürt kültürü kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/yerel_kiyafetler.png',
+    imageUrl: 'asset://assets/question_images/yerel_kiyafetler.webp',
   ),
   QuizQuestion(
     id: 'offline_0455',
@@ -5064,7 +5064,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'ağıt Kürt kültürü kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/agit.png',
+    imageUrl: 'asset://assets/question_images/agit.webp',
   ),
   QuizQuestion(
     id: 'offline_0460',
@@ -5131,7 +5131,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'masal anlatımı Kürt kültürü kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/masal_anlatimi.png',
+    imageUrl: 'asset://assets/question_images/masal_anlatimi.webp',
   ),
   QuizQuestion(
     id: 'offline_0465',
@@ -5200,7 +5200,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'bayramlaşma Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bayramlasma.png',
+    imageUrl: 'asset://assets/question_images/bayramlasma.webp',
   ),
   QuizQuestion(
     id: 'offline_0470',
@@ -5268,7 +5268,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'halk mutfağı Kürt kültürü kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/halk_mutfagi.png',
+    imageUrl: 'asset://assets/question_images/halk_mutfagi.webp',
   ),
   QuizQuestion(
     id: 'offline_0475',
@@ -5334,7 +5334,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Newroz Kürt kültürü kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/newroz.png',
+    imageUrl: 'asset://assets/question_images/newroz.webp',
   ),
   QuizQuestion(
     id: 'offline_0480',
@@ -5399,7 +5399,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'govend Kürt kültürü kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/govend.png',
+    imageUrl: 'asset://assets/question_images/govend.webp',
   ),
   QuizQuestion(
     id: 'offline_0485',
@@ -5466,7 +5466,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'dengbêj Kürt kültürü kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dengbej.png',
+    imageUrl: 'asset://assets/question_images/dengbej.webp',
   ),
   QuizQuestion(
     id: 'offline_0490',
@@ -5534,7 +5534,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'kilim motifleri Kürt kültürü kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kilim_motifleri.png',
+    imageUrl: 'asset://assets/question_images/kilim_motifleri.webp',
   ),
   QuizQuestion(
     id: 'offline_0495',
@@ -5603,7 +5603,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'misafirperverlik Kürt kültürü kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/misafirperverlik.png',
+    imageUrl: 'asset://assets/question_images/misafirperverlik.webp',
   ),
   QuizQuestion(
     id: 'offline_0500',
@@ -5672,7 +5672,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'yerel kıyafetler Kürt kültürü kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/yerel_kiyafetler.png',
+    imageUrl: 'asset://assets/question_images/yerel_kiyafetler.webp',
   ),
   QuizQuestion(
     id: 'offline_0505',
@@ -5738,7 +5738,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'ağıt Kürt kültürü kategorisinde ele alınır.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/agit.png',
+    imageUrl: 'asset://assets/question_images/agit.webp',
   ),
   QuizQuestion(
     id: 'offline_0510',
@@ -5805,7 +5805,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'masal anlatımı Kürt kültürü kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/masal_anlatimi.png',
+    imageUrl: 'asset://assets/question_images/masal_anlatimi.webp',
   ),
   QuizQuestion(
     id: 'offline_0515',
@@ -5874,7 +5874,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'bayramlaşma Kürt kültürü kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bayramlasma.png',
+    imageUrl: 'asset://assets/question_images/bayramlasma.webp',
   ),
   QuizQuestion(
     id: 'offline_0520',
@@ -5942,7 +5942,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'halk mutfağı Kürt kültürü kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/halk_mutfagi.png',
+    imageUrl: 'asset://assets/question_images/halk_mutfagi.webp',
   ),
   QuizQuestion(
     id: 'offline_0525',
@@ -6012,7 +6012,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'birincil kaynak Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/birincil_kaynak.png',
+    imageUrl: 'asset://assets/question_images/birincil_kaynak.webp',
   ),
   QuizQuestion(
     id: 'offline_0530',
@@ -6069,7 +6069,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'sözlü tarih Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sozlu_tarih.png',
+    imageUrl: 'asset://assets/question_images/sozlu_tarih.webp',
   ),
   QuizQuestion(
     id: 'offline_0534',
@@ -6127,7 +6127,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'kronoloji Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kronoloji.png',
+    imageUrl: 'asset://assets/question_images/kronoloji.webp',
   ),
   QuizQuestion(
     id: 'offline_0538',
@@ -6184,7 +6184,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'arkeoloji Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/arkeoloji.png',
+    imageUrl: 'asset://assets/question_images/arkeoloji.webp',
   ),
   QuizQuestion(
     id: 'offline_0542',
@@ -6241,7 +6241,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'Mezopotamya Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mezopotamya.png',
+    imageUrl: 'asset://assets/question_images/mezopotamya.webp',
   ),
   QuizQuestion(
     id: 'offline_0546',
@@ -6296,7 +6296,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'göç Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/goc.png',
+    imageUrl: 'asset://assets/question_images/goc.webp',
   ),
   QuizQuestion(
     id: 'offline_0550',
@@ -6353,7 +6353,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'yerleşik yaşam Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/yerlesik_yasam.png',
+    imageUrl: 'asset://assets/question_images/yerlesik_yasam.webp',
   ),
   QuizQuestion(
     id: 'offline_0554',
@@ -6410,7 +6410,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'ticaret yolu Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ticaret_yolu.png',
+    imageUrl: 'asset://assets/question_images/ticaret_yolu.webp',
   ),
   QuizQuestion(
     id: 'offline_0558',
@@ -6468,7 +6468,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'kültürel etkileşim Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kulturel_etkilesim.png',
+    imageUrl: 'asset://assets/question_images/kulturel_etkilesim.webp',
   ),
   QuizQuestion(
     id: 'offline_0562',
@@ -6525,7 +6525,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'tarihsel yorum Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tarihsel_yorum.png',
+    imageUrl: 'asset://assets/question_images/tarihsel_yorum.webp',
   ),
   QuizQuestion(
     id: 'offline_0566',
@@ -6594,7 +6594,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'birincil kaynak Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/birincil_kaynak.png',
+    imageUrl: 'asset://assets/question_images/birincil_kaynak.webp',
   ),
   QuizQuestion(
     id: 'offline_0571',
@@ -6651,7 +6651,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'sözlü tarih Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sozlu_tarih.png',
+    imageUrl: 'asset://assets/question_images/sozlu_tarih.webp',
   ),
   QuizQuestion(
     id: 'offline_0575',
@@ -6709,7 +6709,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'kronoloji Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kronoloji.png',
+    imageUrl: 'asset://assets/question_images/kronoloji.webp',
   ),
   QuizQuestion(
     id: 'offline_0579',
@@ -6766,7 +6766,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'arkeoloji Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/arkeoloji.png',
+    imageUrl: 'asset://assets/question_images/arkeoloji.webp',
   ),
   QuizQuestion(
     id: 'offline_0583',
@@ -6823,7 +6823,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'Mezopotamya Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mezopotamya.png',
+    imageUrl: 'asset://assets/question_images/mezopotamya.webp',
   ),
   QuizQuestion(
     id: 'offline_0587',
@@ -6880,7 +6880,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'göç Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/goc.png',
+    imageUrl: 'asset://assets/question_images/goc.webp',
   ),
   QuizQuestion(
     id: 'offline_0591',
@@ -6937,7 +6937,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'yerleşik yaşam Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/yerlesik_yasam.png',
+    imageUrl: 'asset://assets/question_images/yerlesik_yasam.webp',
   ),
   QuizQuestion(
     id: 'offline_0595',
@@ -6994,7 +6994,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'ticaret yolu Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ticaret_yolu.png',
+    imageUrl: 'asset://assets/question_images/ticaret_yolu.webp',
   ),
   QuizQuestion(
     id: 'offline_0599',
@@ -7052,7 +7052,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'kültürel etkileşim Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kulturel_etkilesim.png',
+    imageUrl: 'asset://assets/question_images/kulturel_etkilesim.webp',
   ),
   QuizQuestion(
     id: 'offline_0603',
@@ -7109,7 +7109,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'tarihsel yorum Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tarihsel_yorum.png',
+    imageUrl: 'asset://assets/question_images/tarihsel_yorum.webp',
   ),
   QuizQuestion(
     id: 'offline_0607',
@@ -7178,7 +7178,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'birincil kaynak Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/birincil_kaynak.png',
+    imageUrl: 'asset://assets/question_images/birincil_kaynak.webp',
   ),
   QuizQuestion(
     id: 'offline_0612',
@@ -7235,7 +7235,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'sözlü tarih Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sozlu_tarih.png',
+    imageUrl: 'asset://assets/question_images/sozlu_tarih.webp',
   ),
   QuizQuestion(
     id: 'offline_0616',
@@ -7293,7 +7293,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'kronoloji Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kronoloji.png',
+    imageUrl: 'asset://assets/question_images/kronoloji.webp',
   ),
   QuizQuestion(
     id: 'offline_0620',
@@ -7350,7 +7350,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'arkeoloji Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/arkeoloji.png',
+    imageUrl: 'asset://assets/question_images/arkeoloji.webp',
   ),
   QuizQuestion(
     id: 'offline_0624',
@@ -7407,7 +7407,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'Mezopotamya Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mezopotamya.png',
+    imageUrl: 'asset://assets/question_images/mezopotamya.webp',
   ),
   QuizQuestion(
     id: 'offline_0628',
@@ -7463,7 +7463,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'göç Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/goc.png',
+    imageUrl: 'asset://assets/question_images/goc.webp',
   ),
   QuizQuestion(
     id: 'offline_0632',
@@ -7520,7 +7520,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'yerleşik yaşam Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/yerlesik_yasam.png',
+    imageUrl: 'asset://assets/question_images/yerlesik_yasam.webp',
   ),
   QuizQuestion(
     id: 'offline_0636',
@@ -7577,7 +7577,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'ticaret yolu Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ticaret_yolu.png',
+    imageUrl: 'asset://assets/question_images/ticaret_yolu.webp',
   ),
   QuizQuestion(
     id: 'offline_0640',
@@ -7635,7 +7635,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'kültürel etkileşim Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kulturel_etkilesim.png',
+    imageUrl: 'asset://assets/question_images/kulturel_etkilesim.webp',
   ),
   QuizQuestion(
     id: 'offline_0644',
@@ -7692,7 +7692,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'tarihsel yorum Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tarihsel_yorum.png',
+    imageUrl: 'asset://assets/question_images/tarihsel_yorum.webp',
   ),
   QuizQuestion(
     id: 'offline_0648',
@@ -7751,7 +7751,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çîrok Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/cirok.png',
+    imageUrl: 'asset://assets/question_images/cirok.webp',
   ),
   QuizQuestion(
     id: 'offline_0653',
@@ -7795,7 +7795,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'helbest Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/helbest.png',
+    imageUrl: 'asset://assets/question_images/helbest.webp',
   ),
   QuizQuestion(
     id: 'offline_0657',
@@ -7828,7 +7828,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'roman Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/roman.png',
+    imageUrl: 'asset://assets/question_images/roman.webp',
   ),
   QuizQuestion(
     id: 'offline_0660',
@@ -7866,7 +7866,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'destan Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/destan.png',
+    imageUrl: 'asset://assets/question_images/destan.webp',
   ),
   QuizQuestion(
     id: 'offline_0663',
@@ -7904,7 +7904,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'karakter Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/karakter.png',
+    imageUrl: 'asset://assets/question_images/karakter.webp',
   ),
   QuizQuestion(
     id: 'offline_0666',
@@ -7937,7 +7937,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'tema Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tema.png',
+    imageUrl: 'asset://assets/question_images/tema.webp',
   ),
   QuizQuestion(
     id: 'offline_0669',
@@ -7975,7 +7975,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'mecaz Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mecaz.png',
+    imageUrl: 'asset://assets/question_images/mecaz.webp',
   ),
   QuizQuestion(
     id: 'offline_0672',
@@ -8008,7 +8008,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'kafiye Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kafiye.png',
+    imageUrl: 'asset://assets/question_images/kafiye.webp',
   ),
   QuizQuestion(
     id: 'offline_0675',
@@ -8046,7 +8046,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'anlatıcı Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/anlatici.png',
+    imageUrl: 'asset://assets/question_images/anlatici.webp',
   ),
   QuizQuestion(
     id: 'offline_0678',
@@ -8084,7 +8084,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'diyalog Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/diyalog.png',
+    imageUrl: 'asset://assets/question_images/diyalog.webp',
   ),
   QuizQuestion(
     id: 'offline_0681',
@@ -8127,7 +8127,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çîrok Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/cirok.png',
+    imageUrl: 'asset://assets/question_images/cirok.webp',
   ),
   QuizQuestion(
     id: 'offline_0685',
@@ -8171,7 +8171,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'helbest Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/helbest.png',
+    imageUrl: 'asset://assets/question_images/helbest.webp',
   ),
   QuizQuestion(
     id: 'offline_0689',
@@ -8204,7 +8204,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'roman Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/roman.png',
+    imageUrl: 'asset://assets/question_images/roman.webp',
   ),
   QuizQuestion(
     id: 'offline_0692',
@@ -8242,7 +8242,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'destan Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/destan.png',
+    imageUrl: 'asset://assets/question_images/destan.webp',
   ),
   QuizQuestion(
     id: 'offline_0695',
@@ -8280,7 +8280,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'karakter Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/karakter.png',
+    imageUrl: 'asset://assets/question_images/karakter.webp',
   ),
   QuizQuestion(
     id: 'offline_0698',
@@ -8313,7 +8313,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'tema Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tema.png',
+    imageUrl: 'asset://assets/question_images/tema.webp',
   ),
   QuizQuestion(
     id: 'offline_0701',
@@ -8351,7 +8351,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'mecaz Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mecaz.png',
+    imageUrl: 'asset://assets/question_images/mecaz.webp',
   ),
   QuizQuestion(
     id: 'offline_0704',
@@ -8384,7 +8384,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'kafiye Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kafiye.png',
+    imageUrl: 'asset://assets/question_images/kafiye.webp',
   ),
   QuizQuestion(
     id: 'offline_0707',
@@ -8422,7 +8422,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'anlatıcı Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/anlatici.png',
+    imageUrl: 'asset://assets/question_images/anlatici.webp',
   ),
   QuizQuestion(
     id: 'offline_0710',
@@ -8460,7 +8460,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'diyalog Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/diyalog.png',
+    imageUrl: 'asset://assets/question_images/diyalog.webp',
   ),
   QuizQuestion(
     id: 'offline_0713',
@@ -8503,7 +8503,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çîrok Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/cirok.png',
+    imageUrl: 'asset://assets/question_images/cirok.webp',
   ),
   QuizQuestion(
     id: 'offline_0717',
@@ -8547,7 +8547,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'helbest Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/helbest.png',
+    imageUrl: 'asset://assets/question_images/helbest.webp',
   ),
   QuizQuestion(
     id: 'offline_0721',
@@ -8580,7 +8580,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'roman Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/roman.png',
+    imageUrl: 'asset://assets/question_images/roman.webp',
   ),
   QuizQuestion(
     id: 'offline_0724',
@@ -8618,7 +8618,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'destan Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/destan.png',
+    imageUrl: 'asset://assets/question_images/destan.webp',
   ),
   QuizQuestion(
     id: 'offline_0727',
@@ -8656,7 +8656,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'karakter Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/karakter.png',
+    imageUrl: 'asset://assets/question_images/karakter.webp',
   ),
   QuizQuestion(
     id: 'offline_0730',
@@ -8689,7 +8689,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'tema Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tema.png',
+    imageUrl: 'asset://assets/question_images/tema.webp',
   ),
   QuizQuestion(
     id: 'offline_0733',
@@ -8727,7 +8727,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'mecaz Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mecaz.png',
+    imageUrl: 'asset://assets/question_images/mecaz.webp',
   ),
   QuizQuestion(
     id: 'offline_0736',
@@ -8760,7 +8760,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'kafiye Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kafiye.png',
+    imageUrl: 'asset://assets/question_images/kafiye.webp',
   ),
   QuizQuestion(
     id: 'offline_0739',
@@ -8798,7 +8798,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'anlatıcı Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/anlatici.png',
+    imageUrl: 'asset://assets/question_images/anlatici.webp',
   ),
   QuizQuestion(
     id: 'offline_0742',
@@ -8836,7 +8836,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'diyalog Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/diyalog.png',
+    imageUrl: 'asset://assets/question_images/diyalog.webp',
   ),
   QuizQuestion(
     id: 'offline_0745',
@@ -8881,7 +8881,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çiya coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ciya.png',
+    imageUrl: 'asset://assets/question_images/ciya.webp',
   ),
   QuizQuestion(
     id: 'offline_0749',
@@ -8926,7 +8926,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'deşt coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dest.png',
+    imageUrl: 'asset://assets/question_images/dest.webp',
   ),
   QuizQuestion(
     id: 'offline_0753',
@@ -8971,7 +8971,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'av coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/av.png',
+    imageUrl: 'asset://assets/question_images/av.webp',
   ),
   QuizQuestion(
     id: 'offline_0757',
@@ -9016,7 +9016,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çem coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/cem.png',
+    imageUrl: 'asset://assets/question_images/cem.webp',
   ),
   QuizQuestion(
     id: 'offline_0761',
@@ -9061,7 +9061,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'gol coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/gol.png',
+    imageUrl: 'asset://assets/question_images/gol.webp',
   ),
   QuizQuestion(
     id: 'offline_0765',
@@ -9106,7 +9106,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'daristan coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/daristan.png',
+    imageUrl: 'asset://assets/question_images/daristan.webp',
   ),
   QuizQuestion(
     id: 'offline_0769',
@@ -9151,7 +9151,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'newal coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/newal.png',
+    imageUrl: 'asset://assets/question_images/newal.webp',
   ),
   QuizQuestion(
     id: 'offline_0773',
@@ -9196,7 +9196,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'hewa coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/hewa.png',
+    imageUrl: 'asset://assets/question_images/hewa.webp',
   ),
   QuizQuestion(
     id: 'offline_0777',
@@ -9241,7 +9241,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'erd coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/erd.png',
+    imageUrl: 'asset://assets/question_images/erd.webp',
   ),
   QuizQuestion(
     id: 'offline_0781',
@@ -9286,7 +9286,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'sînor coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sinor.png',
+    imageUrl: 'asset://assets/question_images/sinor.webp',
   ),
   QuizQuestion(
     id: 'offline_0785',
@@ -9342,7 +9342,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çiya coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ciya.png',
+    imageUrl: 'asset://assets/question_images/ciya.webp',
   ),
   QuizQuestion(
     id: 'offline_0790',
@@ -9387,7 +9387,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'deşt coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dest.png',
+    imageUrl: 'asset://assets/question_images/dest.webp',
   ),
   QuizQuestion(
     id: 'offline_0794',
@@ -9432,7 +9432,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'av coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/av.png',
+    imageUrl: 'asset://assets/question_images/av.webp',
   ),
   QuizQuestion(
     id: 'offline_0798',
@@ -9477,7 +9477,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çem coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/cem.png',
+    imageUrl: 'asset://assets/question_images/cem.webp',
   ),
   QuizQuestion(
     id: 'offline_0802',
@@ -9522,7 +9522,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'gol coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/gol.png',
+    imageUrl: 'asset://assets/question_images/gol.webp',
   ),
   QuizQuestion(
     id: 'offline_0806',
@@ -9567,7 +9567,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'daristan coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/daristan.png',
+    imageUrl: 'asset://assets/question_images/daristan.webp',
   ),
   QuizQuestion(
     id: 'offline_0810',
@@ -9612,7 +9612,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'newal coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/newal.png',
+    imageUrl: 'asset://assets/question_images/newal.webp',
   ),
   QuizQuestion(
     id: 'offline_0814',
@@ -9657,7 +9657,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'hewa coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/hewa.png',
+    imageUrl: 'asset://assets/question_images/hewa.webp',
   ),
   QuizQuestion(
     id: 'offline_0818',
@@ -9702,7 +9702,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'erd coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/erd.png',
+    imageUrl: 'asset://assets/question_images/erd.webp',
   ),
   QuizQuestion(
     id: 'offline_0822',
@@ -9747,7 +9747,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'sînor coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sinor.png',
+    imageUrl: 'asset://assets/question_images/sinor.webp',
   ),
   QuizQuestion(
     id: 'offline_0826',
@@ -9803,7 +9803,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çiya coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ciya.png',
+    imageUrl: 'asset://assets/question_images/ciya.webp',
   ),
   QuizQuestion(
     id: 'offline_0831',
@@ -9848,7 +9848,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'deşt coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dest.png',
+    imageUrl: 'asset://assets/question_images/dest.webp',
   ),
   QuizQuestion(
     id: 'offline_0835',
@@ -9893,7 +9893,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'av coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/av.png',
+    imageUrl: 'asset://assets/question_images/av.webp',
   ),
   QuizQuestion(
     id: 'offline_0839',
@@ -9938,7 +9938,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çem coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/cem.png',
+    imageUrl: 'asset://assets/question_images/cem.webp',
   ),
   QuizQuestion(
     id: 'offline_0843',
@@ -9983,7 +9983,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'gol coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/gol.png',
+    imageUrl: 'asset://assets/question_images/gol.webp',
   ),
   QuizQuestion(
     id: 'offline_0847',
@@ -10028,7 +10028,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'daristan coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/daristan.png',
+    imageUrl: 'asset://assets/question_images/daristan.webp',
   ),
   QuizQuestion(
     id: 'offline_0851',
@@ -10073,7 +10073,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'newal coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/newal.png',
+    imageUrl: 'asset://assets/question_images/newal.webp',
   ),
   QuizQuestion(
     id: 'offline_0855',
@@ -10118,7 +10118,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'hewa coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/hewa.png',
+    imageUrl: 'asset://assets/question_images/hewa.webp',
   ),
   QuizQuestion(
     id: 'offline_0859',
@@ -10163,7 +10163,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'erd coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/erd.png',
+    imageUrl: 'asset://assets/question_images/erd.webp',
   ),
   QuizQuestion(
     id: 'offline_0863',
@@ -10208,7 +10208,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'sînor coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sinor.png',
+    imageUrl: 'asset://assets/question_images/sinor.webp',
   ),
   QuizQuestion(
     id: 'offline_0867',
@@ -10268,7 +10268,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'dengbêj Kürt müziği kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dengbej.png',
+    imageUrl: 'asset://assets/question_images/dengbej.webp',
   ),
   QuizQuestion(
     id: 'offline_0872',
@@ -10311,7 +10311,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'ritim Kürt müziği kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ritim.png',
+    imageUrl: 'asset://assets/question_images/ritim.webp',
   ),
   QuizQuestion(
     id: 'offline_0876',
@@ -10354,7 +10354,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'melodî Kürt müziği kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/melodi.png',
+    imageUrl: 'asset://assets/question_images/melodi.webp',
   ),
   QuizQuestion(
     id: 'offline_0880',
@@ -10396,7 +10396,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'stran Kürt müziği kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/stran.png',
+    imageUrl: 'asset://assets/question_images/stran.webp',
   ),
   QuizQuestion(
     id: 'offline_0884',
@@ -10438,7 +10438,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'def Kürt müziği kategorisinde ele alınır.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/def.png',
+    imageUrl: 'asset://assets/question_images/def.webp',
   ),
   QuizQuestion(
     id: 'offline_0888',
@@ -10481,7 +10481,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'erbane Kürt müziği kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/erbane.png',
+    imageUrl: 'asset://assets/question_images/erbane.webp',
   ),
   QuizQuestion(
     id: 'offline_0892',
@@ -10513,7 +10513,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'tembûr Kürt müziği kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tembur.png',
+    imageUrl: 'asset://assets/question_images/tembur.webp',
   ),
   QuizQuestion(
     id: 'offline_0895',
@@ -10562,7 +10562,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'nota Kürt müziği kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nota.png',
+    imageUrl: 'asset://assets/question_images/nota.webp',
   ),
   QuizQuestion(
     id: 'offline_0899',
@@ -10605,7 +10605,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'koro Kürt müziği kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/koro.png',
+    imageUrl: 'asset://assets/question_images/koro.webp',
   ),
   QuizQuestion(
     id: 'offline_0903',
@@ -10654,7 +10654,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'solo Kürt müziği kategorisinde ele alınır.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/solo.png',
+    imageUrl: 'asset://assets/question_images/solo.webp',
   ),
   QuizQuestion(
     id: 'offline_0907',
@@ -10714,7 +10714,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'dengbêj Kürt müziği kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dengbej.png',
+    imageUrl: 'asset://assets/question_images/dengbej.webp',
   ),
   QuizQuestion(
     id: 'offline_0912',
@@ -10757,7 +10757,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'ritim Kürt müziği kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ritim.png',
+    imageUrl: 'asset://assets/question_images/ritim.webp',
   ),
   QuizQuestion(
     id: 'offline_0916',
@@ -10800,7 +10800,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'melodî Kürt müziği kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/melodi.png',
+    imageUrl: 'asset://assets/question_images/melodi.webp',
   ),
   QuizQuestion(
     id: 'offline_0920',
@@ -10843,7 +10843,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'stran Kürt müziği kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/stran.png',
+    imageUrl: 'asset://assets/question_images/stran.webp',
   ),
   QuizQuestion(
     id: 'offline_0924',
@@ -10886,7 +10886,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'def Kürt müziği kategorisinde ele alınır.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/def.png',
+    imageUrl: 'asset://assets/question_images/def.webp',
   ),
   QuizQuestion(
     id: 'offline_0928',
@@ -10929,7 +10929,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'erbane Kürt müziği kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/erbane.png',
+    imageUrl: 'asset://assets/question_images/erbane.webp',
   ),
   QuizQuestion(
     id: 'offline_0932',
@@ -10961,7 +10961,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'tembûr Kürt müziği kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tembur.png',
+    imageUrl: 'asset://assets/question_images/tembur.webp',
   ),
   QuizQuestion(
     id: 'offline_0935',
@@ -11010,7 +11010,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'nota Kürt müziği kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nota.png',
+    imageUrl: 'asset://assets/question_images/nota.webp',
   ),
   QuizQuestion(
     id: 'offline_0939',
@@ -11053,7 +11053,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'koro Kürt müziği kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/koro.png',
+    imageUrl: 'asset://assets/question_images/koro.webp',
   ),
   QuizQuestion(
     id: 'offline_0943',
@@ -11102,7 +11102,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'solo Kürt müziği kategorisinde ele alınır.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/solo.png',
+    imageUrl: 'asset://assets/question_images/solo.webp',
   ),
   QuizQuestion(
     id: 'offline_0947',
@@ -11162,7 +11162,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'dengbêj Kürt müziği kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dengbej.png',
+    imageUrl: 'asset://assets/question_images/dengbej.webp',
   ),
   QuizQuestion(
     id: 'offline_0952',
@@ -11205,7 +11205,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'ritim Kürt müziği kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ritim.png',
+    imageUrl: 'asset://assets/question_images/ritim.webp',
   ),
   QuizQuestion(
     id: 'offline_0956',
@@ -11248,7 +11248,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'melodî Kürt müziği kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/melodi.png',
+    imageUrl: 'asset://assets/question_images/melodi.webp',
   ),
   QuizQuestion(
     id: 'offline_0960',
@@ -11291,7 +11291,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'stran Kürt müziği kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/stran.png',
+    imageUrl: 'asset://assets/question_images/stran.webp',
   ),
   QuizQuestion(
     id: 'offline_0964',
@@ -11334,7 +11334,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'def Kürt müziği kategorisinde ele alınır.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/def.png',
+    imageUrl: 'asset://assets/question_images/def.webp',
   ),
   QuizQuestion(
     id: 'offline_0968',
@@ -11377,7 +11377,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'erbane Kürt müziği kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/erbane.png',
+    imageUrl: 'asset://assets/question_images/erbane.webp',
   ),
   QuizQuestion(
     id: 'offline_0972',
@@ -11409,7 +11409,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'tembûr Kürt müziği kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tembur.png',
+    imageUrl: 'asset://assets/question_images/tembur.webp',
   ),
   QuizQuestion(
     id: 'offline_0975',
@@ -11458,7 +11458,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'nota Kürt müziği kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nota.png',
+    imageUrl: 'asset://assets/question_images/nota.webp',
   ),
   QuizQuestion(
     id: 'offline_0979',
@@ -11501,7 +11501,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'koro Kürt müziği kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/koro.png',
+    imageUrl: 'asset://assets/question_images/koro.webp',
   ),
   QuizQuestion(
     id: 'offline_0983',
@@ -11550,7 +11550,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'solo Kürt müziği kategorisinde ele alınır.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/solo.png',
+    imageUrl: 'asset://assets/question_images/solo.webp',
   ),
   QuizQuestion(
     id: 'offline_0987',

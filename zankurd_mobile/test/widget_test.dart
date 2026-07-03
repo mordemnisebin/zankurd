@@ -899,7 +899,7 @@ void main() {
       correctAnswer: 'Müzik',
       explanation: 'Govend kültürel bir dans ve müzik etkinliğidir.',
       type: QuestionType.visual,
-      imageUrl: 'asset://assets/zankurd.png',
+      imageUrl: 'asset://assets/zankurd.webp',
     );
 
     await tester.pumpWidget(

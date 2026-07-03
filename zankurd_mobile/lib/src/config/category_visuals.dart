@@ -18,14 +18,14 @@ class CategoryVisuals {
       };
 
   static String imagePath(String category) => switch (category) {
-        'Ziman' => 'assets/question_images/cat_ziman.png',
-        'Çand' => 'assets/question_images/cat_cand.png',
-        'Dîrok' => 'assets/question_images/cat_dirok.png',
-        'Edebiyat' => 'assets/question_images/cat_edebiyat.png',
-        'Cografya' => 'assets/question_images/cat_cografya.png',
-        'Muzîk' => 'assets/question_images/cat_muzik.png',
-        'Siyaset' => 'assets/question_images/cat_siyaset.png',
-        'Paradigma' => 'assets/question_images/cat_paradigma.png',
-        _ => 'assets/question_images/cat_ziman.png',
+        'Ziman' => 'assets/question_images/cat_ziman.webp',
+        'Çand' => 'assets/question_images/cat_cand.webp',
+        'Dîrok' => 'assets/question_images/cat_dirok.webp',
+        'Edebiyat' => 'assets/question_images/cat_edebiyat.webp',
+        'Cografya' => 'assets/question_images/cat_cografya.webp',
+        'Muzîk' => 'assets/question_images/cat_muzik.webp',
+        'Siyaset' => 'assets/question_images/cat_siyaset.webp',
+        'Paradigma' => 'assets/question_images/cat_paradigma.webp',
+        _ => 'assets/question_images/cat_ziman.webp',
       };
 }

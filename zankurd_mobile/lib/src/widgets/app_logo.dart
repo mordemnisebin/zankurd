@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// ZanKurd marka logosu (assets/zankurd.png).
+/// ZanKurd marka logosu (assets/zankurd.webp).
 ///
 /// Logonun arka planı beyaz olduğundan, koyu zeminlerde okunabilmesi için
 /// [onCard] true verildiğinde beyaz yuvarlatılmış bir kart içine yerleştirilir.
@@ -13,7 +13,7 @@ class AppLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final image = Image.asset(
-      'assets/zankurd.png',
+      'assets/zankurd.webp',
       width: width,
       fit: BoxFit.contain,
       filterQuality: FilterQuality.high,

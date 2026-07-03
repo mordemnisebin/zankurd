@@ -93,7 +93,7 @@ flutter:
 
   assets:
     - assets/question_images/
-    - assets/zankurd.png
+    - assets/zankurd.webp
     - assets/sounds/
     - assets/animations/
 

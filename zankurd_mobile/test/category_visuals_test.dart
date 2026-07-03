@@ -20,13 +20,17 @@ void main() {
     expect(CategoryVisuals.icon('Yok'), Icons.category_outlined);
   });
 
-  test('imagePath bilinen kategoriler için png yolu döner', () {
+  test('imagePath bilinen kategoriler için webp yolu döner', () {
+    // Görseller paket boyutu için WebP'ye taşındı (49MB -> ~4MB).
     for (final cat in known) {
-      expect(CategoryVisuals.imagePath(cat), endsWith('.png'));
+      expect(CategoryVisuals.imagePath(cat), endsWith('.webp'));
     }
   });
 
   test('bilinmeyen kategori imagePath fallback döner', () {
-    expect(CategoryVisuals.imagePath('Yok'), 'assets/question_images/cat_ziman.png');
+    expect(
+      CategoryVisuals.imagePath('Yok'),
+      'assets/question_images/cat_ziman.webp',
+    );
   });
 }
