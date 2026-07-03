@@ -16,11 +16,13 @@ Last updated: 2026-07-03
   "Pending before next AAB" below.
 - Pending before next AAB: source has moved since the AAB was built
   (real player_id opponent matching in 1v1 duels, `submit_answer`
-  response_ms server-side clamp, expanded question explanations). The
-  `clamp_submit_answer_response_ms.sql` migration also still needs to be
-  applied to the live Supabase project — it has not been run against
-  production from this session. Regenerate and re-verify the AAB before
-  the next Play upload.
+  response_ms server-side clamp, expanded question explanations).
+  Regenerate and re-verify the AAB before the next Play upload.
+- `clamp_submit_answer_response_ms.sql`: applied to the live Supabase
+  project (2026-07-03) via the Management API. Verified live via
+  `pg_get_functiondef` (clamp present in the deployed `submit_answer`) and
+  an end-to-end run of `tools/check_live_supabase.py` (room create/join,
+  answer submit, leaderboard — all passed against production).
 
 Google Play currently requires new Android apps and updates to target Android 15 / API level 35 or higher. The 2026-06-15 release build targets API level 36.
 
