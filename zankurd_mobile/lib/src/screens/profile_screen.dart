@@ -1392,12 +1392,17 @@ class _MasterySection extends StatelessWidget {
                 color: AppTheme.violet,
               ),
               const SizedBox(width: 8),
-              Text(
-                isKu ? 'Ustalîya Kategoriyê' : 'Kategori Ustalığı',
-                style: TextStyle(
-                  color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 17,
+              // Dar (iki sütunlu masaüstü) panelde başlık taşmasın.
+              Expanded(
+                child: Text(
+                  isKu ? 'Ustalîya Kategoriyê' : 'Kategori Ustalığı',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 17,
+                  ),
                 ),
               ),
             ],
@@ -1451,21 +1456,26 @@ class _MasteryRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-            decoration: BoxDecoration(
-              color: badgeColor.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: badgeColor.withValues(alpha: 0.3)),
-            ),
-            child: Text(
-              level == MasteryLevel.none
-                  ? (isKu ? 'Destpêkirin' : 'Başlangıç')
-                  : (isKu ? level.titleKu : level.titleTr),
-              style: TextStyle(
-                color: badgeColor,
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
+          // Rozet çipi dar panelde satırı taşırmasın diye esner.
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+              decoration: BoxDecoration(
+                color: badgeColor.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: badgeColor.withValues(alpha: 0.3)),
+              ),
+              child: Text(
+                level == MasteryLevel.none
+                    ? (isKu ? 'Destpêkirin' : 'Başlangıç')
+                    : (isKu ? level.titleKu : level.titleTr),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: badgeColor,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),
@@ -1604,12 +1614,17 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                     color: AppTheme.accent,
                   ),
                   const SizedBox(width: 8),
-                  Text(
-                    isKu ? 'Analîza Performansê' : 'Performans Analizi',
-                    style: TextStyle(
-                      color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w700,
-                      fontSize: 17,
+                  // Dar (iki sütunlu masaüstü) panelde başlık taşmasın.
+                  Expanded(
+                    child: Text(
+                      isKu ? 'Analîza Performansê' : 'Performans Analizi',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(context),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 17,
+                      ),
                     ),
                   ),
                 ],
@@ -1650,14 +1665,18 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      isKu
-                          ? '$maxCorrect bersivên rast'
-                          : '$maxCorrect doğru cevap',
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
+                    Expanded(
+                      child: Text(
+                        isKu
+                            ? '$maxCorrect bersivên rast'
+                            : '$maxCorrect doğru cevap',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: AppTheme.textPrimaryColor(context),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],
@@ -1700,14 +1719,18 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      isKu
-                          ? '$maxMistakes pirsên şaş ên çalak'
-                          : '$maxMistakes aktif yanlış soru',
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
+                    Expanded(
+                      child: Text(
+                        isKu
+                            ? '$maxMistakes pirsên şaş ên çalak'
+                            : '$maxMistakes aktif yanlış soru',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: AppTheme.textPrimaryColor(context),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],
