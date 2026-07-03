@@ -51,7 +51,7 @@ The Flutter app follows a **repository pattern** with environment-based switchin
 
 **Data Layer (`lib/src/data/`):**
 - `ZanKurdRepository` (abstract) — defines all data operations
-- `SupabaseZanKurdRepository` — production implementation using Supabase client
+- `SupabaseZanKurdRepository` — production implementation using Supabase client; holds a private `MockZanKurdRepository _offline` **by composition** (not inheritance) and falls back to it when the network/schema is unavailable — keep it that way
 - `MockZanKurdRepository` — offline/test implementation with hardcoded data
 - Selected at startup in `main.dart` based on `AppConfig.hasSupabaseConfig`
 
@@ -69,7 +69,7 @@ if (AppConfig.hasSupabaseConfig) {
 - `AuthProvider` — manages auth state (anonymous login, Supabase session)
 - `ThemeProvider` — dark/light mode persistence
 - `LanguageProvider` — Kurmanci language support
-- Local data: `LocalDataService` (coin balance, achievements, seen questions, streaks)
+- Local data: per-feature `SharedPreferences` store singletons (aşağıdaki "Local stores" bölümü); coin bakiyesi sunucudan (`coin_transactions` toplamı) okunur
 
 **Environment Configuration (AppConfig):**
 ```dart
@@ -145,7 +145,7 @@ flutter build windows          # Windows desktop (release)
 
 **Code Quality:**
 ```bash
-flutter analyze                # Static analysis
+dart analyze                   # Static analysis (flutter analyze bu ortamda çöküyor — üstteki nota bak)
 dart format lib/ test/         # Auto-format Dart code
 ```
 
@@ -245,25 +245,18 @@ class MyProvider extends ChangeNotifier {
 
 ### Local Data Persistence
 
-Local data (coins, streak, achievements, mastery, seen questions) is stored in `SharedPreferences`. `LocalDataService` handles coins/streaks/seen-questions; the per-feature singleton stores (`AchievementStore`, `MasteryStore`, `MistakeStore`, etc.) own their own keys (see "Local stores" above).
-
-```dart
-LocalDataService.addCoins(amount)          // Update balance
-LocalDataService.coins                     // Read balance
-LocalDataService.applyQuizResult(...)      // Update on quiz completion
-```
+Local data (streak, achievements, mastery, seen questions, missions, XP) is stored in `SharedPreferences` via the per-feature singleton stores (`AchievementStore`, `MasteryStore`, `MistakeStore`, `XPStore`, etc. — see "Local stores" above). **Coins are server-authoritative:** balance is the sum of `coin_transactions`; all writes go through security-definer RPCs (`spend_coins`, `claim_quiz_reward`, `claim_daily_spin`, `claim_extra_spin`, `claim_mission_reward`, `claim_tournament_reward`). There is no client-side "add arbitrary coins" path — do not reintroduce one.
 
 ## Release State & Important Notes
 
-**Current Release:** v1.3.0+4 (tagged v1.3.0-internal.1 on 2026-06-12)
-- The build is validated and ready for Play Console submission
-- Only user-facing Play Console configuration steps remain
+**Current Version:** 1.5.0+6 (pubspec.yaml) — last tagged release v1.3.0-internal.1 (2026-06-12)
+- Bekleyen migration: `supabase/2026-07-03_reward_hardening.sql` canlıya uygulanınca `_questionColumns`'a `explanation_ku, explanation_tr` eklenecek (repository'deki TODO'ya ve `supabase_repository_test.dart`'taki ilgili teste bak)
 
 **Known Issues:**
 - Windows Profile-tab navigation can hang on some debug builds (pre-existing, not related to fonts or recent changes — don't investigate without explicit request)
 
 **Testing Before Release:**
-- Run `flutter analyze` to catch linting issues
+- Run `dart analyze` to catch linting issues
 - Run `flutter test` to validate question bank and data structures
 - Test on both Android emulator and real device before building APK
 
@@ -304,7 +297,7 @@ test/               # Unit and widget tests
 | Build APK | `flutter build apk` (after setting TMP/TEMP) |
 | Run all tests | `flutter test` |
 | Run one test file | `flutter test test/streak_store_test.dart` |
-| Lint Dart | `flutter analyze` |
+| Lint Dart | `dart analyze` |
 | Format Dart | `dart format lib/ test/` |
 | Check pub dependencies | `flutter pub outdated` |
 | Upgrade dependencies | `flutter pub upgrade` |

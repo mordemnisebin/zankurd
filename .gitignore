@@ -13,3 +13,8 @@ output/
 # Eğer varsa sanal ortam klasörleri
 venv/
 .env
+# Oturum artıkları ve yerel araç dizinleri
+.serena/
+.playwright-cli/
+pirs_dump.xml
+/pirs_*.png
