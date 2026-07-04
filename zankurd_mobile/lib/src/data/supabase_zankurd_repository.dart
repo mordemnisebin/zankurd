@@ -228,9 +228,25 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
       var parsedQuestions = rows.map(_questionFromRow).toList();
       if (subCategory != null) {
-        parsedQuestions = parsedQuestions
+        final matched = parsedQuestions
             .where((q) => SubcategoryConfig.getSubcategoryId(q) == subCategory)
             .toList();
+        // Alt kategori etiketi gerçek bir DB kolonu değil, soru id'sinin
+        // hash'inden türetilir (bkz. SubcategoryConfig.getSubcategoryId) —
+        // yani kategori+zorluk havuzunun rastgele ~1/3'ü eşleşir. Eşleşen
+        // sayı istenen limit'in altında kalırsa seviyeyi eksik soruyla
+        // bitirmek yerine aynı kategori+zorluktaki diğer sorularla
+        // tamamla; alt kategori zaten sabit bir içerik sınırı değil.
+        if (matched.length < limit) {
+          final matchedIds = matched.map((q) => q.id).toSet();
+          final need = limit - matched.length;
+          final fillers = parsedQuestions
+              .where((q) => !matchedIds.contains(q.id))
+              .take(need * 3);
+          parsedQuestions = [...matched, ...fillers];
+        } else {
+          parsedQuestions = matched;
+        }
       }
 
       final store = await SeenQuestionStore.load();

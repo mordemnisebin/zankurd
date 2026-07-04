@@ -316,7 +316,11 @@ class _DuelScoreHeader extends StatelessWidget {
                     CircleAvatar(
                       radius: 16,
                       backgroundColor: AppTheme.accent.withValues(alpha: 0.15),
-                      child: const Icon(Icons.person, color: AppTheme.accent, size: 18),
+                      child: const Icon(
+                        Icons.person,
+                        color: AppTheme.accent,
+                        size: 18,
+                      ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -349,7 +353,10 @@ class _DuelScoreHeader extends StatelessWidget {
               ),
               // VS & Progress
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: AppTheme.surfaceColor(context),
                   borderRadius: BorderRadius.circular(12),
@@ -411,7 +418,11 @@ class _DuelScoreHeader extends StatelessWidget {
                     CircleAvatar(
                       radius: 16,
                       backgroundColor: Colors.redAccent.withValues(alpha: 0.15),
-                      child: const Icon(Icons.android, color: Colors.redAccent, size: 18),
+                      child: const Icon(
+                        Icons.android,
+                        color: Colors.redAccent,
+                        size: 18,
+                      ),
                     ),
                   ],
                 ),
@@ -426,7 +437,11 @@ class _DuelScoreHeader extends StatelessWidget {
                 if (playerStreak > 0)
                   Row(
                     children: [
-                      const Icon(Icons.local_fire_department, color: Colors.orange, size: 14),
+                      const Icon(
+                        Icons.local_fire_department,
+                        color: Colors.orange,
+                        size: 14,
+                      ),
                       Text(
                         'x$playerStreak',
                         style: const TextStyle(
@@ -450,7 +465,11 @@ class _DuelScoreHeader extends StatelessWidget {
                           fontSize: 11,
                         ),
                       ),
-                      const Icon(Icons.local_fire_department, color: Colors.orange, size: 14),
+                      const Icon(
+                        Icons.local_fire_department,
+                        color: Colors.orange,
+                        size: 14,
+                      ),
                     ],
                   )
                 else
@@ -572,111 +591,129 @@ class _AnswerButton extends StatelessWidget {
         : badgeColor;
 
     final isPressed = selected;
+    final letter = String.fromCharCode(65 + (index % 26));
+    final stateHint = correct
+        ? ', doğru cevap'
+        : wrong
+        ? ', yanlış'
+        : '';
 
-    return AnimatedPadding(
-      duration: const Duration(milliseconds: 100),
-      padding: EdgeInsets.only(
-        top: isPressed ? 4 : 0,
-        bottom: isPressed ? 0 : 4,
-      ),
-      child: InkWell(
-        onTap: disabled ? null : onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
-          curve: Curves.easeOutCubic,
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          decoration: BoxDecoration(
-            color: color,
-            gradient: gradient,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: borderColor, width: 2.0),
-            boxShadow: isPressed
-                ? []
-                : [
-                    BoxShadow(
-                      color: shadowColor.withValues(alpha: 0.30),
-                      offset: const Offset(0, 4),
-                      blurRadius: 0,
-                    ),
-                  ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  _OptionBadge(
-                    index: index,
-                    stateActive: gradient != null,
-                    stateColor: borderColor,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      answer,
-                      style: TextStyle(
-                        color: textColor,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
+    // Varsayılan olarak Flutter web/erişilebilirlik ağacı bu düğümü kardeş
+    // şıklarla tek bir node'a birleştirebiliyor (bkz. 2026-07-04 keşif turu:
+    // otomasyon/ekran okuyucu tek şıkkı ayırt edemiyordu). button+label+
+    // excludeSemantics ile her şık kendi bağımsız, tıklanabilir semantik
+    // düğümünü alır.
+    return Semantics(
+      button: true,
+      enabled: !disabled,
+      selected: selected,
+      label: '$letter: $answer$stateHint',
+      onTap: disabled ? null : onTap,
+      excludeSemantics: true,
+      child: AnimatedPadding(
+        duration: const Duration(milliseconds: 100),
+        padding: EdgeInsets.only(
+          top: isPressed ? 4 : 0,
+          bottom: isPressed ? 0 : 4,
+        ),
+        child: InkWell(
+          onTap: disabled ? null : onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
+            curve: Curves.easeOutCubic,
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              color: color,
+              gradient: gradient,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: borderColor, width: 2.0),
+              boxShadow: isPressed
+                  ? []
+                  : [
+                      BoxShadow(
+                        color: shadowColor.withValues(alpha: 0.30),
+                        offset: const Offset(0, 4),
+                        blurRadius: 0,
                       ),
-                    ),
-                  ),
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 250),
-                    transitionBuilder: (child, animation) => ScaleTransition(
-                      scale: animation,
-                      child: FadeTransition(
-                        opacity: animation,
-                        child: child,
-                      ),
-                    ),
-                    child: correct
-                        ? const Icon(
-                            Icons.check_circle_outline,
-                            key: ValueKey('correct_icon'),
-                            color: Colors.white,
-                          )
-                        : wrong
-                            ? const Icon(
-                                Icons.cancel_outlined,
-                                key: ValueKey('wrong_icon'),
-                                color: Colors.white,
-                              )
-                            : const SizedBox.shrink(key: ValueKey('empty_icon')),
-                  ),
-                ],
-              ),
-              if (audiencePercent != null) ...[
-                const SizedBox(height: 8),
+                    ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
                 Row(
                   children: [
+                    _OptionBadge(
+                      index: index,
+                      stateActive: gradient != null,
+                      stateColor: borderColor,
+                    ),
+                    const SizedBox(width: 12),
                     Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(3),
-                        child: LinearProgressIndicator(
-                          value: audiencePercent!.clamp(0.0, 1.0),
-                          minHeight: 5,
-                          backgroundColor: Colors.white.withValues(alpha: 0.24),
-                          color: Colors.white,
+                      child: Text(
+                        answer,
+                        style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      '${(audiencePercent! * 100).round()}%',
-                      style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w700,
-                        color: textColor.withValues(alpha: 0.9),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 250),
+                      transitionBuilder: (child, animation) => ScaleTransition(
+                        scale: animation,
+                        child: FadeTransition(opacity: animation, child: child),
                       ),
+                      child: correct
+                          ? const Icon(
+                              Icons.check_circle_outline,
+                              key: ValueKey('correct_icon'),
+                              color: Colors.white,
+                            )
+                          : wrong
+                          ? const Icon(
+                              Icons.cancel_outlined,
+                              key: ValueKey('wrong_icon'),
+                              color: Colors.white,
+                            )
+                          : const SizedBox.shrink(key: ValueKey('empty_icon')),
                     ),
                   ],
                 ),
+                if (audiencePercent != null) ...[
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(3),
+                          child: LinearProgressIndicator(
+                            value: audiencePercent!.clamp(0.0, 1.0),
+                            minHeight: 5,
+                            backgroundColor: Colors.white.withValues(
+                              alpha: 0.24,
+                            ),
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${(audiencePercent! * 100).round()}%',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                          color: textColor.withValues(alpha: 0.9),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),
@@ -792,7 +829,11 @@ class _WildcardButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final baseColor = type.themeColor;
 
-    final opacity = (isEnabled || isActive) ? 1.0 : cantAfford ? 0.45 : 0.35;
+    final opacity = (isEnabled || isActive)
+        ? 1.0
+        : cantAfford
+        ? 0.45
+        : 0.35;
 
     final borderColor = isActive
         ? AppTheme.accent
@@ -835,7 +876,11 @@ class _WildcardButton extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(cantAfford ? Icons.lock_outline : type.icon, size: 20, color: iconColor),
+            Icon(
+              cantAfford ? Icons.lock_outline : type.icon,
+              size: 20,
+              color: iconColor,
+            ),
             const SizedBox(height: 2),
             Text(
               '${type.coinCost}c',

@@ -15,7 +15,10 @@ class SettingsScreen extends StatefulWidget {
   const SettingsScreen({required this.repository, super.key});
 
   final ZanKurdRepository repository;
-  static const appVersion = '1.5.0+6';
+  // pubspec.yaml'daki version alanıyla senkron tutulmalı; her release'te
+  // birlikte güncellenmezse burada eski sürüm görünür (bkz. 2026-07-04
+  // keşif turu bulgusu: 1.6.0+7 iken burada 1.5.0+6 gösteriliyordu).
+  static const appVersion = '1.6.0+7';
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -86,10 +89,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          Icons.badge_outlined,
-                          color: AppTheme.accent,
-                        ),
+                        Icon(Icons.badge_outlined, color: AppTheme.accent),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
@@ -324,7 +324,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       Switch(
                         value: sound.enabled,
-                        onChanged: (_) { sound.toggle(); },
+                        onChanged: (_) {
+                          sound.toggle();
+                        },
                       ),
                     ],
                   ),
@@ -866,7 +868,10 @@ class _ExpandableSection extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   body,
-                  style: TextStyle(color: AppTheme.textSubColor(context), height: 1.55),
+                  style: TextStyle(
+                    color: AppTheme.textSubColor(context),
+                    height: 1.55,
+                  ),
                 ),
               ),
             ],

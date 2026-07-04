@@ -30,12 +30,20 @@ class HomeScreen extends StatefulWidget {
     required this.repository,
     this.displayName,
     this.scrollController,
+    this.refreshSignal,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final String? displayName;
   final ScrollController? scrollController;
+
+  /// Ana Sayfa sekmesi yeniden seçildiğinde tetiklenir; coin bakiyesi ve
+  /// görevler tazelenir. Kategoriler sekmesinden başlatılan solo seviye
+  /// quizleri bu ekranın _refreshCoins'ini doğrudan çağıramaz (farklı bir
+  /// Navigator dalında yaşarlar), bu yüzden dönüşte sekmeye tekrar
+  /// basıldığında tazeleme burada yapılır.
+  final Listenable? refreshSignal;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -71,12 +79,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _bootstrap();
     _refreshStreak();
     _loadMissions();
+    widget.refreshSignal?.addListener(_handleRefreshSignal);
   }
 
   @override
   void dispose() {
+    widget.refreshSignal?.removeListener(_handleRefreshSignal);
     _loadAnimationController.dispose();
     super.dispose();
+  }
+
+  /// Ana Sayfa sekmesine dönüldüğünde coin bakiyesini ve görevleri tazeler.
+  void _handleRefreshSignal() {
+    if (!mounted) return;
+    _refreshCoins();
+    _loadMissions();
+    _refreshStreak();
   }
 
   Future<void> _refreshStreak() async {
@@ -543,19 +561,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Row(
       children: [
         GestureDetector(
-          onTap: () => Navigator.of(context).push(
-            AppRoute.to(ShopScreen(repository: repo)),
-          ).then((_) => _refreshCoins()),
+          onTap: () => Navigator.of(context)
+              .push(AppRoute.to(ShopScreen(repository: repo)))
+              .then((_) => _refreshCoins()),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.2),
+                  ),
                 ),
                 child: Row(
                   children: [

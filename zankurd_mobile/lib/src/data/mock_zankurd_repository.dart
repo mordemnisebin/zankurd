@@ -156,18 +156,36 @@ class MockZanKurdRepository implements ZanKurdRepository {
     String? subCategory,
     int limit = 10,
   }) async {
-    final filtered = questions
+    final byCategoryAndDifficulty = questions
         .where(
           (question) =>
               question.category == category &&
               question.difficulty >= difficultyMin &&
-              question.difficulty <= difficultyMax &&
-              (subCategory == null ||
-                  SubcategoryConfig.getSubcategoryId(question) == subCategory),
+              question.difficulty <= difficultyMax,
         )
         .toList();
 
-    return _selectFresh(filtered.isEmpty ? questions : filtered, limit);
+    var pool = byCategoryAndDifficulty;
+    if (subCategory != null) {
+      final matched = byCategoryAndDifficulty
+          .where((q) => SubcategoryConfig.getSubcategoryId(q) == subCategory)
+          .toList();
+      // Alt kategori etiketi gerçek bir alan değil, id hash'inden türetilir;
+      // eşleşen sayı limit'in altında kalırsa aynı kategori+zorluktaki diğer
+      // sorularla tamamla, seviyeyi eksik soruyla bitirme.
+      if (matched.length < limit) {
+        final matchedIds = matched.map((q) => q.id).toSet();
+        final need = limit - matched.length;
+        final fillers = byCategoryAndDifficulty
+            .where((q) => !matchedIds.contains(q.id))
+            .take(need * 3);
+        pool = [...matched, ...fillers];
+      } else {
+        pool = matched;
+      }
+    }
+
+    return _selectFresh(pool.isEmpty ? questions : pool, limit);
   }
 
   @override

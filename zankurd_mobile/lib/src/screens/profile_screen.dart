@@ -101,11 +101,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           content: Text(
             store.count > 0
                 ? (ku
-                    ? 'Hemû pirsên şaş li benda dema dubarekirinê ne. Paşê biceribîne!'
-                    : 'Tüm yanlışlarınızın tekrar süreleri bekleniyor. Daha sonra tekrar deneyin!')
+                      ? 'Hemû pirsên şaş li benda dema dubarekirinê ne. Paşê biceribîne!'
+                      : 'Tüm yanlışlarınızın tekrar süreleri bekleniyor. Daha sonra tekrar deneyin!')
                 : (ku
-                    ? 'Pirsên şaş tune. Pêşî pêşbirkekê bilîze!'
-                    : 'Tekrar edilecek yanlış yok. Önce bir yarış oyna!'),
+                      ? 'Pirsên şaş tune. Pêşî pêşbirkekê bilîze!'
+                      : 'Tekrar edilecek yanlış yok. Önce bir yarış oyna!'),
           ),
         ),
       );
@@ -197,9 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   CircleAvatar(
                     radius: 34,
-                    backgroundColor: Colors.white.withValues(
-                      alpha: 0.2,
-                    ),
+                    backgroundColor: Colors.white.withValues(alpha: 0.2),
                     child: Text(
                       (_currentName?.isNotEmpty == true
                               ? _currentName![0]
@@ -240,10 +238,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              Divider(
-                color: Colors.white.withValues(alpha: 0.2),
-                height: 1,
-              ),
+              Divider(color: Colors.white.withValues(alpha: 0.2), height: 1),
               const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -295,11 +290,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         AppPanel(
           child: Row(
             children: [
-              const Icon(
-                Icons.language,
-                color: AppTheme.violet,
-                size: 22,
-              ),
+              const Icon(Icons.language, color: AppTheme.violet, size: 22),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -406,15 +397,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     return const SizedBox(
                       height: 160,
                       child: Center(
-                        child: CircularProgressIndicator(color: AppTheme.accent),
+                        child: CircularProgressIndicator(
+                          color: AppTheme.accent,
+                        ),
                       ),
                     );
                   }
                   final history = snapshot.data!.getLast7DaysHistory();
-                  return WeeklyPerformanceChart(
-                    history: history,
-                    isKu: ku,
-                  );
+                  return WeeklyPerformanceChart(history: history, isKu: ku);
                 },
               ),
             ],
@@ -437,10 +427,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(height: 14),
 
         // Rozet Koleksiyonu
-        const AppPanel(
-          glass: true,
-          child: BadgeCollectionSection(),
-        ),
+        const AppPanel(glass: true, child: BadgeCollectionSection()),
         const SizedBox(height: 14),
 
         // Navigasyon kısayolları — tek panel içinde gruplandı
@@ -449,30 +436,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             children: [
               InkWell(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(16),
+                ),
                 onTap: () {
                   Navigator.of(context).push(
-                    AppRoute.to(FavoriteQuestionsScreen(repository: widget.repository)),
+                    AppRoute.to(
+                      FavoriteQuestionsScreen(repository: widget.repository),
+                    ),
                   );
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      const Icon(Icons.bookmark_outline, color: AppTheme.gold, size: 22),
+                      const Icon(
+                        Icons.bookmark_outline,
+                        color: AppTheme.gold,
+                        size: 22,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           ku ? 'Pirsên Tomarkirî' : 'Kaydedilen Sorular',
-                          style: TextStyle(color: AppTheme.textPrimaryColor(context), fontWeight: FontWeight.w800),
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
-                      Icon(Icons.chevron_right_rounded, color: AppTheme.textMutedColor(context)),
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        color: AppTheme.textMutedColor(context),
+                      ),
                     ],
                   ),
                 ),
               ),
-              Divider(height: 1, indent: 50, color: AppTheme.borderColor(context)),
+              Divider(
+                height: 1,
+                indent: 50,
+                color: AppTheme.borderColor(context),
+              ),
               InkWell(
                 borderRadius: BorderRadius.zero,
                 onTap: _practiceLoading ? null : _startMistakePractice,
@@ -484,9 +489,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ? const SizedBox(
                               width: 22,
                               height: 22,
-                              child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.accent),
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: AppTheme.accent,
+                              ),
                             )
-                          : const Icon(Icons.school_outlined, color: AppTheme.accent, size: 22),
+                          : const Icon(
+                              Icons.school_outlined,
+                              color: AppTheme.accent,
+                              size: 22,
+                            ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(
@@ -494,26 +506,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             Text(
                               ku ? 'Şaşiyên Min' : 'Yanlışlarım',
-                              style: TextStyle(color: AppTheme.textPrimaryColor(context), fontWeight: FontWeight.w800),
+                              style: TextStyle(
+                                color: AppTheme.textPrimaryColor(context),
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
                             const SizedBox(height: 2),
                             Text(
                               _mistakeCount == 0
-                                  ? (ku ? 'Şaşiyek tune — aferîn!' : 'Hiç yanlışın yok — aferin!')
+                                  ? (ku
+                                        ? 'Şaşiyek tune — aferîn!'
+                                        : 'Hiç yanlışın yok — aferin!')
                                   : (ku
-                                      ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
-                                      : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
-                              style: TextStyle(color: AppTheme.textMutedColor(context), fontSize: 12),
+                                        ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
+                                        : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
+                              style: TextStyle(
+                                color: AppTheme.textMutedColor(context),
+                                fontSize: 12,
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      Icon(Icons.chevron_right_rounded, color: AppTheme.textMutedColor(context)),
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        color: AppTheme.textMutedColor(context),
+                      ),
                     ],
                   ),
                 ),
               ),
-              Divider(height: 1, indent: 50, color: AppTheme.borderColor(context)),
+              Divider(
+                height: 1,
+                indent: 50,
+                color: AppTheme.borderColor(context),
+              ),
               InkWell(
                 borderRadius: BorderRadius.zero,
                 onTap: () {
@@ -525,20 +552,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      const Icon(Icons.storefront_outlined, color: AppTheme.gold, size: 22),
+                      const Icon(
+                        Icons.storefront_outlined,
+                        color: AppTheme.gold,
+                        size: 22,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           ku ? 'Dukan' : 'Mağaza',
-                          style: TextStyle(color: AppTheme.textPrimaryColor(context), fontWeight: FontWeight.w800),
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
-                      Icon(Icons.chevron_right_rounded, color: AppTheme.textMutedColor(context)),
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        color: AppTheme.textMutedColor(context),
+                      ),
                     ],
                   ),
                 ),
               ),
-              Divider(height: 1, indent: 50, color: AppTheme.borderColor(context)),
+              Divider(
+                height: 1,
+                indent: 50,
+                color: AppTheme.borderColor(context),
+              ),
               InkWell(
                 borderRadius: BorderRadius.zero,
                 onTap: () {
@@ -550,36 +591,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      const Icon(Icons.settings_outlined, color: AppTheme.violet, size: 22),
+                      const Icon(
+                        Icons.settings_outlined,
+                        color: AppTheme.violet,
+                        size: 22,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           ku ? 'Mîheng' : 'Ayarlar',
-                          style: TextStyle(color: AppTheme.textPrimaryColor(context), fontWeight: FontWeight.w800),
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
-                      Icon(Icons.chevron_right_rounded, color: AppTheme.textMutedColor(context)),
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        color: AppTheme.textMutedColor(context),
+                      ),
                     ],
                   ),
                 ),
               ),
-              Divider(height: 1, indent: 50, color: AppTheme.borderColor(context)),
+              Divider(
+                height: 1,
+                indent: 50,
+                color: AppTheme.borderColor(context),
+              ),
               InkWell(
-                borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16)),
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(16),
+                ),
                 onTap: () => _confirmSignOut(context),
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      const Icon(Icons.logout_rounded, color: AppTheme.wrong, size: 22),
+                      const Icon(
+                        Icons.logout_rounded,
+                        color: AppTheme.wrong,
+                        size: 22,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           ku ? 'Derkeve' : 'Çıkış Yap',
-                          style: const TextStyle(color: AppTheme.wrong, fontWeight: FontWeight.w800),
+                          style: const TextStyle(
+                            color: AppTheme.wrong,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
-                      Icon(Icons.chevron_right_rounded, color: AppTheme.textMutedColor(context)),
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        color: AppTheme.textMutedColor(context),
+                      ),
                     ],
                   ),
                 ),
@@ -630,15 +697,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            flex: 11,
-                            child: leftColumn,
-                          ),
+                          Expanded(flex: 11, child: leftColumn),
                           const SizedBox(width: 16),
-                          Expanded(
-                            flex: 10,
-                            child: rightColumn,
-                          ),
+                          Expanded(flex: 10, child: rightColumn),
                         ],
                       )
                     else ...[
@@ -674,7 +735,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const SizedBox(width: 16),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         _displayName(ku),
@@ -689,7 +751,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             ? 'Di tabloya pêşderçûnê de ev nav xuya dike'
                                             : 'Liderlik tablosunda bu isim görünür',
                                         style: TextStyle(
-                                          color: Colors.white.withValues(alpha: 0.7),
+                                          color: Colors.white.withValues(
+                                            alpha: 0.7,
+                                          ),
                                           fontSize: 13,
                                         ),
                                       ),
@@ -740,7 +804,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               borderRadius: BorderRadius.circular(4),
                               child: LinearProgressIndicator(
                                 value: _levelProgress,
-                                backgroundColor: Colors.white.withValues(alpha: 0.15),
+                                backgroundColor: Colors.white.withValues(
+                                  alpha: 0.15,
+                                ),
                                 color: AppTheme.gold,
                                 minHeight: 8,
                               ),
@@ -781,7 +847,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ],
                               ),
                             ),
-                            _LangToggle(isKu: ku, onToggle: langProvider.toggle),
+                            _LangToggle(
+                              isKu: ku,
+                              onToggle: langProvider.toggle,
+                            ),
                           ],
                         ),
                       ),
@@ -806,51 +875,66 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ku
                                     ? 'Hîn dîroka lîstikê ya serhêl tune.\nBi yekê re bikevin an yek çêbikin.'
                                     : 'Henüz çevrimiçi oyun geçmişin yok.\nBir odaya katıl veya oluştur.',
-                                style: const TextStyle(color: AppTheme.textMuted),
+                                style: const TextStyle(
+                                  color: AppTheme.textMuted,
+                                ),
                               )
                             else
                               LayoutBuilder(
-                                builder: (context, constraints) => GridView.count(
-                                  crossAxisCount: constraints.maxWidth > 600 ? 4 : 2,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10,
-                                  childAspectRatio: 1.8,
-                                  children: [
-                                    _StatTile(
-                                      label: ku ? 'Rêze' : 'Sıralama',
-                                      value: '#${_stats!.rank}',
-                                      color: AppTheme.gold,
-                                      icon: Icons.leaderboard_rounded,
+                                builder: (context, constraints) =>
+                                    GridView.count(
+                                      crossAxisCount: constraints.maxWidth > 600
+                                          ? 4
+                                          : 2,
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      mainAxisSpacing: 10,
+                                      crossAxisSpacing: 10,
+                                      childAspectRatio: 1.8,
+                                      children: [
+                                        _StatTile(
+                                          label: ku ? 'Rêze' : 'Sıralama',
+                                          value: '#${_stats!.rank}',
+                                          color: AppTheme.gold,
+                                          icon: Icons.leaderboard_rounded,
+                                        ),
+                                        _StatTile(
+                                          label: ku
+                                              ? 'Tevayî Xal'
+                                              : 'Toplam Puan',
+                                          value: '${_stats!.totalScore}',
+                                          color: AppTheme.accent,
+                                          icon: Icons.star_rounded,
+                                        ),
+                                        _StatTile(
+                                          label: ku
+                                              ? 'Baştirîn Zincîr'
+                                              : 'En İyi Seri',
+                                          value: '${_stats!.bestStreak}',
+                                          color: AppTheme.violet,
+                                          icon: Icons
+                                              .local_fire_department_rounded,
+                                        ),
+                                        _StatTile(
+                                          label: ku ? 'Lîstik' : 'Oyun',
+                                          value: '${_stats!.roomsPlayed}',
+                                          color: AppTheme.correct,
+                                          icon: Icons.sports_esports_rounded,
+                                        ),
+                                      ],
                                     ),
-                                    _StatTile(
-                                      label: ku ? 'Tevayî Xal' : 'Toplam Puan',
-                                      value: '${_stats!.totalScore}',
-                                      color: AppTheme.accent,
-                                      icon: Icons.star_rounded,
-                                    ),
-                                    _StatTile(
-                                      label: ku ? 'Baştirîn Zincîr' : 'En İyi Seri',
-                                      value: '${_stats!.bestStreak}',
-                                      color: AppTheme.violet,
-                                      icon: Icons.local_fire_department_rounded,
-                                    ),
-                                    _StatTile(
-                                      label: ku ? 'Lîstik' : 'Oyun',
-                                      value: '${_stats!.roomsPlayed}',
-                                      color: AppTheme.correct,
-                                      icon: Icons.sports_esports_rounded,
-                                    ),
-                                  ],
-                                ),
                               ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 16),
-                              child: Divider(color: AppTheme.surfaceHiColor(context)),
+                              child: Divider(
+                                color: AppTheme.surfaceHiColor(context),
+                              ),
                             ),
                             Text(
-                              ku ? 'Performansa Heftane' : 'Haftalık Performans',
+                              ku
+                                  ? 'Performansa Heftane'
+                                  : 'Haftalık Performans',
                               style: TextStyle(
                                 color: AppTheme.textPrimaryColor(context),
                                 fontWeight: FontWeight.w800,
@@ -865,11 +949,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   return const SizedBox(
                                     height: 160,
                                     child: Center(
-                                      child: CircularProgressIndicator(color: AppTheme.accent),
+                                      child: CircularProgressIndicator(
+                                        color: AppTheme.accent,
+                                      ),
                                     ),
                                   );
                                 }
-                                final history = snapshot.data!.getLast7DaysHistory();
+                                final history = snapshot.data!
+                                    .getLast7DaysHistory();
                                 return WeeklyPerformanceChart(
                                   history: history,
                                   isKu: ku,
@@ -884,7 +971,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _PedagogicalAnalyticsSection(isKu: ku),
                       const SizedBox(height: 14),
 
-                      _AchievementShowcase(achievements: _achievements, isKu: ku),
+                      _AchievementShowcase(
+                        achievements: _achievements,
+                        isKu: ku,
+                      ),
                       const SizedBox(height: 14),
 
                       // Rozet Koleksiyonu
@@ -905,11 +995,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Column(
                           children: [
                             InkWell(
-                              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                              borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(16),
+                              ),
                               onTap: () {
                                 Navigator.of(context).push(
                                   AppRoute.to(
-                                    FavoriteQuestionsScreen(repository: widget.repository),
+                                    FavoriteQuestionsScreen(
+                                      repository: widget.repository,
+                                    ),
                                   ),
                                 );
                               },
@@ -917,23 +1011,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 padding: const EdgeInsets.all(16),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.bookmark_outline, color: AppTheme.gold, size: 22),
+                                    const Icon(
+                                      Icons.bookmark_outline,
+                                      color: AppTheme.gold,
+                                      size: 22,
+                                    ),
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
-                                        ku ? 'Pirsên Tomarkirî' : 'Kaydedilen Sorular',
-                                        style: TextStyle(color: AppTheme.textPrimaryColor(context), fontWeight: FontWeight.w800),
+                                        ku
+                                            ? 'Pirsên Tomarkirî'
+                                            : 'Kaydedilen Sorular',
+                                        style: TextStyle(
+                                          color: AppTheme.textPrimaryColor(
+                                            context,
+                                          ),
+                                          fontWeight: FontWeight.w800,
+                                        ),
                                       ),
                                     ),
-                                    Icon(Icons.chevron_right_rounded, color: AppTheme.textMutedColor(context)),
+                                    Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: AppTheme.textMutedColor(context),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
-                            Divider(height: 1, indent: 50, color: AppTheme.borderColor(context)),
+                            Divider(
+                              height: 1,
+                              indent: 50,
+                              color: AppTheme.borderColor(context),
+                            ),
                             InkWell(
                               borderRadius: BorderRadius.zero,
-                              onTap: _practiceLoading ? null : _startMistakePractice,
+                              onTap: _practiceLoading
+                                  ? null
+                                  : _startMistakePractice,
                               child: Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Row(
@@ -942,77 +1056,136 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ? const SizedBox(
                                             width: 22,
                                             height: 22,
-                                            child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.accent),
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              color: AppTheme.accent,
+                                            ),
                                           )
-                                        : const Icon(Icons.school_outlined, color: AppTheme.accent, size: 22),
+                                        : const Icon(
+                                            Icons.school_outlined,
+                                            color: AppTheme.accent,
+                                            size: 22,
+                                          ),
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             ku ? 'Şaşiyên Min' : 'Yanlışlarım',
-                                            style: TextStyle(color: AppTheme.textPrimaryColor(context), fontWeight: FontWeight.w800),
+                                            style: TextStyle(
+                                              color: AppTheme.textPrimaryColor(
+                                                context,
+                                              ),
+                                              fontWeight: FontWeight.w800,
+                                            ),
                                           ),
                                           const SizedBox(height: 2),
                                           Text(
                                             _mistakeCount == 0
-                                                ? (ku ? 'Şaşiyek tune — aferîn!' : 'Hiç yanlışın yok — aferin!')
+                                                ? (ku
+                                                      ? 'Şaşiyek tune — aferîn!'
+                                                      : 'Hiç yanlışın yok — aferin!')
                                                 : (ku
-                                                    ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
-                                                    : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
-                                            style: TextStyle(color: AppTheme.textMutedColor(context), fontSize: 12),
+                                                      ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
+                                                      : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
+                                            style: TextStyle(
+                                              color: AppTheme.textMutedColor(
+                                                context,
+                                              ),
+                                              fontSize: 12,
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    Icon(Icons.chevron_right_rounded, color: AppTheme.textMutedColor(context)),
+                                    Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: AppTheme.textMutedColor(context),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
-                            Divider(height: 1, indent: 50, color: AppTheme.borderColor(context)),
+                            Divider(
+                              height: 1,
+                              indent: 50,
+                              color: AppTheme.borderColor(context),
+                            ),
                             InkWell(
                               borderRadius: BorderRadius.zero,
                               onTap: () {
                                 Navigator.of(context).push(
-                                  AppRoute.to(SettingsScreen(repository: widget.repository)),
+                                  AppRoute.to(
+                                    SettingsScreen(
+                                      repository: widget.repository,
+                                    ),
+                                  ),
                                 );
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.settings_outlined, color: AppTheme.violet, size: 22),
+                                    const Icon(
+                                      Icons.settings_outlined,
+                                      color: AppTheme.violet,
+                                      size: 22,
+                                    ),
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
                                         ku ? 'Mîheng' : 'Ayarlar',
-                                        style: TextStyle(color: AppTheme.textPrimaryColor(context), fontWeight: FontWeight.w800),
+                                        style: TextStyle(
+                                          color: AppTheme.textPrimaryColor(
+                                            context,
+                                          ),
+                                          fontWeight: FontWeight.w800,
+                                        ),
                                       ),
                                     ),
-                                    Icon(Icons.chevron_right_rounded, color: AppTheme.textMutedColor(context)),
+                                    Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: AppTheme.textMutedColor(context),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
-                            Divider(height: 1, indent: 50, color: AppTheme.borderColor(context)),
+                            Divider(
+                              height: 1,
+                              indent: 50,
+                              color: AppTheme.borderColor(context),
+                            ),
                             InkWell(
-                              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16)),
+                              borderRadius: const BorderRadius.vertical(
+                                bottom: Radius.circular(16),
+                              ),
                               onTap: () => _confirmSignOut(context),
                               child: Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.logout_rounded, color: AppTheme.wrong, size: 22),
+                                    const Icon(
+                                      Icons.logout_rounded,
+                                      color: AppTheme.wrong,
+                                      size: 22,
+                                    ),
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
                                         ku ? 'Derkeve' : 'Çıkış Yap',
-                                        style: const TextStyle(color: AppTheme.wrong, fontWeight: FontWeight.w800),
+                                        style: const TextStyle(
+                                          color: AppTheme.wrong,
+                                          fontWeight: FontWeight.w800,
+                                        ),
                                       ),
                                     ),
-                                    Icon(Icons.chevron_right_rounded, color: AppTheme.textMutedColor(context)),
+                                    Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: AppTheme.textMutedColor(context),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -1160,7 +1333,10 @@ class _StatTile extends StatelessWidget {
           ),
           Text(
             label,
-            style: TextStyle(color: AppTheme.textMutedColor(context), fontSize: 11),
+            style: TextStyle(
+              color: AppTheme.textMutedColor(context),
+              fontSize: 11,
+            ),
           ),
         ],
       ),
@@ -1221,14 +1397,23 @@ class _AchievementShowcase extends StatelessWidget {
                   itemCount: AchievementStore.definitions.length,
                   itemBuilder: (context, index) {
                     final definition = AchievementStore.definitions[index];
-                    final isUnlocked = achievements.any((a) => a.id == definition.id);
-                    final color = isUnlocked ? AppTheme.gold : AppTheme.textMutedColor(context);
+                    final isUnlocked = achievements.any(
+                      (a) => a.id == definition.id,
+                    );
+                    final color = isUnlocked
+                        ? AppTheme.gold
+                        : AppTheme.textMutedColor(context);
                     return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: isUnlocked
                             ? AppTheme.gold.withValues(alpha: 0.08)
-                            : AppTheme.surfaceHiColor(context).withValues(alpha: 0.5),
+                            : AppTheme.surfaceHiColor(
+                                context,
+                              ).withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           color: isUnlocked
@@ -1291,10 +1476,7 @@ class _AchievementShowcase extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
-                Icons.workspace_premium_outlined,
-                color: AppTheme.gold,
-              ),
+              Icon(Icons.workspace_premium_outlined, color: AppTheme.gold),
               const SizedBox(width: 8),
               Text(
                 isKu ? 'Rozet' : 'Rozetler',
@@ -1351,7 +1533,10 @@ class _AchievementShowcase extends StatelessWidget {
                   final achievement = achievements[index];
                   return Padding(
                     padding: const EdgeInsets.only(right: 8),
-                    child: _AchievementChip(achievement: achievement, isKu: isKu),
+                    child: _AchievementChip(
+                      achievement: achievement,
+                      isKu: isKu,
+                    ),
                   );
                 },
               ),
@@ -1387,10 +1572,7 @@ class _MasterySection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
-                Icons.workspace_premium_outlined,
-                color: AppTheme.violet,
-              ),
+              Icon(Icons.workspace_premium_outlined, color: AppTheme.violet),
               const SizedBox(width: 8),
               // Dar (iki sütunlu masaüstü) panelde başlık taşmasın.
               Expanded(
@@ -1433,10 +1615,10 @@ class _MasteryRow extends StatelessWidget {
     final count = store.correctCount(category);
     final threshold = store.nextThreshold(category);
     final isMamoste = level == MasteryLevel.mamoste;
-    final progress =
-        isMamoste ? 1.0 : (count / threshold).clamp(0.0, 1.0);
-    final badgeColor =
-        level == MasteryLevel.none ? AppTheme.textMuted : level.badgeColor;
+    final progress = isMamoste ? 1.0 : (count / threshold).clamp(0.0, 1.0);
+    final badgeColor = level == MasteryLevel.none
+        ? AppTheme.textMuted
+        : level.badgeColor;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -1552,10 +1734,7 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<dynamic>>(
-      future: Future.wait([
-        MistakeStore.load(),
-        MasteryStore.load(),
-      ]),
+      future: Future.wait([MistakeStore.load(), MasteryStore.load()]),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const SizedBox.shrink();
@@ -1585,19 +1764,36 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
           'Paradigma',
         ];
 
+        var masteryCategoriesPlayed = 0;
+        var mistakeCategoriesPlayed = 0;
+
         for (final cat in categories) {
           final corrects = masteryStore.correctCount(cat);
-          if (corrects > maxCorrect && corrects > 0) {
-            maxCorrect = corrects;
-            strongestCat = cat;
+          if (corrects > 0) {
+            masteryCategoriesPlayed++;
+            if (corrects > maxCorrect) {
+              maxCorrect = corrects;
+              strongestCat = cat;
+            }
           }
 
           final mistakes = mistakesByCategory[cat] ?? 0;
-          if (mistakes > maxMistakes && mistakes > 0) {
-            maxMistakes = mistakes;
-            weakestCat = cat;
+          if (mistakes > 0) {
+            mistakeCategoriesPlayed++;
+            if (mistakes > maxMistakes) {
+              maxMistakes = mistakes;
+              weakestCat = cat;
+            }
           }
         }
+
+        // Tek bir kategori oynanmışken o kategori hem "en güçlü" hem de
+        // "en zayıf" olarak aynı anda görünüyordu (karşılaştırma yapılacak
+        // ikinci bir kategori yoktu) — bkz. 2026-07-04 keşif turu bulgusu.
+        // Anlamlı bir karşılaştırma için en az 2 farklı kategoride veri
+        // birikene kadar ilgili rozeti gösterme.
+        if (masteryCategoriesPlayed < 2) strongestCat = null;
+        if (mistakeCategoriesPlayed < 2) weakestCat = null;
 
         if (strongestCat == null && weakestCat == null) {
           return const SizedBox.shrink();
@@ -1609,10 +1805,7 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(
-                    Icons.analytics_outlined,
-                    color: AppTheme.accent,
-                  ),
+                  Icon(Icons.analytics_outlined, color: AppTheme.accent),
                   const SizedBox(width: 8),
                   // Dar (iki sütunlu masaüstü) panelde başlık taşmasın.
                   Expanded(

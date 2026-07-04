@@ -28,6 +28,7 @@ class _AppShellState extends State<AppShell> {
   static const _profileNameCompletedKey = 'zankurd.profileName.completed';
 
   int _tab = 0;
+  final ValueNotifier<int> _homeRefresh = ValueNotifier<int>(0);
   final ValueNotifier<int> _profileRefresh = ValueNotifier<int>(0);
   bool _checkingOnboarding = true;
   bool _showOnboarding = false;
@@ -57,6 +58,7 @@ class _AppShellState extends State<AppShell> {
     _categoriesScrollController.dispose();
     _leaderboardScrollController.dispose();
     _profileScrollController.dispose();
+    _homeRefresh.dispose();
     _profileRefresh.dispose();
     super.dispose();
   }
@@ -127,6 +129,7 @@ class _AppShellState extends State<AppShell> {
             repository: widget.repository,
             displayName: _profileName,
             scrollController: _homeScrollController,
+            refreshSignal: _homeRefresh,
           ),
           CategoriesTab(
             repository: widget.repository,
@@ -166,8 +169,9 @@ class _AppShellState extends State<AppShell> {
                 );
               }
             } else {
-              // Profil tabı IndexedStack içinde canlı kaldığı için sekmeye her
-              // dönüşte rozet/istatistik/yanlış verilerini tazelemesi gerekir.
+              // Ana Sayfa ve Profil tabları IndexedStack içinde canlı kaldığı
+              // için sekmeye her dönüşte ilgili verileri tazelemesi gerekir.
+              if (i == 0) _homeRefresh.value++;
               if (i == 3) _profileRefresh.value++;
               setState(() => _tab = i);
             }
