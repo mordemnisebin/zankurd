@@ -531,114 +531,40 @@ class _SignInScreenState extends State<SignInScreen>
                                     Row(
                                       children: [
                                         Expanded(
-                                          child: OutlinedButton.icon(
-                                            style: _authOutlineButtonStyle(
-                                              dense: true,
-                                            ),
+                                          child: _GoogleSignInButton(
+                                            dense: true,
                                             onPressed: authProvider.isLoading
                                                 ? null
                                                 : () => _signInWithGoogle(
                                                     authProvider,
                                                   ),
-                                            icon: const Text(
-                                              'G',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 18,
-                                                color: AppTheme.accent,
-                                              ),
-                                            ),
-                                            label: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: Text(
-                                                context.s(
-                                                  'Bi Google têkeve',
-                                                  'Google ile giriş yap',
-                                                ),
-                                              ),
-                                            ),
                                           ),
                                         ),
                                         const SizedBox(width: 8),
                                         Expanded(
-                                          child: OutlinedButton.icon(
-                                            style: _authOutlineButtonStyle(
-                                              dense: true,
-                                            ),
+                                          child: _GuestSignInButton(
+                                            dense: true,
                                             onPressed: authProvider.isLoading
                                                 ? null
                                                 : () => _signInAsGuest(
                                                     authProvider,
                                                   ),
-                                            icon: Icon(
-                                              Icons.person_outline,
-                                              size: 20,
-                                              color: Colors.white.withValues(
-                                                alpha: 0.86,
-                                              ),
-                                            ),
-                                            label: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: Text(
-                                                context.s(
-                                                  'Wek mêvan bidomîne',
-                                                  'Misafir olarak devam et',
-                                                ),
-                                              ),
-                                            ),
                                           ),
                                         ),
                                       ],
                                     )
                                   else ...[
-                                    SizedBox(
-                                      width: double.infinity,
-                                      child: OutlinedButton.icon(
-                                        style: _authOutlineButtonStyle(),
-                                        onPressed: authProvider.isLoading
-                                            ? null
-                                            : () => _signInWithGoogle(
-                                                authProvider,
-                                              ),
-                                        icon: const Text(
-                                          'G',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 18,
-                                            color: AppTheme.accent,
-                                          ),
-                                        ),
-                                        label: Text(
-                                          context.s(
-                                            'Bi Google têkeve',
-                                            'Google ile giriş yap',
-                                          ),
-                                        ),
-                                      ),
+                                    _GoogleSignInButton(
+                                      onPressed: authProvider.isLoading
+                                          ? null
+                                          : () =>
+                                                _signInWithGoogle(authProvider),
                                     ),
                                     SizedBox(height: wideButtonGap),
-                                    SizedBox(
-                                      width: double.infinity,
-                                      child: OutlinedButton.icon(
-                                        style: _authOutlineButtonStyle(),
-                                        onPressed: authProvider.isLoading
-                                            ? null
-                                            : () =>
-                                                  _signInAsGuest(authProvider),
-                                        icon: Icon(
-                                          Icons.person_outline,
-                                          size: 20,
-                                          color: Colors.white.withValues(
-                                            alpha: 0.86,
-                                          ),
-                                        ),
-                                        label: Text(
-                                          context.s(
-                                            'Wek mêvan bidomîne',
-                                            'Misafir olarak devam et',
-                                          ),
-                                        ),
-                                      ),
+                                    _GuestSignInButton(
+                                      onPressed: authProvider.isLoading
+                                          ? null
+                                          : () => _signInAsGuest(authProvider),
                                     ),
                                   ],
                                   SizedBox(height: wideGap),
@@ -898,50 +824,17 @@ class _SignInScreenState extends State<SignInScreen>
                           ),
                           SizedBox(height: altGap),
                           // Google Sign In
-                          SizedBox(
-                            width: double.infinity,
-                            child: OutlinedButton.icon(
-                              style: _authOutlineButtonStyle(),
-                              onPressed: authProvider.isLoading
-                                  ? null
-                                  : () => _signInWithGoogle(authProvider),
-                              icon: const Text(
-                                'G',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 18,
-                                  color: AppTheme.accent,
-                                ),
-                              ),
-                              label: Text(
-                                context.s(
-                                  'Bi Google têkeve',
-                                  'Google ile giriş yap',
-                                ),
-                              ),
-                            ),
+                          _GoogleSignInButton(
+                            onPressed: authProvider.isLoading
+                                ? null
+                                : () => _signInWithGoogle(authProvider),
                           ),
                           const SizedBox(height: 12),
                           // Guest Sign In
-                          SizedBox(
-                            width: double.infinity,
-                            child: OutlinedButton.icon(
-                              style: _authOutlineButtonStyle(),
-                              onPressed: authProvider.isLoading
-                                  ? null
-                                  : () => _signInAsGuest(authProvider),
-                              icon: Icon(
-                                Icons.person_outline,
-                                size: 20,
-                                color: Colors.white.withValues(alpha: 0.86),
-                              ),
-                              label: Text(
-                                context.s(
-                                  'Wek mêvan bidomîne',
-                                  'Misafir olarak devam et',
-                                ),
-                              ),
-                            ),
+                          _GuestSignInButton(
+                            onPressed: authProvider.isLoading
+                                ? null
+                                : () => _signInAsGuest(authProvider),
                           ),
                           SizedBox(height: compact ? 16 : 24),
                           // Sign Up link
@@ -991,14 +884,141 @@ class _SignInScreenState extends State<SignInScreen>
   }
 }
 
-ButtonStyle _authOutlineButtonStyle({bool dense = false}) {
-  return OutlinedButton.styleFrom(
-    foregroundColor: Colors.white,
-    disabledForegroundColor: Colors.white.withValues(alpha: 0.42),
-    side: BorderSide(color: Colors.white.withValues(alpha: 0.72), width: 1.2),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    padding: EdgeInsets.symmetric(vertical: dense ? 8 : 14, horizontal: 20),
-  );
+class _GoogleSignInButton extends StatelessWidget {
+  const _GoogleSignInButton({required this.onPressed, this.dense = false});
+
+  final VoidCallback? onPressed;
+  final bool dense;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = onPressed != null;
+    return Opacity(
+      opacity: enabled ? 1 : 0.5,
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: onPressed,
+          child: Container(
+            height: dense ? 48 : 58,
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.22),
+                  blurRadius: 14,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'G',
+                  style: TextStyle(
+                    color: AppTheme.accent,
+                    fontWeight: FontWeight.w900,
+                    fontSize: dense ? 18 : 22,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    context.s('Bi Google têkeve', 'Google ile giriş yap'),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: AppTheme.bgDeep,
+                      fontWeight: FontWeight.w700,
+                      fontSize: dense ? 13 : 16,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GuestSignInButton extends StatelessWidget {
+  const _GuestSignInButton({required this.onPressed, this.dense = false});
+
+  final VoidCallback? onPressed;
+  final bool dense;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = onPressed != null;
+    return Opacity(
+      opacity: enabled ? 1 : 0.5,
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16),
+        child: Ink(
+          height: dense ? 48 : 58,
+          decoration: BoxDecoration(
+            gradient: AppTheme.homeHeaderGradient,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: AppTheme.violet.withValues(alpha: 0.4),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: onPressed,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: dense ? 24 : 30,
+                    height: dense ? 24 : 30,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.22),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.person_rounded,
+                      color: Colors.white,
+                      size: dense ? 15 : 18,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: Text(
+                      context.s(
+                        'Wek mêvan bidomîne',
+                        'Misafir olarak devam et',
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: dense ? 13 : 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _AuthScrollFrame extends StatelessWidget {

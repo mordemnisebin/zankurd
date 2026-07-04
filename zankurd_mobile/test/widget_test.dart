@@ -261,42 +261,33 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('auth alternative buttons stay readable on dark background', (
-    tester,
-  ) async {
-    await tester.binding.setSurfaceSize(const Size(844, 390));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
+  testWidgets(
+    'auth alternative buttons stay readable on their own backgrounds',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(844, 390));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
 
-    await tester.pumpWidget(
-      _testShell(
-        child: const SignInScreen(),
-        authProvider: _GateAuthProvider(),
-      ),
-    );
-    await tester.pumpAndSettle();
+      await tester.pumpWidget(
+        _testShell(
+          child: const SignInScreen(),
+          authProvider: _GateAuthProvider(),
+        ),
+      );
+      await tester.pumpAndSettle();
 
-    final googleButton = tester.widget<OutlinedButton>(
-      find.ancestor(
-        of: find.text('Google ile giriş yap'),
-        matching: find.byType(OutlinedButton),
-      ),
-    );
-    final guestButton = tester.widget<OutlinedButton>(
-      find.ancestor(
-        of: find.text('Misafir olarak devam et'),
-        matching: find.byType(OutlinedButton),
-      ),
-    );
+      // Google butonu: beyaz dolgu -> koyu metin kontrast sağlamalı.
+      final googleLabel = tester.widget<Text>(
+        find.text('Google ile giriş yap'),
+      );
+      expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
 
-    expect(
-      googleButton.style?.foregroundColor?.resolve({}),
-      equals(Colors.white),
-    );
-    expect(
-      guestButton.style?.foregroundColor?.resolve({}),
-      equals(Colors.white),
-    );
-  });
+      // Misafir butonu: marka gradyanı dolgu -> beyaz metin kontrast sağlamalı.
+      final guestLabel = tester.widget<Text>(
+        find.text('Misafir olarak devam et'),
+      );
+      expect(guestLabel.style?.color, equals(Colors.white));
+    },
+  );
 
   testWidgets('auth form text stays readable on the dark auth background', (
     tester,
