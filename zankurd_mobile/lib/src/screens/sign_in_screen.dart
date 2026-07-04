@@ -365,6 +365,86 @@ class _SignInScreenState extends State<SignInScreen>
                                     ),
                                   ),
                                   SizedBox(height: wideGap),
+                                  if (denseWide)
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: _GoogleSignInButton(
+                                            dense: true,
+                                            onPressed: authProvider.isLoading
+                                                ? null
+                                                : () => _signInWithGoogle(
+                                                    authProvider,
+                                                  ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: _GuestSignInButton(
+                                            dense: true,
+                                            onPressed: authProvider.isLoading
+                                                ? null
+                                                : () => _signInAsGuest(
+                                                    authProvider,
+                                                  ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  else ...[
+                                    _GoogleSignInButton(
+                                      onPressed: authProvider.isLoading
+                                          ? null
+                                          : () =>
+                                                _signInWithGoogle(authProvider),
+                                    ),
+                                    SizedBox(height: wideButtonGap),
+                                    _GuestSignInButton(
+                                      onPressed: authProvider.isLoading
+                                          ? null
+                                          : () => _signInAsGuest(authProvider),
+                                    ),
+                                  ],
+                                  SizedBox(height: wideButtonGap),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Divider(
+                                          color: AppTheme.borderColor(context),
+                                          thickness: 1,
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                          ),
+                                          child: Text(
+                                            context.s(
+                                              'An jî bi e-peyamê',
+                                              'Veya e-posta ile',
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: AppTheme.textMutedColor(
+                                                context,
+                                              ),
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Divider(
+                                          color: AppTheme.borderColor(context),
+                                          thickness: 1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: wideButtonGap),
                                   FadeTransition(
                                     opacity:
                                         LoadAnimationSequence.formField1FadeAnimation(
@@ -495,79 +575,6 @@ class _SignInScreenState extends State<SignInScreen>
                                     ),
                                   ),
                                   SizedBox(height: wideGap),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Divider(
-                                          color: AppTheme.borderColor(context),
-                                          thickness: 1,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                        ),
-                                        child: Text(
-                                          context.s('AN JÎ', 'VEYA'),
-                                          style: TextStyle(
-                                            color: AppTheme.textMutedColor(
-                                              context,
-                                            ),
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Divider(
-                                          color: AppTheme.borderColor(context),
-                                          thickness: 1,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: wideButtonGap),
-                                  if (denseWide)
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: _GoogleSignInButton(
-                                            dense: true,
-                                            onPressed: authProvider.isLoading
-                                                ? null
-                                                : () => _signInWithGoogle(
-                                                    authProvider,
-                                                  ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Expanded(
-                                          child: _GuestSignInButton(
-                                            dense: true,
-                                            onPressed: authProvider.isLoading
-                                                ? null
-                                                : () => _signInAsGuest(
-                                                    authProvider,
-                                                  ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  else ...[
-                                    _GoogleSignInButton(
-                                      onPressed: authProvider.isLoading
-                                          ? null
-                                          : () =>
-                                                _signInWithGoogle(authProvider),
-                                    ),
-                                    SizedBox(height: wideButtonGap),
-                                    _GuestSignInButton(
-                                      onPressed: authProvider.isLoading
-                                          ? null
-                                          : () => _signInAsGuest(authProvider),
-                                    ),
-                                  ],
-                                  SizedBox(height: wideGap),
                                   Wrap(
                                     alignment: WrapAlignment.center,
                                     crossAxisAlignment:
@@ -673,6 +680,58 @@ class _SignInScreenState extends State<SignInScreen>
                             ),
                           ),
                           SizedBox(height: formGap),
+                          // Google Sign In
+                          _GoogleSignInButton(
+                            onPressed: authProvider.isLoading
+                                ? null
+                                : () => _signInWithGoogle(authProvider),
+                          ),
+                          const SizedBox(height: 12),
+                          // Guest Sign In
+                          _GuestSignInButton(
+                            onPressed: authProvider.isLoading
+                                ? null
+                                : () => _signInAsGuest(authProvider),
+                          ),
+                          SizedBox(height: actionGap),
+                          // Divider
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Divider(
+                                  color: AppTheme.borderColor(context),
+                                  thickness: 1,
+                                ),
+                              ),
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  child: Text(
+                                    context.s(
+                                      'An jî bi e-peyamê',
+                                      'Veya e-posta ile',
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: AppTheme.textMutedColor(context),
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  color: AppTheme.borderColor(context),
+                                  thickness: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: altGap),
                           // Form fields with fade animations
                           FadeTransition(
                             opacity:
@@ -790,51 +849,6 @@ class _SignInScreenState extends State<SignInScreen>
                                     : () => _signIn(authProvider),
                               ),
                             ),
-                          ),
-                          SizedBox(height: actionGap),
-                          // Divider
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Divider(
-                                  color: AppTheme.borderColor(context),
-                                  thickness: 1,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                ),
-                                child: Text(
-                                  context.s('AN JÎ', 'VEYA'),
-                                  style: TextStyle(
-                                    color: AppTheme.textMutedColor(context),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Divider(
-                                  color: AppTheme.borderColor(context),
-                                  thickness: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: altGap),
-                          // Google Sign In
-                          _GoogleSignInButton(
-                            onPressed: authProvider.isLoading
-                                ? null
-                                : () => _signInWithGoogle(authProvider),
-                          ),
-                          const SizedBox(height: 12),
-                          // Guest Sign In
-                          _GuestSignInButton(
-                            onPressed: authProvider.isLoading
-                                ? null
-                                : () => _signInAsGuest(authProvider),
                           ),
                           SizedBox(height: compact ? 16 : 24),
                           // Sign Up link
