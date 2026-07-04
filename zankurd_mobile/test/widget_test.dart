@@ -45,12 +45,18 @@ class _GateAuthProvider extends AuthProvider {
   _GateAuthProvider() : super.test();
 
   bool _authenticated = false;
+  bool _loading = false;
 
   @override
   bool get isAuthenticated => _authenticated;
 
   @override
-  bool get isLoading => false;
+  bool get isLoading => _loading;
+
+  set isLoadingForTest(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
 
   @override
   Future<bool> signInAsGuest() async {
@@ -288,6 +294,36 @@ void main() {
       expect(guestLabel.style?.color, equals(Colors.white));
     },
   );
+
+  testWidgets('auth alternative buttons ignore taps while loading', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final authProvider = _GateAuthProvider();
+    await tester.pumpWidget(
+      _testShell(child: const SignInScreen(), authProvider: authProvider),
+    );
+    await tester.pumpAndSettle();
+
+    authProvider.isLoadingForTest = true;
+    await tester.pump();
+
+    // isLoading true iken onPressed null'a düşer; IgnorePointer bu durumda
+    // butonu tamamen hit-test dışı bırakmalı (yalnızca InkWell'in örtük
+    // null-onTap davranışına güvenmemeli). Bulunamaması bunun kanıtıdır.
+    expect(find.text('Misafir olarak devam et').hitTestable(), findsNothing);
+
+    authProvider.isLoadingForTest = false;
+    await tester.pump();
+
+    // Yükleme bitince buton tekrar normal çalışmalı (regresyon önlemi).
+    await tester.tap(find.text('Misafir olarak devam et').hitTestable());
+    await tester.pumpAndSettle();
+
+    expect(authProvider.isAuthenticated, isTrue);
+  });
 
   testWidgets('auth form text stays readable on the dark auth background', (
     tester,
