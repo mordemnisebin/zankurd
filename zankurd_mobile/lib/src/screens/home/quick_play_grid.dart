@@ -141,7 +141,15 @@ class _QuickPlayTile extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      maxLines: 1,
+                      // Geniş ekranda ResponsiveWrapper içeriği 480px'lik
+                      // sabit bir çerçeveye sıkıştırırken HomeScreen'in
+                      // isWide kararı gerçek pencere genişliğine bakıyor;
+                      // bu durumda ızgara çok dar bir yarı-sütuna düşüyor.
+                      // 2 satıra izin vermek, o durumda "Günün Yarışması"
+                      // gibi uzun başlıkların "Günün Ya..." diye
+                      // kesilmesini önlüyor; sabit yükseklikte zaten
+                      // yeterli boşluk var.
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         color: Colors.white,

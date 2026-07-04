@@ -415,15 +415,23 @@ class _SignInScreenState extends State<SignInScreen>
                                         ),
                                       ),
                                       Flexible(
+                                        // Uzun çeviri metni ("An jî bi
+                                        // e-peyamê") iki Expanded çizgiyle eşit
+                                        // pay (flex:1) aldığında dar
+                                        // ekranlarda kesiliyordu; metne 3 kat
+                                        // pay veriyoruz ki çizgiler ince kalıp
+                                        // metin tam sığsın.
+                                        flex: 3,
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
-                                            horizontal: 16,
+                                            horizontal: 8,
                                           ),
                                           child: Text(
                                             context.s(
                                               'An jî bi e-peyamê',
                                               'Veya e-posta ile',
                                             ),
+                                            textAlign: TextAlign.center,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
@@ -704,15 +712,21 @@ class _SignInScreenState extends State<SignInScreen>
                                 ),
                               ),
                               Flexible(
+                                // Uzun çeviri metni iki Expanded çizgiyle
+                                // eşit pay (flex:1) aldığında dar ekranlarda
+                                // kesiliyordu; metne 3 kat pay veriyoruz ki
+                                // çizgiler ince kalıp metin tam sığsın.
+                                flex: 3,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
+                                    horizontal: 8,
                                   ),
                                   child: Text(
                                     context.s(
                                       'An jî bi e-peyamê',
                                       'Veya e-posta ile',
                                     ),
+                                    textAlign: TextAlign.center,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -919,7 +933,7 @@ class _GoogleSignInButton extends StatelessWidget {
             onTap: onPressed,
             child: Container(
               height: dense ? 48 : 58,
-              padding: const EdgeInsets.symmetric(horizontal: 18),
+              padding: EdgeInsets.symmetric(horizontal: dense ? 10 : 18),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
@@ -941,16 +955,23 @@ class _GoogleSignInButton extends StatelessWidget {
                       fontSize: dense ? 18 : 22,
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: dense ? 6 : 10),
                   Flexible(
-                    child: Text(
-                      context.s('Bi Google têkeve', 'Google ile giriş yap'),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: AppTheme.bgDeep,
-                        fontWeight: FontWeight.w700,
-                        fontSize: dense ? 13 : 16,
+                    // dense (yan yana Row) düzende dar alan uzun çeviri
+                    // metnini ("Bi Google têkeve" gibi) kesiyordu; eski
+                    // OutlinedButton'daki FittedBox+scaleDown davranışı
+                    // korunuyor: sığmazsa küçülür, kesilmez.
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        context.s('Bi Google têkeve', 'Google ile giriş yap'),
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: AppTheme.bgDeep,
+                          fontWeight: FontWeight.w700,
+                          fontSize: dense ? 13 : 16,
+                        ),
                       ),
                     ),
                   ),
@@ -997,36 +1018,47 @@ class _GuestSignInButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               onTap: onPressed,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18),
+                padding: EdgeInsets.symmetric(horizontal: dense ? 10 : 18),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: dense ? 24 : 30,
-                      height: dense ? 24 : 30,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.22),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.person_rounded,
-                        color: Colors.white,
-                        size: dense ? 15 : 18,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Flexible(
-                      child: Text(
-                        context.s(
-                          'Wek mêvan bidomîne',
-                          'Misafir olarak devam et',
+                    // dense (yan yana Row) modda rozet+boşluk, uzun "Wek
+                    // mêvan bidomîne" metnine ayrılan payı okunamayacak
+                    // kadar daraltıyordu; bu modda ikon tamamen kaldırılıp
+                    // tüm genişlik metne bırakılıyor.
+                    if (!dense) ...[
+                      Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.22),
+                          shape: BoxShape.circle,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        child: const Icon(
+                          Icons.person_rounded,
                           color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: dense ? 13 : 16,
+                          size: 18,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                    ],
+                    Flexible(
+                      // Google butonundaki gibi: dar (dense) alanda kesmek
+                      // yerine küçülterek sığdır.
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          context.s(
+                            'Wek mêvan bidomîne',
+                            'Misafir olarak devam et',
+                          ),
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: dense ? 13 : 16,
+                          ),
                         ),
                       ),
                     ),
