@@ -109,11 +109,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
         number: 1,
         title: 'Destpêk',
         category: category,
-        // Sadece zorluk=1 ile sınırlıyken bazı kategorilerde (ör. Siyaset'te
-        // hiç, Çand'da 1) ilan edilen 10 soruya ulaşılamıyordu (bkz. 2026-07-05
-        // canlı doğrulama: tüm kategorilerde zorluk=1 havuzu 0-9 arası). Zorluk
-        // 2'yi de kapsayarak yeterli hacme ulaşılıyor; gerçek uzun vadeli çözüm
-        // her kategoriye daha fazla başlangıç seviyesi soru eklemek.
+        // 2026-07-05: canlı zorluk=1 havuzu (Ziman 90, Çand 27, Müzik 16,
+        // Coğrafya 15, Dîrok 10, Edebiyat 9) düzeltme+içerik senkronuyla
+        // büyütüldü, ama Edebiyat gibi bazı kategoriler tam 10'a çok az
+        // farkla yaklaşıyor. Zorluk 2'yi de kapsamak güvenli bir pay
+        // bırakıyor; Siyaset/Paradigma zaten kasıtlı olarak "az kolay
+        // soru" tasarımıyla düşük kalıyor (bkz. question_bank_test.dart
+        // isMature eşiği).
         difficultyMin: 1,
         difficultyMax: 2,
         questionCount: 10,

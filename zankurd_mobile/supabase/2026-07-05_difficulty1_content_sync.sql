@@ -1,0 +1,29 @@
+-- ============================================================
+-- Zorluk=1 (Destpek) icerik senkronu (2026-07-05)
+--
+-- 2026-07-04 kesif turunda bulundu: "Destpek" seviyeleri ilan edilen 10
+-- soru yerine 1-4 soru getiriyordu. Kok neden arastirmasi iki ayri
+-- sorun ortaya cikardi:
+--
+-- 1) 92 soru zaten canliydi ama yanlis zorlukta etiketliydi (kod
+--    offline_question_bank.dart'ta zorluk=1 derken, canli DB'de
+--    zorluk=2/3 olarak kayitliydi) -- muhtemelen eski 3-katmanli-kopya/
+--    prefix temizleme surecinden kalma bir artik. Bu dosyanin calistigi
+--    ortamda bu satirlar UPDATE ile duzeltildi (Ziman: 72, Cand: 20).
+--
+-- 2) 205 soru kod tabaninda (offline_question_bank.dart) vardi ama
+--    canliya hic yuklenmemisti -- rich_question_bank_v2 importu (988
+--    satir) sonrasi yerel banka buyumus (2026-06 genisletmesi, 1100+
+--    soru), bu buyume canliya hic yansitilmamisti. source_url =
+--    'zankurd_offline_bank_2026-07-05' etiketiyle eklendi.
+--
+-- Sonuc (uygulama sonrasi dogrulanan zorluk=1 sayilari):
+--   Ziman 4->90, Cand 1->27, Muzik 8->16, Cografya 9->15, Dirok 9->10,
+--   Edebiyat 5->9. Siyaset (0) ve Paradigma (2) bilinerek dokunulmadi --
+--   bu kategoriler tasarim geregi "az kolay soru" iceriyor (bkz.
+--   test/question_bank_test.dart isMature esigi).
+--
+-- Bu dosya kayit amaclidir; gercek UPDATE/INSERT ifadeleri o an
+-- offline_question_bank.dart'tan uretilip dogrudan calistirildi (tek
+-- seferlik, veriye bagimli, tekrar calistirilabilir script degil).
+-- ============================================================
