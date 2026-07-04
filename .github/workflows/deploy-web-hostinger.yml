@@ -1,0 +1,42 @@
+name: Deploy web to Hostinger
+
+on:
+  push:
+    branches:
+      - local-work-backup-2026-07-04
+    paths:
+      - "zankurd_mobile/**"
+  workflow_dispatch: {}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Flutter kur
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.44.1"
+          channel: "stable"
+
+      - name: Bağımlılıkları al
+        working-directory: zankurd_mobile
+        run: flutter pub get
+
+      - name: Web (release) derle
+        working-directory: zankurd_mobile
+        run: flutter build web --release
+
+      - name: Hostinger'a FTP ile yükle
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          local-dir: zankurd_mobile/build/web/
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
