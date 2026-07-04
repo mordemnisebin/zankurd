@@ -38,7 +38,7 @@ class QuickPlayGrid extends StatelessWidget {
           childAspectRatio: 1.4,
           children: [
             _QuickPlayTile(
-              gradientColors: const [Color(0xFFFF416C), Color(0xFFFF4B2B)],
+              gradientColors: AppTheme.duelGradient,
               icon: Icons.bolt_rounded,
               title: isKu ? 'Şerê 1V1' : '1V1 Düello',
               subtitle: isKu ? 'Zindî' : 'Canlı',
@@ -63,7 +63,7 @@ class QuickPlayGrid extends StatelessWidget {
               onTap: onSpinWheel,
             ),
             _QuickPlayTile(
-              gradientColors: const [Color(0xFF00BFA5), Color(0xFF00897B)],
+              gradientColors: AppTheme.tournamentGradient,
               icon: Icons.emoji_events_outlined,
               title: isKu ? 'Turnuva' : 'Turnuva Modu',
               subtitle: isKu ? 'Kûpa' : 'Kupa',

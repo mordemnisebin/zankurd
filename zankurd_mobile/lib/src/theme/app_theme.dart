@@ -222,6 +222,16 @@ class AppTheme {
     );
   }
 
+  // Tek kullanımlık dekoratif gradyanlar (QuickPlayGrid tile'ları için).
+  static const List<Color> duelGradient = [
+    Color(0xFFFF416C),
+    Color(0xFFFF4B2B),
+  ];
+  static const List<Color> tournamentGradient = [
+    Color(0xFF00BFA5),
+    Color(0xFF00897B),
+  ];
+
   static ThemeData dark() {
     return ThemeData(
       useMaterial3: true,
