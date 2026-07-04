@@ -1029,40 +1029,6 @@ void main() {
     expect(find.text('Rojda'), findsWidgets);
   });
 
-  testWidgets('opens category levels from the home screen', (tester) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-
-    await tester.pumpWidget(
-      ZanKurdApp(
-        repository: repository,
-        authProvider: _FakeAuthProvider(),
-        languageProvider: _turkishLang(),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    // 'Dil' hem kart başlığı hem de dil-değiştirme butonunun Tooltip mesajı
-    // olduğu için metinle aramak belirsiz/kararsız. Bunun yerine yalnızca
-    // Ziman kartında bulunan benzersiz ikonu hedefliyoruz; sabit drag yerine
-    // scrollUntilVisible giriş animasyonu/async yüklemeyle yarışmayı önler.
-    final dilIcon = find.byIcon(Icons.translate_outlined);
-    await tester.scrollUntilVisible(dilIcon, 120);
-    await tester.pumpAndSettle();
-    await tester.tap(
-      find.ancestor(of: dilIcon, matching: find.byType(GestureDetector)).first,
-    );
-    await tester.pumpAndSettle();
-
-    // Tap the subcategory card to open LevelScreen
-    await tester.tap(find.text('Dilbilgisi / Gramer'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Destpêk'), findsOneWidget);
-    expect(find.text('Bingeh'), findsOneWidget);
-    expect(find.text('10 soru · Zorluk 1/5'), findsOneWidget);
-  });
-
   testWidgets('finishes a quiz and opens the result screen', (tester) async {
     final room = repository.createRoom();
     final questions = repository.questions.take(3).toList();

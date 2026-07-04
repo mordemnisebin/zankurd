@@ -11,21 +11,15 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/test_environment.dart';
-import 'home/category_grid.dart';
 import 'home/daily_missions_card.dart';
-import 'home/daily_quiz_card.dart';
 import 'home/hero_card.dart';
-import 'home/question_card.dart';
+import 'home/quick_play_grid.dart';
 import 'home/section_header.dart';
-import 'home/spin_wheel_card.dart';
-import 'home/tournament_card.dart';
 import '../widgets/animated_counter.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
-import 'subcategory_screen.dart';
 import 'quiz_screen.dart';
 import 'room_screen.dart';
-import 'home/battle_1v1_card.dart';
 import 'matchmaking_screen.dart';
 import 'spin_wheel_screen.dart';
 import 'tournament_screen.dart';
@@ -49,8 +43,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late List<QuizQuestion> _questions = widget.repository.questions;
-  late List<String> _categories = widget.repository.categories;
-  bool _loading = true;
   bool _roomActionLoading = false;
   bool _dailyLoading = false;
   int? _coinBalance;
@@ -116,23 +108,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
 
     try {
-      final cats = await repo.loadCategories();
       final qs = await repo.loadQuestions(limit: 10);
       final coins = await repo.loadCoinBalance();
       if (!mounted) return;
       setState(() {
-        _categories = cats.isEmpty ? repo.categories : cats;
         _questions = qs.isEmpty ? repo.questions : qs;
         _coinBalance = coins;
-        _loading = false;
       });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home bootstrap load failed');
       if (!mounted) return;
       setState(() {
         _questions = repo.questions;
-        _categories = repo.categories;
-        _loading = false;
       });
     }
   }
@@ -149,7 +136,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: CustomScrollView(
         controller: widget.scrollController,
         slivers: [
-          // Geometric header with player info and live account badges
           SliverAppBar(
             expandedHeight: 230,
             floating: false,
@@ -166,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   duration: const Duration(milliseconds: 150),
                   opacity: isCollapsed ? 1.0 : 0.0,
                   child: const Text(
-                    'ZanKurd\u200B',
+                    'ZanKurd​',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w800,
@@ -181,7 +167,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               background: _buildGeometricHeader(context, ku),
             ),
           ),
-          // Main content with cards and grid
           if (isWide)
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(18, 12, 18, 24),
@@ -204,55 +189,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               onQuickMatch: () => _openQuiz(context, _room),
                             ),
                           ),
-                          const SizedBox(height: 12),
-                          _buildAnimatedCard(
-                            _heroFadeAnimation(1),
-                            Battle1v1Card(
-                              isKu: ku,
-                              onTap: () => Navigator.of(context).push(
-                                AppRoute.to(MatchmakingScreen(repository: repo)),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 20),
                           _buildAnimatedCard(
                             _heroFadeAnimation(2),
-                            DailyQuizCard(
-                              isKu: ku,
-                              loading: _dailyLoading,
-                              onPlay: () => _openDailyQuiz(context, ku),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          _buildAnimatedCard(
-                            _heroFadeAnimation(5),
                             DailyMissionsCard(
                               isKu: ku,
                               missions: _missions,
                               loading: _missionsLoading,
                             ),
                           ),
-                          if (!_loading && _questions.isNotEmpty) ...[
-                            const SizedBox(height: 20),
-                            _buildAnimatedCard(
-                              _heroFadeAnimation(8),
-                              SectionHeader(
-                                title: ku ? 'Pirsa Nimûne' : 'Örnek Soru',
-                                subtitle: ku
-                                    ? 'Destpêlike û pratîkê bike'
-                                    : 'Hemen başla ve pratik yap',
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            _buildAnimatedCard(
-                              _heroFadeAnimation(9),
-                              QuestionCard(
-                                question: _questions.first,
-                                isKu: ku,
-                                onOpen: () => _openQuiz(context, _room),
-                              ),
-                            ),
-                          ],
                         ],
                       ),
                     ),
@@ -263,36 +208,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildAnimatedCard(
-                            _heroFadeAnimation(3),
-                            SpinWheelCard(
-                              isKu: ku,
-                              onOpen: () => _openSpinWheel(context),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          _buildAnimatedCard(
-                            _heroFadeAnimation(4),
-                            TournamentCard(
-                              isKu: ku,
-                              onOpen: () => _openTournament(context),
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          _buildAnimatedCard(
-                            _heroFadeAnimation(6),
+                            _heroFadeAnimation(1),
                             SectionHeader(
-                              title: ku ? 'Kategorî' : 'Kategoriler',
+                              title: ku ? 'Zû Bilîze' : 'Hemen Oyna',
                               subtitle: ku
-                                  ? 'Her kategoriyê 5 ast hene'
-                                  : 'Her kategori 5 seviyeye ayrıldı',
+                                  ? 'Yarî, xelat û pêşbirkên rojane'
+                                  : 'Oyunlar, ödüller ve günlük yarışmalar',
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          CategoryGrid(
-                            categories: _categories,
-                            isKu: ku,
-                            loading: _loading,
-                            onTap: (cat) => _openCategory(context, cat),
+                          const SizedBox(height: 10),
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(1),
+                            QuickPlayGrid(
+                              isKu: ku,
+                              dailyQuizLoading: _dailyLoading,
+                              onDuel: () => Navigator.of(context).push(
+                                AppRoute.to(
+                                  MatchmakingScreen(repository: repo),
+                                ),
+                              ),
+                              onDailyQuiz: () => _openDailyQuiz(context, ku),
+                              onSpinWheel: () => _openSpinWheel(context),
+                              onTournament: () => _openTournament(context),
+                            ),
                           ),
                         ],
                       ),
@@ -320,60 +258,41 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   }
                   if (index == 1) {
                     return Padding(
-                      padding: const EdgeInsets.only(top: 12),
+                      padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
                         _heroFadeAnimation(1),
-                        Battle1v1Card(
-                          isKu: ku,
-                          onTap: () => Navigator.of(context).push(
-                            AppRoute.to(MatchmakingScreen(repository: repo)),
-                          ),
+                        SectionHeader(
+                          title: ku ? 'Zû Bilîze' : 'Hemen Oyna',
+                          subtitle: ku
+                              ? 'Yarî, xelat û pêşbirkên rojane'
+                              : 'Oyunlar, ödüller ve günlük yarışmalar',
                         ),
                       ),
                     );
                   }
                   if (index == 2) {
                     return Padding(
-                      padding: const EdgeInsets.only(top: 12),
+                      padding: const EdgeInsets.only(top: 10),
                       child: _buildAnimatedCard(
-                        _heroFadeAnimation(2),
-                        DailyQuizCard(
+                        _heroFadeAnimation(1),
+                        QuickPlayGrid(
                           isKu: ku,
-                          loading: _dailyLoading,
-                          onPlay: () => _openDailyQuiz(context, ku),
+                          dailyQuizLoading: _dailyLoading,
+                          onDuel: () => Navigator.of(context).push(
+                            AppRoute.to(MatchmakingScreen(repository: repo)),
+                          ),
+                          onDailyQuiz: () => _openDailyQuiz(context, ku),
+                          onSpinWheel: () => _openSpinWheel(context),
+                          onTournament: () => _openTournament(context),
                         ),
                       ),
                     );
                   }
                   if (index == 3) {
                     return Padding(
-                      padding: const EdgeInsets.only(top: 12),
+                      padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
-                        _heroFadeAnimation(3),
-                        SpinWheelCard(
-                          isKu: ku,
-                          onOpen: () => _openSpinWheel(context),
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 4) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 12),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(4),
-                        TournamentCard(
-                          isKu: ku,
-                          onOpen: () => _openTournament(context),
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 5) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 12),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(5),
+                        _heroFadeAnimation(2),
                         DailyMissionsCard(
                           isKu: ku,
                           missions: _missions,
@@ -382,60 +301,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     );
                   }
-                  if (index == 6) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 24),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(6),
-                        SectionHeader(
-                          title: ku ? 'Kategorî' : 'Kategoriler',
-                          subtitle: ku
-                              ? 'Her kategoriyê 5 ast hene'
-                              : 'Her kategori 5 seviyeye ayrıldı',
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 7) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: CategoryGrid(
-                        categories: _categories,
-                        isKu: ku,
-                        loading: _loading,
-                        onTap: (cat) => _openCategory(context, cat),
-                      ),
-                    );
-                  }
-                  if (index == 8 && !_loading && _questions.isNotEmpty) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 24),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(8),
-                        SectionHeader(
-                          title: ku ? 'Pirsa Nimûne' : 'Örnek Soru',
-                          subtitle: ku
-                              ? 'Destpêlike û pratîkê bike'
-                              : 'Hemen başla ve pratik yap',
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 9 && !_loading && _questions.isNotEmpty) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(9),
-                        QuestionCard(
-                          question: _questions.first,
-                          isKu: ku,
-                          onOpen: () => _openQuiz(context, _room),
-                        ),
-                      ),
-                    );
-                  }
                   return null;
-                }, childCount: _loading || _questions.isEmpty ? 8 : 10),
+                }, childCount: 4),
               ),
             ),
           SliverToBoxAdapter(child: SizedBox(height: bottomContentPadding)),
@@ -529,7 +396,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// Build the geometric header with player info, streak hexagon, and stats
   Widget _buildGeometricHeader(BuildContext context, bool ku) {
     final isTest = isFlutterTestEnvironment;
     final hour = DateTime.now().hour;
@@ -562,7 +428,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       decoration: BoxDecoration(gradient: AppTheme.homeHeaderGradient),
       child: Stack(
         children: [
-          // Semi-transparent white hexagon overlay (geometric accent)
           Positioned(
             top: -40,
             right: -60,
@@ -580,7 +445,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ),
           ),
-          // Player info on the left
           Positioned(
             left: 18,
             bottom: 20,
@@ -613,17 +477,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ),
           ),
-          // Streak hexagon badge (pulsing animation) on the top right
           if (_streak > 0)
             Positioned(top: 16, right: 18, child: _buildStreakHexagon(_streak)),
-          // Real coin balance; hidden while loading to avoid placeholder badges.
           Positioned(left: 18, top: 16, child: _buildCoinGemRow(_coinBalance)),
         ],
       ),
     );
   }
 
-  /// Build animated streak hexagon badge with pulse animation
   Widget _buildStreakHexagon(int streak) {
     final pulseAnim = Tween<double>(begin: 1.0, end: 1.08).animate(
       CurvedAnimation(
@@ -676,7 +537,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// Build coin and gem display row
   Widget _buildCoinGemRow(int? coinBalance) {
     if (coinBalance == null) return const SizedBox.shrink();
 
@@ -719,7 +579,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// Build animated card wrapper with fade and slide animation
   Widget _buildAnimatedCard(Animation<double> animation, Widget child) {
     return ScaleTransition(
       scale: animation,
@@ -727,7 +586,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// Generate hero fade animation for a specific index
   Animation<double> _heroFadeAnimation(int index) {
     final startTime = (index * 0.1).clamp(0.0, 1.0).toDouble();
     final endTime = (startTime + 0.3).clamp(startTime, 1.0).toDouble();
@@ -818,12 +676,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       context,
     ).push(AppRoute.to(TournamentScreen(repository: repo)));
     _refreshCoins();
-  }
-
-  void _openCategory(BuildContext context, String category) {
-    Navigator.of(
-      context,
-    ).push(AppRoute.to(SubcategoryScreen(repository: repo, category: category)));
   }
 
   Future<void> _refreshCoins() async {
