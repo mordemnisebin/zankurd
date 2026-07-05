@@ -10,6 +10,7 @@ import '../data/sync_manager.dart';
 import '../l10n/lang.dart';
 import '../models/achievement.dart';
 import '../models/answer_record.dart';
+import '../models/contest.dart';
 import '../models/player.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
@@ -21,6 +22,7 @@ import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
+import '../widgets/player_avatar.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
 
@@ -38,6 +40,7 @@ class QuizResultScreen extends StatefulWidget {
     this.opponents = const [],
     this.practice = false,
     this.dailyQuiz = false,
+    this.contestId,
     super.key,
   });
 
@@ -55,6 +58,7 @@ class QuizResultScreen extends StatefulWidget {
   final List<Player> opponents;
   final bool practice;
   final bool dailyQuiz;
+  final String? contestId;
 
   @override
   State<QuizResultScreen> createState() => _QuizResultScreenState();
@@ -84,6 +88,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   void initState() {
     super.initState();
     _recordProgress();
+    if (widget.contestId != null) {
+      _claimContestReward();
+    }
+  }
+
+  Future<void> _claimContestReward() async {
+    try {
+      await repository.claimContestReward(widget.contestId!);
+    } catch (_) {
+      // Silent fail — reward already claimed or network issue
+    }
   }
 
   Future<void> _recordProgress() async {
@@ -513,7 +528,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   ),
                   if (opponents.isNotEmpty) ...[
                     const SizedBox(height: 16),
-                    _RaceStandings(userScore: score, opponents: opponents),
+                    _RaceStandings(
+                      userScore: score,
+                      userIdentity: room.players.isNotEmpty
+                          ? room.players.first
+                          : null,
+                      opponents: opponents,
+                    ),
                   ],
                   if (_newAchievements.isNotEmpty) ...[
                     const SizedBox(height: 16),
@@ -828,17 +849,24 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 }
 
 class _RaceStandings extends StatelessWidget {
-  const _RaceStandings({required this.userScore, required this.opponents});
+  const _RaceStandings({
+    required this.userScore,
+    required this.opponents,
+    this.userIdentity,
+  });
 
   final int userScore;
+  final Player? userIdentity;
   final List<Player> opponents;
 
   @override
   Widget build(BuildContext context) {
-    final standings = [
-      Player(name: context.s('Tu', 'Tu'), score: userScore, state: 'Player'),
-      ...opponents,
-    ]..sort((a, b) => b.score.compareTo(a.score));
+    final user =
+        (userIdentity ??
+                Player(name: context.s('Tu', 'Tu'), score: 0, state: ''))
+            .copyWith(score: userScore, state: 'Player');
+    final standings = [user, ...opponents]
+      ..sort((a, b) => b.score.compareTo(a.score));
     final userRank =
         standings.indexWhere((player) => player.state == 'Player') + 1;
     final leader = standings.first;
@@ -1097,6 +1125,15 @@ class _RaceStandingRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
+          PlayerAvatar(
+            radius: 15,
+            photoUrl: player.avatarUrl,
+            iconId: player.avatarIcon,
+            colorHex: player.avatarColor,
+            frameId: player.avatarFrame,
+            displayName: player.name,
+          ),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(
               player.name,
