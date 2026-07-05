@@ -1,6 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/avatar_identity.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
@@ -722,6 +727,36 @@ class MockZanKurdRepository implements ZanKurdRepository {
       ],
     ];
     return all.take(limit).toList();
+  }
+
+  static const _avatarIdentityKey = 'zankurd.avatarIdentity';
+
+  @override
+  Future<AvatarIdentity> loadAvatarIdentity() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString(_avatarIdentityKey);
+      if (raw == null || raw.isEmpty) return const AvatarIdentity();
+      return AvatarIdentity.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+    } catch (_) {
+      return const AvatarIdentity();
+    }
+  }
+
+  @override
+  Future<void> updateAvatarIdentity(AvatarIdentity identity) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_avatarIdentityKey, jsonEncode(identity.toJson()));
+    } catch (_) {
+      // Offline/test ortamında sessizce yut; kozmetik veri kritik değil.
+    }
+  }
+
+  @override
+  Future<String> uploadAvatarPhoto(Uint8List bytes, String contentType) async {
+    // Mock modda gerçek depolama yok; kalıcı olmayan yerel bir işaret döner.
+    return 'mock://avatar/${bytes.length}';
   }
 
   @override

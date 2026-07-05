@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import '../models/avatar_identity.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
@@ -98,6 +101,15 @@ abstract class ZanKurdRepository {
     required int totalQuestions,
     GameRoom? room,
   });
+
+  /// Oyuncunun görsel kimliğini (avatar/çerçeve/unvan) yükler.
+  Future<AvatarIdentity> loadAvatarIdentity();
+
+  /// Görsel kimliği kalıcılaştırır (kozmetik; ekonomiye dokunmaz).
+  Future<void> updateAvatarIdentity(AvatarIdentity identity);
+
+  /// Avatar fotoğrafını yükler ve erişilebilir URL'ini döner.
+  Future<String> uploadAvatarPhoto(Uint8List bytes, String contentType);
 
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName);
   Future<void> cancelMatchmaking();

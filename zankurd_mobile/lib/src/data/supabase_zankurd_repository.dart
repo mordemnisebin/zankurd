@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../models/avatar_identity.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
@@ -129,6 +131,75 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<void> updateProfileName(String name) async {
     await upsertProfile(displayName: name);
+  }
+
+  @override
+  Future<AvatarIdentity> loadAvatarIdentity() async {
+    try {
+      final user = client.auth.currentUser;
+      if (user == null) return _offline.loadAvatarIdentity();
+      final row = await client
+          .from('profiles')
+          .select(
+            'avatar_icon, avatar_color, avatar_url, avatar_frame, showcase_title',
+          )
+          .eq('id', user.id)
+          .maybeSingle();
+      if (row == null) return const AvatarIdentity();
+      return AvatarIdentity(
+        iconId: row['avatar_icon'] as String?,
+        colorHex: row['avatar_color'] as String?,
+        photoUrl: row['avatar_url'] as String?,
+        frameId: row['avatar_frame'] as String?,
+        showcaseTitle: row['showcase_title'] as String?,
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadAvatarIdentity failed');
+      return _offline.loadAvatarIdentity();
+    }
+  }
+
+  @override
+  Future<void> updateAvatarIdentity(AvatarIdentity identity) async {
+    // Yereli her durumda güncelle: çevrimdışı görünürlük + fallback tutarlılığı.
+    await _offline.updateAvatarIdentity(identity);
+    try {
+      final user = client.auth.currentUser;
+      if (user == null) return;
+      await client
+          .from('profiles')
+          .update({
+            'avatar_icon': identity.iconId,
+            'avatar_color': identity.colorHex,
+            'avatar_url': identity.photoUrl,
+            'avatar_frame': identity.frameId,
+            'showcase_title': identity.showcaseTitle,
+            'updated_at': DateTime.now().toUtc().toIso8601String(),
+          })
+          .eq('id', user.id);
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'updateAvatarIdentity failed');
+    }
+  }
+
+  @override
+  Future<String> uploadAvatarPhoto(Uint8List bytes, String contentType) async {
+    final user = client.auth.currentUser;
+    if (user == null) {
+      return _offline.uploadAvatarPhoto(bytes, contentType);
+    }
+    final ext = contentType == 'image/png' ? 'png' : 'jpg';
+    final path = '${user.id}/avatar.$ext';
+    await client.storage
+        .from('avatars')
+        .uploadBinary(
+          path,
+          bytes,
+          fileOptions: FileOptions(contentType: contentType, upsert: true),
+        );
+    // Aynı yol üzerine yazıldığı için URL sabit kalır; önbellek kırıcı ekle.
+    final publicUrl = client.storage.from('avatars').getPublicUrl(path);
+    return '$publicUrl?v=${DateTime.now().millisecondsSinceEpoch}';
   }
 
   @override
