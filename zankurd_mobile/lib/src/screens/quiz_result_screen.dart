@@ -10,7 +10,6 @@ import '../data/sync_manager.dart';
 import '../l10n/lang.dart';
 import '../models/achievement.dart';
 import '../models/answer_record.dart';
-import '../models/contest.dart';
 import '../models/player.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';

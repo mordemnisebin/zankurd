@@ -36,6 +36,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   String? _categoryName;
   int _myLevel = 1;
   AvatarIdentity _myIdentity = const AvatarIdentity();
+  AvatarIdentity _opponentIdentity = const AvatarIdentity();
   int _opponentLevel = 1;
   String _myName = 'Lîstikvan';
   bool _isCancelled = false;
@@ -81,6 +82,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       _statusTextKu = 'Li hevrikekî tê gerîn...';
       _statusTextTr = 'Rakip aranıyor...';
       _found = false;
+      _opponentIdentity = const AvatarIdentity();
       _secondsElapsed = 0;
     });
 
@@ -121,13 +123,24 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
       if (matchRes['status'] == 'matched') {
         // Matched immediately!
-        final matchedName = matchRes['opponent_name'] as String? ?? 'Raqîb';
+        var matchedName = matchRes['opponent_name'] as String? ?? 'Raqîb';
+        var opponentIdentity = const AvatarIdentity();
         final matchedLevel = max(1, level + Random().nextInt(3) - 1);
         final roomId = matchRes['room_id'] as String;
+        final opponent = await _loadOpponentPlayer(
+          roomId: roomId,
+          category: category,
+          currentName: name,
+        );
+        if (opponent != null) {
+          matchedName = opponent.name;
+          opponentIdentity = _identityFromPlayer(opponent);
+        }
 
         await _onMatched(
           matchedName,
           matchedLevel,
+          opponentIdentity,
           roomId,
           questions,
           category,
@@ -147,28 +160,22 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             final roomId = entry['room_id'] as String;
             // Fetch opponent display name
             String matchedName = ku ? 'Hevrik' : 'Rakip';
-            try {
-              final roomPlayers = await widget.repository.loadRoomPlayers(
-                GameRoom(
-                  name: '',
-                  code: '',
-                  category: category,
-                  players: const [],
-                  status: RoomStatus.lobby,
-                  questionCount: 0,
-                ).copyWith(id: roomId),
-              );
-              final opp = roomPlayers.firstWhere(
-                (p) => p.name != name,
-                orElse: () => Player(name: matchedName, score: 0, state: ''),
-              );
-              matchedName = opp.name;
-            } catch (_) {}
+            var opponentIdentity = const AvatarIdentity();
+            final opponent = await _loadOpponentPlayer(
+              roomId: roomId,
+              category: category,
+              currentName: name,
+            );
+            if (opponent != null) {
+              matchedName = opponent.name;
+              opponentIdentity = _identityFromPlayer(opponent);
+            }
 
             final matchedLevel = max(1, level + Random().nextInt(3) - 1);
             await _onMatched(
               matchedName,
               matchedLevel,
+              opponentIdentity,
               roomId,
               questions,
               category,
@@ -213,6 +220,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             await _onMatched(
               matchedName,
               matchedLevel,
+              const AvatarIdentity(),
               null,
               questions,
               category,
@@ -249,9 +257,41 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     }
   }
 
+  AvatarIdentity _identityFromPlayer(Player player) => AvatarIdentity(
+    iconId: player.avatarIcon,
+    colorHex: player.avatarColor,
+    photoUrl: player.avatarUrl,
+    frameId: player.avatarFrame,
+    showcaseTitle: player.showcaseTitle,
+  );
+
+  Future<Player?> _loadOpponentPlayer({
+    required String roomId,
+    required String category,
+    required String currentName,
+  }) async {
+    try {
+      final roomPlayers = await widget.repository.loadRoomPlayers(
+        GameRoom(
+          name: '',
+          code: '',
+          category: category,
+          players: const [],
+          status: RoomStatus.lobby,
+          questionCount: 0,
+        ).copyWith(id: roomId),
+      );
+      for (final player in roomPlayers) {
+        if (player.name != currentName) return player;
+      }
+    } catch (_) {}
+    return null;
+  }
+
   Future<void> _onMatched(
     String matchedName,
     int matchedLevel,
+    AvatarIdentity opponentIdentity,
     String? roomId,
     List<QuizQuestion> questions,
     String category,
@@ -261,6 +301,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       _found = true;
       _opponentName = matchedName;
       _opponentLevel = matchedLevel;
+      _opponentIdentity = opponentIdentity;
       _statusTextKu = 'Hevrik hat dîtin: $matchedName!';
       _statusTextTr = 'Rakip bulundu: $matchedName!';
     });
@@ -275,8 +316,28 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           id: roomId,
           name: ku ? 'Şerê 1v1' : '1v1 Savaş',
           players: [
-            Player(name: _myName, score: 0, state: 'Hazır', streak: 0),
-            Player(name: matchedName, score: 0, state: 'Hazır', streak: 0),
+            Player(
+              name: _myName,
+              score: 0,
+              state: 'Hazır',
+              streak: 0,
+              avatarIcon: _myIdentity.iconId,
+              avatarColor: _myIdentity.colorHex,
+              avatarUrl: _myIdentity.photoUrl,
+              avatarFrame: _myIdentity.frameId,
+              showcaseTitle: _myIdentity.showcaseTitle,
+            ),
+            Player(
+              name: matchedName,
+              score: 0,
+              state: 'Hazır',
+              streak: 0,
+              avatarIcon: opponentIdentity.iconId,
+              avatarColor: opponentIdentity.colorHex,
+              avatarUrl: opponentIdentity.photoUrl,
+              avatarFrame: opponentIdentity.frameId,
+              showcaseTitle: opponentIdentity.showcaseTitle,
+            ),
           ],
         );
 
@@ -442,6 +503,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                   photoUrl: _myIdentity.photoUrl,
                                   iconId: _myIdentity.iconId,
                                   colorHex: _myIdentity.colorHex,
+                                  frameId: _myIdentity.frameId,
                                   displayName: _myName,
                                 ),
                               ),
@@ -512,18 +574,23 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                         ]
                                       : [],
                                 ),
-                                child: CircleAvatar(
-                                  backgroundColor: const Color(0xFF1F1D2B),
-                                  child: Icon(
-                                    _found
-                                        ? Icons.android
-                                        : Icons.question_mark,
-                                    color: _found
-                                        ? AppTheme.correct
-                                        : Colors.white24,
-                                    size: 38,
-                                  ),
-                                ),
+                                child: _found
+                                    ? PlayerAvatar(
+                                        radius: 33,
+                                        photoUrl: _opponentIdentity.photoUrl,
+                                        iconId: _opponentIdentity.iconId,
+                                        colorHex: _opponentIdentity.colorHex,
+                                        frameId: _opponentIdentity.frameId,
+                                        displayName: _opponentName,
+                                      )
+                                    : const CircleAvatar(
+                                        backgroundColor: Color(0xFF1F1D2B),
+                                        child: Icon(
+                                          Icons.question_mark,
+                                          color: Colors.white24,
+                                          size: 38,
+                                        ),
+                                      ),
                               ),
                               const SizedBox(height: 8),
                               Text(

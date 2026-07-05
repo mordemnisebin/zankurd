@@ -26,6 +26,7 @@ import '../utils/test_environment.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
+import '../widgets/player_avatar.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz_result_screen.dart';
 
@@ -548,12 +549,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             Player(name: _isKu ? 'Hevrik' : 'Rakip', score: 0, state: ''),
       );
       return _DuelScoreHeader(
-        playerName: player.name,
-        playerScore: player.score,
-        playerStreak: player.streak,
-        opponentName: opponent.name,
-        opponentScore: opponent.score,
-        opponentStreak: opponent.streak,
+        player: player,
+        opponent: opponent,
         progress: '${index + 1}/${widget.questions.length}',
       );
     }

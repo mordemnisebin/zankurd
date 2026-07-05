@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
@@ -132,6 +133,18 @@ abstract class ZanKurdRepository {
 
   /// Kullanıcının kazandığı contest rozetlerini yükler.
   Future<List<UserContestBadge>> loadUserContestBadges();
+
+  /// Kategori ders listesini yükler.
+  Future<List<Lesson>> loadLessonsByCategory(String category);
+
+  /// Ders ayrıntısını ve slaytlarını yükler.
+  Future<Map<String, dynamic>?> loadLesson(String lessonId);
+
+  /// Dersin slaytlarını yükler.
+  Future<List<LessonSlide>> loadLessonSlides(String lessonId);
+
+  /// Dersi tamamlandı olarak işaretler.
+  Future<bool> markLessonCompleted(String lessonId);
 
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName);
   Future<void> cancelMatchmaking();

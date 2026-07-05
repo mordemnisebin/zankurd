@@ -70,6 +70,15 @@ class _LiveScoreRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
+          PlayerAvatar(
+            radius: 14,
+            photoUrl: player.avatarUrl,
+            iconId: player.avatarIcon,
+            colorHex: player.avatarColor,
+            frameId: player.avatarFrame,
+            displayName: player.name,
+          ),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(
               player.name,
@@ -305,21 +314,13 @@ class _ScoreHeader extends StatelessWidget {
 
 class _DuelScoreHeader extends StatelessWidget {
   const _DuelScoreHeader({
-    required this.playerName,
-    required this.playerScore,
-    required this.playerStreak,
-    required this.opponentName,
-    required this.opponentScore,
-    required this.opponentStreak,
+    required this.player,
+    required this.opponent,
     required this.progress,
   });
 
-  final String playerName;
-  final int playerScore;
-  final int playerStreak;
-  final String opponentName;
-  final int opponentScore;
-  final int opponentStreak;
+  final Player player;
+  final Player opponent;
   final String progress;
 
   @override
@@ -335,14 +336,13 @@ class _DuelScoreHeader extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    CircleAvatar(
+                    PlayerAvatar(
                       radius: 16,
-                      backgroundColor: AppTheme.accent.withValues(alpha: 0.15),
-                      child: const Icon(
-                        Icons.person,
-                        color: AppTheme.accent,
-                        size: 18,
-                      ),
+                      photoUrl: player.avatarUrl,
+                      iconId: player.avatarIcon,
+                      colorHex: player.avatarColor,
+                      frameId: player.avatarFrame,
+                      displayName: player.name,
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -350,7 +350,7 @@ class _DuelScoreHeader extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            playerName,
+                            player.name,
                             style: TextStyle(
                               color: AppTheme.textPrimaryColor(context),
                               fontWeight: FontWeight.w700,
@@ -360,7 +360,7 @@ class _DuelScoreHeader extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            '$playerScore pts',
+                            '${player.score} pts',
                             style: const TextStyle(
                               color: AppTheme.gold,
                               fontWeight: FontWeight.w700,
@@ -416,7 +416,7 @@ class _DuelScoreHeader extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            opponentName,
+                            opponent.name,
                             style: TextStyle(
                               color: AppTheme.textPrimaryColor(context),
                               fontWeight: FontWeight.w700,
@@ -426,7 +426,7 @@ class _DuelScoreHeader extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            '$opponentScore pts',
+                            '${opponent.score} pts',
                             style: const TextStyle(
                               color: AppTheme.gold,
                               fontWeight: FontWeight.w700,
@@ -437,26 +437,25 @@ class _DuelScoreHeader extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    CircleAvatar(
+                    PlayerAvatar(
                       radius: 16,
-                      backgroundColor: Colors.redAccent.withValues(alpha: 0.15),
-                      child: const Icon(
-                        Icons.android,
-                        color: Colors.redAccent,
-                        size: 18,
-                      ),
+                      photoUrl: opponent.avatarUrl,
+                      iconId: opponent.avatarIcon,
+                      colorHex: opponent.avatarColor,
+                      frameId: opponent.avatarFrame,
+                      displayName: opponent.name,
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          if (playerStreak > 0 || opponentStreak > 0) ...[
+          if (player.streak > 0 || opponent.streak > 0) ...[
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (playerStreak > 0)
+                if (player.streak > 0)
                   Row(
                     children: [
                       const Icon(
@@ -465,7 +464,7 @@ class _DuelScoreHeader extends StatelessWidget {
                         size: 14,
                       ),
                       Text(
-                        'x$playerStreak',
+                        'x${player.streak}',
                         style: const TextStyle(
                           color: Colors.orange,
                           fontWeight: FontWeight.w700,
@@ -476,11 +475,11 @@ class _DuelScoreHeader extends StatelessWidget {
                   )
                 else
                   const SizedBox.shrink(),
-                if (opponentStreak > 0)
+                if (opponent.streak > 0)
                   Row(
                     children: [
                       Text(
-                        'x$opponentStreak',
+                        'x${opponent.streak}',
                         style: const TextStyle(
                           color: Colors.orange,
                           fontWeight: FontWeight.w700,
@@ -1172,13 +1171,16 @@ class _ExplanationBox extends StatelessWidget {
                                 color: AppTheme.textSubColor(context),
                               ),
                               const SizedBox(width: 5),
-                              Text(
-                                isKu ? 'Şîrove' : 'Açıklama',
-                                style: TextStyle(
-                                  color: AppTheme.textSubColor(context),
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 11,
-                                  letterSpacing: 0.3,
+                              Flexible(
+                                child: Text(
+                                  isKu ? 'Şîrove' : 'Açıklama',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: AppTheme.textSubColor(context),
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 11,
+                                    letterSpacing: 0.3,
+                                  ),
                                 ),
                               ),
                             ],

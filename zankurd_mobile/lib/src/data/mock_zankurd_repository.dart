@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
@@ -863,5 +864,60 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<UserContestBadge>> loadUserContestBadges() async {
     return const [];
+  }
+
+  @override
+  Future<List<Lesson>> loadLessonsByCategory(String category) async {
+    return [
+      Lesson(
+        id: 'lesson_1',
+        slug: 'alphabet',
+        titleKu: 'Alfabê',
+        titleTr: 'Alfabe',
+        category: category,
+        iconName: 'abc',
+      ),
+      Lesson(
+        id: 'lesson_2',
+        slug: 'numbers',
+        titleKu: 'Hûwander',
+        titleTr: 'Sayılar',
+        category: category,
+        iconName: '123',
+      ),
+    ];
+  }
+
+  @override
+  Future<Map<String, dynamic>?> loadLesson(String lessonId) async {
+    return {
+      'id': lessonId,
+      'slug': 'alphabet',
+      'title_ku': 'Alfabê',
+      'category': 'everyday',
+    };
+  }
+
+  @override
+  Future<List<LessonSlide>> loadLessonSlides(String lessonId) async {
+    return [
+      LessonSlide(
+        id: 'slide_1',
+        lessonId: lessonId,
+        order: 1,
+        contentKu: 'A, B, C, Ç, D, E, Ê, F, G, H',
+      ),
+      LessonSlide(
+        id: 'slide_2',
+        lessonId: lessonId,
+        order: 2,
+        contentKu: 'I, Î, J, K, L, M, N, O, Ö, P',
+      ),
+    ];
+  }
+
+  @override
+  Future<bool> markLessonCompleted(String lessonId) async {
+    return true;
   }
 }

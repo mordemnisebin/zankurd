@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
@@ -1338,6 +1339,66 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .toList();
     } catch (e) {
       return _offline.loadUserContestBadges();
+    }
+  }
+
+  @override
+  Future<List<Lesson>> loadLessonsByCategory(String category) async {
+    try {
+      final res =
+          await client.rpc(
+                'load_lessons_by_category',
+                params: {'p_category': category},
+              )
+              as List<dynamic>;
+      return res
+          .map((row) => Lesson.fromJson(row as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      return _offline.loadLessonsByCategory(category);
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>?> loadLesson(String lessonId) async {
+    try {
+      final res =
+          await client.rpc('load_lesson', params: {'p_lesson_id': lessonId})
+              as List<dynamic>;
+      if (res.isEmpty) return null;
+      return res.first as Map<String, dynamic>;
+    } catch (e) {
+      return _offline.loadLesson(lessonId);
+    }
+  }
+
+  @override
+  Future<List<LessonSlide>> loadLessonSlides(String lessonId) async {
+    try {
+      final res =
+          await client.rpc(
+                'load_lesson_slides',
+                params: {'p_lesson_id': lessonId},
+              )
+              as List<dynamic>;
+      return res
+          .map((row) => LessonSlide.fromJson(row as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      return _offline.loadLessonSlides(lessonId);
+    }
+  }
+
+  @override
+  Future<bool> markLessonCompleted(String lessonId) async {
+    try {
+      await client.rpc(
+        'mark_lesson_completed',
+        params: {'p_lesson_id': lessonId},
+      );
+      return true;
+    } catch (e) {
+      return _offline.markLessonCompleted(lessonId);
     }
   }
 }

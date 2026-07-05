@@ -74,6 +74,7 @@ class _ContestScreenState extends State<ContestScreen> {
                 return AppErrorState(
                   title: ku ? 'Barnekirî' : 'Yüklenemedi',
                   message: ku ? 'Etkinlik yüklenemiyor' : 'Contest yüklenemedi',
+                  retryLabel: ku ? 'Dûbare' : 'Tekrar',
                   onRetry: () => setState(() => _loadContest()),
                 );
               }
@@ -126,7 +127,7 @@ class _ContestContent extends StatelessWidget {
             color: AppTheme.surfaceColor(context),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: AppTheme.accentColor.withValues(alpha: 0.3),
+              color: AppTheme.accent.withValues(alpha: 0.3),
               width: 1,
             ),
             boxShadow: [
@@ -144,7 +145,7 @@ class _ContestContent extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.emoji_events_outlined,
-                    color: AppTheme.accentColor,
+                    color: AppTheme.accent,
                     size: 32,
                   ),
                   const SizedBox(width: 12),
@@ -253,18 +254,18 @@ class _BadgeLabel extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppTheme.accentColor.withValues(alpha: 0.15),
+        color: AppTheme.accent.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: AppTheme.accentColor),
+          Icon(icon, size: 14, color: AppTheme.accent),
           const SizedBox(width: 6),
           Text(
             label,
             style: TextStyle(
-              color: AppTheme.accentColor,
+              color: AppTheme.accent,
               fontSize: 12,
               fontWeight: FontWeight.w700,
             ),
@@ -335,13 +336,13 @@ class _LeaderboardRow extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: AppTheme.accentColor.withValues(alpha: 0.1),
+              color: AppTheme.accent.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Text(
               '${row.score}',
               style: TextStyle(
-                color: AppTheme.accentColor,
+                color: AppTheme.accent,
                 fontWeight: FontWeight.w800,
                 fontSize: 13,
               ),

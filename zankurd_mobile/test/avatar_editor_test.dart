@@ -22,6 +22,8 @@ class _RecordingRepo extends MockZanKurdRepository {
 }
 
 void main() {
+  WidgetController.hitTestWarningShouldBeFatal = true;
+
   setUp(() {
     SharedPreferences.setMockInitialValues({});
     MasteryStore.resetInstance();
@@ -33,6 +35,11 @@ void main() {
       finder,
       120,
       scrollable: find.byType(Scrollable).first,
+    );
+    await Scrollable.ensureVisible(
+      tester.element(finder),
+      alignment: 0.45,
+      duration: Duration.zero,
     );
     await tester.pumpAndSettle();
   }
@@ -80,6 +87,10 @@ void main() {
     expect(find.textContaining('Kilitli'), findsOneWidget);
 
     // Kilitli seçim kaydedilen kimliğe sızmamalı.
+    ScaffoldMessenger.of(
+      tester.element(find.byType(Scaffold)),
+    ).clearSnackBars();
+    await tester.pumpAndSettle();
     await scrollTo(tester, find.byKey(const ValueKey('avatar-save')));
     await tester.tap(find.byKey(const ValueKey('avatar-save')));
     await tester.pumpAndSettle();

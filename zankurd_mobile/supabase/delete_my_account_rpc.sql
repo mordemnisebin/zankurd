@@ -41,6 +41,10 @@ begin
   delete from public.room_players
   where player_id = v_user_id;
 
+  delete from storage.objects
+  where bucket_id = 'avatars'
+    and (storage.foldername(name))[1] = v_user_id::text;
+
   -- Deletes profile through auth.users -> profiles on delete cascade.
   delete from auth.users
   where id = v_user_id;
