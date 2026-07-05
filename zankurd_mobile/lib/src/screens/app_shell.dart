@@ -7,6 +7,7 @@ import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import 'categories_tab.dart';
+import 'friends_screen.dart';
 import 'home_screen.dart';
 import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
@@ -44,6 +45,7 @@ class _AppShellState extends State<AppShell> {
   late final ScrollController _leaderboardScrollController;
   late final ScrollController _learningScrollController;
   late final ScrollController _tournamentScrollController;
+  late final ScrollController _friendsScrollController;
   late final ScrollController _profileScrollController;
 
   @override
@@ -54,6 +56,7 @@ class _AppShellState extends State<AppShell> {
     _leaderboardScrollController = ScrollController();
     _learningScrollController = ScrollController();
     _tournamentScrollController = ScrollController();
+    _friendsScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
   }
@@ -65,6 +68,7 @@ class _AppShellState extends State<AppShell> {
     _leaderboardScrollController.dispose();
     _learningScrollController.dispose();
     _tournamentScrollController.dispose();
+    _friendsScrollController.dispose();
     _profileScrollController.dispose();
     _homeRefresh.dispose();
     _profileRefresh.dispose();
@@ -149,6 +153,7 @@ class _AppShellState extends State<AppShell> {
           ),
           LearningScreen(repository: widget.repository),
           TournamentScreen(repository: widget.repository),
+          FriendsScreen(repository: widget.repository),
           ProfileScreen(
             repository: widget.repository,
             refreshSignal: _profileRefresh,
@@ -170,7 +175,8 @@ class _AppShellState extends State<AppShell> {
                 2 => _leaderboardScrollController,
                 3 => _learningScrollController,
                 4 => _tournamentScrollController,
-                5 => _profileScrollController,
+                5 => _friendsScrollController,
+                6 => _profileScrollController,
                 _ => null,
               };
               if (controller != null && controller.hasClients) {
@@ -182,7 +188,7 @@ class _AppShellState extends State<AppShell> {
               }
             } else {
               if (i == 0) _homeRefresh.value++;
-              if (i == 5) _profileRefresh.value++;
+              if (i == 6) _profileRefresh.value++;
               setState(() => _tab = i);
             }
           },
@@ -211,6 +217,11 @@ class _AppShellState extends State<AppShell> {
               icon: const Icon(Icons.emoji_events_outlined),
               selectedIcon: const Icon(Icons.emoji_events),
               label: ku ? 'Turnuva' : 'Turnuva',
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.people_outline),
+              selectedIcon: const Icon(Icons.people),
+              label: ku ? 'Hevalên' : 'Arkadaşlar',
             ),
             NavigationDestination(
               icon: const Icon(Icons.person_outline),
