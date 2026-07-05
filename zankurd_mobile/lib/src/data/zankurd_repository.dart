@@ -159,6 +159,27 @@ abstract class ZanKurdRepository {
   /// Bekleyen arkadaş isteklerini yükle.
   Future<List<FriendRequest>> loadPendingFriendRequests();
 
+  /// Günlük görev tamamlamasını sunucuya senkronize et.
+  Future<bool> syncMissionCompletion(
+    String missionKey,
+    int coinReward,
+    int xpReward,
+  );
+
+  /// Analytics event'ini sunucuya kaydet.
+  Future<bool> logAnalyticsEvent(
+    String eventName,
+    Map<String, dynamic>? params,
+  );
+
+  /// Turnuva ilerlemesini sunucuya kaydet.
+  Future<bool> saveTournamentProgress(
+    String stage,
+    int userScore,
+    int opponentScore,
+    List<String> botWinners,
+  );
+
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName);
   Future<void> cancelMatchmaking();
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue();

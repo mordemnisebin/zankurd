@@ -967,4 +967,25 @@ class MockZanKurdRepository implements ZanKurdRepository {
       ),
     ];
   }
+
+  @override
+  Future<bool> syncMissionCompletion(
+    String missionKey,
+    int coinReward,
+    int xpReward,
+  ) async => true;
+
+  @override
+  Future<bool> logAnalyticsEvent(
+    String eventName,
+    Map<String, dynamic>? params,
+  ) async => true;
+
+  @override
+  Future<bool> saveTournamentProgress(
+    String stage,
+    int userScore,
+    int opponentScore,
+    List<String> botWinners,
+  ) async => true;
 }

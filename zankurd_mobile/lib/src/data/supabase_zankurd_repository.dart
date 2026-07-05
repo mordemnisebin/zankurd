@@ -1405,4 +1405,69 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return _offline.loadPendingFriendRequests();
     }
   }
+
+  @override
+  Future<bool> syncMissionCompletion(
+    String missionKey,
+    int coinReward,
+    int xpReward,
+  ) async {
+    try {
+      final response = await client.rpc<Map<String, dynamic>>(
+        'sync_mission_completion',
+        params: {
+          'p_mission_key': missionKey,
+          'p_coin_reward': coinReward,
+          'p_xp_reward': xpReward,
+        },
+      );
+      return (response?['success'] as bool?) ?? false;
+    } catch (e) {
+      return _offline.syncMissionCompletion(missionKey, coinReward, xpReward);
+    }
+  }
+
+  @override
+  Future<bool> logAnalyticsEvent(
+    String eventName,
+    Map<String, dynamic>? params,
+  ) async {
+    try {
+      final response = await client.rpc<Map<String, dynamic>>(
+        'log_analytics_event',
+        params: {'p_event_name': eventName, 'p_event_params': params},
+      );
+      return (response?['success'] as bool?) ?? false;
+    } catch (e) {
+      return _offline.logAnalyticsEvent(eventName, params);
+    }
+  }
+
+  @override
+  Future<bool> saveTournamentProgress(
+    String stage,
+    int userScore,
+    int opponentScore,
+    List<String> botWinners,
+  ) async {
+    try {
+      final response = await client.rpc<Map<String, dynamic>>(
+        'save_tournament_progress',
+        params: {
+          'p_stage': stage,
+          'p_user_score': userScore,
+          'p_opponent_score': opponentScore,
+          'p_bot_winners': botWinners,
+        },
+      );
+      return (response?['success'] as bool?) ?? false;
+    } catch (e) {
+      return _offline.saveTournamentProgress(
+        stage,
+        userScore,
+        opponentScore,
+        botWinners,
+      );
+    }
+  }
 }
