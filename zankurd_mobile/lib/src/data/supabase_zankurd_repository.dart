@@ -1353,4 +1353,56 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return _offline.markLessonCompleted(lessonId);
     }
   }
+
+  @override
+  Future<bool> addFriend(String friendId, String friendName) async {
+    try {
+      final response = await client.rpc<Map<String, dynamic>>(
+        'add_friend',
+        params: {'p_friend_id': friendId, 'p_friend_name': friendName},
+      );
+      return (response?['success'] as bool?) ?? false;
+    } catch (e) {
+      return _offline.addFriend(friendId, friendName);
+    }
+  }
+
+  @override
+  Future<bool> acceptFriendRequest(String requestId) async {
+    try {
+      final response = await client.rpc<Map<String, dynamic>>(
+        'accept_friend_request',
+        params: {'p_request_id': requestId},
+      );
+      return (response?['success'] as bool?) ?? false;
+    } catch (e) {
+      return _offline.acceptFriendRequest(requestId);
+    }
+  }
+
+  @override
+  Future<List<Friend>> loadFriends() async {
+    try {
+      final res = await client.rpc<List<dynamic>>('list_friends');
+      return (res ?? [])
+          .map((row) => Friend.fromJson(row as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      return _offline.loadFriends();
+    }
+  }
+
+  @override
+  Future<List<FriendRequest>> loadPendingFriendRequests() async {
+    try {
+      final res = await client.rpc<List<dynamic>>(
+        'list_pending_friend_requests',
+      );
+      return (res ?? [])
+          .map((row) => FriendRequest.fromJson(row as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      return _offline.loadPendingFriendRequests();
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
@@ -145,6 +146,18 @@ abstract class ZanKurdRepository {
 
   /// Dersi tamamlandı olarak işaretler.
   Future<bool> markLessonCompleted(String lessonId);
+
+  /// Arkadaş ekleme isteği gönder.
+  Future<bool> addFriend(String friendId, String friendName);
+
+  /// Arkadaş isteğini kabul et.
+  Future<bool> acceptFriendRequest(String requestId);
+
+  /// Arkadaş listesini yükle.
+  Future<List<Friend>> loadFriends();
+
+  /// Bekleyen arkadaş isteklerini yükle.
+  Future<List<FriendRequest>> loadPendingFriendRequests();
 
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName);
   Future<void> cancelMatchmaking();

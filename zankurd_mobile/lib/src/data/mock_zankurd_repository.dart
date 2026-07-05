@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
@@ -919,5 +920,51 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<bool> markLessonCompleted(String lessonId) async {
     return true;
+  }
+
+  @override
+  Future<bool> addFriend(String friendId, String friendName) async {
+    return true;
+  }
+
+  @override
+  Future<bool> acceptFriendRequest(String requestId) async {
+    return true;
+  }
+
+  @override
+  Future<List<Friend>> loadFriends() async {
+    return [
+      Friend(
+        id: 'friend1',
+        userId: 'user1',
+        friendId: 'friend-user-1',
+        friendName: 'ZanînBot',
+        friendAvatarColor: '#E94560',
+        createdAt: DateTime.now(),
+      ),
+      Friend(
+        id: 'friend2',
+        userId: 'user1',
+        friendId: 'friend-user-2',
+        friendName: 'KurdBot',
+        friendAvatarColor: '#6F61C0',
+        createdAt: DateTime.now(),
+      ),
+    ];
+  }
+
+  @override
+  Future<List<FriendRequest>> loadPendingFriendRequests() async {
+    return [
+      FriendRequest(
+        id: 'req1',
+        fromUserId: 'friend-user-3',
+        fromUserName: 'Diyar',
+        toUserId: 'user1',
+        createdAt: DateTime.now(),
+        status: 'pending',
+      ),
+    ];
   }
 }
