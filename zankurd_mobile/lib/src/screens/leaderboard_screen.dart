@@ -9,6 +9,7 @@ import '../models/leaderboard_period.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_state.dart';
+import '../widgets/player_avatar.dart';
 import 'quiz_screen.dart';
 
 class LeaderboardScreen extends StatefulWidget {
@@ -56,10 +57,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
 
   void _loadData() {
     setState(() {
-      _future = widget.repository.loadLeaderboard(
-        limit: 10,
-        period: _period,
-      );
+      _future = widget.repository.loadLeaderboard(limit: 10, period: _period);
     });
   }
 
@@ -80,8 +78,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   Future<void> _startQuickRace() async {
     final questions = await widget.repository.loadQuestions(limit: 10);
     if (!mounted) return;
-    final raceQuestions =
-        questions.isEmpty ? widget.repository.questions : questions;
+    final raceQuestions = questions.isEmpty
+        ? widget.repository.questions
+        : questions;
     Navigator.of(context).push(
       AppRoute.to(
         QuizScreen(
@@ -98,15 +97,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     final ku = context.isKu;
 
     return Container(
-      decoration:
-          BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
+      decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: SafeArea(
         child: Column(
           children: [
-            _Header(
-              ku: ku,
-              onRefresh: _loadData,
-            ),
+            _Header(ku: ku, onRefresh: _loadData),
             _PeriodTabs(controller: _tabController, ku: ku),
             Expanded(
               child: FutureBuilder<List<LeaderboardEntry>>(
@@ -138,8 +133,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                       message: ku
                           ? 'Pêşbirkekê dest pê bike.'
                           : 'Bir yarış başlat; puanların burada görünür.',
-                      actionLabel:
-                          ku ? 'Pêşbirkê Dest Pê Bike' : 'Yarışa Başla',
+                      actionLabel: ku
+                          ? 'Pêşbirkê Dest Pê Bike'
+                          : 'Yarışa Başla',
                       actionIcon: Icons.bolt_rounded,
                       onAction: _startQuickRace,
                     );
@@ -148,10 +144,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                     controller: widget.scrollController,
                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
                     children: [
-                      _Podium(
-                        entries: entries.take(3).toList(),
-                        isKu: ku,
-                      ),
+                      _Podium(entries: entries.take(3).toList(), isKu: ku),
                       const SizedBox(height: 12),
                       for (final e in entries.skip(3))
                         _RankRow(entry: e, isKu: ku),
@@ -197,7 +190,9 @@ class _Header extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  ku ? 'Her 30 çirkeyî nûve dibe' : 'Her 30 saniyede güncellenir',
+                  ku
+                      ? 'Her 30 çirkeyî nûve dibe'
+                      : 'Her 30 saniyede güncellenir',
                   style: TextStyle(
                     color: AppTheme.textMutedColor(context),
                     fontSize: 12,
@@ -264,9 +259,7 @@ class _PeriodTabs extends StatelessWidget {
         ),
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
-        tabs: [
-          for (final label in labels) Tab(text: label),
-        ],
+        tabs: [for (final label in labels) Tab(text: label)],
       ),
     );
   }
@@ -366,19 +359,13 @@ class _PodiumSlot extends StatelessWidget {
             children: [
               Icon(_medalIcon, color: color, size: isCenter ? 28 : 22),
               const SizedBox(height: 6),
-              CircleAvatar(
+              PlayerAvatar(
                 radius: avatarR,
-                backgroundColor: color.withValues(alpha: 0.2),
-                child: Text(
-                  entry.displayName.isNotEmpty
-                      ? entry.displayName[0].toUpperCase()
-                      : '?',
-                  style: TextStyle(
-                    color: color,
-                    fontWeight: FontWeight.w700,
-                    fontSize: isCenter ? 20 : 16,
-                  ),
-                ),
+                photoUrl: entry.avatarUrl,
+                iconId: entry.avatarIcon,
+                colorHex: entry.avatarColor,
+                frameId: entry.avatarFrame,
+                displayName: entry.displayName,
               ),
               const SizedBox(height: 6),
               Text(
@@ -392,10 +379,20 @@ class _PodiumSlot extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
+              if (entry.showcaseTitle != null)
+                Text(
+                  entry.showcaseTitle!,
+                  style: const TextStyle(
+                    color: AppTheme.gold,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 10,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               const SizedBox(height: 2),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(20),
@@ -461,7 +458,10 @@ class _RankRow extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppTheme.surfaceHiColor(context),
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: AppTheme.borderColor(context), width: 1),
+              border: Border.all(
+                color: AppTheme.borderColor(context),
+                width: 1,
+              ),
             ),
             alignment: Alignment.center,
             child: Text(
@@ -474,19 +474,13 @@ class _RankRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          CircleAvatar(
+          PlayerAvatar(
             radius: 18,
-            backgroundColor: AppTheme.accent.withValues(alpha: 0.12),
-            child: Text(
-              entry.displayName.isNotEmpty
-                  ? entry.displayName[0].toUpperCase()
-                  : '?',
-              style: TextStyle(
-                color: AppTheme.accent,
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
-              ),
-            ),
+            photoUrl: entry.avatarUrl,
+            iconId: entry.avatarIcon,
+            colorHex: entry.avatarColor,
+            frameId: entry.avatarFrame,
+            displayName: entry.displayName,
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -505,8 +499,10 @@ class _RankRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 1),
                 Text(
-                  '${entry.roomsPlayed} ${isKu ? "jûr" : "oda"}'
-                  ' · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}',
+                  entry.showcaseTitle != null
+                      ? '${entry.showcaseTitle} · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}'
+                      : '${entry.roomsPlayed} ${isKu ? "jûr" : "oda"}'
+                            ' · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}',
                   style: TextStyle(
                     color: AppTheme.textMutedColor(context),
                     fontSize: 11,

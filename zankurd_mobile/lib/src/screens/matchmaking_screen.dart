@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import '../data/xp_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../models/avatar_identity.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/player.dart';
+import '../widgets/player_avatar.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/test_environment.dart';
@@ -33,6 +35,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   String? _opponentName;
   String? _categoryName;
   int _myLevel = 1;
+  AvatarIdentity _myIdentity = const AvatarIdentity();
   int _opponentLevel = 1;
   String _myName = 'Lîstikvan';
   bool _isCancelled = false;
@@ -83,12 +86,14 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
     try {
       final name = await widget.repository.getProfileName();
+      final identity = await widget.repository.loadAvatarIdentity();
       final xpStore = await XPStore.load();
       final level = xpStore.currentLevel;
       if (_isCancelled || !mounted) return;
 
       setState(() {
         _myName = name;
+        _myIdentity = identity;
         _myLevel = level;
       });
 
@@ -120,10 +125,19 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         final matchedLevel = max(1, level + Random().nextInt(3) - 1);
         final roomId = matchRes['room_id'] as String;
 
-        await _onMatched(matchedName, matchedLevel, roomId, questions, category, ku);
+        await _onMatched(
+          matchedName,
+          matchedLevel,
+          roomId,
+          questions,
+          category,
+          ku,
+        );
       } else {
         // Status is waiting. Let's subscribe to matchmaking_queue changes.
-        _matchmakingSub = widget.repository.subscribeMatchmakingQueue().listen((entry) async {
+        _matchmakingSub = widget.repository.subscribeMatchmakingQueue().listen((
+          entry,
+        ) async {
           if (entry != null && entry['room_id'] != null) {
             _matchmakingSub?.cancel();
             _matchmakingSub = null;
@@ -144,17 +158,29 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                   questionCount: 0,
                 ).copyWith(id: roomId),
               );
-              final opp = roomPlayers.firstWhere((p) => p.name != name, orElse: () => Player(name: matchedName, score: 0, state: ''));
+              final opp = roomPlayers.firstWhere(
+                (p) => p.name != name,
+                orElse: () => Player(name: matchedName, score: 0, state: ''),
+              );
               matchedName = opp.name;
             } catch (_) {}
 
             final matchedLevel = max(1, level + Random().nextInt(3) - 1);
-            await _onMatched(matchedName, matchedLevel, roomId, questions, category, ku);
+            await _onMatched(
+              matchedName,
+              matchedLevel,
+              roomId,
+              questions,
+              category,
+              ku,
+            );
           }
         });
 
         // Periodically update the status text and count to 30s
-        _statusTimer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+        _statusTimer = Timer.periodic(const Duration(seconds: 1), (
+          timer,
+        ) async {
           _secondsElapsed++;
           if (_isCancelled || !mounted) {
             timer.cancel();
@@ -170,13 +196,28 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
             // Fallback to bot match simulation
             final botNames = [
-              'Rojda', 'Baran', 'Dilan', 'Hogir', 'Azad',
-              'Berfin', 'Narin', 'Sero', 'Çiçek', 'Welat'
+              'Rojda',
+              'Baran',
+              'Dilan',
+              'Hogir',
+              'Azad',
+              'Berfin',
+              'Narin',
+              'Sero',
+              'Çiçek',
+              'Welat',
             ];
             final matchedName = botNames[Random().nextInt(botNames.length)];
             final matchedLevel = max(1, level + Random().nextInt(5) - 2);
 
-            await _onMatched(matchedName, matchedLevel, null, questions, category, ku);
+            await _onMatched(
+              matchedName,
+              matchedLevel,
+              null,
+              questions,
+              category,
+              ku,
+            );
           } else {
             setState(() {
               if (_secondsElapsed < 10) {
@@ -228,7 +269,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     await Future.delayed(const Duration(milliseconds: 1500));
     if (_isCancelled || !mounted) return;
 
-    var room = widget.repository.createRoom(category: category).copyWith(
+    var room = widget.repository
+        .createRoom(category: category)
+        .copyWith(
           id: roomId,
           name: ku ? 'Şerê 1v1' : '1v1 Savaş',
           players: [
@@ -332,12 +375,16 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                 border: Border.all(
                                   color: _found
                                       ? AppTheme.correct.withValues(
-                                          alpha: (1.0 - (radius / 260.0))
-                                              .clamp(0.02, 0.4),
+                                          alpha: (1.0 - (radius / 260.0)).clamp(
+                                            0.02,
+                                            0.4,
+                                          ),
                                         )
                                       : AppTheme.accent.withValues(
-                                          alpha: (1.0 - (radius / 260.0))
-                                              .clamp(0.02, 0.4),
+                                          alpha: (1.0 - (radius / 260.0)).clamp(
+                                            0.02,
+                                            0.4,
+                                          ),
                                         ),
                                   width: 1.5,
                                 ),
@@ -390,13 +437,12 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                     ),
                                   ],
                                 ),
-                                child: const CircleAvatar(
-                                  backgroundColor: Color(0xFF1F1D2B),
-                                  child: Icon(
-                                    Icons.person,
-                                    color: Colors.white,
-                                    size: 38,
-                                  ),
+                                child: PlayerAvatar(
+                                  radius: 33,
+                                  photoUrl: _myIdentity.photoUrl,
+                                  iconId: _myIdentity.iconId,
+                                  colorHex: _myIdentity.colorHex,
+                                  displayName: _myName,
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -469,8 +515,12 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                 child: CircleAvatar(
                                   backgroundColor: const Color(0xFF1F1D2B),
                                   child: Icon(
-                                    _found ? Icons.android : Icons.question_mark,
-                                    color: _found ? AppTheme.correct : Colors.white24,
+                                    _found
+                                        ? Icons.android
+                                        : Icons.question_mark,
+                                    color: _found
+                                        ? AppTheme.correct
+                                        : Colors.white24,
                                     size: 38,
                                   ),
                                 ),
@@ -498,10 +548,14 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                 ),
                                 child: Text(
                                   _found
-                                      ? (ku ? 'Ast $_opponentLevel' : 'Seviye $_opponentLevel')
+                                      ? (ku
+                                            ? 'Ast $_opponentLevel'
+                                            : 'Seviye $_opponentLevel')
                                       : '?',
                                   style: TextStyle(
-                                    color: _found ? AppTheme.correct : Colors.white24,
+                                    color: _found
+                                        ? AppTheme.correct
+                                        : Colors.white24,
                                     fontSize: 10,
                                     fontWeight: FontWeight.w700,
                                   ),

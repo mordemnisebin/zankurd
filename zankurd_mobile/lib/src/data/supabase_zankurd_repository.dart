@@ -1041,6 +1041,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           totalScore: (row['total_score'] as num?)?.toInt() ?? 0,
           bestStreak: (row['best_streak'] as num?)?.toInt() ?? 0,
           roomsPlayed: (row['rooms_played'] as num?)?.toInt() ?? 0,
+          // Eski RPC sürümü bu kolonları döndürmez; null-güvenli okunur ve
+          // migration uygulanana kadar baş-harf avatarı gösterilir.
+          avatarIcon: row['avatar_icon'] as String?,
+          avatarColor: row['avatar_color'] as String?,
+          avatarUrl: row['avatar_url'] as String?,
+          avatarFrame: row['avatar_frame'] as String?,
+          showcaseTitle: row['showcase_title'] as String?,
         );
       }).toList();
     } catch (_) {

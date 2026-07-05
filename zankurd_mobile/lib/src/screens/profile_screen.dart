@@ -16,8 +16,11 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../models/avatar_identity.dart';
 import '../widgets/badge_collection_section.dart';
+import '../widgets/player_avatar.dart';
 import '../widgets/weekly_performance_chart.dart';
+import 'avatar_editor_screen.dart';
 import 'favorite_questions_screen.dart';
 import 'quiz_screen.dart';
 import 'settings_screen.dart';
@@ -45,6 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _loading = true;
   bool _loadFailed = false;
   bool _practiceLoading = false;
+  AvatarIdentity _avatarIdentity = const AvatarIdentity();
   int _mistakeCount = 0;
   int _readyMistakeCount = 0;
   String? _currentName;
@@ -136,6 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       final name = await widget.repository.getProfileName();
       final stats = await widget.repository.getPlayerStats();
+      final avatarIdentity = await widget.repository.loadAvatarIdentity();
       final achievementStore = await AchievementStore.load();
       final masteryStore = await MasteryStore.load();
       final xpStore = await XPStore.load();
@@ -143,6 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         setState(() {
           _currentName = name;
           _stats = stats;
+          _avatarIdentity = avatarIdentity;
           _achievements = achievementStore.unlockedAchievements;
           _masteryStore = masteryStore;
           _level = xpStore.currentLevel;
@@ -162,6 +168,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
       }
     }
+  }
+
+  Future<void> _openAvatarEditor() async {
+    final changed = await Navigator.of(context).push<bool>(
+      AppRoute.to(AvatarEditorScreen(repository: widget.repository)),
+    );
+    if (changed == true && mounted) _load();
   }
 
   /// Sunucudaki varsayılan ad Türkçedir; KU modunda görünümde çevrilir.
@@ -195,19 +208,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 34,
-                    backgroundColor: Colors.white.withValues(alpha: 0.2),
-                    child: Text(
-                      (_currentName?.isNotEmpty == true
-                              ? _currentName![0]
-                              : 'Z')
-                          .toUpperCase(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 28,
-                      ),
+                  // Avatara dokununca düzenleyici açılır; kalem rozeti bunun
+                  // keşfedilebilir olmasını sağlar.
+                  InkWell(
+                    key: const ValueKey('profile-avatar-edit'),
+                    customBorder: const CircleBorder(),
+                    onTap: _openAvatarEditor,
+                    child: Stack(
+                      children: [
+                        PlayerAvatar(
+                          radius: 34,
+                          photoUrl: _avatarIdentity.photoUrl,
+                          iconId: _avatarIdentity.iconId,
+                          colorHex: _avatarIdentity.colorHex,
+                          frameId: _avatarIdentity.frameId,
+                          displayName: _currentName,
+                        ),
+                        Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.edit,
+                              size: 12,
+                              color: Color(0xFF4F1EB8),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -223,15 +256,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             fontSize: 18,
                           ),
                         ),
-                        Text(
-                          ku
-                              ? 'Di tabloya pêşderçûnê de ev nav xuya dike'
-                              : 'Liderlik tablosunda bu isim görünür',
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.7),
-                            fontSize: 13,
+                        if (_avatarIdentity.showcaseTitle != null)
+                          Container(
+                            margin: const EdgeInsets.only(top: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.18),
+                              borderRadius: BorderRadius.circular(999),
+                            ),
+                            child: Text(
+                              _avatarIdentity.showcaseTitle!,
+                              style: const TextStyle(
+                                color: AppTheme.gold,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                              ),
+                            ),
+                          )
+                        else
+                          Text(
+                            ku
+                                ? 'Di tabloya pêşderçûnê de ev nav xuya dike'
+                                : 'Liderlik tablosunda bu isim görünür',
+                            style: TextStyle(
+                              color: Colors.white.withValues(alpha: 0.7),
+                              fontSize: 13,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
