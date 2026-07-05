@@ -64,6 +64,7 @@ dependencies:
 
   # Bağlantı durumu (Sprint 6'da kullanılacak)
   connectivity_plus: ^6.1.0
+  image_picker: ^1.2.3
 
 dev_dependencies:
   flutter_test:
