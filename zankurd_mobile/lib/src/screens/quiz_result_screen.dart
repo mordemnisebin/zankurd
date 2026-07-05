@@ -13,6 +13,7 @@ import '../models/answer_record.dart';
 import '../models/player.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
+import '../utils/analytics_tracker.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import '../data/daily_mission_store.dart';
@@ -87,6 +88,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   void initState() {
     super.initState();
     _recordProgress();
+    repository.logAnalyticsEvent('quiz_complete', {
+      'category': widget.room.category,
+      'correct_count': widget.correctCount,
+      'total_questions': widget.totalQuestions,
+      'score': widget.score,
+    });
     if (widget.contestId != null) {
       _claimContestReward();
     }
