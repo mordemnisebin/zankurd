@@ -482,7 +482,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   },
                 ),
               ),
-              if (widget.enableTimer)
+              // Vinyet yalnız aktif geri sayım baskısında: cevap verildikten
+              // (veya süre dolduktan) sonra kırmızı parlama sönmeli, yoksa
+              // açıklama okunurken ekran "alarm" modunda kalıyor (2026-07-05
+              // görsel QA bulgusu).
+              if (widget.enableTimer && !answered)
                 CriticalVignette(animation: _timerController),
               WrongFlash(trigger: _shakeTrigger),
               if (_showAnswerBurst)
