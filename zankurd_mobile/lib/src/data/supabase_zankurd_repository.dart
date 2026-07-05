@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
