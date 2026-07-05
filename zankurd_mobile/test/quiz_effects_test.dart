@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/seen_question_store.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_effects.dart';
+import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/confetti_overlay.dart';
 
 void main() {
@@ -137,6 +145,115 @@ void main() {
         ),
         findsOneWidget,
       );
+    });
+  });
+
+  group('Quiz efekt entegrasyonu', () {
+    testWidgets('yanlış cevapta seçilen şık ShakeWrapper içinde', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues({});
+      SeenQuestionStore.resetInstance();
+      final repo = MockZanKurdRepository();
+      final room = repo.createRoom();
+      final question = repo.questions.first;
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider<LanguageProvider>(
+              create: (_) => LanguageProvider()..setLang('tr'),
+            ),
+            ChangeNotifierProvider<SoundProvider>(
+              create: (_) => SoundProvider(),
+            ),
+          ],
+          child: MaterialApp(
+            theme: AppTheme.dark(),
+            home: QuizScreen(
+              repository: repo,
+              room: room,
+              questions: [question],
+              enableTimer: false,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final wrongAnswer = question.displayAnswers.firstWhere(
+        (a) => a != question.correctAnswer,
+      );
+      await tester.tap(
+        find
+            .ancestor(
+              of: find.text(wrongAnswer),
+              matching: find.byType(InkWell),
+            )
+            .first,
+      );
+      await tester.pumpAndSettle();
+
+      expect(
+        find.ancestor(
+          of: find.text(wrongAnswer),
+          matching: find.byType(ShakeWrapper),
+        ),
+        findsWidgets,
+      );
+      // Doğru şık sarsılmaz
+      expect(
+        find.ancestor(
+          of: find.text(question.correctAnswer),
+          matching: find.byType(ShakeWrapper),
+        ),
+        findsNothing,
+      );
+    });
+
+    testWidgets('doğru cevapta mini konfeti patlaması görünür', (tester) async {
+      SharedPreferences.setMockInitialValues({});
+      SeenQuestionStore.resetInstance();
+      final repo = MockZanKurdRepository();
+      final room = repo.createRoom();
+      final question = repo.questions.first;
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider<LanguageProvider>(
+              create: (_) => LanguageProvider()..setLang('tr'),
+            ),
+            ChangeNotifierProvider<SoundProvider>(
+              create: (_) => SoundProvider(),
+            ),
+          ],
+          child: MaterialApp(
+            theme: AppTheme.dark(),
+            home: QuizScreen(
+              repository: repo,
+              room: room,
+              questions: [question],
+              enableTimer: false,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(
+        find
+            .ancestor(
+              of: find.text(question.correctAnswer),
+              matching: find.byType(InkWell),
+            )
+            .first,
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(find.byType(ConfettiOverlay), findsWidgets);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
     });
   });
 }

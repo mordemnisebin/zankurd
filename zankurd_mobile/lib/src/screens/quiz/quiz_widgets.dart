@@ -163,6 +163,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.hiddenAnswers,
     required this.firstAttemptAnswer,
     required this.showExplanation,
+    required this.suspense,
     required this.onAnswer,
     this.audiencePoll,
   });
@@ -176,6 +177,11 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final String firstAttemptAnswer;
   final Map<String, double>? audiencePoll;
   final bool showExplanation;
+
+  /// Gerilim tutuşu: cevap seçildi ama sonuç henüz açıklanmadı.
+  /// True iken doğru/yanlış renkleri gizlenir; seçilen şık "kontrol
+  /// ediliyor" (accent) stilinde bekler.
+  final bool suspense;
   final ValueChanged<String> onAnswer;
 
   @override
@@ -201,16 +207,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
               ignoring: hiddenAnswers.contains(answer),
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 10),
-                child: _AnswerButton(
-                  index: index,
-                  answer: answer,
-                  selected: selectedAnswer == answer,
-                  correct: answered && answer == question.correctAnswer,
-                  disabled: answered || answer == firstAttemptAnswer,
-                  firstAttemptWrong: !answered && answer == firstAttemptAnswer,
-                  audiencePercent: audiencePoll?[answer],
-                  onTap: () => onAnswer(answer),
-                ),
+                child: _buildAnswerButton(index, answer),
               ),
             ),
           ),
@@ -221,6 +218,31 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  /// Tek bir şık butonu üretir; gerilim tutuşu sırasında doğru/yanlış
+  /// renkleri gizler, yanlış açıklanan şıkkı sarsıntıyla sarar.
+  Widget _buildAnswerButton(int index, String answer) {
+    final revealed = answered && !suspense;
+    final button = _AnswerButton(
+      index: index,
+      answer: answer,
+      selected: selectedAnswer == answer,
+      correct: revealed && answer == question.correctAnswer,
+      disabled: answered || answer == firstAttemptAnswer,
+      firstAttemptWrong: !answered && answer == firstAttemptAnswer,
+      suspense: suspense,
+      audiencePercent: audiencePoll?[answer],
+      onTap: () => onAnswer(answer),
+    );
+    final isWrongSelected =
+        revealed &&
+        answer == selectedAnswer &&
+        answer != question.correctAnswer;
+    if (isWrongSelected) {
+      return ShakeWrapper(trigger: 1, child: button);
+    }
+    return button;
   }
 }
 
@@ -527,6 +549,7 @@ class _AnswerButton extends StatelessWidget {
     required this.disabled,
     required this.onTap,
     this.firstAttemptWrong = false,
+    this.suspense = false,
     this.audiencePercent,
   });
 
@@ -538,6 +561,10 @@ class _AnswerButton extends StatelessWidget {
   final bool disabled;
   final VoidCallback onTap;
   final bool firstAttemptWrong;
+
+  /// Gerilim tutuşu: sonuç henüz açıklanmadı. Seçilen şık "kontrol
+  /// ediliyor" (accent) stilinde bekler, yanlış stili uygulanmaz.
+  final bool suspense;
   final double? audiencePercent;
 
   // A/B/C/D rozetleriyle eşleşen kenarlık renkleri
@@ -550,8 +577,9 @@ class _AnswerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wrong = (selected && !correct && disabled) || firstAttemptWrong;
-    final isChecking = selected && !disabled;
+    final wrong =
+        (!suspense && selected && !correct && disabled) || firstAttemptWrong;
+    final isChecking = selected && (suspense || !disabled);
 
     final badgeColor = _badgePalette[index % _badgePalette.length];
 

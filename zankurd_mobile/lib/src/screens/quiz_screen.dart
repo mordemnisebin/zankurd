@@ -22,9 +22,11 @@ import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/test_environment.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
+import 'quiz/quiz_effects.dart';
 import 'quiz_result_screen.dart';
 
 part 'quiz/quiz_widgets.dart';
@@ -93,9 +95,17 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   // Timer ve animasyon durumları
   late final AnimationController _timerController;
   final Stopwatch _questionStopwatch = Stopwatch();
-  Timer? _explanationTimer;
+  // Açıklama gecikmesi bilinçli olarak Timer değil AnimationController:
+  // ticker'ı frame ürettiği için pumpAndSettle 800ms'lik bekleyişi atlamaz
+  // ve gerçek cihazda da reveal ritmi kare kare akar.
+  late final AnimationController _explanationController;
   bool _showExplanation = false;
   bool _showConfetti = false;
+  bool _showAnswerBurst = false; // her doğruda mini konfeti
+  bool _suspense = false; // cevap sonrası kısa gerilim tutuşu
+  int _shakeTrigger = 0; // yanlış cevapta artar → WrongFlash oynar
+  int _flyupTrigger = 0; // doğru cevapta artar → ScoreFlyup oynar
+  int _lastPointsEarned = 0;
 
   QuizQuestion get question => _questions[index];
   bool get answered => selectedAnswer.isNotEmpty;
@@ -114,6 +124,15 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       duration: const Duration(seconds: 15),
       value: 1.0,
     );
+    _explanationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _explanationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed && mounted) {
+        setState(() => _showExplanation = true);
+      }
+    });
     if (widget.enableTimer) {
       _timerController.addStatusListener((status) {
         if (status == AnimationStatus.dismissed) {
@@ -324,7 +343,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _playersSub?.cancel();
     _realtimeSub?.cancel();
     _timerController.dispose();
-    _explanationTimer?.cancel();
+    _explanationController.dispose();
     super.dispose();
   }
 
@@ -418,6 +437,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                           _buildScoreHeader(),
                           const SizedBox(height: 16),
                           _buildProgressBar(context),
+                          _buildComboRow(),
                           const SizedBox(height: 16),
                           _buildQuestionSwitcher(context),
                           const SizedBox(height: 16),
@@ -440,6 +460,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                               _buildQuestionSwitcher(context),
                               const SizedBox(height: 12),
                               _buildProgressBar(context),
+                              _buildComboRow(),
                               const SizedBox(height: 12),
                               _buildScoreHeader(),
                             ],
@@ -461,6 +482,19 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   },
                 ),
               ),
+              if (widget.enableTimer)
+                CriticalVignette(animation: _timerController),
+              WrongFlash(trigger: _shakeTrigger),
+              if (_showAnswerBurst)
+                ConfettiOverlay(
+                  particleCount: 24,
+                  duration: const Duration(milliseconds: 900),
+                  onFinished: () {
+                    setState(() {
+                      _showAnswerBurst = false;
+                    });
+                  },
+                ),
               if (_showConfetti)
                 ConfettiOverlay(
                   onFinished: () {
@@ -472,6 +506,21 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  /// Combo rozeti + puan uçuşu satırı. Rozet yokken yükseklik kaplamaz.
+  Widget _buildComboRow() {
+    return Padding(
+      padding: EdgeInsets.only(top: comboTierFor(streak) != null ? 10 : 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ComboBadge(streak: streak, isKu: _isKu),
+          const SizedBox(width: 10),
+          ScoreFlyup(trigger: _flyupTrigger, points: _lastPointsEarned),
+        ],
       ),
     );
   }
@@ -923,6 +972,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                     firstAttemptAnswer: _firstAttemptAnswer,
                     audiencePoll: _audiencePoll,
                     showExplanation: _showExplanation,
+                    suspense: _suspense,
                     onAnswer: _answer,
                   ),
                 ),
@@ -943,6 +993,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
               firstAttemptAnswer: _firstAttemptAnswer,
               audiencePoll: _audiencePoll,
               showExplanation: _showExplanation,
+              suspense: _suspense,
               onAnswer: _answer,
             ),
           ],
@@ -987,11 +1038,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
     _timerController.stop();
 
-    _explanationTimer = Timer(const Duration(milliseconds: 800), () {
-      if (mounted) {
-        setState(() => _showExplanation = true);
-      }
-    });
+    _explanationController.forward(from: 0);
 
     // Çift Cevap aktifse ve ilk deneme yanlışsa: göster ama kilitleme
     if (_wildcard.doubleAnswerActivated &&
@@ -1002,10 +1049,18 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       return;
     }
 
-    // Optimistically select it to disable buttons immediately
+    // Optimistically select it to disable buttons immediately.
+    // TIMEOUT dışında kısa bir "gerilim tutuşu" ile sonuç açıklanması
+    // geciktirilir (TV-şovu ritmi); testte beklemeden geçilir.
+    final isTimeout = answer == 'TIMEOUT';
     setState(() {
       selectedAnswer = answer;
+      _suspense = !isTimeout;
     });
+    if (!isTimeout && !isFlutterTestEnvironment) {
+      await Future.delayed(const Duration(milliseconds: 400));
+    }
+    if (!mounted) return;
 
     final optionKey = question.optionKeyForAnswer(answer);
     final responseMs = _questionStopwatch.elapsedMilliseconds;
@@ -1030,7 +1085,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
       final isCorrect = result['is_correct'] == true;
       _trackMistake(isCorrect);
+      final oldScore = score;
       setState(() {
+        _suspense = false;
         score =
             result['new_score'] as int? ??
             (score + (result['points'] as int? ?? 0));
@@ -1048,10 +1105,21 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         if (correct && streak >= 5 && streak % 5 == 0) {
           _showConfetti = true;
         }
+        if (correct) {
+          _showAnswerBurst = true;
+          _lastPointsEarned = score - oldScore;
+          _flyupTrigger += 1;
+        } else {
+          _shakeTrigger += 1;
+        }
         _recordAnswer(answer);
         _advanceBots();
         _syncMyDuelState(answeredNow: true);
       });
+      // Altın kademe anı: ×10 seriye özel kutlama sesi (yeni asset yok).
+      if (isCorrect && streak == 10 && mounted) {
+        context.read<SoundProvider>().playWin();
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'submitAnswer failed');
       // Fallback local logic if network fails during answer submit
@@ -1066,22 +1134,31 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         context.read<SoundProvider>().playWrong();
       }
       setState(() {
+        _suspense = false;
         if (correct) {
           streak += 1;
           bestStreak = bestStreak < streak ? streak : bestStreak;
           correctCount += 1;
-          score += 100 + (streak * 10).clamp(0, 50);
+          final points = 100 + (streak * 10).clamp(0, 50);
+          score += points;
           if (streak >= 5 && streak % 5 == 0) {
             _showConfetti = true;
           }
+          _showAnswerBurst = true;
+          _lastPointsEarned = points;
+          _flyupTrigger += 1;
         } else {
           streak = 0;
           wrongCount += 1;
+          _shakeTrigger += 1;
         }
         _recordAnswer(answer);
         _advanceBots();
         _syncMyDuelState(answeredNow: true);
       });
+      if (correct && streak == 10 && mounted) {
+        context.read<SoundProvider>().playWin();
+      }
     }
   }
 
@@ -1127,7 +1204,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       return;
     }
 
-    _explanationTimer?.cancel();
+    _explanationController.stop();
+    _explanationController.reset();
     setState(() {
       index += 1;
       selectedAnswer = '';
@@ -1139,6 +1217,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _audiencePoll = null;
       hiddenAnswers = const {};
       _showExplanation = false;
+      _suspense = false;
       _syncMyDuelState(answeredNow: false);
     });
     _markQuestionSeen();
