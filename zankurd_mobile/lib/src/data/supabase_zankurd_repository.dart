@@ -939,49 +939,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     return null;
   }
 
-  static bool _isSameUtcDay(DateTime a, DateTime b) =>
-      a.year == b.year && a.month == b.month && a.day == b.day;
-
-  /// Bugün ücretsiz çark hakkı kaldı mı? (Son 'daily_spin%' işlemi bugüne
-  /// ait değilse hak vardır.)
-  Future<bool> _freeSpinAvailable(User user) async {
-    final rows = await client
-        .from('coin_transactions')
-        .select('created_at')
-        .eq('player_id', user.id)
-        .like('reason', 'daily_spin%')
-        .order('created_at', ascending: false)
-        .limit(1);
-    if (rows.isEmpty) return true;
-    final last = DateTime.parse(rows.first['created_at'] as String).toUtc();
-    return !_isSameUtcDay(last, DateTime.now().toUtc());
-  }
-
   @override
   Future<bool> canSpinToday() async {
     try {
-      final user = client.auth.currentUser ?? await signInAnonymously();
-
-      if (await _freeSpinAvailable(user)) return true;
-
-      // 2. Check purchased extra spins
-      final purchases = await client
-          .from('coin_transactions')
-          .select('amount')
-          .eq('player_id', user.id)
-          .eq('reason', 'purchase_spin_wheel_extra');
-
-      // 'daily_spin:extra_purchase' eski istemcilerin yazdığı mirastır.
-      final usedSpins = await client
-          .from('coin_transactions')
-          .select('amount')
-          .eq('player_id', user.id)
-          .inFilter('reason', [
-            'extra_spin:server',
-            'daily_spin:extra_purchase',
-          ]);
-
-      return purchases.length > usedSpins.length;
+      final result = await client.rpc<bool>('can_spin_today');
+      return result ?? false;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'canSpinToday failed');
       return _offline.canSpinToday();
@@ -991,34 +953,24 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<int> awardSpinCoins() async {
     try {
-      final user = client.auth.currentUser ?? await signInAnonymously();
-      await ensureProfile();
-
-      if (await _freeSpinAvailable(user)) {
-        final response = await client.rpc('claim_daily_spin');
-        if (response is Map<String, dynamic>) {
-          final amount = (response['amount'] as num?)?.toInt() ?? 0;
-          if (amount >= 0) return amount;
-        }
-        if (response is List && response.isNotEmpty) {
-          final first = response.first;
-          if (first is Map<String, dynamic>) {
-            final amount = (first['amount'] as num?)?.toInt() ?? 0;
-            if (amount >= 0) return amount;
-          }
-        }
-        throw StateError('Daily spin RPC returned no reward for ${user.id}.');
-      } else {
-        // Ekstra çark: hak kontrolü ve ödül seçimi sunucudadır.
-        final response = await client.rpc('claim_extra_spin');
-        return _amountFromRpcResponse(response) ?? 0;
-      }
-    } catch (error, stack) {
-      _recordError(
-        error,
-        stack,
-        reason: 'awardSpinCoins/claim_daily_spin failed',
+      final response = await client.rpc<Map<String, dynamic>>(
+        'award_spin_coins',
       );
+      if (response == null) return 0;
+
+      final success = response['success'] as bool? ?? false;
+      if (!success) {
+        _recordError(
+          Exception(response['message'] ?? 'Award spin coins failed'),
+          StackTrace.current,
+          reason: 'awardSpinCoins RPC unsuccessful',
+        );
+        return 0;
+      }
+
+      return (response['reward_amount'] as num?)?.toInt() ?? 0;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'awardSpinCoins failed');
       return 0;
     }
   }
