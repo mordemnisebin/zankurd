@@ -51,8 +51,10 @@ void main() {
     });
 
     test('colorFrom geçerli hex çözer, bozukta fallback döner', () {
-      expect(colorFrom('#E94560', fallback: Colors.black).value,
-          const Color(0xFFE94560).value);
+      expect(
+        colorFrom('#E94560', fallback: Colors.black).toARGB32(),
+        const Color(0xFFE94560).toARGB32(),
+      );
       expect(colorFrom('bozuk', fallback: Colors.black), Colors.black);
       expect(colorFrom(null, fallback: Colors.teal), Colors.teal);
     });
