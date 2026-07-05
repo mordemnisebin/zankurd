@@ -14,6 +14,7 @@ import 'onboarding_screen.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
 import 'sign_in_screen.dart';
+import 'tournament_screen.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({required this.repository, super.key});
@@ -42,6 +43,7 @@ class _AppShellState extends State<AppShell> {
   late final ScrollController _categoriesScrollController;
   late final ScrollController _leaderboardScrollController;
   late final ScrollController _learningScrollController;
+  late final ScrollController _tournamentScrollController;
   late final ScrollController _profileScrollController;
 
   @override
@@ -51,6 +53,7 @@ class _AppShellState extends State<AppShell> {
     _categoriesScrollController = ScrollController();
     _leaderboardScrollController = ScrollController();
     _learningScrollController = ScrollController();
+    _tournamentScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
   }
@@ -61,6 +64,7 @@ class _AppShellState extends State<AppShell> {
     _categoriesScrollController.dispose();
     _leaderboardScrollController.dispose();
     _learningScrollController.dispose();
+    _tournamentScrollController.dispose();
     _profileScrollController.dispose();
     _homeRefresh.dispose();
     _profileRefresh.dispose();
@@ -144,6 +148,7 @@ class _AppShellState extends State<AppShell> {
             scrollController: _leaderboardScrollController,
           ),
           LearningScreen(repository: widget.repository),
+          TournamentScreen(repository: widget.repository),
           ProfileScreen(
             repository: widget.repository,
             refreshSignal: _profileRefresh,
@@ -164,7 +169,8 @@ class _AppShellState extends State<AppShell> {
                 1 => _categoriesScrollController,
                 2 => _leaderboardScrollController,
                 3 => _learningScrollController,
-                4 => _profileScrollController,
+                4 => _tournamentScrollController,
+                5 => _profileScrollController,
                 _ => null,
               };
               if (controller != null && controller.hasClients) {
@@ -175,10 +181,8 @@ class _AppShellState extends State<AppShell> {
                 );
               }
             } else {
-              // Ana Sayfa ve Profil tabları IndexedStack içinde canlı kaldığı
-              // için sekmeye her dönüşte ilgili verileri tazelemesi gerekir.
               if (i == 0) _homeRefresh.value++;
-              if (i == 4) _profileRefresh.value++;
+              if (i == 5) _profileRefresh.value++;
               setState(() => _tab = i);
             }
           },
@@ -202,6 +206,11 @@ class _AppShellState extends State<AppShell> {
               icon: const Icon(Icons.school_outlined),
               selectedIcon: const Icon(Icons.school),
               label: ku ? 'Xwendina' : 'Öğren',
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.emoji_events_outlined),
+              selectedIcon: const Icon(Icons.emoji_events),
+              label: ku ? 'Turnuva' : 'Turnuva',
             ),
             NavigationDestination(
               icon: const Icon(Icons.person_outline),
