@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/avatar_identity.dart';
+import '../models/contest.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
@@ -782,4 +783,85 @@ class MockZanKurdRepository implements ZanKurdRepository {
     String roomId,
     Map<String, dynamic> payload,
   ) async {}
+
+  @override
+  Future<Contest?> loadTodayContest() async {
+    // Mock: statik hergün Ziman teması
+    return Contest(
+      id: 'contest_mock_today',
+      dayKey: DateTime.now(),
+      themeNameKu: 'Ziman Eksperi',
+      themeDescriptionKu: 'Dil usta ol!',
+      category: 'Ziman',
+      difficultyMin: 1,
+      difficultyMax: 3,
+      participationReward: 10,
+      rank1Reward: 500,
+      rank2Reward: 300,
+      rank3Reward: 100,
+      questionCount: 10,
+    );
+  }
+
+  @override
+  Future<ContestEntry?> submitContestEntry({
+    required String contestId,
+    required int correctCount,
+  }) async {
+    final score = correctCount * 100;
+    return ContestEntry(
+      id: 'entry_mock',
+      contestId: contestId,
+      userId: 'user_mock',
+      score: score,
+      correctCount: correctCount,
+      finishedAt: DateTime.now(),
+      rank: 1,
+      rewardClaimed: false,
+    );
+  }
+
+  @override
+  Future<Map<String, dynamic>?> claimContestReward(String contestId) async {
+    return {
+      'claimed': true,
+      'rank_reward': 500,
+      'badge_awarded': 'contest_20260705_champion',
+    };
+  }
+
+  @override
+  Future<List<ContestLeaderboardRow>> getContestLeaderboard({
+    required String contestId,
+    int limit = 10,
+  }) async {
+    return const [
+      ContestLeaderboardRow(
+        userId: 'user1',
+        displayName: 'Rojda',
+        score: 1000,
+        correctCount: 10,
+        rank: 1,
+      ),
+      ContestLeaderboardRow(
+        userId: 'user2',
+        displayName: 'Baran',
+        score: 900,
+        correctCount: 9,
+        rank: 2,
+      ),
+      ContestLeaderboardRow(
+        userId: 'user3',
+        displayName: 'Dilan',
+        score: 800,
+        correctCount: 8,
+        rank: 3,
+      ),
+    ];
+  }
+
+  @override
+  Future<List<UserContestBadge>> loadUserContestBadges() async {
+    return const [];
+  }
 }

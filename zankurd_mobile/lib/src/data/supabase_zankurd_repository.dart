@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/avatar_identity.dart';
+import '../models/contest.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
@@ -1102,7 +1103,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<List<Player>> _loadRoomPlayersById(String roomId) async {
     final rows = await client
         .from('room_players')
-        .select('player_id, score, streak, is_ready, profiles(display_name)')
+        .select(
+          'player_id, score, streak, is_ready, '
+          'profiles(display_name, avatar_icon, avatar_color, avatar_url, '
+          'avatar_frame, showcase_title)',
+        )
         .eq('room_id', roomId)
         .order('joined_at');
 
@@ -1116,6 +1121,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         score: row['score'] as int? ?? 0,
         streak: row['streak'] as int? ?? 0,
         state: ready ? 'Hazır' : 'Bekliyor',
+        avatarIcon: profile?['avatar_icon'] as String?,
+        avatarColor: profile?['avatar_color'] as String?,
+        avatarUrl: profile?['avatar_url'] as String?,
+        avatarFrame: profile?['avatar_frame'] as String?,
+        showcaseTitle: profile?['showcase_title'] as String?,
       );
     }).toList();
   }
@@ -1236,5 +1246,98 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     await _roomChannel(
       roomId,
     ).sendBroadcastMessage(event: 'game_event', payload: payload);
+  }
+
+  @override
+  Future<Contest?> loadTodayContest() async {
+    try {
+      final res = await client.rpc('get_today_contest');
+      if (res == null || res.isEmpty) return null;
+      return Contest.fromJson(res);
+    } catch (e) {
+      return _offline.loadTodayContest();
+    }
+  }
+
+  @override
+  Future<ContestEntry?> submitContestEntry({
+    required String contestId,
+    required int correctCount,
+  }) async {
+    try {
+      final res = await client.rpc(
+        'submit_contest_entry',
+        params: {'p_contest_id': contestId, 'p_correct_count': correctCount},
+      );
+      if (res == null) return null;
+      return ContestEntry.fromJson({
+        'id': res['entry_id'],
+        'contest_id': contestId,
+        'user_id': client.auth.currentUser?.id ?? '',
+        'score': res['score'],
+        'correct_count': correctCount,
+        'finished_at': DateTime.now().toIso8601String(),
+        'rank': res['rank'],
+      });
+    } catch (e) {
+      return _offline.submitContestEntry(
+        contestId: contestId,
+        correctCount: correctCount,
+      );
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>?> claimContestReward(String contestId) async {
+    try {
+      final res = await client.rpc(
+        'claim_contest_reward',
+        params: {'p_contest_id': contestId},
+      );
+      return res;
+    } catch (e) {
+      return _offline.claimContestReward(contestId);
+    }
+  }
+
+  @override
+  Future<List<ContestLeaderboardRow>> getContestLeaderboard({
+    required String contestId,
+    int limit = 10,
+  }) async {
+    try {
+      final res =
+          await client.rpc(
+                'get_contest_leaderboard',
+                params: {'p_contest_id': contestId, 'p_limit': limit},
+              )
+              as List<dynamic>;
+      return res
+          .map(
+            (row) =>
+                ContestLeaderboardRow.fromJson(row as Map<String, dynamic>),
+          )
+          .toList();
+    } catch (e) {
+      return _offline.getContestLeaderboard(contestId: contestId, limit: limit);
+    }
+  }
+
+  @override
+  Future<List<UserContestBadge>> loadUserContestBadges() async {
+    try {
+      final uid = client.auth.currentUser?.id;
+      if (uid == null) return const [];
+      final res = await client
+          .from('user_contest_badges')
+          .select()
+          .eq('user_id', uid)
+          .order('earned_at', ascending: false);
+      return (res as List<dynamic>)
+          .map((row) => UserContestBadge.fromJson(row as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      return _offline.loadUserContestBadges();
+    }
   }
 }

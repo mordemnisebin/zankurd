@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import '../models/avatar_identity.dart';
+import '../models/contest.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
@@ -110,6 +111,27 @@ abstract class ZanKurdRepository {
 
   /// Avatar fotoğrafını yükler ve erişilebilir URL'ini döner.
   Future<String> uploadAvatarPhoto(Uint8List bytes, String contentType);
+
+  /// Bugünün contest/etkinlik temesini yükler (varsa).
+  Future<Contest?> loadTodayContest();
+
+  /// Quiz bitişi sonrası skor kaydeder ve katılım reward'ı verir.
+  Future<ContestEntry?> submitContestEntry({
+    required String contestId,
+    required int correctCount,
+  });
+
+  /// Rank reward'ını ve rozeti talep eder.
+  Future<Map<String, dynamic>?> claimContestReward(String contestId);
+
+  /// Contest leaderboard'unu (top N) yükler.
+  Future<List<ContestLeaderboardRow>> getContestLeaderboard({
+    required String contestId,
+    int limit = 10,
+  });
+
+  /// Kullanıcının kazandığı contest rozetlerini yükler.
+  Future<List<UserContestBadge>> loadUserContestBadges();
 
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName);
   Future<void> cancelMatchmaking();
