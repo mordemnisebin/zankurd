@@ -1214,3 +1214,6 @@ class _MetricItemCompact extends StatelessWidget {
     );
   }
 }
+
+// Analytics tracking will be added in next iteration
+// AnalyticsTracker.trackQuizComplete(category, correctCount, totalQuestions);
