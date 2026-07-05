@@ -14,6 +14,7 @@ import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/tournament.dart';
 import '../utils/error_reporter.dart';
 import '../utils/question_cache.dart';
 import 'mock_zankurd_repository.dart';
@@ -1469,6 +1470,68 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         opponentScore,
         botWinners,
       );
+    }
+  }
+
+  @override
+  Future<TournamentBracket> joinTournament() async {
+    try {
+      return _offline.joinTournament();
+    } catch (e) {
+      return _offline.joinTournament();
+    }
+  }
+
+  @override
+  Future<TournamentBracket?> loadTournamentBracket() async {
+    try {
+      return _offline.loadTournamentBracket();
+    } catch (e) {
+      return _offline.loadTournamentBracket();
+    }
+  }
+
+  @override
+  Future<TournamentMatch> submitTournamentMatch({
+    required String matchId,
+    required int playerScore,
+    required int opponentScore,
+  }) async {
+    try {
+      return _offline.submitTournamentMatch(
+        matchId: matchId,
+        playerScore: playerScore,
+        opponentScore: opponentScore,
+      );
+    } catch (e) {
+      return _offline.submitTournamentMatch(
+        matchId: matchId,
+        playerScore: playerScore,
+        opponentScore: opponentScore,
+      );
+    }
+  }
+
+  @override
+  Future<List<TournamentStandings>> loadTournamentStandings({
+    int limit = 16,
+  }) async {
+    try {
+      return _offline.loadTournamentStandings(limit: limit);
+    } catch (e) {
+      return _offline.loadTournamentStandings(limit: limit);
+    }
+  }
+
+  @override
+  Future<int> claimTournamentChampionReward() async {
+    try {
+      final response = await client.rpc<Map<String, dynamic>>(
+        'claim_tournament_reward',
+      );
+      return (response?['coins'] as int?) ?? 0;
+    } catch (e) {
+      return _offline.claimTournamentChampionReward();
     }
   }
 }

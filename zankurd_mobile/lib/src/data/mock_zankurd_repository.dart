@@ -15,6 +15,7 @@ import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/tournament.dart';
 import '../utils/coin_calculator.dart';
 import 'offline_question_bank.dart';
 import 'seen_question_store.dart';
@@ -988,4 +989,92 @@ class MockZanKurdRepository implements ZanKurdRepository {
     int opponentScore,
     List<String> botWinners,
   ) async => true;
+
+  @override
+  Future<TournamentBracket> joinTournament() async {
+    final rounds = TournamentConfig.generateBracket();
+    final bracket = TournamentBracket(
+      tournamentId: 'mock_tournament_${DateTime.now().toIso8601String()}',
+      userId: 'mock_user_123',
+      rounds: rounds,
+      currentRound: 0,
+      status: 'active',
+      totalScore: 0,
+      botWinners: [],
+      createdAt: DateTime.now(),
+    );
+    return bracket;
+  }
+
+  @override
+  Future<TournamentBracket?> loadTournamentBracket() async {
+    final rounds = TournamentConfig.generateBracket();
+    return TournamentBracket(
+      tournamentId: 'mock_tournament_today',
+      userId: 'mock_user_123',
+      rounds: rounds,
+      currentRound: 0,
+      status: 'active',
+      totalScore: 0,
+      botWinners: [],
+      createdAt: DateTime.now(),
+    );
+  }
+
+  @override
+  Future<TournamentMatch> submitTournamentMatch({
+    required String matchId,
+    required int playerScore,
+    required int opponentScore,
+  }) async {
+    final winner = playerScore > opponentScore ? 'player' : 'opponent';
+    return TournamentMatch(
+      id: matchId,
+      playerOneId: 'player_123',
+      playerOneName: 'You',
+      playerTwoId: 'bot_opponent',
+      playerTwoName: 'Bot Opponent',
+      playerOneScore: playerScore,
+      playerTwoScore: opponentScore,
+      status: 'completed',
+      winnerId: winner == 'player' ? 'player_123' : 'bot_opponent',
+      questionCategory: 'Ziman',
+      questionsAnswered: 4,
+    );
+  }
+
+  @override
+  Future<List<TournamentStandings>> loadTournamentStandings({
+    int limit = 16,
+  }) async {
+    return [
+      const TournamentStandings(
+        rank: 1,
+        playerId: 'player_001',
+        playerName: 'Şampyon',
+        totalScore: 400,
+        status: 'champion',
+      ),
+      const TournamentStandings(
+        rank: 2,
+        playerId: 'player_002',
+        playerName: 'İkinci',
+        totalScore: 300,
+        status: 'finalist',
+      ),
+      const TournamentStandings(
+        rank: 3,
+        playerId: 'player_003',
+        playerName: 'Üçüncü',
+        totalScore: 200,
+        status: 'finalist',
+      ),
+    ];
+  }
+
+  @override
+  Future<int> claimTournamentChampionReward() async {
+    _mockCoins += TournamentConfig.coinBonusChampion;
+    return TournamentConfig.coinBonusChampion;
+  }
 }

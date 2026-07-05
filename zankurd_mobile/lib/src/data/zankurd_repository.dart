@@ -10,6 +10,7 @@ import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/tournament.dart';
 
 abstract class ZanKurdRepository {
   List<String> get categories;
@@ -185,4 +186,23 @@ abstract class ZanKurdRepository {
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue();
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId);
   Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload);
+
+  /// Turnuvaya katıl: bracket oluştur ve ilk rakip belirle.
+  Future<TournamentBracket> joinTournament();
+
+  /// Turnuva durumunu yükle.
+  Future<TournamentBracket?> loadTournamentBracket();
+
+  /// Turnuva maçında cevaplar gönder ve kazananı belirle.
+  Future<TournamentMatch> submitTournamentMatch({
+    required String matchId,
+    required int playerScore,
+    required int opponentScore,
+  });
+
+  /// Turnuva sıralamasını yükle (top 16).
+  Future<List<TournamentStandings>> loadTournamentStandings({int limit = 16});
+
+  /// Turnuva ödülünü talep et (şampiyonluk).
+  Future<int> claimTournamentChampionReward();
 }
