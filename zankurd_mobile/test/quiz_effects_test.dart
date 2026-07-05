@@ -62,4 +62,81 @@ void main() {
       expect(finished, isTrue);
     });
   });
+
+  group('ComboBadge', () {
+    testWidgets('streak 2 iken görünmez, 3 olunca ×3 rozeti çıkar', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        const MaterialApp(home: ComboBadge(streak: 2, isKu: false)),
+      );
+      expect(find.textContaining('×'), findsNothing);
+
+      await tester.pumpWidget(
+        const MaterialApp(home: ComboBadge(streak: 3, isKu: false)),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('×3 Seri!'), findsOneWidget);
+    });
+
+    testWidgets('KU modunda Rêz metni kullanılır', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(home: ComboBadge(streak: 5, isKu: true)),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('×5 Rêz!'), findsOneWidget);
+    });
+  });
+
+  group('ShakeWrapper', () {
+    testWidgets('trigger artınca sarsıntı animasyonu oynar ve durulur', (
+      tester,
+    ) async {
+      Widget build(int trigger) => MaterialApp(
+        home: ShakeWrapper(trigger: trigger, child: const Text('hedef')),
+      );
+      await tester.pumpWidget(build(0));
+      await tester.pumpWidget(build(1));
+      await tester.pump(const Duration(milliseconds: 50));
+      final transform = tester.widget<Transform>(
+        find
+            .ancestor(of: find.text('hedef'), matching: find.byType(Transform))
+            .first,
+      );
+      expect(transform.transform.getTranslation().x, isNot(0.0));
+      await tester.pumpAndSettle();
+    });
+  });
+
+  group('CriticalVignette', () {
+    testWidgets('süre boldayken çizmez, son saniyelerde çizer', (tester) async {
+      final controller = AnimationController(
+        vsync: tester,
+        duration: const Duration(seconds: 15),
+        value: 1.0,
+      );
+      addTearDown(controller.dispose);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Stack(children: [CriticalVignette(animation: controller)]),
+        ),
+      );
+      expect(
+        find.descendant(
+          of: find.byType(CriticalVignette),
+          matching: find.byType(CustomPaint),
+        ),
+        findsNothing,
+      );
+      controller.value = 0.1; // son ~1.5 saniye
+      await tester.pump();
+      expect(
+        find.descendant(
+          of: find.byType(CriticalVignette),
+          matching: find.byType(CustomPaint),
+        ),
+        findsOneWidget,
+      );
+    });
+  });
 }
