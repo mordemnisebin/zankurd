@@ -2,9 +2,19 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class ConfettiOverlay extends StatefulWidget {
-  const ConfettiOverlay({required this.onFinished, super.key});
+  const ConfettiOverlay({
+    required this.onFinished,
+    this.particleCount = 80,
+    this.duration = const Duration(milliseconds: 2500),
+    super.key,
+  });
 
   final VoidCallback onFinished;
+
+  /// Parçacık sayısı: tam ekran kutlama için 80 (varsayılan),
+  /// her-doğru-cevap mini patlaması için ~24 kullanılır.
+  final int particleCount;
+  final Duration duration;
 
   @override
   State<ConfettiOverlay> createState() => _ConfettiOverlayState();
@@ -18,10 +28,7 @@ class _ConfettiOverlayState extends State<ConfettiOverlay>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 2500),
-    );
+    _controller = AnimationController(vsync: this, duration: widget.duration);
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -29,7 +36,10 @@ class _ConfettiOverlayState extends State<ConfettiOverlay>
       }
     });
 
-    _particles = List.generate(80, (index) => _ConfettiParticle.random());
+    _particles = List.generate(
+      widget.particleCount,
+      (index) => _ConfettiParticle.random(),
+    );
     _controller.forward();
   }
 

@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_effects.dart';
+import 'package:zankurd_mobile/src/widgets/confetti_overlay.dart';
 
 void main() {
   group('comboTierFor', () {
@@ -41,6 +43,23 @@ void main() {
     test('aralık dışı girdiler kırpılır', () {
       expect(vignetteStrengthFor(-0.2), 1.0);
       expect(vignetteStrengthFor(1.7), 0.0);
+    });
+  });
+
+  group('ConfettiOverlay parametreleri', () {
+    testWidgets('özel parçacık sayısı ve süre ile kurulabilir', (tester) async {
+      var finished = false;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: ConfettiOverlay(
+            particleCount: 24,
+            duration: const Duration(milliseconds: 300),
+            onFinished: () => finished = true,
+          ),
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 350));
+      expect(finished, isTrue);
     });
   });
 }
