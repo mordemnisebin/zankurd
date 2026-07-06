@@ -39,7 +39,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            context.isKu ? 'Hevalbûn qebûl kir' : 'Arkadaş eklendi',
+            context.isKu ? 'Daxwaz hat qebûlkirin' : 'Arkadaş eklendi',
           ),
           duration: const Duration(seconds: 2),
         ),
@@ -76,7 +76,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          ku ? 'Davetnameyên Ciwan' : 'Bekleyen İstekler',
+                          ku ? 'Daxwazên Hevaltiyê' : 'Bekleyen İstekler',
                           style: TextStyle(
                             color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w800,
@@ -114,11 +114,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     }
                     if (snap.hasError) {
                       return AppErrorState(
-                        title: ku ? 'Barnekirî' : 'Yüklenemedi',
+                        title: ku ? 'Barnebû' : 'Yüklenemedi',
                         message: ku
-                            ? 'Hevalên xwe yüklenê de'
+                            ? 'Heval nehatin barkirin'
                             : 'Arkadaşlar yüklenemedi',
-                        retryLabel: ku ? 'Dûbare' : 'Tekrar',
+                        retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar',
                         onRetry: () => setState(() => _loadFriends()),
                       );
                     }
@@ -128,8 +128,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
                         icon: Icons.people_outline,
                         title: ku ? 'Heval tune' : 'Arkadaş yok',
                         message: ku
-                            ? 'Hûn dikarin hevalê xwe bibînin'
-                            : 'Henüz arkadaş eklememediniz',
+                            ? 'Hîn te heval zêde nekirine'
+                            : 'Henüz arkadaş eklemediniz',
                       );
                     }
                     return Column(
@@ -191,12 +191,12 @@ class _FriendCard extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      ku ? 'Pisporî pêş nayê' : 'Yakında mevcut olacak',
+                      ku ? 'Di demeke nêz de tê' : 'Yakında mevcut olacak',
                     ),
                   ),
                 );
               },
-              child: Text(ku ? 'Bila' : 'Oyna'),
+              child: Text(ku ? 'Bilîze' : 'Oyna'),
             ),
           ],
         ),

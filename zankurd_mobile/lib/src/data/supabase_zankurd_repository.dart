@@ -941,11 +941,22 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     return null;
   }
 
+  /// `RETURNS TABLE` RPC'leri PostgREST'te satır listesi döndürür;
+  /// tek satırlı sonuçların ilk satırını Map olarak çıkarır.
+  static Map<String, dynamic>? _firstRow(dynamic response) {
+    if (response is List) {
+      return response.isEmpty
+          ? null
+          : Map<String, dynamic>.from(response.first as Map);
+    }
+    if (response is Map) return Map<String, dynamic>.from(response);
+    return null;
+  }
+
   @override
   Future<bool> canSpinToday() async {
     try {
-      final result = await client.rpc<bool>('can_spin_today');
-      return result ?? false;
+      return await client.rpc<bool>('can_spin_today');
     } catch (error, stack) {
       _recordError(error, stack, reason: 'canSpinToday failed');
       return _offline.canSpinToday();
@@ -955,22 +966,20 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<int> awardSpinCoins() async {
     try {
-      final response = await client.rpc<Map<String, dynamic>>(
-        'award_spin_coins',
-      );
-      if (response == null) return 0;
+      final row = _firstRow(await client.rpc<dynamic>('award_spin_coins'));
+      if (row == null) return 0;
 
-      final success = response['success'] as bool? ?? false;
+      final success = row['success'] as bool? ?? false;
       if (!success) {
         _recordError(
-          Exception(response['message'] ?? 'Award spin coins failed'),
+          Exception(row['message'] ?? 'Award spin coins failed'),
           StackTrace.current,
           reason: 'awardSpinCoins RPC unsuccessful',
         );
         return 0;
       }
 
-      return (response['reward_amount'] as num?)?.toInt() ?? 0;
+      return (row['reward_amount'] as num?)?.toInt() ?? 0;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'awardSpinCoins failed');
       return 0;
@@ -1359,11 +1368,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<bool> addFriend(String friendId, String friendName) async {
     try {
-      final response = await client.rpc<Map<String, dynamic>>(
+      final response = await client.rpc<dynamic>(
         'add_friend',
         params: {'p_friend_id': friendId, 'p_friend_name': friendName},
       );
-      return (response?['success'] as bool?) ?? false;
+      return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e) {
       return _offline.addFriend(friendId, friendName);
     }
@@ -1372,11 +1381,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<bool> acceptFriendRequest(String requestId) async {
     try {
-      final response = await client.rpc<Map<String, dynamic>>(
+      final response = await client.rpc<dynamic>(
         'accept_friend_request',
         params: {'p_request_id': requestId},
       );
-      return (response?['success'] as bool?) ?? false;
+      return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e) {
       return _offline.acceptFriendRequest(requestId);
     }
@@ -1386,8 +1395,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<List<Friend>> loadFriends() async {
     try {
       final res = await client.rpc<List<dynamic>>('list_friends');
-      return (res ?? [])
-          .map((row) => Friend.fromJson(row as Map<String, dynamic>))
+      return res
+          .map((row) => Friend.fromJson(Map<String, dynamic>.from(row as Map)))
           .toList();
     } catch (e) {
       return _offline.loadFriends();
@@ -1400,8 +1409,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final res = await client.rpc<List<dynamic>>(
         'list_pending_friend_requests',
       );
-      return (res ?? [])
-          .map((row) => FriendRequest.fromJson(row as Map<String, dynamic>))
+      return res
+          .map(
+            (row) =>
+                FriendRequest.fromJson(Map<String, dynamic>.from(row as Map)),
+          )
           .toList();
     } catch (e) {
       return _offline.loadPendingFriendRequests();
@@ -1415,7 +1427,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     int xpReward,
   ) async {
     try {
-      final response = await client.rpc<Map<String, dynamic>>(
+      final response = await client.rpc<dynamic>(
         'sync_mission_completion',
         params: {
           'p_mission_key': missionKey,
@@ -1423,7 +1435,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           'p_xp_reward': xpReward,
         },
       );
-      return (response?['success'] as bool?) ?? false;
+      return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e) {
       return _offline.syncMissionCompletion(missionKey, coinReward, xpReward);
     }
@@ -1435,11 +1447,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     Map<String, dynamic>? params,
   ) async {
     try {
-      final response = await client.rpc<Map<String, dynamic>>(
+      final response = await client.rpc<dynamic>(
         'log_analytics_event',
         params: {'p_event_name': eventName, 'p_event_params': params},
       );
-      return (response?['success'] as bool?) ?? false;
+      return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e) {
       return _offline.logAnalyticsEvent(eventName, params);
     }
@@ -1453,7 +1465,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     List<String> botWinners,
   ) async {
     try {
-      final response = await client.rpc<Map<String, dynamic>>(
+      final response = await client.rpc<dynamic>(
         'save_tournament_progress',
         params: {
           'p_stage': stage,
@@ -1462,7 +1474,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           'p_bot_winners': botWinners,
         },
       );
-      return (response?['success'] as bool?) ?? false;
+      return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e) {
       return _offline.saveTournamentProgress(
         stage,
@@ -1526,10 +1538,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<int> claimTournamentChampionReward() async {
     try {
-      final response = await client.rpc<Map<String, dynamic>>(
-        'claim_tournament_reward',
-      );
-      return (response?['coins'] as int?) ?? 0;
+      final response = await client.rpc<dynamic>('claim_tournament_reward');
+      return (_firstRow(response)?['coins'] as int?) ?? 0;
     } catch (e) {
       return _offline.claimTournamentChampionReward();
     }

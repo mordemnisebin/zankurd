@@ -23,6 +23,7 @@ import '../widgets/weekly_performance_chart.dart';
 import 'avatar_editor_screen.dart';
 import 'favorite_questions_screen.dart';
 import 'quiz_screen.dart';
+import 'friends_screen.dart';
 import 'settings_screen.dart';
 import 'shop_screen.dart';
 
@@ -615,6 +616,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Expanded(
                         child: Text(
                           ku ? 'Dukan' : 'Mağaza',
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        color: AppTheme.textMutedColor(context),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Divider(
+                height: 1,
+                indent: 50,
+                color: AppTheme.borderColor(context),
+              ),
+              InkWell(
+                borderRadius: BorderRadius.zero,
+                onTap: () {
+                  Navigator.of(context).push(
+                    AppRoute.to(FriendsScreen(repository: widget.repository)),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.people_outline,
+                        color: AppTheme.accent,
+                        size: 22,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          ku ? 'Hevalên Min' : 'Arkadaşlarım',
                           style: TextStyle(
                             color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w800,

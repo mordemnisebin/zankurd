@@ -882,7 +882,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'lesson_2',
         slug: 'numbers',
-        titleKu: 'Hûwander',
+        titleKu: 'Hejmar',
         titleTr: 'Sayılar',
         category: category,
         iconName: '123',

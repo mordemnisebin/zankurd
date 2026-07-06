@@ -89,11 +89,11 @@ class _LearningScreenState extends State<LearningScreen> {
                     }
                     if (snap.hasError) {
                       return AppErrorState(
-                        title: ku ? 'Barnekirî' : 'Yüklenemedi',
+                        title: ku ? 'Barnebû' : 'Yüklenemedi',
                         message: ku
-                            ? 'Dersleri yüklerken hata oldu'
+                            ? 'Ders nehatin barkirin'
                             : 'Dersler yüklenemedi',
-                        retryLabel: ku ? 'Dûbare' : 'Tekrar',
+                        retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar',
                         onRetry: () => setState(() => _loadLessons()),
                       );
                     }
@@ -101,9 +101,9 @@ class _LearningScreenState extends State<LearningScreen> {
                     if (lessons.isEmpty) {
                       return AppEmptyState(
                         icon: Icons.school_outlined,
-                        title: ku ? 'Dersan tune' : 'Ders yok',
+                        title: ku ? 'Ders tune' : 'Ders yok',
                         message: ku
-                            ? 'Ev kategoriyê dersan tune'
+                            ? 'Di vê kategoriyê de hîn ders tune'
                             : 'Henüz ders yok',
                       );
                     }
@@ -332,7 +332,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
     if (success && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(context.isKu ? 'Ders qedand' : 'Ders tamamlandı'),
+          content: Text(context.isKu ? 'Ders qediya!' : 'Ders tamamlandı'),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -358,24 +358,54 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
             if (snap.hasError) {
               return Center(
                 child: AppErrorState(
-                  title: ku ? 'Barnekirî' : 'Yüklenemedi',
+                  title: ku ? 'Barnebû' : 'Yüklenemedi',
                   message: ku
-                      ? 'Slidarê dersan yüklenê de\n'
+                      ? 'Slaytên dersê nehatin barkirin'
                       : 'Slaytlar yüklenemedi',
-                  retryLabel: ku ? 'Dûbare' : 'Tekrar',
+                  retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar',
                   onRetry: () => setState(() {}),
                 ),
               );
             }
             final slides = snap.data ?? [];
             if (slides.isEmpty) {
-              return const Center(child: Text('Slayıt yok'));
+              return Center(
+                child: Text(ku ? 'Slayt tune' : 'Slayt yok'),
+              );
             }
             final slide = slides[_currentSlideIndex];
             final isLast = _currentSlideIndex == slides.length - 1;
 
             return Column(
               children: [
+                // Slayt ilerleme göstergesi
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(18, 8, 18, 0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: LinearProgressIndicator(
+                            value: (_currentSlideIndex + 1) / slides.length,
+                            minHeight: 6,
+                            backgroundColor: AppTheme.surfaceHiColor(context),
+                            color: AppTheme.accent,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        '${_currentSlideIndex + 1}/${slides.length}',
+                        style: TextStyle(
+                          color: AppTheme.textSubColor(context),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 // Slide content
                 Expanded(
                   child: SingleChildScrollView(
@@ -407,6 +437,17 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
+                              if (slide.contentTr != null &&
+                                  slide.contentTr!.isNotEmpty) ...[
+                                const SizedBox(height: 6),
+                                Text(
+                                  slide.contentTr!,
+                                  style: TextStyle(
+                                    color: AppTheme.textSubColor(context),
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
                               if (slide.exampleKu != null) ...[
                                 const SizedBox(height: 12),
                                 Container(
@@ -456,8 +497,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                                 },
                           child: Text(
                             isLast
-                                ? (ku ? 'Qedand' : 'Tamamla')
-                                : (ku ? 'Paş' : 'İleri'),
+                                ? (ku ? 'Biqedîne' : 'Tamamla')
+                                : (ku ? 'Pêş' : 'İleri'),
                           ),
                         ),
                       ),

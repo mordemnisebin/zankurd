@@ -7,7 +7,6 @@ import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import 'categories_tab.dart';
-import 'friends_screen.dart';
 import 'home_screen.dart';
 import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
@@ -15,7 +14,6 @@ import 'onboarding_screen.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
 import 'sign_in_screen.dart';
-import 'tournament_screen.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({required this.repository, super.key});
@@ -44,8 +42,6 @@ class _AppShellState extends State<AppShell> {
   late final ScrollController _categoriesScrollController;
   late final ScrollController _leaderboardScrollController;
   late final ScrollController _learningScrollController;
-  late final ScrollController _tournamentScrollController;
-  late final ScrollController _friendsScrollController;
   late final ScrollController _profileScrollController;
 
   @override
@@ -55,8 +51,6 @@ class _AppShellState extends State<AppShell> {
     _categoriesScrollController = ScrollController();
     _leaderboardScrollController = ScrollController();
     _learningScrollController = ScrollController();
-    _tournamentScrollController = ScrollController();
-    _friendsScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
   }
@@ -67,8 +61,6 @@ class _AppShellState extends State<AppShell> {
     _categoriesScrollController.dispose();
     _leaderboardScrollController.dispose();
     _learningScrollController.dispose();
-    _tournamentScrollController.dispose();
-    _friendsScrollController.dispose();
     _profileScrollController.dispose();
     _homeRefresh.dispose();
     _profileRefresh.dispose();
@@ -147,13 +139,11 @@ class _AppShellState extends State<AppShell> {
             repository: widget.repository,
             scrollController: _categoriesScrollController,
           ),
+          LearningScreen(repository: widget.repository),
           LeaderboardScreen(
             repository: widget.repository,
             scrollController: _leaderboardScrollController,
           ),
-          LearningScreen(repository: widget.repository),
-          TournamentScreen(repository: widget.repository),
-          FriendsScreen(repository: widget.repository),
           ProfileScreen(
             repository: widget.repository,
             refreshSignal: _profileRefresh,
@@ -172,11 +162,9 @@ class _AppShellState extends State<AppShell> {
               final controller = switch (i) {
                 0 => _homeScrollController,
                 1 => _categoriesScrollController,
-                2 => _leaderboardScrollController,
-                3 => _learningScrollController,
-                4 => _tournamentScrollController,
-                5 => _friendsScrollController,
-                6 => _profileScrollController,
+                2 => _learningScrollController,
+                3 => _leaderboardScrollController,
+                4 => _profileScrollController,
                 _ => null,
               };
               if (controller != null && controller.hasClients) {
@@ -188,7 +176,7 @@ class _AppShellState extends State<AppShell> {
               }
             } else {
               if (i == 0) _homeRefresh.value++;
-              if (i == 6) _profileRefresh.value++;
+              if (i == 4) _profileRefresh.value++;
               setState(() => _tab = i);
             }
           },
@@ -204,24 +192,14 @@ class _AppShellState extends State<AppShell> {
               label: ku ? 'Kategorî' : 'Kategoriler',
             ),
             NavigationDestination(
-              icon: const Icon(Icons.leaderboard_outlined),
-              selectedIcon: const Icon(Icons.leaderboard),
-              label: ku ? 'Pêşderçûn' : 'Liderlik',
-            ),
-            NavigationDestination(
               icon: const Icon(Icons.school_outlined),
               selectedIcon: const Icon(Icons.school),
-              label: ku ? 'Xwendina' : 'Öğren',
+              label: ku ? 'Xwendin' : 'Öğren',
             ),
             NavigationDestination(
-              icon: const Icon(Icons.emoji_events_outlined),
-              selectedIcon: const Icon(Icons.emoji_events),
-              label: ku ? 'Turnuva' : 'Turnuva',
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.people_outline),
-              selectedIcon: const Icon(Icons.people),
-              label: ku ? 'Hevalên' : 'Arkadaşlar',
+              icon: const Icon(Icons.leaderboard_outlined),
+              selectedIcon: const Icon(Icons.leaderboard),
+              label: ku ? 'Pêşbaz' : 'Liderlik',
             ),
             NavigationDestination(
               icon: const Icon(Icons.person_outline),
