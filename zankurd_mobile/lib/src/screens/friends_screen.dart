@@ -84,6 +84,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
     if (!mounted) return;
     if (success) {
       setState(() => _sentRequests.add(player.id));
+      widget.repository
+          .logAnalyticsEvent('friend_request_sent', null)
+          .catchError((_) => false);
       _showMessage(
         context.isKu ? 'Daxwaz hat şandin' : 'İstek gönderildi',
       );

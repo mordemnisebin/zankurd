@@ -31,15 +31,24 @@ class _LearningScreenState extends State<LearningScreen> {
 
   late Future<List<Lesson>> _lessonsFuture;
   String _selectedCategory = _categories.first;
+  Set<String> _completedIds = const {};
 
   @override
   void initState() {
     super.initState();
     _loadLessons();
+    _refreshCompleted();
   }
 
   void _loadLessons() {
     _lessonsFuture = widget.repository.loadLessonsByCategory(_selectedCategory);
+  }
+
+  Future<void> _refreshCompleted() async {
+    try {
+      final ids = await widget.repository.loadCompletedLessonIds();
+      if (mounted) setState(() => _completedIds = ids);
+    } catch (_) {}
   }
 
   void _selectCategory(String category) {
@@ -112,8 +121,19 @@ class _LearningScreenState extends State<LearningScreen> {
                       itemCount: lessons.length,
                       itemBuilder: (ctx, i) => _LessonCard(
                         lesson: lessons[i],
-                        repository: widget.repository,
                         ku: ku,
+                        completed: _completedIds.contains(lessons[i].id),
+                        onTap: () async {
+                          await Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => LessonDetailScreen(
+                                lesson: lessons[i],
+                                repository: widget.repository,
+                              ),
+                            ),
+                          );
+                          _refreshCompleted();
+                        },
                       ),
                     );
                   },
@@ -196,27 +216,22 @@ class _CategoryTab extends StatelessWidget {
 class _LessonCard extends StatelessWidget {
   const _LessonCard({
     required this.lesson,
-    required this.repository,
     required this.ku,
+    required this.completed,
+    required this.onTap,
   });
 
   final Lesson lesson;
-  final ZanKurdRepository repository;
   final bool ku;
+  final bool completed;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) =>
-                  LessonDetailScreen(lesson: lesson, repository: repository),
-            ),
-          );
-        },
+        onTap: onTap,
         child: AppPanel(
           child: Row(
             children: [
@@ -262,10 +277,24 @@ class _LessonCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Icon(
-                Icons.chevron_right_rounded,
-                color: AppTheme.textMutedColor(context),
-              ),
+              if (completed)
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: AppTheme.accent.withValues(alpha: 0.15),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.check_rounded,
+                    color: AppTheme.accent,
+                    size: 18,
+                  ),
+                )
+              else
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppTheme.textMutedColor(context),
+                ),
             ],
           ),
         ),
@@ -330,6 +359,13 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
       widget.lesson.id,
     );
     if (success && mounted) {
+      widget.repository
+          .logAnalyticsEvent('lesson_completed', {
+            'lesson_id': widget.lesson.id,
+            'lesson_slug': widget.lesson.slug,
+            'category': widget.lesson.category,
+          })
+          .catchError((_) => false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(context.isKu ? 'Ders qediya!' : 'Ders tamamlandı'),

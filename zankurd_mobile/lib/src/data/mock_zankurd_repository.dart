@@ -920,8 +920,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<bool> markLessonCompleted(String lessonId) async {
+    _completedLessonIds.add(lessonId);
     return true;
   }
+
+  final Set<String> _completedLessonIds = {};
+
+  @override
+  Future<Set<String>> loadCompletedLessonIds() async =>
+      Set.of(_completedLessonIds);
 
   @override
   Future<bool> addFriend(String friendId, String friendName) async {

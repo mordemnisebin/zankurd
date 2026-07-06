@@ -148,6 +148,9 @@ abstract class ZanKurdRepository {
   /// Dersi tamamlandı olarak işaretler.
   Future<bool> markLessonCompleted(String lessonId);
 
+  /// Kullanıcının tamamladığı ders id'lerini döndürür.
+  Future<Set<String>> loadCompletedLessonIds();
+
   /// Arkadaş ekleme isteği gönder.
   Future<bool> addFriend(String friendId, String friendName);
 

@@ -1366,6 +1366,22 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<Set<String>> loadCompletedLessonIds() async {
+    try {
+      final rows = await client
+          .from('user_lesson_progress')
+          .select('lesson_id')
+          .eq('completed', true);
+      return rows
+          .map((row) => row['lesson_id'] as String?)
+          .whereType<String>()
+          .toSet();
+    } catch (e) {
+      return _offline.loadCompletedLessonIds();
+    }
+  }
+
+  @override
   Future<bool> addFriend(String friendId, String friendName) async {
     try {
       final response = await client.rpc<dynamic>(

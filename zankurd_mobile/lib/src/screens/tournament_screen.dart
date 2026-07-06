@@ -123,6 +123,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
     widget.repository
         .saveTournamentProgress('r16', 0, 0, const [])
         .catchError((_) => false);
+    widget.repository
+        .logAnalyticsEvent('tournament_started', null)
+        .catchError((_) => false);
   }
 
   TournamentMatch? get _userMatch {
@@ -234,6 +237,12 @@ class _TournamentScreenState extends State<TournamentScreen> {
         completedAt: isFinal ? DateTime.now() : null,
       );
     });
+
+    if (isFinal) {
+      widget.repository
+          .logAnalyticsEvent('tournament_champion', null)
+          .catchError((_) => false);
+    }
 
     final stages = ['quarter', 'semi', 'final', 'won'];
     widget.repository
