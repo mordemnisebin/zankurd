@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../config/category_visuals.dart';
 import '../data/mistake_store.dart';
 import '../data/sync_manager.dart';
 import '../providers/sound_provider.dart';
@@ -914,90 +915,112 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     final promptText = question.promptText;
     final size = MediaQuery.sizeOf(context);
     final compactLandscape = size.width >= 700 && size.width > size.height;
+    final questionIcon = CategoryVisuals.icon(question.category);
     return AppPanel(
       color: AppTheme.surfaceHiColor(context),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
+        clipBehavior: Clip.hardEdge,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Positioned(
+            top: -18,
+            right: -12,
+            child: IgnorePointer(
+              child: Icon(
+                key: const ValueKey('quiz-question-ghost-icon'),
+                questionIcon,
+                size: compactLandscape ? 88 : 112,
+                color: AppTheme.textPrimaryColor(
+                  context,
+                ).withValues(alpha: AppTheme.isLight(context) ? 0.045 : 0.06),
+              ),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: _TinyTag(
-                        label: CategoryNames.localized(
-                          question.category,
-                          context.isKu,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _QuizQuestionIconBadge(icon: questionIcon),
+                        const SizedBox(width: 8),
+                        Flexible(
+                          child: _TinyTag(
+                            label: CategoryNames.localized(
+                              question.category,
+                              context.isKu,
+                            ),
+                          ),
                         ),
-                      ),
+                        const SizedBox(width: 8),
+                        Flexible(
+                          child: _TinyTag(
+                            label: question.typeLabelLocalized(context.isKu),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: _TinyTag(
-                        label: question.typeLabelLocalized(context.isKu),
+                  ),
+                  const SizedBox(width: 8),
+                  _CircularTimer(
+                    key: const ValueKey('quiz-circular-timer'),
+                    animation: _timerController,
+                    maxSeconds: 15,
+                    isPaused: answered,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              if (compactLandscape && question.hasImage)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 164,
+                      child: _QuestionImage(url: question.imageUrl!),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _QuestionTextAndAnswers(
+                        promptText: promptText,
+                        promptFontSize: 20,
+                        question: question,
+                        selectedAnswer: selectedAnswer,
+                        answered: answered,
+                        hiddenAnswers: hiddenAnswers,
+                        firstAttemptAnswer: _firstAttemptAnswer,
+                        audiencePoll: _audiencePoll,
+                        showExplanation: _showExplanation,
+                        suspense: _suspense,
+                        onAnswer: _answer,
                       ),
                     ),
                   ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              _CircularTimer(
-                key: const ValueKey('quiz-circular-timer'),
-                animation: _timerController,
-                maxSeconds: 15,
-                isPaused: answered,
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          if (compactLandscape && question.hasImage)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 164,
-                  child: _QuestionImage(url: question.imageUrl!),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _QuestionTextAndAnswers(
-                    promptText: promptText,
-                    promptFontSize: 20,
-                    question: question,
-                    selectedAnswer: selectedAnswer,
-                    answered: answered,
-                    hiddenAnswers: hiddenAnswers,
-                    firstAttemptAnswer: _firstAttemptAnswer,
-                    audiencePoll: _audiencePoll,
-                    showExplanation: _showExplanation,
-                    suspense: _suspense,
-                    onAnswer: _answer,
-                  ),
+                )
+              else ...[
+                if (question.hasImage) ...[
+                  _QuestionImage(url: question.imageUrl!),
+                  const SizedBox(height: 14),
+                ],
+                _QuestionTextAndAnswers(
+                  promptText: promptText,
+                  promptFontSize: compactLandscape ? 20 : 24,
+                  question: question,
+                  selectedAnswer: selectedAnswer,
+                  answered: answered,
+                  hiddenAnswers: hiddenAnswers,
+                  firstAttemptAnswer: _firstAttemptAnswer,
+                  audiencePoll: _audiencePoll,
+                  showExplanation: _showExplanation,
+                  suspense: _suspense,
+                  onAnswer: _answer,
                 ),
               ],
-            )
-          else ...[
-            if (question.hasImage) ...[
-              _QuestionImage(url: question.imageUrl!),
-              const SizedBox(height: 14),
             ],
-            _QuestionTextAndAnswers(
-              promptText: promptText,
-              promptFontSize: compactLandscape ? 20 : 24,
-              question: question,
-              selectedAnswer: selectedAnswer,
-              answered: answered,
-              hiddenAnswers: hiddenAnswers,
-              firstAttemptAnswer: _firstAttemptAnswer,
-              audiencePoll: _audiencePoll,
-              showExplanation: _showExplanation,
-              suspense: _suspense,
-              onAnswer: _answer,
-            ),
-          ],
+          ),
         ],
       ),
     );

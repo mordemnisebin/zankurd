@@ -583,17 +583,20 @@ class _AnswerButton extends StatelessWidget {
     final badgeColor = _badgePalette[index % _badgePalette.length];
 
     // Gradient belirleme
-    final Gradient? gradient = correct
+    final Gradient gradient = correct
         ? AppTheme.correctGradient
         : wrong
         ? AppTheme.wrongGradient
         : isChecking
         ? AppTheme.accentGradient
-        : null;
-
-    final Color color = gradient != null
-        ? Colors.transparent
-        : AppTheme.surfaceColor(context).withValues(alpha: 0.96);
+        : LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppTheme.surfaceColor(context).withValues(alpha: 0.98),
+              AppTheme.surfaceHiColor(context).withValues(alpha: 0.88),
+            ],
+          );
 
     final Color borderColor = correct
         ? AppTheme.correct
@@ -619,6 +622,7 @@ class _AnswerButton extends StatelessWidget {
 
     final isPressed = selected;
     final letter = String.fromCharCode(65 + (index % 26));
+    final stateActive = correct || wrong || isChecking;
     final stateHint = correct
         ? ', doğru cevap'
         : wrong
@@ -652,7 +656,6 @@ class _AnswerButton extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
-              color: color,
               gradient: gradient,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: borderColor, width: 2.0),
@@ -674,7 +677,7 @@ class _AnswerButton extends StatelessWidget {
                   children: [
                     _OptionBadge(
                       index: index,
-                      stateActive: gradient != null,
+                      stateActive: stateActive,
                       stateColor: borderColor,
                     ),
                     const SizedBox(width: 12),
@@ -805,6 +808,28 @@ class _OptionBadge extends StatelessWidget {
 
 // ─── Küçük etiket ────────────────────────────────────────────────────────────
 
+class _QuizQuestionIconBadge extends StatelessWidget {
+  const _QuizQuestionIconBadge({required this.icon});
+
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: const ValueKey('quiz-question-icon-badge'),
+      width: 34,
+      height: 34,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: AppTheme.accentGradient,
+        boxShadow: AppTheme.elevatedShadow(AppTheme.accent),
+      ),
+      child: Icon(icon, color: Colors.white, size: 18),
+    );
+  }
+}
+
 class _TinyTag extends StatelessWidget {
   const _TinyTag({required this.label});
 
@@ -903,10 +928,19 @@ class _WildcardButton extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              cantAfford ? Icons.lock_outline : type.icon,
-              size: 20,
-              color: iconColor,
+            Container(
+              width: 28,
+              height: 28,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: iconColor.withValues(alpha: isEnabled ? 0.16 : 0.10),
+              ),
+              child: Icon(
+                cantAfford ? Icons.lock_outline : type.icon,
+                size: 18,
+                color: iconColor,
+              ),
             ),
             const SizedBox(height: 2),
             Text(

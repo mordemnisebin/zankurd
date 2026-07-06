@@ -913,6 +913,35 @@ void main() {
     expect(find.text('Doğru cevap'), findsOneWidget);
   });
 
+  testWidgets('quiz question panel renders the polished visual accents', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      _testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const ValueKey('quiz-question-icon-badge')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('quiz-question-ghost-icon')),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('visual quiz keeps the first answer visible in landscape', (
     tester,
   ) async {
