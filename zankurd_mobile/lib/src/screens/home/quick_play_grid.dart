@@ -118,58 +118,85 @@ class _QuickPlayTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
             boxShadow: AppTheme.elevatedShadow(gradientColors.first),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.min,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
+            child: Stack(
               children: [
-                loading
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2.2,
-                          color: Colors.white,
+                // Dekoratif dev ghost ikon: kartlara karakter/derinlik katar,
+                // hepsi aynı düz gradyan kutu gibi görünmesin diye.
+                Positioned(
+                  right: -14,
+                  bottom: -16,
+                  child: Icon(
+                    icon,
+                    size: 76,
+                    color: Colors.white.withValues(alpha: 0.14),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 34,
+                        height: 34,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.22),
+                          shape: BoxShape.circle,
                         ),
-                      )
-                    : Icon(icon, color: Colors.white, size: 20),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      // Geniş ekranda ResponsiveWrapper içeriği 480px'lik
-                      // sabit bir çerçeveye sıkıştırırken HomeScreen'in
-                      // isWide kararı gerçek pencere genişliğine bakıyor;
-                      // bu durumda ızgara çok dar bir yarı-sütuna düşüyor.
-                      // 2 satıra izin vermek, o durumda "Günün Yarışması"
-                      // gibi uzun başlıkların "Günün Ya..." diye
-                      // kesilmesini önlüyor; sabit yükseklikte zaten
-                      // yeterli boşluk var.
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 13,
-                        height: 1.1,
+                        child: loading
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Icon(icon, color: Colors.white, size: 18),
                       ),
-                    ),
-                    Text(
-                      subtitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.85),
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                        height: 1.1,
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            // Geniş ekranda ResponsiveWrapper içeriği 480px'lik
+                            // sabit bir çerçeveye sıkıştırırken HomeScreen'in
+                            // isWide kararı gerçek pencere genişliğine bakıyor;
+                            // bu durumda ızgara çok dar bir yarı-sütuna düşüyor.
+                            // 2 satıra izin vermek, o durumda "Günün Yarışması"
+                            // gibi uzun başlıkların "Günün Ya..." diye
+                            // kesilmesini önlüyor; sabit yükseklikte zaten
+                            // yeterli boşluk var.
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13,
+                              height: 1.1,
+                            ),
+                          ),
+                          Text(
+                            subtitle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.white.withValues(alpha: 0.85),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              height: 1.1,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

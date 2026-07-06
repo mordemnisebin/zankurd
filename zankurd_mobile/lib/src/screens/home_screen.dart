@@ -232,6 +232,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               subtitle: ku
                                   ? 'Yarî, xelat û pêşbirkên rojane'
                                   : 'Oyunlar, ödüller ve günlük yarışmalar',
+                              icon: Icons.flash_on_rounded,
+                              accentColor: AppTheme.gold,
                             ),
                           ),
                           const SizedBox(height: 10),

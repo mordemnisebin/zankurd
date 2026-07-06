@@ -97,17 +97,34 @@ class _AppStateScaffold extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: BoxDecoration(
-                        color: iconColor.withValues(alpha: 0.14),
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: iconColor.withValues(alpha: 0.24),
-                        ),
+                    SizedBox(
+                      width: 84,
+                      height: 84,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: 84,
+                            height: 84,
+                            decoration: BoxDecoration(
+                              color: iconColor.withValues(alpha: 0.06),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          Container(
+                            width: 64,
+                            height: 64,
+                            decoration: BoxDecoration(
+                              color: iconColor.withValues(alpha: 0.14),
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: iconColor.withValues(alpha: 0.24),
+                              ),
+                            ),
+                            child: Icon(icon, color: iconColor, size: 32),
+                          ),
+                        ],
                       ),
-                      child: Icon(icon, color: iconColor, size: 32),
                     ),
                     const SizedBox(height: 14),
                     Text(

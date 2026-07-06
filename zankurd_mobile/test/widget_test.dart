@@ -230,6 +230,7 @@ void main() {
     SharedPreferences.setMockInitialValues({
       'zankurd.onboarding.seen': true,
       'zankurd.profileName.completed': true,
+      'zankurd.navTour.seen': true,
     });
     AchievementStore.resetInstance();
     SeenQuestionStore.resetInstance();

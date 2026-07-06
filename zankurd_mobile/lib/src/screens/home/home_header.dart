@@ -191,17 +191,24 @@ class _CoinBadge extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: AppTheme.goldGradient,
         borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.gold.withValues(alpha: 0.45),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Row(
         children: [
-          const Icon(Icons.monetization_on, color: Colors.white, size: 17),
+          const Icon(Icons.monetization_on, color: Colors.white, size: 18),
           const SizedBox(width: 5),
           Text(
             value != null ? '$value' : '···',
             style: const TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.w700,
-              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              fontSize: 15,
             ),
           ),
         ],

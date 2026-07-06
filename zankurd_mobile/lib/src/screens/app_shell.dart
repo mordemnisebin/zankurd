@@ -6,6 +6,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
+import '../widgets/coach_mark.dart';
 import 'categories_tab.dart';
 import 'home_screen.dart';
 import 'leaderboard_screen.dart';
@@ -27,8 +28,16 @@ class AppShell extends StatefulWidget {
 class _AppShellState extends State<AppShell> {
   static const _onboardingSeenKey = 'zankurd.onboarding.seen';
   static const _profileNameCompletedKey = 'zankurd.profileName.completed';
+  static const _navTourSeenKey = 'zankurd.navTour.seen';
 
   int _tab = 0;
+  bool _showNavTour = false;
+
+  final GlobalKey _homeNavKey = GlobalKey();
+  final GlobalKey _categoriesNavKey = GlobalKey();
+  final GlobalKey _learningNavKey = GlobalKey();
+  final GlobalKey _leaderboardNavKey = GlobalKey();
+  final GlobalKey _profileNavKey = GlobalKey();
   final ValueNotifier<int> _homeRefresh = ValueNotifier<int>(0);
   final ValueNotifier<int> _profileRefresh = ValueNotifier<int>(0);
   bool _checkingOnboarding = true;
@@ -125,6 +134,71 @@ class _AppShellState extends State<AppShell> {
       );
     }
 
+    return Stack(
+      children: [
+        _buildScaffold(context, ku),
+        if (_showNavTour)
+          CoachMarkOverlay(
+            isKu: ku,
+            onFinished: _finishNavTour,
+            steps: [
+              CoachMarkStep(
+                targetKey: _homeNavKey,
+                icon: Icons.home_rounded,
+                titleKu: 'Sereke',
+                titleTr: 'Ana Sayfa',
+                descriptionKu:
+                    'Vir e ku tu dest pê dikî: yariyên zû, xelatên rojane û misyonên te li vir in.',
+                descriptionTr:
+                    'Buradan başlarsın: hızlı oyunlar, günlük ödüller ve görevlerin burada.',
+              ),
+              CoachMarkStep(
+                targetKey: _categoriesNavKey,
+                icon: Icons.grid_view_rounded,
+                titleKu: 'Kategorî',
+                titleTr: 'Kategoriler',
+                descriptionKu:
+                    'Hemû mijar (Ziman, Çand, Dîrok...) li vir bi asteyên cuda hatine rêzkirin.',
+                descriptionTr:
+                    'Tüm konular (Ziman, Çand, Dîrok...) burada seviyelere ayrılmış halde.',
+              ),
+              CoachMarkStep(
+                targetKey: _learningNavKey,
+                icon: Icons.school_rounded,
+                titleKu: 'Xwendin',
+                titleTr: 'Öğren',
+                descriptionKu:
+                    'Kurmancî gav bi gav, dersên kurt û mînakên rastîn bi vir hîn bibe.',
+                descriptionTr:
+                    'Kurmancîyi adım adım, kısa derslerle ve gerçek örneklerle burada öğren.',
+              ),
+              CoachMarkStep(
+                targetKey: _leaderboardNavKey,
+                icon: Icons.leaderboard_rounded,
+                titleKu: 'Pêşbaz',
+                titleTr: 'Liderlik',
+                descriptionKu:
+                    'Rêza xwe ya di nav lîstikvanên din de li vir bibîne.',
+                descriptionTr:
+                    'Diğer oyuncular arasındaki sıralamanı burada görürsün.',
+              ),
+              CoachMarkStep(
+                targetKey: _profileNavKey,
+                icon: Icons.person_rounded,
+                titleKu: 'Profîl',
+                titleTr: 'Profil',
+                descriptionKu:
+                    'Rozet, hevalên te, Turnuva û mîhengên te hemû li vir in.',
+                descriptionTr:
+                    'Rozetlerin, arkadaşların, Turnuva ve ayarların hepsi burada.',
+              ),
+            ],
+          ),
+      ],
+    );
+  }
+
+  Widget _buildScaffold(BuildContext context, bool ku) {
     return Scaffold(
       body: IndexedStack(
         index: _tab,
@@ -182,27 +256,42 @@ class _AppShellState extends State<AppShell> {
           },
           destinations: [
             NavigationDestination(
-              icon: const Icon(Icons.home_outlined),
+              icon: KeyedSubtree(
+                key: _homeNavKey,
+                child: const Icon(Icons.home_outlined),
+              ),
               selectedIcon: const Icon(Icons.home),
               label: ku ? 'Sereke' : 'Ana Sayfa',
             ),
             NavigationDestination(
-              icon: const Icon(Icons.grid_view_outlined),
+              icon: KeyedSubtree(
+                key: _categoriesNavKey,
+                child: const Icon(Icons.grid_view_outlined),
+              ),
               selectedIcon: const Icon(Icons.grid_view),
               label: ku ? 'Kategorî' : 'Kategoriler',
             ),
             NavigationDestination(
-              icon: const Icon(Icons.school_outlined),
+              icon: KeyedSubtree(
+                key: _learningNavKey,
+                child: const Icon(Icons.school_outlined),
+              ),
               selectedIcon: const Icon(Icons.school),
               label: ku ? 'Xwendin' : 'Öğren',
             ),
             NavigationDestination(
-              icon: const Icon(Icons.leaderboard_outlined),
+              icon: KeyedSubtree(
+                key: _leaderboardNavKey,
+                child: const Icon(Icons.leaderboard_outlined),
+              ),
               selectedIcon: const Icon(Icons.leaderboard),
               label: ku ? 'Pêşbaz' : 'Liderlik',
             ),
             NavigationDestination(
-              icon: const Icon(Icons.person_outline),
+              icon: KeyedSubtree(
+                key: _profileNavKey,
+                child: const Icon(Icons.person_outline),
+              ),
               selectedIcon: const Icon(Icons.person),
               label: ku ? 'Profîl' : 'Profil',
             ),
@@ -228,6 +317,7 @@ class _AppShellState extends State<AppShell> {
       _profileNameComplete = completed;
       _checkingProfileName = false;
     });
+    if (completed) _maybeStartNavTour();
   }
 
   Future<void> _completeProfileName() async {
@@ -243,5 +333,23 @@ class _AppShellState extends State<AppShell> {
       _profileNameComplete = true;
       _profileCheckStarted = true;
     });
+    _maybeStartNavTour();
+  }
+
+  Future<void> _maybeStartNavTour() async {
+    final preferences = await SharedPreferences.getInstance();
+    if (preferences.getBool(_navTourSeenKey) == true) return;
+    // Alt menü nav bar'ının ilk frame'de layout'ta olması için bir çerçeve
+    // bekle; aksi halde GlobalKey.currentContext henüz null olur.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) setState(() => _showNavTour = true);
+    });
+  }
+
+  Future<void> _finishNavTour() async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(_navTourSeenKey, true);
+    if (!mounted) return;
+    setState(() => _showNavTour = false);
   }
 }
