@@ -38,6 +38,7 @@ class _AppShellState extends State<AppShell> {
   final GlobalKey _learningNavKey = GlobalKey();
   final GlobalKey _leaderboardNavKey = GlobalKey();
   final GlobalKey _profileNavKey = GlobalKey();
+  final GlobalKey _shellStackKey = GlobalKey();
   final ValueNotifier<int> _homeRefresh = ValueNotifier<int>(0);
   final ValueNotifier<int> _profileRefresh = ValueNotifier<int>(0);
   bool _checkingOnboarding = true;
@@ -135,12 +136,14 @@ class _AppShellState extends State<AppShell> {
     }
 
     return Stack(
+      key: _shellStackKey,
       children: [
         _buildScaffold(context, ku),
         if (_showNavTour)
           CoachMarkOverlay(
             isKu: ku,
             onFinished: _finishNavTour,
+            ancestorKey: _shellStackKey,
             steps: [
               CoachMarkStep(
                 targetKey: _homeNavKey,

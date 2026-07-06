@@ -31,12 +31,20 @@ class CoachMarkOverlay extends StatefulWidget {
     required this.steps,
     required this.onFinished,
     this.isKu = false,
+    this.ancestorKey,
     super.key,
   });
 
   final List<CoachMarkStep> steps;
   final VoidCallback onFinished;
   final bool isKu;
+
+  /// Hedef konumunun göreceli olarak hesaplanacağı üst widget'ın key'i.
+  /// Masaüstü genişliğinde uygulama ResponsiveWrapper tarafından ortalanmış
+  /// dar bir çerçeveye sığdırılıyor; bu durumda "gerçek ekran köküne göre"
+  /// global koordinat almak yanlış konum verir. Bunun yerine hedefin
+  /// konumu, overlay ile aynı Stack'in kökü olan bu ata'ya göre hesaplanır.
+  final GlobalKey? ancestorKey;
 
   @override
   State<CoachMarkOverlay> createState() => _CoachMarkOverlayState();
@@ -67,7 +75,9 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
         _next();
         return;
       }
-      final topLeft = box.localToGlobal(Offset.zero);
+      final ancestorBox =
+          widget.ancestorKey?.currentContext?.findRenderObject() as RenderBox?;
+      final topLeft = box.localToGlobal(Offset.zero, ancestor: ancestorBox);
       setState(() {
         _rect = topLeft & box.size;
         _measuredForIndex = _index;
