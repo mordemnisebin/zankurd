@@ -6,7 +6,11 @@
 -- TABLES
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS lessons (
+DROP TABLE IF EXISTS user_lesson_progress CASCADE;
+DROP TABLE IF EXISTS lesson_slides CASCADE;
+DROP TABLE IF EXISTS lessons CASCADE;
+
+CREATE TABLE lessons (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   slug TEXT UNIQUE NOT NULL,
   title_ku TEXT NOT NULL,
@@ -20,7 +24,7 @@ CREATE TABLE IF NOT EXISTS lessons (
   updated_at TIMESTAMPTZ DEFAULT now()
 );
 
-CREATE TABLE IF NOT EXISTS lesson_slides (
+CREATE TABLE lesson_slides (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   lesson_id UUID NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
   order_in_lesson INT NOT NULL,
@@ -33,7 +37,7 @@ CREATE TABLE IF NOT EXISTS lesson_slides (
   UNIQUE(lesson_id, order_in_lesson)
 );
 
-CREATE TABLE IF NOT EXISTS user_lesson_progress (
+CREATE TABLE user_lesson_progress (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   lesson_id UUID NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
@@ -152,16 +156,21 @@ ALTER TABLE lesson_slides ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_lesson_progress ENABLE ROW LEVEL SECURITY;
 
 -- lessons: anyone can read
+DROP POLICY IF EXISTS "lessons_read" ON lessons;
 CREATE POLICY "lessons_read" ON lessons FOR SELECT USING (true);
 
 -- lesson_slides: anyone can read
+DROP POLICY IF EXISTS "lesson_slides_read" ON lesson_slides;
 CREATE POLICY "lesson_slides_read" ON lesson_slides FOR SELECT USING (true);
 
 -- user_lesson_progress: users see own
+DROP POLICY IF EXISTS "user_lesson_progress_read" ON user_lesson_progress;
 CREATE POLICY "user_lesson_progress_read" ON user_lesson_progress FOR SELECT
   USING (user_id = auth.uid());
+DROP POLICY IF EXISTS "user_lesson_progress_insert_own" ON user_lesson_progress;
 CREATE POLICY "user_lesson_progress_insert_own" ON user_lesson_progress FOR INSERT
   WITH CHECK (user_id = auth.uid());
+DROP POLICY IF EXISTS "user_lesson_progress_update_own" ON user_lesson_progress;
 CREATE POLICY "user_lesson_progress_update_own" ON user_lesson_progress FOR UPDATE
   USING (user_id = auth.uid());
 
@@ -169,10 +178,21 @@ CREATE POLICY "user_lesson_progress_update_own" ON user_lesson_progress FOR UPDA
 -- INDEXES
 -- ============================================================================
 
-CREATE INDEX IF NOT EXISTS idx_lessons_category ON lessons(category);
-CREATE INDEX IF NOT EXISTS idx_lessons_slug ON lessons(slug);
-CREATE INDEX IF NOT EXISTS idx_lesson_slides_lesson_id ON lesson_slides(lesson_id);
-CREATE INDEX IF NOT EXISTS idx_user_lesson_progress_user_id ON user_lesson_progress(user_id);
-CREATE INDEX IF NOT EXISTS idx_user_lesson_progress_lesson_id ON user_lesson_progress(lesson_id);
-CREATE INDEX IF NOT EXISTS idx_user_lesson_progress_completed ON user_lesson_progress(completed)
+DROP INDEX IF EXISTS idx_lessons_category;
+CREATE INDEX idx_lessons_category ON lessons(category);
+
+DROP INDEX IF EXISTS idx_lessons_slug;
+CREATE INDEX idx_lessons_slug ON lessons(slug);
+
+DROP INDEX IF EXISTS idx_lesson_slides_lesson_id;
+CREATE INDEX idx_lesson_slides_lesson_id ON lesson_slides(lesson_id);
+
+DROP INDEX IF EXISTS idx_user_lesson_progress_user_id;
+CREATE INDEX idx_user_lesson_progress_user_id ON user_lesson_progress(user_id);
+
+DROP INDEX IF EXISTS idx_user_lesson_progress_lesson_id;
+CREATE INDEX idx_user_lesson_progress_lesson_id ON user_lesson_progress(lesson_id);
+
+DROP INDEX IF EXISTS idx_user_lesson_progress_completed;
+CREATE INDEX idx_user_lesson_progress_completed ON user_lesson_progress(completed)
   WHERE completed = TRUE;

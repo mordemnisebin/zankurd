@@ -6,7 +6,12 @@
 -- TABLES
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS mission_completions (
+-- Drop existing tables to ensure clean state
+DROP TABLE IF EXISTS mission_completions CASCADE;
+DROP TABLE IF EXISTS analytics_events CASCADE;
+DROP TABLE IF EXISTS tournament_progress CASCADE;
+
+CREATE TABLE mission_completions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   mission_key TEXT NOT NULL,
@@ -18,7 +23,7 @@ CREATE TABLE IF NOT EXISTS mission_completions (
   UNIQUE(user_id, mission_key, completion_date)
 );
 
-CREATE TABLE IF NOT EXISTS analytics_events (
+CREATE TABLE analytics_events (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   event_name TEXT NOT NULL,
@@ -26,7 +31,7 @@ CREATE TABLE IF NOT EXISTS analytics_events (
   event_timestamp TIMESTAMPTZ DEFAULT now()
 );
 
-CREATE TABLE IF NOT EXISTS tournament_progress (
+CREATE TABLE tournament_progress (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   tournament_date DATE NOT NULL,
@@ -151,14 +156,17 @@ ALTER TABLE mission_completions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE analytics_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tournament_progress ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can view own mission completions" ON mission_completions;
 CREATE POLICY "Users can view own mission completions"
   ON mission_completions FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can view own analytics" ON analytics_events;
 CREATE POLICY "Users can view own analytics"
   ON analytics_events FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can view own tournament progress" ON tournament_progress;
 CREATE POLICY "Users can view own tournament progress"
   ON tournament_progress FOR SELECT
   USING (auth.uid() = user_id);
@@ -167,11 +175,14 @@ CREATE POLICY "Users can view own tournament progress"
 -- INDEXES
 -- ============================================================================
 
+DROP INDEX IF EXISTS idx_mission_completions_user_date;
 CREATE INDEX idx_mission_completions_user_date
   ON mission_completions(user_id, completion_date DESC);
 
+DROP INDEX IF EXISTS idx_analytics_events_user_timestamp;
 CREATE INDEX idx_analytics_events_user_timestamp
   ON analytics_events(user_id, event_timestamp DESC);
 
+DROP INDEX IF EXISTS idx_tournament_progress_user_date;
 CREATE INDEX idx_tournament_progress_user_date
   ON tournament_progress(user_id, tournament_date DESC);

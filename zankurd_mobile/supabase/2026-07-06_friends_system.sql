@@ -6,7 +6,10 @@
 -- TABLES
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS friends (
+DROP TABLE IF EXISTS friends CASCADE;
+DROP TABLE IF EXISTS friend_requests CASCADE;
+
+CREATE TABLE friends (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   friend_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -182,10 +185,12 @@ $$;
 ALTER TABLE friends ENABLE ROW LEVEL SECURITY;
 ALTER TABLE friend_requests ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can view own friends" ON friends;
 CREATE POLICY "Users can view own friends"
   ON friends FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can view incoming friend requests" ON friend_requests;
 CREATE POLICY "Users can view incoming friend requests"
   ON friend_requests FOR SELECT
   USING (auth.uid() = to_user_id);
@@ -194,5 +199,8 @@ CREATE POLICY "Users can view incoming friend requests"
 -- INDEXES
 -- ============================================================================
 
+DROP INDEX IF EXISTS idx_friends_user_id;
 CREATE INDEX idx_friends_user_id ON friends(user_id);
+
+DROP INDEX IF EXISTS idx_friend_requests_to_user_id;
 CREATE INDEX idx_friend_requests_to_user_id ON friend_requests(to_user_id, status);

@@ -6,7 +6,8 @@
 -- ============================================================================
 
 -- spin_wheel_history tablosu varsa kontrol et, yoksa oluştur
-CREATE TABLE IF NOT EXISTS spin_wheel_history (
+DROP TABLE IF EXISTS spin_wheel_history CASCADE;
+CREATE TABLE spin_wheel_history (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   spin_date DATE NOT NULL,
@@ -117,10 +118,12 @@ $$;
 
 ALTER TABLE spin_wheel_history ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can view own spin history" ON spin_wheel_history;
 CREATE POLICY "Users can view own spin history"
   ON spin_wheel_history FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert own spin records" ON spin_wheel_history;
 CREATE POLICY "Users can insert own spin records"
   ON spin_wheel_history FOR INSERT
   WITH CHECK (auth.uid() = user_id);
@@ -129,4 +132,5 @@ CREATE POLICY "Users can insert own spin records"
 -- INDEXES
 -- ============================================================================
 
+DROP INDEX IF EXISTS idx_spin_wheel_user_date;
 CREATE INDEX idx_spin_wheel_user_date ON spin_wheel_history(user_id, spin_date DESC);
