@@ -934,6 +934,37 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<bool> rejectFriendRequest(String requestId) async {
+    return true;
+  }
+
+  @override
+  Future<List<PlayerSearchResult>> searchPlayers(String query) async {
+    final q = query.trim().toLowerCase();
+    if (q.length < 2) return const [];
+    const pool = [
+      PlayerSearchResult(
+        id: 'search-user-1',
+        displayName: 'Rojda',
+        avatarColor: '#2AA6A1',
+      ),
+      PlayerSearchResult(
+        id: 'search-user-2',
+        displayName: 'Rojhat',
+        avatarColor: '#E94560',
+      ),
+      PlayerSearchResult(
+        id: 'search-user-3',
+        displayName: 'Berçem',
+        avatarColor: '#6F61C0',
+      ),
+    ];
+    return pool
+        .where((p) => p.displayName.toLowerCase().contains(q))
+        .toList();
+  }
+
+  @override
   Future<List<Friend>> loadFriends() async {
     return [
       Friend(

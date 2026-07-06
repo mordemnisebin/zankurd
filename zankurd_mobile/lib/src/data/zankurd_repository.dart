@@ -154,6 +154,12 @@ abstract class ZanKurdRepository {
   /// Arkadaş isteğini kabul et.
   Future<bool> acceptFriendRequest(String requestId);
 
+  /// Arkadaş isteğini reddet.
+  Future<bool> rejectFriendRequest(String requestId);
+
+  /// Görünen ada göre oyuncu ara (arkadaş ekleme akışı).
+  Future<List<PlayerSearchResult>> searchPlayers(String query);
+
   /// Arkadaş listesini yükle.
   Future<List<Friend>> loadFriends();
 

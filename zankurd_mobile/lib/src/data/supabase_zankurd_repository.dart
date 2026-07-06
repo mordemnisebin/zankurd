@@ -1392,6 +1392,38 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<bool> rejectFriendRequest(String requestId) async {
+    try {
+      final response = await client.rpc<dynamic>(
+        'reject_friend_request',
+        params: {'p_request_id': requestId},
+      );
+      return (_firstRow(response)?['success'] as bool?) ?? false;
+    } catch (e) {
+      return _offline.rejectFriendRequest(requestId);
+    }
+  }
+
+  @override
+  Future<List<PlayerSearchResult>> searchPlayers(String query) async {
+    try {
+      final res = await client.rpc<List<dynamic>>(
+        'search_profiles',
+        params: {'p_query': query},
+      );
+      return res
+          .map(
+            (row) => PlayerSearchResult.fromJson(
+              Map<String, dynamic>.from(row as Map),
+            ),
+          )
+          .toList();
+    } catch (e) {
+      return _offline.searchPlayers(query);
+    }
+  }
+
+  @override
   Future<List<Friend>> loadFriends() async {
     try {
       final res = await client.rpc<List<dynamic>>('list_friends');

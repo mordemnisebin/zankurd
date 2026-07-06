@@ -89,11 +89,36 @@ class FriendRequest {
     id: json['id'] as String,
     fromUserId: json['from_user_id'] as String,
     fromUserName: json['from_user_name'] as String,
-    toUserId: json['to_user_id'] as String,
+    // list_pending_friend_requests RPC'si to_user_id döndürmez (hep alıcıdır).
+    toUserId: json['to_user_id'] as String? ?? '',
     createdAt: DateTime.parse(json['created_at'] as String),
     status: json['status'] as String? ?? 'pending',
   );
 
   @override
   String toString() => 'FriendRequest(from: $fromUserName, status: $status)';
+}
+
+/// Oyuncu arama sonucu (arkadaş ekleme akışı).
+@immutable
+class PlayerSearchResult {
+  final String id;
+  final String displayName;
+  final String? avatarColor;
+
+  const PlayerSearchResult({
+    required this.id,
+    required this.displayName,
+    this.avatarColor,
+  });
+
+  static PlayerSearchResult fromJson(Map<String, dynamic> json) =>
+      PlayerSearchResult(
+        id: json['id'] as String,
+        displayName: json['display_name'] as String? ?? '',
+        avatarColor: json['avatar_color'] as String?,
+      );
+
+  @override
+  String toString() => 'PlayerSearchResult($displayName)';
 }
