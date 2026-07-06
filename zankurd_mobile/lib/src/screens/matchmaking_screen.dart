@@ -103,8 +103,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       final categories = await widget.repository.loadCategories();
       if (_isCancelled || !mounted) return;
 
+      final now = DateTime.now();
+      final seed = now.year * 10000 + now.month * 100 + now.day;
       final category = categories.isNotEmpty
-          ? categories[Random().nextInt(categories.length)]
+          ? categories[Random(seed).nextInt(categories.length)]
           : 'Ziman';
       _categoryName = category;
 

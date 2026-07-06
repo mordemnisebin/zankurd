@@ -39,6 +39,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   List<QuizQuestion> get questions => _offline.questions;
 
   @override
+  String? get currentUserId => client.auth.currentUser?.id;
+
+  @override
   List<QuizLevel> levelsForCategory(String category) =>
       _offline.levelsForCategory(category);
 
@@ -546,6 +549,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       questionCount: 10,
       status: RoomStatus.lobby,
       players: const [Player(name: 'Tu', score: 0, state: 'Hazır', streak: 0)],
+      hostId: client.auth.currentUser?.id ?? 'user',
     );
   }
 
@@ -595,6 +599,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       id: room['id'] as String,
       code: room['code'] as String,
       players: players,
+      hostId: user.id,
     );
   }
 
@@ -614,11 +619,22 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final players = await _loadRoomPlayersById(roomId);
     final category = room['category_name'] as String? ?? 'Ziman';
 
+    String? hostId;
+    try {
+      final hostRow = await client
+          .from('rooms')
+          .select('host_id')
+          .eq('id', roomId)
+          .single();
+      hostId = hostRow['host_id'] as String?;
+    } catch (_) {}
+
     return createRoom(category: category).copyWith(
       id: roomId,
       code: room['code'] as String,
       questionCount: room['question_count'] as int? ?? 10,
       players: players,
+      hostId: hostId,
     );
   }
 

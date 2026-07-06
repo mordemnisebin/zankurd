@@ -33,6 +33,7 @@ class QuickPlayGrid extends StatelessWidget {
         title: isKu ? 'Şerê 1V1' : '1V1 Düello',
         subtitle: isKu ? 'Zindî' : 'Canlı',
         onTap: onDuel,
+        index: 0,
       ),
       _QuickPlayTile(
         gradientColors: const [AppTheme.gold, Color(0xFFFF8F00)],
@@ -41,6 +42,7 @@ class QuickPlayGrid extends StatelessWidget {
         subtitle: isKu ? '10 pirs' : '10 soru',
         loading: dailyQuizLoading,
         onTap: onDailyQuiz,
+        index: 1,
       ),
       _QuickPlayTile(
         gradientColors: const [AppTheme.violet, AppTheme.secondaryAccent],
@@ -48,6 +50,7 @@ class QuickPlayGrid extends StatelessWidget {
         title: isKu ? 'Çerxa Rojê' : 'Günün Çarkı',
         subtitle: '100 coin',
         onTap: onSpinWheel,
+        index: 2,
       ),
       _QuickPlayTile(
         gradientColors: AppTheme.tournamentGradient,
@@ -55,6 +58,7 @@ class QuickPlayGrid extends StatelessWidget {
         title: isKu ? 'Turnuva' : 'Turnuva Modu',
         subtitle: isKu ? 'Kûpa' : 'Kupa',
         onTap: onTournament,
+        index: 3,
       ),
     ];
 
@@ -74,7 +78,7 @@ class QuickPlayGrid extends StatelessWidget {
             crossAxisCount: crossCount,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
-            mainAxisExtent: 108,
+            mainAxisExtent: 112,
           ),
           itemBuilder: (context, index) => tiles[index],
         );
@@ -83,13 +87,14 @@ class QuickPlayGrid extends StatelessWidget {
   }
 }
 
-class _QuickPlayTile extends StatelessWidget {
+class _QuickPlayTile extends StatefulWidget {
   const _QuickPlayTile({
     required this.gradientColors,
     required this.icon,
     required this.title,
     required this.subtitle,
     required this.onTap,
+    required this.index,
     this.loading = false,
   });
 
@@ -99,106 +104,184 @@ class _QuickPlayTile extends StatelessWidget {
   final String subtitle;
   final VoidCallback onTap;
   final bool loading;
+  final int index;
+
+  @override
+  State<_QuickPlayTile> createState() => _QuickPlayTileState();
+}
+
+class _QuickPlayTileState extends State<_QuickPlayTile>
+    with SingleTickerProviderStateMixin {
+  bool _isPressed = false;
+  late final AnimationController _entryController;
+  late final Animation<double> _fadeAnimation;
+  late final Animation<Offset> _slideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _entryController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    _fadeAnimation = CurvedAnimation(
+      parent: _entryController,
+      curve: Interval(
+        widget.index * 0.15,
+        0.6 + widget.index * 0.1,
+        curve: Curves.easeOut,
+      ),
+    );
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.15),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _entryController,
+      curve: Interval(
+        widget.index * 0.15,
+        0.6 + widget.index * 0.1,
+        curve: Curves.easeOut,
+      ),
+    ));
+    _entryController.forward();
+  }
+
+  @override
+  void dispose() {
+    _entryController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
-      child: InkWell(
-        onTap: loading ? null : onTap,
-        borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
-        child: Ink(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: gradientColors,
+    const double shadowHeight = 4.0;
+
+    final shadowColor = widget.gradientColors.last.withValues(alpha: 0.95);
+
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: SlideTransition(
+        position: _slideAnimation,
+        child: GestureDetector(
+          onTapDown: widget.loading
+              ? null
+              : (_) => setState(() => _isPressed = true),
+          onTapUp: widget.loading
+              ? null
+              : (_) {
+                  setState(() => _isPressed = false);
+                  widget.onTap();
+                },
+          onTapCancel: widget.loading
+              ? null
+              : () => setState(() => _isPressed = false),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 50),
+            curve: Curves.easeOut,
+            margin: EdgeInsets.only(
+              top: _isPressed ? shadowHeight : 0,
+              bottom: _isPressed ? 0 : shadowHeight,
             ),
-            borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
-            boxShadow: AppTheme.elevatedShadow(gradientColors.first),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
-            child: Stack(
-              children: [
-                // Dekoratif dev ghost ikon: kartlara karakter/derinlik katar,
-                // hepsi aynı düz gradyan kutu gibi görünmesin diye.
-                Positioned(
-                  right: -14,
-                  bottom: -16,
-                  child: Icon(
-                    icon,
-                    size: 76,
-                    color: Colors.white.withValues(alpha: 0.14),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: widget.gradientColors,
+              ),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.15),
+                width: 1,
+              ),
+              boxShadow: [
+                if (!_isPressed)
+                  BoxShadow(
+                    color: shadowColor,
+                    offset: const Offset(0, shadowHeight),
+                    blurRadius: 0,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 34,
-                        height: 34,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.22),
-                          shape: BoxShape.circle,
-                        ),
-                        child: loading
-                            ? const SizedBox(
-                                width: 16,
-                                height: 16,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.2,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Icon(icon, color: Colors.white, size: 18),
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            title,
-                            // Geniş ekranda ResponsiveWrapper içeriği 480px'lik
-                            // sabit bir çerçeveye sıkıştırırken HomeScreen'in
-                            // isWide kararı gerçek pencere genişliğine bakıyor;
-                            // bu durumda ızgara çok dar bir yarı-sütuna düşüyor.
-                            // 2 satıra izin vermek, o durumda "Günün Yarışması"
-                            // gibi uzun başlıkların "Günün Ya..." diye
-                            // kesilmesini önlüyor; sabit yükseklikte zaten
-                            // yeterli boşluk var.
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                              fontSize: 13,
-                              height: 1.1,
-                            ),
-                          ),
-                          Text(
-                            subtitle,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.85),
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              height: 1.1,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                BoxShadow(
+                  color: widget.gradientColors.first.withValues(alpha: 0.2),
+                  blurRadius: 16,
+                  offset: const Offset(0, 8),
+                  spreadRadius: -4,
                 ),
               ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Stack(
+                children: [
+                  Positioned(
+                    right: -14,
+                    bottom: -16,
+                    child: Icon(
+                      widget.icon,
+                      size: 80,
+                      color: Colors.white.withValues(alpha: 0.1),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          width: 34,
+                          height: 34,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.22),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.15),
+                            ),
+                          ),
+                          child: widget.loading
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2.2,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Icon(widget.icon,
+                                  color: Colors.white, size: 18),
+                        ),
+                        const Spacer(),
+                        Text(
+                          widget.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 13,
+                            height: 1.15,
+                            letterSpacing: -0.2,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          widget.subtitle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color:
+                                Colors.white.withValues(alpha: 0.85),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            height: 1.2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

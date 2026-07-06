@@ -56,9 +56,12 @@ class AppPanel extends StatelessWidget {
         gradient: gradient,
         borderRadius: br,
         border: gradient == null
-            ? Border.all(color: AppTheme.borderColor(context))
+            ? Border.all(
+                color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+                width: 1.0,
+              )
             : null,
-        boxShadow: AppTheme.cardShadow(context),
+        boxShadow: AppTheme.softShadow(context),
       ),
       child: child,
     );

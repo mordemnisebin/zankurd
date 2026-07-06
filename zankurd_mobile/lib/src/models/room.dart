@@ -26,6 +26,7 @@ class GameRoom {
     required this.players,
     required this.status,
     required this.questionCount,
+    this.hostId,
   });
 
   final String? id;
@@ -35,6 +36,7 @@ class GameRoom {
   final List<Player> players;
   final RoomStatus status;
   final int questionCount;
+  final String? hostId;
 
   GameRoom copyWith({
     String? id,
@@ -44,6 +46,7 @@ class GameRoom {
     List<Player>? players,
     RoomStatus? status,
     int? questionCount,
+    String? hostId,
   }) {
     return GameRoom(
       id: id ?? this.id,
@@ -53,6 +56,7 @@ class GameRoom {
       players: players ?? this.players,
       status: status ?? this.status,
       questionCount: questionCount ?? this.questionCount,
+      hostId: hostId ?? this.hostId,
     );
   }
 }

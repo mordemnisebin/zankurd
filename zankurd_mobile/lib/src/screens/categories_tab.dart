@@ -70,6 +70,20 @@ class _CategoriesTabState extends State<CategoriesTab> {
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
               child: Row(
                 children: [
+                  // Sol accent çizgisi
+                  Container(
+                    width: 4,
+                    height: 44,
+                    margin: const EdgeInsets.only(right: 12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(2),
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [AppTheme.accent, AppTheme.primaryGradientEnd],
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,8 +92,9 @@ class _CategoriesTabState extends State<CategoriesTab> {
                           ku ? 'Kategorî' : 'Kategoriler',
                           style: TextStyle(
                             color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w900,
                             fontSize: 28,
+                            letterSpacing: -0.5,
                           ),
                         ),
                         Text(
@@ -123,8 +138,8 @@ class _CategoriesTabState extends State<CategoriesTab> {
                     itemCount: _categories.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossCount,
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 14,
+                      crossAxisSpacing: 14,
                       childAspectRatio: 0.88,
                     ),
                     itemBuilder: (context, index) {
@@ -155,7 +170,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
   }
 }
 
-class _CategoryCard extends StatelessWidget {
+class _CategoryCard extends StatefulWidget {
   const _CategoryCard({
     required this.category,
     required this.index,
@@ -171,146 +186,235 @@ class _CategoryCard extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    final gradient = AppTheme.categoryGradient(index);
-    final glowColor = AppTheme
-        .categoryGradients[index % AppTheme.categoryGradients.length]
-        .first;
-    final image = CategoryVisuals.imagePath(category);
-    final icon = CategoryVisuals.icon(category);
+  State<_CategoryCard> createState() => _CategoryCardState();
+}
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
-          boxShadow: AppTheme.elevatedShadow(glowColor),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-          child: Stack(
-            children: [
-              Positioned.fill(child: Image.asset(image, fit: BoxFit.cover)),
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        gradient.colors.first.withValues(alpha: 0.30),
-                        gradient.colors.last.withValues(alpha: 0.88),
-                      ],
-                    ),
-                  ),
+class _CategoryCardState extends State<_CategoryCard>
+    with SingleTickerProviderStateMixin {
+  bool _pressed = false;
+  late final AnimationController _entryController;
+  late final Animation<double> _fadeAnim;
+  late final Animation<Offset> _slideAnim;
+
+  @override
+  void initState() {
+    super.initState();
+    _entryController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+    final start = (widget.index * 0.08).clamp(0.0, 0.6);
+    final end = (start + 0.5).clamp(start + 0.1, 1.0);
+    _fadeAnim = CurvedAnimation(
+      parent: _entryController,
+      curve: Interval(start, end, curve: Curves.easeOut),
+    );
+    _slideAnim = Tween<Offset>(
+      begin: const Offset(0, 0.12),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _entryController,
+      curve: Interval(start, end, curve: Curves.easeOut),
+    ));
+    _entryController.forward();
+  }
+
+  @override
+  void dispose() {
+    _entryController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final gradient = AppTheme.categoryGradient(widget.index);
+    final glowColor = AppTheme
+        .categoryGradients[widget.index % AppTheme.categoryGradients.length]
+        .first;
+    final image = CategoryVisuals.imagePath(widget.category);
+    final icon = CategoryVisuals.icon(widget.category);
+
+    return FadeTransition(
+      opacity: _fadeAnim,
+      child: SlideTransition(
+        position: _slideAnim,
+        child: GestureDetector(
+          onTapDown: (_) => setState(() => _pressed = true),
+          onTapUp: (_) {
+            setState(() => _pressed = false);
+            widget.onTap();
+          },
+          onTapCancel: () => setState(() => _pressed = false),
+          child: AnimatedScale(
+            scale: _pressed ? 0.96 : 1.0,
+            duration: const Duration(milliseconds: 100),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.15),
+                  width: 1.2,
                 ),
-              ),
-              // Background circle decoration
-              Positioned(
-                right: -20,
-                top: -20,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.08),
-                    shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: glowColor.withValues(alpha: 0.3),
+                    offset: const Offset(0, 6),
+                    blurRadius: 16,
+                    spreadRadius: -4,
                   ),
-                ),
+                  BoxShadow(
+                    color: glowColor.withValues(alpha: 0.6),
+                    offset: const Offset(0, 4),
+                    blurRadius: 0,
+                  ),
+                ],
               ),
-              if (masteryLevel != MasteryLevel.none)
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: Image.asset(image, fit: BoxFit.cover),
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.45),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.15),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          masteryLevel.icon,
-                          color: AppTheme.gold,
-                          size: 11,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          isKu ? masteryLevel.titleKu : masteryLevel.titleTr,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 9,
-                            fontWeight: FontWeight.w700,
+                    Positioned.fill(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              gradient.colors.first.withValues(alpha: 0.25),
+                              gradient.colors.last.withValues(alpha: 0.92),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 52,
-                      height: 52,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(14),
                       ),
-                      child: Icon(icon, color: Colors.white, size: 28),
                     ),
-                    const Spacer(),
-                    Text(
-                      CategoryNames.localized(category, isKu),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black45,
-                            blurRadius: 6,
-                            offset: Offset(0, 1),
+                    // Dekoratif daire
+                    Positioned(
+                      right: -20,
+                      top: -20,
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.06),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                    // Mastery badge
+                    if (widget.masteryLevel != MasteryLevel.none)
+                      Positioned(
+                        top: 10,
+                        right: 10,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.5),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: AppTheme.gold.withValues(alpha: 0.4),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                widget.masteryLevel.icon,
+                                color: AppTheme.gold,
+                                size: 11,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                widget.isKu
+                                    ? widget.masteryLevel.titleKu
+                                    : widget.masteryLevel.titleTr,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 52,
+                            height: 52,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.15),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.15),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Icon(icon, color: Colors.white, size: 28),
+                          ),
+                          const Spacer(),
+                          Text(
+                            CategoryNames.localized(widget.category, widget.isKu),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 18,
+                              letterSpacing: -0.3,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black45,
+                                  blurRadius: 6,
+                                  offset: Offset(0, 1),
+                                ),
+                              ],
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 6),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.1),
+                              ),
+                            ),
+                            child: Text(
+                              widget.isKu ? '5 ast · pêşbaz' : '5 seviye · yarış',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ],
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 4),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Text(
-                        isKu ? '5 ast · pêşbaz' : '5 seviye · yarış',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),

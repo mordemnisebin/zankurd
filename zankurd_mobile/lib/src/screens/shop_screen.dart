@@ -64,7 +64,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descTr: 'Yarışma esnasında elendiğinde kullanabileceğin 1 can verir.',
       cost: 100,
       icon: Icons.favorite_border_rounded,
-      themeColor: Colors.redAccent,
+      themeColor: AppTheme.accent,
     ),
     ShopItem(
       id: 'spin_wheel_extra',
@@ -74,7 +74,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descTr: 'Bugün çarkı tekrar çevirebilmek için ekstra bir hak tanımlar.',
       cost: 200,
       icon: Icons.casino_outlined,
-      themeColor: Colors.purpleAccent,
+      themeColor: Color(0xFF2B5C8F),
     ),
     ShopItem(
       id: 'premium_colors',

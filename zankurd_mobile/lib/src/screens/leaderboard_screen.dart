@@ -173,8 +173,21 @@ class _Header extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 16, 4),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Container(
+            width: 4,
+            height: 44,
+            margin: const EdgeInsets.only(right: 12, top: 2),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(2),
+              gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [AppTheme.gold, AppTheme.primaryGradientStart],
+              ),
+            ),
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +196,7 @@ class _Header extends StatelessWidget {
                   ku ? 'Tabloya Pêşderiyan' : 'Liderlik Tablosu',
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w900,
                     fontSize: 24,
                     letterSpacing: -0.5,
                   ),
@@ -201,12 +214,21 @@ class _Header extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
-            onPressed: onRefresh,
-            icon: Icon(
-              Icons.refresh_rounded,
-              color: AppTheme.textSubColor(context),
-              size: 22,
+          Container(
+            decoration: BoxDecoration(
+              color: AppTheme.surfaceHiColor(context),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+              ),
+            ),
+            child: IconButton(
+              onPressed: onRefresh,
+              icon: Icon(
+                Icons.refresh_rounded,
+                color: AppTheme.textSubColor(context),
+                size: 20,
+              ),
             ),
           ),
         ],
@@ -292,15 +314,25 @@ class _Podium extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF1A243C), Color(0xFF1F2D4A)],
+          colors: [Color(0xFF0F2C21), Color(0xFF163E30), Color(0xFF1A4E3B)],
+          stops: [0.0, 0.6, 1.0],
         ),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFF2A3A5C), width: 1.2),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.12),
+          width: 1.2,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.18),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+            color: const Color(0xFF1E5F47).withValues(alpha: 0.35),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
+            spreadRadius: -4,
+          ),
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -392,16 +424,24 @@ class _PodiumSlot extends StatelessWidget {
                 ),
               const SizedBox(height: 2),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.15),
+                  gradient: LinearGradient(
+                    colors: [
+                      color.withValues(alpha: 0.2),
+                      color.withValues(alpha: 0.1),
+                    ],
+                  ),
                   borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: color.withValues(alpha: 0.3),
+                  ),
                 ),
                 child: Text(
                   '${entry.totalScore}',
                   style: TextStyle(
                     color: color,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w800,
                     fontSize: scoreFontSz,
                   ),
                 ),
@@ -436,19 +476,16 @@ class _RankRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         color: AppTheme.surfaceColor(context),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.borderColor(context), width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            offset: const Offset(0, 2),
-            blurRadius: 6,
-          ),
-        ],
+        border: Border.all(
+          color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+          width: 1,
+        ),
+        boxShadow: AppTheme.softShadow(context),
       ),
       child: Row(
         children: [

@@ -61,9 +61,7 @@ class _StyledInputFieldState extends State<StyledInputField> {
     final backgroundColor = isDarkMode
         ? AppTheme.surface
         : AppTheme.lightSurface;
-    final borderColor = isDarkMode
-        ? const Color(0xFF404050)
-        : const Color(0xFFE0E0E0);
+
     final textStyle =
         widget.inputTextStyle ?? Theme.of(context).textTheme.bodyLarge;
 
@@ -87,112 +85,82 @@ class _StyledInputFieldState extends State<StyledInputField> {
                       ),
                 ),
               ),
-            // Input field with left accent bar
+            // Input field
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
+                border: Border.all(
+                  color: isFocused
+                      ? AppTheme.primaryGradientStart
+                      : AppTheme.borderColor(context).withValues(alpha: 0.5),
+                  width: isFocused ? 1.5 : 1,
+                ),
                 boxShadow: isFocused
                     ? [
                         BoxShadow(
-                          color:
-                              (isFocused
-                                      ? AppTheme.primaryGradientStart
-                                      : AppTheme.primaryGradientEnd)
-                                  .withValues(alpha: 0.15),
+                          color: AppTheme.primaryGradientStart.withValues(alpha: 0.12),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
                       ]
                     : [],
               ),
-              child: Row(
-                children: [
-                  // Left accent bar
-                  Container(
-                    width: 6,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      color: isFocused
-                          ? AppTheme.primaryGradientStart
-                          : AppTheme.primaryGradientEnd,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        bottomLeft: Radius.circular(8),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 14,
+                ),
+                child: Row(
+                  children: [
+                    // Prefix icon
+                    if (widget.prefixIcon != null) ...[
+                      Icon(
+                        widget.prefixIcon,
+                        size: 18,
+                        color: isFocused
+                            ? AppTheme.primaryGradientStart
+                            : (isDarkMode
+                                ? AppTheme.textMuted
+                                : AppTheme.lightTextMuted),
+                      ),
+                      const SizedBox(width: 10),
+                    ],
+                    // Text field
+                    Expanded(
+                      child: TextField(
+                        controller: widget.controller,
+                        focusNode: _focusNode,
+                        keyboardType: widget.keyboardType,
+                        obscureText: widget.obscureText,
+                        style: textStyle,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: '',
+                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                        cursorColor: AppTheme.primaryGradientStart,
                       ),
                     ),
-                  ),
-                  // Input field
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: backgroundColor,
-                        border: Border(
-                          top: BorderSide(color: borderColor, width: 1),
-                          right: BorderSide(color: borderColor, width: 1),
-                          bottom: BorderSide(color: borderColor, width: 1),
-                        ),
-                        borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(8),
-                          bottomRight: Radius.circular(8),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 12,
-                        ),
-                        child: Row(
-                          children: [
-                            // Prefix icon
-                            if (widget.prefixIcon != null) ...[
-                              Icon(
-                                widget.prefixIcon,
-                                size: 18,
-                                color: isDarkMode
-                                    ? AppTheme.textMuted
-                                    : AppTheme.lightTextMuted,
-                              ),
-                              const SizedBox(width: 10),
-                            ],
-                            // Text field
-                            Expanded(
-                              child: TextField(
-                                controller: widget.controller,
-                                focusNode: _focusNode,
-                                keyboardType: widget.keyboardType,
-                                obscureText: widget.obscureText,
-                                style: textStyle,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: '',
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.zero,
-                                ),
-                                cursorColor: isFocused
-                                    ? AppTheme.primaryGradientStart
-                                    : AppTheme.primaryGradientEnd,
-                              ),
-                            ),
-                            // Suffix icon
-                            if (widget.suffixIcon != null) ...[
-                              const SizedBox(width: 10),
-                              GestureDetector(
-                                onTap: widget.onSuffixIconPressed,
-                                child: Icon(
-                                  widget.suffixIcon,
-                                  size: 18,
-                                  color: isDarkMode
-                                      ? AppTheme.textMuted
-                                      : AppTheme.lightTextMuted,
-                                ),
-                              ),
-                            ],
-                          ],
+                    // Suffix icon
+                    if (widget.suffixIcon != null) ...[
+                      const SizedBox(width: 10),
+                      GestureDetector(
+                        onTap: widget.onSuffixIconPressed,
+                        child: Icon(
+                          widget.suffixIcon,
+                          size: 18,
+                          color: isFocused
+                              ? AppTheme.primaryGradientStart
+                              : (isDarkMode
+                                  ? AppTheme.textMuted
+                                  : AppTheme.lightTextMuted),
                         ),
                       ),
-                    ),
-                  ),
-                ],
+                    ],
+                  ],
+                ),
               ),
             ),
           ],

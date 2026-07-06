@@ -673,7 +673,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         gradient: const LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [Color(0xFF6366F1), Color(0xFF4F46E5)],
+                          colors: [Color(0xFF1E5F47), Color(0xFF123427)],
                         ),
                         child: Row(
                           children: [

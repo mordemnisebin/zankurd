@@ -44,7 +44,27 @@ class PlayerAvatar extends StatelessWidget {
       child: ClipOval(child: core),
     );
 
-    if (frame == null) return core;
+    if (frame == null) {
+      return Container(
+        width: radius * 2,
+        height: radius * 2,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: AppTheme.borderColor(context).withValues(alpha: 0.8),
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.06),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: core,
+      );
+    }
 
     final ring = frameColor(frame);
     return Container(
@@ -58,7 +78,11 @@ class PlayerAvatar extends StatelessWidget {
           colors: [ring, ring.withValues(alpha: 0.55)],
         ),
         boxShadow: [
-          BoxShadow(color: ring.withValues(alpha: 0.35), blurRadius: 8),
+          BoxShadow(
+            color: ring.withValues(alpha: 0.3),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          ),
         ],
       ),
       child: core,

@@ -20,11 +20,14 @@ class AppTheme {
   /// Standard card shadow for normal cards.
   static List<BoxShadow> cardShadow(BuildContext context) {
     final isDark = _isDark(context);
+    final shadowColor = isDark
+        ? const Color(0xFF081912)
+        : const Color(0xFFE5DFD3);
     return [
       BoxShadow(
-        color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
-        blurRadius: 16,
-        offset: const Offset(0, 6),
+        color: shadowColor,
+        offset: const Offset(0, 4),
+        blurRadius: 0,
       ),
     ];
   }
@@ -33,9 +36,9 @@ class AppTheme {
   static List<BoxShadow> elevatedShadow(Color tint) {
     return [
       BoxShadow(
-        color: tint.withValues(alpha: 0.35),
-        blurRadius: 24,
-        offset: const Offset(0, 10),
+        color: tint.withValues(alpha: 0.25),
+        offset: const Offset(0, 5),
+        blurRadius: 0,
       ),
     ];
   }
@@ -57,55 +60,55 @@ class AppTheme {
     );
   }
 
-  // ============ Dark Mode Palette ============
+  // ============ Dark Mode Palette (Kültürel Modern - Derin Yeşil & Mercan) ============
   // Primary CTA / marka gradyanı — ana eylem butonları ve marka vurgusu.
-  static const primaryGradientStart = Color(0xFFFF4B91); // Canlı neon pembe
-  static const primaryGradientEnd = Color(0xFFFF7B54); // Canlı neon turuncu
+  static const primaryGradientStart = Color(0xFFE76F51); // Mercan
+  static const primaryGradientEnd = Color(0xFFF4A261); // Mercan-Turuncu
 
   // İkincil aksan — ikincil vurgu / yardımcı renk.
-  static const secondaryAccent = Color(0xFF6F61C0);
+  static const secondaryAccent = Color(0xFF1E5F47); // Derin Yeşil
 
   // Ödül rengi — YALNIZCA coin / ödül / streak / ustalık rozeti göstergelerinde kullan.
-  static const gold = Color(0xFFFFD23F); // Parlak neon altın sarısı
+  static const gold = Color(0xFFE9C46A); // Sıcak Altın Sarısı
 
   // Bilgi/ipucu vurgusu — nadir kullan (ör. joker ipucu). Genel aksan için kullanma.
-  static const cyan = Color(0xFF00F0FF); // Parlak neon mavi/turkuaz
+  static const cyan = Color(0xFF26A69A); // Dengeli Mavi/Turkuaz
 
-  // Dark backgrounds (Derin Gece Mavisi / Kozmik Mor geçişleri)
-  static const bg = Color(0xFF0F0C20); 
-  static const bgDeep = Color(0xFF080711); 
-  static const surface = Color(0xFF16132D); 
-  static const surfaceHi = Color(0xFF221E42); 
-  static const darkBg = Color(0xFF05040B); 
+  // Dark backgrounds (Derin Orman Yeşili / Asil Toprak tonları)
+  static const bg = Color(0xFF0F2C21); 
+  static const bgDeep = Color(0xFF0A1F17); 
+  static const surface = Color(0xFF163E30); 
+  static const surfaceHi = Color(0xFF1F5240); 
+  static const darkBg = Color(0xFF05140F); 
 
   // Dark mode text
-  static const textPrimary = Color(0xFFF5F4FA); 
-  static const textSub = Color(0xFFB8B5D0); 
-  static const textMuted = Color(0xFF7F7A9C); 
+  static const textPrimary = Color(0xFFF4F6F5); 
+  static const textSub = Color(0xFFBCD0C9); 
+  static const textMuted = Color(0xFF7F9C91); 
 
   // Borders
-  static const border = Color(0xFF2E2A52); 
+  static const border = Color(0xFF2C6B54); 
 
   // Status colors
-  // Primary neon pembe — ana aksan / vurgu rengi.
-  static const accent = Color(0xFFFF4B91); // Neon Pembe
-  // İkincil mor aksan — yardımcı vurgu rengi.
-  static const violet = Color(0xFF8E8FFA); // Pastel Neon Mor
+  // Gül kurusu/nar çiçeği pembe — ana aksan / vurgu rengi.
+  static const accent = Color(0xFFD81B60); 
+  // İkincil yeşil aksan — yardımcı vurgu rengi.
+  static const violet = Color(0xFF81C784); 
   // Doğru cevap rengi — YALNIZCA doğru cevap geri bildiriminde kullan.
-  static const correct = Color(0xFF00E676); // Parlak Neon Yeşil
+  static const correct = Color(0xFF2E7D32); // Dengeli Yeşil
   // Yanlış cevap rengi — YALNIZCA yanlış cevap geri bildiriminde kullan.
-  static const wrong = Color(0xFFFF1744); // Parlak Neon Kırmızı
+  static const wrong = Color(0xFFC62828); // Dengeli Kırmızı
 
-  // ============ Light Mode Palette (Premium, TRT Tarzı Canlı/Parlak) ============
+  // ============ Light Mode Palette (Premium Sıcak Krem/Bej) ============
   // Yumuşak, modern ve göz yormayan, aynı zamanda renkleri patlatan arka planlar
-  static const lightBg = Color(0xFFF3F2F9); // Yumuşak lavanta grisi
-  static const lightBgDeep = Color(0xFFE5E3F1); 
+  static const lightBg = Color(0xFFFAF7F0); // Sıcak krem arka plan
+  static const lightBgDeep = Color(0xFFEFECE3); 
   static const lightSurface = Color(0xFFFFFFFF); 
-  static const lightSurfaceHi = Color(0xFFF7F6FB); 
-  static const lightBorder = Color(0xFFDDD9EC); 
-  static const lightTextPrimary = Color(0xFF140D33); 
-  static const lightTextSub = Color(0xFF4A4468); 
-  static const lightTextMuted = Color(0xFF8882A3); 
+  static const lightSurfaceHi = Color(0xFFFAF8F5); 
+  static const lightBorder = Color(0xFFE6DEC9); 
+  static const lightTextPrimary = Color(0xFF14241C); 
+  static const lightTextSub = Color(0xFF384A41); 
+  static const lightTextMuted = Color(0xFF78857E); 
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -131,11 +134,11 @@ class AppTheme {
     colors: [bg, bgDeep],
   );
 
-  // Home header gradient
+  // Home header gradient: Deep Green to Soft Green-Gold transition
   static const homeHeaderGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF6F61C0), Color(0xFFFF4B91)],
+    colors: [Color(0xFF0B251C), Color(0xFF1A4E3B)],
   );
 
   // Legacy gradient aliases for backwards compatibility
@@ -203,14 +206,14 @@ class AppTheme {
 
   // Per-category gradients (index matches category list order)
   static const List<List<Color>> categoryGradients = [
-    [Color(0xFF7C3AED), Color(0xFF5B21B6)], // Ziman - purple
-    [Color(0xFFE94560), Color(0xFFF97316)], // Çand - coral-orange
-    [Color(0xFF2563EB), Color(0xFF1D4ED8)], // Dîrok - blue
-    [Color(0xFF10B981), Color(0xFF059669)], // Edebiyat - green
-    [Color(0xFF06B6D4), Color(0xFF0891B2)], // Cografya - teal
-    [Color(0xFFF59E0B), Color(0xFFD97706)], // Muzîk - amber
-    [Color(0xFFFF2E93), Color(0xFFFF8E53)], // Siyaset - hot pink to neon orange
-    [Color(0xFF00F2FE), Color(0xFF4FACFE)], // Paradigma - bright cyan to neon blue
+    [Color(0xFF1E5F47), Color(0xFF0F3A2B)], // Ziman - asil orman yeşili
+    [Color(0xFFD65A31), Color(0xFF8B2600)], // Çand - terracotta / kil kırmızısı
+    [Color(0xFF2B5C8F), Color(0xFF1A3B5C)], // Dîrok - asil kobalt mavisi
+    [Color(0xFFE0A96D), Color(0xFF966C3B)], // Edebiyat - parşömen / sıcak bej
+    [Color(0xFF4C7063), Color(0xFF2B443B)], // Cografya - adaçayı yeşili
+    [Color(0xFFD4AF37), Color(0xFF8C6D1F)], // Muzîk - sıcak altın sarısı
+    [Color(0xFFB83B5E), Color(0xFF6A2C38)], // Siyaset - asil mürdüm / nar çiçeği
+    [Color(0xFF3282B8), Color(0xFF0F4C81)], // Paradigma - derin klasik mavi
   ];
 
   static LinearGradient categoryGradient(int index) {
@@ -504,14 +507,120 @@ class AppTheme {
   static const badgeGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF7C3AED), Color(0xFF6366F1)],
+    colors: [Color(0xFF1E5F47), Color(0xFF2C6B54)],
   );
 
   /// Streak göstergesi gradient'i.
   static const streakGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFFFF6B6B), Color(0xFFFFD700)],
+    colors: [Color(0xFFE76F51), Color(0xFFE9C46A)],
   );
+
+  // ============ Premium Design Helpers ============
+
+  /// Yumuşak, dağınık gölge — kartlar ve paneller için.
+  static List<BoxShadow> softShadow(BuildContext context) {
+    final isDark = _isDark(context);
+    return [
+      BoxShadow(
+        color: Colors.black.withValues(alpha: isDark ? 0.35 : 0.08),
+        blurRadius: 20,
+        offset: const Offset(0, 8),
+        spreadRadius: -2,
+      ),
+      BoxShadow(
+        color: Colors.black.withValues(alpha: isDark ? 0.15 : 0.04),
+        blurRadius: 6,
+        offset: const Offset(0, 2),
+      ),
+    ];
+  }
+
+  /// Renkli neon ışıltı gölgesi — CTA butonlar ve öne çıkan elemanlar.
+  static List<BoxShadow> glowShadow(Color color, {double intensity = 0.4}) {
+    return [
+      BoxShadow(
+        color: color.withValues(alpha: intensity),
+        blurRadius: 20,
+        offset: const Offset(0, 6),
+        spreadRadius: -2,
+      ),
+      BoxShadow(
+        color: color.withValues(alpha: intensity * 0.4),
+        blurRadius: 40,
+        offset: const Offset(0, 12),
+        spreadRadius: -4,
+      ),
+    ];
+  }
+
+  /// Gradient arka planlı yuvarlak ikon konteyneri.
+  static BoxDecoration iconCircle(List<Color> gradientColors, {double size = 44}) {
+    return BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: gradientColors,
+      ),
+      shape: BoxShape.circle,
+      boxShadow: [
+        BoxShadow(
+          color: gradientColors.first.withValues(alpha: 0.35),
+          blurRadius: 12,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    );
+  }
+
+  /// Premium kart dekorasyonu — gradient arka plan + glow + border.
+  static BoxDecoration premiumCard(
+    BuildContext context, {
+    LinearGradient? gradient,
+    Color? glowColor,
+    double radius = cardRadius,
+  }) {
+    return BoxDecoration(
+      gradient: gradient,
+      color: gradient == null ? surfaceColor(context) : null,
+      borderRadius: BorderRadius.circular(radius),
+      border: Border.all(
+        color: _isDark(context)
+            ? Colors.white.withValues(alpha: 0.1)
+            : Colors.white.withValues(alpha: 0.8),
+        width: 1.2,
+      ),
+      boxShadow: glowColor != null
+          ? glowShadow(glowColor, intensity: 0.25)
+          : softShadow(context),
+    );
+  }
+
+  /// Bölüm başlık aksanı — sol kenardaki renkli dikey çizgi.
+  static BoxDecoration sectionAccent(Color color) {
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(2),
+      color: color,
+    );
+  }
+
+  /// Stat/metric kartı dekorasyonu (profil, sonuç ekranları).
+  static BoxDecoration statCard(BuildContext context, Color accentColor) {
+    return BoxDecoration(
+      color: surfaceColor(context),
+      borderRadius: BorderRadius.circular(cardRadiusSmall),
+      border: Border.all(
+        color: accentColor.withValues(alpha: 0.2),
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: accentColor.withValues(alpha: 0.08),
+          blurRadius: 12,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    );
+  }
 }
 

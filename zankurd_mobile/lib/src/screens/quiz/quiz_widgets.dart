@@ -175,6 +175,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.suspense,
     required this.onAnswer,
     this.audiencePoll,
+    this.opponentSelectedAnswers,
   });
 
   final String promptText;
@@ -186,6 +187,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final String firstAttemptAnswer;
   final Map<String, double>? audiencePoll;
   final bool showExplanation;
+  final Map<String, String>? opponentSelectedAnswers;
 
   /// Gerilim tutuşu: cevap seçildi ama sonuç henüz açıklanmadı.
   /// True iken doğru/yanlış renkleri gizlenir; seçilen şık "kontrol
@@ -233,6 +235,15 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   /// renkleri gizler, yanlış açıklanan şıkkı sarsıntıyla sarar.
   Widget _buildAnswerButton(int index, String answer) {
     final revealed = answered && !suspense;
+    final List<String> opps = [];
+    if (opponentSelectedAnswers != null) {
+      opponentSelectedAnswers!.forEach((name, ans) {
+        if (ans == answer) {
+          opps.add(name);
+        }
+      });
+    }
+
     final button = _AnswerButton(
       index: index,
       answer: answer,
@@ -242,6 +253,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       firstAttemptWrong: !answered && answer == firstAttemptAnswer,
       suspense: suspense,
       audiencePercent: audiencePoll?[answer],
+      opponentNamesWhoSelected: opps,
       onTap: () => onAnswer(answer),
     );
     final isWrongSelected =
@@ -550,6 +562,7 @@ class _AnswerButton extends StatelessWidget {
     this.firstAttemptWrong = false,
     this.suspense = false,
     this.audiencePercent,
+    this.opponentNamesWhoSelected,
   });
 
   /// Görünüm sırası — A/B/C/D rozeti ve şık rengi için kullanılır.
@@ -565,13 +578,14 @@ class _AnswerButton extends StatelessWidget {
   /// ediliyor" (accent) stilinde bekler, yanlış stili uygulanmaz.
   final bool suspense;
   final double? audiencePercent;
+  final List<String>? opponentNamesWhoSelected;
 
   // A/B/C/D rozetleriyle eşleşen kenarlık renkleri
   static const _badgePalette = [
-    Color(0xFFE94560), // A — kırmızı
-    Color(0xFF2563EB), // B — mavi
-    Color(0xFF10B981), // C — yeşil
-    Color(0xFFD97706), // D — koyu amber (WCAG kontrast için)
+    Color(0xFFD65A31), // A — Terracotta / Kil Kırmızısı
+    Color(0xFF2B5C8F), // B — Asil Kobalt Mavisi
+    Color(0xFF1E5F47), // C — Derin Orman Yeşili
+    Color(0xFFD4AF37), // D — Sıcak Altın Sarısı
   ];
 
   @override
@@ -742,6 +756,28 @@ class _AnswerButton extends StatelessWidget {
                     ],
                   ),
                 ],
+                if (opponentNamesWhoSelected != null && opponentNamesWhoSelected!.isNotEmpty) ...[
+                  const SizedBox(height: 6),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: opponentNamesWhoSelected!.map((name) => Container(
+                      margin: const EdgeInsets.only(left: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        '$name 👀',
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    )).toList(),
+                  ),
+                ],
               ],
             ),
           ),
@@ -768,10 +804,10 @@ class _OptionBadge extends StatelessWidget {
 
   /// TRT tarzı çok-renkli şıklar: A kırmızı, B mavi, C yeşil, D amber.
   static const _palette = [
-    Color(0xFFE94560),
-    Color(0xFF2563EB),
-    Color(0xFF10B981),
-    Color(0xFFF59E0B),
+    Color(0xFFD65A31),
+    Color(0xFF2B5C8F),
+    Color(0xFF1E5F47),
+    Color(0xFFD4AF37),
   ];
 
   @override
@@ -860,7 +896,7 @@ class _TinyTag extends StatelessWidget {
 
 // ─── Joker butonu ────────────────────────────────────────────────────────────
 
-class _WildcardButton extends StatelessWidget {
+class _WildcardButton extends StatefulWidget {
   const _WildcardButton({
     required this.type,
     required this.isKu,
@@ -878,80 +914,97 @@ class _WildcardButton extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    final baseColor = type.themeColor;
+  State<_WildcardButton> createState() => _WildcardButtonState();
+}
 
-    final opacity = (isEnabled || isActive)
+class _WildcardButtonState extends State<_WildcardButton> {
+  bool _pressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final baseColor = widget.type.themeColor;
+
+    final opacity = (widget.isEnabled || widget.isActive)
         ? 1.0
-        : cantAfford
+        : widget.cantAfford
         ? 0.45
         : 0.35;
 
-    final borderColor = isActive
+    final borderColor = widget.isActive
         ? AppTheme.accent
-        : cantAfford
+        : widget.cantAfford
         ? AppTheme.wrong.withValues(alpha: 0.5)
-        : isEnabled
+        : widget.isEnabled
         ? baseColor.withValues(alpha: 0.75)
         : AppTheme.borderColor(context);
 
-    final bgColor = isActive
+    final bgColor = widget.isActive
         ? AppTheme.accent.withValues(alpha: 0.15)
-        : cantAfford
+        : widget.cantAfford
         ? AppTheme.wrong.withValues(alpha: 0.05)
-        : isEnabled
+        : widget.isEnabled
         ? baseColor.withValues(alpha: 0.12)
         : null;
 
-    final iconColor = isActive
+    final iconColor = widget.isActive
         ? AppTheme.accent
-        : cantAfford
+        : widget.cantAfford
         ? AppTheme.wrong
-        : isEnabled
+        : widget.isEnabled
         ? baseColor
         : AppTheme.textMutedColor(context);
 
-    return Opacity(
-      opacity: opacity,
-      child: OutlinedButton(
-        onPressed: isEnabled ? onTap : null,
-        style: OutlinedButton.styleFrom(
-          backgroundColor: bgColor,
-          side: BorderSide(color: borderColor, width: 1.5),
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          minimumSize: const Size(0, 50),
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+    return GestureDetector(
+      onTapDown: widget.isEnabled ? (_) => setState(() => _pressed = true) : null,
+      onTapUp: widget.isEnabled ? (_) {
+        setState(() => _pressed = false);
+        widget.onTap();
+      } : null,
+      onTapCancel: widget.isEnabled ? () => setState(() => _pressed = false) : null,
+      child: AnimatedScale(
+        scale: _pressed ? 0.94 : 1.0,
+        duration: const Duration(milliseconds: 80),
+        child: Opacity(
+          opacity: opacity,
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            height: 52,
+            decoration: BoxDecoration(
+              color: bgColor ?? Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: borderColor, width: 1.5),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 24,
+                  height: 24,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: iconColor.withValues(alpha: widget.isEnabled ? 0.16 : 0.10),
+                  ),
+                  child: Icon(
+                    widget.cantAfford ? Icons.lock_outline : widget.type.icon,
+                    size: 15,
+                    color: iconColor,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  '${widget.type.coinCost}c',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: iconColor,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 28,
-              height: 28,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: iconColor.withValues(alpha: isEnabled ? 0.16 : 0.10),
-              ),
-              child: Icon(
-                cantAfford ? Icons.lock_outline : type.icon,
-                size: 18,
-                color: iconColor,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              '${type.coinCost}c',
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-                color: iconColor,
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -1055,11 +1108,24 @@ class _CircularTimerState extends State<_CircularTimer>
         return AnimatedBuilder(
           animation: _scaleAnimation,
           builder: (context, child) {
+            final isAlert = seconds <= 5 && seconds > 0 && !widget.isPaused;
             return Transform.scale(
               scale: _scaleAnimation.value,
-              child: SizedBox(
-                width: 36,
-                height: 36,
+              child: Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: isAlert
+                      ? [
+                          BoxShadow(
+                            color: color.withValues(alpha: 0.4),
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                          )
+                        ]
+                      : null,
+                ),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -1071,8 +1137,16 @@ class _CircularTimerState extends State<_CircularTimer>
                       '$seconds',
                       style: TextStyle(
                         color: color,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w900,
                         fontSize: 13,
+                        shadows: isAlert
+                            ? [
+                                Shadow(
+                                  color: color.withValues(alpha: 0.8),
+                                  blurRadius: 6,
+                                )
+                              ]
+                            : null,
                       ),
                     ),
                   ],

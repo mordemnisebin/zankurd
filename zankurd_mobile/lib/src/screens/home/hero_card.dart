@@ -22,19 +22,37 @@ class HeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(22),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF8E8FFA), Color(0xFF6F61C0), Color(0xFFFF4B91)],
+          colors: [Color(0xFF1E5F47), Color(0xFF123427), Color(0xFFE76F51)],
+          stops: [0.0, 0.55, 1.0],
         ),
         borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.20), width: 1.2),
-        boxShadow: AppTheme.elevatedShadow(const Color(0xFF6F61C0)),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.18),
+          width: 1.2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF1E5F47).withValues(alpha: 0.4),
+            offset: const Offset(0, 8),
+            blurRadius: 24,
+            spreadRadius: -4,
+          ),
+          BoxShadow(
+            color: const Color(0xFFE76F51).withValues(alpha: 0.15),
+            offset: const Offset(0, 16),
+            blurRadius: 32,
+            spreadRadius: -8,
+          ),
+        ],
       ),
       child: Stack(
         children: [
+          // Dekoratif daireler
           Positioned(
             right: -30,
             top: -30,
@@ -43,6 +61,30 @@ class HeroCard extends StatelessWidget {
               height: 140,
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.06),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 20,
+            top: 20,
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.04),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+          Positioned(
+            left: -20,
+            bottom: -20,
+            child: Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: const Color(0xFFE76F51).withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
             ),
@@ -56,22 +98,35 @@ class HeroCard extends StatelessWidget {
                     constraints: BoxConstraints(maxWidth: constraints.maxWidth),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
+                        horizontal: 12,
+                        vertical: 7,
                       ),
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.1),
+                        ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
-                            Icons.radio_button_checked,
-                            color: Colors.white,
-                            size: 14,
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF4ADE80),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xFF4ADE80)
+                                      .withValues(alpha: 0.6),
+                                  blurRadius: 6,
+                                ),
+                              ],
+                            ),
                           ),
-                          const SizedBox(width: 6),
+                          const SizedBox(width: 8),
                           Flexible(
                             child: Text(
                               isKu ? 'Jûra Zindî Vekirî' : 'Canlı Oda Açık',
@@ -90,26 +145,31 @@ class HeroCard extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 16),
               Text(
                 isKu
                     ? 'Bi hevalan re\npêşbikeve'
                     : 'Arkadaşlarınla\ncanlı yarış',
                 style: const TextStyle(
                   color: Colors.white,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w900,
                   fontSize: 28,
                   height: 1.1,
+                  letterSpacing: -0.5,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               Text(
                 isKu
                     ? 'Jûrekê ava bike an bi kodê bikeve. Pirs, skor û rêzbendî bi awayekî zindî nû dibin.'
                     : 'Oda kur veya kodla katıl. Sorular, skorlar ve sıralama canlı güncellenir.',
-                style: const TextStyle(color: Color(0xFFE0D0FF), fontSize: 13),
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.85),
+                  fontSize: 13,
+                  height: 1.4,
+                ),
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 20),
               LayoutBuilder(
                 builder: (context, constraints) {
                   final stacked = constraints.maxWidth < 340;
@@ -148,14 +208,16 @@ class HeroCard extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 10),
-              TextButton.icon(
-                onPressed: onQuickMatch,
-                icon: const Icon(Icons.bolt, size: 17),
-                label: Text(isKu ? 'Tenê pratîk bike' : 'Tek başına pratik'),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  textStyle: const TextStyle(fontWeight: FontWeight.w800),
+              const SizedBox(height: 12),
+              Center(
+                child: TextButton.icon(
+                  onPressed: onQuickMatch,
+                  icon: const Icon(Icons.bolt, size: 17),
+                  label: Text(isKu ? 'Tenê pratîk bike' : 'Tek başına pratik'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white.withValues(alpha: 0.9),
+                    textStyle: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
                 ),
               ),
             ],
@@ -167,7 +229,7 @@ class HeroCard extends StatelessWidget {
   }
 }
 
-class _HeroActionButton extends StatelessWidget {
+class _HeroActionButton extends StatefulWidget {
   const _HeroActionButton({
     required this.label,
     required this.icon,
@@ -181,26 +243,67 @@ class _HeroActionButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   @override
+  State<_HeroActionButton> createState() => _HeroActionButtonState();
+}
+
+class _HeroActionButtonState extends State<_HeroActionButton> {
+  bool _pressed = false;
+
+  @override
   Widget build(BuildContext context) {
-    final background = primary
+    final background = widget.primary
         ? Colors.white
         : Colors.white.withValues(alpha: 0.16);
-    final foreground = primary ? const Color(0xFF7C3AED) : Colors.white;
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      icon: Icon(icon, size: 18),
-      label: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: background,
-        foregroundColor: foreground,
-        disabledBackgroundColor: Colors.white.withValues(alpha: 0.48),
-        disabledForegroundColor: const Color(
-          0xFF7C3AED,
-        ).withValues(alpha: 0.72),
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        textStyle: const TextStyle(fontWeight: FontWeight.w700),
+    final foreground = widget.primary ? const Color(0xFF1E5F47) : Colors.white;
+    return GestureDetector(
+      onTapDown: widget.onPressed != null
+          ? (_) => setState(() => _pressed = true)
+          : null,
+      onTapUp: widget.onPressed != null
+          ? (_) {
+              setState(() => _pressed = false);
+              widget.onPressed?.call();
+            }
+          : null,
+      onTapCancel: () => setState(() => _pressed = false),
+      child: AnimatedScale(
+        scale: _pressed ? 0.95 : 1.0,
+        duration: const Duration(milliseconds: 100),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+          decoration: BoxDecoration(
+            color: background,
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: widget.primary
+                ? [
+                    BoxShadow(
+                      color: Colors.white.withValues(alpha: 0.25),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(widget.icon, size: 18, color: foreground),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  widget.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: foreground,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

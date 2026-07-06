@@ -202,7 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF7C3AED), Color(0xFF4F1EB8)],
+            colors: [Color(0xFF1E5F47), Color(0xFF123427)],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,7 +237,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: const Icon(
                               Icons.edit,
                               size: 12,
-                              color: Color(0xFF4F1EB8),
+                              color: Color(0xFF1E5F47),
                             ),
                           ),
                         ),
@@ -328,12 +328,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const SizedBox(height: 8),
               ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: _levelProgress,
-                  backgroundColor: Colors.white.withValues(alpha: 0.15),
-                  color: AppTheme.gold,
-                  minHeight: 8,
+                borderRadius: BorderRadius.circular(6),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 8,
+                      color: Colors.white.withValues(alpha: 0.15),
+                    ),
+                    FractionallySizedBox(
+                      widthFactor: _levelProgress.clamp(0.0, 1.0),
+                      child: Container(
+                        height: 8,
+                        decoration: BoxDecoration(
+                          gradient: AppTheme.goldGradient,
+                          borderRadius: BorderRadius.circular(6),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppTheme.gold.withValues(alpha: 0.4),
+                              blurRadius: 6,
+                              offset: const Offset(0, 1),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -778,13 +797,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(4, 8, 4, 16),
-                      child: Text(
-                        ku ? 'Profîl' : 'Profil',
-                        style: TextStyle(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w800,
-                          fontSize: 28,
-                        ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 4,
+                            height: 32,
+                            margin: const EdgeInsets.only(right: 12),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              gradient: const LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [AppTheme.accent, AppTheme.primaryGradientEnd],
+                              ),
+                            ),
+                          ),
+                          Text(
+                            ku ? 'Profîl' : 'Profil',
+                            style: TextStyle(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w800,
+                              fontSize: 28,
+                              letterSpacing: -0.5,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     if (isWide)

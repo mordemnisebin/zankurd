@@ -40,6 +40,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   List<QuizQuestion> get questions => offlineQuestionBank;
 
+  @override
+  String? get currentUserId => 'user';
+
   String _mockName = 'ZanKurd Oyuncusu';
   int _mockCoins = 2450;
   int _mockExtraSpins = 0;

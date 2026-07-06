@@ -67,6 +67,8 @@ class _RoomScreenState extends State<RoomScreen> {
     final ku = context.isKu;
     final sorted = [...room.players]
       ..sort((a, b) => b.score.compareTo(a.score));
+    final currentUserId = widget.repository.currentUserId;
+    final isHost = room.hostId == null || room.hostId == currentUserId;
 
     return Scaffold(
       body: Container(
@@ -240,27 +242,64 @@ class _RoomScreenState extends State<RoomScreen> {
                       ),
                       const SizedBox(height: 8),
                     ],
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton.icon(
-                        onPressed: ready && !starting && room.players.length >= 2 ? _startGameHost : null,
-                        icon: starting
-                            ? const SizedBox(
-                                width: 16,
-                                height: 16,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Icon(Icons.play_arrow_rounded),
-                        label: Text(
-                          starting
-                              ? (ku ? 'Tê Amadekirin' : 'Hazırlanıyor')
-                              : (ku ? 'Yara Destpê Bike' : 'Yarışı Başlat'),
+                    if (isHost) ...[
+                      SizedBox(
+                        width: double.infinity,
+                        child: FilledButton.icon(
+                          onPressed: ready && !starting && room.players.length >= 2 ? _startGameHost : null,
+                          icon: starting
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Icon(Icons.play_arrow_rounded),
+                          label: Text(
+                            starting
+                                ? (ku ? 'Tê Amadekirin' : 'Hazırlanıyor')
+                                : (ku ? 'Yara Destpê Bike' : 'Yarışı Başlat'),
+                          ),
                         ),
                       ),
-                    ),
+                    ] else ...[
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: AppTheme.accent.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppTheme.accent.withValues(alpha: 0.25)),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(AppTheme.accent),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                ku
+                                    ? 'Li benda mêvandar e... Lîstik dê ji aliyê damezrîner ve bê destpêkirin.'
+                                    : 'Ev sahibi bekleniyor... Yarışma, odayı kuran kişi tarafından başlatılacaktır.',
+                                style: const TextStyle(
+                                  color: AppTheme.accent,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),

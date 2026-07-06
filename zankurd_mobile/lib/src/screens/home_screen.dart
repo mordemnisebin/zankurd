@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -448,21 +449,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       decoration: BoxDecoration(gradient: AppTheme.homeHeaderGradient),
       child: Stack(
         children: [
-          Positioned(
-            top: -40,
-            right: -60,
-            child: Opacity(
-              opacity: 0.08,
-              child: Transform.rotate(
-                angle: 0.5,
-                child: Container(
-                  width: 280,
-                  height: 280,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white, width: 3),
-                  ),
-                ),
-              ),
+          Positioned.fill(
+            child: CustomPaint(
+              painter: const RojPatternPainter(),
             ),
           ),
           Positioned(
@@ -806,3 +795,53 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 }
+
+class RojPatternPainter extends CustomPainter {
+  const RojPatternPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.05)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.2;
+
+    // Güneş merkezi (Sağ üst / ortalama bölge)
+    final center = Offset(size.width * 0.85, size.height * 0.45);
+    
+    // Güneş halkaları
+    canvas.drawCircle(center, 30, paint);
+    canvas.drawCircle(center, 42, paint);
+    
+    // Güneş Işınları (Roj / 12 ışın)
+    final rayCount = 12;
+    final innerRadius = 46.0;
+    final outerRadius = 70.0;
+    for (int i = 0; i < rayCount; i++) {
+      final angle = (i * 2 * 3.1415926535) / rayCount;
+      final start = Offset(
+        center.dx + innerRadius * cos(angle),
+        center.dy + innerRadius * sin(angle),
+      );
+      final end = Offset(
+        center.dx + outerRadius * cos(angle),
+        center.dy + outerRadius * sin(angle),
+      );
+      canvas.drawLine(start, end, paint);
+    }
+
+    // Geometrik kilim/dağ çizgileri
+    final kilimPaint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.02)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+      
+    for (double i = -50; i < size.width; i += 40) {
+      canvas.drawLine(Offset(i, 0), Offset(i + 120, size.height), kilimPaint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+

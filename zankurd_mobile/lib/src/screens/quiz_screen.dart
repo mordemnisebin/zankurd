@@ -82,6 +82,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
   StreamSubscription<Map<String, dynamic>>? _realtimeSub;
+  final Map<String, String> _opponentSelectedAnswers = {};
+  Timer? _autoNextTimer;
   BotRace? _botRace;
   bool _isKu = true;
   String _myName = '';
@@ -210,7 +212,15 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       livePlayers.add(updatedOpponent);
                     }
                     livePlayers.sort((a, b) => b.score.compareTo(a.score));
+
+                    final oppAnswer = payload['selected_answer'] as String?;
+                    if (oppAnswer != null) {
+                      _opponentSelectedAnswers[senderName] = oppAnswer;
+                    } else if (payload['answered'] == false) {
+                      _opponentSelectedAnswers.remove(senderName);
+                    }
                   });
+                  _checkMultiplayerSync();
                 }
               });
         } else {
@@ -344,6 +354,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   void dispose() {
     _playersSub?.cancel();
     _realtimeSub?.cancel();
+    _autoNextTimer?.cancel();
     _timerController.dispose();
     _explanationController.dispose();
     super.dispose();
@@ -995,6 +1006,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                         audiencePoll: _audiencePoll,
                         showExplanation: _showExplanation,
                         suspense: _suspense,
+                        opponentSelectedAnswers: _opponentSelectedAnswers,
                         onAnswer: _answer,
                       ),
                     ),
@@ -1016,6 +1028,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   audiencePoll: _audiencePoll,
                   showExplanation: _showExplanation,
                   suspense: _suspense,
+                  opponentSelectedAnswers: _opponentSelectedAnswers,
                   onAnswer: _answer,
                 ),
               ],
@@ -1052,9 +1065,30 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           'streak': streak,
           'question_index': index,
           'answered': answeredNow,
+          'selected_answer': answeredNow ? selectedAnswer : null,
           if (finished) 'finished': true,
         })
         .catchError((_) {});
+  }
+
+  void _checkMultiplayerSync() {
+    if (!widget.is1v1 || widget.room.id == null) return;
+    final myName = _myName;
+    final otherPlayers = livePlayers.where((p) => p.name != myName).toList();
+    if (otherPlayers.isEmpty) return;
+
+    final allOthersAnswered = otherPlayers.every(
+      (p) => p.state == 'Cevapladı' || p.state == 'Bersiv da',
+    );
+
+    if (answered && allOthersAnswered) {
+      _autoNextTimer?.cancel();
+      _autoNextTimer = Timer(const Duration(seconds: 3), () {
+        if (mounted) {
+          _next();
+        }
+      });
+    }
   }
 
   Future<void> _answer(String answer) async {
@@ -1140,6 +1174,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         _advanceBots();
         _syncMyDuelState(answeredNow: true);
       });
+      _checkMultiplayerSync();
       // Altın kademe anı: ×10 seriye özel kutlama sesi (yeni asset yok).
       if (isCorrect && streak == 10 && mounted) {
         context.read<SoundProvider>().playWin();
@@ -1180,6 +1215,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         _advanceBots();
         _syncMyDuelState(answeredNow: true);
       });
+      _checkMultiplayerSync();
       if (correct && streak == 10 && mounted) {
         context.read<SoundProvider>().playWin();
       }
@@ -1187,6 +1223,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   Future<void> _next() async {
+    _autoNextTimer?.cancel();
     if (isLastQuestion) {
       if (completing) return;
       setState(() => completing = true);
@@ -1242,6 +1279,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       hiddenAnswers = const {};
       _showExplanation = false;
       _suspense = false;
+      _opponentSelectedAnswers.clear();
       _syncMyDuelState(answeredNow: false);
     });
     _markQuestionSeen();

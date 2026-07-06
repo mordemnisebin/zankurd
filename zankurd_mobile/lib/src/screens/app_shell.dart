@@ -230,7 +230,20 @@ class _AppShellState extends State<AppShell> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: AppTheme.borderColor(context))),
+          color: AppTheme.surfaceColor(context),
+          border: Border(
+            top: BorderSide(
+              color: AppTheme.borderColor(context).withValues(alpha: 0.3),
+              width: 0.5,
+            ),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 20,
+              offset: const Offset(0, -4),
+            ),
+          ],
         ),
         child: NavigationBar(
           selectedIndex: _tab,

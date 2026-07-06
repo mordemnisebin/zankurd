@@ -15,6 +15,7 @@ import '../models/tournament.dart';
 abstract class ZanKurdRepository {
   List<String> get categories;
   List<QuizQuestion> get questions;
+  String? get currentUserId;
 
   Future<void> ensureProfile();
   Future<String> getProfileName();

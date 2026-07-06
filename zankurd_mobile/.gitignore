@@ -69,3 +69,6 @@ app.*.map.json
 
 # Local release artifacts
 release_packages/
+
+# Superpowers brainstorm oturum dosyalari
+.superpowers/

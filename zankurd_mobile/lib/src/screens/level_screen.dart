@@ -238,7 +238,7 @@ class _LevelCard extends StatelessWidget {
 
   Color _badgeColor(int n) => switch (n) {
     1 => AppTheme.correct,
-    2 => const Color(0xFF4059AD),
+    2 => const Color(0xFF2B5C8F),
     3 => AppTheme.gold,
     4 => AppTheme.accent,
     _ => AppTheme.violet,

@@ -63,7 +63,16 @@ class _LearningScreenState extends State<LearningScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(ku ? 'Xwendina' : 'Öğren')),
+      appBar: AppBar(
+        title: Text(ku ? 'Xwendina' : 'Öğren'),
+        titleTextStyle: TextStyle(
+          color: AppTheme.textPrimaryColor(context),
+          fontWeight: FontWeight.w900,
+          fontSize: 22,
+          letterSpacing: -0.3,
+          fontFamily: 'Rubik',
+        ),
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -179,21 +188,24 @@ class _CategoryTab extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
       child: GestureDetector(
         onTap: onTap,
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             gradient: isSelected
                 ? AppTheme.accentGradient
-                : const LinearGradient(
-                    colors: [Colors.transparent, Colors.transparent],
-                  ),
-            borderRadius: BorderRadius.circular(12),
+                : null,
+            color: isSelected ? null : Colors.transparent,
+            borderRadius: BorderRadius.circular(14),
             border: Border.all(
               color: isSelected
                   ? Colors.transparent
                   : AppTheme.borderColor(context).withValues(alpha: 0.5),
               width: 1,
             ),
+            boxShadow: isSelected
+                ? AppTheme.glowShadow(AppTheme.accent, intensity: 0.25)
+                : null,
           ),
           child: Center(
             child: Text(
@@ -240,7 +252,14 @@ class _LessonCard extends StatelessWidget {
                 height: 56,
                 decoration: BoxDecoration(
                   gradient: AppTheme.accentGradient,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppTheme.primaryGradientStart.withValues(alpha: 0.3),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Center(
                   child: Icon(
@@ -279,15 +298,22 @@ class _LessonCard extends StatelessWidget {
               const SizedBox(width: 8),
               if (completed)
                 Container(
-                  padding: const EdgeInsets.all(4),
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: AppTheme.accent.withValues(alpha: 0.15),
+                    gradient: AppTheme.correctGradient,
                     shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppTheme.correct.withValues(alpha: 0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
                   child: const Icon(
                     Icons.check_rounded,
-                    color: AppTheme.accent,
-                    size: 18,
+                    color: Colors.white,
+                    size: 16,
                   ),
                 )
               else

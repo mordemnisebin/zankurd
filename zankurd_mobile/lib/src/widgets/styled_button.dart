@@ -20,127 +20,84 @@ class GeometricGradientButton extends StatefulWidget {
       _GeometricGradientButtonState();
 }
 
-class _GeometricGradientButtonState extends State<GeometricGradientButton>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 100),
-      vsync: this,
-    );
-
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.98).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
-    );
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  void _onPointerDown(PointerDownEvent event) {
-    if (widget.onPressed != null && !widget.isLoading) {
-      _animationController.forward();
-    }
-  }
-
-  void _onPointerUp(PointerUpEvent event) {
-    _animationController.reverse();
-    if (widget.onPressed != null && !widget.isLoading) {
-      widget.onPressed!();
-    }
-  }
+class _GeometricGradientButtonState extends State<GeometricGradientButton> {
+  bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {
     final isEnabled = widget.onPressed != null && !widget.isLoading;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final disabledColor = isDarkMode ? Color(0xFF404050) : Color(0xFFE0E0E0);
+    final disabledColor = isDarkMode ? const Color(0xFF404050) : const Color(0xFFE0E0E0);
+    
+    final shadowColor = isEnabled
+        ? const Color(0xFFB54D35)
+        : disabledColor.withValues(alpha: 0.6);
 
-    return Listener(
-      onPointerDown: isEnabled ? _onPointerDown : null,
-      onPointerUp: isEnabled ? _onPointerUp : null,
-      child: Opacity(
-        opacity: isEnabled ? 1.0 : 0.5,
-        child: IgnorePointer(
-          ignoring: !isEnabled,
-          child: ScaleTransition(
-            scale: _scaleAnimation,
-            child: Container(
-              height: 48,
-              decoration: BoxDecoration(
-                gradient: isEnabled
-                    ? AppTheme.accentGradient
-                    : LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [disabledColor, disabledColor],
-                      ),
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppTheme.primaryGradientStart.withValues(alpha: 0.3),
-                    blurRadius: 16,
-                    offset: const Offset(0, 6),
-                  ),
-                ],
+    const double shadowHeight = 4.0;
+
+    return GestureDetector(
+      onTapDown: isEnabled ? (_) => setState(() => _isPressed = true) : null,
+      onTapUp: isEnabled ? (_) {
+        setState(() => _isPressed = false);
+        widget.onPressed?.call();
+      } : null,
+      onTapCancel: isEnabled ? () => setState(() => _isPressed = false) : null,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 50),
+        curve: Curves.easeOut,
+        height: 48,
+        margin: EdgeInsets.only(
+          top: _isPressed ? shadowHeight : 0,
+          bottom: _isPressed ? 0 : shadowHeight,
+        ),
+        decoration: BoxDecoration(
+          gradient: isEnabled
+              ? AppTheme.accentGradient
+              : LinearGradient(colors: [disabledColor, disabledColor]),
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [
+            if (!_isPressed)
+              BoxShadow(
+                color: shadowColor,
+                offset: const Offset(0, shadowHeight),
+                blurRadius: 0,
               ),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: isEnabled ? widget.onPressed : null,
-                  borderRadius: BorderRadius.circular(8),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        if (widget.isLoading)
-                          SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white,
-                              ),
-                            ),
-                          )
-                        else ...[
-                          if (widget.icon != null) ...[
-                            Icon(widget.icon, color: Colors.white, size: 20),
-                            const SizedBox(width: 10),
-                          ],
-                          Flexible(
-                            child: Text(
-                              widget.label,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ],
+          ],
+        ),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              if (widget.isLoading)
+                const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                )
+              else ...[
+                if (widget.icon != null) ...[
+                  Icon(widget.icon, color: Colors.white, size: 20),
+                  const SizedBox(width: 8),
+                ],
+                Flexible(
+                  child: Text(
+                    widget.label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.5,
                     ),
                   ),
                 ),
-              ),
-            ),
+              ],
+            ],
           ),
         ),
       ),

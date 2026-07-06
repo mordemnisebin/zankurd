@@ -21,20 +21,26 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        // Logo badge — gradient arka planlı
         Container(
-          width: 46,
-          height: 46,
+          width: 48,
+          height: 48,
           decoration: BoxDecoration(
             gradient: AppTheme.accentGradient,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: AppTheme.glowShadow(
+              AppTheme.primaryGradientStart,
+              intensity: 0.3,
+            ),
           ),
           alignment: Alignment.center,
           child: const Text(
             'ZK',
             style: TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.w700,
-              fontSize: 16,
+              fontWeight: FontWeight.w900,
+              fontSize: 17,
+              letterSpacing: -0.5,
             ),
           ),
         ),
@@ -47,8 +53,9 @@ class HomeHeader extends StatelessWidget {
                 'ZanKurd',
                 style: TextStyle(
                   color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w900,
                   fontSize: 22,
+                  letterSpacing: -0.5,
                 ),
               ),
               Text(
@@ -65,7 +72,7 @@ class HomeHeader extends StatelessWidget {
           _StreakBadge(value: streak),
           const SizedBox(width: 8),
         ],
-        _CoinBadge(value: coinBalance), // null → shows ···
+        _CoinBadge(value: coinBalance),
         const SizedBox(width: 8),
         _LanguageQuickToggle(isKu: isKu),
         const SizedBox(width: 8),
@@ -86,15 +93,24 @@ class _LanguageQuickToggle extends StatelessWidget {
       message: isKu ? 'Ziman' : 'Dil',
       child: InkWell(
         onTap: context.langProvider.toggle,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12),
         child: Container(
           width: 42,
-          height: 36,
+          height: 38,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppTheme.surfaceHiColor(context),
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppTheme.borderColor(context)),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Text(
             isKu ? 'KU' : 'TR',
@@ -120,15 +136,24 @@ class _ThemeQuickToggle extends StatelessWidget {
       message: 'Tema',
       child: InkWell(
         onTap: themeProvider.toggleDarkLight,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12),
         child: Container(
           width: 38,
-          height: 36,
+          height: 38,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppTheme.surfaceHiColor(context),
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppTheme.borderColor(context)),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Icon(
             themeProvider.isDark
@@ -143,33 +168,68 @@ class _ThemeQuickToggle extends StatelessWidget {
   }
 }
 
-class _StreakBadge extends StatelessWidget {
+class _StreakBadge extends StatefulWidget {
   const _StreakBadge({required this.value});
 
   final int value;
+
+  @override
+  State<_StreakBadge> createState() => _StreakBadgeState();
+}
+
+class _StreakBadgeState extends State<_StreakBadge>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _scale;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1200),
+      vsync: this,
+    )..repeat(reverse: true);
+    _scale = Tween<double>(begin: 1.0, end: 1.12).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: AppTheme.accent.withValues(alpha: 0.16),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppTheme.accent.withValues(alpha: 0.5)),
+        gradient: LinearGradient(
+          colors: [
+            AppTheme.accent.withValues(alpha: 0.18),
+            AppTheme.primaryGradientStart.withValues(alpha: 0.12),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppTheme.accent.withValues(alpha: 0.4)),
       ),
       child: Row(
         children: [
-          const Icon(
-            Icons.local_fire_department,
-            color: AppTheme.accent,
-            size: 17,
+          ScaleTransition(
+            scale: _scale,
+            child: const Icon(
+              Icons.local_fire_department,
+              color: AppTheme.accent,
+              size: 17,
+            ),
           ),
           const SizedBox(width: 4),
           Text(
-            '$value',
+            '${widget.value}',
             style: const TextStyle(
               color: AppTheme.accent,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w800,
               fontSize: 14,
             ),
           ),
@@ -190,14 +250,8 @@ class _CoinBadge extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         gradient: AppTheme.goldGradient,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: AppTheme.gold.withValues(alpha: 0.45),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.35),
       ),
       child: Row(
         children: [
