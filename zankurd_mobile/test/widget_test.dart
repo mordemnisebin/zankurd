@@ -1276,6 +1276,37 @@ void main() {
     expect(find.text('Henüz kaydedilmiş soru yok.'), findsOneWidget);
   });
 
+  testWidgets('profil mobil düzende 6 menü öğesinin tamamını gösterir', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(400, 900);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      _testShell(
+        child: Scaffold(body: ProfileScreen(repository: repository)),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Geniş düzende var olup mobil kopyada unutulmuş iki öğe:
+    await tester.scrollUntilVisible(
+      find.text('Mağaza'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('Mağaza'), findsOneWidget);
+    expect(find.text('Arkadaşlarım'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.text('Çıkış Yap'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('Çıkış Yap'), findsOneWidget);
+  });
+
   testWidgets('profile screen shows unlocked achievement showcase', (
     tester,
   ) async {
