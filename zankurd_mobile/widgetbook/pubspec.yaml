@@ -1,0 +1,35 @@
+name: widgetbook_workspace
+description: "ZanKurd Widgetbook - UI Component Preview & Design System"
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.12.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  zankurd_mobile:
+    path: ../
+  widgetbook: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  # Font'lar ana projeden geliyor, widgetbook'da ayrıca tanımlamaya gerek yok.
+  # Rubik font ailesi zankurd_mobile tarafından sağlanıyor.
+
+dependency_overrides:
+  # objective_c >= 6.0 adds native asset build hooks that fail when the
+  # project path contains spaces on Windows.
+  objective_c: '>=0.1.0 <6.0.0'
+  # path_provider_foundation >= 2.6.0 introduces native asset FFI bindings
+  # that fail to compile on Windows.
+  path_provider_foundation: '>=0.0.1 <2.6.0'
+  # path_provider_android >= 2.3.0 migrated to package:jni, whose CMake
+  # native build fails when project path has spaces / non-ASCII characters.
+  path_provider_android: '>=2.2.0 <2.3.0'
