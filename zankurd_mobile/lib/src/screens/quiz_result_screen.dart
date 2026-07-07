@@ -357,19 +357,29 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       }
     }
 
-    final headerGradient = is1v1
+    final headerColor = is1v1
         ? (isWinner
-              ? AppTheme.correctGradient
+              ? AppTheme.correct.withValues(alpha: 0.16)
               : isDraw
-              ? const LinearGradient(
-                  colors: [Color(0xFF6B7280), Color(0xFF4B5563)],
-                )
-              : AppTheme.wrongGradient)
-        : AppTheme.accentGradient;
+              ? AppTheme.surfaceHiColor(context)
+              : AppTheme.wrong.withValues(alpha: 0.16))
+        : (AppTheme.isLight(context)
+              ? AppTheme.surfaceHiColor(context)
+              : const Color(0xFF13222F)); // Premium dark navy / petrol tone
+        
+    final borderColor = is1v1
+        ? (isWinner
+              ? AppTheme.correct.withValues(alpha: 0.45)
+              : isDraw
+              ? AppTheme.borderColor(context)
+              : AppTheme.wrong.withValues(alpha: 0.45))
+        : (AppTheme.isLight(context)
+              ? AppTheme.borderColor(context)
+              : const Color(0xFF233B52)); // Subtle premium navy border
 
     final headerTitle = is1v1
         ? (isWinner
-              ? context.s('Te bi ser ketî!', 'Kazandın!')
+              ? context.s('Tu bi ser ketî!', 'Kazandın!')
               : isDraw
               ? context.s('Beramberî!', 'Berabere!')
               : context.s('Te winda kir...', 'Kaybettin...'))
@@ -385,7 +395,31 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(context.s('Encam', 'Sonuç'))),
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppTheme.isLight(context)
+                  ? AppTheme.lightTextPrimary.withValues(alpha: 0.06)
+                  : Colors.white.withValues(alpha: 0.08),
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: AppTheme.isLight(context)
+                    ? AppTheme.lightTextPrimary.withValues(alpha: 0.10)
+                    : Colors.white.withValues(alpha: 0.15),
+                width: 1,
+              ),
+            ),
+            child: BackButton(
+              color: AppTheme.isLight(context)
+                  ? AppTheme.lightTextPrimary
+                  : Colors.white,
+            ),
+          ),
+        ),
+        title: Text(context.s('Encam', 'Sonuç')),
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -396,8 +430,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               ListView(
                 padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
                 children: [
-                  AppPanel(
-                    gradient: headerGradient,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: headerColor,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: borderColor, width: 1.2),
+                    ),
                     padding: const EdgeInsets.all(20),
                     child: Stack(
                       children: [
@@ -407,7 +445,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           child: Icon(
                             headerIcon,
                             size: 90,
-                            color: Colors.white.withValues(alpha: 0.12),
+                            color: AppTheme.textPrimaryColor(context).withValues(alpha: 0.05),
                           ),
                         ),
                         Column(
@@ -415,15 +453,25 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           children: [
                             Row(
                               children: [
-                                Icon(headerIcon, color: Colors.white, size: 16),
+                                Icon(headerIcon,
+                                    color: AppTheme.isLight(context)
+                                        ? AppTheme.lightTextPrimary
+                                        : Colors.white,
+                                    size: 16),
                                 const SizedBox(width: 8),
-                                Text(
-                                  headerTitle.toUpperCase(),
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 11,
-                                    letterSpacing: 1.2,
+                                Expanded(
+                                  child: Text(
+                                    headerTitle.toUpperCase(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: AppTheme.isLight(context)
+                                          ? AppTheme.lightTextSub
+                                          : Colors.white70,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 11,
+                                      letterSpacing: 1.2,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -431,8 +479,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             const SizedBox(height: 14),
                             Text(
                               '$score',
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: AppTheme.textPrimaryColor(context),
                                 fontWeight: FontWeight.w800,
                                 fontSize: 52,
                                 height: 1,
@@ -441,8 +489,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             const SizedBox(height: 6),
                             Text(
                               '${CategoryNames.localized(room.category, context.isKu)} · ${room.code}',
-                              style: const TextStyle(
-                                color: Colors.white70,
+                              style: TextStyle(
+                                color: AppTheme.textSubColor(context),
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -454,16 +502,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 vertical: 5,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.15),
+                                color: AppTheme.surfaceColor(context),
                                 borderRadius: BorderRadius.circular(99),
+                                border: Border.all(color: AppTheme.borderColor(context)),
                               ),
                               child: Text(
                                 context.s(
                                   'Rastbûn: %$accuracy',
                                   'Doğruluk: %$accuracy',
                                 ),
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color: AppTheme.textPrimaryColor(context),
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12,
                                 ),
@@ -476,12 +525,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   _ResultRewardChip(
                                     icon: Icons.monetization_on_outlined,
                                     label: '+${coinsAwarded}c',
+                                    color: AppTheme.gold,
                                   ),
                                   if (_earnedXP > 0) ...[
                                     const SizedBox(width: 8),
                                     _ResultRewardChip(
                                       icon: Icons.bolt_rounded,
                                       label: '+$_earnedXP XP',
+                                      color: AppTheme.accent,
                                     ),
                                   ],
                                 ],
@@ -490,7 +541,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Divider(
-                                color: Colors.white.withValues(alpha: 0.25),
+                                color: AppTheme.borderColor(context),
                                 height: 1,
                               ),
                             ),
@@ -501,29 +552,25 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   icon: Icons.check_circle_outline,
                                   label: context.s('Rast', 'Doğru'),
                                   value: '$correctCount',
-                                  iconColor: Colors.white,
+                                  iconColor: AppTheme.correct,
                                 ),
                                 _MetricItemCompact(
                                   icon: Icons.cancel_outlined,
                                   label: context.s('Şaş', 'Yanlış'),
                                   value: '$wrongCount',
-                                  iconColor: Colors.white.withValues(
-                                    alpha: 0.8,
-                                  ),
+                                  iconColor: AppTheme.wrong,
                                 ),
                                 _MetricItemCompact(
                                   icon: Icons.hourglass_empty_rounded,
                                   label: context.s('Vala', 'Boş'),
                                   value: '$unanswered',
-                                  iconColor: Colors.white.withValues(
-                                    alpha: 0.8,
-                                  ),
+                                  iconColor: AppTheme.textMutedColor(context),
                                 ),
                                 _MetricItemCompact(
                                   icon: Icons.local_fire_department_outlined,
                                   label: context.s('Baştirîn', 'En İyi'),
                                   value: '$bestStreak',
-                                  iconColor: Colors.white,
+                                  iconColor: AppTheme.gold,
                                 ),
                               ],
                             ),
@@ -605,24 +652,39 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         scale: 0.92 + 0.08 * t,
                         child: Opacity(opacity: t, child: child),
                       ),
-                      child: AppPanel(
-                        gradient: AppTheme.goldGradient,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Stack(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(left: 19, top: 16, right: 16, bottom: 16),
+                              decoration: BoxDecoration(
+                                color: AppTheme.surfaceHiColor(context),
+                                border: Border.all(color: AppTheme.gold.withValues(alpha: 0.18)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppTheme.gold.withValues(alpha: 0.05),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
                         child: Row(
                           children: [
                             Container(
                               width: 46,
                               height: 46,
                               decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.18),
+                                color: AppTheme.surfaceColor(context),
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.25),
+                                  color: AppTheme.borderColor(context),
                                   width: 1,
                                 ),
                               ),
                               child: const Icon(
                                 Icons.monetization_on_outlined,
-                                color: Colors.white,
+                                color: AppTheme.gold,
                               ),
                             ),
                             const SizedBox(width: 12),
@@ -642,8 +704,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                         '+$value coin stendî',
                                         '+$value coin kazandın',
                                       ),
-                                      style: const TextStyle(
-                                        color: Colors.white,
+                                      style: TextStyle(
+                                        color: AppTheme.textPrimaryColor(context),
                                         fontWeight: FontWeight.w700,
                                         fontSize: 18,
                                       ),
@@ -654,8 +716,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                       'Xelata te di malperê de tê nûkirin.',
                                       'Ödül bakiyen ana ekranda güncellenir.',
                                     ),
-                                    style: const TextStyle(
-                                      color: Colors.white70,
+                                    style: TextStyle(
+                                      color: AppTheme.textSubColor(context),
                                     ),
                                   ),
                                 ],
@@ -664,6 +726,25 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           ],
                         ),
                       ),
+                      // Sol gold accent çizgisi
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        child: Container(
+                          width: 3,
+                          decoration: const BoxDecoration(
+                            color: AppTheme.gold,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              bottomLeft: Radius.circular(16),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -676,28 +757,39 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         scale: 0.92 + 0.08 * t,
                         child: Opacity(opacity: t, child: child),
                       ),
-                      child: AppPanel(
-                        gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Color(0xFF1E5F47), Color(0xFF123427)],
-                        ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Stack(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(left: 19, top: 16, right: 16, bottom: 16),
+                              decoration: BoxDecoration(
+                                color: AppTheme.surfaceHiColor(context),
+                                border: Border.all(color: AppTheme.accent.withValues(alpha: 0.18)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppTheme.accent.withValues(alpha: 0.05),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
                         child: Row(
                           children: [
                             Container(
                               width: 46,
                               height: 46,
                               decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.18),
+                                color: AppTheme.surfaceColor(context),
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.25),
+                                  color: AppTheme.borderColor(context),
                                   width: 1,
                                 ),
                               ),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.bolt_rounded,
-                                color: Colors.white,
+                                color: AppTheme.accent,
                               ),
                             ),
                             const SizedBox(width: 12),
@@ -714,8 +806,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                         '+$value XP bi dest xist',
                                         '+$value XP kazandın',
                                       ),
-                                      style: const TextStyle(
-                                        color: Colors.white,
+                                      style: TextStyle(
+                                        color: AppTheme.textPrimaryColor(context),
                                         fontWeight: FontWeight.w700,
                                         fontSize: 18,
                                       ),
@@ -726,8 +818,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                       'Asta te li ser profîlê tê nûkirin.',
                                       'Seviyen profil sayfasında güncellenir.',
                                     ),
-                                    style: const TextStyle(
-                                      color: Colors.white70,
+                                    style: TextStyle(
+                                      color: AppTheme.textSubColor(context),
                                       fontSize: 12,
                                     ),
                                   ),
@@ -737,6 +829,25 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           ],
                         ),
                       ),
+                      // Sol accent (pink) çizgisi
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        child: Container(
+                          width: 3,
+                          decoration: const BoxDecoration(
+                            color: AppTheme.accent,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              bottomLeft: Radius.circular(16),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -1120,29 +1231,30 @@ class _MasteryPromotions extends StatelessWidget {
 }
 
 class _ResultRewardChip extends StatelessWidget {
-  const _ResultRewardChip({required this.icon, required this.label});
+  const _ResultRewardChip({required this.icon, required this.label, required this.color});
 
   final IconData icon;
   final String label;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.18),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(99),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.35)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: Colors.white, size: 14),
+          Icon(icon, color: color, size: 14),
           const SizedBox(width: 4),
           Text(
             label,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: color,
               fontWeight: FontWeight.w700,
               fontSize: 12,
             ),
@@ -1259,6 +1371,7 @@ class _MetricItemCompact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fg = AppTheme.textPrimaryColor(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -1267,10 +1380,10 @@ class _MetricItemCompact extends StatelessWidget {
           height: 36,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.12),
+            color: fg.withValues(alpha: 0.10),
             shape: BoxShape.circle,
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.18),
+              color: fg.withValues(alpha: 0.16),
               width: 1,
             ),
           ),
@@ -1279,8 +1392,8 @@ class _MetricItemCompact extends StatelessWidget {
         const SizedBox(height: 6),
         Text(
           value,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: fg,
             fontWeight: FontWeight.w900,
             fontSize: 15,
           ),
@@ -1289,7 +1402,7 @@ class _MetricItemCompact extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.7),
+            color: fg.withValues(alpha: 0.7),
             fontSize: 10,
             fontWeight: FontWeight.w700,
           ),
