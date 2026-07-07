@@ -1,0 +1,1298 @@
+[
+  {
+    "id": "pure_15000",
+    "category": "Ziman",
+    "prompt": "Têgeha 'ergatîf' a ku di qada ziman de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
+      "lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê",
+      "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
+      "hêmanên wekî '-î, -ê, -an' ku di tewandina navdêran de cih digirin"
+    ],
+    "correctAnswer": "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
+    "explanation": "Têgeha 'ergatîf' di bin sîwana ziman de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15001",
+    "category": "Ziman",
+    "prompt": "Têgeha 'tewandin' a ku di qada ziman de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "nîşanderên wekî 'ez, tu, ew, em, hûn, ew' ên ku bo kesan tên bikaranîn",
+      "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
+      "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de",
+      "têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide"
+    ],
+    "correctAnswer": "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de",
+    "explanation": "Têgeha 'tewandin' di bin sîwana ziman de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15002",
+    "category": "Ziman",
+    "prompt": "Ravekirina 'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide' têkildarî kîjan têgeha ziman ye?",
+    "answers": [
+      "cînavkên tewandî",
+      "paşgirên tewandinê",
+      "ezafe",
+      "daçekên hevedudanî"
+    ],
+    "correctAnswer": "ezafe",
+    "explanation": "Têgeha 'ezafe' di bin sîwana ziman de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15003",
+    "category": "Ziman",
+    "prompt": "Têgeha 'Cînavkên tewandî' di heman demê de wekî 'cînavkên wekî 'min, te, wî, wê, me, we, wan' ku di bin tewandinê de ne' tê binavkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'cînavkên tewandî' di bin sîwana ziman de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15004",
+    "category": "Ziman",
+    "prompt": "Têgeha 'Daçekên hevedudanî' di qada ziman de tu wateyê nîşan nade.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'daçekên hevedudanî' di bin sîwana ziman de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15005",
+    "category": "Ziman",
+    "prompt": "Di lêkolînên ziman de, avahiya 'lêkera gerguhêz' wekî mijareke sereke tê qebûlkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'lêkera gerguhêz' di bin sîwana ziman de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15006",
+    "category": "Ziman",
+    "prompt": "Pênaseya 'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin' bi tevahî li derveyî çarçoveya 'rênivîsa Hawarê' dimîne.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'rênivîsa Hawarê' di bin sîwana ziman de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15007",
+    "category": "Ziman",
+    "prompt": "Di warê ziman de têgeha 'cînavkên kesane' bi kîjan pênaseya xwe ya bingehîn tê naskirin?",
+    "answers": [
+      "nîşanderên wekî 'ez, tu, ew, em, hûn, ew' ên ku bo kesan tên bikaranîn",
+      "cînavkên wekî 'min, te, wî, wê, me, we, wan' ku di bin tewandinê de ne",
+      "têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide",
+      "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide"
+    ],
+    "correctAnswer": "nîşanderên wekî 'ez, tu, ew, em, hûn, ew' ên ku bo kesan tên bikaranîn",
+    "explanation": "Têgeha 'cînavkên kesane' di bin sîwana ziman de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15008",
+    "category": "Ziman",
+    "prompt": "Kîjan vebijark di çarçoveya ziman de wateya têgeha 'dema borî ya dûr' bi awayekî herî rast nîşan dide?",
+    "answers": [
+      "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
+      "Ew wekî 'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide' tê pênasekirin.",
+      "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de",
+      "cînavkên wekî 'min, te, wî, wê, me, we, wan' ku di bin tewandinê de ne"
+    ],
+    "correctAnswer": "Ew wekî 'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide' tê pênasekirin.",
+    "explanation": "Têgeha 'dema borî ya dûr' di bin sîwana ziman de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15009",
+    "category": "Ziman",
+    "prompt": "Têgeha 'paşgirên tewandinê' a ku di qada ziman de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê",
+      "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de",
+      "hêmanên wekî '-î, -ê, -an' ku di tewandina navdêran de cih digirin",
+      "nîşanderên wekî 'ez, tu, ew, em, hûn, ew' ên ku bo kesan tên bikaranîn"
+    ],
+    "correctAnswer": "hêmanên wekî '-î, -ê, -an' ku di tewandina navdêran de cih digirin",
+    "explanation": "Têgeha 'paşgirên tewandinê' di bin sîwana ziman de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15010",
+    "category": "Edebiyat",
+    "prompt": "Kîjan vebijark di çarçoveya edebiyat de wateya têgeha 'Melayê Cizîrî' bi awayekî herî rast nîşan dide?",
+    "answers": [
+      "Ew wekî 'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin' tê pênasekirin.",
+      "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
+      "nivîskarê destana nemir a 'Mem û Zîn' ku hîmê ramanî yê kurdewariyê daniye",
+      "kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye"
+    ],
+    "correctAnswer": "Ew wekî 'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin' tê pênasekirin.",
+    "explanation": "Têgeha 'Melayê Cizîrî' di bin sîwana edebiyat de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15011",
+    "category": "Edebiyat",
+    "prompt": "Têgeha 'Feqiyê Teyran' a ku di qada edebiyat de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
+      "helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e",
+      "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû",
+      "helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin"
+    ],
+    "correctAnswer": "helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e",
+    "explanation": "Têgeha 'Feqiyê Teyran' di bin sîwana edebiyat de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15012",
+    "category": "Edebiyat",
+    "prompt": "Ravekirina 'nivîskarê destana nemir a 'Mem û Zîn' ku hîmê ramanî yê kurdewariyê daniye' têkildarî kîjan têgeha edebiyat ye?",
+    "answers": [
+      "Cegerxwîn",
+      "Feqiyê Teyran",
+      "Melayê Cizîrî",
+      "Ehmedê Xanî"
+    ],
+    "correctAnswer": "Ehmedê Xanî",
+    "explanation": "Têgeha 'Ehmedê Xanî' di bin sîwana edebiyat de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15013",
+    "category": "Edebiyat",
+    "prompt": "Têgeha 'Melayê bateyî' di heman demê de wekî 'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye' tê binavkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'Melayê Bateyî' di bin sîwana edebiyat de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15014",
+    "category": "Edebiyat",
+    "prompt": "Têgeha 'Kovara hawarê' di qada edebiyat de tu wateyê nîşan nade.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'kovara Hawarê' di bin sîwana edebiyat de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15015",
+    "category": "Edebiyat",
+    "prompt": "Di lêkolînên edebiyat de, avahiya 'Cegerxwîn' wekî mijareke sereke tê qebûlkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'Cegerxwîn' di bin sîwana edebiyat de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15016",
+    "category": "Edebiyat",
+    "prompt": "Pênaseya 'nivîskarê romana 'Şivanê Kurd' ku wekî romana yekem a kurdî tê qebûlkirin' bi tevahî li derveyî çarçoveya 'Arabê Şamo' dimîne.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'Arabê Şamo' di bin sîwana edebiyat de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15017",
+    "category": "Edebiyat",
+    "prompt": "Di warê edebiyat de têgeha 'Mehmed Uzun' bi kîjan pênaseya xwe ya bingehîn tê naskirin?",
+    "answers": [
+      "nivîskarê destana nemir a 'Mem û Zîn' ku hîmê ramanî yê kurdewariyê daniye",
+      "kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye",
+      "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
+      "civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin"
+    ],
+    "correctAnswer": "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
+    "explanation": "Têgeha 'Mehmed Uzun' di bin sîwana edebiyat de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15018",
+    "category": "Edebiyat",
+    "prompt": "Kîjan vebijark di çarçoveya edebiyat de wateya têgeha 'şevbêrkên wêjeyî' bi awayekî herî rast nîşan dide?",
+    "answers": [
+      "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
+      "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû",
+      "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
+      "Ew wekî 'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin' tê pênasekirin."
+    ],
+    "correctAnswer": "Ew wekî 'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin' tê pênasekirin.",
+    "explanation": "Têgeha 'şevbêrkên wêjeyî' di bin sîwana edebiyat de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15019",
+    "category": "Edebiyat",
+    "prompt": "Têgeha 'Helbesta Azad' a ku di qada edebiyat de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "nivîskarê romana 'Şivanê Kurd' ku wekî romana yekem a kurdî tê qebûlkirin",
+      "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
+      "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dibe",
+      "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir"
+    ],
+    "correctAnswer": "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dibe",
+    "explanation": "Têgeha 'Helbesta Azad' di bin sîwana edebiyat de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15020",
+    "category": "Dîrok",
+    "prompt": "Kîjan vebijark di çarçoveya dîrok de wateya têgeha 'Împaratoriya Medî' bi awayekî herî rast nîşan dide?",
+    "answers": [
+      "Ew wekî 'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin' tê pênasekirin.",
+      "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû",
+      "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû",
+      "weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî"
+    ],
+    "correctAnswer": "Ew wekî 'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin' tê pênasekirin.",
+    "explanation": "Têgeha 'Împaratoriya Medî' di bin sîwana dîrok de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15021",
+    "category": "Dîrok",
+    "prompt": "Têgeha 'Dewleta Merwaniyan' a ku di qada dîrok de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn",
+      "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir",
+      "weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî",
+      "hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin"
+    ],
+    "correctAnswer": "xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn",
+    "explanation": "Têgeha 'Dewleta Merwaniyan' di bin sîwana dîrok de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15022",
+    "category": "Dîrok",
+    "prompt": "Ravekirina 'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû' têkildarî kîjan têgeha dîrok ye?",
+    "answers": [
+      "Kovara Jîn",
+      "Mîrgeha Botan",
+      "Mîrgeha Erdelanê",
+      "Şerefname"
+    ],
+    "correctAnswer": "Mîrgeha Botan",
+    "explanation": "Têgeha 'Mîrgeha Botan' di bin sîwana dîrok de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15023",
+    "category": "Dîrok",
+    "prompt": "Têgeha 'Şerefname' di heman demê de wekî 'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin' tê binavkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'Şerefname' di bin sîwana dîrok de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15024",
+    "category": "Dîrok",
+    "prompt": "Têgeha 'Kovara jîn' di qada dîrok de tu wateyê nîşan nade.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'Kovara Jîn' di bin sîwana dîrok de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15025",
+    "category": "Dîrok",
+    "prompt": "Di lêkolînên dîrok de, avahiya 'Selaheddînê Eyûbî' wekî mijareke sereke tê qebûlkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'Selaheddînê Eyûbî' di bin sîwana dîrok de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15026",
+    "category": "Dîrok",
+    "prompt": "Pênaseya 'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike' bi tevahî li derveyî çarçoveya 'Mîrê Kor' dimîne.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'Mîrê Kor' di bin sîwana dîrok de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15027",
+    "category": "Dîrok",
+    "prompt": "Têgeha 'Rojnameya Kurdistan' a ku di qada dîrok de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn",
+      "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
+      "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir",
+      "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû"
+    ],
+    "correctAnswer": "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
+    "explanation": "Têgeha 'Rojnameya Kurdistan' di bin sîwana dîrok de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15028",
+    "category": "Dîrok",
+    "prompt": "Kîjan vebijark di çarçoveya dîrok de wateya têgeha 'Mîrgeha Erdelanê' bi awayekî herî rast nîşan dide?",
+    "answers": [
+      "Ew wekî 'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû' tê pênasekirin.",
+      "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
+      "pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin",
+      "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir"
+    ],
+    "correctAnswer": "Ew wekî 'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû' tê pênasekirin.",
+    "explanation": "Têgeha 'Mîrgeha Erdelanê' di bin sîwana dîrok de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15029",
+    "category": "Dîrok",
+    "prompt": "Têgeha 'Peymana Lozanê' a ku di qada dîrok de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike",
+      "pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin",
+      "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir",
+      "hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin"
+    ],
+    "correctAnswer": "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir",
+    "explanation": "Têgeha 'Peymana Lozanê' di bin sîwana dîrok de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15030",
+    "category": "Cografya",
+    "prompt": "Têgeha 'çiyayên Zagrosê' a ku di qada cografya de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê",
+      "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
+      "geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve",
+      "rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin"
+    ],
+    "correctAnswer": "rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin",
+    "explanation": "Têgeha 'çiyayên Zagrosê' di bin sîwana cografya de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15031",
+    "category": "Cografya",
+    "prompt": "Têgeha 'Newala Dîcleyê' a ku di qada cografya de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin",
+      "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê",
+      "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
+      "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye"
+    ],
+    "correctAnswer": "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
+    "explanation": "Têgeha 'Newala Dîcleyê' di bin sîwana cografya de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15032",
+    "category": "Cografya",
+    "prompt": "Ravekirina 'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar' têkildarî kîjan têgeha cografya ye?",
+    "answers": [
+      "çiyayên Zagrosê",
+      "Çemê Firatê",
+      "Newala Dîcleyê",
+      "Çiyayê Cûdî"
+    ],
+    "correctAnswer": "Çemê Firatê",
+    "explanation": "Têgeha 'Çemê Firatê' di bin sîwana cografya de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15033",
+    "category": "Cografya",
+    "prompt": "Têgeha 'Çiyayê cûdî' di heman demê de wekî 'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye' tê binavkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'Çiyayê Cûdî' di bin sîwana cografya de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15034",
+    "category": "Cografya",
+    "prompt": "Têgeha 'Girê mirazan' di qada cografya de tu wateyê nîşan nade.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'Girê Mirazan' di bin sîwana cografya de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15035",
+    "category": "Cografya",
+    "prompt": "Di lêkolînên cografya de, avahiya 'Gola Wanê' wekî mijareke sereke tê qebûlkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'Gola Wanê' di bin sîwana cografya de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15036",
+    "category": "Cografya",
+    "prompt": "Pênaseya 'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê' bi tevahî li derveyî çarçoveya 'Çiyayê Sîpanê' dimîne.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'Çiyayê Sîpanê' di bin sîwana cografya de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15037",
+    "category": "Cografya",
+    "prompt": "Di warê cografya de têgeha 'Geliyê Zapê' bi kîjan pênaseya xwe ya bingehîn tê naskirin?",
+    "answers": [
+      "gola herî mezin a herêmê ku avên wê şor û sodadar in",
+      "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
+      "geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve",
+      "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê"
+    ],
+    "correctAnswer": "geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve",
+    "explanation": "Têgeha 'Geliyê Zapê' di bin sîwana cografya de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15038",
+    "category": "Cografya",
+    "prompt": "Têgeha 'Heskîf' a ku di qada cografya de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
+      "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye",
+      "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye",
+      "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar"
+    ],
+    "correctAnswer": "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye",
+    "explanation": "Têgeha 'Heskîf' di bin sîwana cografya de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15039",
+    "category": "Cografya",
+    "prompt": "Têgeha 'Qerejdax' a ku di qada cografya de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
+      "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar",
+      "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye",
+      "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye"
+    ],
+    "correctAnswer": "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
+    "explanation": "Têgeha 'Qerejdax' di bin sîwana cografya de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15040",
+    "category": "Çand",
+    "prompt": "Kîjan vebijark di çarçoveya çand de wateya têgeha 'Sazîbûna Dengbêjiyê' bi awayekî herî rast nîşan dide?",
+    "answers": [
+      "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin",
+      "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye",
+      "Ew wekî 'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin' tê pênasekirin.",
+      "dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin"
+    ],
+    "correctAnswer": "Ew wekî 'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin' tê pênasekirin.",
+    "explanation": "Têgeha 'Sazîbûna Dengbêjiyê' di bin sîwana çand de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15041",
+    "category": "Çand",
+    "prompt": "Têgeha 'Newroz' a ku di qada çand de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye",
+      "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
+      "têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin",
+      "çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze"
+    ],
+    "correctAnswer": "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye",
+    "explanation": "Têgeha 'Newroz' di bin sîwana çand de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15042",
+    "category": "Çand",
+    "prompt": "Ravekirina 'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin' têkildarî kîjan têgeha çand ye?",
+    "answers": [
+      "Sazîbûna Dengbêjiyê",
+      "kilimên kurdî",
+      "şevbêrk",
+      "Kalo û Sersal"
+    ],
+    "correctAnswer": "Kalo û Sersal",
+    "explanation": "Têgeha 'Kalo û Sersal' di bin sîwana çand de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15043",
+    "category": "Çand",
+    "prompt": "Têgeha 'Govenda kurdî' di heman demê de wekî 'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin' tê binavkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'Govenda Kurdî' di bin sîwana çand de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15044",
+    "category": "Çand",
+    "prompt": "Têgeha 'Çanda koçeriyê' di qada çand de tu wateyê nîşan nade.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'çanda koçeriyê' di bin sîwana çand de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15045",
+    "category": "Çand",
+    "prompt": "Di lêkolînên çand de, avahiya 'misafirperweriya kurdî' wekî mijareke sereke tê qebûlkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'misafirperweriya kurdî' di bin sîwana çand de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15046",
+    "category": "Çand",
+    "prompt": "Pênaseya 'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin' bi tevahî li derveyî çarçoveya 'kilimên kurdî' dimîne.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'kilimên kurdî' di bin sîwana çand de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15047",
+    "category": "Çand",
+    "prompt": "Di warê çand de têgeha 'Destana Memê Alan' bi kîjan pênaseya xwe ya bingehîn tê naskirin?",
+    "answers": [
+      "dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin",
+      "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
+      "çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze",
+      "kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin"
+    ],
+    "correctAnswer": "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
+    "explanation": "Têgeha 'Destana Memê Alan' di bin sîwana çand de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15048",
+    "category": "Çand",
+    "prompt": "Kîjan vebijark di çarçoveya çand de wateya têgeha 'hewran' bi awayekî herî rast nîşan dide?",
+    "answers": [
+      "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
+      "elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin",
+      "Ew wekî 'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze' tê pênasekirin.",
+      "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye"
+    ],
+    "correctAnswer": "Ew wekî 'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze' tê pênasekirin.",
+    "explanation": "Têgeha 'hewran' di bin sîwana çand de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15049",
+    "category": "Çand",
+    "prompt": "Têgeha 'şevbêrk' a ku di qada çand de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin",
+      "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
+      "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye",
+      "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin"
+    ],
+    "correctAnswer": "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin",
+    "explanation": "Têgeha 'şevbêrk' di bin sîwana çand de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15050",
+    "category": "Muzîk",
+    "prompt": "Têgeha 'tembûr' a ku di qada muzîk de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan",
+      "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
+      "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin",
+      "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye"
+    ],
+    "correctAnswer": "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan",
+    "explanation": "Têgeha 'tembûr' di bin sîwana muzîk de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15051",
+    "category": "Muzîk",
+    "prompt": "Têgeha 'erbane' a ku di qada muzîk de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin",
+      "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê",
+      "amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e",
+      "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine"
+    ],
+    "correctAnswer": "amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e",
+    "explanation": "Têgeha 'erbane' di bin sîwana muzîk de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15052",
+    "category": "Muzîk",
+    "prompt": "Ravekirina 'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin' têkildarî kîjan têgeha muzîk ye?",
+    "answers": [
+      "bilûr",
+      "lîrîka klaman",
+      "erbane",
+      "tembûr"
+    ],
+    "correctAnswer": "bilûr",
+    "explanation": "Têgeha 'bilûr' di bin sîwana muzîk de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15053",
+    "category": "Muzîk",
+    "prompt": "Têgeha 'Lîrîka klaman' di heman demê de wekî 'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin' tê binavkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'lîrîka klaman' di bin sîwana muzîk de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15054",
+    "category": "Muzîk",
+    "prompt": "Têgeha 'Şakiro' di qada muzîk de tu wateyê nîşan nade.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'Şakiro' di bin sîwana muzîk de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15055",
+    "category": "Muzîk",
+    "prompt": "Di lêkolînên muzîk de, avahiya 'Hasan Cizrawî' wekî mijareke sereke tê qebûlkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'Hasan Cizrawî' di bin sîwana muzîk de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15056",
+    "category": "Muzîk",
+    "prompt": "Pênaseya 'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye' bi tevahî li derveyî çarçoveya 'Meryem Xan' dimîne.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'Meryem Xan' di bin sîwana muzîk de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15057",
+    "category": "Muzîk",
+    "prompt": "Di warê muzîk de têgeha 'Koma Wetan' bi kîjan pênaseya xwe ya bingehîn tê naskirin?",
+    "answers": [
+      "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
+      "amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e",
+      "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê",
+      "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin"
+    ],
+    "correctAnswer": "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê",
+    "explanation": "Têgeha 'Koma Wetan' di bin sîwana muzîk de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15058",
+    "category": "Muzîk",
+    "prompt": "Kîjan vebijark di çarçoveya muzîk de wateya têgeha 'lawik' bi awayekî herî rast nîşan dide?",
+    "answers": [
+      "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine",
+      "Ew wekî 'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin' tê pênasekirin.",
+      "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê",
+      "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan"
+    ],
+    "correctAnswer": "Ew wekî 'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin' tê pênasekirin.",
+    "explanation": "Têgeha 'lawik' di bin sîwana muzîk de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15059",
+    "category": "Muzîk",
+    "prompt": "Têgeha 'heyran' a ku di qada muzîk de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine",
+      "dengbêjê mezin ê ku wekî 'Şahê Dengbêjan' tê naskirin û xwedî dengekî bêhempa bû",
+      "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin",
+      "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê"
+    ],
+    "correctAnswer": "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin",
+    "explanation": "Têgeha 'heyran' di bin sîwana muzîk de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15060",
+    "category": "Siyaset",
+    "prompt": "Kîjan vebijark di çarçoveya siyaset de wateya têgeha 'Radikal demokrasi' bi awayekî herî rast nîşan dide?",
+    "answers": [
+      "mafê parastina xwezayî ya civakê li dijî êrîşên derveyî",
+      "modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin",
+      "prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de",
+      "Ew wekî 'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze' tê pênasekirin."
+    ],
+    "correctAnswer": "Ew wekî 'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze' tê pênasekirin.",
+    "explanation": "Têgeha 'Radikal demokrasi' di bin sîwana siyaset de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15061",
+    "category": "Siyaset",
+    "prompt": "Têgeha 'eşseroktî' a ku di qada siyaset de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
+      "mafê parastina xwezayî ya civakê li dijî êrîşên derveyî",
+      "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
+      "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan"
+    ],
+    "correctAnswer": "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
+    "explanation": "Têgeha 'eşseroktî' di bin sîwana siyaset de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15062",
+    "category": "Siyaset",
+    "prompt": "Ravekirina 'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan' têkildarî kîjan têgeha siyaset ye?",
+    "answers": [
+      "pirrengî",
+      "komûn û meclîs",
+      "eşseroktî",
+      "hevpeymaniya demokratîk"
+    ],
+    "correctAnswer": "komûn û meclîs",
+    "explanation": "Têgeha 'komûn û meclîs' di bin sîwana siyaset de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15063",
+    "category": "Siyaset",
+    "prompt": "Têgeha 'Peymana civakî' di heman demê de wekî 'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike' tê binavkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'peymana civakî' di bin sîwana siyaset de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15064",
+    "category": "Siyaset",
+    "prompt": "Têgeha 'Ademi-merkeziyet' di qada siyaset de tu wateyê nîşan nade.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'ademi-merkeziyet' di bin sîwana siyaset de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15065",
+    "category": "Siyaset",
+    "prompt": "Di lêkolînên siyaset de, avahiya 'parastina rewa' wekî mijareke sereke tê qebûlkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'parastina rewa' di bin sîwana siyaset de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15066",
+    "category": "Siyaset",
+    "prompt": "Pênaseya 'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de' bi tevahî li derveyî çarçoveya 'pirrengî' dimîne.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'pirrengî' di bin sîwana siyaset de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15067",
+    "category": "Siyaset",
+    "prompt": "Di warê siyaset de têgeha 'demokrasiya rasterast' bi kîjan pênaseya xwe ya bingehîn tê naskirin?",
+    "answers": [
+      "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze",
+      "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan",
+      "şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide",
+      "modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin"
+    ],
+    "correctAnswer": "şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide",
+    "explanation": "Têgeha 'demokrasiya rasterast' di bin sîwana siyaset de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15068",
+    "category": "Siyaset",
+    "prompt": "Kîjan vebijark di çarçoveya siyaset de wateya têgeha 'xweseriya demokratîk' bi awayekî herî rast nîşan dide?",
+    "answers": [
+      "parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve",
+      "şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide",
+      "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
+      "Ew wekî 'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin' tê pênasekirin."
+    ],
+    "correctAnswer": "Ew wekî 'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin' tê pênasekirin.",
+    "explanation": "Têgeha 'xweseriya demokratîk' di bin sîwana siyaset de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15069",
+    "category": "Siyaset",
+    "prompt": "Têgeha 'hevpeymaniya demokratîk' a ku di qada siyaset de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de",
+      "têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de",
+      "mafê parastina xwezayî ya civakê li dijî êrîşên derveyî",
+      "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin"
+    ],
+    "correctAnswer": "têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de",
+    "explanation": "Têgeha 'hevpeymaniya demokratîk' di bin sîwana siyaset de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15070",
+    "category": "Paradigma",
+    "prompt": "Kîjan vebijark di çarçoveya paradigma de wateya têgeha 'Konfederalîzma Demokratîk' bi awayekî herî rast nîşan dide?",
+    "answers": [
+      "Ew wekî 'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê' tê pênasekirin.",
+      "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê",
+      "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de",
+      "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern"
+    ],
+    "correctAnswer": "Ew wekî 'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê' tê pênasekirin.",
+    "explanation": "Têgeha 'Konfederalîzma Demokratîk' di bin sîwana paradigma de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15071",
+    "category": "Paradigma",
+    "prompt": "Têgeha 'Moderniteya Demokratîk' a ku di qada paradigma de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
+      "avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike",
+      "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
+      "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de"
+    ],
+    "correctAnswer": "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
+    "explanation": "Têgeha 'Moderniteya Demokratîk' di bin sîwana paradigma de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15072",
+    "category": "Paradigma",
+    "prompt": "Ravekirina 'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike' têkildarî kîjan têgeha paradigma ye?",
+    "answers": [
+      "rexneya patriyarkayê",
+      "Konfederalîzma Demokratîk",
+      "Ekolojiya Civakî",
+      "Jineolojî"
+    ],
+    "correctAnswer": "Jineolojî",
+    "explanation": "Têgeha 'Jineolojî' di bin sîwana paradigma de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15073",
+    "category": "Paradigma",
+    "prompt": "Têgeha 'Ekolojiya civakî' di heman demê de wekî 'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de' tê binavkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'Ekolojiya Civakî' di bin sîwana paradigma de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15074",
+    "category": "Paradigma",
+    "prompt": "Têgeha 'Aboriya komûnal' di qada paradigma de tu wateyê nîşan nade.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'aboriya komûnal' di bin sîwana paradigma de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15075",
+    "category": "Paradigma",
+    "prompt": "Di lêkolînên paradigma de, avahiya 'civaka exlaqî-polîtîk' wekî mijareke sereke tê qebûlkirin.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Rast",
+    "explanation": "Têgeha 'civaka exlaqî-polîtîk' di bin sîwana paradigma de xwedî roleke giring e.",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15076",
+    "category": "Paradigma",
+    "prompt": "Pênaseya 'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê' bi tevahî li derveyî çarçoveya 'rexneya patriyarkayê' dimîne.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "correctAnswer": "Şaş",
+    "explanation": "Têgeha 'rexneya patriyarkayê' di bin sîwana paradigma de xwedî roleke giring e.",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15077",
+    "category": "Paradigma",
+    "prompt": "Di warê paradigma de têgeha 'hiyerarşiya civakî' bi kîjan pênaseya xwe ya bingehîn tê naskirin?",
+    "answers": [
+      "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de",
+      "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de",
+      "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
+      "avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike"
+    ],
+    "correctAnswer": "avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike",
+    "explanation": "Têgeha 'hiyerarşiya civakî' di bin sîwana paradigma de xwedî roleke giring e.",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15078",
+    "category": "Paradigma",
+    "prompt": "Têgeha 'zanistiya azad' a ku di qada paradigma de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike",
+      "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
+      "analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê",
+      "hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike"
+    ],
+    "correctAnswer": "hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike",
+    "explanation": "Têgeha 'zanistiya azad' di bin sîwana paradigma de xwedî roleke giring e.",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  },
+  {
+    "id": "pure_15079",
+    "category": "Paradigma",
+    "prompt": "Têgeha 'azadiya zayendî' a ku di qada paradigma de derdikeve pêş, çi nîşan dide?",
+    "answers": [
+      "civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide",
+      "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê",
+      "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de",
+      "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern"
+    ],
+    "correctAnswer": "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de",
+    "explanation": "Têgeha 'azadiya zayendî' di bin sîwana paradigma de xwedî roleke giring e.",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "imageUrl": null,
+    "source_url": "zankurd_pure_kurdish_v1"
+  }
+]

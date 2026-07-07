@@ -132,17 +132,17 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
         curve: Curves.easeOut,
       ),
     );
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.15),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _entryController,
-      curve: Interval(
-        widget.index * 0.15,
-        0.6 + widget.index * 0.1,
-        curve: Curves.easeOut,
-      ),
-    ));
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.15), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _entryController,
+            curve: Interval(
+              widget.index * 0.15,
+              0.6 + widget.index * 0.1,
+              curve: Curves.easeOut,
+            ),
+          ),
+        );
     _entryController.forward();
   }
 
@@ -190,8 +190,8 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
               ),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: Colors.white.withValues(alpha: 0.15),
-                width: 1,
+                color: Colors.white.withValues(alpha: 0.16),
+                width: 1.2,
               ),
               boxShadow: [
                 if (!_isPressed)
@@ -201,8 +201,8 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
                     blurRadius: 0,
                   ),
                 BoxShadow(
-                  color: widget.gradientColors.first.withValues(alpha: 0.2),
-                  blurRadius: 16,
+                  color: widget.gradientColors.first.withValues(alpha: 0.25),
+                  blurRadius: 18,
                   offset: const Offset(0, 8),
                   spreadRadius: -4,
                 ),
@@ -213,12 +213,12 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
               child: Stack(
                 children: [
                   Positioned(
-                    right: -14,
-                    bottom: -16,
+                    right: -10,
+                    bottom: -12,
                     child: Icon(
                       widget.icon,
-                      size: 80,
-                      color: Colors.white.withValues(alpha: 0.1),
+                      size: 76,
+                      color: Colors.white.withValues(alpha: 0.08),
                     ),
                   ),
                   Padding(
@@ -229,27 +229,31 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Container(
-                          width: 34,
-                          height: 34,
+                          width: 32,
+                          height: 32,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.22),
+                            color: Colors.white.withValues(alpha: 0.15),
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.15),
+                              color: Colors.white.withValues(alpha: 0.1),
+                              width: 1,
                             ),
                           ),
                           child: widget.loading
                               ? const SizedBox(
-                                  width: 16,
-                                  height: 16,
+                                  width: 14,
+                                  height: 14,
                                   child: CircularProgressIndicator(
-                                    strokeWidth: 2.2,
+                                    strokeWidth: 2.0,
                                     color: Colors.white,
                                   ),
                                 )
-                              : Icon(widget.icon,
-                                  color: Colors.white, size: 18),
+                              : Icon(
+                                  widget.icon,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
                         ),
                         const Spacer(),
                         Text(
@@ -258,9 +262,9 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w900,
                             fontSize: 13,
-                            height: 1.15,
+                            height: 1.1,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -270,11 +274,10 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color:
-                                Colors.white.withValues(alpha: 0.85),
+                            color: Colors.white.withValues(alpha: 0.75),
                             fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            height: 1.2,
+                            fontWeight: FontWeight.w700,
+                            height: 1.1,
                           ),
                         ),
                       ],

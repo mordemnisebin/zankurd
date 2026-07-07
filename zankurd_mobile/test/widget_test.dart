@@ -809,8 +809,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Bi Kodê Bikeve'), findsOneWidget);
-    expect(find.text('Bi Kodê Tevlî Bibe'), findsNothing);
+    expect(find.text('Bi Kodê Tevlî Bibe'), findsOneWidget);
+    expect(find.text('Bi Kodê Bikeve'), findsNothing);
   });
 
   testWidgets('join by code opens the room code sheet from the hero', (
@@ -1558,7 +1558,7 @@ void main() {
       expect(find.text('Rojda'), findsNothing);
       expect(find.text('Baran'), findsNothing);
       expect(
-        find.text('Online oda açılamadı. Lütfen tekrar deneyin.'),
+        find.text('Çevrimiçi oda açılamadı. Lütfen tekrar deneyin.'),
         findsOneWidget,
       );
     },
@@ -1589,7 +1589,7 @@ void main() {
     expect(find.text('Rojda'), findsNothing);
     expect(find.text('Baran'), findsNothing);
     expect(
-      find.text('Online odaya katılınamadı. Lütfen kodu kontrol edin.'),
+      find.text('Çevrimiçi odaya katılınamadı. Lütfen kodu kontrol edin.'),
       findsOneWidget,
     );
   });

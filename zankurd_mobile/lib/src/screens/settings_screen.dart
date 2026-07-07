@@ -62,7 +62,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
         stack,
         reason: 'settings profile name load failed',
       );
-      if (mounted) setState(() => _loadingName = false);
+      if (mounted) {
+        setState(() => _loadingName = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              context.s(
+                'Navê lîstikvan nehat barkirin.',
+                'Oyuncu adı yüklenemedi.',
+              ),
+            ),
+          ),
+        );
+      }
     }
   }
 
@@ -431,7 +443,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 body: ku
                     ? '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n'
                           '• Pêşbirka Rojê: her roj ji bo hemû lîstikvanan heman 10 pirs.\n'
-                          '• Jûr Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n'
+                          '• Odeyek Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n'
                           '• Kategorî û Ast: ji 8 kategoriyan û 5 astan hilbijêre.\n'
                           '• Joker 50/50: du bersivên şaş radike.\n'
                           '• Bersiva rast pûan û coin dide; rêza rast bonus zêde dike.'
@@ -660,11 +672,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  Future<bool?> _showFinalDeleteConfirmation() {
+  Future<bool?> _showFinalDeleteConfirmation() async {
     final controller = TextEditingController();
     final ku = context.isKu;
     final confirmWord = ku ? 'JÊ BIBE' : 'SIL';
-    return showDialog<bool>(
+    final result = await showDialog<bool>(
       context: context,
       builder: (dialogContext) {
         var canDelete = false;
@@ -717,6 +729,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         );
       },
     );
+    // StatefulBuilder rebuild akışının tamamlanması için bir sonraki frame'de dispose.
+    WidgetsBinding.instance.addPostFrameCallback((_) => controller.dispose());
+    return result;
   }
 
   Future<void> _deleteAccount() async {

@@ -152,6 +152,8 @@ class _ContestContent extends StatelessWidget {
                   Expanded(
                     child: Text(
                       contest.themeNameKu,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: AppTheme.textPrimaryColor(context),
                         fontSize: 18,
@@ -217,6 +219,18 @@ class _ContestContent extends StatelessWidget {
               return const Padding(
                 padding: EdgeInsets.all(24),
                 child: CircularProgressIndicator(),
+              );
+            }
+            if (snap.hasError) {
+              return Padding(
+                padding: const EdgeInsets.all(24),
+                child: Text(
+                  ku
+                      ? 'Rêzkirin nehat barkirin.'
+                      : 'Sıralama yüklenemedi.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: AppTheme.textMutedColor(context)),
+                ),
               );
             }
             final rows = snap.data ?? [];
@@ -316,6 +330,8 @@ class _LeaderboardRow extends StatelessWidget {
               children: [
                 Text(
                   row.displayName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w700,

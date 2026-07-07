@@ -12,7 +12,8 @@ import '../utils/error_reporter.dart';
 /// Misafir modu Supabase anonim oturumu kullanır ve daha sonra e-posta
 /// ile kalıcı hesaba yükseltilebilir.
 class AuthProvider extends ChangeNotifier {
-  static const authRedirectUri = 'com.zankurd.app://login-callback/';
+  static String get authRedirectUri =>
+      kIsWeb ? 'https://www.zankurd.com/' : 'com.zankurd.app://login-callback/';
 
   final SupabaseClient? _client;
   StreamSubscription<AuthState>? _authSub;

@@ -47,6 +47,16 @@ class _SignInScreenState extends State<SignInScreen>
   }
 
   Future<void> _signIn(AuthProvider authProvider) async {
+    // StyledInputField, TextField kullandığı için Form.validate() ile
+    // tetiklenmez. Boş alan kontrolü manuel yapılır.
+    if (_emailController.text.trim().isEmpty) {
+      _showAuthError(context.s('E-peyam pêwîst e', 'E-posta gerekli'));
+      return;
+    }
+    if (_passwordController.text.isEmpty) {
+      _showAuthError(context.s('Şîfre pêwîst e', 'Parola gerekli'));
+      return;
+    }
     if (!_formKey.currentState!.validate()) return;
 
     LoadingOverlay.show(
@@ -186,6 +196,9 @@ class _SignInScreenState extends State<SignInScreen>
       fontWeight: FontWeight.w600,
     );
 
+    final glowColor1 = AppTheme.gold.withValues(alpha: 0.08);
+    final glowColor2 = AppTheme.secondaryAccent.withValues(alpha: 0.12);
+
     return Theme(
       data: AppTheme.dark(),
       child: Scaffold(
@@ -195,6 +208,36 @@ class _SignInScreenState extends State<SignInScreen>
             Container(
               decoration: const BoxDecoration(
                 gradient: AppTheme.darkAuthGradient,
+              ),
+            ),
+            // Soft Glow 1: Sağ Üst
+            Positioned(
+              top: -120,
+              right: -120,
+              child: Container(
+                width: 320,
+                height: 320,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [glowColor1, glowColor1.withValues(alpha: 0)],
+                  ),
+                ),
+              ),
+            ),
+            // Soft Glow 2: Sol Alt
+            Positioned(
+              bottom: -140,
+              left: -140,
+              child: Container(
+                width: 360,
+                height: 360,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [glowColor2, glowColor2.withValues(alpha: 0)],
+                  ),
+                ),
               ),
             ),
             // Geometric shape overlays
@@ -924,58 +967,61 @@ class _GoogleSignInButton extends StatelessWidget {
     return IgnorePointer(
       ignoring: !enabled,
       child: Opacity(
-        opacity: enabled ? 1 : 0.5,
-        child: Material(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(16),
-            onTap: onPressed,
-            child: Container(
-              height: dense ? 48 : 58,
-              padding: EdgeInsets.symmetric(horizontal: dense ? 10 : 18),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.22),
-                    blurRadius: 14,
-                    offset: const Offset(0, 6),
-                  ),
-                ],
+        opacity: enabled ? 1 : 0.55,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.14),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
+                spreadRadius: -2,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'G',
-                    style: TextStyle(
-                      color: AppTheme.accent,
-                      fontWeight: FontWeight.w900,
-                      fontSize: dense ? 18 : 22,
+            ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(AppRadius.lg),
+              onTap: onPressed,
+              child: Container(
+                height: dense ? 48 : 54,
+                padding: EdgeInsets.symmetric(horizontal: dense ? 12 : 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'G',
+                      style: TextStyle(
+                        color: AppTheme.accent,
+                        fontWeight: FontWeight.w900,
+                        fontFamily: 'Rubik',
+                        fontSize: dense ? 20 : 24,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: dense ? 6 : 10),
-                  Flexible(
-                    // dense (yan yana Row) düzende dar alan uzun çeviri
-                    // metnini ("Bi Google têkeve" gibi) kesiyordu; eski
-                    // OutlinedButton'daki FittedBox+scaleDown davranışı
-                    // korunuyor: sığmazsa küçülür, kesilmez.
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        context.s('Bi Google têkeve', 'Google ile giriş yap'),
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: AppTheme.bgDeep,
-                          fontWeight: FontWeight.w700,
-                          fontSize: dense ? 13 : 16,
+                    SizedBox(width: dense ? 8 : 12),
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          context.s('Bi Google têkeve', 'Google ile giriş yap'),
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: AppTheme.bgDeep,
+                            fontWeight: FontWeight.w800,
+                            fontSize: dense ? 14 : 16,
+                            letterSpacing: 0.1,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -997,54 +1043,54 @@ class _GuestSignInButton extends StatelessWidget {
     return IgnorePointer(
       ignoring: !enabled,
       child: Opacity(
-        opacity: enabled ? 1 : 0.5,
-        child: Material(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
-          child: Ink(
-            height: dense ? 48 : 58,
-            decoration: BoxDecoration(
-              gradient: AppTheme.homeHeaderGradient,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.violet.withValues(alpha: 0.4),
-                  blurRadius: 16,
-                  offset: const Offset(0, 6),
-                ),
-              ],
+        opacity: enabled ? 1 : 0.55,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.06),
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.12),
+              width: 1.2,
             ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.15),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+                spreadRadius: -4,
+              ),
+            ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
             child: InkWell(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(AppRadius.lg),
               onTap: onPressed,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: dense ? 10 : 18),
+              child: Container(
+                height: dense ? 48 : 54,
+                padding: EdgeInsets.symmetric(horizontal: dense ? 12 : 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // dense (yan yana Row) modda rozet+boşluk, uzun "Wek
-                    // mêvan bidomîne" metnine ayrılan payı okunamayacak
-                    // kadar daraltıyordu; bu modda ikon tamamen kaldırılıp
-                    // tüm genişlik metne bırakılıyor.
                     if (!dense) ...[
                       Container(
-                        width: 30,
-                        height: 30,
+                        width: 28,
+                        height: 28,
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.22),
+                          color: Colors.white.withValues(alpha: 0.15),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
                           Icons.person_rounded,
                           color: Colors.white,
-                          size: 18,
+                          size: 16,
                         ),
                       ),
                       const SizedBox(width: 10),
                     ],
                     Flexible(
-                      // Google butonundaki gibi: dar (dense) alanda kesmek
-                      // yerine küçülterek sığdır.
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         alignment: Alignment.centerLeft,
@@ -1056,8 +1102,9 @@ class _GuestSignInButton extends StatelessWidget {
                           maxLines: 1,
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: dense ? 13 : 16,
+                            fontWeight: FontWeight.w800,
+                            fontSize: dense ? 14 : 16,
+                            letterSpacing: 0.1,
                           ),
                         ),
                       ),
@@ -1108,14 +1155,22 @@ class _LanguageToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     final isKu = context.isKu;
     return Container(
-      padding: const EdgeInsets.all(2),
+      padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceHi.withValues(alpha: 0.8),
-        borderRadius: BorderRadius.circular(20),
+        color: AppTheme.surfaceHiColor(context).withValues(alpha: 0.45),
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: AppTheme.border.withValues(alpha: 0.5),
-          width: 1,
+          color: Colors.white.withValues(alpha: 0.08),
+          width: 1.2,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+            spreadRadius: -2,
+          ),
+        ],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -1152,17 +1207,29 @@ class _LanguageChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        duration: const Duration(milliseconds: 240),
+        curve: Curves.easeInOut,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
         decoration: BoxDecoration(
-          color: active ? AppTheme.accent : Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
+          gradient: active ? AppTheme.accentGradient : null,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: active
+              ? [
+                  BoxShadow(
+                    color: AppTheme.primaryGradientStart.withValues(
+                      alpha: 0.35,
+                    ),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                  ),
+                ]
+              : null,
         ),
         child: Text(
           label,
           style: TextStyle(
             color: active ? Colors.white : AppTheme.textMutedColor(context),
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w800,
             fontSize: 12,
             letterSpacing: 0.5,
           ),

@@ -59,7 +59,7 @@ class Lesson {
     titleKu: json['title_ku'] as String,
     titleTr: json['title_tr'] as String?,
     descriptionKu: json['description_ku'] as String?,
-    category: json['category'] as String,
+    category: json['category'] as String? ?? '',
     iconName: json['icon_name'] as String?,
     order: json['order'] as int? ?? 0,
   );

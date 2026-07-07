@@ -35,16 +35,27 @@ class _RoomScreenState extends State<RoomScreen> {
   StreamSubscription? _playersSub;
   StreamSubscription? _statusSub;
 
+  /// Realtime event gelmezse devreye giren polling fallback.
+  /// Realtime çalışınca otomatik durur, 15s sonra tekrar başlar.
+  Timer? _pollTimer;
+  int _pollCount = 0;
+  static const _pollInterval = Duration(seconds: 3);
+  static const _maxPollsBeforePause = 20; // ~60s
+
   @override
   void initState() {
     super.initState();
     _startSubscriptions();
+    _startPolling();
     widget.repository.updateReady(room, ready);
   }
 
   void _startSubscriptions() {
     _playersSub = widget.repository.subscribeRoomPlayers(room).listen((p) {
       if (!mounted) return;
+      // Realtime event geldi → polling'i durdur.
+      _pausePolling();
+      _pollCount = 0;
       setState(() => room = room.copyWith(players: p));
     });
     _statusSub = widget.repository.subscribeRoomStatus(room).listen((status) {
@@ -54,10 +65,40 @@ class _RoomScreenState extends State<RoomScreen> {
     });
   }
 
+  /// Realtime çalışmazsa host, 2. oyuncunun geldiğini polling ile görür.
+  void _startPolling() {
+    _pollTimer?.cancel();
+    _pollTimer = Timer.periodic(_pollInterval, (_) async {
+      if (!mounted || quizOpened) return;
+      try {
+        final players = await widget.repository.loadRoomPlayers(room);
+        if (!mounted) return;
+        setState(() => room = room.copyWith(players: players));
+        _pollCount++;
+        // Çok uzun süre polling yaptıysak biraz duraklat (ağ tasarrufu).
+        if (_pollCount >= _maxPollsBeforePause) {
+          _pausePolling();
+          // 15s sonra tekrar dene (realtime belki çalışmaya başlamıştır).
+          Future.delayed(const Duration(seconds: 15), () {
+            if (mounted && !quizOpened) _startPolling();
+          });
+        }
+      } catch (_) {
+        // Network hatası → sessizce yoksay, bir sonraki tick'te tekrar dene.
+      }
+    });
+  }
+
+  void _pausePolling() {
+    _pollTimer?.cancel();
+    _pollTimer = null;
+  }
+
   @override
   void dispose() {
     _playersSub?.cancel();
     _statusSub?.cancel();
+    _pausePolling();
     widget.repository.updateReady(room, false).catchError((_) {});
     super.dispose();
   }
@@ -126,7 +167,7 @@ class _RoomScreenState extends State<RoomScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      ku ? 'Jûra Taybet' : 'Özel Oda',
+                      ku ? 'Odeya Taybet' : 'Özel Oda',
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.7),
                         fontSize: 13,
@@ -260,7 +301,7 @@ class _RoomScreenState extends State<RoomScreen> {
                           label: Text(
                             starting
                                 ? (ku ? 'Tê Amadekirin' : 'Hazırlanıyor')
-                                : (ku ? 'Yara Destpê Bike' : 'Yarışı Başlat'),
+                                : (ku ? 'Pêşbirkê Dest Pê Bike' : 'Yarışı Başlat'),
                           ),
                         ),
                       ),

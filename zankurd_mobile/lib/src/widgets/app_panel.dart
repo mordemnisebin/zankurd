@@ -26,7 +26,7 @@ class AppPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final br = borderRadius ?? BorderRadius.circular(AppTheme.cardRadius);
+    final br = borderRadius ?? BorderRadius.circular(AppRadius.card);
 
     if (glass) {
       return ClipRRect(
@@ -49,20 +49,27 @@ class AppPanel extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: padding,
-      decoration: BoxDecoration(
-        color: gradient == null
-            ? (color ?? AppTheme.surfaceColor(context))
-            : null,
-        gradient: gradient,
-        borderRadius: br,
-        border: gradient == null
-            ? Border.all(
-                color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-                width: 1.0,
-              )
-            : null,
-        boxShadow: AppTheme.softShadow(context),
-      ),
+      decoration:
+          AppTheme.premiumCard(
+            context,
+            gradient: gradient is LinearGradient
+                ? gradient as LinearGradient
+                : null,
+            radius: br.topLeft.x,
+          ).copyWith(
+            color: gradient == null
+                ? (color ?? AppTheme.surfaceColor(context))
+                : null,
+            gradient: gradient,
+            borderRadius: br,
+            border: gradient == null
+                ? Border.all(
+                    color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+                    width: 1.0,
+                  )
+                : null,
+            boxShadow: AppShadows.panel(context),
+          ),
       child: child,
     );
   }

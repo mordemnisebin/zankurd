@@ -71,6 +71,14 @@ class _FriendsScreenState extends State<FriendsScreen> {
           context.isKu ? 'Lîstikvan nehat dîtin' : 'Oyuncu bulunamadı',
         );
       }
+    } catch (_) {
+      if (mounted) {
+        setState(() => _searching = false);
+        _showMessage(
+          context.isKu ? 'Lêgerîn bi ser neket.' : 'Arama başarısız oldu.',
+        );
+      }
+      return;
     } finally {
       if (mounted) setState(() => _searching = false);
     }
@@ -105,6 +113,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
         context.isKu ? 'Daxwaz hat qebûlkirin' : 'Arkadaş eklendi',
       );
       setState(_loadFriends);
+    } else {
+      _showMessage(
+        context.isKu ? 'Qebûlkirin bi ser neket.' : 'Kabul işlemi başarısız.',
+      );
     }
   }
 
@@ -114,6 +126,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
     if (success) {
       _showMessage(context.isKu ? 'Daxwaz hat redkirin' : 'İstek reddedildi');
       setState(_loadFriends);
+    } else {
+      _showMessage(
+        context.isKu ? 'Redkirin bi ser neket.' : 'Red işlemi başarısız.',
+      );
     }
   }
 
@@ -126,7 +142,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
       if (!mounted) return;
       _showMessage(
         context.isKu
-            ? 'Koda jûrê bi ${friend.friendName} re parve bike'
+            ? 'Koda odeyê bi ${friend.friendName} re parve bike'
             : 'Oda kodunu ${friend.friendName} ile paylaş',
       );
       await Navigator.of(context).push(
@@ -137,7 +153,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
     } catch (_) {
       if (mounted) {
         _showMessage(
-          context.isKu ? 'Jûr nehat avakirin' : 'Oda oluşturulamadı',
+          context.isKu ? 'Ode nehat avakirin' : 'Oda oluşturulamadı',
         );
       }
     } finally {
@@ -269,7 +285,22 @@ class _FriendsScreenState extends State<FriendsScreen> {
     return FutureBuilder<List<FriendRequest>>(
       future: _requestsFuture,
       builder: (ctx, snap) {
-        if (snap.hasError || (snap.data?.isEmpty ?? true)) {
+        if (snap.hasError) {
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: AppErrorState(
+              title: ku ? 'Daxwaz nehatin barkirin' : 'İstekler yüklenemedi',
+              message: ku
+                  ? 'Daxwaz nehatin barkirin.'
+                  : 'İstekler yüklenemedi.',
+              retryLabel: ku ? 'Dîsa Biceribîne' : 'Tekrar Dene',
+              onRetry: () => setState(() {
+                _requestsFuture = widget.repository.loadPendingFriendRequests();
+              }),
+            ),
+          );
+        }
+        if (snap.data?.isEmpty ?? true) {
           return const SizedBox.shrink();
         }
         final requests = snap.data!;

@@ -34,6 +34,7 @@ class StyledInputField extends StatefulWidget {
 class _StyledInputFieldState extends State<StyledInputField> {
   late FocusNode _focusNode;
   late ValueNotifier<bool> _isFocused;
+  String? _errorText;
 
   @override
   void initState() {
@@ -53,21 +54,36 @@ class _StyledInputFieldState extends State<StyledInputField> {
 
   void _handleFocusChange() {
     _isFocused.value = _focusNode.hasFocus;
+    // Focus kazanınca eski hata temizlenir (yeniden yazmaya başlayınca).
+    if (!_focusNode.hasFocus && widget.validator != null) {
+      _validate(widget.controller.text);
+    }
+  }
+
+  void _validate(String value) {
+    if (widget.validator == null) return;
+    final error = widget.validator!(value);
+    if (error != _errorText) {
+      setState(() => _errorText = error);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDarkMode
-        ? AppTheme.surface
-        : AppTheme.lightSurface;
-
     final textStyle =
         widget.inputTextStyle ?? Theme.of(context).textTheme.bodyLarge;
+    final hasError = _errorText != null;
 
     return ValueListenableBuilder<bool>(
       valueListenable: _isFocused,
       builder: (context, isFocused, _) {
+        final borderColor = hasError
+            ? AppTheme.wrong
+            : isFocused
+                ? AppColors.focus
+                : AppTheme.borderColor(context).withValues(alpha: 0.5);
+        final borderWidth = (hasError || isFocused) ? 1.5 : 1.0;
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -75,7 +91,7 @@ class _StyledInputFieldState extends State<StyledInputField> {
             // Label
             if (widget.label.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                 child: Text(
                   widget.label,
                   style:
@@ -88,27 +104,16 @@ class _StyledInputFieldState extends State<StyledInputField> {
             // Input field
             Container(
               decoration: BoxDecoration(
-                color: backgroundColor,
-                borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
-                border: Border.all(
-                  color: isFocused
-                      ? AppTheme.primaryGradientStart
-                      : AppTheme.borderColor(context).withValues(alpha: 0.5),
-                  width: isFocused ? 1.5 : 1,
-                ),
-                boxShadow: isFocused
-                    ? [
-                        BoxShadow(
-                          color: AppTheme.primaryGradientStart.withValues(alpha: 0.12),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ]
+                color: AppTheme.surfaceColor(context),
+                borderRadius: BorderRadius.circular(AppRadius.md),
+                border: Border.all(color: borderColor, width: borderWidth),
+                boxShadow: (hasError || isFocused)
+                    ? AppShadows.focusRing(borderColor)
                     : [],
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
+                  horizontal: AppSpacing.lg,
                   vertical: 14,
                 ),
                 child: Row(
@@ -118,13 +123,13 @@ class _StyledInputFieldState extends State<StyledInputField> {
                       Icon(
                         widget.prefixIcon,
                         size: 18,
-                        color: isFocused
-                            ? AppTheme.primaryGradientStart
-                            : (isDarkMode
-                                ? AppTheme.textMuted
-                                : AppTheme.lightTextMuted),
+                        color: hasError
+                            ? AppTheme.wrong
+                            : isFocused
+                                ? AppColors.focus
+                                : AppTheme.textMutedColor(context),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: AppSpacing.md),
                     ],
                     // Text field
                     Expanded(
@@ -134,28 +139,29 @@ class _StyledInputFieldState extends State<StyledInputField> {
                         keyboardType: widget.keyboardType,
                         obscureText: widget.obscureText,
                         style: textStyle,
+                        onChanged: (value) => _validate(value),
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: '',
                           isDense: true,
                           contentPadding: EdgeInsets.zero,
                         ),
-                        cursorColor: AppTheme.primaryGradientStart,
+                        cursorColor: hasError ? AppTheme.wrong : AppColors.focus,
                       ),
                     ),
                     // Suffix icon
                     if (widget.suffixIcon != null) ...[
-                      const SizedBox(width: 10),
+                      const SizedBox(width: AppSpacing.md),
                       GestureDetector(
                         onTap: widget.onSuffixIconPressed,
                         child: Icon(
                           widget.suffixIcon,
                           size: 18,
-                          color: isFocused
-                              ? AppTheme.primaryGradientStart
-                              : (isDarkMode
-                                  ? AppTheme.textMuted
-                                  : AppTheme.lightTextMuted),
+                          color: hasError
+                              ? AppTheme.wrong
+                              : isFocused
+                                  ? AppColors.focus
+                                  : AppTheme.textMutedColor(context),
                         ),
                       ),
                     ],
@@ -163,6 +169,21 @@ class _StyledInputFieldState extends State<StyledInputField> {
                 ),
               ),
             ),
+            // Error text
+            if (hasError)
+              Padding(
+                padding: const EdgeInsets.only(top: 4, left: 4),
+                child: Text(
+                  _errorText!,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: AppTheme.wrong,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
           ],
         );
       },

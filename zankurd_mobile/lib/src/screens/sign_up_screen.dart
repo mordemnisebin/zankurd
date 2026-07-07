@@ -173,6 +173,9 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   @override
   Widget build(BuildContext context) {
+    final glowColor1 = AppTheme.gold.withValues(alpha: 0.08);
+    final glowColor2 = AppTheme.secondaryAccent.withValues(alpha: 0.12);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -180,6 +183,36 @@ class _SignUpScreenState extends State<SignUpScreen>
           Container(
             decoration: const BoxDecoration(
               gradient: AppTheme.darkAuthGradient,
+            ),
+          ),
+          // Soft Glow 1: Sağ Üst
+          Positioned(
+            top: -120,
+            right: -120,
+            child: Container(
+              width: 320,
+              height: 320,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [glowColor1, glowColor1.withValues(alpha: 0)],
+                ),
+              ),
+            ),
+          ),
+          // Soft Glow 2: Sol Alt
+          Positioned(
+            bottom: -140,
+            left: -140,
+            child: Container(
+              width: 360,
+              height: 360,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [glowColor2, glowColor2.withValues(alpha: 0)],
+                ),
+              ),
             ),
           ),
           // Geometric shape overlays
@@ -314,6 +347,20 @@ class _SignUpScreenState extends State<SignUpScreen>
                                 onPressed: authProvider.isLoading
                                     ? null
                                     : _previousStep,
+                                style: OutlinedButton.styleFrom(
+                                  minimumSize: const Size(double.infinity, 48),
+                                  side: BorderSide(
+                                    color: AppTheme.borderColor(
+                                      context,
+                                    ).withValues(alpha: 0.8),
+                                    width: 1.2,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadius.lg,
+                                    ),
+                                  ),
+                                ),
                                 child: Text(context.s('Paş', 'Geri')),
                               ),
                             ),
@@ -403,9 +450,10 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
   Widget _buildStepContent(BuildContext context) {
+    Widget stepWidget;
     switch (_currentStep) {
       case 0:
-        return Column(
+        stepWidget = Column(
           children: [
             StyledInputField(
               label: context.s('Navnîşana e-peyamê', 'E-posta adresi'),
@@ -487,8 +535,9 @@ class _SignUpScreenState extends State<SignUpScreen>
             ),
           ],
         );
+        break;
       case 1:
-        return Column(
+        stepWidget = Column(
           children: [
             StyledInputField(
               label: context.s('Navê bikarhêner', 'Kullanıcı adı'),
@@ -512,42 +561,54 @@ class _SignUpScreenState extends State<SignUpScreen>
             ),
           ],
         );
+        break;
       case 2:
-        return Column(
+        stepWidget = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppTheme.surfaceHiColor(context),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppTheme.borderColor(context)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _ReviewItem(
-                    label: context.s('E-peyam:', 'E-posta:'),
-                    value: _emailController.text,
-                  ),
-                  const SizedBox(height: 12),
-                  _ReviewItem(
-                    label: context.s('Navê bikarhêner:', 'Kullanıcı adı:'),
-                    value: _usernameController.text,
-                  ),
-                  const SizedBox(height: 12),
-                  _ReviewItem(
-                    label: context.s('Şîfre:', 'Parola:'),
-                    value: '*' * _passwordController.text.length,
-                  ),
-                ],
-              ),
+            _ReviewItem(
+              label: context.s('E-peyam:', 'E-posta:'),
+              value: _emailController.text,
+            ),
+            const SizedBox(height: 12),
+            _ReviewItem(
+              label: context.s('Navê bikarhêner:', 'Kullanıcı adı:'),
+              value: _usernameController.text,
+            ),
+            const SizedBox(height: 12),
+            _ReviewItem(
+              label: context.s('Şîfre:', 'Parola:'),
+              value: '*' * _passwordController.text.length,
             ),
           ],
         );
+        break;
       default:
-        return const SizedBox.shrink();
+        stepWidget = const SizedBox.shrink();
     }
+
+    if (_currentStep > 2) return stepWidget;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceColor(context).withValues(alpha: 0.35),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.08),
+          width: 1.2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.2),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
+            spreadRadius: -4,
+          ),
+        ],
+      ),
+      child: stepWidget,
+    );
   }
 }
 
@@ -579,18 +640,28 @@ class _ProgressHexagon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 240),
+      curve: Curves.easeInOut,
       width: 44,
       height: 44,
       decoration: BoxDecoration(
         gradient: isActive ? AppTheme.accentGradient : null,
-        border: isActive ? null : Border.all(color: AppTheme.borderColor(context), width: 2),
-        borderRadius: BorderRadius.circular(8),
+        color: isActive
+            ? null
+            : AppTheme.surfaceHiColor(context).withValues(alpha: 0.5),
+        border: Border.all(
+          color: isActive
+              ? Colors.white.withValues(alpha: 0.15)
+              : AppTheme.borderColor(context).withValues(alpha: 0.6),
+          width: 1.2,
+        ),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: isActive
             ? [
                 BoxShadow(
-                  color: AppTheme.accent.withValues(alpha: 0.3),
-                  blurRadius: 12,
+                  color: AppTheme.primaryGradientStart.withValues(alpha: 0.35),
+                  blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
               ]
@@ -601,8 +672,8 @@ class _ProgressHexagon extends StatelessWidget {
           '$number',
           style: TextStyle(
             color: isActive ? Colors.white : AppTheme.textMutedColor(context),
-            fontWeight: FontWeight.w700,
-            fontSize: 18,
+            fontWeight: FontWeight.w800,
+            fontSize: 16,
           ),
         ),
       ),

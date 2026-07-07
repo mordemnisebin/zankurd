@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
 import '../../widgets/shimmer_glow.dart';
 
 class HeroCard extends StatelessWidget {
@@ -27,25 +26,25 @@ class HeroCard extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF1E5F47), Color(0xFF123427), Color(0xFFE76F51)],
-          stops: [0.0, 0.55, 1.0],
+          colors: [Color(0xFF0F4C3A), Color(0xFF0A291F), Color(0xFF1E5F47)],
+          stops: [0.0, 0.65, 1.0],
         ),
-        borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+        borderRadius: BorderRadius.circular(16), // AppRadius.lg
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.18),
+          color: Colors.white.withValues(alpha: 0.15),
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF1E5F47).withValues(alpha: 0.4),
-            offset: const Offset(0, 8),
-            blurRadius: 24,
-            spreadRadius: -4,
+            color: const Color(0xFF0F4C3A).withValues(alpha: 0.35),
+            offset: const Offset(0, 10),
+            blurRadius: 28,
+            spreadRadius: -6,
           ),
           BoxShadow(
-            color: const Color(0xFFE76F51).withValues(alpha: 0.15),
-            offset: const Offset(0, 16),
-            blurRadius: 32,
+            color: const Color(0xFF4ADE80).withValues(alpha: 0.08),
+            offset: const Offset(0, 18),
+            blurRadius: 36,
             spreadRadius: -8,
           ),
         ],
@@ -60,7 +59,7 @@ class HeroCard extends StatelessWidget {
               width: 140,
               height: 140,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.06),
+                color: Colors.white.withValues(alpha: 0.05),
                 shape: BoxShape.circle,
               ),
             ),
@@ -72,7 +71,7 @@ class HeroCard extends StatelessWidget {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.04),
+                color: Colors.white.withValues(alpha: 0.03),
                 shape: BoxShape.circle,
               ),
             ),
@@ -84,7 +83,7 @@ class HeroCard extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: const Color(0xFFE76F51).withValues(alpha: 0.08),
+                color: Colors.white.withValues(alpha: 0.04),
                 shape: BoxShape.circle,
               ),
             ),
@@ -119,8 +118,9 @@ class HeroCard extends StatelessWidget {
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFF4ADE80)
-                                      .withValues(alpha: 0.6),
+                                  color: const Color(
+                                    0xFF4ADE80,
+                                  ).withValues(alpha: 0.6),
                                   blurRadius: 6,
                                 ),
                               ],
@@ -129,7 +129,7 @@ class HeroCard extends StatelessWidget {
                           const SizedBox(width: 8),
                           Flexible(
                             child: Text(
-                              isKu ? 'Jûra Zindî Vekirî' : 'Canlı Oda Açık',
+                              isKu ? 'Odeya Zindî Vekirî' : 'Canlı Oda Açık',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -161,7 +161,7 @@ class HeroCard extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 isKu
-                    ? 'Jûrekê ava bike an bi kodê bikeve. Pirs, skor û rêzbendî bi awayekî zindî nû dibin.'
+                    ? 'Odeyekê ava bike an bi kodê tevlî bibe. Pirs, skor û rêzbendî bi awayekî zindî nû dibin.'
                     : 'Oda kur veya kodla katıl. Sorular, skorlar ve sıralama canlı güncellenir.',
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.85),
@@ -176,13 +176,13 @@ class HeroCard extends StatelessWidget {
                   final createButton = _HeroActionButton(
                     label: loading
                         ? (isKu ? 'Tê Vekirin...' : 'Açılıyor...')
-                        : (isKu ? 'Jûr Ava Bike' : 'Oda Kur'),
+                        : (isKu ? 'Odeyek Ava Bike' : 'Oda Kur'),
                     icon: Icons.add_circle_outline,
                     primary: true,
                     onPressed: loading ? null : onCreateRoom,
                   );
                   final joinButton = _HeroActionButton(
-                    label: isKu ? 'Bi Kodê Bikeve' : 'Kodla Katıl',
+                    label: isKu ? 'Bi Kodê Tevlî Bibe' : 'Kodla Katıl',
                     icon: Icons.meeting_room_outlined,
                     primary: false,
                     onPressed: onJoinRoom,
@@ -253,8 +253,8 @@ class _HeroActionButtonState extends State<_HeroActionButton> {
   Widget build(BuildContext context) {
     final background = widget.primary
         ? Colors.white
-        : Colors.white.withValues(alpha: 0.16);
-    final foreground = widget.primary ? const Color(0xFF1E5F47) : Colors.white;
+        : Colors.white.withValues(alpha: 0.12);
+    final foreground = widget.primary ? const Color(0xFF0F4C3A) : Colors.white;
     return GestureDetector(
       onTapDown: widget.onPressed != null
           ? (_) => setState(() => _pressed = true)
@@ -267,17 +267,23 @@ class _HeroActionButtonState extends State<_HeroActionButton> {
           : null,
       onTapCancel: () => setState(() => _pressed = false),
       child: AnimatedScale(
-        scale: _pressed ? 0.95 : 1.0,
+        scale: _pressed ? 0.96 : 1.0,
         duration: const Duration(milliseconds: 100),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
           decoration: BoxDecoration(
             color: background,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(16), // AppRadius.lg
+            border: widget.primary
+                ? null
+                : Border.all(
+                    color: Colors.white.withValues(alpha: 0.15),
+                    width: 1.2,
+                  ),
             boxShadow: widget.primary
                 ? [
                     BoxShadow(
-                      color: Colors.white.withValues(alpha: 0.25),
+                      color: Colors.white.withValues(alpha: 0.22),
                       blurRadius: 12,
                       offset: const Offset(0, 4),
                     ),
@@ -296,8 +302,9 @@ class _HeroActionButtonState extends State<_HeroActionButton> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: foreground,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 13,
+                    letterSpacing: 0.1,
                   ),
                 ),
               ),

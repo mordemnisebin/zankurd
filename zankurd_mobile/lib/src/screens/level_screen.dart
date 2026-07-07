@@ -142,9 +142,10 @@ class _CategoryHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Hero status bar'ın arkasına uzandığı için yüksekliğe payı eklenir.
     final topInset = MediaQuery.of(context).padding.top;
-    
+    final color1 = Colors.white.withValues(alpha: 0.08);
+    final color2 = Colors.white.withValues(alpha: 0.03);
+
     String title = CategoryNames.localized(category, isKu);
     String subtitle = isKu
         ? 'Ji hêsan ber bi dijwar ve, xalên xwe bicivîne.'
@@ -163,7 +164,9 @@ class _CategoryHero extends StatelessWidget {
         ),
       );
       if (sub.id.isNotEmpty) {
-        title = isKu ? '${CategoryNames.localized(category, isKu)} · ${sub.nameKu}' : '${CategoryNames.localized(category, isKu)} · ${sub.nameTr}';
+        title = isKu
+            ? '${CategoryNames.localized(category, isKu)} · ${sub.nameKu}'
+            : '${CategoryNames.localized(category, isKu)} · ${sub.nameTr}';
         subtitle = isKu ? sub.descriptionKu : sub.descriptionTr;
       }
     }
@@ -174,17 +177,57 @@ class _CategoryHero extends StatelessWidget {
         type: MaterialType.transparency,
         child: Container(
           height: 200 + topInset,
-          decoration: BoxDecoration(gradient: gradient),
+          decoration: BoxDecoration(
+            gradient: gradient,
+            boxShadow: [
+              BoxShadow(
+                color: gradient.colors.first.withValues(alpha: 0.25),
+                blurRadius: 20,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
           child: Stack(
             children: [
+              // Soft Glow 1
               Positioned(
                 right: -40,
                 top: -40,
                 child: Container(
-                  width: 200,
-                  height: 200,
+                  width: 220,
+                  height: 220,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.07),
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [color1, color1.withValues(alpha: 0)],
+                    ),
+                  ),
+                ),
+              ),
+              // Soft Glow 2
+              Positioned(
+                left: -50,
+                bottom: -50,
+                child: Container(
+                  width: 160,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [color2, color2.withValues(alpha: 0)],
+                    ),
+                  ),
+                ),
+              ),
+              // Dekoratif daire
+              Positioned(
+                right: 20,
+                bottom: -30,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.04),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -223,7 +266,7 @@ class _CategoryHero extends StatelessWidget {
   }
 }
 
-class _LevelCard extends StatelessWidget {
+class _LevelCard extends StatefulWidget {
   const _LevelCard({
     required this.level,
     required this.disabled,
@@ -236,6 +279,13 @@ class _LevelCard extends StatelessWidget {
   final bool isKu;
   final VoidCallback onTap;
 
+  @override
+  State<_LevelCard> createState() => _LevelCardState();
+}
+
+class _LevelCardState extends State<_LevelCard> {
+  bool _isPressed = false;
+
   Color _badgeColor(int n) => switch (n) {
     1 => AppTheme.correct,
     2 => const Color(0xFF2B5C8F),
@@ -246,75 +296,131 @@ class _LevelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final badgeColor = _badgeColor(level.number);
+    final badgeColor = _badgeColor(widget.level.number);
 
     return GestureDetector(
-      onTap: disabled ? null : onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppTheme.surfaceOf(context),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppTheme.borderColor(context)),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: badgeColor.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: badgeColor.withValues(alpha: 0.4)),
+      onTapDown: widget.disabled
+          ? null
+          : (_) => setState(() => _isPressed = true),
+      onTapUp: widget.disabled
+          ? null
+          : (_) {
+              setState(() => _isPressed = false);
+              widget.onTap();
+            },
+      onTapCancel: widget.disabled
+          ? null
+          : () => setState(() => _isPressed = false),
+      child: AnimatedScale(
+        scale: _isPressed ? 0.97 : 1.0,
+        duration: const Duration(milliseconds: 100),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceOf(context),
+            borderRadius: BorderRadius.circular(16), // AppRadius.lg
+            border: Border.all(
+              color: _isPressed
+                  ? badgeColor.withValues(alpha: 0.4)
+                  : AppTheme.borderColor(context).withValues(alpha: 0.8),
+              width: 1.2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.15),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
+                spreadRadius: -4,
               ),
-              alignment: Alignment.center,
-              child: Text(
-                '${level.number}',
-                style: TextStyle(
-                  color: badgeColor,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 20,
+              if (_isPressed)
+                BoxShadow(
+                  color: badgeColor.withValues(alpha: 0.15),
+                  blurRadius: 10,
+                  offset: const Offset(0, 2),
+                ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: badgeColor.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: badgeColor.withValues(alpha: 0.25),
+                    width: 1.2,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: badgeColor.withValues(alpha: 0.08),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  '${widget.level.number}',
+                  style: TextStyle(
+                    color: badgeColor,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 20,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    level.title,
-                    style: TextStyle(
-                      color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w700,
-                      fontSize: 17,
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.level.title,
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(context),
+                        fontWeight: FontWeight.w800,
+                        fontSize: 16.5,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    '${level.questionCount} ${isKu ? "pirs" : "soru"} · ${isKu ? "Zehmetî" : "Zorluk"} ${level.difficultyLabel}',
-                    style: TextStyle(
-                      color: AppTheme.textMutedColor(context),
-                      fontSize: 13,
+                    const SizedBox(height: 4),
+                    Text(
+                      '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"} · ${widget.isKu ? "Zehmetî" : "Zorluk"} ${widget.level.difficultyLabel}',
+                      style: TextStyle(
+                        color: AppTheme.textMutedColor(context),
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
+                  ],
+                ),
+              ),
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: badgeColor.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: badgeColor.withValues(alpha: 0.2),
+                    width: 1,
                   ),
-                ],
+                  boxShadow: [
+                    BoxShadow(
+                      color: badgeColor.withValues(alpha: 0.05),
+                      blurRadius: 6,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  Icons.play_arrow_rounded,
+                  color: badgeColor,
+                  size: 22,
+                ),
               ),
-            ),
-            Container(
-              width: 38,
-              height: 38,
-              decoration: BoxDecoration(
-                color: badgeColor.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                Icons.play_arrow_rounded,
-                color: badgeColor,
-                size: 22,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

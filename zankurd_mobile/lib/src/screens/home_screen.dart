@@ -450,9 +450,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: Stack(
         children: [
           Positioned.fill(
-            child: CustomPaint(
-              painter: const RojPatternPainter(),
-            ),
+            child: CustomPaint(painter: const RojPatternPainter()),
           ),
           Positioned(
             left: 18,
@@ -495,7 +493,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildStreakHexagon(int streak) {
-    final pulseAnim = Tween<double>(begin: 1.0, end: 1.08).animate(
+    final pulseAnim = Tween<double>(begin: 1.0, end: 1.06).animate(
       CurvedAnimation(
         parent: _loadAnimationController,
         curve: Curves.easeInOut,
@@ -508,34 +506,35 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         return Transform.scale(
           scale: pulseAnim.value,
           child: Container(
-            width: 60,
-            height: 60,
+            width: 58,
+            height: 58,
             decoration: BoxDecoration(
               gradient: AppTheme.goldGradient,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(14),
               boxShadow: [
                 BoxShadow(
-                  color: AppTheme.gold.withValues(alpha: 0.4),
-                  blurRadius: 16,
-                  offset: const Offset(0, 6),
+                  color: AppTheme.gold.withValues(alpha: 0.35),
+                  blurRadius: 14,
+                  offset: const Offset(0, 5),
                 ),
               ],
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.local_fire_department,
+                const Icon(
+                  Icons.local_fire_department_rounded,
                   color: Colors.white,
-                  size: 22,
+                  size: 24,
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 1),
                 Text(
                   '$streak',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 13,
+                    letterSpacing: -0.2,
                   ),
                 ),
               ],
@@ -556,31 +555,45 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               .push(AppRoute.to(ShopScreen(repository: repo)))
               .then((_) => _refreshCoins()),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12),
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
+                  horizontal: 14,
+                  vertical: 7,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white.withValues(alpha: 0.08),
+                  borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.2),
+                    color: Colors.white.withValues(alpha: 0.16),
+                    width: 1.2,
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
                 ),
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.monetization_on, color: Colors.white, size: 16),
-                    const SizedBox(width: 5),
+                    const Icon(
+                      Icons.monetization_on_rounded,
+                      color: AppTheme.gold,
+                      size: 17,
+                    ),
+                    const SizedBox(width: 6),
                     AnimatedCounter(
                       value: coinBalance,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w800,
                         fontSize: 13,
+                        letterSpacing: 0.1,
                       ),
                     ),
                   ],
@@ -625,8 +638,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         SnackBar(
           content: Text(
             context.isKu
-                ? 'Jûra serhêl nehate vekirin. Ji kerema xwe dîsa biceribîne.'
-                : 'Online oda açılamadı. Lütfen tekrar deneyin.',
+                ? 'Odeya serhêl nehate vekirin. Ji kerema xwe dîsa biceribîne.'
+                : 'Çevrimiçi oda açılamadı. Lütfen tekrar deneyin.',
           ),
         ),
       );
@@ -727,7 +740,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  ku ? 'Tevlî Jûrê Bibe' : 'Odaya Katıl',
+                  ku ? 'Tevlî Odeyê Bibe' : 'Odaya Katıl',
                   style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 22,
@@ -740,11 +753,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   textCapitalization: TextCapitalization.characters,
                   style: TextStyle(color: AppTheme.textPrimary),
                   decoration: InputDecoration(
-                    labelText: ku ? 'Koda jûrê' : 'Oda kodu',
+                    labelText: ku ? 'Koda odeyê' : 'Oda kodu',
                   ),
                   validator: (value) {
                     if ((value ?? '').trim().isEmpty) {
-                      return ku ? 'Koda jûrê pêwîst e.' : 'Oda kodu gerekli.';
+                      return ku ? 'Koda odeyê pêwîst e.' : 'Oda kodu gerekli.';
                     }
                     return null;
                   },
@@ -776,8 +789,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           SnackBar(
                             content: Text(
                               context.isKu
-                                  ? 'Tevlî jûra serhêl nebû. Ji kerema xwe kodê kontrol bike.'
-                                  : 'Online odaya katılınamadı. Lütfen kodu kontrol edin.',
+                                  ? 'Tevlî odeya serhêl nebû. Ji kerema xwe kodê kontrol bike.'
+                                  : 'Çevrimiçi odaya katılınamadı. Lütfen kodu kontrol edin.',
                             ),
                           ),
                         );
@@ -792,7 +805,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         );
       },
-    );
+    ).whenComplete(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) => controller.dispose());
+    });
   }
 }
 
@@ -808,11 +823,11 @@ class RojPatternPainter extends CustomPainter {
 
     // Güneş merkezi (Sağ üst / ortalama bölge)
     final center = Offset(size.width * 0.85, size.height * 0.45);
-    
+
     // Güneş halkaları
     canvas.drawCircle(center, 30, paint);
     canvas.drawCircle(center, 42, paint);
-    
+
     // Güneş Işınları (Roj / 12 ışın)
     final rayCount = 12;
     final innerRadius = 46.0;
@@ -835,7 +850,7 @@ class RojPatternPainter extends CustomPainter {
       ..color = Colors.white.withValues(alpha: 0.02)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
-      
+
     for (double i = -50; i < size.width; i += 40) {
       canvas.drawLine(Offset(i, 0), Offset(i + 120, size.height), kilimPaint);
     }
@@ -844,4 +859,3 @@ class RojPatternPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-

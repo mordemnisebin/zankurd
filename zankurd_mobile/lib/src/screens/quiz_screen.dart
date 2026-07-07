@@ -13,6 +13,7 @@ import '../data/daily_mission_store.dart';
 import '../data/xp_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
+import '../data/supabase_zankurd_repository.dart';
 import '../game/bot_opponent.dart';
 import '../models/answer_record.dart';
 import '../models/player.dart';
@@ -32,6 +33,16 @@ import 'quiz/quiz_effects.dart';
 import 'quiz_result_screen.dart';
 
 part 'quiz/quiz_widgets.dart';
+
+/// Multiplayer quiz turlarının ortak faz durumu.
+enum _MultiplayerPhase {
+  /// Oyuncular cevap veriyor.
+  answering,
+  /// Cevap verildi, diğer oyuncu bekleniyor.
+  waiting,
+  /// İki oyuncu da cevapladı veya süre bitti; doğru cevap gösteriliyor.
+  reveal,
+}
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({
@@ -111,10 +122,21 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   int _flyupTrigger = 0; // doğru cevapta artar → ScoreFlyup oynar
   int _lastPointsEarned = 0;
 
+  // Multiplayer phase state
+  _MultiplayerPhase _mpPhase = _MultiplayerPhase.answering;
+  Timer? _revealTimer;
+  int _revealCountdown = 0;
+  Timer? _revealTickTimer;
+  StreamSubscription? _roomSub;
+  Timer? _pollTimer;
+
   QuizQuestion get question => _questions[index];
   bool get answered => selectedAnswer.isNotEmpty;
   bool get isLastQuestion => index == widget.questions.length - 1;
   bool get _isSoloMode => widget.room.id == null;
+
+  /// Gerçek online multiplayer: 1v1 + gerçek oda (bot değil).
+  bool get _isMultiplayer => widget.is1v1 && widget.room.id != null;
 
   @override
   void initState() {
@@ -265,6 +287,26 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _loadFavoriteState();
       _startTimer();
     }
+
+    if (_isMultiplayer) {
+      if (widget.repository is SupabaseZanKurdRepository) {
+        final client = (widget.repository as SupabaseZanKurdRepository).client;
+        _roomSub = client
+            .from('rooms')
+            .stream(primaryKey: ['id'])
+            .eq('id', widget.room.id!)
+            .listen((rows) {
+              if (!mounted) return;
+              if (rows.isNotEmpty) {
+                final dbIndex = rows.first['current_question_index'] as int? ?? 0;
+                _onRoomQuestionIndexChanged(dbIndex);
+              }
+            });
+      }
+      _pollTimer = Timer.periodic(const Duration(seconds: 4), (_) {
+        _pollRoomIndex();
+      });
+    }
   }
 
   /// Gösterilen sorunun gerçek favori durumunu yükler. Soru değiştiyse
@@ -355,6 +397,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _playersSub?.cancel();
     _realtimeSub?.cancel();
     _autoNextTimer?.cancel();
+    _revealTimer?.cancel();
+    _revealTickTimer?.cancel();
+    _roomSub?.cancel();
+    _pollTimer?.cancel();
     _timerController.dispose();
     _explanationController.dispose();
     super.dispose();
@@ -421,7 +467,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('${context.s('Jûr', 'Oda')} ${widget.room.code}'),
+          title: Text('${context.s('Ode', 'Oda')} ${widget.room.code}'),
           actions: [
             IconButton(
               onPressed: _toggleFavorite,
@@ -443,55 +489,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     final landscape = constraints.maxWidth >= 700;
-                    if (!landscape) {
-                      return ListView(
-                        padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-                        children: [
-                          _buildScoreHeader(),
-                          const SizedBox(height: 16),
-                          _buildProgressBar(context),
-                          _buildComboRow(),
-                          const SizedBox(height: 16),
-                          _buildQuestionSwitcher(context),
-                          const SizedBox(height: 16),
-                          _buildActionControls(),
-                          const SizedBox(height: 16),
-                          _LiveScoreboard(players: livePlayers),
-                        ],
-                      );
+                    if (landscape) {
+                      return _buildLandscapeLayout();
                     }
-
-                    return Row(
-                      key: const ValueKey('quiz-landscape-layout'),
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(
-                          flex: 7,
-                          child: ListView(
-                            padding: const EdgeInsets.fromLTRB(18, 8, 10, 18),
-                            children: [
-                              _buildQuestionSwitcher(context),
-                              const SizedBox(height: 12),
-                              _buildProgressBar(context),
-                              _buildComboRow(),
-                              const SizedBox(height: 12),
-                              _buildScoreHeader(),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 280,
-                          child: ListView(
-                            padding: const EdgeInsets.fromLTRB(8, 8, 18, 18),
-                            children: [
-                              _buildActionControls(),
-                              const SizedBox(height: 12),
-                              _LiveScoreboard(players: livePlayers),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
+                    return _buildPortraitLayout();
                   },
                 ),
               ),
@@ -524,6 +525,108 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           ),
         ),
       ),
+    );
+  }
+
+  // ─── Portrait layout: sabit header, kaydırılabilir orta, sabit alt bar ──
+
+  Widget _buildPortraitLayout() {
+    // Multiplayer'da açıklama sadece reveal phase'de gösterilir.
+    final showExpl = _isMultiplayer
+        ? (_mpPhase == _MultiplayerPhase.reveal)
+        : _showExplanation;
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 680),
+        child: Column(
+          children: [
+            // ── Üst sabit alan ──
+            Padding(
+              padding: const EdgeInsets.fromLTRB(18, 8, 18, 0),
+              child: Column(
+                children: [
+                  _buildScoreHeader(),
+                  const SizedBox(height: 12),
+                  _buildProgressBar(context),
+                  _buildComboRow(),
+                ],
+              ),
+            ),
+
+            // ── Orta kaydırılabilir içerik ──
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
+                child: Column(
+                  children: [
+                    _buildQuestionSwitcher(context, showExplanation: showExpl),
+                    // Multiplayer bekleme/reveal overlay
+                    if (_isMultiplayer && answered && _mpPhase == _MultiplayerPhase.waiting)
+                      _MultiplayerWaitingOverlay(isKu: _isKu),
+                    if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
+                      _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
+                    if (widget.is1v1) ...[
+                      const SizedBox(height: 12),
+                      _LiveScoreboard(players: livePlayers),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+
+            // ── Alt sabit aksiyon alanı ──
+            Padding(
+              padding: const EdgeInsets.fromLTRB(18, 4, 18, 12),
+              child: _buildActionControls(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ─── Landscape layout: mevcut yapı korunuyor ────────────────────────────
+
+  Widget _buildLandscapeLayout() {
+    final showExpl = _isMultiplayer
+        ? (_mpPhase == _MultiplayerPhase.reveal)
+        : _showExplanation;
+
+    return Row(
+      key: const ValueKey('quiz-landscape-layout'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(
+          flex: 7,
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(18, 8, 10, 18),
+            children: [
+              _buildQuestionSwitcher(context, showExplanation: showExpl),
+              if (_isMultiplayer && answered && _mpPhase == _MultiplayerPhase.waiting)
+                _MultiplayerWaitingOverlay(isKu: _isKu),
+              if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
+                _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
+              const SizedBox(height: 12),
+              _buildProgressBar(context),
+              _buildComboRow(),
+              const SizedBox(height: 12),
+              _buildScoreHeader(),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 280,
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(8, 8, 18, 18),
+            children: [
+              _buildActionControls(),
+              const SizedBox(height: 12),
+              _LiveScoreboard(players: livePlayers),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -589,7 +692,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildQuestionSwitcher(BuildContext context) {
+  Widget _buildQuestionSwitcher(BuildContext context, {bool? showExplanation}) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 280),
       switchInCurve: Curves.easeOutCubic,
@@ -606,7 +709,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       ),
       child: KeyedSubtree(
         key: ValueKey(index),
-        child: _buildQuestionPanel(context),
+        child: _buildQuestionPanel(context, showExplanation: showExplanation),
       ),
     );
   }
@@ -617,6 +720,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         answered &&
         selectedAnswer == question.correctAnswer &&
         !completing;
+
+    // Multiplayer'da "Sonraki" butonu devre dışı: geçiş otomatik.
+    final bool canPressNext = _isMultiplayer
+        ? false
+        : (answered && !completing);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -682,16 +790,35 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 ],
               )
             : FilledButton.icon(
-                onPressed: answered && !completing ? () => _next() : null,
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppTheme.accent,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16), // AppRadius.lg
+                  ),
+                  elevation: 2,
+                  shadowColor: AppTheme.accent.withValues(alpha: 0.3),
+                ),
+                onPressed: canPressNext ? () => _next() : null,
                 icon: Icon(
-                  isLastQuestion
-                      ? Icons.flag_outlined
-                      : Icons.arrow_forward_rounded,
+                  _isMultiplayer
+                      ? Icons.hourglass_top_rounded
+                      : isLastQuestion
+                          ? Icons.flag_outlined
+                          : Icons.arrow_forward_rounded,
                 ),
                 label: Text(
-                  isLastQuestion
-                      ? context.s('Qediya', 'Bitir')
-                      : context.s('Piştî vê', 'Sonraki'),
+                  _isMultiplayer && answered && _mpPhase != _MultiplayerPhase.reveal
+                      ? context.s('Li benda hevrik...', 'Rakip bekleniyor...')
+                      : isLastQuestion
+                          ? context.s('Qediya', 'Bitir')
+                          : context.s('Piştî vê', 'Sonraki'),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15,
+                    letterSpacing: 0.2,
+                  ),
                 ),
               ),
       ],
@@ -922,7 +1049,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   // ─── Soru paneli ─────────────────────────────────────────────────────────
 
-  Widget _buildQuestionPanel(BuildContext context) {
+  Widget _buildQuestionPanel(BuildContext context, {bool? showExplanation}) {
     final promptText = question.promptText;
     final size = MediaQuery.sizeOf(context);
     final compactLandscape = size.width >= 700 && size.width > size.height;
@@ -1004,7 +1131,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                         hiddenAnswers: hiddenAnswers,
                         firstAttemptAnswer: _firstAttemptAnswer,
                         audiencePoll: _audiencePoll,
-                        showExplanation: _showExplanation,
+                        showExplanation: showExplanation ?? _showExplanation,
                         suspense: _suspense,
                         opponentSelectedAnswers: _opponentSelectedAnswers,
                         onAnswer: _answer,
@@ -1026,7 +1153,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   hiddenAnswers: hiddenAnswers,
                   firstAttemptAnswer: _firstAttemptAnswer,
                   audiencePoll: _audiencePoll,
-                  showExplanation: _showExplanation,
+                  showExplanation: showExplanation ?? _showExplanation,
                   suspense: _suspense,
                   opponentSelectedAnswers: _opponentSelectedAnswers,
                   onAnswer: _answer,
@@ -1072,23 +1199,181 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   void _checkMultiplayerSync() {
-    if (!widget.is1v1 || widget.room.id == null) return;
+    if (!_isMultiplayer) return;
     final myName = _myName;
-    final otherPlayers = livePlayers.where((p) => p.name != myName).toList();
+    final otherPlayers = livePlayers.where((p) =>
+      _myId != null ? p.id != _myId : p.name != myName,
+    ).toList();
     if (otherPlayers.isEmpty) return;
 
     final allOthersAnswered = otherPlayers.every(
       (p) => p.state == 'Cevapladı' || p.state == 'Bersiv da',
     );
 
-    if (answered && allOthersAnswered) {
-      _autoNextTimer?.cancel();
-      _autoNextTimer = Timer(const Duration(seconds: 3), () {
-        if (mounted) {
-          _next();
-        }
-      });
+    if (answered && allOthersAnswered && _mpPhase != _MultiplayerPhase.reveal) {
+      _startRevealPhase();
     }
+  }
+
+  /// Multiplayer reveal phase: doğru cevap ve açıklama gösterilir.
+  /// [_revealCountdown] saniye sonra otomatik olarak sonraki soruya geçilir.
+  void _startRevealPhase() {
+    _autoNextTimer?.cancel();
+    _revealTimer?.cancel();
+    _revealTickTimer?.cancel();
+
+    const revealDuration = 5;
+    setState(() {
+      _mpPhase = _MultiplayerPhase.reveal;
+      _revealCountdown = revealDuration;
+      // Açıklamayı açıklama controller aracılığıyla da tetikle
+      // (tek oyunculu ile aynı animasyon ritmi).
+      _showExplanation = true;
+    });
+
+    // Her saniye geri sayım güncelle
+    _revealTickTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      setState(() {
+        _revealCountdown = (revealDuration - timer.tick).clamp(0, revealDuration);
+      });
+    });
+
+    // Reveal süresi bitince host olan taraf index'i DB'de artırır.
+    _revealTimer = Timer(const Duration(seconds: revealDuration), () {
+      _revealTickTimer?.cancel();
+      if (mounted) {
+        if (_isHost) {
+          _advanceAuthoritativeIndex();
+        }
+      }
+    });
+  }
+
+  bool get _isHost {
+    final uid = widget.repository.currentUserId;
+    return uid != null && uid == widget.room.hostId;
+  }
+
+  void _onRoomQuestionIndexChanged(int dbIndex) {
+    if (!_isMultiplayer) return;
+    if (dbIndex > index) {
+      _syncToQuestionIndex(dbIndex);
+    }
+  }
+
+  void _syncToQuestionIndex(int targetIndex) {
+    if (targetIndex >= _questions.length) {
+      _finishGameMultiplayer();
+      return;
+    }
+
+    _explanationController.stop();
+    _explanationController.reset();
+    setState(() {
+      index = targetIndex;
+      selectedAnswer = '';
+      favorite = false;
+      _favoriteTouched = false;
+      completing = false;
+      _wildcard = const WildcardState();
+      _firstAttemptAnswer = '';
+      _audiencePoll = null;
+      hiddenAnswers = const {};
+      _showExplanation = false;
+      _suspense = false;
+      _opponentSelectedAnswers.clear();
+      _mpPhase = _MultiplayerPhase.answering;
+      _revealCountdown = 0;
+      _syncMyDuelState(answeredNow: false);
+    });
+    _markQuestionSeen();
+    _loadFavoriteState();
+    _startTimer();
+  }
+
+  Future<void> _pollRoomIndex() async {
+    if (!_isMultiplayer) return;
+    if (widget.repository is SupabaseZanKurdRepository) {
+      final client = (widget.repository as SupabaseZanKurdRepository).client;
+      try {
+        final row = await client
+            .from('rooms')
+            .select('current_question_index')
+            .eq('id', widget.room.id!)
+            .single();
+        final dbIndex = row['current_question_index'] as int? ?? 0;
+        if (mounted && dbIndex > index) {
+          _onRoomQuestionIndexChanged(dbIndex);
+        }
+      } catch (_) {}
+    }
+  }
+
+  Future<void> _advanceAuthoritativeIndex() async {
+    final nextIndex = index + 1;
+    if (widget.repository is SupabaseZanKurdRepository) {
+      final client = (widget.repository as SupabaseZanKurdRepository).client;
+      try {
+        await client
+            .from('rooms')
+            .update({'current_question_index': nextIndex})
+            .eq('id', widget.room.id!);
+      } catch (e) {
+        // Fallback
+        _next();
+      }
+    } else {
+      _next();
+    }
+  }
+
+  Future<void> _finishGameMultiplayer() async {
+    if (completing) return;
+    setState(() => completing = true);
+
+    if (_isHost) {
+      widget.repository.finishGame(widget.room).catchError((_) {});
+    }
+
+    _syncMyDuelState(answeredNow: true, finished: true);
+
+    final coinsAwarded = widget.practice
+        ? 0
+        : await widget.repository
+              .awardQuizCoins(
+                score: score,
+                correctCount: correctCount,
+                bestStreak: bestStreak,
+                totalQuestions: widget.questions.length,
+                room: widget.room,
+              )
+              .catchError((_) => 0);
+
+    if (!mounted) return;
+    context.read<SoundProvider>().playWin();
+
+    Navigator.of(context).pushReplacement(
+      AppRoute.replace(
+        QuizResultScreen(
+          repository: widget.repository,
+          room: widget.room,
+          score: score,
+          correctCount: correctCount,
+          wrongCount: wrongCount,
+          totalQuestions: widget.questions.length,
+          bestStreak: bestStreak,
+          answerRecords: answerRecords,
+          coinsAwarded: coinsAwarded,
+          opponents: livePlayers.where((p) => p.name != _myName).toList(),
+          practice: widget.practice,
+          dailyQuiz: widget.dailyQuiz,
+        ),
+      ),
+    );
   }
 
   Future<void> _answer(String answer) async {
@@ -1096,7 +1381,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
     _timerController.stop();
 
-    _explanationController.forward(from: 0);
+    // Multiplayer'da açıklama reveal phase'de gösterilir, hemen değil.
+    if (!_isMultiplayer) {
+      _explanationController.forward(from: 0);
+    }
 
     // Çift Cevap aktifse ve ilk deneme yanlışsa: göster ama kilitleme
     if (_wildcard.doubleAnswerActivated &&
@@ -1173,6 +1461,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         _recordAnswer(answer);
         _advanceBots();
         _syncMyDuelState(answeredNow: true);
+        // Multiplayer: bekleme fazına geç
+        if (_isMultiplayer) _mpPhase = _MultiplayerPhase.waiting;
       });
       _checkMultiplayerSync();
       // Altın kademe anı: ×10 seriye özel kutlama sesi (yeni asset yok).
@@ -1214,6 +1504,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         _recordAnswer(answer);
         _advanceBots();
         _syncMyDuelState(answeredNow: true);
+        if (_isMultiplayer) _mpPhase = _MultiplayerPhase.waiting;
       });
       _checkMultiplayerSync();
       if (correct && streak == 10 && mounted) {
@@ -1224,6 +1515,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   Future<void> _next() async {
     _autoNextTimer?.cancel();
+    _revealTimer?.cancel();
+    _revealTickTimer?.cancel();
     if (isLastQuestion) {
       if (completing) return;
       setState(() => completing = true);
@@ -1280,6 +1573,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _showExplanation = false;
       _suspense = false;
       _opponentSelectedAnswers.clear();
+      // Multiplayer phase sıfırla
+      _mpPhase = _MultiplayerPhase.answering;
+      _revealCountdown = 0;
       _syncMyDuelState(answeredNow: false);
     });
     _markQuestionSeen();

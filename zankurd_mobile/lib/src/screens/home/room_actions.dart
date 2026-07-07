@@ -24,7 +24,7 @@ class RoomActions extends StatelessWidget {
           child: _GradientButton(
             label: loading
                 ? (isKu ? 'Tê Vekirin...' : 'Açılıyor...')
-                : (isKu ? 'Jûr Ava Bike' : 'Oda Kur'),
+                : (isKu ? 'Odeyek Ava Bike' : 'Oda Kur'),
             icon: Icons.add_circle_outline,
             gradient: AppTheme.accentGradient,
             onTap: onCreateRoom,
@@ -33,7 +33,7 @@ class RoomActions extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(
           child: _GradientButton(
-            label: isKu ? 'Bi Kodê Bikeve' : 'Kodla Katıl',
+            label: isKu ? 'Bi Kodê Tevlî Bibe' : 'Kodla Katıl',
             icon: Icons.meeting_room_outlined,
             gradient: const LinearGradient(
               colors: [Color(0xFF2563EB), Color(0xFF1D4ED8)],

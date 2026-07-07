@@ -130,8 +130,8 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                       const SizedBox(height: 8),
                       Text(
                         ku
-                            ? 'Ev nav di tabloya pêşderçûnê û jûrên serhêl de xuya dibe.'
-                            : 'Bu ad liderlik tablosunda ve online odalarda görünecek.',
+                            ? 'Ev nav di tabloya pêşderçûnê û odeyên serhêl de xuya dibe.'
+                            : 'Bu ad liderlik tablosunda ve çevrimiçi odalarda görünecek.',
                         style: TextStyle(
                           color: AppTheme.textSubColor(context),
                           height: 1.45,
@@ -146,7 +146,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                           color: AppTheme.textPrimaryColor(context),
                         ),
                         decoration: InputDecoration(
-                          hintText: ku ? 'Mînak: Rojda' : 'Örn: Rojda',
+                          hintText: ku ? 'Mînak: Zelal' : 'Örn: Zelal',
                           prefixIcon: Icon(
                             Icons.person_outline,
                             color: AppTheme.textMutedColor(context),

@@ -270,6 +270,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             child: Text(
                               _avatarIdentity.showcaseTitle!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 color: AppTheme.gold,
                                 fontWeight: FontWeight.w700,
@@ -467,6 +469,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               FutureBuilder<MistakeStore>(
                 future: MistakeStore.load(),
                 builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return SizedBox(
+                      height: 160,
+                      child: Center(
+                        child: Text(
+                          ku
+                              ? 'Performans nehat barkirin.'
+                              : 'Performans yüklenemedi.',
+                          style: TextStyle(color: AppTheme.textMutedColor(context)),
+                        ),
+                      ),
+                    );
+                  }
                   if (!snapshot.hasData) {
                     return const SizedBox(
                       height: 160,

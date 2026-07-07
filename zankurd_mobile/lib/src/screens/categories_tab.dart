@@ -42,6 +42,17 @@ class _CategoriesTabState extends State<CategoriesTab> {
       if (mounted && cats.isNotEmpty) setState(() => _categories = cats);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'categories load failed');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              context.isKu
+                  ? 'Kategorî nehatin barkirin. Ji kerema xwe rûpelê nû bike.'
+                  : 'Kategoriler yüklenemedi. Lütfen sayfayı yenileyin.',
+            ),
+          ),
+        );
+      }
     }
     if (mounted) setState(() => _loading = false);
     await _loadMastery();
@@ -67,21 +78,21 @@ class _CategoriesTabState extends State<CategoriesTab> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.xl,
+                AppSpacing.xl,
+                AppSpacing.xl,
+                AppSpacing.md,
+              ),
               child: Row(
                 children: [
-                  // Sol accent çizgisi
                   Container(
                     width: 4,
                     height: 44,
-                    margin: const EdgeInsets.only(right: 12),
+                    margin: const EdgeInsets.only(right: AppSpacing.md),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
-                      gradient: const LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [AppTheme.accent, AppTheme.primaryGradientEnd],
-                      ),
+                      gradient: AppGradients.accentVertical,
                     ),
                   ),
                   Expanded(
@@ -124,6 +135,8 @@ class _CategoriesTabState extends State<CategoriesTab> {
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
+                  final bottomPadding =
+                      MediaQuery.paddingOf(context).bottom + AppSpacing.xxl;
                   int crossCount = 2;
                   if (constraints.maxWidth > 1200) {
                     crossCount = 5;
@@ -134,13 +147,18 @@ class _CategoriesTabState extends State<CategoriesTab> {
                   }
                   return GridView.builder(
                     controller: widget.scrollController,
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.page,
+                      AppSpacing.sm,
+                      AppSpacing.page,
+                      bottomPadding,
+                    ),
                     itemCount: _categories.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossCount,
-                      mainAxisSpacing: 14,
-                      crossAxisSpacing: 14,
-                      childAspectRatio: 0.88,
+                      mainAxisSpacing: AppSpacing.gridGap,
+                      crossAxisSpacing: AppSpacing.gridGap,
+                      childAspectRatio: 0.84,
                     ),
                     itemBuilder: (context, index) {
                       final cat = _categories[index];
@@ -209,13 +227,13 @@ class _CategoryCardState extends State<_CategoryCard>
       parent: _entryController,
       curve: Interval(start, end, curve: Curves.easeOut),
     );
-    _slideAnim = Tween<Offset>(
-      begin: const Offset(0, 0.12),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _entryController,
-      curve: Interval(start, end, curve: Curves.easeOut),
-    ));
+    _slideAnim = Tween<Offset>(begin: const Offset(0, 0.12), end: Offset.zero)
+        .animate(
+          CurvedAnimation(
+            parent: _entryController,
+            curve: Interval(start, end, curve: Curves.easeOut),
+          ),
+        );
     _entryController.forward();
   }
 
@@ -233,6 +251,7 @@ class _CategoryCardState extends State<_CategoryCard>
         .first;
     final image = CategoryVisuals.imagePath(widget.category);
     final icon = CategoryVisuals.icon(widget.category);
+    final radius = BorderRadius.circular(AppRadius.card);
 
     return FadeTransition(
       opacity: _fadeAnim,
@@ -246,76 +265,76 @@ class _CategoryCardState extends State<_CategoryCard>
           },
           onTapCancel: () => setState(() => _pressed = false),
           child: AnimatedScale(
-            scale: _pressed ? 0.96 : 1.0,
-            duration: const Duration(milliseconds: 100),
+            scale: _pressed ? 0.975 : 1.0,
+            duration: const Duration(milliseconds: 120),
+            curve: Curves.easeOutCubic,
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.15),
-                  width: 1.2,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: glowColor.withValues(alpha: 0.3),
-                    offset: const Offset(0, 6),
-                    blurRadius: 16,
-                    spreadRadius: -4,
-                  ),
-                  BoxShadow(
-                    color: glowColor.withValues(alpha: 0.6),
-                    offset: const Offset(0, 4),
-                    blurRadius: 0,
-                  ),
-                ],
-              ),
+              decoration: AppTheme.categoryCardDecoration(glowColor),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+                borderRadius: radius,
                 child: Stack(
                   children: [
                     Positioned.fill(
-                      child: Image.asset(image, fit: BoxFit.cover),
+                      child: Image.asset(
+                        image,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: AppGradients.categoryFallback(gradient),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                icon,
+                                color: Colors.white.withValues(alpha: 0.74),
+                                size: 48,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     Positioned.fill(
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              gradient.colors.first.withValues(alpha: 0.25),
-                              gradient.colors.last.withValues(alpha: 0.92),
-                            ],
+                          gradient: AppGradients.categoryImageOverlay(gradient),
+                        ),
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: radius,
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.08),
                           ),
                         ),
                       ),
                     ),
-                    // Dekoratif daire
                     Positioned(
-                      right: -20,
-                      top: -20,
+                      right: -24,
+                      top: -24,
                       child: Container(
-                        width: 100,
-                        height: 100,
+                        width: 112,
+                        height: 112,
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.06),
+                          color: Colors.white.withValues(alpha: 0.07),
                           shape: BoxShape.circle,
                         ),
                       ),
                     ),
-                    // Mastery badge
                     if (widget.masteryLevel != MasteryLevel.none)
                       Positioned(
-                        top: 10,
-                        right: 10,
+                        top: AppSpacing.md,
+                        right: AppSpacing.md,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8,
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.5),
-                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.black.withValues(alpha: 0.42),
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
                             border: Border.all(
                               color: AppTheme.gold.withValues(alpha: 0.4),
                             ),
@@ -344,68 +363,57 @@ class _CategoryCardState extends State<_CategoryCard>
                         ),
                       ),
                     Padding(
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(AppSpacing.lg),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: 52,
-                            height: 52,
+                            width: 46,
+                            height: 46,
                             decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(14),
+                              color: Colors.white.withValues(alpha: 0.18),
+                              borderRadius: BorderRadius.circular(AppRadius.lg),
                               border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.15),
+                                color: Colors.white.withValues(alpha: 0.22),
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.15),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 3),
+                                  color: Colors.black.withValues(alpha: 0.18),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 4),
                                 ),
                               ],
                             ),
-                            child: Icon(icon, color: Colors.white, size: 28),
+                            child: Icon(icon, color: Colors.white, size: 25),
                           ),
                           const Spacer(),
                           Text(
-                            CategoryNames.localized(widget.category, widget.isKu),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                              fontSize: 18,
-                              letterSpacing: -0.3,
-                              shadows: [
-                                Shadow(
-                                  color: Colors.black45,
-                                  blurRadius: 6,
-                                  offset: Offset(0, 1),
-                                ),
-                              ],
+                            CategoryNames.localized(
+                              widget.category,
+                              widget.isKu,
                             ),
+                            style: AppTypography.categoryTitle,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 6),
+                          const SizedBox(height: AppSpacing.sm),
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 10,
-                              vertical: 4,
+                              vertical: 5,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.black.withValues(alpha: 0.24),
+                              borderRadius: BorderRadius.circular(AppRadius.sm),
                               border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.1),
+                                color: Colors.white.withValues(alpha: 0.16),
                               ),
                             ),
                             child: Text(
-                              widget.isKu ? '5 ast · pêşbaz' : '5 seviye · yarış',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              widget.isKu
+                                  ? '5 ast • pêşbaz'
+                                  : '5 seviye • yarış',
+                              style: AppTypography.categoryMeta,
                             ),
                           ),
                         ],

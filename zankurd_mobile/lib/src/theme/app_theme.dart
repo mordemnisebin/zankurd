@@ -1,5 +1,136 @@
 import 'package:flutter/material.dart';
 
+class AppColors {
+  const AppColors._();
+
+  static const focus = AppTheme.primaryGradientStart;
+
+  static Color disabledSurface(BuildContext context) =>
+      AppTheme.isLight(context)
+      ? const Color(0xFFE4E0D6)
+      : const Color(0xFF284235);
+}
+
+class AppTypography {
+  const AppTypography._();
+
+  static const categoryTitle = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w900,
+    fontSize: 19,
+    height: 1.05,
+    letterSpacing: 0,
+    shadows: [
+      Shadow(color: Color(0x99000000), blurRadius: 10, offset: Offset(0, 2)),
+    ],
+  );
+
+  static const categoryMeta = TextStyle(
+    color: Colors.white,
+    fontSize: 11.5,
+    height: 1.2,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+  );
+}
+
+class AppSpacing {
+  const AppSpacing._();
+
+  static const double xxs = 4;
+  static const double xs = 6;
+  static const double sm = 8;
+  static const double md = 12;
+  static const double lg = 16;
+  static const double xl = 20;
+  static const double xxl = 24;
+  static const double page = AppTheme.pagePadding;
+  static const double section = AppTheme.sectionGap;
+  static const double cardGap = AppTheme.cardGap;
+  static const double gridGap = 16;
+}
+
+class AppRadius {
+  const AppRadius._();
+
+  static const double xs = 8;
+  static const double sm = 10;
+  static const double md = AppTheme.cardRadiusSmall;
+  static const double lg = 16;
+  static const double card = AppTheme.cardRadius;
+  static const double xl = 24;
+  static const double pill = 99;
+}
+
+class AppGradients {
+  const AppGradients._();
+
+  static const accentVertical = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [AppTheme.accent, AppTheme.primaryGradientEnd],
+  );
+
+  static LinearGradient categoryImageOverlay(LinearGradient base) {
+    return LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: const [0, 0.42, 1],
+      colors: [
+        Colors.black.withValues(alpha: 0.06),
+        base.colors.first.withValues(alpha: 0.18),
+        base.colors.last.withValues(alpha: 0.86),
+      ],
+    );
+  }
+
+  static LinearGradient categoryFallback(LinearGradient base) {
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [base.colors.first, base.colors.last],
+    );
+  }
+}
+
+class AppShadows {
+  const AppShadows._();
+
+  static List<BoxShadow> panel(BuildContext context) =>
+      AppTheme.softShadow(context);
+
+  static List<BoxShadow> categoryCard(Color color) {
+    return [
+      BoxShadow(
+        color: color.withValues(alpha: 0.26),
+        offset: const Offset(0, 14),
+        blurRadius: 24,
+        spreadRadius: -12,
+      ),
+      BoxShadow(
+        color: color.withValues(alpha: 0.32),
+        offset: const Offset(0, 5),
+        blurRadius: 0,
+      ),
+    ];
+  }
+
+  static List<BoxShadow> button(Color color, {required bool pressed}) {
+    if (pressed) return const [];
+    return [BoxShadow(color: color, offset: const Offset(0, 4), blurRadius: 0)];
+  }
+
+  static List<BoxShadow> focusRing(Color color) {
+    return [
+      BoxShadow(
+        color: color.withValues(alpha: 0.14),
+        blurRadius: 12,
+        offset: const Offset(0, 3),
+      ),
+    ];
+  }
+}
+
 class AppTheme {
   // ============ Design Tokens ============
   /// Standard card corner radius used across all cards.
@@ -24,11 +155,7 @@ class AppTheme {
         ? const Color(0xFF081912)
         : const Color(0xFFE5DFD3);
     return [
-      BoxShadow(
-        color: shadowColor,
-        offset: const Offset(0, 4),
-        blurRadius: 0,
-      ),
+      BoxShadow(color: shadowColor, offset: const Offset(0, 4), blurRadius: 0),
     ];
   }
 
@@ -44,7 +171,8 @@ class AppTheme {
   }
 
   /// Standard card decoration helper.
-  static BoxDecoration cardDecoration(BuildContext context, {
+  static BoxDecoration cardDecoration(
+    BuildContext context, {
     LinearGradient? gradient,
     Color? color,
     double radius = cardRadius,
@@ -57,6 +185,17 @@ class AppTheme {
           ? Border.all(color: borderColor(context).withValues(alpha: 0.5))
           : null,
       boxShadow: cardShadow(context),
+    );
+  }
+
+  static BoxDecoration categoryCardDecoration(Color tint) {
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(AppRadius.card),
+      border: Border.all(
+        color: Colors.white.withValues(alpha: 0.22),
+        width: 1.2,
+      ),
+      boxShadow: AppShadows.categoryCard(tint),
     );
   }
 
@@ -75,25 +214,25 @@ class AppTheme {
   static const cyan = Color(0xFF26A69A); // Dengeli Mavi/Turkuaz
 
   // Dark backgrounds (Derin Orman Yeşili / Asil Toprak tonları)
-  static const bg = Color(0xFF0F2C21); 
-  static const bgDeep = Color(0xFF0A1F17); 
-  static const surface = Color(0xFF163E30); 
-  static const surfaceHi = Color(0xFF1F5240); 
-  static const darkBg = Color(0xFF05140F); 
+  static const bg = Color(0xFF0F2C21);
+  static const bgDeep = Color(0xFF0A1F17);
+  static const surface = Color(0xFF163E30);
+  static const surfaceHi = Color(0xFF1F5240);
+  static const darkBg = Color(0xFF05140F);
 
   // Dark mode text
-  static const textPrimary = Color(0xFFF4F6F5); 
-  static const textSub = Color(0xFFBCD0C9); 
-  static const textMuted = Color(0xFF7F9C91); 
+  static const textPrimary = Color(0xFFF4F6F5);
+  static const textSub = Color(0xFFBCD0C9);
+  static const textMuted = Color(0xFF7F9C91);
 
   // Borders
-  static const border = Color(0xFF2C6B54); 
+  static const border = Color(0xFF2C6B54);
 
   // Status colors
   // Gül kurusu/nar çiçeği pembe — ana aksan / vurgu rengi.
-  static const accent = Color(0xFFD81B60); 
+  static const accent = Color(0xFFD81B60);
   // İkincil yeşil aksan — yardımcı vurgu rengi.
-  static const violet = Color(0xFF81C784); 
+  static const violet = Color(0xFF81C784);
   // Doğru cevap rengi — YALNIZCA doğru cevap geri bildiriminde kullan.
   static const correct = Color(0xFF2E7D32); // Dengeli Yeşil
   // Yanlış cevap rengi — YALNIZCA yanlış cevap geri bildiriminde kullan.
@@ -102,13 +241,13 @@ class AppTheme {
   // ============ Light Mode Palette (Premium Sıcak Krem/Bej) ============
   // Yumuşak, modern ve göz yormayan, aynı zamanda renkleri patlatan arka planlar
   static const lightBg = Color(0xFFFAF7F0); // Sıcak krem arka plan
-  static const lightBgDeep = Color(0xFFEFECE3); 
-  static const lightSurface = Color(0xFFFFFFFF); 
-  static const lightSurfaceHi = Color(0xFFFAF8F5); 
-  static const lightBorder = Color(0xFFE6DEC9); 
-  static const lightTextPrimary = Color(0xFF14241C); 
-  static const lightTextSub = Color(0xFF384A41); 
-  static const lightTextMuted = Color(0xFF78857E); 
+  static const lightBgDeep = Color(0xFFEFECE3);
+  static const lightSurface = Color(0xFFFFFFFF);
+  static const lightSurfaceHi = Color(0xFFFAF8F5);
+  static const lightBorder = Color(0xFFE6DEC9);
+  static const lightTextPrimary = Color(0xFF14241C);
+  static const lightTextSub = Color(0xFF384A41);
+  static const lightTextMuted = Color(0xFF78857E);
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -212,7 +351,10 @@ class AppTheme {
     [Color(0xFFE0A96D), Color(0xFF966C3B)], // Edebiyat - parşömen / sıcak bej
     [Color(0xFF4C7063), Color(0xFF2B443B)], // Cografya - adaçayı yeşili
     [Color(0xFFD4AF37), Color(0xFF8C6D1F)], // Muzîk - sıcak altın sarısı
-    [Color(0xFFB83B5E), Color(0xFF6A2C38)], // Siyaset - asil mürdüm / nar çiçeği
+    [
+      Color(0xFFB83B5E),
+      Color(0xFF6A2C38),
+    ], // Siyaset - asil mürdüm / nar çiçeği
     [Color(0xFF3282B8), Color(0xFF0F4C81)], // Paradigma - derin klasik mavi
   ];
 
@@ -455,8 +597,8 @@ class AppTheme {
         bodySmall: base.textTheme.bodySmall?.copyWith(color: lightTextMuted),
       ),
       snackBarTheme: base.snackBarTheme.copyWith(
-        backgroundColor: const Color(0xFFFFFFFF),
-        contentTextStyle: const TextStyle(color: Color(0xFF172033)),
+        backgroundColor: lightSurface,
+        contentTextStyle: TextStyle(color: lightTextPrimary),
       ),
     );
   }
@@ -464,7 +606,8 @@ class AppTheme {
   // ============ Glassmorphism Helpers ============
 
   /// Glassmorphism efektli dekorasyon oluşturur.
-  static BoxDecoration glassDecoration(BuildContext context, {
+  static BoxDecoration glassDecoration(
+    BuildContext context, {
     double borderRadius = 16,
     double opacity = 0.12,
   }) {
@@ -493,11 +636,7 @@ class AppTheme {
   static const shimmerGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [
-      Color(0x33FFFFFF),
-      Color(0x11FFFFFF),
-      Color(0x33FFFFFF),
-    ],
+    colors: [Color(0x33FFFFFF), Color(0x11FFFFFF), Color(0x33FFFFFF)],
     stops: [0.0, 0.5, 1.0],
   );
 
@@ -556,7 +695,10 @@ class AppTheme {
   }
 
   /// Gradient arka planlı yuvarlak ikon konteyneri.
-  static BoxDecoration iconCircle(List<Color> gradientColors, {double size = 44}) {
+  static BoxDecoration iconCircle(
+    List<Color> gradientColors, {
+    double size = 44,
+  }) {
     return BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topLeft,
@@ -599,10 +741,7 @@ class AppTheme {
 
   /// Bölüm başlık aksanı — sol kenardaki renkli dikey çizgi.
   static BoxDecoration sectionAccent(Color color) {
-    return BoxDecoration(
-      borderRadius: BorderRadius.circular(2),
-      color: color,
-    );
+    return BoxDecoration(borderRadius: BorderRadius.circular(2), color: color);
   }
 
   /// Stat/metric kartı dekorasyonu (profil, sonuç ekranları).
@@ -610,9 +749,7 @@ class AppTheme {
     return BoxDecoration(
       color: surfaceColor(context),
       borderRadius: BorderRadius.circular(cardRadiusSmall),
-      border: Border.all(
-        color: accentColor.withValues(alpha: 0.2),
-      ),
+      border: Border.all(color: accentColor.withValues(alpha: 0.2)),
       boxShadow: [
         BoxShadow(
           color: accentColor.withValues(alpha: 0.08),
@@ -623,4 +760,3 @@ class AppTheme {
     );
   }
 }
-

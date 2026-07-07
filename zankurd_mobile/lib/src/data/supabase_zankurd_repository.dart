@@ -1331,7 +1331,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
               )
               as List<dynamic>;
       return res
-          .map((row) => Lesson.fromJson(row as Map<String, dynamic>))
+          .map((row) {
+            final map = Map<String, dynamic>.from(row as Map);
+            if (map['category'] == null || (map['category'] as String).isEmpty) {
+              map['category'] = category;
+            }
+            return Lesson.fromJson(map);
+          })
           .toList();
     } catch (e) {
       return _offline.loadLessonsByCategory(category);

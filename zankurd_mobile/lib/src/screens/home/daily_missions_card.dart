@@ -81,8 +81,7 @@ class DailyMissionsCard extends StatelessWidget {
                   ],
                 ),
               ),
-              if (!loading)
-                _MiniProgressRing(progress: totalProgress),
+              if (!loading) _MiniProgressRing(progress: totalProgress),
             ],
           ),
           const SizedBox(height: 16),
@@ -113,7 +112,9 @@ class _MiniProgressRing extends StatelessWidget {
           CircularProgressIndicator(
             value: progress,
             strokeWidth: 3.5,
-            backgroundColor: AppTheme.borderColor(context).withValues(alpha: 0.3),
+            backgroundColor: AppTheme.borderColor(
+              context,
+            ).withValues(alpha: 0.3),
             valueColor: AlwaysStoppedAnimation(color),
             strokeCap: StrokeCap.round,
           ),
@@ -144,18 +145,28 @@ class _MissionTile extends StatelessWidget {
     final isDone = mission.completed;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDone
-            ? AppTheme.gold.withValues(alpha: 0.08)
-            : AppTheme.surfaceColor(context).withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(12),
+            ? AppTheme.gold.withValues(alpha: 0.05)
+            : Colors.white.withValues(alpha: 0.03),
+        borderRadius: BorderRadius.circular(16), // AppRadius.lg
         border: Border.all(
           color: isDone
-              ? AppTheme.gold.withValues(alpha: 0.2)
-              : AppTheme.borderColor(context).withValues(alpha: 0.3),
+              ? AppTheme.gold.withValues(alpha: 0.16)
+              : Colors.white.withValues(alpha: 0.06),
+          width: 1.2,
         ),
+        boxShadow: isDone
+            ? [
+                BoxShadow(
+                  color: AppTheme.gold.withValues(alpha: 0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ]
+            : null,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,22 +174,22 @@ class _MissionTile extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 24,
-                height: 24,
+                width: 28,
+                height: 28,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: isDone
-                      ? AppTheme.gold.withValues(alpha: 0.15)
-                      : AppTheme.accent.withValues(alpha: 0.1),
+                      ? AppTheme.gold.withValues(alpha: 0.12)
+                      : AppTheme.accent.withValues(alpha: 0.08),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   isDone ? Icons.check_rounded : Icons.flag_rounded,
                   color: isDone ? AppTheme.gold : AppTheme.accent,
-                  size: 13,
+                  size: 14,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   label,
@@ -186,7 +197,7 @@ class _MissionTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w700,
                     color: isDone
                         ? AppTheme.gold
                         : AppTheme.textPrimaryColor(context),
@@ -197,20 +208,19 @@ class _MissionTile extends StatelessWidget {
               ),
               if (!isDone)
                 Padding(
-                  padding: const EdgeInsets.only(left: 6),
+                  padding: const EdgeInsets.only(left: 8),
                   child: Text(
                     '+${mission.coinReward}',
-                    style: TextStyle(
-                      fontSize: 12,
+                    style: const TextStyle(
+                      fontSize: 13,
                       color: AppTheme.gold,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                 ),
             ],
           ),
-
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: Stack(
@@ -218,7 +228,9 @@ class _MissionTile extends StatelessWidget {
                 Container(
                   height: 6,
                   decoration: BoxDecoration(
-                    color: AppTheme.surfaceHiColor(context),
+                    color: AppTheme.surfaceHiColor(
+                      context,
+                    ).withValues(alpha: 0.4),
                     borderRadius: BorderRadius.circular(6),
                   ),
                 ),
@@ -234,8 +246,8 @@ class _MissionTile extends StatelessWidget {
                       boxShadow: [
                         BoxShadow(
                           color: (isDone ? AppTheme.gold : AppTheme.accent)
-                              .withValues(alpha: 0.4),
-                          blurRadius: 6,
+                              .withValues(alpha: 0.3),
+                          blurRadius: 4,
                           offset: const Offset(0, 1),
                         ),
                       ],
@@ -245,13 +257,13 @@ class _MissionTile extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Text(
             '${mission.progress.clamp(0, mission.target)} / ${mission.target}',
             style: TextStyle(
-              fontSize: 11,
+              fontSize: 10.5,
               color: AppTheme.textMutedColor(context),
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],

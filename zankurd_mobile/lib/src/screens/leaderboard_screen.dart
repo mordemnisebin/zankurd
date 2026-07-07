@@ -538,7 +538,7 @@ class _RankRow extends StatelessWidget {
                 Text(
                   entry.showcaseTitle != null
                       ? '${entry.showcaseTitle} · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}'
-                      : '${entry.roomsPlayed} ${isKu ? "jûr" : "oda"}'
+                      : '${entry.roomsPlayed} ${isKu ? "ode" : "oda"}'
                             ' · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}',
                   style: TextStyle(
                     color: AppTheme.textMutedColor(context),

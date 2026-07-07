@@ -188,6 +188,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         _showConfetti = promotions.isNotEmpty;
       });
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
         for (final mission in completedMissions) {
           MissionToast.show(context, mission);
         }
@@ -303,8 +304,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     SizedBox(
                       width: double.infinity,
                       height: 48,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
+                      child: FilledButton(
+                        style: FilledButton.styleFrom(
                           backgroundColor: AppTheme.gold,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -614,8 +615,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               decoration: BoxDecoration(
                                 color: Colors.white.withValues(alpha: 0.18),
                                 borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.white.withValues(alpha: 0.25),
+                                  width: 1,
+                                ),
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.monetization_on_outlined,
                                 color: Colors.white,
                               ),
@@ -637,7 +642,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                         '+$value coin stendî',
                                         '+$value coin kazandın',
                                       ),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700,
                                         fontSize: 18,
@@ -649,7 +654,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                       'Xelata te di malperê de tê nûkirin.',
                                       'Ödül bakiyen ana ekranda güncellenir.',
                                     ),
-                                    style: TextStyle(color: Colors.white70),
+                                    style: const TextStyle(
+                                      color: Colors.white70,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -683,8 +690,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               decoration: BoxDecoration(
                                 color: Colors.white.withValues(alpha: 0.18),
                                 borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.white.withValues(alpha: 0.25),
+                                  width: 1,
+                                ),
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.bolt_rounded,
                                 color: Colors.white,
                               ),
@@ -703,7 +714,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                         '+$value XP bi dest xist',
                                         '+$value XP kazandın',
                                       ),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700,
                                         fontSize: 18,
@@ -715,7 +726,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                       'Asta te li ser profîlê tê nûkirin.',
                                       'Seviyen profil sayfasında güncellenir.',
                                     ),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white70,
                                       fontSize: 12,
                                     ),
@@ -748,15 +759,28 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         const SizedBox(height: 8),
                         Text(
                           context.s(
-                            'Pûanên te li jûrên online di tabloya pêşderçûnê de xuya dibin.',
+                            'Pûanên te li odeyên serhêl di tabloya pêşderçûnê de xuya dibin.',
                             'Puanların online odalarda liderlik tablosuna yansır.',
                           ),
-                          style: TextStyle(color: AppTheme.textMuted),
+                          style: TextStyle(
+                            color: AppTheme.textMutedColor(context),
+                          ),
                         ),
                         const SizedBox(height: 14),
                         SizedBox(
                           width: double.infinity,
                           child: FilledButton.icon(
+                            style: FilledButton.styleFrom(
+                              backgroundColor: AppTheme.accent,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  16,
+                                ), // AppRadius.lg
+                              ),
+                              elevation: 2,
+                            ),
                             onPressed: () {
                               Navigator.of(
                                 context,
@@ -765,6 +789,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             icon: const Icon(Icons.home_outlined),
                             label: Text(
                               context.s('Vegere malê', 'Ana ekrana dön'),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         ),
@@ -773,6 +801,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           children: [
                             Expanded(
                               child: OutlinedButton.icon(
+                                style: OutlinedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 14,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                ),
                                 onPressed: answerRecords.isEmpty
                                     ? null
                                     : () {
@@ -791,12 +827,24 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     'Bersivan Bibîne',
                                     'Cevapları İncele',
                                   ),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 13.5,
+                                  ),
                                 ),
                               ),
                             ),
                             const SizedBox(width: 8),
                             Expanded(
                               child: OutlinedButton.icon(
+                                style: OutlinedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 14,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                ),
                                 onPressed: () => ResultSharer.share(
                                   context,
                                   isKu: context.isKu,
@@ -807,7 +855,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   category: room.category,
                                 ),
                                 icon: const Icon(Icons.share_rounded),
-                                label: Text(context.s('Parve Bike', 'Paylaş')),
+                                label: Text(
+                                  context.s('Parve Bike', 'Paylaş'),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 13.5,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -816,6 +870,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         SizedBox(
                           width: double.infinity,
                           child: OutlinedButton.icon(
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
                             onPressed: () {
                               Navigator.of(context).push(
                                 AppRoute.to(
@@ -828,6 +888,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               context.s(
                                 'Tabloya Pêşderçûnê',
                                 'Liderlik Tablosu',
+                              ),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13.5,
                               ),
                             ),
                           ),
@@ -1102,31 +1166,32 @@ class _RaceStandingRow extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(top: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         color: isUser
             ? AppTheme.accent.withValues(alpha: 0.12)
             : AppTheme.bgOf(context).withValues(alpha: 0.35),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16), // AppRadius.lg
         border: Border.all(
           color: isUser
               ? AppTheme.accent.withValues(alpha: 0.45)
-              : AppTheme.borderColor(context),
+              : AppTheme.borderColor(context).withValues(alpha: 0.5),
+          width: 1.2,
         ),
       ),
       child: Row(
         children: [
           Container(
-            width: 30,
-            height: 30,
+            width: 32,
+            height: 32,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.16),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
               '$rank',
-              style: TextStyle(color: color, fontWeight: FontWeight.w700),
+              style: TextStyle(color: color, fontWeight: FontWeight.w800),
             ),
           ),
           const SizedBox(width: 10),
@@ -1146,7 +1211,7 @@ class _RaceStandingRow extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
               ),
             ),
           ),
@@ -1170,7 +1235,7 @@ class _RaceStandingRow extends StatelessWidget {
             '${player.score}',
             style: TextStyle(
               color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w800,
             ),
           ),
         ],
@@ -1197,23 +1262,36 @@ class _MetricItemCompact extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: iconColor, size: 18),
-        const SizedBox(height: 4),
+        Container(
+          width: 36,
+          height: 36,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.12),
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.18),
+              width: 1,
+            ),
+          ),
+          child: Icon(icon, color: iconColor, size: 16),
+        ),
+        const SizedBox(height: 6),
         Text(
           value,
           style: const TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
+            fontWeight: FontWeight.w900,
+            fontSize: 15,
           ),
         ),
-        const SizedBox(height: 1),
+        const SizedBox(height: 2),
         Text(
           label,
           style: TextStyle(
             color: Colors.white.withValues(alpha: 0.7),
             fontSize: 10,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ],

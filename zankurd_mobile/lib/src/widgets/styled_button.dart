@@ -26,24 +26,25 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
   @override
   Widget build(BuildContext context) {
     final isEnabled = widget.onPressed != null && !widget.isLoading;
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final disabledColor = isDarkMode ? const Color(0xFF404050) : const Color(0xFFE0E0E0);
-    
+    final disabledColor = AppColors.disabledSurface(context);
+
     final shadowColor = isEnabled
-        ? const Color(0xFFB54D35)
+        ? AppTheme.primaryGradientStart.withValues(alpha: 0.55)
         : disabledColor.withValues(alpha: 0.6);
 
     const double shadowHeight = 4.0;
 
     return GestureDetector(
       onTapDown: isEnabled ? (_) => setState(() => _isPressed = true) : null,
-      onTapUp: isEnabled ? (_) {
-        setState(() => _isPressed = false);
-        widget.onPressed?.call();
-      } : null,
+      onTapUp: isEnabled
+          ? (_) {
+              setState(() => _isPressed = false);
+              widget.onPressed?.call();
+            }
+          : null,
       onTapCancel: isEnabled ? () => setState(() => _isPressed = false) : null,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 50),
+        duration: const Duration(milliseconds: 90),
         curve: Curves.easeOut,
         height: 48,
         margin: EdgeInsets.only(
@@ -54,15 +55,8 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
           gradient: isEnabled
               ? AppTheme.accentGradient
               : LinearGradient(colors: [disabledColor, disabledColor]),
-          borderRadius: BorderRadius.circular(14),
-          boxShadow: [
-            if (!_isPressed)
-              BoxShadow(
-                color: shadowColor,
-                offset: const Offset(0, shadowHeight),
-                blurRadius: 0,
-              ),
-          ],
+          borderRadius: BorderRadius.circular(AppRadius.lg),
+          boxShadow: AppShadows.button(shadowColor, pressed: _isPressed),
         ),
         child: Center(
           child: Row(
@@ -92,7 +86,7 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      letterSpacing: 0.5,
+                      letterSpacing: 0,
                     ),
                   ),
                 ),

@@ -291,32 +291,49 @@ class _ScoreHeader extends StatelessWidget {
             tween: IntTween(begin: 0, end: score),
             duration: const Duration(milliseconds: 450),
             curve: Curves.easeOutCubic,
-            builder: (context, value, _) =>
-                _Metric(label: context.s('Pûan', 'Puan'), value: '$value'),
+            builder: (context, value, _) => _Metric(
+              label: context.s('Pûan', 'Puan'),
+              value: '$value',
+              icon: Icons.emoji_events_outlined,
+              iconColor: Colors.orange,
+            ),
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 8),
         Expanded(
           child: TweenAnimationBuilder<int>(
             tween: IntTween(begin: 0, end: streak),
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeOutCubic,
-            builder: (context, value, _) =>
-                _Metric(label: context.s('Rêz', 'Seri'), value: '$value'),
+            builder: (context, value, _) => _Metric(
+              label: context.s('Rêz', 'Seri'),
+              value: '$value',
+              icon: Icons.local_fire_department_outlined,
+              iconColor: Colors.redAccent,
+            ),
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 8),
         Expanded(
-          child: _Metric(label: context.s('Pirs', 'Soru'), value: progress),
+          child: _Metric(
+            label: context.s('Pirs', 'Soru'),
+            value: progress,
+            icon: Icons.help_outline_rounded,
+            iconColor: AppTheme.accent,
+          ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 8),
         Expanded(
           child: TweenAnimationBuilder<int>(
             tween: IntTween(begin: 0, end: coinBalance),
             duration: const Duration(milliseconds: 350),
             curve: Curves.easeOutCubic,
-            builder: (context, value, _) =>
-                _Metric(label: 'Coin', value: '$value'),
+            builder: (context, value, _) => _Metric(
+              label: 'Coin',
+              value: '$value',
+              icon: Icons.monetization_on_outlined,
+              iconColor: AppTheme.gold,
+            ),
           ),
         ),
       ],
@@ -517,30 +534,54 @@ class _DuelScoreHeader extends StatelessWidget {
 }
 
 class _Metric extends StatelessWidget {
-  const _Metric({required this.label, required this.value});
+  const _Metric({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.iconColor,
+  });
 
   final String label;
   final String value;
+  final IconData icon;
+  final Color iconColor;
 
   @override
   Widget build(BuildContext context) {
     return AppPanel(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+      color: AppTheme.surfaceHiColor(context).withValues(alpha: 0.5),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            value,
-            style: TextStyle(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w700,
-              fontSize: 20,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 14, color: iconColor),
+              const SizedBox(width: 4),
+              Flexible(
+                child: Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
           ),
+          const SizedBox(height: 4),
           Text(
             label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: AppTheme.textMutedColor(context),
-              fontSize: 12,
+              fontSize: 10.5,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],
@@ -700,8 +741,8 @@ class _AnswerButton extends StatelessWidget {
                         answer,
                         style: TextStyle(
                           color: textColor,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 15,
                         ),
                       ),
                     ),
@@ -756,26 +797,34 @@ class _AnswerButton extends StatelessWidget {
                     ],
                   ),
                 ],
-                if (opponentNamesWhoSelected != null && opponentNamesWhoSelected!.isNotEmpty) ...[
+                if (opponentNamesWhoSelected != null &&
+                    opponentNamesWhoSelected!.isNotEmpty) ...[
                   const SizedBox(height: 6),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: opponentNamesWhoSelected!.map((name) => Container(
-                      margin: const EdgeInsets.only(left: 4),
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text(
-                        '$name 👀',
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    )).toList(),
+                    children: opponentNamesWhoSelected!
+                        .map(
+                          (name) => Container(
+                            margin: const EdgeInsets.only(left: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2.5,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withValues(alpha: 0.15),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Text(
+                              '$name 👀',
+                              style: const TextStyle(
+                                fontSize: 10,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
                   ),
                 ],
               ],
@@ -955,12 +1004,18 @@ class _WildcardButtonState extends State<_WildcardButton> {
         : AppTheme.textMutedColor(context);
 
     return GestureDetector(
-      onTapDown: widget.isEnabled ? (_) => setState(() => _pressed = true) : null,
-      onTapUp: widget.isEnabled ? (_) {
-        setState(() => _pressed = false);
-        widget.onTap();
-      } : null,
-      onTapCancel: widget.isEnabled ? () => setState(() => _pressed = false) : null,
+      onTapDown: widget.isEnabled
+          ? (_) => setState(() => _pressed = true)
+          : null,
+      onTapUp: widget.isEnabled
+          ? (_) {
+              setState(() => _pressed = false);
+              widget.onTap();
+            }
+          : null,
+      onTapCancel: widget.isEnabled
+          ? () => setState(() => _pressed = false)
+          : null,
       child: AnimatedScale(
         scale: _pressed ? 0.94 : 1.0,
         duration: const Duration(milliseconds: 80),
@@ -985,7 +1040,9 @@ class _WildcardButtonState extends State<_WildcardButton> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: iconColor.withValues(alpha: widget.isEnabled ? 0.16 : 0.10),
+                    color: iconColor.withValues(
+                      alpha: widget.isEnabled ? 0.16 : 0.10,
+                    ),
                   ),
                   child: Icon(
                     widget.cantAfford ? Icons.lock_outline : widget.type.icon,
@@ -1122,7 +1179,7 @@ class _CircularTimerState extends State<_CircularTimer>
                             color: color.withValues(alpha: 0.4),
                             blurRadius: 10,
                             spreadRadius: 2,
-                          )
+                          ),
                         ]
                       : null,
                 ),
@@ -1144,7 +1201,7 @@ class _CircularTimerState extends State<_CircularTimer>
                                 Shadow(
                                   color: color.withValues(alpha: 0.8),
                                   blurRadius: 6,
-                                )
+                                ),
                               ]
                             : null,
                       ),
@@ -1228,87 +1285,217 @@ class _ExplanationBox extends StatelessWidget {
                 );
               },
               child: Container(
-                margin: const EdgeInsets.only(top: 12),
-                padding: const EdgeInsets.all(14),
+                margin: const EdgeInsets.only(top: 14),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppTheme.surfaceColor(context).withValues(alpha: 0.72),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppTheme.borderColor(context)),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.lightbulb_outline,
-                      color: AppTheme.correct,
-                      size: 20,
+                  color: AppTheme.surfaceColor(context).withValues(alpha: 0.85),
+                  borderRadius: BorderRadius.circular(16), // AppRadius.lg
+                  border: Border.all(
+                    color: AppTheme.correct.withValues(alpha: 0.3),
+                    width: 1.2,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.08),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
                     ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            isKu ? 'Bersiva rast' : 'Doğru cevap',
-                            style: const TextStyle(
-                              color: AppTheme.correct,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                            ),
-                          ),
-                          const SizedBox(height: 3),
-                          Text(
-                            question.correctAnswer,
-                            style: TextStyle(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Divider(
-                            height: 1,
-                            thickness: 1,
-                            color: AppTheme.borderColor(context),
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
+                  ],
+                ),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 200),
+                  child: SingleChildScrollView(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.lightbulb_outline,
+                          color: AppTheme.correct,
+                          size: 22,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(
-                                Icons.menu_book_outlined,
-                                size: 14,
-                                color: AppTheme.textSubColor(context),
+                              Text(
+                                isKu ? 'Bersiva rast' : 'Doğru cevap',
+                                style: const TextStyle(
+                                  color: AppTheme.correct,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 12,
+                                ),
                               ),
-                              const SizedBox(width: 5),
-                              Flexible(
-                                child: Text(
-                                  isKu ? 'Şîrove' : 'Açıklama',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
+                              const SizedBox(height: 4),
+                              Text(
+                                question.correctAnswer,
+                                style: TextStyle(
+                                  color: AppTheme.textPrimaryColor(context),
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.menu_book_outlined,
+                                    size: 14,
                                     color: AppTheme.textSubColor(context),
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 11,
-                                    letterSpacing: 0.3,
                                   ),
+                                  const SizedBox(width: 6),
+                                  Flexible(
+                                    child: Text(
+                                      isKu ? 'Şîrove' : 'Açıklama',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: AppTheme.textSubColor(context),
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 11,
+                                        letterSpacing: 0.3,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                question.getLocalizedExplanation(isKu),
+                                style: TextStyle(
+                                  color: AppTheme.textSubColor(context),
+                                  fontSize: 13,
+                                  height: 1.4,
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 5),
-                          Text(
-                            question.getLocalizedExplanation(isKu),
-                            style: TextStyle(
-                              color: AppTheme.textSubColor(context),
-                              height: 1.4,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             )
           : const SizedBox(width: double.infinity, height: 0),
+    );
+  }
+}
+
+// ─── Multiplayer Bekleme Overlay ────────────────────────────────────────────
+
+class _MultiplayerWaitingOverlay extends StatelessWidget {
+  const _MultiplayerWaitingOverlay({required this.isKu});
+
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        decoration: BoxDecoration(
+          color: AppTheme.surfaceHiColor(context),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: AppTheme.accent.withValues(alpha: 0.3),
+            width: 1.2,
+          ),
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2.5,
+                color: AppTheme.accent,
+              ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    isKu ? 'Bersiva te hat qeydkirin' : 'Cevabın kaydedildi',
+                    style: TextStyle(
+                      color: AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    isKu
+                        ? 'Li benda hevrik tê bendewarî...'
+                        : 'Diğer oyuncu bekleniyor...',
+                    style: TextStyle(
+                      color: AppTheme.textMutedColor(context),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.hourglass_top_rounded,
+              color: AppTheme.accent.withValues(alpha: 0.6),
+              size: 22,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Reveal Countdown ──────────────────────────────────────────────────────
+
+class _RevealCountdown extends StatelessWidget {
+  const _RevealCountdown({required this.seconds, required this.isKu});
+
+  final int seconds;
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: AppTheme.surfaceColor(context).withValues(alpha: 0.8),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: AppTheme.borderColor(context),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.skip_next_rounded,
+              color: AppTheme.textSubColor(context),
+              size: 18,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              isKu
+                  ? 'Pirsa nû: ${seconds}s'
+                  : 'Sonraki soru: ${seconds}s',
+              style: TextStyle(
+                color: AppTheme.textSubColor(context),
+                fontWeight: FontWeight.w700,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

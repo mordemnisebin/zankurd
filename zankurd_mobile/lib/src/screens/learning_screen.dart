@@ -276,6 +276,8 @@ class _LessonCard extends StatelessWidget {
                   children: [
                     Text(
                       lesson.titleKu,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: AppTheme.textPrimaryColor(context),
                         fontWeight: FontWeight.w700,

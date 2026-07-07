@@ -577,6 +577,8 @@ class _UserMatchCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   match.playerOneName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(context),
@@ -710,6 +712,7 @@ class _MatchRow extends StatelessWidget {
         Expanded(
           child: Text(
             match.playerOneName == 'TBD' ? placeholder : match.playerOneName,
+            maxLines: 1,
             style: nameStyle(match.playerOneId),
             overflow: TextOverflow.ellipsis,
           ),

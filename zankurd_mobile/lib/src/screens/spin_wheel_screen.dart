@@ -84,6 +84,18 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       can = await widget.repository.canSpinToday();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'canSpinToday failed');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              context.s(
+                'Rewşa çerxê nehat kontrolkirin.',
+                'Çark durumu kontrol edilemedi.',
+              ),
+            ),
+          ),
+        );
+      }
     }
     if (mounted) {
       setState(() {
