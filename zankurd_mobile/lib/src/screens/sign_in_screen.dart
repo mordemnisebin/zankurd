@@ -7,7 +7,7 @@ import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_logo.dart';
-import '../widgets/geometric_shapes.dart';
+import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/styled_button.dart';
 import '../widgets/styled_input.dart';
@@ -181,10 +181,8 @@ class _SignInScreenState extends State<SignInScreen>
     final screenSize = MediaQuery.sizeOf(context);
     final compact = screenSize.height < 900;
     final logoWidth = compact ? 118.0 : 200.0;
-    final topGap = compact ? 0.0 : 16.0;
-    final titleGap = compact ? 12.0 : 32.0;
-    final formGap = compact ? 16.0 : 40.0;
-    final actionGap = compact ? 12.0 : 28.0;
+    final topGap = compact ? 0.0 : AppSpacing.md;
+    final actionGap = compact ? AppSpacing.sm : AppSpacing.lg;
     final altGap = compact ? 8.0 : 20.0;
     final bottomGap = compact ? 14.0 : 32.0;
     const authInputLabelStyle = TextStyle(
@@ -240,65 +238,6 @@ class _SignInScreenState extends State<SignInScreen>
                 ),
               ),
             ),
-            // Geometric shape overlays
-            Positioned(
-              top: -60,
-              right: -80,
-              child: ScaleTransition(
-                scale: LoadAnimationSequence.logoScaleAnimation(
-                  _animationController,
-                ),
-                child: Container(
-                  width: 280,
-                  height: 280,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        AppTheme.accent.withValues(alpha: 0.08),
-                        AppTheme.violet.withValues(alpha: 0.04),
-                      ],
-                    ),
-                  ),
-                  child: ClipPath(
-                    clipper: OctagonClipper(),
-                    child: Container(
-                      color: AppTheme.accent.withValues(alpha: 0.05),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: -100,
-              left: -100,
-              child: ScaleTransition(
-                scale: LoadAnimationSequence.logoScaleAnimation(
-                  _animationController,
-                ),
-                child: Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomRight,
-                      end: Alignment.topLeft,
-                      colors: [
-                        AppTheme.violet.withValues(alpha: 0.08),
-                        AppTheme.accent.withValues(alpha: 0.04),
-                      ],
-                    ),
-                  ),
-                  child: ClipPath(
-                    clipper: DiamondClipper(),
-                    child: Container(
-                      color: AppTheme.violet.withValues(alpha: 0.05),
-                    ),
-                  ),
-                ),
-              ),
-            ),
             // Main content
             Positioned.fill(
               child: SafeArea(
@@ -338,7 +277,7 @@ class _SignInScreenState extends State<SignInScreen>
                                         ),
                                       ),
                                     ),
-                                    SizedBox(height: denseWide ? 8 : 24),
+                                    SizedBox(height: denseWide ? AppSpacing.xs : AppSpacing.lg),
                                     FadeTransition(
                                       opacity:
                                           LoadAnimationSequence.titleFadeAnimation(
@@ -351,39 +290,8 @@ class _SignInScreenState extends State<SignInScreen>
                                             _animationController,
                                           ).value,
                                         ),
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              context.s(
-                                                'Bi xêr hatî ZanKurdê',
-                                                'ZanKurd\'a Hoş Geldin',
-                                              ),
-                                              style: TextStyle(
-                                                color:
-                                                    AppTheme.textPrimaryColor(
-                                                      context,
-                                                    ),
-                                                fontWeight: FontWeight.w800,
-                                                fontSize: 28,
-                                                letterSpacing: 0,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            const SizedBox(height: 8),
-                                            Text(
-                                              context.s(
-                                                'Kurmancî hîn bibe û pêşbirkê bike',
-                                                'Kurmancî öğren ve yarışmaya katıl',
-                                              ),
-                                              style: TextStyle(
-                                                color: AppTheme.textSubColor(
-                                                  context,
-                                                ),
-                                                fontSize: 15,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ],
+                                        child: _SignInHeroBanner(
+                                          compact: denseWide,
                                         ),
                                       ),
                                     ),
@@ -394,7 +302,8 @@ class _SignInScreenState extends State<SignInScreen>
                             const SizedBox(width: 48),
                             Expanded(
                               flex: 6,
-                              child: Column(
+                              child: _AuthFormPanel(
+                                child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Align(
@@ -660,6 +569,7 @@ class _SignInScreenState extends State<SignInScreen>
                                   ),
                                 ],
                               ),
+                              ),
                             ),
                           ],
                         );
@@ -688,8 +598,7 @@ class _SignInScreenState extends State<SignInScreen>
                               child: AppLogo(width: logoWidth, onCard: true),
                             ),
                           ),
-                          SizedBox(height: titleGap),
-                          // Title and subtitle with animations
+                          SizedBox(height: compact ? AppSpacing.sm : AppSpacing.lg),
                           FadeTransition(
                             opacity: LoadAnimationSequence.titleFadeAnimation(
                               _animationController,
@@ -701,37 +610,14 @@ class _SignInScreenState extends State<SignInScreen>
                                   _animationController,
                                 ).value,
                               ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    context.s(
-                                      'Bi xêr hatî ZanKurdê',
-                                      'ZanKurd\'a Hoş Geldin',
-                                    ),
-                                    style: TextStyle(
-                                      color: AppTheme.textPrimaryColor(context),
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 26,
-                                      letterSpacing: 0,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    context.s(
-                                      'Kurmancî hîn bibe û pêşbirkê bike',
-                                      'Kurmancî öğren ve yarışmaya katıl',
-                                    ),
-                                    style: TextStyle(
-                                      color: AppTheme.textSubColor(context),
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              child: _SignInHeroBanner(compact: compact),
                             ),
                           ),
-                          SizedBox(height: formGap),
-                          // Google Sign In
+                          SizedBox(height: compact ? AppSpacing.md : AppSpacing.lg),
+                          _AuthFormPanel(
+                            child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
                           _GoogleSignInButton(
                             onPressed: authProvider.isLoading
                                 ? null
@@ -940,6 +826,9 @@ class _SignInScreenState extends State<SignInScreen>
                               ),
                             ],
                           ),
+                            ],
+                          ),
+                          ),
                           SizedBox(height: bottomGap),
                         ],
                       );
@@ -951,6 +840,91 @@ class _SignInScreenState extends State<SignInScreen>
           ],
         ),
       ),
+    );
+  }
+}
+
+class _SignInHeroBanner extends StatelessWidget {
+  const _SignInHeroBanner({required this.compact});
+
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(AppRadius.card),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(compact ? AppSpacing.md : AppSpacing.lg),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+          ),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
+          boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.1),
+        ),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: IgnorePointer(
+                child: CustomPaint(
+                  painter: KilimPatternPainter(
+                    drawPattern: true,
+                    color: Colors.white,
+                    opacity: 0.05,
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                Text(
+                  context.s('Bi xêr hatî ZanKurdê', 'ZanKurd\'a Hoş Geldin'),
+                  style: AppTypography.heading1.copyWith(
+                    color: Colors.white,
+                    fontSize: compact ? 22 : 26,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  context.s(
+                    'Kurmancî hîn bibe û pêşbirkê bike',
+                    'Kurmancî öğren ve yarışmaya katıl',
+                  ),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Colors.white.withValues(alpha: 0.78),
+                    fontSize: compact ? 13 : 14,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AuthFormPanel extends StatelessWidget {
+  const _AuthFormPanel({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.04),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+      ),
+      child: child,
     );
   }
 }
@@ -1130,13 +1104,14 @@ class _AuthScrollFrame extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth > 720;
-        final horizontalPadding = constraints.maxWidth < 380 ? 16.0 : 24.0;
+        final horizontalPadding =
+            constraints.maxWidth < 380 ? AppSpacing.md : AppSpacing.lg;
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(
             horizontalPadding,
             0,
             horizontalPadding,
-            24,
+            AppSpacing.lg,
           ),
           child: Center(
             child: ConstrainedBox(

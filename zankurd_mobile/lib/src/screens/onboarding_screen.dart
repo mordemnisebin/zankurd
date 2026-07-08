@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_logo.dart';
+import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/styled_button.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -100,8 +101,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   final compact = constraints.maxHeight < 560;
                   final wide = constraints.maxWidth >= 720;
                   final wideCompact = compact && wide;
-                  final horizontalPadding = wide ? 32.0 : 20.0;
-                  final verticalPadding = compact ? 4.0 : 8.0;
+                  final horizontalPadding = wide ? AppSpacing.xl : AppSpacing.page;
+                  final verticalPadding = compact ? AppSpacing.xxs : AppSpacing.xs;
                   final headerHeight = compact
                       ? 90.0
                       : (constraints.maxHeight < 720 ? 115.0 : 150.0);
@@ -164,10 +165,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                     ),
                                     child: Text(
                                       context.s('Derbas bike', 'Atla'),
-                                      style: const TextStyle(
+                                      style: AppTypography.caption.copyWith(
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 13,
-                                        letterSpacing: 0.2,
+                                        color: AppTheme.textMutedColor(context),
                                       ),
                                     ),
                                   ),
@@ -189,7 +189,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             ),
                           ),
                         ),
-                        SizedBox(height: compact ? 6 : 8),
+                        SizedBox(height: compact ? AppSpacing.xs : AppSpacing.xs),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -200,7 +200,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                 width: i == _page ? 28 : 8,
                                 height: 8,
                                 margin: const EdgeInsets.symmetric(
-                                  horizontal: 4,
+                                  horizontal: AppSpacing.xxs,
                                 ),
                                 decoration: BoxDecoration(
                                   gradient: i == _page
@@ -351,15 +351,14 @@ class _AnimatedBrandLockup extends StatelessWidget {
           children: [
             AppLogo(width: logoWidth, onCard: true),
             if (showTagline) ...[
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 context.s('Hîn bibe, pêş bike', 'Öğren, yarış, ilerle'),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: AppTypography.caption.copyWith(
                   color: AppTheme.textMutedColor(context),
-                  fontSize: 12,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.3,
                 ),
@@ -408,70 +407,103 @@ class _OnboardingPage extends StatelessWidget {
 
     return Column(
       children: [
-        // ── Hero blok (büyük ikon + gradient arka plan) ──────────────
         Expanded(
           flex: compact ? 40 : 45,
-          child: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(horizontal: 2),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  data.color.withValues(alpha: 0.18),
-                  data.color.withValues(alpha: 0.05),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            child: Container(
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 2),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+                ),
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.12),
+                  width: 1.2,
+                ),
+                boxShadow: AppTheme.glowShadow(
+                  data.color == AppTheme.gold ? AppTheme.gold : AppTheme.accent,
+                  intensity: 0.1,
+                ),
+              ),
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: CustomPaint(
+                        painter: KilimPatternPainter(
+                          drawPattern: true,
+                          color: Colors.white,
+                          opacity: 0.05,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: _OnboardingIcon(
+                      data: data,
+                      size: heroIconSize,
+                      iconSize: heroGlyphSize,
+                    ),
+                  ),
                 ],
-              ),
-              borderRadius: BorderRadius.circular(24),
-              border: Border.all(
-                color: data.color.withValues(alpha: 0.22),
-                width: 1.2,
-              ),
-            ),
-            child: Center(
-              child: _OnboardingIcon(
-                data: data,
-                size: heroIconSize,
-                iconSize: heroGlyphSize,
               ),
             ),
           ),
         ),
-        SizedBox(height: compact ? 16 : 22),
-        // ── Metin + değer maddeleri ──────────────────────────────────
+        SizedBox(height: compact ? AppSpacing.md : AppSpacing.lg),
         Expanded(
           flex: compact ? 60 : 55,
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: wideCompact
-                  ? CrossAxisAlignment.start
-                  : CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  data.title,
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w900,
-                    fontSize: titleSize,
-                    letterSpacing: -0.5,
-                    height: 1.15,
-                  ),
+                Row(
+                  children: [
+                    Container(
+                      width: 4,
+                      height: 22,
+                      margin: const EdgeInsets.only(right: AppSpacing.sm),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [data.color, data.color.withValues(alpha: 0.5)],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        data.title,
+                        style: AppTypography.heading1.copyWith(
+                          color: AppTheme.textPrimaryColor(context),
+                          fontSize: titleSize,
+                          letterSpacing: -0.5,
+                          height: 1.15,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: compact ? 6 : 8),
+                SizedBox(height: compact ? AppSpacing.xs : AppSpacing.xs),
                 Text(
                   data.body,
-                  style: TextStyle(
+                  style: AppTypography.bodyMedium.copyWith(
                     color: AppTheme.textSubColor(context),
                     fontSize: bodySize,
                     height: 1.5,
                   ),
                 ),
                 if (data.bullets.isNotEmpty) ...[
-                  SizedBox(height: compact ? 14 : 18),
+                  SizedBox(height: compact ? AppSpacing.cardGap : AppSpacing.md),
                   for (final bullet in data.bullets) ...[
                     _BulletRow(text: bullet, color: data.color),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.xs),
                   ],
                 ],
               ],
@@ -501,11 +533,11 @@ class _BulletRow extends StatelessWidget {
           height: 8,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.sm),
         Expanded(
           child: Text(
             text,
-            style: TextStyle(
+            style: AppTypography.bodyMedium.copyWith(
               color: AppTheme.textPrimaryColor(context),
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -531,6 +563,8 @@ class _OnboardingIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final glowColor =
+        data.color == AppTheme.gold ? AppTheme.gold : AppTheme.accent;
     return Container(
       width: size,
       height: size,
@@ -539,26 +573,23 @@ class _OnboardingIcon extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            data.color.withValues(alpha: 0.22),
-            data.color.withValues(alpha: 0.05),
+            glowColor.withValues(alpha: 0.28),
+            Colors.white.withValues(alpha: 0.08),
           ],
         ),
-        borderRadius: BorderRadius.circular(AppRadius.xl),
+        shape: BoxShape.circle,
         border: Border.all(
-          color: data.color.withValues(alpha: 0.4),
+          color: Colors.white.withValues(alpha: 0.22),
           width: 1.5,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: data.color.withValues(alpha: 0.2),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-            spreadRadius: -4,
-          ),
-        ],
+        boxShadow: AppTheme.glowShadow(glowColor, intensity: 0.18),
       ),
       child: Center(
-        child: Icon(data.icon, color: data.color, size: iconSize),
+        child: Icon(
+          data.icon,
+          color: data.color == AppTheme.gold ? AppTheme.gold : Colors.white,
+          size: iconSize,
+        ),
       ),
     );
   }
