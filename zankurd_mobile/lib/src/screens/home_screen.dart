@@ -751,9 +751,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 TextFormField(
                   controller: controller,
                   textCapitalization: TextCapitalization.characters,
-                  style: TextStyle(color: AppTheme.textPrimary),
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w700,
+                  ),
+                  cursorColor: AppTheme.accent,
                   decoration: InputDecoration(
                     labelText: ku ? 'Koda odeyê' : 'Oda kodu',
+                    labelStyle: TextStyle(color: AppTheme.textSubColor(context)),
+                    hintText: 'ZK-XXXX',
+                    hintStyle: TextStyle(color: AppTheme.textMutedColor(context)),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppTheme.borderColor(context)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppTheme.accent, width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                   validator: (value) {
                     if ((value ?? '').trim().isEmpty) {
