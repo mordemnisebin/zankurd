@@ -5,7 +5,7 @@ import '../animations/load_animations.dart';
 import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
-import '../widgets/geometric_shapes.dart';
+import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/styled_button.dart';
 import '../widgets/styled_input.dart';
@@ -176,10 +176,11 @@ class _SignUpScreenState extends State<SignUpScreen>
     final glowColor1 = AppTheme.gold.withValues(alpha: 0.08);
     final glowColor2 = AppTheme.secondaryAccent.withValues(alpha: 0.12);
 
-    return Scaffold(
-      body: Stack(
+    return Theme(
+      data: AppTheme.dark(),
+      child: Scaffold(
+        body: Stack(
         children: [
-          // Dark gradient background
           Container(
             decoration: const BoxDecoration(
               gradient: AppTheme.darkAuthGradient,
@@ -215,65 +216,6 @@ class _SignUpScreenState extends State<SignUpScreen>
               ),
             ),
           ),
-          // Geometric shape overlays
-          Positioned(
-            top: -60,
-            right: -80,
-            child: ScaleTransition(
-              scale: LoadAnimationSequence.logoScaleAnimation(
-                _animationController,
-              ),
-              child: Container(
-                width: 280,
-                height: 280,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      AppTheme.accent.withValues(alpha: 0.08),
-                      AppTheme.violet.withValues(alpha: 0.04),
-                    ],
-                  ),
-                ),
-                child: ClipPath(
-                  clipper: OctagonClipper(),
-                  child: Container(
-                    color: AppTheme.accent.withValues(alpha: 0.05),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -100,
-            left: -100,
-            child: ScaleTransition(
-              scale: LoadAnimationSequence.logoScaleAnimation(
-                _animationController,
-              ),
-              child: Container(
-                width: 300,
-                height: 300,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomRight,
-                    end: Alignment.topLeft,
-                    colors: [
-                      AppTheme.violet.withValues(alpha: 0.08),
-                      AppTheme.accent.withValues(alpha: 0.04),
-                    ],
-                  ),
-                ),
-                child: ClipPath(
-                  clipper: DiamondClipper(),
-                  child: Container(
-                    color: AppTheme.violet.withValues(alpha: 0.05),
-                  ),
-                ),
-              ),
-            ),
-          ),
           // Main content
           SafeArea(
             child: _AuthScrollFrame(
@@ -282,16 +224,14 @@ class _SignUpScreenState extends State<SignUpScreen>
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const SizedBox(height: 16),
-                      // Progress hexagons
+                      const SizedBox(height: AppSpacing.md),
                       ScaleTransition(
                         scale: LoadAnimationSequence.logoScaleAnimation(
                           _animationController,
                         ),
                         child: _ProgressIndicator(currentStep: _currentStep),
                       ),
-                      const SizedBox(height: 32),
-                      // Title and subtitle with animations
+                      const SizedBox(height: AppSpacing.lg),
                       FadeTransition(
                         opacity: LoadAnimationSequence.titleFadeAnimation(
                           _animationController,
@@ -303,42 +243,23 @@ class _SignUpScreenState extends State<SignUpScreen>
                               _animationController,
                             ).value,
                           ),
-                          child: Column(
-                            children: [
-                              Text(
-                                context.s(
-                                  'Hesabê xwe biafirîne',
-                                  'Hesabını oluştur',
-                                ),
-                                style: TextStyle(
-                                  color: AppTheme.textPrimaryColor(context),
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 24,
-                                  letterSpacing: -0.5,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                _getStepSubtitle(context),
-                                style: TextStyle(
-                                  color: AppTheme.textSubColor(context),
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
+                          child: _SignUpHeroBanner(
+                            subtitle: _getStepSubtitle(context),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 32),
-                      // Form content based on current step
+                      const SizedBox(height: AppSpacing.lg),
+                      _AuthFormPanel(
+                        child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
                       FadeTransition(
                         opacity: LoadAnimationSequence.formField1FadeAnimation(
                           _animationController,
                         ),
                         child: _buildStepContent(context),
                       ),
-                      const SizedBox(height: 32),
-                      // Navigation buttons
+                      const SizedBox(height: AppSpacing.lg),
                       Row(
                         children: [
                           if (_currentStep > 0)
@@ -364,7 +285,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                                 child: Text(context.s('Paş', 'Geri')),
                               ),
                             ),
-                          if (_currentStep > 0) const SizedBox(width: 12),
+                          if (_currentStep > 0) const SizedBox(width: AppSpacing.sm),
                           Expanded(
                             child: GeometricGradientButton(
                               label: _currentStep == 2
@@ -386,8 +307,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                           ),
                         ],
                       ),
-                      const SizedBox(height: 24),
-                      // Sign In link
+                      const SizedBox(height: AppSpacing.lg),
                       Wrap(
                         alignment: WrapAlignment.center,
                         crossAxisAlignment: WrapCrossAlignment.center,
@@ -415,7 +335,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                           ),
                         ],
                       ),
-                      const SizedBox(height: 32),
+                        ],
+                      ),
+                      ),
+                      const SizedBox(height: AppSpacing.xl),
                     ],
                   );
                 },
@@ -423,6 +346,7 @@ class _SignUpScreenState extends State<SignUpScreen>
             ),
           ),
         ],
+        ),
       ),
     );
   }
@@ -589,26 +513,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 
     if (_currentStep > 2) return stepWidget;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context).withValues(alpha: 0.35),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.08),
-          width: 1.2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
-            spreadRadius: -4,
-          ),
-        ],
-      ),
-      child: stepWidget,
-    );
+    return stepWidget;
   }
 }
 
@@ -623,9 +528,9 @@ class _ProgressIndicator extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _ProgressHexagon(number: 1, isActive: currentStep >= 0),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.xs),
         _ProgressHexagon(number: 2, isActive: currentStep >= 1),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.xs),
         _ProgressHexagon(number: 3, isActive: currentStep >= 2),
       ],
     );
@@ -694,25 +599,104 @@ class _ReviewItem extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: AppTypography.caption.copyWith(
             color: AppTheme.textSubColor(context),
             fontWeight: FontWeight.w600,
-            fontSize: 13,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.xs),
         Expanded(
           child: Text(
             value,
-            style: TextStyle(
+            style: AppTypography.caption.copyWith(
               color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w500,
-              fontSize: 13,
             ),
             overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SignUpHeroBanner extends StatelessWidget {
+  const _SignUpHeroBanner({required this.subtitle});
+
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(AppRadius.card),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+          ),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
+          boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.1),
+        ),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: IgnorePointer(
+                child: CustomPaint(
+                  painter: KilimPatternPainter(
+                    drawPattern: true,
+                    color: Colors.white,
+                    opacity: 0.05,
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                Text(
+                  context.s('Hesabê xwe biafirîne', 'Hesabını oluştur'),
+                  style: AppTypography.heading1.copyWith(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  subtitle,
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Colors.white.withValues(alpha: 0.78),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AuthFormPanel extends StatelessWidget {
+  const _AuthFormPanel({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.04),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+      ),
+      child: child,
     );
   }
 }
@@ -726,13 +710,14 @@ class _AuthScrollFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final horizontalPadding = constraints.maxWidth < 380 ? 16.0 : 24.0;
+        final horizontalPadding =
+            constraints.maxWidth < 380 ? AppSpacing.md : AppSpacing.lg;
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(
             horizontalPadding,
             0,
             horizontalPadding,
-            24,
+            AppSpacing.lg,
           ),
           child: Center(
             child: ConstrainedBox(
