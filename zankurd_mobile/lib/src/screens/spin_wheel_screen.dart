@@ -12,6 +12,7 @@ import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/confetti_overlay.dart';
+import '../widgets/kilim_pattern_painter.dart';
 
 class SpinWheelScreen extends StatefulWidget {
   const SpinWheelScreen({required this.repository, super.key});
@@ -207,19 +208,86 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       child: CircularProgressIndicator(color: AppTheme.accent),
                     )
                   : ListView(
-                      padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.page,
+                        AppSpacing.xs,
+                        AppSpacing.page,
+                        AppSpacing.lg,
+                      ),
                       children: [
-                        Text(
-                          ku
-                              ? 'Her roj carekê bizivirîne, coin qezenc bike!'
-                              : 'Her gün bir kez çevir, coin kazan!',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppTheme.textSubColor(context),
-                            fontSize: 15,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(AppRadius.card),
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(AppSpacing.lg),
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  AppTheme.secondaryAccent,
+                                  AppTheme.bgDeep,
+                                ],
+                              ),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.12),
+                              ),
+                              boxShadow: AppTheme.glowShadow(
+                                AppTheme.gold,
+                                intensity: 0.12,
+                              ),
+                            ),
+                            child: Stack(
+                              children: [
+                                Positioned.fill(
+                                  child: IgnorePointer(
+                                    child: CustomPaint(
+                                      painter: KilimPatternPainter(
+                                        drawPattern: true,
+                                        color: Colors.white,
+                                        opacity: 0.05,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    Icon(
+                                      Icons.casino_outlined,
+                                      color: AppTheme.gold.withValues(
+                                        alpha: 0.9,
+                                      ),
+                                      size: 32,
+                                    ),
+                                    const SizedBox(height: AppSpacing.sm),
+                                    Text(
+                                      ku
+                                          ? 'Her roj carekê bizivirîne!'
+                                          : 'Her gün bir kez çevir!',
+                                      textAlign: TextAlign.center,
+                                      style: AppTypography.heading2.copyWith(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const SizedBox(height: AppSpacing.xxs),
+                                    Text(
+                                      ku
+                                          ? 'Coin qezenc bike û seriyê xwe bidomîne'
+                                          : 'Coin kazan ve serini sürdür',
+                                      textAlign: TextAlign.center,
+                                      style: AppTypography.bodyMedium.copyWith(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.75,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: AppSpacing.lg),
                         SizedBox(
                           height: 320,
                           child: Stack(
@@ -283,7 +351,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                             ],
                           ),
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: AppSpacing.lg),
                         if (_wonAmount != null) ...[
                           AppPanel(
                             gradient: AppTheme.goldGradient,
@@ -310,10 +378,10 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                               ],
                             ),
                           ),
-                          const SizedBox(height: 14),
+                          const SizedBox(height: AppSpacing.cardGap),
                         ],
                         SizedBox(
-                          height: 54,
+                          height: 52,
                           child: FilledButton.icon(
                             onPressed: (_canSpin && !_spinning) ? _spin : null,
                             icon: _spinning
@@ -332,9 +400,8 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                   : _canSpin
                                   ? (ku ? 'Bizivirîne!' : 'Çevir!')
                                   : (ku ? 'Sibê dîsa were!' : 'Yarın tekrar gel!'),
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16,
+                              style: AppTypography.bodyLarge.copyWith(
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -401,14 +468,14 @@ class _WheelPainter extends CustomPainter {
   final double angle;
 
   static const _colors = [
-    Color(0xFF7C3AED),
-    Color(0xFFE94560),
-    Color(0xFF2563EB),
-    Color(0xFF10B981),
-    Color(0xFF06B6D4),
-    Color(0xFFF59E0B),
-    Color(0xFFBD1E3B),
-    Color(0xFF5B21B6),
+    AppTheme.secondaryAccent,
+    AppTheme.accent,
+    AppTheme.primaryGradientStart,
+    AppTheme.correct,
+    AppTheme.cyan,
+    AppTheme.gold,
+    AppTheme.wrong,
+    AppTheme.violet,
   ];
 
   @override

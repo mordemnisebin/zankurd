@@ -91,30 +91,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         child: SafeArea(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.page,
+              AppSpacing.xs,
+              AppSpacing.page,
+              AppSpacing.lg,
+            ),
             children: [
+              _SettingsPageHeader(
+                title: ku ? 'Vebijarkên Te' : 'Tercihlerin',
+                subtitle: ku
+                    ? 'Hesab, dîmen û dengê xwe birêve bibe'
+                    : 'Hesap, görünüm ve ses tercihlerini yönet',
+              ),
+              const SizedBox(height: AppSpacing.md),
+
               // ============ HESAP / ACCOUNT ============
-              _SectionLabel(ku ? 'Hesap' : 'Hesap'),
+              _SettingsSectionHeader(label: ku ? 'Hesap' : 'Hesap'),
               AppPanel(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Icon(Icons.badge_outlined, color: AppTheme.accent),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            ku ? 'Navê lîstikê' : 'Oyuncu Adı',
-                            style: TextStyle(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ),
-                      ],
+                    _SettingsIconTitle(
+                      icon: Icons.badge_outlined,
+                      color: AppTheme.accent,
+                      title: ku ? 'Navê lîstikê' : 'Oyuncu Adı',
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: AppSpacing.sm),
                     TextField(
                       key: const ValueKey('settings-player-name-field'),
                       controller: _nameController,
@@ -130,7 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       textInputAction: TextInputAction.done,
                       onSubmitted: (_) => _savePlayerName(),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.sm),
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton.icon(
@@ -153,7 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.cardGap),
 
               // Hesap Silme (kırmızı/uyarı stili ile ayrı görselleştirme, Hesap grubunun altında)
               AppPanel(
@@ -254,176 +257,131 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.cardGap),
 
               // ============ GÖRÜNÜM / APPEARANCE ============
-              _SectionLabel(ku ? 'Dîmen' : 'Görünüm'),
-              // Language
+              _SettingsSectionHeader(label: ku ? 'Dîmen' : 'Görünüm'),
               AppPanel(
-                child: Row(
+                padding: EdgeInsets.zero,
+                child: Column(
                   children: [
-                    Icon(Icons.language, color: AppTheme.violet),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        ku ? 'Zimanê sepanê' : 'Uygulama dili',
-                        style: TextStyle(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
+                    _SettingsToggleRow(
+                      icon: Icons.language,
+                      color: AppTheme.violet,
+                      title: ku ? 'Zimanê sepanê' : 'Uygulama dili',
+                      trailing: _LangSwitch(),
                     ),
-                    _LangSwitch(),
+                    Divider(
+                      height: 1,
+                      indent: 56,
+                      color: AppTheme.borderColor(context),
+                    ),
+                    Consumer<ThemeProvider>(
+                      builder: (context, themeProvider, _) =>
+                          _SettingsToggleRow(
+                            icon: themeProvider.isDark
+                                ? Icons.dark_mode_outlined
+                                : Icons.light_mode_outlined,
+                            color: AppTheme.violet,
+                            title: ku
+                                ? 'Modê tarî/ronahî'
+                                : 'Karanlık/Aydınlık mod',
+                            trailing: Switch(
+                              value: themeProvider.isDark,
+                              onChanged: (_) {
+                                themeProvider.toggleDarkLight();
+                              },
+                            ),
+                          ),
+                    ),
                   ],
                 ),
               ),
-              const SizedBox(height: 14),
-
-              // Tema geçişi
-              Consumer<ThemeProvider>(
-                builder: (context, themeProvider, _) => AppPanel(
-                  child: Row(
-                    children: [
-                      Icon(
-                        themeProvider.isDark
-                            ? Icons.dark_mode_outlined
-                            : Icons.light_mode_outlined,
-                        color: AppTheme.violet,
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          ku ? 'Modê tarî/ronahî' : 'Karanlık/Aydınlık mod',
-                          style: TextStyle(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ),
-                      Switch(
-                        value: themeProvider.isDark,
-                        onChanged: (_) {
-                          themeProvider.toggleDarkLight();
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.cardGap),
 
               // ============ SES & BİLDİRİM / SOUND & NOTIFICATIONS ============
-              _SectionLabel(ku ? 'Deng û Agahdarî' : 'Ses & Bildirim'),
-              Consumer<SoundProvider>(
-                builder: (context, sound, _) => AppPanel(
-                  child: Row(
-                    children: [
-                      Icon(
-                        sound.enabled
+              _SettingsSectionHeader(
+                label: ku ? 'Deng û Agahdarî' : 'Ses & Bildirim',
+              ),
+              AppPanel(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    Consumer<SoundProvider>(
+                      builder: (context, sound, _) => _SettingsToggleRow(
+                        icon: sound.enabled
                             ? Icons.volume_up_outlined
                             : Icons.volume_off_outlined,
                         color: AppTheme.accent,
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          ku ? 'Deng û mûzîk' : 'Ses efektleri',
-                          style: TextStyle(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w800,
-                          ),
+                        title: ku ? 'Deng û mûzîk' : 'Ses efektleri',
+                        trailing: Switch(
+                          value: sound.enabled,
+                          onChanged: (_) => sound.toggle(),
                         ),
                       ),
-                      Switch(
-                        value: sound.enabled,
-                        onChanged: (_) {
-                          sound.toggle();
-                        },
+                    ),
+                    Divider(
+                      height: 1,
+                      indent: 56,
+                      color: AppTheme.borderColor(context),
+                    ),
+                    _SettingsToggleRow(
+                      icon: _notificationsEnabled
+                          ? Icons.notifications_active_outlined
+                          : Icons.notifications_off_outlined,
+                      color: AppTheme.violet,
+                      title: ku ? 'Bîranîna rojane' : 'Günlük hatırlatıcı',
+                      subtitle: ku
+                          ? 'Her roj di demjimêr $_notificationTime de'
+                          : 'Her gün saat $_notificationTime',
+                      trailing: Switch(
+                        value: _notificationsEnabled,
+                        onChanged: _toggleNotifications,
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 14),
-
-              // Bildirim ayarları
-              AppPanel(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          _notificationsEnabled
-                              ? Icons.notifications_active_outlined
-                              : Icons.notifications_off_outlined,
-                          color: AppTheme.violet,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                ku ? 'Bîranîna rojane' : 'Günlük hatırlatıcı',
-                                style: TextStyle(
-                                  color: AppTheme.textPrimaryColor(context),
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                              Text(
-                                ku
-                                    ? 'Her roj di demjimêr $_notificationTime de'
-                                    : 'Her gün saat $_notificationTime',
-                                style: TextStyle(
-                                  color: AppTheme.textMutedColor(context),
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Switch(
-                          value: _notificationsEnabled,
-                          onChanged: (value) => _toggleNotifications(value),
-                        ),
-                      ],
                     ),
                     if (_notificationsEnabled) ...[
-                      const SizedBox(height: 8),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(8),
-                        onTap: _pickNotificationTime,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppTheme.surfaceHiColor(context),
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: AppTheme.borderColor(context),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          AppSpacing.md,
+                          0,
+                          AppSpacing.md,
+                          AppSpacing.md,
+                        ),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
+                          onTap: _pickNotificationTime,
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppSpacing.sm,
+                              vertical: AppSpacing.xs,
                             ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.access_time_outlined,
-                                color: AppTheme.violet,
-                                size: 18,
+                            decoration: BoxDecoration(
+                              color: AppTheme.surfaceHiColor(context),
+                              borderRadius: BorderRadius.circular(AppRadius.sm),
+                              border: Border.all(
+                                color: AppTheme.borderColor(context),
                               ),
-                              const SizedBox(width: 8),
-                              Text(
-                                ku
-                                    ? 'Demê biguherîne: $_notificationTime'
-                                    : 'Saati değiştir: $_notificationTime',
-                                style: TextStyle(
-                                  color: AppTheme.textPrimaryColor(context),
-                                  fontWeight: FontWeight.w600,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.access_time_outlined,
+                                  color: AppTheme.violet,
+                                  size: 18,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: AppSpacing.xs),
+                                Text(
+                                  ku
+                                      ? 'Demê biguherîne: $_notificationTime'
+                                      : 'Saati değiştir: $_notificationTime',
+                                  style: AppTypography.bodyMedium.copyWith(
+                                    color: AppTheme.textPrimaryColor(context),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -431,10 +389,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.cardGap),
 
               // ============ HAKKINDA / ABOUT ============
-              _SectionLabel(ku ? 'Derbarê Sepanê' : 'Uygulama Hakkında'),
+              _SettingsSectionHeader(
+                label: ku ? 'Derbarê Sepanê' : 'Uygulama Hakkında',
+              ),
               // How to play
               _ExpandableSection(
                 icon: Icons.help_outline_rounded,
@@ -454,7 +414,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           '• 50/50 jokeri iki yanlış cevabı eler.\n'
                           '• Doğru cevap puan ve coin kazandırır; seri bonusu artırır.',
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.cardGap),
 
               // Privacy
               _ExpandableSection(
@@ -480,7 +440,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           'Hesabını ve tüm verilerini kalıcı sildirmek için: '
                           'nisebinbawer47@gmail.com',
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.cardGap),
 
               // About (includes version)
               AppPanel(
@@ -824,23 +784,174 @@ class _LangChip extends StatelessWidget {
   }
 }
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
+class _SettingsPageHeader extends StatelessWidget {
+  const _SettingsPageHeader({required this.title, required this.subtitle});
+
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, AppSpacing.xs, 4, 0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 4,
+            height: 36,
+            margin: const EdgeInsets.only(right: AppSpacing.sm),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(2),
+              gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [AppTheme.accent, AppTheme.primaryGradientEnd],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTypography.heading1.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xxs),
+                Text(
+                  subtitle,
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppTheme.textMutedColor(context),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SettingsSectionHeader extends StatelessWidget {
+  const _SettingsSectionHeader({required this.label});
 
   final String label;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(4, 4, 4, 6),
+      padding: const EdgeInsets.fromLTRB(4, AppSpacing.xs, 4, AppSpacing.xs),
       child: Text(
         label.toUpperCase(),
-        style: TextStyle(
+        style: AppTypography.caption.copyWith(
           color: AppTheme.textMutedColor(context),
-          fontSize: 11,
-          fontWeight: FontWeight.w700,
-          letterSpacing: 0.8,
+          letterSpacing: 1.1,
         ),
+      ),
+    );
+  }
+}
+
+class _SettingsIconTitle extends StatelessWidget {
+  const _SettingsIconTitle({
+    required this.icon,
+    required this.color,
+    required this.title,
+  });
+
+  final IconData icon;
+  final Color color;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 34,
+          height: 34,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.14),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
+          ),
+          child: Icon(icon, color: color, size: 18),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: Text(
+            title,
+            style: AppTypography.bodyLarge.copyWith(
+              color: AppTheme.textPrimaryColor(context),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SettingsToggleRow extends StatelessWidget {
+  const _SettingsToggleRow({
+    required this.icon,
+    required this.color,
+    required this.title,
+    required this.trailing,
+    this.subtitle,
+  });
+
+  final IconData icon;
+  final Color color;
+  final String title;
+  final String? subtitle;
+  final Widget trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Row(
+        children: [
+          Container(
+            width: 34,
+            height: 34,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+            ),
+            child: Icon(icon, color: color, size: 18),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTypography.bodyLarge.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                  ),
+                ),
+                if (subtitle != null) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle!,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textMutedColor(context),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          trailing,
+        ],
       ),
     );
   }
@@ -868,17 +979,30 @@ class _ExpandableSection extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: ExpansionTile(
-            leading: Icon(icon, color: iconColor),
+            leading: Container(
+              width: 34,
+              height: 34,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: iconColor.withValues(alpha: 0.14),
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+              ),
+              child: Icon(icon, color: iconColor, size: 18),
+            ),
             iconColor: AppTheme.textSubColor(context),
             collapsedIconColor: AppTheme.textMutedColor(context),
             title: Text(
               title,
-              style: TextStyle(
+              style: AppTypography.bodyLarge.copyWith(
                 color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w800,
               ),
             ),
-            childrenPadding: const EdgeInsets.fromLTRB(18, 0, 18, 16),
+            childrenPadding: const EdgeInsets.fromLTRB(
+              AppSpacing.page,
+              0,
+              AppSpacing.page,
+              AppSpacing.md,
+            ),
             children: [
               Align(
                 alignment: Alignment.centerLeft,

@@ -7,6 +7,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../widgets/kilim_pattern_painter.dart';
 import 'quiz_screen.dart';
 
 /// Günlük turnuva: 16 oyuncu, 4 tur, tur başına 4 soruluk maç.
@@ -299,17 +300,22 @@ class _TournamentScreenState extends State<TournamentScreen> {
     final roundNames = _roundNames(ku);
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(18, 12, 18, 24),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.page,
+        AppSpacing.sm,
+        AppSpacing.page,
+        AppSpacing.lg,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _StatusCard(bracket: bracket, ku: ku),
           if (bracket.status == 'won') ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.md),
             _ChampionBanner(ku: ku),
           ],
           if (userMatch != null) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.md),
             _UserMatchCard(
               match: userMatch,
               roundName: roundNames[bracket.currentRound],
@@ -318,16 +324,11 @@ class _TournamentScreenState extends State<TournamentScreen> {
               onStart: _startMatch,
             ),
           ],
-          const SizedBox(height: 24),
-          Text(
-            ku ? 'Şemaya Turnuvayê' : 'Turnuva Şeması',
-            style: TextStyle(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w800,
-              fontSize: 16,
-            ),
+          const SizedBox(height: AppSpacing.lg),
+          _TournamentSectionTitle(
+            title: ku ? 'Şemaya Turnuvayê' : 'Turnuva Şeması',
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.sm),
           for (var i = 0; i < bracket.rounds.length; i++) ...[
             _RoundSection(
               title: roundNames[i],
@@ -335,18 +336,11 @@ class _TournamentScreenState extends State<TournamentScreen> {
               userId: _userId,
               ku: ku,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.md),
           ],
           if (_standings.isNotEmpty) ...[
-            Text(
-              ku ? 'Rêzkirin' : 'Sıralama',
-              style: TextStyle(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w800,
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 12),
+            _TournamentSectionTitle(title: ku ? 'Rêzkirin' : 'Sıralama'),
+            const SizedBox(height: AppSpacing.sm),
             ..._standings.map((s) => _StandingRow(s: s)),
           ],
         ],
@@ -365,81 +359,109 @@ class _LobbyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 96,
-              height: 96,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFFFD54F), Color(0xFFFF8F00)],
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFFFF8F00).withValues(alpha: 0.4),
-                    blurRadius: 24,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
               ),
-              child: const Icon(
-                Icons.emoji_events_rounded,
-                color: Colors.white,
-                size: 52,
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.12),
               ),
+              boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.14),
             ),
-            const SizedBox(height: 20),
-            Text(
-              ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
-              style: TextStyle(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w900,
-                fontSize: 24,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              ku
-                  ? '16 lîstikvan · 4 tur · her maç ${TournamentConfig.questionsPerMatch} pirs'
-                  : '16 oyuncu · 4 tur · her maç ${TournamentConfig.questionsPerMatch} soru',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppTheme.textSubColor(context),
-                fontSize: 14,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              ku
-                  ? 'Şampiyon dibe xwediyê kûpayê!'
-                  : 'Şampiyon kupanın sahibi olur!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppTheme.textMutedColor(context),
-                fontSize: 13,
-              ),
-            ),
-            const SizedBox(height: 28),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: onStart,
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: Text(
-                  ku ? 'Dest Bi Turnuvayê Bike' : 'Turnuvaya Başla',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 16,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: IgnorePointer(
+                    child: CustomPaint(
+                      painter: KilimPatternPainter(
+                        drawPattern: true,
+                        color: Colors.white,
+                        opacity: 0.05,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Column(
+                  children: [
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: AppTheme.goldGradient,
+                        boxShadow: AppTheme.glowShadow(
+                          AppTheme.gold,
+                          intensity: 0.3,
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.emoji_events_rounded,
+                        color: Colors.white,
+                        size: 44,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(
+                      ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
+                      textAlign: TextAlign.center,
+                      style: AppTypography.heading1.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      ku
+                          ? '16 lîstikvan · 4 tur · ${TournamentConfig.questionsPerMatch} pirs/maç'
+                          : '16 oyuncu · 4 tur · ${TournamentConfig.questionsPerMatch} soru/maç',
+                      textAlign: TextAlign.center,
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: Colors.white.withValues(alpha: 0.78),
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xxs),
+                    Text(
+                      ku
+                          ? 'Şampiyon dibe xwediyê kûpayê!'
+                          : 'Şampiyon kupanın sahibi olur!',
+                      textAlign: TextAlign.center,
+                      style: AppTypography.caption.copyWith(
+                        color: Colors.white.withValues(alpha: 0.65),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.lg),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton(
+                        onPressed: onStart,
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: AppSpacing.md,
+                          ),
+                          backgroundColor: AppTheme.gold,
+                          foregroundColor: AppTheme.bgDeep,
+                        ),
+                        child: Text(
+                          ku ? 'Dest Bi Turnuvayê Bike' : 'Turnuvaya Başla',
+                          style: AppTypography.bodyLarge.copyWith(
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -468,40 +490,36 @@ class _StatusCard extends StatelessWidget {
             children: [
               Text(
                 ku ? 'Rewş' : 'Durum',
-                style: TextStyle(
+                style: AppTypography.caption.copyWith(
                   color: AppTheme.textMutedColor(context),
-                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               Text(
                 statusLabel,
-                style: TextStyle(
+                style: AppTypography.heading2.copyWith(
                   color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w700,
                 ),
               ),
             ],
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                ku ? 'Tur' : 'Tur',
-                style: TextStyle(
-                  color: AppTheme.textMutedColor(context),
-                  fontSize: 12,
-                ),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.sm,
+              vertical: AppSpacing.xxs,
+            ),
+            decoration: BoxDecoration(
+              color: AppTheme.accent.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+              border: Border.all(
+                color: AppTheme.accent.withValues(alpha: 0.28),
               ),
-              Text(
-                '${(bracket.currentRound + 1).clamp(1, bracket.rounds.length)}'
-                '/${bracket.rounds.length}',
-                style: const TextStyle(
-                  color: AppTheme.accent,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16,
-                ),
-              ),
-            ],
+            ),
+            child: Text(
+              '${(bracket.currentRound + 1).clamp(1, bracket.rounds.length)}'
+              '/${bracket.rounds.length}',
+              style: AppTypography.bodyLarge.copyWith(color: AppTheme.accent),
+            ),
           ),
         ],
       ),
@@ -517,23 +535,21 @@ class _ChampionBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppPanel(
+      gradient: AppTheme.goldGradient,
       child: Row(
         children: [
           const Icon(
             Icons.emoji_events_rounded,
-            color: Color(0xFFFFB300),
+            color: Colors.white,
             size: 32,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
               ku
                   ? 'Pîroz be! Tu şampiyonê Kûpaya ZanKurd î!'
                   : 'Tebrikler! ZanKurd Kupası şampiyonusun!',
-              style: TextStyle(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w800,
-              ),
+              style: AppTypography.heading2.copyWith(color: Colors.white),
             ),
           ),
         ],
@@ -732,6 +748,41 @@ class _MatchRow extends StatelessWidget {
             textAlign: TextAlign.end,
             style: nameStyle(match.playerTwoId),
             overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TournamentSectionTitle extends StatelessWidget {
+  const _TournamentSectionTitle({required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 4,
+          height: 22,
+          margin: const EdgeInsets.only(right: AppSpacing.sm),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(2),
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [AppTheme.accent, AppTheme.primaryGradientEnd],
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            title,
+            style: AppTypography.heading2.copyWith(
+              color: AppTheme.textPrimaryColor(context),
+            ),
           ),
         ),
       ],

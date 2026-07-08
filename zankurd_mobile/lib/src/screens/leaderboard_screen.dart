@@ -9,6 +9,7 @@ import '../models/leaderboard_period.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_state.dart';
+import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/player_avatar.dart';
 import 'quiz_screen.dart';
 
@@ -146,10 +147,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                   }
                   return ListView(
                     controller: widget.scrollController,
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.page,
+                      AppSpacing.xs,
+                      AppSpacing.page,
+                      AppSpacing.xl,
+                    ),
                     children: [
                       _Podium(entries: entries.take(3).toList(), isKu: ku),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.cardGap),
                       for (final e in entries.skip(3))
                         _RankRow(entry: e, isKu: ku),
                     ],
@@ -175,14 +181,19 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 16, 4),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.page,
+        AppSpacing.lg,
+        AppSpacing.md,
+        AppSpacing.xxs,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: 4,
             height: 44,
-            margin: const EdgeInsets.only(right: 12, top: 2),
+            margin: const EdgeInsets.only(right: AppSpacing.sm, top: 2),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(2),
               gradient: const LinearGradient(
@@ -198,21 +209,18 @@ class _Header extends StatelessWidget {
               children: [
                 Text(
                   ku ? 'Tabloya Pêşderiyan' : 'Liderlik Tablosu',
-                  style: TextStyle(
+                  style: AppTypography.heading1.copyWith(
                     color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w900,
-                    fontSize: 24,
-                    letterSpacing: -0.5,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacing.xxs),
                 Text(
                   ku
                       ? 'Her 30 çirkeyî nûve dibe'
                       : 'Her 30 saniyede güncellenir',
-                  style: TextStyle(
+                  style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
-                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
@@ -221,7 +229,7 @@ class _Header extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: AppTheme.surfaceHiColor(context),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
               border: Border.all(
                 color: AppTheme.borderColor(context).withValues(alpha: 0.5),
               ),
@@ -256,11 +264,16 @@ class _PeriodTabs extends StatelessWidget {
         : ['Günlük', 'Haftalık', 'Aylık'];
 
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-      height: 42,
+      margin: const EdgeInsets.fromLTRB(
+        AppSpacing.page,
+        AppSpacing.xs,
+        AppSpacing.page,
+        AppSpacing.xxs,
+      ),
+      height: 44,
       decoration: BoxDecoration(
         color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         border: Border.all(
           color: AppTheme.gold.withValues(alpha: 0.22),
           width: 1,
@@ -270,17 +283,15 @@ class _PeriodTabs extends StatelessWidget {
         controller: controller,
         labelColor: AppTheme.textPrimaryColor(context),
         unselectedLabelColor: AppTheme.textMutedColor(context),
-        labelStyle: const TextStyle(
+        labelStyle: AppTypography.bodyMedium.copyWith(
           fontWeight: FontWeight.w800,
-          fontSize: 13.5,
         ),
-        unselectedLabelStyle: const TextStyle(
+        unselectedLabelStyle: AppTypography.bodyMedium.copyWith(
           fontWeight: FontWeight.w600,
-          fontSize: 13.5,
         ),
         indicator: BoxDecoration(
           color: AppTheme.gold.withValues(alpha: 0.16),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
             color: AppTheme.gold.withValues(alpha: 0.46),
             width: 1.2,
@@ -315,37 +326,47 @@ class _Podium extends StatelessWidget {
       if (third != null) _PodiumSlot(entry: third, isCenter: false),
     ];
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF211B0D), Color(0xFF243323), Color(0xFF102F28)],
-          stops: [0.0, 0.6, 1.0],
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(AppRadius.card),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.sm,
+          AppSpacing.md,
+          AppSpacing.sm,
+          AppSpacing.md,
         ),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.12),
-          width: 1.2,
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+          ),
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.12),
+            width: 1.2,
+          ),
+          boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.14),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: AppTheme.gold.withValues(alpha: 0.20),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
-            spreadRadius: -4,
-          ),
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: slots.map((s) => Expanded(child: s)).toList(),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: IgnorePointer(
+                child: CustomPaint(
+                  painter: KilimPatternPainter(
+                    drawPattern: true,
+                    color: Colors.white,
+                    opacity: 0.05,
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: slots.map((s) => Expanded(child: s)).toList(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -409,7 +430,7 @@ class _PodiumSlot extends StatelessWidget {
               const SizedBox(height: 6),
               Text(
                 entry.displayName,
-                style: TextStyle(
+                style: AppTypography.bodyLarge.copyWith(
                   color: AppTheme.textPrimary,
                   fontWeight: FontWeight.w800,
                   fontSize: nameFontSz,
@@ -484,18 +505,17 @@ class _RankRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(16),
+      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      decoration: AppTheme.statCard(context, AppTheme.gold).copyWith(
         border: Border.all(
           color: entry.rank <= 10
-              ? AppTheme.gold.withValues(alpha: 0.18)
-              : AppTheme.borderColor(context).withValues(alpha: 0.5),
-          width: 1,
+              ? AppTheme.gold.withValues(alpha: 0.22)
+              : AppTheme.borderColor(context).withValues(alpha: 0.45),
         ),
-        boxShadow: AppTheme.softShadow(context),
       ),
       child: Row(
         children: [
