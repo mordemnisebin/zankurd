@@ -231,91 +231,116 @@ class _AppShellState extends State<AppShell> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.surfaceColor(context),
-          border: Border(
-            top: BorderSide(
-              color: AppTheme.borderColor(context).withValues(alpha: 0.3),
-              width: 0.5,
+      bottomNavigationBar: NavigationBarTheme(
+        data: NavigationBarThemeData(
+          height: 68,
+          backgroundColor: AppTheme.surfaceColor(context),
+          surfaceTintColor: Colors.transparent,
+          shadowColor: Colors.black.withValues(alpha: 0.12),
+          elevation: 8,
+          labelTextStyle: WidgetStateProperty.resolveWith((states) {
+            final selected = states.contains(WidgetState.selected);
+            return TextStyle(
+              fontSize: 11,
+              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+              letterSpacing: 0.1,
+            );
+          }),
+          iconTheme: WidgetStateProperty.resolveWith((states) {
+            final selected = states.contains(WidgetState.selected);
+            return IconThemeData(
+              size: selected ? 26 : 24,
+              color: selected
+                  ? AppTheme.accent
+                  : AppTheme.textMutedColor(context),
+            );
+          }),
+          indicatorColor: AppTheme.accent.withValues(alpha: 0.12),
+          indicatorShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          overlayColor: WidgetStateProperty.all(
+            AppTheme.accent.withValues(alpha: 0.06),
+          ),
+        ),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: AppTheme.borderColor(context).withValues(alpha: 0.25),
+                width: 0.5,
+              ),
             ),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 20,
-              offset: const Offset(0, -4),
-            ),
-          ],
-        ),
-        child: NavigationBar(
-          selectedIndex: _tab,
-          onDestinationSelected: (i) {
-            if (_tab == i) {
-              final controller = switch (i) {
-                0 => _homeScrollController,
-                1 => _categoriesScrollController,
-                2 => _learningScrollController,
-                3 => _leaderboardScrollController,
-                4 => _profileScrollController,
-                _ => null,
-              };
-              if (controller != null && controller.hasClients) {
-                controller.animateTo(
-                  0.0,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                );
+          child: NavigationBar(
+            selectedIndex: _tab,
+            onDestinationSelected: (i) {
+              if (_tab == i) {
+                final controller = switch (i) {
+                  0 => _homeScrollController,
+                  1 => _categoriesScrollController,
+                  2 => _learningScrollController,
+                  3 => _leaderboardScrollController,
+                  4 => _profileScrollController,
+                  _ => null,
+                };
+                if (controller != null && controller.hasClients) {
+                  controller.animateTo(
+                    0.0,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  );
+                }
+              } else {
+                if (i == 0) _homeRefresh.value++;
+                if (i == 3) _leaderboardRefresh.value++;
+                if (i == 4) _profileRefresh.value++;
+                setState(() => _tab = i);
               }
-            } else {
-              if (i == 0) _homeRefresh.value++;
-              if (i == 3) _leaderboardRefresh.value++;
-              if (i == 4) _profileRefresh.value++;
-              setState(() => _tab = i);
-            }
-          },
-          destinations: [
-            NavigationDestination(
-              icon: KeyedSubtree(
-                key: _homeNavKey,
-                child: const Icon(Icons.home_outlined),
+            },
+            destinations: [
+              NavigationDestination(
+                icon: KeyedSubtree(
+                  key: _homeNavKey,
+                  child: const Icon(Icons.home_outlined),
+                ),
+                selectedIcon: const Icon(Icons.home),
+                label: ku ? 'Sereke' : 'Ana Sayfa',
               ),
-              selectedIcon: const Icon(Icons.home),
-              label: ku ? 'Sereke' : 'Ana Sayfa',
-            ),
-            NavigationDestination(
-              icon: KeyedSubtree(
-                key: _categoriesNavKey,
-                child: const Icon(Icons.grid_view_outlined),
+              NavigationDestination(
+                icon: KeyedSubtree(
+                  key: _categoriesNavKey,
+                  child: const Icon(Icons.grid_view_outlined),
+                ),
+                selectedIcon: const Icon(Icons.grid_view),
+                label: ku ? 'Kategorî' : 'Kategoriler',
               ),
-              selectedIcon: const Icon(Icons.grid_view),
-              label: ku ? 'Kategorî' : 'Kategoriler',
-            ),
-            NavigationDestination(
-              icon: KeyedSubtree(
-                key: _learningNavKey,
-                child: const Icon(Icons.school_outlined),
+              NavigationDestination(
+                icon: KeyedSubtree(
+                  key: _learningNavKey,
+                  child: const Icon(Icons.school_outlined),
+                ),
+                selectedIcon: const Icon(Icons.school),
+                label: ku ? 'Xwendin' : 'Öğren',
               ),
-              selectedIcon: const Icon(Icons.school),
-              label: ku ? 'Xwendin' : 'Öğren',
-            ),
-            NavigationDestination(
-              icon: KeyedSubtree(
-                key: _leaderboardNavKey,
-                child: const Icon(Icons.leaderboard_outlined),
+              NavigationDestination(
+                icon: KeyedSubtree(
+                  key: _leaderboardNavKey,
+                  child: const Icon(Icons.leaderboard_outlined),
+                ),
+                selectedIcon: const Icon(Icons.leaderboard),
+                label: ku ? 'Pêşbaz' : 'Liderlik',
               ),
-              selectedIcon: const Icon(Icons.leaderboard),
-              label: ku ? 'Pêşbaz' : 'Liderlik',
-            ),
-            NavigationDestination(
-              icon: KeyedSubtree(
-                key: _profileNavKey,
-                child: const Icon(Icons.person_outline),
+              NavigationDestination(
+                icon: KeyedSubtree(
+                  key: _profileNavKey,
+                  child: const Icon(Icons.person_outline),
+                ),
+                selectedIcon: const Icon(Icons.person),
+                label: ku ? 'Profîl' : 'Profil',
               ),
-              selectedIcon: const Icon(Icons.person),
-              label: ku ? 'Profîl' : 'Profil',
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

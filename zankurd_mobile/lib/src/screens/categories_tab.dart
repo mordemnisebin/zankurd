@@ -329,15 +329,22 @@ class _CategoryCardState extends State<_CategoryCard>
                         right: AppSpacing.md,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
+                            horizontal: 9,
+                            vertical: 5,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.42),
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
+                            color: Colors.black.withValues(alpha: 0.50),
+                            borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: AppTheme.gold.withValues(alpha: 0.4),
+                              color: AppTheme.gold.withValues(alpha: 0.55),
                             ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppTheme.gold.withValues(alpha: 0.18),
+                                blurRadius: 10,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -352,10 +359,12 @@ class _CategoryCardState extends State<_CategoryCard>
                                 widget.isKu
                                     ? widget.masteryLevel.titleKu
                                     : widget.masteryLevel.titleTr,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 9,
-                                  fontWeight: FontWeight.w700,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w800,
                                 ),
                               ),
                             ],
@@ -387,33 +396,53 @@ class _CategoryCardState extends State<_CategoryCard>
                             child: Icon(icon, color: Colors.white, size: 25),
                           ),
                           const Spacer(),
-                          Text(
-                            CategoryNames.localized(
-                              widget.category,
-                              widget.isKu,
-                            ),
-                            style: AppTypography.categoryTitle,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: AppSpacing.sm),
                           Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.24),
-                              borderRadius: BorderRadius.circular(AppRadius.sm),
+                              color: Colors.black.withValues(alpha: 0.26),
+                              borderRadius: BorderRadius.circular(16),
                               border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.16),
+                                color: Colors.white.withValues(alpha: 0.12),
                               ),
                             ),
-                            child: Text(
-                              widget.isKu
-                                  ? '5 ast • pêşbaz'
-                                  : '5 seviye • yarış',
-                              style: AppTypography.categoryMeta,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  CategoryNames.localized(
+                                    widget.category,
+                                    widget.isKu,
+                                  ),
+                                  style: AppTypography.categoryTitle,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: AppSpacing.sm),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.layers_outlined,
+                                      color: Colors.white.withValues(
+                                        alpha: 0.82,
+                                      ),
+                                      size: 13,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Flexible(
+                                      child: Text(
+                                        widget.isKu
+                                            ? '5 ast • pêşbaz'
+                                            : '5 seviye • yarış',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTypography.categoryMeta,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ],

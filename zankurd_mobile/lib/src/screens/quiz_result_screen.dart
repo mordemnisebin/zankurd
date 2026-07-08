@@ -366,7 +366,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         : (AppTheme.isLight(context)
               ? AppTheme.surfaceHiColor(context)
               : const Color(0xFF13222F)); // Premium dark navy / petrol tone
-        
+
     final borderColor = is1v1
         ? (isWinner
               ? AppTheme.correct.withValues(alpha: 0.45)
@@ -435,6 +435,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       color: headerColor,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: borderColor, width: 1.2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: borderColor.withValues(alpha: 0.18),
+                          blurRadius: 24,
+                          offset: const Offset(0, 10),
+                          spreadRadius: -10,
+                        ),
+                      ],
                     ),
                     padding: const EdgeInsets.all(20),
                     child: Stack(
@@ -445,7 +453,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           child: Icon(
                             headerIcon,
                             size: 90,
-                            color: AppTheme.textPrimaryColor(context).withValues(alpha: 0.05),
+                            color: AppTheme.textPrimaryColor(
+                              context,
+                            ).withValues(alpha: 0.05),
                           ),
                         ),
                         Column(
@@ -453,11 +463,24 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           children: [
                             Row(
                               children: [
-                                Icon(headerIcon,
+                                Container(
+                                  width: 30,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: AppTheme.surfaceColor(context),
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: AppTheme.borderColor(context),
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    headerIcon,
                                     color: AppTheme.isLight(context)
                                         ? AppTheme.lightTextPrimary
                                         : Colors.white,
-                                    size: 16),
+                                    size: 16,
+                                  ),
+                                ),
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
@@ -479,6 +502,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             const SizedBox(height: 14),
                             Text(
                               '$score',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: AppTheme.textPrimaryColor(context),
                                 fontWeight: FontWeight.w800,
@@ -489,6 +514,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             const SizedBox(height: 6),
                             Text(
                               '${CategoryNames.localized(room.category, context.isKu)} · ${room.code}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: AppTheme.textSubColor(context),
                                 fontSize: 13,
@@ -504,7 +531,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               decoration: BoxDecoration(
                                 color: AppTheme.surfaceColor(context),
                                 borderRadius: BorderRadius.circular(99),
-                                border: Border.all(color: AppTheme.borderColor(context)),
+                                border: Border.all(
+                                  color: AppTheme.borderColor(context),
+                                ),
                               ),
                               child: Text(
                                 context.s(
@@ -549,6 +578,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Flexible(
+                                  fit: FlexFit.tight,
                                   child: _MetricItemCompact(
                                     icon: Icons.check_circle_outline,
                                     label: context.s('Rast', 'Doğru'),
@@ -557,6 +587,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 ),
                                 Flexible(
+                                  fit: FlexFit.tight,
                                   child: _MetricItemCompact(
                                     icon: Icons.cancel_outlined,
                                     label: context.s('Şaş', 'Yanlış'),
@@ -565,6 +596,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 ),
                                 Flexible(
+                                  fit: FlexFit.tight,
                                   child: _MetricItemCompact(
                                     icon: Icons.hourglass_empty_rounded,
                                     label: context.s('Vala', 'Boş'),
@@ -573,6 +605,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 ),
                                 Flexible(
+                                  fit: FlexFit.tight,
                                   child: _MetricItemCompact(
                                     icon: Icons.local_fire_department_outlined,
                                     label: context.s('Baştirîn', 'En İyi'),
@@ -665,94 +698,114 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         child: Stack(
                           children: [
                             Container(
-                              padding: const EdgeInsets.only(left: 19, top: 16, right: 16, bottom: 16),
+                              padding: const EdgeInsets.only(
+                                left: 19,
+                                top: 16,
+                                right: 16,
+                                bottom: 16,
+                              ),
                               decoration: BoxDecoration(
                                 color: AppTheme.surfaceHiColor(context),
-                                border: Border.all(color: AppTheme.gold.withValues(alpha: 0.18)),
+                                border: Border.all(
+                                  color: AppTheme.gold.withValues(alpha: 0.18),
+                                ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppTheme.gold.withValues(alpha: 0.05),
+                                    color: AppTheme.gold.withValues(
+                                      alpha: 0.05,
+                                    ),
                                     blurRadius: 12,
                                     offset: const Offset(0, 4),
                                   ),
                                 ],
                               ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 46,
-                              height: 46,
-                              decoration: BoxDecoration(
-                                color: AppTheme.surfaceColor(context),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: AppTheme.borderColor(context),
-                                  width: 1,
-                                ),
-                              ),
-                              child: const Icon(
-                                Icons.monetization_on_outlined,
-                                color: AppTheme.gold,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Row(
                                 children: [
-                                  TweenAnimationBuilder<int>(
-                                    tween: IntTween(
-                                      begin: 0,
-                                      end: coinsAwarded,
+                                  Container(
+                                    width: 46,
+                                    height: 46,
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.surfaceColor(context),
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: AppTheme.borderColor(context),
+                                        width: 1,
+                                      ),
                                     ),
-                                    duration: const Duration(milliseconds: 800),
-                                    curve: Curves.easeOut,
-                                    builder: (context, value, _) => Text(
-                                      context.s(
-                                        '+$value coin stendî',
-                                        '+$value coin kazandın',
-                                      ),
-                                      style: TextStyle(
-                                        color: AppTheme.textPrimaryColor(context),
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 18,
-                                      ),
+                                    child: const Icon(
+                                      Icons.monetization_on_outlined,
+                                      color: AppTheme.gold,
                                     ),
                                   ),
-                                  Text(
-                                    context.s(
-                                      'Xelata te di malperê de tê nûkirin.',
-                                      'Ödül bakiyen ana ekranda güncellenir.',
-                                    ),
-                                    style: TextStyle(
-                                      color: AppTheme.textSubColor(context),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TweenAnimationBuilder<int>(
+                                          tween: IntTween(
+                                            begin: 0,
+                                            end: coinsAwarded,
+                                          ),
+                                          duration: const Duration(
+                                            milliseconds: 800,
+                                          ),
+                                          curve: Curves.easeOut,
+                                          builder: (context, value, _) => Text(
+                                            context.s(
+                                              '+$value coin stendî',
+                                              '+$value coin kazandın',
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: AppTheme.textPrimaryColor(
+                                                context,
+                                              ),
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          context.s(
+                                            'Xelata te di malperê de tê nûkirin.',
+                                            'Ödül bakiyen ana ekranda güncellenir.',
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: AppTheme.textSubColor(
+                                              context,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
                             ),
+                            // Sol gold accent çizgisi
+                            Positioned(
+                              left: 0,
+                              top: 0,
+                              bottom: 0,
+                              child: Container(
+                                width: 3,
+                                decoration: const BoxDecoration(
+                                  color: AppTheme.gold,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(16),
+                                    bottomLeft: Radius.circular(16),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                      // Sol gold accent çizgisi
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        bottom: 0,
-                        child: Container(
-                          width: 3,
-                          decoration: const BoxDecoration(
-                            color: AppTheme.gold,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              bottomLeft: Radius.circular(16),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -770,92 +823,117 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         child: Stack(
                           children: [
                             Container(
-                              padding: const EdgeInsets.only(left: 19, top: 16, right: 16, bottom: 16),
+                              padding: const EdgeInsets.only(
+                                left: 19,
+                                top: 16,
+                                right: 16,
+                                bottom: 16,
+                              ),
                               decoration: BoxDecoration(
                                 color: AppTheme.surfaceHiColor(context),
-                                border: Border.all(color: AppTheme.accent.withValues(alpha: 0.18)),
+                                border: Border.all(
+                                  color: AppTheme.accent.withValues(
+                                    alpha: 0.18,
+                                  ),
+                                ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppTheme.accent.withValues(alpha: 0.05),
+                                    color: AppTheme.accent.withValues(
+                                      alpha: 0.05,
+                                    ),
                                     blurRadius: 12,
                                     offset: const Offset(0, 4),
                                   ),
                                 ],
                               ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 46,
-                              height: 46,
-                              decoration: BoxDecoration(
-                                color: AppTheme.surfaceColor(context),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: AppTheme.borderColor(context),
-                                  width: 1,
-                                ),
-                              ),
-                              child: Icon(
-                                Icons.bolt_rounded,
-                                color: AppTheme.accent,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Row(
                                 children: [
-                                  TweenAnimationBuilder<int>(
-                                    tween: IntTween(begin: 0, end: _earnedXP),
-                                    duration: const Duration(milliseconds: 800),
-                                    curve: Curves.easeOut,
-                                    builder: (context, value, _) => Text(
-                                      context.s(
-                                        '+$value XP bi dest xist',
-                                        '+$value XP kazandın',
+                                  Container(
+                                    width: 46,
+                                    height: 46,
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.surfaceColor(context),
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: AppTheme.borderColor(context),
+                                        width: 1,
                                       ),
-                                      style: TextStyle(
-                                        color: AppTheme.textPrimaryColor(context),
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 18,
-                                      ),
+                                    ),
+                                    child: Icon(
+                                      Icons.bolt_rounded,
+                                      color: AppTheme.accent,
                                     ),
                                   ),
-                                  Text(
-                                    context.s(
-                                      'Asta te li ser profîlê tê nûkirin.',
-                                      'Seviyen profil sayfasında güncellenir.',
-                                    ),
-                                    style: TextStyle(
-                                      color: AppTheme.textSubColor(context),
-                                      fontSize: 12,
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TweenAnimationBuilder<int>(
+                                          tween: IntTween(
+                                            begin: 0,
+                                            end: _earnedXP,
+                                          ),
+                                          duration: const Duration(
+                                            milliseconds: 800,
+                                          ),
+                                          curve: Curves.easeOut,
+                                          builder: (context, value, _) => Text(
+                                            context.s(
+                                              '+$value XP bi dest xist',
+                                              '+$value XP kazandın',
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: AppTheme.textPrimaryColor(
+                                                context,
+                                              ),
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          context.s(
+                                            'Asta te li ser profîlê tê nûkirin.',
+                                            'Seviyen profil sayfasında güncellenir.',
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: AppTheme.textSubColor(
+                                              context,
+                                            ),
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
                             ),
+                            // Sol accent (pink) çizgisi
+                            Positioned(
+                              left: 0,
+                              top: 0,
+                              bottom: 0,
+                              child: Container(
+                                width: 3,
+                                decoration: const BoxDecoration(
+                                  color: AppTheme.accent,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(16),
+                                    bottomLeft: Radius.circular(16),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                      // Sol accent (pink) çizgisi
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        bottom: 0,
-                        child: Container(
-                          width: 3,
-                          decoration: const BoxDecoration(
-                            color: AppTheme.accent,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              bottomLeft: Radius.circular(16),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -869,6 +947,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             'Rêzbendiyê bişopîne',
                             'Sıralamaya devam et',
                           ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w700,
@@ -881,6 +961,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             'Pûanên te li odeyên serhêl di tabloya pêşderçûnê de xuya dibin.',
                             'Puanların online odalarda liderlik tablosuna yansır.',
                           ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: AppTheme.textMutedColor(context),
                           ),
@@ -946,6 +1028,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     'Bersivan Bibîne',
                                     'Cevapları İncele',
                                   ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 13.5,
@@ -976,6 +1060,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 icon: const Icon(Icons.share_rounded),
                                 label: Text(
                                   context.s('Parve Bike', 'Paylaş'),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 13.5,
@@ -1008,6 +1094,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 'Tabloya Pêşderçûnê',
                                 'Liderlik Tablosu',
                               ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 13.5,
@@ -1239,7 +1327,11 @@ class _MasteryPromotions extends StatelessWidget {
 }
 
 class _ResultRewardChip extends StatelessWidget {
-  const _ResultRewardChip({required this.icon, required this.label, required this.color});
+  const _ResultRewardChip({
+    required this.icon,
+    required this.label,
+    required this.color,
+  });
 
   final IconData icon;
   final String label;
@@ -1390,10 +1482,7 @@ class _MetricItemCompact extends StatelessWidget {
           decoration: BoxDecoration(
             color: fg.withValues(alpha: 0.10),
             shape: BoxShape.circle,
-            border: Border.all(
-              color: fg.withValues(alpha: 0.16),
-              width: 1,
-            ),
+            border: Border.all(color: fg.withValues(alpha: 0.16), width: 1),
           ),
           child: Icon(icon, color: iconColor, size: 16),
         ),

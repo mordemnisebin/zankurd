@@ -264,33 +264,63 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   }
 
   List<_OnboardingData> _pages(BuildContext context) {
+    final ku = context.isKu;
     return [
       _OnboardingData(
-        icon: Icons.menu_book_outlined,
+        icon: Icons.menu_book_rounded,
         color: AppTheme.accent,
         title: context.s('Hîn bibe', 'Öğren'),
         body: context.s(
           'Kurmancî peyv, çand û zanînê bi pirsên kurt fêr bibe.',
           'Kurmancî kelimeleri, kültürü ve bilgiyi kısa sorularla öğren.',
         ),
+        bullets: [
+          ku
+              ? '8 kategorî — Ziman, Dîrok, Çand û zêdetir'
+              : '8 kategori — Dil, Tarih, Kültür ve daha fazlası',
+          ku
+              ? 'Her roj pirsên nû û balkêş'
+              : 'Her gün yeni ve ilgi çekici sorular',
+          ku ? 'Bi kurtî û bi bandor fêr bibe' : 'Kısa ve etkili öğrenme',
+        ],
       ),
       _OnboardingData(
-        icon: Icons.emoji_events_outlined,
+        icon: Icons.emoji_events_rounded,
         color: AppTheme.gold,
         title: context.s('Pêşbirkê bike', 'Yarış'),
         body: context.s(
           'Bi hevalan an botan re pêşbirkê bike û pûanên xwe zêde bike.',
           'Arkadaşlarınla veya botlarla yarış, puanını yükselt.',
         ),
+        bullets: [
+          ku
+              ? 'Şerê 1vs1 — rasterast bi hevalên xwe re'
+              : '1vs1 düello — arkadaşlarınla doğrudan',
+          ku
+              ? 'Pêşbirka Rojê — 10 pirs, xelata rojê'
+              : 'Günün Yarışması — 10 soru, günlük ödül',
+          ku ? 'Turnuva — ji bo kûpayê pêşbikeve' : 'Turnuva — kupa için yarış',
+        ],
       ),
       _OnboardingData(
-        icon: Icons.local_fire_department_outlined,
+        icon: Icons.local_fire_department_rounded,
         color: AppTheme.violet,
         title: context.s('Her roj vegere', 'Günlük ödüller'),
         body: context.s(
           'Pêşbirka rojê, çerxa rojane û rozetan bi rêzê veke.',
           'Günün yarışması, günlük çark ve rozetlerle ilerle.',
         ),
+        bullets: [
+          ku
+              ? 'Çerxa Rojê — 100 coinê belaş'
+              : 'Günlük Çark — 100 ücretsiz coin',
+          ku
+              ? 'Zincîra xwe biparêze û bonus bistîne'
+              : 'Seriyi koru, bonus kazan',
+          ku
+              ? 'Rozetên taybetî bi encamên xwe ve bistîne'
+              : 'Başarılarınla özel rozetler kazan',
+        ],
       ),
     ];
   }
@@ -348,12 +378,14 @@ class _OnboardingData {
     required this.color,
     required this.title,
     required this.body,
+    this.bullets = const [],
   });
 
   final IconData icon;
   final Color color;
   final String title;
   final String body;
+  final List<String> bullets;
 }
 
 class _OnboardingPage extends StatelessWidget {
@@ -369,61 +401,119 @@ class _OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconSize = compact ? 70.0 : 96.0;
-    final iconGlyphSize = compact ? 30.0 : 42.0;
-    final titleSize = compact ? 20.0 : 26.0;
+    final heroIconSize = compact ? 72.0 : 100.0;
+    final heroGlyphSize = compact ? 36.0 : 52.0;
+    final titleSize = compact ? 22.0 : 26.0;
     final bodySize = compact ? 13.0 : 15.0;
 
-    final textColumn = Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: wideCompact
-          ? CrossAxisAlignment.start
-          : CrossAxisAlignment.center,
+    return Column(
       children: [
-        Text(
-          data.title,
-          textAlign: wideCompact ? TextAlign.start : TextAlign.center,
-          style: TextStyle(
-            color: AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.w900,
-            fontSize: titleSize,
-            letterSpacing: -0.5,
+        // ── Hero blok (büyük ikon + gradient arka plan) ──────────────
+        Expanded(
+          flex: compact ? 40 : 45,
+          child: Container(
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 2),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  data.color.withValues(alpha: 0.18),
+                  data.color.withValues(alpha: 0.05),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                color: data.color.withValues(alpha: 0.22),
+                width: 1.2,
+              ),
+            ),
+            child: Center(
+              child: _OnboardingIcon(
+                data: data,
+                size: heroIconSize,
+                iconSize: heroGlyphSize,
+              ),
+            ),
           ),
         ),
-        SizedBox(height: compact ? 4 : 8),
-        Text(
-          data.body,
-          textAlign: wideCompact ? TextAlign.start : TextAlign.center,
-          style: TextStyle(
-            color: AppTheme.textSubColor(context),
-            fontSize: bodySize,
-            height: 1.4,
+        SizedBox(height: compact ? 16 : 22),
+        // ── Metin + değer maddeleri ──────────────────────────────────
+        Expanded(
+          flex: compact ? 60 : 55,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: wideCompact
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data.title,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w900,
+                    fontSize: titleSize,
+                    letterSpacing: -0.5,
+                    height: 1.15,
+                  ),
+                ),
+                SizedBox(height: compact ? 6 : 8),
+                Text(
+                  data.body,
+                  style: TextStyle(
+                    color: AppTheme.textSubColor(context),
+                    fontSize: bodySize,
+                    height: 1.5,
+                  ),
+                ),
+                if (data.bullets.isNotEmpty) ...[
+                  SizedBox(height: compact ? 14 : 18),
+                  for (final bullet in data.bullets) ...[
+                    _BulletRow(text: bullet, color: data.color),
+                    const SizedBox(height: 8),
+                  ],
+                ],
+              ],
+            ),
           ),
         ),
       ],
     );
+  }
+}
 
-    final content = [
-      _OnboardingIcon(data: data, size: iconSize, iconSize: iconGlyphSize),
-      SizedBox(height: compact ? 10 : 18, width: wideCompact ? 20 : 0),
-      if (wideCompact) Flexible(child: textColumn) else textColumn,
-    ];
+/// Onboarding sayfasındaki madde satırı.
+class _BulletRow extends StatelessWidget {
+  const _BulletRow({required this.text, required this.color});
 
-    return Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: wideCompact ? 720 : 440),
-        child: wideCompact
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: content,
-              )
-            : SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: content,
-                ),
-              ),
-      ),
+  final String text;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 3),
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              height: 1.4,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -116,14 +116,12 @@ class _ShopScreenState extends State<ShopScreen> {
     try {
       final balance = await widget.repository.loadCoinBalance();
       List<ShopItem> dynamicItems = _items;
-      
+
       if (widget.repository is SupabaseZanKurdRepository) {
         try {
-          final client = (widget.repository as SupabaseZanKurdRepository).client;
-          final rows = await client
-              .from('shop_items')
-              .select()
-              .order('cost');
+          final client =
+              (widget.repository as SupabaseZanKurdRepository).client;
+          final rows = await client.from('shop_items').select().order('cost');
           if (rows.isNotEmpty) {
             dynamicItems = rows.map((row) {
               return ShopItem(
@@ -173,9 +171,7 @@ class _ShopScreenState extends State<ShopScreen> {
       HapticFeedback.vibrate();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            ku ? 'Bakiyeya te kêm e!' : 'Bakiye yetersiz!',
-          ),
+          content: Text(ku ? 'Bakiyeya te kêm e!' : 'Bakiye yetersiz!'),
           backgroundColor: AppTheme.wrong,
         ),
       );
@@ -219,11 +215,7 @@ class _ShopScreenState extends State<ShopScreen> {
     } catch (_) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            ku ? 'Çewtiyek çêbû.' : 'Bir hata oluştu.',
-          ),
-        ),
+        SnackBar(content: Text(ku ? 'Çewtiyek çêbû.' : 'Bir hata oluştu.')),
       );
     } finally {
       _loadBalance();
@@ -239,11 +231,11 @@ class _ShopScreenState extends State<ShopScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
         title: Text(
           ku ? 'Dukan / Mağaza' : 'Mağaza',
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: AppTheme.textPrimaryColor(context),
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -260,31 +252,40 @@ class _ShopScreenState extends State<ShopScreen> {
                 padding: const EdgeInsets.all(16),
                 child: AppPanel(
                   gradient: AppTheme.goldGradient,
+                  padding: const EdgeInsets.all(18),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ku ? 'Bakiyeya Te' : 'Mevcut Bakiyen',
-                            style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.8),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              ku ? 'Bakiyeya Te' : 'Mevcut Bakiyen',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white.withValues(alpha: 0.86),
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '$_coinBalance Coins',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 28,
-                              fontWeight: FontWeight.w700,
+                            const SizedBox(height: 4),
+                            Text(
+                              '$_coinBalance Coins',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                                fontWeight: FontWeight.w800,
+                                height: 1.05,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
+                      const SizedBox(width: 12),
                       Container(
                         width: 54,
                         height: 54,
@@ -306,7 +307,9 @@ class _ShopScreenState extends State<ShopScreen> {
               Expanded(
                 child: _loading && _coinBalance == 0
                     ? const Center(
-                        child: CircularProgressIndicator(color: AppTheme.accent),
+                        child: CircularProgressIndicator(
+                          color: AppTheme.accent,
+                        ),
                       )
                     : ListView.separated(
                         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
@@ -316,7 +319,9 @@ class _ShopScreenState extends State<ShopScreen> {
                           final item = _dynamicItems[index];
                           final title = ku ? item.titleKu : item.titleTr;
                           final desc = ku ? item.descKu : item.descTr;
-                          final isPurchased = _purchasedItemIds.contains(item.id);
+                          final isPurchased = _purchasedItemIds.contains(
+                            item.id,
+                          );
                           final canAfford = _coinBalance >= item.cost;
 
                           return AppPanel(
@@ -327,10 +332,14 @@ class _ShopScreenState extends State<ShopScreen> {
                                   width: 48,
                                   height: 48,
                                   decoration: BoxDecoration(
-                                    color: item.themeColor.withValues(alpha: 0.15),
+                                    color: item.themeColor.withValues(
+                                      alpha: 0.15,
+                                    ),
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
-                                      color: item.themeColor.withValues(alpha: 0.3),
+                                      color: item.themeColor.withValues(
+                                        alpha: 0.3,
+                                      ),
                                     ),
                                   ),
                                   child: Icon(
@@ -342,12 +351,17 @@ class _ShopScreenState extends State<ShopScreen> {
                                 const SizedBox(width: 14),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         title,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                          color: AppTheme.textPrimaryColor(context),
+                                          color: AppTheme.textPrimaryColor(
+                                            context,
+                                          ),
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
                                         ),
@@ -355,10 +369,12 @@ class _ShopScreenState extends State<ShopScreen> {
                                       const SizedBox(height: 4),
                                       Text(
                                         desc,
-                                        maxLines: 3,
+                                        maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                          color: AppTheme.textMutedColor(context),
+                                          color: AppTheme.textMutedColor(
+                                            context,
+                                          ),
                                           fontSize: 12,
                                         ),
                                       ),
@@ -366,57 +382,75 @@ class _ShopScreenState extends State<ShopScreen> {
                                   ),
                                 ),
                                 const SizedBox(width: 10),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: isPurchased
-                                        ? AppTheme.correct.withValues(alpha: 0.2)
-                                        : (canAfford
-                                            ? AppTheme.gold
-                                            : AppTheme.surfaceHiColor(context)),
-                                    foregroundColor: isPurchased
-                                        ? AppTheme.correct
-                                        : (canAfford
-                                            ? Colors.white
-                                            : AppTheme.textMutedColor(context)),
-                                    elevation: 0,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 14,
-                                      vertical: 14,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
+                                ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                    minWidth: 72,
+                                    minHeight: 46,
                                   ),
-                                  onPressed: (_loading || isPurchased) ? null : () => _purchase(item),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      if (isPurchased) ...[
-                                        const Icon(Icons.check, size: 14),
-                                        const SizedBox(width: 4),
-                                        Text(
-                                          ku ? 'Kirî' : 'Satın Alındı',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 12,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: isPurchased
+                                          ? AppTheme.correct.withValues(
+                                              alpha: 0.18,
+                                            )
+                                          : (canAfford
+                                                ? AppTheme.gold
+                                                : AppTheme.surfaceHiColor(
+                                                    context,
+                                                  )),
+                                      foregroundColor: isPurchased
+                                          ? AppTheme.correct
+                                          : (canAfford
+                                                ? Colors.white
+                                                : AppTheme.textMutedColor(
+                                                    context,
+                                                  )),
+                                      elevation: 0,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 13,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                    ),
+                                    onPressed: (_loading || isPurchased)
+                                        ? null
+                                        : () => _purchase(item),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        if (isPurchased) ...[
+                                          const Icon(Icons.check, size: 14),
+                                          const SizedBox(width: 4),
+                                          Flexible(
+                                            child: Text(
+                                              ku ? 'Kirî' : 'Alındı',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 12,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ] else ...[
-                                        if (canAfford)
-                                          const Icon(
-                                            Icons.shopping_cart_outlined,
-                                            size: 14,
+                                        ] else ...[
+                                          if (canAfford)
+                                            const Icon(
+                                              Icons.shopping_cart_outlined,
+                                              size: 14,
+                                            ),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            '${item.cost}c',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 13,
+                                            ),
                                           ),
-                                        const SizedBox(width: 4),
-                                        Text(
-                                          '${item.cost}c',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 13,
-                                          ),
-                                        ),
+                                        ],
                                       ],
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ],

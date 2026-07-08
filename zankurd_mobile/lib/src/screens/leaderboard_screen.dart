@@ -260,8 +260,11 @@ class _PeriodTabs extends StatelessWidget {
       height: 42,
       decoration: BoxDecoration(
         color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppTheme.borderColor(context), width: 1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: AppTheme.gold.withValues(alpha: 0.22),
+          width: 1,
+        ),
       ),
       child: TabBar(
         controller: controller,
@@ -276,10 +279,10 @@ class _PeriodTabs extends StatelessWidget {
           fontSize: 13.5,
         ),
         indicator: BoxDecoration(
-          color: AppTheme.accent.withValues(alpha: 0.15),
-          borderRadius: BorderRadius.circular(11),
+          color: AppTheme.gold.withValues(alpha: 0.16),
+          borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: AppTheme.accent.withValues(alpha: 0.45),
+            color: AppTheme.gold.withValues(alpha: 0.46),
             width: 1.2,
           ),
         ),
@@ -318,17 +321,17 @@ class _Podium extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF0F2C21), Color(0xFF163E30), Color(0xFF1A4E3B)],
+          colors: [Color(0xFF211B0D), Color(0xFF243323), Color(0xFF102F28)],
           stops: [0.0, 0.6, 1.0],
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.12),
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF1E5F47).withValues(alpha: 0.35),
+            color: AppTheme.gold.withValues(alpha: 0.20),
             blurRadius: 24,
             offset: const Offset(0, 8),
             spreadRadius: -4,
@@ -428,7 +431,10 @@ class _PodiumSlot extends StatelessWidget {
                 ),
               const SizedBox(height: 2),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -437,9 +443,7 @@ class _PodiumSlot extends StatelessWidget {
                     ],
                   ),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: color.withValues(alpha: 0.3),
-                  ),
+                  border: Border.all(color: color.withValues(alpha: 0.3)),
                 ),
                 child: Text(
                   '${entry.totalScore}',
@@ -486,7 +490,9 @@ class _RankRow extends StatelessWidget {
         color: AppTheme.surfaceColor(context),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+          color: entry.rank <= 10
+              ? AppTheme.gold.withValues(alpha: 0.18)
+              : AppTheme.borderColor(context).withValues(alpha: 0.5),
           width: 1,
         ),
         boxShadow: AppTheme.softShadow(context),
@@ -544,6 +550,8 @@ class _RankRow extends StatelessWidget {
                       ? '${entry.showcaseTitle} · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}'
                       : '${entry.roomsPlayed} ${isKu ? "ode" : "oda"}'
                             ' · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: AppTheme.textMutedColor(context),
                     fontSize: 11,

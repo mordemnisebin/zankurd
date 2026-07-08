@@ -424,7 +424,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
-                    childAspectRatio: 1.8,
+                    childAspectRatio: 1.45,
                     children: [
                       _StatTile(
                         label: ku ? 'Rêze' : 'Sıralama',
@@ -477,7 +477,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ku
                               ? 'Performans nehat barkirin.'
                               : 'Performans yüklenemedi.',
-                          style: TextStyle(color: AppTheme.textMutedColor(context)),
+                          style: TextStyle(
+                            color: AppTheme.textMutedColor(context),
+                          ),
                         ),
                       ),
                     );
@@ -779,7 +781,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           const NeverScrollableScrollPhysics(),
                                       mainAxisSpacing: 10,
                                       crossAxisSpacing: 10,
-                                      childAspectRatio: 1.8,
+                                      childAspectRatio: 1.45,
                                       children: [
                                         _StatTile(
                                           label: ku ? 'Rêze' : 'Sıralama',
@@ -1160,7 +1162,7 @@ class _StatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
@@ -1169,22 +1171,27 @@ class _StatTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: color, size: 16),
+          Icon(icon, color: color, size: 15),
           const SizedBox(height: 2),
           Text(
             value,
             style: TextStyle(
               color: color,
               fontWeight: FontWeight.w700,
-              fontSize: 18,
+              fontSize: 17,
             ),
           ),
-          Text(
-            label,
-            style: TextStyle(
-              color: AppTheme.textMutedColor(context),
-              fontSize: 11,
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: AppTheme.textMutedColor(context),
+                fontSize: 11,
+              ),
             ),
           ),
         ],
