@@ -76,8 +76,8 @@ class QuickPlayGrid extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossCount,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
+            mainAxisSpacing: AppSpacing.sm,
+            crossAxisSpacing: AppSpacing.sm,
             mainAxisExtent: 112,
           ),
           itemBuilder: (context, index) => tiles[index],
@@ -176,7 +176,7 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
               ? null
               : () => setState(() => _isPressed = false),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 50),
+            duration: const Duration(milliseconds: 200),
             curve: Curves.easeOut,
             margin: EdgeInsets.only(
               top: _isPressed ? shadowHeight : 0,
@@ -188,7 +188,7 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
                 end: Alignment.bottomRight,
                 colors: widget.gradientColors,
               ),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(AppRadius.md),
               border: Border.all(
                 color: Colors.white.withValues(alpha: 0.20),
                 width: 1.1,
@@ -198,19 +198,19 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
                   BoxShadow(
                     color: shadowColor,
                     offset: const Offset(0, shadowHeight),
-                    blurRadius: 12,
-                    spreadRadius: -8,
+                    blurRadius: 10,
+                    spreadRadius: -4,
                   ),
                 BoxShadow(
-                  color: widget.gradientColors.first.withValues(alpha: 0.22),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                  spreadRadius: -8,
+                  color: Colors.black.withValues(alpha: 0.12),
+                  blurRadius: 16,
+                  offset: const Offset(0, 8),
+                  spreadRadius: -4,
                 ),
               ],
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(AppRadius.md),
               child: Stack(
                 children: [
                   Positioned(
@@ -224,11 +224,16 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
                   ),
                   Positioned(
                     left: 0,
-                    top: 0,
-                    bottom: 0,
+                    top: 14,
+                    bottom: 14,
                     child: Container(
                       width: 3,
-                      color: Colors.white.withValues(alpha: 0.34),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.40),
+                        borderRadius: const BorderRadius.horizontal(
+                          right: Radius.circular(2),
+                        ),
+                      ),
                     ),
                   ),
                   Padding(
@@ -243,10 +248,10 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
                           height: 28,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.15),
+                            color: Colors.white.withValues(alpha: 0.18),
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.1),
+                              color: Colors.white.withValues(alpha: 0.15),
                               width: 1,
                             ),
                           ),
@@ -270,36 +275,30 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
                           widget.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: AppTypography.caption.copyWith(
                             color: Colors.white,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 12.5,
-                            height: 1.1,
-                            letterSpacing: -0.2,
+                            fontSize: 12,
                           ),
                         ),
                         const SizedBox(height: 2),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 7,
-                            vertical: 2,
+                            horizontal: AppSpacing.xs,
+                            vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.14),
-                            borderRadius: BorderRadius.circular(16),
+                            color: Colors.white.withValues(alpha: 0.16),
+                            borderRadius: BorderRadius.circular(AppRadius.pill),
                             border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.14),
+                              color: Colors.white.withValues(alpha: 0.12),
                             ),
                           ),
                           child: Text(
                             widget.subtitle,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.86),
-                              fontSize: 10,
-                              fontWeight: FontWeight.w800,
-                              height: 1.1,
+                            style: AppTypography.caption.copyWith(
+                              color: Colors.white.withValues(alpha: 0.90),
                             ),
                           ),
                         ),
