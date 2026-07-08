@@ -97,12 +97,12 @@ class _ShopScreenState extends State<ShopScreen> {
   };
 
   static Color _getColor(String? hex) {
-    if (hex == null) return Colors.blue;
+    if (hex == null) return AppTheme.accent;
     try {
       final cleanHex = hex.replaceAll('#', '');
       return Color(int.parse('FF$cleanHex', radix: 16));
     } catch (_) {
-      return Colors.blue;
+      return AppTheme.accent;
     }
   }
 
@@ -176,7 +176,7 @@ class _ShopScreenState extends State<ShopScreen> {
           content: Text(
             ku ? 'Bakiyeya te kêm e!' : 'Bakiye yetersiz!',
           ),
-          backgroundColor: Colors.redAccent,
+          backgroundColor: AppTheme.wrong,
         ),
       );
       return;
@@ -212,7 +212,7 @@ class _ShopScreenState extends State<ShopScreen> {
             content: Text(
               ku ? 'Kirîn bi ser neket.' : 'Satın alma başarısız oldu.',
             ),
-            backgroundColor: Colors.redAccent,
+            backgroundColor: AppTheme.wrong,
           ),
         );
       }
@@ -355,6 +355,8 @@ class _ShopScreenState extends State<ShopScreen> {
                                       const SizedBox(height: 4),
                                       Text(
                                         desc,
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           color: AppTheme.textMutedColor(context),
                                           fontSize: 12,
@@ -379,10 +381,10 @@ class _ShopScreenState extends State<ShopScreen> {
                                     elevation: 0,
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 14,
-                                      vertical: 10,
+                                      vertical: 14,
                                     ),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(16),
                                     ),
                                   ),
                                   onPressed: (_loading || isPurchased) ? null : () => _purchase(item),
