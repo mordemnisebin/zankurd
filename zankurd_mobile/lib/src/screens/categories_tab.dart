@@ -101,20 +101,18 @@ class _CategoriesTabState extends State<CategoriesTab> {
                       children: [
                         Text(
                           ku ? 'Kategorî' : 'Kategoriler',
-                          style: TextStyle(
+                          style: AppTypography.display.copyWith(
                             color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w900,
                             fontSize: 28,
-                            letterSpacing: -0.5,
                           ),
                         ),
+                        const SizedBox(height: AppSpacing.xxs),
                         Text(
                           ku
                               ? 'Kategoriyekê hilbijêre û dest pê bike'
                               : 'Bir kategori seç ve başla',
-                          style: TextStyle(
+                          style: AppTypography.bodyMedium.copyWith(
                             color: AppTheme.textMutedColor(context),
-                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -333,10 +331,11 @@ class _CategoryCardState extends State<_CategoryCard>
                             vertical: 5,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.50),
-                            borderRadius: BorderRadius.circular(16),
+                            color: Colors.black.withValues(alpha: 0.55),
+                            borderRadius: BorderRadius.circular(AppRadius.md),
                             border: Border.all(
-                              color: AppTheme.gold.withValues(alpha: 0.55),
+                              color: AppTheme.gold.withValues(alpha: 0.60),
+                              width: 1.1,
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -380,29 +379,30 @@ class _CategoryCardState extends State<_CategoryCard>
                             width: 46,
                             height: 46,
                             decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.18),
-                              borderRadius: BorderRadius.circular(AppRadius.lg),
+                              color: Colors.white.withValues(alpha: 0.20),
+                              borderRadius: BorderRadius.circular(AppRadius.md),
                               border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.22),
-                              ),
+                                  color: Colors.white.withValues(alpha: 0.25),
+                                  width: 1.1),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.18),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4),
+                                  color: Colors.black.withValues(alpha: 0.20),
+                                  blurRadius: 14,
+                                  offset: const Offset(0, 5),
                                 ),
                               ],
                             ),
-                            child: Icon(icon, color: Colors.white, size: 25),
+                            child: Icon(icon, color: Colors.white, size: 24),
                           ),
                           const Spacer(),
                           Container(
-                            padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(AppSpacing.sm),
                             decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.26),
-                              borderRadius: BorderRadius.circular(16),
+                              color: Colors.black.withValues(alpha: 0.28),
+                              borderRadius: BorderRadius.circular(AppRadius.md),
                               border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.12),
+                                color: Colors.white.withValues(alpha: 0.15),
+                                width: 1.1,
                               ),
                             ),
                             child: Column(
