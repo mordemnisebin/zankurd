@@ -20,18 +20,16 @@ class _LiveScoreboard extends StatelessWidget {
           Row(
             children: [
               const Icon(Icons.leaderboard_outlined, color: AppTheme.gold),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.xs),
               Text(
                 context.s('Skora zindî', 'Canlı skor'),
-                style: TextStyle(
+                style: AppTypography.heading2.copyWith(
                   color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.xs),
           for (var i = 0; i < sortedPlayers.take(4).length; i++)
             _LiveScoreRow(rank: i + 1, player: sortedPlayers[i]),
         ],
@@ -58,7 +56,7 @@ class _LiveScoreRow extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppTheme.surfaceColor(context),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(AppRadius.xs),
               border: Border.all(color: AppTheme.borderColor(context)),
             ),
             child: Text(
@@ -69,7 +67,7 @@ class _LiveScoreRow extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.xs),
           PlayerAvatar(
             radius: 14,
             photoUrl: player.avatarUrl,
@@ -78,7 +76,7 @@ class _LiveScoreRow extends StatelessWidget {
             frameId: player.avatarFrame,
             displayName: player.name,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.xs),
           Expanded(
             child: Text(
               player.name,
@@ -90,7 +88,7 @@ class _LiveScoreRow extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.xs),
           Text(
             '${player.score}',
             style: const TextStyle(
@@ -137,7 +135,7 @@ class _QuestionImage extends StatelessWidget {
           );
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(AppRadius.sm),
       child: isLandscapeTablet
           ? SizedBox(width: double.infinity, height: maxHeight, child: image)
           : AspectRatio(aspectRatio: 16 / 9, child: image),
@@ -202,14 +200,12 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       children: [
         Text(
           promptText,
-          style: TextStyle(
+          style: AppTypography.heading2.copyWith(
             color: AppTheme.textPrimaryColor(context),
             fontSize: promptFontSize,
-            fontWeight: FontWeight.w700,
-            height: 1.16,
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.sm),
         for (final (index, answer) in question.displayAnswers.indexed)
           AnimatedOpacity(
             duration: const Duration(milliseconds: 250),
@@ -217,7 +213,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
             child: IgnorePointer(
               ignoring: hiddenAnswers.contains(answer),
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: AppSpacing.xs),
                 child: _buildAnswerButton(index, answer),
               ),
             ),
@@ -299,7 +295,7 @@ class _ScoreHeader extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.xs),
         Expanded(
           child: TweenAnimationBuilder<int>(
             tween: IntTween(begin: 0, end: streak),
@@ -313,7 +309,7 @@ class _ScoreHeader extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.xs),
         Expanded(
           child: _Metric(
             label: context.s('Pirs', 'Soru'),
@@ -322,7 +318,7 @@ class _ScoreHeader extends StatelessWidget {
             iconColor: AppTheme.accent,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.xs),
         Expanded(
           child: TweenAnimationBuilder<int>(
             tween: IntTween(begin: 0, end: coinBalance),
@@ -355,7 +351,10 @@ class _DuelScoreHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppPanel(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
       child: Column(
         children: [
           Row(
@@ -373,27 +372,25 @@ class _DuelScoreHeader extends StatelessWidget {
                       frameId: player.avatarFrame,
                       displayName: player.name,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.xs),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             player.name,
-                            style: TextStyle(
+                            style: AppTypography.caption.copyWith(
                               color: AppTheme.textPrimaryColor(context),
                               fontWeight: FontWeight.w700,
-                              fontSize: 13,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             '${player.score} pts',
-                            style: const TextStyle(
+                            style: AppTypography.caption.copyWith(
                               color: AppTheme.gold,
                               fontWeight: FontWeight.w700,
-                              fontSize: 12,
                             ),
                           ),
                         ],
@@ -405,30 +402,28 @@ class _DuelScoreHeader extends StatelessWidget {
               // VS & Progress
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
+                  horizontal: AppSpacing.xs,
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
                   color: AppTheme.surfaceColor(context),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
                   border: Border.all(color: AppTheme.borderColor(context)),
                 ),
                 child: Column(
                   children: [
                     Text(
                       progress,
-                      style: TextStyle(
+                      style: AppTypography.caption.copyWith(
                         color: AppTheme.textSubColor(context),
                         fontWeight: FontWeight.w700,
-                        fontSize: 12,
                       ),
                     ),
-                    const Text(
+                    Text(
                       'VS',
-                      style: TextStyle(
+                      style: AppTypography.caption.copyWith(
                         color: Colors.redAccent,
                         fontWeight: FontWeight.w700,
-                        fontSize: 10,
                         fontStyle: FontStyle.italic,
                       ),
                     ),
@@ -446,26 +441,24 @@ class _DuelScoreHeader extends StatelessWidget {
                         children: [
                           Text(
                             opponent.name,
-                            style: TextStyle(
+                            style: AppTypography.caption.copyWith(
                               color: AppTheme.textPrimaryColor(context),
                               fontWeight: FontWeight.w700,
-                              fontSize: 13,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             '${opponent.score} pts',
-                            style: const TextStyle(
+                            style: AppTypography.caption.copyWith(
                               color: AppTheme.gold,
                               fontWeight: FontWeight.w700,
-                              fontSize: 12,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.xs),
                     PlayerAvatar(
                       radius: 16,
                       photoUrl: opponent.avatarUrl,
@@ -480,7 +473,7 @@ class _DuelScoreHeader extends StatelessWidget {
             ],
           ),
           if (player.streak > 0 || opponent.streak > 0) ...[
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.xs),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -494,10 +487,9 @@ class _DuelScoreHeader extends StatelessWidget {
                       ),
                       Text(
                         'x${player.streak}',
-                        style: const TextStyle(
+                        style: AppTypography.caption.copyWith(
                           color: Colors.orange,
                           fontWeight: FontWeight.w700,
-                          fontSize: 11,
                         ),
                       ),
                     ],
@@ -509,10 +501,9 @@ class _DuelScoreHeader extends StatelessWidget {
                     children: [
                       Text(
                         'x${opponent.streak}',
-                        style: const TextStyle(
+                        style: AppTypography.caption.copyWith(
                           color: Colors.orange,
                           fontWeight: FontWeight.w700,
-                          fontSize: 11,
                         ),
                       ),
                       const Icon(
@@ -549,7 +540,10 @@ class _Metric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppPanel(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.xs,
+        horizontal: AppSpacing.xs,
+      ),
       color: AppTheme.surfaceHiColor(context).withValues(alpha: 0.5),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -558,29 +552,27 @@ class _Metric extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, size: 14, color: iconColor),
-              const SizedBox(width: 4),
+              const SizedBox(width: AppSpacing.xxs),
               Flexible(
                 child: Text(
                   value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: AppTypography.bodyLarge.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w900,
-                    fontSize: 16,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xxs),
           Text(
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: AppTypography.caption.copyWith(
               color: AppTheme.textMutedColor(context),
-              fontSize: 10.5,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -704,15 +696,18 @@ class _AnswerButton extends StatelessWidget {
         ),
         child: InkWell(
           onTap: disabled ? null : onTap,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppRadius.md),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 150),
             curve: Curves.easeOutCubic,
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
             decoration: BoxDecoration(
               gradient: gradient,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(AppRadius.md),
               border: Border.all(color: borderColor, width: 2.0),
               boxShadow: isPressed
                   ? []
@@ -735,14 +730,13 @@ class _AnswerButton extends StatelessWidget {
                       stateActive: stateActive,
                       stateColor: borderColor,
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: AppSpacing.sm),
                     Expanded(
                       child: Text(
                         answer,
-                        style: TextStyle(
+                        style: AppTypography.bodyLarge.copyWith(
                           color: textColor,
                           fontWeight: FontWeight.w800,
-                          fontSize: 15,
                         ),
                       ),
                     ),
@@ -774,7 +768,7 @@ class _AnswerButton extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(3),
+                          borderRadius: BorderRadius.circular(AppRadius.xs),
                           child: LinearProgressIndicator(
                             value: audiencePercent!.clamp(0.0, 1.0),
                             minHeight: 5,
@@ -785,11 +779,10 @@ class _AnswerButton extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: AppSpacing.xs),
                       Text(
                         '${(audiencePercent! * 100).round()}%',
-                        style: TextStyle(
-                          fontSize: 11,
+                        style: AppTypography.caption.copyWith(
                           fontWeight: FontWeight.w700,
                           color: textColor.withValues(alpha: 0.9),
                         ),
@@ -805,19 +798,18 @@ class _AnswerButton extends StatelessWidget {
                     children: opponentNamesWhoSelected!
                         .map(
                           (name) => Container(
-                            margin: const EdgeInsets.only(left: 4),
+                            margin: const EdgeInsets.only(left: AppSpacing.xxs),
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 6,
-                              vertical: 2.5,
+                              horizontal: AppSpacing.xxs,
+                              vertical: 2,
                             ),
                             decoration: BoxDecoration(
                               color: Colors.black.withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(AppRadius.xs),
                             ),
                             child: Text(
                               '$name 👀',
-                              style: const TextStyle(
-                                fontSize: 10,
+                              style: AppTypography.caption.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w800,
                               ),
@@ -872,7 +864,7 @@ class _OptionBadge extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: bg,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(AppRadius.xs),
         boxShadow: stateActive
             ? null
             : [
@@ -885,7 +877,7 @@ class _OptionBadge extends StatelessWidget {
       ),
       child: Text(
         letter,
-        style: TextStyle(color: fg, fontWeight: FontWeight.w700, fontSize: 17),
+        style: AppTypography.heading2.copyWith(color: fg),
       ),
     );
   }
@@ -1023,43 +1015,46 @@ class _WildcardButtonState extends State<_WildcardButton> {
           opacity: opacity,
           child: Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            height: 52,
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            constraints: const BoxConstraints(minHeight: 48),
             decoration: BoxDecoration(
               color: bgColor ?? Colors.transparent,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
               border: Border.all(color: borderColor, width: 1.5),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 24,
-                  height: 24,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: iconColor.withValues(
-                      alpha: widget.isEnabled ? 0.16 : 0.10,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 22,
+                    height: 22,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: iconColor.withValues(
+                        alpha: widget.isEnabled ? 0.16 : 0.10,
+                      ),
+                    ),
+                    child: Icon(
+                      widget.cantAfford ? Icons.lock_outline : widget.type.icon,
+                      size: 14,
+                      color: iconColor,
                     ),
                   ),
-                  child: Icon(
-                    widget.cantAfford ? Icons.lock_outline : widget.type.icon,
-                    size: 15,
-                    color: iconColor,
+                  const SizedBox(height: 1),
+                  Text(
+                    '${widget.type.coinCost}c',
+                    style: AppTypography.caption.copyWith(
+                      fontWeight: FontWeight.w700,
+                      height: 1.0,
+                      color: iconColor,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  '${widget.type.coinCost}c',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                    color: iconColor,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -1192,10 +1187,9 @@ class _CircularTimerState extends State<_CircularTimer>
                     ),
                     Text(
                       '$seconds',
-                      style: TextStyle(
+                      style: AppTypography.bodyMedium.copyWith(
                         color: color,
                         fontWeight: FontWeight.w900,
-                        fontSize: 13,
                         shadows: isAlert
                             ? [
                                 Shadow(
@@ -1285,11 +1279,11 @@ class _ExplanationBox extends StatelessWidget {
                 );
               },
               child: Container(
-                margin: const EdgeInsets.only(top: 14),
-                padding: const EdgeInsets.all(16),
+                margin: const EdgeInsets.only(top: AppSpacing.sm),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
                   color: AppTheme.surfaceColor(context).withValues(alpha: 0.85),
-                  borderRadius: BorderRadius.circular(16), // AppRadius.lg
+                  borderRadius: BorderRadius.circular(AppRadius.md), // AppRadius.lg
                   border: Border.all(
                     color: AppTheme.correct.withValues(alpha: 0.3),
                     width: 1.2,
@@ -1321,22 +1315,20 @@ class _ExplanationBox extends StatelessWidget {
                             children: [
                               Text(
                                 isKu ? 'Bersiva rast' : 'Doğru cevap',
-                                style: const TextStyle(
+                                style: AppTypography.caption.copyWith(
                                   color: AppTheme.correct,
                                   fontWeight: FontWeight.w800,
-                                  fontSize: 12,
                                 ),
                               ),
                               const SizedBox(height: 4),
                               Text(
                                 question.correctAnswer,
-                                style: TextStyle(
+                                style: AppTypography.bodyLarge.copyWith(
                                   color: AppTheme.textPrimaryColor(context),
                                   fontWeight: FontWeight.w800,
-                                  fontSize: 15,
                                 ),
                               ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: AppSpacing.sm),
                               Row(
                                 children: [
                                   Icon(
@@ -1349,10 +1341,9 @@ class _ExplanationBox extends StatelessWidget {
                                     child: Text(
                                       isKu ? 'Şîrove' : 'Açıklama',
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
+                                      style: AppTypography.caption.copyWith(
                                         color: AppTheme.textSubColor(context),
                                         fontWeight: FontWeight.w800,
-                                        fontSize: 11,
                                         letterSpacing: 0.3,
                                       ),
                                     ),
@@ -1362,9 +1353,8 @@ class _ExplanationBox extends StatelessWidget {
                               const SizedBox(height: 6),
                               Text(
                                 question.getLocalizedExplanation(isKu),
-                                style: TextStyle(
+                                style: AppTypography.bodyMedium.copyWith(
                                   color: AppTheme.textSubColor(context),
-                                  fontSize: 13,
                                   height: 1.4,
                                 ),
                               ),
@@ -1394,10 +1384,13 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.lg,
+          vertical: AppSpacing.md,
+        ),
         decoration: BoxDecoration(
           color: AppTheme.surfaceHiColor(context),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
             color: AppTheme.accent.withValues(alpha: 0.3),
             width: 1.2,
@@ -1421,10 +1414,9 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
                 children: [
                   Text(
                     isKu ? 'Bersiva te hat qeydkirin' : 'Cevabın kaydedildi',
-                    style: TextStyle(
+                    style: AppTypography.bodyMedium.copyWith(
                       color: AppTheme.textPrimaryColor(context),
                       fontWeight: FontWeight.w700,
-                      fontSize: 14,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -1432,9 +1424,8 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
                     isKu
                         ? 'Li benda hevrik tê bendewarî...'
                         : 'Diğer oyuncu bekleniyor...',
-                    style: TextStyle(
+                    style: AppTypography.caption.copyWith(
                       color: AppTheme.textMutedColor(context),
-                      fontSize: 12,
                     ),
                   ),
                 ],
@@ -1465,10 +1456,13 @@ class _RevealCountdown extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.xs,
+        ),
         decoration: BoxDecoration(
           color: AppTheme.surfaceColor(context).withValues(alpha: 0.8),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
           border: Border.all(
             color: AppTheme.borderColor(context),
           ),
@@ -1482,15 +1476,14 @@ class _RevealCountdown extends StatelessWidget {
               color: AppTheme.textSubColor(context),
               size: 18,
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.sm),
             Text(
               isKu
                   ? 'Pirsa nû: ${seconds}s'
                   : 'Sonraki soru: ${seconds}s',
-              style: TextStyle(
+              style: AppTypography.bodyMedium.copyWith(
                 color: AppTheme.textSubColor(context),
                 fontWeight: FontWeight.w700,
-                fontSize: 13,
               ),
             ),
           ],

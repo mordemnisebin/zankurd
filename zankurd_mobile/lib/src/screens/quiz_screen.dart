@@ -29,6 +29,7 @@ import '../widgets/app_panel.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/kilim_pattern_painter.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz_result_screen.dart';
 
@@ -749,7 +750,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildWildcardRow(),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.xs),
         showRatingBar
             ? Row(
                 children: [
@@ -758,51 +759,51 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       style: FilledButton.styleFrom(
                         backgroundColor: Colors.orange,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
                         ),
                       ),
                       onPressed: () => _submitPracticeRating(3),
                       child: Text(
                         context.s('Zor', 'Zor'),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: AppTypography.bodyMedium.copyWith(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.xs),
                   Expanded(
                     child: FilledButton(
                       style: FilledButton.styleFrom(
                         backgroundColor: AppTheme.accent,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
                         ),
                       ),
                       onPressed: () => _submitPracticeRating(4),
                       child: Text(
                         context.s('Navîn', 'Orta'),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: AppTypography.bodyMedium.copyWith(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.xs),
                   Expanded(
                     child: FilledButton(
                       style: FilledButton.styleFrom(
                         backgroundColor: AppTheme.correct,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
                         ),
                       ),
                       onPressed: () => _submitPracticeRating(5),
                       child: Text(
                         context.s('Hêsan', 'Kolay'),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: AppTypography.bodyMedium.copyWith(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -812,9 +813,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 style: FilledButton.styleFrom(
                   backgroundColor: AppTheme.accent,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16), // AppRadius.lg
+                    borderRadius: BorderRadius.circular(AppRadius.md), // AppRadius.lg
                   ),
                   elevation: 2,
                   shadowColor: AppTheme.accent.withValues(alpha: 0.3),
@@ -833,10 +834,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       : isLastQuestion
                           ? context.s('Qediya', 'Bitir')
                           : context.s('Piştî vê', 'Sonraki'),
-                  style: const TextStyle(
+                  style: AppTypography.bodyLarge.copyWith(
                     fontWeight: FontWeight.w800,
-                    fontSize: 15,
-                    letterSpacing: 0.2,
                   ),
                 ),
               ),
@@ -856,7 +855,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     return Row(
       children: [
         for (var i = 0; i < jokers.length; i++) ...[
-          if (i > 0) const SizedBox(width: 6),
+          if (i > 0) const SizedBox(width: AppSpacing.xxs),
           Expanded(child: _buildWildcardButton(jokers[i])),
         ],
       ],
@@ -1078,6 +1077,17 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       child: Stack(
         clipBehavior: Clip.hardEdge,
         children: [
+          Positioned.fill(
+            child: IgnorePointer(
+              child: CustomPaint(
+                painter: KilimPatternPainter(
+                  drawPattern: true,
+                  color: AppTheme.textPrimaryColor(context),
+                  opacity: 0.04,
+                ),
+              ),
+            ),
+          ),
           Positioned(
             top: -18,
             right: -12,
