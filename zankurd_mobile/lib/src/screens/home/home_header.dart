@@ -95,8 +95,8 @@ class _LanguageQuickToggle extends StatelessWidget {
         onTap: context.langProvider.toggle,
         borderRadius: BorderRadius.circular(12),
         child: Container(
-          width: 42,
-          height: 38,
+          width: 44,
+          height: 44,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppTheme.surfaceHiColor(context),
@@ -138,8 +138,8 @@ class _ThemeQuickToggle extends StatelessWidget {
         onTap: themeProvider.toggleDarkLight,
         borderRadius: BorderRadius.circular(12),
         child: Container(
-          width: 38,
-          height: 38,
+          width: 44,
+          height: 44,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppTheme.surfaceHiColor(context),
