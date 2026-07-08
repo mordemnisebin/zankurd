@@ -21,7 +21,7 @@ void main() {
       ),
     );
 
-    expect(find.text('1V1 Düello'), findsOneWidget);
+    expect(find.text('1vs1 Düello'), findsOneWidget);
     expect(find.text('Günün Yarışması'), findsOneWidget);
     expect(find.text('Günün Çarkı'), findsOneWidget);
     expect(find.text('Turnuva Modu'), findsOneWidget);
@@ -43,7 +43,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Şerê 1V1'), findsOneWidget);
+    expect(find.text('Şerê 1vs1'), findsOneWidget);
     expect(find.text('Pêşbirka Rojê'), findsOneWidget);
     expect(find.text('Çerxa Rojê'), findsOneWidget);
     expect(find.text('Turnuva'), findsOneWidget);

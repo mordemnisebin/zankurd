@@ -30,7 +30,7 @@ class QuickPlayGrid extends StatelessWidget {
       _QuickPlayTile(
         gradientColors: AppTheme.duelGradient,
         icon: Icons.bolt_rounded,
-        title: isKu ? 'Şerê 1V1' : '1V1 Düello',
+        title: isKu ? 'Şerê 1vs1' : '1vs1 Düello',
         subtitle: isKu ? 'Zindî' : 'Canlı',
         onTap: onDuel,
         index: 0,
