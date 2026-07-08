@@ -173,6 +173,65 @@ class _FailingJoinRoomRepository extends MockZanKurdRepository {
   }
 }
 
+/// Host-only online lobby for start-gate diagnostics.
+class _HostOnlyRoomRepository extends MockZanKurdRepository {
+  _HostOnlyRoomRepository()
+    : _players = const [
+        Player(
+          id: 'host',
+          name: 'HostOyuncu',
+          score: 0,
+          state: 'Hazır',
+          streak: 0,
+        ),
+      ];
+
+  final List<Player> _players;
+
+  @override
+  String? get currentUserId => 'host-user';
+
+  GameRoom hostLobbyRoom() => GameRoom(
+    id: 'room-sync-1',
+    name: 'Hevalên Zanînê',
+    code: 'ZK-SYNC',
+    category: 'Ziman',
+    players: List<Player>.of(_players),
+    status: RoomStatus.lobby,
+    questionCount: 10,
+    hostId: 'host-user',
+  );
+
+  @override
+  Future<List<Player>> loadRoomPlayers(GameRoom room) async {
+    return List<Player>.of(_players);
+  }
+
+  @override
+  Stream<List<Player>> subscribeRoomPlayers(GameRoom room) {
+    return Stream.value(List<Player>.of(_players));
+  }
+}
+
+/// Emits a second participant shortly after subscribe (sync simulation).
+class _GrowingPlayersRoomRepository extends _HostOnlyRoomRepository {
+  @override
+  Stream<List<Player>> subscribeRoomPlayers(GameRoom room) async* {
+    yield List<Player>.of(_players);
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    yield [
+      ..._players,
+      const Player(
+        id: 'guest',
+        name: 'Misafir',
+        score: 0,
+        state: 'Bekliyor',
+        streak: 0,
+      ),
+    ];
+  }
+}
+
 class _NeedsNameRepository extends MockZanKurdRepository {
   String savedName = '';
 
@@ -907,6 +966,69 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Yarışı Başlat'), findsOneWidget);
+  });
+
+  testWidgets('room lobby keeps start disabled until two players are present', (
+    tester,
+  ) async {
+    final repository = _HostOnlyRoomRepository();
+
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.hostLobbyRoom(),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(
+      find.text('Yarışı başlatmak için en az 2 oyuncu olmalıdır.'),
+      findsOneWidget,
+    );
+
+    final startButton = tester.widget<FilledButton>(
+      find.widgetWithText(FilledButton, 'Yarışı Başlat'),
+    );
+    expect(startButton.onPressed, isNull);
+  });
+
+  testWidgets('room lobby enables start after player stream adds a guest', (
+    tester,
+  ) async {
+    final repository = _GrowingPlayersRoomRepository();
+
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.hostLobbyRoom(),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(find.text('Misafir'), findsNothing);
+
+    await tester.pump(const Duration(milliseconds: 60));
+
+    expect(find.text('Misafir'), findsOneWidget);
+    expect(
+      find.text('Yarışı başlatmak için en az 2 oyuncu olmalıdır.'),
+      findsNothing,
+    );
+
+    final startButton = tester.widget<FilledButton>(
+      find.widgetWithText(FilledButton, 'Yarışı Başlat'),
+    );
+    expect(startButton.onPressed, isNotNull);
   });
 
   testWidgets('quiz screen remains usable in landscape', (tester) async {
