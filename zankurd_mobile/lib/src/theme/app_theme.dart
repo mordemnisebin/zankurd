@@ -14,6 +14,46 @@ class AppColors {
 class AppTypography {
   const AppTypography._();
 
+  static const TextStyle display = TextStyle(
+    fontWeight: FontWeight.w900,
+    fontSize: 32,
+    height: 1.15,
+    letterSpacing: -0.8,
+  );
+
+  static const TextStyle heading1 = TextStyle(
+    fontWeight: FontWeight.w800,
+    fontSize: 24,
+    height: 1.2,
+    letterSpacing: -0.5,
+  );
+
+  static const TextStyle heading2 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 18,
+    height: 1.25,
+    letterSpacing: -0.3,
+  );
+
+  static const TextStyle bodyLarge = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+    height: 1.45,
+  );
+
+  static const TextStyle bodyMedium = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 14,
+    height: 1.5,
+  );
+
+  static const TextStyle caption = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 12,
+    height: 1.35,
+    letterSpacing: 0.2,
+  );
+
   static const categoryTitle = TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.w900,
@@ -38,15 +78,16 @@ class AppSpacing {
   const AppSpacing._();
 
   static const double xxs = 4;
-  static const double xs = 6;
-  static const double sm = 8;
-  static const double md = 12;
-  static const double lg = 16;
-  static const double xl = 20;
-  static const double xxl = 24;
-  static const double page = AppTheme.pagePadding;
-  static const double section = AppTheme.sectionGap;
-  static const double cardGap = AppTheme.cardGap;
+  static const double xs = 8;
+  static const double sm = 12;
+  static const double md = 16;
+  static const double lg = 24;
+  static const double xl = 32;
+  static const double xxl = 48;
+
+  static const double page = 20;
+  static const double section = 28;
+  static const double cardGap = 14;
   static const double gridGap = 16;
 }
 
@@ -54,12 +95,13 @@ class AppRadius {
   const AppRadius._();
 
   static const double xs = 8;
-  static const double sm = 10;
-  static const double md = AppTheme.cardRadiusSmall;
-  static const double lg = 16;
-  static const double card = AppTheme.cardRadius;
-  static const double xl = 24;
+  static const double sm = 12;
+  static const double md = 16;
+  static const double lg = 20;
+  static const double xl = 28;
   static const double pill = 99;
+
+  static const double card = 20;
 }
 
 class AppGradients {

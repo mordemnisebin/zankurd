@@ -18,3 +18,10 @@ venv/
 .playwright-cli/
 pirs_dump.xml
 /pirs_*.png
+
+# Repo dışı kalması gereken tasarım inceleme ve audit araçları
+audit/
+design_review/
+phase1-desktop-current.png
+**/test/golden/failures/
+
