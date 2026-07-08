@@ -232,6 +232,31 @@ class _GrowingPlayersRoomRepository extends _HostOnlyRoomRepository {
   }
 }
 
+/// Realtime returns stale 1-player list; polling recovers with 2 players.
+class _StaleStreamPollRecoveryRepository extends _HostOnlyRoomRepository {
+  int pollCalls = 0;
+
+  @override
+  Stream<List<Player>> subscribeRoomPlayers(GameRoom room) {
+    return Stream.value(List<Player>.of(_players));
+  }
+
+  @override
+  Future<List<Player>> loadRoomPlayers(GameRoom room) async {
+    pollCalls += 1;
+    return [
+      ..._players,
+      const Player(
+        id: 'guest',
+        name: 'Misafir',
+        score: 0,
+        state: 'Bekliyor',
+        streak: 0,
+      ),
+    ];
+  }
+}
+
 class _NeedsNameRepository extends MockZanKurdRepository {
   String savedName = '';
 
@@ -1030,6 +1055,44 @@ void main() {
     );
     expect(startButton.onPressed, isNotNull);
   });
+
+  testWidgets(
+    'room lobby recovers via polling when realtime player list stays stale',
+    (tester) async {
+      final repository = _StaleStreamPollRecoveryRepository();
+
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      await tester.pumpWidget(
+        _testShell(
+          child: RoomScreen(
+            repository: repository,
+            initialRoom: repository.hostLobbyRoom(),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      expect(find.text('Misafir'), findsNothing);
+      final disabledButton = tester.widget<FilledButton>(
+        find.widgetWithText(FilledButton, 'Yarışı Başlat'),
+      );
+      expect(disabledButton.onPressed, isNull);
+
+      await tester.pump(const Duration(seconds: 3));
+      await tester.pump();
+
+      expect(repository.pollCalls, greaterThan(0));
+      expect(find.text('Misafir'), findsOneWidget);
+
+      final enabledButton = tester.widget<FilledButton>(
+        find.widgetWithText(FilledButton, 'Yarışı Başlat'),
+      );
+      expect(enabledButton.onPressed, isNotNull);
+      expect(find.byType(QuizScreen), findsNothing);
+    },
+  );
 
   testWidgets('quiz screen remains usable in landscape', (tester) async {
     await tester.binding.setSurfaceSize(const Size(844, 390));

@@ -35,12 +35,12 @@ class _RoomScreenState extends State<RoomScreen> {
   StreamSubscription? _playersSub;
   StreamSubscription? _statusSub;
 
-  /// Realtime event gelmezse devreye giren polling fallback.
-  /// Realtime çalışınca otomatik durur, 15s sonra tekrar başlar.
+  /// Realtime yetersiz kalırsa devreye giren polling fallback.
+  /// Yalnızca lobide en az 2 oyuncu görülünce durur; aksi halde devam eder.
   Timer? _pollTimer;
   int _pollCount = 0;
   static const _pollInterval = Duration(seconds: 3);
-  static const _maxPollsBeforePause = 20; // ~60s
+  static const _maxPollsBeforePause = 20; // ~60s, yalnızca >=2 oyuncu varken
 
   @override
   void initState() {
@@ -53,10 +53,7 @@ class _RoomScreenState extends State<RoomScreen> {
   void _startSubscriptions() {
     _playersSub = widget.repository.subscribeRoomPlayers(room).listen((p) {
       if (!mounted) return;
-      // Realtime event geldi → polling'i durdur.
-      _pausePolling();
-      _pollCount = 0;
-      setState(() => room = room.copyWith(players: p));
+      _applyPlayerList(p);
     });
     _statusSub = widget.repository.subscribeRoomStatus(room).listen((status) {
       if (!mounted) return;
@@ -65,28 +62,57 @@ class _RoomScreenState extends State<RoomScreen> {
     });
   }
 
-  /// Realtime çalışmazsa host, 2. oyuncunun geldiğini polling ile görür.
+  void _applyPlayerList(List<Player> players) {
+    if (!mounted) return;
+    setState(() => room = room.copyWith(players: players));
+    _syncPollingForLobby(players.length);
+  }
+
+  /// Lobide 2 oyuncu görülene kadar polling açık kalır; eksik realtime
+  /// yanıtlarında host takılı kalmaz.
+  void _syncPollingForLobby(int playerCount) {
+    if (quizOpened) {
+      _pausePolling();
+      return;
+    }
+    if (playerCount >= 2) {
+      _pausePolling();
+      _pollCount = 0;
+      return;
+    }
+    if (_pollTimer == null) {
+      _startPolling();
+    }
+  }
+
+  /// Realtime yetersizse host, 2. oyuncuyu polling ile görür.
   void _startPolling() {
     _pollTimer?.cancel();
-    _pollTimer = Timer.periodic(_pollInterval, (_) async {
-      if (!mounted || quizOpened) return;
-      try {
-        final players = await widget.repository.loadRoomPlayers(room);
-        if (!mounted) return;
-        setState(() => room = room.copyWith(players: players));
-        _pollCount++;
-        // Çok uzun süre polling yaptıysak biraz duraklat (ağ tasarrufu).
-        if (_pollCount >= _maxPollsBeforePause) {
-          _pausePolling();
-          // 15s sonra tekrar dene (realtime belki çalışmaya başlamıştır).
-          Future.delayed(const Duration(seconds: 15), () {
-            if (mounted && !quizOpened) _startPolling();
-          });
-        }
-      } catch (_) {
-        // Network hatası → sessizce yoksay, bir sonraki tick'te tekrar dene.
+    _pollTimer = Timer.periodic(_pollInterval, (_) => _pollPlayersOnce());
+  }
+
+  Future<void> _pollPlayersOnce() async {
+    if (!mounted || quizOpened) return;
+    try {
+      final players = await widget.repository.loadRoomPlayers(room);
+      if (!mounted) return;
+      _applyPlayerList(players);
+      if (players.length < 2) {
+        _pollCount = 0;
+        return;
       }
-    });
+      _pollCount++;
+      if (_pollCount >= _maxPollsBeforePause) {
+        _pausePolling();
+        Future.delayed(const Duration(seconds: 15), () {
+          if (mounted && !quizOpened && room.players.length >= 2) {
+            _startPolling();
+          }
+        });
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'loadRoomPlayers poll failed');
+    }
   }
 
   void _pausePolling() {
