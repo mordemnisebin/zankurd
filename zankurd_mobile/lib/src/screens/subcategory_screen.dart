@@ -30,11 +30,13 @@ class SubcategoryScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(
+          color: AppTheme.isLight(context) ? AppTheme.lightTextPrimary : Colors.white,
+        ),
         title: Text(
           CategoryNames.localized(category, ku),
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: AppTheme.isLight(context) ? AppTheme.lightTextPrimary : Colors.white,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -166,6 +168,8 @@ class _CategoryBanner extends StatelessWidget {
                 const Spacer(),
                 Text(
                   CategoryNames.localized(category, isKu),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
@@ -177,6 +181,8 @@ class _CategoryBanner extends StatelessWidget {
                   isKu
                       ? 'Barekî hilbijêre û dest bi lîstinê bike.'
                       : 'Bir alt alan seçerek yarışmaya başla.',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.8),
                     fontSize: 13,
