@@ -135,8 +135,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   bool get isLastQuestion => index == widget.questions.length - 1;
   bool get _isSoloMode => widget.room.id == null;
 
-  /// Gerçek online multiplayer: 1v1 + gerçek oda (bot değil).
-  bool get _isMultiplayer => widget.is1v1 && widget.room.id != null;
+  /// Gerçek online multiplayer: 1v1 veya takım oyunu (bot değil).
+  bool get _isMultiplayer => widget.room.id != null;
 
   @override
   void initState() {
@@ -187,65 +187,86 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         _myName = name;
       });
 
-      if (widget.is1v1) {
-        if (widget.room.id != null) {
-          // Real online 1v1 match: subscribe to realtime channel updates
-          livePlayers = List.of(widget.room.players);
-          _myId = livePlayers
-              .firstWhere(
-                (p) => p.name == name,
-                orElse: () => const Player(name: '', score: 0, state: ''),
-              )
-              .id;
-          _realtimeSub = widget.repository
-              .subscribeRoomBroadcast(widget.room.id!)
-              .listen((payload) {
-                if (!mounted) return;
-                final senderId = payload['sender_id'] as String?;
-                final senderName = payload['sender'] as String?;
-                // Kimlik varsa id ile eşleştir; aynı isimli oyuncularda skor
-                // karışmasını önler. Kimlik yoksa (eski payload) isme düş.
-                final isSelf = _myId != null && senderId != null
-                    ? senderId == _myId
-                    : senderName == name;
-                if (senderName != null && !isSelf) {
-                  setState(() {
-                    final opponentIdx = livePlayers.indexWhere(
-                      (p) => senderId != null
-                          ? p.id == senderId
-                          : p.name == senderName,
-                    );
-                    final updatedOpponent = Player(
-                      id:
-                          senderId ??
-                          (opponentIdx != -1
-                              ? livePlayers[opponentIdx].id
-                              : null),
-                      name: senderName,
-                      score: (payload['score'] as num?)?.toInt() ?? 0,
-                      streak: (payload['streak'] as num?)?.toInt() ?? 0,
-                      state: payload['answered'] == true
-                          ? (_isKu ? 'Bersiv da' : 'Cevapladı')
-                          : (_isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor'),
-                    );
-                    if (opponentIdx != -1) {
-                      livePlayers[opponentIdx] = updatedOpponent;
-                    } else {
-                      livePlayers.add(updatedOpponent);
-                    }
-                    livePlayers.sort((a, b) => b.score.compareTo(a.score));
+      if (widget.room.id != null) {
+        // Real online multiplayer (1vs1 or Team Game)
+        livePlayers = List.of(widget.room.players);
+        _myId = livePlayers
+            .firstWhere(
+              (p) => p.name == name,
+              orElse: () => const Player(name: '', score: 0, state: ''),
+            )
+            .id;
+        _realtimeSub = widget.repository
+            .subscribeRoomBroadcast(widget.room.id!)
+            .listen((payload) {
+              if (!mounted) return;
+              final senderId = payload['sender_id'] as String?;
+              final senderName = payload['sender'] as String?;
+              final isSelf = _myId != null && senderId != null
+                  ? senderId == _myId
+                  : senderName == name;
+              if (senderName != null && !isSelf) {
+                setState(() {
+                  final opponentIdx = livePlayers.indexWhere(
+                    (p) => senderId != null
+                        ? p.id == senderId
+                        : p.name == senderName,
+                  );
+                  final updatedOpponent = Player(
+                    id:
+                        senderId ??
+                        (opponentIdx != -1
+                            ? livePlayers[opponentIdx].id
+                            : null),
+                    name: senderName,
+                    score: (payload['score'] as num?)?.toInt() ?? 0,
+                    streak: (payload['streak'] as num?)?.toInt() ?? 0,
+                    state: payload['answered'] == true
+                        ? (_isKu ? 'Bersiv da' : 'Cevapladı')
+                        : (_isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor'),
+                  );
+                  if (opponentIdx != -1) {
+                    livePlayers[opponentIdx] = updatedOpponent;
+                  } else {
+                    livePlayers.add(updatedOpponent);
+                  }
+                  livePlayers.sort((a, b) => b.score.compareTo(a.score));
 
-                    final oppAnswer = payload['selected_answer'] as String?;
-                    if (oppAnswer != null) {
-                      _opponentSelectedAnswers[senderName] = oppAnswer;
-                    } else if (payload['answered'] == false) {
-                      _opponentSelectedAnswers.remove(senderName);
+                  final oppAnswer = payload['selected_answer'] as String?;
+                  if (oppAnswer != null) {
+                    _opponentSelectedAnswers[senderName] = oppAnswer;
+                  } else if (payload['answered'] == false) {
+                    _opponentSelectedAnswers.remove(senderName);
+                  }
+                });
+                _checkMultiplayerSync();
+              }
+            });
+
+        if (!widget.is1v1) {
+          _playersSub = widget.repository
+              .subscribeRoomPlayers(widget.room)
+              .listen((players) {
+                if (!mounted) return;
+                setState(() {
+                  for (final p in players) {
+                    final idx = livePlayers.indexWhere((lp) => lp.name == p.name);
+                    if (idx != -1) {
+                      livePlayers[idx] = livePlayers[idx].copyWith(
+                        score: p.score,
+                        streak: p.streak,
+                        state: p.state,
+                      );
+                    } else {
+                      livePlayers.add(p);
                     }
-                  });
-                  _checkMultiplayerSync();
-                }
+                  }
+                  livePlayers.sort((a, b) => b.score.compareTo(a.score));
+                });
               });
-        } else {
+        }
+      } else {
+        if (widget.is1v1) {
           // Bot fallback 1v1 match
           final rng = Random();
           final botNames = const [
@@ -266,17 +287,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             BotOpponent(name: botName, skill: botSkill, random: rng),
           ]);
           livePlayers = _composeBotRacePlayers();
+        } else if (widget.botRace) {
+          _botRace = BotRace.standard();
+          livePlayers = _composeBotRacePlayers();
         }
-      } else if (widget.botRace) {
-        _botRace = BotRace.standard();
-        livePlayers = _composeBotRacePlayers();
-      } else {
-        _playersSub = widget.repository
-            .subscribeRoomPlayers(widget.room)
-            .listen((players) {
-              if (!mounted) return;
-              setState(() => livePlayers = players);
-            });
       }
     });
 
