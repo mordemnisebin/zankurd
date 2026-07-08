@@ -238,6 +238,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   } else if (payload['answered'] == false) {
                     _opponentSelectedAnswers.remove(senderName);
                   }
+
+                  final oppIndex = payload['question_index'] as int?;
+                  if (oppIndex != null && oppIndex > index) {
+                    _syncToQuestionIndex(oppIndex);
+                  }
                 });
                 _checkMultiplayerSync();
               }
