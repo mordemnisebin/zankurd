@@ -731,12 +731,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (sheetCtx) {
+        final fieldLabel = ku ? 'Koda odeyê' : 'Oda kodu';
+        final inputTextStyle = AppTypography.bodyLarge.copyWith(
+          color: AppTheme.textPrimaryColor(context),
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.6,
+        );
+        final hintTextStyle = AppTypography.bodyLarge.copyWith(
+          color: AppTheme.textSubColor(context),
+          fontWeight: FontWeight.w500,
+        );
+        final fieldBorderRadius = BorderRadius.circular(AppRadius.sm);
+
         return Padding(
           padding: EdgeInsets.fromLTRB(
-            20,
-            20,
-            20,
-            MediaQuery.viewInsetsOf(sheetCtx).bottom + 20,
+            AppSpacing.md,
+            AppSpacing.md,
+            AppSpacing.md,
+            MediaQuery.viewInsetsOf(sheetCtx).bottom + AppSpacing.md,
           ),
           child: Form(
             key: formKey,
@@ -746,39 +758,66 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               children: [
                 Text(
                   ku ? 'Tevlî Odeyê Bibe' : 'Odaya Katıl',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 22,
+                  style: AppTypography.heading1.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                   ),
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  fieldLabel,
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppTheme.textSubColor(context),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xs),
                 TextFormField(
+                  key: const ValueKey('join-room-code-field'),
                   controller: controller,
                   textCapitalization: TextCapitalization.characters,
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                  ),
-                  cursorColor: AppTheme.accent,
+                  style: inputTextStyle,
+                  cursorColor: AppColors.focus,
                   decoration: InputDecoration(
-                    labelText: ku ? 'Koda odeyê' : 'Oda kodu',
-                    labelStyle: TextStyle(
+                    hintText: 'ZK-XXXX',
+                    hintStyle: hintTextStyle,
+                    filled: true,
+                    fillColor: AppTheme.surfaceHiColor(context),
+                    prefixIcon: Icon(
+                      Icons.tag_rounded,
                       color: AppTheme.textSubColor(context),
                     ),
-                    hintText: 'ZK-XXXX',
-                    hintStyle: TextStyle(
-                      color: AppTheme.textMutedColor(context),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.md,
+                      vertical: AppSpacing.sm,
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: AppTheme.borderColor(context),
                       ),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: fieldBorderRadius,
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.accent, width: 2),
-                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: AppColors.focus,
+                        width: 2,
+                      ),
+                      borderRadius: fieldBorderRadius,
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: AppTheme.wrong),
+                      borderRadius: fieldBorderRadius,
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: AppTheme.wrong,
+                        width: 2,
+                      ),
+                      borderRadius: fieldBorderRadius,
+                    ),
+                    errorStyle: const TextStyle(
+                      color: AppTheme.wrong,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   validator: (value) {
@@ -788,7 +827,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     return null;
                   },
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: AppSpacing.sm),
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton.icon(

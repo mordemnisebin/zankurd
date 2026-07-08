@@ -832,6 +832,34 @@ void main() {
     expect(find.text('Odaya Katıl'), findsOneWidget);
     expect(find.text('Oda kodu'), findsOneWidget);
     expect(find.text('Katıl'), findsOneWidget);
+    expect(find.byKey(const ValueKey('join-room-code-field')), findsOneWidget);
+  });
+
+  testWidgets('join room sheet accepts typed room code text', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: _FakeAuthProvider(),
+        languageProvider: _turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Kodla Katıl'));
+    await tester.tap(find.text('Kodla Katıl'));
+    await tester.pumpAndSettle();
+
+    const code = 'ZK-ABCD';
+    await tester.enterText(
+      find.byKey(const ValueKey('join-room-code-field')),
+      code,
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text(code), findsOneWidget);
   });
 
   testWidgets('home hero keeps multiplayer actions visible in landscape', (
