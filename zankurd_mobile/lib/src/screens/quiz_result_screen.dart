@@ -548,29 +548,37 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                _MetricItemCompact(
-                                  icon: Icons.check_circle_outline,
-                                  label: context.s('Rast', 'Doğru'),
-                                  value: '$correctCount',
-                                  iconColor: AppTheme.correct,
+                                Flexible(
+                                  child: _MetricItemCompact(
+                                    icon: Icons.check_circle_outline,
+                                    label: context.s('Rast', 'Doğru'),
+                                    value: '$correctCount',
+                                    iconColor: AppTheme.correct,
+                                  ),
                                 ),
-                                _MetricItemCompact(
-                                  icon: Icons.cancel_outlined,
-                                  label: context.s('Şaş', 'Yanlış'),
-                                  value: '$wrongCount',
-                                  iconColor: AppTheme.wrong,
+                                Flexible(
+                                  child: _MetricItemCompact(
+                                    icon: Icons.cancel_outlined,
+                                    label: context.s('Şaş', 'Yanlış'),
+                                    value: '$wrongCount',
+                                    iconColor: AppTheme.wrong,
+                                  ),
                                 ),
-                                _MetricItemCompact(
-                                  icon: Icons.hourglass_empty_rounded,
-                                  label: context.s('Vala', 'Boş'),
-                                  value: '$unanswered',
-                                  iconColor: AppTheme.textMutedColor(context),
+                                Flexible(
+                                  child: _MetricItemCompact(
+                                    icon: Icons.hourglass_empty_rounded,
+                                    label: context.s('Vala', 'Boş'),
+                                    value: '$unanswered',
+                                    iconColor: AppTheme.textMutedColor(context),
+                                  ),
                                 ),
-                                _MetricItemCompact(
-                                  icon: Icons.local_fire_department_outlined,
-                                  label: context.s('Baştirîn', 'En İyi'),
-                                  value: '$bestStreak',
-                                  iconColor: AppTheme.gold,
+                                Flexible(
+                                  child: _MetricItemCompact(
+                                    icon: Icons.local_fire_department_outlined,
+                                    label: context.s('Baştirîn', 'En İyi'),
+                                    value: '$bestStreak',
+                                    iconColor: AppTheme.gold,
+                                  ),
                                 ),
                               ],
                             ),
