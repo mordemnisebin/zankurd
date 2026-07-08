@@ -1126,7 +1126,8 @@ class _Tab extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      constraints: const BoxConstraints(minHeight: 44),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
       decoration: BoxDecoration(
         color: active ? AppTheme.accent : Colors.transparent,
         borderRadius: BorderRadius.circular(18),
@@ -1339,8 +1340,7 @@ class _AchievementShowcase extends StatelessWidget {
                 onPressed: () => _showAllAchievementsSheet(context),
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
-                  minimumSize: Size.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  minimumSize: const Size(44, 44),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
