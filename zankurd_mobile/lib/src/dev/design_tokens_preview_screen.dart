@@ -222,7 +222,7 @@ class _ColorCard extends StatelessWidget {
         color: color,
         borderRadius: BorderRadius.circular(AppRadius.md),
         border: hasBorder
-            ? Border.all(color: Colors.black.withOpacity(0.12))
+            ? Border.all(color: Colors.black.withValues(alpha: 0.12))
             : null,
       ),
       child: Column(
@@ -236,7 +236,7 @@ class _ColorCard extends StatelessWidget {
           Text(
             desc,
             style: AppTypography.bodyMedium.copyWith(
-              color: textColor.withOpacity(0.9),
+              color: textColor.withValues(alpha: 0.9),
               fontSize: 12,
             ),
           ),

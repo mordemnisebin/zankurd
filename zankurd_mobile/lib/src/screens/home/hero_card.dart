@@ -39,12 +39,12 @@ class HeroCard extends StatelessWidget {
         gradient: gradient,
         borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(
-          color: Colors.white.withOpacity(0.12),
+          color: Colors.white.withValues(alpha: 0.12),
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.bgDeep.withOpacity(0.4),
+            color: AppTheme.bgDeep.withValues(alpha: 0.4),
             offset: const Offset(0, 10),
             blurRadius: 28,
             spreadRadius: -6,
@@ -77,10 +77,10 @@ class HeroCard extends StatelessWidget {
                         vertical: AppSpacing.xxs,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
+                        color: Colors.white.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(AppRadius.pill),
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.08),
+                          color: Colors.white.withValues(alpha: 0.08),
                         ),
                       ),
                       child: Row(
@@ -90,11 +90,11 @@ class HeroCard extends StatelessWidget {
                             width: 8,
                             height: 8,
                             decoration: BoxDecoration(
-                              color: AppTheme.gold, // Online durum noktası
+                              color: AppTheme.gold.withValues(alpha: 0.6), // Online durum noktası
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppTheme.gold.withOpacity(0.6),
+                                  color: AppTheme.gold.withValues(alpha: 0.6),
                                   blurRadius: 6,
                                 ),
                               ],
@@ -137,7 +137,7 @@ class HeroCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(AppRadius.sm),
                         boxShadow: [
                           BoxShadow(
-                            color: AppTheme.primaryGradientStart.withOpacity(0.25),
+                            color: AppTheme.primaryGradientStart.withValues(alpha: 0.25),
                             blurRadius: 8,
                             offset: const Offset(0, 3),
                           ),
@@ -166,10 +166,10 @@ class HeroCard extends StatelessWidget {
                     child: Container(
                       height: 48,
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.12),
+                        color: Colors.white.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(AppRadius.sm),
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.15),
+                          color: Colors.white.withValues(alpha: 0.15),
                         ),
                       ),
                       child: ElevatedButton(
@@ -200,7 +200,7 @@ class HeroCard extends StatelessWidget {
                   onPressed: onQuickMatch,
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(
-                      color: AppTheme.gold.withOpacity(0.8),
+                      color: AppTheme.gold.withValues(alpha: 0.8),
                       width: 1.5,
                     ),
                     shape: RoundedRectangleBorder(
