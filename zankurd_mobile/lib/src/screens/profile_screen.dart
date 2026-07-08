@@ -18,6 +18,7 @@ import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../models/avatar_identity.dart';
 import '../widgets/badge_collection_section.dart';
+import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/weekly_performance_chart.dart';
 import 'avatar_editor_screen.dart';
@@ -194,173 +195,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final width = MediaQuery.sizeOf(context).width;
     final isWide = width > 720;
 
+    final profileHero = _ProfileHeroCard(
+      ku: ku,
+      displayName: _displayName(ku),
+      avatarIdentity: _avatarIdentity,
+      showcaseTitle: _avatarIdentity.showcaseTitle,
+      level: _level,
+      xpInLevel: _xpInLevel,
+      xpNeeded: _xpNeeded,
+      levelProgress: _levelProgress,
+      onEditAvatar: _openAvatarEditor,
+    );
+
     Widget leftColumn = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Avatar card
-        AppPanel(
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF1E5F47), Color(0xFF123427)],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  // Avatara dokununca düzenleyici açılır; kalem rozeti bunun
-                  // keşfedilebilir olmasını sağlar.
-                  InkWell(
-                    key: const ValueKey('profile-avatar-edit'),
-                    customBorder: const CircleBorder(),
-                    onTap: _openAvatarEditor,
-                    child: Stack(
-                      children: [
-                        PlayerAvatar(
-                          radius: 34,
-                          photoUrl: _avatarIdentity.photoUrl,
-                          iconId: _avatarIdentity.iconId,
-                          colorHex: _avatarIdentity.colorHex,
-                          frameId: _avatarIdentity.frameId,
-                          displayName: _currentName,
-                        ),
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.edit,
-                              size: 12,
-                              color: Color(0xFF1E5F47),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _displayName(ku),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                          ),
-                        ),
-                        if (_avatarIdentity.showcaseTitle != null)
-                          Container(
-                            margin: const EdgeInsets.only(top: 4),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.18),
-                              borderRadius: BorderRadius.circular(999),
-                            ),
-                            child: Text(
-                              _avatarIdentity.showcaseTitle!,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: AppTheme.gold,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12,
-                              ),
-                            ),
-                          )
-                        else
-                          Text(
-                            ku
-                                ? 'Di tabloya pêşderçûnê de ev nav xuya dike'
-                                : 'Liderlik tablosunda bu isim görünür',
-                            style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.7),
-                              fontSize: 13,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Divider(color: Colors.white.withValues(alpha: 0.2), height: 1),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.military_tech_rounded,
-                        color: AppTheme.gold,
-                        size: 22,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        ku ? 'Ast $_level' : 'Seviye $_level',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    '$_xpInLevel / $_xpNeeded XP',
-                    style: const TextStyle(
-                      color: Colors.white70,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 8,
-                      color: Colors.white.withValues(alpha: 0.15),
-                    ),
-                    FractionallySizedBox(
-                      widthFactor: _levelProgress.clamp(0.0, 1.0),
-                      child: Container(
-                        height: 8,
-                        decoration: BoxDecoration(
-                          gradient: AppTheme.goldGradient,
-                          borderRadius: BorderRadius.circular(6),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppTheme.gold.withValues(alpha: 0.4),
-                              blurRadius: 6,
-                              offset: const Offset(0, 1),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 14),
+        profileHero,
+        const SizedBox(height: AppSpacing.cardGap),
 
         // Language toggle
         AppPanel(
@@ -592,296 +443,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Expanded(flex: 10, child: rightColumn),
                         ],
                       )
-                    else ...[
-                      // Avatar card
-                      AppPanel(
-                        gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Color(0xFF7C3AED), Color(0xFF4F1EB8)],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 34,
-                                  backgroundColor: Colors.white.withValues(
-                                    alpha: 0.2,
-                                  ),
-                                  child: Text(
-                                    (_currentName?.isNotEmpty == true
-                                            ? _currentName![0]
-                                            : 'Z')
-                                        .toUpperCase(),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 28,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        _displayName(ku),
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      Text(
-                                        ku
-                                            ? 'Di tabloya pêşderçûnê de ev nav xuya dike'
-                                            : 'Liderlik tablosunda bu isim görünür',
-                                        style: TextStyle(
-                                          color: Colors.white.withValues(
-                                            alpha: 0.7,
-                                          ),
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-                            Divider(
-                              color: Colors.white.withValues(alpha: 0.2),
-                              height: 1,
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.military_tech_rounded,
-                                      color: AppTheme.gold,
-                                      size: 22,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      ku ? 'Ast $_level' : 'Seviye $_level',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  '$_xpInLevel / $_xpNeeded XP',
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(4),
-                              child: LinearProgressIndicator(
-                                value: _levelProgress,
-                                backgroundColor: Colors.white.withValues(
-                                  alpha: 0.15,
-                                ),
-                                color: AppTheme.gold,
-                                minHeight: 8,
-                              ),
-                            ),
-                          ],
-                        ),
+                    else
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          leftColumn,
+                          const SizedBox(height: AppSpacing.md),
+                          rightColumn,
+                        ],
                       ),
-                      const SizedBox(height: 14),
-
-                      // Language toggle
-                      AppPanel(
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.language,
-                              color: AppTheme.violet,
-                              size: 22,
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    ku ? 'Ziman' : 'Dil',
-                                    style: TextStyle(
-                                      color: AppTheme.textPrimaryColor(context),
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                  Text(
-                                    ku ? 'Kurdî / Tirkî' : 'Kürtçe / Türkçe',
-                                    style: TextStyle(
-                                      color: AppTheme.textMutedColor(context),
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            _LangToggle(
-                              isKu: ku,
-                              onToggle: langProvider.toggle,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-
-                      // Stats
-                      AppPanel(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              ku ? 'Statîstîkên Min' : 'İstatistiklerim',
-                              style: TextStyle(
-                                color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w700,
-                                fontSize: 17,
-                              ),
-                            ),
-                            const SizedBox(height: 14),
-                            if (_stats == null)
-                              Text(
-                                ku
-                                    ? 'Hîn dîroka lîstikê ya serhêl tune.\nBi yekê re bikevin an yek çêbikin.'
-                                    : 'Henüz çevrimiçi oyun geçmişin yok.\nBir odaya katıl veya oluştur.',
-                                style: const TextStyle(
-                                  color: AppTheme.textMuted,
-                                ),
-                              )
-                            else
-                              LayoutBuilder(
-                                builder: (context, constraints) =>
-                                    GridView.count(
-                                      crossAxisCount: constraints.maxWidth > 600
-                                          ? 4
-                                          : 2,
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      mainAxisSpacing: 10,
-                                      crossAxisSpacing: 10,
-                                      childAspectRatio: 1.45,
-                                      children: [
-                                        _StatTile(
-                                          label: ku ? 'Rêze' : 'Sıralama',
-                                          value: '#${_stats!.rank}',
-                                          color: AppTheme.gold,
-                                          icon: Icons.leaderboard_rounded,
-                                        ),
-                                        _StatTile(
-                                          label: ku
-                                              ? 'Tevayî Xal'
-                                              : 'Toplam Puan',
-                                          value: '${_stats!.totalScore}',
-                                          color: AppTheme.accent,
-                                          icon: Icons.star_rounded,
-                                        ),
-                                        _StatTile(
-                                          label: ku
-                                              ? 'Baştirîn Zincîr'
-                                              : 'En İyi Seri',
-                                          value: '${_stats!.bestStreak}',
-                                          color: AppTheme.violet,
-                                          icon: Icons
-                                              .local_fire_department_rounded,
-                                        ),
-                                        _StatTile(
-                                          label: ku ? 'Lîstik' : 'Oyun',
-                                          value: '${_stats!.roomsPlayed}',
-                                          color: AppTheme.correct,
-                                          icon: Icons.sports_esports_rounded,
-                                        ),
-                                      ],
-                                    ),
-                              ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              child: Divider(
-                                color: AppTheme.surfaceHiColor(context),
-                              ),
-                            ),
-                            Text(
-                              ku
-                                  ? 'Performansa Heftane'
-                                  : 'Haftalık Performans',
-                              style: TextStyle(
-                                color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w800,
-                                fontSize: 15,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            FutureBuilder<MistakeStore>(
-                              future: MistakeStore.load(),
-                              builder: (context, snapshot) {
-                                if (!snapshot.hasData) {
-                                  return const SizedBox(
-                                    height: 160,
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        color: AppTheme.accent,
-                                      ),
-                                    ),
-                                  );
-                                }
-                                final history = snapshot.data!
-                                    .getLast7DaysHistory();
-                                return WeeklyPerformanceChart(
-                                  history: history,
-                                  isKu: ku,
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-
-                      _PedagogicalAnalyticsSection(isKu: ku),
-                      const SizedBox(height: 14),
-
-                      _AchievementShowcase(
-                        achievements: _achievements,
-                        isKu: ku,
-                      ),
-                      const SizedBox(height: 14),
-
-                      // Rozet Koleksiyonu
-                      const AppPanel(
-                        glass: true,
-                        child: BadgeCollectionSection(),
-                      ),
-                      const SizedBox(height: 14),
-
-                      if (_masteryStore != null) ...[
-                        _MasterySection(store: _masteryStore!, isKu: ku),
-                        const SizedBox(height: 14),
-                      ],
-
-                      // Navigasyon kısayolları — tek panel içinde gruplandı
-                      _buildMenuPanel(ku),
-                    ],
                   ],
                 ),
               ),
@@ -1146,6 +716,229 @@ class _Tab extends StatelessWidget {
   }
 }
 
+class _ProfileHeroCard extends StatelessWidget {
+  const _ProfileHeroCard({
+    required this.ku,
+    required this.displayName,
+    required this.avatarIdentity,
+    required this.showcaseTitle,
+    required this.level,
+    required this.xpInLevel,
+    required this.xpNeeded,
+    required this.levelProgress,
+    required this.onEditAvatar,
+  });
+
+  final bool ku;
+  final String displayName;
+  final AvatarIdentity avatarIdentity;
+  final String? showcaseTitle;
+  final int level;
+  final int xpInLevel;
+  final int xpNeeded;
+  final double levelProgress;
+  final VoidCallback onEditAvatar;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(AppRadius.card),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+          ),
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.12),
+            width: 1.2,
+          ),
+          boxShadow: AppTheme.glowShadow(
+            AppTheme.secondaryAccent,
+            intensity: 0.16,
+          ),
+        ),
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: IgnorePointer(
+                child: CustomPaint(
+                  painter: KilimPatternPainter(
+                    drawPattern: true,
+                    color: Colors.white,
+                    opacity: 0.05,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              right: -8,
+              top: -12,
+              child: IgnorePointer(
+                child: Icon(
+                  Icons.person_rounded,
+                  size: 96,
+                  color: Colors.white.withValues(alpha: 0.06),
+                ),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    InkWell(
+                      key: const ValueKey('profile-avatar-edit'),
+                      customBorder: const CircleBorder(),
+                      onTap: onEditAvatar,
+                      child: Stack(
+                        children: [
+                          PlayerAvatar(
+                            radius: 34,
+                            photoUrl: avatarIdentity.photoUrl,
+                            iconId: avatarIdentity.iconId,
+                            colorHex: avatarIdentity.colorHex,
+                            frameId: avatarIdentity.frameId,
+                            displayName: displayName,
+                          ),
+                          Positioned(
+                            right: 0,
+                            bottom: 0,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.edit,
+                                size: 12,
+                                color: AppTheme.secondaryAccent,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.md),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            displayName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.heading2.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                          if (showcaseTitle != null)
+                            Container(
+                              margin: const EdgeInsets.only(top: AppSpacing.xxs),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppSpacing.xs,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.16),
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.pill,
+                                ),
+                              ),
+                              child: Text(
+                                showcaseTitle!,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTypography.caption.copyWith(
+                                  color: AppTheme.gold,
+                                ),
+                              ),
+                            )
+                          else
+                            Text(
+                              ku
+                                  ? 'Di tabloya pêşderçûnê de ev nav xuya dike'
+                                  : 'Liderlik tablosunda bu isim görünür',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypography.bodyMedium.copyWith(
+                                color: Colors.white.withValues(alpha: 0.72),
+                                fontSize: 13,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Divider(
+                  color: Colors.white.withValues(alpha: 0.18),
+                  height: 1,
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.military_tech_rounded,
+                          color: AppTheme.gold,
+                          size: 22,
+                        ),
+                        const SizedBox(width: AppSpacing.xxs),
+                        Text(
+                          ku ? 'Ast $level' : 'Seviye $level',
+                          style: AppTypography.bodyLarge.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      '$xpInLevel / $xpNeeded XP',
+                      style: AppTypography.caption.copyWith(
+                        color: Colors.white.withValues(alpha: 0.78),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadius.xs),
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 8,
+                        color: Colors.white.withValues(alpha: 0.14),
+                      ),
+                      FractionallySizedBox(
+                        widthFactor: levelProgress.clamp(0.0, 1.0),
+                        child: Container(
+                          height: 8,
+                          decoration: BoxDecoration(
+                            gradient: AppTheme.goldGradient,
+                            borderRadius: BorderRadius.circular(AppRadius.xs),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _StatTile extends StatelessWidget {
   const _StatTile({
     required this.label,
@@ -1162,36 +955,41 @@ class _StatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withValues(alpha: 0.2)),
-      ),
+      padding: const EdgeInsets.all(AppSpacing.sm),
+      decoration: AppTheme.statCard(context, color),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: color, size: 15),
-          const SizedBox(height: 2),
+          Container(
+            width: 28,
+            height: 28,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(AppRadius.xs),
+            ),
+            child: Icon(icon, color: color, size: 16),
+          ),
+          const SizedBox(height: AppSpacing.xxs),
           Text(
             value,
-            style: TextStyle(
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTypography.heading2.copyWith(
               color: color,
-              fontWeight: FontWeight.w700,
               fontSize: 17,
             ),
           ),
-          Flexible(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: AppTheme.textMutedColor(context),
-                fontSize: 11,
-              ),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTypography.caption.copyWith(
+              color: AppTheme.textMutedColor(context),
+              fontWeight: FontWeight.w600,
+              fontSize: 11,
             ),
           ),
         ],

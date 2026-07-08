@@ -21,6 +21,7 @@ import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
+import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/player_avatar.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
@@ -357,25 +358,46 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       }
     }
 
-    final headerColor = is1v1
+    final headerGradient = is1v1
         ? (isWinner
-              ? AppTheme.correct.withValues(alpha: 0.16)
+              ? LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    AppTheme.correct.withValues(alpha: 0.92),
+                    const Color(0xFF1B5E20),
+                  ],
+                )
               : isDraw
-              ? AppTheme.surfaceHiColor(context)
-              : AppTheme.wrong.withValues(alpha: 0.16))
-        : (AppTheme.isLight(context)
-              ? AppTheme.surfaceHiColor(context)
-              : const Color(0xFF13222F)); // Premium dark navy / petrol tone
+              ? LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    AppTheme.surfaceHiColor(context),
+                    AppTheme.surfaceColor(context),
+                  ],
+                )
+              : LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    AppTheme.wrong.withValues(alpha: 0.88),
+                    const Color(0xFF7F1D1D),
+                  ],
+                ))
+        : const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+          );
 
     final borderColor = is1v1
         ? (isWinner
-              ? AppTheme.correct.withValues(alpha: 0.45)
+              ? AppTheme.correct.withValues(alpha: 0.55)
               : isDraw
               ? AppTheme.borderColor(context)
-              : AppTheme.wrong.withValues(alpha: 0.45))
-        : (AppTheme.isLight(context)
-              ? AppTheme.borderColor(context)
-              : const Color(0xFF233B52)); // Subtle premium navy border
+              : AppTheme.wrong.withValues(alpha: 0.55))
+        : AppTheme.secondaryAccent.withValues(alpha: 0.45);
 
     final headerTitle = is1v1
         ? (isWinner
@@ -428,125 +450,144 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           child: Stack(
             children: [
               ListView(
-                padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.page,
+                  AppSpacing.xs,
+                  AppSpacing.page,
+                  AppSpacing.lg,
+                ),
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: headerColor,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: borderColor, width: 1.2),
-                      boxShadow: [
-                        BoxShadow(
-                          color: borderColor.withValues(alpha: 0.18),
-                          blurRadius: 24,
-                          offset: const Offset(0, 10),
-                          spreadRadius: -10,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(AppRadius.card),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: headerGradient,
+                        borderRadius: BorderRadius.circular(AppRadius.card),
+                        border: Border.all(color: borderColor, width: 1.2),
+                        boxShadow: AppTheme.glowShadow(
+                          is1v1
+                              ? (isWinner
+                                    ? AppTheme.correct
+                                    : isDraw
+                                    ? AppTheme.borderColor(context)
+                                    : AppTheme.wrong)
+                              : AppTheme.secondaryAccent,
+                          intensity: 0.18,
                         ),
-                      ],
-                    ),
-                    padding: const EdgeInsets.all(20),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          right: -10,
-                          top: -10,
-                          child: Icon(
-                            headerIcon,
-                            size: 90,
-                            color: AppTheme.textPrimaryColor(
-                              context,
-                            ).withValues(alpha: 0.05),
+                      ),
+                      padding: const EdgeInsets.all(AppSpacing.lg),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Positioned.fill(
+                            child: IgnorePointer(
+                              child: CustomPaint(
+                                painter: KilimPatternPainter(
+                                  drawPattern: true,
+                                  color: Colors.white,
+                                  opacity: 0.05,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: AppTheme.surfaceColor(context),
-                                    borderRadius: BorderRadius.circular(16),
-                                    border: Border.all(
-                                      color: AppTheme.borderColor(context),
+                          Positioned(
+                            right: -14,
+                            top: -18,
+                            child: IgnorePointer(
+                              child: Icon(
+                                headerIcon,
+                                size: 112,
+                                color: Colors.white.withValues(alpha: 0.07),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 36,
+                                    height: 36,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.14,
+                                      ),
+                                      borderRadius: BorderRadius.circular(
+                                        AppRadius.sm,
+                                      ),
+                                      border: Border.all(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.22,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Icon(
+                                      headerIcon,
+                                      color: Colors.white,
+                                      size: 18,
                                     ),
                                   ),
-                                  child: Icon(
-                                    headerIcon,
-                                    color: AppTheme.isLight(context)
-                                        ? AppTheme.lightTextPrimary
-                                        : Colors.white,
-                                    size: 16,
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    headerTitle.toUpperCase(),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: AppTheme.isLight(context)
-                                          ? AppTheme.lightTextSub
-                                          : Colors.white70,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 11,
-                                      letterSpacing: 1.2,
+                                  const SizedBox(width: AppSpacing.xs),
+                                  Expanded(
+                                    child: Text(
+                                      headerTitle.toUpperCase(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: AppTypography.caption.copyWith(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.82,
+                                        ),
+                                        letterSpacing: 1.4,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 14),
-                            Text(
-                              '$score',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w800,
-                                fontSize: 52,
-                                height: 1,
+                                ],
                               ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              '${CategoryNames.localized(room.category, context.isKu)} · ${room.code}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: AppTheme.textSubColor(context),
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 14),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppTheme.surfaceColor(context),
-                                borderRadius: BorderRadius.circular(99),
-                                border: Border.all(
-                                  color: AppTheme.borderColor(context),
+                              const SizedBox(height: AppSpacing.md),
+                              Text(
+                                '$score',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTypography.display.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 56,
                                 ),
                               ),
-                              child: Text(
-                                context.s(
-                                  'Rastbûn: %$accuracy',
-                                  'Doğruluk: %$accuracy',
-                                ),
-                                style: TextStyle(
-                                  color: AppTheme.textPrimaryColor(context),
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12,
+                              const SizedBox(height: AppSpacing.xxs),
+                              Text(
+                                '${CategoryNames.localized(room.category, context.isKu)} · ${room.code}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTypography.bodyMedium.copyWith(
+                                  color: Colors.white.withValues(alpha: 0.78),
                                 ),
                               ),
-                            ),
+                              const SizedBox(height: AppSpacing.md),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.sm,
+                                  vertical: AppSpacing.xxs + 1,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.12),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.pill,
+                                  ),
+                                  border: Border.all(
+                                    color: Colors.white.withValues(alpha: 0.2),
+                                  ),
+                                ),
+                                child: Text(
+                                  context.s(
+                                    'Rastbûn: %$accuracy',
+                                    'Doğruluk: %$accuracy',
+                                  ),
+                                  style: AppTypography.caption.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             if (coinsAwarded > 0) ...[
                               const SizedBox(height: 12),
                               Row(
@@ -568,9 +609,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               ),
                             ],
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: AppSpacing.md,
+                              ),
                               child: Divider(
-                                color: AppTheme.borderColor(context),
+                                color: Colors.white.withValues(alpha: 0.18),
                                 height: 1,
                               ),
                             ),
@@ -619,6 +662,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         ),
                       ],
                     ),
+                  ),
                   ),
                   if (opponents.isNotEmpty) ...[
                     const SizedBox(height: 16),
@@ -1471,40 +1515,44 @@ class _MetricItemCompact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fg = AppTheme.textPrimaryColor(context);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 36,
-          height: 36,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: fg.withValues(alpha: 0.10),
-            shape: BoxShape.circle,
-            border: Border.all(color: fg.withValues(alpha: 0.16), width: 1),
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 34,
+            height: 34,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.12),
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.18),
+                width: 1,
+              ),
+            ),
+            child: Icon(icon, color: iconColor, size: 16),
           ),
-          child: Icon(icon, color: iconColor, size: 16),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          value,
-          style: TextStyle(
-            color: fg,
-            fontWeight: FontWeight.w900,
-            fontSize: 15,
+          const SizedBox(height: AppSpacing.xxs + 2),
+          Text(
+            value,
+            style: AppTypography.bodyLarge.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w900,
+              fontSize: 15,
+            ),
           ),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          label,
-          style: TextStyle(
-            color: fg.withValues(alpha: 0.7),
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
+          const SizedBox(height: 2),
+          Text(
+            label,
+            style: AppTypography.caption.copyWith(
+              color: Colors.white.withValues(alpha: 0.72),
+              fontSize: 10,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
