@@ -236,7 +236,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   Widget _buildAnswerButton(int index, String answer) {
     final revealed = answered && !suspense;
     final List<String> opps = [];
-    if (opponentSelectedAnswers != null) {
+    if (revealed && opponentSelectedAnswers != null) {
       opponentSelectedAnswers!.forEach((name, ans) {
         if (ans == answer) {
           opps.add(name);
