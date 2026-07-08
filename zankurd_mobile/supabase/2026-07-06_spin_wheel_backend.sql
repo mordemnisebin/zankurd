@@ -71,12 +71,11 @@ BEGIN
   ON CONFLICT (user_id, spin_date) DO NOTHING;
 
   -- Award coins via coin_transactions (audit trail)
-  INSERT INTO coin_transactions (user_id, delta, reason, metadata)
+  INSERT INTO coin_transactions (player_id, amount, reason)
   VALUES (
     v_user_id,
     v_reward,
-    'spin_wheel',
-    jsonb_build_object('spin_date', v_today, 'segment_reward', v_reward)
+    'spin_wheel'
   );
 
   RETURN QUERY SELECT TRUE, v_reward, 'Spin awarded successfully'::TEXT;

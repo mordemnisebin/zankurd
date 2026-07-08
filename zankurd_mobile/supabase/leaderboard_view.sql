@@ -2,14 +2,17 @@ drop view if exists public.leaderboard_entries;
 
 create view public.leaderboard_entries as
 select
-  rp.player_id,
+  row_number() over (order by coalesce(p.xp, 0) desc)::integer as rank,
+  p.id as player_id,
   coalesce(p.display_name, 'Oyuncu') as display_name,
-  coalesce(sum(rp.score), 0)::integer as total_score,
-  coalesce(max(rp.streak), 0)::integer as best_streak,
-  count(distinct rp.room_id)::integer as rooms_played
-from public.room_players rp
-left join public.profiles p on p.id = rp.player_id
-group by rp.player_id, p.display_name
-order by total_score desc, best_streak desc, rooms_played desc;
+  coalesce(p.xp, 0)::integer as total_score,
+  0::integer as best_streak,
+  0::integer as rooms_played,
+  p.avatar_icon,
+  p.avatar_color,
+  p.avatar_url,
+  p.avatar_frame,
+  p.showcase_title
+from public.profiles p;
 
 grant select on public.leaderboard_entries to anon, authenticated;

@@ -16,11 +16,13 @@ class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({
     required this.repository,
     this.scrollController,
+    this.refreshSignal,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final ScrollController? scrollController;
+  final ValueNotifier<int>? refreshSignal;
 
   @override
   State<LeaderboardScreen> createState() => _LeaderboardScreenState();
@@ -40,6 +42,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     _tabController.addListener(_onTabChanged);
     _loadData();
     _startAutoRefresh();
+    widget.refreshSignal?.addListener(_loadData);
   }
 
   void _onTabChanged() {
@@ -69,6 +72,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
 
   @override
   void dispose() {
+    widget.refreshSignal?.removeListener(_loadData);
     _tabController.removeListener(_onTabChanged);
     _tabController.dispose();
     _refreshTimer?.cancel();

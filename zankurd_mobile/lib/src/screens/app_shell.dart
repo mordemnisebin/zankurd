@@ -40,6 +40,7 @@ class _AppShellState extends State<AppShell> {
   final GlobalKey _profileNavKey = GlobalKey();
   final GlobalKey _shellStackKey = GlobalKey();
   final ValueNotifier<int> _homeRefresh = ValueNotifier<int>(0);
+  final ValueNotifier<int> _leaderboardRefresh = ValueNotifier<int>(0);
   final ValueNotifier<int> _profileRefresh = ValueNotifier<int>(0);
   bool _checkingOnboarding = true;
   bool _showOnboarding = false;
@@ -73,6 +74,7 @@ class _AppShellState extends State<AppShell> {
     _learningScrollController.dispose();
     _profileScrollController.dispose();
     _homeRefresh.dispose();
+    _leaderboardRefresh.dispose();
     _profileRefresh.dispose();
     super.dispose();
   }
@@ -220,6 +222,7 @@ class _AppShellState extends State<AppShell> {
           LeaderboardScreen(
             repository: widget.repository,
             scrollController: _leaderboardScrollController,
+            refreshSignal: _leaderboardRefresh,
           ),
           ProfileScreen(
             repository: widget.repository,
@@ -266,6 +269,7 @@ class _AppShellState extends State<AppShell> {
               }
             } else {
               if (i == 0) _homeRefresh.value++;
+              if (i == 3) _leaderboardRefresh.value++;
               if (i == 4) _profileRefresh.value++;
               setState(() => _tab = i);
             }

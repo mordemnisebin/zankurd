@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/avatar_identity.dart';
@@ -972,6 +973,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<bool> canSpinToday() async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final lastSpinStr = prefs.getString('zankurd.last_spin_date');
+      final now = DateTime.now();
+      final todayStr = '${now.year}-${now.month}-${now.day}';
+      if (lastSpinStr == todayStr) {
+        return false;
+      }
       return await client.rpc<bool>('can_spin_today');
     } catch (error, stack) {
       _recordError(error, stack, reason: 'canSpinToday failed');
@@ -995,7 +1003,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         return 0;
       }
 
-      return (row['reward_amount'] as num?)?.toInt() ?? 0;
+      final amount = (row['reward_amount'] as num?)?.toInt() ?? 0;
+      if (amount > 0) {
+        try {
+          final prefs = await SharedPreferences.getInstance();
+          final now = DateTime.now();
+          final todayStr = '${now.year}-${now.month}-${now.day}';
+          await prefs.setString('zankurd.last_spin_date', todayStr);
+        } catch (_) {}
+      }
+      return amount;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'awardSpinCoins failed');
       return 0;
