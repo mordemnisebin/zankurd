@@ -17,6 +17,7 @@ import 'home/hero_card.dart';
 import 'home/quick_play_grid.dart';
 import 'home/section_header.dart';
 import '../widgets/animated_counter.dart';
+import '../widgets/kilim_pattern_painter.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
 import 'quiz_screen.dart';
@@ -450,11 +451,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: Stack(
         children: [
           Positioned.fill(
-            child: CustomPaint(painter: const RojPatternPainter()),
+            child: CustomPaint(
+              painter: KilimPatternPainter(
+                drawPattern: true,
+                color: Colors.white,
+                opacity: 0.05,
+              ),
+            ),
           ),
           Positioned(
-            left: 18,
-            bottom: 20,
+            left: AppSpacing.page,
+            bottom: AppSpacing.lg,
             child: _buildAnimatedCard(
               _heroFadeAnimation(0),
               Column(
@@ -462,31 +469,35 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 children: [
                   Text(
                     greeting,
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: Colors.white.withOpacity(0.75),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xxs),
                   Text(
                     'ZanKurd',
-                    style: TextStyle(
+                    style: AppTypography.display.copyWith(
                       color: Colors.white,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 28,
                       height: 1.0,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: AppSpacing.sm),
                   _buildPriorityMission(context, ku),
                 ],
               ),
             ),
           ),
           if (_streak > 0)
-            Positioned(top: 16, right: 18, child: _buildStreakHexagon(_streak)),
-          Positioned(left: 18, top: 16, child: _buildCoinGemRow(_coinBalance)),
+            Positioned(
+              top: AppSpacing.lg,
+              right: AppSpacing.page,
+              child: _buildStreakHexagon(_streak),
+            ),
+          Positioned(
+            left: AppSpacing.page,
+            top: AppSpacing.lg,
+            child: _buildCoinGemRow(_coinBalance),
+          ),
         ],
       ),
     );
@@ -506,14 +517,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         return Transform.scale(
           scale: pulseAnim.value,
           child: Container(
-            width: 58,
-            height: 58,
+            width: 54,
+            height: 54,
             decoration: BoxDecoration(
               gradient: AppTheme.goldGradient,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
               boxShadow: [
                 BoxShadow(
-                  color: AppTheme.gold.withValues(alpha: 0.35),
+                  color: AppTheme.gold.withOpacity(0.35),
                   blurRadius: 14,
                   offset: const Offset(0, 5),
                 ),
@@ -524,17 +535,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               children: [
                 const Icon(
                   Icons.local_fire_department_rounded,
-                  color: Colors.white,
-                  size: 24,
+                  color: AppTheme.lightTextPrimary, // Koyu Yeşil Kontrast (9.68:1)
+                  size: 22,
                 ),
                 const SizedBox(height: 1),
                 Text(
                   '$streak',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 13,
-                    letterSpacing: -0.2,
+                  style: AppTypography.caption.copyWith(
+                    color: AppTheme.lightTextPrimary,
                   ),
                 ),
               ],
@@ -555,24 +563,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               .push(AppRoute.to(ShopScreen(repository: repo)))
               .then((_) => _refreshCoins()),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 7,
+                  horizontal: AppSpacing.sm,
+                  vertical: AppSpacing.xs,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
                   border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.16),
+                    color: Colors.white.withOpacity(0.16),
                     width: 1.2,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
+                      color: Colors.black.withOpacity(0.1),
                       blurRadius: 8,
                       offset: const Offset(0, 3),
                     ),
@@ -584,16 +592,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     const Icon(
                       Icons.monetization_on_rounded,
                       color: AppTheme.gold,
-                      size: 17,
+                      size: 16,
                     ),
-                    const SizedBox(width: 6),
+                    const SizedBox(width: AppSpacing.xxs),
                     AnimatedCounter(
                       value: coinBalance,
-                      style: const TextStyle(
+                      style: AppTypography.caption.copyWith(
                         color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 13,
-                        letterSpacing: 0.1,
                       ),
                     ),
                   ],
@@ -758,11 +763,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   cursorColor: AppTheme.accent,
                   decoration: InputDecoration(
                     labelText: ku ? 'Koda odeyê' : 'Oda kodu',
-                    labelStyle: TextStyle(color: AppTheme.textSubColor(context)),
+                    labelStyle: TextStyle(
+                      color: AppTheme.textSubColor(context),
+                    ),
                     hintText: 'ZK-XXXX',
-                    hintStyle: TextStyle(color: AppTheme.textMutedColor(context)),
+                    hintStyle: TextStyle(
+                      color: AppTheme.textMutedColor(context),
+                    ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.borderColor(context)),
+                      borderSide: BorderSide(
+                        color: AppTheme.borderColor(context),
+                      ),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(

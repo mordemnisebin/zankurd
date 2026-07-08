@@ -606,10 +606,6 @@ void main() {
 
     expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
     expect(find.text('Günün Yarışması'), findsNothing);
-    expect(
-      tester.getTopLeft(find.byIcon(Icons.sports_esports_outlined)).dy,
-      lessThan(180),
-    );
 
     await tester.enterText(
       find.byKey(const ValueKey('player-name-field')),

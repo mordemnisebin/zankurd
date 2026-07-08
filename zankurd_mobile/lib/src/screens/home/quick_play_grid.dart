@@ -156,7 +156,7 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
   Widget build(BuildContext context) {
     const double shadowHeight = 4.0;
 
-    final shadowColor = widget.gradientColors.last.withValues(alpha: 0.95);
+    final shadowColor = widget.gradientColors.last.withValues(alpha: 0.42);
 
     return FadeTransition(
       opacity: _fadeAnimation,
@@ -190,21 +190,22 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
               ),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: Colors.white.withValues(alpha: 0.16),
-                width: 1.2,
+                color: Colors.white.withValues(alpha: 0.20),
+                width: 1.1,
               ),
               boxShadow: [
                 if (!_isPressed)
                   BoxShadow(
                     color: shadowColor,
                     offset: const Offset(0, shadowHeight),
-                    blurRadius: 0,
+                    blurRadius: 12,
+                    spreadRadius: -8,
                   ),
                 BoxShadow(
-                  color: widget.gradientColors.first.withValues(alpha: 0.25),
-                  blurRadius: 18,
-                  offset: const Offset(0, 8),
-                  spreadRadius: -4,
+                  color: widget.gradientColors.first.withValues(alpha: 0.22),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                  spreadRadius: -8,
                 ),
               ],
             ),
@@ -221,16 +222,25 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
                       color: Colors.white.withValues(alpha: 0.08),
                     ),
                   ),
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: Container(
+                      width: 3,
+                      color: Colors.white.withValues(alpha: 0.34),
+                    ),
+                  ),
                   Padding(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.fromLTRB(14, 10, 12, 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Container(
-                          width: 32,
-                          height: 32,
+                          width: 28,
+                          height: 28,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: Colors.white.withValues(alpha: 0.15),
@@ -252,32 +262,45 @@ class _QuickPlayTileState extends State<_QuickPlayTile>
                               : Icon(
                                   widget.icon,
                                   color: Colors.white,
-                                  size: 16,
+                                  size: 15,
                                 ),
                         ),
                         const Spacer(),
                         Text(
                           widget.title,
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w900,
-                            fontSize: 13,
+                            fontSize: 12.5,
                             height: 1.1,
                             letterSpacing: -0.2,
                           ),
                         ),
                         const SizedBox(height: 2),
-                        Text(
-                          widget.subtitle,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.75),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700,
-                            height: 1.1,
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 7,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.14),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.14),
+                            ),
+                          ),
+                          child: Text(
+                            widget.subtitle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.white.withValues(alpha: 0.86),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w800,
+                              height: 1.1,
+                            ),
                           ),
                         ),
                       ],
