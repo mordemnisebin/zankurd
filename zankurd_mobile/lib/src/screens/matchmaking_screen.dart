@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import '../data/supabase_zankurd_repository.dart';
 import '../data/xp_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -348,8 +349,25 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     await Future.delayed(const Duration(milliseconds: 1500));
     if (_isCancelled || !mounted) return;
 
+    String? dbHostId;
+    if (roomId != null && widget.repository is SupabaseZanKurdRepository) {
+      try {
+        final client = (widget.repository as SupabaseZanKurdRepository).client;
+        final res = await client
+            .from('rooms')
+            .select('host_id')
+            .eq('id', roomId)
+            .maybeSingle();
+        if (res != null) {
+          dbHostId = res['host_id'] as String?;
+        }
+      } catch (_) {}
+    }
+    if (!mounted) return;
+
     var room = widget.repository.createRoom(category: category).copyWith(
           id: roomId,
+          hostId: dbHostId,
           name: ku ? 'Şerê 1v1' : '1v1 Savaş',
           players: [
             Player(
