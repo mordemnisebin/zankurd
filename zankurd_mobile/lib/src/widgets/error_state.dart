@@ -18,7 +18,7 @@ class ErrorState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final message = isKu ? messageKu : messageTr;
-    final retryLabel = isKu ? 'Dîsa Biceribîne' : 'Tekrar Dene';
+    final retryLabel = isKu ? 'Dîsa biceribîne' : 'Tekrar dene';
 
     return Center(
       child: Container(

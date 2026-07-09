@@ -233,7 +233,7 @@ class _ShopScreenState extends State<ShopScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
         title: Text(
-          ku ? 'Dukan / Mağaza' : 'Mağaza',
+          ku ? 'Dukan' : 'Mağaza',
           style: TextStyle(
             color: AppTheme.textPrimaryColor(context),
             fontWeight: FontWeight.w700,
@@ -272,7 +272,9 @@ class _ShopScreenState extends State<ShopScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              '$_coinBalance Coins',
+                              ku
+                                  ? '$_coinBalance coin'
+                                  : '$_coinBalance coin',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(

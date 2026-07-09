@@ -5,7 +5,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_0005',
     category: 'Ziman',
     prompt: 'Görsel etiketi "av" kavramını gösteriyor. Doğru anlam hangisidir?',
-    answers: ['te', 'Sen', 'su', 'ev'],
+    answers: ['ateş', 'ben', 'su', 'ev'],
     correctAnswer: 'su',
     explanation: 'Görsel soru "av" kelimesini pekiştirir.',
     difficulty: 1,
@@ -16,7 +16,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_0010',
     category: 'Ziman',
     prompt: 'Görsel etiketi "roj" kavramını gösteriyor. Doğru anlam hangisidir?',
-    answers: ['Yüz (100)', 'gün/güneş', 'Kürtçenin', 'Duygu/his'],
+    answers: ['Yüz (100)', 'gün/güneş', 'sözcük', 'Duygu/his'],
     correctAnswer: 'gün/güneş',
     explanation: 'Görsel soru "roj" kelimesini pekiştirir.',
     difficulty: 2,
@@ -27,7 +27,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_0015',
     category: 'Ziman',
     prompt: 'Görsel etiketi "mal" kavramını gösteriyor. Doğru anlam hangisidir?',
-    answers: ['ev', 'Sen', 'su', 'İş'],
+    answers: ['ev', 'ben', 'su', 'okul'],
     correctAnswer: 'ev',
     explanation: 'Görsel soru "mal" kelimesini pekiştirir.',
     difficulty: 3,
@@ -126,7 +126,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_0060',
     category: 'Ziman',
     prompt: 'Görsel etiketi "rê" kavramını gösteriyor. Doğru anlam hangisidir?',
-    answers: ['dağ', 'nan', 'Sen', 'yol'],
+    answers: ['dağ', 'nan', 'ben', 'yol'],
     correctAnswer: 'yol',
     explanation: 'Görsel soru "rê" kelimesini pekiştirir.',
     difficulty: 2,
@@ -279,7 +279,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5813',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "baran" bi Tirkî çi ye? (Şablon 4)',
+    prompt: 'Di Kurmancî de peyva "baran" bi Tirkî çi ye?',
     answers: ['yağmur', 'Yoğurt', 'gelmek', 'okumak'],
     correctAnswer: 'yağmur',
     explanation: '"baran" kelimesi "yağmur" anlamına gelir.',
@@ -309,7 +309,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5106',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "heval" bi Tirkî çi ye? (Şablon 0)',
+    prompt: 'Di Kurmancî de peyva "heval" bi Tirkî çi ye?',
     answers: ['nanxane', 'Yumurta', 'pencere', 'arkadaş'],
     correctAnswer: 'arkadaş',
     explanation: '"heval" kelimesi "arkadaş" anlamına gelir.',
@@ -319,7 +319,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5057',
     category: 'Ziman',
-    prompt: '"sanat" anlamına gelen Kurmancî kelime hangisidir? (Şablon 18)',
+    prompt: '"sanat" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['huner', 'ciwan', 'Siyah', 'diçim'],
     correctAnswer: 'huner',
     explanation: '"sanat" için doğru karşılık "huner"tir.',
@@ -329,7 +329,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5019',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "derî" bi Tirkî çi ye? (Şablon 24)',
+    prompt: 'Di Kurmancî de peyva "derî" bi Tirkî çi ye?',
     answers: ['kaya', 'kapı', 'Rast', 'ateş'],
     correctAnswer: 'kapı',
     explanation: '"derî" kelimesi "kapı" anlamına gelir.',
@@ -359,7 +359,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5886',
     category: 'Ziman',
-    prompt: '"ülke/vatan" anlamına gelen Kurmancî kelime hangisidir? (Şablon 10)',
+    prompt: '"ülke/vatan" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['nivîn', 'Beyaz', 'Küçük', 'welat'],
     correctAnswer: 'welat',
     explanation: '"ülke/vatan" için doğru karşılık "welat"tir.',
@@ -369,7 +369,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5622',
     category: 'Ziman',
-    prompt: '"baba" anlamına gelen Kurmancî kelime hangisidir? (Şablon 6)',
+    prompt: '"baba" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['diş', 'bav', 'îro', 'ben'],
     correctAnswer: 'bav',
     explanation: '"baba" için doğru karşılık "bav"tir.',
@@ -389,7 +389,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5713',
     category: 'Ziman',
-    prompt: '"dede" anlamına gelen Kurmancî kelime hangisidir? (Şablon 6)',
+    prompt: '"dede" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['îro', 'şêr', 'diş', 'kal'],
     correctAnswer: 'kal',
     explanation: '"dede" için doğru karşılık "kal"tir.',
@@ -399,7 +399,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5391',
     category: 'Ziman',
-    prompt: '"doğru" anlamına gelen Kurmancî kelime hangisidir? (Şablon 18)',
+    prompt: '"doğru" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['kaya', 'Ağız', 'okul', 'rast'],
     correctAnswer: 'rast',
     explanation: '"doğru" için doğru karşılık "rast"tir.',
@@ -439,7 +439,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5012',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "dê" bi Tirkî çi ye? (Şablon 8)',
+    prompt: 'Di Kurmancî de peyva "dê" bi Tirkî çi ye?',
     answers: ['anne', 'hava', 'kanî', 'xweş'],
     correctAnswer: 'anne',
     explanation: '"dê" kelimesi "anne" anlamına gelir.',
@@ -449,7 +449,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5041',
     category: 'Ziman',
-    prompt: '"okumak" anlamına gelen Kurmancî kelime hangisidir? (Şablon 6)',
+    prompt: '"okumak" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['nanxane', 'ad/isim', 'xwendin', 'pencere'],
     correctAnswer: 'xwendin',
     explanation: '"okumak" için doğru karşılık "xwendin"tir.',
@@ -459,7 +459,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5531',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "dil" bi Tirkî çi ye? (Şablon 20)',
+    prompt: 'Di Kurmancî de peyva "dil" bi Tirkî çi ye?',
     answers: ['kalp/dil', 'konuşmak', 'rûniştin', 'Altı (6)'],
     correctAnswer: 'kalp/dil',
     explanation: '"dil" kelimesi "kalp/dil" anlamına gelir.',
@@ -469,7 +469,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5742',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "çûn" bi Tirkî çi ye? (Şablon 4)',
+    prompt: 'Di Kurmancî de peyva "çûn" bi Tirkî çi ye?',
     answers: ['toprak', 'yazmak', 'malbat', 'gitmek'],
     correctAnswer: 'gitmek',
     explanation: '"çûn" kelimesi "gitmek" anlamına gelir.',
@@ -489,7 +489,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5654',
     category: 'Ziman',
-    prompt: '"sandalye" anlamına gelen Kurmancî kelime hangisidir? (Şablon 14)',
+    prompt: '"sandalye" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['were!', 'burun', 'diçim', 'kursî'],
     correctAnswer: 'kursî',
     explanation: '"sandalye" için doğru karşılık "kursî"tir.',
@@ -509,7 +509,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5835',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "derî" bi Tirkî çi ye? (Şablon 12)',
+    prompt: 'Di Kurmancî de peyva "derî" bi Tirkî çi ye?',
     answers: ['Ağız', 'baba', 'kapı', 'okul'],
     correctAnswer: 'kapı',
     explanation: '"derî" kelimesi "kapı" anlamına gelir.',
@@ -519,7 +519,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5930',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "kanî" bi Tirkî çi ye? (Şablon 20)',
+    prompt: 'Di Kurmancî de peyva "kanî" bi Tirkî çi ye?',
     answers: ['çeşme/pınar', 'Kız (çocuğu)', 'Hint-Avrupa', 'Yirmi (20)'],
     correctAnswer: 'çeşme/pınar',
     explanation: '"kanî" kelimesi "çeşme/pınar" anlamına gelir.',
@@ -529,7 +529,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5386',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "rûniştin" bi Tirkî çi ye? (Şablon 8)',
+    prompt: 'Di Kurmancî de peyva "rûniştin" bi Tirkî çi ye?',
     answers: ['öğrenci', 'pencere', 'oturmak', 'Kırmızı'],
     correctAnswer: 'oturmak',
     explanation: '"rûniştin" kelimesi "oturmak" anlamına gelir.',
@@ -539,7 +539,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5016',
     category: 'Ziman',
-    prompt: '"aslan" anlamına gelen Kurmancî kelime hangisidir? (Şablon 2)',
+    prompt: '"aslan" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['çav', 'por', 'şêr', 'di-'],
     correctAnswer: 'şêr',
     explanation: '"aslan" için doğru karşılık "şêr"tir.',
@@ -549,7 +549,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5440',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "mamoste" bi Tirkî çi ye? (Şablon 20)',
+    prompt: 'Di Kurmancî de peyva "mamoste" bi Tirkî çi ye?',
     answers: ['öğretmen', 'dibistan', 'Altı (6)', 'baş/kafa'],
     correctAnswer: 'öğretmen',
     explanation: '"mamoste" kelimesi "öğretmen" anlamına gelir.',
@@ -559,8 +559,8 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5712',
     category: 'Ziman',
-    prompt: '"su" anlamına gelen Kurmancî kelime hangisidir? (Şablon 18)',
-    answers: ['su', '-a', 'İş', 'av'],
+    prompt: '"su" anlamına gelen Kurmancî kelime hangisidir?',
+    answers: ['su', '-a', 'okul', 'av'],
     correctAnswer: 'av',
     explanation: '"su" için doğru karşılık "av"tir.',
     difficulty: 4,
@@ -569,7 +569,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5114',
     category: 'Ziman',
-    prompt: '"yemekhane" anlamına gelen Kurmancî kelime hangisidir? (Şablon 6)',
+    prompt: '"yemekhane" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['fırıncı', 'nanxane', 'öğrenci', 'işitmek'],
     correctAnswer: 'nanxane',
     explanation: '"yemekhane" için doğru karşılık "nanxane"tir.',
@@ -599,7 +599,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5926',
     category: 'Ziman',
-    prompt: '"renk" anlamına gelen Kurmancî kelime hangisidir? (Şablon 6)',
+    prompt: '"renk" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['ağız', 'reng', 'eski', 'baba'],
     correctAnswer: 'reng',
     explanation: '"renk" için doğru karşılık "reng"tir.',
@@ -609,7 +609,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5225',
     category: 'Ziman',
-    prompt: '"göz" anlamına gelen Kurmancî kelime hangisidir? (Şablon 2)',
+    prompt: '"göz" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['di-', 'kar', 'diş', 'çav'],
     correctAnswer: 'çav',
     explanation: '"göz" için doğru karşılık "çav"tir.',
@@ -619,7 +619,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5903',
     category: 'Ziman',
-    prompt: '"bugün" anlamına gelen Kurmancî kelime hangisidir? (Şablon 2)',
+    prompt: '"bugün" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['dar', 'gül', 'çok', 'îro'],
     correctAnswer: 'îro',
     explanation: '"bugün" için doğru karşılık "îro"tir.',
@@ -649,7 +649,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5221',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "kal" bi Tirkî çi ye? (Şablon 4)',
+    prompt: 'Di Kurmancî de peyva "kal" bi Tirkî çi ye?',
     answers: ['baba', 'hava', 'dede', 'rast'],
     correctAnswer: 'dede',
     explanation: '"kal" kelimesi "dede" anlamına gelir.',
@@ -659,7 +659,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5933',
     category: 'Ziman',
-    prompt: '"masa" anlamına gelen Kurmancî kelime hangisidir? (Şablon 10)',
+    prompt: '"masa" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['eski', 'ağız', 'mase', 'reng'],
     correctAnswer: 'mase',
     explanation: '"masa" için doğru karşılık "mase"tir.',
@@ -679,7 +679,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5305',
     category: 'Ziman',
-    prompt: '"gelmek" anlamına gelen Kurmancî kelime hangisidir? (Şablon 10)',
+    prompt: '"gelmek" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['rabûn', 'ciwan', 'kursî', 'hatin'],
     correctAnswer: 'hatin',
     explanation: '"gelmek" için doğru karşılık "hatin"tir.',
@@ -699,7 +699,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5260',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "reng" bi Tirkî çi ye? (Şablon 16)',
+    prompt: 'Di Kurmancî de peyva "reng" bi Tirkî çi ye?',
     answers: ['bira', 'renk', 'reng', 'Renk'],
     correctAnswer: 'renk',
     explanation: '"reng" kelimesi "renk" anlamına gelir.',
@@ -709,7 +709,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5236',
     category: 'Ziman',
-    prompt: '"yol" anlamına gelen Kurmancî kelime hangisidir? (Şablon 10)',
+    prompt: '"yol" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['El', 'rê', 'av', 'ay'],
     correctAnswer: 'rê',
     explanation: '"yol" için doğru karşılık "rê"tir.',
@@ -719,7 +719,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5748',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "rabûn" bi Tirkî çi ye? (Şablon 4)',
+    prompt: 'Di Kurmancî de peyva "rabûn" bi Tirkî çi ye?',
     answers: ['kalkmak', 'pencere', 'Beş (5)', 'öğrenci'],
     correctAnswer: 'kalkmak',
     explanation: '"rabûn" kelimesi "kalkmak" anlamına gelir.',
@@ -729,7 +729,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5090',
     category: 'Ziman',
-    prompt: '"kalp/dil" anlamına gelen Kurmancî kelime hangisidir? (Şablon 18)',
+    prompt: '"kalp/dil" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['dar', 'ben', 'dil', 'gül'],
     correctAnswer: 'dil',
     explanation: '"kalp/dil" için doğru karşılık "dil"tir.',
@@ -749,7 +749,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5459',
     category: 'Ziman',
-    prompt: '"ağız" anlamına gelen Kurmancî kelime hangisidir? (Şablon 10)',
+    prompt: '"ağız" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['dev', 'şêr', 'poz', 'diş'],
     correctAnswer: 'dev',
     explanation: '"ağız" için doğru karşılık "dev"tir.',
@@ -759,7 +759,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5604',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "bav" bi Tirkî çi ye? (Şablon 20)',
+    prompt: 'Di Kurmancî de peyva "bav" bi Tirkî çi ye?',
     answers: ['eski', 'baba', 'Ağız', 'ağız'],
     correctAnswer: 'baba',
     explanation: '"bav" kelimesi "baba" anlamına gelir.',
@@ -779,7 +779,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5297',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "malbat" bi Tirkî çi ye? (Şablon 0)',
+    prompt: 'Di Kurmancî de peyva "malbat" bi Tirkî çi ye?',
     answers: ['hava', 'eski', 'reng', 'aile'],
     correctAnswer: 'aile',
     explanation: '"malbat" kelimesi "aile" anlamına gelir.',
@@ -799,7 +799,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5638',
     category: 'Ziman',
-    prompt: '"şehir" anlamına gelen Kurmancî kelime hangisidir? (Şablon 2)',
+    prompt: '"şehir" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['bajar', 'Beyaz', 'Siyah', 'ciwan'],
     correctAnswer: 'bajar',
     explanation: '"şehir" için doğru karşılık "bajar"tir.',
@@ -809,7 +809,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5143',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "welat" bi Tirkî çi ye? (Şablon 16)',
+    prompt: 'Di Kurmancî de peyva "welat" bi Tirkî çi ye?',
     answers: ['ülke/vatan', 'nivîsandin', 'ez nizanim', 'kız kardeş'],
     correctAnswer: 'ülke/vatan',
     explanation: '"welat" kelimesi "ülke/vatan" anlamına gelir.',
@@ -819,7 +819,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5790',
     category: 'Ziman',
-    prompt: '"görmek" anlamına gelen Kurmancî kelime hangisidir? (Şablon 10)',
+    prompt: '"görmek" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['dîtin', 'biçûk', 'dapîr', 'ziman'],
     correctAnswer: 'dîtin',
     explanation: '"görmek" için doğru karşılık "dîtin"tir.',
@@ -829,8 +829,8 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5774',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "hesp" bi Tirkî çi ye? (Şablon 20)',
-    answers: ['at', 'Su', 'te', 'At'],
+    prompt: 'Di Kurmancî de peyva "hesp" bi Tirkî çi ye?',
+    answers: ['at', 'Su', 'ateş', 'At'],
     correctAnswer: 'at',
     explanation: '"hesp" kelimesi "at" anlamına gelir.',
     difficulty: 1,
@@ -839,7 +839,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5264',
     category: 'Ziman',
-    prompt: '"kapı" anlamına gelen Kurmancî kelime hangisidir? (Şablon 18)',
+    prompt: '"kapı" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['bira', 'Renk', 'derî', 'ağız'],
     correctAnswer: 'derî',
     explanation: '"kapı" için doğru karşılık "derî"tir.',
@@ -849,7 +849,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5685',
     category: 'Ziman',
-    prompt: '"ay" anlamına gelen Kurmancî kelime hangisidir? (Şablon 6)',
+    prompt: '"ay" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['heyv', 'rast', 'okul', 'eski'],
     correctAnswer: 'heyv',
     explanation: '"ay" için doğru karşılık "heyv"tir.',
@@ -880,7 +880,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_0116',
     category: 'Ziman',
     prompt: 'Di Kurmancî de peyva "pir" bi Tirkî çi ye?',
-    answers: ['Ben', 'Sen', 'min', 'çok'],
+    answers: ['Ben', 'ben', 'min', 'çok'],
     correctAnswer: 'çok',
     explanation: '"pir" kelimesi "çok" anlamına gelir.',
     difficulty: 4,
@@ -889,7 +889,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5030',
     category: 'Ziman',
-    prompt: '"yaşlı/ihtiyar" anlamına gelen Kurmancî kelime hangisidir? (Şablon 22)',
+    prompt: '"yaşlı/ihtiyar" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['pîr', 'Ben', 'îro', 'poz'],
     correctAnswer: 'pîr',
     explanation: '"yaşlı/ihtiyar" için doğru karşılık "pîr"tir.',
@@ -899,7 +899,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5138',
     category: 'Ziman',
-    prompt: '"gitmek" anlamına gelen Kurmancî kelime hangisidir? (Şablon 18)',
+    prompt: '"gitmek" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['di-', 'çûn', 'gül', 'dar'],
     correctAnswer: 'çûn',
     explanation: '"gitmek" için doğru karşılık "çûn"tir.',
@@ -919,7 +919,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5916',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "çem" bi Tirkî çi ye? (Şablon 20)',
+    prompt: 'Di Kurmancî de peyva "çem" bi Tirkî çi ye?',
     answers: ['ciwan', 'nehir', 'burun', 'kursî'],
     correctAnswer: 'nehir',
     explanation: '"çem" kelimesi "nehir" anlamına gelir.',
@@ -939,7 +939,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5932',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "dil" bi Tirkî çi ye? (Şablon 4)',
+    prompt: 'Di Kurmancî de peyva "dil" bi Tirkî çi ye?',
     answers: ['kalp/dil', 'Altı (6)', 'teşekkür', 'konuşmak'],
     correctAnswer: 'kalp/dil',
     explanation: '"dil" kelimesi "kalp/dil" anlamına gelir.',
@@ -949,7 +949,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5894',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "nivîn" bi Tirkî çi ye? (Şablon 24)',
+    prompt: 'Di Kurmancî de peyva "nivîn" bi Tirkî çi ye?',
     answers: ['burun', 'doğru', 'biçûk', 'yatak'],
     correctAnswer: 'yatak',
     explanation: '"nivîn" kelimesi "yatak" anlamına gelir.',
@@ -959,7 +959,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5448',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "wêne" bi Tirkî çi ye? (Şablon 24)',
+    prompt: 'Di Kurmancî de peyva "wêne" bi Tirkî çi ye?',
     answers: ['Arkadaş/yoldaş', 'yaşlı/ihtiyar', 'resim/fotoğraf', 'Latin (Hawar)'],
     correctAnswer: 'resim/fotoğraf',
     explanation: '"wêne" kelimesi "resim/fotoğraf" anlamına gelir.',
@@ -969,7 +969,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5805',
     category: 'Ziman',
-    prompt: '"aile" anlamına gelen Kurmancî kelime hangisidir? (Şablon 14)',
+    prompt: '"aile" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['malbat', 'Görmek', 'yazmak', 'toprak'],
     correctAnswer: 'malbat',
     explanation: '"aile" için doğru karşılık "malbat"tir.',
@@ -979,7 +979,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5270',
     category: 'Ziman',
-    prompt: '"sevmek" anlamına gelen Kurmancî kelime hangisidir? (Şablon 18)',
+    prompt: '"sevmek" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['bihîstin', 'Altı (6)', 'sandalye', 'hezkirin'],
     correctAnswer: 'hezkirin',
     explanation: '"sevmek" için doğru karşılık "hezkirin"tir.',
@@ -999,7 +999,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5284',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "zanîn" bi Tirkî çi ye? (Şablon 4)',
+    prompt: 'Di Kurmancî de peyva "zanîn" bi Tirkî çi ye?',
     answers: ['malbat', 'Yoğurt', 'Görmek', 'bilmek'],
     correctAnswer: 'bilmek',
     explanation: '"zanîn" kelimesi "bilmek" anlamına gelir.',
@@ -1009,7 +1009,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5255',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "xwendekar" bi Tirkî çi ye? (Şablon 8)',
+    prompt: 'Di Kurmancî de peyva "xwendekar" bi Tirkî çi ye?',
     answers: ['işitmek', 'ad/isim', 'öğrenci', 'fırıncı'],
     correctAnswer: 'öğrenci',
     explanation: '"xwendekar" kelimesi "öğrenci" anlamına gelir.',
@@ -1029,7 +1029,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5094',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "şev" bi Tirkî çi ye? (Şablon 20)',
+    prompt: 'Di Kurmancî de peyva "şev" bi Tirkî çi ye?',
     answers: ['baba', 'hava', 'gece', 'okul'],
     correctAnswer: 'gece',
     explanation: '"şev" kelimesi "gece" anlamına gelir.',
@@ -1049,7 +1049,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5755',
     category: 'Ziman',
-    prompt: '"renk" anlamına gelen Kurmancî kelime hangisidir? (Şablon 22)',
+    prompt: '"renk" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['reng', 'ağız', 'Rast', 'xweş'],
     correctAnswer: 'reng',
     explanation: '"renk" için doğru karşılık "reng"tir.',
@@ -1059,7 +1059,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5832',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "kurd" bi Tirkî çi ye? (Şablon 0)',
+    prompt: 'Di Kurmancî de peyva "kurd" bi Tirkî çi ye?',
     answers: ['eski', 'Kürt', 'reng', 'xweş'],
     correctAnswer: 'Kürt',
     explanation: '"kurd" kelimesi "Kürt" anlamına gelir.',
@@ -1079,7 +1079,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5599',
     category: 'Ziman',
-    prompt: '"kalkmak" anlamına gelen Kurmancî kelime hangisidir? (Şablon 14)',
+    prompt: '"kalkmak" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['rabûn', 'nivîn', 'Siyah', 'diçim'],
     correctAnswer: 'rabûn',
     explanation: '"kalkmak" için doğru karşılık "rabûn"tir.',
@@ -1089,7 +1089,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5937',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "hesp" bi Tirkî çi ye? (Şablon 24)',
+    prompt: 'Di Kurmancî de peyva "hesp" bi Tirkî çi ye?',
     answers: ['Ay', 'at', 'iş', 'rê'],
     correctAnswer: 'at',
     explanation: '"hesp" kelimesi "at" anlamına gelir.',
@@ -1109,7 +1109,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5463',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "rûniştin" bi Tirkî çi ye? (Şablon 0)',
+    prompt: 'Di Kurmancî de peyva "rûniştin" bi Tirkî çi ye?',
     answers: ['işitmek', 'oturmak', 'axaftin', 'ergatîf'],
     correctAnswer: 'oturmak',
     explanation: '"rûniştin" kelimesi "oturmak" anlamına gelir.',
@@ -1119,7 +1119,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5298',
     category: 'Ziman',
-    prompt: '"okul" anlamına gelen Kurmancî kelime hangisidir? (Şablon 14)',
+    prompt: '"okul" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['Adın ne?', 'dibistan', 'Teşekkür', 'su içmek'],
     correctAnswer: 'dibistan',
     explanation: '"okul" için doğru karşılık "dibistan"tir.',
@@ -1129,7 +1129,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5097',
     category: 'Ziman',
-    prompt: '"okumak" anlamına gelen Kurmancî kelime hangisidir? (Şablon 2)',
+    prompt: '"okumak" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['fırıncı', 'xwendin', 'öğrenci', 'pencere'],
     correctAnswer: 'xwendin',
     explanation: '"okumak" için doğru karşılık "xwendin"tir.',
@@ -1139,7 +1139,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5644',
     category: 'Ziman',
-    prompt: '"el" anlamına gelen Kurmancî kelime hangisidir? (Şablon 14)',
+    prompt: '"el" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['bira', 'ateş', 'dest', 'kaya'],
     correctAnswer: 'dest',
     explanation: '"el" için doğru karşılık "dest"tir.',
@@ -1149,7 +1149,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5015',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "dil" bi Tirkî çi ye? (Şablon 8)',
+    prompt: 'Di Kurmancî de peyva "dil" bi Tirkî çi ye?',
     answers: ['Altı (6)', 'Teşekkür', 'kalp/dil', 'dibistan'],
     correctAnswer: 'kalp/dil',
     explanation: '"dil" kelimesi "kalp/dil" anlamına gelir.',
@@ -1159,7 +1159,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5202',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "xanî" bi Tirkî çi ye? (Şablon 4)',
+    prompt: 'Di Kurmancî de peyva "xanî" bi Tirkî çi ye?',
     answers: ['pencere', 'bina/ev', 'destpêk', 'öğrenci'],
     correctAnswer: 'bina/ev',
     explanation: '"xanî" kelimesi "bina/ev" anlamına gelir.',
@@ -1179,7 +1179,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5031',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "av" bi Tirkî çi ye? (Şablon 0)',
+    prompt: 'Di Kurmancî de peyva "av" bi Tirkî çi ye?',
     answers: ['Ay', 'su', 'iş', 'av'],
     correctAnswer: 'su',
     explanation: '"av" kelimesi "su" anlamına gelir.',
@@ -1189,7 +1189,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5925',
     category: 'Ziman',
-    prompt: '"ağız" anlamına gelen Kurmancî kelime hangisidir? (Şablon 22)',
+    prompt: '"ağız" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['çok', 'Ben', 'dev', 'çav'],
     correctAnswer: 'dev',
     explanation: '"ağız" için doğru karşılık "dev"tir.',
@@ -1199,7 +1199,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5190',
     category: 'Ziman',
-    prompt: '"teşekkür" anlamına gelen Kurmancî kelime hangisidir? (Şablon 18)',
+    prompt: '"teşekkür" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['Renk', 'spas', 'ağız', 'ateş'],
     correctAnswer: 'spas',
     explanation: '"teşekkür" için doğru karşılık "spas"tir.',
@@ -1209,7 +1209,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5342',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "kar" bi Tirkî çi ye? (Şablon 16)',
+    prompt: 'Di Kurmancî de peyva "kar" bi Tirkî çi ye?',
     answers: ['ay', 'rû', 'iş', 'ev'],
     correctAnswer: 'iş',
     explanation: '"kar" kelimesi "iş" anlamına gelir.',
@@ -1219,7 +1219,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5095',
     category: 'Ziman',
-    prompt: '"okul/akademi" anlamına gelen Kurmancî kelime hangisidir? (Şablon 22)',
+    prompt: '"okul/akademi" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['xwendegeh', 'Pazartesi', 'Dokuz (9)', 'Sekiz (8)'],
     correctAnswer: 'xwendegeh',
     explanation: '"okul/akademi" için doğru karşılık "xwendegeh"tir.',
@@ -1249,7 +1249,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5664',
     category: 'Ziman',
-    prompt: '"kaya" anlamına gelen Kurmancî kelime hangisidir? (Şablon 14)',
+    prompt: '"kaya" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['zinar', 'nivîn', 'diçim', 'biçûk'],
     correctAnswer: 'zinar',
     explanation: '"kaya" için doğru karşılık "zinar"tir.',
@@ -1259,7 +1259,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5188',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "kaxiz" bi Tirkî çi ye? (Şablon 4)',
+    prompt: 'Di Kurmancî de peyva "kaxiz" bi Tirkî çi ye?',
     answers: ['kağıt', 'doğru', 'ciwan', 'here!'],
     correctAnswer: 'kağıt',
     explanation: '"kaxiz" kelimesi "kağıt" anlamına gelir.',
@@ -1279,7 +1279,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5524',
     category: 'Ziman',
-    prompt: '"Kürt" anlamına gelen Kurmancî kelime hangisidir? (Şablon 18)',
+    prompt: '"Kürt" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['ateş', 'Ağız', 'xweş', 'kurd'],
     correctAnswer: 'kurd',
     explanation: '"Kürt" için doğru karşılık "kurd"tir.',
@@ -1289,7 +1289,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5325',
     category: 'Ziman',
-    prompt: '"işitmek" anlamına gelen Kurmancî kelime hangisidir? (Şablon 18)',
+    prompt: '"işitmek" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['öğretmen', 'bihîstin', 'sandalye', 'dibistan'],
     correctAnswer: 'bihîstin',
     explanation: '"işitmek" için doğru karşılık "bihîstin"tir.',
@@ -1299,7 +1299,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5457',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "zanîn" bi Tirkî çi ye? (Şablon 20)',
+    prompt: 'Di Kurmancî de peyva "zanîn" bi Tirkî çi ye?',
     answers: ['rüzgar', 'bilmek', 'görmek', 'Üç (3)'],
     correctAnswer: 'bilmek',
     explanation: '"zanîn" kelimesi "bilmek" anlamına gelir.',
@@ -1319,7 +1319,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5091',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "bav" bi Tirkî çi ye? (Şablon 0)',
+    prompt: 'Di Kurmancî de peyva "bav" bi Tirkî çi ye?',
     answers: ['baba', 'ağız', 'rast', 'ateş'],
     correctAnswer: 'baba',
     explanation: '"bav" kelimesi "baba" anlamına gelir.',
@@ -1329,7 +1329,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5934',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "teşt" bi Tirkî çi ye? (Şablon 0)',
+    prompt: 'Di Kurmancî de peyva "teşt" bi Tirkî çi ye?',
     answers: ['biçûk', 'diçim', 'leğen', 'doğru'],
     correctAnswer: 'leğen',
     explanation: '"teşt" kelimesi "leğen" anlamına gelir.',
@@ -1339,7 +1339,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5063',
     category: 'Ziman',
-    prompt: '"ateş" anlamına gelen Kurmancî kelime hangisidir? (Şablon 2)',
+    prompt: '"ateş" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['ateş', 'eski', 'Renk', 'agir'],
     correctAnswer: 'agir',
     explanation: '"ateş" için doğru karşılık "agir"tir.',
@@ -1349,7 +1349,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5912',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "nivîsandin" bi Tirkî çi ye? (Şablon 24)',
+    prompt: 'Di Kurmancî de peyva "nivîsandin" bi Tirkî çi ye?',
     answers: ['bilmek', 'rüzgar', 'Üç (3)', 'yazmak'],
     correctAnswer: 'yazmak',
     explanation: '"nivîsandin" kelimesi "yazmak" anlamına gelir.',
@@ -1359,7 +1359,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5606',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "pencere" bi Tirkî çi ye? (Şablon 4)',
+    prompt: 'Di Kurmancî de peyva "pencere" bi Tirkî çi ye?',
     answers: ['ad/isim', 'Beş (5)', 'xwendin', 'pencere'],
     correctAnswer: 'pencere',
     explanation: '"pencere" kelimesi "pencere" anlamına gelir.',
@@ -1369,7 +1369,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5089',
     category: 'Ziman',
-    prompt: '"yemekhane" anlamına gelen Kurmancî kelime hangisidir? (Şablon 22)',
+    prompt: '"yemekhane" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['ergatîf', 'Gökyüzü', 'ad/isim', 'nanxane'],
     correctAnswer: 'nanxane',
     explanation: '"yemekhane" için doğru karşılık "nanxane"tir.',
@@ -1379,7 +1379,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5699',
     category: 'Ziman',
-    prompt: '"yazmak" anlamına gelen Kurmancî kelime hangisidir? (Şablon 14)',
+    prompt: '"yazmak" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['xwendegeh', 'İyi günler', 'gün/güneş', 'nivîsandin'],
     correctAnswer: 'nivîsandin',
     explanation: '"yazmak" için doğru karşılık "nivîsandin"tir.',
@@ -1389,7 +1389,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5404',
     category: 'Ziman',
-    prompt: '"kaya" anlamına gelen Kurmancî kelime hangisidir? (Şablon 6)',
+    prompt: '"kaya" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['diçim', 'kadın', 'zinar', 'ciwan'],
     correctAnswer: 'zinar',
     explanation: '"kaya" için doğru karşılık "zinar"tir.',
@@ -1399,7 +1399,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5697',
     category: 'Ziman',
-    prompt: '"doğru" anlamına gelen Kurmancî kelime hangisidir? (Şablon 2)',
+    prompt: '"doğru" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['kanî', 'Renk', 'rast', 'eski'],
     correctAnswer: 'rast',
     explanation: '"doğru" için doğru karşılık "rast"tir.',
@@ -1409,7 +1409,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5336',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "kanî" bi Tirkî çi ye? (Şablon 0)',
+    prompt: 'Di Kurmancî de peyva "kanî" bi Tirkî çi ye?',
     answers: ['çeşme/pınar', 'Ben iyiyim', 'nivîsandin', 'Vatan/ülke'],
     correctAnswer: 'çeşme/pınar',
     explanation: '"kanî" kelimesi "çeşme/pınar" anlamına gelir.',
@@ -1419,7 +1419,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5852',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "dîtin" bi Tirkî çi ye? (Şablon 20)',
+    prompt: 'Di Kurmancî de peyva "dîtin" bi Tirkî çi ye?',
     answers: ['görmek', 'okumak', 'Üç (3)', 'yağmur'],
     correctAnswer: 'görmek',
     explanation: '"dîtin" kelimesi "görmek" anlamına gelir.',
@@ -1429,7 +1429,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5796',
     category: 'Ziman',
-    prompt: '"gece" anlamına gelen Kurmancî kelime hangisidir? (Şablon 6)',
+    prompt: '"gece" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['şev', 'İyi', 'ben', 'Ben'],
     correctAnswer: 'şev',
     explanation: '"gece" için doğru karşılık "şev"tir.',
@@ -1449,7 +1449,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5542',
     category: 'Ziman',
-    prompt: '"arkadaş" anlamına gelen Kurmancî kelime hangisidir? (Şablon 6)',
+    prompt: '"arkadaş" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['Küçük', 'nivîn', 'doğru', 'heval'],
     correctAnswer: 'heval',
     explanation: '"arkadaş" için doğru karşılık "heval"tir.',
@@ -1459,7 +1459,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5514',
     category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "jin" bi Tirkî çi ye? (Şablon 20)',
+    prompt: 'Di Kurmancî de peyva "jin" bi Tirkî çi ye?',
     answers: ['doğru', 'Küçük', 'ciwan', 'kadın'],
     correctAnswer: 'kadın',
     explanation: '"jin" kelimesi "kadın" anlamına gelir.',
@@ -1470,8 +1470,8 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_2231',
     category: 'Ziman',
     prompt: 'Kurmancî ve Soranî neyin iki önemli kolu/lehçesi olarak bilinir?',
-    answers: ['Kürtçenin', 'Arapçanın', 'Yunancanın', 'Rusçanın'],
-    correctAnswer: 'Kürtçenin',
+    answers: ['Kürtçe', 'Arapça', 'Yunanca', 'Rusça'],
+    correctAnswer: 'Kürtçe',
     explanation: 'Kurmancî ve Soranî, Kürtçe denildiğinde en yaygın iki ana lehçe/standart olarak öne çıkar.',
     difficulty: 2,
     type: QuestionType.multipleChoice
@@ -1500,7 +1500,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_2596',
     category: 'Ziman',
     prompt: 'Kurmancî\'de "goşt" ne demek?',
-    answers: ['Et', 'te', 'Su', 'At'],
+    answers: ['Et', 'ateş', 'Su', 'At'],
     correctAnswer: 'Et',
     explanation: '"Goşt" et demektir.',
     difficulty: 2,
@@ -1509,7 +1509,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5900',
     category: 'Ziman',
-    prompt: '"bina/ev" anlamına gelen Kurmancî kelime hangisidir? (Şablon 6)',
+    prompt: '"bina/ev" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['reng', 'xanî', 'rast', 'ateş'],
     correctAnswer: 'xanî',
     explanation: '"bina/ev" için doğru karşılık "xanî"tir.',
@@ -1519,7 +1519,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5897',
     category: 'Ziman',
-    prompt: '"yatak" anlamına gelen Kurmancî kelime hangisidir? (Şablon 2)',
+    prompt: '"yatak" anlamına gelen Kurmancî kelime hangisidir?',
     answers: ['kadın', 'nivîn', 'doğru', 'Beyaz'],
     correctAnswer: 'nivîn',
     explanation: '"yatak" için doğru karşılık "nivîn"tir.',
@@ -1529,7 +1529,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5557',
     category: 'Ziman',
-    prompt: 'Peyva "kaxiz" "resim/fotoğraf" anlamına gelir. (Şablon 15)',
+    prompt: 'Peyva "kaxiz" "resim/fotoğraf" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"kaxiz" kelimesi "kağıt" demektir.',
@@ -1549,7 +1549,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5314',
     category: 'Ziman',
-    prompt: 'Peyva "ba" "rüzgar" anlamına gelir. (Şablon 9)',
+    prompt: 'Peyva "ba" "rüzgar" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"ba" için doğru karşılık "rüzgar"tir.',
@@ -1559,7 +1559,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5307',
     category: 'Ziman',
-    prompt: 'Peyva "av" "gün/güneş" anlamına gelir. (Şablon 23)',
+    prompt: 'Peyva "av" "gün/güneş" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"av" kelimesi "su" demektir.',
@@ -1569,7 +1569,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5394',
     category: 'Ziman',
-    prompt: 'Peyva "deng" "ses" anlamına gelir. (Şablon 5)',
+    prompt: 'Peyva "deng" "ses" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"deng" için doğru karşılık "ses"tir.',
@@ -1579,7 +1579,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5465',
     category: 'Ziman',
-    prompt: 'Peyva "agir" "ateş" anlamına gelir. (Şablon 1)',
+    prompt: 'Peyva "agir" "ateş" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"agir" için doğru karşılık "ateş"tir.',
@@ -1589,7 +1589,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5158',
     category: 'Ziman',
-    prompt: 'Peyva "berf" "ateş" anlamına gelir. (Şablon 19)',
+    prompt: 'Peyva "berf" "ateş" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"berf" kelimesi "kar" demektir.',
@@ -1599,7 +1599,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5499',
     category: 'Ziman',
-    prompt: 'Peyva "nanpêj" "fırıncı" anlamına gelir. (Şablon 13)',
+    prompt: 'Peyva "nanpêj" "fırıncı" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"nanpêj" için doğru karşılık "fırıncı"tir.',
@@ -1609,7 +1609,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5817',
     category: 'Ziman',
-    prompt: 'Peyva "mal" "kitap" anlamına gelir. (Şablon 7)',
+    prompt: 'Peyva "mal" "kitap" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"mal" kelimesi "ev" demektir.',
@@ -1619,7 +1619,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5920',
     category: 'Ziman',
-    prompt: 'Peyva "çûn" "gitmek" anlamına gelir. (Şablon 1)',
+    prompt: 'Peyva "çûn" "gitmek" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"çûn" için doğru karşılık "gitmek"tir.',
@@ -1639,7 +1639,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5631',
     category: 'Ziman',
-    prompt: 'Peyva "şev" "deniz" anlamına gelir. (Şablon 7)',
+    prompt: 'Peyva "şev" "deniz" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"şev" kelimesi "gece" demektir.',
@@ -1649,7 +1649,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5676',
     category: 'Ziman',
-    prompt: 'Peyva "diran" "saç" anlamına gelir. (Şablon 3)',
+    prompt: 'Peyva "diran" "saç" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"diran" kelimesi "diş" demektir.',
@@ -1659,7 +1659,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5000',
     category: 'Ziman',
-    prompt: 'Peyva "nanxane" "yemekhane" anlamına gelir. (Şablon 17)',
+    prompt: 'Peyva "nanxane" "yemekhane" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"nanxane" için doğru karşılık "yemekhane"tir.',
@@ -1669,7 +1669,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5632',
     category: 'Ziman',
-    prompt: 'Peyva "şêr" "köpek" anlamına gelir. (Şablon 23)',
+    prompt: 'Peyva "şêr" "köpek" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"şêr" kelimesi "aslan" demektir.',
@@ -1679,7 +1679,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5848',
     category: 'Ziman',
-    prompt: 'Peyva "welat" "dünya" anlamına gelir. (Şablon 15)',
+    prompt: 'Peyva "welat" "dünya" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"welat" kelimesi "ülke/vatan" demektir.',
@@ -1689,7 +1689,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5470',
     category: 'Ziman',
-    prompt: 'Peyva "çûn" "oturmak" anlamına gelir. (Şablon 7)',
+    prompt: 'Peyva "çûn" "oturmak" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"çûn" kelimesi "gitmek" demektir.',
@@ -1699,7 +1699,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5707',
     category: 'Ziman',
-    prompt: 'Peyva "hewa" "hava" anlamına gelir. (Şablon 21)',
+    prompt: 'Peyva "hewa" "hava" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"hewa" için doğru karşılık "hava"tir.',
@@ -1709,7 +1709,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5174',
     category: 'Ziman',
-    prompt: 'Peyva "ba" "yağmur" anlamına gelir. (Şablon 19)',
+    prompt: 'Peyva "ba" "yağmur" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"ba" kelimesi "rüzgar" demektir.',
@@ -1719,7 +1719,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5722',
     category: 'Ziman',
-    prompt: 'Peyva "ziman" "okul" anlamına gelir. (Şablon 11)',
+    prompt: 'Peyva "ziman" "okul" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"ziman" kelimesi "dil" demektir.',
@@ -1729,7 +1729,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5593',
     category: 'Ziman',
-    prompt: 'Peyva "çav" "burun" anlamına gelir. (Şablon 3)',
+    prompt: 'Peyva "çav" "burun" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"çav" kelimesi "göz" demektir.',
@@ -1739,7 +1739,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5268',
     category: 'Ziman',
-    prompt: 'Peyva "pisîk" "kedi" anlamına gelir. (Şablon 17)',
+    prompt: 'Peyva "pisîk" "kedi" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"pisîk" için doğru karşılık "kedi"tir.',
@@ -1759,7 +1759,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5204',
     category: 'Ziman',
-    prompt: 'Peyva "pirtûk" "bilmek" anlamına gelir. (Şablon 23)',
+    prompt: 'Peyva "pirtûk" "bilmek" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"pirtûk" kelimesi "kitap" demektir.',
@@ -1769,7 +1769,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5364',
     category: 'Ziman',
-    prompt: 'Peyva "derî" "pencere" anlamına gelir. (Şablon 19)',
+    prompt: 'Peyva "derî" "pencere" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"derî" kelimesi "kapı" demektir.',
@@ -1779,7 +1779,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5039',
     category: 'Ziman',
-    prompt: 'Peyva "wêne" "ses" anlamına gelir. (Şablon 19)',
+    prompt: 'Peyva "wêne" "ses" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"wêne" kelimesi "resim/fotoğraf" demektir.',
@@ -1789,7 +1789,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5381',
     category: 'Ziman',
-    prompt: 'Peyva "zanîn" "bilmek" anlamına gelir. (Şablon 21)',
+    prompt: 'Peyva "zanîn" "bilmek" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"zanîn" için doğru karşılık "bilmek"tir.',
@@ -1809,7 +1809,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5941',
     category: 'Ziman',
-    prompt: 'Peyva "derya" "yıldız" anlamına gelir. (Şablon 7)',
+    prompt: 'Peyva "derya" "yıldız" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"derya" kelimesi "deniz" demektir.',
@@ -1819,7 +1819,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5834',
     category: 'Ziman',
-    prompt: 'Peyva "pir" "başlangıç" anlamına gelir. (Şablon 3)',
+    prompt: 'Peyva "pir" "başlangıç" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"pir" kelimesi "çok" demektir.',
@@ -1829,7 +1829,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5675',
     category: 'Ziman',
-    prompt: 'Peyva "pê" "baş/kafa" anlamına gelir. (Şablon 11)',
+    prompt: 'Peyva "pê" "baş/kafa" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"pê" kelimesi "ayak" demektir.',
@@ -1839,7 +1839,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5168',
     category: 'Ziman',
-    prompt: 'Peyva "kûçik" "kedi" anlamına gelir. (Şablon 7)',
+    prompt: 'Peyva "kûçik" "kedi" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"kûçik" kelimesi "köpek" demektir.',
@@ -1849,7 +1849,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5427',
     category: 'Ziman',
-    prompt: 'Peyva "nan" "ekmek" anlamına gelir. (Şablon 5)',
+    prompt: 'Peyva "nan" "ekmek" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"nan" için doğru karşılık "ekmek"tir.',
@@ -1859,7 +1859,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5719',
     category: 'Ziman',
-    prompt: 'Peyva "ax" "toprak" anlamına gelir. (Şablon 5)',
+    prompt: 'Peyva "ax" "toprak" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"ax" için doğru karşılık "toprak"tir.',
@@ -1869,7 +1869,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5067',
     category: 'Ziman',
-    prompt: 'Peyva "hesp" "at" anlamına gelir. (Şablon 1)',
+    prompt: 'Peyva "hesp" "at" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"hesp" için doğru karşılık "at"tir.',
@@ -1879,7 +1879,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5433',
     category: 'Ziman',
-    prompt: 'Peyva "destpêk" "ağaç" anlamına gelir. (Şablon 15)',
+    prompt: 'Peyva "destpêk" "ağaç" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"destpêk" kelimesi "başlangıç" demektir.',
@@ -1889,7 +1889,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5876',
     category: 'Ziman',
-    prompt: 'Peyva "bajar" "şehir" anlamına gelir. (Şablon 1)',
+    prompt: 'Peyva "bajar" "şehir" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"bajar" için doğru karşılık "şehir"tir.',
@@ -1909,7 +1909,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5825',
     category: 'Ziman',
-    prompt: 'Peyva "mal" "kitap" anlamına gelir. (Şablon 19)',
+    prompt: 'Peyva "mal" "kitap" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"mal" kelimesi "ev" demektir.',
@@ -1919,7 +1919,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5581',
     category: 'Ziman',
-    prompt: 'Peyva "bajar" "şehir" anlamına gelir. (Şablon 21)',
+    prompt: 'Peyva "bajar" "şehir" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"bajar" için doğru karşılık "şehir"tir.',
@@ -1929,7 +1929,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5208',
     category: 'Ziman',
-    prompt: 'Peyva "zarok" "öğrenci" anlamına gelir. (Şablon 7)',
+    prompt: 'Peyva "zarok" "öğrenci" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"zarok" kelimesi "çocuk" demektir.',
@@ -1939,7 +1939,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5798',
     category: 'Ziman',
-    prompt: 'Peyva "pir" "başlangıç" anlamına gelir. (Şablon 19)',
+    prompt: 'Peyva "pir" "başlangıç" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"pir" kelimesi "çok" demektir.',
@@ -1949,7 +1949,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5591',
     category: 'Ziman',
-    prompt: 'Peyva "xwendekar" "doğru" anlamına gelir. (Şablon 23)',
+    prompt: 'Peyva "xwendekar" "doğru" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"xwendekar" kelimesi "öğrenci" demektir.',
@@ -1959,7 +1959,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5565',
     category: 'Ziman',
-    prompt: 'Peyva "jin" "kadın" anlamına gelir. (Şablon 21)',
+    prompt: 'Peyva "jin" "kadın" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"jin" için doğru karşılık "kadın"tir.',
@@ -1969,7 +1969,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5099',
     category: 'Ziman',
-    prompt: 'Peyva "mase" "sandalye" anlamına gelir. (Şablon 15)',
+    prompt: 'Peyva "mase" "sandalye" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"mase" kelimesi "masa" demektir.',
@@ -1979,7 +1979,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5035',
     category: 'Ziman',
-    prompt: 'Peyva "stêrk" "yıldız" anlamına gelir. (Şablon 21)',
+    prompt: 'Peyva "stêrk" "yıldız" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"stêrk" için doğru karşılık "yıldız"tir.',
@@ -1989,7 +1989,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5301',
     category: 'Ziman',
-    prompt: 'Peyva "şêr" "aslan" anlamına gelir. (Şablon 21)',
+    prompt: 'Peyva "şêr" "aslan" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"şêr" için doğru karşılık "aslan"tir.',
@@ -1999,7 +1999,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5042',
     category: 'Ziman',
-    prompt: 'Peyva "av" "gün/güneş" anlamına gelir. (Şablon 3)',
+    prompt: 'Peyva "av" "gün/güneş" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"av" kelimesi "su" demektir.',
@@ -2009,7 +2009,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5475',
     category: 'Ziman',
-    prompt: 'Peyva "deşt" "kaya" anlamına gelir. (Şablon 7)',
+    prompt: 'Peyva "deşt" "kaya" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"deşt" kelimesi "ova" demektir.',
@@ -2019,7 +2019,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5733',
     category: 'Ziman',
-    prompt: 'Peyva "cîhan" "dünya" anlamına gelir. (Şablon 13)',
+    prompt: 'Peyva "cîhan" "dünya" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"cîhan" için doğru karşılık "dünya"tir.',

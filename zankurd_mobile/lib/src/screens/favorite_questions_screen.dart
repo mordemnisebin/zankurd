@@ -83,10 +83,10 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
                     'Kaydedilen sorular yüklenemedi',
                   ),
                   message: context.s(
-                    'Girêdanê kontrol bike û dîsa bicerib.',
+                    'Girêdanê kontrol bike û dîsa biceribîne.',
                     'Bağlantıyı kontrol edip tekrar dene.',
                   ),
-                  retryLabel: context.s('Dîsa Bicerib', 'Tekrar Dene'),
+                  retryLabel: context.s('Dîsa biceribîne', 'Tekrar dene'),
                   onRetry: _reload,
                 );
               }

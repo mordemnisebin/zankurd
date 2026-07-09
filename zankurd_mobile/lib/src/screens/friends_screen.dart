@@ -301,7 +301,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
               message: ku
                   ? 'Daxwaz nehatin barkirin.'
                   : 'İstekler yüklenemedi.',
-              retryLabel: ku ? 'Dîsa Biceribîne' : 'Tekrar Dene',
+              retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
               onRetry: () => setState(() {
                 _requestsFuture = widget.repository.loadPendingFriendRequests();
               }),

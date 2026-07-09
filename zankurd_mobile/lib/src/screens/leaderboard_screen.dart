@@ -124,9 +124,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                     return AppErrorState(
                       title: ku ? 'Tabloya barnekirî' : 'Yüklenemedi',
                       message: ku
-                          ? 'Girêdanê kontrol bike û dîsa bicerib.'
+                          ? 'Girêdanê kontrol bike û dîsa biceribîne.'
                           : 'Bağlantıyı kontrol edip tekrar dene.',
-                      retryLabel: ku ? 'Dîsa Bicerib' : 'Tekrar Dene',
+                      retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
                       onRetry: _loadData,
                     );
                   }

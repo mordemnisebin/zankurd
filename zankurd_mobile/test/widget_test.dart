@@ -1608,10 +1608,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
-    expect(find.text('Tekrar Dene'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
     expect(repository.loadCalls, 1);
 
-    await tester.tap(find.text('Tekrar Dene'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pumpAndSettle();
 
     expect(repository.loadCalls, 2);

@@ -256,7 +256,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            ku ? 'Li hevberdan bi ser neket.' : 'Eşleştirme başarısız oldu.',
+            ku
+                ? 'Li hev anîn bi ser neket.'
+                : 'Eşleştirme başarısız oldu.',
           ),
         ),
       );
@@ -541,7 +543,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          ku ? 'Hevrikiya Rastgele' : 'Rastgele Eşleşme',
+                          ku ? 'Hevrikîya rastgele' : 'Rastgele eşleşme',
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w800,
@@ -569,7 +571,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           Padding(
             padding: const EdgeInsets.only(left: 4, bottom: 10),
             child: Text(
-              ku ? 'Li gorî Kategoriyê Eşleş' : 'Kategoriye Göre Eşleş',
+              ku
+                  ? 'Li gorî kategoriyê li hev bîne'
+                  : 'Kategoriye göre eşleş',
               style: TextStyle(
                 color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w800,

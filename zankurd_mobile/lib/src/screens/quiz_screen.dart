@@ -833,7 +833,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       ? context.s('Li benda hevrik...', 'Rakip bekleniyor...')
                       : isLastQuestion
                           ? context.s('Qediya', 'Bitir')
-                          : context.s('Piştî vê', 'Sonraki'),
+                          : context.s('Piştre', 'Sonraki'),
                   style: AppTypography.bodyLarge.copyWith(
                     fontWeight: FontWeight.w800,
                   ),

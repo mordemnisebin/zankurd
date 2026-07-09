@@ -137,7 +137,7 @@ class _RoomScreenState extends State<RoomScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          '${room.code} ${ku ? "kopî kir" : "kopyalandı"}.',
+          '${room.code} ${ku ? "hat kopîkirin" : "kopyalandı"}.',
         ),
       ),
     );
@@ -559,7 +559,7 @@ class _RoomScreenState extends State<RoomScreen> {
         SnackBar(
           content: Text(
             context.isKu
-                ? 'Lîstik nehat destpêkirin. Dîsa bicerib.'
+                ? 'Lîstik nehat destpêkirin. Dîsa biceribîne.'
                 : 'Oyun başlatılamadı. Tekrar dene.',
           ),
         ),

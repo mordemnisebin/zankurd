@@ -247,7 +247,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                   : Icons.arrow_forward_rounded,
                               label: last
                                   ? context.s('Dest pê bike', 'Başla')
-                                  : context.s('Piştî vê', 'Sonraki'),
+                                  : context.s('Piştre', 'Sonraki'),
                             ),
                           ),
                         ),

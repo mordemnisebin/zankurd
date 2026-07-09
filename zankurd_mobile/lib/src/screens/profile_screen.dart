@@ -390,9 +390,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ? AppErrorState(
                 title: ku ? 'Profîl nehat barkirin' : 'Profil yüklenemedi',
                 message: ku
-                    ? 'Girêdanê kontrol bike û dîsa bicerib.'
+                    ? 'Girêdanê kontrol bike û dîsa biceribîne.'
                     : 'Bağlantıyı kontrol edip tekrar dene.',
-                retryLabel: ku ? 'Dîsa Bicerib' : 'Tekrar Dene',
+                retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
                 onRetry: _load,
               )
             : RefreshIndicator(

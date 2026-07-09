@@ -51,7 +51,7 @@ class _ContestScreenState extends State<ContestScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(ku ? 'Etkinlik' : 'Etkinlik')),
+      appBar: AppBar(title: Text(ku ? 'Çalakî' : 'Etkinlik')),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -67,9 +67,11 @@ class _ContestScreenState extends State<ContestScreen> {
               }
               if (snapshot.hasError) {
                 return AppErrorState(
-                  title: ku ? 'Barnekirî' : 'Yüklenemedi',
-                  message: ku ? 'Etkinlik yüklenemiyor' : 'Contest yüklenemedi',
-                  retryLabel: ku ? 'Dûbare' : 'Tekrar',
+                  title: ku ? 'Barnebû' : 'Yüklenemedi',
+                  message: ku
+                      ? 'Çalakî nehat barkirin.'
+                      : 'Etkinlik yüklenemedi.',
+                  retryLabel: ku ? 'Dîsa' : 'Tekrar',
                   onRetry: () => setState(() => _loadContest()),
                 );
               }
@@ -77,9 +79,9 @@ class _ContestScreenState extends State<ContestScreen> {
               if (contest == null) {
                 return AppEmptyState(
                   icon: Icons.celebration_outlined,
-                  title: ku ? 'Hîn etkinlik tune' : 'Henüz etkinlik yok',
+                  title: ku ? 'Hîn çalakî tune' : 'Henüz etkinlik yok',
                   message: ku
-                      ? 'Sibe kontestê tê.'
+                      ? 'Sibê çalakiya nû tê.'
                       : 'Yarın yeni etkinlik başlar.',
                 );
               }
@@ -189,13 +191,13 @@ class _ContestContent extends StatelessWidget {
                 child: FilledButton.icon(
                   onPressed: null,
                   icon: const Icon(Icons.hourglass_top_rounded),
-                  label: Text(ku ? 'Zû tê (nêzîk)' : 'Yakında'),
+                  label: Text(ku ? 'Nêzîk e' : 'Yakında'),
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 ku
-                    ? 'Destpêkirina kontestê hîn amade nabe.'
+                    ? 'Destpêkirina çalakiyê hîn amade nîne.'
                     : 'Etkinlik başlatma henüz kullanıma açılmadı.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -210,7 +212,7 @@ class _ContestContent extends StatelessWidget {
 
         // Leaderboard
         Text(
-          ku ? 'Pêşderiyan' : 'Leaderboard',
+          ku ? 'Pêşderçûn' : 'Sıralama',
           style: TextStyle(
             color: AppTheme.textPrimaryColor(context),
             fontWeight: FontWeight.w800,
@@ -251,7 +253,7 @@ class _ContestContent extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(24),
                 child: Text(
-                  ku ? 'Hîn kesan tune' : 'Henüz katılım yok',
+                  ku ? 'Hîn beşdar tune' : 'Henüz katılım yok',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: AppTheme.textMutedColor(context)),
                 ),
