@@ -56,7 +56,7 @@ class QuickPlayGrid extends StatelessWidget {
         gradientColors: AppTheme.tournamentGradient,
         icon: Icons.emoji_events_outlined,
         title: isKu ? 'Turnuva' : 'Turnuva Modu',
-        subtitle: isKu ? 'Kûpa' : 'Kupa',
+        subtitle: isKu ? 'Bot kûpa' : 'Bot kupa',
         onTap: onTournament,
         index: 3,
       ),

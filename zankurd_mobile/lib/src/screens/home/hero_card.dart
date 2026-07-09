@@ -208,9 +208,10 @@ class HeroCard extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    isKu ? 'Hemen Dest pê bike' : 'Hemen Başla',
+                    // Secondary path: 1v1 queue (primary CTAs above = room)
+                    isKu ? '1vs1 — Zû dest pê bike' : '1vs1 — Hemen başla',
                     style: AppTypography.bodyLarge.copyWith(
-                      color: AppTheme.gold, // Gold dolgu değil çizgi olduğu için sarı metin kabul edilebilir
+                      color: AppTheme.gold,
                     ),
                   ),
                 ),

@@ -418,11 +418,35 @@ class _LobbyView extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.xs),
+                    const SizedBox(height: AppSpacing.sm),
+                    // Honesty label: bot-filled bracket, not live multiplayer
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.sm,
+                        vertical: AppSpacing.xxs,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTheme.gold.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(AppRadius.pill),
+                        border: Border.all(
+                          color: AppTheme.gold.withValues(alpha: 0.45),
+                        ),
+                      ),
+                      child: Text(
+                        ku
+                            ? 'Bot turnuva · rojane kûpa'
+                            : 'Bot turnuva · günlük kupa',
+                        style: AppTypography.caption.copyWith(
+                          color: AppTheme.gold,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
                     Text(
                       ku
-                          ? '16 lîstikvan · 4 tur · ${TournamentConfig.questionsPerMatch} pirs/maç'
-                          : '16 oyuncu · 4 tur · ${TournamentConfig.questionsPerMatch} soru/maç',
+                          ? '16 lîstikvan (bot) · 4 tur · ${TournamentConfig.questionsPerMatch} pirs/maç'
+                          : '16 oyuncu (bot) · 4 tur · ${TournamentConfig.questionsPerMatch} soru/maç',
                       textAlign: TextAlign.center,
                       style: AppTypography.bodyMedium.copyWith(
                         color: Colors.white.withValues(alpha: 0.78),
@@ -431,8 +455,8 @@ class _LobbyView extends StatelessWidget {
                     const SizedBox(height: AppSpacing.xxs),
                     Text(
                       ku
-                          ? 'Şampiyon dibe xwediyê kûpayê!'
-                          : 'Şampiyon kupanın sahibi olur!',
+                          ? 'Bi botan re pêşbikeve — şampiyon kûpayê digire!'
+                          : 'Bot rakiplere karşı yarış — şampiyon kupayı alır!',
                       textAlign: TextAlign.center,
                       style: AppTypography.caption.copyWith(
                         color: Colors.white.withValues(alpha: 0.65),
