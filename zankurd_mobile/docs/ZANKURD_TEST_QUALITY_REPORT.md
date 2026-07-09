@@ -83,7 +83,7 @@
 - **Kodla giriş input görünürlüğü (7.6):** `home_screen.dart` join sheet'i theme-aware renkler, açık hintStyle, focus border ve validator ile zaten düzeltilmiş; repo tarafı `trim().toUpperCase()` normalize ediyor (artık testli).
 - **Liderlik bayatlaması (7.5):** `LeaderboardScreen` hem oto-refresh timer'ı hem `refreshSignal` dinleyicisi taşıyor; sinyal AppShell'den bağlı (artık testli).
 - **Dispose denetimi (Aşama 6):** `quiz_screen` (7 timer/sub + 2 controller), `matchmaking_screen` (2 controller, sub, timer + kuyruk iptali), `spin_wheel` (controller + countdown), `room_screen` (2 sub + polling) — tümü eksiksiz dispose ediyor; async callback'lerde `mounted`/`_isCancelled` guard'ları tutarlı.
-- **Shop `context.read<SoundProvider>()`** (`shop_screen.dart` satır ~193): try bloğu içinde olduğundan provider yoksa hata yutulup "Bir hata oluştu" gösterilir — uygulama ağacında provider hep mevcut, risk düşük; not edildi, dokunulmadı.
+- **Shop `context.read<SoundProvider>()`** (`shop_screen.dart`): try bloğu içindeydi; provider/ses hatası başarılı satın almayı "Bir hata oluştu" mesajına dönüştürebiliyordu. **Düzeltildi (890065f):** ses çağrısı çark ekranındaki desenle aynı şekilde kendi try-catch'ine alındı.
 
 ## 7. Formatlama
 
@@ -111,7 +111,7 @@
 
 ## 10. Kalan Riskler
 
-- Çark fix'i istemci guard'ını sunucuyla hizalar; sunucu saat dilimi (Postgres `CURRENT_DATE`) UTC varsayımına dayanır — Supabase varsayılanı UTC'dir, ancak canlıda doğrulamak için gece yarısı çevresinde manuel test önerilir.
+- ~~Sunucu saat dilimi UTC varsayımı~~ **KAPANDI (2026-07-10):** canlı DB'ye salt-okunur sorguyla doğrulandı — `timezone = UTC`. Sorgu anında lokal tarih 10 Temmuz iken sunucu 9 Temmuz 23:21 UTC'deydi; yani tam uyumsuzluk penceresi canlıda gözlendi ve fix'in hedeflediği durum birebir teyit edildi.
 - `join_matchmaking` canlı durumu hafıza notlarında "uygulandı (2026-07-03)" görünüyor; 1v1 online akışın canlı doğrulaması yine de iki cihaz ister.
 - Takım oyunu ayrı mod olarak yok; ürün beklentisiyse ayrı bir geliştirme kalemi.
 - Format diff'i geniş (85 dosya) ama tamamen mekanik; istenirse `style:` ve `test:` olarak iki commit'e bölünebilir.
