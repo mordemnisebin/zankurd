@@ -213,7 +213,7 @@ class _CategoryTab extends StatelessWidget {
               width: 1,
             ),
             boxShadow: isSelected
-                ? AppTheme.glowShadow(AppTheme.accent, intensity: 0.25)
+                ? AppTheme.glowShadow(AppTheme.primaryGradientStart, intensity: 0.25)
                 : null,
           ),
           child: Center(
@@ -472,7 +472,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                             value: (_currentSlideIndex + 1) / slides.length,
                             minHeight: 6,
                             backgroundColor: AppTheme.surfaceHiColor(context),
-                            color: AppTheme.accent,
+                            color: AppTheme.primaryGradientStart,
                           ),
                         ),
                       ),

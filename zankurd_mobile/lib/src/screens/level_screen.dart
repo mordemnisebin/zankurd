@@ -290,7 +290,7 @@ class _LevelCardState extends State<_LevelCard> {
     1 => AppTheme.correct,
     2 => const Color(0xFF2B5C8F),
     3 => AppTheme.gold,
-    4 => AppTheme.accent,
+    4 => AppTheme.primaryGradientStart,
     _ => AppTheme.violet,
   };
 

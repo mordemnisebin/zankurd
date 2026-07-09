@@ -268,7 +268,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     return [
       _OnboardingData(
         icon: Icons.menu_book_rounded,
-        color: AppTheme.accent,
+        color: AppTheme.primaryGradientStart,
         title: context.s('Hîn bibe', 'Öğren'),
         body: context.s(
           'Kurmancî peyv, çand û zanînê bi pirsên kurt fêr bibe.',
@@ -426,7 +426,9 @@ class _OnboardingPage extends StatelessWidget {
                   width: 1.2,
                 ),
                 boxShadow: AppTheme.glowShadow(
-                  data.color == AppTheme.gold ? AppTheme.gold : AppTheme.accent,
+                  data.color == AppTheme.gold
+                      ? AppTheme.gold
+                      : AppTheme.primaryGradientStart,
                   intensity: 0.1,
                 ),
               ),

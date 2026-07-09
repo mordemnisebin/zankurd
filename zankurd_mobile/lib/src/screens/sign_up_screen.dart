@@ -327,7 +327,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                             child: Text(
                               context.s('Têkeve', 'Giriş Yap'),
                               style: TextStyle(
-                                color: AppTheme.accent,
+                                color: AppTheme.primaryGradientStart,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14,
                               ),

@@ -272,7 +272,8 @@ class AppTheme {
   static const border = Color(0xFF2C6B54);
 
   // Status colors
-  // Gül kurusu/nar çiçeği pembe — ana aksan / vurgu rengi.
+  // Legacy pembe vurgu — CTA için primaryGradientStart (coral) tercih et.
+  // Doğru/yanlış renkleri correct/wrong; altın ödül gold.
   static const accent = Color(0xFFD81B60);
   // İkincil yeşil aksan — yardımcı vurgu rengi.
   static const violet = Color(0xFF81C784);

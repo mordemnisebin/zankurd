@@ -42,6 +42,12 @@ Kısa, tutarlı UI ve soru metinleri için. Pirs benzeri quiz akışlarında net
 2. İkincil oda eylemleri outline — `Oda kur` / `Kodla katıl`.
 3. Hızlı grid: günlük / çark / turnuva (dürüst etiket: bot kupa).
 
+## Renk
+
+- Birincil CTA / vurgu buton: `AppTheme.primaryGradientStart` veya `accentGradient`
+- Pembe `AppTheme.accent` yeni UI’da kullanma (legacy)
+- Ödül: `gold` · Doğru: `correct` · Yanlış: `wrong`
+
 ## Contest
 
 - Quiz wiring tamamlanmadan ana menüye bağlama.

@@ -272,7 +272,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
                             ),
                             child: Icon(
                               Icons.check_circle,
-                              color: AppTheme.accent.withValues(alpha: 0.8),
+                              color: AppTheme.primaryGradientStart
+                                  .withValues(alpha: 0.8),
                             ),
                           )
                         : FilledButton.tonal(

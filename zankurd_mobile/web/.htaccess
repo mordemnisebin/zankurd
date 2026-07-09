@@ -1,0 +1,19 @@
+# Hostinger / Apache SPA fallback for Flutter web
+# Keeps client-side routes on index.html (refresh / deep link).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Optional: cache static assets (safe defaults)
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|png|jpg|jpeg|webp|woff2|ttf|svg)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  <FilesMatch "index\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

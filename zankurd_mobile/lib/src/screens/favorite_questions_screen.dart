@@ -155,7 +155,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
       width: double.infinity,
       child: ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppTheme.accent,
+          backgroundColor: AppTheme.primaryGradientStart,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
@@ -265,7 +265,10 @@ class _FavoriteQuestionTile extends StatelessWidget {
                   color: AppTheme.textMutedColor(context),
                 ),
               ),
-              Icon(Icons.play_arrow_rounded, color: AppTheme.accent),
+              Icon(
+                Icons.play_arrow_rounded,
+                color: AppTheme.primaryGradientStart,
+              ),
             ],
           ),
         ),

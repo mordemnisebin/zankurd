@@ -290,7 +290,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             child: Text(ku ? 'Na' : 'Hayır', style: TextStyle(color: AppTheme.wrong)),
           ),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: AppTheme.accent),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppTheme.primaryGradientStart,
+            ),
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(ku ? 'Belê' : 'Evet'),
           ),
