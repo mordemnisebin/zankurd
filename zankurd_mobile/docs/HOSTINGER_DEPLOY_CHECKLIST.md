@@ -54,7 +54,7 @@ Telefon + bilgisayar tarayıcı:
 
 | Özellik | Durum |
 |---------|--------|
-| Contest quiz başlatma | Bilinçli **Yakında** (ana menüde yok) |
+| Contest / etkinlik | **Aktif** — Günün Yarışması → contest (varsa), quiz + skor/ödül |
 | Turnuva | **Bot kupa** (etiketli) |
 | Canlı multiplayer | Supabase + RPC canlıda doğru olmalı |
 

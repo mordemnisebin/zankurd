@@ -100,8 +100,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   }
 
   Future<void> _claimContestReward() async {
+    final id = widget.contestId;
+    if (id == null) return;
     try {
-      await repository.claimContestReward(widget.contestId!);
+      // Skoru kaydet + sıralama; sonra rank/badge ödülünü talep et.
+      await repository.submitContestEntry(
+        contestId: id,
+        correctCount: widget.correctCount,
+      );
+      await repository.claimContestReward(id);
     } catch (_) {
       // Silent fail — reward already claimed or network issue
     }

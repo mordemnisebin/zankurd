@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../models/contest.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
@@ -23,6 +24,7 @@ import '../models/daily_mission.dart';
 import 'quiz_screen.dart';
 import 'room_screen.dart';
 import 'matchmaking_screen.dart';
+import 'contest_screen.dart';
 import 'spin_wheel_screen.dart';
 import 'tournament_screen.dart';
 import 'shop_screen.dart';
@@ -670,22 +672,37 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     if (_dailyLoading) return;
     setState(() => _dailyLoading = true);
     try {
-      final dailyQuestions = await repo.loadDailyQuestions(limit: 10);
+      // Önce günlük etkinlik (contest) ekranı; yoksa klasik günün yarışması.
+      Contest? todayContest;
+      try {
+        todayContest = await repo.loadTodayContest();
+      } catch (_) {
+        todayContest = null;
+      }
       if (!context.mounted) return;
-      final dailyRoom = repo.createRoom().copyWith(
-        name: ku ? 'Pêşbirka Rojê' : 'Günün Yarışması',
-        questionCount: dailyQuestions.length,
-      );
-      await Navigator.of(context).push(
-        AppRoute.to(
-          QuizScreen(
-            repository: repo,
-            room: dailyRoom,
-            questions: dailyQuestions,
-            dailyQuiz: true,
+
+      if (todayContest != null) {
+        await Navigator.of(context).push(
+          AppRoute.to(ContestScreen(repository: repo)),
+        );
+      } else {
+        final dailyQuestions = await repo.loadDailyQuestions(limit: 10);
+        if (!context.mounted) return;
+        final dailyRoom = repo.createRoom().copyWith(
+          name: ku ? 'Pêşbirka Rojê' : 'Günün Yarışması',
+          questionCount: dailyQuestions.length,
+        );
+        await Navigator.of(context).push(
+          AppRoute.to(
+            QuizScreen(
+              repository: repo,
+              room: dailyRoom,
+              questions: dailyQuestions,
+              dailyQuiz: true,
+            ),
           ),
-        ),
-      );
+        );
+      }
       _refreshCoins();
       _loadMissions();
     } finally {

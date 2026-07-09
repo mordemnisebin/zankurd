@@ -6,13 +6,13 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/contest.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
+import '../widgets/styled_button.dart';
+import 'quiz_screen.dart';
 
-/// Günlük contest ekranı: tema, leaderboard, quiz start.
-///
-/// **Release notu:** Quiz başlatma henüz bağlı değil; UI "Yakında" gösterir.
-/// Ana navigasyona bağlanmamalı (Pirs'teki ContestActivity tam akışlıdır;
-/// ZanKurd tarafında product wiring ayrı faz).
+/// Günlük contest/etkinlik: tema, sıralama ve quiz başlatma.
 class ContestScreen extends StatefulWidget {
   const ContestScreen({required this.repository, super.key});
 
@@ -25,6 +25,7 @@ class ContestScreen extends StatefulWidget {
 class _ContestScreenState extends State<ContestScreen> {
   late Future<Contest?> _contestFuture;
   Timer? _refreshTimer;
+  bool _starting = false;
 
   @override
   void initState() {
@@ -38,9 +39,9 @@ class _ContestScreenState extends State<ContestScreen> {
   }
 
   void _startRefresh() {
-    _refreshTimer = Timer.periodic(const Duration(seconds: 5), (_) {
-      if (mounted) _loadContest();
-      setState(() {});
+    _refreshTimer = Timer.periodic(const Duration(seconds: 8), (_) {
+      if (!mounted || _starting) return;
+      setState(_loadContest);
     });
   }
 
@@ -48,6 +49,72 @@ class _ContestScreenState extends State<ContestScreen> {
   void dispose() {
     _refreshTimer?.cancel();
     super.dispose();
+  }
+
+  Future<void> _startQuiz(Contest contest) async {
+    if (_starting) return;
+    setState(() => _starting = true);
+    final ku = context.isKu;
+    try {
+      var questions = await widget.repository.loadLevelQuestions(
+        category: contest.category,
+        difficultyMin: contest.difficultyMin,
+        difficultyMax: contest.difficultyMax,
+        limit: contest.questionCount,
+      );
+      if (questions.isEmpty) {
+        questions = await widget.repository.loadDailyQuestions(
+          limit: contest.questionCount,
+        );
+      }
+      if (questions.isEmpty) {
+        questions = widget.repository.questions.take(contest.questionCount).toList();
+      }
+      if (!mounted) return;
+      if (questions.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              ku ? 'Pirs nehatin dîtin.' : 'Soru bulunamadı.',
+            ),
+          ),
+        );
+        return;
+      }
+
+      final room = widget.repository.createRoom(category: contest.category).copyWith(
+            name: contest.themeNameKu,
+            questionCount: questions.length,
+          );
+
+      await Navigator.of(context).push(
+        AppRoute.to(
+          QuizScreen(
+            repository: widget.repository,
+            room: room,
+            questions: questions,
+            dailyQuiz: true,
+            contestId: contest.id,
+          ),
+        ),
+      );
+      if (!mounted) return;
+      setState(_loadContest);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'contest quiz start failed');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            ku
+                ? 'Çalakî dest pê nekir. Dîsa biceribîne.'
+                : 'Etkinlik başlatılamadı. Tekrar dene.',
+          ),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _starting = false);
+    }
   }
 
   @override
@@ -64,9 +131,12 @@ class _ContestScreenState extends State<ContestScreen> {
           child: FutureBuilder<Contest?>(
             future: _contestFuture,
             builder: (ctx, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              if (snapshot.connectionState == ConnectionState.waiting &&
+                  !snapshot.hasData) {
                 return const Center(
-                  child: CircularProgressIndicator(color: AppTheme.primaryGradientStart),
+                  child: CircularProgressIndicator(
+                    color: AppTheme.primaryGradientStart,
+                  ),
                 );
               }
               if (snapshot.hasError) {
@@ -76,7 +146,7 @@ class _ContestScreenState extends State<ContestScreen> {
                       ? 'Çalakî nehat barkirin.'
                       : 'Etkinlik yüklenemedi.',
                   retryLabel: ku ? 'Dîsa' : 'Tekrar',
-                  onRetry: () => setState(() => _loadContest()),
+                  onRetry: () => setState(_loadContest),
                 );
               }
               final contest = snapshot.data;
@@ -93,6 +163,8 @@ class _ContestScreenState extends State<ContestScreen> {
                 contest: contest,
                 repository: widget.repository,
                 ku: ku,
+                starting: _starting,
+                onStart: () => _startQuiz(contest),
               );
             },
           ),
@@ -107,14 +179,20 @@ class _ContestContent extends StatelessWidget {
     required this.contest,
     required this.repository,
     required this.ku,
+    required this.starting,
+    required this.onStart,
   });
 
   final Contest contest;
   final ZanKurdRepository repository;
   final bool ku;
+  final bool starting;
+  final VoidCallback onStart;
 
   @override
   Widget build(BuildContext context) {
+    final categoryLabel = CategoryNames.localized(contest.category, ku);
+
     return ListView(
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.page,
@@ -123,12 +201,11 @@ class _ContestContent extends StatelessWidget {
         AppSpacing.lg,
       ),
       children: [
-        // Tema kartı
         Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
             color: AppTheme.surfaceColor(context),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(AppRadius.card),
             border: Border.all(
               color: AppTheme.primaryGradientStart.withValues(alpha: 0.3),
               width: 1,
@@ -146,16 +223,16 @@ class _ContestContent extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.emoji_events_outlined,
                     color: AppTheme.primaryGradientStart,
                     size: 32,
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
                       contest.themeNameKu,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: AppTheme.textPrimaryColor(context),
@@ -166,55 +243,73 @@ class _ContestContent extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
-              Text(
-                contest.themeDescriptionKu ?? '',
-                style: TextStyle(
-                  color: AppTheme.textMutedColor(context),
-                  fontSize: 13,
+              if ((contest.themeDescriptionKu ?? '').isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  contest.themeDescriptionKu!,
+                  style: TextStyle(
+                    color: AppTheme.textMutedColor(context),
+                    fontSize: 13,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 14),
-              Row(
+              ],
+              const SizedBox(height: AppSpacing.sm),
+              Wrap(
+                spacing: AppSpacing.xs,
+                runSpacing: AppSpacing.xs,
                 children: [
                   _BadgeLabel(
                     icon: Icons.category_outlined,
-                    label: contest.category,
+                    label: categoryLabel,
                   ),
-                  const SizedBox(width: 8),
                   _BadgeLabel(
                     icon: Icons.speed_outlined,
                     label: '${contest.difficultyMin}-${contest.difficultyMax}',
                   ),
+                  _BadgeLabel(
+                    icon: Icons.quiz_outlined,
+                    label: ku
+                        ? '${contest.questionCount} pirs'
+                        : '${contest.questionCount} soru',
+                  ),
                 ],
               ),
-              const SizedBox(height: 16),
-              // Quiz entegrasyonu henüz yok — sahte "başlayacak" vaadi vermiyoruz.
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  onPressed: null,
-                  icon: const Icon(Icons.hourglass_top_rounded),
-                  label: Text(ku ? 'Nêzîk e' : 'Yakında'),
-                ),
+              const SizedBox(height: AppSpacing.md),
+              GeometricGradientButton(
+                label: starting
+                    ? (ku ? 'Tê amadekirin…' : 'Hazırlanıyor…')
+                    : (ku ? 'Çalakiyê dest pê bike' : 'Etkinliğe başla'),
+                icon: Icons.play_arrow_rounded,
+                isLoading: starting,
+                onPressed: starting ? null : onStart,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 ku
-                    ? 'Destpêkirina çalakiyê hîn amade nîne.'
-                    : 'Etkinlik başlatma henüz kullanıma açılmadı.',
+                    ? 'Beşdariyê bike û pêşderçûnê de cîh bigire.'
+                    : 'Katıl ve sıralamada yerini al.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppTheme.textMutedColor(context),
                   fontSize: 12,
                 ),
               ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                ku
+                    ? 'Xelat: beşdarî ${contest.participationReward} · 1. ${contest.rank1Reward} coin'
+                    : 'Ödül: katılım ${contest.participationReward} · 1. ${contest.rank1Reward} coin',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppTheme.gold,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ],
           ),
         ),
-        const SizedBox(height: 20),
-
-        // Leaderboard
+        const SizedBox(height: AppSpacing.section - 8),
         Text(
           ku ? 'Pêşderçûn' : 'Sıralama',
           style: TextStyle(
@@ -223,11 +318,11 @@ class _ContestContent extends StatelessWidget {
             fontSize: 16,
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.sm),
         FutureBuilder<List<ContestLeaderboardRow>>(
           future: repository.getContestLeaderboard(
             contestId: contest.id,
-            limit: 5,
+            limit: 10,
           ),
           builder: (ctx, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
@@ -257,7 +352,7 @@ class _ContestContent extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(24),
                 child: Text(
-                  ku ? 'Hîn beşdar tune' : 'Henüz katılım yok',
+                  ku ? 'Hîn beşdar tune — yekemîn tu bibe!' : 'Henüz katılım yok — ilk sen ol!',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: AppTheme.textMutedColor(context)),
                 ),
@@ -288,7 +383,7 @@ class _BadgeLabel extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: AppTheme.primaryGradientStart.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppRadius.xs),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -297,7 +392,7 @@ class _BadgeLabel extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppTheme.primaryGradientStart,
               fontSize: 12,
               fontWeight: FontWeight.w700,
@@ -325,7 +420,7 @@ class _LeaderboardRow extends StatelessWidget {
       1 => '🥇',
       2 => '🥈',
       3 => '🥉',
-      _ => '${(rank ?? 0) + 1}.',
+      _ => '${rank ?? (index + 1)}.',
     };
   }
 
@@ -336,7 +431,7 @@ class _LeaderboardRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
         border: Border.all(color: AppTheme.borderColor(context), width: 1),
       ),
       child: Row(
@@ -359,7 +454,9 @@ class _LeaderboardRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  '${row.correctCount}/${row.score}',
+                  ku
+                      ? '${row.correctCount} rast · ${row.score} pûan'
+                      : '${row.correctCount} doğru · ${row.score} puan',
                   style: TextStyle(
                     color: AppTheme.textMutedColor(context),
                     fontSize: 11,
@@ -376,7 +473,7 @@ class _LeaderboardRow extends StatelessWidget {
             ),
             child: Text(
               '${row.score}',
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppTheme.primaryGradientStart,
                 fontWeight: FontWeight.w800,
                 fontSize: 13,

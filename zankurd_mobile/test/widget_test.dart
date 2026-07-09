@@ -23,6 +23,7 @@ import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
+import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
@@ -852,6 +853,13 @@ void main() {
     await tester.ensureVisible(find.text('Günün Yarışması'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Günün Yarışması'));
+    await tester.pumpAndSettle();
+
+    // Mock her gün contest döner → etkinlik lobisi; oradan quiz başlar.
+    expect(find.byType(ContestScreen), findsOneWidget);
+    expect(find.text('Etkinliğe başla'), findsOneWidget);
+
+    await tester.tap(find.text('Etkinliğe başla'));
     await tester.pumpAndSettle();
 
     expect(find.byType(QuizScreen), findsOneWidget);

@@ -55,6 +55,7 @@ class QuizScreen extends StatefulWidget {
     this.dailyQuiz = false,
     this.enableTimer = true,
     this.is1v1 = false,
+    this.contestId,
     super.key,
   });
 
@@ -73,6 +74,9 @@ class QuizScreen extends StatefulWidget {
 
   final bool enableTimer;
   final bool is1v1;
+
+  /// Günlük etkinlik (contest) quiz'i — sonuçta skor + ödül RPC.
+  final String? contestId;
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -1400,6 +1404,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           opponents: livePlayers.where((p) => p.name != _myName).toList(),
           practice: widget.practice,
           dailyQuiz: widget.dailyQuiz,
+          contestId: widget.contestId,
         ),
       ),
     );
@@ -1581,6 +1586,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 : (_botRace?.toPlayers() ?? const []),
             practice: widget.practice,
             dailyQuiz: widget.dailyQuiz,
+            contestId: widget.contestId,
           ),
         ),
       );
