@@ -272,9 +272,7 @@ class _ShopScreenState extends State<ShopScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              ku
-                                  ? '$_coinBalance coin'
-                                  : '$_coinBalance coin',
+                              ku ? '$_coinBalance coin' : '$_coinBalance coin',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -407,8 +405,8 @@ class _ShopScreenState extends State<ShopScreen> {
                                                 style: TextStyle(
                                                   color:
                                                       AppTheme.textPrimaryColor(
-                                                    context,
-                                                  ),
+                                                        context,
+                                                      ),
                                                   fontWeight: FontWeight.w800,
                                                   fontSize: 16,
                                                 ),
@@ -419,16 +417,16 @@ class _ShopScreenState extends State<ShopScreen> {
                                               Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                  horizontal: 6,
-                                                  vertical: 2,
-                                                ),
+                                                      horizontal: 6,
+                                                      vertical: 2,
+                                                    ),
                                                 decoration: BoxDecoration(
                                                   color: AppTheme.correct
                                                       .withValues(alpha: 0.15),
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                    AppRadius.xs,
-                                                  ),
+                                                        AppRadius.xs,
+                                                      ),
                                                 ),
                                                 child: Text(
                                                   ku ? 'Yê te' : 'Sende',
@@ -470,17 +468,18 @@ class _ShopScreenState extends State<ShopScreen> {
                                                 alpha: 0.18,
                                               )
                                             : (canAfford
-                                                ? AppTheme.primaryGradientStart
-                                                : AppTheme.surfaceHiColor(
-                                                    context,
-                                                  )),
+                                                  ? AppTheme
+                                                        .primaryGradientStart
+                                                  : AppTheme.surfaceHiColor(
+                                                      context,
+                                                    )),
                                         foregroundColor: isPurchased
                                             ? AppTheme.correct
                                             : (canAfford
-                                                ? Colors.white
-                                                : AppTheme.textMutedColor(
-                                                    context,
-                                                  )),
+                                                  ? Colors.white
+                                                  : AppTheme.textMutedColor(
+                                                      context,
+                                                    )),
                                         elevation: 0,
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 12,

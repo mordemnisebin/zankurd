@@ -77,29 +77,30 @@ void main() {
     expect(spinWheelTapped, isFalse);
   });
 
-  testWidgets('daily quiz tile shows a spinner and ignores taps while loading', (
-    tester,
-  ) async {
-    var tapped = false;
+  testWidgets(
+    'daily quiz tile shows a spinner and ignores taps while loading',
+    (tester) async {
+      var tapped = false;
 
-    await tester.pumpWidget(
-      wrap(
-        QuickPlayGrid(
-          isKu: false,
-          dailyQuizLoading: true,
-          onDuel: () {},
-          onDailyQuiz: () => tapped = true,
-          onSpinWheel: () {},
-          onTournament: () {},
+      await tester.pumpWidget(
+        wrap(
+          QuickPlayGrid(
+            isKu: false,
+            dailyQuizLoading: true,
+            onDuel: () {},
+            onDailyQuiz: () => tapped = true,
+            onSpinWheel: () {},
+            onTournament: () {},
+          ),
         ),
-      ),
-    );
+      );
 
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
-    await tester.tap(find.text('Günün Yarışması'));
-    await tester.pump();
+      await tester.tap(find.text('Günün Yarışması'));
+      await tester.pump();
 
-    expect(tapped, isFalse);
-  });
+      expect(tapped, isFalse);
+    },
+  );
 }

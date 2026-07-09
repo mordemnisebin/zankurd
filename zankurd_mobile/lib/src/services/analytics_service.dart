@@ -11,7 +11,9 @@ class AnalyticsService {
 
   /// Uygulama başlatıldığında çağrılır.
   Future<void> initialize() async {
-    if (kIsWeb || defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS) {
+    if (kIsWeb ||
+        defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS) {
       try {
         _analytics = FirebaseAnalytics.instance;
         debugPrint('[Analytics] Firebase Analytics başlatıldı');
@@ -28,10 +30,7 @@ class AnalyticsService {
     debugPrint('[Analytics] $name ${parameters ?? ''}');
     try {
       if (_analytics != null) {
-        await _analytics!.logEvent(
-          name: name,
-          parameters: parameters,
-        );
+        await _analytics!.logEvent(name: name, parameters: parameters);
       }
     } catch (e) {
       debugPrint('[Analytics] Olay gönderilemedi: $e');
@@ -39,10 +38,7 @@ class AnalyticsService {
   }
 
   /// Quiz başlatma olayı.
-  Future<void> logQuizStart({
-    required String category,
-    required String mode,
-  }) =>
+  Future<void> logQuizStart({required String category, required String mode}) =>
       logEvent('quiz_start', {'category': category, 'mode': mode});
 
   /// Quiz tamamlama olayı.
@@ -51,13 +47,12 @@ class AnalyticsService {
     required int correctCount,
     required int totalQuestions,
     required int xpEarned,
-  }) =>
-      logEvent('quiz_complete', {
-        'category': category,
-        'correct': correctCount,
-        'total': totalQuestions,
-        'xp': xpEarned,
-      });
+  }) => logEvent('quiz_complete', {
+    'category': category,
+    'correct': correctCount,
+    'total': totalQuestions,
+    'xp': xpEarned,
+  });
 
   /// Rozet kazanma olayı.
   Future<void> logBadgeEarned(String badgeId) =>

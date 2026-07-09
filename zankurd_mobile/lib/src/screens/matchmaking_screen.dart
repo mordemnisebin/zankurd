@@ -256,9 +256,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            ku
-                ? 'Li hev anîn bi ser neket.'
-                : 'Eşleştirme başarısız oldu.',
+            ku ? 'Li hev anîn bi ser neket.' : 'Eşleştirme başarısız oldu.',
           ),
         ),
       );
@@ -276,7 +274,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
           ku ? 'Dema Gerînê Qediya' : 'Arama Süresi Doldu',
-          style: TextStyle(color: AppTheme.textPrimaryColor(context), fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: AppTheme.textPrimaryColor(context),
+            fontWeight: FontWeight.bold,
+          ),
         ),
         content: Text(
           ku
@@ -287,7 +288,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text(ku ? 'Na' : 'Hayır', style: TextStyle(color: AppTheme.wrong)),
+            child: Text(
+              ku ? 'Na' : 'Hayır',
+              style: TextStyle(color: AppTheme.wrong),
+            ),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -302,12 +306,12 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   }
 
   AvatarIdentity _identityFromPlayer(Player player) => AvatarIdentity(
-        iconId: player.avatarIcon,
-        colorHex: player.avatarColor,
-        photoUrl: player.avatarUrl,
-        frameId: player.avatarFrame,
-        showcaseTitle: player.showcaseTitle,
-      );
+    iconId: player.avatarIcon,
+    colorHex: player.avatarColor,
+    photoUrl: player.avatarUrl,
+    frameId: player.avatarFrame,
+    showcaseTitle: player.showcaseTitle,
+  );
 
   Future<Player?> _loadOpponentPlayer({
     required String roomId,
@@ -369,7 +373,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     }
     if (!mounted) return;
 
-    var room = widget.repository.createRoom(category: category).copyWith(
+    var room = widget.repository
+        .createRoom(category: category)
+        .copyWith(
           id: roomId,
           hostId: dbHostId,
           name: ku ? 'Şerê 1v1' : '1v1 Savaş',
@@ -410,7 +416,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
     if (matchQuestions.isEmpty) {
       final actualCategory = (category == 'Rastgele' || category == 'Random')
-          ? (_categories.isNotEmpty ? _categories[Random().nextInt(_categories.length)] : 'Ziman')
+          ? (_categories.isNotEmpty
+                ? _categories[Random().nextInt(_categories.length)]
+                : 'Ziman')
           : category;
       try {
         matchQuestions = await widget.repository.loadLevelQuestions(
@@ -443,7 +451,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final status = ku ? (_statusTextKu ?? 'Tê gerîn...') : (_statusTextTr ?? 'Aranıyor...');
+    final status = ku
+        ? (_statusTextKu ?? 'Tê gerîn...')
+        : (_statusTextTr ?? 'Aranıyor...');
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -457,7 +467,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           gradient: AppTheme.backgroundGradient(context),
         ),
         child: SafeArea(
-          child: _searchingStarted ? _buildRadarSearch(status, ku) : _buildSelectionMenu(ku),
+          child: _searchingStarted
+              ? _buildRadarSearch(status, ku)
+              : _buildSelectionMenu(ku),
         ),
       ),
     );
@@ -474,7 +486,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             decoration: BoxDecoration(
               color: AppTheme.surfaceHiColor(context),
               borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: AppTheme.borderColor(context), width: 1.2),
+              border: Border.all(
+                color: AppTheme.borderColor(context),
+                width: 1.2,
+              ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withValues(alpha: 0.15),
@@ -489,7 +504,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                   width: 64,
                   height: 64,
                   decoration: BoxDecoration(
-                    color: AppTheme.primaryGradientStart.withValues(alpha: 0.15),
+                    color: AppTheme.primaryGradientStart.withValues(
+                      alpha: 0.15,
+                    ),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
@@ -537,7 +554,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                       color: Colors.white.withValues(alpha: 0.18),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.shuffle_rounded, color: Colors.white),
+                    child: const Icon(
+                      Icons.shuffle_rounded,
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -554,7 +574,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          ku ? 'Bêyî hilbijartina kategoriyê rasterast bikeve rêzê.' : 'Kategori seçmeden doğrudan sıraya gir.',
+                          ku
+                              ? 'Bêyî hilbijartina kategoriyê rasterast bikeve rêzê.'
+                              : 'Kategori seçmeden doğrudan sıraya gir.',
                           style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 12,
@@ -563,7 +585,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                       ],
                     ),
                   ),
-                  const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white70, size: 16),
+                  const Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: Colors.white70,
+                    size: 16,
+                  ),
                 ],
               ),
             ),
@@ -573,9 +599,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           Padding(
             padding: const EdgeInsets.only(left: 4, bottom: 10),
             child: Text(
-              ku
-                  ? 'Li gorî kategoriyê li hev bîne'
-                  : 'Kategoriye göre eşleş',
+              ku ? 'Li gorî kategoriyê li hev bîne' : 'Kategoriye göre eşleş',
               style: TextStyle(
                 color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w800,
@@ -608,7 +632,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                     _startMatchmaking(category);
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
                     decoration: BoxDecoration(
                       color: AppTheme.surfaceHiColor(context),
                       borderRadius: BorderRadius.circular(16),
@@ -645,10 +672,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         children: [
           if (_categoryName != null) ...[
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 6,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
               decoration: BoxDecoration(
                 color: AppTheme.primaryGradientStart.withValues(alpha: 0.14),
                 borderRadius: BorderRadius.circular(12),
@@ -684,7 +708,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                       final pulseValue = _pulseController.value;
                       final isLight = AppTheme.isLight(context);
                       final baseAlpha = 1.0 - (radius / 260.0);
-                      final alpha = (isLight ? baseAlpha * 1.5 : baseAlpha).clamp(0.06, 0.6);
+                      final alpha = (isLight ? baseAlpha * 1.5 : baseAlpha)
+                          .clamp(0.06, 0.6);
                       return Container(
                         width: radius + (pulseValue * 15.0),
                         height: radius + (pulseValue * 15.0),
@@ -693,8 +718,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                           border: Border.all(
                             color: _found
                                 ? AppTheme.correct.withValues(alpha: alpha)
-                                : AppTheme.primaryGradientStart
-                                    .withValues(alpha: alpha),
+                                : AppTheme.primaryGradientStart.withValues(
+                                    alpha: alpha,
+                                  ),
                             width: 1.5,
                           ),
                         ),
@@ -837,10 +863,14 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                   displayName: _opponentName,
                                 )
                               : CircleAvatar(
-                                  backgroundColor: AppTheme.isLight(context) ? const Color(0xFFE4E0D6) : const Color(0xFF1F1D2B),
+                                  backgroundColor: AppTheme.isLight(context)
+                                      ? const Color(0xFFE4E0D6)
+                                      : const Color(0xFF1F1D2B),
                                   child: Icon(
                                     Icons.question_mark,
-                                    color: AppTheme.isLight(context) ? AppTheme.textMutedColor(context) : Colors.white24,
+                                    color: AppTheme.isLight(context)
+                                        ? AppTheme.textMutedColor(context)
+                                        : Colors.white24,
                                     size: 38,
                                   ),
                                 ),
@@ -866,16 +896,20 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                             color: _found
                                 ? AppTheme.correct.withValues(alpha: 0.15)
                                 : (AppTheme.isLight(context)
-                                    ? Colors.black.withValues(alpha: 0.05)
-                                    : Colors.white.withValues(alpha: 0.05)),
+                                      ? Colors.black.withValues(alpha: 0.05)
+                                      : Colors.white.withValues(alpha: 0.05)),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
                             _found
-                                ? (ku ? 'Ast $_opponentLevel' : 'Seviye $_opponentLevel')
+                                ? (ku
+                                      ? 'Ast $_opponentLevel'
+                                      : 'Seviye $_opponentLevel')
                                 : '?',
                             style: TextStyle(
-                              color: _found ? AppTheme.correct : AppTheme.textMutedColor(context),
+                              color: _found
+                                  ? AppTheme.correct
+                                  : AppTheme.textMutedColor(context),
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
                             ),

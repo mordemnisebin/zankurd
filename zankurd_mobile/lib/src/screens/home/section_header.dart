@@ -61,9 +61,7 @@ class SectionHeader extends StatelessWidget {
                           ],
                         ),
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: color.withValues(alpha: 0.2),
-                        ),
+                        border: Border.all(color: color.withValues(alpha: 0.2)),
                       ),
                       child: Icon(icon, color: color, size: 18),
                     ),

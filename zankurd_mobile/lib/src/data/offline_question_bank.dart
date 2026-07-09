@@ -10,7 +10,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'av\' kavramını gösterir; doğru yanıt: su.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/av.webp'
+    imageUrl: 'asset://assets/question_images/av.webp',
   ),
   QuizQuestion(
     id: 'offline_0010',
@@ -21,7 +21,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'roj\' kavramını gösterir; doğru yanıt: gün/güneş.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/roj.webp'
+    imageUrl: 'asset://assets/question_images/roj.webp',
   ),
   QuizQuestion(
     id: 'offline_0014',
@@ -31,7 +31,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Şaş',
     explanation: '"mal" "ev" demektir; "dibistan" ise "okul" anlamına gelir.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_0015',
@@ -42,7 +42,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'mal\' kavramını gösterir; doğru yanıt: ev.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mal.webp'
+    imageUrl: 'asset://assets/question_images/mal.webp',
   ),
   QuizQuestion(
     id: 'offline_0016',
@@ -52,7 +52,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'kitap',
     explanation: 'Doğru anlam: "pirtûk" → "kitap".',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0020',
@@ -63,7 +63,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'pirtûk\' kavramını gösterir; doğru yanıt: kitap.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/pirtuk.webp'
+    imageUrl: 'asset://assets/question_images/pirtuk.webp',
   ),
   QuizQuestion(
     id: 'offline_0025',
@@ -74,7 +74,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'zanîn\' kavramını gösterir; doğru yanıt: bilmek.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/zanin.webp'
+    imageUrl: 'asset://assets/question_images/zanin.webp',
   ),
   QuizQuestion(
     id: 'offline_0030',
@@ -85,7 +85,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'hatin\' kavramını gösterir; doğru yanıt: gelmek.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/hatin.webp'
+    imageUrl: 'asset://assets/question_images/hatin.webp',
   ),
   QuizQuestion(
     id: 'offline_0035',
@@ -96,7 +96,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'çiya\' kavramını gösterir; doğru yanıt: dağ.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ciya.webp'
+    imageUrl: 'asset://assets/question_images/ciya.webp',
   ),
   QuizQuestion(
     id: 'offline_0040',
@@ -107,7 +107,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'dil\' kavramını gösterir; doğru yanıt: kalp/dil.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dil.webp'
+    imageUrl: 'asset://assets/question_images/dil.webp',
   ),
   QuizQuestion(
     id: 'offline_0045',
@@ -118,7 +118,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'heval\' kavramını gösterir; doğru yanıt: arkadaş.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/heval.webp'
+    imageUrl: 'asset://assets/question_images/heval.webp',
   ),
   QuizQuestion(
     id: 'offline_0050',
@@ -129,7 +129,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'bajar\' kavramını gösterir; doğru yanıt: şehir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bajar.webp'
+    imageUrl: 'asset://assets/question_images/bajar.webp',
   ),
   QuizQuestion(
     id: 'offline_0055',
@@ -140,7 +140,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'nan\' kavramını gösterir; doğru yanıt: ekmek.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nan.webp'
+    imageUrl: 'asset://assets/question_images/nan.webp',
   ),
   QuizQuestion(
     id: 'offline_0060',
@@ -151,7 +151,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'rê\' kavramını gösterir; doğru yanıt: yol.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/re.webp'
+    imageUrl: 'asset://assets/question_images/re.webp',
   ),
   QuizQuestion(
     id: 'offline_0062',
@@ -161,7 +161,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'spas',
     explanation: 'Doğru eşleştirme: "teşekkür" → "spas".',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0065',
@@ -172,7 +172,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'spas\' kavramını gösterir; doğru yanıt: teşekkür.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/spas.webp'
+    imageUrl: 'asset://assets/question_images/spas.webp',
   ),
   QuizQuestion(
     id: 'offline_0067',
@@ -182,7 +182,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'xweş',
     explanation: '\'güzel/iyi\' → xweş.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0070',
@@ -193,7 +193,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'xweş\' kavramını gösterir; doğru yanıt: güzel/iyi.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/xwes.webp'
+    imageUrl: 'asset://assets/question_images/xwes.webp',
   ),
   QuizQuestion(
     id: 'offline_0075',
@@ -204,7 +204,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'sar\' kavramını gösterir; doğru yanıt: soğuk.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sar.webp'
+    imageUrl: 'asset://assets/question_images/sar.webp',
   ),
   QuizQuestion(
     id: 'offline_0076',
@@ -214,7 +214,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'küçük',
     explanation: 'Kurmancî "biçûk" ≈ "küçük".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0080',
@@ -225,7 +225,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'biçûk\' kavramını gösterir; doğru yanıt: küçük.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bicuk.webp'
+    imageUrl: 'asset://assets/question_images/bicuk.webp',
   ),
   QuizQuestion(
     id: 'offline_0081',
@@ -235,7 +235,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'eski',
     explanation: '"kevin" kelimesi "eski" demektir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0083',
@@ -245,7 +245,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '"kevin" için doğru anlam "eski"tir.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_0085',
@@ -256,7 +256,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'kevin\' kavramını gösterir; doğru yanıt: eski.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kevin.webp'
+    imageUrl: 'asset://assets/question_images/kevin.webp',
   ),
   QuizQuestion(
     id: 'offline_0090',
@@ -267,7 +267,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'îro\' kavramını gösterir; doğru yanıt: bugün.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/iro.webp'
+    imageUrl: 'asset://assets/question_images/iro.webp',
   ),
   QuizQuestion(
     id: 'offline_0095',
@@ -278,7 +278,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'duh\' kavramını gösterir; doğru yanıt: dün.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/duh.webp'
+    imageUrl: 'asset://assets/question_images/duh.webp',
   ),
   QuizQuestion(
     id: 'offline_0100',
@@ -289,7 +289,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'nav\' kavramını gösterir; doğru yanıt: ad/isim.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nav.webp'
+    imageUrl: 'asset://assets/question_images/nav.webp',
   ),
   QuizQuestion(
     id: 'offline_0105',
@@ -300,7 +300,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'zarok\' kavramını gösterir; doğru yanıt: çocuk.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/zarok.webp'
+    imageUrl: 'asset://assets/question_images/zarok.webp',
   ),
   QuizQuestion(
     id: 'offline_0110',
@@ -308,10 +308,11 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"xwendekar" görseli hangi anlama gelir?',
     answers: ['öğrenci', 'ergatîf', 'Üç (3)', 'Bir (1)'],
     correctAnswer: 'öğrenci',
-    explanation: 'Görsel \'xwendekar\' kavramını gösterir; doğru yanıt: öğrenci.',
+    explanation:
+        'Görsel \'xwendekar\' kavramını gösterir; doğru yanıt: öğrenci.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/xwendekar.webp'
+    imageUrl: 'asset://assets/question_images/xwendekar.webp',
   ),
   QuizQuestion(
     id: 'offline_0111',
@@ -321,7 +322,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'doğru',
     explanation: 'Kurmancî "rast" ≈ "doğru".',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0115',
@@ -332,7 +333,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Doğru yanıt: doğru.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/rast.webp'
+    imageUrl: 'asset://assets/question_images/rast.webp',
   ),
   QuizQuestion(
     id: 'offline_0116',
@@ -342,7 +343,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'çok',
     explanation: 'Doğru anlam: "pir" → "çok".',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0120',
@@ -353,7 +354,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Görsel \'pir\' kavramını gösterir; doğru yanıt: çok.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/pir.webp'
+    imageUrl: 'asset://assets/question_images/pir.webp',
   ),
   QuizQuestion(
     id: 'offline_0121',
@@ -363,7 +364,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'başlangıç',
     explanation: 'Kurmancî "destpêk" ≈ "başlangıç".',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0125',
@@ -371,20 +372,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Bu görsel "destpêk" için: doğru karşılık hangisi?',
     answers: ['başlangıç', 'güzel/iyi', 'Duygu/his', 'Ben iyiyim'],
     correctAnswer: 'başlangıç',
-    explanation: 'Görsel \'destpêk\' kavramını gösterir; doğru yanıt: başlangıç.',
+    explanation:
+        'Görsel \'destpêk\' kavramını gösterir; doğru yanıt: başlangıç.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/destpek.webp'
+    imageUrl: 'asset://assets/question_images/destpek.webp',
   ),
   QuizQuestion(
     id: 'offline_0376',
     category: 'Çand',
     prompt: 'Kürt kültüründe Newroz en çok hangi alanla ilişkilidir?',
-    answers: ['Halka biçiminde toplu dans', 'baharın gelişi ve yenilenme', 'toplumsal bağları güçlendirme', 'Sırayla kilam/anlatı söylerdi'],
+    answers: [
+      'Halka biçiminde toplu dans',
+      'baharın gelişi ve yenilenme',
+      'toplumsal bağları güçlendirme',
+      'Sırayla kilam/anlatı söylerdi',
+    ],
     correctAnswer: 'baharın gelişi ve yenilenme',
     explanation: 'Newroz, Kürt kültüründe 21 Adar bağlamında değerlendirilir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0379',
@@ -395,17 +402,23 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'Newroz Kürt kültürü kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/newroz.webp'
+    imageUrl: 'asset://assets/question_images/newroz.webp',
   ),
   QuizQuestion(
     id: 'offline_0381',
     category: 'Çand',
     prompt: 'Kürt kültüründe govend en çok hangi alanla ilişkilidir?',
-    answers: ['Newroz bayramı', 'Kına (hene) gecesi', 'toplu halk oyunu', 'Toplu halk dansı'],
+    answers: [
+      'Newroz bayramı',
+      'Kına (hene) gecesi',
+      'toplu halk oyunu',
+      'Toplu halk dansı',
+    ],
     correctAnswer: 'toplu halk oyunu',
-    explanation: 'govend, Kürt kültüründe düğün ve kutlama bağlamında değerlendirilir.',
+    explanation:
+        'govend, Kürt kültüründe düğün ve kutlama bağlamında değerlendirilir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0384',
@@ -416,7 +429,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'govend Kürt kültürü kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/govend.webp'
+    imageUrl: 'asset://assets/question_images/govend.webp',
   ),
   QuizQuestion(
     id: 'offline_0389',
@@ -427,7 +440,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'dengbêj Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dengbej.webp'
+    imageUrl: 'asset://assets/question_images/dengbej.webp',
   ),
   QuizQuestion(
     id: 'offline_0394',
@@ -438,17 +451,23 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'kilim motifleri Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kilim_motifleri.webp'
+    imageUrl: 'asset://assets/question_images/kilim_motifleri.webp',
   ),
   QuizQuestion(
     id: 'offline_0395',
     category: 'Çand',
     prompt: 'Kürt kültüründe kilim motifleri hakkında hangisi daha doğrudur?',
-    answers: ['el sanatı ile ilişkilidir', 'sadece sayı sistemidir', 'sadece gök cismidir', 'sadece trafik işaretidir'],
+    answers: [
+      'el sanatı ile ilişkilidir',
+      'sadece sayı sistemidir',
+      'sadece gök cismidir',
+      'sadece trafik işaretidir',
+    ],
     correctAnswer: 'el sanatı ile ilişkilidir',
-    explanation: 'kilim motifleri, Kürt kültüründe el sanatı alanıyla bağlantılıdır.',
+    explanation:
+        'kilim motifleri, Kürt kültüründe el sanatı alanıyla bağlantılıdır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0399',
@@ -459,7 +478,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'misafirperverlik Kürt kültürü kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/misafirperverlik.webp'
+    imageUrl: 'asset://assets/question_images/misafirperverlik.webp',
   ),
   QuizQuestion(
     id: 'offline_0404',
@@ -470,7 +489,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'yerel kıyafetler Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/yerel_kiyafetler.webp'
+    imageUrl: 'asset://assets/question_images/yerel_kiyafetler.webp',
   ),
   QuizQuestion(
     id: 'offline_0409',
@@ -481,7 +500,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'ağıt Kürt kültürü kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/agit.webp'
+    imageUrl: 'asset://assets/question_images/agit.webp',
   ),
   QuizQuestion(
     id: 'offline_0414',
@@ -492,17 +511,23 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'masal anlatımı Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/masal_anlatimi.webp'
+    imageUrl: 'asset://assets/question_images/masal_anlatimi.webp',
   ),
   QuizQuestion(
     id: 'offline_0415',
     category: 'Çand',
     prompt: 'Kürt kültüründe masal anlatımı hakkında hangisi daha doğrudur?',
-    answers: ['sözlü kültür ile ilişkilidir', 'sadece sayı sistemidir', 'sadece gök cismidir', 'sadece trafik işaretidir'],
+    answers: [
+      'sözlü kültür ile ilişkilidir',
+      'sadece sayı sistemidir',
+      'sadece gök cismidir',
+      'sadece trafik işaretidir',
+    ],
     correctAnswer: 'sözlü kültür ile ilişkilidir',
-    explanation: 'masal anlatımı, Kürt kültüründe sözlü kültür alanıyla bağlantılıdır.',
+    explanation:
+        'masal anlatımı, Kürt kültüründe sözlü kültür alanıyla bağlantılıdır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0419',
@@ -513,7 +538,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'bayramlaşma Kürt kültürü kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/bayramlasma.webp'
+    imageUrl: 'asset://assets/question_images/bayramlasma.webp',
   ),
   QuizQuestion(
     id: 'offline_0424',
@@ -524,27 +549,34 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'halk mutfağı Kürt kültürü kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/halk_mutfagi.webp'
+    imageUrl: 'asset://assets/question_images/halk_mutfagi.webp',
   ),
   QuizQuestion(
     id: 'offline_0425',
     category: 'Çand',
     prompt: 'Kürt kültüründe halk mutfağı hakkında hangisi daha doğrudur?',
-    answers: ['sofra kültürü ile ilişkilidir', 'sadece sayı sistemidir', 'sadece gök cismidir', 'sadece trafik işaretidir'],
+    answers: [
+      'sofra kültürü ile ilişkilidir',
+      'sadece sayı sistemidir',
+      'sadece gök cismidir',
+      'sadece trafik işaretidir',
+    ],
     correctAnswer: 'sofra kültürü ile ilişkilidir',
-    explanation: 'halk mutfağı, Kürt kültüründe sofra kültürü alanıyla bağlantılıdır.',
+    explanation:
+        'halk mutfağı, Kürt kültüründe sofra kültürü alanıyla bağlantılıdır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0527',
     category: 'Dîrok',
-    prompt: 'Birincil kaynak Kürt ve Kürdistan tarihini anlamada kullanılabilir.',
+    prompt:
+        'Birincil kaynak Kürt ve Kürdistan tarihini anlamada kullanılabilir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: 'birincil kaynak tarihsel düşünme için yararlı bir kavramdır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_0529',
@@ -552,10 +584,11 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'birincil kaynak\' görseli hangi kategoriyi işaret eder?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
-    explanation: 'birincil kaynak Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
+    explanation:
+        'birincil kaynak Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/birincil_kaynak.webp'
+    imageUrl: 'asset://assets/question_images/birincil_kaynak.webp',
   ),
   QuizQuestion(
     id: 'offline_0533',
@@ -563,20 +596,28 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Bu görseldeki \'sözlü tarih\' Dîrok bağlamında nereye yakındır?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
-    explanation: 'sözlü tarih Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
+    explanation:
+        'sözlü tarih Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sozlu_tarih.webp'
+    imageUrl: 'asset://assets/question_images/sozlu_tarih.webp',
   ),
   QuizQuestion(
     id: 'offline_0534',
     category: 'Dîrok',
-    prompt: 'Kürt ve Kürdistan tarihi için sözlü tarih kavramının en uygun açıklaması hangisidir?',
-    answers: ['Fiili özerk yönetim ve sonrasında KRG kurumlaşması', 'tanıklık ve anlatılarla geçmişi anlama yöntemi', 'Hakkari/Cizre çevresi (dağlık güneydoğu)', 'KYB (Kürdistan Yurtseverler Birliği)'],
+    prompt:
+        'Kürt ve Kürdistan tarihi için sözlü tarih kavramının en uygun açıklaması hangisidir?',
+    answers: [
+      'Fiili özerk yönetim ve sonrasında KRG kurumlaşması',
+      'tanıklık ve anlatılarla geçmişi anlama yöntemi',
+      'Hakkari/Cizre çevresi (dağlık güneydoğu)',
+      'KYB (Kürdistan Yurtseverler Birliği)',
+    ],
     correctAnswer: 'tanıklık ve anlatılarla geçmişi anlama yöntemi',
-    explanation: 'Doğru açıklama: tanıklık ve anlatılarla geçmişi anlama yöntemi.',
+    explanation:
+        'Doğru açıklama: tanıklık ve anlatılarla geçmişi anlama yöntemi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0537',
@@ -584,10 +625,11 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel \'kronoloji\' diyor; hangi alanla bağdaşır?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
-    explanation: 'kronoloji Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
+    explanation:
+        'kronoloji Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kronoloji.webp'
+    imageUrl: 'asset://assets/question_images/kronoloji.webp',
   ),
   QuizQuestion(
     id: 'offline_0541',
@@ -595,20 +637,28 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'arkeoloji\' görseli Dîrok içinde hangi kategoriye girer?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
-    explanation: 'arkeoloji Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
+    explanation:
+        'arkeoloji Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/arkeoloji.webp'
+    imageUrl: 'asset://assets/question_images/arkeoloji.webp',
   ),
   QuizQuestion(
     id: 'offline_0543',
     category: 'Dîrok',
-    prompt: 'Kürt ve Kürdistan tarihini çalışırken Mezopotamya neyi ifade eder?',
-    answers: ['Merkezî yönetime bağlanmış / tasfiye edilmiş yapı', 'yek ji wargehên herî kevn ên domdar', 'Dicle ve Fırat çevresindeki tarihsel bölge', 'KYB (Kürdistan Yurtseverler Birliği)'],
+    prompt:
+        'Kürt ve Kürdistan tarihini çalışırken Mezopotamya neyi ifade eder?',
+    answers: [
+      'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
+      'yek ji wargehên herî kevn ên domdar',
+      'Dicle ve Fırat çevresindeki tarihsel bölge',
+      'KYB (Kürdistan Yurtseverler Birliği)',
+    ],
     correctAnswer: 'Dicle ve Fırat çevresindeki tarihsel bölge',
-    explanation: 'Mezopotamya, Kürt ve Kürdistan tarihi araştırmalarında Dicle ve Fırat çevresindeki tarihsel bölge olarak kullanılabilir.',
+    explanation:
+        'Mezopotamya, Kürt ve Kürdistan tarihi araştırmalarında Dicle ve Fırat çevresindeki tarihsel bölge olarak kullanılabilir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0545',
@@ -616,20 +666,27 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Mezopotamya\' etiketli görsel hangi alanla ilişkilidir?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
-    explanation: 'Mezopotamya Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
+    explanation:
+        'Mezopotamya Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mezopotamya.webp'
+    imageUrl: 'asset://assets/question_images/mezopotamya.webp',
   ),
   QuizQuestion(
     id: 'offline_0546',
     category: 'Dîrok',
-    prompt: 'Kürt ve Kürdistan tarihi için Mezopotamya kavramının en uygun açıklaması hangisidir?',
-    answers: ['Hakkari/Cizre çevresi (dağlık güneydoğu)', 'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı', 'Dicle ve Fırat çevresindeki tarihsel bölge', 'yek ji wargehên herî kevn ên domdar'],
+    prompt:
+        'Kürt ve Kürdistan tarihi için Mezopotamya kavramının en uygun açıklaması hangisidir?',
+    answers: [
+      'Hakkari/Cizre çevresi (dağlık güneydoğu)',
+      'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
+      'Dicle ve Fırat çevresindeki tarihsel bölge',
+      'yek ji wargehên herî kevn ên domdar',
+    ],
     correctAnswer: 'Dicle ve Fırat çevresindeki tarihsel bölge',
     explanation: 'Doğru açıklama: Dicle ve Fırat çevresindeki tarihsel bölge.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0549',
@@ -637,10 +694,11 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel ipucu \'göç\': doğru kategori hangisidir?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
-    explanation: 'göç Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
+    explanation:
+        'göç Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/goc.webp'
+    imageUrl: 'asset://assets/question_images/goc.webp',
   ),
   QuizQuestion(
     id: 'offline_0553',
@@ -648,10 +706,11 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'yerleşik yaşam\' görseli Dîrok içinde hangi kategoriye girer?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
-    explanation: 'yerleşik yaşam Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
+    explanation:
+        'yerleşik yaşam Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/yerlesik_yasam.webp'
+    imageUrl: 'asset://assets/question_images/yerlesik_yasam.webp',
   ),
   QuizQuestion(
     id: 'offline_0557',
@@ -659,21 +718,24 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel \'ticaret yolu\' diyor; hangi alanla bağdaşır?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
-    explanation: 'ticaret yolu Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
+    explanation:
+        'ticaret yolu Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ticaret_yolu.webp'
+    imageUrl: 'asset://assets/question_images/ticaret_yolu.webp',
   ),
   QuizQuestion(
     id: 'offline_0561',
     category: 'Dîrok',
-    prompt: '\'kültürel etkileşim\' görseli Dîrok içinde hangi kategoriye girer?',
+    prompt:
+        '\'kültürel etkileşim\' görseli Dîrok içinde hangi kategoriye girer?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
-    explanation: 'kültürel etkileşim Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
+    explanation:
+        'kültürel etkileşim Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kulturel_etkilesim.webp'
+    imageUrl: 'asset://assets/question_images/kulturel_etkilesim.webp',
   ),
   QuizQuestion(
     id: 'offline_0565',
@@ -681,10 +743,11 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'tarihsel yorum\' etiketli görsel hangi alanla ilişkilidir?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
-    explanation: 'tarihsel yorum Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
+    explanation:
+        'tarihsel yorum Kürt ve Kürdistan tarihi kategorisindeki kavramlardan biridir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tarihsel_yorum.webp'
+    imageUrl: 'asset://assets/question_images/tarihsel_yorum.webp',
   ),
   QuizQuestion(
     id: 'offline_0652',
@@ -695,7 +758,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çîrok Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/cirok.webp'
+    imageUrl: 'asset://assets/question_images/cirok.webp',
   ),
   QuizQuestion(
     id: 'offline_0656',
@@ -706,7 +769,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'helbest Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/helbest.webp'
+    imageUrl: 'asset://assets/question_images/helbest.webp',
   ),
   QuizQuestion(
     id: 'offline_0659',
@@ -717,7 +780,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'roman Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/roman.webp'
+    imageUrl: 'asset://assets/question_images/roman.webp',
   ),
   QuizQuestion(
     id: 'offline_0662',
@@ -728,7 +791,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'destan Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/destan.webp'
+    imageUrl: 'asset://assets/question_images/destan.webp',
   ),
   QuizQuestion(
     id: 'offline_0665',
@@ -739,7 +802,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'karakter Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/karakter.webp'
+    imageUrl: 'asset://assets/question_images/karakter.webp',
   ),
   QuizQuestion(
     id: 'offline_0668',
@@ -750,7 +813,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'tema Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tema.webp'
+    imageUrl: 'asset://assets/question_images/tema.webp',
   ),
   QuizQuestion(
     id: 'offline_0670',
@@ -760,7 +823,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: 'mecaz edebi metinleri anlamada kullanılan bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_0671',
@@ -771,7 +834,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'mecaz Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/mecaz.webp'
+    imageUrl: 'asset://assets/question_images/mecaz.webp',
   ),
   QuizQuestion(
     id: 'offline_0674',
@@ -782,7 +845,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'kafiye Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/kafiye.webp'
+    imageUrl: 'asset://assets/question_images/kafiye.webp',
   ),
   QuizQuestion(
     id: 'offline_0677',
@@ -793,17 +856,23 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'anlatıcı Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/anlatici.webp'
+    imageUrl: 'asset://assets/question_images/anlatici.webp',
   ),
   QuizQuestion(
     id: 'offline_0678',
     category: 'Edebiyat',
     prompt: 'Kürt edebiyatında diyalog ne anlama gelir?',
-    answers: ['karşılıklı konuşma', 'coğrafi yön', 'matematik sembolü', 'maden türü'],
+    answers: [
+      'karşılıklı konuşma',
+      'coğrafi yön',
+      'matematik sembolü',
+      'maden türü',
+    ],
     correctAnswer: 'karşılıklı konuşma',
-    explanation: 'diyalog, Kürt edebiyatı alanında karşılıklı konuşma anlamında kullanılır.',
+    explanation:
+        'diyalog, Kürt edebiyatı alanında karşılıklı konuşma anlamında kullanılır.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0680',
@@ -814,7 +883,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'diyalog Kürt edebiyatı kategorisinde değerlendirilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/diyalog.webp'
+    imageUrl: 'asset://assets/question_images/diyalog.webp',
   ),
   QuizQuestion(
     id: 'offline_0745',
@@ -824,7 +893,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'dağ',
     explanation: '"çiya" coğrafya bağlamında "dağ" anlamına gelir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0748',
@@ -835,7 +904,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çiya coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ciya.webp'
+    imageUrl: 'asset://assets/question_images/ciya.webp',
   ),
   QuizQuestion(
     id: 'offline_0752',
@@ -846,17 +915,18 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'deşt coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dest.webp'
+    imageUrl: 'asset://assets/question_images/dest.webp',
   ),
   QuizQuestion(
     id: 'offline_0755',
     category: 'Cografya',
-    prompt: 'Su Kürdistan coğrafyasını anlamada kullanılabilecek kavramlardan biridir.',
+    prompt:
+        'Su Kürdistan coğrafyasını anlamada kullanılabilecek kavramlardan biridir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: 'Coğrafya doğal ve beşeri çevreyi inceler.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_0756',
@@ -867,17 +937,18 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'av coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/av.webp'
+    imageUrl: 'asset://assets/question_images/av.webp',
   ),
   QuizQuestion(
     id: 'offline_0757',
     category: 'Cografya',
-    prompt: 'Kürdistan coğrafyasında su için en uygun Kurmancî kelime hangisidir?',
+    prompt:
+        'Kürdistan coğrafyasında su için en uygun Kurmancî kelime hangisidir?',
     answers: ['av', 'dağ', 'Ağrı', 'Muş'],
     correctAnswer: 'av',
     explanation: 'Su için doğru kelime \'av\'tir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0760',
@@ -888,7 +959,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'çem coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/cem.webp'
+    imageUrl: 'asset://assets/question_images/cem.webp',
   ),
   QuizQuestion(
     id: 'offline_0764',
@@ -899,7 +970,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'gol coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/gol.webp'
+    imageUrl: 'asset://assets/question_images/gol.webp',
   ),
   QuizQuestion(
     id: 'offline_0768',
@@ -910,7 +981,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'daristan coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/daristan.webp'
+    imageUrl: 'asset://assets/question_images/daristan.webp',
   ),
   QuizQuestion(
     id: 'offline_0772',
@@ -921,7 +992,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'newal coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/newal.webp'
+    imageUrl: 'asset://assets/question_images/newal.webp',
   ),
   QuizQuestion(
     id: 'offline_0776',
@@ -932,7 +1003,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'hewa coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/hewa.webp'
+    imageUrl: 'asset://assets/question_images/hewa.webp',
   ),
   QuizQuestion(
     id: 'offline_0780',
@@ -943,7 +1014,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'erd coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/erd.webp'
+    imageUrl: 'asset://assets/question_images/erd.webp',
   ),
   QuizQuestion(
     id: 'offline_0784',
@@ -954,7 +1025,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'sînor coğrafi bir kavram olarak kullanılabilir.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/sinor.webp'
+    imageUrl: 'asset://assets/question_images/sinor.webp',
   ),
   QuizQuestion(
     id: 'offline_0869',
@@ -964,7 +1035,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: 'dengbêj müzik kültüründe kullanılan bir kavramdır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_0871',
@@ -975,7 +1046,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'dengbêj Kürt müziği kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/dengbej.webp'
+    imageUrl: 'asset://assets/question_images/dengbej.webp',
   ),
   QuizQuestion(
     id: 'offline_0873',
@@ -985,7 +1056,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'düzenli vuruş',
     explanation: 'ritim, Kürt müziği alanında düzenli vuruş ile ilişkilidir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0875',
@@ -996,7 +1067,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'ritim Kürt müziği kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/ritim.webp'
+    imageUrl: 'asset://assets/question_images/ritim.webp',
   ),
   QuizQuestion(
     id: 'offline_0879',
@@ -1007,7 +1078,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'melodî Kürt müziği kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/melodi.webp'
+    imageUrl: 'asset://assets/question_images/melodi.webp',
   ),
   QuizQuestion(
     id: 'offline_0883',
@@ -1018,7 +1089,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'stran Kürt müziği kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/stran.webp'
+    imageUrl: 'asset://assets/question_images/stran.webp',
   ),
   QuizQuestion(
     id: 'offline_0887',
@@ -1029,7 +1100,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'def Kürt müziği kategorisinde ele alınır.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/def.webp'
+    imageUrl: 'asset://assets/question_images/def.webp',
   ),
   QuizQuestion(
     id: 'offline_0891',
@@ -1040,7 +1111,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'erbane Kürt müziği kategorisinde ele alınır.',
     difficulty: 1,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/erbane.webp'
+    imageUrl: 'asset://assets/question_images/erbane.webp',
   ),
   QuizQuestion(
     id: 'offline_0894',
@@ -1051,7 +1122,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'tembûr Kürt müziği kategorisinde ele alınır.',
     difficulty: 2,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/tembur.webp'
+    imageUrl: 'asset://assets/question_images/tembur.webp',
   ),
   QuizQuestion(
     id: 'offline_0895',
@@ -1061,7 +1132,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'tembûr',
     explanation: 'Doğru yanıt: tembûr.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_0898',
@@ -1072,7 +1143,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'nota Kürt müziği kategorisinde ele alınır.',
     difficulty: 3,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/nota.webp'
+    imageUrl: 'asset://assets/question_images/nota.webp',
   ),
   QuizQuestion(
     id: 'offline_0902',
@@ -1083,7 +1154,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'koro Kürt müziği kategorisinde ele alınır.',
     difficulty: 4,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/koro.webp'
+    imageUrl: 'asset://assets/question_images/koro.webp',
   ),
   QuizQuestion(
     id: 'offline_0906',
@@ -1094,7 +1165,7 @@ const offlineQuestionBank = <QuizQuestion>[
     explanation: 'solo Kürt müziği kategorisinde ele alınır.',
     difficulty: 5,
     type: QuestionType.visual,
-    imageUrl: 'asset://assets/question_images/solo.webp'
+    imageUrl: 'asset://assets/question_images/solo.webp',
   ),
   QuizQuestion(
     id: 'offline_2009',
@@ -1104,7 +1175,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'evet ve hayır',
     explanation: '"erê" evet, "na" hayır demektir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2020',
@@ -1114,7 +1185,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'yaz',
     explanation: '\'Havîn\' → yaz.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2025',
@@ -1124,7 +1195,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'ez nizanim',
     explanation: '"zanîn" fiilinin olumsuzu özel biçimde "nizanim" olur.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2027',
@@ -1134,7 +1205,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'were!',
     explanation: '"hatin" (gelmek) fiilinin emir kipi "were!" (gel!) olur.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2035',
@@ -1144,7 +1215,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'on',
     explanation: '\'deh\' → on.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2036',
@@ -1154,7 +1225,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'beş',
     explanation: '\'pênc\' → beş.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2042',
@@ -1164,17 +1235,22 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Şaş',
     explanation: '"e" kısa, "ê" ise kapalı uzun bir ünlüdür; farklı seslerdir.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_2046',
     category: 'Ziman',
     prompt: 'Paşgira "-istan" çi çêdike?',
-    answers: ['Kadın, yaşam, özgürlük', 'Arkadaş/yoldaş', 'Amca kızı (kuzen)', 'navên cih û welatan'],
+    answers: [
+      'Kadın, yaşam, özgürlük',
+      'Arkadaş/yoldaş',
+      'Amca kızı (kuzen)',
+      'navên cih û welatan',
+    ],
     correctAnswer: 'navên cih û welatan',
     explanation: '"-istan" yer/ülke adı türetir: gulistan (gül bahçesi) gibi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2049',
@@ -1184,7 +1260,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '"mal" yuva/ev, "xanî" yapı olarak ev demektir.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_2052',
@@ -1194,7 +1270,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: 'Newroz "yeni gün" demektir ve bahar yeni yılını simgeler.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_2053',
@@ -1204,7 +1280,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'agir',
     explanation: 'Newroz kutlamalarının simgesi yakılan büyük ateştir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2066',
@@ -1214,7 +1290,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'hediye/ödül',
     explanation: '"xelat" hediye ya da ödül anlamına gelir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2079',
@@ -1224,7 +1300,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: 'Çay ikramı günlük yaşamın ve misafirliğin parçasıdır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_2086',
@@ -1232,19 +1308,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Pira Malabadê li ser kîjan avê ye?',
     answers: ['Çemê Batmanê', 'Riha (Urfa)', 'Safevi/İran', 'Dîcle û Ferat'],
     correctAnswer: 'Çemê Batmanê',
-    explanation: 'Malabadi Köprüsü (1147), Batman Çayı üzerindeki tarihi taş köprüdür.',
+    explanation:
+        'Malabadi Köprüsü (1147), Batman Çayı üzerindeki tarihi taş köprüdür.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2092',
     category: 'Dîrok',
     prompt: 'Mîrgeha Erdelanê navenda xwe li kîjan bajarî bû?',
-    answers: ['Tarihî surlarıyla', 'Sine (Senendec)', 'avahiyên kevirîn', 'II. Abdülhamid'],
+    answers: [
+      'Tarihî surlarıyla',
+      'Sine (Senendec)',
+      'avahiyên kevirîn',
+      'II. Abdülhamid',
+    ],
     correctAnswer: 'Sine (Senendec)',
-    explanation: 'Erdelan Beyliği\'nin merkezi bugünkü İran\'daki Senendec\'ti.',
+    explanation:
+        'Erdelan Beyliği\'nin merkezi bugünkü İran\'daki Senendec\'ti.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2102',
@@ -1252,9 +1335,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Urartû navenda xwe li kîjan derê bû?',
     answers: ['16. yüzyıl', 'Tuşpa (Wan)', 'Cizre-Bohtan', '20. yüzyıl'],
     correctAnswer: 'Tuşpa (Wan)',
-    explanation: 'Urartu Krallığı\'nın başkenti Van Gölü kıyısındaki Tuşpa\'ydı.',
+    explanation:
+        'Urartu Krallığı\'nın başkenti Van Gölü kıyısındaki Tuşpa\'ydı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2106',
@@ -1262,9 +1346,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Mîrgeha Baban navenda xwe li kîjan bajarî bû?',
     answers: ['Silêmanî', 'Hewlêr', 'Duhok', 'Kerkûk'],
     correctAnswer: 'Silêmanî',
-    explanation: 'Baban Beyliği, bugünkü Süleymaniye\'yi kurmuş ve merkez yapmıştır.',
+    explanation:
+        'Baban Beyliği, bugünkü Süleymaniye\'yi kurmuş ve merkez yapmıştır.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2108',
@@ -1272,19 +1357,21 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Çar birca navdar a Amedê ya li ser sûran kîjan e?',
     answers: ['Birca Keçî', 'Birca Spî', 'Birca Avê', 'Birca Zêrîn'],
     correctAnswer: 'Birca Keçî',
-    explanation: 'Keçi Burcu (Birca Keçî), Diyarbakır Surları\'nın en bilinen burcudur.',
+    explanation:
+        'Keçi Burcu (Birca Keçî), Diyarbakır Surları\'nın en bilinen burcudur.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2110',
     category: 'Dîrok',
-    prompt: 'Xirabreşk (Girê Mirazan / Göbekli Tepe) li nêzîkî kîjan bajarî ye?',
+    prompt:
+        'Xirabreşk (Girê Mirazan / Göbekli Tepe) li nêzîkî kîjan bajarî ye?',
     answers: ['16. yüzyıl', 'Sevr (1920)', 'Riha (Urfa)', 'Lozan (1923)'],
     correctAnswer: 'Riha (Urfa)',
     explanation: 'Göbekli Tepe, Şanlıurfa yakınlarındaki neolitik tapınaktır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2113',
@@ -1294,17 +1381,22 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: '1695',
     explanation: 'Eser 1695\'te tamamlanmıştır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2119',
     category: 'Edebiyat',
     prompt: 'Kovara "Hawar" kê derxist?',
-    answers: ['Celadet Alî Bedirxan', '15-18. yüzyıllar', 'karşılıklı konuşma', 'İmkânsız aşk ve özlemi'],
+    answers: [
+      'Celadet Alî Bedirxan',
+      '15-18. yüzyıllar',
+      'karşılıklı konuşma',
+      'İmkânsız aşk ve özlemi',
+    ],
     correctAnswer: 'Celadet Alî Bedirxan',
     explanation: 'Hawar dergisini Celadet Alî Bedirxan çıkardı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2121',
@@ -1314,27 +1406,38 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Şam',
     explanation: 'Hawar, Şam\'da (Damascus) yayımlanıyordu.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2122',
     category: 'Edebiyat',
     prompt: 'Alfabeya Kurmancî ya Latînî kê amade kir?',
-    answers: ['Celadet Alî Bedirxan', 'karşılıklı konuşma', 'Kuşlar (teyr = kuş)', 'teyran (kuşlarla)'],
+    answers: [
+      'Celadet Alî Bedirxan',
+      'karşılıklı konuşma',
+      'Kuşlar (teyr = kuş)',
+      'teyran (kuşlarla)',
+    ],
     correctAnswer: 'Celadet Alî Bedirxan',
-    explanation: 'Bugün kullanılan Latin temelli Kurmanci alfabesini Bedirxan düzenledi.',
+    explanation:
+        'Bugün kullanılan Latin temelli Kurmanci alfabesini Bedirxan düzenledi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2129',
     category: 'Edebiyat',
     prompt: '"Destan" çi ye?',
-    answers: ['Tasavvufi şiir (divan)', 'Medrese öğrencisi/talebe', 'vegotineke dirêj a lehengiyê', 'Kürtçe yayıncılığın yaygınlaşması'],
+    answers: [
+      'Tasavvufi şiir (divan)',
+      'Medrese öğrencisi/talebe',
+      'vegotineke dirêj a lehengiyê',
+      'Kürtçe yayıncılığın yaygınlaşması',
+    ],
     correctAnswer: 'vegotineke dirêj a lehengiyê',
     explanation: 'Destan, kahramanlık konulu uzun halk anlatısıdır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2132',
@@ -1344,17 +1447,23 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'fıkralar',
     explanation: '"pêkenok" güldürü amaçlı kısa anlatı, yani fıkradır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2134',
     category: 'Edebiyat',
     prompt: 'Gotina pêşiyan: "Dest destê dişo, ..." berdewamiya wê çi ye?',
-    answers: ['dest jî rû dişo', 'dest jî nan dixwe', 'dest jî av vedixwe', 'dest jî kar dike'],
+    answers: [
+      'dest jî rû dişo',
+      'dest jî nan dixwe',
+      'dest jî av vedixwe',
+      'dest jî kar dike',
+    ],
     correctAnswer: 'dest jî rû dişo',
-    explanation: 'Atasözü: "El eli yıkar, el de yüzü yıkar" — dayanışmayı anlatır.',
+    explanation:
+        'Atasözü: "El eli yıkar, el de yüzü yıkar" — dayanışmayı anlatır.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2141',
@@ -1364,7 +1473,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Çiyayê Agirî',
     explanation: 'Ağrı Dağı (Çiyayê Agirî) 5.137 metreyle en yüksek dağdır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2147',
@@ -1374,7 +1483,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Şirnex',
     explanation: 'Cudi Dağı, Şırnak ilindedir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2168',
@@ -1384,7 +1493,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: 'Fırat\'ın kaynakları Doğu Anadolu\'dadır (Karasu ve Murat).',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_2171',
@@ -1394,7 +1503,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Dîcle',
     explanation: 'Büyük Zap ve Küçük Zap, Dicle\'nin kollarıdır.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2175',
@@ -1404,7 +1513,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Îran',
     explanation: 'Mahabad, İran\'ın kuzeybatısındadır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2178',
@@ -1414,7 +1523,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'li dawetan',
     explanation: 'Davul-zurna düğün ve şenliklerin müziğidir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2183',
@@ -1424,7 +1533,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: '19.',
     explanation: 'Büyük dengbêj Evdalê Zeynikê 19. yüzyılda yaşadı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2191',
@@ -1434,7 +1543,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'şarkıcı',
     explanation: 'Şarkı söyleyen kişiye "stranbêj" denir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2199',
@@ -1444,7 +1553,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Îran',
     explanation: 'Hesen Zîrek, İran\'ın Bokan kentinden ünlü bir sestir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2201',
@@ -1454,7 +1563,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'dengbêjiyê',
     explanation: 'Kawîs Axa, Behdînan bölgesinin ünlü dengbêjidir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2205',
@@ -1462,29 +1571,44 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Meryem Xan yek ji dengên jin ên pêşî yên tomarkirî ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: 'Meryem Xan\'ın plak kayıtları, kadın seslerinin ilk örneklerindendir.',
+    explanation:
+        'Meryem Xan\'ın plak kayıtları, kadın seslerinin ilk örneklerindendir.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_2220',
     category: 'Dîrok',
-    prompt: 'Kürt tarih yazımında Şerefname adlı eser kiminle ilişkilendirilir?',
-    answers: ['Şeref Han Bitlisi', 'Ehmedê Xanî', 'Cegerxwîn', 'Mikdad Midhat Bedirxan'],
+    prompt:
+        'Kürt tarih yazımında Şerefname adlı eser kiminle ilişkilendirilir?',
+    answers: [
+      'Şeref Han Bitlisi',
+      'Ehmedê Xanî',
+      'Cegerxwîn',
+      'Mikdad Midhat Bedirxan',
+    ],
     correctAnswer: 'Şeref Han Bitlisi',
-    explanation: 'Şerefname, Kürt emirlikleri ve hanedanları hakkında erken dönem önemli kaynaklardan biridir.',
+    explanation:
+        'Şerefname, Kürt emirlikleri ve hanedanları hakkında erken dönem önemli kaynaklardan biridir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2227',
     category: 'Dîrok',
-    prompt: 'Kürt tarihindeki Newroz anlatısında zalime karşı direnişin sembol ismi kimdir?',
-    answers: ['Şeref Han Bitlisi', 'Kawa/Kave Demirci', 'Beylik (mîrlik)', 'Irak Cumhurbaşkanı'],
+    prompt:
+        'Kürt tarihindeki Newroz anlatısında zalime karşı direnişin sembol ismi kimdir?',
+    answers: [
+      'Şeref Han Bitlisi',
+      'Kawa/Kave Demirci',
+      'Beylik (mîrlik)',
+      'Irak Cumhurbaşkanı',
+    ],
     correctAnswer: 'Kawa/Kave Demirci',
-    explanation: 'Kürt Newroz anlatısında Kawa, Dehak/Zahhak zulmüne karşı başkaldırının sembol figürüdür.',
+    explanation:
+        'Kürt Newroz anlatısında Kawa, Dehak/Zahhak zulmüne karşı başkaldırının sembol figürüdür.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2231',
@@ -1492,29 +1616,43 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kurmancî ve Soranî neyin iki önemli kolu/lehçesi olarak bilinir?',
     answers: ['Kürtçe', 'Arapça', 'Yunanca', 'Rusça'],
     correctAnswer: 'Kürtçe',
-    explanation: 'Kurmancî ve Soranî, Kürtçe denildiğinde en yaygın iki ana lehçe/standart olarak öne çıkar.',
+    explanation:
+        'Kurmancî ve Soranî, Kürtçe denildiğinde en yaygın iki ana lehçe/standart olarak öne çıkar.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2232',
     category: 'Ziman',
     prompt: 'Kurmancî çoğunlukla hangi yazı sistemiyle yazılır?',
-    answers: ['Latin kökenli Hawar alfabesi', 'Kiril alfabesi dışında hiçbir alfabe', 'Çivi yazısı', 'Japon kana sistemi'],
+    answers: [
+      'Latin kökenli Hawar alfabesi',
+      'Kiril alfabesi dışında hiçbir alfabe',
+      'Çivi yazısı',
+      'Japon kana sistemi',
+    ],
     correctAnswer: 'Latin kökenli Hawar alfabesi',
-    explanation: 'Kurmancî, özellikle Türkiye ve Suriye bağlamında Latin temelli Hawar alfabesiyle yaygınlaşmıştır.',
+    explanation:
+        'Kurmancî, özellikle Türkiye ve Suriye bağlamında Latin temelli Hawar alfabesiyle yaygınlaşmıştır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2233',
     category: 'Ziman',
-    prompt: 'Soranî Kürtçesi Irak ve İran’da çoğunlukla hangi yazı sistemiyle yazılır?',
-    answers: ['Arap temelli Kürt alfabesi', 'Latin Hawar alfabesi dışında hiç yazılmaz', 'Runik yazı', 'Gürcü alfabesi'],
+    prompt:
+        'Soranî Kürtçesi Irak ve İran’da çoğunlukla hangi yazı sistemiyle yazılır?',
+    answers: [
+      'Arap temelli Kürt alfabesi',
+      'Latin Hawar alfabesi dışında hiç yazılmaz',
+      'Runik yazı',
+      'Gürcü alfabesi',
+    ],
     correctAnswer: 'Arap temelli Kürt alfabesi',
-    explanation: 'Soranî, Irak ve İran’da Arap temelli Kürt alfabesiyle yaygın biçimde yazılır.',
+    explanation:
+        'Soranî, Irak ve İran’da Arap temelli Kürt alfabesiyle yaygın biçimde yazılır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2237',
@@ -1522,19 +1660,28 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kürtçede “heval” kelimesi genellikle ne demektir?',
     answers: ['Arkadaş/yoldaş', 'teşekkürler', 'Erkek kardeş', 'Gelecek zaman'],
     correctAnswer: 'Arkadaş/yoldaş',
-    explanation: 'Heval, gündelik kullanımda arkadaş; siyasal-kolektif bağlamda yoldaş anlamında kullanılır.',
+    explanation:
+        'Heval, gündelik kullanımda arkadaş; siyasal-kolektif bağlamda yoldaş anlamında kullanılır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2241',
     category: 'Ziman',
-    prompt: 'Kürtçe konuşma tanıma çalışmalarında Jira projesi hangi alanda örnek gösterilir?',
-    answers: ['Kullanıcı seviyesine göre soru seçmeyi', 'Temel sözvarlığı ve kültürel kavramları tanıma', 'Kategori, seçenek, doğru cevap ve açıklama içeren yapı', 'Merkezî Kürtçe/Soranî için konuşma korpusu ve tanıma sistemi'],
-    correctAnswer: 'Merkezî Kürtçe/Soranî için konuşma korpusu ve tanıma sistemi',
-    explanation: 'Jira, Merkezî Kürtçe için konuşma korpusu ve büyük sözvarlıklı konuşma tanıma çalışması olarak sunulmuştur.',
+    prompt:
+        'Kürtçe konuşma tanıma çalışmalarında Jira projesi hangi alanda örnek gösterilir?',
+    answers: [
+      'Kullanıcı seviyesine göre soru seçmeyi',
+      'Temel sözvarlığı ve kültürel kavramları tanıma',
+      'Kategori, seçenek, doğru cevap ve açıklama içeren yapı',
+      'Merkezî Kürtçe/Soranî için konuşma korpusu ve tanıma sistemi',
+    ],
+    correctAnswer:
+        'Merkezî Kürtçe/Soranî için konuşma korpusu ve tanıma sistemi',
+    explanation:
+        'Jira, Merkezî Kürtçe için konuşma korpusu ve büyük sözvarlıklı konuşma tanıma çalışması olarak sunulmuştur.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2246',
@@ -1542,59 +1689,91 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'İlk Kürt gazetesi hangi adı taşır?',
     answers: ['Kürdistan', 'Hawar', 'Azadiya Welat', 'Rojnameya Nû'],
     correctAnswer: 'Kürdistan',
-    explanation: 'Kürdistan gazetesi, ilk Kürt gazetesi olarak basın tarihinde özel bir yere sahiptir.',
+    explanation:
+        'Kürdistan gazetesi, ilk Kürt gazetesi olarak basın tarihinde özel bir yere sahiptir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2248',
     category: 'Edebiyat',
     prompt: 'Hawar dergisi Kürtçe için özellikle hangi katkıyla hatırlanır?',
-    answers: ['Latin temelli Kürt alfabesinin yaygınlaşması', 'Birçok yazarın yurt dışında üretmesi nedeniyle', 'Modern dönemde roman/gazete gibi türlerin gelişmesi', 'Sözlü anlatı ve ezgili hikâye aktarımı'],
+    answers: [
+      'Latin temelli Kürt alfabesinin yaygınlaşması',
+      'Birçok yazarın yurt dışında üretmesi nedeniyle',
+      'Modern dönemde roman/gazete gibi türlerin gelişmesi',
+      'Sözlü anlatı ve ezgili hikâye aktarımı',
+    ],
     correctAnswer: 'Latin temelli Kürt alfabesinin yaygınlaşması',
-    explanation: 'Hawar çevresi, Latin temelli Kürt alfabesinin standartlaşması ve modern Kurmancî yazısı açısından önemlidir.',
+    explanation:
+        'Hawar çevresi, Latin temelli Kürt alfabesinin standartlaşması ve modern Kurmancî yazısı açısından önemlidir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2261',
     category: 'Çand',
     prompt: 'Kürt kültüründe ağıtlar hangi işleve sıkça sahiptir?',
-    answers: ['Misafirperverlik ve ilişki kurma isteğini', 'Acıyı, kaybı ve toplumsal hafızayı aktarmak', 'Bahar, yenilenme ve özgürlük/direniş', 'İranlılar ve birçok halk (Nevruz olarak)'],
+    answers: [
+      'Misafirperverlik ve ilişki kurma isteğini',
+      'Acıyı, kaybı ve toplumsal hafızayı aktarmak',
+      'Bahar, yenilenme ve özgürlük/direniş',
+      'İranlılar ve birçok halk (Nevruz olarak)',
+    ],
     correctAnswer: 'Acıyı, kaybı ve toplumsal hafızayı aktarmak',
-    explanation: 'Ağıtlar, bireysel yasın yanında toplumsal olayların ve kolektif acının hafızasını taşır.',
+    explanation:
+        'Ağıtlar, bireysel yasın yanında toplumsal olayların ve kolektif acının hafızasını taşır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2266',
     category: 'Çand',
     prompt: 'Kürt mutfağında dolma/yaprax en genel olarak nedir?',
-    answers: ['İç harçla doldurulan sebze veya yaprak yemeği', 'Acıyı, kaybı ve toplumsal hafızayı aktarmak', 'Kültürel aidiyet ve coğrafi hafızayı', 'Özgün dini-kültürel topluluk ve tarihsel travmalar'],
+    answers: [
+      'İç harçla doldurulan sebze veya yaprak yemeği',
+      'Acıyı, kaybı ve toplumsal hafızayı aktarmak',
+      'Kültürel aidiyet ve coğrafi hafızayı',
+      'Özgün dini-kültürel topluluk ve tarihsel travmalar',
+    ],
     correctAnswer: 'İç harçla doldurulan sebze veya yaprak yemeği',
-    explanation: 'Kürt mutfağında dolma veya yaprax, yaprak ve sebzelerin pirinçli/etli harçla doldurulmasıyla yapılır.',
+    explanation:
+        'Kürt mutfağında dolma veya yaprax, yaprak ve sebzelerin pirinçli/etli harçla doldurulmasıyla yapılır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2270',
     category: 'Çand',
-    prompt: 'Kürt sofralarında yemeğin büyük tepsi veya ortak sunumla paylaşılması neyi güçlendirir?',
-    answers: ['Topluluk ve aile bağlarını', 'Tam bireysel izolasyonu', 'Yemek yasağını', 'Sessiz sınav düzenini'],
+    prompt:
+        'Kürt sofralarında yemeğin büyük tepsi veya ortak sunumla paylaşılması neyi güçlendirir?',
+    answers: [
+      'Topluluk ve aile bağlarını',
+      'Tam bireysel izolasyonu',
+      'Yemek yasağını',
+      'Sessiz sınav düzenini',
+    ],
     correctAnswer: 'Topluluk ve aile bağlarını',
-    explanation: 'Ortak sunum ve paylaşım, aile, komşuluk ve misafirlik ilişkilerini güçlendiren kültürel pratiklerdir.',
+    explanation:
+        'Ortak sunum ve paylaşım, aile, komşuluk ve misafirlik ilişkilerini güçlendiren kültürel pratiklerdir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2271',
     category: 'Çand',
     prompt: 'Dew/doogh türü içecek hangi ana malzemeyle ilişkilidir?',
-    answers: ['Yoğurt/ayran', 'Kahve likörü', 'Sadece limon kabuğu', 'Mısır unu'],
+    answers: [
+      'Yoğurt/ayran',
+      'Kahve likörü',
+      'Sadece limon kabuğu',
+      'Mısır unu',
+    ],
     correctAnswer: 'Yoğurt/ayran',
-    explanation: 'Dew/doogh, yoğurt temelli ferahlatıcı bir içecek geleneğiyle ilişkilidir.',
+    explanation:
+        'Dew/doogh, yoğurt temelli ferahlatıcı bir içecek geleneğiyle ilişkilidir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2273',
@@ -1604,97 +1783,161 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Ekmek',
     explanation: 'Nan, Kürtçede ekmek anlamına gelen temel kelimedir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2276',
     category: 'Çand',
-    prompt: 'Kürt mutfağındaki yerel yemek çeşitliliği neden tek bir standart tarife indirgenemez?',
-    answers: ['Resmi arşivlerde görünmeyen deneyimleri ve hafızayı kaydedebildiği için', 'Sosyal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı', 'Müslüman çoğunluk yanında Ezidi, Alevi, Yarsanî/Ehl-i Hak ve başka inanç toplulukları da vardır', 'Bölge, lehçe, iklim, tarım ve komşu mutfaklarla etkileşim farklı olduğu için'],
-    correctAnswer: 'Bölge, lehçe, iklim, tarım ve komşu mutfaklarla etkileşim farklı olduğu için',
-    explanation: 'Kürt coğrafyası geniş olduğu için malzemeler ve tarif adları bölgeden bölgeye değişebilir.',
+    prompt:
+        'Kürt mutfağındaki yerel yemek çeşitliliği neden tek bir standart tarife indirgenemez?',
+    answers: [
+      'Resmi arşivlerde görünmeyen deneyimleri ve hafızayı kaydedebildiği için',
+      'Sosyal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı',
+      'Müslüman çoğunluk yanında Ezidi, Alevi, Yarsanî/Ehl-i Hak ve başka inanç toplulukları da vardır',
+      'Bölge, lehçe, iklim, tarım ve komşu mutfaklarla etkileşim farklı olduğu için',
+    ],
+    correctAnswer:
+        'Bölge, lehçe, iklim, tarım ve komşu mutfaklarla etkileşim farklı olduğu için',
+    explanation:
+        'Kürt coğrafyası geniş olduğu için malzemeler ve tarif adları bölgeden bölgeye değişebilir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2292',
     category: 'Paradigma',
     prompt: 'Jineolojî en kısa nasıl açıklanabilir?',
-    answers: ['Eğitim uygulaması için güvenli, analitik ve demokratik öğrenme amaçlandığı için', 'Kadın özgürlüğünü toplumsal özgürlüğün temeli görmeyi', 'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle', 'Kadın bilgisi/bilimi ve patriyarka eleştirisi etrafında gelişen yaklaşım'],
-    correctAnswer: 'Kadın bilgisi/bilimi ve patriyarka eleştirisi etrafında gelişen yaklaşım',
-    explanation: 'Jineolojî, kadın özgürlüğü, toplumsal cinsiyet, tarih ve bilgi üretimini yeniden düşünmeye odaklanan bir yaklaşımdır.',
+    answers: [
+      'Eğitim uygulaması için güvenli, analitik ve demokratik öğrenme amaçlandığı için',
+      'Kadın özgürlüğünü toplumsal özgürlüğün temeli görmeyi',
+      'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
+      'Kadın bilgisi/bilimi ve patriyarka eleştirisi etrafında gelişen yaklaşım',
+    ],
+    correctAnswer:
+        'Kadın bilgisi/bilimi ve patriyarka eleştirisi etrafında gelişen yaklaşım',
+    explanation:
+        'Jineolojî, kadın özgürlüğü, toplumsal cinsiyet, tarih ve bilgi üretimini yeniden düşünmeye odaklanan bir yaklaşımdır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2304',
     category: 'Çand',
-    prompt: 'Ezidiler Kürt kültürel coğrafyasında özellikle hangi başlıkla anılır?',
-    answers: ['Acıyı, kaybı ve toplumsal hafızayı aktarmak', 'İranlılar ve birçok halk (Nevruz olarak)', 'Özgün dini-kültürel topluluk ve tarihsel travmalar', 'Sosyal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı'],
+    prompt:
+        'Ezidiler Kürt kültürel coğrafyasında özellikle hangi başlıkla anılır?',
+    answers: [
+      'Acıyı, kaybı ve toplumsal hafızayı aktarmak',
+      'İranlılar ve birçok halk (Nevruz olarak)',
+      'Özgün dini-kültürel topluluk ve tarihsel travmalar',
+      'Sosyal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı',
+    ],
     correctAnswer: 'Özgün dini-kültürel topluluk ve tarihsel travmalar',
-    explanation: 'Ezidiler, Kürtçe konuşan/kimliklenen topluluklar arasında özgün inanç yapıları ve yakın dönem travmalarıyla öne çıkar.',
+    explanation:
+        'Ezidiler, Kürtçe konuşan/kimliklenen topluluklar arasında özgün inanç yapıları ve yakın dönem travmalarıyla öne çıkar.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2305',
     category: 'Çand',
     prompt: 'Kürt kimliğinde dil neden merkezi bir öneme sahiptir?',
-    answers: ['Farklı halkların eşitlik ve barış içinde ortak yaşamını', 'İç harçla doldurulan sebze veya yaprak yemeği', 'Kültürel hafıza, edebiyat, sözlü anlatı ve aidiyet taşıdığı için', 'Bölge, lehçe, iklim, tarım ve komşu mutfaklarla etkileşim farklı olduğu için'],
-    correctAnswer: 'Kültürel hafıza, edebiyat, sözlü anlatı ve aidiyet taşıdığı için',
-    explanation: 'Dil, dengbêjlikten edebiyata ve günlük yaşama kadar kültürel hafızanın ana taşıyıcılarındandır.',
+    answers: [
+      'Farklı halkların eşitlik ve barış içinde ortak yaşamını',
+      'İç harçla doldurulan sebze veya yaprak yemeği',
+      'Kültürel hafıza, edebiyat, sözlü anlatı ve aidiyet taşıdığı için',
+      'Bölge, lehçe, iklim, tarım ve komşu mutfaklarla etkileşim farklı olduğu için',
+    ],
+    correctAnswer:
+        'Kültürel hafıza, edebiyat, sözlü anlatı ve aidiyet taşıdığı için',
+    explanation:
+        'Dil, dengbêjlikten edebiyata ve günlük yaşama kadar kültürel hafızanın ana taşıyıcılarındandır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2307',
     category: 'Çand',
-    prompt: 'Kürt toplumunda aşiret yapıları tarihsel olarak hangi işleve sahip olmuştur?',
-    answers: ['Tavuk ve pirinçle yapılan geleneksel yemek', 'Dil, kültür, yayıncılık, dayanışma ve kimlik aktarımı', 'İç harçla doldurulan sebze veya yaprak yemeği', 'Sosyal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı'],
+    prompt:
+        'Kürt toplumunda aşiret yapıları tarihsel olarak hangi işleve sahip olmuştur?',
+    answers: [
+      'Tavuk ve pirinçle yapılan geleneksel yemek',
+      'Dil, kültür, yayıncılık, dayanışma ve kimlik aktarımı',
+      'İç harçla doldurulan sebze veya yaprak yemeği',
+      'Sosyal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı',
+    ],
     correctAnswer: 'Sosyal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı',
-    explanation: 'Aşiret yapıları tarihsel olarak sosyal dayanışma ve siyasal otorite ağlarının bir parçası olmuştur.',
+    explanation:
+        'Aşiret yapıları tarihsel olarak sosyal dayanışma ve siyasal otorite ağlarının bir parçası olmuştur.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2312',
     category: 'Çand',
     prompt: 'Kürtçe yer adlarını öğrenmek bir uygulamada neyi güçlendirir?',
-    answers: ['Kültürel aidiyet ve coğrafi hafızayı', 'Kullanıcıyı tamamen yanıltmayı', 'Dil görünürlüğünü azaltmayı', 'Soruları anlamsızlaştırmayı'],
+    answers: [
+      'Kültürel aidiyet ve coğrafi hafızayı',
+      'Kullanıcıyı tamamen yanıltmayı',
+      'Dil görünürlüğünü azaltmayı',
+      'Soruları anlamsızlaştırmayı',
+    ],
     correctAnswer: 'Kültürel aidiyet ve coğrafi hafızayı',
-    explanation: 'Yer adları, coğrafyayı yalnızca harita değil, hafıza ve kimlik alanı olarak da öğretir.',
+    explanation:
+        'Yer adları, coğrafyayı yalnızca harita değil, hafıza ve kimlik alanı olarak da öğretir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2314',
     category: 'Ziman',
-    prompt: 'ZanKurd gibi bir öğrenme uygulamasında soru bankasının en faydalı biçimi hangisidir?',
-    answers: ['Geçmiş zamanlı geçişli fiillerde', 'Soranî ders kitaplarından oluşan metin korpusu', 'Bilginin doğrulanabilirliğini artırır', 'Kategori, seçenek, doğru cevap ve açıklama içeren yapı'],
+    prompt:
+        'ZanKurd gibi bir öğrenme uygulamasında soru bankasının en faydalı biçimi hangisidir?',
+    answers: [
+      'Geçmiş zamanlı geçişli fiillerde',
+      'Soranî ders kitaplarından oluşan metin korpusu',
+      'Bilginin doğrulanabilirliğini artırır',
+      'Kategori, seçenek, doğru cevap ve açıklama içeren yapı',
+    ],
     correctAnswer: 'Kategori, seçenek, doğru cevap ve açıklama içeren yapı',
-    explanation: 'Uygulama için kategori, seçenekler, cevap ve açıklama alanları veri tabanı veya CSV aktarımını kolaylaştırır.',
+    explanation:
+        'Uygulama için kategori, seçenekler, cevap ve açıklama alanları veri tabanı veya CSV aktarımını kolaylaştırır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2322',
     category: 'Ziman',
     prompt: 'Bir soru bankasında “etiketler” alanı hangi teknik işe yarar?',
-    answers: ['Kısa açıklama ve doğru cevabın nedeni', 'Kategori, seçenek, doğru cevap ve açıklama içeren yapı', 'Arama, filtreleme ve kişiselleştirilmiş tekrar sistemi kurmaya', 'Kavram, tarih, kurum ve haklar üzerinden nesnel bağlam vermek'],
-    correctAnswer: 'Arama, filtreleme ve kişiselleştirilmiş tekrar sistemi kurmaya',
-    explanation: 'Etiketler, uygulamada kategori içi filtreleme ve zayıf konu tekrarları için kullanılabilir.',
+    answers: [
+      'Kısa açıklama ve doğru cevabın nedeni',
+      'Kategori, seçenek, doğru cevap ve açıklama içeren yapı',
+      'Arama, filtreleme ve kişiselleştirilmiş tekrar sistemi kurmaya',
+      'Kavram, tarih, kurum ve haklar üzerinden nesnel bağlam vermek',
+    ],
+    correctAnswer:
+        'Arama, filtreleme ve kişiselleştirilmiş tekrar sistemi kurmaya',
+    explanation:
+        'Etiketler, uygulamada kategori içi filtreleme ve zayıf konu tekrarları için kullanılabilir.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2324',
     category: 'Ziman',
-    prompt: 'Soru bankasında güncel siyaset soruları neden düzenli güncellenmelidir?',
-    answers: ['Kullanıcının sadece ezber değil, bağlam öğrenmesini sağladığı için', 'Kaynak, telif ve temsil doğruluğuna dikkat etmek', 'Merkezî Kürtçe/Soranî için konuşma korpusu ve tanıma sistemi', 'Parti adları, süreçler, hukuki statüler ve barış görüşmeleri zamanla değişebildiği için'],
-    correctAnswer: 'Parti adları, süreçler, hukuki statüler ve barış görüşmeleri zamanla değişebildiği için',
-    explanation: '2025-2026 barış ve silahsızlanma tartışmaları gibi konular güncel gelişmelere bağlıdır; düzenli kaynak kontrolü gerekir.',
+    prompt:
+        'Soru bankasında güncel siyaset soruları neden düzenli güncellenmelidir?',
+    answers: [
+      'Kullanıcının sadece ezber değil, bağlam öğrenmesini sağladığı için',
+      'Kaynak, telif ve temsil doğruluğuna dikkat etmek',
+      'Merkezî Kürtçe/Soranî için konuşma korpusu ve tanıma sistemi',
+      'Parti adları, süreçler, hukuki statüler ve barış görüşmeleri zamanla değişebildiği için',
+    ],
+    correctAnswer:
+        'Parti adları, süreçler, hukuki statüler ve barış görüşmeleri zamanla değişebildiği için',
+    explanation:
+        '2025-2026 barış ve silahsızlanma tartışmaları gibi konular güncel gelişmelere bağlıdır; düzenli kaynak kontrolü gerekir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2328',
@@ -1702,29 +1945,43 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"Jin, jiyan, azadî" sloganında "jiyan" ne demektir?',
     answers: ['Yaşam', 'Kadın', 'Onur', 'Özgürlük'],
     correctAnswer: 'Yaşam',
-    explanation: 'Slogan "kadın (jin), yaşam (jiyan), özgürlük (azadî)" anlamına gelir.',
+    explanation:
+        'Slogan "kadın (jin), yaşam (jiyan), özgürlük (azadî)" anlamına gelir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2329',
     category: 'Paradigma',
     prompt: 'Demokratik konfederalizmin üç temel ekseni hangileridir?',
-    answers: ['Kadın özgürlüğü, ekoloji ve demokrasi', 'Piyasa, mülkiyet ve rekabet', 'Sanayileşme, kalkınma ve refah', 'Ulus, bayrak ve vatan'],
+    answers: [
+      'Kadın özgürlüğü, ekoloji ve demokrasi',
+      'Piyasa, mülkiyet ve rekabet',
+      'Sanayileşme, kalkınma ve refah',
+      'Ulus, bayrak ve vatan',
+    ],
     correctAnswer: 'Kadın özgürlüğü, ekoloji ve demokrasi',
-    explanation: 'Paradigmanın temel eksenleri kadın özgürlüğü, ekolojik toplum ve taban demokrasisidir.',
+    explanation:
+        'Paradigmanın temel eksenleri kadın özgürlüğü, ekolojik toplum ve taban demokrasisidir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2336',
     category: 'Siyaset',
-    prompt: 'Radikal demokrasi, klasik temsilî demokrasiden hangi yönüyle ayrılır?',
-    answers: ['Kararları teknokratlara bırakır', 'Temsilcilere tam yetki devreder', 'Tabandan doğrudan ve sürekli katılımı önceler', 'Yalnızca referandumla yönetir'],
+    prompt:
+        'Radikal demokrasi, klasik temsilî demokrasiden hangi yönüyle ayrılır?',
+    answers: [
+      'Kararları teknokratlara bırakır',
+      'Temsilcilere tam yetki devreder',
+      'Tabandan doğrudan ve sürekli katılımı önceler',
+      'Yalnızca referandumla yönetir',
+    ],
     correctAnswer: 'Tabandan doğrudan ve sürekli katılımı önceler',
-    explanation: 'Radikal demokrasi, kararları seçilmişlere devretmek yerine tabandan doğrudan ve sürekli katılımı esas alır.',
+    explanation:
+        'Radikal demokrasi, kararları seçilmişlere devretmek yerine tabandan doğrudan ve sürekli katılımı esas alır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2349',
@@ -1732,9 +1989,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Dengbêjlerin toplanıp icra yaptığı ortama ne denir?',
     answers: ['Sûriye', 'Şarkı', 'şarkı', 'Dîwan'],
     correctAnswer: 'Dîwan',
-    explanation: 'Dengbêjlerin toplanıp sırayla icra ettiği ortama dîwan (dîwana dengbêjan) denir.',
+    explanation:
+        'Dengbêjlerin toplanıp sırayla icra ettiği ortama dîwan (dîwana dengbêjan) denir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2354',
@@ -1742,19 +2000,22 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kobanê şehri hangi ülkenin sınırları içindedir?',
     answers: ['Türkiye', 'İran', 'Suriye', 'Irak'],
     correctAnswer: 'Suriye',
-    explanation: 'Kobanê, Suriye\'nin kuzeyinde, Türkiye sınırına yakın bir şehirdir.',
+    explanation:
+        'Kobanê, Suriye\'nin kuzeyinde, Türkiye sınırına yakın bir şehirdir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2362',
     category: 'Çand',
-    prompt: 'Êzidîlik geleneksel olarak hangi topluluğun inançlarından biridir?',
+    prompt:
+        'Êzidîlik geleneksel olarak hangi topluluğun inançlarından biridir?',
     answers: ['Araplar', 'Süryaniler', 'Kürtler', 'Türkmenler'],
     correctAnswer: 'Kürtler',
-    explanation: 'Êzidîlik, Kürtçe konuşan Êzidî topluluğunun geleneksel inancıdır.',
+    explanation:
+        'Êzidîlik, Kürtçe konuşan Êzidî topluluğunun geleneksel inancıdır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2376',
@@ -1762,9 +2023,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"Hewlêr" hangi şehrin Kürtçe adıdır?',
     answers: ['Musul', 'Süleymaniye', 'Kerkük', 'Erbil'],
     correctAnswer: 'Erbil',
-    explanation: 'Hewlêr, Irak Kürdistan Bölgesi\'nin merkezi Erbil\'in Kürtçe adıdır.',
+    explanation:
+        'Hewlêr, Irak Kürdistan Bölgesi\'nin merkezi Erbil\'in Kürtçe adıdır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2381',
@@ -1774,27 +2036,31 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Vurmalı',
     explanation: 'Erbane (def), çerçeveli/zilli bir vurmalı çalgıdır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2388',
     category: 'Çand',
-    prompt: 'Kışın anlatılan masal ve hikâyelere Kurmancî\'de genel olarak ne denir?',
+    prompt:
+        'Kışın anlatılan masal ve hikâyelere Kurmancî\'de genel olarak ne denir?',
     answers: ['Ekmek', 'Amca', 'Çîrok', 'Gelin'],
     correctAnswer: 'Çîrok',
-    explanation: '"Çîrok" masal/hikâye demektir; stran ve kilam müzikle, govend ise dansla ilgilidir.',
+    explanation:
+        '"Çîrok" masal/hikâye demektir; stran ve kilam müzikle, govend ise dansla ilgilidir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2406',
     category: 'Edebiyat',
-    prompt: 'Modern Kürtçeye katkı sunan "Hawar" dergisi hangi şehirde çıkmıştır?',
+    prompt:
+        'Modern Kürtçeye katkı sunan "Hawar" dergisi hangi şehirde çıkmıştır?',
     answers: ['Şam', 'Tahran', 'İstanbul', 'Bağdat'],
     correctAnswer: 'Şam',
-    explanation: 'Hawar dergisi, Celadet Alî Bedirxan tarafından Şam\'da (Suriye) yayımlanmıştır.',
+    explanation:
+        'Hawar dergisi, Celadet Alî Bedirxan tarafından Şam\'da (Suriye) yayımlanmıştır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2417',
@@ -1804,17 +2070,24 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Ateş',
     explanation: '\'Agir\' → Ateş.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2429',
     category: 'Dîrok',
-    prompt: 'Mustafa Barzani\'nin oğlu olan ve KDP liderliği yapan kişi kimdir?',
-    answers: ['Qazi Muhammed', 'Simko Şikak', 'Mesud Barzani', 'Celal Talabani'],
+    prompt:
+        'Mustafa Barzani\'nin oğlu olan ve KDP liderliği yapan kişi kimdir?',
+    answers: [
+      'Qazi Muhammed',
+      'Simko Şikak',
+      'Mesud Barzani',
+      'Celal Talabani',
+    ],
     correctAnswer: 'Mesud Barzani',
-    explanation: 'Mesud Barzani, Mustafa Barzani\'nin oğludur ve KDP liderliği yapmıştır.',
+    explanation:
+        'Mesud Barzani, Mustafa Barzani\'nin oğludur ve KDP liderliği yapmıştır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2430',
@@ -1822,9 +2095,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Mahabad Cumhuriyeti hangi yıl kurulmuştur?',
     answers: ['1946', '1991', '1923', '1960'],
     correctAnswer: '1946',
-    explanation: 'Mahabad Cumhuriyeti 1946\'da, bugünkü İran sınırları içinde kurulmuştur.',
+    explanation:
+        'Mahabad Cumhuriyeti 1946\'da, bugünkü İran sınırları içinde kurulmuştur.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2436',
@@ -1834,37 +2108,56 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Dicle',
     explanation: '"Dîcle", Dicle Nehri\'nin Kürtçe/yerel adıdır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2443',
     category: 'Siyaset',
     prompt: 'Demokratik özerklik modelinde kararlar ağırlıkla nerede alınır?',
-    answers: ['Yerel meclis ve komünlerde', 'Uluslararası mahkemede', 'Tek bir liderde', 'Sadece merkezi hükümette'],
+    answers: [
+      'Yerel meclis ve komünlerde',
+      'Uluslararası mahkemede',
+      'Tek bir liderde',
+      'Sadece merkezi hükümette',
+    ],
     correctAnswer: 'Yerel meclis ve komünlerde',
-    explanation: 'Demokratik özerklikte kararlar, yerel meclis ve komünler aracılığıyla tabandan alınır.',
+    explanation:
+        'Demokratik özerklikte kararlar, yerel meclis ve komünler aracılığıyla tabandan alınır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2451',
     category: 'Çand',
     prompt: '"Newroz" sözcüğü hangi iki kelimeden oluşur?',
-    answers: ['Masal/hikâye anlatan kişi', 'el sanatı ile ilişkilidir', '"Nû" (yeni) + "roj" (gün)', 'Manevi akrabalık (sünnet)'],
+    answers: [
+      'Masal/hikâye anlatan kişi',
+      'el sanatı ile ilişkilidir',
+      '"Nû" (yeni) + "roj" (gün)',
+      'Manevi akrabalık (sünnet)',
+    ],
     correctAnswer: '"Nû" (yeni) + "roj" (gün)',
-    explanation: 'Newroz, "nû" (yeni) ve "roj" (gün) sözcüklerinden oluşur: yeni gün.',
+    explanation:
+        'Newroz, "nû" (yeni) ve "roj" (gün) sözcüklerinden oluşur: yeni gün.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2452',
     category: 'Çand',
-    prompt: 'Bölge kültüründe yaygın, yılan motifli efsanevi varlık hangisidir?',
-    answers: ['Şahmaran', 'Kanatlı at efsanesi', 'Deniz kızı efsanesi', 'Dev kuş efsanesi'],
+    prompt:
+        'Bölge kültüründe yaygın, yılan motifli efsanevi varlık hangisidir?',
+    answers: [
+      'Şahmaran',
+      'Kanatlı at efsanesi',
+      'Deniz kızı efsanesi',
+      'Dev kuş efsanesi',
+    ],
     correctAnswer: 'Şahmaran',
-    explanation: 'Şahmaran, yarı insan yarı yılan biçiminde tasvir edilen, bölgede yaygın efsanevi bir varlıktır.',
+    explanation:
+        'Şahmaran, yarı insan yarı yılan biçiminde tasvir edilen, bölgede yaygın efsanevi bir varlıktır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2455',
@@ -1874,27 +2167,40 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Newroz bayramı',
     explanation: '"Cejna Newrozê" Newroz bayramı demektir (cejn = bayram).',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2458',
     category: 'Dîrok',
-    prompt: 'Mervanîler (Mervani hanedanı) hangi dönemde Diyarbakır çevresinde hüküm sürmüştür?',
-    answers: ['Silêmanî / Süleymaniye', 'Orta Çağ (10-11. yüzyıl)', 'Azerbaycan/Tebriz çevresi', 'kalıcı yerleşim düzeni'],
+    prompt:
+        'Mervanîler (Mervani hanedanı) hangi dönemde Diyarbakır çevresinde hüküm sürmüştür?',
+    answers: [
+      'Silêmanî / Süleymaniye',
+      'Orta Çağ (10-11. yüzyıl)',
+      'Azerbaycan/Tebriz çevresi',
+      'kalıcı yerleşim düzeni',
+    ],
     correctAnswer: 'Orta Çağ (10-11. yüzyıl)',
-    explanation: 'Mervanîler, 10-11. yüzyıllarda Diyarbakır (Amed) ve çevresinde hüküm süren bir Kürt hanedanıdır.',
+    explanation:
+        'Mervanîler, 10-11. yüzyıllarda Diyarbakır (Amed) ve çevresinde hüküm süren bir Kürt hanedanıdır.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2459',
     category: 'Dîrok',
     prompt: '"Şerefname" temel olarak neyi anlatır?',
-    answers: ['Haçlı seferlerine karşı mücadele', 'Kürt hanedan ve beyliklerinin tarihini', 'Aşiretlerden oluşturulan süvari birlikleri', 'Med İmparatorluğu (Pers öncesi)'],
+    answers: [
+      'Haçlı seferlerine karşı mücadele',
+      'Kürt hanedan ve beyliklerinin tarihini',
+      'Aşiretlerden oluşturulan süvari birlikleri',
+      'Med İmparatorluğu (Pers öncesi)',
+    ],
     correctAnswer: 'Kürt hanedan ve beyliklerinin tarihini',
-    explanation: 'Şerefname, Kürt hanedanlarının ve beyliklerinin tarihini anlatan ilk kapsamlı eserdir.',
+    explanation:
+        'Şerefname, Kürt hanedanlarının ve beyliklerinin tarihini anlatan ilk kapsamlı eserdir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2464',
@@ -1904,7 +2210,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Adıyaman',
     explanation: '"Semsûr", Adıyaman şehrinin Kürtçe adıdır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2467',
@@ -1912,49 +2218,69 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Hewramî (Hawraman) bölgesi hangi iki ülkenin sınır kuşağındadır?',
     answers: ['İran-Türkiye', 'Irak-Suriye', 'Türkiye-Suriye', 'İran-Irak'],
     correctAnswer: 'İran-Irak',
-    explanation: 'Hawraman (Hewramî) bölgesi, İran ile Irak sınır kuşağında, dağlık bir Kürt yöresidir.',
+    explanation:
+        'Hawraman (Hewramî) bölgesi, İran ile Irak sınır kuşağında, dağlık bir Kürt yöresidir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2468',
     category: 'Muzîk',
     prompt: '"Govend" temel olarak ne tür bir etkinliktir?',
-    answers: ['Şiir okuma', 'Bireysel şarkı', 'Tiyatro gösterisi', 'Toplu halk dansı'],
+    answers: [
+      'Şiir okuma',
+      'Bireysel şarkı',
+      'Tiyatro gösterisi',
+      'Toplu halk dansı',
+    ],
     correctAnswer: 'Toplu halk dansı',
     explanation: 'Govend, el ele tutuşularak oynanan toplu bir halk dansıdır.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2481',
     category: 'Çand',
     prompt: 'Kürt bayrağında yer alan üç temel renk hangileridir?',
-    answers: ['Siyah, kırmızı ve sarı', 'Mavi, beyaz ve kırmızı', 'Yeşil, sarı ve mor', 'Kırmızı, beyaz ve yeşil'],
+    answers: [
+      'Siyah, kırmızı ve sarı',
+      'Mavi, beyaz ve kırmızı',
+      'Yeşil, sarı ve mor',
+      'Kırmızı, beyaz ve yeşil',
+    ],
     correctAnswer: 'Kırmızı, beyaz ve yeşil',
-    explanation: 'Kürt bayrağında kırmızı, beyaz ve yeşil renkler ile ortada bir güneş bulunur.',
+    explanation:
+        'Kürt bayrağında kırmızı, beyaz ve yeşil renkler ile ortada bir güneş bulunur.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2486',
     category: 'Dîrok',
-    prompt: 'Êzidîlerin tarih boyunca maruz kaldığı katliamlara kendi dillerinde ne denir?',
+    prompt:
+        'Êzidîlerin tarih boyunca maruz kaldığı katliamlara kendi dillerinde ne denir?',
     answers: ['Hawar', 'Mahabad', 'Farsça', 'Ferman'],
     correctAnswer: 'Ferman',
-    explanation: 'Êzidîler, maruz kaldıkları katliamları kendi dillerinde "ferman" olarak adlandırır.',
+    explanation:
+        'Êzidîler, maruz kaldıkları katliamları kendi dillerinde "ferman" olarak adlandırır.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2497',
     category: 'Cografya',
     prompt: 'Amed, Riha ve Mêrdîn gibi şehirler hangi tarihî bölgede yer alır?',
-    answers: ['Erbil (Hewlêr)', 'Maraş (Kahramanmaraş)', 'Nuh\'un gemisi (tufan)', 'Yukarı Mezopotamya'],
+    answers: [
+      'Erbil (Hewlêr)',
+      'Maraş (Kahramanmaraş)',
+      'Nuh\'un gemisi (tufan)',
+      'Yukarı Mezopotamya',
+    ],
     correctAnswer: 'Yukarı Mezopotamya',
-    explanation: 'Bu şehirler, Dicle-Fırat arasındaki Yukarı Mezopotamya bölgesinde yer alır.',
+    explanation:
+        'Bu şehirler, Dicle-Fırat arasındaki Yukarı Mezopotamya bölgesinde yer alır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2499',
@@ -1964,27 +2290,40 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Üflemeli',
     explanation: 'Mey, kamıştan yapılan üflemeli bir çalgıdır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2502',
     category: 'Siyaset',
-    prompt: '"Demokratik ulus" anlayışında farklı halklar nasıl bir arada yaşar?',
-    answers: ['Eşit ve gönüllü birliktelikle', 'Tam bir ayrışmayla', 'Katı bir hiyerarşiyle', 'Birinin diğerine asimilasyonuyla'],
+    prompt:
+        '"Demokratik ulus" anlayışında farklı halklar nasıl bir arada yaşar?',
+    answers: [
+      'Eşit ve gönüllü birliktelikle',
+      'Tam bir ayrışmayla',
+      'Katı bir hiyerarşiyle',
+      'Birinin diğerine asimilasyonuyla',
+    ],
     correctAnswer: 'Eşit ve gönüllü birliktelikle',
-    explanation: 'Demokratik ulus, farklı halk ve inançların eşit, gönüllü ve çoğulcu birlikteliğini esas alır.',
+    explanation:
+        'Demokratik ulus, farklı halk ve inançların eşit, gönüllü ve çoğulcu birlikteliğini esas alır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2503',
     category: 'Paradigma',
     prompt: '"Toplumsal ekoloji" düşüncesi hangi ilişkiyi merkeze alır?',
-    answers: ['Tahakküm ile doğa tahribatı arasındaki ilişkiyi', 'Sadece sembolik değil, örgütsel ve kurumsal düzeyde', 'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle', 'Kimliklerin devlet zoru olmadan birlikteliğini'],
+    answers: [
+      'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
+      'Sadece sembolik değil, örgütsel ve kurumsal düzeyde',
+      'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
+      'Kimliklerin devlet zoru olmadan birlikteliğini',
+    ],
     correctAnswer: 'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
-    explanation: 'Toplumsal ekoloji, toplumdaki tahakküm ilişkileri ile doğanın tahribi arasındaki bağı merkeze alır.',
+    explanation:
+        'Toplumsal ekoloji, toplumdaki tahakküm ilişkileri ile doğanın tahribi arasındaki bağı merkeze alır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2507',
@@ -1994,7 +2333,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Yedi (7)',
     explanation: '\'heft\' → Yedi (7).',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2508',
@@ -2004,17 +2343,24 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'On (10)',
     explanation: '\'deh\' → On (10).',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2520',
     category: 'Edebiyat',
-    prompt: 'Zazakî\'de (Kirmanckî) ilk yazılı mevlitlerden birini veren isim kimdir?',
-    answers: ['Melayê Cizîrî', 'Mela Ehmedê Xasî', 'Ehmedê Xanî', 'Mehmed Uzun'],
+    prompt:
+        'Zazakî\'de (Kirmanckî) ilk yazılı mevlitlerden birini veren isim kimdir?',
+    answers: [
+      'Melayê Cizîrî',
+      'Mela Ehmedê Xasî',
+      'Ehmedê Xanî',
+      'Mehmed Uzun',
+    ],
     correctAnswer: 'Mela Ehmedê Xasî',
-    explanation: 'Mela Ehmedê Xasî, Zazakî\'de (Kirmanckî) ilk yazılı mevlitlerden birini vermesiyle bilinir.',
+    explanation:
+        'Mela Ehmedê Xasî, Zazakî\'de (Kirmanckî) ilk yazılı mevlitlerden birini vermesiyle bilinir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2538',
@@ -2024,27 +2370,40 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Dağ',
     explanation: '"Çiya" dağ demektir (ör. Çiyayê Agirî = Ağrı Dağı).',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2542',
     category: 'Çand',
-    prompt: 'Dengbêjlik geleneği eskiden ağırlıkla hangi mekânlarda canlı tutulurdu?',
-    answers: ['yerel yaşam ve paylaşım', 'Kırmızı, yeşil ve sarı', 'Köy odaları ve dîwanlar', 'gelenek ile ilişkilidir'],
+    prompt:
+        'Dengbêjlik geleneği eskiden ağırlıkla hangi mekânlarda canlı tutulurdu?',
+    answers: [
+      'yerel yaşam ve paylaşım',
+      'Kırmızı, yeşil ve sarı',
+      'Köy odaları ve dîwanlar',
+      'gelenek ile ilişkilidir',
+    ],
     correctAnswer: 'Köy odaları ve dîwanlar',
-    explanation: 'Dengbêjler, geleneksel olarak köy odaları ve dîwanlarda toplanıp icra yaparlardı.',
+    explanation:
+        'Dengbêjler, geleneksel olarak köy odaları ve dîwanlarda toplanıp icra yaparlardı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2556',
     category: 'Cografya',
     prompt: '"Behdînan" bölgesi ağırlıkla hangi ülkededir?',
-    answers: ['Güney (Irak Kürdistanı)', 'İran’daki Kürt bölgesi', 'Antep (Gaziantep)', 'Irak (Duhok çevresi)'],
+    answers: [
+      'Güney (Irak Kürdistanı)',
+      'İran’daki Kürt bölgesi',
+      'Antep (Gaziantep)',
+      'Irak (Duhok çevresi)',
+    ],
     correctAnswer: 'Irak (Duhok çevresi)',
-    explanation: 'Behdînan, ağırlıkla Irak\'ın Duhok çevresini kapsayan bir Kürt bölgesidir.',
+    explanation:
+        'Behdînan, ağırlıkla Irak\'ın Duhok çevresini kapsayan bir Kürt bölgesidir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2565',
@@ -2052,19 +2411,22 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kürt kültüründe "mîr" ne demek?',
     answers: ['Yoğurt/ayran', 'Şîn (ağıt)', 'Bey/yönetici', 'Özgür eş yaşam'],
     correctAnswer: 'Bey/yönetici',
-    explanation: '"Mîr", bey ya da yönetici anlamına gelir; beyliklerin başındaki kişiyi belirtir.',
+    explanation:
+        '"Mîr", bey ya da yönetici anlamına gelir; beyliklerin başındaki kişiyi belirtir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2578',
     category: 'Dîrok',
-    prompt: 'Kürtlerin atası sayılan antik halklardan biri olarak hangisi anılır?',
+    prompt:
+        'Kürtlerin atası sayılan antik halklardan biri olarak hangisi anılır?',
     answers: ['Mayalar', 'Medler', 'Vikingler', 'Romalılar'],
     correctAnswer: 'Medler',
-    explanation: 'Medler, Kürtlerin tarihsel atalarından biri olarak sıkça anılır.',
+    explanation:
+        'Medler, Kürtlerin tarihsel atalarından biri olarak sıkça anılır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2584',
@@ -2072,29 +2434,42 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'İlk Kürtçe romanlar ağırlıkla hangi dönemde ortaya çıkmıştır?',
     answers: ['15. yüzyıl', '12. yüzyıl', '17. yüzyıl', '20. yüzyıl'],
     correctAnswer: '20. yüzyıl',
-    explanation: 'Kürtçe roman, ağırlıkla 20. yüzyılda gelişen modern bir türdür.',
+    explanation:
+        'Kürtçe roman, ağırlıkla 20. yüzyılda gelişen modern bir türdür.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2593',
     category: 'Paradigma',
     prompt: '"Demokratik modernite" hangi değerleri esas alır?',
-    answers: ['Demokrasi, kadın özgürlüğü ve ekoloji', 'Ekoloji, kadın ve demokrasi krizlerini', 'Farklılıklara saygı ve eşitlik', 'Toplumun genel özgürlük düzeyinin'],
+    answers: [
+      'Demokrasi, kadın özgürlüğü ve ekoloji',
+      'Ekoloji, kadın ve demokrasi krizlerini',
+      'Farklılıklara saygı ve eşitlik',
+      'Toplumun genel özgürlük düzeyinin',
+    ],
     correctAnswer: 'Demokrasi, kadın özgürlüğü ve ekoloji',
-    explanation: 'Demokratik modernite; demokrasi, kadın özgürlüğü ve ekoloji değerlerini esas alır.',
+    explanation:
+        'Demokratik modernite; demokrasi, kadın özgürlüğü ve ekoloji değerlerini esas alır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2594',
     category: 'Paradigma',
     prompt: '"Toplumsal sözleşme" yerine paradigma neyi önerir?',
-    answers: ['Kadın özgürlüğü, ekoloji ve demokrasi', 'Tabandan tavana, katılımcı biçimde', 'Toplumun doğrudan ve örgütlü katılımını', 'Demokrasi, kadın özgürlüğü ve ekoloji'],
+    answers: [
+      'Kadın özgürlüğü, ekoloji ve demokrasi',
+      'Tabandan tavana, katılımcı biçimde',
+      'Toplumun doğrudan ve örgütlü katılımını',
+      'Demokrasi, kadın özgürlüğü ve ekoloji',
+    ],
     correctAnswer: 'Toplumun doğrudan ve örgütlü katılımını',
-    explanation: 'Paradigma, toplumun doğrudan ve örgütlü (komün-meclis) katılımını esas alır.',
+    explanation:
+        'Paradigma, toplumun doğrudan ve örgütlü (komün-meclis) katılımını esas alır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2596',
@@ -2104,7 +2479,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Et',
     explanation: '\'goşt\' → Et.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2599',
@@ -2114,7 +2489,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Yoğurt',
     explanation: '\'mast\' → Yoğurt.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2606',
@@ -2124,17 +2499,22 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Atalar/ecdat',
     explanation: '"Bav û kal" (baba ve dede) deyimi ataları/ecdadı ifade eder.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2610',
     category: 'Dîrok',
     prompt: 'Newroz hangi mevsim ve ayla özdeşleşir?',
-    answers: ['Kış / Aralık', 'Yaz / Temmuz', 'İlkbahar / Mart', 'Sonbahar / Eylül'],
+    answers: [
+      'Kış / Aralık',
+      'Yaz / Temmuz',
+      'İlkbahar / Mart',
+      'Sonbahar / Eylül',
+    ],
     correctAnswer: 'İlkbahar / Mart',
     explanation: 'Newroz, ilkbaharın başlangıcı olarak 21 Mart ile özdeşleşir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2625',
@@ -2144,7 +2524,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Gitmek',
     explanation: '\'çûn\' → Gitmek.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2628',
@@ -2154,7 +2534,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Görmek',
     explanation: '\'dîtin\' → Görmek.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2629',
@@ -2164,27 +2544,39 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Yapmak/etmek',
     explanation: '"Kirin" yapmak/etmek demektir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2638',
     category: 'Dîrok',
     prompt: '"Hesenwayhîler" hangi bölgede hüküm sürmüş bir Kürt hanedanıdır?',
-    answers: ['Kafkasya (Gence-Ani çevresi)', 'Batı İran / Zagros çevresi', 'Şeref Han (Bitlis beyi)', 'Irak Kürt ulusal hareketi'],
+    answers: [
+      'Kafkasya (Gence-Ani çevresi)',
+      'Batı İran / Zagros çevresi',
+      'Şeref Han (Bitlis beyi)',
+      'Irak Kürt ulusal hareketi',
+    ],
     correctAnswer: 'Batı İran / Zagros çevresi',
-    explanation: 'Hesenwayhîler, Orta Çağ\'da Batı İran-Zagros çevresinde hüküm sürmüş bir Kürt hanedanıdır.',
+    explanation:
+        'Hesenwayhîler, Orta Çağ\'da Batı İran-Zagros çevresinde hüküm sürmüş bir Kürt hanedanıdır.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2639',
     category: 'Dîrok',
     prompt: 'Newroz efsanesinde Dehak nasıl biri olarak anlatılır?',
-    answers: ['Kahraman bir asker', 'Bilge bir hâkim', 'Zalim bir kral/tiran', 'Cömert bir tüccar'],
+    answers: [
+      'Kahraman bir asker',
+      'Bilge bir hâkim',
+      'Zalim bir kral/tiran',
+      'Cömert bir tüccar',
+    ],
     correctAnswer: 'Zalim bir kral/tiran',
-    explanation: 'Newroz anlatısında Dehak, halka zulmeden zalim bir kral/tiran olarak betimlenir.',
+    explanation:
+        'Newroz anlatısında Dehak, halka zulmeden zalim bir kral/tiran olarak betimlenir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2644',
@@ -2194,27 +2586,39 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Erzurum',
     explanation: '"Erzirom", Erzurum şehrinin Kürtçe-yerel söylenişidir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2651',
     category: 'Siyaset',
     prompt: 'Demokratik konfederalizm devlete karşı hangi tutumu benimser?',
-    answers: ['Devlet-dışı, tabandan örgütlenen öz yönetimi', 'Devleti aşan, ona alternatif bir öz yönetim', 'Hem reel sosyalizmi hem kapitalizmi olduğu gibi', 'Farklı kimlik ve inançların bir arada yaşamasını'],
+    answers: [
+      'Devlet-dışı, tabandan örgütlenen öz yönetimi',
+      'Devleti aşan, ona alternatif bir öz yönetim',
+      'Hem reel sosyalizmi hem kapitalizmi olduğu gibi',
+      'Farklı kimlik ve inançların bir arada yaşamasını',
+    ],
     correctAnswer: 'Devleti aşan, ona alternatif bir öz yönetim',
-    explanation: 'Demokratik konfederalizm, devleti ele geçirmeyi değil; onu aşan, alternatif bir toplumsal öz yönetim kurmayı hedefler.',
+    explanation:
+        'Demokratik konfederalizm, devleti ele geçirmeyi değil; onu aşan, alternatif bir toplumsal öz yönetim kurmayı hedefler.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2653',
     category: 'Siyaset',
     prompt: '"Çoğulculuk" demokratik ulusta neyi güvence altına alır?',
-    answers: ['Türkiye’de yasal pro-Kürt/sol-demokratik parti siyaseti', 'Kapitalist modernite ve merkezi ulus-devlet eleştirisi', 'Yerel yönetim, eğitim ve ekonomi gibi alanlarda', 'Farklı kimlik ve inançların bir arada yaşamasını'],
+    answers: [
+      'Türkiye’de yasal pro-Kürt/sol-demokratik parti siyaseti',
+      'Kapitalist modernite ve merkezi ulus-devlet eleştirisi',
+      'Yerel yönetim, eğitim ve ekonomi gibi alanlarda',
+      'Farklı kimlik ve inançların bir arada yaşamasını',
+    ],
     correctAnswer: 'Farklı kimlik ve inançların bir arada yaşamasını',
-    explanation: 'Çoğulculuk, demokratik ulusta farklı kimlik ve inançların eşit biçimde bir arada yaşamasını güvence altına alır.',
+    explanation:
+        'Çoğulculuk, demokratik ulusta farklı kimlik ve inançların eşit biçimde bir arada yaşamasını güvence altına alır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2658',
@@ -2224,7 +2628,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Yirmi (20)',
     explanation: '"Bîst" yirmi (20) demektir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2666',
@@ -2234,7 +2638,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Baba',
     explanation: '\'bav\' → Baba.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2668',
@@ -2242,69 +2646,101 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Selahaddin Eyyubi hangi şehirde doğmuştur?',
     answers: ['Bağdat', 'Kahire', 'Tikrit', 'İstanbul'],
     correctAnswer: 'Tikrit',
-    explanation: 'Selahaddin Eyyubi, bugünkü Irak\'ta yer alan Tikrit\'te doğmuştur.',
+    explanation:
+        'Selahaddin Eyyubi, bugünkü Irak\'ta yer alan Tikrit\'te doğmuştur.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2669',
     category: 'Dîrok',
     prompt: 'Eyyubiler hangi şehirleri uzun süre merkez edinmiştir?',
-    answers: ['Pekin ve Tokyo', 'Madrid ve Lizbon', 'Roma ve Atina', 'Kahire ve Şam'],
+    answers: [
+      'Pekin ve Tokyo',
+      'Madrid ve Lizbon',
+      'Roma ve Atina',
+      'Kahire ve Şam',
+    ],
     correctAnswer: 'Kahire ve Şam',
     explanation: 'Eyyubiler, ağırlıkla Kahire ve Şam\'ı merkez edinmiştir.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2674',
     category: 'Edebiyat',
     prompt: 'Cigerxwîn eserlerini hangi dilde yazmıştır?',
-    answers: ['Kürtçe (Kurmancî)', 'Siyabend û Xecê', 'dest jî rû dişo', 'Dîwana xwe ya klasîk'],
+    answers: [
+      'Kürtçe (Kurmancî)',
+      'Siyabend û Xecê',
+      'dest jî rû dişo',
+      'Dîwana xwe ya klasîk',
+    ],
     correctAnswer: 'Kürtçe (Kurmancî)',
     explanation: 'Cigerxwîn, şiirlerini Kürtçe (Kurmancî) yazmıştır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2682',
     category: 'Paradigma',
     prompt: '"Ekolojik toplum" sanayi toplumundan hangi yönüyle ayrılır?',
-    answers: ['Doğayı yalnızca sömürü nesnesi olarak görmemesiyle', 'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi', 'Dünya çapında kadın özgürlüğü sembolü olmuştur', 'Toplumun kendini koruma ve örgütleme hakkını'],
+    answers: [
+      'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
+      'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi',
+      'Dünya çapında kadın özgürlüğü sembolü olmuştur',
+      'Toplumun kendini koruma ve örgütleme hakkını',
+    ],
     correctAnswer: 'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
-    explanation: 'Ekolojik toplum, doğayı sınırsız sömürülecek bir nesne olarak görmemesiyle sanayi toplumundan ayrılır.',
+    explanation:
+        'Ekolojik toplum, doğayı sınırsız sömürülecek bir nesne olarak görmemesiyle sanayi toplumundan ayrılır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2692',
     category: 'Çand',
-    prompt: 'Êzidî toplumunun dinî önderliği geleneksel olarak kimlerce yürütülür?',
-    answers: ['Kına (hene) gecesi', 'Mîr ve Baba Şeyh', 'çîrokan vedibêje', 'Baharatlı pirinç'],
+    prompt:
+        'Êzidî toplumunun dinî önderliği geleneksel olarak kimlerce yürütülür?',
+    answers: [
+      'Kına (hene) gecesi',
+      'Mîr ve Baba Şeyh',
+      'çîrokan vedibêje',
+      'Baharatlı pirinç',
+    ],
     correctAnswer: 'Mîr ve Baba Şeyh',
-    explanation: 'Êzidî toplumunda dinî-toplumsal önderlik geleneksel olarak Mîr ve Baba Şeyh tarafından yürütülür.',
+    explanation:
+        'Êzidî toplumunda dinî-toplumsal önderlik geleneksel olarak Mîr ve Baba Şeyh tarafından yürütülür.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2696',
     category: 'Dîrok',
-    prompt: 'Sevr\'in yerine geçen ve Kürt statüsünü içermeyen antlaşma hangisidir?',
+    prompt:
+        'Sevr\'in yerine geçen ve Kürt statüsünü içermeyen antlaşma hangisidir?',
     answers: ['Lozan (1923)', 'Dîcle û Ferat', 'Sünni İslam', '19. yüzyıl'],
     correctAnswer: 'Lozan (1923)',
-    explanation: '1923 Lozan Antlaşması, Sevr\'in yerine geçmiş ve Kürtlere dair bir statü içermemiştir.',
+    explanation:
+        '1923 Lozan Antlaşması, Sevr\'in yerine geçmiş ve Kürtlere dair bir statü içermemiştir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2699',
     category: 'Edebiyat',
     prompt: 'Mehmed Uzun eserlerini ağırlıkla hangi dilde yazmıştır?',
-    answers: ['Doğa ve kuşlar', 'Kürtçe (Kurmancî)', 'Yazar ve aydın', '15-18. yüzyıllar'],
+    answers: [
+      'Doğa ve kuşlar',
+      'Kürtçe (Kurmancî)',
+      'Yazar ve aydın',
+      '15-18. yüzyıllar',
+    ],
     correctAnswer: 'Kürtçe (Kurmancî)',
-    explanation: 'Mehmed Uzun, İsveç\'te yaşamasına rağmen eserlerini ağırlıkla Kürtçe (Kurmancî) yazmıştır.',
+    explanation:
+        'Mehmed Uzun, İsveç\'te yaşamasına rağmen eserlerini ağırlıkla Kürtçe (Kurmancî) yazmıştır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2705',
@@ -2312,19 +2748,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"Çiyayê Sîpan" (Süphan Dağı) hangi gölün yakınındadır?',
     answers: ['Van Gölü', 'Eğirdir Gölü', 'Tuz Gölü', 'Beyşehir Gölü'],
     correctAnswer: 'Van Gölü',
-    explanation: 'Çiyayê Sîpan (Süphan Dağı), Van Gölü\'nün kuzeyinde yer alır.',
+    explanation:
+        'Çiyayê Sîpan (Süphan Dağı), Van Gölü\'nün kuzeyinde yer alır.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2710',
     category: 'Siyaset',
     prompt: '"Anadil" hakkı paradigmada en çok neyle ilişkilendirilir?',
-    answers: ['Yerel/bölgesel düzeyde', 'Kültürel varoluş ve kimlik', 'Yerel komünlerden üst meclislere', 'Kadın dayanışması ve özgürlüğü'],
+    answers: [
+      'Yerel/bölgesel düzeyde',
+      'Kültürel varoluş ve kimlik',
+      'Yerel komünlerden üst meclislere',
+      'Kadın dayanışması ve özgürlüğü',
+    ],
     correctAnswer: 'Kültürel varoluş ve kimlik',
-    explanation: 'Anadil hakkı, kültürel varoluş ve kimliğin sürdürülmesiyle ilişkilendirilir.',
+    explanation:
+        'Anadil hakkı, kültürel varoluş ve kimliğin sürdürülmesiyle ilişkilendirilir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2722',
@@ -2334,37 +2777,55 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Sarı',
     explanation: '\'zer\' → Sarı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2724',
     category: 'Çand',
     prompt: 'Kürt halk kültüründe dağlara verilen önem en çok neyle açıklanır?',
-    answers: ['İranlılar ve birçok halk (Nevruz olarak)', 'Tarih boyunca dağlık coğrafyada yaşamayla', 'Zulme karşı direniş ve yeniden doğuş', 'Halay çekilir ve ateşin üstünden atlanır'],
+    answers: [
+      'İranlılar ve birçok halk (Nevruz olarak)',
+      'Tarih boyunca dağlık coğrafyada yaşamayla',
+      'Zulme karşı direniş ve yeniden doğuş',
+      'Halay çekilir ve ateşin üstünden atlanır',
+    ],
     correctAnswer: 'Tarih boyunca dağlık coğrafyada yaşamayla',
-    explanation: 'Kürtlerin dağlara verdiği önem, tarih boyunca dağlık bir coğrafyada yaşamalarıyla ilişkilidir.',
+    explanation:
+        'Kürtlerin dağlara verdiği önem, tarih boyunca dağlık bir coğrafyada yaşamalarıyla ilişkilidir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2727',
     category: 'Dîrok',
     prompt: 'Selahaddin Eyyubi hangi savaşın ardından Kudüs\'ü geri almıştır?',
-    answers: ['Hıttin Savaşı (1187)', 'Ankara Savaşı', 'Çanakkale Savaşı', 'Malazgirt Savaşı'],
+    answers: [
+      'Hıttin Savaşı (1187)',
+      'Ankara Savaşı',
+      'Çanakkale Savaşı',
+      'Malazgirt Savaşı',
+    ],
     correctAnswer: 'Hıttin Savaşı (1187)',
-    explanation: 'Selahaddin Eyyubi, 1187 Hıttin Savaşı\'nın ardından Kudüs\'ü geri almıştır.',
+    explanation:
+        'Selahaddin Eyyubi, 1187 Hıttin Savaşı\'nın ardından Kudüs\'ü geri almıştır.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2741',
     category: 'Siyaset',
     prompt: '"Barış ve demokratik siyaset" hangi yöntemi reddeder?',
-    answers: ['Kadın kotası', 'Yerel meclis ve komünlerde', 'Şiddet ve dayatmayı', 'Kadın dayanışması ve özgürlüğü'],
+    answers: [
+      'Kadın kotası',
+      'Yerel meclis ve komünlerde',
+      'Şiddet ve dayatmayı',
+      'Kadın dayanışması ve özgürlüğü',
+    ],
     correctAnswer: 'Şiddet ve dayatmayı',
-    explanation: 'Barış ve demokratik siyaset, çözüm yöntemi olarak şiddet ve dayatmayı reddeder.',
+    explanation:
+        'Barış ve demokratik siyaset, çözüm yöntemi olarak şiddet ve dayatmayı reddeder.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2749',
@@ -2374,7 +2835,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Yazmak',
     explanation: '"Nivîsîn" yazmak demektir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2780',
@@ -2384,17 +2845,23 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Barış',
     explanation: '\'aştî\' → Barış.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2782',
     category: 'Çand',
     prompt: 'Êzidîlikte güneşe dönük dua etme geleneği neyi yansıtır?',
-    answers: ['Işığa/güneşe verilen kutsallığı', 'Melek Tavus ve ışık/güneş motifi', 'gündelik kültür ile ilişkilidir', 'toplumsal bağları güçlendirme'],
+    answers: [
+      'Işığa/güneşe verilen kutsallığı',
+      'Melek Tavus ve ışık/güneş motifi',
+      'gündelik kültür ile ilişkilidir',
+      'toplumsal bağları güçlendirme',
+    ],
     correctAnswer: 'Işığa/güneşe verilen kutsallığı',
-    explanation: 'Êzidî geleneğinde güneşe/ışığa verilen kutsallık, ibadet biçimlerine de yansır.',
+    explanation:
+        'Êzidî geleneğinde güneşe/ışığa verilen kutsallık, ibadet biçimlerine de yansır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2787',
@@ -2402,9 +2869,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kürt sözlü edebiyatının en önemli taşıyıcıları kimlerdir?',
     answers: ['Askerler', 'Denizciler', 'Tüccarlar', 'Dengbêjler'],
     correctAnswer: 'Dengbêjler',
-    explanation: 'Kürt sözlü edebiyatının en önemli taşıyıcıları dengbêjlerdir.',
+    explanation:
+        'Kürt sözlü edebiyatının en önemli taşıyıcıları dengbêjlerdir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2790',
@@ -2414,17 +2882,23 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Fırat',
     explanation: '"Euphrates", Fırat Nehri\'nin (uluslararası) adıdır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2801',
     category: 'Muzîk',
     prompt: 'Govend, dengbêjlik ve kilam birlikte neyi oluşturur?',
-    answers: ['Kürt müzik-kültür mirasını', 'Klasik Batı müziğini', 'Modern pop endüstrisini', 'Caz geleneğini'],
+    answers: [
+      'Kürt müzik-kültür mirasını',
+      'Klasik Batı müziğini',
+      'Modern pop endüstrisini',
+      'Caz geleneğini',
+    ],
     correctAnswer: 'Kürt müzik-kültür mirasını',
-    explanation: 'Govend, dengbêjlik ve kilam birlikte zengin bir Kürt müzik-kültür mirasını oluşturur.',
+    explanation:
+        'Govend, dengbêjlik ve kilam birlikte zengin bir Kürt müzik-kültür mirasını oluşturur.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2803',
@@ -2432,9 +2906,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kurmancî\'de "bîr" ne demek?',
     answers: ['teşekkürler', 'Ben iyiyim', 'iyi günler', 'Hafıza/akıl'],
     correctAnswer: 'Hafıza/akıl',
-    explanation: '"Bîr" hafıza/akıl anlamına gelir (ör. bîr anîn = hatırlamak).',
+    explanation:
+        '"Bîr" hafıza/akıl anlamına gelir (ör. bîr anîn = hatırlamak).',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2804',
@@ -2444,67 +2919,104 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'İş',
     explanation: '\'kar\' → İş.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2811',
     category: 'Dîrok',
-    prompt: 'Kürt tarihinde "beylikler dönemi" sonrası hangi süreç yaşanmıştır?',
-    answers: ['Med İmparatorluğu (Pers öncesi)', 'Merkezîleşme ve doğrudan yönetim', 'KYB (Kürdistan Yurtseverler Birliği)', 'maddi kalıntılarla geçmişi araştırma'],
+    prompt:
+        'Kürt tarihinde "beylikler dönemi" sonrası hangi süreç yaşanmıştır?',
+    answers: [
+      'Med İmparatorluğu (Pers öncesi)',
+      'Merkezîleşme ve doğrudan yönetim',
+      'KYB (Kürdistan Yurtseverler Birliği)',
+      'maddi kalıntılarla geçmişi araştırma',
+    ],
     correctAnswer: 'Merkezîleşme ve doğrudan yönetim',
-    explanation: 'Beylikler döneminin ardından merkezîleşme politikalarıyla doğrudan yönetim süreci yaşanmıştır.',
+    explanation:
+        'Beylikler döneminin ardından merkezîleşme politikalarıyla doğrudan yönetim süreci yaşanmıştır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2818',
     category: 'Cografya',
     prompt: '"Cizîr ve Botan" adları hangi tarihî bölgeyle anılır?',
-    answers: ['Botan/Cizre bölgesi (güneydoğu)', 'Herêma Kurdistanê ya Iraqê', 'Kürt coğrafyasındaki dağlar', 'Bereketli Hilal/Mezopotamya'],
+    answers: [
+      'Botan/Cizre bölgesi (güneydoğu)',
+      'Herêma Kurdistanê ya Iraqê',
+      'Kürt coğrafyasındaki dağlar',
+      'Bereketli Hilal/Mezopotamya',
+    ],
     correctAnswer: 'Botan/Cizre bölgesi (güneydoğu)',
-    explanation: 'Cizîr ve Botan, güneydoğudaki tarihî Botan-Cizre bölgesiyle anılır.',
+    explanation:
+        'Cizîr ve Botan, güneydoğudaki tarihî Botan-Cizre bölgesiyle anılır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2820',
     category: 'Paradigma',
     prompt: '"Demokratik modernite" hangi üç krizi aşmayı hedefler?',
-    answers: ['Borsa, döviz ve faiz sorunlarını', 'Trafik, enflasyon ve işsizlik krizlerini', 'Spor, sanat ve turizm sorunlarını', 'Ekoloji, kadın ve demokrasi krizlerini'],
+    answers: [
+      'Borsa, döviz ve faiz sorunlarını',
+      'Trafik, enflasyon ve işsizlik krizlerini',
+      'Spor, sanat ve turizm sorunlarını',
+      'Ekoloji, kadın ve demokrasi krizlerini',
+    ],
     correctAnswer: 'Ekoloji, kadın ve demokrasi krizlerini',
-    explanation: 'Demokratik modernite; ekolojik, kadın ve demokrasi krizlerini aşmayı hedefler.',
+    explanation:
+        'Demokratik modernite; ekolojik, kadın ve demokrasi krizlerini aşmayı hedefler.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2823',
     category: 'Siyaset',
     prompt: '"Demokratik çözüm" hangi değerleri önceler?',
-    answers: ['Sınır, ordu ve bayrağı', 'Eşitlik, özgürlük ve barışı', 'Hiyerarşi, zenginlik ve gücü', 'Rekabet, kâr ve mülkiyeti'],
+    answers: [
+      'Sınır, ordu ve bayrağı',
+      'Eşitlik, özgürlük ve barışı',
+      'Hiyerarşi, zenginlik ve gücü',
+      'Rekabet, kâr ve mülkiyeti',
+    ],
     correctAnswer: 'Eşitlik, özgürlük ve barışı',
-    explanation: 'Demokratik çözüm; eşitlik, özgürlük ve barış değerlerini önceler.',
+    explanation:
+        'Demokratik çözüm; eşitlik, özgürlük ve barış değerlerini önceler.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2825',
     category: 'Muzîk',
     prompt: '"Kilam, stran ve lawik" ortak olarak kimdir?',
-    answers: ['ji bo pitikan', 'Kürt ezgi türleri', 'Sözlü kültürel miras', 'bê amûr (a capella)'],
+    answers: [
+      'ji bo pitikan',
+      'Kürt ezgi türleri',
+      'Sözlü kültürel miras',
+      'bê amûr (a capella)',
+    ],
     correctAnswer: 'Kürt ezgi türleri',
-    explanation: 'Kilam, stran ve lawik, Kürt sözlü-müzikal geleneğinin ezgi türleridir.',
+    explanation:
+        'Kilam, stran ve lawik, Kürt sözlü-müzikal geleneğinin ezgi türleridir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_2826',
     category: 'Dîrok',
     prompt: '"Şerefname" kim tarafından yazılmıştır?',
-    answers: ['serokê Komara Mehabadê', 'Şeref Han (Bitlis beyi)', 'kanıtlardan anlam çıkarma', 'kalıcı yerleşim düzeni'],
+    answers: [
+      'serokê Komara Mehabadê',
+      'Şeref Han (Bitlis beyi)',
+      'kanıtlardan anlam çıkarma',
+      'kalıcı yerleşim düzeni',
+    ],
     correctAnswer: 'Şeref Han (Bitlis beyi)',
-    explanation: 'Şerefname, Bitlis beyi Şeref Han tarafından 1597\'de yazılmıştır.',
+    explanation:
+        'Şerefname, Bitlis beyi Şeref Han tarafından 1597\'de yazılmıştır.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5000',
@@ -2514,7 +3026,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'nanxane\' Ziman alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5012',
@@ -2524,7 +3036,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'anne',
     explanation: 'Doğru anlam: "dê" → "anne".',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5016',
@@ -2534,7 +3046,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'şêr',
     explanation: 'Doğru eşleştirme: "aslan" → "şêr".',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5019',
@@ -2544,17 +3056,18 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'kapı',
     explanation: '\'derî\' → kapı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5030',
     category: 'Ziman',
-    prompt: 'Aşağıdakilerden hangisi "yaşlı/ihtiyar" anlamındaki Kurmancî kelimedir?',
+    prompt:
+        'Aşağıdakilerden hangisi "yaşlı/ihtiyar" anlamındaki Kurmancî kelimedir?',
     answers: ['pîr', 'Ben', 'îro', 'poz'],
     correctAnswer: 'pîr',
     explanation: '\'yaşlı/ihtiyar\' → pîr.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5031',
@@ -2564,7 +3077,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'su',
     explanation: '"av" kelimesi "su" demektir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5035',
@@ -2574,7 +3087,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'stêrk\' Ziman alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5039',
@@ -2584,7 +3097,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Şaş',
     explanation: '"wêne" = "resim/fotoğraf".',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5041',
@@ -2594,7 +3107,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'xwendin',
     explanation: '\'okumak\' → xwendin.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5057',
@@ -2604,7 +3117,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'huner',
     explanation: '\'sanat\' → huner.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5063',
@@ -2614,7 +3127,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'agir',
     explanation: '"ateş" kelimesinin karşılığı "agir"dir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5067',
@@ -2624,17 +3137,18 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'hesp\' Ziman alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5090',
     category: 'Ziman',
-    prompt: 'Aşağıdakilerden hangisi "kalp/dil" anlamındaki Kurmancî kelimedir?',
+    prompt:
+        'Aşağıdakilerden hangisi "kalp/dil" anlamındaki Kurmancî kelimedir?',
     answers: ['dar', 'ben', 'dil', 'gül'],
     correctAnswer: 'dil',
     explanation: '\'kalp/dil\' → dil.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5094',
@@ -2644,7 +3158,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'gece',
     explanation: '"şev" kelimesi "gece" demektir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5095',
@@ -2654,7 +3168,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'xwendegeh',
     explanation: '"okul/akademi" kelimesinin karşılığı "xwendegeh"dir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5099',
@@ -2662,9 +3176,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kurmancîde "mase" denince kastedilen "sandalye" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'mase\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'mase\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5106',
@@ -2674,7 +3189,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'arkadaş',
     explanation: 'Doğru anlam: "heval" → "arkadaş".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5114',
@@ -2684,7 +3199,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'nanxane',
     explanation: 'Doğru eşleştirme: "yemekhane" → "nanxane".',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5138',
@@ -2694,7 +3209,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'çûn',
     explanation: 'Doğru eşleştirme: "gitmek" → "çûn".',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5143',
@@ -2704,7 +3219,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'ülke/vatan',
     explanation: '"welat" kelimesi "ülke/vatan" demektir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5158',
@@ -2712,9 +3227,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"berf" kelimesinin Türkçe karşılığı "ateş" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'berf\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'berf\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5168',
@@ -2722,9 +3238,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"kûçik" kelimesinin Türkçe karşılığı "kedi" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'kûçik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'kûçik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5174',
@@ -2732,9 +3249,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"ba" kelimesinin Türkçe karşılığı "yağmur" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'ba\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'ba\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5188',
@@ -2744,7 +3262,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'kağıt',
     explanation: 'Kurmancî "kaxiz" ≈ "kağıt".',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5202',
@@ -2754,7 +3272,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'bina/ev',
     explanation: 'Doğru anlam: "xanî" → "bina/ev".',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5204',
@@ -2762,9 +3280,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"pirtûk" kelimesinin Türkçe karşılığı "bilmek" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'pirtûk\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'pirtûk\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5208',
@@ -2772,9 +3291,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Doğru mu, yanlış mı: Kurmancî "zarok" = "öğrenci".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'zarok\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'zarok\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5221',
@@ -2784,7 +3304,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'dede',
     explanation: '"kal" kelimesi "dede" demektir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5225',
@@ -2794,7 +3314,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'çav',
     explanation: 'Doğru eşleştirme: "göz" → "çav".',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5236',
@@ -2804,7 +3324,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'rê',
     explanation: 'Doğru eşleştirme: "yol" → "rê".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5255',
@@ -2814,7 +3334,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'öğrenci',
     explanation: 'Doğru anlam: "xwendekar" → "öğrenci".',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5260',
@@ -2824,7 +3344,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'renk',
     explanation: '"reng" kelimesi "renk" demektir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5264',
@@ -2834,7 +3354,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'derî',
     explanation: '\'kapı\' → derî.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5268',
@@ -2844,7 +3364,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '"pisîk" kelimesinin karşılığı "kedi"dir.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5270',
@@ -2854,7 +3374,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'hezkirin',
     explanation: '\'sevmek\' → hezkirin.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5284',
@@ -2864,7 +3384,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'bilmek',
     explanation: 'Kurmancî "zanîn" ≈ "bilmek".',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5297',
@@ -2874,7 +3394,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'aile',
     explanation: 'Kurmancî "malbat" ≈ "aile".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5298',
@@ -2884,7 +3404,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'dibistan',
     explanation: '\'okul\' → dibistan.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5301',
@@ -2894,7 +3414,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "şêr" → "aslan".',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5305',
@@ -2904,7 +3424,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'hatin',
     explanation: '"gelmek" kelimesinin karşılığı "hatin"dir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5307',
@@ -2912,9 +3432,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kurmancîde "av" denince kastedilen "gün/güneş" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'av\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'av\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5314',
@@ -2924,7 +3445,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "ba" → "rüzgar".',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5325',
@@ -2934,7 +3455,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'bihîstin',
     explanation: '\'işitmek\' → bihîstin.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5342',
@@ -2944,7 +3465,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'iş',
     explanation: '\'kar\' → iş.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5364',
@@ -2952,9 +3473,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kurmancîde "derî" denince kastedilen "pencere" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'derî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'derî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5381',
@@ -2964,7 +3486,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'zanîn\' Ziman alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5386',
@@ -2974,7 +3496,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'oturmak',
     explanation: '"rûniştin" kelimesi "oturmak" demektir.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5391',
@@ -2984,7 +3506,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'rast',
     explanation: '"doğru" kelimesinin karşılığı "rast"dir.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5394',
@@ -2994,7 +3516,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '"deng" kelimesinin karşılığı "ses"dir.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5427',
@@ -3004,7 +3526,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "nan" → "ekmek".',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5433',
@@ -3012,9 +3534,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"destpêk" kelimesinin Türkçe karşılığı "ağaç" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'destpêk\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'destpêk\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5440',
@@ -3024,17 +3547,22 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'öğretmen',
     explanation: 'Doğru anlam: "mamoste" → "öğretmen".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5448',
     category: 'Ziman',
     prompt: 'Wateya Tirkî ya peyva "wêne" kîjan e?',
-    answers: ['Arkadaş/yoldaş', 'yaşlı/ihtiyar', 'resim/fotoğraf', 'Latin (Hawar)'],
+    answers: [
+      'Arkadaş/yoldaş',
+      'yaşlı/ihtiyar',
+      'resim/fotoğraf',
+      'Latin (Hawar)',
+    ],
     correctAnswer: 'resim/fotoğraf',
     explanation: 'Kurmancî "wêne" ≈ "resim/fotoğraf".',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5459',
@@ -3044,7 +3572,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'dev',
     explanation: '"ağız" kelimesinin karşılığı "dev"dir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5465',
@@ -3054,7 +3582,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'agir\' Ziman alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5475',
@@ -3062,9 +3590,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"deşt" kelimesinin Türkçe karşılığı "kaya" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'deşt\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'deşt\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5499',
@@ -3074,7 +3603,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "nanpêj" → "fırıncı".',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5514',
@@ -3084,7 +3613,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'kadın',
     explanation: '"jin" kelimesi "kadın" demektir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5524',
@@ -3094,7 +3623,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'kurd',
     explanation: '"Kürt" kelimesinin karşılığı "kurd"dir.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5531',
@@ -3104,7 +3633,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'kalp/dil',
     explanation: 'Kurmancî "dil" ≈ "kalp/dil".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5542',
@@ -3114,7 +3643,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'heval',
     explanation: '"arkadaş" kelimesinin karşılığı "heval"dir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5557',
@@ -3122,9 +3651,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Peyva "kaxiz" "resim/fotoğraf" anlamına gelir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'kaxiz\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'kaxiz\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5565',
@@ -3134,7 +3664,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '"jin" kelimesinin karşılığı "kadın"dir.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5591',
@@ -3142,9 +3672,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Doğru mu, yanlış mı: Kurmancî "xwendekar" = "doğru".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'xwendekar\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'xwendekar\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5593',
@@ -3152,9 +3683,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Doğru mu, yanlış mı: Kurmancî "çav" = "burun".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'çav\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'çav\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5599',
@@ -3164,7 +3696,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'rabûn',
     explanation: '"kalkmak" kelimesinin karşılığı "rabûn"dir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5604',
@@ -3174,7 +3706,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'baba',
     explanation: '"bav" kelimesi "baba" demektir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5606',
@@ -3184,7 +3716,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'pencere',
     explanation: 'Kurmancî "pencere" ≈ "pencere".',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5622',
@@ -3194,7 +3726,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'bav',
     explanation: '\'baba\' → bav.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5631',
@@ -3202,9 +3734,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kurmancîde "şev" denince kastedilen "deniz" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'şev\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'şev\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5632',
@@ -3212,9 +3745,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"şêr" kelimesinin Türkçe karşılığı "köpek" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'şêr\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'şêr\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5638',
@@ -3224,7 +3758,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'bajar',
     explanation: '"şehir" kelimesinin karşılığı "bajar"dir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5644',
@@ -3234,17 +3768,18 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'dest',
     explanation: 'Doğru eşleştirme: "el" → "dest".',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5654',
     category: 'Ziman',
-    prompt: 'Aşağıdakilerden hangisi "sandalye" anlamındaki Kurmancî kelimedir?',
+    prompt:
+        'Aşağıdakilerden hangisi "sandalye" anlamındaki Kurmancî kelimedir?',
     answers: ['were!', 'burun', 'diçim', 'kursî'],
     correctAnswer: 'kursî',
     explanation: 'Doğru eşleştirme: "sandalye" → "kursî".',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5664',
@@ -3254,7 +3789,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'zinar',
     explanation: '\'kaya\' → zinar.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5675',
@@ -3262,9 +3797,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Doğru mu, yanlış mı: Kurmancî "pê" = "baş/kafa".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'pê\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'pê\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5676',
@@ -3272,9 +3808,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kurmancîde "diran" denince kastedilen "saç" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'diran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'diran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5685',
@@ -3284,7 +3821,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'heyv',
     explanation: 'Doğru eşleştirme: "ay" → "heyv".',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5699',
@@ -3294,7 +3831,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'nivîsandin',
     explanation: '"yazmak" kelimesinin karşılığı "nivîsandin"dir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5707',
@@ -3304,7 +3841,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "hewa" → "hava".',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5712',
@@ -3314,7 +3851,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'av',
     explanation: '\'su\' → av.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5713',
@@ -3324,7 +3861,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'kal',
     explanation: 'Doğru eşleştirme: "dede" → "kal".',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5719',
@@ -3334,7 +3871,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '"ax" kelimesinin karşılığı "toprak"dir.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5722',
@@ -3342,9 +3879,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kurmancîde "ziman" denince kastedilen "okul" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'okul\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'okul\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5733',
@@ -3354,7 +3892,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '"cîhan" kelimesinin karşılığı "dünya"dir.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5742',
@@ -3364,7 +3902,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'gitmek',
     explanation: 'Doğru anlam: "çûn" → "gitmek".',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5748',
@@ -3374,7 +3912,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'kalkmak',
     explanation: 'Doğru anlam: "rabûn" → "kalkmak".',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5774',
@@ -3384,7 +3922,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'at',
     explanation: 'Doğru anlam: "hesp" → "at".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5790',
@@ -3394,7 +3932,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'dîtin',
     explanation: 'Doğru eşleştirme: "görmek" → "dîtin".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5796',
@@ -3404,7 +3942,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'şev',
     explanation: 'Doğru eşleştirme: "gece" → "şev".',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5805',
@@ -3414,7 +3952,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'malbat',
     explanation: '"aile" kelimesinin karşılığı "malbat"dir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5813',
@@ -3424,7 +3962,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'yağmur',
     explanation: '"baran" kelimesi "yağmur" demektir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5832',
@@ -3434,7 +3972,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Kürt',
     explanation: '\'kurd\' → Kürt.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5834',
@@ -3442,9 +3980,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kurmancîde "pir" denince kastedilen "başlangıç" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'pir\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'pir\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5848',
@@ -3452,9 +3991,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kurmancîde "welat" denince kastedilen "dünya" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'welat\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'welat\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5852',
@@ -3464,7 +4004,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'görmek',
     explanation: '"dîtin" kelimesi "görmek" demektir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5876',
@@ -3474,17 +4014,18 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "bajar" → "şehir".',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5886',
     category: 'Ziman',
-    prompt: 'Aşağıdakilerden hangisi "ülke/vatan" anlamındaki Kurmancî kelimedir?',
+    prompt:
+        'Aşağıdakilerden hangisi "ülke/vatan" anlamındaki Kurmancî kelimedir?',
     answers: ['nivîn', 'Beyaz', 'Küçük', 'welat'],
     correctAnswer: 'welat',
     explanation: '"ülke/vatan" kelimesinin karşılığı "welat"dir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5894',
@@ -3494,7 +4035,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'yatak',
     explanation: '"nivîn" kelimesi "yatak" demektir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5897',
@@ -3504,7 +4045,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'nivîn',
     explanation: '\'yatak\' → nivîn.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5900',
@@ -3514,7 +4055,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'xanî',
     explanation: '"bina/ev" kelimesinin karşılığı "xanî"dir.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5903',
@@ -3524,7 +4065,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'îro',
     explanation: '"bugün" kelimesinin karşılığı "îro"dir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5912',
@@ -3534,7 +4075,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'yazmak',
     explanation: '"nivîsandin" kelimesi "yazmak" demektir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5916',
@@ -3544,7 +4085,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'nehir',
     explanation: 'Doğru anlam: "çem" → "nehir".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5920',
@@ -3554,7 +4095,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '"çûn" kelimesinin karşılığı "gitmek"dir.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5926',
@@ -3564,7 +4105,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'reng',
     explanation: '\'renk\' → reng.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5930',
@@ -3574,7 +4115,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'çeşme/pınar',
     explanation: 'Doğru anlam: "kanî" → "çeşme/pınar".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5933',
@@ -3584,7 +4125,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'mase',
     explanation: 'Doğru eşleştirme: "masa" → "mase".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5934',
@@ -3594,7 +4135,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'leğen',
     explanation: 'Kurmancî "teşt" ≈ "leğen".',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5941',
@@ -3602,9 +4143,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kurmancîde "derya" denince kastedilen "yıldız" midir?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'derya\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'derya\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5957',
@@ -3612,29 +4154,40 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Kew\' Çand alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Kew\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Kew\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5968',
     category: 'Çand',
     prompt: '\'destmal\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['geleneksel kadın oyunları veya dansları', 'Renkli, katmanlı uzun elbiseler (kras)', 'Halkın direnişini ve özgürlük umudunu', 'halay başının elinde salladığı mendil'],
+    answers: [
+      'geleneksel kadın oyunları veya dansları',
+      'Renkli, katmanlı uzun elbiseler (kras)',
+      'Halkın direnişini ve özgürlük umudunu',
+      'halay başının elinde salladığı mendil',
+    ],
     correctAnswer: 'halay başının elinde salladığı mendil',
     explanation: '\'destmal\' → halay başının elinde salladığı mendil.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5969',
     category: 'Çand',
     prompt: 'Şıklardan hangisi \'şahmaran\' anlamına gelir?',
-    answers: ['göçer yaşam tarzı ve dans ritmi', 'doğu kültüründe mitolojik figür', 'üç ayaklı geleneksel halk dansı', 'Sözlü/ezbere aktarılan anlatıya'],
+    answers: [
+      'göçer yaşam tarzı ve dans ritmi',
+      'doğu kültüründe mitolojik figür',
+      'üç ayaklı geleneksel halk dansı',
+      'Sözlü/ezbere aktarılan anlatıya',
+    ],
     correctAnswer: 'doğu kültüründe mitolojik figür',
     explanation: '\'şahmaran\' → doğu kültüründe mitolojik figür.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5970',
@@ -3642,29 +4195,36 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Govendên herêmî\' Çand alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Govendên herêmî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Govendên herêmî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5973',
     category: 'Çand',
     prompt: '\'şax\' dendiğinde kastedilen nedir?',
-    answers: ['yiyecek taşımak için dokunan torba', 'Zulme karşı direniş ve yeniden doğuş', 'yabani gül ve bitkisel çay geleneği', 'şırnak yöresine ait geleneksel dans'],
+    answers: [
+      'yiyecek taşımak için dokunan torba',
+      'Zulme karşı direniş ve yeniden doğuş',
+      'yabani gül ve bitkisel çay geleneği',
+      'şırnak yöresine ait geleneksel dans',
+    ],
     correctAnswer: 'şırnak yöresine ait geleneksel dans',
     explanation: '\'şax\' → şırnak yöresine ait geleneksel dans.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_5983',
     category: 'Çand',
-    prompt: '\'yerel kıyafetler\' Çand bilgisinin parçası olan gerçek bir başlıktır.',
+    prompt:
+        '\'yerel kıyafetler\' Çand bilgisinin parçası olan gerçek bir başlıktır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'yerel kıyafetler\' Çand alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_5988',
@@ -3674,97 +4234,142 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Kilim motifleri\' Çand alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6020',
     category: 'Çand',
     prompt: 'Çand açısından \'govendên herêmî\' için doğru ifade hangisidir?',
-    answers: ['Sosyal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı', 'yöresel halk dansları', 'Halay çekilir ve ateşin üstünden atlanır', 'Misafirperverlik ve ilişki kurma isteğini'],
+    answers: [
+      'Sosyal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı',
+      'yöresel halk dansları',
+      'Halay çekilir ve ateşin üstünden atlanır',
+      'Misafirperverlik ve ilişki kurma isteğini',
+    ],
     correctAnswer: 'yöresel halk dansları',
     explanation: '\'govendên herêmî\' → yöresel halk dansları.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6042',
     category: 'Çand',
     prompt: '\'pêncşem\' dendiğinde kastedilen nedir?',
-    answers: ['geleneksel ziyaret ve anma günü', 'kültürel sembol ve renk hafızası', 'Dinî ilahi/sözlü kutsal metinler', 'Işığa/güneşe verilen kutsallığı'],
+    answers: [
+      'geleneksel ziyaret ve anma günü',
+      'kültürel sembol ve renk hafızası',
+      'Dinî ilahi/sözlü kutsal metinler',
+      'Işığa/güneşe verilen kutsallığı',
+    ],
     correctAnswer: 'geleneksel ziyaret ve anma günü',
     explanation: '\'pêncşem\' → geleneksel ziyaret ve anma günü.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6053',
     category: 'Çand',
     prompt: '\'şal û şapik\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['geleneksel kaval benzeri çalgı', 'geleneksel erkek giyim takımı', 'ayran ve su ikram etme kültürü', 'Doğanın canlanışı ve bereket'],
+    answers: [
+      'geleneksel kaval benzeri çalgı',
+      'geleneksel erkek giyim takımı',
+      'ayran ve su ikram etme kültürü',
+      'Doğanın canlanışı ve bereket',
+    ],
     correctAnswer: 'geleneksel erkek giyim takımı',
     explanation: '\'şal û şapik\' → geleneksel erkek giyim takımı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6059',
     category: 'Çand',
     prompt: '\'hewran\' için geçerli tanım hangisidir?',
-    answers: ['"Nû" (yeni) + "roj" (gün)', 'geleneksel kıl çadır yapımı', 'Topluluk ve aile bağlarını', 'baharın gelişi ve yenilenme'],
+    answers: [
+      '"Nû" (yeni) + "roj" (gün)',
+      'geleneksel kıl çadır yapımı',
+      'Topluluk ve aile bağlarını',
+      'baharın gelişi ve yenilenme',
+    ],
     correctAnswer: 'geleneksel kıl çadır yapımı',
     explanation: '\'hewran\' → geleneksel kıl çadır yapımı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6067',
     category: 'Çand',
     prompt: '\'çilkez\' hakkında bilinen doğru nedir?',
-    answers: ['Dinî ilahi/sözlü kutsal metinler', 'kültürel sembol ve renk hafızası', 'yiyecek taşımak için dokunan torba', 'geleneksel Kürt saç örgüsü modeli'],
+    answers: [
+      'Dinî ilahi/sözlü kutsal metinler',
+      'kültürel sembol ve renk hafızası',
+      'yiyecek taşımak için dokunan torba',
+      'geleneksel Kürt saç örgüsü modeli',
+    ],
     correctAnswer: 'geleneksel Kürt saç örgüsü modeli',
     explanation: '\'çilkez\' → geleneksel Kürt saç örgüsü modeli.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6080',
     category: 'Çand',
     prompt: '\'yerel kıyafetler\' ile kastedilen doğru nedir?',
-    answers: ['kimlik ve bölgesel çeşitlilik', 'sofra kültürü ile ilişkilidir', 'sözlü gelenek ile ilişkilidir', 'geleneksel yedi tahıllı çorba'],
+    answers: [
+      'kimlik ve bölgesel çeşitlilik',
+      'sofra kültürü ile ilişkilidir',
+      'sözlü gelenek ile ilişkilidir',
+      'geleneksel yedi tahıllı çorba',
+    ],
     correctAnswer: 'kimlik ve bölgesel çeşitlilik',
     explanation: '\'yerel kıyafetler\' → kimlik ve bölgesel çeşitlilik.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6083',
     category: 'Çand',
     prompt: 'Çand çerçevesinde \'destmal\' ne anlama gelir?',
-    answers: ['Kürt halk müziğinde ağıt benzeri ezgi', 'Zulme karşı direniş ve yeniden doğuş', 'el yapımı geleneksel Kürt ayakkabısı', 'halay başının elinde salladığı mendil'],
+    answers: [
+      'Kürt halk müziğinde ağıt benzeri ezgi',
+      'Zulme karşı direniş ve yeniden doğuş',
+      'el yapımı geleneksel Kürt ayakkabısı',
+      'halay başının elinde salladığı mendil',
+    ],
     correctAnswer: 'halay başının elinde salladığı mendil',
     explanation: '\'destmal\' → halay başının elinde salladığı mendil.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6093',
     category: 'Çand',
     prompt: '\'tûrik\' için geçerli tanım hangisidir?',
-    answers: ['geleneksel çobanlık ve doğa bilgisi', 'koç katımı ve hayvancılık şenliği', 'yiyecek taşımak için dokunan torba', 'Çîrok (masal) ve kilam/stran (ezgi)'],
+    answers: [
+      'geleneksel çobanlık ve doğa bilgisi',
+      'koç katımı ve hayvancılık şenliği',
+      'yiyecek taşımak için dokunan torba',
+      'Çîrok (masal) ve kilam/stran (ezgi)',
+    ],
     correctAnswer: 'yiyecek taşımak için dokunan torba',
     explanation: '\'tûrik\' → yiyecek taşımak için dokunan torba.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6117',
     category: 'Çand',
     prompt: '\'nanê tenûrê\' konusunda hangisi doğrudur?',
-    answers: ['tandırda pişirilen geleneksel ekmek', 'Ekşili/etli sebze yemeği veya yahni', 'Zulme karşı direniş ve yeniden doğuş', 'yaşanmış ilginç olayların anlatımı'],
+    answers: [
+      'tandırda pişirilen geleneksel ekmek',
+      'Ekşili/etli sebze yemeği veya yahni',
+      'Zulme karşı direniş ve yeniden doğuş',
+      'yaşanmış ilginç olayların anlatımı',
+    ],
     correctAnswer: 'tandırda pişirilen geleneksel ekmek',
     explanation: '\'nanê tenûrê\' → tandırda pişirilen geleneksel ekmek.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6123',
@@ -3774,7 +4379,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Bayramlaşma\' Çand alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6130',
@@ -3784,27 +4389,37 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Govend\' Çand alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6136',
     category: 'Çand',
     prompt: 'Hangisi \'koçerî\' kavramını doğru betimler?',
-    answers: ['hesinkarê ku li dijî zilmê rabû', 'Dinî ilahi/sözlü kutsal metinler', 'göçer yaşam tarzı ve dans ritmi', 'kuşaktan kuşağa aktarılan anlatı'],
+    answers: [
+      'hesinkarê ku li dijî zilmê rabû',
+      'Dinî ilahi/sözlü kutsal metinler',
+      'göçer yaşam tarzı ve dans ritmi',
+      'kuşaktan kuşağa aktarılan anlatı',
+    ],
     correctAnswer: 'göçer yaşam tarzı ve dans ritmi',
     explanation: '\'koçerî\' → göçer yaşam tarzı ve dans ritmi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6143',
     category: 'Çand',
     prompt: '\'helase\' hakkında bilinen doğru nedir?',
-    answers: ['Kültürel aidiyet ve coğrafi hafızayı', 'yaşanmış ilginç olayların anlatımı', 'geleneksel çobanlık ve doğa bilgisi', 'geleneksel hasat ve bereket şenliği'],
+    answers: [
+      'Kültürel aidiyet ve coğrafi hafızayı',
+      'yaşanmış ilginç olayların anlatımı',
+      'geleneksel çobanlık ve doğa bilgisi',
+      'geleneksel hasat ve bereket şenliği',
+    ],
     correctAnswer: 'geleneksel hasat ve bereket şenliği',
     explanation: '\'helase\' → geleneksel hasat ve bereket şenliği.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6172',
@@ -3812,9 +4427,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Çand bağlamında \'Kıl çadır\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Kıl çadır\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Kıl çadır\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6176',
@@ -3822,39 +4438,55 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Çand çalışmalarında \'Tûrik\' hiç kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Tûrik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Tûrik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6182',
     category: 'Çand',
     prompt: 'Çand alanında \'memê alan\' neyi ifade eder?',
-    answers: ['Tavuk ve pirinçle yapılan geleneksel yemek', 'Dil, kültür, yayıncılık, dayanışma ve kimlik aktarımı', 'Kültürel hafıza, edebiyat, sözlü anlatı ve aidiyet taşıdığı için', 'destansı Kürt halk anlatısı'],
+    answers: [
+      'Tavuk ve pirinçle yapılan geleneksel yemek',
+      'Dil, kültür, yayıncılık, dayanışma ve kimlik aktarımı',
+      'Kültürel hafıza, edebiyat, sözlü anlatı ve aidiyet taşıdığı için',
+      'destansı Kürt halk anlatısı',
+    ],
     correctAnswer: 'destansı Kürt halk anlatısı',
     explanation: '\'memê alan\' → destansı Kürt halk anlatısı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6189',
     category: 'Çand',
     prompt: '\'cîranî\' kavramını doğru anlatan ifade hangisidir?',
-    answers: ['komşuluk ve toplumsal yardımlaşma', 'Melek Tavus ve ışık/güneş motifi', 'koç katımı ve hayvancılık şenliği', 'yiyecek taşımak için dokunan torba'],
+    answers: [
+      'komşuluk ve toplumsal yardımlaşma',
+      'Melek Tavus ve ışık/güneş motifi',
+      'koç katımı ve hayvancılık şenliği',
+      'yiyecek taşımak için dokunan torba',
+    ],
     correctAnswer: 'komşuluk ve toplumsal yardımlaşma',
     explanation: '\'cîranî\' → komşuluk ve toplumsal yardımlaşma.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6206',
     category: 'Çand',
     prompt: '\'dengbêj\' nasıl tanımlanır?',
-    answers: ['toplumsal bağları güçlendirme', 'geleneksel kaval benzeri çalgı', 'sözlü anlatım ve ezgili hikaye', 'Sözlü/ezbere aktarılan anlatıya'],
+    answers: [
+      'toplumsal bağları güçlendirme',
+      'geleneksel kaval benzeri çalgı',
+      'sözlü anlatım ve ezgili hikaye',
+      'Sözlü/ezbere aktarılan anlatıya',
+    ],
     correctAnswer: 'sözlü anlatım ve ezgili hikaye',
     explanation: '\'dengbêj\' → sözlü anlatım ve ezgili hikaye.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6223',
@@ -3864,27 +4496,37 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'masal anlatımı\' Çand alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6230',
     category: 'Çand',
     prompt: '\'heftegiyan\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['geleneksel erkek giyim takımı', 'geleneksel yedi tahıllı çorba', 'Sığınak, özgürlük ve direnişi', 'geleneksel kaval benzeri çalgı'],
+    answers: [
+      'geleneksel erkek giyim takımı',
+      'geleneksel yedi tahıllı çorba',
+      'Sığınak, özgürlük ve direnişi',
+      'geleneksel kaval benzeri çalgı',
+    ],
     correctAnswer: 'geleneksel yedi tahıllı çorba',
     explanation: '\'heftegiyan\' → geleneksel yedi tahıllı çorba.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6260',
     category: 'Çand',
     prompt: 'Hangisi \'Newroz\' ile uyumlu bir tanımdır?',
-    answers: ['"Nû" (yeni) + "roj" (gün)', 'keça û kurê apê (kuzenler)', 'Melek Tavus (Tawûsî Melek)', 'baharın gelişi ve yenilenme'],
+    answers: [
+      '"Nû" (yeni) + "roj" (gün)',
+      'keça û kurê apê (kuzenler)',
+      'Melek Tavus (Tawûsî Melek)',
+      'baharın gelişi ve yenilenme',
+    ],
     correctAnswer: 'baharın gelişi ve yenilenme',
     explanation: '\'Newroz\' → baharın gelişi ve yenilenme.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6263',
@@ -3894,7 +4536,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'kelaş\' Çand alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6266',
@@ -3902,99 +4544,145 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'pêncşem\' Çand açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'pêncşem\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'pêncşem\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6309',
     category: 'Çand',
     prompt: '\'sêpê\', Çand konusunda neyi anlatır?',
-    answers: ['Dinî ilahi/sözlü kutsal metinler', 'Mêvanperwerî (misafirperverlik)', 'hesinkarê ku li dijî zilmê rabû', 'üç ayaklı geleneksel halk dansı'],
+    answers: [
+      'Dinî ilahi/sözlü kutsal metinler',
+      'Mêvanperwerî (misafirperverlik)',
+      'hesinkarê ku li dijî zilmê rabû',
+      'üç ayaklı geleneksel halk dansı',
+    ],
     correctAnswer: 'üç ayaklı geleneksel halk dansı',
     explanation: '\'sêpê\' → üç ayaklı geleneksel halk dansı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6325',
     category: 'Çand',
     prompt: '\'bilûr\' hakkında bilinen doğru nedir?',
-    answers: ['Kürt halk takviminde yılbaşı kutlaması', 'kaval benzeri geleneksel üflemeli çalgı', 'Halay çekilir ve ateşin üstünden atlanır', 'koyun sağan kadınların kültürel rolü'],
+    answers: [
+      'Kürt halk takviminde yılbaşı kutlaması',
+      'kaval benzeri geleneksel üflemeli çalgı',
+      'Halay çekilir ve ateşin üstünden atlanır',
+      'koyun sağan kadınların kültürel rolü',
+    ],
     correctAnswer: 'kaval benzeri geleneksel üflemeli çalgı',
     explanation: '\'bilûr\' → kaval benzeri geleneksel üflemeli çalgı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6343',
     category: 'Çand',
     prompt: 'Aşağıdakilerden hangisi \'tûtik\' için doğrudur?',
-    answers: ['ayran ve su ikram etme kültürü', 'Müzik ve ritüel/ezgi geleneği', 'geleneksel kaval benzeri çalgı', 'toplumsal bağları güçlendirme'],
+    answers: [
+      'ayran ve su ikram etme kültürü',
+      'Müzik ve ritüel/ezgi geleneği',
+      'geleneksel kaval benzeri çalgı',
+      'toplumsal bağları güçlendirme',
+    ],
     correctAnswer: 'geleneksel kaval benzeri çalgı',
     explanation: '\'tûtik\' → geleneksel kaval benzeri çalgı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6365',
     category: 'Çand',
     prompt: '\'zembîlfiroş\' konusunda hangisi doğrudur?',
-    answers: ['lehengên destaneke evînê', 'Toplu/kolektif bir kutlama', 'duygu ve toplumsal hafıza', 'meşhur Kürt halk hikayesi'],
+    answers: [
+      'lehengên destaneke evînê',
+      'Toplu/kolektif bir kutlama',
+      'duygu ve toplumsal hafıza',
+      'meşhur Kürt halk hikayesi',
+    ],
     correctAnswer: 'meşhur Kürt halk hikayesi',
     explanation: '\'zembîlfiroş\' → meşhur Kürt halk hikayesi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6380',
     category: 'Çand',
     prompt: '\'bêrîvan\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['hunermendê ku kilaman ji ber dibêje', 'Halkın direnişini ve özgürlük umudunu', 'koyun sağan kadınların kültürel rolü', 'tandırda pişirilen geleneksel ekmek'],
+    answers: [
+      'hunermendê ku kilaman ji ber dibêje',
+      'Halkın direnişini ve özgürlük umudunu',
+      'koyun sağan kadınların kültürel rolü',
+      'tandırda pişirilen geleneksel ekmek',
+    ],
     correctAnswer: 'koyun sağan kadınların kültürel rolü',
     explanation: '\'bêrîvan\' → koyun sağan kadınların kültürel rolü.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6406',
     category: 'Çand',
     prompt: '\'govend\' ifadesinin doğru karşılığı hangisidir?',
-    answers: ['toplu halk oyunu', 'yöresel kıyafet', 'kültürel ritüel', 'Baharatlı pirinç'],
+    answers: [
+      'toplu halk oyunu',
+      'yöresel kıyafet',
+      'kültürel ritüel',
+      'Baharatlı pirinç',
+    ],
     correctAnswer: 'toplu halk oyunu',
     explanation: '\'govend\' → toplu halk oyunu.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6445',
     category: 'Çand',
     prompt: '\'bayramlaşma\', Çand konusunda neyi anlatır?',
-    answers: ['sözlü gelenek ile ilişkilidir', 'geleneksel yedi tahıllı çorba', 'toplumsal bağları güçlendirme', 'sözlü kültür ile ilişkilidir'],
+    answers: [
+      'sözlü gelenek ile ilişkilidir',
+      'geleneksel yedi tahıllı çorba',
+      'toplumsal bağları güçlendirme',
+      'sözlü kültür ile ilişkilidir',
+    ],
     correctAnswer: 'toplumsal bağları güçlendirme',
     explanation: '\'bayramlaşma\' → toplumsal bağları güçlendirme.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6457',
     category: 'Çand',
     prompt: '\'şabaş\' nasıl tanımlanır?',
-    answers: ['Dinî ilahi/sözlü kutsal metinler', 'göçebe Kürt aşiretlerinin barınağı', 'düğünlerde geline takılan altınlar', 'müzisyenlere bahşiş atma geleneği'],
+    answers: [
+      'Dinî ilahi/sözlü kutsal metinler',
+      'göçebe Kürt aşiretlerinin barınağı',
+      'düğünlerde geline takılan altınlar',
+      'müzisyenlere bahşiş atma geleneği',
+    ],
     correctAnswer: 'müzisyenlere bahşiş atma geleneği',
     explanation: '\'şabaş\' → müzisyenlere bahşiş atma geleneği.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6465',
     category: 'Çand',
     prompt: 'Çand için \'sersal\' hakkında doğru seçenek hangisidir?',
-    answers: ['Kürt halk takviminde yılbaşı kutlaması', 'kaval benzeri geleneksel üflemeli çalgı', 'kınalı keklik ve doğa sevgisi sembolü', 'koyun sağan kadınların kültürel rolü'],
+    answers: [
+      'Kürt halk takviminde yılbaşı kutlaması',
+      'kaval benzeri geleneksel üflemeli çalgı',
+      'kınalı keklik ve doğa sevgisi sembolü',
+      'koyun sağan kadınların kültürel rolü',
+    ],
     correctAnswer: 'Kürt halk takviminde yılbaşı kutlaması',
     explanation: '\'sersal\' → Kürt halk takviminde yılbaşı kutlaması.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6481',
@@ -4004,7 +4692,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'şevbêrk\' Çand alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6492',
@@ -4012,139 +4700,205 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Çand alanında \'Memê alan\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Memê alan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Memê alan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6509',
     category: 'Çand',
     prompt: 'Aşağıdakilerden hangisi \'koçerî\' için doğrudur?',
-    answers: ['Dinî ilahi/sözlü kutsal metinler', 'doğu kültüründe mitolojik figür', 'Mêvanperwerî (misafirperverlik)', 'göçer yaşam tarzı ve dans ritmi'],
+    answers: [
+      'Dinî ilahi/sözlü kutsal metinler',
+      'doğu kültüründe mitolojik figür',
+      'Mêvanperwerî (misafirperverlik)',
+      'göçer yaşam tarzı ve dans ritmi',
+    ],
     correctAnswer: 'göçer yaşam tarzı ve dans ritmi',
     explanation: '\'koçerî\' → göçer yaşam tarzı ve dans ritmi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6523',
     category: 'Çand',
     prompt: 'Çand bağlamında \'şîlan\' nasıl anlaşılmalıdır?',
-    answers: ['tandırda pişirilen geleneksel ekmek', 'Zulme karşı direniş ve yeniden doğuş', 'yabani gül ve bitkisel çay geleneği', 'Çîrok (masal) ve kilam/stran (ezgi)'],
+    answers: [
+      'tandırda pişirilen geleneksel ekmek',
+      'Zulme karşı direniş ve yeniden doğuş',
+      'yabani gül ve bitkisel çay geleneği',
+      'Çîrok (masal) ve kilam/stran (ezgi)',
+    ],
     correctAnswer: 'yabani gül ve bitkisel çay geleneği',
     explanation: '\'şîlan\' → yabani gül ve bitkisel çay geleneği.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6530',
     category: 'Çand',
     prompt: '\'kelaş\' dendiğinde kastedilen nedir?',
-    answers: ['Halkın direnişini ve özgürlük umudunu', 'hunermendê ku kilaman ji ber dibêje', 'el yapımı geleneksel Kürt ayakkabısı', 'geleneksel hasat ve bereket şenliği'],
+    answers: [
+      'Halkın direnişini ve özgürlük umudunu',
+      'hunermendê ku kilaman ji ber dibêje',
+      'el yapımı geleneksel Kürt ayakkabısı',
+      'geleneksel hasat ve bereket şenliği',
+    ],
     correctAnswer: 'el yapımı geleneksel Kürt ayakkabısı',
     explanation: '\'kelaş\' → el yapımı geleneksel Kürt ayakkabısı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6533',
     category: 'Çand',
     prompt: 'Hangisi \'masal anlatımı\' kavramını doğru betimler?',
-    answers: ['kuşaktan kuşağa aktarılan anlatı', 'geleneksel Kürt saç örgüsü modeli', 'siyah keçi kılından yapılan çadır', 'üç ayaklı geleneksel halk dansı'],
+    answers: [
+      'kuşaktan kuşağa aktarılan anlatı',
+      'geleneksel Kürt saç örgüsü modeli',
+      'siyah keçi kılından yapılan çadır',
+      'üç ayaklı geleneksel halk dansı',
+    ],
     correctAnswer: 'kuşaktan kuşağa aktarılan anlatı',
     explanation: '\'masal anlatımı\' → kuşaktan kuşağa aktarılan anlatı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6538',
     category: 'Çand',
     prompt: '\'şevbêrk\' ile kastedilen doğru nedir?',
-    answers: ['Tarih boyunca dağlık coğrafyada yaşamayla', 'kış gecelerinde yapılan sohbet toplantıları', 'geleneksel kadın oyunları veya dansları', 'Renkli, katmanlı uzun elbiseler (kras)'],
+    answers: [
+      'Tarih boyunca dağlık coğrafyada yaşamayla',
+      'kış gecelerinde yapılan sohbet toplantıları',
+      'geleneksel kadın oyunları veya dansları',
+      'Renkli, katmanlı uzun elbiseler (kras)',
+    ],
     correctAnswer: 'kış gecelerinde yapılan sohbet toplantıları',
     explanation: '\'şevbêrk\' → kış gecelerinde yapılan sohbet toplantıları.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6541',
     category: 'Çand',
     prompt: '\'qazîn\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['geleneksel kadın oyunları veya dansları', 'Kültürel aidiyet ve coğrafi hafızayı', 'halay başının elinde salladığı mendil', 'kaval benzeri geleneksel üflemeli çalgı'],
+    answers: [
+      'geleneksel kadın oyunları veya dansları',
+      'Kültürel aidiyet ve coğrafi hafızayı',
+      'halay başının elinde salladığı mendil',
+      'kaval benzeri geleneksel üflemeli çalgı',
+    ],
     correctAnswer: 'geleneksel kadın oyunları veya dansları',
     explanation: '\'qazîn\' → geleneksel kadın oyunları veya dansları.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6542',
     category: 'Çand',
     prompt: '\'şevbêrk\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['Renkli, katmanlı uzun elbiseler (kras)', 'İranlılar ve birçok halk (Nevruz olarak)', 'Misafirperverlik ve ilişki kurma isteğini', 'kış gecelerinde yapılan sohbet toplantıları'],
+    answers: [
+      'Renkli, katmanlı uzun elbiseler (kras)',
+      'İranlılar ve birçok halk (Nevruz olarak)',
+      'Misafirperverlik ve ilişki kurma isteğini',
+      'kış gecelerinde yapılan sohbet toplantıları',
+    ],
     correctAnswer: 'kış gecelerinde yapılan sohbet toplantıları',
     explanation: '\'şevbêrk\' → kış gecelerinde yapılan sohbet toplantıları.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6555',
     category: 'Çand',
     prompt: 'Hangisi \'serzêr\' kavramını doğru betimler?',
-    answers: ['hunermendê ku kilaman ji ber dibêje', 'tandırda pişirilen geleneksel ekmek', 'siyah keçi kılından yapılan çadır', 'düğünlerde geline takılan altınlar'],
+    answers: [
+      'hunermendê ku kilaman ji ber dibêje',
+      'tandırda pişirilen geleneksel ekmek',
+      'siyah keçi kılından yapılan çadır',
+      'düğünlerde geline takılan altınlar',
+    ],
     correctAnswer: 'düğünlerde geline takılan altınlar',
     explanation: '\'serzêr\' → düğünlerde geline takılan altınlar.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6560',
     category: 'Çand',
     prompt: '\'çilkez\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['Bölge, lehçe, iklim, tarım ve komşu mutfaklarla etkileşim farklı olduğu için', 'Dağlık iklimde mevsimsel dayanıklılık ve gıda güvenliği sağladığı için', 'Gündelik yaşam, motif ve yerel estetik bilgisini taşıdığı için', 'geleneksel Kürt saç örgüsü modeli'],
+    answers: [
+      'Bölge, lehçe, iklim, tarım ve komşu mutfaklarla etkileşim farklı olduğu için',
+      'Dağlık iklimde mevsimsel dayanıklılık ve gıda güvenliği sağladığı için',
+      'Gündelik yaşam, motif ve yerel estetik bilgisini taşıdığı için',
+      'geleneksel Kürt saç örgüsü modeli',
+    ],
     correctAnswer: 'geleneksel Kürt saç örgüsü modeli',
     explanation: '\'çilkez\' → geleneksel Kürt saç örgüsü modeli.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6575',
     category: 'Çand',
     prompt: 'Hangisi \'şabaş\' kavramını doğru betimler?',
-    answers: ['yiyecek taşımak için dokunan torba', 'Melek Tavus ve ışık/güneş motifi', 'geleneksel ziyaret ve anma günü', 'müzisyenlere bahşiş atma geleneği'],
+    answers: [
+      'yiyecek taşımak için dokunan torba',
+      'Melek Tavus ve ışık/güneş motifi',
+      'geleneksel ziyaret ve anma günü',
+      'müzisyenlere bahşiş atma geleneği',
+    ],
     correctAnswer: 'müzisyenlere bahşiş atma geleneği',
     explanation: '\'şabaş\' → müzisyenlere bahşiş atma geleneği.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6581',
     category: 'Çand',
     prompt: '\'nanê sêlê\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['sözlü gelenek ile ilişkilidir', 'geleneksel yedi tahıllı çorba', 'Müzik ve ritüel/ezgi geleneği', 'sac üzerinde pişirilen ekmek'],
+    answers: [
+      'sözlü gelenek ile ilişkilidir',
+      'geleneksel yedi tahıllı çorba',
+      'Müzik ve ritüel/ezgi geleneği',
+      'sac üzerinde pişirilen ekmek',
+    ],
     correctAnswer: 'sac üzerinde pişirilen ekmek',
     explanation: '\'nanê sêlê\' → sac üzerinde pişirilen ekmek.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6610',
     category: 'Çand',
     prompt: '\'lûr\' nasıl tanımlanır?',
-    answers: ['Kürt halk müziğinde ağıt benzeri ezgi', 'el yapımı geleneksel Kürt ayakkabısı', 'kınalı keklik ve doğa sevgisi sembolü', 'Halkın direnişini ve özgürlük umudunu'],
+    answers: [
+      'Kürt halk müziğinde ağıt benzeri ezgi',
+      'el yapımı geleneksel Kürt ayakkabısı',
+      'kınalı keklik ve doğa sevgisi sembolü',
+      'Halkın direnişini ve özgürlük umudunu',
+    ],
     correctAnswer: 'Kürt halk müziğinde ağıt benzeri ezgi',
     explanation: '\'lûr\' → Kürt halk müziğinde ağıt benzeri ezgi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6626',
     category: 'Çand',
     prompt: '\'ağıt\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['meşhur Kürt halk hikayesi', 'Dinî-toplumsal sınıfları', 'duygu ve toplumsal hafıza', 'destaneke gelêrî ya klasîk'],
+    answers: [
+      'meşhur Kürt halk hikayesi',
+      'Dinî-toplumsal sınıfları',
+      'duygu ve toplumsal hafıza',
+      'destaneke gelêrî ya klasîk',
+    ],
     correctAnswer: 'duygu ve toplumsal hafıza',
     explanation: '\'ağıt\' → duygu ve toplumsal hafıza.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6629',
@@ -4154,7 +4908,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Sersal\' Çand alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6638',
@@ -4162,19 +4916,25 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'hewran\' Çand alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'hewran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'hewran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6642',
     category: 'Çand',
     prompt: '\'misafirperverlik\' dendiğinde kastedilen nedir?',
-    answers: ['toplumsal dayanışma', 'Yaşlıları/ihtiyarları', 'mevsimlik ritüel', 'Sözlü/müzikal gelenek'],
+    answers: [
+      'toplumsal dayanışma',
+      'Yaşlıları/ihtiyarları',
+      'mevsimlik ritüel',
+      'Sözlü/müzikal gelenek',
+    ],
     correctAnswer: 'toplumsal dayanışma',
     explanation: '\'misafirperverlik\' → toplumsal dayanışma.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6652',
@@ -4182,9 +4942,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Kew\' yalnızca Çand dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Kew\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Kew\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6658',
@@ -4194,7 +4955,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Shivaniyeti\' Çand alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6680',
@@ -4204,17 +4965,22 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'cîranî\' Çand alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6684',
     category: 'Çand',
     prompt: '\'heftegiyan\' ne anlama gelir?',
-    answers: ['toplumsal bağları güçlendirme', 'sözlü anlatım ve ezgili hikaye', 'geleneksel yedi tahıllı çorba', 'Müzik ve ritüel/ezgi geleneği'],
+    answers: [
+      'toplumsal bağları güçlendirme',
+      'sözlü anlatım ve ezgili hikaye',
+      'geleneksel yedi tahıllı çorba',
+      'Müzik ve ritüel/ezgi geleneği',
+    ],
     correctAnswer: 'geleneksel yedi tahıllı çorba',
     explanation: '\'heftegiyan\' → geleneksel yedi tahıllı çorba.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6696',
@@ -4224,7 +4990,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'serzêr\' Çand alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6707',
@@ -4232,49 +4998,70 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Qazîn\' Çand açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Qazîn\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Qazîn\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6708',
     category: 'Çand',
     prompt: 'Hangisi Çand içinde \'sînan\' kavramını doğru yerleştirir?',
-    answers: ['geleneksel taş işçiliği', 'Köy odaları ve dîwanlar', 'Kırmızı, beyaz ve yeşil', 'Dil ve kültürel haklar'],
+    answers: [
+      'geleneksel taş işçiliği',
+      'Köy odaları ve dîwanlar',
+      'Kırmızı, beyaz ve yeşil',
+      'Dil ve kültürel haklar',
+    ],
     correctAnswer: 'geleneksel taş işçiliği',
     explanation: '\'sînan\' → geleneksel taş işçiliği.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6716',
     category: 'Çand',
     prompt: '\'bêrîvan\' ifadesinin doğru karşılığı hangisidir?',
-    answers: ['Höyük üzerinde gelişmiş eski tahkimli yerleşim', 'Farklı halkların eşitlik ve barış içinde ortak yaşamını', 'koyun sağan kadınların kültürel rolü', 'Dağlık iklimde mevsimsel dayanıklılık ve gıda güvenliği sağladığı için'],
+    answers: [
+      'Höyük üzerinde gelişmiş eski tahkimli yerleşim',
+      'Farklı halkların eşitlik ve barış içinde ortak yaşamını',
+      'koyun sağan kadınların kültürel rolü',
+      'Dağlık iklimde mevsimsel dayanıklılık ve gıda güvenliği sağladığı için',
+    ],
     correctAnswer: 'koyun sağan kadınların kültürel rolü',
     explanation: '\'bêrîvan\' → koyun sağan kadınların kültürel rolü.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6722',
     category: 'Çand',
     prompt: '\'fistan\' neyi ifade eder?',
-    answers: ['el sanatı ile ilişkilidir', 'lehengên destaneke evînê', 'Köy odaları ve dîwanlar', 'geleneksel kadın giysisi'],
+    answers: [
+      'el sanatı ile ilişkilidir',
+      'lehengên destaneke evînê',
+      'Köy odaları ve dîwanlar',
+      'geleneksel kadın giysisi',
+    ],
     correctAnswer: 'geleneksel kadın giysisi',
     explanation: '\'fistan\' → geleneksel kadın giysisi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6730',
     category: 'Çand',
     prompt: '\'serpêhatî\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['düğünlerde geline takılan altınlar', 'geleneksel hasat ve bereket şenliği', 'Geleneksel toplumsal-dinî rolleri', 'yaşanmış ilginç olayların anlatımı'],
+    answers: [
+      'düğünlerde geline takılan altınlar',
+      'geleneksel hasat ve bereket şenliği',
+      'Geleneksel toplumsal-dinî rolleri',
+      'yaşanmış ilginç olayların anlatımı',
+    ],
     correctAnswer: 'yaşanmış ilginç olayların anlatımı',
     explanation: '\'serpêhatî\' → yaşanmış ilginç olayların anlatımı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6758',
@@ -4282,9 +5069,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Çand alanında \'fistan\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'fistan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'fistan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6769',
@@ -4292,19 +5080,25 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'şahmaran\' yalnızca Çand dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'şahmaran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'şahmaran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6773',
     category: 'Çand',
     prompt: '\'şîlan\' ifadesinin doğru karşılığı hangisidir?',
-    answers: ['yabani gül ve bitkisel çay geleneği', 'Çîrok (masal) ve kilam/stran (ezgi)', 'geleneksel Kürt yeleği veya giysisi', 'hunermendê ku kilaman ji ber dibêje'],
+    answers: [
+      'yabani gül ve bitkisel çay geleneği',
+      'Çîrok (masal) ve kilam/stran (ezgi)',
+      'geleneksel Kürt yeleği veya giysisi',
+      'hunermendê ku kilaman ji ber dibêje',
+    ],
     correctAnswer: 'yabani gül ve bitkisel çay geleneği',
     explanation: '\'şîlan\' → yabani gül ve bitkisel çay geleneği.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6778',
@@ -4314,7 +5108,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Nanê tenûrê\' Çand alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6794',
@@ -4324,77 +5118,112 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'nanê sêlê\' Çand alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6803',
     category: 'Çand',
     prompt: 'Hangisi \'lûr\' kavramını doğru betimler?',
-    answers: ['kınalı keklik ve doğa sevgisi sembolü', 'Kürt halk müziğinde ağıt benzeri ezgi', 'geleneksel Kürt yeleği veya giysisi', 'şırnak yöresine ait geleneksel dans'],
+    answers: [
+      'kınalı keklik ve doğa sevgisi sembolü',
+      'Kürt halk müziğinde ağıt benzeri ezgi',
+      'geleneksel Kürt yeleği veya giysisi',
+      'şırnak yöresine ait geleneksel dans',
+    ],
     correctAnswer: 'Kürt halk müziğinde ağıt benzeri ezgi',
     explanation: '\'lûr\' → Kürt halk müziğinde ağıt benzeri ezgi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6809',
     category: 'Çand',
     prompt: 'Aşağıdakilerden hangisi \'sînan\' için doğrudur?',
-    answers: ['geleneksel taş işçiliği', '21 Adar ile ilişkilidir', 'Etnik ve dilsel topluluk', 'Dinî önder/yol gösterici'],
+    answers: [
+      'geleneksel taş işçiliği',
+      '21 Adar ile ilişkilidir',
+      'Etnik ve dilsel topluluk',
+      'Dinî önder/yol gösterici',
+    ],
     correctAnswer: 'geleneksel taş işçiliği',
     explanation: '\'sînan\' → geleneksel taş işçiliği.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6823',
     category: 'Çand',
     prompt: 'Hangisi \'kilim motifleri\' kavramını doğru betimler?',
-    answers: ['masallardaki altın saray motifi', 'düğün ve kutlama ile ilişkilidir', 'Dinî ilahi/sözlü kutsal metinler', 'kültürel sembol ve renk hafızası'],
+    answers: [
+      'masallardaki altın saray motifi',
+      'düğün ve kutlama ile ilişkilidir',
+      'Dinî ilahi/sözlü kutsal metinler',
+      'kültürel sembol ve renk hafızası',
+    ],
     correctAnswer: 'kültürel sembol ve renk hafızası',
     explanation: '\'kilim motifleri\' → kültürel sembol ve renk hafızası.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6835',
     category: 'Çand',
     prompt: '\'qutik\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['geleneksel Kürt yeleği veya giysisi', 'Zulme karşı direniş ve yeniden doğuş', 'düğünlerde geline takılan altınlar', 'göçebe Kürt aşiretlerinin barınağı'],
+    answers: [
+      'geleneksel Kürt yeleği veya giysisi',
+      'Zulme karşı direniş ve yeniden doğuş',
+      'düğünlerde geline takılan altınlar',
+      'göçebe Kürt aşiretlerinin barınağı',
+    ],
     correctAnswer: 'geleneksel Kürt yeleği veya giysisi',
     explanation: '\'qutik\' → geleneksel Kürt yeleği veya giysisi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6838',
     category: 'Çand',
     prompt: '\'şax\' ile kastedilen doğru nedir?',
-    answers: ['şırnak yöresine ait geleneksel dans', 'göçebe Kürt aşiretlerinin barınağı', 'Kültürel aidiyet ve coğrafi hafızayı', 'geleneksel çobanlık ve doğa bilgisi'],
+    answers: [
+      'şırnak yöresine ait geleneksel dans',
+      'göçebe Kürt aşiretlerinin barınağı',
+      'Kültürel aidiyet ve coğrafi hafızayı',
+      'geleneksel çobanlık ve doğa bilgisi',
+    ],
     correctAnswer: 'şırnak yöresine ait geleneksel dans',
     explanation: '\'şax\' → şırnak yöresine ait geleneksel dans.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6841',
     category: 'Çand',
     prompt: 'Çand bağlamında \'reşmal\' nasıl anlaşılmalıdır?',
-    answers: ['Resmi arşivlerde görünmeyen deneyimleri ve hafızayı kaydedebildiği için', 'Dil, kültür, yayıncılık, dayanışma ve kimlik aktarımı', 'Dağlık iklimde mevsimsel dayanıklılık ve gıda güvenliği sağladığı için', 'siyah keçi kılından yapılan çadır'],
+    answers: [
+      'Resmi arşivlerde görünmeyen deneyimleri ve hafızayı kaydedebildiği için',
+      'Dil, kültür, yayıncılık, dayanışma ve kimlik aktarımı',
+      'Dağlık iklimde mevsimsel dayanıklılık ve gıda güvenliği sağladığı için',
+      'siyah keçi kılından yapılan çadır',
+    ],
     correctAnswer: 'siyah keçi kılından yapılan çadır',
     explanation: '\'reşmal\' → siyah keçi kılından yapılan çadır.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6882',
     category: 'Çand',
     prompt: 'Aşağıdakilerden hangisi \'halk mutfağı\' için doğrudur?',
-    answers: ['Kırmızı, yeşil ve sarı', 'Dil ve kültürel haklar', 'yerel yaşam ve paylaşım', 'Yoldaşlık ve dayanışma'],
+    answers: [
+      'Kırmızı, yeşil ve sarı',
+      'Dil ve kültürel haklar',
+      'yerel yaşam ve paylaşım',
+      'Yoldaşlık ve dayanışma',
+    ],
     correctAnswer: 'yerel yaşam ve paylaşım',
     explanation: '\'halk mutfağı\' → yerel yaşam ve paylaşım.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6903',
@@ -4402,9 +5231,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Çand bağlamında \'şal û şapik\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'şal û şapik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'şal û şapik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6911',
@@ -4414,17 +5244,22 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'kıl çadır\' Çand alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6937',
     category: 'Çand',
     prompt: '\'bilûr\' doğru şekilde nasıl açıklanır?',
-    answers: ['Halay çekilir ve ateşin üstünden atlanır', 'kaval benzeri geleneksel üflemeli çalgı', 'Kürt halk takviminde yılbaşı kutlaması', 'Zulme karşı direniş ve yeniden doğuş'],
+    answers: [
+      'Halay çekilir ve ateşin üstünden atlanır',
+      'kaval benzeri geleneksel üflemeli çalgı',
+      'Kürt halk takviminde yılbaşı kutlaması',
+      'Zulme karşı direniş ve yeniden doğuş',
+    ],
     correctAnswer: 'kaval benzeri geleneksel üflemeli çalgı',
     explanation: '\'bilûr\' → kaval benzeri geleneksel üflemeli çalgı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6958',
@@ -4432,19 +5267,25 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Halk mutfağı\' Çand açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Halk mutfağı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Halk mutfağı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6971',
     category: 'Çand',
     prompt: '\'sêpê\' için geçerli tanım hangisidir?',
-    answers: ['gündelik kültür ile ilişkilidir', 'kültürel sembol ve renk hafızası', 'üç ayaklı geleneksel halk dansı', 'doğu kültüründe mitolojik figür'],
+    answers: [
+      'gündelik kültür ile ilişkilidir',
+      'kültürel sembol ve renk hafızası',
+      'üç ayaklı geleneksel halk dansı',
+      'doğu kültüründe mitolojik figür',
+    ],
     correctAnswer: 'üç ayaklı geleneksel halk dansı',
     explanation: '\'sêpê\' → üç ayaklı geleneksel halk dansı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6974',
@@ -4454,17 +5295,22 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Qutik\' Çand alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_6986',
     category: 'Çand',
     prompt: 'Aşağıdakilerden hangisi \'zembîlfiroş\' için doğrudur?',
-    answers: ['Masal/hikâye anlatan kişi', 'Toplu/kolektif bir kutlama', 'meşhur Kürt halk hikayesi', 'lehengên destaneke evînê'],
+    answers: [
+      'Masal/hikâye anlatan kişi',
+      'Toplu/kolektif bir kutlama',
+      'meşhur Kürt halk hikayesi',
+      'lehengên destaneke evînê',
+    ],
     correctAnswer: 'meşhur Kürt halk hikayesi',
     explanation: '\'zembîlfiroş\' → meşhur Kürt halk hikayesi.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_6987',
@@ -4472,69 +5318,103 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Çand literatüründe \'Ağıt\' yer almaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Ağıt\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Ağıt\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7011',
     category: 'Dîrok',
     prompt: 'Dîrok çerçevesinde \'Jiyan gazetesi\' ne anlama gelir?',
-    answers: ['Osmanlı döneminde özerk kalmış Kürt hükümdarlığı', 'Süleymaniye\'de basılan erken dönem Kürtçe gazete', 'Selahaddin Eyyubi tarafından kurulan büyük devlet', '1925 yılında Kürt hakları için isyan eden lider'],
+    answers: [
+      'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
+      'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
+      'Selahaddin Eyyubi tarafından kurulan büyük devlet',
+      '1925 yılında Kürt hakları için isyan eden lider',
+    ],
     correctAnswer: 'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
-    explanation: '\'Jiyan gazetesi\' → Süleymaniye\'de basılan erken dönem Kürtçe gazete.',
+    explanation:
+        '\'Jiyan gazetesi\' → Süleymaniye\'de basılan erken dönem Kürtçe gazete.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7015',
     category: 'Dîrok',
-    prompt: 'Dîrok bilgisinde \'Kürdistan Eyaleti\' ile ilgili doğru olan hangisidir?',
-    answers: ['Irak rejimi tarafından idam edilen Kürt kadın aktivist', '19. yüzyılda özerklik mücadelesi veren Kürt emiri', 'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet', 'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı'],
+    prompt:
+        'Dîrok bilgisinde \'Kürdistan Eyaleti\' ile ilgili doğru olan hangisidir?',
+    answers: [
+      'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
+      '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
+      'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet',
+      'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
+    ],
     correctAnswer: 'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet',
-    explanation: '\'Kürdistan Eyaleti\': Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet.',
+    explanation:
+        '\'Kürdistan Eyaleti\': Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7053',
     category: 'Dîrok',
     prompt: 'Dîrok çerçevesinde \'Barzani Hareketi\' ne anlama gelir?',
-    answers: ['Irak rejimi tarafından idam edilen Kürt kadın aktivist', '19. yüzyılda özerklik mücadelesi veren Kürt emiri', 'Selahaddin Eyyubi tarafından kurulan büyük devlet', 'Güney Kürdistan\'da uzun yıllar süren ulusal hareket'],
+    answers: [
+      'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
+      '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
+      'Selahaddin Eyyubi tarafından kurulan büyük devlet',
+      'Güney Kürdistan\'da uzun yıllar süren ulusal hareket',
+    ],
     correctAnswer: 'Güney Kürdistan\'da uzun yıllar süren ulusal hareket',
-    explanation: '\'Barzani Hareketi\' → Güney Kürdistan\'da uzun yıllar süren ulusal hareket.',
+    explanation:
+        '\'Barzani Hareketi\' → Güney Kürdistan\'da uzun yıllar süren ulusal hareket.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7058',
     category: 'Dîrok',
     prompt: 'Aşağıdakilerden hangisi \'Mezopotamya\' kavramını açıklar?',
-    answers: ['Latin alfabesiyle basılan ilk Kürtçe dergi', '1946\'da kurulan ilk kısa ömürlü Kürt devleti', 'Soran emirliğinin kör lakaplı güçlü lideri', 'Dicle ve Fırat çevresindeki tarihsel bölge'],
+    answers: [
+      'Latin alfabesiyle basılan ilk Kürtçe dergi',
+      '1946\'da kurulan ilk kısa ömürlü Kürt devleti',
+      'Soran emirliğinin kör lakaplı güçlü lideri',
+      'Dicle ve Fırat çevresindeki tarihsel bölge',
+    ],
     correctAnswer: 'Dicle ve Fırat çevresindeki tarihsel bölge',
-    explanation: '\'Mezopotamya\' → Dicle ve Fırat çevresindeki tarihsel bölge.',
+    explanation:
+        '\'Mezopotamya\' → Dicle ve Fırat çevresindeki tarihsel bölge.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7066',
     category: 'Dîrok',
     prompt: '\'Dersim 1937\' hangi yönüyle bilinir?',
-    answers: ['Irak\'ta kendini Kürdistan kralı ilan eden lider', 'Kürdistan gazetesini çıkaran ilk Kürt gazeteci', 'Dersim bölgesinde yaşanan askeri harekat ve kriz', '1988\'de Kürtlere karşı yapılan kimyasal saldırı'],
+    answers: [
+      'Irak\'ta kendini Kürdistan kralı ilan eden lider',
+      'Kürdistan gazetesini çıkaran ilk Kürt gazeteci',
+      'Dersim bölgesinde yaşanan askeri harekat ve kriz',
+      '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
+    ],
     correctAnswer: 'Dersim bölgesinde yaşanan askeri harekat ve kriz',
-    explanation: '\'Dersim 1937\': Dersim bölgesinde yaşanan askeri harekat ve kriz.',
+    explanation:
+        '\'Dersim 1937\': Dersim bölgesinde yaşanan askeri harekat ve kriz.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7091',
     category: 'Dîrok',
-    prompt: '\'Mikdat Mithat Bedirxan\', Dîrok alanında bilinen gerçek bir kavramdır.',
+    prompt:
+        '\'Mikdat Mithat Bedirxan\', Dîrok alanında bilinen gerçek bir kavramdır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Mikdat Mithat Bedirxan\' Dîrok alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Mikdat Mithat Bedirxan\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7097',
@@ -4542,89 +5422,127 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Mîrê Kor\' Dîrok açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Mîrê Kor\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Mîrê Kor\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7118',
     category: 'Dîrok',
-    prompt: '\'Yerleşik yaşam\' Dîrok bilgisinin parçası olan gerçek bir başlıktır.',
+    prompt:
+        '\'Yerleşik yaşam\' Dîrok bilgisinin parçası olan gerçek bir başlıktır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Yerleşik yaşam\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7135',
     category: 'Dîrok',
     prompt: '\'Cizre\' için geçerli tanım hangisidir?',
-    answers: ['Irak rejimi tarafından idam edilen Kürt kadın aktivist', 'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi', 'Botan emirliğinin ve tarihsel kültürün beşiği olan şehir', '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş'],
+    answers: [
+      'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
+      'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
+      'Botan emirliğinin ve tarihsel kültürün beşiği olan şehir',
+      '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş',
+    ],
     correctAnswer: 'Botan emirliğinin ve tarihsel kültürün beşiği olan şehir',
-    explanation: '\'Cizre\' → Botan emirliğinin ve tarihsel kültürün beşiği olan şehir.',
+    explanation:
+        '\'Cizre\' → Botan emirliğinin ve tarihsel kültürün beşiği olan şehir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7145',
     category: 'Dîrok',
     prompt: '\'Şeyh Said\', Dîrok konusunda neyi anlatır?',
-    answers: ['Ravanduz merkezli askeri güç biriktiren beylik', 'Irak rejimi tarafından Kürtlere yönelik soykırım', '1925 yılında Kürt hakları için isyan eden lider', 'Kürt coğrafyasını dört devlete bölen antlaşma'],
+    answers: [
+      'Ravanduz merkezli askeri güç biriktiren beylik',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+      '1925 yılında Kürt hakları için isyan eden lider',
+      'Kürt coğrafyasını dört devlete bölen antlaşma',
+    ],
     correctAnswer: '1925 yılında Kürt hakları için isyan eden lider',
-    explanation: '\'Şeyh Said\': 1925 yılında Kürt hakları için isyan eden lider.',
+    explanation:
+        '\'Şeyh Said\': 1925 yılında Kürt hakları için isyan eden lider.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7151',
     category: 'Dîrok',
     prompt: '\'Baban Emirliği\' doğru şekilde nasıl açıklanır?',
-    answers: ['1946\'da kurulan ilk kısa ömürlü Kürt devleti', 'Döneminden kalan belge veya nesne (birincil kaynak)', 'Dicle ve Fırat çevresindeki tarihsel bölge', 'Süleymaniye merkezli güçlü Kürt prensliği'],
+    answers: [
+      '1946\'da kurulan ilk kısa ömürlü Kürt devleti',
+      'Döneminden kalan belge veya nesne (birincil kaynak)',
+      'Dicle ve Fırat çevresindeki tarihsel bölge',
+      'Süleymaniye merkezli güçlü Kürt prensliği',
+    ],
     correctAnswer: 'Süleymaniye merkezli güçlü Kürt prensliği',
-    explanation: '\'Baban Emirliği\' → Süleymaniye merkezli güçlü Kürt prensliği.',
+    explanation:
+        '\'Baban Emirliği\' → Süleymaniye merkezli güçlü Kürt prensliği.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7163',
     category: 'Dîrok',
     prompt: 'Dîrok bilgisinde \'Şeyh Said\' ile ilgili doğru olan hangisidir?',
-    answers: ['Osmanlı döneminde özerk kalmış Kürt hükümdarlığı', '1925 yılında Kürt hakları için isyan eden lider', 'Osmanlı ve Safevi sınırını belirleyen antlaşma', 'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı'],
+    answers: [
+      'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
+      '1925 yılında Kürt hakları için isyan eden lider',
+      'Osmanlı ve Safevi sınırını belirleyen antlaşma',
+      'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
+    ],
     correctAnswer: '1925 yılında Kürt hakları için isyan eden lider',
-    explanation: '\'Şeyh Said\': 1925 yılında Kürt hakları için isyan eden lider.',
+    explanation:
+        '\'Şeyh Said\': 1925 yılında Kürt hakları için isyan eden lider.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7196',
     category: 'Dîrok',
-    prompt: 'Dîrok çalışmalarında \'Barzani hareketi\' ele alınan konulardandır.',
+    prompt:
+        'Dîrok çalışmalarında \'Barzani hareketi\' ele alınan konulardandır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Barzani hareketi\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7201',
     category: 'Dîrok',
     prompt: '\'Celadet Bedirxan\' kim olarak anılır?',
-    answers: ['Süleymaniye merkezli güçlü Kürt prensliği', 'Soran emirliğinin kör lakaplı güçlü lideri', 'Kürt örf adetlerini derleyen ilk araştırmacı', 'Kürt alfabesini geliştiren yayıncı ve aydın'],
+    answers: [
+      'Süleymaniye merkezli güçlü Kürt prensliği',
+      'Soran emirliğinin kör lakaplı güçlü lideri',
+      'Kürt örf adetlerini derleyen ilk araştırmacı',
+      'Kürt alfabesini geliştiren yayıncı ve aydın',
+    ],
     correctAnswer: 'Kürt alfabesini geliştiren yayıncı ve aydın',
-    explanation: '\'Celadet Bedirxan\': Kürt alfabesini geliştiren yayıncı ve aydın.',
+    explanation:
+        '\'Celadet Bedirxan\': Kürt alfabesini geliştiren yayıncı ve aydın.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7210',
     category: 'Dîrok',
     prompt: 'Hangisi \'Mîrê Kor\' kişisini doğru tanıtır?',
-    answers: ['Soran emirliğinin kör lakaplı güçlü lideri', 'Döneminden kalan belge veya nesne (birincil kaynak)', 'Van gölü güneyinde hüküm sürmüş Kürt beyliği', 'Kürt alfabesini geliştiren yayıncı ve aydın'],
+    answers: [
+      'Soran emirliğinin kör lakaplı güçlü lideri',
+      'Döneminden kalan belge veya nesne (birincil kaynak)',
+      'Van gölü güneyinde hüküm sürmüş Kürt beyliği',
+      'Kürt alfabesini geliştiren yayıncı ve aydın',
+    ],
     correctAnswer: 'Soran emirliğinin kör lakaplı güçlü lideri',
     explanation: '\'Mîrê Kor\': Soran emirliğinin kör lakaplı güçlü lideri.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7222',
@@ -4634,27 +5552,39 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Jiyan gazetesi\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7223',
     category: 'Dîrok',
     prompt: '\'Kasr-ı Şirin Antlaşması\' için en isabetli açıklama hangisidir?',
-    answers: ['Osmanlı ve Safevi sınırını belirleyen antlaşma', 'Irak\'ta kendini Kürdistan kralı ilan eden lider', 'Kürt coğrafyasını dört devlete bölen antlaşma', 'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı'],
+    answers: [
+      'Osmanlı ve Safevi sınırını belirleyen antlaşma',
+      'Irak\'ta kendini Kürdistan kralı ilan eden lider',
+      'Kürt coğrafyasını dört devlete bölen antlaşma',
+      'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
+    ],
     correctAnswer: 'Osmanlı ve Safevi sınırını belirleyen antlaşma',
-    explanation: '\'Kasr-ı Şirin Antlaşması\' → Osmanlı ve Safevi sınırını belirleyen antlaşma.',
+    explanation:
+        '\'Kasr-ı Şirin Antlaşması\' → Osmanlı ve Safevi sınırını belirleyen antlaşma.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7227',
     category: 'Dîrok',
     prompt: '\'Halepçe katliamı\' için geçerli tanım hangisidir?',
-    answers: ['19. yüzyılda özerklik mücadelesi veren Kürt emiri', '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş', '1988\'de Kürtlere karşı yapılan kimyasal saldırı', 'Fiili özerk yönetim ve sonrasında KRG kurumlaşması'],
+    answers: [
+      '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
+      '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş',
+      '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
+      'Fiili özerk yönetim ve sonrasında KRG kurumlaşması',
+    ],
     correctAnswer: '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
-    explanation: '\'Halepçe katliamı\' → 1988\'de Kürtlere karşı yapılan kimyasal saldırı.',
+    explanation:
+        '\'Halepçe katliamı\' → 1988\'de Kürtlere karşı yapılan kimyasal saldırı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7228',
@@ -4664,7 +5594,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Amida\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7230',
@@ -4672,89 +5602,138 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Dîrok alanında \'Soran emirliği\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Soran emirliği\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Soran emirliği\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7242',
     category: 'Dîrok',
     prompt: 'Aşağıdakilerden hangisi \'Lozan Antlaşması\' kavramını açıklar?',
-    answers: ['Van gölü güneyinde hüküm sürmüş Kürt beyliği', 'Şeref Han tarafından yazılan Kürt tarihi eseri', 'Kürt coğrafyasını dört devlete bölen antlaşma', 'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı'],
+    answers: [
+      'Van gölü güneyinde hüküm sürmüş Kürt beyliği',
+      'Şeref Han tarafından yazılan Kürt tarihi eseri',
+      'Kürt coğrafyasını dört devlete bölen antlaşma',
+      'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
+    ],
     correctAnswer: 'Kürt coğrafyasını dört devlete bölen antlaşma',
-    explanation: '\'Lozan Antlaşması\' → Kürt coğrafyasını dört devlete bölen antlaşma.',
+    explanation:
+        '\'Lozan Antlaşması\' → Kürt coğrafyasını dört devlete bölen antlaşma.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7247',
     category: 'Dîrok',
     prompt: 'Aşağıdakilerden hangisi \'Şengal\' için doğrudur?',
-    answers: ['Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi', 'Selahaddin Eyyubi tarafından kurulan büyük devlet', 'Fiili özerk yönetim ve sonrasında KRG kurumlaşması', 'Süleymaniye\'de basılan erken dönem Kürtçe gazete'],
+    answers: [
+      'Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi',
+      'Selahaddin Eyyubi tarafından kurulan büyük devlet',
+      'Fiili özerk yönetim ve sonrasında KRG kurumlaşması',
+      'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
+    ],
     correctAnswer: 'Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi',
-    explanation: '\'Şengal\' → Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi.',
+    explanation:
+        '\'Şengal\' → Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7249',
     category: 'Dîrok',
     prompt: '\'Şeyh Mahmud Berzenci\' tarihsel olarak kimdir?',
-    answers: ['Irak\'ta kendini Kürdistan kralı ilan eden lider', '1988\'de Kürtlere karşı yapılan kimyasal saldırı', 'Irak rejimi tarafından Kürtlere yönelik soykırım', 'Kürdistan gazetesini çıkaran ilk Kürt gazeteci'],
+    answers: [
+      'Irak\'ta kendini Kürdistan kralı ilan eden lider',
+      '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+      'Kürdistan gazetesini çıkaran ilk Kürt gazeteci',
+    ],
     correctAnswer: 'Irak\'ta kendini Kürdistan kralı ilan eden lider',
-    explanation: '\'Şeyh Mahmud Berzenci\': Irak\'ta kendini Kürdistan kralı ilan eden lider.',
+    explanation:
+        '\'Şeyh Mahmud Berzenci\': Irak\'ta kendini Kürdistan kralı ilan eden lider.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7257',
     category: 'Dîrok',
     prompt: 'Dîrok alanında \'Qazi Muhammed\' neyi ifade eder?',
-    answers: ['Süleymaniye merkezli güçlü Kürt prensliği', 'Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı', 'Kürt alfabesini geliştiren yayıncı ve aydın', 'Van gölü güneyinde hüküm sürmüş Kürt beyliği'],
+    answers: [
+      'Süleymaniye merkezli güçlü Kürt prensliği',
+      'Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı',
+      'Kürt alfabesini geliştiren yayıncı ve aydın',
+      'Van gölü güneyinde hüküm sürmüş Kürt beyliği',
+    ],
     correctAnswer: 'Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı',
-    explanation: '\'Qazi Muhammed\': Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı.',
+    explanation:
+        '\'Qazi Muhammed\': Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7260',
     category: 'Dîrok',
     prompt: '\'Lozan Antlaşması\' kavramını doğru anlatan ifade hangisidir?',
-    answers: ['Osmanlı ve Safevi sınırını belirleyen antlaşma', 'Diyarbakır merkezli ortaçağ Kürt hanedanlığı', '1988\'de Kürtlere karşı yapılan kimyasal saldırı', 'Kürt coğrafyasını dört devlete bölen antlaşma'],
+    answers: [
+      'Osmanlı ve Safevi sınırını belirleyen antlaşma',
+      'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
+      '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
+      'Kürt coğrafyasını dört devlete bölen antlaşma',
+    ],
     correctAnswer: 'Kürt coğrafyasını dört devlete bölen antlaşma',
-    explanation: '\'Lozan Antlaşması\' → Kürt coğrafyasını dört devlete bölen antlaşma.',
+    explanation:
+        '\'Lozan Antlaşması\' → Kürt coğrafyasını dört devlete bölen antlaşma.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7293',
     category: 'Dîrok',
     prompt: '\'Ağrı İsyanları\' hangi yönüyle bilinir?',
-    answers: ['Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi', '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş', 'Botan emirliğinin ve tarihsel kültürün beşiği olan şehir', 'Irak rejimi tarafından idam edilen Kürt kadın aktivist'],
+    answers: [
+      'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
+      '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş',
+      'Botan emirliğinin ve tarihsel kültürün beşiği olan şehir',
+      'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
+    ],
     correctAnswer: '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş',
-    explanation: '\'Ağrı İsyanları\': 1927-1930 yılları arasında Ağrı dağı çevresindeki direniş.',
+    explanation:
+        '\'Ağrı İsyanları\': 1927-1930 yılları arasında Ağrı dağı çevresindeki direniş.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7300',
     category: 'Dîrok',
     prompt: 'Aşağıdakilerden hangisi \'Mela Mahmude Bayazidi\' için doğrudur?',
-    answers: ['Döneminden kalan belge veya nesne (birincil kaynak)', 'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı', 'Kürt örf adetlerini derleyen ilk araştırmacı', 'Osmanlı ve Safevi sınırını belirleyen antlaşma'],
+    answers: [
+      'Döneminden kalan belge veya nesne (birincil kaynak)',
+      'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
+      'Kürt örf adetlerini derleyen ilk araştırmacı',
+      'Osmanlı ve Safevi sınırını belirleyen antlaşma',
+    ],
     correctAnswer: 'Kürt örf adetlerini derleyen ilk araştırmacı',
-    explanation: '\'Mela Mahmude Bayazidi\': Kürt örf adetlerini derleyen ilk araştırmacı.',
+    explanation:
+        '\'Mela Mahmude Bayazidi\': Kürt örf adetlerini derleyen ilk araştırmacı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7312',
     category: 'Dîrok',
     prompt: '\'Şeyh Mahmud Berzenci\' ile ilgili doğru bilgi hangisidir?',
-    answers: ['Irak\'ta kendini Kürdistan kralı ilan eden lider', 'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi', 'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı', 'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı'],
+    answers: [
+      'Irak\'ta kendini Kürdistan kralı ilan eden lider',
+      'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
+      'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
+      'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
+    ],
     correctAnswer: 'Irak\'ta kendini Kürdistan kralı ilan eden lider',
-    explanation: '\'Şeyh Mahmud Berzenci\': Irak\'ta kendini Kürdistan kralı ilan eden lider.',
+    explanation:
+        '\'Şeyh Mahmud Berzenci\': Irak\'ta kendini Kürdistan kralı ilan eden lider.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7316',
@@ -4762,9 +5741,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Mezopotamya\' Dîrok bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Mezopotamya\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Mezopotamya\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7326',
@@ -4772,9 +5752,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Mahabad Cumhuriyeti\' Dîrok bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Mahabad Cumhuriyeti\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Mahabad Cumhuriyeti\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7333',
@@ -4782,69 +5763,106 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Dîrok çalışmalarında \'Dersim 1937\' hiç kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Dersim 1937\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Dersim 1937\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7334',
     category: 'Dîrok',
     prompt: '\'Barzani Hareketi\' kavramı neyi karşılar?',
-    answers: ['Hoybun cemiyeti adına askeri liderlik yapan subay', 'Irak rejimi tarafından Kürtlere yönelik soykırım', 'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet', 'Güney Kürdistan\'da uzun yıllar süren ulusal hareket'],
+    answers: [
+      'Hoybun cemiyeti adına askeri liderlik yapan subay',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+      'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet',
+      'Güney Kürdistan\'da uzun yıllar süren ulusal hareket',
+    ],
     correctAnswer: 'Güney Kürdistan\'da uzun yıllar süren ulusal hareket',
-    explanation: '\'Barzani Hareketi\' → Güney Kürdistan\'da uzun yıllar süren ulusal hareket.',
+    explanation:
+        '\'Barzani Hareketi\' → Güney Kürdistan\'da uzun yıllar süren ulusal hareket.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7335',
     category: 'Dîrok',
     prompt: '\'Ehmedê Xanî\' ile ilgili doğru bilgi hangisidir?',
-    answers: ['Kürdistan gazetesini çıkaran ilk Kürt gazeteci', '17. yüzyılda Kürt aydınlanma fikrini yazan şair', 'Dersim bölgesinde yaşanan askeri harekat ve kriz', 'Kürt coğrafyasını dört devlete bölen antlaşma'],
+    answers: [
+      'Kürdistan gazetesini çıkaran ilk Kürt gazeteci',
+      '17. yüzyılda Kürt aydınlanma fikrini yazan şair',
+      'Dersim bölgesinde yaşanan askeri harekat ve kriz',
+      'Kürt coğrafyasını dört devlete bölen antlaşma',
+    ],
     correctAnswer: '17. yüzyılda Kürt aydınlanma fikrini yazan şair',
-    explanation: '\'Ehmedê Xanî\': 17. yüzyılda Kürt aydınlanma fikrini yazan şair.',
+    explanation:
+        '\'Ehmedê Xanî\': 17. yüzyılda Kürt aydınlanma fikrini yazan şair.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7351',
     category: 'Dîrok',
     prompt: 'Hangisi \'Şeyh Said\' kişisini doğru tanıtır?',
-    answers: ['Irak rejimi tarafından Kürtlere yönelik soykırım', 'tanıklık ve anlatılarla geçmişi anlama yöntemi', '1925 yılında Kürt hakları için isyan eden lider', 'Osmanlı ve Safevi sınırını belirleyen antlaşma'],
+    answers: [
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+      'tanıklık ve anlatılarla geçmişi anlama yöntemi',
+      '1925 yılında Kürt hakları için isyan eden lider',
+      'Osmanlı ve Safevi sınırını belirleyen antlaşma',
+    ],
     correctAnswer: '1925 yılında Kürt hakları için isyan eden lider',
-    explanation: '\'Şeyh Said\': 1925 yılında Kürt hakları için isyan eden lider.',
+    explanation:
+        '\'Şeyh Said\': 1925 yılında Kürt hakları için isyan eden lider.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7360',
     category: 'Dîrok',
     prompt: '\'Soran Emirliği\' için en isabetli açıklama hangisidir?',
-    answers: ['Merkezî yönetime bağlanmış / tasfiye edilmiş yapı', 'Ravanduz merkezli askeri güç biriktiren beylik', 'Diyarbakır merkezli ortaçağ Kürt hanedanlığı', 'Irak\'ta kendini Kürdistan kralı ilan eden lider'],
+    answers: [
+      'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
+      'Ravanduz merkezli askeri güç biriktiren beylik',
+      'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
+      'Irak\'ta kendini Kürdistan kralı ilan eden lider',
+    ],
     correctAnswer: 'Ravanduz merkezli askeri güç biriktiren beylik',
-    explanation: '\'Soran Emirliği\' → Ravanduz merkezli askeri güç biriktiren beylik.',
+    explanation:
+        '\'Soran Emirliği\' → Ravanduz merkezli askeri güç biriktiren beylik.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7372',
     category: 'Dîrok',
     prompt: 'Dîrok açısından \'Mervaniler\' için doğru ifade hangisidir?',
-    answers: ['Osmanlı ve Safevi sınırını belirleyen antlaşma', 'Kürt alfabesini geliştiren yayıncı ve aydın', 'Osmanlı ve Kaçar merkezileşme politikaları', 'Diyarbakır merkezli ortaçağ Kürt hanedanlığı'],
+    answers: [
+      'Osmanlı ve Safevi sınırını belirleyen antlaşma',
+      'Kürt alfabesini geliştiren yayıncı ve aydın',
+      'Osmanlı ve Kaçar merkezileşme politikaları',
+      'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
+    ],
     correctAnswer: 'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
-    explanation: '\'Mervaniler\' → Diyarbakır merkezli ortaçağ Kürt hanedanlığı.',
+    explanation:
+        '\'Mervaniler\' → Diyarbakır merkezli ortaçağ Kürt hanedanlığı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7383',
     category: 'Dîrok',
     prompt: 'Hangisi \'Mahabad Cumhuriyeti\' tanımına uyar?',
-    answers: ['Kürt örf adetlerini derleyen ilk araştırmacı', '1946\'da kurulan ilk kısa ömürlü Kürt devleti', 'Osmanlı ve Safevi sınırını belirleyen antlaşma', 'Döneminden kalan belge veya nesne (birincil kaynak)'],
+    answers: [
+      'Kürt örf adetlerini derleyen ilk araştırmacı',
+      '1946\'da kurulan ilk kısa ömürlü Kürt devleti',
+      'Osmanlı ve Safevi sınırını belirleyen antlaşma',
+      'Döneminden kalan belge veya nesne (birincil kaynak)',
+    ],
     correctAnswer: '1946\'da kurulan ilk kısa ömürlü Kürt devleti',
-    explanation: '\'Mahabad Cumhuriyeti\' → 1946\'da kurulan ilk kısa ömürlü Kürt devleti.',
+    explanation:
+        '\'Mahabad Cumhuriyeti\' → 1946\'da kurulan ilk kısa ömürlü Kürt devleti.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7386',
@@ -4854,7 +5872,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Sözlü tarih\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7388',
@@ -4864,37 +5882,49 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Şerefname\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7394',
     category: 'Dîrok',
     prompt: 'Hangisi \'Koçgiri İsyanı\' ile uyumlu bir tanımdır?',
-    answers: ['Van gölü güneyinde hüküm sürmüş Kürt beyliği', 'Kürt alfabesini geliştiren yayıncı ve aydın', '1921\'de Sivas yöresinde gelişen Kürt hareketi', '1925 yılında Kürt hakları için isyan eden lider'],
+    answers: [
+      'Van gölü güneyinde hüküm sürmüş Kürt beyliği',
+      'Kürt alfabesini geliştiren yayıncı ve aydın',
+      '1921\'de Sivas yöresinde gelişen Kürt hareketi',
+      '1925 yılında Kürt hakları için isyan eden lider',
+    ],
     correctAnswer: '1921\'de Sivas yöresinde gelişen Kürt hareketi',
-    explanation: '\'Koçgiri İsyanı\' → 1921\'de Sivas yöresinde gelişen Kürt hareketi.',
+    explanation:
+        '\'Koçgiri İsyanı\' → 1921\'de Sivas yöresinde gelişen Kürt hareketi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7400',
     category: 'Dîrok',
-    prompt: 'Dîrok alanında \'Med i̇mparatorluğu\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Dîrok alanında \'Med i̇mparatorluğu\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Med i̇mparatorluğu\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7417',
     category: 'Dîrok',
     prompt: '\'tarihsel yorum\' neyi ifade eder?',
-    answers: ['Mısır, Suriye ve çevresi', 'Batı İran / Zagros çevresi', 'kanıtlardan anlam çıkarma', 'Azerbaycan/Tebriz çevresi'],
+    answers: [
+      'Mısır, Suriye ve çevresi',
+      'Batı İran / Zagros çevresi',
+      'kanıtlardan anlam çıkarma',
+      'Azerbaycan/Tebriz çevresi',
+    ],
     correctAnswer: 'kanıtlardan anlam çıkarma',
     explanation: '\'tarihsel yorum\' → kanıtlardan anlam çıkarma.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7428',
@@ -4902,29 +5932,42 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Dîrok bağlamında \'İhsan Nuri Paşa\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'İhsan Nuri Paşa\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'İhsan Nuri Paşa\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7443',
     category: 'Dîrok',
     prompt: '\'Eyyubiler\' nasıl tanımlanır?',
-    answers: ['17. yüzyılda Kürt aydınlanma fikrini yazan şair', 'Süleymaniye\'de basılan erken dönem Kürtçe gazete', 'Fiili özerk yönetim ve sonrasında KRG kurumlaşması', 'Selahaddin Eyyubi tarafından kurulan büyük devlet'],
+    answers: [
+      '17. yüzyılda Kürt aydınlanma fikrini yazan şair',
+      'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
+      'Fiili özerk yönetim ve sonrasında KRG kurumlaşması',
+      'Selahaddin Eyyubi tarafından kurulan büyük devlet',
+    ],
     correctAnswer: 'Selahaddin Eyyubi tarafından kurulan büyük devlet',
-    explanation: '\'Eyyubiler\' → Selahaddin Eyyubi tarafından kurulan büyük devlet.',
+    explanation:
+        '\'Eyyubiler\' → Selahaddin Eyyubi tarafından kurulan büyük devlet.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7451',
     category: 'Dîrok',
     prompt: 'Dîrok bağlamında \'Ağrı İsyanları\' nasıl anlaşılmalıdır?',
-    answers: ['19. yüzyılda özerklik mücadelesi veren Kürt emiri', '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş', 'Irak rejimi tarafından Kürtlere yönelik soykırım', 'Irak rejimi tarafından idam edilen Kürt kadın aktivist'],
+    answers: [
+      '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
+      '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+      'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
+    ],
     correctAnswer: '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş',
-    explanation: '\'Ağrı İsyanları\': 1927-1930 yılları arasında Ağrı dağı çevresindeki direniş.',
+    explanation:
+        '\'Ağrı İsyanları\': 1927-1930 yılları arasında Ağrı dağı çevresindeki direniş.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7465',
@@ -4932,89 +5975,132 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Ağrı İsyanları\' Dîrok alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Ağrı İsyanları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Ağrı İsyanları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7474',
     category: 'Dîrok',
     prompt: '\'sözlü tarih\' ifadesinin doğru karşılığı hangisidir?',
-    answers: ['tanıklık ve anlatılarla geçmişi anlama yöntemi', 'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı', 'Diyarbakır merkezli ortaçağ Kürt hanedanlığı', 'Şeref Han tarafından yazılan Kürt tarihi eseri'],
+    answers: [
+      'tanıklık ve anlatılarla geçmişi anlama yöntemi',
+      'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
+      'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
+      'Şeref Han tarafından yazılan Kürt tarihi eseri',
+    ],
     correctAnswer: 'tanıklık ve anlatılarla geçmişi anlama yöntemi',
-    explanation: '\'sözlü tarih\' → tanıklık ve anlatılarla geçmişi anlama yöntemi.',
+    explanation:
+        '\'sözlü tarih\' → tanıklık ve anlatılarla geçmişi anlama yöntemi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7480',
     category: 'Dîrok',
     prompt: 'Şıklardan hangisi \'Cizre\' anlamına gelir?',
-    answers: ['Selahaddin Eyyubi tarafından kurulan büyük devlet', 'Botan emirliğinin ve tarihsel kültürün beşiği olan şehir', 'Irak rejimi tarafından Kürtlere yönelik soykırım', 'Irak rejimi tarafından idam edilen Kürt kadın aktivist'],
+    answers: [
+      'Selahaddin Eyyubi tarafından kurulan büyük devlet',
+      'Botan emirliğinin ve tarihsel kültürün beşiği olan şehir',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+      'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
+    ],
     correctAnswer: 'Botan emirliğinin ve tarihsel kültürün beşiği olan şehir',
-    explanation: '\'Cizre\' → Botan emirliğinin ve tarihsel kültürün beşiği olan şehir.',
+    explanation:
+        '\'Cizre\' → Botan emirliğinin ve tarihsel kültürün beşiği olan şehir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7483',
     category: 'Dîrok',
     prompt: '\'Qazi Muhammed\' kimdir?',
-    answers: ['Döneminden kalan belge veya nesne (birincil kaynak)', 'Diyarbakır merkezli ortaçağ Kürt hanedanlığı', 'Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı', 'Soran emirliğinin kör lakaplı güçlü lideri'],
+    answers: [
+      'Döneminden kalan belge veya nesne (birincil kaynak)',
+      'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
+      'Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı',
+      'Soran emirliğinin kör lakaplı güçlü lideri',
+    ],
     correctAnswer: 'Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı',
-    explanation: '\'Qazi Muhammed\': Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı.',
+    explanation:
+        '\'Qazi Muhammed\': Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7497',
     category: 'Dîrok',
     prompt: '\'Mustafa Barzani\' hangi yönüyle bilinir?',
-    answers: ['Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet', 'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı', 'Süleymaniye\'de basılan erken dönem Kürtçe gazete', 'Kürt hareketinin efsanevi askeri ve siyasi lideri'],
+    answers: [
+      'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet',
+      'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
+      'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
+      'Kürt hareketinin efsanevi askeri ve siyasi lideri',
+    ],
     correctAnswer: 'Kürt hareketinin efsanevi askeri ve siyasi lideri',
-    explanation: '\'Mustafa Barzani\': Kürt hareketinin efsanevi askeri ve siyasi lideri.',
+    explanation:
+        '\'Mustafa Barzani\': Kürt hareketinin efsanevi askeri ve siyasi lideri.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7507',
     category: 'Dîrok',
     prompt: '\'göç\' nasıl tanımlanır?',
-    answers: ['Zulme karşı özgürlük ve direnişi', 'bölgeler arası alışveriş güzergahı', 'Cizre merkezli önemli Kürt beyliği', 'toplulukların yer değiştirmesi'],
+    answers: [
+      'Zulme karşı özgürlük ve direnişi',
+      'bölgeler arası alışveriş güzergahı',
+      'Cizre merkezli önemli Kürt beyliği',
+      'toplulukların yer değiştirmesi',
+    ],
     correctAnswer: 'toplulukların yer değiştirmesi',
     explanation: '\'göç\' → toplulukların yer değiştirmesi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7524',
     category: 'Dîrok',
-    prompt: '\'Lozan Antlaşması\' Dîrok bilgisinin parçası olan gerçek bir başlıktır.',
+    prompt:
+        '\'Lozan Antlaşması\' Dîrok bilgisinin parçası olan gerçek bir başlıktır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Lozan Antlaşması\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7527',
     category: 'Dîrok',
     prompt: '\'Amida\', Dîrok konusunda neyi anlatır?',
-    answers: ['Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi', 'Irak rejimi tarafından Kürtlere yönelik soykırım', 'Kürt hareketinin efsanevi askeri ve siyasi lideri', 'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet'],
+    answers: [
+      'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+      'Kürt hareketinin efsanevi askeri ve siyasi lideri',
+      'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet',
+    ],
     correctAnswer: 'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
-    explanation: '\'Amida\' → Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi.',
+    explanation:
+        '\'Amida\' → Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7528',
     category: 'Dîrok',
     prompt: 'Hangisi \'Kürdistan Eyaleti\' kişisini doğru tanıtır?',
-    answers: ['Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet', 'Hoybun cemiyeti adına askeri liderlik yapan subay', 'Süleymaniye\'de basılan erken dönem Kürtçe gazete', '19. yüzyılda özerklik mücadelesi veren Kürt emiri'],
+    answers: [
+      'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet',
+      'Hoybun cemiyeti adına askeri liderlik yapan subay',
+      'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
+      '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
+    ],
     correctAnswer: 'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet',
-    explanation: '\'Kürdistan Eyaleti\': Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet.',
+    explanation:
+        '\'Kürdistan Eyaleti\': Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7560',
@@ -5024,37 +6110,50 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'ticaret yolu\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7569',
     category: 'Dîrok',
     prompt: '\'kronoloji\' hakkında bilinen doğru nedir?',
-    answers: ['olayları zaman sırasına koyma', 'Kafkasya (Gence-Ani çevresi)', 'toplumların birbirini etkilemesi', 'Osmanlı döneminde (16. yüzyıl)'],
+    answers: [
+      'olayları zaman sırasına koyma',
+      'Kafkasya (Gence-Ani çevresi)',
+      'toplumların birbirini etkilemesi',
+      'Osmanlı döneminde (16. yüzyıl)',
+    ],
     correctAnswer: 'olayları zaman sırasına koyma',
     explanation: '\'kronoloji\' → olayları zaman sırasına koyma.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7598',
     category: 'Dîrok',
     prompt: '\'Kürdistan gazetesi\' dendiğinde kastedilen nedir?',
-    answers: ['Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı', 'Kahire\'de 1898\'de basılan ilk Kürt gazetesi', 'Soran emirliğinin kör lakaplı güçlü lideri', 'Diyarbakır merkezli ortaçağ Kürt hanedanlığı'],
+    answers: [
+      'Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı',
+      'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
+      'Soran emirliğinin kör lakaplı güçlü lideri',
+      'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
+    ],
     correctAnswer: 'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
-    explanation: '\'Kürdistan gazetesi\' → Kahire\'de 1898\'de basılan ilk Kürt gazetesi.',
+    explanation:
+        '\'Kürdistan gazetesi\' → Kahire\'de 1898\'de basılan ilk Kürt gazetesi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7600',
     category: 'Dîrok',
-    prompt: 'Dîrok çerçevesinde \'Kasr-ı Şirin Antlaşması\' bilinen bir konudur.',
+    prompt:
+        'Dîrok çerçevesinde \'Kasr-ı Şirin Antlaşması\' bilinen bir konudur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Kasr-ı Şirin Antlaşması\' Dîrok alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Kasr-ı Şirin Antlaşması\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7604',
@@ -5064,17 +6163,24 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Eyyubiler\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7605',
     category: 'Dîrok',
-    prompt: 'Hangisi Dîrok içinde \'birincil kaynak\' kavramını doğru yerleştirir?',
-    answers: ['Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı', 'Kürt coğrafyasını dört devlete bölen antlaşma', 'Kahire\'de 1898\'de basılan ilk Kürt gazetesi', 'Döneminden kalan belge veya nesne (birincil kaynak)'],
+    prompt:
+        'Hangisi Dîrok içinde \'birincil kaynak\' kavramını doğru yerleştirir?',
+    answers: [
+      'Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı',
+      'Kürt coğrafyasını dört devlete bölen antlaşma',
+      'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
+      'Döneminden kalan belge veya nesne (birincil kaynak)',
+    ],
     correctAnswer: 'Döneminden kalan belge veya nesne (birincil kaynak)',
-    explanation: '\'birincil kaynak\' → Döneminden kalan belge veya nesne (birincil kaynak).',
+    explanation:
+        '\'birincil kaynak\' → Döneminden kalan belge veya nesne (birincil kaynak).',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7608',
@@ -5082,89 +6188,138 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Celadet Bedirxan\' Dîrok bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Celadet Bedirxan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Celadet Bedirxan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7633',
     category: 'Dîrok',
     prompt: 'Hangisi \'Leyla Qasim\' kişisini doğru tanıtır?',
-    answers: ['Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi', 'Selahaddin Eyyubi tarafından kurulan büyük devlet', 'Botan emirliğinin ve tarihsel kültürün beşiği olan şehir', 'Irak rejimi tarafından idam edilen Kürt kadın aktivist'],
+    answers: [
+      'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
+      'Selahaddin Eyyubi tarafından kurulan büyük devlet',
+      'Botan emirliğinin ve tarihsel kültürün beşiği olan şehir',
+      'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
+    ],
     correctAnswer: 'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
-    explanation: '\'Leyla Qasim\': Irak rejimi tarafından idam edilen Kürt kadın aktivist.',
+    explanation:
+        '\'Leyla Qasim\': Irak rejimi tarafından idam edilen Kürt kadın aktivist.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7643',
     category: 'Dîrok',
     prompt: 'Dîrok bağlamında \'Mikdat Mithat Bedirxan\' nasıl anlaşılmalıdır?',
-    answers: ['Kürt coğrafyasını dört devlete bölen antlaşma', 'Irak\'ta kendini Kürdistan kralı ilan eden lider', 'Kürdistan gazetesini çıkaran ilk Kürt gazeteci', 'Irak rejimi tarafından Kürtlere yönelik soykırım'],
+    answers: [
+      'Kürt coğrafyasını dört devlete bölen antlaşma',
+      'Irak\'ta kendini Kürdistan kralı ilan eden lider',
+      'Kürdistan gazetesini çıkaran ilk Kürt gazeteci',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+    ],
     correctAnswer: 'Kürdistan gazetesini çıkaran ilk Kürt gazeteci',
-    explanation: '\'Mikdat Mithat Bedirxan\': Kürdistan gazetesini çıkaran ilk Kürt gazeteci.',
+    explanation:
+        '\'Mikdat Mithat Bedirxan\': Kürdistan gazetesini çıkaran ilk Kürt gazeteci.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7644',
     category: 'Dîrok',
     prompt: '\'Amida\' için en isabetli açıklama hangisidir?',
-    answers: ['Güney Kürdistan\'da uzun yıllar süren ulusal hareket', 'Selahaddin Eyyubi tarafından kurulan büyük devlet', 'Kürt hareketinin efsanevi askeri ve siyasi lideri', 'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi'],
+    answers: [
+      'Güney Kürdistan\'da uzun yıllar süren ulusal hareket',
+      'Selahaddin Eyyubi tarafından kurulan büyük devlet',
+      'Kürt hareketinin efsanevi askeri ve siyasi lideri',
+      'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
+    ],
     correctAnswer: 'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
-    explanation: '\'Amida\' → Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi.',
+    explanation:
+        '\'Amida\' → Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7657',
     category: 'Dîrok',
     prompt: 'Hangisi \'Bitlis Prensliği\' kişisini doğru tanıtır?',
-    answers: ['Irak\'ta kendini Kürdistan kralı ilan eden lider', 'Irak rejimi tarafından Kürtlere yönelik soykırım', 'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı', 'Dersim bölgesinde yaşanan askeri harekat ve kriz'],
+    answers: [
+      'Irak\'ta kendini Kürdistan kralı ilan eden lider',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+      'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
+      'Dersim bölgesinde yaşanan askeri harekat ve kriz',
+    ],
     correctAnswer: 'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
-    explanation: '\'Bitlis Prensliği\': Osmanlı döneminde özerk kalmış Kürt hükümdarlığı.',
+    explanation:
+        '\'Bitlis Prensliği\': Osmanlı döneminde özerk kalmış Kürt hükümdarlığı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7666',
     category: 'Dîrok',
     prompt: 'Dîrok çerçevesinde \'Bitlis Prensliği\' ne anlama gelir?',
-    answers: ['Irak\'ta kendini Kürdistan kralı ilan eden lider', 'Selahaddin Eyyubi tarafından kurulan büyük devlet', 'Kürt hareketinin efsanevi askeri ve siyasi lideri', 'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı'],
+    answers: [
+      'Irak\'ta kendini Kürdistan kralı ilan eden lider',
+      'Selahaddin Eyyubi tarafından kurulan büyük devlet',
+      'Kürt hareketinin efsanevi askeri ve siyasi lideri',
+      'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
+    ],
     correctAnswer: 'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
-    explanation: '\'Bitlis Prensliği\': Osmanlı döneminde özerk kalmış Kürt hükümdarlığı.',
+    explanation:
+        '\'Bitlis Prensliği\': Osmanlı döneminde özerk kalmış Kürt hükümdarlığı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7668',
     category: 'Dîrok',
     prompt: '\'Halepçe katliamı\' dendiğinde kastedilen nedir?',
-    answers: ['Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi', 'Irak\'ta kendini Kürdistan kralı ilan eden lider', '1988\'de Kürtlere karşı yapılan kimyasal saldırı', 'Dersim bölgesinde yaşanan askeri harekat ve kriz'],
+    answers: [
+      'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
+      'Irak\'ta kendini Kürdistan kralı ilan eden lider',
+      '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
+      'Dersim bölgesinde yaşanan askeri harekat ve kriz',
+    ],
     correctAnswer: '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
-    explanation: '\'Halepçe katliamı\' → 1988\'de Kürtlere karşı yapılan kimyasal saldırı.',
+    explanation:
+        '\'Halepçe katliamı\' → 1988\'de Kürtlere karşı yapılan kimyasal saldırı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7669',
     category: 'Dîrok',
     prompt: 'Dîrok çerçevesinde \'Şeyh Mahmud Berzenci\' ne anlama gelir?',
-    answers: ['1988\'de Kürtlere karşı yapılan kimyasal saldırı', 'Irak\'ta kendini Kürdistan kralı ilan eden lider', 'Şeref Han tarafından yazılan Kürt tarihi eseri', 'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı'],
+    answers: [
+      '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
+      'Irak\'ta kendini Kürdistan kralı ilan eden lider',
+      'Şeref Han tarafından yazılan Kürt tarihi eseri',
+      'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
+    ],
     correctAnswer: 'Irak\'ta kendini Kürdistan kralı ilan eden lider',
-    explanation: '\'Şeyh Mahmud Berzenci\': Irak\'ta kendini Kürdistan kralı ilan eden lider.',
+    explanation:
+        '\'Şeyh Mahmud Berzenci\': Irak\'ta kendini Kürdistan kralı ilan eden lider.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7680',
     category: 'Dîrok',
     prompt: 'Dîrok açısından \'Jiyan gazetesi\' için doğru ifade hangisidir?',
-    answers: ['Süleymaniye\'de basılan erken dönem Kürtçe gazete', '17. yüzyılda Kürt aydınlanma fikrini yazan şair', '1988\'de Kürtlere karşı yapılan kimyasal saldırı', 'Irak rejimi tarafından Kürtlere yönelik soykırım'],
+    answers: [
+      'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
+      '17. yüzyılda Kürt aydınlanma fikrini yazan şair',
+      '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+    ],
     correctAnswer: 'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
-    explanation: '\'Jiyan gazetesi\' → Süleymaniye\'de basılan erken dönem Kürtçe gazete.',
+    explanation:
+        '\'Jiyan gazetesi\' → Süleymaniye\'de basılan erken dönem Kürtçe gazete.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7716',
@@ -5172,19 +6327,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Dîrok çalışmalarında \'Mela mahmude bayazidi\' hiç kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Mela mahmude bayazidi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Mela mahmude bayazidi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7717',
     category: 'Dîrok',
     prompt: 'Şıklardan hangisi \'Kürt Teali Cemiyeti\' anlamına gelir?',
-    answers: ['Dicle ve Fırat çevresindeki tarihsel bölge', 'Aşiretlerden oluşturulan süvari birlikleri', '20. yüzyıl başında kurulan Kürt örgütü', 'Osmanlı ve Kaçar merkezileşme politikaları'],
+    answers: [
+      'Dicle ve Fırat çevresindeki tarihsel bölge',
+      'Aşiretlerden oluşturulan süvari birlikleri',
+      '20. yüzyıl başında kurulan Kürt örgütü',
+      'Osmanlı ve Kaçar merkezileşme politikaları',
+    ],
     correctAnswer: '20. yüzyıl başında kurulan Kürt örgütü',
-    explanation: '\'Kürt Teali Cemiyeti\' → 20. yüzyıl başında kurulan Kürt örgütü.',
+    explanation:
+        '\'Kürt Teali Cemiyeti\' → 20. yüzyıl başında kurulan Kürt örgütü.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7720',
@@ -5192,19 +6354,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Hawar dergisi\' Dîrok alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Hawar dergisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Hawar dergisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7753',
     category: 'Dîrok',
     prompt: '\'Şengal\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['Osmanlı döneminde özerk kalmış Kürt hükümdarlığı', 'Irak rejimi tarafından idam edilen Kürt kadın aktivist', 'Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi', '19. yüzyılda özerklik mücadelesi veren Kürt emiri'],
+    answers: [
+      'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
+      'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
+      'Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi',
+      '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
+    ],
     correctAnswer: 'Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi',
-    explanation: '\'Şengal\' → Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi.',
+    explanation:
+        '\'Şengal\' → Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7761',
@@ -5212,69 +6381,100 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Dîrok alanında \'Kürt teali cemiyeti\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Kürt teali cemiyeti\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Kürt teali cemiyeti\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7763',
     category: 'Dîrok',
     prompt: '\'Bohtan Emirliği\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['Osmanlı döneminde (16. yüzyıl)', 'Cizre merkezli önemli Kürt beyliği', 'Kürt hanedan ve beyliklerinin tarihini', 'Osmanlı-Safevi dönemi (16-19. yüzyıl)'],
+    answers: [
+      'Osmanlı döneminde (16. yüzyıl)',
+      'Cizre merkezli önemli Kürt beyliği',
+      'Kürt hanedan ve beyliklerinin tarihini',
+      'Osmanlı-Safevi dönemi (16-19. yüzyıl)',
+    ],
     correctAnswer: 'Cizre merkezli önemli Kürt beyliği',
     explanation: '\'Bohtan Emirliği\' → Cizre merkezli önemli Kürt beyliği.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7777',
     category: 'Dîrok',
     prompt: '\'Hawar dergisi\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['Kürt coğrafyasını dört devlete bölen antlaşma', 'Latin alfabesiyle basılan ilk Kürtçe dergi', 'Hakkari/Cizre çevresi (dağlık güneydoğu)', 'Kahire\'de 1898\'de basılan ilk Kürt gazetesi'],
+    answers: [
+      'Kürt coğrafyasını dört devlete bölen antlaşma',
+      'Latin alfabesiyle basılan ilk Kürtçe dergi',
+      'Hakkari/Cizre çevresi (dağlık güneydoğu)',
+      'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
+    ],
     correctAnswer: 'Latin alfabesiyle basılan ilk Kürtçe dergi',
-    explanation: '\'Hawar dergisi\' → Latin alfabesiyle basılan ilk Kürtçe dergi.',
+    explanation:
+        '\'Hawar dergisi\' → Latin alfabesiyle basılan ilk Kürtçe dergi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7778',
     category: 'Dîrok',
     prompt: '\'Mervaniler\' neyi ifade eder?',
-    answers: ['Diyarbakır merkezli ortaçağ Kürt hanedanlığı', 'Dicle ve Fırat çevresindeki tarihsel bölge', 'Döneminden kalan belge veya nesne (birincil kaynak)', 'Aşiretlerden oluşturulan süvari birlikleri'],
+    answers: [
+      'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
+      'Dicle ve Fırat çevresindeki tarihsel bölge',
+      'Döneminden kalan belge veya nesne (birincil kaynak)',
+      'Aşiretlerden oluşturulan süvari birlikleri',
+    ],
     correctAnswer: 'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
-    explanation: '\'Mervaniler\' → Diyarbakır merkezli ortaçağ Kürt hanedanlığı.',
+    explanation:
+        '\'Mervaniler\' → Diyarbakır merkezli ortaçağ Kürt hanedanlığı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7798',
     category: 'Dîrok',
     prompt: 'Aşağıdakilerden hangisi \'İhsan Nuri Paşa\' için doğrudur?',
-    answers: ['Hoybun cemiyeti adına askeri liderlik yapan subay', 'Selahaddin Eyyubi tarafından kurulan büyük devlet', 'Fiili özerk yönetim ve sonrasında KRG kurumlaşması', 'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet'],
+    answers: [
+      'Hoybun cemiyeti adına askeri liderlik yapan subay',
+      'Selahaddin Eyyubi tarafından kurulan büyük devlet',
+      'Fiili özerk yönetim ve sonrasında KRG kurumlaşması',
+      'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet',
+    ],
     correctAnswer: 'Hoybun cemiyeti adına askeri liderlik yapan subay',
-    explanation: '\'İhsan Nuri Paşa\': Hoybun cemiyeti adına askeri liderlik yapan subay.',
+    explanation:
+        '\'İhsan Nuri Paşa\': Hoybun cemiyeti adına askeri liderlik yapan subay.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7803',
     category: 'Dîrok',
     prompt: 'Hangisi \'Mustafa Barzani\' kişisini doğru tanıtır?',
-    answers: ['Dersim bölgesinde yaşanan askeri harekat ve kriz', '1988\'de Kürtlere karşı yapılan kimyasal saldırı', '19. yüzyılda özerklik mücadelesi veren Kürt emiri', 'Kürt hareketinin efsanevi askeri ve siyasi lideri'],
+    answers: [
+      'Dersim bölgesinde yaşanan askeri harekat ve kriz',
+      '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
+      '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
+      'Kürt hareketinin efsanevi askeri ve siyasi lideri',
+    ],
     correctAnswer: 'Kürt hareketinin efsanevi askeri ve siyasi lideri',
-    explanation: '\'Mustafa Barzani\': Kürt hareketinin efsanevi askeri ve siyasi lideri.',
+    explanation:
+        '\'Mustafa Barzani\': Kürt hareketinin efsanevi askeri ve siyasi lideri.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7812',
     category: 'Dîrok',
-    prompt: '\'Koçgiri i̇syanı\' Dîrok bağlamında kullanılan geçerli bir terimdir.',
+    prompt:
+        '\'Koçgiri i̇syanı\' Dîrok bağlamında kullanılan geçerli bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Koçgiri i̇syanı\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7818',
@@ -5284,47 +6484,70 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Baban emirliği\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7832',
     category: 'Dîrok',
     prompt: '\'Mîrê Kor\' ile ilgili doğru bilgi hangisidir?',
-    answers: ['1946\'da kurulan ilk kısa ömürlü Kürt devleti', 'Kahire\'de 1898\'de basılan ilk Kürt gazetesi', 'Kürt coğrafyasını dört devlete bölen antlaşma', 'Soran emirliğinin kör lakaplı güçlü lideri'],
+    answers: [
+      '1946\'da kurulan ilk kısa ömürlü Kürt devleti',
+      'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
+      'Kürt coğrafyasını dört devlete bölen antlaşma',
+      'Soran emirliğinin kör lakaplı güçlü lideri',
+    ],
     correctAnswer: 'Soran emirliğinin kör lakaplı güçlü lideri',
     explanation: '\'Mîrê Kor\': Soran emirliğinin kör lakaplı güçlü lideri.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7845',
     category: 'Dîrok',
     prompt: '\'Mustafa Barzani\' tarihsel olarak kimdir?',
-    answers: ['1925 yılında Kürt hakları için isyan eden lider', 'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi', 'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı', 'Kürt hareketinin efsanevi askeri ve siyasi lideri'],
+    answers: [
+      '1925 yılında Kürt hakları için isyan eden lider',
+      'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
+      'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
+      'Kürt hareketinin efsanevi askeri ve siyasi lideri',
+    ],
     correctAnswer: 'Kürt hareketinin efsanevi askeri ve siyasi lideri',
-    explanation: '\'Mustafa Barzani\': Kürt hareketinin efsanevi askeri ve siyasi lideri.',
+    explanation:
+        '\'Mustafa Barzani\': Kürt hareketinin efsanevi askeri ve siyasi lideri.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7848',
     category: 'Dîrok',
     prompt: '\'Mahabad Cumhuriyeti\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['1946\'da kurulan ilk kısa ömürlü Kürt devleti', 'Soran emirliğinin kör lakaplı güçlü lideri', 'Aşiretlerden oluşturulan süvari birlikleri', 'Osmanlı ve Safevi sınırını belirleyen antlaşma'],
+    answers: [
+      '1946\'da kurulan ilk kısa ömürlü Kürt devleti',
+      'Soran emirliğinin kör lakaplı güçlü lideri',
+      'Aşiretlerden oluşturulan süvari birlikleri',
+      'Osmanlı ve Safevi sınırını belirleyen antlaşma',
+    ],
     correctAnswer: '1946\'da kurulan ilk kısa ömürlü Kürt devleti',
-    explanation: '\'Mahabad Cumhuriyeti\' → 1946\'da kurulan ilk kısa ömürlü Kürt devleti.',
+    explanation:
+        '\'Mahabad Cumhuriyeti\' → 1946\'da kurulan ilk kısa ömürlü Kürt devleti.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7849',
     category: 'Dîrok',
     prompt: '\'Kürdistan gazetesi\' için geçerli tanım hangisidir?',
-    answers: ['Kürt alfabesini geliştiren yayıncı ve aydın', 'Kürt örf adetlerini derleyen ilk araştırmacı', 'Latin alfabesiyle basılan ilk Kürtçe dergi', 'Kahire\'de 1898\'de basılan ilk Kürt gazetesi'],
+    answers: [
+      'Kürt alfabesini geliştiren yayıncı ve aydın',
+      'Kürt örf adetlerini derleyen ilk araştırmacı',
+      'Latin alfabesiyle basılan ilk Kürtçe dergi',
+      'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
+    ],
     correctAnswer: 'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
-    explanation: '\'Kürdistan gazetesi\' → Kahire\'de 1898\'de basılan ilk Kürt gazetesi.',
+    explanation:
+        '\'Kürdistan gazetesi\' → Kahire\'de 1898\'de basılan ilk Kürt gazetesi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7851',
@@ -5332,39 +6555,57 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Bedirhan bey\' Dîrok bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Bedirhan bey\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Bedirhan bey\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7852',
     category: 'Dîrok',
     prompt: '\'Hawar dergisi\' nasıl tanımlanır?',
-    answers: ['Latin alfabesiyle basılan ilk Kürtçe dergi', 'Kürt örf adetlerini derleyen ilk araştırmacı', 'Kahire\'de 1898\'de basılan ilk Kürt gazetesi', 'Van gölü güneyinde hüküm sürmüş Kürt beyliği'],
+    answers: [
+      'Latin alfabesiyle basılan ilk Kürtçe dergi',
+      'Kürt örf adetlerini derleyen ilk araştırmacı',
+      'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
+      'Van gölü güneyinde hüküm sürmüş Kürt beyliği',
+    ],
     correctAnswer: 'Latin alfabesiyle basılan ilk Kürtçe dergi',
-    explanation: '\'Hawar dergisi\' → Latin alfabesiyle basılan ilk Kürtçe dergi.',
+    explanation:
+        '\'Hawar dergisi\' → Latin alfabesiyle basılan ilk Kürtçe dergi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7866',
     category: 'Dîrok',
     prompt: '\'arkeoloji\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['Osmanlı-Safevi dönemi (16-19. yüzyıl)', 'yek ji wargehên herî kevn ên domdar', 'maddi kalıntılarla geçmişi araştırma', 'toplumların birbirini etkilemesi'],
+    answers: [
+      'Osmanlı-Safevi dönemi (16-19. yüzyıl)',
+      'yek ji wargehên herî kevn ên domdar',
+      'maddi kalıntılarla geçmişi araştırma',
+      'toplumların birbirini etkilemesi',
+    ],
     correctAnswer: 'maddi kalıntılarla geçmişi araştırma',
     explanation: '\'arkeoloji\' → maddi kalıntılarla geçmişi araştırma.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7874',
     category: 'Dîrok',
     prompt: '\'Med İmparatorluğu\' hangi yönüyle bilinir?',
-    answers: ['Cizre merkezli önemli Kürt beyliği', 'Merkezîleşme ve doğrudan yönetim', 'maddi kalıntılarla geçmişi araştırma', 'antik çağda Zagros merkezli büyük güç'],
+    answers: [
+      'Cizre merkezli önemli Kürt beyliği',
+      'Merkezîleşme ve doğrudan yönetim',
+      'maddi kalıntılarla geçmişi araştırma',
+      'antik çağda Zagros merkezli büyük güç',
+    ],
     correctAnswer: 'antik çağda Zagros merkezli büyük güç',
-    explanation: '\'Med İmparatorluğu\': antik çağda Zagros merkezli büyük güç.',
+    explanation:
+        '\'Med İmparatorluğu\': antik çağda Zagros merkezli büyük güç.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7878',
@@ -5372,49 +6613,75 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Bedirhan Bey\' yalnızca Dîrok dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Bedirhan Bey\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Bedirhan Bey\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7881',
     category: 'Dîrok',
-    prompt: 'Dîrok açısından \'kültürel etkileşim\' için doğru ifade hangisidir?',
-    answers: ['Demirci Kawa ile zalim Dehak', 'maddi kalıntılarla geçmişi araştırma', 'toplumların birbirini etkilemesi', 'Med İmparatorluğu (Pers öncesi)'],
+    prompt:
+        'Dîrok açısından \'kültürel etkileşim\' için doğru ifade hangisidir?',
+    answers: [
+      'Demirci Kawa ile zalim Dehak',
+      'maddi kalıntılarla geçmişi araştırma',
+      'toplumların birbirini etkilemesi',
+      'Med İmparatorluğu (Pers öncesi)',
+    ],
     correctAnswer: 'toplumların birbirini etkilemesi',
     explanation: '\'kültürel etkileşim\' → toplumların birbirini etkilemesi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7898',
     category: 'Dîrok',
     prompt: '\'Soran Emirliği\' ne anlama gelir?',
-    answers: ['Ravanduz merkezli askeri güç biriktiren beylik', '1988\'de Kürtlere karşı yapılan kimyasal saldırı', 'Irak rejimi tarafından Kürtlere yönelik soykırım', 'Şeref Han tarafından yazılan Kürt tarihi eseri'],
+    answers: [
+      'Ravanduz merkezli askeri güç biriktiren beylik',
+      '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+      'Şeref Han tarafından yazılan Kürt tarihi eseri',
+    ],
     correctAnswer: 'Ravanduz merkezli askeri güç biriktiren beylik',
-    explanation: '\'Soran Emirliği\' → Ravanduz merkezli askeri güç biriktiren beylik.',
+    explanation:
+        '\'Soran Emirliği\' → Ravanduz merkezli askeri güç biriktiren beylik.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7905',
     category: 'Dîrok',
-    prompt: 'Dîrok bilgisinde \'Anfal operasyonu\' ile ilgili doğru olan hangisidir?',
-    answers: ['17. yüzyılda Kürt aydınlanma fikrini yazan şair', 'Irak rejimi tarafından Kürtlere yönelik soykırım', 'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi', 'Hoybun cemiyeti adına askeri liderlik yapan subay'],
+    prompt:
+        'Dîrok bilgisinde \'Anfal operasyonu\' ile ilgili doğru olan hangisidir?',
+    answers: [
+      '17. yüzyılda Kürt aydınlanma fikrini yazan şair',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+      'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
+      'Hoybun cemiyeti adına askeri liderlik yapan subay',
+    ],
     correctAnswer: 'Irak rejimi tarafından Kürtlere yönelik soykırım',
-    explanation: '\'Anfal operasyonu\': Irak rejimi tarafından Kürtlere yönelik soykırım.',
+    explanation:
+        '\'Anfal operasyonu\': Irak rejimi tarafından Kürtlere yönelik soykırım.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7922',
     category: 'Dîrok',
     prompt: 'Dîrok bağlamında \'Mervaniler\' nasıl anlaşılmalıdır?',
-    answers: ['Diyarbakır merkezli ortaçağ Kürt hanedanlığı', 'Döneminden kalan belge veya nesne (birincil kaynak)', 'Kürt alfabesini geliştiren yayıncı ve aydın', 'Kürt coğrafyasını dört devlete bölen antlaşma'],
+    answers: [
+      'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
+      'Döneminden kalan belge veya nesne (birincil kaynak)',
+      'Kürt alfabesini geliştiren yayıncı ve aydın',
+      'Kürt coğrafyasını dört devlete bölen antlaşma',
+    ],
     correctAnswer: 'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
-    explanation: '\'Mervaniler\' → Diyarbakır merkezli ortaçağ Kürt hanedanlığı.',
+    explanation:
+        '\'Mervaniler\' → Diyarbakır merkezli ortaçağ Kürt hanedanlığı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7950',
@@ -5422,9 +6689,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Qazi Muhammed\' Dîrok alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Qazi Muhammed\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Qazi Muhammed\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7958',
@@ -5434,17 +6702,23 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Şengal\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7969',
     category: 'Dîrok',
     prompt: '\'Celadet Bedirxan\' hakkında doğru olan hangisidir?',
-    answers: ['Kahire\'de 1898\'de basılan ilk Kürt gazetesi', 'Kürt alfabesini geliştiren yayıncı ve aydın', 'Latin alfabesiyle basılan ilk Kürtçe dergi', 'Soran emirliğinin kör lakaplı güçlü lideri'],
+    answers: [
+      'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
+      'Kürt alfabesini geliştiren yayıncı ve aydın',
+      'Latin alfabesiyle basılan ilk Kürtçe dergi',
+      'Soran emirliğinin kör lakaplı güçlü lideri',
+    ],
     correctAnswer: 'Kürt alfabesini geliştiren yayıncı ve aydın',
-    explanation: '\'Celadet Bedirxan\': Kürt alfabesini geliştiren yayıncı ve aydın.',
+    explanation:
+        '\'Celadet Bedirxan\': Kürt alfabesini geliştiren yayıncı ve aydın.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7980',
@@ -5452,19 +6726,25 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Kürdistan gazetesi\' Dîrok açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Kürdistan gazetesi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Kürdistan gazetesi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_7983',
     category: 'Dîrok',
     prompt: '\'yerleşik yaşam\' ifadesinin doğru karşılığı hangisidir?',
-    answers: ['Osmanlı ve Safevi (İran)', 'Orta Çağ (10-11. yüzyıl)', 'Şeref Han (Bitlis beyi)', 'kalıcı yerleşim düzeni'],
+    answers: [
+      'Osmanlı ve Safevi (İran)',
+      'Orta Çağ (10-11. yüzyıl)',
+      'Şeref Han (Bitlis beyi)',
+      'kalıcı yerleşim düzeni',
+    ],
     correctAnswer: 'kalıcı yerleşim düzeni',
     explanation: '\'yerleşik yaşam\' → kalıcı yerleşim düzeni.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_7990',
@@ -5472,9 +6752,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Bitlis prensliği\' Dîrok bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Bitlis prensliği\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Bitlis prensliği\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8003',
@@ -5484,27 +6765,39 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Göç\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8023',
     category: 'Dîrok',
     prompt: 'Hangisi Dîrok içinde \'Hasankeyf\' kavramını doğru yerleştirir?',
-    answers: ['Irak rejimi tarafından idam edilen Kürt kadın aktivist', 'Dicle nehri üzerinde yer alan binlerce yıllık tarihi kent', 'Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi', '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş'],
+    answers: [
+      'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
+      'Dicle nehri üzerinde yer alan binlerce yıllık tarihi kent',
+      'Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi',
+      '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş',
+    ],
     correctAnswer: 'Dicle nehri üzerinde yer alan binlerce yıllık tarihi kent',
-    explanation: '\'Hasankeyf\': Dicle nehri üzerinde yer alan binlerce yıllık tarihi kent.',
+    explanation:
+        '\'Hasankeyf\': Dicle nehri üzerinde yer alan binlerce yıllık tarihi kent.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8037',
     category: 'Dîrok',
     prompt: '\'Ehmedê Xanî\' tarihsel olarak kimdir?',
-    answers: ['17. yüzyılda Kürt aydınlanma fikrini yazan şair', '1988\'de Kürtlere karşı yapılan kimyasal saldırı', 'Kürdistan gazetesini çıkaran ilk Kürt gazeteci', 'Süleymaniye\'de basılan erken dönem Kürtçe gazete'],
+    answers: [
+      '17. yüzyılda Kürt aydınlanma fikrini yazan şair',
+      '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
+      'Kürdistan gazetesini çıkaran ilk Kürt gazeteci',
+      'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
+    ],
     correctAnswer: '17. yüzyılda Kürt aydınlanma fikrini yazan şair',
-    explanation: '\'Ehmedê Xanî\': 17. yüzyılda Kürt aydınlanma fikrini yazan şair.',
+    explanation:
+        '\'Ehmedê Xanî\': 17. yüzyılda Kürt aydınlanma fikrini yazan şair.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8038',
@@ -5512,9 +6805,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Dîrok alanında \'Cizre\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Cizre\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Cizre\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8045',
@@ -5524,7 +6818,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Halepçe katliamı\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8054',
@@ -5534,47 +6828,66 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Kürdistan eyaleti\' Dîrok alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8066',
     category: 'Dîrok',
     prompt: 'Hangisi \'Anfal operasyonu\' kişisini doğru tanıtır?',
-    answers: ['Hoybun cemiyeti adına askeri liderlik yapan subay', 'Irak\'ta kendini Kürdistan kralı ilan eden lider', 'Irak rejimi tarafından Kürtlere yönelik soykırım', 'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi'],
+    answers: [
+      'Hoybun cemiyeti adına askeri liderlik yapan subay',
+      'Irak\'ta kendini Kürdistan kralı ilan eden lider',
+      'Irak rejimi tarafından Kürtlere yönelik soykırım',
+      'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
+    ],
     correctAnswer: 'Irak rejimi tarafından Kürtlere yönelik soykırım',
-    explanation: '\'Anfal operasyonu\': Irak rejimi tarafından Kürtlere yönelik soykırım.',
+    explanation:
+        '\'Anfal operasyonu\': Irak rejimi tarafından Kürtlere yönelik soykırım.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8091',
     category: 'Dîrok',
     prompt: '\'Eyyubiler\' kavramını doğru anlatan ifade hangisidir?',
-    answers: ['Selahaddin Eyyubi tarafından kurulan büyük devlet', '19. yüzyılda özerklik mücadelesi veren Kürt emiri', '17. yüzyılda Kürt aydınlanma fikrini yazan şair', 'Kürt hareketinin efsanevi askeri ve siyasi lideri'],
+    answers: [
+      'Selahaddin Eyyubi tarafından kurulan büyük devlet',
+      '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
+      '17. yüzyılda Kürt aydınlanma fikrini yazan şair',
+      'Kürt hareketinin efsanevi askeri ve siyasi lideri',
+    ],
     correctAnswer: 'Selahaddin Eyyubi tarafından kurulan büyük devlet',
-    explanation: '\'Eyyubiler\' → Selahaddin Eyyubi tarafından kurulan büyük devlet.',
+    explanation:
+        '\'Eyyubiler\' → Selahaddin Eyyubi tarafından kurulan büyük devlet.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8099',
     category: 'Cografya',
-    prompt: '\'Cudi dağı\' Cografya bağlamında kullanılan geçerli bir terimdir.',
+    prompt:
+        '\'Cudi dağı\' Cografya bağlamında kullanılan geçerli bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Cudi dağı\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8108',
     category: 'Cografya',
     prompt: '\'Behdînan bölgesi\' coğrafyada neyi ifade eder?',
-    answers: ['Nuh\'un gemisinin indiğine inanılan tarihi dağ', 'Karacadağ lavlarının oluşturduğu taşlık plato', 'Dersim coğrafyasının en engebeli sıradağları', 'Zaho ve Duhok civarındaki dağlık coğrafi alan'],
+    answers: [
+      'Nuh\'un gemisinin indiğine inanılan tarihi dağ',
+      'Karacadağ lavlarının oluşturduğu taşlık plato',
+      'Dersim coğrafyasının en engebeli sıradağları',
+      'Zaho ve Duhok civarındaki dağlık coğrafi alan',
+    ],
     correctAnswer: 'Zaho ve Duhok civarındaki dağlık coğrafi alan',
-    explanation: '\'Behdînan bölgesi\' → Zaho ve Duhok civarındaki dağlık coğrafi alan.',
+    explanation:
+        '\'Behdînan bölgesi\' → Zaho ve Duhok civarındaki dağlık coğrafi alan.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8131',
@@ -5582,39 +6895,58 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Cografya çalışmalarında \'Botan vadisi\' hiç kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Botan vadisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Botan vadisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8141',
     category: 'Cografya',
     prompt: 'Aşağıdakilerden hangisi \'Derbendihan gölü\' için doğrudur?',
-    answers: ['Botan çayının oluşturduğu derin kanyon vadi', 'Güney Kürdistan\'ın en verimli tarım ovası', 'Diyala nehri üzerinde kurulmuş baraj gölü', 'Mezopotamya\'ya hayat veren büyük nehir'],
+    answers: [
+      'Botan çayının oluşturduğu derin kanyon vadi',
+      'Güney Kürdistan\'ın en verimli tarım ovası',
+      'Diyala nehri üzerinde kurulmuş baraj gölü',
+      'Mezopotamya\'ya hayat veren büyük nehir',
+    ],
     correctAnswer: 'Diyala nehri üzerinde kurulmuş baraj gölü',
-    explanation: '\'Derbendihan gölü\' → Diyala nehri üzerinde kurulmuş baraj gölü.',
+    explanation:
+        '\'Derbendihan gölü\' → Diyala nehri üzerinde kurulmuş baraj gölü.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8149',
     category: 'Cografya',
     prompt: 'Cografya bağlamında \'Munzur vadisi\' nasıl anlaşılmalıdır?',
-    answers: ['Fırat\'ın kollarının suladığı büyük tarım ovası', 'Karacadağ lavlarının oluşturduğu taşlık plato', 'Tunceli\'de yer alan milli park statüsündeki vadi', 'dünyanın en büyük ikinci krater gölüne sahip dağ'],
+    answers: [
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+      'Karacadağ lavlarının oluşturduğu taşlık plato',
+      'Tunceli\'de yer alan milli park statüsündeki vadi',
+      'dünyanın en büyük ikinci krater gölüne sahip dağ',
+    ],
     correctAnswer: 'Tunceli\'de yer alan milli park statüsündeki vadi',
-    explanation: '\'Munzur vadisi\' → Tunceli\'de yer alan milli park statüsündeki vadi.',
+    explanation:
+        '\'Munzur vadisi\' → Tunceli\'de yer alan milli park statüsündeki vadi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8155',
     category: 'Cografya',
     prompt: 'Cografya alanında \'Süphan dağı\' neyi ifade eder?',
-    answers: ['Tunceli\'de yer alan milli park statüsündeki vadi', 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ', 'birçok nehrin kaynağını aldığı yüksek yaylaklar', 'Cizre ve Silopi düzlüklerini kapsayan verimli ova'],
+    answers: [
+      'Tunceli\'de yer alan milli park statüsündeki vadi',
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+      'birçok nehrin kaynağını aldığı yüksek yaylaklar',
+      'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
+    ],
     correctAnswer: 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
-    explanation: '\'Süphan dağı\' → Van gölü kuzeyinde yer alan sönmüş volkanik dağ.',
+    explanation:
+        '\'Süphan dağı\' → Van gölü kuzeyinde yer alan sönmüş volkanik dağ.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8178',
@@ -5622,9 +6954,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Zap vadisi\' Cografya açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Zap vadisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Zap vadisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8181',
@@ -5634,77 +6967,119 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'orman',
     explanation: '\'daristan\' → orman.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8200',
     category: 'Cografya',
     prompt: '\'Siverek ovası\', Cografya konusunda neyi anlatır?',
-    answers: ['Fırat\'ın kollarının suladığı büyük tarım ovası', 'Musul ovasının ortasında yükselen stratejik dağ', 'Karacadağ lavlarının oluşturduğu taşlık plato', 'Siirt yöresinden geçip Dicle\'ye dökülen nehir'],
+    answers: [
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+      'Musul ovasının ortasında yükselen stratejik dağ',
+      'Karacadağ lavlarının oluşturduğu taşlık plato',
+      'Siirt yöresinden geçip Dicle\'ye dökülen nehir',
+    ],
     correctAnswer: 'Karacadağ lavlarının oluşturduğu taşlık plato',
-    explanation: '\'Siverek ovası\' → Karacadağ lavlarının oluşturduğu taşlık plato.',
+    explanation:
+        '\'Siverek ovası\' → Karacadağ lavlarının oluşturduğu taşlık plato.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8212',
     category: 'Cografya',
     prompt: '\'Munzur dağları\' neresidir?',
-    answers: ['Güney Kürdistan\'ın en verimli tarım ovası', 'Dersim coğrafyasının en engebeli sıradağları', 'Zaho ve Duhok civarındaki dağlık coğrafi alan', 'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası'],
+    answers: [
+      'Güney Kürdistan\'ın en verimli tarım ovası',
+      'Dersim coğrafyasının en engebeli sıradağları',
+      'Zaho ve Duhok civarındaki dağlık coğrafi alan',
+      'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası',
+    ],
     correctAnswer: 'Dersim coğrafyasının en engebeli sıradağları',
-    explanation: '\'Munzur dağları\' → Dersim coğrafyasının en engebeli sıradağları.',
+    explanation:
+        '\'Munzur dağları\' → Dersim coğrafyasının en engebeli sıradağları.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8213',
     category: 'Cografya',
     prompt: 'Cografya alanında \'Zap vadisi\' neyi ifade eder?',
-    answers: ['Kürdistan coğrafyasının kuzeybatı yüksek kesimi', 'dik kayalıklar arasından Zap suyunun aktığı derin vadi', 'Musul ovasının ortasında yükselen stratejik dağ', 'Cizre ve Silopi düzlüklerini kapsayan verimli ova'],
+    answers: [
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+      'dik kayalıklar arasından Zap suyunun aktığı derin vadi',
+      'Musul ovasının ortasında yükselen stratejik dağ',
+      'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
+    ],
     correctAnswer: 'dik kayalıklar arasından Zap suyunun aktığı derin vadi',
-    explanation: '\'Zap vadisi\' → dik kayalıklar arasından Zap suyunun aktığı derin vadi.',
+    explanation:
+        '\'Zap vadisi\' → dik kayalıklar arasından Zap suyunun aktığı derin vadi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8220',
     category: 'Cografya',
     prompt: '\'Zap vadisi\' hangi coğrafi unsurdur?',
-    answers: ['Süleymaniye yakınlarında yer alan yapay baraj gölü', 'Musul ovasının ortasında yükselen stratejik dağ', 'dik kayalıklar arasından Zap suyunun aktığı derin vadi', 'Kürdistan coğrafyasını baştan başa bölen dağlar'],
+    answers: [
+      'Süleymaniye yakınlarında yer alan yapay baraj gölü',
+      'Musul ovasının ortasında yükselen stratejik dağ',
+      'dik kayalıklar arasından Zap suyunun aktığı derin vadi',
+      'Kürdistan coğrafyasını baştan başa bölen dağlar',
+    ],
     correctAnswer: 'dik kayalıklar arasından Zap suyunun aktığı derin vadi',
-    explanation: '\'Zap vadisi\' → dik kayalıklar arasından Zap suyunun aktığı derin vadi.',
+    explanation:
+        '\'Zap vadisi\' → dik kayalıklar arasından Zap suyunun aktığı derin vadi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8230',
     category: 'Cografya',
     prompt: '\'Şehrizor ovası\' hangi coğrafi unsurdur?',
-    answers: ['Süleymaniye güneyindeki tarihi verimli düzlük', 'Hakkari dağlarını yararak akan hırçın akarsu', 'Doğu Kürdistan\'da yer alan tuzlu göl havzası', 'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası'],
+    answers: [
+      'Süleymaniye güneyindeki tarihi verimli düzlük',
+      'Hakkari dağlarını yararak akan hırçın akarsu',
+      'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
+      'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası',
+    ],
     correctAnswer: 'Süleymaniye güneyindeki tarihi verimli düzlük',
-    explanation: '\'Şehrizor ovası\' → Süleymaniye güneyindeki tarihi verimli düzlük.',
+    explanation:
+        '\'Şehrizor ovası\' → Süleymaniye güneyindeki tarihi verimli düzlük.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8242',
     category: 'Cografya',
     prompt: '\'Yukarı Fırat bölümü\' neresidir?',
-    answers: ['Fırat\'ın kollarının suladığı büyük tarım ovası', 'Nuh\'un gemisinin indiğine inanılan tarihi dağ', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi', 'birçok nehrin kaynağını aldığı yüksek yaylaklar'],
+    answers: [
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+      'Nuh\'un gemisinin indiğine inanılan tarihi dağ',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+      'birçok nehrin kaynağını aldığı yüksek yaylaklar',
+    ],
     correctAnswer: 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
-    explanation: '\'Yukarı Fırat bölümü\' → Kürdistan coğrafyasının kuzeybatı yüksek kesimi.',
+    explanation:
+        '\'Yukarı Fırat bölümü\' → Kürdistan coğrafyasının kuzeybatı yüksek kesimi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8247',
     category: 'Cografya',
     prompt: 'Aşağıdakilerden hangisi \'Süphan dağı\' için doğrudur?',
-    answers: ['Karacadağ lavlarının oluşturduğu taşlık plato', 'Tunceli\'de yer alan milli park statüsündeki vadi', 'Cizre ve Silopi düzlüklerini kapsayan verimli ova', 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ'],
+    answers: [
+      'Karacadağ lavlarının oluşturduğu taşlık plato',
+      'Tunceli\'de yer alan milli park statüsündeki vadi',
+      'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+    ],
     correctAnswer: 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
-    explanation: '\'Süphan dağı\' → Van gölü kuzeyinde yer alan sönmüş volkanik dağ.',
+    explanation:
+        '\'Süphan dağı\' → Van gölü kuzeyinde yer alan sönmüş volkanik dağ.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8252',
@@ -5714,47 +7089,66 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Newal\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8255',
     category: 'Cografya',
     prompt: 'Aşağıdakilerden hangisi \'Zagros sıradağları\' için doğrudur?',
-    answers: ['Siirt yöresinden geçip Dicle\'ye dökülen nehir', 'dünyanın en büyük ikinci krater gölüne sahip dağ', 'Kürdistan coğrafyasını baştan başa bölen dağlar', 'Musul ovasının ortasında yükselen stratejik dağ'],
+    answers: [
+      'Siirt yöresinden geçip Dicle\'ye dökülen nehir',
+      'dünyanın en büyük ikinci krater gölüne sahip dağ',
+      'Kürdistan coğrafyasını baştan başa bölen dağlar',
+      'Musul ovasının ortasında yükselen stratejik dağ',
+    ],
     correctAnswer: 'Kürdistan coğrafyasını baştan başa bölen dağlar',
-    explanation: '\'Zagros sıradağları\': Kürdistan coğrafyasını baştan başa bölen dağlar.',
+    explanation:
+        '\'Zagros sıradağları\': Kürdistan coğrafyasını baştan başa bölen dağlar.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8261',
     category: 'Cografya',
-    prompt: 'Cografya alanında \'Garzan çayı\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Cografya alanında \'Garzan çayı\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Garzan çayı\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8263',
     category: 'Cografya',
     prompt: 'Aşağıdakilerden hangisi \'Botan çayı\' için doğrudur?',
-    answers: ['Dersim coğrafyasının en engebeli sıradağları', 'Fırat\'ın kollarının suladığı büyük tarım ovası', 'Doğu Kürdistan\'da yer alan tuzlu göl havzası', 'Siirt yöresinden geçip Dicle\'ye dökülen nehir'],
+    answers: [
+      'Dersim coğrafyasının en engebeli sıradağları',
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+      'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
+      'Siirt yöresinden geçip Dicle\'ye dökülen nehir',
+    ],
     correctAnswer: 'Siirt yöresinden geçip Dicle\'ye dökülen nehir',
-    explanation: '\'Botan çayı\' → Siirt yöresinden geçip Dicle\'ye dökülen nehir.',
+    explanation:
+        '\'Botan çayı\' → Siirt yöresinden geçip Dicle\'ye dökülen nehir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8284',
     category: 'Cografya',
     prompt: '\'Kandil dağları\' hakkında doğru olan hangisidir?',
-    answers: ['Garzan çayı yakınlarındaki dağlık kütle', 'karasal ve dağlık alanlarda soğuk kışlar', 'Diyarbakır surlarının altından geçen nehir', 'Mezopotamya\'ya hayat veren büyük nehir'],
+    answers: [
+      'Garzan çayı yakınlarındaki dağlık kütle',
+      'karasal ve dağlık alanlarda soğuk kışlar',
+      'Diyarbakır surlarının altından geçen nehir',
+      'Mezopotamya\'ya hayat veren büyük nehir',
+    ],
     correctAnswer: 'Garzan çayı yakınlarındaki dağlık kütle',
-    explanation: '\'Kandil dağları\' → Garzan çayı yakınlarındaki dağlık kütle.',
+    explanation:
+        '\'Kandil dağları\' → Garzan çayı yakınlarındaki dağlık kütle.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8313',
@@ -5762,59 +7156,90 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'av\' Cografya alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'av\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'av\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8316',
     category: 'Cografya',
     prompt: 'Cografya alanında \'meşe ormanları\' neyi ifade eder?',
-    answers: ['Cizre ve Silopi düzlüklerini kapsayan verimli ova', 'dünyanın en büyük ikinci krater gölüne sahip dağ', 'Kürdistan dağlarının tipik bitki örtüsü ve ağacı', 'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim'],
+    answers: [
+      'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
+      'dünyanın en büyük ikinci krater gölüne sahip dağ',
+      'Kürdistan dağlarının tipik bitki örtüsü ve ağacı',
+      'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim',
+    ],
     correctAnswer: 'Kürdistan dağlarının tipik bitki örtüsü ve ağacı',
-    explanation: '\'meşe ormanları\' → Kürdistan dağlarının tipik bitki örtüsü ve ağacı.',
+    explanation:
+        '\'meşe ormanları\' → Kürdistan dağlarının tipik bitki örtüsü ve ağacı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8319',
     category: 'Cografya',
     prompt: '\'Nemrut krateri\' nerede / ne olarak bilinir?',
-    answers: ['Süleymaniye yakınlarında yer alan yapay baraj gölü', 'Kürdistan coğrafyasını baştan başa bölen dağlar', 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ', 'dünyanın en büyük ikinci krater gölüne sahip dağ'],
+    answers: [
+      'Süleymaniye yakınlarında yer alan yapay baraj gölü',
+      'Kürdistan coğrafyasını baştan başa bölen dağlar',
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+      'dünyanın en büyük ikinci krater gölüne sahip dağ',
+    ],
     correctAnswer: 'dünyanın en büyük ikinci krater gölüne sahip dağ',
-    explanation: '\'Nemrut krateri\' → dünyanın en büyük ikinci krater gölüne sahip dağ.',
+    explanation:
+        '\'Nemrut krateri\' → dünyanın en büyük ikinci krater gölüne sahip dağ.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8331',
     category: 'Cografya',
     prompt: 'Cografya için \'Urmiye gölü\' hakkında doğru seçenek hangisidir?',
-    answers: ['Doğu Kürdistan\'da yer alan tuzlu göl havzası', 'Hakkari dağlarını yararak akan hırçın akarsu', 'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası', 'Nuh\'un gemisinin indiğine inanılan tarihi dağ'],
+    answers: [
+      'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
+      'Hakkari dağlarını yararak akan hırçın akarsu',
+      'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası',
+      'Nuh\'un gemisinin indiğine inanılan tarihi dağ',
+    ],
     correctAnswer: 'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
-    explanation: '\'Urmiye gölü\' → Doğu Kürdistan\'da yer alan tuzlu göl havzası.',
+    explanation:
+        '\'Urmiye gölü\' → Doğu Kürdistan\'da yer alan tuzlu göl havzası.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8336',
     category: 'Cografya',
     prompt: '\'Şengal dağı\' coğrafyada neyi ifade eder?',
-    answers: ['Van gölü kuzeyinde yer alan sönmüş volkanik dağ', 'Hakkari\'de yer alan yüksek rakımlı tektonik ova', 'Fırat\'ın kollarının suladığı büyük tarım ovası', 'Musul ovasının ortasında yükselen stratejik dağ'],
+    answers: [
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+      'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+      'Musul ovasının ortasında yükselen stratejik dağ',
+    ],
     correctAnswer: 'Musul ovasının ortasında yükselen stratejik dağ',
-    explanation: '\'Şengal dağı\' → Musul ovasının ortasında yükselen stratejik dağ.',
+    explanation:
+        '\'Şengal dağı\' → Musul ovasının ortasında yükselen stratejik dağ.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8356',
     category: 'Cografya',
     prompt: 'Cografya bağlamında \'Halgurd dağı\' nasıl anlaşılmalıdır?',
-    answers: ['Irak Kürdistanı sınırlarında yer alan en yüksek zirve', 'dik kayalıklar arasından Zap suyunun aktığı derin vadi', 'Süleymaniye yakınlarında yer alan yapay baraj gölü', 'Kürdistan dağlarının tipik bitki örtüsü ve ağacı'],
+    answers: [
+      'Irak Kürdistanı sınırlarında yer alan en yüksek zirve',
+      'dik kayalıklar arasından Zap suyunun aktığı derin vadi',
+      'Süleymaniye yakınlarında yer alan yapay baraj gölü',
+      'Kürdistan dağlarının tipik bitki örtüsü ve ağacı',
+    ],
     correctAnswer: 'Irak Kürdistanı sınırlarında yer alan en yüksek zirve',
-    explanation: '\'Halgurd dağı\' → Irak Kürdistanı sınırlarında yer alan en yüksek zirve.',
+    explanation:
+        '\'Halgurd dağı\' → Irak Kürdistanı sınırlarında yer alan en yüksek zirve.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8357',
@@ -5822,19 +7247,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Cografya çalışmalarında \'Kürdistan iklimi\' hiç kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Kürdistan iklimi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Kürdistan iklimi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8361',
     category: 'Cografya',
     prompt: 'Aşağıdakilerden hangisi \'Bingöl dağları\' için doğrudur?',
-    answers: ['Tunceli\'de yer alan milli park statüsündeki vadi', 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ', 'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim', 'birçok nehrin kaynağını aldığı yüksek yaylaklar'],
+    answers: [
+      'Tunceli\'de yer alan milli park statüsündeki vadi',
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+      'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim',
+      'birçok nehrin kaynağını aldığı yüksek yaylaklar',
+    ],
     correctAnswer: 'birçok nehrin kaynağını aldığı yüksek yaylaklar',
-    explanation: '\'Bingöl dağları\' → birçok nehrin kaynağını aldığı yüksek yaylaklar.',
+    explanation:
+        '\'Bingöl dağları\' → birçok nehrin kaynağını aldığı yüksek yaylaklar.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8367',
@@ -5844,17 +7276,23 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'göl',
     explanation: '\'gol\' → göl.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8376',
     category: 'Cografya',
     prompt: 'Aşağıdakilerden hangisi \'Muş ovası\' için doğrudur?',
-    answers: ['Süleymaniye güneyindeki tarihi verimli düzlük', 'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi', 'Fırat\'ın kollarının suladığı büyük tarım ovası'],
+    answers: [
+      'Süleymaniye güneyindeki tarihi verimli düzlük',
+      'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+    ],
     correctAnswer: 'Fırat\'ın kollarının suladığı büyük tarım ovası',
-    explanation: '\'Muş ovası\' → Fırat\'ın kollarının suladığı büyük tarım ovası.',
+    explanation:
+        '\'Muş ovası\' → Fırat\'ın kollarının suladığı büyük tarım ovası.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8380',
@@ -5864,17 +7302,24 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Yüksekova\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8384',
     category: 'Cografya',
-    prompt: 'Cografya bilgisinde \'Hewler ovası\' ile ilgili doğru olan hangisidir?',
-    answers: ['Karacadağ lavlarının oluşturduğu taşlık plato', 'Elazığ sınırlarında yer alan tektonik göl', 'Diyala nehri üzerinde kurulmuş baraj gölü', 'Güney Kürdistan\'ın en verimli tarım ovası'],
+    prompt:
+        'Cografya bilgisinde \'Hewler ovası\' ile ilgili doğru olan hangisidir?',
+    answers: [
+      'Karacadağ lavlarının oluşturduğu taşlık plato',
+      'Elazığ sınırlarında yer alan tektonik göl',
+      'Diyala nehri üzerinde kurulmuş baraj gölü',
+      'Güney Kürdistan\'ın en verimli tarım ovası',
+    ],
     correctAnswer: 'Güney Kürdistan\'ın en verimli tarım ovası',
-    explanation: '\'Hewler ovası\' → Güney Kürdistan\'ın en verimli tarım ovası.',
+    explanation:
+        '\'Hewler ovası\' → Güney Kürdistan\'ın en verimli tarım ovası.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8406',
@@ -5884,7 +7329,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'yer/toprak',
     explanation: '\'erd\' → yer/toprak.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8436',
@@ -5892,19 +7337,21 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Cografya alanında \'erd\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'erd\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'erd\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8460',
     category: 'Cografya',
-    prompt: '\'Serhat bölgesi\', Cografya alanında bilinen gerçek bir kavramdır.',
+    prompt:
+        '\'Serhat bölgesi\', Cografya alanında bilinen gerçek bir kavramdır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Serhat bölgesi\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8468',
@@ -5914,147 +7361,226 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Çiya\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8473',
     category: 'Cografya',
     prompt: '\'Van gölü\' hakkında doğru olan hangisidir?',
-    answers: ['Garzan çayı yakınlarındaki dağlık kütle', 'dünyanın en büyük sodalı gölü olan havza', 'Elazığ sınırlarında yer alan tektonik göl', 'Türkiye ve Irak sınırını çizen Dicle kolu'],
+    answers: [
+      'Garzan çayı yakınlarındaki dağlık kütle',
+      'dünyanın en büyük sodalı gölü olan havza',
+      'Elazığ sınırlarında yer alan tektonik göl',
+      'Türkiye ve Irak sınırını çizen Dicle kolu',
+    ],
     correctAnswer: 'dünyanın en büyük sodalı gölü olan havza',
     explanation: '\'Van gölü\' → dünyanın en büyük sodalı gölü olan havza.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8479',
     category: 'Cografya',
     prompt: '\'Yüksekova\' için en isabetli açıklama hangisidir?',
-    answers: ['Hakkari\'de yer alan yüksek rakımlı tektonik ova', 'Tunceli\'de yer alan milli park statüsündeki vadi', 'Cizre ve Silopi düzlüklerini kapsayan verimli ova', 'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu'],
+    answers: [
+      'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
+      'Tunceli\'de yer alan milli park statüsündeki vadi',
+      'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
+      'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
+    ],
     correctAnswer: 'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
-    explanation: '\'Yüksekova\' → Hakkari\'de yer alan yüksek rakımlı tektonik ova.',
+    explanation:
+        '\'Yüksekova\' → Hakkari\'de yer alan yüksek rakımlı tektonik ova.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8480',
     category: 'Cografya',
     prompt: '\'Karacadağ\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['Diyarbakır ovasında yer alan yayvan bazaltik volkan', 'Tunceli\'de yer alan milli park statüsündeki vadi', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi', 'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim'],
+    answers: [
+      'Diyarbakır ovasında yer alan yayvan bazaltik volkan',
+      'Tunceli\'de yer alan milli park statüsündeki vadi',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+      'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim',
+    ],
     correctAnswer: 'Diyarbakır ovasında yer alan yayvan bazaltik volkan',
-    explanation: '\'Karacadağ\' → Diyarbakır ovasında yer alan yayvan bazaltik volkan.',
+    explanation:
+        '\'Karacadağ\' → Diyarbakır ovasında yer alan yayvan bazaltik volkan.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8506',
     category: 'Cografya',
     prompt: '\'Kandil dağları\' neresidir?',
-    answers: ['Kürdistan coğrafyasının en yüksek zirvesi', 'Garzan çayı yakınlarındaki dağlık kütle', 'Mezopotamya\'ya hayat veren büyük nehir', 'krater gölüne sahip aktif volkanik dağ'],
+    answers: [
+      'Kürdistan coğrafyasının en yüksek zirvesi',
+      'Garzan çayı yakınlarındaki dağlık kütle',
+      'Mezopotamya\'ya hayat veren büyük nehir',
+      'krater gölüne sahip aktif volkanik dağ',
+    ],
     correctAnswer: 'Garzan çayı yakınlarındaki dağlık kütle',
-    explanation: '\'Kandil dağları\' → Garzan çayı yakınlarındaki dağlık kütle.',
+    explanation:
+        '\'Kandil dağları\' → Garzan çayı yakınlarındaki dağlık kütle.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8512',
     category: 'Cografya',
     prompt: 'Cografya için \'Halgurd dağı\' hakkında doğru seçenek hangisidir?',
-    answers: ['Cizre ve Silopi düzlüklerini kapsayan verimli ova', 'Irak Kürdistanı sınırlarında yer alan en yüksek zirve', 'Kars ve Iğdır sınırlarından geçip Hazar\'a dökülen su', 'Kürdistan dağlarının tipik bitki örtüsü ve ağacı'],
+    answers: [
+      'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
+      'Irak Kürdistanı sınırlarında yer alan en yüksek zirve',
+      'Kars ve Iğdır sınırlarından geçip Hazar\'a dökülen su',
+      'Kürdistan dağlarının tipik bitki örtüsü ve ağacı',
+    ],
     correctAnswer: 'Irak Kürdistanı sınırlarında yer alan en yüksek zirve',
-    explanation: '\'Halgurd dağı\' → Irak Kürdistanı sınırlarında yer alan en yüksek zirve.',
+    explanation:
+        '\'Halgurd dağı\' → Irak Kürdistanı sınırlarında yer alan en yüksek zirve.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8523',
     category: 'Cografya',
-    prompt: 'Cografya bilgisinde \'Dicle nehri\' ile ilgili doğru olan hangisidir?',
-    answers: ['Diyala nehri üzerinde kurulmuş baraj gölü', 'Elazığ sınırlarında yer alan tektonik göl', 'Diyarbakır surlarının altından geçen nehir', 'Dersim coğrafyasının en engebeli sıradağları'],
+    prompt:
+        'Cografya bilgisinde \'Dicle nehri\' ile ilgili doğru olan hangisidir?',
+    answers: [
+      'Diyala nehri üzerinde kurulmuş baraj gölü',
+      'Elazığ sınırlarında yer alan tektonik göl',
+      'Diyarbakır surlarının altından geçen nehir',
+      'Dersim coğrafyasının en engebeli sıradağları',
+    ],
     correctAnswer: 'Diyarbakır surlarının altından geçen nehir',
-    explanation: '\'Dicle nehri\' → Diyarbakır surlarının altından geçen nehir.',
+    explanation:
+        '\'Dicle nehri\' → Diyarbakır surlarının altından geçen nehir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8532',
     category: 'Cografya',
     prompt: '\'Dokan gölü\' neresidir?',
-    answers: ['Kürdistan coğrafyasını baştan başa bölen dağlar', 'Musul ovasının ortasında yükselen stratejik dağ', 'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu', 'Süleymaniye yakınlarında yer alan yapay baraj gölü'],
+    answers: [
+      'Kürdistan coğrafyasını baştan başa bölen dağlar',
+      'Musul ovasının ortasında yükselen stratejik dağ',
+      'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
+      'Süleymaniye yakınlarında yer alan yapay baraj gölü',
+    ],
     correctAnswer: 'Süleymaniye yakınlarında yer alan yapay baraj gölü',
-    explanation: '\'Dokan gölü\' → Süleymaniye yakınlarında yer alan yapay baraj gölü.',
+    explanation:
+        '\'Dokan gölü\' → Süleymaniye yakınlarında yer alan yapay baraj gölü.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8539',
     category: 'Cografya',
     prompt: 'Cografya bağlamında \'Kürdistan iklimi\' nasıl anlaşılmalıdır?',
-    answers: ['Basra Körfezi (Şattülarap üzerinden)', 'dünyanın en büyük sodalı gölü olan havza', 'Botan çayının oluşturduğu derin kanyon vadi', 'karasal ve dağlık alanlarda soğuk kışlar'],
+    answers: [
+      'Basra Körfezi (Şattülarap üzerinden)',
+      'dünyanın en büyük sodalı gölü olan havza',
+      'Botan çayının oluşturduğu derin kanyon vadi',
+      'karasal ve dağlık alanlarda soğuk kışlar',
+    ],
     correctAnswer: 'karasal ve dağlık alanlarda soğuk kışlar',
-    explanation: '\'Kürdistan iklimi\': karasal ve dağlık alanlarda soğuk kışlar.',
+    explanation:
+        '\'Kürdistan iklimi\': karasal ve dağlık alanlarda soğuk kışlar.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8545',
     category: 'Cografya',
     prompt: 'Cografya bağlamında \'Bingöl dağları\' nasıl anlaşılmalıdır?',
-    answers: ['birçok nehrin kaynağını aldığı yüksek yaylaklar', 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ', 'Kürdistan coğrafyasını baştan başa bölen dağlar', 'Fırat\'ın kollarının suladığı büyük tarım ovası'],
+    answers: [
+      'birçok nehrin kaynağını aldığı yüksek yaylaklar',
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+      'Kürdistan coğrafyasını baştan başa bölen dağlar',
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+    ],
     correctAnswer: 'birçok nehrin kaynağını aldığı yüksek yaylaklar',
-    explanation: '\'Bingöl dağları\' → birçok nehrin kaynağını aldığı yüksek yaylaklar.',
+    explanation:
+        '\'Bingöl dağları\' → birçok nehrin kaynağını aldığı yüksek yaylaklar.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8561',
     category: 'Cografya',
     prompt: '\'akdeniz iklimi\' için en isabetli açıklama hangisidir?',
-    answers: ['Musul ovasının ortasında yükselen stratejik dağ', 'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim', 'Hakkari\'de yer alan yüksek rakımlı tektonik ova', 'Kürdistan coğrafyasını baştan başa bölen dağlar'],
+    answers: [
+      'Musul ovasının ortasında yükselen stratejik dağ',
+      'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim',
+      'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
+      'Kürdistan coğrafyasını baştan başa bölen dağlar',
+    ],
     correctAnswer: 'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim',
-    explanation: '\'akdeniz iklimi\' → Akdeniz\'e yakın Kürt bölgelerinde görülen iklim.',
+    explanation:
+        '\'akdeniz iklimi\' → Akdeniz\'e yakın Kürt bölgelerinde görülen iklim.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8574',
     category: 'Cografya',
     prompt: 'Cografya açısından \'Siverek ovası\' için doğru ifade hangisidir?',
-    answers: ['Dersim coğrafyasının en engebeli sıradağları', 'Karacadağ lavlarının oluşturduğu taşlık plato', 'Nuh\'un gemisinin indiğine inanılan tarihi dağ', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi'],
+    answers: [
+      'Dersim coğrafyasının en engebeli sıradağları',
+      'Karacadağ lavlarının oluşturduğu taşlık plato',
+      'Nuh\'un gemisinin indiğine inanılan tarihi dağ',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+    ],
     correctAnswer: 'Karacadağ lavlarının oluşturduğu taşlık plato',
-    explanation: '\'Siverek ovası\' → Karacadağ lavlarının oluşturduğu taşlık plato.',
+    explanation:
+        '\'Siverek ovası\' → Karacadağ lavlarının oluşturduğu taşlık plato.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8585',
     category: 'Cografya',
-    prompt: 'Hangisi Cografya içinde \'Şehrizor ovası\' kavramını doğru yerleştirir?',
-    answers: ['Botan çayının oluşturduğu derin kanyon vadi', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi', 'Süleymaniye güneyindeki tarihi verimli düzlük', 'Zaho ve Duhok civarındaki dağlık coğrafi alan'],
+    prompt:
+        'Hangisi Cografya içinde \'Şehrizor ovası\' kavramını doğru yerleştirir?',
+    answers: [
+      'Botan çayının oluşturduğu derin kanyon vadi',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+      'Süleymaniye güneyindeki tarihi verimli düzlük',
+      'Zaho ve Duhok civarındaki dağlık coğrafi alan',
+    ],
     correctAnswer: 'Süleymaniye güneyindeki tarihi verimli düzlük',
-    explanation: '\'Şehrizor ovası\' → Süleymaniye güneyindeki tarihi verimli düzlük.',
+    explanation:
+        '\'Şehrizor ovası\' → Süleymaniye güneyindeki tarihi verimli düzlük.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8590',
     category: 'Cografya',
-    prompt: '\'Akdeniz iklimi\' Cografya bilgisinin parçası olan gerçek bir başlıktır.',
+    prompt:
+        '\'Akdeniz iklimi\' Cografya bilgisinin parçası olan gerçek bir başlıktır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Akdeniz iklimi\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8603',
     category: 'Cografya',
     prompt: '\'Hazar gölü\' neresidir?',
-    answers: ['Dersim coğrafyasının en engebeli sıradağları', 'Diyarbakır surlarının altından geçen nehir', 'Diyala nehri üzerinde kurulmuş baraj gölü', 'Elazığ sınırlarında yer alan tektonik göl'],
+    answers: [
+      'Dersim coğrafyasının en engebeli sıradağları',
+      'Diyarbakır surlarının altından geçen nehir',
+      'Diyala nehri üzerinde kurulmuş baraj gölü',
+      'Elazığ sınırlarında yer alan tektonik göl',
+    ],
     correctAnswer: 'Elazığ sınırlarında yer alan tektonik göl',
     explanation: '\'Hazar gölü\' → Elazığ sınırlarında yer alan tektonik göl.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8615',
@@ -6064,17 +7590,18 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'akarsu',
     explanation: '\'çem\' → akarsu.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8635',
     category: 'Cografya',
-    prompt: 'Cografya alanında \'Bingöl dağları\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Cografya alanında \'Bingöl dağları\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Bingöl dağları\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8652',
@@ -6082,9 +7609,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Cografya alanında \'Habur çayı\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Habur çayı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Habur çayı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8657',
@@ -6094,27 +7622,34 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Deşt\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8669',
     category: 'Cografya',
-    prompt: '\'Dicle ovası\' Cografya bağlamında kullanılan geçerli bir terimdir.',
+    prompt:
+        '\'Dicle ovası\' Cografya bağlamında kullanılan geçerli bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Dicle ovası\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8672',
     category: 'Cografya',
     prompt: 'Cografya için \'Dicle bölümü\' hakkında doğru seçenek hangisidir?',
-    answers: ['Dünyanın en eski sürekli yerleşimlerinden biri olmasıyla', 'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası', 'Irak’ın 19. vilayeti/gubernatorluğu olarak ayrı statü kazandı', 'Süleymaniye yakınlarında yer alan yapay baraj gölü'],
+    answers: [
+      'Dünyanın en eski sürekli yerleşimlerinden biri olmasıyla',
+      'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası',
+      'Irak’ın 19. vilayeti/gubernatorluğu olarak ayrı statü kazandı',
+      'Süleymaniye yakınlarında yer alan yapay baraj gölü',
+    ],
     correctAnswer: 'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası',
-    explanation: '\'Dicle bölümü\' → Diyarbakır ve Şırnak\'ı kapsayan nehir havzası.',
+    explanation:
+        '\'Dicle bölümü\' → Diyarbakır ve Şırnak\'ı kapsayan nehir havzası.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8678',
@@ -6124,27 +7659,34 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'sınır',
     explanation: '\'sînor\' → sınır.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8686',
     category: 'Cografya',
     prompt: '\'Munzur dağları\' hakkında doğru olan hangisidir?',
-    answers: ['Musul ovasının ortasında yükselen stratejik dağ', 'Dersim coğrafyasının en engebeli sıradağları', 'Botan çayının oluşturduğu derin kanyon vadi', 'Fırat\'ın kollarının suladığı büyük tarım ovası'],
+    answers: [
+      'Musul ovasının ortasında yükselen stratejik dağ',
+      'Dersim coğrafyasının en engebeli sıradağları',
+      'Botan çayının oluşturduğu derin kanyon vadi',
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+    ],
     correctAnswer: 'Dersim coğrafyasının en engebeli sıradağları',
-    explanation: '\'Munzur dağları\' → Dersim coğrafyasının en engebeli sıradağları.',
+    explanation:
+        '\'Munzur dağları\' → Dersim coğrafyasının en engebeli sıradağları.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8700',
     category: 'Cografya',
-    prompt: '\'Munzur dağları\' Cografya bilgisinin parçası olan gerçek bir başlıktır.',
+    prompt:
+        '\'Munzur dağları\' Cografya bilgisinin parçası olan gerçek bir başlıktır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Munzur dağları\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8701',
@@ -6152,9 +7694,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Zap suyu\' Cografya bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Zap suyu\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Zap suyu\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8710',
@@ -6162,9 +7705,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Cografya çalışmalarında \'Dokan gölü\' hiç kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Dokan gölü\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Dokan gölü\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8715',
@@ -6174,27 +7718,39 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'hava',
     explanation: '\'hewa\' → hava.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8726',
     category: 'Cografya',
     prompt: '\'Yukarı Fırat bölümü\' coğrafi olarak neyi anlatır?',
-    answers: ['Cizre ve Silopi düzlüklerini kapsayan verimli ova', 'dünyanın en büyük ikinci krater gölüne sahip dağ', 'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi'],
+    answers: [
+      'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
+      'dünyanın en büyük ikinci krater gölüne sahip dağ',
+      'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+    ],
     correctAnswer: 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
-    explanation: '\'Yukarı Fırat bölümü\' → Kürdistan coğrafyasının kuzeybatı yüksek kesimi.',
+    explanation:
+        '\'Yukarı Fırat bölümü\' → Kürdistan coğrafyasının kuzeybatı yüksek kesimi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8739',
     category: 'Cografya',
     prompt: 'Cografya bağlamında \'Muş ovası\' nasıl anlaşılmalıdır?',
-    answers: ['Kürdistan coğrafyasının kuzeybatı yüksek kesimi', 'Fırat\'ın kollarının suladığı büyük tarım ovası', 'Siirt yöresinden geçip Dicle\'ye dökülen nehir', 'Hakkari\'de yer alan yüksek rakımlı tektonik ova'],
+    answers: [
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+      'Siirt yöresinden geçip Dicle\'ye dökülen nehir',
+      'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
+    ],
     correctAnswer: 'Fırat\'ın kollarının suladığı büyük tarım ovası',
-    explanation: '\'Muş ovası\' → Fırat\'ın kollarının suladığı büyük tarım ovası.',
+    explanation:
+        '\'Muş ovası\' → Fırat\'ın kollarının suladığı büyük tarım ovası.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8754',
@@ -6204,27 +7760,34 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Munzur vadisi\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8757',
     category: 'Cografya',
     prompt: '\'Yukarı Fırat bölümü\' coğrafyada neyi ifade eder?',
-    answers: ['Karacadağ lavlarının oluşturduğu taşlık plato', 'Tunceli\'de yer alan milli park statüsündeki vadi', 'birçok nehrin kaynağını aldığı yüksek yaylaklar', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi'],
+    answers: [
+      'Karacadağ lavlarının oluşturduğu taşlık plato',
+      'Tunceli\'de yer alan milli park statüsündeki vadi',
+      'birçok nehrin kaynağını aldığı yüksek yaylaklar',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+    ],
     correctAnswer: 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
-    explanation: '\'Yukarı Fırat bölümü\' → Kürdistan coğrafyasının kuzeybatı yüksek kesimi.',
+    explanation:
+        '\'Yukarı Fırat bölümü\' → Kürdistan coğrafyasının kuzeybatı yüksek kesimi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8762',
     category: 'Cografya',
-    prompt: 'Cografya çalışmalarında \'Hewler ovası\' ele alınan konulardandır.',
+    prompt:
+        'Cografya çalışmalarında \'Hewler ovası\' ele alınan konulardandır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Hewler ovası\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8769',
@@ -6234,7 +7797,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Botan çayı\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8772',
@@ -6242,19 +7805,21 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Cografya bağlamında \'Derbendihan gölü\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Derbendihan gölü\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Derbendihan gölü\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8778',
     category: 'Cografya',
-    prompt: 'Cografya alanında \'Siverek ovası\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Cografya alanında \'Siverek ovası\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Siverek ovası\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8783',
@@ -6264,87 +7829,134 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'su',
     explanation: '\'av\' → su.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8803',
     category: 'Cografya',
     prompt: 'Cografya bağlamında \'Hazar gölü\' nasıl anlaşılmalıdır?',
-    answers: ['Hakkari dağlarını yararak akan hırçın akarsu', 'krater gölüne sahip aktif volkanik dağ', 'Mezopotamya\'ya hayat veren büyük nehir', 'Elazığ sınırlarında yer alan tektonik göl'],
+    answers: [
+      'Hakkari dağlarını yararak akan hırçın akarsu',
+      'krater gölüne sahip aktif volkanik dağ',
+      'Mezopotamya\'ya hayat veren büyük nehir',
+      'Elazığ sınırlarında yer alan tektonik göl',
+    ],
     correctAnswer: 'Elazığ sınırlarında yer alan tektonik göl',
     explanation: '\'Hazar gölü\' → Elazığ sınırlarında yer alan tektonik göl.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8823',
     category: 'Cografya',
     prompt: '\'Urmiye gölü\' neresidir?',
-    answers: ['Doğu Kürdistan\'da yer alan tuzlu göl havzası', 'Diyarbakır surlarının altından geçen nehir', 'Siirt yöresinden geçip Dicle\'ye dökülen nehir', 'Türkiye ve Irak sınırını çizen Dicle kolu'],
+    answers: [
+      'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
+      'Diyarbakır surlarının altından geçen nehir',
+      'Siirt yöresinden geçip Dicle\'ye dökülen nehir',
+      'Türkiye ve Irak sınırını çizen Dicle kolu',
+    ],
     correctAnswer: 'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
-    explanation: '\'Urmiye gölü\' → Doğu Kürdistan\'da yer alan tuzlu göl havzası.',
+    explanation:
+        '\'Urmiye gölü\' → Doğu Kürdistan\'da yer alan tuzlu göl havzası.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8828',
     category: 'Cografya',
     prompt: 'Cografya çerçevesinde \'Garzan çayı\' ne anlama gelir?',
-    answers: ['Batman\'dan geçip Dicle\'ye dökülen önemli akarsu', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi', 'Kürdistan dağlarının tipik bitki örtüsü ve ağacı', 'Tunceli\'de yer alan milli park statüsündeki vadi'],
+    answers: [
+      'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+      'Kürdistan dağlarının tipik bitki örtüsü ve ağacı',
+      'Tunceli\'de yer alan milli park statüsündeki vadi',
+    ],
     correctAnswer: 'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
-    explanation: '\'Garzan çayı\' → Batman\'dan geçip Dicle\'ye dökülen önemli akarsu.',
+    explanation:
+        '\'Garzan çayı\' → Batman\'dan geçip Dicle\'ye dökülen önemli akarsu.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8830',
     category: 'Cografya',
     prompt: 'Aşağıdakilerden hangisi \'Behdînan bölgesi\' için doğrudur?',
-    answers: ['Botan çayının oluşturduğu derin kanyon vadi', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi', 'birçok nehrin kaynağını aldığı yüksek yaylaklar', 'Zaho ve Duhok civarındaki dağlık coğrafi alan'],
+    answers: [
+      'Botan çayının oluşturduğu derin kanyon vadi',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+      'birçok nehrin kaynağını aldığı yüksek yaylaklar',
+      'Zaho ve Duhok civarındaki dağlık coğrafi alan',
+    ],
     correctAnswer: 'Zaho ve Duhok civarındaki dağlık coğrafi alan',
-    explanation: '\'Behdînan bölgesi\' → Zaho ve Duhok civarındaki dağlık coğrafi alan.',
+    explanation:
+        '\'Behdînan bölgesi\' → Zaho ve Duhok civarındaki dağlık coğrafi alan.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8833',
     category: 'Cografya',
     prompt: '\'Ağrı dağı\', Cografya konusunda neyi anlatır?',
-    answers: ['Doğu Kürdistan\'da yer alan tuzlu göl havzası', 'Elazığ sınırlarında yer alan tektonik göl', 'Güney Kürdistan\'ın en verimli tarım ovası', 'Kürdistan coğrafyasının en yüksek zirvesi'],
+    answers: [
+      'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
+      'Elazığ sınırlarında yer alan tektonik göl',
+      'Güney Kürdistan\'ın en verimli tarım ovası',
+      'Kürdistan coğrafyasının en yüksek zirvesi',
+    ],
     correctAnswer: 'Kürdistan coğrafyasının en yüksek zirvesi',
     explanation: '\'Ağrı dağı\' → Kürdistan coğrafyasının en yüksek zirvesi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8839',
     category: 'Cografya',
-    prompt: 'Hangisi Cografya içinde \'Süphan dağı\' kavramını doğru yerleştirir?',
-    answers: ['Musul ovasının ortasında yükselen stratejik dağ', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi', 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ', 'Fırat\'ın kollarının suladığı büyük tarım ovası'],
+    prompt:
+        'Hangisi Cografya içinde \'Süphan dağı\' kavramını doğru yerleştirir?',
+    answers: [
+      'Musul ovasının ortasında yükselen stratejik dağ',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+    ],
     correctAnswer: 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
-    explanation: '\'Süphan dağı\' → Van gölü kuzeyinde yer alan sönmüş volkanik dağ.',
+    explanation:
+        '\'Süphan dağı\' → Van gölü kuzeyinde yer alan sönmüş volkanik dağ.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8852',
     category: 'Cografya',
     prompt: 'Hangisi \'Urmiye gölü\' yerini doğru tanımlar?',
-    answers: ['Fırat\'ın kollarının suladığı büyük tarım ovası', 'Dersim coğrafyasının en engebeli sıradağları', 'Diyarbakır surlarının altından geçen nehir', 'Doğu Kürdistan\'da yer alan tuzlu göl havzası'],
+    answers: [
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+      'Dersim coğrafyasının en engebeli sıradağları',
+      'Diyarbakır surlarının altından geçen nehir',
+      'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
+    ],
     correctAnswer: 'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
-    explanation: '\'Urmiye gölü\' → Doğu Kürdistan\'da yer alan tuzlu göl havzası.',
+    explanation:
+        '\'Urmiye gölü\' → Doğu Kürdistan\'da yer alan tuzlu göl havzası.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8861',
     category: 'Cografya',
     prompt: '\'Karacadağ\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['Batman\'dan geçip Dicle\'ye dökülen önemli akarsu', 'Cizre ve Silopi düzlüklerini kapsayan verimli ova', 'Kürdistan dağlarının tipik bitki örtüsü ve ağacı', 'Diyarbakır ovasında yer alan yayvan bazaltik volkan'],
+    answers: [
+      'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
+      'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
+      'Kürdistan dağlarının tipik bitki örtüsü ve ağacı',
+      'Diyarbakır ovasında yer alan yayvan bazaltik volkan',
+    ],
     correctAnswer: 'Diyarbakır ovasında yer alan yayvan bazaltik volkan',
-    explanation: '\'Karacadağ\' → Diyarbakır ovasında yer alan yayvan bazaltik volkan.',
+    explanation:
+        '\'Karacadağ\' → Diyarbakır ovasında yer alan yayvan bazaltik volkan.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8883',
@@ -6352,9 +7964,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Cografya bağlamında \'Zagros sıradağları\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Zagros sıradağları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Zagros sıradağları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8888',
@@ -6362,29 +7975,43 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Fırat nehri\' Cografya bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Fırat nehri\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Fırat nehri\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8889',
     category: 'Cografya',
     prompt: '\'Nemrut krateri\', Cografya konusunda neyi anlatır?',
-    answers: ['Süleymaniye yakınlarında yer alan yapay baraj gölü', 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ', 'dünyanın en büyük ikinci krater gölüne sahip dağ', 'Karacadağ lavlarının oluşturduğu taşlık plato'],
+    answers: [
+      'Süleymaniye yakınlarında yer alan yapay baraj gölü',
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+      'dünyanın en büyük ikinci krater gölüne sahip dağ',
+      'Karacadağ lavlarının oluşturduğu taşlık plato',
+    ],
     correctAnswer: 'dünyanın en büyük ikinci krater gölüne sahip dağ',
-    explanation: '\'Nemrut krateri\' → dünyanın en büyük ikinci krater gölüne sahip dağ.',
+    explanation:
+        '\'Nemrut krateri\' → dünyanın en büyük ikinci krater gölüne sahip dağ.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8894',
     category: 'Cografya',
-    prompt: 'Hangisi Cografya içinde \'akdeniz iklimi\' kavramını doğru yerleştirir?',
-    answers: ['Batman\'dan geçip Dicle\'ye dökülen önemli akarsu', 'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim', 'Karacadağ lavlarının oluşturduğu taşlık plato', 'Cizre ve Silopi düzlüklerini kapsayan verimli ova'],
+    prompt:
+        'Hangisi Cografya içinde \'akdeniz iklimi\' kavramını doğru yerleştirir?',
+    answers: [
+      'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
+      'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim',
+      'Karacadağ lavlarının oluşturduğu taşlık plato',
+      'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
+    ],
     correctAnswer: 'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim',
-    explanation: '\'akdeniz iklimi\' → Akdeniz\'e yakın Kürt bölgelerinde görülen iklim.',
+    explanation:
+        '\'akdeniz iklimi\' → Akdeniz\'e yakın Kürt bölgelerinde görülen iklim.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8899',
@@ -6394,7 +8021,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Daristan\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8902',
@@ -6404,37 +8031,55 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'vadi',
     explanation: '\'newal\' → vadi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8903',
     category: 'Cografya',
-    prompt: 'Cografya bilgisinde \'Fırat nehri\' ile ilgili doğru olan hangisidir?',
-    answers: ['dünyanın en büyük sodalı gölü olan havza', 'UNESCO mirası tarihî höyük yerleşimi', 'Mezopotamya\'ya hayat veren büyük nehir', 'krater gölüne sahip aktif volkanik dağ'],
+    prompt:
+        'Cografya bilgisinde \'Fırat nehri\' ile ilgili doğru olan hangisidir?',
+    answers: [
+      'dünyanın en büyük sodalı gölü olan havza',
+      'UNESCO mirası tarihî höyük yerleşimi',
+      'Mezopotamya\'ya hayat veren büyük nehir',
+      'krater gölüne sahip aktif volkanik dağ',
+    ],
     correctAnswer: 'Mezopotamya\'ya hayat veren büyük nehir',
     explanation: '\'Fırat nehri\' → Mezopotamya\'ya hayat veren büyük nehir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8916',
     category: 'Cografya',
     prompt: '\'Aras nehri\' hakkında doğru olan hangisidir?',
-    answers: ['Kürdistan coğrafyasını baştan başa bölen dağlar', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi', 'Tunceli\'de yer alan milli park statüsündeki vadi', 'Kars ve Iğdır sınırlarından geçip Hazar\'a dökülen su'],
+    answers: [
+      'Kürdistan coğrafyasını baştan başa bölen dağlar',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+      'Tunceli\'de yer alan milli park statüsündeki vadi',
+      'Kars ve Iğdır sınırlarından geçip Hazar\'a dökülen su',
+    ],
     correctAnswer: 'Kars ve Iğdır sınırlarından geçip Hazar\'a dökülen su',
-    explanation: '\'Aras nehri\' → Kars ve Iğdır sınırlarından geçip Hazar\'a dökülen su.',
+    explanation:
+        '\'Aras nehri\' → Kars ve Iğdır sınırlarından geçip Hazar\'a dökülen su.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8921',
     category: 'Cografya',
     prompt: '\'Nemrut krateri\' hakkında doğru olan hangisidir?',
-    answers: ['Hakkari\'de yer alan yüksek rakımlı tektonik ova', 'Musul ovasının ortasında yükselen stratejik dağ', 'Süleymaniye yakınlarında yer alan yapay baraj gölü', 'dünyanın en büyük ikinci krater gölüne sahip dağ'],
+    answers: [
+      'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
+      'Musul ovasının ortasında yükselen stratejik dağ',
+      'Süleymaniye yakınlarında yer alan yapay baraj gölü',
+      'dünyanın en büyük ikinci krater gölüne sahip dağ',
+    ],
     correctAnswer: 'dünyanın en büyük ikinci krater gölüne sahip dağ',
-    explanation: '\'Nemrut krateri\' → dünyanın en büyük ikinci krater gölüne sahip dağ.',
+    explanation:
+        '\'Nemrut krateri\' → dünyanın en büyük ikinci krater gölüne sahip dağ.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8925',
@@ -6444,57 +8089,82 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Sînor\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8936',
     category: 'Cografya',
-    prompt: '\'Halgurd dağı\' Cografya bağlamında kullanılan geçerli bir terimdir.',
+    prompt:
+        '\'Halgurd dağı\' Cografya bağlamında kullanılan geçerli bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Halgurd dağı\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8941',
     category: 'Cografya',
     prompt: '\'Botan çayı\' coğrafyada neyi ifade eder?',
-    answers: ['Siirt yöresinden geçip Dicle\'ye dökülen nehir', 'Dersim coğrafyasının en engebeli sıradağları', 'Hakkari dağlarını yararak akan hırçın akarsu', 'Karacadağ lavlarının oluşturduğu taşlık plato'],
+    answers: [
+      'Siirt yöresinden geçip Dicle\'ye dökülen nehir',
+      'Dersim coğrafyasının en engebeli sıradağları',
+      'Hakkari dağlarını yararak akan hırçın akarsu',
+      'Karacadağ lavlarının oluşturduğu taşlık plato',
+    ],
     correctAnswer: 'Siirt yöresinden geçip Dicle\'ye dökülen nehir',
-    explanation: '\'Botan çayı\' → Siirt yöresinden geçip Dicle\'ye dökülen nehir.',
+    explanation:
+        '\'Botan çayı\' → Siirt yöresinden geçip Dicle\'ye dökülen nehir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8947',
     category: 'Cografya',
     prompt: 'Cografya çerçevesinde \'Zagros sıradağları\' ne anlama gelir?',
-    answers: ['Kürdistan dağlarının tipik bitki örtüsü ve ağacı', 'Kürdistan coğrafyasını baştan başa bölen dağlar', 'Hakkari\'de yer alan yüksek rakımlı tektonik ova', 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ'],
+    answers: [
+      'Kürdistan dağlarının tipik bitki örtüsü ve ağacı',
+      'Kürdistan coğrafyasını baştan başa bölen dağlar',
+      'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+    ],
     correctAnswer: 'Kürdistan coğrafyasını baştan başa bölen dağlar',
-    explanation: '\'Zagros sıradağları\': Kürdistan coğrafyasını baştan başa bölen dağlar.',
+    explanation:
+        '\'Zagros sıradağları\': Kürdistan coğrafyasını baştan başa bölen dağlar.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8950',
     category: 'Cografya',
     prompt: '\'Dokan gölü\' coğrafi olarak neyi anlatır?',
-    answers: ['Cizre ve Silopi düzlüklerini kapsayan verimli ova', 'Kürdistan coğrafyasını baştan başa bölen dağlar', 'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu', 'Süleymaniye yakınlarında yer alan yapay baraj gölü'],
+    answers: [
+      'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
+      'Kürdistan coğrafyasını baştan başa bölen dağlar',
+      'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
+      'Süleymaniye yakınlarında yer alan yapay baraj gölü',
+    ],
     correctAnswer: 'Süleymaniye yakınlarında yer alan yapay baraj gölü',
-    explanation: '\'Dokan gölü\' → Süleymaniye yakınlarında yer alan yapay baraj gölü.',
+    explanation:
+        '\'Dokan gölü\' → Süleymaniye yakınlarında yer alan yapay baraj gölü.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8965',
     category: 'Cografya',
     prompt: 'Aşağıdakilerden hangisi \'Yüksekova\' kavramını açıklar?',
-    answers: ['Hakkari\'de yer alan yüksek rakımlı tektonik ova', 'Kars ve Iğdır sınırlarından geçip Hazar\'a dökülen su', 'Irak Kürdistanı sınırlarında yer alan en yüksek zirve', 'Dünyanın en eski sürekli yerleşimlerinden biri olmasıyla'],
+    answers: [
+      'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
+      'Kars ve Iğdır sınırlarından geçip Hazar\'a dökülen su',
+      'Irak Kürdistanı sınırlarında yer alan en yüksek zirve',
+      'Dünyanın en eski sürekli yerleşimlerinden biri olmasıyla',
+    ],
     correctAnswer: 'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
-    explanation: '\'Yüksekova\' → Hakkari\'de yer alan yüksek rakımlı tektonik ova.',
+    explanation:
+        '\'Yüksekova\' → Hakkari\'de yer alan yüksek rakımlı tektonik ova.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8977',
@@ -6502,19 +8172,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Dicle nehri\' yalnızca Cografya dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Dicle nehri\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Dicle nehri\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_8986',
     category: 'Cografya',
     prompt: '\'Şengal dağı\' hangi coğrafi unsurdur?',
-    answers: ['Kürdistan coğrafyasını baştan başa bölen dağlar', 'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim', 'Musul ovasının ortasında yükselen stratejik dağ', 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ'],
+    answers: [
+      'Kürdistan coğrafyasını baştan başa bölen dağlar',
+      'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim',
+      'Musul ovasının ortasında yükselen stratejik dağ',
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+    ],
     correctAnswer: 'Musul ovasının ortasında yükselen stratejik dağ',
-    explanation: '\'Şengal dağı\' → Musul ovasının ortasında yükselen stratejik dağ.',
+    explanation:
+        '\'Şengal dağı\' → Musul ovasının ortasında yükselen stratejik dağ.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_8992',
@@ -6524,47 +8201,69 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Karacadağ\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9008',
     category: 'Cografya',
     prompt: '\'Muş ovası\' coğrafi olarak neyi anlatır?',
-    answers: ['Fırat\'ın kollarının suladığı büyük tarım ovası', 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ', 'Nuh\'un gemisinin indiğine inanılan tarihi dağ', 'Kürdistan coğrafyasının kuzeybatı yüksek kesimi'],
+    answers: [
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+      'Nuh\'un gemisinin indiğine inanılan tarihi dağ',
+      'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
+    ],
     correctAnswer: 'Fırat\'ın kollarının suladığı büyük tarım ovası',
-    explanation: '\'Muş ovası\' → Fırat\'ın kollarının suladığı büyük tarım ovası.',
+    explanation:
+        '\'Muş ovası\' → Fırat\'ın kollarının suladığı büyük tarım ovası.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9029',
     category: 'Cografya',
     prompt: 'Aşağıdakilerden hangisi \'Van gölü\' için doğrudur?',
-    answers: ['Garzan çayı yakınlarındaki dağlık kütle', 'dünyanın en büyük sodalı gölü olan havza', 'Elazığ sınırlarında yer alan tektonik göl', 'Mezopotamya\'ya hayat veren büyük nehir'],
+    answers: [
+      'Garzan çayı yakınlarındaki dağlık kütle',
+      'dünyanın en büyük sodalı gölü olan havza',
+      'Elazığ sınırlarında yer alan tektonik göl',
+      'Mezopotamya\'ya hayat veren büyük nehir',
+    ],
     correctAnswer: 'dünyanın en büyük sodalı gölü olan havza',
     explanation: '\'Van gölü\' → dünyanın en büyük sodalı gölü olan havza.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9032',
     category: 'Cografya',
     prompt: '\'meşe ormanları\' doğru şekilde nasıl açıklanır?',
-    answers: ['Süleymaniye yakınlarında yer alan yapay baraj gölü', 'Diyarbakır ovasında yer alan yayvan bazaltik volkan', 'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim', 'Kürdistan dağlarının tipik bitki örtüsü ve ağacı'],
+    answers: [
+      'Süleymaniye yakınlarında yer alan yapay baraj gölü',
+      'Diyarbakır ovasında yer alan yayvan bazaltik volkan',
+      'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim',
+      'Kürdistan dağlarının tipik bitki örtüsü ve ağacı',
+    ],
     correctAnswer: 'Kürdistan dağlarının tipik bitki örtüsü ve ağacı',
-    explanation: '\'meşe ormanları\' → Kürdistan dağlarının tipik bitki örtüsü ve ağacı.',
+    explanation:
+        '\'meşe ormanları\' → Kürdistan dağlarının tipik bitki örtüsü ve ağacı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9036',
     category: 'Cografya',
     prompt: 'Hangisi \'Tendürek dağı\' yerini doğru tanımlar?',
-    answers: ['Taş mimarisi ve Mezopotamya manzarası', 'Diyala nehri üzerinde kurulmuş baraj gölü', 'krater gölüne sahip aktif volkanik dağ', 'Türkiye ve Irak sınırını çizen Dicle kolu'],
+    answers: [
+      'Taş mimarisi ve Mezopotamya manzarası',
+      'Diyala nehri üzerinde kurulmuş baraj gölü',
+      'krater gölüne sahip aktif volkanik dağ',
+      'Türkiye ve Irak sınırını çizen Dicle kolu',
+    ],
     correctAnswer: 'krater gölüne sahip aktif volkanik dağ',
     explanation: '\'Tendürek dağı\' → krater gölüne sahip aktif volkanik dağ.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9066',
@@ -6572,19 +8271,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Cografya literatüründe \'gol\' yer almaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'gol\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'gol\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9072',
     category: 'Cografya',
     prompt: 'Hangisi \'Munzur vadisi\' yerini doğru tanımlar?',
-    answers: ['Tunceli\'de yer alan milli park statüsündeki vadi', 'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu', 'Van gölü kuzeyinde yer alan sönmüş volkanik dağ', 'Fırat\'ın kollarının suladığı büyük tarım ovası'],
+    answers: [
+      'Tunceli\'de yer alan milli park statüsündeki vadi',
+      'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
+      'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
+      'Fırat\'ın kollarının suladığı büyük tarım ovası',
+    ],
     correctAnswer: 'Tunceli\'de yer alan milli park statüsündeki vadi',
-    explanation: '\'Munzur vadisi\' → Tunceli\'de yer alan milli park statüsündeki vadi.',
+    explanation:
+        '\'Munzur vadisi\' → Tunceli\'de yer alan milli park statüsündeki vadi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9086',
@@ -6594,7 +8300,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Aras nehri\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9087',
@@ -6604,17 +8310,23 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'ova',
     explanation: '\'deşt\' → ova.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9096',
     category: 'Cografya',
     prompt: 'Cografya açısından \'Garzan çayı\' için doğru ifade hangisidir?',
-    answers: ['birçok nehrin kaynağını aldığı yüksek yaylaklar', 'Nuh\'un gemisinin indiğine inanılan tarihi dağ', 'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu', 'Kürdistan coğrafyasını baştan başa bölen dağlar'],
+    answers: [
+      'birçok nehrin kaynağını aldığı yüksek yaylaklar',
+      'Nuh\'un gemisinin indiğine inanılan tarihi dağ',
+      'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
+      'Kürdistan coğrafyasını baştan başa bölen dağlar',
+    ],
     correctAnswer: 'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
-    explanation: '\'Garzan çayı\' → Batman\'dan geçip Dicle\'ye dökülen önemli akarsu.',
+    explanation:
+        '\'Garzan çayı\' → Batman\'dan geçip Dicle\'ye dökülen önemli akarsu.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9098',
@@ -6622,9 +8334,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Tendürek dağı\' Cografya alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Tendürek dağı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Tendürek dağı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9106',
@@ -6632,19 +8345,25 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Cografya alanında \'Zap suyu\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Zap suyu\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Zap suyu\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9132',
     category: 'Cografya',
     prompt: '\'Habur çayı\' coğrafi olarak neyi anlatır?',
-    answers: ['Hakkari dağlarını yararak akan hırçın akarsu', 'krater gölüne sahip aktif volkanik dağ', 'Doğu Kürdistan\'da yer alan tuzlu göl havzası', 'Türkiye ve Irak sınırını çizen Dicle kolu'],
+    answers: [
+      'Hakkari dağlarını yararak akan hırçın akarsu',
+      'krater gölüne sahip aktif volkanik dağ',
+      'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
+      'Türkiye ve Irak sınırını çizen Dicle kolu',
+    ],
     correctAnswer: 'Türkiye ve Irak sınırını çizen Dicle kolu',
     explanation: '\'Habur çayı\' → Türkiye ve Irak sınırını çizen Dicle kolu.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9146',
@@ -6654,17 +8373,23 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Cudi dağı\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9157',
     category: 'Cografya',
     prompt: 'Cografya çerçevesinde \'Dicle nehri\' ne anlama gelir?',
-    answers: ['Dersim coğrafyasının en engebeli sıradağları', 'Diyarbakır surlarının altından geçen nehir', 'Diyala nehri üzerinde kurulmuş baraj gölü', 'Doğu Kürdistan\'da yer alan tuzlu göl havzası'],
+    answers: [
+      'Dersim coğrafyasının en engebeli sıradağları',
+      'Diyarbakır surlarının altından geçen nehir',
+      'Diyala nehri üzerinde kurulmuş baraj gölü',
+      'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
+    ],
     correctAnswer: 'Diyarbakır surlarının altından geçen nehir',
-    explanation: '\'Dicle nehri\' → Diyarbakır surlarının altından geçen nehir.',
+    explanation:
+        '\'Dicle nehri\' → Diyarbakır surlarının altından geçen nehir.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9161',
@@ -6672,19 +8397,22 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Hewa\' Cografya açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Hewa\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Hewa\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9170',
     category: 'Cografya',
-    prompt: '\'Behdînan bölgesi\', Cografya alanında bilinen gerçek bir kavramdır.',
+    prompt:
+        '\'Behdînan bölgesi\', Cografya alanında bilinen gerçek bir kavramdır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Behdînan bölgesi\' Cografya alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Behdînan bölgesi\' Cografya alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9198',
@@ -6692,19 +8420,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Edebiyat alanında \'Ehmedê xanî\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Ehmedê xanî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Ehmedê xanî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9207',
     category: 'Edebiyat',
     prompt: '\'Ronahî dergisi\' kavramı neyi karşılar?',
-    answers: ['Şam\'da Latin alfabesiyle çıkarılan edebi dergi', 'Klasik Kürt şiirinin önemli isimleri olmaları', 'klasik Kürt edebiyatında önemli yeri olan şair', 'Birçok yazarın yurt dışında üretmesi nedeniyle'],
+    answers: [
+      'Şam\'da Latin alfabesiyle çıkarılan edebi dergi',
+      'Klasik Kürt şiirinin önemli isimleri olmaları',
+      'klasik Kürt edebiyatında önemli yeri olan şair',
+      'Birçok yazarın yurt dışında üretmesi nedeniyle',
+    ],
     correctAnswer: 'Şam\'da Latin alfabesiyle çıkarılan edebi dergi',
-    explanation: '\'Ronahî dergisi\' → Şam\'da Latin alfabesiyle çıkarılan edebi dergi.',
+    explanation:
+        '\'Ronahî dergisi\' → Şam\'da Latin alfabesiyle çıkarılan edebi dergi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9210',
@@ -6712,9 +8447,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Kafiye\' Edebiyat açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Kafiye\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Kafiye\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9215',
@@ -6724,27 +8460,37 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'hikaye',
     explanation: '\'çîrok\' → hikaye.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9227',
     category: 'Edebiyat',
     prompt: 'Edebiyat alanında \'Cegerxwîn\' neyi ifade eder?',
-    answers: ['Mevlid-i Şerif\'i Kürtçe yazan klasik şair', 'modern Kürt şiirinin öncü toplumcu şairi', 'Latin temelli Kürt alfabesinin yaygınlaşması', 'Şivanê Kurd adlı ilk Kürtçe romanın yazarı'],
+    answers: [
+      'Mevlid-i Şerif\'i Kürtçe yazan klasik şair',
+      'modern Kürt şiirinin öncü toplumcu şairi',
+      'Latin temelli Kürt alfabesinin yaygınlaşması',
+      'Şivanê Kurd adlı ilk Kürtçe romanın yazarı',
+    ],
     correctAnswer: 'modern Kürt şiirinin öncü toplumcu şairi',
     explanation: '\'Cegerxwîn\': modern Kürt şiirinin öncü toplumcu şairi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9266',
     category: 'Edebiyat',
     prompt: '\'diyalog\' dendiğinde kastedilen nedir?',
-    answers: ['Celadet Alî Bedirxan', 'kahramanlık anlatısı', 'karşılıklı konuşma', 'Mela Ehmedê Xasî'],
+    answers: [
+      'Celadet Alî Bedirxan',
+      'kahramanlık anlatısı',
+      'karşılıklı konuşma',
+      'Mela Ehmedê Xasî',
+    ],
     correctAnswer: 'karşılıklı konuşma',
     explanation: '\'diyalog\' → karşılıklı konuşma.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9280',
@@ -6754,7 +8500,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'uzun anlatı',
     explanation: '\'roman\' → uzun anlatı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9284',
@@ -6762,19 +8508,25 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'roman\' yalnızca Edebiyat dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'roman\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'roman\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9287',
     category: 'Edebiyat',
     prompt: '\'karakter\', Edebiyat konusunda neyi anlatır?',
-    answers: ['Siyabend û Xecê', 'Doğa ve kuşlar', 'anlatı kişisi', 'Melayê Cizîrî'],
+    answers: [
+      'Siyabend û Xecê',
+      'Doğa ve kuşlar',
+      'anlatı kişisi',
+      'Melayê Cizîrî',
+    ],
     correctAnswer: 'anlatı kişisi',
     explanation: '\'karakter\' → anlatı kişisi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9311',
@@ -6782,9 +8534,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Yaşar kemal\' Edebiyat bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Yaşar kemal\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Yaşar kemal\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9318',
@@ -6792,39 +8545,59 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Tema\' yalnızca Edebiyat dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Tema\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Tema\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9343',
     category: 'Edebiyat',
-    prompt: 'Edebiyat için \'Hêmin Mukriyanî\' hakkında doğru seçenek hangisidir?',
-    answers: ['Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük', 'Hawar dergisini çıkaran edebi ekolün kurucusu', 'Doğu Kürdistan\'ın meşhur modern şair ve yazarı', 'Kürt şiirine serbest tarzı getiren büyük şair'],
+    prompt:
+        'Edebiyat için \'Hêmin Mukriyanî\' hakkında doğru seçenek hangisidir?',
+    answers: [
+      'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
+      'Hawar dergisini çıkaran edebi ekolün kurucusu',
+      'Doğu Kürdistan\'ın meşhur modern şair ve yazarı',
+      'Kürt şiirine serbest tarzı getiren büyük şair',
+    ],
     correctAnswer: 'Doğu Kürdistan\'ın meşhur modern şair ve yazarı',
-    explanation: '\'Hêmin Mukriyanî\': Doğu Kürdistan\'ın meşhur modern şair ve yazarı.',
+    explanation:
+        '\'Hêmin Mukriyanî\': Doğu Kürdistan\'ın meşhur modern şair ve yazarı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9344',
     category: 'Edebiyat',
-    prompt: 'Hangisi Edebiyat içinde \'Hejar Mukriyanî\' kavramını doğru yerleştirir?',
-    answers: ['Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar', 'modern Kürt hikayeciliğinin kurucu isimlerinden', 'Soranice klasik şiir okulunun en büyük divan şairi', 'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük'],
+    prompt:
+        'Hangisi Edebiyat içinde \'Hejar Mukriyanî\' kavramını doğru yerleştirir?',
+    answers: [
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+      'modern Kürt hikayeciliğinin kurucu isimlerinden',
+      'Soranice klasik şiir okulunun en büyük divan şairi',
+      'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
+    ],
     correctAnswer: 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
-    explanation: '\'Hejar Mukriyanî\': Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar.',
+    explanation:
+        '\'Hejar Mukriyanî\': Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9378',
     category: 'Edebiyat',
     prompt: '\'Feqiyê Teyran\' hakkında doğru olan hangisidir?',
-    answers: ['destana gelêrî ya ku bingeha Mem û Zînê ye', 'Mevlid-i Şerif\'i Kürtçe yazan klasik şair', 'kuşların diliyle yazan meşhur Kürt şair', 'Masallar, destanlar ve dengbêj anlatıları'],
+    answers: [
+      'destana gelêrî ya ku bingeha Mem û Zînê ye',
+      'Mevlid-i Şerif\'i Kürtçe yazan klasik şair',
+      'kuşların diliyle yazan meşhur Kürt şair',
+      'Masallar, destanlar ve dengbêj anlatıları',
+    ],
     correctAnswer: 'kuşların diliyle yazan meşhur Kürt şair',
     explanation: '\'Feqiyê Teyran\': kuşların diliyle yazan meşhur Kürt şair.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9383',
@@ -6834,107 +8607,158 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Hêmin mukriyanî\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9387',
     category: 'Edebiyat',
     prompt: '\'Ronahî dergisi\' kavramını doğru anlatan ifade hangisidir?',
-    answers: ['Şam\'da Latin alfabesiyle çıkarılan edebi dergi', 'Kürt edebiyatının bilinen en eski klasik şairlerinden', 'Kürtçenin yazı, yayın, eğitim ve dijital üretimde görünürlüğünü artırmayı', 'Modern dönemde roman/gazete gibi türlerin gelişmesi'],
+    answers: [
+      'Şam\'da Latin alfabesiyle çıkarılan edebi dergi',
+      'Kürt edebiyatının bilinen en eski klasik şairlerinden',
+      'Kürtçenin yazı, yayın, eğitim ve dijital üretimde görünürlüğünü artırmayı',
+      'Modern dönemde roman/gazete gibi türlerin gelişmesi',
+    ],
     correctAnswer: 'Şam\'da Latin alfabesiyle çıkarılan edebi dergi',
-    explanation: '\'Ronahî dergisi\' → Şam\'da Latin alfabesiyle çıkarılan edebi dergi.',
+    explanation:
+        '\'Ronahî dergisi\' → Şam\'da Latin alfabesiyle çıkarılan edebi dergi.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9400',
     category: 'Edebiyat',
-    prompt: '\'Dîwana melayê cizîrî\', Edebiyat ile ilgili gerçek bir terimdir.',
+    prompt:
+        '\'Dîwana melayê cizîrî\', Edebiyat ile ilgili gerçek bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Dîwana melayê cizîrî\' Edebiyat alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Dîwana melayê cizîrî\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9405',
     category: 'Edebiyat',
     prompt: 'Edebiyat açısından \'Mem û Zîn\' için doğru ifade hangisidir?',
-    answers: ['Klasik Kürt şiirinin önemli isimleri olmaları', 'Doğu Kürdistan\'ın meşhur modern şair ve yazarı', 'Kürt edebiyatının en eski klasik rubai şairi', 'Kürt klasik edebiyatının en büyük aşk destanı'],
+    answers: [
+      'Klasik Kürt şiirinin önemli isimleri olmaları',
+      'Doğu Kürdistan\'ın meşhur modern şair ve yazarı',
+      'Kürt edebiyatının en eski klasik rubai şairi',
+      'Kürt klasik edebiyatının en büyük aşk destanı',
+    ],
     correctAnswer: 'Kürt klasik edebiyatının en büyük aşk destanı',
-    explanation: '\'Mem û Zîn\' → Kürt klasik edebiyatının en büyük aşk destanı.',
+    explanation:
+        '\'Mem û Zîn\' → Kürt klasik edebiyatının en büyük aşk destanı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9408',
     category: 'Edebiyat',
     prompt: 'Edebiyat çerçevesinde \'Mestûre Kurdistanî\' ne anlama gelir?',
-    answers: ['Erdelan beyliğinde yaşamış ünlü kadın şair', 'Şivanê Kurd adlı ilk Kürtçe romanın yazarı', 'Kürt tasavvuf şiirinin klasik divan şairi', 'Kürt tiyatrosunun kurucu oyun yazarlarından'],
+    answers: [
+      'Erdelan beyliğinde yaşamış ünlü kadın şair',
+      'Şivanê Kurd adlı ilk Kürtçe romanın yazarı',
+      'Kürt tasavvuf şiirinin klasik divan şairi',
+      'Kürt tiyatrosunun kurucu oyun yazarlarından',
+    ],
     correctAnswer: 'Erdelan beyliğinde yaşamış ünlü kadın şair',
-    explanation: '\'Mestûre Kurdistanî\': Erdelan beyliğinde yaşamış ünlü kadın şair.',
+    explanation:
+        '\'Mestûre Kurdistanî\': Erdelan beyliğinde yaşamış ünlü kadın şair.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9409',
     category: 'Edebiyat',
     prompt: 'Edebiyat için \'Ehmedê Xasî\' hakkında doğru seçenek hangisidir?',
-    answers: ['1935 yılında basılan ilk modern Kürtçe roman', 'Masallar, destanlar ve dengbêj anlatıları', 'Zazaca ilk mevlidi yazan şair ve din alimi', 'Kürt edebiyatının en eski klasik rubai şairi'],
+    answers: [
+      '1935 yılında basılan ilk modern Kürtçe roman',
+      'Masallar, destanlar ve dengbêj anlatıları',
+      'Zazaca ilk mevlidi yazan şair ve din alimi',
+      'Kürt edebiyatının en eski klasik rubai şairi',
+    ],
     correctAnswer: 'Zazaca ilk mevlidi yazan şair ve din alimi',
     explanation: '\'Ehmedê Xasî\': Zazaca ilk mevlidi yazan şair ve din alimi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9410',
     category: 'Edebiyat',
     prompt: '\'Memê Alan destanı\' hakkında bilinen doğru nedir?',
-    answers: ['Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı', 'İlk Kürt gazetesi Kürdistan’ın yayımlanmasıyla ilişkilidir', 'Kürt sözlü edebiyatının en hüzünlü destanlarından biri', 'Modern dönemde roman/gazete gibi türlerin gelişmesi'],
+    answers: [
+      'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı',
+      'İlk Kürt gazetesi Kürdistan’ın yayımlanmasıyla ilişkilidir',
+      'Kürt sözlü edebiyatının en hüzünlü destanlarından biri',
+      'Modern dönemde roman/gazete gibi türlerin gelişmesi',
+    ],
     correctAnswer: 'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı',
-    explanation: '\'Memê Alan destanı\' → Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı.',
+    explanation:
+        '\'Memê Alan destanı\' → Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9411',
     category: 'Edebiyat',
     prompt: 'Edebiyat için \'Arabê Şamo\' hakkında doğru seçenek hangisidir?',
-    answers: ['Şivanê Kurd adlı ilk Kürtçe romanın yazarı', 'Erivan\'da uzun yıllar basılan Kürtçe gazete', 'Kürt tasavvuf şiirinin klasik divan şairi', 'Sözlü anlatı ve ezgili hikâye aktarımı'],
+    answers: [
+      'Şivanê Kurd adlı ilk Kürtçe romanın yazarı',
+      'Erivan\'da uzun yıllar basılan Kürtçe gazete',
+      'Kürt tasavvuf şiirinin klasik divan şairi',
+      'Sözlü anlatı ve ezgili hikâye aktarımı',
+    ],
     correctAnswer: 'Şivanê Kurd adlı ilk Kürtçe romanın yazarı',
     explanation: '\'Arabê Şamo\': Şivanê Kurd adlı ilk Kürtçe romanın yazarı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9414',
     category: 'Edebiyat',
-    prompt: '\'Celadet Bedirxan\' Edebiyat bağlamında kullanılan geçerli bir terimdir.',
+    prompt:
+        '\'Celadet Bedirxan\' Edebiyat bağlamında kullanılan geçerli bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Celadet Bedirxan\' Edebiyat alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Celadet Bedirxan\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9419',
     category: 'Edebiyat',
-    prompt: 'Edebiyat için \'Dîwana Melayê Cizîrî\' hakkında doğru seçenek hangisidir?',
-    answers: ['mistik aşk ve felsefe içeren meşhur şiir divanı', 'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük', 'Klasik Kürt şiirinin önemli isimleri olmaları', 'klasik Kürt edebiyatında önemli yeri olan şair'],
+    prompt:
+        'Edebiyat için \'Dîwana Melayê Cizîrî\' hakkında doğru seçenek hangisidir?',
+    answers: [
+      'mistik aşk ve felsefe içeren meşhur şiir divanı',
+      'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
+      'Klasik Kürt şiirinin önemli isimleri olmaları',
+      'klasik Kürt edebiyatında önemli yeri olan şair',
+    ],
     correctAnswer: 'mistik aşk ve felsefe içeren meşhur şiir divanı',
-    explanation: '\'Dîwana Melayê Cizîrî\': mistik aşk ve felsefe içeren meşhur şiir divanı.',
+    explanation:
+        '\'Dîwana Melayê Cizîrî\': mistik aşk ve felsefe içeren meşhur şiir divanı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9434',
     category: 'Edebiyat',
     prompt: '\'Riya Taza gazetesi\' nasıl tanımlanır?',
-    answers: ['Erivan\'da uzun yıllar basılan Kürtçe gazete', 'Şivanê Kurd adlı ilk Kürtçe romanın yazarı', 'Hawar dergisini çıkaran edebi ekolün kurucusu', '1935 yılında basılan ilk modern Kürtçe roman'],
+    answers: [
+      'Erivan\'da uzun yıllar basılan Kürtçe gazete',
+      'Şivanê Kurd adlı ilk Kürtçe romanın yazarı',
+      'Hawar dergisini çıkaran edebi ekolün kurucusu',
+      '1935 yılında basılan ilk modern Kürtçe roman',
+    ],
     correctAnswer: 'Erivan\'da uzun yıllar basılan Kürtçe gazete',
-    explanation: '\'Riya Taza gazetesi\' → Erivan\'da uzun yıllar basılan Kürtçe gazete.',
+    explanation:
+        '\'Riya Taza gazetesi\' → Erivan\'da uzun yıllar basılan Kürtçe gazete.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9443',
@@ -6942,39 +8766,53 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Cegerxwîn\' yalnızca Edebiyat dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Cegerxwîn\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Cegerxwîn\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9455',
     category: 'Edebiyat',
-    prompt: '\'Dewrêşê Evdî destanı\' Edebiyat açısından anlamsız bir ifadedir.',
+    prompt:
+        '\'Dewrêşê Evdî destanı\' Edebiyat açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Dewrêşê Evdî destanı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Dewrêşê Evdî destanı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9456',
     category: 'Edebiyat',
     prompt: '\'Xanî Mektebi\' için en isabetli açıklama hangisidir?',
-    answers: ['Kürt dili ve edebiyatı üzerine çalışan akademisyen', 'Modern dönemde roman/gazete gibi türlerin gelişmesi', 'Kürtçe gramer kitapları yazan dilbilimci ve yazar', 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol'],
+    answers: [
+      'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
+      'Modern dönemde roman/gazete gibi türlerin gelişmesi',
+      'Kürtçe gramer kitapları yazan dilbilimci ve yazar',
+      'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
+    ],
     correctAnswer: 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
-    explanation: '\'Xanî Mektebi\' → Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol.',
+    explanation:
+        '\'Xanî Mektebi\' → Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9459',
     category: 'Edebiyat',
     prompt: '\'anlatıcı\' kavramı neyi karşılar?',
-    answers: ['hikayeyi aktaran ses', 'Kürtçe (Kurmancî)', 'Dîwana xwe ya klasîk', 'teyran (kuşlarla)'],
+    answers: [
+      'hikayeyi aktaran ses',
+      'Kürtçe (Kurmancî)',
+      'Dîwana xwe ya klasîk',
+      'teyran (kuşlarla)',
+    ],
     correctAnswer: 'hikayeyi aktaran ses',
     explanation: '\'anlatıcı\' → hikayeyi aktaran ses.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9462',
@@ -6984,67 +8822,95 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Karakter\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9473',
     category: 'Edebiyat',
     prompt: '\'Arabê Şamo\', Edebiyat konusunda neyi anlatır?',
-    answers: ['klasik dönemde Kürtçe eserler yazmış şair', 'Mem û Zîn eserinin ünlü yazarı ve düşünür', 'Kürt edebiyatının en eski klasik rubai şairi', 'Şivanê Kurd adlı ilk Kürtçe romanın yazarı'],
+    answers: [
+      'klasik dönemde Kürtçe eserler yazmış şair',
+      'Mem û Zîn eserinin ünlü yazarı ve düşünür',
+      'Kürt edebiyatının en eski klasik rubai şairi',
+      'Şivanê Kurd adlı ilk Kürtçe romanın yazarı',
+    ],
     correctAnswer: 'Şivanê Kurd adlı ilk Kürtçe romanın yazarı',
     explanation: '\'Arabê Şamo\': Şivanê Kurd adlı ilk Kürtçe romanın yazarı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9474',
     category: 'Edebiyat',
-    prompt: 'Edebiyat için \'Abdulla Goran\' hakkında doğru seçenek hangisidir?',
-    answers: ['Kürt tiyatrosunun kurucu oyun yazarlarından', 'Erivan\'da uzun yıllar basılan Kürtçe gazete', 'Latin temelli Kürt alfabesinin yaygınlaşması', 'Sorani Kürtçe şiirinde modernleşmenin öncüsü'],
+    prompt:
+        'Edebiyat için \'Abdulla Goran\' hakkında doğru seçenek hangisidir?',
+    answers: [
+      'Kürt tiyatrosunun kurucu oyun yazarlarından',
+      'Erivan\'da uzun yıllar basılan Kürtçe gazete',
+      'Latin temelli Kürt alfabesinin yaygınlaşması',
+      'Sorani Kürtçe şiirinde modernleşmenin öncüsü',
+    ],
     correctAnswer: 'Sorani Kürtçe şiirinde modernleşmenin öncüsü',
-    explanation: '\'Abdulla Goran\': Sorani Kürtçe şiirinde modernleşmenin öncüsü.',
+    explanation:
+        '\'Abdulla Goran\': Sorani Kürtçe şiirinde modernleşmenin öncüsü.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9484',
     category: 'Edebiyat',
-    prompt: '\'Mem û zîn\' Edebiyat bilgisinin parçası olan gerçek bir başlıktır.',
+    prompt:
+        '\'Mem û zîn\' Edebiyat bilgisinin parçası olan gerçek bir başlıktır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mem û zîn\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9507',
     category: 'Edebiyat',
     prompt: '\'Riya Taza gazetesi\' dendiğinde kastedilen nedir?',
-    answers: ['Erivan\'da uzun yıllar basılan Kürtçe gazete', 'Hawar dergisini çıkaran edebi ekolün kurucusu', 'Latin temelli Kürt alfabesinin yaygınlaşması', 'Sorani Kürtçe şiirinde modernleşmenin öncüsü'],
+    answers: [
+      'Erivan\'da uzun yıllar basılan Kürtçe gazete',
+      'Hawar dergisini çıkaran edebi ekolün kurucusu',
+      'Latin temelli Kürt alfabesinin yaygınlaşması',
+      'Sorani Kürtçe şiirinde modernleşmenin öncüsü',
+    ],
     correctAnswer: 'Erivan\'da uzun yıllar basılan Kürtçe gazete',
-    explanation: '\'Riya Taza gazetesi\' → Erivan\'da uzun yıllar basılan Kürtçe gazete.',
+    explanation:
+        '\'Riya Taza gazetesi\' → Erivan\'da uzun yıllar basılan Kürtçe gazete.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9521',
     category: 'Edebiyat',
-    prompt: 'Edebiyat alanında \'Baba tahirê hemedanî\' bilinmez ve kullanılmaz.',
+    prompt:
+        'Edebiyat alanında \'Baba tahirê hemedanî\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Baba tahirê hemedanî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Baba tahirê hemedanî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9529',
     category: 'Edebiyat',
-    prompt: 'Hangisi Edebiyat içinde \'Şivanê Kurd\' kavramını doğru yerleştirir?',
-    answers: ['1935 yılında basılan ilk modern Kürtçe roman', 'Erivan\'da uzun yıllar basılan Kürtçe gazete', 'Latin temelli Kürt alfabesinin yaygınlaşması', 'klasik Kürt edebiyatında önemli yeri olan şair'],
+    prompt:
+        'Hangisi Edebiyat içinde \'Şivanê Kurd\' kavramını doğru yerleştirir?',
+    answers: [
+      '1935 yılında basılan ilk modern Kürtçe roman',
+      'Erivan\'da uzun yıllar basılan Kürtçe gazete',
+      'Latin temelli Kürt alfabesinin yaygınlaşması',
+      'klasik Kürt edebiyatında önemli yeri olan şair',
+    ],
     correctAnswer: '1935 yılında basılan ilk modern Kürtçe roman',
-    explanation: '\'Şivanê Kurd\': 1935 yılında basılan ilk modern Kürtçe roman.',
+    explanation:
+        '\'Şivanê Kurd\': 1935 yılında basılan ilk modern Kürtçe roman.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9547',
@@ -7052,19 +8918,27 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Helbest\' Edebiyat bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Helbest\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Helbest\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9552',
     category: 'Edebiyat',
-    prompt: 'Edebiyat bilgisinde \'Masture Erdelan\' ile ilgili doğru olan hangisidir?',
-    answers: ['mistik aşk ve felsefe içeren meşhur şiir divanı', 'Soranice klasik şiir okulunun en büyük divan şairi', 'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair', 'Kürtçe gramer kitapları yazan dilbilimci ve yazar'],
+    prompt:
+        'Edebiyat bilgisinde \'Masture Erdelan\' ile ilgili doğru olan hangisidir?',
+    answers: [
+      'mistik aşk ve felsefe içeren meşhur şiir divanı',
+      'Soranice klasik şiir okulunun en büyük divan şairi',
+      'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair',
+      'Kürtçe gramer kitapları yazan dilbilimci ve yazar',
+    ],
     correctAnswer: 'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair',
-    explanation: '\'Masture Erdelan\': tarihte divan yazmış ilk Kürt kadın tarihçi ve şair.',
+    explanation:
+        '\'Masture Erdelan\': tarihte divan yazmış ilk Kürt kadın tarihçi ve şair.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9565',
@@ -7074,47 +8948,66 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Hejar mukriyanî\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9573',
     category: 'Edebiyat',
-    prompt: '\'Ferhad û şîrîn\', Edebiyat alanında bilinen gerçek bir kavramdır.',
+    prompt:
+        '\'Ferhad û şîrîn\', Edebiyat alanında bilinen gerçek bir kavramdır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Ferhad û şîrîn\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9579',
     category: 'Edebiyat',
     prompt: '\'Ferhad û Şîrîn\', Edebiyat konusunda neyi anlatır?',
-    answers: ['Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol', 'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi', 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar', 'Kürt edebiyatının bilinen en eski klasik şairlerinden'],
+    answers: [
+      'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
+      'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi',
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+      'Kürt edebiyatının bilinen en eski klasik şairlerinden',
+    ],
     correctAnswer: 'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi',
-    explanation: '\'Ferhad û Şîrîn\': Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi.',
+    explanation:
+        '\'Ferhad û Şîrîn\': Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9582',
     category: 'Edebiyat',
     prompt: '\'Abdulla Goran\' kim olarak anılır?',
-    answers: ['modern Kürt şiirinde ve nesrinde iz bırakmış yazar', 'Kürtçenin yazı, yayın, eğitim ve dijital üretimde görünürlüğünü artırmayı', 'Sorani Kürtçe şiirinde modernleşmenin öncüsü', 'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım'],
+    answers: [
+      'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
+      'Kürtçenin yazı, yayın, eğitim ve dijital üretimde görünürlüğünü artırmayı',
+      'Sorani Kürtçe şiirinde modernleşmenin öncüsü',
+      'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
+    ],
     correctAnswer: 'Sorani Kürtçe şiirinde modernleşmenin öncüsü',
-    explanation: '\'Abdulla Goran\': Sorani Kürtçe şiirinde modernleşmenin öncüsü.',
+    explanation:
+        '\'Abdulla Goran\': Sorani Kürtçe şiirinde modernleşmenin öncüsü.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9594',
     category: 'Edebiyat',
     prompt: 'Hangisi \'Nûbihara Biçukan\' kavramını doğru betimler?',
-    answers: ['Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol', 'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük', 'İlk Kürt gazetesi Kürdistan’ın yayımlanmasıyla ilişkilidir', 'Kürtçenin yazı, yayın, eğitim ve dijital üretimde görünürlüğünü artırmayı'],
+    answers: [
+      'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
+      'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
+      'İlk Kürt gazetesi Kürdistan’ın yayımlanmasıyla ilişkilidir',
+      'Kürtçenin yazı, yayın, eğitim ve dijital üretimde görünürlüğünü artırmayı',
+    ],
     correctAnswer: 'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
-    explanation: '\'Nûbihara Biçukan\' → Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük.',
+    explanation:
+        '\'Nûbihara Biçukan\' → Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9612',
@@ -7124,17 +9017,18 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'ses uyumu',
     explanation: '\'kafiye\' → ses uyumu.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9614',
     category: 'Edebiyat',
-    prompt: 'Edebiyat alanında \'Osman sabri\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Edebiyat alanında \'Osman sabri\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Osman sabri\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9623',
@@ -7144,17 +9038,23 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'ana düşünce',
     explanation: '\'tema\' → ana düşünce.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9625',
     category: 'Edebiyat',
     prompt: '\'Osman Sabri\' kim olarak anılır?',
-    answers: ['Doğu Kürdistan\'ın meşhur modern şair ve yazarı', 'Kürt dilinin ve birliğinin değerini göstermek', 'mistik aşk ve felsefe içeren meşhur şiir divanı', 'modern Kürt hikayeciliğinin kurucu isimlerinden'],
+    answers: [
+      'Doğu Kürdistan\'ın meşhur modern şair ve yazarı',
+      'Kürt dilinin ve birliğinin değerini göstermek',
+      'mistik aşk ve felsefe içeren meşhur şiir divanı',
+      'modern Kürt hikayeciliğinin kurucu isimlerinden',
+    ],
     correctAnswer: 'modern Kürt hikayeciliğinin kurucu isimlerinden',
-    explanation: '\'Osman Sabri\': modern Kürt hikayeciliğinin kurucu isimlerinden.',
+    explanation:
+        '\'Osman Sabri\': modern Kürt hikayeciliğinin kurucu isimlerinden.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9626',
@@ -7164,57 +9064,87 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Nalî\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9636',
     category: 'Edebiyat',
     prompt: 'Aşağıdakilerden hangisi \'Ferhad û Şîrîn\' için doğrudur?',
-    answers: ['Kürt sözlü edebiyatının en hüzünlü destanlarından biri', 'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi', 'Dil ve alfabe çalışmalarını yaygınlaştırdığı için', 'Kürt edebiyatının bilinen en eski klasik şairlerinden'],
+    answers: [
+      'Kürt sözlü edebiyatının en hüzünlü destanlarından biri',
+      'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi',
+      'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
+      'Kürt edebiyatının bilinen en eski klasik şairlerinden',
+    ],
     correctAnswer: 'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi',
-    explanation: '\'Ferhad û Şîrîn\': Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi.',
+    explanation:
+        '\'Ferhad û Şîrîn\': Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9668',
     category: 'Edebiyat',
     prompt: 'Hangisi \'Dewrêşê Evdî destanı\' tanımına uyar?',
-    answers: ['erken dönem Kürtçe edebi ve siyasi yayınlardan biri', 'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi', 'Kürt sözlü edebiyatının en hüzünlü destanlarından biri', 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar'],
+    answers: [
+      'erken dönem Kürtçe edebi ve siyasi yayınlardan biri',
+      'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi',
+      'Kürt sözlü edebiyatının en hüzünlü destanlarından biri',
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+    ],
     correctAnswer: 'Kürt sözlü edebiyatının en hüzünlü destanlarından biri',
-    explanation: '\'Dewrêşê Evdî destanı\' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri.',
+    explanation:
+        '\'Dewrêşê Evdî destanı\' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9706',
     category: 'Edebiyat',
     prompt: 'Aşağıdakilerden hangisi \'Masture Erdelan\' için doğrudur?',
-    answers: ['Kürt dili ve edebiyatı üzerine çalışan akademisyen', 'Kürt edebiyatının bilinen en eski klasik şairlerinden', 'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair', 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar'],
+    answers: [
+      'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
+      'Kürt edebiyatının bilinen en eski klasik şairlerinden',
+      'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair',
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+    ],
     correctAnswer: 'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair',
-    explanation: '\'Masture Erdelan\': tarihte divan yazmış ilk Kürt kadın tarihçi ve şair.',
+    explanation:
+        '\'Masture Erdelan\': tarihte divan yazmış ilk Kürt kadın tarihçi ve şair.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9716',
     category: 'Edebiyat',
     prompt: '\'Hêmin Mukriyanî\' hakkında doğru olan hangisidir?',
-    answers: ['Hawar dergisini çıkaran edebi ekolün kurucusu', 'klasik Kürt edebiyatında önemli yeri olan şair', 'modern Kürt romanının kurucusu ve öncü romancı', 'Doğu Kürdistan\'ın meşhur modern şair ve yazarı'],
+    answers: [
+      'Hawar dergisini çıkaran edebi ekolün kurucusu',
+      'klasik Kürt edebiyatında önemli yeri olan şair',
+      'modern Kürt romanının kurucusu ve öncü romancı',
+      'Doğu Kürdistan\'ın meşhur modern şair ve yazarı',
+    ],
     correctAnswer: 'Doğu Kürdistan\'ın meşhur modern şair ve yazarı',
-    explanation: '\'Hêmin Mukriyanî\': Doğu Kürdistan\'ın meşhur modern şair ve yazarı.',
+    explanation:
+        '\'Hêmin Mukriyanî\': Doğu Kürdistan\'ın meşhur modern şair ve yazarı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9724',
     category: 'Edebiyat',
     prompt: '\'Hawar Ekolü\' için en isabetli açıklama hangisidir?',
-    answers: ['Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım', 'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi', 'Soranice klasik şiir okulunun en büyük divan şairi', 'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair'],
+    answers: [
+      'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
+      'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi',
+      'Soranice klasik şiir okulunun en büyük divan şairi',
+      'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair',
+    ],
     correctAnswer: 'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
-    explanation: '\'Hawar Ekolü\' → Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım.',
+    explanation:
+        '\'Hawar Ekolü\' → Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9728',
@@ -7222,119 +9152,188 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Jîna nû dergisi\' Edebiyat alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Jîna nû dergisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Jîna nû dergisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9730',
     category: 'Edebiyat',
-    prompt: 'Edebiyat bilgisinde \'Şêrko Bêkes\' ile ilgili doğru olan hangisidir?',
-    answers: ['Sorani Kürtçe şiirinde modernleşmenin öncüsü', 'Erivan\'da uzun yıllar basılan Kürtçe gazete', 'Kürt şiirine serbest tarzı getiren büyük şair', 'Şam\'da Latin alfabesiyle çıkarılan edebi dergi'],
+    prompt:
+        'Edebiyat bilgisinde \'Şêrko Bêkes\' ile ilgili doğru olan hangisidir?',
+    answers: [
+      'Sorani Kürtçe şiirinde modernleşmenin öncüsü',
+      'Erivan\'da uzun yıllar basılan Kürtçe gazete',
+      'Kürt şiirine serbest tarzı getiren büyük şair',
+      'Şam\'da Latin alfabesiyle çıkarılan edebi dergi',
+    ],
     correctAnswer: 'Kürt şiirine serbest tarzı getiren büyük şair',
-    explanation: '\'Şêrko Bêkes\': Kürt şiirine serbest tarzı getiren büyük şair.',
+    explanation:
+        '\'Şêrko Bêkes\': Kürt şiirine serbest tarzı getiren büyük şair.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9749',
     category: 'Edebiyat',
     prompt: 'Edebiyat için \'Qanadê Kurdo\' hakkında doğru seçenek hangisidir?',
-    answers: ['modern Kürt hikayeciliğinin kurucu isimlerinden', 'Dil ve alfabe çalışmalarını yaygınlaştırdığı için', 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar', 'Kürt dili ve edebiyatı üzerine çalışan akademisyen'],
+    answers: [
+      'modern Kürt hikayeciliğinin kurucu isimlerinden',
+      'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+      'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
+    ],
     correctAnswer: 'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
-    explanation: '\'Qanadê Kurdo\': Kürt dili ve edebiyatı üzerine çalışan akademisyen.',
+    explanation:
+        '\'Qanadê Kurdo\': Kürt dili ve edebiyatı üzerine çalışan akademisyen.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9754',
     category: 'Edebiyat',
     prompt: '\'Şivanê Kurd\' kimdir?',
-    answers: ['Şam\'da Latin alfabesiyle çıkarılan edebi dergi', 'Hawar dergisini çıkaran edebi ekolün kurucusu', '1935 yılında basılan ilk modern Kürtçe roman', 'Kürt şiirine serbest tarzı getiren büyük şair'],
+    answers: [
+      'Şam\'da Latin alfabesiyle çıkarılan edebi dergi',
+      'Hawar dergisini çıkaran edebi ekolün kurucusu',
+      '1935 yılında basılan ilk modern Kürtçe roman',
+      'Kürt şiirine serbest tarzı getiren büyük şair',
+    ],
     correctAnswer: '1935 yılında basılan ilk modern Kürtçe roman',
-    explanation: '\'Şivanê Kurd\': 1935 yılında basılan ilk modern Kürtçe roman.',
+    explanation:
+        '\'Şivanê Kurd\': 1935 yılında basılan ilk modern Kürtçe roman.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9777',
     category: 'Edebiyat',
     prompt: 'Aşağıdakilerden hangisi \'Memê Alan destanı\' kavramını açıklar?',
-    answers: ['modern Kürt şiirinde ve nesrinde iz bırakmış yazar', 'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı', 'Modern dönemde roman/gazete gibi türlerin gelişmesi', 'erken dönem Kürtçe edebi ve siyasi yayınlardan biri'],
+    answers: [
+      'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
+      'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı',
+      'Modern dönemde roman/gazete gibi türlerin gelişmesi',
+      'erken dönem Kürtçe edebi ve siyasi yayınlardan biri',
+    ],
     correctAnswer: 'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı',
-    explanation: '\'Memê Alan destanı\' → Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı.',
+    explanation:
+        '\'Memê Alan destanı\' → Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9778',
     category: 'Edebiyat',
     prompt: 'Edebiyat bilgisinde \'Nalî\' ile ilgili doğru olan hangisidir?',
-    answers: ['Kürt dili ve edebiyatı üzerine çalışan akademisyen', 'Dil ve alfabe çalışmalarını yaygınlaştırdığı için', 'Soranice klasik şiir okulunun en büyük divan şairi', 'erken dönem Kürtçe edebi ve siyasi yayınlardan biri'],
+    answers: [
+      'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
+      'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
+      'Soranice klasik şiir okulunun en büyük divan şairi',
+      'erken dönem Kürtçe edebi ve siyasi yayınlardan biri',
+    ],
     correctAnswer: 'Soranice klasik şiir okulunun en büyük divan şairi',
-    explanation: '\'Nalî\': Soranice klasik şiir okulunun en büyük divan şairi.',
+    explanation:
+        '\'Nalî\': Soranice klasik şiir okulunun en büyük divan şairi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9789',
     category: 'Edebiyat',
     prompt: 'Hangisi \'Kamuran Bedirxan\' kişisini doğru tanıtır?',
-    answers: ['Kürtçe gramer kitapları yazan dilbilimci ve yazar', 'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük', 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol', 'Kürt dili ve edebiyatı üzerine çalışan akademisyen'],
+    answers: [
+      'Kürtçe gramer kitapları yazan dilbilimci ve yazar',
+      'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
+      'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
+      'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
+    ],
     correctAnswer: 'Kürtçe gramer kitapları yazan dilbilimci ve yazar',
-    explanation: '\'Kamuran Bedirxan\': Kürtçe gramer kitapları yazan dilbilimci ve yazar.',
+    explanation:
+        '\'Kamuran Bedirxan\': Kürtçe gramer kitapları yazan dilbilimci ve yazar.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9810',
     category: 'Edebiyat',
     prompt: '\'Xanî Mektebi\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük', 'modern Kürt şiirinde ve nesrinde iz bırakmış yazar', 'Dil ve alfabe çalışmalarını yaygınlaştırdığı için', 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol'],
+    answers: [
+      'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
+      'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
+      'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
+      'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
+    ],
     correctAnswer: 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
-    explanation: '\'Xanî Mektebi\' → Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol.',
+    explanation:
+        '\'Xanî Mektebi\' → Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9812',
     category: 'Edebiyat',
     prompt: 'Edebiyat alanında \'Masture Erdelan\' neyi ifade eder?',
-    answers: ['Kürt sözlü edebiyatının en hüzünlü destanlarından biri', 'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair', 'Dil ve alfabe çalışmalarını yaygınlaştırdığı için', 'Kürt kökenli, dünya çapında tanınan usta romancı'],
+    answers: [
+      'Kürt sözlü edebiyatının en hüzünlü destanlarından biri',
+      'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair',
+      'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
+      'Kürt kökenli, dünya çapında tanınan usta romancı',
+    ],
     correctAnswer: 'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair',
-    explanation: '\'Masture Erdelan\': tarihte divan yazmış ilk Kürt kadın tarihçi ve şair.',
+    explanation:
+        '\'Masture Erdelan\': tarihte divan yazmış ilk Kürt kadın tarihçi ve şair.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9820',
     category: 'Edebiyat',
     prompt: '\'Nalî\' hakkında doğru olan hangisidir?',
-    answers: ['Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük', 'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair', 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol', 'Soranice klasik şiir okulunun en büyük divan şairi'],
+    answers: [
+      'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
+      'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair',
+      'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
+      'Soranice klasik şiir okulunun en büyük divan şairi',
+    ],
     correctAnswer: 'Soranice klasik şiir okulunun en büyük divan şairi',
-    explanation: '\'Nalî\': Soranice klasik şiir okulunun en büyük divan şairi.',
+    explanation:
+        '\'Nalî\': Soranice klasik şiir okulunun en büyük divan şairi.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9838',
     category: 'Edebiyat',
-    prompt: 'Edebiyat açısından \'Riya Taza gazetesi\' için doğru ifade hangisidir?',
-    answers: ['Kürt şiirine serbest tarzı getiren büyük şair', 'Zazaca ilk mevlidi yazan şair ve din alimi', 'Erdelan beyliğinde yaşamış ünlü kadın şair', 'Erivan\'da uzun yıllar basılan Kürtçe gazete'],
+    prompt:
+        'Edebiyat açısından \'Riya Taza gazetesi\' için doğru ifade hangisidir?',
+    answers: [
+      'Kürt şiirine serbest tarzı getiren büyük şair',
+      'Zazaca ilk mevlidi yazan şair ve din alimi',
+      'Erdelan beyliğinde yaşamış ünlü kadın şair',
+      'Erivan\'da uzun yıllar basılan Kürtçe gazete',
+    ],
     correctAnswer: 'Erivan\'da uzun yıllar basılan Kürtçe gazete',
-    explanation: '\'Riya Taza gazetesi\' → Erivan\'da uzun yıllar basılan Kürtçe gazete.',
+    explanation:
+        '\'Riya Taza gazetesi\' → Erivan\'da uzun yıllar basılan Kürtçe gazete.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9867',
     category: 'Edebiyat',
     prompt: '\'Hejar Mukriyanî\' tarihsel olarak kimdir?',
-    answers: ['Hakkari emirliğinde yetişmiş klasik divan şairi', 'modern Kürt hikayeciliğinin kurucu isimlerinden', 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar', 'Kürt dili ve edebiyatı üzerine çalışan akademisyen'],
+    answers: [
+      'Hakkari emirliğinde yetişmiş klasik divan şairi',
+      'modern Kürt hikayeciliğinin kurucu isimlerinden',
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+      'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
+    ],
     correctAnswer: 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
-    explanation: '\'Hejar Mukriyanî\': Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar.',
+    explanation:
+        '\'Hejar Mukriyanî\': Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9878',
@@ -7342,29 +9341,41 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Edebiyat bağlamında \'Şivanê kurd\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Şivanê kurd\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Şivanê kurd\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9880',
     category: 'Edebiyat',
     prompt: '\'Ehmedê Xasî\' hangi yönüyle bilinir?',
-    answers: ['modern Kürt şiirinin öncü toplumcu şairi', 'Erivan\'da uzun yıllar basılan Kürtçe gazete', 'Kürt tasavvuf şiirinin klasik divan şairi', 'Zazaca ilk mevlidi yazan şair ve din alimi'],
+    answers: [
+      'modern Kürt şiirinin öncü toplumcu şairi',
+      'Erivan\'da uzun yıllar basılan Kürtçe gazete',
+      'Kürt tasavvuf şiirinin klasik divan şairi',
+      'Zazaca ilk mevlidi yazan şair ve din alimi',
+    ],
     correctAnswer: 'Zazaca ilk mevlidi yazan şair ve din alimi',
     explanation: '\'Ehmedê Xasî\': Zazaca ilk mevlidi yazan şair ve din alimi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9892',
     category: 'Edebiyat',
     prompt: '\'Nûbihara Biçukan\' için en isabetli açıklama hangisidir?',
-    answers: ['Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük', 'mistik aşk ve felsefe içeren meşhur şiir divanı', 'klasik Kürt edebiyatında önemli yeri olan şair', 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar'],
+    answers: [
+      'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
+      'mistik aşk ve felsefe içeren meşhur şiir divanı',
+      'klasik Kürt edebiyatında önemli yeri olan şair',
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+    ],
     correctAnswer: 'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
-    explanation: '\'Nûbihara Biçukan\' → Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük.',
+    explanation:
+        '\'Nûbihara Biçukan\' → Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9893',
@@ -7372,9 +9383,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Edebiyat alanında \'Haris bitlisî\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Haris bitlisî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Haris bitlisî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9916',
@@ -7382,19 +9394,27 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Qanadê Kurdo\' Edebiyat açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Qanadê Kurdo\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Qanadê Kurdo\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9918',
     category: 'Edebiyat',
-    prompt: 'Hangisi Edebiyat içinde \'Evdirehîm Rehmî Hekarî\' kavramını doğru yerleştirir?',
-    answers: ['Kürt tiyatrosunun kurucu oyun yazarlarından', 'Kürt dilinin ve birliğinin değerini göstermek', 'Hawar dergisini çıkaran edebi ekolün kurucusu', 'Erdelan beyliğinde yaşamış ünlü kadın şair'],
+    prompt:
+        'Hangisi Edebiyat içinde \'Evdirehîm Rehmî Hekarî\' kavramını doğru yerleştirir?',
+    answers: [
+      'Kürt tiyatrosunun kurucu oyun yazarlarından',
+      'Kürt dilinin ve birliğinin değerini göstermek',
+      'Hawar dergisini çıkaran edebi ekolün kurucusu',
+      'Erdelan beyliğinde yaşamış ünlü kadın şair',
+    ],
     correctAnswer: 'Kürt tiyatrosunun kurucu oyun yazarlarından',
-    explanation: '\'Evdirehîm Rehmî Hekarî\': Kürt tiyatrosunun kurucu oyun yazarlarından.',
+    explanation:
+        '\'Evdirehîm Rehmî Hekarî\': Kürt tiyatrosunun kurucu oyun yazarlarından.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9923',
@@ -7404,57 +9424,87 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Destan\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9936',
     category: 'Edebiyat',
     prompt: 'Edebiyat için \'Qedrîcan\' hakkında doğru seçenek hangisidir?',
-    answers: ['Kürt edebiyatının bilinen en eski klasik şairlerinden', 'Dil ve alfabe çalışmalarını yaygınlaştırdığı için', 'modern Kürt şiirinde ve nesrinde iz bırakmış yazar', 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol'],
+    answers: [
+      'Kürt edebiyatının bilinen en eski klasik şairlerinden',
+      'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
+      'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
+      'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
+    ],
     correctAnswer: 'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
-    explanation: '\'Qedrîcan\' → modern Kürt şiirinde ve nesrinde iz bırakmış yazar.',
+    explanation:
+        '\'Qedrîcan\' → modern Kürt şiirinde ve nesrinde iz bırakmış yazar.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9942',
     category: 'Edebiyat',
     prompt: '\'Pertew Begê Hkarî\' hangi yönüyle bilinir?',
-    answers: ['Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar', 'Hakkari emirliğinde yetişmiş klasik divan şairi', 'mistik aşk ve felsefe içeren meşhur şiir divanı', 'Birçok yazarın yurt dışında üretmesi nedeniyle'],
+    answers: [
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+      'Hakkari emirliğinde yetişmiş klasik divan şairi',
+      'mistik aşk ve felsefe içeren meşhur şiir divanı',
+      'Birçok yazarın yurt dışında üretmesi nedeniyle',
+    ],
     correctAnswer: 'Hakkari emirliğinde yetişmiş klasik divan şairi',
-    explanation: '\'Pertew Begê Hkarî\': Hakkari emirliğinde yetişmiş klasik divan şairi.',
+    explanation:
+        '\'Pertew Begê Hkarî\': Hakkari emirliğinde yetişmiş klasik divan şairi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9950',
     category: 'Edebiyat',
     prompt: '\'Melayê Bateyî\' tarihsel olarak kimdir?',
-    answers: ['Şivanê Kurd adlı ilk Kürtçe romanın yazarı', 'Mevlid-i Şerif\'i Kürtçe yazan klasik şair', 'Zazaca ilk mevlidi yazan şair ve din alimi', 'Latin temelli Kürt alfabesinin yaygınlaşması'],
+    answers: [
+      'Şivanê Kurd adlı ilk Kürtçe romanın yazarı',
+      'Mevlid-i Şerif\'i Kürtçe yazan klasik şair',
+      'Zazaca ilk mevlidi yazan şair ve din alimi',
+      'Latin temelli Kürt alfabesinin yaygınlaşması',
+    ],
     correctAnswer: 'Mevlid-i Şerif\'i Kürtçe yazan klasik şair',
-    explanation: '\'Melayê Bateyî\': Mevlid-i Şerif\'i Kürtçe yazan klasik şair.',
+    explanation:
+        '\'Melayê Bateyî\': Mevlid-i Şerif\'i Kürtçe yazan klasik şair.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9953',
     category: 'Edebiyat',
     prompt: '\'Haris Bitlisî\' kimdir?',
-    answers: ['klasik dönemde Kürtçe eserler yazmış şair', 'Masallar, destanlar ve dengbêj anlatıları', 'Mem û Zîn eserinin ünlü yazarı ve düşünür', 'Kürt tiyatrosunun kurucu oyun yazarlarından'],
+    answers: [
+      'klasik dönemde Kürtçe eserler yazmış şair',
+      'Masallar, destanlar ve dengbêj anlatıları',
+      'Mem û Zîn eserinin ünlü yazarı ve düşünür',
+      'Kürt tiyatrosunun kurucu oyun yazarlarından',
+    ],
     correctAnswer: 'klasik dönemde Kürtçe eserler yazmış şair',
-    explanation: '\'Haris Bitlisî\': klasik dönemde Kürtçe eserler yazmış şair.',
+    explanation:
+        '\'Haris Bitlisî\': klasik dönemde Kürtçe eserler yazmış şair.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9972',
     category: 'Edebiyat',
     prompt: '\'Qedrîcan\' için en isabetli açıklama hangisidir?',
-    answers: ['Kürt edebiyatının bilinen en eski klasik şairlerinden', 'erken dönem Kürtçe edebi ve siyasi yayınlardan biri', 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol', 'modern Kürt şiirinde ve nesrinde iz bırakmış yazar'],
+    answers: [
+      'Kürt edebiyatının bilinen en eski klasik şairlerinden',
+      'erken dönem Kürtçe edebi ve siyasi yayınlardan biri',
+      'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
+      'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
+    ],
     correctAnswer: 'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
-    explanation: '\'Qedrîcan\' → modern Kürt şiirinde ve nesrinde iz bırakmış yazar.',
+    explanation:
+        '\'Qedrîcan\' → modern Kürt şiirinde ve nesrinde iz bırakmış yazar.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9977',
@@ -7462,119 +9512,183 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Edebiyat literatüründe \'Pertew begê hkarî\' yer almaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Pertew begê hkarî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Pertew begê hkarî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_9996',
     category: 'Edebiyat',
     prompt: 'Hangisi \'Qanadê Kurdo\' kişisini doğru tanıtır?',
-    answers: ['modern Kürt şiirinde ve nesrinde iz bırakmış yazar', 'Kürt dili ve edebiyatı üzerine çalışan akademisyen', 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar', 'Modern dönemde roman/gazete gibi türlerin gelişmesi'],
+    answers: [
+      'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
+      'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+      'Modern dönemde roman/gazete gibi türlerin gelişmesi',
+    ],
     correctAnswer: 'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
-    explanation: '\'Qanadê Kurdo\': Kürt dili ve edebiyatı üzerine çalışan akademisyen.',
+    explanation:
+        '\'Qanadê Kurdo\': Kürt dili ve edebiyatı üzerine çalışan akademisyen.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_9997',
     category: 'Edebiyat',
     prompt: '\'Xanî Mektebi\' kavramı neyi karşılar?',
-    answers: ['Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar', 'Dil ve alfabe çalışmalarını yaygınlaştırdığı için', 'modern Kürt hikayeciliğinin kurucu isimlerinden', 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol'],
+    answers: [
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+      'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
+      'modern Kürt hikayeciliğinin kurucu isimlerinden',
+      'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
+    ],
     correctAnswer: 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
-    explanation: '\'Xanî Mektebi\' → Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol.',
+    explanation:
+        '\'Xanî Mektebi\' → Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10002',
     category: 'Edebiyat',
     prompt: 'Edebiyat çerçevesinde \'Kamuran Bedirxan\' ne anlama gelir?',
-    answers: ['Kürtçe gramer kitapları yazan dilbilimci ve yazar', 'Soranice klasik şiir okulunun en büyük divan şairi', 'Kürt dili ve edebiyatı üzerine çalışan akademisyen', 'klasik Kürt edebiyatında önemli yeri olan şair'],
+    answers: [
+      'Kürtçe gramer kitapları yazan dilbilimci ve yazar',
+      'Soranice klasik şiir okulunun en büyük divan şairi',
+      'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
+      'klasik Kürt edebiyatında önemli yeri olan şair',
+    ],
     correctAnswer: 'Kürtçe gramer kitapları yazan dilbilimci ve yazar',
-    explanation: '\'Kamuran Bedirxan\': Kürtçe gramer kitapları yazan dilbilimci ve yazar.',
+    explanation:
+        '\'Kamuran Bedirxan\': Kürtçe gramer kitapları yazan dilbilimci ve yazar.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10024',
     category: 'Edebiyat',
     prompt: 'Edebiyat açısından \'Melayê Bateyî\' için doğru ifade hangisidir?',
-    answers: ['Kürt tiyatrosunun kurucu oyun yazarlarından', 'klasik dönemde Kürtçe eserler yazmış şair', 'Mem û Zîn eserinin ünlü yazarı ve düşünür', 'Mevlid-i Şerif\'i Kürtçe yazan klasik şair'],
+    answers: [
+      'Kürt tiyatrosunun kurucu oyun yazarlarından',
+      'klasik dönemde Kürtçe eserler yazmış şair',
+      'Mem û Zîn eserinin ünlü yazarı ve düşünür',
+      'Mevlid-i Şerif\'i Kürtçe yazan klasik şair',
+    ],
     correctAnswer: 'Mevlid-i Şerif\'i Kürtçe yazan klasik şair',
-    explanation: '\'Melayê Bateyî\': Mevlid-i Şerif\'i Kürtçe yazan klasik şair.',
+    explanation:
+        '\'Melayê Bateyî\': Mevlid-i Şerif\'i Kürtçe yazan klasik şair.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10045',
     category: 'Edebiyat',
-    prompt: 'Edebiyat için \'Melayê Cizîrî\' hakkında doğru seçenek hangisidir?',
-    answers: ['Sözlü anlatı ve ezgili hikâye aktarımı', 'Latin temelli Kürt alfabesinin yaygınlaşması', 'Kürt tasavvuf şiirinin klasik divan şairi', 'Mem û Zîn eserinin ünlü yazarı ve düşünür'],
+    prompt:
+        'Edebiyat için \'Melayê Cizîrî\' hakkında doğru seçenek hangisidir?',
+    answers: [
+      'Sözlü anlatı ve ezgili hikâye aktarımı',
+      'Latin temelli Kürt alfabesinin yaygınlaşması',
+      'Kürt tasavvuf şiirinin klasik divan şairi',
+      'Mem û Zîn eserinin ünlü yazarı ve düşünür',
+    ],
     correctAnswer: 'Kürt tasavvuf şiirinin klasik divan şairi',
-    explanation: '\'Melayê Cizîrî\': Kürt tasavvuf şiirinin klasik divan şairi.',
+    explanation:
+        '\'Melayê Cizîrî\': Kürt tasavvuf şiirinin klasik divan şairi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10069',
     category: 'Edebiyat',
     prompt: 'Edebiyat bağlamında \'Hawar Ekolü\' nasıl anlaşılmalıdır?',
-    answers: ['Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım', 'Kürt edebiyatının bilinen en eski klasik şairlerinden', 'Soranice klasik şiir okulunun en büyük divan şairi', 'Kürt sözlü edebiyatının en hüzünlü destanlarından biri'],
+    answers: [
+      'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
+      'Kürt edebiyatının bilinen en eski klasik şairlerinden',
+      'Soranice klasik şiir okulunun en büyük divan şairi',
+      'Kürt sözlü edebiyatının en hüzünlü destanlarından biri',
+    ],
     correctAnswer: 'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
-    explanation: '\'Hawar Ekolü\' → Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım.',
+    explanation:
+        '\'Hawar Ekolü\' → Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10071',
     category: 'Edebiyat',
     prompt: 'Edebiyat açısından \'Elî Herîrî\' için doğru ifade hangisidir?',
-    answers: ['Kürt edebiyatının bilinen en eski klasik şairlerinden', 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol', 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar', 'Soranice klasik şiir okulunun en büyük divan şairi'],
+    answers: [
+      'Kürt edebiyatının bilinen en eski klasik şairlerinden',
+      'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+      'Soranice klasik şiir okulunun en büyük divan şairi',
+    ],
     correctAnswer: 'Kürt edebiyatının bilinen en eski klasik şairlerinden',
-    explanation: '\'Elî Herîrî\': Kürt edebiyatının bilinen en eski klasik şairlerinden.',
+    explanation:
+        '\'Elî Herîrî\': Kürt edebiyatının bilinen en eski klasik şairlerinden.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10074',
     category: 'Edebiyat',
-    prompt: 'Edebiyat açısından \'Dîwana Melayê Cizîrî\' için doğru ifade hangisidir?',
-    answers: ['Hakkari emirliğinde yetişmiş klasik divan şairi', 'Doğu Kürdistan\'ın meşhur modern şair ve yazarı', 'mistik aşk ve felsefe içeren meşhur şiir divanı', 'Şam\'da Latin alfabesiyle çıkarılan edebi dergi'],
+    prompt:
+        'Edebiyat açısından \'Dîwana Melayê Cizîrî\' için doğru ifade hangisidir?',
+    answers: [
+      'Hakkari emirliğinde yetişmiş klasik divan şairi',
+      'Doğu Kürdistan\'ın meşhur modern şair ve yazarı',
+      'mistik aşk ve felsefe içeren meşhur şiir divanı',
+      'Şam\'da Latin alfabesiyle çıkarılan edebi dergi',
+    ],
     correctAnswer: 'mistik aşk ve felsefe içeren meşhur şiir divanı',
-    explanation: '\'Dîwana Melayê Cizîrî\': mistik aşk ve felsefe içeren meşhur şiir divanı.',
+    explanation:
+        '\'Dîwana Melayê Cizîrî\': mistik aşk ve felsefe içeren meşhur şiir divanı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10089',
     category: 'Edebiyat',
     prompt: 'Edebiyat için \'Yaşar Kemal\' hakkında doğru seçenek hangisidir?',
-    answers: ['Kürt kökenli, dünya çapında tanınan usta romancı', 'Kürtçe gramer kitapları yazan dilbilimci ve yazar', 'Birçok yazarın yurt dışında üretmesi nedeniyle', 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar'],
+    answers: [
+      'Kürt kökenli, dünya çapında tanınan usta romancı',
+      'Kürtçe gramer kitapları yazan dilbilimci ve yazar',
+      'Birçok yazarın yurt dışında üretmesi nedeniyle',
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+    ],
     correctAnswer: 'Kürt kökenli, dünya çapında tanınan usta romancı',
-    explanation: '\'Yaşar Kemal\': Kürt kökenli, dünya çapında tanınan usta romancı.',
+    explanation:
+        '\'Yaşar Kemal\': Kürt kökenli, dünya çapında tanınan usta romancı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10104',
     category: 'Edebiyat',
     prompt: 'Edebiyat alanında \'Yaşar Kemal\' neyi ifade eder?',
-    answers: ['Hakkari emirliğinde yetişmiş klasik divan şairi', 'Kürt kökenli, dünya çapında tanınan usta romancı', 'Birçok yazarın yurt dışında üretmesi nedeniyle', 'modern Kürt romanının kurucusu ve öncü romancı'],
+    answers: [
+      'Hakkari emirliğinde yetişmiş klasik divan şairi',
+      'Kürt kökenli, dünya çapında tanınan usta romancı',
+      'Birçok yazarın yurt dışında üretmesi nedeniyle',
+      'modern Kürt romanının kurucusu ve öncü romancı',
+    ],
     correctAnswer: 'Kürt kökenli, dünya çapında tanınan usta romancı',
-    explanation: '\'Yaşar Kemal\': Kürt kökenli, dünya çapında tanınan usta romancı.',
+    explanation:
+        '\'Yaşar Kemal\': Kürt kökenli, dünya çapında tanınan usta romancı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10120',
     category: 'Edebiyat',
-    prompt: '\'Arabê şamo\' Edebiyat bağlamında kullanılan geçerli bir terimdir.',
+    prompt:
+        '\'Arabê şamo\' Edebiyat bağlamında kullanılan geçerli bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Arabê şamo\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10123',
@@ -7582,9 +9696,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Baba Tahirê Hemedanî\' Edebiyat alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Baba Tahirê Hemedanî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Baba Tahirê Hemedanî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10143',
@@ -7594,37 +9709,51 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Feqiyê Teyran\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10145',
     category: 'Edebiyat',
     prompt: '\'Memê Alan destanı\' ne anlama gelir?',
-    answers: ['Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar', 'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım', 'Dil ve alfabe çalışmalarını yaygınlaştırdığı için', 'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı'],
+    answers: [
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+      'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
+      'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
+      'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı',
+    ],
     correctAnswer: 'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı',
-    explanation: '\'Memê Alan destanı\' → Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı.',
+    explanation:
+        '\'Memê Alan destanı\' → Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10157',
     category: 'Edebiyat',
     prompt: '\'Hawar Ekolü\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım', 'Kürt dili ve edebiyatı üzerine çalışan akademisyen', 'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar', 'modern Kürt şiirinde ve nesrinde iz bırakmış yazar'],
+    answers: [
+      'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
+      'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
+      'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
+      'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
+    ],
     correctAnswer: 'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
-    explanation: '\'Hawar Ekolü\' → Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım.',
+    explanation:
+        '\'Hawar Ekolü\' → Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10166',
     category: 'Edebiyat',
-    prompt: '\'Evdirehîm Rehmî Hekarî\' Edebiyat bilgisinin tamamen dışındadır.',
+    prompt:
+        '\'Evdirehîm Rehmî Hekarî\' Edebiyat bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Evdirehîm Rehmî Hekarî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Evdirehîm Rehmî Hekarî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10176',
@@ -7634,27 +9763,34 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Mecaz\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10184',
     category: 'Edebiyat',
-    prompt: 'Edebiyat alanında \'Elî herîrî\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Edebiyat alanında \'Elî herîrî\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Elî herîrî\' Edebiyat alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10188',
     category: 'Edebiyat',
     prompt: 'Edebiyat için \'Şêrko Bêkes\' hakkında doğru seçenek hangisidir?',
-    answers: ['Doğu Kürdistan\'ın meşhur modern şair ve yazarı', 'Kürt şiirine serbest tarzı getiren büyük şair', 'Hawar dergisini çıkaran edebi ekolün kurucusu', 'Şam\'da Latin alfabesiyle çıkarılan edebi dergi'],
+    answers: [
+      'Doğu Kürdistan\'ın meşhur modern şair ve yazarı',
+      'Kürt şiirine serbest tarzı getiren büyük şair',
+      'Hawar dergisini çıkaran edebi ekolün kurucusu',
+      'Şam\'da Latin alfabesiyle çıkarılan edebi dergi',
+    ],
     correctAnswer: 'Kürt şiirine serbest tarzı getiren büyük şair',
-    explanation: '\'Şêrko Bêkes\': Kürt şiirine serbest tarzı getiren büyük şair.',
+    explanation:
+        '\'Şêrko Bêkes\': Kürt şiirine serbest tarzı getiren büyük şair.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10202',
@@ -7662,9 +9798,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Melayê Cizîrî\' yalnızca Edebiyat dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Melayê Cizîrî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Melayê Cizîrî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10203',
@@ -7672,29 +9809,41 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Ronahî dergisi\' Edebiyat alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Ronahî dergisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Ronahî dergisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10228',
     category: 'Edebiyat',
     prompt: 'Edebiyat bağlamında \'destan\' nasıl anlaşılmalıdır?',
-    answers: ['kahramanlık anlatısı', 'Medrese öğrencisi/talebe', 'Klasik Kürt şiiri', 'Tasavvufi şiir (divan)'],
+    answers: [
+      'kahramanlık anlatısı',
+      'Medrese öğrencisi/talebe',
+      'Klasik Kürt şiiri',
+      'Tasavvufi şiir (divan)',
+    ],
     correctAnswer: 'kahramanlık anlatısı',
     explanation: '\'destan\' → kahramanlık anlatısı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10230',
     category: 'Edebiyat',
     prompt: '\'Nûbihara Biçukan\' ne anlama gelir?',
-    answers: ['Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük', 'mistik aşk ve felsefe içeren meşhur şiir divanı', 'Kürt kökenli, dünya çapında tanınan usta romancı', 'Dil ve alfabe çalışmalarını yaygınlaştırdığı için'],
+    answers: [
+      'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
+      'mistik aşk ve felsefe içeren meşhur şiir divanı',
+      'Kürt kökenli, dünya çapında tanınan usta romancı',
+      'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
+    ],
     correctAnswer: 'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
-    explanation: '\'Nûbihara Biçukan\' → Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük.',
+    explanation:
+        '\'Nûbihara Biçukan\' → Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10237',
@@ -7704,47 +9853,72 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'şiir',
     explanation: '\'helbest\' → şiir.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10260',
     category: 'Edebiyat',
     prompt: '\'Elî Herîrî\' ile ilgili doğru bilgi hangisidir?',
-    answers: ['Kürt edebiyatının bilinen en eski klasik şairlerinden', 'Soranice klasik şiir okulunun en büyük divan şairi', 'Kürt dili ve edebiyatı üzerine çalışan akademisyen', 'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair'],
+    answers: [
+      'Kürt edebiyatının bilinen en eski klasik şairlerinden',
+      'Soranice klasik şiir okulunun en büyük divan şairi',
+      'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
+      'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair',
+    ],
     correctAnswer: 'Kürt edebiyatının bilinen en eski klasik şairlerinden',
-    explanation: '\'Elî Herîrî\': Kürt edebiyatının bilinen en eski klasik şairlerinden.',
+    explanation:
+        '\'Elî Herîrî\': Kürt edebiyatının bilinen en eski klasik şairlerinden.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10271',
     category: 'Edebiyat',
     prompt: '\'Dewrêşê Evdî destanı\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı', 'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol', 'modern Kürt şiirinde ve nesrinde iz bırakmış yazar', 'Kürt sözlü edebiyatının en hüzünlü destanlarından biri'],
+    answers: [
+      'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı',
+      'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
+      'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
+      'Kürt sözlü edebiyatının en hüzünlü destanlarından biri',
+    ],
     correctAnswer: 'Kürt sözlü edebiyatının en hüzünlü destanlarından biri',
-    explanation: '\'Dewrêşê Evdî destanı\' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri.',
+    explanation:
+        '\'Dewrêşê Evdî destanı\' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10284',
     category: 'Edebiyat',
-    prompt: 'Edebiyat için \'Mestûre Kurdistanî\' hakkında doğru seçenek hangisidir?',
-    answers: ['Kürt tasavvuf şiirinin klasik divan şairi', 'modern Kürt şiirinin öncü toplumcu şairi', 'Erdelan beyliğinde yaşamış ünlü kadın şair', 'Sözlü anlatı ve ezgili hikâye aktarımı'],
+    prompt:
+        'Edebiyat için \'Mestûre Kurdistanî\' hakkında doğru seçenek hangisidir?',
+    answers: [
+      'Kürt tasavvuf şiirinin klasik divan şairi',
+      'modern Kürt şiirinin öncü toplumcu şairi',
+      'Erdelan beyliğinde yaşamış ünlü kadın şair',
+      'Sözlü anlatı ve ezgili hikâye aktarımı',
+    ],
     correctAnswer: 'Erdelan beyliğinde yaşamış ünlü kadın şair',
-    explanation: '\'Mestûre Kurdistanî\': Erdelan beyliğinde yaşamış ünlü kadın şair.',
+    explanation:
+        '\'Mestûre Kurdistanî\': Erdelan beyliğinde yaşamış ünlü kadın şair.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10304',
     category: 'Muzîk',
     prompt: '\'Eyşeqan\' ifadesinin doğru karşılığı hangisidir?',
-    answers: ['müziği kağıda dökmek için kullanılan evrensel işaretler', 'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı', 'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı', 'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden'],
+    answers: [
+      'müziği kağıda dökmek için kullanılan evrensel işaretler',
+      'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı',
+      'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı',
+      'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
+    ],
     correctAnswer: 'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
-    explanation: '\'Eyşeqan\' → Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden.',
+    explanation:
+        '\'Eyşeqan\' → Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10310',
@@ -7754,27 +9928,39 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Lawik\' Muzîk alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10314',
     category: 'Muzîk',
     prompt: '\'serhad ezgileri\' ile kastedilen doğru nedir?',
-    answers: ['Şırnak ve Cizre yöresinin ritmik ve makamsal müziği', 'erbane veya defi ustalıkla çalan ritim sanatçısı', 'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj', 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı'],
+    answers: [
+      'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
+      'erbane veya defi ustalıkla çalan ritim sanatçısı',
+      'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+    ],
     correctAnswer: 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
-    explanation: '\'serhad ezgileri\' → Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı.',
+    explanation:
+        '\'serhad ezgileri\' → Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10320',
     category: 'Muzîk',
     prompt: 'Aşağıdakilerden hangisi \'dengbêjlik okulu\' için doğrudur?',
-    answers: ['kış gecesi sohbetlerinde icra edilen sözlü müzik', 'usta-çırak ilişkisiyle yürüyen müzikal aktarım', 'halk müziğinde yaygın olarak çalınan zilli tef', 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı'],
+    answers: [
+      'kış gecesi sohbetlerinde icra edilen sözlü müzik',
+      'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
+      'halk müziğinde yaygın olarak çalınan zilli tef',
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+    ],
     correctAnswer: 'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
-    explanation: '\'dengbêjlik okulu\' → usta-çırak ilişkisiyle yürüyen müzikal aktarım.',
+    explanation:
+        '\'dengbêjlik okulu\' → usta-çırak ilişkisiyle yürüyen müzikal aktarım.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10328',
@@ -7782,49 +9968,72 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Muzîk bağlamında \'Hasan cizrawî\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Hasan cizrawî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Hasan cizrawî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10333',
     category: 'Muzîk',
     prompt: 'Şıklardan hangisi \'zurna\' anlamına gelir?',
-    answers: ['Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı', 'tek bir sanatçının şarkı söylemesi veya çalması', 'erbane veya defi ustalıkla çalan ritim sanatçısı', 'yüksek sesli, açık havada çalınan nefesli çalgı'],
+    answers: [
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+      'tek bir sanatçının şarkı söylemesi veya çalması',
+      'erbane veya defi ustalıkla çalan ritim sanatçısı',
+      'yüksek sesli, açık havada çalınan nefesli çalgı',
+    ],
     correctAnswer: 'yüksek sesli, açık havada çalınan nefesli çalgı',
     explanation: '\'zurna\' → yüksek sesli, açık havada çalınan nefesli çalgı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10344',
     category: 'Muzîk',
     prompt: '\'Kardeş Türküler\' kimdir?',
-    answers: ['Bahdinan bölgesinin popüler klasik halk sanatçısı', 'Kürt halkının ulusal duygularını seslendiren ozan', 'modern dönemde Kürt halk müziğini icra eden sanatçı', 'Kürt müziğini çok kültürlü ortamda icra eden grup'],
+    answers: [
+      'Bahdinan bölgesinin popüler klasik halk sanatçısı',
+      'Kürt halkının ulusal duygularını seslendiren ozan',
+      'modern dönemde Kürt halk müziğini icra eden sanatçı',
+      'Kürt müziğini çok kültürlü ortamda icra eden grup',
+    ],
     correctAnswer: 'Kürt müziğini çok kültürlü ortamda icra eden grup',
-    explanation: '\'Kardeş Türküler\': Kürt müziğini çok kültürlü ortamda icra eden grup.',
+    explanation:
+        '\'Kardeş Türküler\': Kürt müziğini çok kültürlü ortamda icra eden grup.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10352',
     category: 'Muzîk',
     prompt: 'Muzîk bağlamında \'dengbêjlik okulu\' nasıl anlaşılmalıdır?',
-    answers: ['usta-çırak ilişkisiyle yürüyen müzikal aktarım', 'Kürt halk müziğinde en kutsal sayılan telli saz', 'erken dönem Kürt müziği kayıtlarını yapan dengbêj', 'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses'],
+    answers: [
+      'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
+      'Kürt halk müziğinde en kutsal sayılan telli saz',
+      'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
+      'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses',
+    ],
     correctAnswer: 'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
-    explanation: '\'dengbêjlik okulu\' → usta-çırak ilişkisiyle yürüyen müzikal aktarım.',
+    explanation:
+        '\'dengbêjlik okulu\' → usta-çırak ilişkisiyle yürüyen müzikal aktarım.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10372',
     category: 'Muzîk',
     prompt: '\'melodî\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['topluluk halinde şarkı söyleme biçimi', 'Kürt coğrafyasında da çalınan yaylı çalgı', 'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses', 'seslerin ardışık dizilmesiyle oluşan ezgi'],
+    answers: [
+      'topluluk halinde şarkı söyleme biçimi',
+      'Kürt coğrafyasında da çalınan yaylı çalgı',
+      'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses',
+      'seslerin ardışık dizilmesiyle oluşan ezgi',
+    ],
     correctAnswer: 'seslerin ardışık dizilmesiyle oluşan ezgi',
     explanation: '\'melodî\' → seslerin ardışık dizilmesiyle oluşan ezgi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10378',
@@ -7834,27 +10043,39 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Ritim\' Muzîk alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10379',
     category: 'Muzîk',
     prompt: '\'makam\' ile kastedilen doğru nedir?',
-    answers: ['Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem', 'Kürt müziğine rock ve caz esintileri getiren sanatçı', 'halaylarda çalınan hareketli ve ritmik halk şarkıları', 'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı'],
+    answers: [
+      'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem',
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+      'halaylarda çalınan hareketli ve ritmik halk şarkıları',
+      'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı',
+    ],
     correctAnswer: 'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem',
-    explanation: '\'makam\' → Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem.',
+    explanation:
+        '\'makam\' → Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10410',
     category: 'Muzîk',
     prompt: 'Muzîk bilgisinde \'nota\' ile ilgili doğru olan hangisidir?',
-    answers: ['Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan', 'Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar', 'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden', 'müziği kağıda dökmek için kullanılan evrensel işaretler'],
+    answers: [
+      'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
+      'Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar',
+      'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
+      'müziği kağıda dökmek için kullanılan evrensel işaretler',
+    ],
     correctAnswer: 'müziği kağıda dökmek için kullanılan evrensel işaretler',
-    explanation: '\'nota\' → müziği kağıda dökmek için kullanılan evrensel işaretler.',
+    explanation:
+        '\'nota\' → müziği kağıda dökmek için kullanılan evrensel işaretler.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10411',
@@ -7864,17 +10085,23 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Defbaz\' Muzîk alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10423',
     category: 'Muzîk',
     prompt: '\'tembûr\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı', 'Kürt halk müziğinde en kutsal sayılan telli saz', 'erbane veya defi ustalıkla çalan ritim sanatçısı', 'yüksek sesli, açık havada çalınan nefesli çalgı'],
+    answers: [
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+      'Kürt halk müziğinde en kutsal sayılan telli saz',
+      'erbane veya defi ustalıkla çalan ritim sanatçısı',
+      'yüksek sesli, açık havada çalınan nefesli çalgı',
+    ],
     correctAnswer: 'Kürt halk müziğinde en kutsal sayılan telli saz',
-    explanation: '\'tembûr\' → Kürt halk müziğinde en kutsal sayılan telli saz.',
+    explanation:
+        '\'tembûr\' → Kürt halk müziğinde en kutsal sayılan telli saz.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10426',
@@ -7882,29 +10109,41 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Kardeş türküler\' yalnızca Muzîk dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Kardeş türküler\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Kardeş türküler\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10427',
     category: 'Muzîk',
     prompt: '\'hîran\' ile kastedilen doğru nedir?',
-    answers: ['Kürt coğrafyasında da çalınan yaylı çalgı', 'müziğin temelini oluşturan düzenli vuruşlar', 'Kürt halk müziğinde bir başka ezgi tarzı', 'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses'],
+    answers: [
+      'Kürt coğrafyasında da çalınan yaylı çalgı',
+      'müziğin temelini oluşturan düzenli vuruşlar',
+      'Kürt halk müziğinde bir başka ezgi tarzı',
+      'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses',
+    ],
     correctAnswer: 'Kürt halk müziğinde bir başka ezgi tarzı',
     explanation: '\'hîran\' → Kürt halk müziğinde bir başka ezgi tarzı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10433',
     category: 'Muzîk',
     prompt: 'Aşağıdakilerden hangisi \'Aram Tigran\' için doğrudur?',
-    answers: ['Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı', 'çobanların da çaldığı üflemeli geleneksel enstrüman', 'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen', 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü'],
+    answers: [
+      'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
+      'çobanların da çaldığı üflemeli geleneksel enstrüman',
+      'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+    ],
     correctAnswer: 'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
-    explanation: '\'Aram Tigran\': Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen.',
+    explanation:
+        '\'Aram Tigran\': Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10435',
@@ -7912,9 +10151,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'def\' Muzîk açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'def\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'def\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10448',
@@ -7922,29 +10162,42 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Muzîk alanında \'Behedînî ezgileri\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Behedînî ezgileri\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Behedînî ezgileri\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10463',
     category: 'Muzîk',
     prompt: 'Şıklardan hangisi \'lawik\' anlamına gelir?',
-    answers: ['Kürt müziğine rock ve caz esintileri getiren sanatçı', 'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü', 'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı', 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü'],
+    answers: [
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+      'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü',
+      'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+    ],
     correctAnswer: 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
-    explanation: '\'lawik\' → daha çok aşk ve yiğitlik üzerine söylenen müzik türü.',
+    explanation:
+        '\'lawik\' → daha çok aşk ve yiğitlik üzerine söylenen müzik türü.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10480',
     category: 'Muzîk',
     prompt: '\'botan ezgileri\' dendiğinde kastedilen nedir?',
-    answers: ['Şırnak ve Cizre yöresinin ritmik ve makamsal müziği', 'erken dönem Kürt müziği kayıtlarını yapan dengbêj', 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü', 'Kürt müziğine rock ve caz esintileri getiren sanatçı'],
+    answers: [
+      'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
+      'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+    ],
     correctAnswer: 'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
-    explanation: '\'botan ezgileri\' → Şırnak ve Cizre yöresinin ritmik ve makamsal müziği.',
+    explanation:
+        '\'botan ezgileri\' → Şırnak ve Cizre yöresinin ritmik ve makamsal müziği.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10492',
@@ -7952,49 +10205,75 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Zurna\' Muzîk bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Zurna\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Zurna\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10498',
     category: 'Muzîk',
     prompt: 'Hangisi Muzîk içinde \'Koma Amed\' kavramını doğru yerleştirir?',
-    answers: ['Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen', '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu', 'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan', 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü'],
-    correctAnswer: '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
-    explanation: '\'Koma Amed\': 90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu.',
+    answers: [
+      'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
+      '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
+      'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+    ],
+    correctAnswer:
+        '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
+    explanation:
+        '\'Koma Amed\': 90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10537',
     category: 'Muzîk',
     prompt: 'Hangisi \'Aynur Doğan\' kişisini doğru tanıtır?',
-    answers: ['Kürt müziğine rock ve caz esintileri getiren sanatçı', 'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı', 'modern dönemde Kürt halk müziğini icra eden sanatçı', 'çobanların da çaldığı üflemeli geleneksel enstrüman'],
+    answers: [
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+      'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
+      'modern dönemde Kürt halk müziğini icra eden sanatçı',
+      'çobanların da çaldığı üflemeli geleneksel enstrüman',
+    ],
     correctAnswer: 'modern dönemde Kürt halk müziğini icra eden sanatçı',
-    explanation: '\'Aynur Doğan\': modern dönemde Kürt halk müziğini icra eden sanatçı.',
+    explanation:
+        '\'Aynur Doğan\': modern dönemde Kürt halk müziğini icra eden sanatçı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10547',
     category: 'Muzîk',
     prompt: '\'Erdewan Zaxoyî\' hakkında doğru olan hangisidir?',
-    answers: ['Kürtlerin \'şahê dengbêjan\' dediği güçlü ses', 'Bahdinan bölgesinin sevilen devrimci müzisyeni', 'usta-çırak ilişkisiyle yürüyen müzikal aktarım', 'Kürt halk müziğinde en kutsal sayılan telli saz'],
+    answers: [
+      'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses',
+      'Bahdinan bölgesinin sevilen devrimci müzisyeni',
+      'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
+      'Kürt halk müziğinde en kutsal sayılan telli saz',
+    ],
     correctAnswer: 'Bahdinan bölgesinin sevilen devrimci müzisyeni',
-    explanation: '\'Erdewan Zaxoyî\': Bahdinan bölgesinin sevilen devrimci müzisyeni.',
+    explanation:
+        '\'Erdewan Zaxoyî\': Bahdinan bölgesinin sevilen devrimci müzisyeni.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10554',
     category: 'Muzîk',
     prompt: '\'botan ezgileri\' konusunda hangisi doğrudur?',
-    answers: ['Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik', 'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı', 'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği', 'Kürt müziğine rock ve caz esintileri getiren sanatçı'],
+    answers: [
+      'Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik',
+      'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
+      'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+    ],
     correctAnswer: 'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
-    explanation: '\'botan ezgileri\' → Şırnak ve Cizre yöresinin ritmik ve makamsal müziği.',
+    explanation:
+        '\'botan ezgileri\' → Şırnak ve Cizre yöresinin ritmik ve makamsal müziği.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10562',
@@ -8004,107 +10283,169 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Dengbêj evi\' Muzîk alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10566',
     category: 'Muzîk',
     prompt: '\'nota\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['müziği kağıda dökmek için kullanılan evrensel işaretler', 'halaylarda çalınan hareketli ve ritmik halk şarkıları', 'dengbêjlerin söylediği destansı veya aşk temalı şarkı', 'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı'],
+    answers: [
+      'müziği kağıda dökmek için kullanılan evrensel işaretler',
+      'halaylarda çalınan hareketli ve ritmik halk şarkıları',
+      'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
+      'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
+    ],
     correctAnswer: 'müziği kağıda dökmek için kullanılan evrensel işaretler',
-    explanation: '\'nota\' → müziği kağıda dökmek için kullanılan evrensel işaretler.',
+    explanation:
+        '\'nota\' → müziği kağıda dökmek için kullanılan evrensel işaretler.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10572',
     category: 'Muzîk',
     prompt: 'Aşağıdakilerden hangisi \'Hasan Cizrawî\' için doğrudur?',
-    answers: ['Kürt halkının ulusal duygularını seslendiren ozan', 'tek bir sanatçının şarkı söylemesi veya çalması', 'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj', 'erken dönem Kürt müziği kayıtlarını yapan dengbêj'],
+    answers: [
+      'Kürt halkının ulusal duygularını seslendiren ozan',
+      'tek bir sanatçının şarkı söylemesi veya çalması',
+      'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
+      'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
+    ],
     correctAnswer: 'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
-    explanation: '\'Hasan Cizrawî\': erken dönem Kürt müziği kayıtlarını yapan dengbêj.',
+    explanation:
+        '\'Hasan Cizrawî\': erken dönem Kürt müziği kayıtlarını yapan dengbêj.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10595',
     category: 'Muzîk',
     prompt: 'Hangisi Muzîk içinde \'çeng\' kavramını doğru yerleştirir?',
-    answers: ['Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı', 'Kürt müziğine rock ve caz esintileri getiren sanatçı', 'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan', 'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı'],
-    correctAnswer: 'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı',
-    explanation: '\'çeng\' → antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı.',
+    answers: [
+      'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı',
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+      'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
+      'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı',
+    ],
+    correctAnswer:
+        'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı',
+    explanation:
+        '\'çeng\' → antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10606',
     category: 'Muzîk',
     prompt: '\'şevbêrk müziği\' ifadesinin doğru karşılığı hangisidir?',
-    answers: ['kış gecesi sohbetlerinde icra edilen sözlü müzik', 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı', 'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj', 'usta-çırak ilişkisiyle yürüyen müzikal aktarım'],
+    answers: [
+      'kış gecesi sohbetlerinde icra edilen sözlü müzik',
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+      'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
+      'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
+    ],
     correctAnswer: 'kış gecesi sohbetlerinde icra edilen sözlü müzik',
-    explanation: '\'şevbêrk müziği\' → kış gecesi sohbetlerinde icra edilen sözlü müzik.',
+    explanation:
+        '\'şevbêrk müziği\' → kış gecesi sohbetlerinde icra edilen sözlü müzik.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10613',
     category: 'Muzîk',
     prompt: '\'çeng\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı', 'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen', 'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden', 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü'],
-    correctAnswer: 'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı',
-    explanation: '\'çeng\' → antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı.',
+    answers: [
+      'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı',
+      'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
+      'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+    ],
+    correctAnswer:
+        'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı',
+    explanation:
+        '\'çeng\' → antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10615',
     category: 'Muzîk',
     prompt: '\'Meryem Xan\' hakkında doğru olan hangisidir?',
-    answers: ['Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı', 'çobanların da çaldığı üflemeli geleneksel enstrüman', 'dengbêjlerin söylediği destansı veya aşk temalı şarkı', 'Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik'],
+    answers: [
+      'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
+      'çobanların da çaldığı üflemeli geleneksel enstrüman',
+      'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
+      'Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik',
+    ],
     correctAnswer: 'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
-    explanation: '\'Meryem Xan\': Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı.',
+    explanation:
+        '\'Meryem Xan\': Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10643',
     category: 'Muzîk',
     prompt: '\'Erdewan Zaxoyî\' tarihsel olarak kimdir?',
-    answers: ['tek bir sanatçının şarkı söylemesi veya çalması', 'Bahdinan bölgesinin sevilen devrimci müzisyeni', 'müziğin temelini oluşturan düzenli vuruşlar', 'kilamların okunduğu serbest ritimli vokal tarzı'],
+    answers: [
+      'tek bir sanatçının şarkı söylemesi veya çalması',
+      'Bahdinan bölgesinin sevilen devrimci müzisyeni',
+      'müziğin temelini oluşturan düzenli vuruşlar',
+      'kilamların okunduğu serbest ritimli vokal tarzı',
+    ],
     correctAnswer: 'Bahdinan bölgesinin sevilen devrimci müzisyeni',
-    explanation: '\'Erdewan Zaxoyî\': Bahdinan bölgesinin sevilen devrimci müzisyeni.',
+    explanation:
+        '\'Erdewan Zaxoyî\': Bahdinan bölgesinin sevilen devrimci müzisyeni.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10653',
     category: 'Muzîk',
     prompt: '\'Eyşeqan\' neyi ifade eder?',
-    answers: ['90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu', 'dengbêjlerin söylediği destansı veya aşk temalı şarkı', 'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü', 'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden'],
+    answers: [
+      '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
+      'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
+      'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü',
+      'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
+    ],
     correctAnswer: 'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
-    explanation: '\'Eyşeqan\' → Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden.',
+    explanation:
+        '\'Eyşeqan\' → Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10654',
     category: 'Muzîk',
     prompt: '\'Meryem Xan\' tarihsel olarak kimdir?',
-    answers: ['Bahdinan bölgesinin popüler klasik halk sanatçısı', 'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı', 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı', 'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı'],
+    answers: [
+      'Bahdinan bölgesinin popüler klasik halk sanatçısı',
+      'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+      'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
+    ],
     correctAnswer: 'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
-    explanation: '\'Meryem Xan\': Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı.',
+    explanation:
+        '\'Meryem Xan\': Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10656',
     category: 'Muzîk',
     prompt: '\'Aram Tigran\' kimdir?',
-    answers: ['Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen', 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü', 'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan', 'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden'],
+    answers: [
+      'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+      'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
+      'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
+    ],
     correctAnswer: 'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
-    explanation: '\'Aram Tigran\': Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen.',
+    explanation:
+        '\'Aram Tigran\': Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10658',
@@ -8112,19 +10453,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Stranbêj\' yalnızca Muzîk dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Stranbêj\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Stranbêj\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10715',
     category: 'Muzîk',
     prompt: '\'Mihemed Taha Akreyî\' hangi yönüyle bilinir?',
-    answers: ['kilamların okunduğu serbest ritimli vokal tarzı', 'Bahdinan bölgesinin popüler klasik halk sanatçısı', 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı', 'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı'],
+    answers: [
+      'kilamların okunduğu serbest ritimli vokal tarzı',
+      'Bahdinan bölgesinin popüler klasik halk sanatçısı',
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+      'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
+    ],
     correctAnswer: 'Bahdinan bölgesinin popüler klasik halk sanatçısı',
-    explanation: '\'Mihemed Taha Akreyî\': Bahdinan bölgesinin popüler klasik halk sanatçısı.',
+    explanation:
+        '\'Mihemed Taha Akreyî\': Bahdinan bölgesinin popüler klasik halk sanatçısı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10744',
@@ -8132,9 +10480,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'heyran\' Muzîk bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'heyran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'heyran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10762',
@@ -8142,9 +10491,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'şakiro stranları\' Muzîk açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'şakiro stranları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'şakiro stranları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10803',
@@ -8152,49 +10502,75 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Aram tigran\' Muzîk açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Aram tigran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Aram tigran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10813',
     category: 'Muzîk',
     prompt: '\'şabaş geleneği\' ne anlama gelir?',
-    answers: ['müzisyenlere para atarak taltif etme adeti', 'usta-çırak ilişkisiyle yürüyen müzikal aktarım', 'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses', 'efsaneyi anlatan meşhur geleneksel kilam'],
+    answers: [
+      'müzisyenlere para atarak taltif etme adeti',
+      'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
+      'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses',
+      'efsaneyi anlatan meşhur geleneksel kilam',
+    ],
     correctAnswer: 'müzisyenlere para atarak taltif etme adeti',
-    explanation: '\'şabaş geleneği\' → müzisyenlere para atarak taltif etme adeti.',
+    explanation:
+        '\'şabaş geleneği\' → müzisyenlere para atarak taltif etme adeti.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10827',
     category: 'Muzîk',
     prompt: '\'Karapetê Xaço\' kim olarak anılır?',
-    answers: ['Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj', 'dengbêjlerin söylediği destansı veya aşk temalı şarkı', 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü', 'Kürt müziğini çok kültürlü ortamda icra eden grup'],
+    answers: [
+      'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
+      'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+      'Kürt müziğini çok kültürlü ortamda icra eden grup',
+    ],
     correctAnswer: 'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
-    explanation: '\'Karapetê Xaço\': Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj.',
+    explanation:
+        '\'Karapetê Xaço\': Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10853',
     category: 'Muzîk',
     prompt: 'Muzîk açısından \'makam\' için doğru ifade hangisidir?',
-    answers: ['Şırnak ve Cizre yöresinin ritmik ve makamsal müziği', 'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem', 'halaylarda çalınan hareketli ve ritmik halk şarkıları', 'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı'],
+    answers: [
+      'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
+      'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem',
+      'halaylarda çalınan hareketli ve ritmik halk şarkıları',
+      'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
+    ],
     correctAnswer: 'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem',
-    explanation: '\'makam\' → Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem.',
+    explanation:
+        '\'makam\' → Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10861',
     category: 'Muzîk',
-    prompt: 'Muzîk için \'şakiro stranları\' hakkında doğru seçenek hangisidir?',
-    answers: ['Kürt müziğine rock ve caz esintileri getiren sanatçı', 'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü', 'çobanların da çaldığı üflemeli geleneksel enstrüman', 'Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar'],
+    prompt:
+        'Muzîk için \'şakiro stranları\' hakkında doğru seçenek hangisidir?',
+    answers: [
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+      'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü',
+      'çobanların da çaldığı üflemeli geleneksel enstrüman',
+      'Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar',
+    ],
     correctAnswer: 'Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar',
-    explanation: '\'şakiro stranları\' → Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar.',
+    explanation:
+        '\'şakiro stranları\' → Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10862',
@@ -8204,7 +10580,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'çeng\' Muzîk alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10863',
@@ -8212,69 +10588,106 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'dahol\' yalnızca Muzîk dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'dahol\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'dahol\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10871',
     category: 'Muzîk',
     prompt: '\'serhad ezgileri\' için en isabetli açıklama hangisidir?',
-    answers: ['erken dönem Kürt müziği kayıtlarını yapan dengbêj', 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı', 'Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik', 'yüksek sesli, açık havada çalınan nefesli çalgı'],
+    answers: [
+      'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+      'Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik',
+      'yüksek sesli, açık havada çalınan nefesli çalgı',
+    ],
     correctAnswer: 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
-    explanation: '\'serhad ezgileri\' → Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı.',
+    explanation:
+        '\'serhad ezgileri\' → Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10874',
     category: 'Muzîk',
     prompt: 'Aşağıdakilerden hangisi \'serhad ezgileri\' için doğrudur?',
-    answers: ['Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı', 'kilamların okunduğu serbest ritimli vokal tarzı', 'erken dönem Kürt müziği kayıtlarını yapan dengbêj', 'erbane veya defi ustalıkla çalan ritim sanatçısı'],
+    answers: [
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+      'kilamların okunduğu serbest ritimli vokal tarzı',
+      'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
+      'erbane veya defi ustalıkla çalan ritim sanatçısı',
+    ],
     correctAnswer: 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
-    explanation: '\'serhad ezgileri\' → Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı.',
+    explanation:
+        '\'serhad ezgileri\' → Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10875',
     category: 'Muzîk',
     prompt: 'Aşağıda \'govend müziği\' için doğru olan hangisidir?',
-    answers: ['halaylarda çalınan hareketli ve ritmik halk şarkıları', 'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem', 'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı', 'çobanların da çaldığı üflemeli geleneksel enstrüman'],
+    answers: [
+      'halaylarda çalınan hareketli ve ritmik halk şarkıları',
+      'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem',
+      'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
+      'çobanların da çaldığı üflemeli geleneksel enstrüman',
+    ],
     correctAnswer: 'halaylarda çalınan hareketli ve ritmik halk şarkıları',
-    explanation: '\'govend müziği\' → halaylarda çalınan hareketli ve ritmik halk şarkıları.',
+    explanation:
+        '\'govend müziği\' → halaylarda çalınan hareketli ve ritmik halk şarkıları.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10878',
     category: 'Muzîk',
     prompt: 'Muzîk çerçevesinde \'Kardeş Türküler\' ne anlama gelir?',
-    answers: ['kış gecesi sohbetlerinde icra edilen sözlü müzik', 'Kürt müziğini çok kültürlü ortamda icra eden grup', 'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği', 'tek bir sanatçının şarkı söylemesi veya çalması'],
+    answers: [
+      'kış gecesi sohbetlerinde icra edilen sözlü müzik',
+      'Kürt müziğini çok kültürlü ortamda icra eden grup',
+      'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
+      'tek bir sanatçının şarkı söylemesi veya çalması',
+    ],
     correctAnswer: 'Kürt müziğini çok kültürlü ortamda icra eden grup',
-    explanation: '\'Kardeş Türküler\': Kürt müziğini çok kültürlü ortamda icra eden grup.',
+    explanation:
+        '\'Kardeş Türküler\': Kürt müziğini çok kültürlü ortamda icra eden grup.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10882',
     category: 'Muzîk',
     prompt: 'Muzîk alanında \'zembîlfiroş stranı\' neyi ifade eder?',
-    answers: ['Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü', 'Kürt müziğine rock ve caz esintileri getiren sanatçı', 'efsaneyi anlatan meşhur geleneksel kilam', 'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem'],
+    answers: [
+      'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü',
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+      'efsaneyi anlatan meşhur geleneksel kilam',
+      'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem',
+    ],
     correctAnswer: 'efsaneyi anlatan meşhur geleneksel kilam',
-    explanation: '\'zembîlfiroş stranı\' → efsaneyi anlatan meşhur geleneksel kilam.',
+    explanation:
+        '\'zembîlfiroş stranı\' → efsaneyi anlatan meşhur geleneksel kilam.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10903',
     category: 'Muzîk',
     prompt: '\'şevbêrk müziği\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['usta-çırak ilişkisiyle yürüyen müzikal aktarım', 'kış gecesi sohbetlerinde icra edilen sözlü müzik', 'Bahdinan bölgesinin sevilen devrimci müzisyeni', 'erbane veya defi ustalıkla çalan ritim sanatçısı'],
+    answers: [
+      'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
+      'kış gecesi sohbetlerinde icra edilen sözlü müzik',
+      'Bahdinan bölgesinin sevilen devrimci müzisyeni',
+      'erbane veya defi ustalıkla çalan ritim sanatçısı',
+    ],
     correctAnswer: 'kış gecesi sohbetlerinde icra edilen sözlü müzik',
-    explanation: '\'şevbêrk müziği\' → kış gecesi sohbetlerinde icra edilen sözlü müzik.',
+    explanation:
+        '\'şevbêrk müziği\' → kış gecesi sohbetlerinde icra edilen sözlü müzik.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10921',
@@ -8284,87 +10697,130 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Koma wetan\' Muzîk alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10926',
     category: 'Muzîk',
     prompt: 'Muzîk açısından \'Mihemed Şêxo\' için doğru ifade hangisidir?',
-    answers: ['erken dönem Kürt müziği kayıtlarını yapan dengbêj', 'Kürt halkının ulusal duygularını seslendiren ozan', 'Kürt müziğini çok kültürlü ortamda icra eden grup', 'yüksek sesli, açık havada çalınan nefesli çalgı'],
+    answers: [
+      'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
+      'Kürt halkının ulusal duygularını seslendiren ozan',
+      'Kürt müziğini çok kültürlü ortamda icra eden grup',
+      'yüksek sesli, açık havada çalınan nefesli çalgı',
+    ],
     correctAnswer: 'Kürt halkının ulusal duygularını seslendiren ozan',
-    explanation: '\'Mihemed Şêxo\': Kürt halkının ulusal duygularını seslendiren ozan.',
+    explanation:
+        '\'Mihemed Şêxo\': Kürt halkının ulusal duygularını seslendiren ozan.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10927',
     category: 'Muzîk',
     prompt: 'Muzîk alanında \'şabaş geleneği\' neyi ifade eder?',
-    answers: ['Kürt coğrafyasında da çalınan yaylı çalgı', 'müzisyenlere para atarak taltif etme adeti', 'tarihteki ilk Kürtçe rock grubunun adı', 'seslerin ardışık dizilmesiyle oluşan ezgi'],
+    answers: [
+      'Kürt coğrafyasında da çalınan yaylı çalgı',
+      'müzisyenlere para atarak taltif etme adeti',
+      'tarihteki ilk Kürtçe rock grubunun adı',
+      'seslerin ardışık dizilmesiyle oluşan ezgi',
+    ],
     correctAnswer: 'müzisyenlere para atarak taltif etme adeti',
-    explanation: '\'şabaş geleneği\' → müzisyenlere para atarak taltif etme adeti.',
+    explanation:
+        '\'şabaş geleneği\' → müzisyenlere para atarak taltif etme adeti.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10930',
     category: 'Muzîk',
     prompt: '\'dengbêj evi\' kavramı neyi karşılar?',
-    answers: ['Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan', 'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden', 'dengbêjlerin söylediği destansı veya aşk temalı şarkı', 'halaylarda çalınan hareketli ve ritmik halk şarkıları'],
-    correctAnswer: 'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
-    explanation: '\'dengbêj evi\' → Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan.',
+    answers: [
+      'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
+      'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
+      'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
+      'halaylarda çalınan hareketli ve ritmik halk şarkıları',
+    ],
+    correctAnswer:
+        'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
+    explanation:
+        '\'dengbêj evi\' → Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10939',
     category: 'Muzîk',
     prompt: 'Hangisi \'koro\' tanımına uyar?',
-    answers: ['tarihteki ilk Kürtçe rock grubunun adı', 'Kürt coğrafyasında da çalınan yaylı çalgı', 'Kürt müziğinin tanınmış sanatçısı', 'topluluk halinde şarkı söyleme biçimi'],
+    answers: [
+      'tarihteki ilk Kürtçe rock grubunun adı',
+      'Kürt coğrafyasında da çalınan yaylı çalgı',
+      'Kürt müziğinin tanınmış sanatçısı',
+      'topluluk halinde şarkı söyleme biçimi',
+    ],
     correctAnswer: 'topluluk halinde şarkı söyleme biçimi',
     explanation: '\'koro\' → topluluk halinde şarkı söyleme biçimi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10940',
     category: 'Muzîk',
     prompt: 'Muzîk açısından \'Şivan Perwer\' için doğru ifade hangisidir?',
-    answers: ['Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı', 'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı', 'çobanların da çaldığı üflemeli geleneksel enstrüman', 'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği'],
+    answers: [
+      'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
+      'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
+      'çobanların da çaldığı üflemeli geleneksel enstrüman',
+      'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
+    ],
     correctAnswer: 'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
-    explanation: '\'Şivan Perwer\': Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı.',
+    explanation:
+        '\'Şivan Perwer\': Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10962',
     category: 'Muzîk',
     prompt: '\'şakiro stranları\' ne anlama gelir?',
-    answers: ['halaylarda çalınan hareketli ve ritmik halk şarkıları', 'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı', 'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden', 'Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar'],
+    answers: [
+      'halaylarda çalınan hareketli ve ritmik halk şarkıları',
+      'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
+      'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
+      'Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar',
+    ],
     correctAnswer: 'Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar',
-    explanation: '\'şakiro stranları\' → Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar.',
+    explanation:
+        '\'şakiro stranları\' → Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10963',
     category: 'Muzîk',
     prompt: 'Muzîk bağlamında \'Ciwan Haco\' nasıl anlaşılmalıdır?',
-    answers: ['Şırnak ve Cizre yöresinin ritmik ve makamsal müziği', 'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj', 'Kürt müziğine rock ve caz esintileri getiren sanatçı', 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü'],
+    answers: [
+      'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
+      'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+    ],
     correctAnswer: 'Kürt müziğine rock ve caz esintileri getiren sanatçı',
-    explanation: '\'Ciwan Haco\': Kürt müziğine rock ve caz esintileri getiren sanatçı.',
+    explanation:
+        '\'Ciwan Haco\': Kürt müziğine rock ve caz esintileri getiren sanatçı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_10976',
     category: 'Muzîk',
-    prompt: 'Muzîk alanında \'Zembîlfiroş stranı\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Muzîk alanında \'Zembîlfiroş stranı\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Zembîlfiroş stranı\' Muzîk alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_10990',
@@ -8372,19 +10828,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'govend müziği\' Muzîk alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'govend müziği\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'govend müziği\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11008',
     category: 'Muzîk',
     prompt: '\'Aynur Doğan\' hakkında doğru olan hangisidir?',
-    answers: ['çobanların da çaldığı üflemeli geleneksel enstrüman', 'modern dönemde Kürt halk müziğini icra eden sanatçı', 'halaylarda çalınan hareketli ve ritmik halk şarkıları', 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı'],
+    answers: [
+      'çobanların da çaldığı üflemeli geleneksel enstrüman',
+      'modern dönemde Kürt halk müziğini icra eden sanatçı',
+      'halaylarda çalınan hareketli ve ritmik halk şarkıları',
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+    ],
     correctAnswer: 'modern dönemde Kürt halk müziğini icra eden sanatçı',
-    explanation: '\'Aynur Doğan\': modern dönemde Kürt halk müziğini icra eden sanatçı.',
+    explanation:
+        '\'Aynur Doğan\': modern dönemde Kürt halk müziğini icra eden sanatçı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11009',
@@ -8394,17 +10857,22 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Dengbêj makamı\' Muzîk alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11013',
     category: 'Muzîk',
     prompt: '\'stran\' ile kastedilen doğru nedir?',
-    answers: ['fîqa şivanan (kaval)', 'Kürtçe şarkı veya melodi', 'defa bi zengil (tef)', 'cureyên kilamên gelêrî'],
+    answers: [
+      'fîqa şivanan (kaval)',
+      'Kürtçe şarkı veya melodi',
+      'defa bi zengil (tef)',
+      'cureyên kilamên gelêrî',
+    ],
     correctAnswer: 'Kürtçe şarkı veya melodi',
     explanation: '\'stran\' → Kürtçe şarkı veya melodi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11037',
@@ -8412,9 +10880,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Muzîk alanında \'Meryem xan\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Meryem xan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Meryem xan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11050',
@@ -8422,179 +10891,279 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Muzîk bağlamında \'Kilam\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Kilam\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Kilam\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11056',
     category: 'Muzîk',
     prompt: 'Hangisi \'dengbêj evi\' kavramını doğru betimler?',
-    answers: ['Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan', 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü', 'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı', 'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem'],
-    correctAnswer: 'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
-    explanation: '\'dengbêj evi\' → Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan.',
+    answers: [
+      'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+      'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
+      'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem',
+    ],
+    correctAnswer:
+        'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
+    explanation:
+        '\'dengbêj evi\' → Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11068',
     category: 'Muzîk',
     prompt: 'Aşağıda \'behedînî ezgileri\' için doğru olan hangisidir?',
-    answers: ['Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı', 'Duhok ve Zaho yöresine has müzikal tarz', 'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem', 'Kürt müziğine rock ve caz esintileri getiren sanatçı'],
+    answers: [
+      'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
+      'Duhok ve Zaho yöresine has müzikal tarz',
+      'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem',
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+    ],
     correctAnswer: 'Duhok ve Zaho yöresine has müzikal tarz',
-    explanation: '\'behedînî ezgileri\' → Duhok ve Zaho yöresine has müzikal tarz.',
+    explanation:
+        '\'behedînî ezgileri\' → Duhok ve Zaho yöresine has müzikal tarz.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11077',
     category: 'Muzîk',
     prompt: '\'botan ezgileri\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['Şırnak ve Cizre yöresinin ritmik ve makamsal müziği', 'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı', 'Kürt halkının ulusal duygularını seslendiren ozan', 'erken dönem Kürt müziği kayıtlarını yapan dengbêj'],
+    answers: [
+      'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
+      'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
+      'Kürt halkının ulusal duygularını seslendiren ozan',
+      'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
+    ],
     correctAnswer: 'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
-    explanation: '\'botan ezgileri\' → Şırnak ve Cizre yöresinin ritmik ve makamsal müziği.',
+    explanation:
+        '\'botan ezgileri\' → Şırnak ve Cizre yöresinin ritmik ve makamsal müziği.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11087',
     category: 'Muzîk',
     prompt: '\'zurna\' için en isabetli açıklama hangisidir?',
-    answers: ['tek bir sanatçının şarkı söylemesi veya çalması', 'Kürt halkının ulusal duygularını seslendiren ozan', 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı', 'yüksek sesli, açık havada çalınan nefesli çalgı'],
+    answers: [
+      'tek bir sanatçının şarkı söylemesi veya çalması',
+      'Kürt halkının ulusal duygularını seslendiren ozan',
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+      'yüksek sesli, açık havada çalınan nefesli çalgı',
+    ],
     correctAnswer: 'yüksek sesli, açık havada çalınan nefesli çalgı',
     explanation: '\'zurna\' → yüksek sesli, açık havada çalınan nefesli çalgı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11093',
     category: 'Muzîk',
     prompt: '\'şabaş geleneği\' ile kastedilen doğru nedir?',
-    answers: ['müzisyenlere para atarak taltif etme adeti', 'Kürt halk müziğinde bir başka ezgi tarzı', 'usta-çırak ilişkisiyle yürüyen müzikal aktarım', 'klasik Bahdinan müziğinin efsanevi sesi'],
+    answers: [
+      'müzisyenlere para atarak taltif etme adeti',
+      'Kürt halk müziğinde bir başka ezgi tarzı',
+      'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
+      'klasik Bahdinan müziğinin efsanevi sesi',
+    ],
     correctAnswer: 'müzisyenlere para atarak taltif etme adeti',
-    explanation: '\'şabaş geleneği\' → müzisyenlere para atarak taltif etme adeti.',
+    explanation:
+        '\'şabaş geleneği\' → müzisyenlere para atarak taltif etme adeti.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11103',
     category: 'Muzîk',
     prompt: 'Hangisi \'Koma Amed\' kişisini doğru tanıtır?',
-    answers: ['müziği kağıda dökmek için kullanılan evrensel işaretler', 'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen', '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu', 'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden'],
-    correctAnswer: '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
-    explanation: '\'Koma Amed\': 90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu.',
+    answers: [
+      'müziği kağıda dökmek için kullanılan evrensel işaretler',
+      'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
+      '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
+      'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
+    ],
+    correctAnswer:
+        '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
+    explanation:
+        '\'Koma Amed\': 90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11107',
     category: 'Muzîk',
     prompt: 'Muzîk bilgisinde \'kemençe\' ile ilgili doğru olan hangisidir?',
-    answers: ['müziğin temelini oluşturan düzenli vuruşlar', 'klasik Bahdinan müziğinin efsanevi sesi', 'Kürt coğrafyasında da çalınan yaylı çalgı', 'genel olarak şarkı okuyan, seslendiren kişi'],
+    answers: [
+      'müziğin temelini oluşturan düzenli vuruşlar',
+      'klasik Bahdinan müziğinin efsanevi sesi',
+      'Kürt coğrafyasında da çalınan yaylı çalgı',
+      'genel olarak şarkı okuyan, seslendiren kişi',
+    ],
     correctAnswer: 'Kürt coğrafyasında da çalınan yaylı çalgı',
     explanation: '\'kemençe\' → Kürt coğrafyasında da çalınan yaylı çalgı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11123',
     category: 'Muzîk',
     prompt: '\'Şakiro\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['Kürt halk müziğinde bir başka ezgi tarzı', 'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses', 'tek bir sanatçının şarkı söylemesi veya çalması', 'seslerin ardışık dizilmesiyle oluşan ezgi'],
+    answers: [
+      'Kürt halk müziğinde bir başka ezgi tarzı',
+      'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses',
+      'tek bir sanatçının şarkı söylemesi veya çalması',
+      'seslerin ardışık dizilmesiyle oluşan ezgi',
+    ],
     correctAnswer: 'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses',
     explanation: '\'Şakiro\' → Kürtlerin \'şahê dengbêjan\' dediği güçlü ses.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11125',
     category: 'Muzîk',
     prompt: '\'Şivan Perwer\' tarihsel olarak kimdir?',
-    answers: ['Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı', 'Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar', 'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen', 'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı'],
+    answers: [
+      'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
+      'Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar',
+      'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
+      'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
+    ],
     correctAnswer: 'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
-    explanation: '\'Şivan Perwer\': Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı.',
+    explanation:
+        '\'Şivan Perwer\': Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11127',
     category: 'Muzîk',
     prompt: 'Muzîk için \'Koma Wetan\' hakkında doğru seçenek hangisidir?',
-    answers: ['Kürt coğrafyasında da çalınan yaylı çalgı', 'tarihteki ilk Kürtçe rock grubunun adı', 'Duhok ve Zaho yöresine has müzikal tarz', 'zurna ile birlikte çalınan ritim sazı'],
+    answers: [
+      'Kürt coğrafyasında da çalınan yaylı çalgı',
+      'tarihteki ilk Kürtçe rock grubunun adı',
+      'Duhok ve Zaho yöresine has müzikal tarz',
+      'zurna ile birlikte çalınan ritim sazı',
+    ],
     correctAnswer: 'tarihteki ilk Kürtçe rock grubunun adı',
     explanation: '\'Koma Wetan\': tarihteki ilk Kürtçe rock grubunun adı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11133',
     category: 'Muzîk',
-    prompt: 'Hangisi Muzîk içinde \'Mihemed Şêxo\' kavramını doğru yerleştirir?',
-    answers: ['Kürt halkının ulusal duygularını seslendiren ozan', 'yüksek sesli, açık havada çalınan nefesli çalgı', 'kilamların okunduğu serbest ritimli vokal tarzı', 'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj'],
+    prompt:
+        'Hangisi Muzîk içinde \'Mihemed Şêxo\' kavramını doğru yerleştirir?',
+    answers: [
+      'Kürt halkının ulusal duygularını seslendiren ozan',
+      'yüksek sesli, açık havada çalınan nefesli çalgı',
+      'kilamların okunduğu serbest ritimli vokal tarzı',
+      'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
+    ],
     correctAnswer: 'Kürt halkının ulusal duygularını seslendiren ozan',
-    explanation: '\'Mihemed Şêxo\': Kürt halkının ulusal duygularını seslendiren ozan.',
+    explanation:
+        '\'Mihemed Şêxo\': Kürt halkının ulusal duygularını seslendiren ozan.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11134',
     category: 'Muzîk',
-    prompt: 'Hangisi Muzîk içinde \'şevbêrk müziği\' kavramını doğru yerleştirir?',
-    answers: ['kış gecesi sohbetlerinde icra edilen sözlü müzik', 'tek bir sanatçının şarkı söylemesi veya çalması', 'Bahdinan bölgesinin sevilen devrimci müzisyeni', 'erbane veya defi ustalıkla çalan ritim sanatçısı'],
+    prompt:
+        'Hangisi Muzîk içinde \'şevbêrk müziği\' kavramını doğru yerleştirir?',
+    answers: [
+      'kış gecesi sohbetlerinde icra edilen sözlü müzik',
+      'tek bir sanatçının şarkı söylemesi veya çalması',
+      'Bahdinan bölgesinin sevilen devrimci müzisyeni',
+      'erbane veya defi ustalıkla çalan ritim sanatçısı',
+    ],
     correctAnswer: 'kış gecesi sohbetlerinde icra edilen sözlü müzik',
-    explanation: '\'şevbêrk müziği\' → kış gecesi sohbetlerinde icra edilen sözlü müzik.',
+    explanation:
+        '\'şevbêrk müziği\' → kış gecesi sohbetlerinde icra edilen sözlü müzik.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11136',
     category: 'Muzîk',
     prompt: '\'ritim\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['seslerin ardışık dizilmesiyle oluşan ezgi', 'yüksek sesli, açık havada çalınan nefesli çalgı', 'müziğin temelini oluşturan düzenli vuruşlar', 'kilamların okunduğu serbest ritimli vokal tarzı'],
+    answers: [
+      'seslerin ardışık dizilmesiyle oluşan ezgi',
+      'yüksek sesli, açık havada çalınan nefesli çalgı',
+      'müziğin temelini oluşturan düzenli vuruşlar',
+      'kilamların okunduğu serbest ritimli vokal tarzı',
+    ],
     correctAnswer: 'müziğin temelini oluşturan düzenli vuruşlar',
     explanation: '\'ritim\' → müziğin temelini oluşturan düzenli vuruşlar.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11143',
     category: 'Muzîk',
     prompt: '\'stranbêj\' ifadesinin doğru karşılığı hangisidir?',
-    answers: ['Kürtlerin \'şahê dengbêjan\' dediği güçlü ses', 'seslerin ardışık dizilmesiyle oluşan ezgi', 'efsaneyi anlatan meşhur geleneksel kilam', 'genel olarak şarkı okuyan, seslendiren kişi'],
+    answers: [
+      'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses',
+      'seslerin ardışık dizilmesiyle oluşan ezgi',
+      'efsaneyi anlatan meşhur geleneksel kilam',
+      'genel olarak şarkı okuyan, seslendiren kişi',
+    ],
     correctAnswer: 'genel olarak şarkı okuyan, seslendiren kişi',
     explanation: '\'stranbêj\' → genel olarak şarkı okuyan, seslendiren kişi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11152',
     category: 'Muzîk',
     prompt: '\'Eyşeqan\' kavramı neyi karşılar?',
-    answers: ['Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden', 'dengbêjlerin söylediği destansı veya aşk temalı şarkı', 'halaylarda çalınan hareketli ve ritmik halk şarkıları', 'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı'],
+    answers: [
+      'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
+      'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
+      'halaylarda çalınan hareketli ve ritmik halk şarkıları',
+      'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı',
+    ],
     correctAnswer: 'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
-    explanation: '\'Eyşeqan\' → Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden.',
+    explanation:
+        '\'Eyşeqan\' → Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11154',
     category: 'Muzîk',
     prompt: '\'kilam\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['dengbêjlerin söylediği destansı veya aşk temalı şarkı', 'Kürt müziğine rock ve caz esintileri getiren sanatçı', 'modern dönemde Kürt halk müziğini icra eden sanatçı', 'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı'],
+    answers: [
+      'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+      'modern dönemde Kürt halk müziğini icra eden sanatçı',
+      'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
+    ],
     correctAnswer: 'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
-    explanation: '\'kilam\' → dengbêjlerin söylediği destansı veya aşk temalı şarkı.',
+    explanation:
+        '\'kilam\' → dengbêjlerin söylediği destansı veya aşk temalı şarkı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11160',
     category: 'Muzîk',
     prompt: 'Aşağıdakilerden hangisi \'hîran\' kavramını açıklar?',
-    answers: ['Duhok ve Zaho yöresine has müzikal tarz', 'Kürt coğrafyasında da çalınan yaylı çalgı', 'klasik Bahdinan müziğinin efsanevi sesi', 'Kürt halk müziğinde bir başka ezgi tarzı'],
+    answers: [
+      'Duhok ve Zaho yöresine has müzikal tarz',
+      'Kürt coğrafyasında da çalınan yaylı çalgı',
+      'klasik Bahdinan müziğinin efsanevi sesi',
+      'Kürt halk müziğinde bir başka ezgi tarzı',
+    ],
     correctAnswer: 'Kürt halk müziğinde bir başka ezgi tarzı',
     explanation: '\'hîran\' → Kürt halk müziğinde bir başka ezgi tarzı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11162',
@@ -8602,9 +11171,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Ciwan Haco\' Muzîk açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Ciwan Haco\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Ciwan Haco\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11171',
@@ -8612,39 +11182,58 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Mihemed taha akreyî\' yalnızca Muzîk dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Mihemed taha akreyî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Mihemed taha akreyî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11172',
     category: 'Muzîk',
     prompt: 'Aşağıdakilerden hangisi \'kilam\' kavramını açıklar?',
-    answers: ['çobanların da çaldığı üflemeli geleneksel enstrüman', 'dengbêjlerin söylediği destansı veya aşk temalı şarkı', 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü', 'müziği kağıda dökmek için kullanılan evrensel işaretler'],
+    answers: [
+      'çobanların da çaldığı üflemeli geleneksel enstrüman',
+      'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+      'müziği kağıda dökmek için kullanılan evrensel işaretler',
+    ],
     correctAnswer: 'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
-    explanation: '\'kilam\' → dengbêjlerin söylediği destansı veya aşk temalı şarkı.',
+    explanation:
+        '\'kilam\' → dengbêjlerin söylediği destansı veya aşk temalı şarkı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11180',
     category: 'Muzîk',
     prompt: '\'dengbêj makamı\' kavramı neyi karşılar?',
-    answers: ['Bahdinan bölgesinin sevilen devrimci müzisyeni', 'kilamların okunduğu serbest ritimli vokal tarzı', 'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı', 'tek bir sanatçının şarkı söylemesi veya çalması'],
+    answers: [
+      'Bahdinan bölgesinin sevilen devrimci müzisyeni',
+      'kilamların okunduğu serbest ritimli vokal tarzı',
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+      'tek bir sanatçının şarkı söylemesi veya çalması',
+    ],
     correctAnswer: 'kilamların okunduğu serbest ritimli vokal tarzı',
-    explanation: '\'dengbêj makamı\' → kilamların okunduğu serbest ritimli vokal tarzı.',
+    explanation:
+        '\'dengbêj makamı\' → kilamların okunduğu serbest ritimli vokal tarzı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11189',
     category: 'Muzîk',
     prompt: 'Hangisi Muzîk içinde \'Ciwan Haco\' kavramını doğru yerleştirir?',
-    answers: ['Kürt müziğine rock ve caz esintileri getiren sanatçı', 'dengbêjlerin söylediği destansı veya aşk temalı şarkı', '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu', 'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü'],
+    answers: [
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+      'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
+      '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
+      'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü',
+    ],
     correctAnswer: 'Kürt müziğine rock ve caz esintileri getiren sanatçı',
-    explanation: '\'Ciwan Haco\': Kürt müziğine rock ve caz esintileri getiren sanatçı.',
+    explanation:
+        '\'Ciwan Haco\': Kürt müziğine rock ve caz esintileri getiren sanatçı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11194',
@@ -8652,9 +11241,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'makam\' Muzîk bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'makam\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'makam\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11198',
@@ -8662,19 +11252,25 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Muzîk literatüründe \'Erdewan zaxoyî\' yer almaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Erdewan zaxoyî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Erdewan zaxoyî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11200',
     category: 'Muzîk',
     prompt: '\'dahol\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['zurna ile birlikte çalınan ritim sazı', 'Enstrümansız ve doğaçlama ezgili', 'seslerin ardışık dizilmesiyle oluşan ezgi', 'klasik Bahdinan müziğinin efsanevi sesi'],
+    answers: [
+      'zurna ile birlikte çalınan ritim sazı',
+      'Enstrümansız ve doğaçlama ezgili',
+      'seslerin ardışık dizilmesiyle oluşan ezgi',
+      'klasik Bahdinan müziğinin efsanevi sesi',
+    ],
     correctAnswer: 'zurna ile birlikte çalınan ritim sazı',
     explanation: '\'dahol\' → zurna ile birlikte çalınan ritim sazı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11218',
@@ -8684,17 +11280,23 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Stran\' Muzîk alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11227',
     category: 'Muzîk',
     prompt: '\'defbaz\' ile kastedilen doğru nedir?',
-    answers: ['Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı', 'Kürt halkının ulusal duygularını seslendiren ozan', 'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj', 'erbane veya defi ustalıkla çalan ritim sanatçısı'],
+    answers: [
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+      'Kürt halkının ulusal duygularını seslendiren ozan',
+      'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
+      'erbane veya defi ustalıkla çalan ritim sanatçısı',
+    ],
     correctAnswer: 'erbane veya defi ustalıkla çalan ritim sanatçısı',
-    explanation: '\'defbaz\' → erbane veya defi ustalıkla çalan ritim sanatçısı.',
+    explanation:
+        '\'defbaz\' → erbane veya defi ustalıkla çalan ritim sanatçısı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11238',
@@ -8704,37 +11306,54 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Kemençe\' Muzîk alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11294',
     category: 'Muzîk',
     prompt: 'Muzîk açısından \'erbane\' için doğru ifade hangisidir?',
-    answers: ['halk müziğinde yaygın olarak çalınan zilli tef', 'kış gecesi sohbetlerinde icra edilen sözlü müzik', 'usta-çırak ilişkisiyle yürüyen müzikal aktarım', 'Bahdinan bölgesinin popüler klasik halk sanatçısı'],
+    answers: [
+      'halk müziğinde yaygın olarak çalınan zilli tef',
+      'kış gecesi sohbetlerinde icra edilen sözlü müzik',
+      'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
+      'Bahdinan bölgesinin popüler klasik halk sanatçısı',
+    ],
     correctAnswer: 'halk müziğinde yaygın olarak çalınan zilli tef',
     explanation: '\'erbane\' → halk müziğinde yaygın olarak çalınan zilli tef.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11295',
     category: 'Muzîk',
     prompt: 'Muzîk için \'tembûr\' hakkında doğru seçenek hangisidir?',
-    answers: ['Kürt halk müziğinde en kutsal sayılan telli saz', 'müziğin temelini oluşturan düzenli vuruşlar', 'erbane veya defi ustalıkla çalan ritim sanatçısı', 'kış gecesi sohbetlerinde icra edilen sözlü müzik'],
+    answers: [
+      'Kürt halk müziğinde en kutsal sayılan telli saz',
+      'müziğin temelini oluşturan düzenli vuruşlar',
+      'erbane veya defi ustalıkla çalan ritim sanatçısı',
+      'kış gecesi sohbetlerinde icra edilen sözlü müzik',
+    ],
     correctAnswer: 'Kürt halk müziğinde en kutsal sayılan telli saz',
-    explanation: '\'tembûr\' → Kürt halk müziğinde en kutsal sayılan telli saz.',
+    explanation:
+        '\'tembûr\' → Kürt halk müziğinde en kutsal sayılan telli saz.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11326',
     category: 'Muzîk',
     prompt: 'Hangisi \'zaza müziği\' ile uyumlu bir tanımdır?',
-    answers: ['Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj', 'Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik', 'modern dönemde Kürt halk müziğini icra eden sanatçı', 'Bahdinan bölgesinin popüler klasik halk sanatçısı'],
+    answers: [
+      'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
+      'Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik',
+      'modern dönemde Kürt halk müziğini icra eden sanatçı',
+      'Bahdinan bölgesinin popüler klasik halk sanatçısı',
+    ],
     correctAnswer: 'Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik',
-    explanation: '\'zaza müziği\' → Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik.',
+    explanation:
+        '\'zaza müziği\' → Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11329',
@@ -8742,59 +11361,90 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Muzîk bağlamında \'dengbêjlik okulu\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'dengbêjlik okulu\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'dengbêjlik okulu\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11341',
     category: 'Muzîk',
     prompt: 'Muzîk bağlamında \'Mihemed Taha Akreyî\' nasıl anlaşılmalıdır?',
-    answers: ['erken dönem Kürt müziği kayıtlarını yapan dengbêj', 'kış gecesi sohbetlerinde icra edilen sözlü müzik', 'Bahdinan bölgesinin popüler klasik halk sanatçısı', 'yüksek sesli, açık havada çalınan nefesli çalgı'],
+    answers: [
+      'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
+      'kış gecesi sohbetlerinde icra edilen sözlü müzik',
+      'Bahdinan bölgesinin popüler klasik halk sanatçısı',
+      'yüksek sesli, açık havada çalınan nefesli çalgı',
+    ],
     correctAnswer: 'Bahdinan bölgesinin popüler klasik halk sanatçısı',
-    explanation: '\'Mihemed Taha Akreyî\': Bahdinan bölgesinin popüler klasik halk sanatçısı.',
+    explanation:
+        '\'Mihemed Taha Akreyî\': Bahdinan bölgesinin popüler klasik halk sanatçısı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11356',
     category: 'Muzîk',
     prompt: 'Hangisi \'Karapetê Xaço\' kişisini doğru tanıtır?',
-    answers: ['Kürt müziğini çok kültürlü ortamda icra eden grup', 'dengbêjlerin söylediği destansı veya aşk temalı şarkı', 'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj', 'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı'],
+    answers: [
+      'Kürt müziğini çok kültürlü ortamda icra eden grup',
+      'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
+      'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
+      'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
+    ],
     correctAnswer: 'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
-    explanation: '\'Karapetê Xaço\': Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj.',
+    explanation:
+        '\'Karapetê Xaço\': Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11366',
     category: 'Muzîk',
     prompt: '\'solo\', Muzîk konusunda neyi anlatır?',
-    answers: ['daha çok aşk ve yiğitlik üzerine söylenen müzik türü', 'tek bir sanatçının şarkı söylemesi veya çalması', 'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı', 'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı'],
+    answers: [
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+      'tek bir sanatçının şarkı söylemesi veya çalması',
+      'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı',
+      'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı',
+    ],
     correctAnswer: 'tek bir sanatçının şarkı söylemesi veya çalması',
     explanation: '\'solo\' → tek bir sanatçının şarkı söylemesi veya çalması.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11371',
     category: 'Muzîk',
     prompt: '\'Koma Amed\' kimdir?',
-    answers: ['90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu', 'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan', 'Kürt müziğine rock ve caz esintileri getiren sanatçı', 'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı'],
-    correctAnswer: '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
-    explanation: '\'Koma Amed\': 90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu.',
+    answers: [
+      '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
+      'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
+      'Kürt müziğine rock ve caz esintileri getiren sanatçı',
+      'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı',
+    ],
+    correctAnswer:
+        '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
+    explanation:
+        '\'Koma Amed\': 90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11383',
     category: 'Muzîk',
     prompt: '\'heyran\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['halaylarda çalınan hareketli ve ritmik halk şarkıları', 'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü', 'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı', 'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen'],
+    answers: [
+      'halaylarda çalınan hareketli ve ritmik halk şarkıları',
+      'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü',
+      'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı',
+      'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
+    ],
     correctAnswer: 'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü',
-    explanation: '\'heyran\' → Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü.',
+    explanation:
+        '\'heyran\' → Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11401',
@@ -8804,67 +11454,98 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'solo\' Muzîk alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11420',
     category: 'Muzîk',
     prompt: 'Muzîk açısından \'govend müziği\' için doğru ifade hangisidir?',
-    answers: ['halaylarda çalınan hareketli ve ritmik halk şarkıları', 'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen', 'çobanların da çaldığı üflemeli geleneksel enstrüman', 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü'],
+    answers: [
+      'halaylarda çalınan hareketli ve ritmik halk şarkıları',
+      'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
+      'çobanların da çaldığı üflemeli geleneksel enstrüman',
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+    ],
     correctAnswer: 'halaylarda çalınan hareketli ve ritmik halk şarkıları',
-    explanation: '\'govend müziği\' → halaylarda çalınan hareketli ve ritmik halk şarkıları.',
+    explanation:
+        '\'govend müziği\' → halaylarda çalınan hareketli ve ritmik halk şarkıları.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11422',
     category: 'Muzîk',
     prompt: 'Muzîk çerçevesinde \'Mihemed Şêxo\' ne anlama gelir?',
-    answers: ['Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı', 'tek bir sanatçının şarkı söylemesi veya çalması', 'çobanların da çaldığı üflemeli geleneksel enstrüman', 'Kürt halkının ulusal duygularını seslendiren ozan'],
+    answers: [
+      'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
+      'tek bir sanatçının şarkı söylemesi veya çalması',
+      'çobanların da çaldığı üflemeli geleneksel enstrüman',
+      'Kürt halkının ulusal duygularını seslendiren ozan',
+    ],
     correctAnswer: 'Kürt halkının ulusal duygularını seslendiren ozan',
-    explanation: '\'Mihemed Şêxo\': Kürt halkının ulusal duygularını seslendiren ozan.',
+    explanation:
+        '\'Mihemed Şêxo\': Kürt halkının ulusal duygularını seslendiren ozan.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11428',
     category: 'Muzîk',
     prompt: 'Muzîk çerçevesinde \'lawik\' ne anlama gelir?',
-    answers: ['daha çok aşk ve yiğitlik üzerine söylenen müzik türü', 'dengbêjlerin söylediği destansı veya aşk temalı şarkı', 'çobanların da çaldığı üflemeli geleneksel enstrüman', 'modern dönemde Kürt halk müziğini icra eden sanatçı'],
+    answers: [
+      'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
+      'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
+      'çobanların da çaldığı üflemeli geleneksel enstrüman',
+      'modern dönemde Kürt halk müziğini icra eden sanatçı',
+    ],
     correctAnswer: 'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
-    explanation: '\'lawik\' → daha çok aşk ve yiğitlik üzerine söylenen müzik türü.',
+    explanation:
+        '\'lawik\' → daha çok aşk ve yiğitlik üzerine söylenen müzik türü.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11431',
     category: 'Muzîk',
     prompt: 'Şıklardan hangisi \'dengbêj\' anlamına gelir?',
-    answers: ['Duhok ve Zaho yöresine has müzikal tarz', 'zurna ile birlikte çalınan ritim sazı', 'Enstrümansız ve doğaçlama ezgili', 'ezgili sözlü anlatım yapan sanatçı'],
+    answers: [
+      'Duhok ve Zaho yöresine has müzikal tarz',
+      'zurna ile birlikte çalınan ritim sazı',
+      'Enstrümansız ve doğaçlama ezgili',
+      'ezgili sözlü anlatım yapan sanatçı',
+    ],
     correctAnswer: 'ezgili sözlü anlatım yapan sanatçı',
     explanation: '\'dengbêj\' → ezgili sözlü anlatım yapan sanatçı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11461',
     category: 'Paradigma',
-    prompt: '\'ahlaki-politik toplum\' yalnızca Paradigma dışı alanlara aittir.',
+    prompt:
+        '\'ahlaki-politik toplum\' yalnızca Paradigma dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'ahlaki-politik toplum\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'ahlaki-politik toplum\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11471',
     category: 'Paradigma',
     prompt: '\'ekolojik bilinç\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['Doğayı yalnızca sömürü nesnesi olarak görmemesiyle', 'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi', 'kendi kararlarını alan, etik değerlere sahip toplum', 'insanın doğanın bir parçası olduğunu anlama durumu'],
+    answers: [
+      'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
+      'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi',
+      'kendi kararlarını alan, etik değerlere sahip toplum',
+      'insanın doğanın bir parçası olduğunu anlama durumu',
+    ],
     correctAnswer: 'insanın doğanın bir parçası olduğunu anlama durumu',
-    explanation: '\'ekolojik bilinç\' → insanın doğanın bir parçası olduğunu anlama durumu.',
+    explanation:
+        '\'ekolojik bilinç\' → insanın doğanın bir parçası olduğunu anlama durumu.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11479',
@@ -8872,79 +11553,123 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Paradigma bağlamında \'Ahlakilik\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Ahlakilik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Ahlakilik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11493',
     category: 'Paradigma',
     prompt: 'Şıklardan hangisi \'demokratik ittifak\' anlamına gelir?',
-    answers: ['farklı ezilen kesimlerin eşitlikçi birlikteliği', 'halkın kendi kendini yönetme ve örgütleme biçimi', 'Yerel toplumun kendi karar süreçlerine katılması', 'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü'],
+    answers: [
+      'farklı ezilen kesimlerin eşitlikçi birlikteliği',
+      'halkın kendi kendini yönetme ve örgütleme biçimi',
+      'Yerel toplumun kendi karar süreçlerine katılması',
+      'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
+    ],
     correctAnswer: 'farklı ezilen kesimlerin eşitlikçi birlikteliği',
-    explanation: '\'demokratik ittifak\' → farklı ezilen kesimlerin eşitlikçi birlikteliği.',
+    explanation:
+        '\'demokratik ittifak\' → farklı ezilen kesimlerin eşitlikçi birlikteliği.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11508',
     category: 'Paradigma',
     prompt: '\'antikapitalizm\' hakkında bilinen doğru nedir?',
-    answers: ['kapitalist moderniteye alternatif yaşam sistemi', 'Yerel toplumun kendi karar süreçlerine katılması', 'kapitalizmin kâr ve sömürü mantığına karşı duruş', 'Tahakküm ile doğa tahribatı arasındaki ilişkiyi'],
+    answers: [
+      'kapitalist moderniteye alternatif yaşam sistemi',
+      'Yerel toplumun kendi karar süreçlerine katılması',
+      'kapitalizmin kâr ve sömürü mantığına karşı duruş',
+      'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
+    ],
     correctAnswer: 'kapitalizmin kâr ve sömürü mantığına karşı duruş',
-    explanation: '\'antikapitalizm\' → kapitalizmin kâr ve sömürü mantığına karşı duruş.',
+    explanation:
+        '\'antikapitalizm\' → kapitalizmin kâr ve sömürü mantığına karşı duruş.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11511',
     category: 'Paradigma',
     prompt: '\'hiyerarşi\' doğru şekilde nasıl açıklanır?',
-    answers: ['ortak vatanda çok kültürlü ve eşitlikçi birliktelik', 'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme', 'Sadece sembolik değil, örgütsel ve kurumsal düzeyde', 'Yerel toplumun kendi karar süreçlerine katılması'],
+    answers: [
+      'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
+      'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme',
+      'Sadece sembolik değil, örgütsel ve kurumsal düzeyde',
+      'Yerel toplumun kendi karar süreçlerine katılması',
+    ],
     correctAnswer: 'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme',
-    explanation: '\'hiyerarşi\' → toplumda alt-üst ilişkisi kuran baskıcı örgütlenme.',
+    explanation:
+        '\'hiyerarşi\' → toplumda alt-üst ilişkisi kuran baskıcı örgütlenme.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11517',
     category: 'Paradigma',
-    prompt: 'Paradigma için \'ekolojik endüstri\' hakkında doğru seçenek hangisidir?',
-    answers: ['devlet dışı, toplumsal örgütlenme alanları', 'Biri çoğul-gönüllü, diğeri tekçi-zorunludur', 'doğayla uyumlu, geri dönüşümlü üretim tarzı', 'Kimliklerin devlet zoru olmadan birlikteliğini'],
+    prompt:
+        'Paradigma için \'ekolojik endüstri\' hakkında doğru seçenek hangisidir?',
+    answers: [
+      'devlet dışı, toplumsal örgütlenme alanları',
+      'Biri çoğul-gönüllü, diğeri tekçi-zorunludur',
+      'doğayla uyumlu, geri dönüşümlü üretim tarzı',
+      'Kimliklerin devlet zoru olmadan birlikteliğini',
+    ],
     correctAnswer: 'doğayla uyumlu, geri dönüşümlü üretim tarzı',
-    explanation: '\'ekolojik endüstri\' → doğayla uyumlu, geri dönüşümlü üretim tarzı.',
+    explanation:
+        '\'ekolojik endüstri\' → doğayla uyumlu, geri dönüşümlü üretim tarzı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11538',
     category: 'Paradigma',
     prompt: '\'özgürlük ölçütü\' dendiğinde kastedilen nedir?',
-    answers: ['komünlerin üstünde yer alan koordinasyon ve karar organı', 'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi', 'toplumun kendi kendini koruma ve yürütme refleksidir', 'Kurucu ilkeleri ve yönetim esaslarını belirleyen anayasal belge'],
+    answers: [
+      'komünlerin üstünde yer alan koordinasyon ve karar organı',
+      'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi',
+      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'Kurucu ilkeleri ve yönetim esaslarını belirleyen anayasal belge',
+    ],
     correctAnswer: 'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi',
-    explanation: '\'özgürlük ölçütü\' → toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi.',
+    explanation:
+        '\'özgürlük ölçütü\' → toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11543',
     category: 'Paradigma',
     prompt: '\'özgür eş yaşam\' nasıl tanımlanır?',
-    answers: ['kadın bilincini ve jineolojiyi geliştiren okullar', 'kapitalizmin kâr ve sömürü mantığına karşı duruş', 'baskı ve sahiplenmeye dayanmayan eşit ortak yaşam', 'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi'],
+    answers: [
+      'kadın bilincini ve jineolojiyi geliştiren okullar',
+      'kapitalizmin kâr ve sömürü mantığına karşı duruş',
+      'baskı ve sahiplenmeye dayanmayan eşit ortak yaşam',
+      'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
+    ],
     correctAnswer: 'baskı ve sahiplenmeye dayanmayan eşit ortak yaşam',
-    explanation: '\'özgür eş yaşam\' → baskı ve sahiplenmeye dayanmayan eşit ortak yaşam.',
+    explanation:
+        '\'özgür eş yaşam\' → baskı ve sahiplenmeye dayanmayan eşit ortak yaşam.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11556',
     category: 'Paradigma',
     prompt: 'Paradigma çerçevesinde \'sosyal sözleşme\' ne anlama gelir?',
-    answers: ['kantonların ve komünlerin ortak kurucu metni', 'toplumun kendini koruma ve örgütleme hakkı', 'yerel özerkliğe sahip idari ve toplumsal birim', 'komün yaşamına ve dayanışmaya dayalı sistem'],
+    answers: [
+      'kantonların ve komünlerin ortak kurucu metni',
+      'toplumun kendini koruma ve örgütleme hakkı',
+      'yerel özerkliğe sahip idari ve toplumsal birim',
+      'komün yaşamına ve dayanışmaya dayalı sistem',
+    ],
     correctAnswer: 'kantonların ve komünlerin ortak kurucu metni',
-    explanation: '\'sosyal sözleşme\' → kantonların ve komünlerin ortak kurucu metni.',
+    explanation:
+        '\'sosyal sözleşme\' → kantonların ve komünlerin ortak kurucu metni.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11560',
@@ -8952,119 +11677,187 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'toplumsal cinsiyet\' Paradigma bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'toplumsal cinsiyet\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'toplumsal cinsiyet\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11583',
     category: 'Paradigma',
     prompt: '\'eş başkanlık\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['yönetim organlarında kadın-erkek eşit temsil sistemi', 'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle', 'ortak vatanda çok kültürlü ve eşitlikçi birliktelik', 'toplumun bir arada yaşama ilkelerini belirleyen belge'],
+    answers: [
+      'yönetim organlarında kadın-erkek eşit temsil sistemi',
+      'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
+      'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
+      'toplumun bir arada yaşama ilkelerini belirleyen belge',
+    ],
     correctAnswer: 'yönetim organlarında kadın-erkek eşit temsil sistemi',
-    explanation: '\'eş başkanlık\' → yönetim organlarında kadın-erkek eşit temsil sistemi.',
+    explanation:
+        '\'eş başkanlık\' → yönetim organlarında kadın-erkek eşit temsil sistemi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11584',
     category: 'Paradigma',
     prompt: '\'komün\' kavramı neyi karşılar?',
-    answers: ['komünlerin üstünde yer alan koordinasyon ve karar organı', 'tekelci olmayan, topluma hizmet eden bilim anlayışı', 'toplumun en küçük ve doğrudan katılımcı yönetim birimi', 'toplumun kendi kaderi hakkında söz ve karar sahibi olması'],
+    answers: [
+      'komünlerin üstünde yer alan koordinasyon ve karar organı',
+      'tekelci olmayan, topluma hizmet eden bilim anlayışı',
+      'toplumun en küçük ve doğrudan katılımcı yönetim birimi',
+      'toplumun kendi kaderi hakkında söz ve karar sahibi olması',
+    ],
     correctAnswer: 'toplumun en küçük ve doğrudan katılımcı yönetim birimi',
-    explanation: '\'komün\' → toplumun en küçük ve doğrudan katılımcı yönetim birimi.',
+    explanation:
+        '\'komün\' → toplumun en küçük ve doğrudan katılımcı yönetim birimi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11587',
     category: 'Paradigma',
     prompt: '\'cinsiyet özgürlükçü\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke', 'Yerel toplumun kendi karar süreçlerine katılması', 'kâr amaçlı doğayı tahrip eden sanayileşme modeli', 'kapitalizmin kâr ve sömürü mantığına karşı duruş'],
+    answers: [
+      'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
+      'Yerel toplumun kendi karar süreçlerine katılması',
+      'kâr amaçlı doğayı tahrip eden sanayileşme modeli',
+      'kapitalizmin kâr ve sömürü mantığına karşı duruş',
+    ],
     correctAnswer: 'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
-    explanation: '\'cinsiyet özgürlükçü\' → cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke.',
+    explanation:
+        '\'cinsiyet özgürlükçü\' → cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11588',
     category: 'Paradigma',
     prompt: 'Paradigma alanında \'ahlaki güç\' neyi ifade eder?',
-    answers: ['tekelci olmayan, topluma hizmet eden bilim anlayışı', 'yasalara gerek kalmadan toplumun kendini yönetebilmesi', 'yönetim organlarında kadın-erkek eşit temsil sistemi', 'halkın doğrudan yönetime ve karar süreçlerine katılımı'],
+    answers: [
+      'tekelci olmayan, topluma hizmet eden bilim anlayışı',
+      'yasalara gerek kalmadan toplumun kendini yönetebilmesi',
+      'yönetim organlarında kadın-erkek eşit temsil sistemi',
+      'halkın doğrudan yönetime ve karar süreçlerine katılımı',
+    ],
     correctAnswer: 'yasalara gerek kalmadan toplumun kendini yönetebilmesi',
-    explanation: '\'ahlaki güç\' → yasalara gerek kalmadan toplumun kendini yönetebilmesi.',
+    explanation:
+        '\'ahlaki güç\' → yasalara gerek kalmadan toplumun kendini yönetebilmesi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11591',
     category: 'Paradigma',
     prompt: '\'ataerkillik\' dendiğinde kastedilen nedir?',
-    answers: ['erkeği egemen kılan, kadını ezen toplumsal yapı', 'halkın temsilciler olmadan doğrudan karar alması', 'Kimliklerin devlet zoru olmadan birlikteliğini', 'Yerel toplumun kendi karar süreçlerine katılması'],
+    answers: [
+      'erkeği egemen kılan, kadını ezen toplumsal yapı',
+      'halkın temsilciler olmadan doğrudan karar alması',
+      'Kimliklerin devlet zoru olmadan birlikteliğini',
+      'Yerel toplumun kendi karar süreçlerine katılması',
+    ],
     correctAnswer: 'erkeği egemen kılan, kadını ezen toplumsal yapı',
-    explanation: '\'ataerkillik\' → erkeği egemen kılan, kadını ezen toplumsal yapı.',
+    explanation:
+        '\'ataerkillik\' → erkeği egemen kılan, kadını ezen toplumsal yapı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11597',
     category: 'Paradigma',
     prompt: '\'patriyarka eleştirisi\' ile kastedilen doğru nedir?',
-    answers: ['erkek egemen sistemin yapısını deşifre etme', 'devletçi olmayan, tabana dayalı federasyon', 'toplumun kadın ve erkeğe biçtiği yapay roller', 'Biri çoğul-gönüllü, diğeri tekçi-zorunludur'],
+    answers: [
+      'erkek egemen sistemin yapısını deşifre etme',
+      'devletçi olmayan, tabana dayalı federasyon',
+      'toplumun kadın ve erkeğe biçtiği yapay roller',
+      'Biri çoğul-gönüllü, diğeri tekçi-zorunludur',
+    ],
     correctAnswer: 'erkek egemen sistemin yapısını deşifre etme',
-    explanation: '\'patriyarka eleştirisi\' → erkek egemen sistemin yapısını deşifre etme.',
+    explanation:
+        '\'patriyarka eleştirisi\' → erkek egemen sistemin yapısını deşifre etme.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11599',
     category: 'Paradigma',
     prompt: '\'komünal ekonomi\' kavramı neyi karşılar?',
-    answers: ['sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi', 'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi', 'halkın temsilciler olmadan doğrudan karar alması', 'Sadece sembolik değil, örgütsel ve kurumsal düzeyde'],
+    answers: [
+      'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
+      'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi',
+      'halkın temsilciler olmadan doğrudan karar alması',
+      'Sadece sembolik değil, örgütsel ve kurumsal düzeyde',
+    ],
     correctAnswer: 'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi',
-    explanation: '\'komünal ekonomi\' → kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi.',
+    explanation:
+        '\'komünal ekonomi\' → kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11605',
     category: 'Paradigma',
-    prompt: '\'demokratik konfederalizm\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['Doğayı tahrip eden endüstriyalizm ve kâr odaklı büyümeyi', 'toplumun en küçük ve doğrudan katılımcı yönetim birimi', 'devlet dışı toplumsal yönetim modeli', 'Toplum ile doğa arasında uyumlu, sürdürülebilir bir ilişkiyi'],
+    prompt:
+        '\'demokratik konfederalizm\' hakkında doğru olan seçenek hangisidir?',
+    answers: [
+      'Doğayı tahrip eden endüstriyalizm ve kâr odaklı büyümeyi',
+      'toplumun en küçük ve doğrudan katılımcı yönetim birimi',
+      'devlet dışı toplumsal yönetim modeli',
+      'Toplum ile doğa arasında uyumlu, sürdürülebilir bir ilişkiyi',
+    ],
     correctAnswer: 'devlet dışı toplumsal yönetim modeli',
-    explanation: '\'demokratik konfederalizm\' → devlet dışı toplumsal yönetim modeli.',
+    explanation:
+        '\'demokratik konfederalizm\' → devlet dışı toplumsal yönetim modeli.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11624',
     category: 'Paradigma',
     prompt: 'Paradigma alanında \'kadın özgürlüğü\' neyi ifade eder?',
-    answers: ['toplumsal özgürleşmenin en temel kriteri', 'Ekoloji, kadın ve demokrasi krizlerini', 'Kadın özgürlüğü, ekoloji ve demokrasi', 'alternatif bilim ve yaşam arayışının okulu'],
+    answers: [
+      'toplumsal özgürleşmenin en temel kriteri',
+      'Ekoloji, kadın ve demokrasi krizlerini',
+      'Kadın özgürlüğü, ekoloji ve demokrasi',
+      'alternatif bilim ve yaşam arayışının okulu',
+    ],
     correctAnswer: 'toplumsal özgürleşmenin en temel kriteri',
-    explanation: '\'kadın özgürlüğü\' → toplumsal özgürleşmenin en temel kriteri.',
+    explanation:
+        '\'kadın özgürlüğü\' → toplumsal özgürleşmenin en temel kriteri.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11649',
     category: 'Paradigma',
     prompt: '\'meclis\' için geçerli tanım hangisidir?',
-    answers: ['komünlerin üstünde yer alan koordinasyon ve karar organı', 'halkın doğrudan yönetime ve karar süreçlerine katılımı', 'yasalara gerek kalmadan toplumun kendini yönetebilmesi', 'tek tipleştirici, sınırları kutsallaştıran devlet yapısı'],
+    answers: [
+      'komünlerin üstünde yer alan koordinasyon ve karar organı',
+      'halkın doğrudan yönetime ve karar süreçlerine katılımı',
+      'yasalara gerek kalmadan toplumun kendini yönetebilmesi',
+      'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
+    ],
     correctAnswer: 'komünlerin üstünde yer alan koordinasyon ve karar organı',
-    explanation: '\'meclis\' → komünlerin üstünde yer alan koordinasyon ve karar organı.',
+    explanation:
+        '\'meclis\' → komünlerin üstünde yer alan koordinasyon ve karar organı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11655',
     category: 'Paradigma',
     prompt: '\'demokratik siyaset\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['komünlerin üstünde yer alan koordinasyon ve karar organı', 'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim', 'halkın doğrudan yönetime ve karar süreçlerine katılımı', 'tekelci olmayan, topluma hizmet eden bilim anlayışı'],
+    answers: [
+      'komünlerin üstünde yer alan koordinasyon ve karar organı',
+      'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim',
+      'halkın doğrudan yönetime ve karar süreçlerine katılımı',
+      'tekelci olmayan, topluma hizmet eden bilim anlayışı',
+    ],
     correctAnswer: 'halkın doğrudan yönetime ve karar süreçlerine katılımı',
-    explanation: '\'demokratik siyaset\' → halkın doğrudan yönetime ve karar süreçlerine katılımı.',
+    explanation:
+        '\'demokratik siyaset\' → halkın doğrudan yönetime ve karar süreçlerine katılımı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11695',
@@ -9072,119 +11865,184 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Yerel meclis\' Paradigma alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Yerel meclis\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Yerel meclis\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11713',
     category: 'Paradigma',
     prompt: '\'ahlaki-politik toplum\' doğru şekilde nasıl açıklanır?',
-    answers: ['devletçi olmayan, halkların komünal gelişim çizgisi', 'ortak vatanda çok kültürlü ve eşitlikçi birliktelik', 'kendi kararlarını alan, etik değerlere sahip toplum', 'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme'],
+    answers: [
+      'devletçi olmayan, halkların komünal gelişim çizgisi',
+      'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
+      'kendi kararlarını alan, etik değerlere sahip toplum',
+      'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme',
+    ],
     correctAnswer: 'kendi kararlarını alan, etik değerlere sahip toplum',
-    explanation: '\'ahlaki-politik toplum\' → kendi kararlarını alan, etik değerlere sahip toplum.',
+    explanation:
+        '\'ahlaki-politik toplum\' → kendi kararlarını alan, etik değerlere sahip toplum.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11715',
     category: 'Paradigma',
     prompt: 'Şıklardan hangisi \'pozitivizm\' anlamına gelir?',
-    answers: ['Toplum ile doğa arasında uyumlu, sürdürülebilir bir ilişkiyi', 'sadece maddi olguları kabul eden, dogmatik bilim anlayışı', 'Kadın özgürlüğünü toplumsal özgürlüğün temeli görmeyi', 'toplumun kendi kaderi hakkında söz ve karar sahibi olması'],
+    answers: [
+      'Toplum ile doğa arasında uyumlu, sürdürülebilir bir ilişkiyi',
+      'sadece maddi olguları kabul eden, dogmatik bilim anlayışı',
+      'Kadın özgürlüğünü toplumsal özgürlüğün temeli görmeyi',
+      'toplumun kendi kaderi hakkında söz ve karar sahibi olması',
+    ],
     correctAnswer: 'sadece maddi olguları kabul eden, dogmatik bilim anlayışı',
-    explanation: '\'pozitivizm\' → sadece maddi olguları kabul eden, dogmatik bilim anlayışı.',
+    explanation:
+        '\'pozitivizm\' → sadece maddi olguları kabul eden, dogmatik bilim anlayışı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11727',
     category: 'Paradigma',
     prompt: '\'demokratik komünalizm\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['kantonların ve komünlerin ortak kurucu metni', 'komün yaşamına ve dayanışmaya dayalı sistem', 'Toplumun kendini koruma ve örgütleme hakkını', 'alternatif bilim ve yaşam arayışının okulu'],
+    answers: [
+      'kantonların ve komünlerin ortak kurucu metni',
+      'komün yaşamına ve dayanışmaya dayalı sistem',
+      'Toplumun kendini koruma ve örgütleme hakkını',
+      'alternatif bilim ve yaşam arayışının okulu',
+    ],
     correctAnswer: 'komün yaşamına ve dayanışmaya dayalı sistem',
-    explanation: '\'demokratik komünalizm\' → komün yaşamına ve dayanışmaya dayalı sistem.',
+    explanation:
+        '\'demokratik komünalizm\' → komün yaşamına ve dayanışmaya dayalı sistem.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11728',
     category: 'Paradigma',
     prompt: 'Aşağıda \'ulus devlet\' için doğru olan hangisidir?',
-    answers: ['tek tipleştirici, sınırları kutsallaştıran devlet yapısı', 'toplumun kendi kendini koruma ve yürütme refleksidir', 'komünlerin üstünde yer alan koordinasyon ve karar organı', 'halkın doğrudan yönetime ve karar süreçlerine katılımı'],
+    answers: [
+      'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
+      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'komünlerin üstünde yer alan koordinasyon ve karar organı',
+      'halkın doğrudan yönetime ve karar süreçlerine katılımı',
+    ],
     correctAnswer: 'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
-    explanation: '\'ulus devlet\' → tek tipleştirici, sınırları kutsallaştıran devlet yapısı.',
+    explanation:
+        '\'ulus devlet\' → tek tipleştirici, sınırları kutsallaştıran devlet yapısı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11738',
     category: 'Paradigma',
-    prompt: '\'Demokratik bilim\', Paradigma alanında bilinen gerçek bir kavramdır.',
+    prompt:
+        '\'Demokratik bilim\', Paradigma alanında bilinen gerçek bir kavramdır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Demokratik bilim\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Demokratik bilim\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11740',
     category: 'Paradigma',
     prompt: 'Hangisi \'cinsiyet özgürlükçü\' tanımına uyar?',
-    answers: ['mahalle ve köylerde halkın kararlar aldığı kurul', 'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke', 'doğayı sömürmeyen, onunla uyumlu yaşayan toplum', 'erkeği egemen kılan, kadını ezen toplumsal yapı'],
+    answers: [
+      'mahalle ve köylerde halkın kararlar aldığı kurul',
+      'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
+      'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
+      'erkeği egemen kılan, kadını ezen toplumsal yapı',
+    ],
     correctAnswer: 'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
-    explanation: '\'cinsiyet özgürlükçü\' → cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke.',
+    explanation:
+        '\'cinsiyet özgürlükçü\' → cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11746',
     category: 'Paradigma',
     prompt: '\'demokratik siyaset\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['kendi kararlarını alan, etik değerlere sahip toplum', 'halkın doğrudan yönetime ve karar süreçlerine katılımı', 'devletçi olmayan, halkların komünal gelişim çizgisi', 'sadece maddi olguları kabul eden, dogmatik bilim anlayışı'],
+    answers: [
+      'kendi kararlarını alan, etik değerlere sahip toplum',
+      'halkın doğrudan yönetime ve karar süreçlerine katılımı',
+      'devletçi olmayan, halkların komünal gelişim çizgisi',
+      'sadece maddi olguları kabul eden, dogmatik bilim anlayışı',
+    ],
     correctAnswer: 'halkın doğrudan yönetime ve karar süreçlerine katılımı',
-    explanation: '\'demokratik siyaset\' → halkın doğrudan yönetime ve karar süreçlerine katılımı.',
+    explanation:
+        '\'demokratik siyaset\' → halkın doğrudan yönetime ve karar süreçlerine katılımı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11779',
     category: 'Paradigma',
-    prompt: 'Paradigma için \'kapitalist modernite\' hakkında doğru seçenek hangisidir?',
-    answers: ['endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü', 'erkeği egemen kılan, kadını ezen toplumsal yapı', 'doğayı sömürmeyen, onunla uyumlu yaşayan toplum', 'mahalle ve köylerde halkın kararlar aldığı kurul'],
+    prompt:
+        'Paradigma için \'kapitalist modernite\' hakkında doğru seçenek hangisidir?',
+    answers: [
+      'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
+      'erkeği egemen kılan, kadını ezen toplumsal yapı',
+      'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
+      'mahalle ve köylerde halkın kararlar aldığı kurul',
+    ],
     correctAnswer: 'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
-    explanation: '\'kapitalist modernite\' → endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü.',
+    explanation:
+        '\'kapitalist modernite\' → endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11782',
     category: 'Paradigma',
-    prompt: 'Hangisi Paradigma içinde \'tekelcilik\' kavramını doğru yerleştirir?',
-    answers: ['devletçi olmayan, tabana dayalı federasyon', 'toplumun kadın ve erkeğe biçtiği yapay roller', 'economic and political centralization crisis', 'alternatif bilim ve yaşam arayışının okulu'],
+    prompt:
+        'Hangisi Paradigma içinde \'tekelcilik\' kavramını doğru yerleştirir?',
+    answers: [
+      'devletçi olmayan, tabana dayalı federasyon',
+      'toplumun kadın ve erkeğe biçtiği yapay roller',
+      'economic and political centralization crisis',
+      'alternatif bilim ve yaşam arayışının okulu',
+    ],
     correctAnswer: 'economic and political centralization crisis',
-    explanation: '\'tekelcilik\' → economic and political centralization crisis.',
+    explanation:
+        '\'tekelcilik\' → economic and political centralization crisis.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11789',
     category: 'Paradigma',
     prompt: '\'demokratik modernite akademisi\' konusunda hangisi doğrudur?',
-    answers: ['toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi', 'alternatif bilim ve yaşam arayışının okulu', 'tek tipleştirici, sınırları kutsallaştıran devlet yapısı', 'halkın doğrudan yönetime ve karar süreçlerine katılımı'],
+    answers: [
+      'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi',
+      'alternatif bilim ve yaşam arayışının okulu',
+      'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
+      'halkın doğrudan yönetime ve karar süreçlerine katılımı',
+    ],
     correctAnswer: 'alternatif bilim ve yaşam arayışının okulu',
-    explanation: '\'demokratik modernite akademisi\' → alternatif bilim ve yaşam arayışının okulu.',
+    explanation:
+        '\'demokratik modernite akademisi\' → alternatif bilim ve yaşam arayışının okulu.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11792',
     category: 'Paradigma',
     prompt: '\'demokratik bilim\' konusunda hangisi doğrudur?',
-    answers: ['tekelci olmayan, topluma hizmet eden bilim anlayışı', 'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi', 'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle', 'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme'],
+    answers: [
+      'tekelci olmayan, topluma hizmet eden bilim anlayışı',
+      'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
+      'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
+      'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme',
+    ],
     correctAnswer: 'tekelci olmayan, topluma hizmet eden bilim anlayışı',
-    explanation: '\'demokratik bilim\' → tekelci olmayan, topluma hizmet eden bilim anlayışı.',
+    explanation:
+        '\'demokratik bilim\' → tekelci olmayan, topluma hizmet eden bilim anlayışı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11809',
@@ -9192,269 +12050,400 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Paradigma çerçevesinde \'Toplumsal ekoloji\' bilinen bir konudur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Toplumsal ekoloji\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Toplumsal ekoloji\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11813',
     category: 'Paradigma',
     prompt: '\'demokratik ulus\' için geçerli tanım hangisidir?',
-    answers: ['Doğayı yalnızca sömürü nesnesi olarak görmemesiyle', 'ortak vatanda çok kültürlü ve eşitlikçi birliktelik', 'toplumun bir arada yaşama ilkelerini belirleyen belge', 'tekelci olmayan, topluma hizmet eden bilim anlayışı'],
+    answers: [
+      'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
+      'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
+      'toplumun bir arada yaşama ilkelerini belirleyen belge',
+      'tekelci olmayan, topluma hizmet eden bilim anlayışı',
+    ],
     correctAnswer: 'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
-    explanation: '\'demokratik ulus\' → ortak vatanda çok kültürlü ve eşitlikçi birliktelik.',
+    explanation:
+        '\'demokratik ulus\' → ortak vatanda çok kültürlü ve eşitlikçi birliktelik.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11820',
     category: 'Paradigma',
     prompt: '\'sivil toplum\', Paradigma konusunda neyi anlatır?',
-    answers: ['toprağın ve araçların topluma ait olması', 'komünal ekonominin temel dayanışma birimi', 'devlet dışı, toplumsal örgütlenme alanları', 'doğayla uyumlu, geri dönüşümlü üretim tarzı'],
+    answers: [
+      'toprağın ve araçların topluma ait olması',
+      'komünal ekonominin temel dayanışma birimi',
+      'devlet dışı, toplumsal örgütlenme alanları',
+      'doğayla uyumlu, geri dönüşümlü üretim tarzı',
+    ],
     correctAnswer: 'devlet dışı, toplumsal örgütlenme alanları',
-    explanation: '\'sivil toplum\' → devlet dışı, toplumsal örgütlenme alanları.',
+    explanation:
+        '\'sivil toplum\' → devlet dışı, toplumsal örgütlenme alanları.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11838',
     category: 'Paradigma',
     prompt: '\'demokratik uygarlık\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi', 'Eğitim uygulaması için güvenli, analitik ve demokratik öğrenme amaçlandığı için', 'Toplum-doğa ilişkisini iktidar ve ekonomi eleştirisiyle birlikte ele aldığı için', 'devletçi olmayan, halkların komünal gelişim çizgisi'],
+    answers: [
+      'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi',
+      'Eğitim uygulaması için güvenli, analitik ve demokratik öğrenme amaçlandığı için',
+      'Toplum-doğa ilişkisini iktidar ve ekonomi eleştirisiyle birlikte ele aldığı için',
+      'devletçi olmayan, halkların komünal gelişim çizgisi',
+    ],
     correctAnswer: 'devletçi olmayan, halkların komünal gelişim çizgisi',
-    explanation: '\'demokratik uygarlık\' → devletçi olmayan, halkların komünal gelişim çizgisi.',
+    explanation:
+        '\'demokratik uygarlık\' → devletçi olmayan, halkların komünal gelişim çizgisi.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11841',
     category: 'Paradigma',
-    prompt: 'Paradigma çalışmalarında \'demokratik uygarlık\' ele alınan konulardandır.',
+    prompt:
+        'Paradigma çalışmalarında \'demokratik uygarlık\' ele alınan konulardandır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'demokratik uygarlık\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'demokratik uygarlık\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11846',
     category: 'Paradigma',
     prompt: '\'demokratik kanton\' kavramı neyi karşılar?',
-    answers: ['yerel özerkliğe sahip idari ve toplumsal birim', 'Dünya çapında kadın özgürlüğü sembolü olmuştur', 'erkeği egemen kılan, kadını ezen toplumsal yapı', 'kantonların ve komünlerin ortak kurucu metni'],
+    answers: [
+      'yerel özerkliğe sahip idari ve toplumsal birim',
+      'Dünya çapında kadın özgürlüğü sembolü olmuştur',
+      'erkeği egemen kılan, kadını ezen toplumsal yapı',
+      'kantonların ve komünlerin ortak kurucu metni',
+    ],
     correctAnswer: 'yerel özerkliğe sahip idari ve toplumsal birim',
-    explanation: '\'demokratik kanton\' → yerel özerkliğe sahip idari ve toplumsal birim.',
+    explanation:
+        '\'demokratik kanton\' → yerel özerkliğe sahip idari ve toplumsal birim.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11849',
     category: 'Paradigma',
-    prompt: 'Paradigma alanında \'Patriyarka eleştirisi\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Paradigma alanında \'Patriyarka eleştirisi\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Patriyarka eleştirisi\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Patriyarka eleştirisi\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11864',
     category: 'Paradigma',
     prompt: 'Hangisi \'demokratik konfederal\' tanımına uyar?',
-    answers: ['Toplumun kendini koruma ve örgütleme hakkını', 'devletçi olmayan, tabana dayalı federasyon', 'toplumsal özgürleşmenin en temel kriteri', 'erkek egemen sistemin yapısını deşifre etme'],
+    answers: [
+      'Toplumun kendini koruma ve örgütleme hakkını',
+      'devletçi olmayan, tabana dayalı federasyon',
+      'toplumsal özgürleşmenin en temel kriteri',
+      'erkek egemen sistemin yapısını deşifre etme',
+    ],
     correctAnswer: 'devletçi olmayan, tabana dayalı federasyon',
-    explanation: '\'demokratik konfederal\' → devletçi olmayan, tabana dayalı federasyon.',
+    explanation:
+        '\'demokratik konfederal\' → devletçi olmayan, tabana dayalı federasyon.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11870',
     category: 'Paradigma',
-    prompt: 'Hangisi Paradigma içinde \'toplumsal ekoloji\' kavramını doğru yerleştirir?',
-    answers: ['tek tipleştirici, sınırları kutsallaştıran devlet yapısı', 'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim', 'Sadece sembolik değil, örgütsel ve kurumsal düzeyde', 'toplumun en küçük ve doğrudan katılımcı yönetim birimi'],
+    prompt:
+        'Hangisi Paradigma içinde \'toplumsal ekoloji\' kavramını doğru yerleştirir?',
+    answers: [
+      'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
+      'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim',
+      'Sadece sembolik değil, örgütsel ve kurumsal düzeyde',
+      'toplumun en küçük ve doğrudan katılımcı yönetim birimi',
+    ],
     correctAnswer: 'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim',
-    explanation: '\'toplumsal ekoloji\' → doğa tahribatının hiyerarşiyle ilişkisini kuran bilim.',
+    explanation:
+        '\'toplumsal ekoloji\' → doğa tahribatının hiyerarşiyle ilişkisini kuran bilim.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11886',
     category: 'Paradigma',
     prompt: '\'toplumsal sözleşme\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['toplumun bir arada yaşama ilkelerini belirleyen belge', 'tek tipleştirici, sınırları kutsallaştıran devlet yapısı', 'Kadın özgürlüğünü toplumsal özgürlüğün temeli görmeyi', 'yasalara gerek kalmadan toplumun kendini yönetebilmesi'],
+    answers: [
+      'toplumun bir arada yaşama ilkelerini belirleyen belge',
+      'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
+      'Kadın özgürlüğünü toplumsal özgürlüğün temeli görmeyi',
+      'yasalara gerek kalmadan toplumun kendini yönetebilmesi',
+    ],
     correctAnswer: 'toplumun bir arada yaşama ilkelerini belirleyen belge',
-    explanation: '\'toplumsal sözleşme\' → toplumun bir arada yaşama ilkelerini belirleyen belge.',
+    explanation:
+        '\'toplumsal sözleşme\' → toplumun bir arada yaşama ilkelerini belirleyen belge.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11892',
     category: 'Paradigma',
-    prompt: 'Paradigma çalışmalarında \'Demokratik siyaset\' ele alınan konulardandır.',
+    prompt:
+        'Paradigma çalışmalarında \'Demokratik siyaset\' ele alınan konulardandır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Demokratik siyaset\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Demokratik siyaset\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11893',
     category: 'Paradigma',
     prompt: 'Aşağıdakilerden hangisi \'ekolojik toplum\' kavramını açıklar?',
-    answers: ['doğayı sömürmeyen, onunla uyumlu yaşayan toplum', 'Kimliklerin devlet zoru olmadan birlikteliğini', 'farklı ezilen kesimlerin eşitlikçi birlikteliği', 'Dünya çapında kadın özgürlüğü sembolü olmuştur'],
+    answers: [
+      'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
+      'Kimliklerin devlet zoru olmadan birlikteliğini',
+      'farklı ezilen kesimlerin eşitlikçi birlikteliği',
+      'Dünya çapında kadın özgürlüğü sembolü olmuştur',
+    ],
     correctAnswer: 'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
-    explanation: '\'ekolojik toplum\' → doğayı sömürmeyen, onunla uyumlu yaşayan toplum.',
+    explanation:
+        '\'ekolojik toplum\' → doğayı sömürmeyen, onunla uyumlu yaşayan toplum.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11909',
     category: 'Paradigma',
-    prompt: '\'Demokratik konfederal\' Paradigma bağlamında kullanılan geçerli bir terimdir.',
+    prompt:
+        '\'Demokratik konfederal\' Paradigma bağlamında kullanılan geçerli bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Demokratik konfederal\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Demokratik konfederal\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11912',
     category: 'Paradigma',
-    prompt: 'Paradigma çalışmalarında \'doğrudan demokrasi\' ele alınan konulardandır.',
+    prompt:
+        'Paradigma çalışmalarında \'doğrudan demokrasi\' ele alınan konulardandır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'doğrudan demokrasi\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'doğrudan demokrasi\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11917',
     category: 'Paradigma',
     prompt: 'Aşağıdakilerden hangisi \'eş başkanlık\' kavramını açıklar?',
-    answers: ['ortak vatanda çok kültürlü ve eşitlikçi birliktelik', 'insanın doğanın bir parçası olduğunu anlama durumu', 'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi', 'yönetim organlarında kadın-erkek eşit temsil sistemi'],
+    answers: [
+      'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
+      'insanın doğanın bir parçası olduğunu anlama durumu',
+      'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi',
+      'yönetim organlarında kadın-erkek eşit temsil sistemi',
+    ],
     correctAnswer: 'yönetim organlarında kadın-erkek eşit temsil sistemi',
-    explanation: '\'eş başkanlık\' → yönetim organlarında kadın-erkek eşit temsil sistemi.',
+    explanation:
+        '\'eş başkanlık\' → yönetim organlarında kadın-erkek eşit temsil sistemi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11948',
     category: 'Paradigma',
     prompt: '\'ulus devlet\' için en isabetli açıklama hangisidir?',
-    answers: ['toplumun en küçük ve doğrudan katılımcı yönetim birimi', 'Toplum ile doğa arasında uyumlu, sürdürülebilir bir ilişkiyi', 'tek tipleştirici, sınırları kutsallaştıran devlet yapısı', 'toplumun kendi kendini koruma ve yürütme refleksidir'],
+    answers: [
+      'toplumun en küçük ve doğrudan katılımcı yönetim birimi',
+      'Toplum ile doğa arasında uyumlu, sürdürülebilir bir ilişkiyi',
+      'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
+      'toplumun kendi kendini koruma ve yürütme refleksidir',
+    ],
     correctAnswer: 'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
-    explanation: '\'ulus devlet\' → tek tipleştirici, sınırları kutsallaştıran devlet yapısı.',
+    explanation:
+        '\'ulus devlet\' → tek tipleştirici, sınırları kutsallaştıran devlet yapısı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11953',
     category: 'Paradigma',
     prompt: '\'pozitivizm\' nasıl tanımlanır?',
-    answers: ['komünlerin üstünde yer alan koordinasyon ve karar organı', 'sadece maddi olguları kabul eden, dogmatik bilim anlayışı', 'toplumun kendi kendini koruma ve yürütme refleksidir', 'toplumun en küçük ve doğrudan katılımcı yönetim birimi'],
+    answers: [
+      'komünlerin üstünde yer alan koordinasyon ve karar organı',
+      'sadece maddi olguları kabul eden, dogmatik bilim anlayışı',
+      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'toplumun en küçük ve doğrudan katılımcı yönetim birimi',
+    ],
     correctAnswer: 'sadece maddi olguları kabul eden, dogmatik bilim anlayışı',
-    explanation: '\'pozitivizm\' → sadece maddi olguları kabul eden, dogmatik bilim anlayışı.',
+    explanation:
+        '\'pozitivizm\' → sadece maddi olguları kabul eden, dogmatik bilim anlayışı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11954',
     category: 'Paradigma',
     prompt: 'Hangisi \'demokratik uygarlık\' tanımına uyar?',
-    answers: ['doğa tahribatının hiyerarşiyle ilişkisini kuran bilim', 'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme', 'devletçi olmayan, halkların komünal gelişim çizgisi', 'ortak vatanda çok kültürlü ve eşitlikçi birliktelik'],
+    answers: [
+      'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim',
+      'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme',
+      'devletçi olmayan, halkların komünal gelişim çizgisi',
+      'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
+    ],
     correctAnswer: 'devletçi olmayan, halkların komünal gelişim çizgisi',
-    explanation: '\'demokratik uygarlık\' → devletçi olmayan, halkların komünal gelişim çizgisi.',
+    explanation:
+        '\'demokratik uygarlık\' → devletçi olmayan, halkların komünal gelişim çizgisi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11956',
     category: 'Paradigma',
     prompt: '\'hiyerarşi\' için geçerli tanım hangisidir?',
-    answers: ['sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi', 'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme', 'toplumun kendi kendini koruma ve yürütme refleksidir', 'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi'],
+    answers: [
+      'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
+      'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme',
+      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi',
+    ],
     correctAnswer: 'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme',
-    explanation: '\'hiyerarşi\' → toplumda alt-üst ilişkisi kuran baskıcı örgütlenme.',
+    explanation:
+        '\'hiyerarşi\' → toplumda alt-üst ilişkisi kuran baskıcı örgütlenme.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11957',
     category: 'Paradigma',
     prompt: '\'toplumsal cinsiyet\' dendiğinde kastedilen nedir?',
-    answers: ['economic and political centralization crisis', 'kapitalist moderniteye alternatif yaşam sistemi', 'toplumun kadın ve erkeğe biçtiği yapay roller', 'erkeği egemen kılan, kadını ezen toplumsal yapı'],
+    answers: [
+      'economic and political centralization crisis',
+      'kapitalist moderniteye alternatif yaşam sistemi',
+      'toplumun kadın ve erkeğe biçtiği yapay roller',
+      'erkeği egemen kılan, kadını ezen toplumsal yapı',
+    ],
     correctAnswer: 'toplumun kadın ve erkeğe biçtiği yapay roller',
-    explanation: '\'toplumsal cinsiyet\' → toplumun kadın ve erkeğe biçtiği yapay roller.',
+    explanation:
+        '\'toplumsal cinsiyet\' → toplumun kadın ve erkeğe biçtiği yapay roller.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11967',
     category: 'Paradigma',
-    prompt: 'Paradigma alanında \'Eş başkanlık\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Paradigma alanında \'Eş başkanlık\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Eş başkanlık\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_11996',
     category: 'Paradigma',
     prompt: '\'antikapitalizm\' neyi ifade eder?',
-    answers: ['Demokratik örgütlenmenin yalnızca merkezi devletle sınırlı olmadığını', 'kapitalizmin kâr ve sömürü mantığına karşı duruş', 'Kadın bilgisi/bilimi ve patriyarka eleştirisi etrafında gelişen yaklaşım', 'halkın doğrudan yönetime ve karar süreçlerine katılımı'],
+    answers: [
+      'Demokratik örgütlenmenin yalnızca merkezi devletle sınırlı olmadığını',
+      'kapitalizmin kâr ve sömürü mantığına karşı duruş',
+      'Kadın bilgisi/bilimi ve patriyarka eleştirisi etrafında gelişen yaklaşım',
+      'halkın doğrudan yönetime ve karar süreçlerine katılımı',
+    ],
     correctAnswer: 'kapitalizmin kâr ve sömürü mantığına karşı duruş',
-    explanation: '\'antikapitalizm\' → kapitalizmin kâr ve sömürü mantığına karşı duruş.',
+    explanation:
+        '\'antikapitalizm\' → kapitalizmin kâr ve sömürü mantığına karşı duruş.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_11999',
     category: 'Paradigma',
     prompt: '\'antikapitalizm\' için en isabetli açıklama hangisidir?',
-    answers: ['kâr amaçlı doğayı tahrip eden sanayileşme modeli', 'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke', 'kapitalizmin kâr ve sömürü mantığına karşı duruş', 'kapitalist moderniteye alternatif yaşam sistemi'],
+    answers: [
+      'kâr amaçlı doğayı tahrip eden sanayileşme modeli',
+      'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
+      'kapitalizmin kâr ve sömürü mantığına karşı duruş',
+      'kapitalist moderniteye alternatif yaşam sistemi',
+    ],
     correctAnswer: 'kapitalizmin kâr ve sömürü mantığına karşı duruş',
-    explanation: '\'antikapitalizm\' → kapitalizmin kâr ve sömürü mantığına karşı duruş.',
+    explanation:
+        '\'antikapitalizm\' → kapitalizmin kâr ve sömürü mantığına karşı duruş.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12000',
     category: 'Paradigma',
     prompt: 'Aşağıdakilerden hangisi \'sivil toplum\' kavramını açıklar?',
-    answers: ['devlet dışı, toplumsal örgütlenme alanları', 'Endüstriyalizm, kapitalizm ve ulus-devlet', 'Patriyarka (erkek egemenliği) eleştirisi', 'economic and political centralization crisis'],
+    answers: [
+      'devlet dışı, toplumsal örgütlenme alanları',
+      'Endüstriyalizm, kapitalizm ve ulus-devlet',
+      'Patriyarka (erkek egemenliği) eleştirisi',
+      'economic and political centralization crisis',
+    ],
     correctAnswer: 'devlet dışı, toplumsal örgütlenme alanları',
-    explanation: '\'sivil toplum\' → devlet dışı, toplumsal örgütlenme alanları.',
+    explanation:
+        '\'sivil toplum\' → devlet dışı, toplumsal örgütlenme alanları.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12006',
     category: 'Paradigma',
-    prompt: 'Paradigma alanında \'demokratik modernite akademisi\' neyi ifade eder?',
-    answers: ['komün yaşamına ve dayanışmaya dayalı sistem', 'toplumun kendini koruma ve örgütleme hakkı', 'alternatif bilim ve yaşam arayışının okulu', 'doğayla uyumlu, geri dönüşümlü üretim tarzı'],
+    prompt:
+        'Paradigma alanında \'demokratik modernite akademisi\' neyi ifade eder?',
+    answers: [
+      'komün yaşamına ve dayanışmaya dayalı sistem',
+      'toplumun kendini koruma ve örgütleme hakkı',
+      'alternatif bilim ve yaşam arayışının okulu',
+      'doğayla uyumlu, geri dönüşümlü üretim tarzı',
+    ],
     correctAnswer: 'alternatif bilim ve yaşam arayışının okulu',
-    explanation: '\'demokratik modernite akademisi\' → alternatif bilim ve yaşam arayışının okulu.',
+    explanation:
+        '\'demokratik modernite akademisi\' → alternatif bilim ve yaşam arayışının okulu.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12026',
     category: 'Paradigma',
-    prompt: '\'Kadın akademileri\' Paradigma bağlamında kullanılan geçerli bir terimdir.',
+    prompt:
+        '\'Kadın akademileri\' Paradigma bağlamında kullanılan geçerli bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Kadın akademileri\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Kadın akademileri\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12036',
     category: 'Paradigma',
-    prompt: 'Paradigma açısından \'endüstriyalizm\' için doğru ifade hangisidir?',
-    answers: ['kâr amaçlı doğayı tahrip eden sanayileşme modeli', 'Tahakküm ile doğa tahribatı arasındaki ilişkiyi', 'kapitalizmin kâr ve sömürü mantığına karşı duruş', 'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke'],
+    prompt:
+        'Paradigma açısından \'endüstriyalizm\' için doğru ifade hangisidir?',
+    answers: [
+      'kâr amaçlı doğayı tahrip eden sanayileşme modeli',
+      'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
+      'kapitalizmin kâr ve sömürü mantığına karşı duruş',
+      'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
+    ],
     correctAnswer: 'kâr amaçlı doğayı tahrip eden sanayileşme modeli',
-    explanation: '\'endüstriyalizm\' → kâr amaçlı doğayı tahrip eden sanayileşme modeli.',
+    explanation:
+        '\'endüstriyalizm\' → kâr amaçlı doğayı tahrip eden sanayileşme modeli.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12043',
@@ -9462,119 +12451,173 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Tekelcilik\' Paradigma alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Tekelcilik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Tekelcilik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12055',
     category: 'Paradigma',
     prompt: '\'kapitalist modernite\' ne anlama gelir?',
-    answers: ['endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü', 'kâr amaçlı doğayı tahrip eden sanayileşme modeli', 'kapitalizmin kâr ve sömürü mantığına karşı duruş', 'mahalle ve köylerde halkın kararlar aldığı kurul'],
+    answers: [
+      'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
+      'kâr amaçlı doğayı tahrip eden sanayileşme modeli',
+      'kapitalizmin kâr ve sömürü mantığına karşı duruş',
+      'mahalle ve köylerde halkın kararlar aldığı kurul',
+    ],
     correctAnswer: 'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
-    explanation: '\'kapitalist modernite\' → endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü.',
+    explanation:
+        '\'kapitalist modernite\' → endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12069',
     category: 'Paradigma',
     prompt: '\'komünal mülkiyet\' dendiğinde kastedilen nedir?',
-    answers: ['toprağın ve araçların topluma ait olması', 'toplumsal özgürleşmenin en temel kriteri', 'Kadın özgürlüğü, ekoloji ve demokrasi', 'erkek egemen sistemin yapısını deşifre etme'],
+    answers: [
+      'toprağın ve araçların topluma ait olması',
+      'toplumsal özgürleşmenin en temel kriteri',
+      'Kadın özgürlüğü, ekoloji ve demokrasi',
+      'erkek egemen sistemin yapısını deşifre etme',
+    ],
     correctAnswer: 'toprağın ve araçların topluma ait olması',
-    explanation: '\'komünal mülkiyet\' → toprağın ve araçların topluma ait olması.',
+    explanation:
+        '\'komünal mülkiyet\' → toprağın ve araçların topluma ait olması.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12073',
     category: 'Paradigma',
     prompt: '\'kadın akademileri\' konusunda hangisi doğrudur?',
-    answers: ['insanın doğanın bir parçası olduğunu anlama durumu', 'kadın bilincini ve jineolojiyi geliştiren okullar', 'kapitalizmin kâr ve sömürü mantığına karşı duruş', 'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi'],
+    answers: [
+      'insanın doğanın bir parçası olduğunu anlama durumu',
+      'kadın bilincini ve jineolojiyi geliştiren okullar',
+      'kapitalizmin kâr ve sömürü mantığına karşı duruş',
+      'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
+    ],
     correctAnswer: 'kadın bilincini ve jineolojiyi geliştiren okullar',
-    explanation: '\'kadın akademileri\' → kadın bilincini ve jineolojiyi geliştiren okullar.',
+    explanation:
+        '\'kadın akademileri\' → kadın bilincini ve jineolojiyi geliştiren okullar.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12082',
     category: 'Paradigma',
-    prompt: '\'demokratik konfederalizm\' Paradigma bağlamında kullanılan geçerli bir terimdir.',
+    prompt:
+        '\'demokratik konfederalizm\' Paradigma bağlamında kullanılan geçerli bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'demokratik konfederalizm\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'demokratik konfederalizm\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12096',
     category: 'Paradigma',
     prompt: '\'sosyal sözleşme\' kavramı neyi karşılar?',
-    answers: ['kantonların ve komünlerin ortak kurucu metni', 'Toplumun kendini koruma ve örgütleme hakkını', 'toplumun kadın ve erkeğe biçtiği yapay roller', 'devletçi olmayan, tabana dayalı federasyon'],
+    answers: [
+      'kantonların ve komünlerin ortak kurucu metni',
+      'Toplumun kendini koruma ve örgütleme hakkını',
+      'toplumun kadın ve erkeğe biçtiği yapay roller',
+      'devletçi olmayan, tabana dayalı federasyon',
+    ],
     correctAnswer: 'kantonların ve komünlerin ortak kurucu metni',
-    explanation: '\'sosyal sözleşme\' → kantonların ve komünlerin ortak kurucu metni.',
+    explanation:
+        '\'sosyal sözleşme\' → kantonların ve komünlerin ortak kurucu metni.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12100',
     category: 'Paradigma',
     prompt: 'Şıklardan hangisi \'kapitalist modernite\' anlamına gelir?',
-    answers: ['baskı ve sahiplenmeye dayanmayan eşit ortak yaşam', 'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü', 'halkın kendi kendini yönetme ve örgütleme biçimi', 'Tahakküm ile doğa tahribatı arasındaki ilişkiyi'],
+    answers: [
+      'baskı ve sahiplenmeye dayanmayan eşit ortak yaşam',
+      'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
+      'halkın kendi kendini yönetme ve örgütleme biçimi',
+      'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
+    ],
     correctAnswer: 'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
-    explanation: '\'kapitalist modernite\' → endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü.',
+    explanation:
+        '\'kapitalist modernite\' → endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12102',
     category: 'Paradigma',
     prompt: 'Hangisi \'ahlaki güç\' tanımına uyar?',
-    answers: ['Kadın özgürlüğünü toplumsal özgürlüğün temeli görmeyi', 'komünlerin üstünde yer alan koordinasyon ve karar organı', 'devletçi olmayan, halkların komünal gelişim çizgisi', 'yasalara gerek kalmadan toplumun kendini yönetebilmesi'],
+    answers: [
+      'Kadın özgürlüğünü toplumsal özgürlüğün temeli görmeyi',
+      'komünlerin üstünde yer alan koordinasyon ve karar organı',
+      'devletçi olmayan, halkların komünal gelişim çizgisi',
+      'yasalara gerek kalmadan toplumun kendini yönetebilmesi',
+    ],
     correctAnswer: 'yasalara gerek kalmadan toplumun kendini yönetebilmesi',
-    explanation: '\'ahlaki güç\' → yasalara gerek kalmadan toplumun kendini yönetebilmesi.',
+    explanation:
+        '\'ahlaki güç\' → yasalara gerek kalmadan toplumun kendini yönetebilmesi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12103',
     category: 'Paradigma',
-    prompt: '\'demokratik modernite\' Paradigma açısından anlamsız bir ifadedir.',
+    prompt:
+        '\'demokratik modernite\' Paradigma açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'demokratik modernite\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'demokratik modernite\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12118',
     category: 'Paradigma',
     prompt: '\'komün\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['toplumun en küçük ve doğrudan katılımcı yönetim birimi', 'tekelci olmayan, topluma hizmet eden bilim anlayışı', 'toplumun kendi kaderi hakkında söz ve karar sahibi olması', 'Kadın özgürlüğünü toplumsal özgürlüğün temeli görmeyi'],
+    answers: [
+      'toplumun en küçük ve doğrudan katılımcı yönetim birimi',
+      'tekelci olmayan, topluma hizmet eden bilim anlayışı',
+      'toplumun kendi kaderi hakkında söz ve karar sahibi olması',
+      'Kadın özgürlüğünü toplumsal özgürlüğün temeli görmeyi',
+    ],
     correctAnswer: 'toplumun en küçük ve doğrudan katılımcı yönetim birimi',
-    explanation: '\'komün\' → toplumun en küçük ve doğrudan katılımcı yönetim birimi.',
+    explanation:
+        '\'komün\' → toplumun en küçük ve doğrudan katılımcı yönetim birimi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12120',
     category: 'Paradigma',
-    prompt: '\'Endüstriyalizm\', Paradigma alanında bilinen gerçek bir kavramdır.',
+    prompt:
+        '\'Endüstriyalizm\', Paradigma alanında bilinen gerçek bir kavramdır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Endüstriyalizm\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12122',
     category: 'Paradigma',
     prompt: '\'ataerkillik\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke', 'tahakküm ve sömürünün olmadığı eşitlikçi düzen', 'Dünya çapında kadın özgürlüğü sembolü olmuştur', 'erkeği egemen kılan, kadını ezen toplumsal yapı'],
+    answers: [
+      'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
+      'tahakküm ve sömürünün olmadığı eşitlikçi düzen',
+      'Dünya çapında kadın özgürlüğü sembolü olmuştur',
+      'erkeği egemen kılan, kadını ezen toplumsal yapı',
+    ],
     correctAnswer: 'erkeği egemen kılan, kadını ezen toplumsal yapı',
-    explanation: '\'ataerkillik\' → erkeği egemen kılan, kadını ezen toplumsal yapı.',
+    explanation:
+        '\'ataerkillik\' → erkeği egemen kılan, kadını ezen toplumsal yapı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12126',
@@ -9584,67 +12627,98 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Sivil toplum\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12131',
     category: 'Paradigma',
     prompt: '\'özgür eş yaşam\' dendiğinde kastedilen nedir?',
-    answers: ['endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü', 'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi', 'baskı ve sahiplenmeye dayanmayan eşit ortak yaşam', 'kapitalizmin kâr ve sömürü mantığına karşı duruş'],
+    answers: [
+      'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
+      'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
+      'baskı ve sahiplenmeye dayanmayan eşit ortak yaşam',
+      'kapitalizmin kâr ve sömürü mantığına karşı duruş',
+    ],
     correctAnswer: 'baskı ve sahiplenmeye dayanmayan eşit ortak yaşam',
-    explanation: '\'özgür eş yaşam\' → baskı ve sahiplenmeye dayanmayan eşit ortak yaşam.',
+    explanation:
+        '\'özgür eş yaşam\' → baskı ve sahiplenmeye dayanmayan eşit ortak yaşam.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12133',
     category: 'Paradigma',
-    prompt: 'Paradigma çalışmalarında \'politikleşme\' ele alınan konulardandır.',
+    prompt:
+        'Paradigma çalışmalarında \'politikleşme\' ele alınan konulardandır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'politikleşme\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12138',
     category: 'Paradigma',
     prompt: '\'demokratik bilim\' doğru şekilde nasıl açıklanır?',
-    answers: ['toplumun kendi kendini koruma ve yürütme refleksidir', 'tekelci olmayan, topluma hizmet eden bilim anlayışı', 'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme', 'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi'],
+    answers: [
+      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'tekelci olmayan, topluma hizmet eden bilim anlayışı',
+      'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme',
+      'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi',
+    ],
     correctAnswer: 'tekelci olmayan, topluma hizmet eden bilim anlayışı',
-    explanation: '\'demokratik bilim\' → tekelci olmayan, topluma hizmet eden bilim anlayışı.',
+    explanation:
+        '\'demokratik bilim\' → tekelci olmayan, topluma hizmet eden bilim anlayışı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12156',
     category: 'Paradigma',
     prompt: '\'ulus devlet\' dendiğinde kastedilen nedir?',
-    answers: ['toplumun kendi kendini koruma ve yürütme refleksidir', 'tek tipleştirici, sınırları kutsallaştıran devlet yapısı', 'Toplum ile doğa arasında uyumlu, sürdürülebilir bir ilişkiyi', 'toplumun bir arada yaşama ilkelerini belirleyen belge'],
+    answers: [
+      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
+      'Toplum ile doğa arasında uyumlu, sürdürülebilir bir ilişkiyi',
+      'toplumun bir arada yaşama ilkelerini belirleyen belge',
+    ],
     correctAnswer: 'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
-    explanation: '\'ulus devlet\' → tek tipleştirici, sınırları kutsallaştıran devlet yapısı.',
+    explanation:
+        '\'ulus devlet\' → tek tipleştirici, sınırları kutsallaştıran devlet yapısı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12157',
     category: 'Paradigma',
     prompt: '\'kadın özgürlüğü\' doğru şekilde nasıl açıklanır?',
-    answers: ['toplumsal özgürleşmenin en temel kriteri', 'Toplumun doğrudan ve örgütlü katılımını', 'komünal ekonominin temel dayanışma birimi', 'erkek egemen sistemin yapısını deşifre etme'],
+    answers: [
+      'toplumsal özgürleşmenin en temel kriteri',
+      'Toplumun doğrudan ve örgütlü katılımını',
+      'komünal ekonominin temel dayanışma birimi',
+      'erkek egemen sistemin yapısını deşifre etme',
+    ],
     correctAnswer: 'toplumsal özgürleşmenin en temel kriteri',
-    explanation: '\'kadın özgürlüğü\' → toplumsal özgürleşmenin en temel kriteri.',
+    explanation:
+        '\'kadın özgürlüğü\' → toplumsal özgürleşmenin en temel kriteri.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12158',
     category: 'Paradigma',
     prompt: '\'cinsiyet özgürlükçü\' dendiğinde kastedilen nedir?',
-    answers: ['Tahakküm ile doğa tahribatı arasındaki ilişkiyi', 'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke', 'doğayı sömürmeyen, onunla uyumlu yaşayan toplum', 'erkeği egemen kılan, kadını ezen toplumsal yapı'],
+    answers: [
+      'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
+      'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
+      'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
+      'erkeği egemen kılan, kadını ezen toplumsal yapı',
+    ],
     correctAnswer: 'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
-    explanation: '\'cinsiyet özgürlükçü\' → cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke.',
+    explanation:
+        '\'cinsiyet özgürlükçü\' → cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12173',
@@ -9652,69 +12726,102 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'sosyal sözleşme\' Paradigma açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'sosyal sözleşme\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'sosyal sözleşme\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12193',
     category: 'Paradigma',
     prompt: '\'demokratik ulus\' kavramını doğru anlatan ifade hangisidir?',
-    answers: ['doğa tahribatının hiyerarşiyle ilişkisini kuran bilim', 'insanın doğanın bir parçası olduğunu anlama durumu', 'ortak vatanda çok kültürlü ve eşitlikçi birliktelik', 'toplumun kendi kendini koruma ve yürütme refleksidir'],
+    answers: [
+      'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim',
+      'insanın doğanın bir parçası olduğunu anlama durumu',
+      'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
+      'toplumun kendi kendini koruma ve yürütme refleksidir',
+    ],
     correctAnswer: 'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
-    explanation: '\'demokratik ulus\' → ortak vatanda çok kültürlü ve eşitlikçi birliktelik.',
+    explanation:
+        '\'demokratik ulus\' → ortak vatanda çok kültürlü ve eşitlikçi birliktelik.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12206',
     category: 'Paradigma',
     prompt: 'Hangisi \'demokratik ittifak\' tanımına uyar?',
-    answers: ['Tahakküm ile doğa tahribatı arasındaki ilişkiyi', 'tahakküm ve sömürünün olmadığı eşitlikçi düzen', 'Yerel toplumun kendi karar süreçlerine katılması', 'farklı ezilen kesimlerin eşitlikçi birlikteliği'],
+    answers: [
+      'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
+      'tahakküm ve sömürünün olmadığı eşitlikçi düzen',
+      'Yerel toplumun kendi karar süreçlerine katılması',
+      'farklı ezilen kesimlerin eşitlikçi birlikteliği',
+    ],
     correctAnswer: 'farklı ezilen kesimlerin eşitlikçi birlikteliği',
-    explanation: '\'demokratik ittifak\' → farklı ezilen kesimlerin eşitlikçi birlikteliği.',
+    explanation:
+        '\'demokratik ittifak\' → farklı ezilen kesimlerin eşitlikçi birlikteliği.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12219',
     category: 'Paradigma',
     prompt: '\'ahlaki-politik toplum\' hakkında bilinen doğru nedir?',
-    answers: ['toplumun bir arada yaşama ilkelerini belirleyen belge', 'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi', 'kendi kararlarını alan, etik değerlere sahip toplum', 'tekelci olmayan, topluma hizmet eden bilim anlayışı'],
+    answers: [
+      'toplumun bir arada yaşama ilkelerini belirleyen belge',
+      'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
+      'kendi kararlarını alan, etik değerlere sahip toplum',
+      'tekelci olmayan, topluma hizmet eden bilim anlayışı',
+    ],
     correctAnswer: 'kendi kararlarını alan, etik değerlere sahip toplum',
-    explanation: '\'ahlaki-politik toplum\' → kendi kararlarını alan, etik değerlere sahip toplum.',
+    explanation:
+        '\'ahlaki-politik toplum\' → kendi kararlarını alan, etik değerlere sahip toplum.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12233',
     category: 'Paradigma',
-    prompt: '\'hiyerarşisiz toplum\', Paradigma alanında bilinen gerçek bir kavramdır.',
+    prompt:
+        '\'hiyerarşisiz toplum\', Paradigma alanında bilinen gerçek bir kavramdır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'hiyerarşisiz toplum\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'hiyerarşisiz toplum\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12236',
     category: 'Paradigma',
     prompt: '\'endüstriyalizm\' kavramı neyi karşılar?',
-    answers: ['kâr amaçlı doğayı tahrip eden sanayileşme modeli', 'mahalle ve köylerde halkın kararlar aldığı kurul', 'doğayı sömürmeyen, onunla uyumlu yaşayan toplum', 'halkın kendi kendini yönetme ve örgütleme biçimi'],
+    answers: [
+      'kâr amaçlı doğayı tahrip eden sanayileşme modeli',
+      'mahalle ve köylerde halkın kararlar aldığı kurul',
+      'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
+      'halkın kendi kendini yönetme ve örgütleme biçimi',
+    ],
     correctAnswer: 'kâr amaçlı doğayı tahrip eden sanayileşme modeli',
-    explanation: '\'endüstriyalizm\' → kâr amaçlı doğayı tahrip eden sanayileşme modeli.',
+    explanation:
+        '\'endüstriyalizm\' → kâr amaçlı doğayı tahrip eden sanayileşme modeli.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12238',
     category: 'Paradigma',
     prompt: '\'komünal ekonomi\' dendiğinde kastedilen nedir?',
-    answers: ['Yerel toplumun kendi karar süreçlerine katılması', 'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi', 'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi', 'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi'],
+    answers: [
+      'Yerel toplumun kendi karar süreçlerine katılması',
+      'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi',
+      'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
+      'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi',
+    ],
     correctAnswer: 'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi',
-    explanation: '\'komünal ekonomi\' → kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi.',
+    explanation:
+        '\'komünal ekonomi\' → kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12259',
@@ -9722,49 +12829,74 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'özgürlük ölçütü\' yalnızca Paradigma dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'özgürlük ölçütü\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'özgürlük ölçütü\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12261',
     category: 'Paradigma',
     prompt: '\'hiyerarşisiz toplum\' ne anlama gelir?',
-    answers: ['Tahakküm ile doğa tahribatı arasındaki ilişkiyi', 'halkın temsilciler olmadan doğrudan karar alması', 'farklı ezilen kesimlerin eşitlikçi birlikteliği', 'tahakküm ve sömürünün olmadığı eşitlikçi düzen'],
+    answers: [
+      'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
+      'halkın temsilciler olmadan doğrudan karar alması',
+      'farklı ezilen kesimlerin eşitlikçi birlikteliği',
+      'tahakküm ve sömürünün olmadığı eşitlikçi düzen',
+    ],
     correctAnswer: 'tahakküm ve sömürünün olmadığı eşitlikçi düzen',
-    explanation: '\'hiyerarşisiz toplum\' → tahakküm ve sömürünün olmadığı eşitlikçi düzen.',
+    explanation:
+        '\'hiyerarşisiz toplum\' → tahakküm ve sömürünün olmadığı eşitlikçi düzen.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12269',
     category: 'Paradigma',
     prompt: 'Aşağıda \'toplumsal cinsiyet\' için doğru olan hangisidir?',
-    answers: ['doğayı sömürmeyen, onunla uyumlu yaşayan toplum', 'erkek egemen sistemin yapısını deşifre etme', 'toplumun kadın ve erkeğe biçtiği yapay roller', 'farklı ezilen kesimlerin eşitlikçi birlikteliği'],
+    answers: [
+      'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
+      'erkek egemen sistemin yapısını deşifre etme',
+      'toplumun kadın ve erkeğe biçtiği yapay roller',
+      'farklı ezilen kesimlerin eşitlikçi birlikteliği',
+    ],
     correctAnswer: 'toplumun kadın ve erkeğe biçtiği yapay roller',
-    explanation: '\'toplumsal cinsiyet\' → toplumun kadın ve erkeğe biçtiği yapay roller.',
+    explanation:
+        '\'toplumsal cinsiyet\' → toplumun kadın ve erkeğe biçtiği yapay roller.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12291',
     category: 'Paradigma',
     prompt: '\'politikleşme\' doğru şekilde nasıl açıklanır?',
-    answers: ['toplumun bir arada yaşama ilkelerini belirleyen belge', 'komünlerin üstünde yer alan koordinasyon ve karar organı', 'Doğayı tahrip eden endüstriyalizm ve kâr odaklı büyümeyi', 'toplumun kendi kaderi hakkında söz ve karar sahibi olması'],
+    answers: [
+      'toplumun bir arada yaşama ilkelerini belirleyen belge',
+      'komünlerin üstünde yer alan koordinasyon ve karar organı',
+      'Doğayı tahrip eden endüstriyalizm ve kâr odaklı büyümeyi',
+      'toplumun kendi kaderi hakkında söz ve karar sahibi olması',
+    ],
     correctAnswer: 'toplumun kendi kaderi hakkında söz ve karar sahibi olması',
-    explanation: '\'politikleşme\' → toplumun kendi kaderi hakkında söz ve karar sahibi olması.',
+    explanation:
+        '\'politikleşme\' → toplumun kendi kaderi hakkında söz ve karar sahibi olması.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12294',
     category: 'Paradigma',
     prompt: 'Aşağıdakilerden hangisi \'ekolojik toplum\' için doğrudur?',
-    answers: ['doğayı sömürmeyen, onunla uyumlu yaşayan toplum', 'yerel özerkliğe sahip idari ve toplumsal birim', 'Kimliklerin devlet zoru olmadan birlikteliğini', 'Yerel toplumun kendi karar süreçlerine katılması'],
+    answers: [
+      'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
+      'yerel özerkliğe sahip idari ve toplumsal birim',
+      'Kimliklerin devlet zoru olmadan birlikteliğini',
+      'Yerel toplumun kendi karar süreçlerine katılması',
+    ],
     correctAnswer: 'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
-    explanation: '\'ekolojik toplum\' → doğayı sömürmeyen, onunla uyumlu yaşayan toplum.',
+    explanation:
+        '\'ekolojik toplum\' → doğayı sömürmeyen, onunla uyumlu yaşayan toplum.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12298',
@@ -9772,119 +12904,175 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'demokratik ittifak\' Paradigma alanında uydurma bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'demokratik ittifak\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'demokratik ittifak\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12312',
     category: 'Paradigma',
     prompt: '\'tekelcilik\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['Toplumun kendini koruma ve örgütleme hakkını', 'economic and political centralization crisis', 'toplumun kadın ve erkeğe biçtiği yapay roller', 'tahakküm ve sömürünün olmadığı eşitlikçi düzen'],
+    answers: [
+      'Toplumun kendini koruma ve örgütleme hakkını',
+      'economic and political centralization crisis',
+      'toplumun kadın ve erkeğe biçtiği yapay roller',
+      'tahakküm ve sömürünün olmadığı eşitlikçi düzen',
+    ],
     correctAnswer: 'economic and political centralization crisis',
-    explanation: '\'tekelcilik\' → economic and political centralization crisis.',
+    explanation:
+        '\'tekelcilik\' → economic and political centralization crisis.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12331',
     category: 'Paradigma',
     prompt: '\'doğrudan demokrasi\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['halkın temsilciler olmadan doğrudan karar alması', 'Yerel toplumun kendi karar süreçlerine katılması', 'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü', 'Tahakküm ile doğa tahribatı arasındaki ilişkiyi'],
+    answers: [
+      'halkın temsilciler olmadan doğrudan karar alması',
+      'Yerel toplumun kendi karar süreçlerine katılması',
+      'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
+      'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
+    ],
     correctAnswer: 'halkın temsilciler olmadan doğrudan karar alması',
-    explanation: '\'doğrudan demokrasi\' → halkın temsilciler olmadan doğrudan karar alması.',
+    explanation:
+        '\'doğrudan demokrasi\' → halkın temsilciler olmadan doğrudan karar alması.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12344',
     category: 'Paradigma',
     prompt: 'Paradigma bağlamında \'kooperatifçilik\' nasıl anlaşılmalıdır?',
-    answers: ['komünal ekonominin temel dayanışma birimi', 'devletçi olmayan, tabana dayalı federasyon', 'komün yaşamına ve dayanışmaya dayalı sistem', 'economic and political centralization crisis'],
+    answers: [
+      'komünal ekonominin temel dayanışma birimi',
+      'devletçi olmayan, tabana dayalı federasyon',
+      'komün yaşamına ve dayanışmaya dayalı sistem',
+      'economic and political centralization crisis',
+    ],
     correctAnswer: 'komünal ekonominin temel dayanışma birimi',
-    explanation: '\'kooperatifçilik\' → komünal ekonominin temel dayanışma birimi.',
+    explanation:
+        '\'kooperatifçilik\' → komünal ekonominin temel dayanışma birimi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12363',
     category: 'Paradigma',
     prompt: 'Şıklardan hangisi \'politikleşme\' anlamına gelir?',
-    answers: ['doğa tahribatının hiyerarşiyle ilişkisini kuran bilim', 'Doğayı tahrip eden endüstriyalizm ve kâr odaklı büyümeyi', 'toplumun kendi kaderi hakkında söz ve karar sahibi olması', 'toplumun bir arada yaşama ilkelerini belirleyen belge'],
+    answers: [
+      'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim',
+      'Doğayı tahrip eden endüstriyalizm ve kâr odaklı büyümeyi',
+      'toplumun kendi kaderi hakkında söz ve karar sahibi olması',
+      'toplumun bir arada yaşama ilkelerini belirleyen belge',
+    ],
     correctAnswer: 'toplumun kendi kaderi hakkında söz ve karar sahibi olması',
-    explanation: '\'politikleşme\' → toplumun kendi kaderi hakkında söz ve karar sahibi olması.',
+    explanation:
+        '\'politikleşme\' → toplumun kendi kaderi hakkında söz ve karar sahibi olması.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12366',
     category: 'Paradigma',
     prompt: '\'öz savunma\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['komün yaşamına ve dayanışmaya dayalı sistem', 'doğayla uyumlu, geri dönüşümlü üretim tarzı', 'toprağın ve araçların topluma ait olması', 'toplumun kendini koruma ve örgütleme hakkı'],
+    answers: [
+      'komün yaşamına ve dayanışmaya dayalı sistem',
+      'doğayla uyumlu, geri dönüşümlü üretim tarzı',
+      'toprağın ve araçların topluma ait olması',
+      'toplumun kendini koruma ve örgütleme hakkı',
+    ],
     correctAnswer: 'toplumun kendini koruma ve örgütleme hakkı',
     explanation: '\'öz savunma\' → toplumun kendini koruma ve örgütleme hakkı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12367',
     category: 'Paradigma',
-    prompt: 'Paradigma alanında \'Özgür eş yaşam\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Paradigma alanında \'Özgür eş yaşam\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Özgür eş yaşam\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12371',
     category: 'Paradigma',
-    prompt: '\'Komünal ekonomi\' Paradigma bilgisinin parçası olan gerçek bir başlıktır.',
+    prompt:
+        '\'Komünal ekonomi\' Paradigma bilgisinin parçası olan gerçek bir başlıktır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Komünal ekonomi\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Komünal ekonomi\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12386',
     category: 'Paradigma',
     prompt: 'Aşağıda \'ekolojik bilinç\' için doğru olan hangisidir?',
-    answers: ['baskı ve sahiplenmeye dayanmayan eşit ortak yaşam', 'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle', 'insanın doğanın bir parçası olduğunu anlama durumu', 'ortak vatanda çok kültürlü ve eşitlikçi birliktelik'],
+    answers: [
+      'baskı ve sahiplenmeye dayanmayan eşit ortak yaşam',
+      'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
+      'insanın doğanın bir parçası olduğunu anlama durumu',
+      'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
+    ],
     correctAnswer: 'insanın doğanın bir parçası olduğunu anlama durumu',
-    explanation: '\'ekolojik bilinç\' → insanın doğanın bir parçası olduğunu anlama durumu.',
+    explanation:
+        '\'ekolojik bilinç\' → insanın doğanın bir parçası olduğunu anlama durumu.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12391',
     category: 'Paradigma',
     prompt: 'Paradigma çerçevesinde \'devletçi uygarlık\' ne anlama gelir?',
-    answers: ['sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi', 'devletçi olmayan, halkların komünal gelişim çizgisi', 'Yerel toplumun kendi karar süreçlerine katılması', 'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi'],
+    answers: [
+      'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
+      'devletçi olmayan, halkların komünal gelişim çizgisi',
+      'Yerel toplumun kendi karar süreçlerine katılması',
+      'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi',
+    ],
     correctAnswer: 'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
-    explanation: '\'devletçi uygarlık\' → sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi.',
+    explanation:
+        '\'devletçi uygarlık\' → sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12401',
     category: 'Paradigma',
     prompt: 'Aşağıdakilerden hangisi \'demokratik komünalizm\' için doğrudur?',
-    answers: ['komün yaşamına ve dayanışmaya dayalı sistem', 'economic and political centralization crisis', 'doğayla uyumlu, geri dönüşümlü üretim tarzı', 'alternatif bilim ve yaşam arayışının okulu'],
+    answers: [
+      'komün yaşamına ve dayanışmaya dayalı sistem',
+      'economic and political centralization crisis',
+      'doğayla uyumlu, geri dönüşümlü üretim tarzı',
+      'alternatif bilim ve yaşam arayışının okulu',
+    ],
     correctAnswer: 'komün yaşamına ve dayanışmaya dayalı sistem',
-    explanation: '\'demokratik komünalizm\' → komün yaşamına ve dayanışmaya dayalı sistem.',
+    explanation:
+        '\'demokratik komünalizm\' → komün yaşamına ve dayanışmaya dayalı sistem.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12407',
     category: 'Paradigma',
     prompt: '\'öz savunma\' ile kastedilen doğru nedir?',
-    answers: ['alternatif bilim ve yaşam arayışının okulu', 'komün yaşamına ve dayanışmaya dayalı sistem', 'economic and political centralization crisis', 'toplumun kendini koruma ve örgütleme hakkı'],
+    answers: [
+      'alternatif bilim ve yaşam arayışının okulu',
+      'komün yaşamına ve dayanışmaya dayalı sistem',
+      'economic and political centralization crisis',
+      'toplumun kendini koruma ve örgütleme hakkı',
+    ],
     correctAnswer: 'toplumun kendini koruma ve örgütleme hakkı',
     explanation: '\'öz savunma\' → toplumun kendini koruma ve örgütleme hakkı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12418',
@@ -9892,29 +13080,38 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Toplumsal sözleşme\', Paradigma ile ilgili gerçek bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Toplumsal sözleşme\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Toplumsal sözleşme\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12427',
     category: 'Paradigma',
     prompt: '\'kooperatifçilik\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['komünal ekonominin temel dayanışma birimi', 'devlet dışı, toplumsal örgütlenme alanları', 'komün yaşamına ve dayanışmaya dayalı sistem', 'Biri çoğul-gönüllü, diğeri tekçi-zorunludur'],
+    answers: [
+      'komünal ekonominin temel dayanışma birimi',
+      'devlet dışı, toplumsal örgütlenme alanları',
+      'komün yaşamına ve dayanışmaya dayalı sistem',
+      'Biri çoğul-gönüllü, diğeri tekçi-zorunludur',
+    ],
     correctAnswer: 'komünal ekonominin temel dayanışma birimi',
-    explanation: '\'kooperatifçilik\' → komünal ekonominin temel dayanışma birimi.',
+    explanation:
+        '\'kooperatifçilik\' → komünal ekonominin temel dayanışma birimi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12430',
     category: 'Paradigma',
-    prompt: '\'demokratik komünalizm\' ifadesi Paradigma bağlamında anlamlıdır.',
+    prompt:
+        '\'demokratik komünalizm\' ifadesi Paradigma bağlamında anlamlıdır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'demokratik komünalizm\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'demokratik komünalizm\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12452',
@@ -9922,19 +13119,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Paradigma alanında \'ekolojik bilinç\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'ekolojik bilinç\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'ekolojik bilinç\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12459',
     category: 'Paradigma',
     prompt: 'Paradigma bağlamında \'pozitivizm\' nasıl anlaşılmalıdır?',
-    answers: ['toplumun bir arada yaşama ilkelerini belirleyen belge', 'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi', 'toplumun kendi kaderi hakkında söz ve karar sahibi olması', 'sadece maddi olguları kabul eden, dogmatik bilim anlayışı'],
+    answers: [
+      'toplumun bir arada yaşama ilkelerini belirleyen belge',
+      'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi',
+      'toplumun kendi kaderi hakkında söz ve karar sahibi olması',
+      'sadece maddi olguları kabul eden, dogmatik bilim anlayışı',
+    ],
     correctAnswer: 'sadece maddi olguları kabul eden, dogmatik bilim anlayışı',
-    explanation: '\'pozitivizm\' → sadece maddi olguları kabul eden, dogmatik bilim anlayışı.',
+    explanation:
+        '\'pozitivizm\' → sadece maddi olguları kabul eden, dogmatik bilim anlayışı.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12460',
@@ -9944,7 +13148,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Komün\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12465',
@@ -9952,49 +13156,75 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Paradigma çerçevesinde \'devletçi uygarlık\' bilinen bir konudur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'devletçi uygarlık\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'devletçi uygarlık\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12477',
     category: 'Paradigma',
     prompt: '\'kadın akademileri\' nasıl tanımlanır?',
-    answers: ['kadın bilincini ve jineolojiyi geliştiren okullar', 'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü', 'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi', 'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle'],
+    answers: [
+      'kadın bilincini ve jineolojiyi geliştiren okullar',
+      'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
+      'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
+      'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
+    ],
     correctAnswer: 'kadın bilincini ve jineolojiyi geliştiren okullar',
-    explanation: '\'kadın akademileri\' → kadın bilincini ve jineolojiyi geliştiren okullar.',
+    explanation:
+        '\'kadın akademileri\' → kadın bilincini ve jineolojiyi geliştiren okullar.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12484',
     category: 'Paradigma',
     prompt: '\'patriyarka eleştirisi\' konusunda hangisi doğrudur?',
-    answers: ['doğayla uyumlu, geri dönüşümlü üretim tarzı', 'erkek egemen sistemin yapısını deşifre etme', 'kantonların ve komünlerin ortak kurucu metni', 'Toplumun kendini koruma ve örgütleme hakkını'],
+    answers: [
+      'doğayla uyumlu, geri dönüşümlü üretim tarzı',
+      'erkek egemen sistemin yapısını deşifre etme',
+      'kantonların ve komünlerin ortak kurucu metni',
+      'Toplumun kendini koruma ve örgütleme hakkını',
+    ],
     correctAnswer: 'erkek egemen sistemin yapısını deşifre etme',
-    explanation: '\'patriyarka eleştirisi\' → erkek egemen sistemin yapısını deşifre etme.',
+    explanation:
+        '\'patriyarka eleştirisi\' → erkek egemen sistemin yapısını deşifre etme.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12495',
     category: 'Paradigma',
-    prompt: 'Paradigma açısından \'komünal mülkiyet\' için doğru ifade hangisidir?',
-    answers: ['toprağın ve araçların topluma ait olması', 'devlet dışı, toplumsal örgütlenme alanları', 'Toplumun doğrudan ve örgütlü katılımını', 'Demokrasi, kadın özgürlüğü ve ekoloji'],
+    prompt:
+        'Paradigma açısından \'komünal mülkiyet\' için doğru ifade hangisidir?',
+    answers: [
+      'toprağın ve araçların topluma ait olması',
+      'devlet dışı, toplumsal örgütlenme alanları',
+      'Toplumun doğrudan ve örgütlü katılımını',
+      'Demokrasi, kadın özgürlüğü ve ekoloji',
+    ],
     correctAnswer: 'toprağın ve araçların topluma ait olması',
-    explanation: '\'komünal mülkiyet\' → toprağın ve araçların topluma ait olması.',
+    explanation:
+        '\'komünal mülkiyet\' → toprağın ve araçların topluma ait olması.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12506',
     category: 'Paradigma',
     prompt: '\'ekolojik endüstri\' kavramını doğru anlatan ifade hangisidir?',
-    answers: ['toplumun kendini koruma ve örgütleme hakkı', 'kantonların ve komünlerin ortak kurucu metni', 'toplumsal özgürleşmenin en temel kriteri', 'doğayla uyumlu, geri dönüşümlü üretim tarzı'],
+    answers: [
+      'toplumun kendini koruma ve örgütleme hakkı',
+      'kantonların ve komünlerin ortak kurucu metni',
+      'toplumsal özgürleşmenin en temel kriteri',
+      'doğayla uyumlu, geri dönüşümlü üretim tarzı',
+    ],
     correctAnswer: 'doğayla uyumlu, geri dönüşümlü üretim tarzı',
-    explanation: '\'ekolojik endüstri\' → doğayla uyumlu, geri dönüşümlü üretim tarzı.',
+    explanation:
+        '\'ekolojik endüstri\' → doğayla uyumlu, geri dönüşümlü üretim tarzı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12520',
@@ -10002,19 +13232,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'yerel meclis\' Paradigma bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'yerel meclis\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'yerel meclis\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12547',
     category: 'Paradigma',
     prompt: '\'demokratik konfederal\' ile kastedilen doğru nedir?',
-    answers: ['devletçi olmayan, tabana dayalı federasyon', 'kantonların ve komünlerin ortak kurucu metni', 'devlet dışı, toplumsal örgütlenme alanları', 'toprağın ve araçların topluma ait olması'],
+    answers: [
+      'devletçi olmayan, tabana dayalı federasyon',
+      'kantonların ve komünlerin ortak kurucu metni',
+      'devlet dışı, toplumsal örgütlenme alanları',
+      'toprağın ve araçların topluma ait olması',
+    ],
     correctAnswer: 'devletçi olmayan, tabana dayalı federasyon',
-    explanation: '\'demokratik konfederal\' → devletçi olmayan, tabana dayalı federasyon.',
+    explanation:
+        '\'demokratik konfederal\' → devletçi olmayan, tabana dayalı federasyon.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12590',
@@ -10022,29 +13259,42 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Paradigma çerçevesinde \'Ekolojik endüstri\' bilinen bir konudur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Ekolojik endüstri\' Paradigma alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Ekolojik endüstri\' Paradigma alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12635',
     category: 'Paradigma',
     prompt: '\'ataerkillik\' ile kastedilen doğru nedir?',
-    answers: ['kapitalist moderniteye alternatif yaşam sistemi', 'erkeği egemen kılan, kadını ezen toplumsal yapı', 'halkın kendi kendini yönetme ve örgütleme biçimi', 'Kimliklerin devlet zoru olmadan birlikteliğini'],
+    answers: [
+      'kapitalist moderniteye alternatif yaşam sistemi',
+      'erkeği egemen kılan, kadını ezen toplumsal yapı',
+      'halkın kendi kendini yönetme ve örgütleme biçimi',
+      'Kimliklerin devlet zoru olmadan birlikteliğini',
+    ],
     correctAnswer: 'erkeği egemen kılan, kadını ezen toplumsal yapı',
-    explanation: '\'ataerkillik\' → erkeği egemen kılan, kadını ezen toplumsal yapı.',
+    explanation:
+        '\'ataerkillik\' → erkeği egemen kılan, kadını ezen toplumsal yapı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12637',
     category: 'Paradigma',
     prompt: '\'meclis\' neyi ifade eder?',
-    answers: ['doğa tahribatının hiyerarşiyle ilişkisini kuran bilim', 'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi', 'komünlerin üstünde yer alan koordinasyon ve karar organı', 'toplumun kendi kaderi hakkında söz ve karar sahibi olması'],
+    answers: [
+      'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim',
+      'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi',
+      'komünlerin üstünde yer alan koordinasyon ve karar organı',
+      'toplumun kendi kaderi hakkında söz ve karar sahibi olması',
+    ],
     correctAnswer: 'komünlerin üstünde yer alan koordinasyon ve karar organı',
-    explanation: '\'meclis\' → komünlerin üstünde yer alan koordinasyon ve karar organı.',
+    explanation:
+        '\'meclis\' → komünlerin üstünde yer alan koordinasyon ve karar organı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12653',
@@ -10052,19 +13302,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'anayasal güvence\' yalnızca Siyaset dışı alanlara aittir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'anayasal güvence\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'anayasal güvence\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12660',
     category: 'Siyaset',
     prompt: '\'toplumsal barış\' nasıl tanımlanır?',
-    answers: ['Demokratik konfederalizm ve demokratik ulus tartışması', 'Toplumun bütününün özgürleşmesinin koşulu sayıldığı için', 'Yasal düzenlemeler ve demokratik entegrasyon adımları', 'farklı etnik ve inanç gruplarının huzurlu birlikteliği'],
+    answers: [
+      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'Toplumun bütününün özgürleşmesinin koşulu sayıldığı için',
+      'Yasal düzenlemeler ve demokratik entegrasyon adımları',
+      'farklı etnik ve inanç gruplarının huzurlu birlikteliği',
+    ],
     correctAnswer: 'farklı etnik ve inanç gruplarının huzurlu birlikteliği',
-    explanation: '\'toplumsal barış\' → farklı etnik ve inanç gruplarının huzurlu birlikteliği.',
+    explanation:
+        '\'toplumsal barış\' → farklı etnik ve inanç gruplarının huzurlu birlikteliği.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12678',
@@ -10072,29 +13329,36 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Siyaset çalışmalarında \'azınlık hakları\' hiç kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'azınlık hakları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'azınlık hakları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12680',
     category: 'Siyaset',
-    prompt: 'Siyaset alanında \'Statü hakkı\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Siyaset alanında \'Statü hakkı\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Statü hakkı\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12681',
     category: 'Siyaset',
     prompt: '\'müzakere\' konusunda hangisi doğrudur?',
-    answers: ['sorunları diyalog yoluyla çözme yöntemi', 'yerel kararların alındığı halk meclisleri', 'hakların kanunla koruma altına alınması', 'halkın siyasi kararlara bizzat dahil olması'],
+    answers: [
+      'sorunları diyalog yoluyla çözme yöntemi',
+      'yerel kararların alındığı halk meclisleri',
+      'hakların kanunla koruma altına alınması',
+      'halkın siyasi kararlara bizzat dahil olması',
+    ],
     correctAnswer: 'sorunları diyalog yoluyla çözme yöntemi',
     explanation: '\'müzakere\' → sorunları diyalog yoluyla çözme yöntemi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12695',
@@ -10102,159 +13366,252 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Siyaset alanında \'Meclis sistemi\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Meclis sistemi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Meclis sistemi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12703',
     category: 'Siyaset',
     prompt: '\'hakikat komisyonu\' doğru şekilde nasıl açıklanır?',
-    answers: ['merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü', 'Müzakere, demokratik reform ve hakların güvenceye alınması', 'geçmişteki acıları araştırıp toplumsal barışı kuran kurul', 'Türkiye’de yasal pro-Kürt/sol-demokratik parti siyaseti'],
+    answers: [
+      'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü',
+      'Müzakere, demokratik reform ve hakların güvenceye alınması',
+      'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
+      'Türkiye’de yasal pro-Kürt/sol-demokratik parti siyaseti',
+    ],
     correctAnswer: 'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
-    explanation: '\'hakikat komisyonu\' → geçmişteki acıları araştırıp toplumsal barışı kuran kurul.',
+    explanation:
+        '\'hakikat komisyonu\' → geçmişteki acıları araştırıp toplumsal barışı kuran kurul.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12713',
     category: 'Siyaset',
     prompt: 'Aşağıdakilerden hangisi \'toplumsal barış\' için doğrudur?',
-    answers: ['halkların kendi kimliğiyle tanınma ve yönetilme hakkı', 'sadece çoğunluğun değil azınlığın da dinlendiği yapı', 'Kimlik, dil, kültürel haklar, statü ve demokratik temsil', 'farklı etnik ve inanç gruplarının huzurlu birlikteliği'],
+    answers: [
+      'halkların kendi kimliğiyle tanınma ve yönetilme hakkı',
+      'sadece çoğunluğun değil azınlığın da dinlendiği yapı',
+      'Kimlik, dil, kültürel haklar, statü ve demokratik temsil',
+      'farklı etnik ve inanç gruplarının huzurlu birlikteliği',
+    ],
     correctAnswer: 'farklı etnik ve inanç gruplarının huzurlu birlikteliği',
-    explanation: '\'toplumsal barış\' → farklı etnik ve inanç gruplarının huzurlu birlikteliği.',
+    explanation:
+        '\'toplumsal barış\' → farklı etnik ve inanç gruplarının huzurlu birlikteliği.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12742',
     category: 'Siyaset',
     prompt: 'Hangisi \'temsili demokrasi\' kavramını doğru betimler?',
-    answers: ['vatandaşların karar alma süreçlerine müdahil olması', 'halkın sadece seçimlerle yönetime katıldığı sistem', 'bütçe harcamalarını halkın meclislerle belirlemesi', 'toplumun dışarıdan baskı olmadan kendini yönetmesi'],
+    answers: [
+      'vatandaşların karar alma süreçlerine müdahil olması',
+      'halkın sadece seçimlerle yönetime katıldığı sistem',
+      'bütçe harcamalarını halkın meclislerle belirlemesi',
+      'toplumun dışarıdan baskı olmadan kendini yönetmesi',
+    ],
     correctAnswer: 'halkın sadece seçimlerle yönetime katıldığı sistem',
-    explanation: '\'temsili demokrasi\' → halkın sadece seçimlerle yönetime katıldığı sistem.',
+    explanation:
+        '\'temsili demokrasi\' → halkın sadece seçimlerle yönetime katıldığı sistem.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12743',
     category: 'Siyaset',
     prompt: 'Siyaset alanında \'yerel demokrasi\' neyi ifade eder?',
-    answers: ['farklı muhalif grupların ortak barış platformu', 'Tabandan doğrudan ve sürekli katılımı önceler', 'çoğunluğa karşı farklı olan grupların korunması', 'kararların halka en yakın birimlerde alınması'],
+    answers: [
+      'farklı muhalif grupların ortak barış platformu',
+      'Tabandan doğrudan ve sürekli katılımı önceler',
+      'çoğunluğa karşı farklı olan grupların korunması',
+      'kararların halka en yakın birimlerde alınması',
+    ],
     correctAnswer: 'kararların halka en yakın birimlerde alınması',
-    explanation: '\'yerel demokrasi\' → kararların halka en yakın birimlerde alınması.',
+    explanation:
+        '\'yerel demokrasi\' → kararların halka en yakın birimlerde alınması.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12745',
     category: 'Siyaset',
     prompt: 'Siyaset çerçevesinde \'çoğulcu demokrasi\' ne anlama gelir?',
-    answers: ['farklı kimliklerin ve inançların eşit kabul edilmesi', 'Farklı halkların eşit ve dayanışmacı birlikteliğini', 'sadece çoğunluğun değil azınlığın da dinlendiği yapı', 'kendi yasalarını yapabilen yerel parlamento yetkisi'],
+    answers: [
+      'farklı kimliklerin ve inançların eşit kabul edilmesi',
+      'Farklı halkların eşit ve dayanışmacı birlikteliğini',
+      'sadece çoğunluğun değil azınlığın da dinlendiği yapı',
+      'kendi yasalarını yapabilen yerel parlamento yetkisi',
+    ],
     correctAnswer: 'sadece çoğunluğun değil azınlığın da dinlendiği yapı',
-    explanation: '\'çoğulcu demokrasi\' → sadece çoğunluğun değil azınlığın da dinlendiği yapı.',
+    explanation:
+        '\'çoğulcu demokrasi\' → sadece çoğunluğun değil azınlığın da dinlendiği yapı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12755',
     category: 'Siyaset',
     prompt: '\'yerel demokrasi\' doğru şekilde nasıl açıklanır?',
-    answers: ['kararların halka en yakın birimlerde alınması', 'Devleti aşan, ona alternatif bir öz yönetim', 'partilerde kadının eşit söz sahibi olma sistemi', 'halkın siyasi kararlara bizzat dahil olması'],
+    answers: [
+      'kararların halka en yakın birimlerde alınması',
+      'Devleti aşan, ona alternatif bir öz yönetim',
+      'partilerde kadının eşit söz sahibi olma sistemi',
+      'halkın siyasi kararlara bizzat dahil olması',
+    ],
     correctAnswer: 'kararların halka en yakın birimlerde alınması',
-    explanation: '\'yerel demokrasi\' → kararların halka en yakın birimlerde alınması.',
+    explanation:
+        '\'yerel demokrasi\' → kararların halka en yakın birimlerde alınması.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12758',
     category: 'Siyaset',
     prompt: 'Hangisi \'demokratik siyaset\' ile uyumlu bir tanımdır?',
-    answers: ['baskı ve tasfiye yerine diyalogu seçen siyaset tarzı', 'belediyeler ve yerel kurulların oluşturduğu yönetim', 'Farklı halkların eşit ve dayanışmacı birlikteliğini', 'kendi yasalarını yapabilen yerel parlamento yetkisi'],
+    answers: [
+      'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı',
+      'belediyeler ve yerel kurulların oluşturduğu yönetim',
+      'Farklı halkların eşit ve dayanışmacı birlikteliğini',
+      'kendi yasalarını yapabilen yerel parlamento yetkisi',
+    ],
     correctAnswer: 'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı',
-    explanation: '\'demokratik siyaset\' → baskı ve tasfiye yerine diyalogu seçen siyaset tarzı.',
+    explanation:
+        '\'demokratik siyaset\' → baskı ve tasfiye yerine diyalogu seçen siyaset tarzı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12760',
     category: 'Siyaset',
-    prompt: 'Siyaset bilgisinde \'demokratik özerklik\' ile ilgili doğru olan hangisidir?',
-    answers: ['vatandaşların karar alma süreçlerine müdahil olması', 'yerelde kendi kendini yönetme ve karar alma statüsü', 'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı', 'belediyeler ve yerel kurulların oluşturduğu yönetim'],
+    prompt:
+        'Siyaset bilgisinde \'demokratik özerklik\' ile ilgili doğru olan hangisidir?',
+    answers: [
+      'vatandaşların karar alma süreçlerine müdahil olması',
+      'yerelde kendi kendini yönetme ve karar alma statüsü',
+      'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı',
+      'belediyeler ve yerel kurulların oluşturduğu yönetim',
+    ],
     correctAnswer: 'yerelde kendi kendini yönetme ve karar alma statüsü',
-    explanation: '\'demokratik özerklik\' → yerelde kendi kendini yönetme ve karar alma statüsü.',
+    explanation:
+        '\'demokratik özerklik\' → yerelde kendi kendini yönetme ve karar alma statüsü.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12769',
     category: 'Siyaset',
-    prompt: 'Hangisi Siyaset içinde \'demokratik özerklik\' kavramını doğru yerleştirir?',
-    answers: ['dernekler ve inisiyatiflerle yönetime müdahil olma', 'yerelde kendi kendini yönetme ve karar alma statüsü', 'toplumun dışarıdan baskı olmadan kendini yönetmesi', 'vatandaşların karar alma süreçlerine müdahil olması'],
+    prompt:
+        'Hangisi Siyaset içinde \'demokratik özerklik\' kavramını doğru yerleştirir?',
+    answers: [
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+      'yerelde kendi kendini yönetme ve karar alma statüsü',
+      'toplumun dışarıdan baskı olmadan kendini yönetmesi',
+      'vatandaşların karar alma süreçlerine müdahil olması',
+    ],
     correctAnswer: 'yerelde kendi kendini yönetme ve karar alma statüsü',
-    explanation: '\'demokratik özerklik\' → yerelde kendi kendini yönetme ve karar alma statüsü.',
+    explanation:
+        '\'demokratik özerklik\' → yerelde kendi kendini yönetme ve karar alma statüsü.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12771',
     category: 'Siyaset',
     prompt: '\'demokratik ittifaklar\' kavramı neyi karşılar?',
-    answers: ['gücün tek merkezden yerel birimlere dağıtılması', 'anayasal güvence ve kültürel hakların tanınması', 'farklı muhalif grupların ortak barış platformu', 'bağımsız ve tarafsız mahkemelerde savunma hakkı'],
+    answers: [
+      'gücün tek merkezden yerel birimlere dağıtılması',
+      'anayasal güvence ve kültürel hakların tanınması',
+      'farklı muhalif grupların ortak barış platformu',
+      'bağımsız ve tarafsız mahkemelerde savunma hakkı',
+    ],
     correctAnswer: 'farklı muhalif grupların ortak barış platformu',
-    explanation: '\'demokratik ittifaklar\' → farklı muhalif grupların ortak barış platformu.',
+    explanation:
+        '\'demokratik ittifaklar\' → farklı muhalif grupların ortak barış platformu.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12774',
     category: 'Siyaset',
     prompt: '\'demokratik uzlaşı\' ne anlama gelir?',
-    answers: ['hakların kanunla koruma altına alınması', 'Kimlik, dil, statü ve haklar sorunu olarak', 'ortak yararda partilerin bir araya gelmesi', 'yerel bütçe ve hizmetleri kendi yönetme hakkı'],
+    answers: [
+      'hakların kanunla koruma altına alınması',
+      'Kimlik, dil, statü ve haklar sorunu olarak',
+      'ortak yararda partilerin bir araya gelmesi',
+      'yerel bütçe ve hizmetleri kendi yönetme hakkı',
+    ],
     correctAnswer: 'ortak yararda partilerin bir araya gelmesi',
-    explanation: '\'demokratik uzlaşı\' → ortak yararda partilerin bir araya gelmesi.',
+    explanation:
+        '\'demokratik uzlaşı\' → ortak yararda partilerin bir araya gelmesi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12776',
     category: 'Siyaset',
     prompt: '\'toplumsal uzlaşı\' kavramı neyi karşılar?',
-    answers: ['resmi ve kamusal alanlarda anadilinin kullanılması', 'Yerel yönetim, eğitim ve ekonomi gibi alanlarda', 'adaletsiz yasalara karşı barışçıl protesto biçimi', 'barışçıl çözüm için toplumun ortak karara varması'],
+    answers: [
+      'resmi ve kamusal alanlarda anadilinin kullanılması',
+      'Yerel yönetim, eğitim ve ekonomi gibi alanlarda',
+      'adaletsiz yasalara karşı barışçıl protesto biçimi',
+      'barışçıl çözüm için toplumun ortak karara varması',
+    ],
     correctAnswer: 'barışçıl çözüm için toplumun ortak karara varması',
-    explanation: '\'toplumsal uzlaşı\' → barışçıl çözüm için toplumun ortak karara varması.',
+    explanation:
+        '\'toplumsal uzlaşı\' → barışçıl çözüm için toplumun ortak karara varması.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12779',
     category: 'Siyaset',
     prompt: '\'statü hakkı\' ile kastedilen doğru nedir?',
-    answers: ['Demokratik konfederalizm ve demokratik ulus tartışması', 'halkların kendi kimliğiyle tanınma ve yönetilme hakkı', 'farklı kimliklerin ve inançların eşit kabul edilmesi', 'Türkiye’de yasal pro-Kürt/sol-demokratik parti siyaseti'],
+    answers: [
+      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'halkların kendi kimliğiyle tanınma ve yönetilme hakkı',
+      'farklı kimliklerin ve inançların eşit kabul edilmesi',
+      'Türkiye’de yasal pro-Kürt/sol-demokratik parti siyaseti',
+    ],
     correctAnswer: 'halkların kendi kimliğiyle tanınma ve yönetilme hakkı',
-    explanation: '\'statü hakkı\' → halkların kendi kimliğiyle tanınma ve yönetilme hakkı.',
+    explanation:
+        '\'statü hakkı\' → halkların kendi kimliğiyle tanınma ve yönetilme hakkı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12780',
     category: 'Siyaset',
     prompt: '\'toplumsal muhalefet\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['Yerel demokrasi, kadın özgürlüğü, ekoloji ve çoğulculuk', 'halkların kendi kimliğiyle tanınma ve yönetilme hakkı', 'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi', 'Kapitalist modernite ve merkezi ulus-devlet eleştirisi'],
+    answers: [
+      'Yerel demokrasi, kadın özgürlüğü, ekoloji ve çoğulculuk',
+      'halkların kendi kimliğiyle tanınma ve yönetilme hakkı',
+      'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi',
+      'Kapitalist modernite ve merkezi ulus-devlet eleştirisi',
+    ],
     correctAnswer: 'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi',
-    explanation: '\'toplumsal muhalefet\' → resmi yönetime karşı halkın barışçıl tepki örgütlenmesi.',
+    explanation:
+        '\'toplumsal muhalefet\' → resmi yönetime karşı halkın barışçıl tepki örgütlenmesi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12818',
     category: 'Siyaset',
     prompt: '\'doğrudan katılım\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['Kadın-erkek eşit temsili ve ortak yönetimi', 'halkın siyasi kararlara bizzat dahil olması', 'ortak yararda partilerin bir araya gelmesi', 'yerel kararların alındığı halk meclisleri'],
+    answers: [
+      'Kadın-erkek eşit temsili ve ortak yönetimi',
+      'halkın siyasi kararlara bizzat dahil olması',
+      'ortak yararda partilerin bir araya gelmesi',
+      'yerel kararların alındığı halk meclisleri',
+    ],
     correctAnswer: 'halkın siyasi kararlara bizzat dahil olması',
-    explanation: '\'doğrudan katılım\' → halkın siyasi kararlara bizzat dahil olması.',
+    explanation:
+        '\'doğrudan katılım\' → halkın siyasi kararlara bizzat dahil olması.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12827',
@@ -10262,19 +13619,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Siyaset çalışmalarında \'Adil yargılanma\' hiç kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Adil yargılanma\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Adil yargılanma\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12832',
     category: 'Siyaset',
     prompt: '\'barışçıl çözüm\' nasıl tanımlanır?',
-    answers: ['çatışmaları silah yerine diyalogla çözme iradesi', 'protesto, örgütlenme ve ifade özgürlüğü hakları', 'kaynakların ve hakların eşit paylaşılması ilkesi', 'anayasal güvence ve kültürel hakların tanınması'],
+    answers: [
+      'çatışmaları silah yerine diyalogla çözme iradesi',
+      'protesto, örgütlenme ve ifade özgürlüğü hakları',
+      'kaynakların ve hakların eşit paylaşılması ilkesi',
+      'anayasal güvence ve kültürel hakların tanınması',
+    ],
     correctAnswer: 'çatışmaları silah yerine diyalogla çözme iradesi',
-    explanation: '\'barışçıl çözüm\' → çatışmaları silah yerine diyalogla çözme iradesi.',
+    explanation:
+        '\'barışçıl çözüm\' → çatışmaları silah yerine diyalogla çözme iradesi.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12834',
@@ -10282,19 +13646,26 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Siyaset literatüründe \'toplumsal muhalefet\' yer almaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'toplumsal muhalefet\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'toplumsal muhalefet\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12854',
     category: 'Siyaset',
     prompt: '\'sivil katılım\' hakkında bilinen doğru nedir?',
-    answers: ['adaletsiz yasalara karşı barışçıl protesto biçimi', 'toplumun dışarıdan baskı olmadan kendini yönetmesi', 'dernekler ve inisiyatiflerle yönetime müdahil olma', 'barışçıl çözüm için toplumun ortak karara varması'],
+    answers: [
+      'adaletsiz yasalara karşı barışçıl protesto biçimi',
+      'toplumun dışarıdan baskı olmadan kendini yönetmesi',
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+      'barışçıl çözüm için toplumun ortak karara varması',
+    ],
     correctAnswer: 'dernekler ve inisiyatiflerle yönetime müdahil olma',
-    explanation: '\'sivil katılım\' → dernekler ve inisiyatiflerle yönetime müdahil olma.',
+    explanation:
+        '\'sivil katılım\' → dernekler ve inisiyatiflerle yönetime müdahil olma.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12863',
@@ -10304,7 +13675,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'siyasi ahlak\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12874',
@@ -10312,69 +13683,102 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'demokratik siyaset\' Siyaset bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'demokratik siyaset\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'demokratik siyaset\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12875',
     category: 'Siyaset',
     prompt: '\'kuvvetler ayrılığı\' kavramını doğru anlatan ifade hangisidir?',
-    answers: ['Müzakere, demokratik reform ve hakların güvenceye alınması', 'farklı etnik ve inanç gruplarının huzurlu birlikteliği', 'yasama, yürütme ve yargının bağımsız olması', 'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi'],
+    answers: [
+      'Müzakere, demokratik reform ve hakların güvenceye alınması',
+      'farklı etnik ve inanç gruplarının huzurlu birlikteliği',
+      'yasama, yürütme ve yargının bağımsız olması',
+      'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi',
+    ],
     correctAnswer: 'yasama, yürütme ve yargının bağımsız olması',
-    explanation: '\'kuvvetler ayrılığı\' → yasama, yürütme ve yargının bağımsız olması.',
+    explanation:
+        '\'kuvvetler ayrılığı\' → yasama, yürütme ve yargının bağımsız olması.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12877',
     category: 'Siyaset',
-    prompt: 'Siyaset alanında \'Yerel yönetim\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Siyaset alanında \'Yerel yönetim\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Yerel yönetim\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12882',
     category: 'Siyaset',
     prompt: '\'barış süreci\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['bağımsız ve tarafsız mahkemelerde savunma hakkı', 'çatışmalı ortamı diyalogla sonlandırma aşaması', 'gücün tek merkezden yerel birimlere dağıtılması', 'partilerde kadının eşit söz sahibi olma sistemi'],
+    answers: [
+      'bağımsız ve tarafsız mahkemelerde savunma hakkı',
+      'çatışmalı ortamı diyalogla sonlandırma aşaması',
+      'gücün tek merkezden yerel birimlere dağıtılması',
+      'partilerde kadının eşit söz sahibi olma sistemi',
+    ],
     correctAnswer: 'çatışmalı ortamı diyalogla sonlandırma aşaması',
-    explanation: '\'barış süreci\' → çatışmalı ortamı diyalogla sonlandırma aşaması.',
+    explanation:
+        '\'barış süreci\' → çatışmalı ortamı diyalogla sonlandırma aşaması.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12891',
     category: 'Siyaset',
-    prompt: 'Siyaset bilgisinde \'statü talebi\' ile ilgili doğru olan hangisidir?',
-    answers: ['anayasal güvence ve kültürel hakların tanınması', 'çatışmaları silah yerine diyalogla çözme iradesi', 'çoğunluğa karşı farklı olan grupların korunması', 'çatışmalı ortamı diyalogla sonlandırma aşaması'],
+    prompt:
+        'Siyaset bilgisinde \'statü talebi\' ile ilgili doğru olan hangisidir?',
+    answers: [
+      'anayasal güvence ve kültürel hakların tanınması',
+      'çatışmaları silah yerine diyalogla çözme iradesi',
+      'çoğunluğa karşı farklı olan grupların korunması',
+      'çatışmalı ortamı diyalogla sonlandırma aşaması',
+    ],
     correctAnswer: 'anayasal güvence ve kültürel hakların tanınması',
-    explanation: '\'statü talebi\' → anayasal güvence ve kültürel hakların tanınması.',
+    explanation:
+        '\'statü talebi\' → anayasal güvence ve kültürel hakların tanınması.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12899',
     category: 'Siyaset',
     prompt: '\'ademi merkeziyetçilik\' için en isabetli açıklama hangisidir?',
-    answers: ['Hem reel sosyalizmi hem kapitalizmi olduğu gibi', 'gücün tek merkezden yerel birimlere dağıtılması', 'protesto, örgütlenme ve ifade özgürlüğü hakları', 'kaynakların ve hakların eşit paylaşılması ilkesi'],
+    answers: [
+      'Hem reel sosyalizmi hem kapitalizmi olduğu gibi',
+      'gücün tek merkezden yerel birimlere dağıtılması',
+      'protesto, örgütlenme ve ifade özgürlüğü hakları',
+      'kaynakların ve hakların eşit paylaşılması ilkesi',
+    ],
     correctAnswer: 'gücün tek merkezden yerel birimlere dağıtılması',
-    explanation: '\'ademi merkeziyetçilik\' → gücün tek merkezden yerel birimlere dağıtılması.',
+    explanation:
+        '\'ademi merkeziyetçilik\' → gücün tek merkezden yerel birimlere dağıtılması.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12901',
     category: 'Siyaset',
     prompt: '\'kuvvetler ayrılığı\' için en isabetli açıklama hangisidir?',
-    answers: ['Devleti aşan, ona alternatif bir öz yönetim', 'Devlet-dışı, tabandan örgütlenen öz yönetimi', 'ortak yararda partilerin bir araya gelmesi', 'yasama, yürütme ve yargının bağımsız olması'],
+    answers: [
+      'Devleti aşan, ona alternatif bir öz yönetim',
+      'Devlet-dışı, tabandan örgütlenen öz yönetimi',
+      'ortak yararda partilerin bir araya gelmesi',
+      'yasama, yürütme ve yargının bağımsız olması',
+    ],
     correctAnswer: 'yasama, yürütme ve yargının bağımsız olması',
-    explanation: '\'kuvvetler ayrılığı\' → yasama, yürütme ve yargının bağımsız olması.',
+    explanation:
+        '\'kuvvetler ayrılığı\' → yasama, yürütme ve yargının bağımsız olması.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12934',
@@ -10382,89 +13786,139 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Siyaset literatüründe \'statü talebi\' yer almaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'statü talebi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'statü talebi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_12946',
     category: 'Siyaset',
     prompt: '\'adil yargılanma\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['Farklı kimlik ve inançların bir arada yaşamasını', 'farklı muhalif grupların ortak barış platformu', 'anayasal güvence ve kültürel hakların tanınması', 'bağımsız ve tarafsız mahkemelerde savunma hakkı'],
+    answers: [
+      'Farklı kimlik ve inançların bir arada yaşamasını',
+      'farklı muhalif grupların ortak barış platformu',
+      'anayasal güvence ve kültürel hakların tanınması',
+      'bağımsız ve tarafsız mahkemelerde savunma hakkı',
+    ],
     correctAnswer: 'bağımsız ve tarafsız mahkemelerde savunma hakkı',
-    explanation: '\'adil yargılanma\' → bağımsız ve tarafsız mahkemelerde savunma hakkı.',
+    explanation:
+        '\'adil yargılanma\' → bağımsız ve tarafsız mahkemelerde savunma hakkı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12954',
     category: 'Siyaset',
     prompt: 'Hangisi \'siyasi katılım\' ile uyumlu bir tanımdır?',
-    answers: ['halkın sadece seçimlerle yönetime katıldığı sistem', 'yerelde kendi kendini yönetme ve karar alma statüsü', 'vatandaşların karar alma süreçlerine müdahil olması', 'toplumun savaşsız bir ortamda yaşama evrensel hakkı'],
+    answers: [
+      'halkın sadece seçimlerle yönetime katıldığı sistem',
+      'yerelde kendi kendini yönetme ve karar alma statüsü',
+      'vatandaşların karar alma süreçlerine müdahil olması',
+      'toplumun savaşsız bir ortamda yaşama evrensel hakkı',
+    ],
     correctAnswer: 'vatandaşların karar alma süreçlerine müdahil olması',
-    explanation: '\'siyasi katılım\' → vatandaşların karar alma süreçlerine müdahil olması.',
+    explanation:
+        '\'siyasi katılım\' → vatandaşların karar alma süreçlerine müdahil olması.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12961',
     category: 'Siyaset',
-    prompt: 'Siyaset için \'yerel meclisler\' hakkında doğru seçenek hangisidir?',
-    answers: ['Kimlik, dil, statü ve haklar sorunu olarak', 'mecliste ve sokakta hak arama kanalları', 'halkların kendi diliyle eğitim alma hakkı', 'yerel kararların alındığı halk meclisleri'],
+    prompt:
+        'Siyaset için \'yerel meclisler\' hakkında doğru seçenek hangisidir?',
+    answers: [
+      'Kimlik, dil, statü ve haklar sorunu olarak',
+      'mecliste ve sokakta hak arama kanalları',
+      'halkların kendi diliyle eğitim alma hakkı',
+      'yerel kararların alındığı halk meclisleri',
+    ],
     correctAnswer: 'yerel kararların alındığı halk meclisleri',
-    explanation: '\'yerel meclisler\' → yerel kararların alındığı halk meclisleri.',
+    explanation:
+        '\'yerel meclisler\' → yerel kararların alındığı halk meclisleri.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12965',
     category: 'Siyaset',
     prompt: '\'yerel özerklik şartı\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['belediyeler ve yerel kurulların oluşturduğu yönetim', 'yerel yönetimlerin gücünü artıran uluslararası belge', 'vatandaşların karar alma süreçlerine müdahil olması', 'Yasal düzenlemeler ve demokratik entegrasyon adımları'],
+    answers: [
+      'belediyeler ve yerel kurulların oluşturduğu yönetim',
+      'yerel yönetimlerin gücünü artıran uluslararası belge',
+      'vatandaşların karar alma süreçlerine müdahil olması',
+      'Yasal düzenlemeler ve demokratik entegrasyon adımları',
+    ],
     correctAnswer: 'yerel yönetimlerin gücünü artıran uluslararası belge',
-    explanation: '\'yerel özerklik şartı\' → yerel yönetimlerin gücünü artıran uluslararası belge.',
+    explanation:
+        '\'yerel özerklik şartı\' → yerel yönetimlerin gücünü artıran uluslararası belge.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12981',
     category: 'Siyaset',
     prompt: '\'anadilinde eğitim\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['Eşit yurttaşlık ve hakların tanınmasını', 'halkların kendi diliyle eğitim alma hakkı', 'kararların halka en yakın birimlerde alınması', 'yerel kararların alındığı halk meclisleri'],
+    answers: [
+      'Eşit yurttaşlık ve hakların tanınmasını',
+      'halkların kendi diliyle eğitim alma hakkı',
+      'kararların halka en yakın birimlerde alınması',
+      'yerel kararların alındığı halk meclisleri',
+    ],
     correctAnswer: 'halkların kendi diliyle eğitim alma hakkı',
-    explanation: '\'anadilinde eğitim\' → halkların kendi diliyle eğitim alma hakkı.',
+    explanation:
+        '\'anadilinde eğitim\' → halkların kendi diliyle eğitim alma hakkı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12985',
     category: 'Siyaset',
     prompt: '\'radikal demokrasi\' hakkında doğru olan seçenek hangisidir?',
-    answers: ['Demokratik konfederalizm ve demokratik ulus tartışması', 'sadece çoğunluğun değil azınlığın da dinlendiği yapı', 'vatandaşların karar alma süreçlerine müdahil olması', 'tabandan doğrudan katılımı öncelikli kılan demokrasi'],
+    answers: [
+      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'sadece çoğunluğun değil azınlığın da dinlendiği yapı',
+      'vatandaşların karar alma süreçlerine müdahil olması',
+      'tabandan doğrudan katılımı öncelikli kılan demokrasi',
+    ],
     correctAnswer: 'tabandan doğrudan katılımı öncelikli kılan demokrasi',
-    explanation: '\'radikal demokrasi\' → tabandan doğrudan katılımı öncelikli kılan demokrasi.',
+    explanation:
+        '\'radikal demokrasi\' → tabandan doğrudan katılımı öncelikli kılan demokrasi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_12989',
     category: 'Siyaset',
     prompt: 'Siyaset bağlamında \'idari özerklik\' nasıl anlaşılmalıdır?',
-    answers: ['Tabandan doğrudan ve sürekli katılımı önceler', 'Kimliğin ve kültürün kuşaklara aktarımı için', 'yerel bütçe ve hizmetleri kendi yönetme hakkı', 'bağımsız ve tarafsız mahkemelerde savunma hakkı'],
+    answers: [
+      'Tabandan doğrudan ve sürekli katılımı önceler',
+      'Kimliğin ve kültürün kuşaklara aktarımı için',
+      'yerel bütçe ve hizmetleri kendi yönetme hakkı',
+      'bağımsız ve tarafsız mahkemelerde savunma hakkı',
+    ],
     correctAnswer: 'yerel bütçe ve hizmetleri kendi yönetme hakkı',
-    explanation: '\'idari özerklik\' → yerel bütçe ve hizmetleri kendi yönetme hakkı.',
+    explanation:
+        '\'idari özerklik\' → yerel bütçe ve hizmetleri kendi yönetme hakkı.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13010',
     category: 'Siyaset',
     prompt: 'Siyaset bağlamında \'toplumsal muhalefet\' nasıl anlaşılmalıdır?',
-    answers: ['Kapitalist modernite ve merkezi ulus-devlet eleştirisi', 'Yasal düzenlemeler ve demokratik entegrasyon adımları', 'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi', 'halkların kendi kimliğiyle tanınma ve yönetilme hakkı'],
+    answers: [
+      'Kapitalist modernite ve merkezi ulus-devlet eleştirisi',
+      'Yasal düzenlemeler ve demokratik entegrasyon adımları',
+      'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi',
+      'halkların kendi kimliğiyle tanınma ve yönetilme hakkı',
+    ],
     correctAnswer: 'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi',
-    explanation: '\'toplumsal muhalefet\' → resmi yönetime karşı halkın barışçıl tepki örgütlenmesi.',
+    explanation:
+        '\'toplumsal muhalefet\' → resmi yönetime karşı halkın barışçıl tepki örgütlenmesi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13025',
@@ -10472,19 +13926,27 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Doğrudan katılım\' Siyaset bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Doğrudan katılım\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Doğrudan katılım\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13030',
     category: 'Siyaset',
     prompt: 'Siyaset bağlamında \'yerel irade\' nasıl anlaşılmalıdır?',
-    answers: ['Toplulukların yerel olarak kendi işlerini yönetmesini', 'geçmişteki acıları araştırıp toplumsal barışı kuran kurul', 'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi', 'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü'],
-    correctAnswer: 'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü',
-    explanation: '\'yerel irade\' → merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü.',
+    answers: [
+      'Toplulukların yerel olarak kendi işlerini yönetmesini',
+      'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
+      'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi',
+      'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü',
+    ],
+    correctAnswer:
+        'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü',
+    explanation:
+        '\'yerel irade\' → merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13039',
@@ -10494,17 +13956,23 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Siyasi özerklik\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13040',
     category: 'Siyaset',
     prompt: '\'azınlık hakları\' için en isabetli açıklama hangisidir?',
-    answers: ['çoğunluğa karşı farklı olan grupların korunması', 'çatışmaları silah yerine diyalogla çözme iradesi', 'farklı muhalif grupların ortak barış platformu', 'gücün tek merkezden yerel birimlere dağıtılması'],
+    answers: [
+      'çoğunluğa karşı farklı olan grupların korunması',
+      'çatışmaları silah yerine diyalogla çözme iradesi',
+      'farklı muhalif grupların ortak barış platformu',
+      'gücün tek merkezden yerel birimlere dağıtılması',
+    ],
     correctAnswer: 'çoğunluğa karşı farklı olan grupların korunması',
-    explanation: '\'azınlık hakları\' → çoğunluğa karşı farklı olan grupların korunması.',
+    explanation:
+        '\'azınlık hakları\' → çoğunluğa karşı farklı olan grupların korunması.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13060',
@@ -10512,119 +13980,183 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Siyaset bağlamında \'cinsiyet kotası\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'cinsiyet kotası\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'cinsiyet kotası\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13067',
     category: 'Siyaset',
     prompt: 'Aşağıdakilerden hangisi \'ademi merkeziyetçilik\' için doğrudur?',
-    answers: ['Kimlik, dil, kültürel haklar, statü ve demokratik temsil', 'Demokratik konfederalizm ve demokratik ulus tartışması', 'Yerel demokrasi, kadın özgürlüğü, ekoloji ve çoğulculuk', 'gücün tek merkezden yerel birimlere dağıtılması'],
+    answers: [
+      'Kimlik, dil, kültürel haklar, statü ve demokratik temsil',
+      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'Yerel demokrasi, kadın özgürlüğü, ekoloji ve çoğulculuk',
+      'gücün tek merkezden yerel birimlere dağıtılması',
+    ],
     correctAnswer: 'gücün tek merkezden yerel birimlere dağıtılması',
-    explanation: '\'ademi merkeziyetçilik\' → gücün tek merkezden yerel birimlere dağıtılması.',
+    explanation:
+        '\'ademi merkeziyetçilik\' → gücün tek merkezden yerel birimlere dağıtılması.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13068',
     category: 'Siyaset',
-    prompt: 'Hangisi Siyaset içinde \'temsili demokrasi\' kavramını doğru yerleştirir?',
-    answers: ['halkın sadece seçimlerle yönetime katıldığı sistem', 'toplumun savaşsız bir ortamda yaşama evrensel hakkı', 'Farklı halkların eşit ve dayanışmacı birlikteliğini', 'resmi ve kamusal alanlarda anadilinin kullanılması'],
+    prompt:
+        'Hangisi Siyaset içinde \'temsili demokrasi\' kavramını doğru yerleştirir?',
+    answers: [
+      'halkın sadece seçimlerle yönetime katıldığı sistem',
+      'toplumun savaşsız bir ortamda yaşama evrensel hakkı',
+      'Farklı halkların eşit ve dayanışmacı birlikteliğini',
+      'resmi ve kamusal alanlarda anadilinin kullanılması',
+    ],
     correctAnswer: 'halkın sadece seçimlerle yönetime katıldığı sistem',
-    explanation: '\'temsili demokrasi\' → halkın sadece seçimlerle yönetime katıldığı sistem.',
+    explanation:
+        '\'temsili demokrasi\' → halkın sadece seçimlerle yönetime katıldığı sistem.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13081',
     category: 'Siyaset',
     prompt: '\'çoğulcu demokrasi\' kavramı neyi karşılar?',
-    answers: ['siyasette kadın katılımını güvenceye alan yasal oran', 'kendi yasalarını yapabilen yerel parlamento yetkisi', 'sadece çoğunluğun değil azınlığın da dinlendiği yapı', 'yerel yönetimlerin gücünü artıran uluslararası belge'],
+    answers: [
+      'siyasette kadın katılımını güvenceye alan yasal oran',
+      'kendi yasalarını yapabilen yerel parlamento yetkisi',
+      'sadece çoğunluğun değil azınlığın da dinlendiği yapı',
+      'yerel yönetimlerin gücünü artıran uluslararası belge',
+    ],
     correctAnswer: 'sadece çoğunluğun değil azınlığın da dinlendiği yapı',
-    explanation: '\'çoğulcu demokrasi\' → sadece çoğunluğun değil azınlığın da dinlendiği yapı.',
+    explanation:
+        '\'çoğulcu demokrasi\' → sadece çoğunluğun değil azınlığın da dinlendiği yapı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13087',
     category: 'Siyaset',
-    prompt: 'Siyaset çalışmalarında \'Demokratik özerklik\' ele alınan konulardandır.',
+    prompt:
+        'Siyaset çalışmalarında \'Demokratik özerklik\' ele alınan konulardandır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Demokratik özerklik\' Siyaset alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Demokratik özerklik\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13102',
     category: 'Siyaset',
     prompt: '\'parti eş başkanlığı\' dendiğinde kastedilen nedir?',
-    answers: ['Yerel yönetim, eğitim ve ekonomi gibi alanlarda', 'partilerde kadının eşit söz sahibi olma sistemi', 'farklı muhalif grupların ortak barış platformu', 'kaynakların ve hakların eşit paylaşılması ilkesi'],
+    answers: [
+      'Yerel yönetim, eğitim ve ekonomi gibi alanlarda',
+      'partilerde kadının eşit söz sahibi olma sistemi',
+      'farklı muhalif grupların ortak barış platformu',
+      'kaynakların ve hakların eşit paylaşılması ilkesi',
+    ],
     correctAnswer: 'partilerde kadının eşit söz sahibi olma sistemi',
-    explanation: '\'parti eş başkanlığı\' → partilerde kadının eşit söz sahibi olma sistemi.',
+    explanation:
+        '\'parti eş başkanlığı\' → partilerde kadının eşit söz sahibi olma sistemi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13117',
     category: 'Siyaset',
     prompt: 'Siyaset çerçevesinde \'siyasi ahlak\' ne anlama gelir?',
-    answers: ['geçmişteki acıları araştırıp toplumsal barışı kuran kurul', 'Örgütsel yapının feshi ve silahlı mücadelenin sonlandırılması', 'Müzakere, demokratik reform ve hakların güvenceye alınması', 'siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri'],
+    answers: [
+      'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
+      'Örgütsel yapının feshi ve silahlı mücadelenin sonlandırılması',
+      'Müzakere, demokratik reform ve hakların güvenceye alınması',
+      'siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri',
+    ],
     correctAnswer: 'siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri',
-    explanation: '\'siyasi ahlak\' → siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri.',
+    explanation:
+        '\'siyasi ahlak\' → siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13122',
     category: 'Siyaset',
     prompt: 'Siyaset açısından \'barış hakkı\' için doğru ifade hangisidir?',
-    answers: ['toplumun dışarıdan baskı olmadan kendini yönetmesi', 'sadece çoğunluğun değil azınlığın da dinlendiği yapı', 'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı', 'toplumun savaşsız bir ortamda yaşama evrensel hakkı'],
+    answers: [
+      'toplumun dışarıdan baskı olmadan kendini yönetmesi',
+      'sadece çoğunluğun değil azınlığın da dinlendiği yapı',
+      'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı',
+      'toplumun savaşsız bir ortamda yaşama evrensel hakkı',
+    ],
     correctAnswer: 'toplumun savaşsız bir ortamda yaşama evrensel hakkı',
-    explanation: '\'barış hakkı\' → toplumun savaşsız bir ortamda yaşama evrensel hakkı.',
+    explanation:
+        '\'barış hakkı\' → toplumun savaşsız bir ortamda yaşama evrensel hakkı.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13124',
     category: 'Siyaset',
     prompt: '\'anadili hakkı\' hakkında bilinen doğru nedir?',
-    answers: ['Silah bırakma ve örgütsel yapıyı feshetme çağrısı', 'toplumun savaşsız bir ortamda yaşama evrensel hakkı', 'dernekler ve inisiyatiflerle yönetime müdahil olma', 'resmi ve kamusal alanlarda anadilinin kullanılması'],
+    answers: [
+      'Silah bırakma ve örgütsel yapıyı feshetme çağrısı',
+      'toplumun savaşsız bir ortamda yaşama evrensel hakkı',
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+      'resmi ve kamusal alanlarda anadilinin kullanılması',
+    ],
     correctAnswer: 'resmi ve kamusal alanlarda anadilinin kullanılması',
-    explanation: '\'anadili hakkı\' → resmi ve kamusal alanlarda anadilinin kullanılması.',
+    explanation:
+        '\'anadili hakkı\' → resmi ve kamusal alanlarda anadilinin kullanılması.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13125',
     category: 'Siyaset',
     prompt: 'Aşağıdakilerden hangisi \'sivil katılım\' için doğrudur?',
-    answers: ['resmi ve kamusal alanlarda anadilinin kullanılması', 'bütçe harcamalarını halkın meclislerle belirlemesi', 'dernekler ve inisiyatiflerle yönetime müdahil olma', 'Silah bırakma ve örgütsel yapıyı feshetme çağrısı'],
+    answers: [
+      'resmi ve kamusal alanlarda anadilinin kullanılması',
+      'bütçe harcamalarını halkın meclislerle belirlemesi',
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+      'Silah bırakma ve örgütsel yapıyı feshetme çağrısı',
+    ],
     correctAnswer: 'dernekler ve inisiyatiflerle yönetime müdahil olma',
-    explanation: '\'sivil katılım\' → dernekler ve inisiyatiflerle yönetime müdahil olma.',
+    explanation:
+        '\'sivil katılım\' → dernekler ve inisiyatiflerle yönetime müdahil olma.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13129',
     category: 'Siyaset',
     prompt: 'Hangisi \'yerel yönetim\' ile uyumlu bir tanımdır?',
-    answers: ['vatandaşların karar alma süreçlerine müdahil olması', 'toplumun savaşsız bir ortamda yaşama evrensel hakkı', 'belediyeler ve yerel kurulların oluşturduğu yönetim', 'farklı kimliklerin ve inançların eşit kabul edilmesi'],
+    answers: [
+      'vatandaşların karar alma süreçlerine müdahil olması',
+      'toplumun savaşsız bir ortamda yaşama evrensel hakkı',
+      'belediyeler ve yerel kurulların oluşturduğu yönetim',
+      'farklı kimliklerin ve inançların eşit kabul edilmesi',
+    ],
     correctAnswer: 'belediyeler ve yerel kurulların oluşturduğu yönetim',
-    explanation: '\'yerel yönetim\' → belediyeler ve yerel kurulların oluşturduğu yönetim.',
+    explanation:
+        '\'yerel yönetim\' → belediyeler ve yerel kurulların oluşturduğu yönetim.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13148',
     category: 'Siyaset',
     prompt: '\'siyasi katılım\' için geçerli tanım hangisidir?',
-    answers: ['vatandaşların karar alma süreçlerine müdahil olması', 'toplumun dışarıdan baskı olmadan kendini yönetmesi', 'resmi ve kamusal alanlarda anadilinin kullanılması', 'yerelde kendi kendini yönetme ve karar alma statüsü'],
+    answers: [
+      'vatandaşların karar alma süreçlerine müdahil olması',
+      'toplumun dışarıdan baskı olmadan kendini yönetmesi',
+      'resmi ve kamusal alanlarda anadilinin kullanılması',
+      'yerelde kendi kendini yönetme ve karar alma statüsü',
+    ],
     correctAnswer: 'vatandaşların karar alma süreçlerine müdahil olması',
-    explanation: '\'siyasi katılım\' → vatandaşların karar alma süreçlerine müdahil olması.',
+    explanation:
+        '\'siyasi katılım\' → vatandaşların karar alma süreçlerine müdahil olması.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13157',
@@ -10632,39 +14164,58 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Siyaset alanında \'Yerel irade\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Yerel irade\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Yerel irade\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13158',
     category: 'Siyaset',
     prompt: '\'statü hakkı\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['Toplulukların yerel olarak kendi işlerini yönetmesini', 'belediyeler ve yerel kurulların oluşturduğu yönetim', 'halkların kendi kimliğiyle tanınma ve yönetilme hakkı', 'farklı kimliklerin ve inançların eşit kabul edilmesi'],
+    answers: [
+      'Toplulukların yerel olarak kendi işlerini yönetmesini',
+      'belediyeler ve yerel kurulların oluşturduğu yönetim',
+      'halkların kendi kimliğiyle tanınma ve yönetilme hakkı',
+      'farklı kimliklerin ve inançların eşit kabul edilmesi',
+    ],
     correctAnswer: 'halkların kendi kimliğiyle tanınma ve yönetilme hakkı',
-    explanation: '\'statü hakkı\' → halkların kendi kimliğiyle tanınma ve yönetilme hakkı.',
+    explanation:
+        '\'statü hakkı\' → halkların kendi kimliğiyle tanınma ve yönetilme hakkı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13166',
     category: 'Siyaset',
     prompt: '\'sivil katılım\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['tüm farklı kesimleri kapsayan özgürlükçü anayasa', 'yerelde kendi kendini yönetme ve karar alma statüsü', 'dernekler ve inisiyatiflerle yönetime müdahil olma', 'kendi yasalarını yapabilen yerel parlamento yetkisi'],
+    answers: [
+      'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
+      'yerelde kendi kendini yönetme ve karar alma statüsü',
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+      'kendi yasalarını yapabilen yerel parlamento yetkisi',
+    ],
     correctAnswer: 'dernekler ve inisiyatiflerle yönetime müdahil olma',
-    explanation: '\'sivil katılım\' → dernekler ve inisiyatiflerle yönetime müdahil olma.',
+    explanation:
+        '\'sivil katılım\' → dernekler ve inisiyatiflerle yönetime müdahil olma.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13169',
     category: 'Siyaset',
     prompt: '\'toplumsal adalet\' ne anlama gelir?',
-    answers: ['kaynakların ve hakların eşit paylaşılması ilkesi', 'protesto, örgütlenme ve ifade özgürlüğü hakları', 'Silah bırakma ve örgütsel yapıyı feshetme çağrısı', 'çatışmaları silah yerine diyalogla çözme iradesi'],
+    answers: [
+      'kaynakların ve hakların eşit paylaşılması ilkesi',
+      'protesto, örgütlenme ve ifade özgürlüğü hakları',
+      'Silah bırakma ve örgütsel yapıyı feshetme çağrısı',
+      'çatışmaları silah yerine diyalogla çözme iradesi',
+    ],
     correctAnswer: 'kaynakların ve hakların eşit paylaşılması ilkesi',
-    explanation: '\'toplumsal adalet\' → kaynakların ve hakların eşit paylaşılması ilkesi.',
+    explanation:
+        '\'toplumsal adalet\' → kaynakların ve hakların eşit paylaşılması ilkesi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13170',
@@ -10672,49 +14223,69 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Siyaset alanında \'katılımcı bütçe\' bilinmez ve kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'katılımcı bütçe\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'katılımcı bütçe\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13171',
     category: 'Siyaset',
     prompt: 'Siyaset alanında \'siyasi ahlak\' neyi ifade eder?',
-    answers: ['Örgütsel yapının feshi ve silahlı mücadelenin sonlandırılması', 'Kimlik, dil, kültürel haklar, statü ve demokratik temsil', 'siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri', 'Toplulukların yerel olarak kendi işlerini yönetmesini'],
+    answers: [
+      'Örgütsel yapının feshi ve silahlı mücadelenin sonlandırılması',
+      'Kimlik, dil, kültürel haklar, statü ve demokratik temsil',
+      'siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri',
+      'Toplulukların yerel olarak kendi işlerini yönetmesini',
+    ],
     correctAnswer: 'siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri',
-    explanation: '\'siyasi ahlak\' → siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri.',
+    explanation:
+        '\'siyasi ahlak\' → siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13193',
     category: 'Siyaset',
     prompt: 'Aşağıdakilerden hangisi \'yerel özerklik şartı\' için doğrudur?',
-    answers: ['yerel yönetimlerin gücünü artıran uluslararası belge', 'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı', 'Demokratik konfederalizm ve demokratik ulus tartışması', 'toplumun savaşsız bir ortamda yaşama evrensel hakkı'],
+    answers: [
+      'yerel yönetimlerin gücünü artıran uluslararası belge',
+      'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı',
+      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'toplumun savaşsız bir ortamda yaşama evrensel hakkı',
+    ],
     correctAnswer: 'yerel yönetimlerin gücünü artıran uluslararası belge',
-    explanation: '\'yerel özerklik şartı\' → yerel yönetimlerin gücünü artıran uluslararası belge.',
+    explanation:
+        '\'yerel özerklik şartı\' → yerel yönetimlerin gücünü artıran uluslararası belge.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13228',
     category: 'Siyaset',
     prompt: '\'parti eş başkanlığı\' hakkında bilinen doğru nedir?',
-    answers: ['kararların tek lider yerine kurullarla alınması', 'partilerde kadının eşit söz sahibi olma sistemi', 'protesto, örgütlenme ve ifade özgürlüğü hakları', 'çoğunluğa karşı farklı olan grupların korunması'],
+    answers: [
+      'kararların tek lider yerine kurullarla alınması',
+      'partilerde kadının eşit söz sahibi olma sistemi',
+      'protesto, örgütlenme ve ifade özgürlüğü hakları',
+      'çoğunluğa karşı farklı olan grupların korunması',
+    ],
     correctAnswer: 'partilerde kadının eşit söz sahibi olma sistemi',
-    explanation: '\'parti eş başkanlığı\' → partilerde kadının eşit söz sahibi olma sistemi.',
+    explanation:
+        '\'parti eş başkanlığı\' → partilerde kadının eşit söz sahibi olma sistemi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13232',
     category: 'Siyaset',
-    prompt: '\'Toplumsal uzlaşı\' Siyaset bilgisinin parçası olan gerçek bir başlıktır.',
+    prompt:
+        '\'Toplumsal uzlaşı\' Siyaset bilgisinin parçası olan gerçek bir başlıktır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Toplumsal uzlaşı\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13236',
@@ -10722,79 +14293,123 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'siyasi katılım\' Siyaset bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'siyasi katılım\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'siyasi katılım\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13252',
     category: 'Siyaset',
     prompt: '\'insan hakları\', Siyaset konusunda neyi anlatır?',
-    answers: ['kaynakların ve hakların eşit paylaşılması ilkesi', 'çoğunluğa karşı farklı olan grupların korunması', 'adaletsiz yasalara karşı barışçıl protesto biçimi', 'her bireyin doğuştan sahip olduğu evrensel haklar'],
+    answers: [
+      'kaynakların ve hakların eşit paylaşılması ilkesi',
+      'çoğunluğa karşı farklı olan grupların korunması',
+      'adaletsiz yasalara karşı barışçıl protesto biçimi',
+      'her bireyin doğuştan sahip olduğu evrensel haklar',
+    ],
     correctAnswer: 'her bireyin doğuştan sahip olduğu evrensel haklar',
-    explanation: '\'insan hakları\' → her bireyin doğuştan sahip olduğu evrensel haklar.',
+    explanation:
+        '\'insan hakları\' → her bireyin doğuştan sahip olduğu evrensel haklar.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13265',
     category: 'Siyaset',
     prompt: 'Aşağıdakilerden hangisi \'anadili hakkı\' kavramını açıklar?',
-    answers: ['bütçe harcamalarını halkın meclislerle belirlemesi', 'tüm farklı kesimleri kapsayan özgürlükçü anayasa', 'toplumun savaşsız bir ortamda yaşama evrensel hakkı', 'resmi ve kamusal alanlarda anadilinin kullanılması'],
+    answers: [
+      'bütçe harcamalarını halkın meclislerle belirlemesi',
+      'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
+      'toplumun savaşsız bir ortamda yaşama evrensel hakkı',
+      'resmi ve kamusal alanlarda anadilinin kullanılması',
+    ],
     correctAnswer: 'resmi ve kamusal alanlarda anadilinin kullanılması',
-    explanation: '\'anadili hakkı\' → resmi ve kamusal alanlarda anadilinin kullanılması.',
+    explanation:
+        '\'anadili hakkı\' → resmi ve kamusal alanlarda anadilinin kullanılması.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13269',
     category: 'Siyaset',
     prompt: 'Siyaset alanında \'eş başkanlık\' neyi ifade eder?',
-    answers: ['Müzakere ve demokratik çözüme', 'yönetimde eşit temsil sistemidir', 'Yerel komünlerden üst meclislere', 'Kadın dayanışması ve özgürlüğü'],
+    answers: [
+      'Müzakere ve demokratik çözüme',
+      'yönetimde eşit temsil sistemidir',
+      'Yerel komünlerden üst meclislere',
+      'Kadın dayanışması ve özgürlüğü',
+    ],
     correctAnswer: 'yönetimde eşit temsil sistemidir',
     explanation: '\'eş başkanlık\' → yönetimde eşit temsil sistemidir.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13275',
     category: 'Siyaset',
-    prompt: 'Siyaset açısından \'cinsiyet kotası\' için doğru ifade hangisidir?',
-    answers: ['yerelde kendi kendini yönetme ve karar alma statüsü', 'halkların kendi kimliğiyle tanınma ve yönetilme hakkı', 'siyasette kadın katılımını güvenceye alan yasal oran', 'toplumun savaşsız bir ortamda yaşama evrensel hakkı'],
+    prompt:
+        'Siyaset açısından \'cinsiyet kotası\' için doğru ifade hangisidir?',
+    answers: [
+      'yerelde kendi kendini yönetme ve karar alma statüsü',
+      'halkların kendi kimliğiyle tanınma ve yönetilme hakkı',
+      'siyasette kadın katılımını güvenceye alan yasal oran',
+      'toplumun savaşsız bir ortamda yaşama evrensel hakkı',
+    ],
     correctAnswer: 'siyasette kadın katılımını güvenceye alan yasal oran',
-    explanation: '\'cinsiyet kotası\' → siyasette kadın katılımını güvenceye alan yasal oran.',
+    explanation:
+        '\'cinsiyet kotası\' → siyasette kadın katılımını güvenceye alan yasal oran.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13296',
     category: 'Siyaset',
     prompt: '\'insan hakları\' kavramı neyi karşılar?',
-    answers: ['barışçıl çözüm için toplumun ortak karara varması', 'Farklı kimlik ve inançların bir arada yaşamasını', 'dernekler ve inisiyatiflerle yönetime müdahil olma', 'her bireyin doğuştan sahip olduğu evrensel haklar'],
+    answers: [
+      'barışçıl çözüm için toplumun ortak karara varması',
+      'Farklı kimlik ve inançların bir arada yaşamasını',
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+      'her bireyin doğuştan sahip olduğu evrensel haklar',
+    ],
     correctAnswer: 'her bireyin doğuştan sahip olduğu evrensel haklar',
-    explanation: '\'insan hakları\' → her bireyin doğuştan sahip olduğu evrensel haklar.',
+    explanation:
+        '\'insan hakları\' → her bireyin doğuştan sahip olduğu evrensel haklar.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13313',
     category: 'Siyaset',
     prompt: '\'katılımcı bütçe\' ile kastedilen doğru nedir?',
-    answers: ['kendi yasalarını yapabilen yerel parlamento yetkisi', 'resmi ve kamusal alanlarda anadilinin kullanılması', 'bütçe harcamalarını halkın meclislerle belirlemesi', 'dernekler ve inisiyatiflerle yönetime müdahil olma'],
+    answers: [
+      'kendi yasalarını yapabilen yerel parlamento yetkisi',
+      'resmi ve kamusal alanlarda anadilinin kullanılması',
+      'bütçe harcamalarını halkın meclislerle belirlemesi',
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+    ],
     correctAnswer: 'bütçe harcamalarını halkın meclislerle belirlemesi',
-    explanation: '\'katılımcı bütçe\' → bütçe harcamalarını halkın meclislerle belirlemesi.',
+    explanation:
+        '\'katılımcı bütçe\' → bütçe harcamalarını halkın meclislerle belirlemesi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13332',
     category: 'Siyaset',
-    prompt: 'Siyaset bilgisinde \'hakikat komisyonu\' ile ilgili doğru olan hangisidir?',
-    answers: ['Kimlik, dil, kültürel haklar, statü ve demokratik temsil', 'Kapitalist modernite ve merkezi ulus-devlet eleştirisi', 'Toplumun bütününün özgürleşmesinin koşulu sayıldığı için', 'geçmişteki acıları araştırıp toplumsal barışı kuran kurul'],
+    prompt:
+        'Siyaset bilgisinde \'hakikat komisyonu\' ile ilgili doğru olan hangisidir?',
+    answers: [
+      'Kimlik, dil, kültürel haklar, statü ve demokratik temsil',
+      'Kapitalist modernite ve merkezi ulus-devlet eleştirisi',
+      'Toplumun bütününün özgürleşmesinin koşulu sayıldığı için',
+      'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
+    ],
     correctAnswer: 'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
-    explanation: '\'hakikat komisyonu\' → geçmişteki acıları araştırıp toplumsal barışı kuran kurul.',
+    explanation:
+        '\'hakikat komisyonu\' → geçmişteki acıları araştırıp toplumsal barışı kuran kurul.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13353',
@@ -10802,89 +14417,134 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Siyaset çalışmalarında \'sivil itaatsizlik\' hiç kullanılmaz.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'sivil itaatsizlik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'sivil itaatsizlik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13382',
     category: 'Siyaset',
     prompt: '\'sivil itaatsizlik\' hakkında bilinen doğru nedir?',
-    answers: ['barışçıl çözüm için toplumun ortak karara varması', 'her bireyin doğuştan sahip olduğu evrensel haklar', 'adaletsiz yasalara karşı barışçıl protesto biçimi', 'bütçe harcamalarını halkın meclislerle belirlemesi'],
+    answers: [
+      'barışçıl çözüm için toplumun ortak karara varması',
+      'her bireyin doğuştan sahip olduğu evrensel haklar',
+      'adaletsiz yasalara karşı barışçıl protesto biçimi',
+      'bütçe harcamalarını halkın meclislerle belirlemesi',
+    ],
     correctAnswer: 'adaletsiz yasalara karşı barışçıl protesto biçimi',
-    explanation: '\'sivil itaatsizlik\' → adaletsiz yasalara karşı barışçıl protesto biçimi.',
+    explanation:
+        '\'sivil itaatsizlik\' → adaletsiz yasalara karşı barışçıl protesto biçimi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13390',
     category: 'Siyaset',
     prompt: '\'meşruiyet\' hakkında bilinen doğru nedir?',
-    answers: ['Silah bırakma ve örgütsel yapıyı feshetme çağrısı', 'kaynakların ve hakların eşit paylaşılması ilkesi', 'yönetimin halkın rızasına ve hukuka uygun olması', 'çoğunluğa karşı farklı olan grupların korunması'],
+    answers: [
+      'Silah bırakma ve örgütsel yapıyı feshetme çağrısı',
+      'kaynakların ve hakların eşit paylaşılması ilkesi',
+      'yönetimin halkın rızasına ve hukuka uygun olması',
+      'çoğunluğa karşı farklı olan grupların korunması',
+    ],
     correctAnswer: 'yönetimin halkın rızasına ve hukuka uygun olması',
-    explanation: '\'meşruiyet\' → yönetimin halkın rızasına ve hukuka uygun olması.',
+    explanation:
+        '\'meşruiyet\' → yönetimin halkın rızasına ve hukuka uygun olması.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13391',
     category: 'Siyaset',
     prompt: 'Hangisi \'hakikat komisyonu\' kavramını doğru betimler?',
-    answers: ['Müzakere, demokratik reform ve hakların güvenceye alınması', 'geçmişteki acıları araştırıp toplumsal barışı kuran kurul', 'Kapitalist modernite ve merkezi ulus-devlet eleştirisi', 'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü'],
+    answers: [
+      'Müzakere, demokratik reform ve hakların güvenceye alınması',
+      'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
+      'Kapitalist modernite ve merkezi ulus-devlet eleştirisi',
+      'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü',
+    ],
     correctAnswer: 'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
-    explanation: '\'hakikat komisyonu\' → geçmişteki acıları araştırıp toplumsal barışı kuran kurul.',
+    explanation:
+        '\'hakikat komisyonu\' → geçmişteki acıları araştırıp toplumsal barışı kuran kurul.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13393',
     category: 'Siyaset',
     prompt: '\'meşruiyet\' kavramını doğru anlatan ifade hangisidir?',
-    answers: ['Farklı kimlik ve inançların bir arada yaşamasını', 'kararların tek lider yerine kurullarla alınması', 'Silah bırakma ve örgütsel yapıyı feshetme çağrısı', 'yönetimin halkın rızasına ve hukuka uygun olması'],
+    answers: [
+      'Farklı kimlik ve inançların bir arada yaşamasını',
+      'kararların tek lider yerine kurullarla alınması',
+      'Silah bırakma ve örgütsel yapıyı feshetme çağrısı',
+      'yönetimin halkın rızasına ve hukuka uygun olması',
+    ],
     correctAnswer: 'yönetimin halkın rızasına ve hukuka uygun olması',
-    explanation: '\'meşruiyet\' → yönetimin halkın rızasına ve hukuka uygun olması.',
+    explanation:
+        '\'meşruiyet\' → yönetimin halkın rızasına ve hukuka uygun olması.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13394',
     category: 'Siyaset',
     prompt: '\'siyasi özerklik\' doğru şekilde nasıl açıklanır?',
-    answers: ['halkın sadece seçimlerle yönetime katıldığı sistem', 'kendi yasalarını yapabilen yerel parlamento yetkisi', 'farklı kimliklerin ve inançların eşit kabul edilmesi', 'resmi ve kamusal alanlarda anadilinin kullanılması'],
+    answers: [
+      'halkın sadece seçimlerle yönetime katıldığı sistem',
+      'kendi yasalarını yapabilen yerel parlamento yetkisi',
+      'farklı kimliklerin ve inançların eşit kabul edilmesi',
+      'resmi ve kamusal alanlarda anadilinin kullanılması',
+    ],
     correctAnswer: 'kendi yasalarını yapabilen yerel parlamento yetkisi',
-    explanation: '\'siyasi özerklik\' → kendi yasalarını yapabilen yerel parlamento yetkisi.',
+    explanation:
+        '\'siyasi özerklik\' → kendi yasalarını yapabilen yerel parlamento yetkisi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13428',
     category: 'Siyaset',
     prompt: 'Aşağıda \'yerel özerklik şartı\' için doğru olan hangisidir?',
-    answers: ['yerel yönetimlerin gücünü artıran uluslararası belge', 'kendi yasalarını yapabilen yerel parlamento yetkisi', 'Toplulukların yerel olarak kendi işlerini yönetmesini', 'belediyeler ve yerel kurulların oluşturduğu yönetim'],
+    answers: [
+      'yerel yönetimlerin gücünü artıran uluslararası belge',
+      'kendi yasalarını yapabilen yerel parlamento yetkisi',
+      'Toplulukların yerel olarak kendi işlerini yönetmesini',
+      'belediyeler ve yerel kurulların oluşturduğu yönetim',
+    ],
     correctAnswer: 'yerel yönetimlerin gücünü artıran uluslararası belge',
-    explanation: '\'yerel özerklik şartı\' → yerel yönetimlerin gücünü artıran uluslararası belge.',
+    explanation:
+        '\'yerel özerklik şartı\' → yerel yönetimlerin gücünü artıran uluslararası belge.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13432',
     category: 'Siyaset',
     prompt: 'Aşağıdakilerden hangisi \'kuvvetler ayrılığı\' için doğrudur?',
-    answers: ['yasama, yürütme ve yargının bağımsız olması', 'halkın siyasi kararlara bizzat dahil olması', 'sorunları diyalog yoluyla çözme yöntemi', 'Kimliğin ve kültürün kuşaklara aktarımı için'],
+    answers: [
+      'yasama, yürütme ve yargının bağımsız olması',
+      'halkın siyasi kararlara bizzat dahil olması',
+      'sorunları diyalog yoluyla çözme yöntemi',
+      'Kimliğin ve kültürün kuşaklara aktarımı için',
+    ],
     correctAnswer: 'yasama, yürütme ve yargının bağımsız olması',
-    explanation: '\'kuvvetler ayrılığı\' → yasama, yürütme ve yargının bağımsız olması.',
+    explanation:
+        '\'kuvvetler ayrılığı\' → yasama, yürütme ve yargının bağımsız olması.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13439',
     category: 'Siyaset',
-    prompt: 'Siyaset alanında \'Radikal demokrasi\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Siyaset alanında \'Radikal demokrasi\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Radikal demokrasi\' Siyaset alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Radikal demokrasi\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13454',
@@ -10892,49 +14552,75 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Demokratik haklar\', Siyaset ile ilgili gerçek bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Demokratik haklar\' Siyaset alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Demokratik haklar\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13474',
     category: 'Siyaset',
     prompt: '\'doğrudan katılım\' kavramı neyi karşılar?',
-    answers: ['kararların halka en yakın birimlerde alınması', 'Kimlik, dil, statü ve haklar sorunu olarak', 'halkın siyasi kararlara bizzat dahil olması', 'çatışmalı ortamı diyalogla sonlandırma aşaması'],
+    answers: [
+      'kararların halka en yakın birimlerde alınması',
+      'Kimlik, dil, statü ve haklar sorunu olarak',
+      'halkın siyasi kararlara bizzat dahil olması',
+      'çatışmalı ortamı diyalogla sonlandırma aşaması',
+    ],
     correctAnswer: 'halkın siyasi kararlara bizzat dahil olması',
-    explanation: '\'doğrudan katılım\' → halkın siyasi kararlara bizzat dahil olması.',
+    explanation:
+        '\'doğrudan katılım\' → halkın siyasi kararlara bizzat dahil olması.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13483',
     category: 'Siyaset',
     prompt: 'Aşağıdakilerden hangisi \'siyasi özerklik\' kavramını açıklar?',
-    answers: ['kendi yasalarını yapabilen yerel parlamento yetkisi', 'belediyeler ve yerel kurulların oluşturduğu yönetim', 'dernekler ve inisiyatiflerle yönetime müdahil olma', 'vatandaşların karar alma süreçlerine müdahil olması'],
+    answers: [
+      'kendi yasalarını yapabilen yerel parlamento yetkisi',
+      'belediyeler ve yerel kurulların oluşturduğu yönetim',
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+      'vatandaşların karar alma süreçlerine müdahil olması',
+    ],
     correctAnswer: 'kendi yasalarını yapabilen yerel parlamento yetkisi',
-    explanation: '\'siyasi özerklik\' → kendi yasalarını yapabilen yerel parlamento yetkisi.',
+    explanation:
+        '\'siyasi özerklik\' → kendi yasalarını yapabilen yerel parlamento yetkisi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13486',
     category: 'Siyaset',
-    prompt: 'Siyaset açısından \'özyönetim hakkı\' için doğru ifade hangisidir?',
-    answers: ['yerelde kendi kendini yönetme ve karar alma statüsü', 'Silah bırakma ve örgütsel yapıyı feshetme çağrısı', 'toplumun dışarıdan baskı olmadan kendini yönetmesi', 'halkın sadece seçimlerle yönetime katıldığı sistem'],
+    prompt:
+        'Siyaset açısından \'özyönetim hakkı\' için doğru ifade hangisidir?',
+    answers: [
+      'yerelde kendi kendini yönetme ve karar alma statüsü',
+      'Silah bırakma ve örgütsel yapıyı feshetme çağrısı',
+      'toplumun dışarıdan baskı olmadan kendini yönetmesi',
+      'halkın sadece seçimlerle yönetime katıldığı sistem',
+    ],
     correctAnswer: 'toplumun dışarıdan baskı olmadan kendini yönetmesi',
-    explanation: '\'özyönetim hakkı\' → toplumun dışarıdan baskı olmadan kendini yönetmesi.',
+    explanation:
+        '\'özyönetim hakkı\' → toplumun dışarıdan baskı olmadan kendini yönetmesi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13505',
     category: 'Siyaset',
     prompt: 'Hangisi \'barış süreci\' ile uyumlu bir tanımdır?',
-    answers: ['kararların halka en yakın birimlerde alınması', 'Tabandan doğrudan ve sürekli katılımı önceler', 'çatışmalı ortamı diyalogla sonlandırma aşaması', 'tüm farklı kesimleri kapsayan özgürlükçü anayasa'],
+    answers: [
+      'kararların halka en yakın birimlerde alınması',
+      'Tabandan doğrudan ve sürekli katılımı önceler',
+      'çatışmalı ortamı diyalogla sonlandırma aşaması',
+      'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
+    ],
     correctAnswer: 'çatışmalı ortamı diyalogla sonlandırma aşaması',
-    explanation: '\'barış süreci\' → çatışmalı ortamı diyalogla sonlandırma aşaması.',
+    explanation:
+        '\'barış süreci\' → çatışmalı ortamı diyalogla sonlandırma aşaması.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13513',
@@ -10942,19 +14628,27 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'temsili demokrasi\' ifadesi Siyaset bağlamında anlamlıdır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'temsili demokrasi\' Siyaset alanında geçerli bir kavramdır.',
+    explanation:
+        '\'temsili demokrasi\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13519',
     category: 'Siyaset',
-    prompt: 'Siyaset bağlamında \'ademi merkeziyetçilik\' nasıl anlaşılmalıdır?',
-    answers: ['protesto, örgütlenme ve ifade özgürlüğü hakları', 'gücün tek merkezden yerel birimlere dağıtılması', 'tüm farklı kesimleri kapsayan özgürlükçü anayasa', 'çatışmaları silah yerine diyalogla çözme iradesi'],
+    prompt:
+        'Siyaset bağlamında \'ademi merkeziyetçilik\' nasıl anlaşılmalıdır?',
+    answers: [
+      'protesto, örgütlenme ve ifade özgürlüğü hakları',
+      'gücün tek merkezden yerel birimlere dağıtılması',
+      'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
+      'çatışmaları silah yerine diyalogla çözme iradesi',
+    ],
     correctAnswer: 'gücün tek merkezden yerel birimlere dağıtılması',
-    explanation: '\'ademi merkeziyetçilik\' → gücün tek merkezden yerel birimlere dağıtılması.',
+    explanation:
+        '\'ademi merkeziyetçilik\' → gücün tek merkezden yerel birimlere dağıtılması.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13524',
@@ -10962,199 +14656,311 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Siyaset bağlamında \'toplumsal barış\' diye bir konu yoktur.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'toplumsal barış\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'toplumsal barış\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13527',
     category: 'Siyaset',
     prompt: '\'meşruiyet\' ne anlama gelir?',
-    answers: ['kaynakların ve hakların eşit paylaşılması ilkesi', 'yönetimin halkın rızasına ve hukuka uygun olması', 'anayasal güvence ve kültürel hakların tanınması', 'protesto, örgütlenme ve ifade özgürlüğü hakları'],
+    answers: [
+      'kaynakların ve hakların eşit paylaşılması ilkesi',
+      'yönetimin halkın rızasına ve hukuka uygun olması',
+      'anayasal güvence ve kültürel hakların tanınması',
+      'protesto, örgütlenme ve ifade özgürlüğü hakları',
+    ],
     correctAnswer: 'yönetimin halkın rızasına ve hukuka uygun olması',
-    explanation: '\'meşruiyet\' → yönetimin halkın rızasına ve hukuka uygun olması.',
+    explanation:
+        '\'meşruiyet\' → yönetimin halkın rızasına ve hukuka uygun olması.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13541',
     category: 'Siyaset',
-    prompt: '\'anayasal güvence\' Siyaset bağlamında kullanılan geçerli bir terimdir.',
+    prompt:
+        '\'anayasal güvence\' Siyaset bağlamında kullanılan geçerli bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'anayasal güvence\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13547',
     category: 'Siyaset',
     prompt: 'Aşağıdakilerden hangisi \'demokratik anayasa\' için doğrudur?',
-    answers: ['tüm farklı kesimleri kapsayan özgürlükçü anayasa', 'çoğunluğa karşı farklı olan grupların korunması', 'partilerde kadının eşit söz sahibi olma sistemi', 'yönetimin halkın rızasına ve hukuka uygun olması'],
+    answers: [
+      'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
+      'çoğunluğa karşı farklı olan grupların korunması',
+      'partilerde kadının eşit söz sahibi olma sistemi',
+      'yönetimin halkın rızasına ve hukuka uygun olması',
+    ],
     correctAnswer: 'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
-    explanation: '\'demokratik anayasa\' → tüm farklı kesimleri kapsayan özgürlükçü anayasa.',
+    explanation:
+        '\'demokratik anayasa\' → tüm farklı kesimleri kapsayan özgürlükçü anayasa.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13556',
     category: 'Siyaset',
-    prompt: 'Siyaset çerçevesinde \'demokratik haklar beyannamesi\' ne anlama gelir?',
-    answers: ['Tabandan katılım ve yerel karar alma', 'Eşit yurttaşlık ve hakların tanınmasını', 'temel hakları listeleyen kurucu belge', 'sorunları diyalog yoluyla çözme yöntemi'],
+    prompt:
+        'Siyaset çerçevesinde \'demokratik haklar beyannamesi\' ne anlama gelir?',
+    answers: [
+      'Tabandan katılım ve yerel karar alma',
+      'Eşit yurttaşlık ve hakların tanınmasını',
+      'temel hakları listeleyen kurucu belge',
+      'sorunları diyalog yoluyla çözme yöntemi',
+    ],
     correctAnswer: 'temel hakları listeleyen kurucu belge',
-    explanation: '\'demokratik haklar beyannamesi\' → temel hakları listeleyen kurucu belge.',
+    explanation:
+        '\'demokratik haklar beyannamesi\' → temel hakları listeleyen kurucu belge.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13557',
     category: 'Siyaset',
     prompt: '\'toplumsal adalet\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['protesto, örgütlenme ve ifade özgürlüğü hakları', 'Farklı kimlik ve inançların bir arada yaşamasını', 'partilerde kadının eşit söz sahibi olma sistemi', 'kaynakların ve hakların eşit paylaşılması ilkesi'],
+    answers: [
+      'protesto, örgütlenme ve ifade özgürlüğü hakları',
+      'Farklı kimlik ve inançların bir arada yaşamasını',
+      'partilerde kadının eşit söz sahibi olma sistemi',
+      'kaynakların ve hakların eşit paylaşılması ilkesi',
+    ],
     correctAnswer: 'kaynakların ve hakların eşit paylaşılması ilkesi',
-    explanation: '\'toplumsal adalet\' → kaynakların ve hakların eşit paylaşılması ilkesi.',
+    explanation:
+        '\'toplumsal adalet\' → kaynakların ve hakların eşit paylaşılması ilkesi.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13574',
     category: 'Siyaset',
     prompt: '\'demokratik uzlaşı\' kavramı neyi karşılar?',
-    answers: ['Eşit yurttaşlık ve hakların tanınmasını', 'yasama, yürütme ve yargının bağımsız olması', 'ortak yararda partilerin bir araya gelmesi', 'yerel bütçe ve hizmetleri kendi yönetme hakkı'],
+    answers: [
+      'Eşit yurttaşlık ve hakların tanınmasını',
+      'yasama, yürütme ve yargının bağımsız olması',
+      'ortak yararda partilerin bir araya gelmesi',
+      'yerel bütçe ve hizmetleri kendi yönetme hakkı',
+    ],
     correctAnswer: 'ortak yararda partilerin bir araya gelmesi',
-    explanation: '\'demokratik uzlaşı\' → ortak yararda partilerin bir araya gelmesi.',
+    explanation:
+        '\'demokratik uzlaşı\' → ortak yararda partilerin bir araya gelmesi.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13575',
     category: 'Siyaset',
     prompt: 'Hangisi \'katılımcı bütçe\' tanımına uyar?',
-    answers: ['bütçe harcamalarını halkın meclislerle belirlemesi', 'belediyeler ve yerel kurulların oluşturduğu yönetim', 'kendi yasalarını yapabilen yerel parlamento yetkisi', 'resmi ve kamusal alanlarda anadilinin kullanılması'],
+    answers: [
+      'bütçe harcamalarını halkın meclislerle belirlemesi',
+      'belediyeler ve yerel kurulların oluşturduğu yönetim',
+      'kendi yasalarını yapabilen yerel parlamento yetkisi',
+      'resmi ve kamusal alanlarda anadilinin kullanılması',
+    ],
     correctAnswer: 'bütçe harcamalarını halkın meclislerle belirlemesi',
-    explanation: '\'katılımcı bütçe\' → bütçe harcamalarını halkın meclislerle belirlemesi.',
+    explanation:
+        '\'katılımcı bütçe\' → bütçe harcamalarını halkın meclislerle belirlemesi.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13581',
     category: 'Siyaset',
     prompt: '\'adil yargılanma\', Siyaset konusunda neyi anlatır?',
-    answers: ['bağımsız ve tarafsız mahkemelerde savunma hakkı', 'Farklı kimlik ve inançların bir arada yaşamasını', 'tüm farklı kesimleri kapsayan özgürlükçü anayasa', 'Yerel yönetim, eğitim ve ekonomi gibi alanlarda'],
+    answers: [
+      'bağımsız ve tarafsız mahkemelerde savunma hakkı',
+      'Farklı kimlik ve inançların bir arada yaşamasını',
+      'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
+      'Yerel yönetim, eğitim ve ekonomi gibi alanlarda',
+    ],
     correctAnswer: 'bağımsız ve tarafsız mahkemelerde savunma hakkı',
-    explanation: '\'adil yargılanma\' → bağımsız ve tarafsız mahkemelerde savunma hakkı.',
+    explanation:
+        '\'adil yargılanma\' → bağımsız ve tarafsız mahkemelerde savunma hakkı.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13590',
     category: 'Siyaset',
     prompt: 'Aşağıda \'azınlık hakları\' için doğru olan hangisidir?',
-    answers: ['çoğunluğa karşı farklı olan grupların korunması', 'Farklı kimlik ve inançların bir arada yaşamasını', 'gücün tek merkezden yerel birimlere dağıtılması', 'partilerde kadının eşit söz sahibi olma sistemi'],
+    answers: [
+      'çoğunluğa karşı farklı olan grupların korunması',
+      'Farklı kimlik ve inançların bir arada yaşamasını',
+      'gücün tek merkezden yerel birimlere dağıtılması',
+      'partilerde kadının eşit söz sahibi olma sistemi',
+    ],
     correctAnswer: 'çoğunluğa karşı farklı olan grupların korunması',
-    explanation: '\'azınlık hakları\' → çoğunluğa karşı farklı olan grupların korunması.',
+    explanation:
+        '\'azınlık hakları\' → çoğunluğa karşı farklı olan grupların korunması.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13597',
     category: 'Siyaset',
     prompt: '\'demokratik haklar beyannamesi\' için geçerli tanım hangisidir?',
-    answers: ['Kadın özgürlüğü ve çoğulcu öz yönetimle', 'Kürt siyasi yapıları ve belediyeler', 'temel hakları listeleyen kurucu belge', 'hakların kanunla koruma altına alınması'],
+    answers: [
+      'Kadın özgürlüğü ve çoğulcu öz yönetimle',
+      'Kürt siyasi yapıları ve belediyeler',
+      'temel hakları listeleyen kurucu belge',
+      'hakların kanunla koruma altına alınması',
+    ],
     correctAnswer: 'temel hakları listeleyen kurucu belge',
-    explanation: '\'demokratik haklar beyannamesi\' → temel hakları listeleyen kurucu belge.',
+    explanation:
+        '\'demokratik haklar beyannamesi\' → temel hakları listeleyen kurucu belge.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13600',
     category: 'Siyaset',
     prompt: '\'meclis sistemi\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['kararların tek lider yerine kurullarla alınması', 'tüm farklı kesimleri kapsayan özgürlükçü anayasa', 'yönetimin halkın rızasına ve hukuka uygun olması', 'çatışmaları silah yerine diyalogla çözme iradesi'],
+    answers: [
+      'kararların tek lider yerine kurullarla alınması',
+      'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
+      'yönetimin halkın rızasına ve hukuka uygun olması',
+      'çatışmaları silah yerine diyalogla çözme iradesi',
+    ],
     correctAnswer: 'kararların tek lider yerine kurullarla alınması',
-    explanation: '\'meclis sistemi\' → kararların tek lider yerine kurullarla alınması.',
+    explanation:
+        '\'meclis sistemi\' → kararların tek lider yerine kurullarla alınması.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13604',
     category: 'Siyaset',
     prompt: '\'demokratik haklar\' kavramını doğru anlatan ifade hangisidir?',
-    answers: ['çatışmalı ortamı diyalogla sonlandırma aşaması', 'anayasal güvence ve kültürel hakların tanınması', 'protesto, örgütlenme ve ifade özgürlüğü hakları', 'Yerel yönetim, eğitim ve ekonomi gibi alanlarda'],
+    answers: [
+      'çatışmalı ortamı diyalogla sonlandırma aşaması',
+      'anayasal güvence ve kültürel hakların tanınması',
+      'protesto, örgütlenme ve ifade özgürlüğü hakları',
+      'Yerel yönetim, eğitim ve ekonomi gibi alanlarda',
+    ],
     correctAnswer: 'protesto, örgütlenme ve ifade özgürlüğü hakları',
-    explanation: '\'demokratik haklar\' → protesto, örgütlenme ve ifade özgürlüğü hakları.',
+    explanation:
+        '\'demokratik haklar\' → protesto, örgütlenme ve ifade özgürlüğü hakları.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13614',
     category: 'Siyaset',
-    prompt: 'Hangisi Siyaset içinde \'parti eş başkanlığı\' kavramını doğru yerleştirir?',
-    answers: ['bağımsız ve tarafsız mahkemelerde savunma hakkı', 'partilerde kadının eşit söz sahibi olma sistemi', 'yönetimin halkın rızasına ve hukuka uygun olması', 'çatışmaları silah yerine diyalogla çözme iradesi'],
+    prompt:
+        'Hangisi Siyaset içinde \'parti eş başkanlığı\' kavramını doğru yerleştirir?',
+    answers: [
+      'bağımsız ve tarafsız mahkemelerde savunma hakkı',
+      'partilerde kadının eşit söz sahibi olma sistemi',
+      'yönetimin halkın rızasına ve hukuka uygun olması',
+      'çatışmaları silah yerine diyalogla çözme iradesi',
+    ],
     correctAnswer: 'partilerde kadının eşit söz sahibi olma sistemi',
-    explanation: '\'parti eş başkanlığı\' → partilerde kadının eşit söz sahibi olma sistemi.',
+    explanation:
+        '\'parti eş başkanlığı\' → partilerde kadının eşit söz sahibi olma sistemi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13625',
     category: 'Siyaset',
-    prompt: 'Siyaset bilgisinde \'barış süreci\' ile ilgili doğru olan hangisidir?',
-    answers: ['çatışmalı ortamı diyalogla sonlandırma aşaması', 'Yerel yönetim, eğitim ve ekonomi gibi alanlarda', 'tüm farklı kesimleri kapsayan özgürlükçü anayasa', 'çoğunluğa karşı farklı olan grupların korunması'],
+    prompt:
+        'Siyaset bilgisinde \'barış süreci\' ile ilgili doğru olan hangisidir?',
+    answers: [
+      'çatışmalı ortamı diyalogla sonlandırma aşaması',
+      'Yerel yönetim, eğitim ve ekonomi gibi alanlarda',
+      'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
+      'çoğunluğa karşı farklı olan grupların korunması',
+    ],
     correctAnswer: 'çatışmalı ortamı diyalogla sonlandırma aşaması',
-    explanation: '\'barış süreci\' → çatışmalı ortamı diyalogla sonlandırma aşaması.',
+    explanation:
+        '\'barış süreci\' → çatışmalı ortamı diyalogla sonlandırma aşaması.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13643',
     category: 'Siyaset',
     prompt: '\'insan hakları\' ifadesinin doğru karşılığı hangisidir?',
-    answers: ['dernekler ve inisiyatiflerle yönetime müdahil olma', 'kaynakların ve hakların eşit paylaşılması ilkesi', 'toplumun dışarıdan baskı olmadan kendini yönetmesi', 'her bireyin doğuştan sahip olduğu evrensel haklar'],
+    answers: [
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+      'kaynakların ve hakların eşit paylaşılması ilkesi',
+      'toplumun dışarıdan baskı olmadan kendini yönetmesi',
+      'her bireyin doğuştan sahip olduğu evrensel haklar',
+    ],
     correctAnswer: 'her bireyin doğuştan sahip olduğu evrensel haklar',
-    explanation: '\'insan hakları\' → her bireyin doğuştan sahip olduğu evrensel haklar.',
+    explanation:
+        '\'insan hakları\' → her bireyin doğuştan sahip olduğu evrensel haklar.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13647',
     category: 'Siyaset',
     prompt: 'Siyaset alanında \'demokratik uzlaşı\' neyi ifade eder?',
-    answers: ['yasama, yürütme ve yargının bağımsız olması', 'Kadın-erkek eşit temsili ve ortak yönetimi', 'ortak yararda partilerin bir araya gelmesi', 'sorunları diyalog yoluyla çözme yöntemi'],
+    answers: [
+      'yasama, yürütme ve yargının bağımsız olması',
+      'Kadın-erkek eşit temsili ve ortak yönetimi',
+      'ortak yararda partilerin bir araya gelmesi',
+      'sorunları diyalog yoluyla çözme yöntemi',
+    ],
     correctAnswer: 'ortak yararda partilerin bir araya gelmesi',
-    explanation: '\'demokratik uzlaşı\' → ortak yararda partilerin bir araya gelmesi.',
+    explanation:
+        '\'demokratik uzlaşı\' → ortak yararda partilerin bir araya gelmesi.',
     difficulty: 1,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13649',
     category: 'Siyaset',
     prompt: 'Siyaset için \'eş başkanlık\' hakkında doğru seçenek hangisidir?',
-    answers: ['temel hakları listeleyen kurucu belge', 'Meclisler, örgütlenme ve müzakere', 'yönetimde eşit temsil sistemidir', 'Kürt siyasi yapıları ve belediyeler'],
+    answers: [
+      'temel hakları listeleyen kurucu belge',
+      'Meclisler, örgütlenme ve müzakere',
+      'yönetimde eşit temsil sistemidir',
+      'Kürt siyasi yapıları ve belediyeler',
+    ],
     correctAnswer: 'yönetimde eşit temsil sistemidir',
     explanation: '\'eş başkanlık\' → yönetimde eşit temsil sistemidir.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13654',
     category: 'Siyaset',
     prompt: '\'anadili hakkı\' kavramı neyi karşılar?',
-    answers: ['yerelde kendi kendini yönetme ve karar alma statüsü', 'toplumun dışarıdan baskı olmadan kendini yönetmesi', 'vatandaşların karar alma süreçlerine müdahil olması', 'resmi ve kamusal alanlarda anadilinin kullanılması'],
+    answers: [
+      'yerelde kendi kendini yönetme ve karar alma statüsü',
+      'toplumun dışarıdan baskı olmadan kendini yönetmesi',
+      'vatandaşların karar alma süreçlerine müdahil olması',
+      'resmi ve kamusal alanlarda anadilinin kullanılması',
+    ],
     correctAnswer: 'resmi ve kamusal alanlarda anadilinin kullanılması',
-    explanation: '\'anadili hakkı\' → resmi ve kamusal alanlarda anadilinin kullanılması.',
+    explanation:
+        '\'anadili hakkı\' → resmi ve kamusal alanlarda anadilinin kullanılması.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13657',
     category: 'Siyaset',
     prompt: 'Siyaset alanında \'toplumsal uzlaşı\' neyi ifade eder?',
-    answers: ['barışçıl çözüm için toplumun ortak karara varması', 'bütçe harcamalarını halkın meclislerle belirlemesi', 'Farklı kimlik ve inançların bir arada yaşamasını', 'dernekler ve inisiyatiflerle yönetime müdahil olma'],
+    answers: [
+      'barışçıl çözüm için toplumun ortak karara varması',
+      'bütçe harcamalarını halkın meclislerle belirlemesi',
+      'Farklı kimlik ve inançların bir arada yaşamasını',
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+    ],
     correctAnswer: 'barışçıl çözüm için toplumun ortak karara varması',
-    explanation: '\'toplumsal uzlaşı\' → barışçıl çözüm için toplumun ortak karara varması.',
+    explanation:
+        '\'toplumsal uzlaşı\' → barışçıl çözüm için toplumun ortak karara varması.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13673',
@@ -11162,39 +14968,57 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'anadilinde eğitim\' Siyaset bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'anadilinde eğitim\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'anadilinde eğitim\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13691',
     category: 'Siyaset',
     prompt: '\'demokratik siyaset\' konusunda hangisi doğrudur?',
-    answers: ['Yasal düzenlemeler ve demokratik entegrasyon adımları', 'belediyeler ve yerel kurulların oluşturduğu yönetim', 'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı', 'siyasette kadın katılımını güvenceye alan yasal oran'],
+    answers: [
+      'Yasal düzenlemeler ve demokratik entegrasyon adımları',
+      'belediyeler ve yerel kurulların oluşturduğu yönetim',
+      'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı',
+      'siyasette kadın katılımını güvenceye alan yasal oran',
+    ],
     correctAnswer: 'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı',
-    explanation: '\'demokratik siyaset\' → baskı ve tasfiye yerine diyalogu seçen siyaset tarzı.',
+    explanation:
+        '\'demokratik siyaset\' → baskı ve tasfiye yerine diyalogu seçen siyaset tarzı.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13729',
     category: 'Siyaset',
     prompt: '\'müzakere\' ile bağdaşan doğru açıklama hangisidir?',
-    answers: ['Kadın özgürlüğü ve çoğulcu öz yönetimle', 'Kadın-erkek eşit temsili ve ortak yönetimi', 'Devleti aşan, ona alternatif bir öz yönetim', 'sorunları diyalog yoluyla çözme yöntemi'],
+    answers: [
+      'Kadın özgürlüğü ve çoğulcu öz yönetimle',
+      'Kadın-erkek eşit temsili ve ortak yönetimi',
+      'Devleti aşan, ona alternatif bir öz yönetim',
+      'sorunları diyalog yoluyla çözme yöntemi',
+    ],
     correctAnswer: 'sorunları diyalog yoluyla çözme yöntemi',
     explanation: '\'müzakere\' → sorunları diyalog yoluyla çözme yöntemi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13732',
     category: 'Siyaset',
     prompt: 'Aşağıdakilerden hangisi \'özyönetim hakkı\' kavramını açıklar?',
-    answers: ['her bireyin doğuştan sahip olduğu evrensel haklar', 'toplumun dışarıdan baskı olmadan kendini yönetmesi', 'Farklı halkların eşit ve dayanışmacı birlikteliğini', 'dernekler ve inisiyatiflerle yönetime müdahil olma'],
+    answers: [
+      'her bireyin doğuştan sahip olduğu evrensel haklar',
+      'toplumun dışarıdan baskı olmadan kendini yönetmesi',
+      'Farklı halkların eşit ve dayanışmacı birlikteliğini',
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+    ],
     correctAnswer: 'toplumun dışarıdan baskı olmadan kendini yönetmesi',
-    explanation: '\'özyönetim hakkı\' → toplumun dışarıdan baskı olmadan kendini yönetmesi.',
+    explanation:
+        '\'özyönetim hakkı\' → toplumun dışarıdan baskı olmadan kendini yönetmesi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13738',
@@ -11202,29 +15026,43 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'demokratik muhalefet\', Siyaset ile ilgili gerçek bir terimdir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'demokratik muhalefet\' Siyaset alanında geçerli bir kavramdır.',
+    explanation:
+        '\'demokratik muhalefet\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 5,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13745',
     category: 'Siyaset',
     prompt: '\'çoğulculuk\' ile ilgili en doğru bilgi hangisidir?',
-    answers: ['Yasal düzenlemeler ve demokratik entegrasyon adımları', 'Demokratik konfederalizm ve demokratik ulus tartışması', 'Farklı halkların eşit ve dayanışmacı birlikteliğini', 'farklı kimliklerin ve inançların eşit kabul edilmesi'],
+    answers: [
+      'Yasal düzenlemeler ve demokratik entegrasyon adımları',
+      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'Farklı halkların eşit ve dayanışmacı birlikteliğini',
+      'farklı kimliklerin ve inançların eşit kabul edilmesi',
+    ],
     correctAnswer: 'farklı kimliklerin ve inançların eşit kabul edilmesi',
-    explanation: '\'çoğulculuk\' → farklı kimliklerin ve inançların eşit kabul edilmesi.',
+    explanation:
+        '\'çoğulculuk\' → farklı kimliklerin ve inançların eşit kabul edilmesi.',
     difficulty: 5,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13753',
     category: 'Siyaset',
-    prompt: 'Hangisi Siyaset içinde \'sivil itaatsizlik\' kavramını doğru yerleştirir?',
-    answers: ['halkın sadece seçimlerle yönetime katıldığı sistem', 'bütçe harcamalarını halkın meclislerle belirlemesi', 'dernekler ve inisiyatiflerle yönetime müdahil olma', 'adaletsiz yasalara karşı barışçıl protesto biçimi'],
+    prompt:
+        'Hangisi Siyaset içinde \'sivil itaatsizlik\' kavramını doğru yerleştirir?',
+    answers: [
+      'halkın sadece seçimlerle yönetime katıldığı sistem',
+      'bütçe harcamalarını halkın meclislerle belirlemesi',
+      'dernekler ve inisiyatiflerle yönetime müdahil olma',
+      'adaletsiz yasalara karşı barışçıl protesto biçimi',
+    ],
     correctAnswer: 'adaletsiz yasalara karşı barışçıl protesto biçimi',
-    explanation: '\'sivil itaatsizlik\' → adaletsiz yasalara karşı barışçıl protesto biçimi.',
+    explanation:
+        '\'sivil itaatsizlik\' → adaletsiz yasalara karşı barışçıl protesto biçimi.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13756',
@@ -11232,9 +15070,10 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'yerel meclisler\' Siyaset bilgisinin tamamen dışındadır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'yerel meclisler\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'yerel meclisler\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 1,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13757',
@@ -11244,7 +15083,7 @@ const offlineQuestionBank = <QuizQuestion>[
     correctAnswer: 'Rast',
     explanation: '\'Idari özerklik\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 3,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13767',
@@ -11252,78 +15091,119 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'Barış hakkı\' Siyaset açısından anlamsız bir ifadedir.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
-    explanation: '\'Barış hakkı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+    explanation:
+        '\'Barış hakkı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
     difficulty: 4,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
   QuizQuestion(
     id: 'offline_13777',
     category: 'Siyaset',
-    prompt: 'Siyaset için \'demokratik ittifaklar\' hakkında doğru seçenek hangisidir?',
-    answers: ['yerel bütçe ve hizmetleri kendi yönetme hakkı', 'çoğunluğa karşı farklı olan grupların korunması', 'protesto, örgütlenme ve ifade özgürlüğü hakları', 'farklı muhalif grupların ortak barış platformu'],
+    prompt:
+        'Siyaset için \'demokratik ittifaklar\' hakkında doğru seçenek hangisidir?',
+    answers: [
+      'yerel bütçe ve hizmetleri kendi yönetme hakkı',
+      'çoğunluğa karşı farklı olan grupların korunması',
+      'protesto, örgütlenme ve ifade özgürlüğü hakları',
+      'farklı muhalif grupların ortak barış platformu',
+    ],
     correctAnswer: 'farklı muhalif grupların ortak barış platformu',
-    explanation: '\'demokratik ittifaklar\' → farklı muhalif grupların ortak barış platformu.',
+    explanation:
+        '\'demokratik ittifaklar\' → farklı muhalif grupların ortak barış platformu.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13783',
     category: 'Siyaset',
     prompt: '\'yerel irade\' ifadesinin doğru karşılığı hangisidir?',
-    answers: ['geçmişteki acıları araştırıp toplumsal barışı kuran kurul', 'farklı etnik ve inanç gruplarının huzurlu birlikteliği', 'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi', 'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü'],
-    correctAnswer: 'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü',
-    explanation: '\'yerel irade\' → merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü.',
+    answers: [
+      'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
+      'farklı etnik ve inanç gruplarının huzurlu birlikteliği',
+      'resmi yönetime karşı halkın barışçıl tepki örgütlenmesi',
+      'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü',
+    ],
+    correctAnswer:
+        'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü',
+    explanation:
+        '\'yerel irade\' → merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü.',
     difficulty: 3,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13790',
     category: 'Siyaset',
     prompt: 'Hangisi \'demokratik muhalefet\' ile uyumlu bir tanımdır?',
-    answers: ['mecliste ve sokakta hak arama kanalları', 'yerel kararların alındığı halk meclisleri', 'hakların kanunla koruma altına alınması', 'Devleti aşan, ona alternatif bir öz yönetim'],
+    answers: [
+      'mecliste ve sokakta hak arama kanalları',
+      'yerel kararların alındığı halk meclisleri',
+      'hakların kanunla koruma altına alınması',
+      'Devleti aşan, ona alternatif bir öz yönetim',
+    ],
     correctAnswer: 'mecliste ve sokakta hak arama kanalları',
-    explanation: '\'demokratik muhalefet\' → mecliste ve sokakta hak arama kanalları.',
+    explanation:
+        '\'demokratik muhalefet\' → mecliste ve sokakta hak arama kanalları.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13799',
     category: 'Siyaset',
     prompt: '\'yerel demokrasi\' nasıl tanımlanır?',
-    answers: ['kararların halka en yakın birimlerde alınması', 'halkın siyasi kararlara bizzat dahil olması', 'Devleti aşan, ona alternatif bir öz yönetim', 'bağımsız ve tarafsız mahkemelerde savunma hakkı'],
+    answers: [
+      'kararların halka en yakın birimlerde alınması',
+      'halkın siyasi kararlara bizzat dahil olması',
+      'Devleti aşan, ona alternatif bir öz yönetim',
+      'bağımsız ve tarafsız mahkemelerde savunma hakkı',
+    ],
     correctAnswer: 'kararların halka en yakın birimlerde alınması',
-    explanation: '\'yerel demokrasi\' → kararların halka en yakın birimlerde alınması.',
+    explanation:
+        '\'yerel demokrasi\' → kararların halka en yakın birimlerde alınması.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13813',
     category: 'Siyaset',
     prompt: 'Siyaset çerçevesinde \'yerel yönetim\' ne anlama gelir?',
-    answers: ['Kapitalist modernite ve merkezi ulus-devlet eleştirisi', 'siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri', 'belediyeler ve yerel kurulların oluşturduğu yönetim', 'geçmişteki acıları araştırıp toplumsal barışı kuran kurul'],
+    answers: [
+      'Kapitalist modernite ve merkezi ulus-devlet eleştirisi',
+      'siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri',
+      'belediyeler ve yerel kurulların oluşturduğu yönetim',
+      'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
+    ],
     correctAnswer: 'belediyeler ve yerel kurulların oluşturduğu yönetim',
-    explanation: '\'yerel yönetim\' → belediyeler ve yerel kurulların oluşturduğu yönetim.',
+    explanation:
+        '\'yerel yönetim\' → belediyeler ve yerel kurulların oluşturduğu yönetim.',
     difficulty: 4,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13817',
     category: 'Siyaset',
     prompt: '\'cinsiyet kotası\' ile ilgili doğru seçenek hangisidir?',
-    answers: ['Toplulukların yerel olarak kendi işlerini yönetmesini', 'siyasette kadın katılımını güvenceye alan yasal oran', 'toplumun savaşsız bir ortamda yaşama evrensel hakkı', 'belediyeler ve yerel kurulların oluşturduğu yönetim'],
+    answers: [
+      'Toplulukların yerel olarak kendi işlerini yönetmesini',
+      'siyasette kadın katılımını güvenceye alan yasal oran',
+      'toplumun savaşsız bir ortamda yaşama evrensel hakkı',
+      'belediyeler ve yerel kurulların oluşturduğu yönetim',
+    ],
     correctAnswer: 'siyasette kadın katılımını güvenceye alan yasal oran',
-    explanation: '\'cinsiyet kotası\' → siyasette kadın katılımını güvenceye alan yasal oran.',
+    explanation:
+        '\'cinsiyet kotası\' → siyasette kadın katılımını güvenceye alan yasal oran.',
     difficulty: 2,
-    type: QuestionType.multipleChoice
+    type: QuestionType.multipleChoice,
   ),
   QuizQuestion(
     id: 'offline_13839',
     category: 'Siyaset',
-    prompt: 'Siyaset alanında \'Demokratik ittifaklar\' geçerli bir kavram olarak yer alır.',
+    prompt:
+        'Siyaset alanında \'Demokratik ittifaklar\' geçerli bir kavram olarak yer alır.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
-    explanation: '\'Demokratik ittifaklar\' Siyaset alanında geçerli bir kavramdır.',
+    explanation:
+        '\'Demokratik ittifaklar\' Siyaset alanında geçerli bir kavramdır.',
     difficulty: 2,
-    type: QuestionType.trueFalse
+    type: QuestionType.trueFalse,
   ),
 ];

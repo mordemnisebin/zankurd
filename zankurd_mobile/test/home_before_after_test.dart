@@ -15,7 +15,7 @@ import 'package:zankurd_mobile/src/screens/home/hero_card.dart';
 void main() {
   testWidgets('Capture Home After Screen', (WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
-    
+
     final repository = MockZanKurdRepository();
     final boundaryKey = GlobalKey();
 
@@ -45,7 +45,8 @@ void main() {
 
     await tester.runAsync(() async {
       final RenderRepaintBoundary boundary =
-          boundaryKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData!.buffer.asUint8List();
@@ -86,7 +87,8 @@ void main() {
 
     await tester.runAsync(() async {
       final RenderRepaintBoundary boundary =
-          boundaryKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData!.buffer.asUint8List();
@@ -98,7 +100,9 @@ void main() {
     });
   }, tags: ['preview']);
 
-  testWidgets('Capture Hero Card No Pattern Screen', (WidgetTester tester) async {
+  testWidgets('Capture Hero Card No Pattern Screen', (
+    WidgetTester tester,
+  ) async {
     await tester.binding.setSurfaceSize(const Size(390, 380));
     final boundaryKey = GlobalKey();
 
@@ -127,7 +131,8 @@ void main() {
 
     await tester.runAsync(() async {
       final RenderRepaintBoundary boundary =
-          boundaryKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData!.buffer.asUint8List();

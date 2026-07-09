@@ -27,10 +27,7 @@ void main() {
           theme: AppTheme.dark(),
           debugShowCheckedModeBanner: false,
           home: Scaffold(
-            body: RepaintBoundary(
-              key: boundaryKey,
-              child: screen,
-            ),
+            body: RepaintBoundary(key: boundaryKey, child: screen),
           ),
         ),
       ),
@@ -39,8 +36,9 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.runAsync(() async {
-      final boundary = boundaryKey.currentContext!.findRenderObject()
-          as RenderRepaintBoundary;
+      final boundary =
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       final image = await boundary.toImage(pixelRatio: 2.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final file = File('docs/screenshots/phase2c/$filename');

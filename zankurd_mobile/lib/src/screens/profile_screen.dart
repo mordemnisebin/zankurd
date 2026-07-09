@@ -579,11 +579,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: ku ? 'Şaşiyên Min' : 'Yanlışlarım',
                 subtitle: _mistakeCount == 0
                     ? (ku
-                        ? 'Şaşiyek tune — aferîn!'
-                        : 'Hiç yanlışın yok — aferin!')
+                          ? 'Şaşiyek tune — aferîn!'
+                          : 'Hiç yanlışın yok — aferin!')
                     : (ku
-                        ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
-                        : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
+                          ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
+                          : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
                 borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(AppRadius.md),
                 ),
@@ -880,7 +880,9 @@ class _ProfileHeroCard extends StatelessWidget {
                           ),
                           if (showcaseTitle != null)
                             Container(
-                              margin: const EdgeInsets.only(top: AppSpacing.xxs),
+                              margin: const EdgeInsets.only(
+                                top: AppSpacing.xxs,
+                              ),
                               padding: const EdgeInsets.symmetric(
                                 horizontal: AppSpacing.xs,
                                 vertical: 2,
@@ -918,10 +920,7 @@ class _ProfileHeroCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.md),
-                Divider(
-                  color: Colors.white.withValues(alpha: 0.18),
-                  height: 1,
-                ),
+                Divider(color: Colors.white.withValues(alpha: 0.18), height: 1),
                 const SizedBox(height: AppSpacing.sm),
                 Row(
                   children: [
@@ -1024,10 +1023,7 @@ class _StatTile extends StatelessWidget {
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTypography.heading2.copyWith(
-              color: color,
-              fontSize: 17,
-            ),
+            style: AppTypography.heading2.copyWith(color: color, fontSize: 17),
           ),
           Text(
             label,

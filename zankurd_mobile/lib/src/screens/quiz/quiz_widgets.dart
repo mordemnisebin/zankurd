@@ -875,10 +875,7 @@ class _OptionBadge extends StatelessWidget {
                 ),
               ],
       ),
-      child: Text(
-        letter,
-        style: AppTypography.heading2.copyWith(color: fg),
-      ),
+      child: Text(letter, style: AppTypography.heading2.copyWith(color: fg)),
     );
   }
 }
@@ -1283,7 +1280,9 @@ class _ExplanationBox extends StatelessWidget {
                 padding: const EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
                   color: AppTheme.surfaceColor(context).withValues(alpha: 0.85),
-                  borderRadius: BorderRadius.circular(AppRadius.md), // AppRadius.lg
+                  borderRadius: BorderRadius.circular(
+                    AppRadius.md,
+                  ), // AppRadius.lg
                   border: Border.all(
                     color: AppTheme.correct.withValues(alpha: 0.3),
                     width: 1.2,
@@ -1463,9 +1462,7 @@ class _RevealCountdown extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppTheme.surfaceColor(context).withValues(alpha: 0.8),
           borderRadius: BorderRadius.circular(AppRadius.sm),
-          border: Border.all(
-            color: AppTheme.borderColor(context),
-          ),
+          border: Border.all(color: AppTheme.borderColor(context)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1478,9 +1475,7 @@ class _RevealCountdown extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.sm),
             Text(
-              isKu
-                  ? 'Pirsa nû: ${seconds}s'
-                  : 'Sonraki soru: ${seconds}s',
+              isKu ? 'Pirsa nû: ${seconds}s' : 'Sonraki soru: ${seconds}s',
               style: AppTypography.bodyMedium.copyWith(
                 color: AppTheme.textSubColor(context),
                 fontWeight: FontWeight.w700,

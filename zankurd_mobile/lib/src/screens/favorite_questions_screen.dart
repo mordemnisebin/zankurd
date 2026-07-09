@@ -54,10 +54,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
       appBar: AppBar(
         title: Text(context.s('Tomarkirî', 'Kaydedilenler')),
         actions: [
-          IconButton(
-            onPressed: _reload,
-            icon: Icon(Icons.refresh_rounded),
-          ),
+          IconButton(onPressed: _reload, icon: Icon(Icons.refresh_rounded)),
         ],
       ),
       body: Container(
@@ -149,7 +146,10 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
     );
   }
 
-  Widget _buildPlayAllButton(BuildContext context, List<QuizQuestion> questions) {
+  Widget _buildPlayAllButton(
+    BuildContext context,
+    List<QuizQuestion> questions,
+  ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       width: double.infinity,
@@ -183,10 +183,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
         icon: const Icon(Icons.play_circle_fill, size: 22),
         label: Text(
           context.s('Pirsên Tomarkirî Bilîze', 'Kaydedilen Soruları Oyna'),
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
         ),
       ),
     );

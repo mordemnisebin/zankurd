@@ -30,9 +30,9 @@ class MistakeStore {
     } catch (_) {
       preferences = null;
     }
-    
+
     final ids = preferences?.getStringList(_storageKey)?.toSet() ?? <String>{};
-    
+
     final metadataString = preferences?.getString(_metadataKey);
     final Map<String, Map<String, dynamic>> metadata = {};
     if (metadataString != null) {
@@ -92,13 +92,16 @@ class MistakeStore {
   Future<void> markMistake(String id, {String? category}) async {
     await _recordAnswer(false);
     _ids.add(id);
-    
+
     // Get existing easeFactor if present to keep continuity, or start fresh at 2.5
-    final double currentEF = (_metadata[id]?['easeFactor'] as num?)?.toDouble() ?? 2.5;
-    
+    final double currentEF =
+        (_metadata[id]?['easeFactor'] as num?)?.toDouble() ?? 2.5;
+
     // Incorrect answer: reset repetitions to 0, interval to 1 day, reduce easeFactor
     _metadata[id] = {
-      'nextReview': DateTime.now().add(const Duration(days: 1)).millisecondsSinceEpoch,
+      'nextReview': DateTime.now()
+          .add(const Duration(days: 1))
+          .millisecondsSinceEpoch,
       'intervalDays': 1,
       'repetitions': 0,
       'easeFactor': math.max(1.3, currentEF - 0.2),
@@ -123,7 +126,7 @@ class MistakeStore {
     if (!_ids.contains(id)) return;
 
     final meta = _metadata[id];
-    
+
     // Extract current parameters
     double easeFactor = 2.5;
     int repetitions = 0;
@@ -133,7 +136,8 @@ class MistakeStore {
       easeFactor = (meta['easeFactor'] as num?)?.toDouble() ?? 2.5;
       repetitions = (meta['repetitions'] as num?)?.toInt() ?? 0;
       // Handle legacy intervalHours if present
-      if (meta.containsKey('intervalHours') && !meta.containsKey('intervalDays')) {
+      if (meta.containsKey('intervalHours') &&
+          !meta.containsKey('intervalDays')) {
         final hours = (meta['intervalHours'] as num?)?.toInt() ?? 24;
         intervalDays = (hours / 24).round();
       } else {
@@ -148,7 +152,8 @@ class MistakeStore {
       easeFactor = math.max(1.3, easeFactor - 0.2);
     } else {
       // Calculate new ease factor based on SM-2 formula
-      easeFactor = easeFactor + (0.1 - (5 - score) * (0.08 + (5 - score) * 0.02));
+      easeFactor =
+          easeFactor + (0.1 - (5 - score) * (0.08 + (5 - score) * 0.02));
       easeFactor = easeFactor.clamp(1.3, 3.0);
 
       // Calculate new interval
@@ -168,12 +173,15 @@ class MistakeStore {
       _metadata.remove(id);
     } else {
       _metadata[id] = {
-        'nextReview': DateTime.now().add(Duration(days: intervalDays)).millisecondsSinceEpoch,
+        'nextReview': DateTime.now()
+            .add(Duration(days: intervalDays))
+            .millisecondsSinceEpoch,
         'intervalDays': intervalDays,
         'repetitions': repetitions,
         'easeFactor': easeFactor,
         // ignore: use_null_aware_elements
-        if (meta != null && meta.containsKey('category')) 'category': meta['category'],
+        if (meta != null && meta.containsKey('category'))
+          'category': meta['category'],
       };
     }
     await _persist();
@@ -207,7 +215,10 @@ class MistakeStore {
 
   Future<void> _recordAnswer(bool correct) async {
     final todayKey = _dayKey(DateTime.now());
-    final dayData = _history.putIfAbsent(todayKey, () => {'correct': 0, 'wrong': 0});
+    final dayData = _history.putIfAbsent(
+      todayKey,
+      () => {'correct': 0, 'wrong': 0},
+    );
     if (correct) {
       dayData['correct'] = (dayData['correct'] ?? 0) + 1;
     } else {

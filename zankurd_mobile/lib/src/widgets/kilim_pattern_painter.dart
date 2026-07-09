@@ -21,7 +21,7 @@ class KilimPatternPainter extends CustomPainter {
       ..strokeWidth = 1.0;
 
     final path = Path();
-    
+
     // Kilim geometrisi: Elmas ve zikzak örgü dokusu
     final double stepX = 24.0;
     final double stepY = 24.0;
@@ -34,7 +34,7 @@ class KilimPatternPainter extends CustomPainter {
         path.lineTo(x + stepX / 2, y + stepY);
         path.lineTo(x, y + stepY / 2);
         path.close();
-        
+
         // İç geometrik zikzak dolgusu (küçük motif detayları)
         path.moveTo(x + stepX * 0.25, y + stepY * 0.5);
         path.lineTo(x + stepX * 0.5, y + stepY * 0.25);

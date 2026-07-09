@@ -4,15 +4,24 @@ import 'package:zankurd_mobile/src/config/category_visuals.dart';
 
 void main() {
   const known = [
-    'Ziman', 'Çand', 'Dîrok', 'Edebiyat',
-    'Cografya', 'Muzîk', 'Siyaset', 'Paradigma',
+    'Ziman',
+    'Çand',
+    'Dîrok',
+    'Edebiyat',
+    'Cografya',
+    'Muzîk',
+    'Siyaset',
+    'Paradigma',
   ];
 
   test('bilinen her kategori için ikon tanımlı', () {
     for (final cat in known) {
       expect(CategoryVisuals.icon(cat), isA<IconData>());
-      expect(CategoryVisuals.icon(cat), isNot(Icons.category_outlined),
-          reason: '$cat için özel ikon bekleniyor');
+      expect(
+        CategoryVisuals.icon(cat),
+        isNot(Icons.category_outlined),
+        reason: '$cat için özel ikon bekleniyor',
+      );
     }
   });
 

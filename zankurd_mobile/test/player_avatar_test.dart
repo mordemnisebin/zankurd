@@ -70,10 +70,7 @@ void main() {
         ),
       ),
     );
-    expect(
-      find.byKey(const ValueKey('avatar-frame-ring')),
-      findsOneWidget,
-    );
+    expect(find.byKey(const ValueKey('avatar-frame-ring')), findsOneWidget);
   });
 
   testWidgets('çerçevesizken halka yok', (tester) async {

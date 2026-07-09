@@ -80,8 +80,8 @@ class _StyledInputFieldState extends State<StyledInputField> {
         final borderColor = hasError
             ? AppTheme.wrong
             : isFocused
-                ? AppColors.focus
-                : AppTheme.borderColor(context).withValues(alpha: 0.5);
+            ? AppColors.focus
+            : AppTheme.borderColor(context).withValues(alpha: 0.5);
         final borderWidth = (hasError || isFocused) ? 1.5 : 1.0;
 
         return Column(
@@ -126,8 +126,8 @@ class _StyledInputFieldState extends State<StyledInputField> {
                         color: hasError
                             ? AppTheme.wrong
                             : isFocused
-                                ? AppColors.focus
-                                : AppTheme.textMutedColor(context),
+                            ? AppColors.focus
+                            : AppTheme.textMutedColor(context),
                       ),
                       const SizedBox(width: AppSpacing.md),
                     ],
@@ -146,7 +146,9 @@ class _StyledInputFieldState extends State<StyledInputField> {
                           isDense: true,
                           contentPadding: EdgeInsets.zero,
                         ),
-                        cursorColor: hasError ? AppTheme.wrong : AppColors.focus,
+                        cursorColor: hasError
+                            ? AppTheme.wrong
+                            : AppColors.focus,
                       ),
                     ),
                     // Suffix icon
@@ -160,8 +162,8 @@ class _StyledInputFieldState extends State<StyledInputField> {
                           color: hasError
                               ? AppTheme.wrong
                               : isFocused
-                                  ? AppColors.focus
-                                  : AppTheme.textMutedColor(context),
+                              ? AppColors.focus
+                              : AppTheme.textMutedColor(context),
                         ),
                       ),
                     ],

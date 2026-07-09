@@ -72,21 +72,24 @@ void main() {
       expect(question.displayAnswers.first, isNot(question.answers.first));
     });
 
-    test('optionKeyForAnswer keeps backend option keys tied to stored answers', () {
-      const question = QuizQuestion(
-        id: 'q_shuffle',
-        category: 'Ziman',
-        prompt: 'Test question?',
-        answers: ['Correct', 'Wrong 1', 'Wrong 2', 'Wrong 3'],
-        correctAnswer: 'Correct',
-        explanation: 'This is correct',
-      );
+    test(
+      'optionKeyForAnswer keeps backend option keys tied to stored answers',
+      () {
+        const question = QuizQuestion(
+          id: 'q_shuffle',
+          category: 'Ziman',
+          prompt: 'Test question?',
+          answers: ['Correct', 'Wrong 1', 'Wrong 2', 'Wrong 3'],
+          correctAnswer: 'Correct',
+          explanation: 'This is correct',
+        );
 
-      expect(question.optionKeyForAnswer('Correct'), 'A');
-      expect(question.optionKeyForAnswer('Wrong 1'), 'B');
-      expect(question.optionKeyForAnswer('Wrong 2'), 'C');
-      expect(question.optionKeyForAnswer('Wrong 3'), 'D');
-    });
+        expect(question.optionKeyForAnswer('Correct'), 'A');
+        expect(question.optionKeyForAnswer('Wrong 1'), 'B');
+        expect(question.optionKeyForAnswer('Wrong 2'), 'C');
+        expect(question.optionKeyForAnswer('Wrong 3'), 'D');
+      },
+    );
 
     test('true false display order stays stable', () {
       const question = QuizQuestion(
@@ -102,36 +105,48 @@ void main() {
       expect(question.displayAnswers, ['Rast', 'Şaş']);
     });
 
-    test('getLocalizedExplanation returns localized explanations correctly', () {
-      const question = QuizQuestion(
-        id: 'q_explanation_test',
-        category: 'Ziman',
-        prompt: 'Test?',
-        answers: ['A', 'B'],
-        correctAnswer: 'A',
-        explanation: 'Default explanation',
-        explanationKu: 'Kurdish explanation',
-        explanationTr: 'Turkish explanation',
-      );
+    test(
+      'getLocalizedExplanation returns localized explanations correctly',
+      () {
+        const question = QuizQuestion(
+          id: 'q_explanation_test',
+          category: 'Ziman',
+          prompt: 'Test?',
+          answers: ['A', 'B'],
+          correctAnswer: 'A',
+          explanation: 'Default explanation',
+          explanationKu: 'Kurdish explanation',
+          explanationTr: 'Turkish explanation',
+        );
 
-      expect(question.getLocalizedExplanation(true), 'Kurdish explanation');
-      expect(question.getLocalizedExplanation(false), 'Turkish explanation');
-    });
+        expect(question.getLocalizedExplanation(true), 'Kurdish explanation');
+        expect(question.getLocalizedExplanation(false), 'Turkish explanation');
+      },
+    );
 
-    test('getLocalizedExplanation falls back to base explanation or local translation function', () {
-      const question = QuizQuestion(
-        id: 'q_explanation_fallback',
-        category: 'Ziman',
-        prompt: 'Test?',
-        answers: ['A', 'B'],
-        correctAnswer: 'A',
-        explanation: '"av" kelimesi "su" anlamına gelir.',
-      );
+    test(
+      'getLocalizedExplanation falls back to base explanation or local translation function',
+      () {
+        const question = QuizQuestion(
+          id: 'q_explanation_fallback',
+          category: 'Ziman',
+          prompt: 'Test?',
+          answers: ['A', 'B'],
+          correctAnswer: 'A',
+          explanation: '"av" kelimesi "su" anlamına gelir.',
+        );
 
-      // Kurdish mode uses local translation mapping (explanationToKu) on the base explanation
-      expect(question.getLocalizedExplanation(true), 'Peyva "av" tê wateya "su".');
-      expect(question.getLocalizedExplanation(false), '"av" kelimesi "su" anlamına gelir.');
-    });
+        // Kurdish mode uses local translation mapping (explanationToKu) on the base explanation
+        expect(
+          question.getLocalizedExplanation(true),
+          'Peyva "av" tê wateya "su".',
+        );
+        expect(
+          question.getLocalizedExplanation(false),
+          '"av" kelimesi "su" anlamına gelir.',
+        );
+      },
+    );
   });
 
   group('MockZanKurdRepository question bank', () {

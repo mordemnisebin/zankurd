@@ -53,9 +53,7 @@ class MissionToast {
         ),
         backgroundColor: AppTheme.gold,
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         duration: const Duration(seconds: 3),
         margin: const EdgeInsets.all(16),
       ),

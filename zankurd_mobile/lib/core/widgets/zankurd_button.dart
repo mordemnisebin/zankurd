@@ -58,17 +58,41 @@ class ZankurdButton extends StatelessWidget {
 
     switch (variant) {
       case ZankurdButtonVariant.filled:
-        return _Filled(label: label, icon: icon, onPressed: onPressed, expanded: expanded, child: child);
+        return _Filled(
+          label: label,
+          icon: icon,
+          onPressed: onPressed,
+          expanded: expanded,
+          child: child,
+        );
       case ZankurdButtonVariant.outlined:
-        return _Outlined(label: label, icon: icon, onPressed: onPressed, expanded: expanded, child: child);
+        return _Outlined(
+          label: label,
+          icon: icon,
+          onPressed: onPressed,
+          expanded: expanded,
+          child: child,
+        );
       case ZankurdButtonVariant.ghost:
-        return _Ghost(label: label, icon: icon, onPressed: onPressed, expanded: expanded, child: child);
+        return _Ghost(
+          label: label,
+          icon: icon,
+          onPressed: onPressed,
+          expanded: expanded,
+          child: child,
+        );
     }
   }
 }
 
 class _Filled extends StatelessWidget {
-  const _Filled({required this.label, this.icon, this.onPressed, required this.expanded, required this.child});
+  const _Filled({
+    required this.label,
+    this.icon,
+    this.onPressed,
+    required this.expanded,
+    required this.child,
+  });
   final String label;
   final IconData? icon;
   final VoidCallback? onPressed;
@@ -89,7 +113,13 @@ class _Filled extends StatelessWidget {
 }
 
 class _Outlined extends StatelessWidget {
-  const _Outlined({required this.label, this.icon, this.onPressed, required this.expanded, required this.child});
+  const _Outlined({
+    required this.label,
+    this.icon,
+    this.onPressed,
+    required this.expanded,
+    required this.child,
+  });
   final String label;
   final IconData? icon;
   final VoidCallback? onPressed;
@@ -110,7 +140,13 @@ class _Outlined extends StatelessWidget {
 }
 
 class _Ghost extends StatelessWidget {
-  const _Ghost({required this.label, this.icon, this.onPressed, required this.expanded, required this.child});
+  const _Ghost({
+    required this.label,
+    this.icon,
+    this.onPressed,
+    required this.expanded,
+    required this.child,
+  });
   final String label;
   final IconData? icon;
   final VoidCallback? onPressed;
@@ -125,12 +161,23 @@ class _Ghost extends StatelessWidget {
       height: 48, // min 44 px touch target'a uygun
       child: TextButton.icon(
         onPressed: onPressed,
-        icon: icon != null ? Icon(icon, size: 20, color: onPressed != null ? fgColor : AppTheme.textMuted) : null,
+        icon: icon != null
+            ? Icon(
+                icon,
+                size: 20,
+                color: onPressed != null ? fgColor : AppTheme.textMuted,
+              )
+            : null,
         label: Text(label),
         style: TextButton.styleFrom(
           foregroundColor: onPressed != null ? fgColor : AppTheme.textMuted,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppTheme.cardRadius)),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+            vertical: 12,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+          ),
         ),
       ),
     );

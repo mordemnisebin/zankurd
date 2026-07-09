@@ -3,10 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/widgets/animated_counter.dart';
 
 Widget _host(int value) => MaterialApp(
-      home: Scaffold(
-        body: Center(child: AnimatedCounter(value: value)),
-      ),
-    );
+  home: Scaffold(
+    body: Center(child: AnimatedCounter(value: value)),
+  ),
+);
 
 void main() {
   testWidgets('ilk değeri animasyonsuz gösterir', (tester) async {

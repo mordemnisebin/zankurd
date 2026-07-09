@@ -44,7 +44,7 @@ void main() {
 
   test('addXP adds XP correctly and returns level-up status', () async {
     final store = await XPStore.load();
-    
+
     // Add XP within Level 1
     bool leveledUp = await store.addXP(400);
     expect(leveledUp, isFalse);

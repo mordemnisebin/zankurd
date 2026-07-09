@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 
 /// Dokununca hafifçe küçülen (scale 0.97) tıklanabilir kart sarmalayıcı.
 class PressableCard extends StatefulWidget {
-  const PressableCard({
-    required this.child,
-    required this.onTap,
-    super.key,
-  });
+  const PressableCard({required this.child, required this.onTap, super.key});
 
   final Widget child;
   final VoidCallback onTap;

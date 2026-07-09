@@ -6,7 +6,9 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 void main() {
   testGoldens('ZankurdButton filled dark', (tester) async {
     await tester.pumpWidgetBuilder(
-      const Center(child: ZankurdButton(label: 'Destpê Bike', icon: Icons.play_arrow)),
+      const Center(
+        child: ZankurdButton(label: 'Destpê Bike', icon: Icons.play_arrow),
+      ),
       wrapper: materialAppWrapper(theme: AppTheme.dark()),
       surfaceSize: const Size(300, 100),
     );
@@ -31,7 +33,10 @@ void main() {
   testGoldens('ZankurdButton ghost dark', (tester) async {
     await tester.pumpWidgetBuilder(
       const Center(
-        child: ZankurdButton(label: 'Cancel', variant: ZankurdButtonVariant.ghost),
+        child: ZankurdButton(
+          label: 'Cancel',
+          variant: ZankurdButtonVariant.ghost,
+        ),
       ),
       wrapper: materialAppWrapper(theme: AppTheme.dark()),
       surfaceSize: const Size(300, 100),

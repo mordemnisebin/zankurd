@@ -9,16 +9,28 @@ void main() {
       Column(
         mainAxisSize: MainAxisSize.min,
         children: const [
-          ZankurdQuizOption(label: 'Neutral option text here.', optionLetter: 'A'),
+          ZankurdQuizOption(
+            label: 'Neutral option text here.',
+            optionLetter: 'A',
+          ),
           SizedBox(height: 8),
           ZankurdQuizOption(
-              label: 'Selected option text here.', optionLetter: 'B', state: QuizOptionState.selected),
+            label: 'Selected option text here.',
+            optionLetter: 'B',
+            state: QuizOptionState.selected,
+          ),
           SizedBox(height: 8),
           ZankurdQuizOption(
-              label: 'Correct option text here.', optionLetter: 'C', state: QuizOptionState.correct),
+            label: 'Correct option text here.',
+            optionLetter: 'C',
+            state: QuizOptionState.correct,
+          ),
           SizedBox(height: 8),
           ZankurdQuizOption(
-              label: 'Wrong option text here.', optionLetter: 'D', state: QuizOptionState.wrong),
+            label: 'Wrong option text here.',
+            optionLetter: 'D',
+            state: QuizOptionState.wrong,
+          ),
         ],
       ),
       wrapper: materialAppWrapper(theme: AppTheme.dark()),
@@ -32,16 +44,28 @@ void main() {
       Column(
         mainAxisSize: MainAxisSize.min,
         children: const [
-          ZankurdQuizOption(label: 'Neutral option text here.', optionLetter: 'A'),
+          ZankurdQuizOption(
+            label: 'Neutral option text here.',
+            optionLetter: 'A',
+          ),
           SizedBox(height: 8),
           ZankurdQuizOption(
-              label: 'Selected option text here.', optionLetter: 'B', state: QuizOptionState.selected),
+            label: 'Selected option text here.',
+            optionLetter: 'B',
+            state: QuizOptionState.selected,
+          ),
           SizedBox(height: 8),
           ZankurdQuizOption(
-              label: 'Correct option text here.', optionLetter: 'C', state: QuizOptionState.correct),
+            label: 'Correct option text here.',
+            optionLetter: 'C',
+            state: QuizOptionState.correct,
+          ),
           SizedBox(height: 8),
           ZankurdQuizOption(
-              label: 'Wrong option text here.', optionLetter: 'D', state: QuizOptionState.wrong),
+            label: 'Wrong option text here.',
+            optionLetter: 'D',
+            state: QuizOptionState.wrong,
+          ),
         ],
       ),
       wrapper: materialAppWrapper(theme: AppTheme.light()),

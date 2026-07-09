@@ -146,15 +146,13 @@ class _ChartPainter extends CustomPainter {
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
 
-    final textPainter = TextPainter(
-      textDirection: TextDirection.ltr,
-    );
+    final textPainter = TextPainter(textDirection: TextDirection.ltr);
 
     // 1. Draw Grid Lines and Y-Axis labels
     final int gridCount = 4;
     for (int i = 0; i <= gridCount; i++) {
       final double y = chartHeight * (1.0 - (i / gridCount));
-      
+
       // Draw grid line
       canvas.drawLine(
         Offset(labelAreaWidth, y),
@@ -173,16 +171,14 @@ class _ChartPainter extends CustomPainter {
         ),
       );
       textPainter.layout();
-      textPainter.paint(
-        canvas,
-        Offset(0, y - textPainter.height / 2),
-      );
+      textPainter.paint(canvas, Offset(0, y - textPainter.height / 2));
     }
 
     // 2. Draw Bars and X-Axis labels
     final List<String> keys = history.keys.toList();
     final double barWidth = math.min(18.0, chartWidth / (keys.length * 2.0));
-    final double spacing = (chartWidth - (barWidth * keys.length)) / (keys.length + 1);
+    final double spacing =
+        (chartWidth - (barWidth * keys.length)) / (keys.length + 1);
 
     for (int i = 0; i < keys.length; i++) {
       final key = keys[i];
@@ -193,7 +189,8 @@ class _ChartPainter extends CustomPainter {
       final double x = labelAreaWidth + spacing + i * (barWidth + spacing);
 
       // Stacked Bar Heights
-      final double correctHeight = (correctCount / maxVal) * chartHeight * progress;
+      final double correctHeight =
+          (correctCount / maxVal) * chartHeight * progress;
       final double wrongHeight = (wrongCount / maxVal) * chartHeight * progress;
 
       // Draw Correct part (Bottom part)
@@ -210,10 +207,7 @@ class _ChartPainter extends CustomPainter {
           bottomLeft: const Radius.circular(4),
           bottomRight: const Radius.circular(4),
         );
-        canvas.drawRRect(
-          rect,
-          Paint()..color = correctColor,
-        );
+        canvas.drawRRect(rect, Paint()..color = correctColor);
       }
 
       // Draw Wrong part (Top part, stacked on top of correct part)
@@ -227,13 +221,14 @@ class _ChartPainter extends CustomPainter {
           ),
           topLeft: const Radius.circular(4),
           topRight: const Radius.circular(4),
-          bottomLeft: correctHeight == 0 ? const Radius.circular(4) : Radius.zero,
-          bottomRight: correctHeight == 0 ? const Radius.circular(4) : Radius.zero,
+          bottomLeft: correctHeight == 0
+              ? const Radius.circular(4)
+              : Radius.zero,
+          bottomRight: correctHeight == 0
+              ? const Radius.circular(4)
+              : Radius.zero,
         );
-        canvas.drawRRect(
-          rect,
-          Paint()..color = wrongColor,
-        );
+        canvas.drawRRect(rect, Paint()..color = wrongColor);
       }
 
       // Draw X Label (Weekday)
@@ -254,10 +249,7 @@ class _ChartPainter extends CustomPainter {
       textPainter.layout();
       textPainter.paint(
         canvas,
-        Offset(
-          x + (barWidth - textPainter.width) / 2,
-          chartHeight + 6,
-        ),
+        Offset(x + (barWidth - textPainter.width) / 2, chartHeight + 6),
       );
     }
   }

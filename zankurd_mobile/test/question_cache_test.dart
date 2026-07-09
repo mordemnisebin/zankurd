@@ -54,10 +54,7 @@ void main() {
 
   test('get çıktısının değiştirilmesi cache\'i bozmaz', () {
     cache.set('Ziman_10', [q]);
-    expect(
-      () => cache.get('Ziman_10')!.add(q2),
-      throwsUnsupportedError,
-    );
+    expect(() => cache.get('Ziman_10')!.add(q2), throwsUnsupportedError);
     expect(cache.get('Ziman_10'), [q]);
   });
 }

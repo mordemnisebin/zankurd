@@ -13,7 +13,7 @@ import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 void main() {
   testWidgets('Capture Categories Before Screen', (WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
-    
+
     final repository = MockZanKurdRepository();
     final boundaryKey = GlobalKey();
 
@@ -44,7 +44,8 @@ void main() {
 
     await tester.runAsync(() async {
       final RenderRepaintBoundary boundary =
-          boundaryKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData!.buffer.asUint8List();
@@ -58,7 +59,7 @@ void main() {
 
   testWidgets('Capture Categories After Screen', (WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
-    
+
     final repository = MockZanKurdRepository();
     final boundaryKey = GlobalKey();
 
@@ -89,7 +90,8 @@ void main() {
 
     await tester.runAsync(() async {
       final RenderRepaintBoundary boundary =
-          boundaryKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData!.buffer.asUint8List();

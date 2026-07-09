@@ -23,9 +23,21 @@ class TournamentScreen extends StatefulWidget {
 
 class _TournamentScreenState extends State<TournamentScreen> {
   static const _botNames = [
-    'Azad', 'Rojîn', 'Berfîn', 'Zana', 'Dilan',
-    'Şêrko', 'Evîn', 'Baran', 'Hêlîn', 'Serhat',
-    'Xezal', 'Mîran', 'Delal', 'Welat', 'Nûdem',
+    'Azad',
+    'Rojîn',
+    'Berfîn',
+    'Zana',
+    'Dilan',
+    'Şêrko',
+    'Evîn',
+    'Baran',
+    'Hêlîn',
+    'Serhat',
+    'Xezal',
+    'Mîran',
+    'Delal',
+    'Welat',
+    'Nûdem',
   ];
 
   TournamentBracket? _bracket;
@@ -218,9 +230,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             playerOneName: p1.name,
             playerTwoId: p2.id,
             playerTwoName: p2.name,
-            status: p1.id == _userId || p2.id == _userId
-                ? 'active'
-                : 'pending',
+            status: p1.id == _userId || p2.id == _userId ? 'active' : 'pending',
           ),
         );
       }
@@ -373,9 +383,7 @@ class _LobbyView extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
               ),
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.12),
-              ),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
               boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.14),
             ),
             child: Stack(
@@ -564,11 +572,7 @@ class _ChampionBanner extends StatelessWidget {
       gradient: AppTheme.goldGradient,
       child: Row(
         children: [
-          const Icon(
-            Icons.emoji_events_rounded,
-            color: Colors.white,
-            size: 32,
-          ),
+          const Icon(Icons.emoji_events_rounded, color: Colors.white, size: 32),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
@@ -727,7 +731,11 @@ class _RoundSection extends StatelessWidget {
 }
 
 class _MatchRow extends StatelessWidget {
-  const _MatchRow({required this.match, required this.userId, required this.ku});
+  const _MatchRow({
+    required this.match,
+    required this.userId,
+    required this.ku,
+  });
 
   final TournamentMatch match;
   final String userId;

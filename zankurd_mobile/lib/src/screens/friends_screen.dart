@@ -95,9 +95,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
       widget.repository
           .logAnalyticsEvent('friend_request_sent', null)
           .catchError((_) => false);
-      _showMessage(
-        context.isKu ? 'Daxwaz hat şandin' : 'İstek gönderildi',
-      );
+      _showMessage(context.isKu ? 'Daxwaz hat şandin' : 'İstek gönderildi');
     } else {
       _showMessage(
         context.isKu ? 'Daxwaz neçû, dîsa biceribîne' : 'İstek gönderilemedi',
@@ -109,9 +107,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
     final success = await widget.repository.acceptFriendRequest(requestId);
     if (!mounted) return;
     if (success) {
-      _showMessage(
-        context.isKu ? 'Daxwaz hat qebûlkirin' : 'Arkadaş eklendi',
-      );
+      _showMessage(context.isKu ? 'Daxwaz hat qebûlkirin' : 'Arkadaş eklendi');
       setState(_loadFriends);
     } else {
       _showMessage(
@@ -267,13 +263,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     ),
                     _sentRequests.contains(player.id)
                         ? Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
                             child: Icon(
                               Icons.check_circle,
-                              color: AppTheme.primaryGradientStart
-                                  .withValues(alpha: 0.8),
+                              color: AppTheme.primaryGradientStart.withValues(
+                                alpha: 0.8,
+                              ),
                             ),
                           )
                         : FilledButton.tonal(
@@ -354,9 +349,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
         if (snap.hasError) {
           return AppErrorState(
             title: ku ? 'Barnebû' : 'Yüklenemedi',
-            message: ku
-                ? 'Heval nehatin barkirin'
-                : 'Arkadaşlar yüklenemedi',
+            message: ku ? 'Heval nehatin barkirin' : 'Arkadaşlar yüklenemedi',
             retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar',
             onRetry: () => setState(_loadFriends),
           );

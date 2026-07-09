@@ -201,9 +201,7 @@ class _CategoryTab extends StatelessWidget {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
-            gradient: isSelected
-                ? AppTheme.accentGradient
-                : null,
+            gradient: isSelected ? AppTheme.accentGradient : null,
             color: isSelected ? null : Colors.transparent,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
@@ -213,7 +211,10 @@ class _CategoryTab extends StatelessWidget {
               width: 1,
             ),
             boxShadow: isSelected
-                ? AppTheme.glowShadow(AppTheme.primaryGradientStart, intensity: 0.25)
+                ? AppTheme.glowShadow(
+                    AppTheme.primaryGradientStart,
+                    intensity: 0.25,
+                  )
                 : null,
           ),
           child: Center(
@@ -264,7 +265,9 @@ class _LessonCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14),
                   boxShadow: [
                     BoxShadow(
-                      color: AppTheme.primaryGradientStart.withValues(alpha: 0.3),
+                      color: AppTheme.primaryGradientStart.withValues(
+                        alpha: 0.3,
+                      ),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -446,9 +449,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
             }
             final slides = snap.data ?? [];
             if (slides.isEmpty) {
-              return Center(
-                child: Text(ku ? 'Slayt tune' : 'Slayt yok'),
-              );
+              return Center(child: Text(ku ? 'Slayt tune' : 'Slayt yok'));
             }
             final slide = slides[_currentSlideIndex];
             final isLast = _currentSlideIndex == slides.length - 1;

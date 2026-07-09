@@ -39,8 +39,10 @@ part 'quiz/quiz_widgets.dart';
 enum _MultiplayerPhase {
   /// Oyuncular cevap veriyor.
   answering,
+
   /// Cevap verildi, diğer oyuncu bekleniyor.
   waiting,
+
   /// İki oyuncu da cevapladı veya süre bitti; doğru cevap gösteriliyor.
   reveal,
 }
@@ -260,7 +262,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 if (!mounted) return;
                 setState(() {
                   for (final p in players) {
-                    final idx = livePlayers.indexWhere((lp) => lp.name == p.name);
+                    final idx = livePlayers.indexWhere(
+                      (lp) => lp.name == p.name,
+                    );
                     if (idx != -1) {
                       livePlayers[idx] = livePlayers[idx].copyWith(
                         score: p.score,
@@ -322,7 +326,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             .listen((rows) {
               if (!mounted) return;
               if (rows.isNotEmpty) {
-                final dbIndex = rows.first['current_question_index'] as int? ?? 0;
+                final dbIndex =
+                    rows.first['current_question_index'] as int? ?? 0;
                 _onRoomQuestionIndexChanged(dbIndex);
               }
             });
@@ -586,7 +591,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   children: [
                     _buildQuestionSwitcher(context, showExplanation: showExpl),
                     // Multiplayer bekleme/reveal overlay
-                    if (_isMultiplayer && answered && _mpPhase == _MultiplayerPhase.waiting)
+                    if (_isMultiplayer &&
+                        answered &&
+                        _mpPhase == _MultiplayerPhase.waiting)
                       _MultiplayerWaitingOverlay(isKu: _isKu),
                     if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
                       _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
@@ -627,7 +634,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             padding: const EdgeInsets.fromLTRB(18, 8, 10, 18),
             children: [
               _buildQuestionSwitcher(context, showExplanation: showExpl),
-              if (_isMultiplayer && answered && _mpPhase == _MultiplayerPhase.waiting)
+              if (_isMultiplayer &&
+                  answered &&
+                  _mpPhase == _MultiplayerPhase.waiting)
                 _MultiplayerWaitingOverlay(isKu: _isKu),
               if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
                 _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
@@ -763,7 +772,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       style: FilledButton.styleFrom(
                         backgroundColor: Colors.orange,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.sm,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(AppRadius.sm),
                         ),
@@ -771,7 +782,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       onPressed: () => _submitPracticeRating(3),
                       child: Text(
                         context.s('Zor', 'Zor'),
-                        style: AppTypography.bodyMedium.copyWith(fontWeight: FontWeight.bold),
+                        style: AppTypography.bodyMedium.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -781,7 +794,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       style: FilledButton.styleFrom(
                         backgroundColor: AppTheme.accent,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.sm,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(AppRadius.sm),
                         ),
@@ -789,7 +804,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       onPressed: () => _submitPracticeRating(4),
                       child: Text(
                         context.s('Navîn', 'Orta'),
-                        style: AppTypography.bodyMedium.copyWith(fontWeight: FontWeight.bold),
+                        style: AppTypography.bodyMedium.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -799,7 +816,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       style: FilledButton.styleFrom(
                         backgroundColor: AppTheme.correct,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.sm,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(AppRadius.sm),
                         ),
@@ -807,7 +826,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       onPressed: () => _submitPracticeRating(5),
                       child: Text(
                         context.s('Hêsan', 'Kolay'),
-                        style: AppTypography.bodyMedium.copyWith(fontWeight: FontWeight.bold),
+                        style: AppTypography.bodyMedium.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -819,7 +840,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppRadius.md), // AppRadius.lg
+                    borderRadius: BorderRadius.circular(
+                      AppRadius.md,
+                    ), // AppRadius.lg
                   ),
                   elevation: 2,
                   shadowColor: AppTheme.accent.withValues(alpha: 0.3),
@@ -829,15 +852,17 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   _isMultiplayer
                       ? Icons.hourglass_top_rounded
                       : isLastQuestion
-                          ? Icons.flag_outlined
-                          : Icons.arrow_forward_rounded,
+                      ? Icons.flag_outlined
+                      : Icons.arrow_forward_rounded,
                 ),
                 label: Text(
-                  _isMultiplayer && answered && _mpPhase != _MultiplayerPhase.reveal
+                  _isMultiplayer &&
+                          answered &&
+                          _mpPhase != _MultiplayerPhase.reveal
                       ? context.s('Li benda hevrik...', 'Rakip bekleniyor...')
                       : isLastQuestion
-                          ? context.s('Qediya', 'Bitir')
-                          : context.s('Piştre', 'Sonraki'),
+                      ? context.s('Qediya', 'Bitir')
+                      : context.s('Piştre', 'Sonraki'),
                   style: AppTypography.bodyLarge.copyWith(
                     fontWeight: FontWeight.w800,
                   ),
@@ -1234,9 +1259,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   void _checkMultiplayerSync() {
     if (!_isMultiplayer) return;
     final myName = _myName;
-    final otherPlayers = livePlayers.where((p) =>
-      _myId != null ? p.id != _myId : p.name != myName,
-    ).toList();
+    final otherPlayers = livePlayers
+        .where((p) => _myId != null ? p.id != _myId : p.name != myName)
+        .toList();
     if (otherPlayers.isEmpty) return;
 
     final allOthersAnswered = otherPlayers.every(
@@ -1271,7 +1296,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         return;
       }
       setState(() {
-        _revealCountdown = (revealDuration - timer.tick).clamp(0, revealDuration);
+        _revealCountdown = (revealDuration - timer.tick).clamp(
+          0,
+          revealDuration,
+        );
       });
     });
 

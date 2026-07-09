@@ -12,20 +12,49 @@ void main() {
   });
 
   group('MasteryLevelDetails.fromCorrectCount', () {
-    test('0 → none', () => expect(
-      MasteryLevelDetails.fromCorrectCount(0), MasteryLevel.none));
-    test('19 → none', () => expect(
-      MasteryLevelDetails.fromCorrectCount(19), MasteryLevel.none));
-    test('20 → xwendekar', () => expect(
-      MasteryLevelDetails.fromCorrectCount(20), MasteryLevel.xwendekar));
-    test('99 → xwendekar', () => expect(
-      MasteryLevelDetails.fromCorrectCount(99), MasteryLevel.xwendekar));
-    test('100 → pispor', () => expect(
-      MasteryLevelDetails.fromCorrectCount(100), MasteryLevel.pispor));
-    test('399 → pispor', () => expect(
-      MasteryLevelDetails.fromCorrectCount(399), MasteryLevel.pispor));
-    test('400 → mamoste', () => expect(
-      MasteryLevelDetails.fromCorrectCount(400), MasteryLevel.mamoste));
+    test(
+      '0 → none',
+      () => expect(MasteryLevelDetails.fromCorrectCount(0), MasteryLevel.none),
+    );
+    test(
+      '19 → none',
+      () => expect(MasteryLevelDetails.fromCorrectCount(19), MasteryLevel.none),
+    );
+    test(
+      '20 → xwendekar',
+      () => expect(
+        MasteryLevelDetails.fromCorrectCount(20),
+        MasteryLevel.xwendekar,
+      ),
+    );
+    test(
+      '99 → xwendekar',
+      () => expect(
+        MasteryLevelDetails.fromCorrectCount(99),
+        MasteryLevel.xwendekar,
+      ),
+    );
+    test(
+      '100 → pispor',
+      () => expect(
+        MasteryLevelDetails.fromCorrectCount(100),
+        MasteryLevel.pispor,
+      ),
+    );
+    test(
+      '399 → pispor',
+      () => expect(
+        MasteryLevelDetails.fromCorrectCount(399),
+        MasteryLevel.pispor,
+      ),
+    );
+    test(
+      '400 → mamoste',
+      () => expect(
+        MasteryLevelDetails.fromCorrectCount(400),
+        MasteryLevel.mamoste,
+      ),
+    );
   });
 
   group('MasteryStore', () {

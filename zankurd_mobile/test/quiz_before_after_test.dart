@@ -14,7 +14,7 @@ import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 void main() {
   testWidgets('Capture Quiz Before Screen', (WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
-    
+
     final repository = MockZanKurdRepository();
     final room = repository.createRoom();
     final questions = repository.questions.take(3).toList();
@@ -23,7 +23,9 @@ void main() {
     await tester.pumpWidget(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider<LanguageProvider>(create: (_) => LanguageProvider()),
+          ChangeNotifierProvider<LanguageProvider>(
+            create: (_) => LanguageProvider(),
+          ),
           ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
         ],
         child: MaterialApp(
@@ -50,7 +52,8 @@ void main() {
 
     await tester.runAsync(() async {
       final RenderRepaintBoundary boundary =
-          boundaryKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData!.buffer.asUint8List();
@@ -64,7 +67,7 @@ void main() {
 
   testWidgets('Capture Quiz After Screen', (WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
-    
+
     final repository = MockZanKurdRepository();
     final room = repository.createRoom();
     final questions = repository.questions.take(3).toList();
@@ -73,7 +76,9 @@ void main() {
     await tester.pumpWidget(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider<LanguageProvider>(create: (_) => LanguageProvider()),
+          ChangeNotifierProvider<LanguageProvider>(
+            create: (_) => LanguageProvider(),
+          ),
           ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
         ],
         child: MaterialApp(
@@ -100,7 +105,8 @@ void main() {
 
     await tester.runAsync(() async {
       final RenderRepaintBoundary boundary =
-          boundaryKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData!.buffer.asUint8List();

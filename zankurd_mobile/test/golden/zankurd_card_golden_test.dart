@@ -10,9 +10,15 @@ void main() {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Zankurd Card', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
+            Text(
+              'Zankurd Card',
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+            ),
             const SizedBox(height: 8),
-            Text('Surface card with theme-aware shadow.', style: TextStyle(fontSize: 14)),
+            Text(
+              'Surface card with theme-aware shadow.',
+              style: TextStyle(fontSize: 14),
+            ),
           ],
         ),
       ),
@@ -28,9 +34,15 @@ void main() {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Zankurd Card', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
+            Text(
+              'Zankurd Card',
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+            ),
             const SizedBox(height: 8),
-            Text('Surface card with theme-aware shadow.', style: TextStyle(fontSize: 14)),
+            Text(
+              'Surface card with theme-aware shadow.',
+              style: TextStyle(fontSize: 14),
+            ),
           ],
         ),
       ),
@@ -50,8 +62,14 @@ void main() {
           children: [
             Icon(Icons.star, color: Colors.white, size: 24),
             SizedBox(height: 8),
-            Text('Premium Card',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 16)),
+            Text(
+              'Premium Card',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w800,
+                fontSize: 16,
+              ),
+            ),
           ],
         ),
       ),

@@ -27,11 +27,11 @@ class ResultSharer {
         : ((correctCount / totalQuestions) * 100).round();
     final text = isKu
         ? 'Min di ZanKurd de $score pûan girt! '
-            'Rast: $correctCount/$totalQuestions (%$accuracy). '
-            'Tu jî bilîze: Play Store → "ZanKurd"'
+              'Rast: $correctCount/$totalQuestions (%$accuracy). '
+              'Tu jî bilîze: Play Store → "ZanKurd"'
         : 'ZanKurd\'te $score puan aldım! '
-            'Doğru: $correctCount/$totalQuestions (%$accuracy). '
-            'Sen de oyna: Play Store → "ZanKurd"';
+              'Doğru: $correctCount/$totalQuestions (%$accuracy). '
+              'Sen de oyna: Play Store → "ZanKurd"';
 
     final overlay = Overlay.maybeOf(context);
     Uint8List? bytes;

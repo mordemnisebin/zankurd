@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeProvider({ThemeMode initialMode = ThemeMode.light}) : _mode = initialMode;
+  ThemeProvider({ThemeMode initialMode = ThemeMode.light})
+    : _mode = initialMode;
 
   static const _storageKey = 'zankurd.themeMode';
 

@@ -74,11 +74,12 @@ class DailyMissionStore {
       if (mission.completed) continue;
       switch (mission.type) {
         case MissionType.answerCorrect:
-          mission.progress =
-              (mission.progress + correctAnswers).clamp(0, mission.target);
+          mission.progress = (mission.progress + correctAnswers).clamp(
+            0,
+            mission.target,
+          );
         case MissionType.completeQuiz:
-          mission.progress =
-              (mission.progress + 1).clamp(0, mission.target);
+          mission.progress = (mission.progress + 1).clamp(0, mission.target);
         case MissionType.keepStreak:
           if (streakAlive) mission.progress = mission.target;
         case MissionType.playCategory:
@@ -97,7 +98,9 @@ class DailyMissionStore {
 
   Future<DailyMission?> reportWildcardUsed() async {
     for (final mission in _missions) {
-      if (mission.completed || mission.type != MissionType.useWildcard) continue;
+      if (mission.completed || mission.type != MissionType.useWildcard) {
+        continue;
+      }
       mission.progress = (mission.progress + 1).clamp(0, mission.target);
       if (mission.progress >= mission.target) mission.completed = true;
       await _persist();

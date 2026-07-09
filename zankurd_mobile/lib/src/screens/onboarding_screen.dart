@@ -101,8 +101,12 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   final compact = constraints.maxHeight < 560;
                   final wide = constraints.maxWidth >= 720;
                   final wideCompact = compact && wide;
-                  final horizontalPadding = wide ? AppSpacing.xl : AppSpacing.page;
-                  final verticalPadding = compact ? AppSpacing.xxs : AppSpacing.xs;
+                  final horizontalPadding = wide
+                      ? AppSpacing.xl
+                      : AppSpacing.page;
+                  final verticalPadding = compact
+                      ? AppSpacing.xxs
+                      : AppSpacing.xs;
                   final headerHeight = compact
                       ? 90.0
                       : (constraints.maxHeight < 720 ? 115.0 : 150.0);
@@ -189,7 +193,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             ),
                           ),
                         ),
-                        SizedBox(height: compact ? AppSpacing.xs : AppSpacing.xs),
+                        SizedBox(
+                          height: compact ? AppSpacing.xs : AppSpacing.xs,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -475,7 +481,10 @@ class _OnboardingPage extends StatelessWidget {
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [data.color, data.color.withValues(alpha: 0.5)],
+                          colors: [
+                            data.color,
+                            data.color.withValues(alpha: 0.5),
+                          ],
                         ),
                       ),
                     ),
@@ -502,7 +511,9 @@ class _OnboardingPage extends StatelessWidget {
                   ),
                 ),
                 if (data.bullets.isNotEmpty) ...[
-                  SizedBox(height: compact ? AppSpacing.cardGap : AppSpacing.md),
+                  SizedBox(
+                    height: compact ? AppSpacing.cardGap : AppSpacing.md,
+                  ),
                   for (final bullet in data.bullets) ...[
                     _BulletRow(text: bullet, color: data.color),
                     const SizedBox(height: AppSpacing.xs),
@@ -565,8 +576,9 @@ class _OnboardingIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final glowColor =
-        data.color == AppTheme.gold ? AppTheme.gold : AppTheme.accent;
+    final glowColor = data.color == AppTheme.gold
+        ? AppTheme.gold
+        : AppTheme.accent;
     return Container(
       width: size,
       height: size,

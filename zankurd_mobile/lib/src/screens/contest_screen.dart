@@ -68,24 +68,23 @@ class _ContestScreenState extends State<ContestScreen> {
         );
       }
       if (questions.isEmpty) {
-        questions = widget.repository.questions.take(contest.questionCount).toList();
+        questions = widget.repository.questions
+            .take(contest.questionCount)
+            .toList();
       }
       if (!mounted) return;
       if (questions.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              ku ? 'Pirs nehatin dîtin.' : 'Soru bulunamadı.',
-            ),
+            content: Text(ku ? 'Pirs nehatin dîtin.' : 'Soru bulunamadı.'),
           ),
         );
         return;
       }
 
-      final room = widget.repository.createRoom(category: contest.category).copyWith(
-            name: contest.themeNameKu,
-            questionCount: questions.length,
-          );
+      final room = widget.repository
+          .createRoom(category: contest.category)
+          .copyWith(name: contest.themeNameKu, questionCount: questions.length);
 
       await Navigator.of(context).push(
         AppRoute.to(
@@ -339,9 +338,7 @@ class _ContestContent extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(24),
                 child: Text(
-                  ku
-                      ? 'Rêzkirin nehat barkirin.'
-                      : 'Sıralama yüklenemedi.',
+                  ku ? 'Rêzkirin nehat barkirin.' : 'Sıralama yüklenemedi.',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: AppTheme.textMutedColor(context)),
                 ),
@@ -352,7 +349,9 @@ class _ContestContent extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(24),
                 child: Text(
-                  ku ? 'Hîn beşdar tune — yekemîn tu bibe!' : 'Henüz katılım yok — ilk sen ol!',
+                  ku
+                      ? 'Hîn beşdar tune — yekemîn tu bibe!'
+                      : 'Henüz katılım yok — ilk sen ol!',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: AppTheme.textMutedColor(context)),
                 ),

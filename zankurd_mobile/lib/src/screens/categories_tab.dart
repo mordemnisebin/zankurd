@@ -382,8 +382,9 @@ class _CategoryCardState extends State<_CategoryCard>
                               color: Colors.white.withValues(alpha: 0.20),
                               borderRadius: BorderRadius.circular(AppRadius.md),
                               border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.25),
-                                  width: 1.1),
+                                color: Colors.white.withValues(alpha: 0.25),
+                                width: 1.1,
+                              ),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withValues(alpha: 0.20),

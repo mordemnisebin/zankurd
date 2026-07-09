@@ -16,10 +16,10 @@ class ReviewService {
   static ReviewService? _instance;
 
   /// Test'lerde mağaza çağrısını taklit etmek için enjekte edilebilir.
-  static Future<bool> Function() availabilityCheck =
-      () => InAppReview.instance.isAvailable();
-  static Future<void> Function() requestReviewFn =
-      () => InAppReview.instance.requestReview();
+  static Future<bool> Function() availabilityCheck = () =>
+      InAppReview.instance.isAvailable();
+  static Future<void> Function() requestReviewFn = () =>
+      InAppReview.instance.requestReview();
 
   final SharedPreferences? _preferences;
   int _completedQuizzes;

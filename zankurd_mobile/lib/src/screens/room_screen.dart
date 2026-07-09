@@ -136,9 +136,7 @@ class _RoomScreenState extends State<RoomScreen> {
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(
-          '${room.code} ${ku ? "hat kopîkirin" : "kopyalandı"}.',
-        ),
+        content: Text('${room.code} ${ku ? "hat kopîkirin" : "kopyalandı"}.'),
       ),
     );
   }
@@ -202,10 +200,7 @@ class _RoomScreenState extends State<RoomScreen> {
                       gradient: const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [
-                          AppTheme.secondaryAccent,
-                          AppTheme.bgDeep,
-                        ],
+                        colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -247,8 +242,7 @@ class _RoomScreenState extends State<RoomScreen> {
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () => _copyRoomCode(context, ku),
-                              borderRadius:
-                                  BorderRadius.circular(AppRadius.sm),
+                              borderRadius: BorderRadius.circular(AppRadius.sm),
                               child: Container(
                                 width: double.infinity,
                                 padding: const EdgeInsets.symmetric(
@@ -257,8 +251,9 @@ class _RoomScreenState extends State<RoomScreen> {
                                 ),
                                 decoration: BoxDecoration(
                                   color: Colors.white.withValues(alpha: 0.1),
-                                  borderRadius:
-                                      BorderRadius.circular(AppRadius.sm),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.sm,
+                                  ),
                                   border: Border.all(
                                     color: Colors.white.withValues(alpha: 0.18),
                                   ),
@@ -276,27 +271,28 @@ class _RoomScreenState extends State<RoomScreen> {
                                                 : 'Oda kodunu paylaş',
                                             style: AppTypography.caption
                                                 .copyWith(
-                                              color: Colors.white
-                                                  .withValues(alpha: 0.7),
-                                            ),
+                                                  color: Colors.white
+                                                      .withValues(alpha: 0.7),
+                                                ),
                                           ),
                                           const SizedBox(height: 2),
                                           Text(
                                             room.code,
                                             style: AppTypography.heading1
                                                 .copyWith(
-                                              color: AppTheme.gold,
-                                              letterSpacing: 2,
-                                              fontSize: 28,
-                                            ),
+                                                  color: AppTheme.gold,
+                                                  letterSpacing: 2,
+                                                  fontSize: 28,
+                                                ),
                                           ),
                                         ],
                                       ),
                                     ),
                                     Icon(
                                       Icons.copy_all_rounded,
-                                      color: Colors.white
-                                          .withValues(alpha: 0.85),
+                                      color: Colors.white.withValues(
+                                        alpha: 0.85,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -358,8 +354,9 @@ class _RoomScreenState extends State<RoomScreen> {
                             height: 10,
                             child: CircularProgressIndicator(
                               strokeWidth: 1.5,
-                              color: AppTheme.primaryGradientStart
-                                  .withValues(alpha: 0.85),
+                              color: AppTheme.primaryGradientStart.withValues(
+                                alpha: 0.85,
+                              ),
                             ),
                           ),
                           const SizedBox(width: AppSpacing.xs),
@@ -379,9 +376,7 @@ class _RoomScreenState extends State<RoomScreen> {
                     const SizedBox(height: AppSpacing.sm),
                     if (sorted.isEmpty)
                       Text(
-                        ku
-                            ? 'Hîn lîstikvan tune.'
-                            : 'Henüz oyuncu yok.',
+                        ku ? 'Hîn lîstikvan tune.' : 'Henüz oyuncu yok.',
                         style: AppTypography.bodyMedium.copyWith(
                           color: AppTheme.textMutedColor(context),
                         ),
@@ -392,7 +387,8 @@ class _RoomScreenState extends State<RoomScreen> {
                           rank: i + 1,
                           player: sorted[i],
                           isKu: ku,
-                          isHost: room.hostId != null &&
+                          isHost:
+                              room.hostId != null &&
                               sorted[i].id == room.hostId,
                         ),
                     if (room.players.length < 2) ...[
@@ -485,9 +481,7 @@ class _RoomScreenState extends State<RoomScreen> {
                       GeometricGradientButton(
                         label: starting
                             ? (ku ? 'Tê Amadekirin' : 'Hazırlanıyor')
-                            : (ku
-                                ? 'Pêşbirkê Dest Pê Bike'
-                                : 'Yarışı Başlat'),
+                            : (ku ? 'Pêşbirkê Dest Pê Bike' : 'Yarışı Başlat'),
                         icon: Icons.play_arrow_rounded,
                         isLoading: starting,
                         onPressed: canStart ? _startGameHost : null,
@@ -499,12 +493,14 @@ class _RoomScreenState extends State<RoomScreen> {
                           horizontal: AppSpacing.md,
                         ),
                         decoration: BoxDecoration(
-                          color: AppTheme.primaryGradientStart
-                              .withValues(alpha: 0.1),
+                          color: AppTheme.primaryGradientStart.withValues(
+                            alpha: 0.1,
+                          ),
                           borderRadius: BorderRadius.circular(AppRadius.sm),
                           border: Border.all(
-                            color: AppTheme.primaryGradientStart
-                                .withValues(alpha: 0.28),
+                            color: AppTheme.primaryGradientStart.withValues(
+                              alpha: 0.28,
+                            ),
                           ),
                         ),
                         child: Row(
@@ -665,9 +661,7 @@ class _PlayerTile extends StatelessWidget {
         color: AppTheme.surfaceHiColor(context),
         borderRadius: BorderRadius.circular(AppRadius.sm),
         border: isHost
-            ? Border.all(
-                color: AppTheme.gold.withValues(alpha: 0.35),
-              )
+            ? Border.all(color: AppTheme.gold.withValues(alpha: 0.35))
             : null,
       ),
       child: Row(

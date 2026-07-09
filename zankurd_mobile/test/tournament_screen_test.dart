@@ -20,16 +20,12 @@ void main() {
   Widget createTestWidget() {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<SoundProvider>(
-          create: (_) => SoundProvider(),
-        ),
+        ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
         ChangeNotifierProvider<LanguageProvider>(
           create: (_) => LanguageProvider(initialLang: 'tr'),
         ),
       ],
-      child: MaterialApp(
-        home: TournamentScreen(repository: repository),
-      ),
+      child: MaterialApp(home: TournamentScreen(repository: repository)),
     );
   }
 
@@ -43,17 +39,20 @@ void main() {
       expect(find.byIcon(Icons.emoji_events_rounded), findsOneWidget);
     });
 
-    testWidgets('baslangic butonuna basildiginda ceyrek final eslesmesi yukleniyor', (tester) async {
-      await tester.pumpWidget(createTestWidget());
-      await tester.pumpAndSettle();
+    testWidgets(
+      'baslangic butonuna basildiginda ceyrek final eslesmesi yukleniyor',
+      (tester) async {
+        await tester.pumpWidget(createTestWidget());
+        await tester.pumpAndSettle();
 
-      final startButton = find.text('Turnuvaya Başla');
-      await tester.tap(startButton);
-      await tester.pumpAndSettle();
+        final startButton = find.text('Turnuvaya Başla');
+        await tester.tap(startButton);
+        await tester.pumpAndSettle();
 
-      expect(find.text('Çeyrek Final'), findsAtLeast(1));
-      expect(find.text('Maçı Başlat'), findsOneWidget);
-      expect(find.text('Turnuva Şeması'), findsOneWidget);
-    });
+        expect(find.text('Çeyrek Final'), findsAtLeast(1));
+        expect(find.text('Maçı Başlat'), findsOneWidget);
+        expect(find.text('Turnuva Şeması'), findsOneWidget);
+      },
+    );
   });
 }

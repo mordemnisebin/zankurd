@@ -11,7 +11,12 @@ void main() {
             Positioned(
               left: 10,
               top: 10,
-              child: Container(key: key, width: 40, height: 40, color: Colors.red),
+              child: Container(
+                key: key,
+                width: 40,
+                height: 40,
+                color: Colors.red,
+              ),
             ),
             overlayChild,
           ],

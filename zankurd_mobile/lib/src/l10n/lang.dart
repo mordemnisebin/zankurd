@@ -74,9 +74,7 @@ class CategoryNames {
   };
 
   /// Optional Kurmanci display labels (ID stays the map key).
-  static const Map<String, String> _kuDisplay = {
-    'Cografya': 'Erdnîgarî',
-  };
+  static const Map<String, String> _kuDisplay = {'Cografya': 'Erdnîgarî'};
 
   static String tr(String kuName) => _kuToTr[kuName] ?? kuName;
 

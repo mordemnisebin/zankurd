@@ -595,81 +595,85 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 ),
                               ),
-                            if (coinsAwarded > 0) ...[
-                              const SizedBox(height: 12),
-                              Row(
-                                children: [
-                                  _ResultRewardChip(
-                                    icon: Icons.monetization_on_outlined,
-                                    label: '+${coinsAwarded}c',
-                                    color: AppTheme.gold,
-                                  ),
-                                  if (_earnedXP > 0) ...[
-                                    const SizedBox(width: 8),
+                              if (coinsAwarded > 0) ...[
+                                const SizedBox(height: 12),
+                                Row(
+                                  children: [
                                     _ResultRewardChip(
-                                      icon: Icons.bolt_rounded,
-                                      label: '+$_earnedXP XP',
-                                      color: AppTheme.accent,
+                                      icon: Icons.monetization_on_outlined,
+                                      label: '+${coinsAwarded}c',
+                                      color: AppTheme.gold,
                                     ),
+                                    if (_earnedXP > 0) ...[
+                                      const SizedBox(width: 8),
+                                      _ResultRewardChip(
+                                        icon: Icons.bolt_rounded,
+                                        label: '+$_earnedXP XP',
+                                        color: AppTheme.accent,
+                                      ),
+                                    ],
                                   ],
+                                ),
+                              ],
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: AppSpacing.md,
+                                ),
+                                child: Divider(
+                                  color: Colors.white.withValues(alpha: 0.18),
+                                  height: 1,
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    child: _MetricItemCompact(
+                                      icon: Icons.check_circle_outline,
+                                      label: context.s('Rast', 'Doğru'),
+                                      value: '$correctCount',
+                                      iconColor: AppTheme.correct,
+                                    ),
+                                  ),
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    child: _MetricItemCompact(
+                                      icon: Icons.cancel_outlined,
+                                      label: context.s('Şaş', 'Yanlış'),
+                                      value: '$wrongCount',
+                                      iconColor: AppTheme.wrong,
+                                    ),
+                                  ),
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    child: _MetricItemCompact(
+                                      icon: Icons.hourglass_empty_rounded,
+                                      label: context.s('Vala', 'Boş'),
+                                      value: '$unanswered',
+                                      iconColor: AppTheme.textMutedColor(
+                                        context,
+                                      ),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    child: _MetricItemCompact(
+                                      icon:
+                                          Icons.local_fire_department_outlined,
+                                      label: context.s('Baştirîn', 'En İyi'),
+                                      value: '$bestStreak',
+                                      iconColor: AppTheme.gold,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: AppSpacing.md,
-                              ),
-                              child: Divider(
-                                color: Colors.white.withValues(alpha: 0.18),
-                                height: 1,
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Flexible(
-                                  fit: FlexFit.tight,
-                                  child: _MetricItemCompact(
-                                    icon: Icons.check_circle_outline,
-                                    label: context.s('Rast', 'Doğru'),
-                                    value: '$correctCount',
-                                    iconColor: AppTheme.correct,
-                                  ),
-                                ),
-                                Flexible(
-                                  fit: FlexFit.tight,
-                                  child: _MetricItemCompact(
-                                    icon: Icons.cancel_outlined,
-                                    label: context.s('Şaş', 'Yanlış'),
-                                    value: '$wrongCount',
-                                    iconColor: AppTheme.wrong,
-                                  ),
-                                ),
-                                Flexible(
-                                  fit: FlexFit.tight,
-                                  child: _MetricItemCompact(
-                                    icon: Icons.hourglass_empty_rounded,
-                                    label: context.s('Vala', 'Boş'),
-                                    value: '$unanswered',
-                                    iconColor: AppTheme.textMutedColor(context),
-                                  ),
-                                ),
-                                Flexible(
-                                  fit: FlexFit.tight,
-                                  child: _MetricItemCompact(
-                                    icon: Icons.local_fire_department_outlined,
-                                    label: context.s('Baştirîn', 'En İyi'),
-                                    value: '$bestStreak',
-                                    iconColor: AppTheme.gold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   ),
                   if (opponents.isNotEmpty) ...[
                     const SizedBox(height: 16),

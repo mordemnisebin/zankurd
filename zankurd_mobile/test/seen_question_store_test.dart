@@ -97,19 +97,21 @@ void main() {
     expect(selected.length, 3);
   });
 
-  test('prompt dedupe still recycles when all prompts have been seen',
-      () async {
-    final store = await SeenQuestionStore.load();
-    final pool = [
-      _question('a1', prompt: 'roj nedir?'),
-      _question('a2', prompt: 'roj nedir?'),
-      _question('b1', prompt: 'av nedir?'),
-    ];
-    await store.markSeen(['a1', 'a2', 'b1']);
+  test(
+    'prompt dedupe still recycles when all prompts have been seen',
+    () async {
+      final store = await SeenQuestionStore.load();
+      final pool = [
+        _question('a1', prompt: 'roj nedir?'),
+        _question('a2', prompt: 'roj nedir?'),
+        _question('b1', prompt: 'av nedir?'),
+      ];
+      await store.markSeen(['a1', 'a2', 'b1']);
 
-    final selected = store.preferUnseen(pool, 3, random: Random(1));
-    final prompts = selected.map((q) => q.prompt).toList();
-    expect(prompts.toSet().length, prompts.length);
-    expect(selected.length, 2); // 'roj nedir?' ve 'av nedir?'
-  });
+      final selected = store.preferUnseen(pool, 3, random: Random(1));
+      final prompts = selected.map((q) => q.prompt).toList();
+      expect(prompts.toSet().length, prompts.length);
+      expect(selected.length, 2); // 'roj nedir?' ve 'av nedir?'
+    },
+  );
 }

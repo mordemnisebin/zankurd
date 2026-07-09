@@ -16,6 +16,7 @@ class SettingsScreen extends StatefulWidget {
   const SettingsScreen({required this.repository, super.key});
 
   final ZanKurdRepository repository;
+
   /// Fallback if [PackageInfo] unavailable (tests / edge platforms).
   static const appVersion = '1.8.0+10';
 
@@ -781,9 +782,7 @@ class _LangChip extends StatelessWidget {
         constraints: const BoxConstraints(minHeight: 44),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         decoration: BoxDecoration(
-          color: active
-              ? AppTheme.primaryGradientStart
-              : Colors.transparent,
+          color: active ? AppTheme.primaryGradientStart : Colors.transparent,
           borderRadius: BorderRadius.circular(99),
         ),
         child: Text(

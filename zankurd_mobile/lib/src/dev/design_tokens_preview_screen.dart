@@ -24,7 +24,9 @@ class DesignTokensPreviewScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.sm),
               Text(
                 'Kültürel Modern Tasarım Sistemi Önizlemesi',
-                style: AppTypography.bodyLarge.copyWith(color: AppTheme.lightTextSub),
+                style: AppTypography.bodyLarge.copyWith(
+                  color: AppTheme.lightTextSub,
+                ),
               ),
               const SizedBox(height: AppSpacing.xl),
 
@@ -38,13 +40,15 @@ class DesignTokensPreviewScreen extends StatelessWidget {
                   _ColorCard(
                     colorName: 'Primary (Coral)',
                     color: AppTheme.primaryGradientStart,
-                    textColor: AppTheme.lightTextPrimary, // Koyu Yeşil (5.23:1 Kontrast)
+                    textColor: AppTheme
+                        .lightTextPrimary, // Koyu Yeşil (5.23:1 Kontrast)
                     desc: '0xFFE76F51\nKoyu Yeşil Yazı',
                   ),
                   _ColorCard(
                     colorName: 'Gold (Sun/Streak)',
                     color: AppTheme.gold,
-                    textColor: AppTheme.lightTextPrimary, // Koyu Yeşil (9.68:1 Kontrast)
+                    textColor: AppTheme
+                        .lightTextPrimary, // Koyu Yeşil (9.68:1 Kontrast)
                     desc: '0xFFE9C46A\nKoyu Yeşil Yazı',
                   ),
                   _ColorCard(
@@ -79,7 +83,9 @@ class DesignTokensPreviewScreen extends StatelessWidget {
                       ),
                       child: Text(
                         'Mercan + Koyu Yeşil (5.23:1)',
-                        style: AppTypography.bodyLarge.copyWith(color: AppTheme.lightTextPrimary),
+                        style: AppTypography.bodyLarge.copyWith(
+                          color: AppTheme.lightTextPrimary,
+                        ),
                       ),
                     ),
                   ),
@@ -94,7 +100,9 @@ class DesignTokensPreviewScreen extends StatelessWidget {
                       ),
                       child: Text(
                         'Gold + Koyu Yeşil (9.68:1)',
-                        style: AppTypography.bodyLarge.copyWith(color: AppTheme.lightTextPrimary),
+                        style: AppTypography.bodyLarge.copyWith(
+                          color: AppTheme.lightTextPrimary,
+                        ),
                       ),
                     ),
                   ),
@@ -138,7 +146,9 @@ class DesignTokensPreviewScreen extends StatelessWidget {
                     const SizedBox(height: AppSpacing.xs),
                     Text(
                       'Body Medium (14pt, Medium)',
-                      style: AppTypography.bodyMedium.copyWith(color: themeText),
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: themeText,
+                      ),
                     ),
                     const SizedBox(height: AppSpacing.xs),
                     Text(

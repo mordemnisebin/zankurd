@@ -7,7 +7,11 @@ void main() {
   testGoldens('ZankurdMetricTile accent dark', (tester) async {
     await tester.pumpWidgetBuilder(
       const Center(
-        child: ZankurdMetricTile(icon: Icons.pie_chart, value: '85%', label: 'Accuracy'),
+        child: ZankurdMetricTile(
+          icon: Icons.pie_chart,
+          value: '85%',
+          label: 'Accuracy',
+        ),
       ),
       wrapper: materialAppWrapper(theme: AppTheme.dark()),
       surfaceSize: const Size(180, 150),

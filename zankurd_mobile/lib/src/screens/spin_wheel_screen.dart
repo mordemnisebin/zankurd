@@ -317,15 +317,22 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                 decoration: BoxDecoration(
                                   gradient: AppTheme.accentGradient,
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: Colors.white, width: 3.5),
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 3.5,
+                                  ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.45),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.45,
+                                      ),
                                       offset: const Offset(0, 6),
                                       blurRadius: 8,
                                     ),
                                     BoxShadow(
-                                      color: Colors.white.withValues(alpha: 0.2),
+                                      color: Colors.white.withValues(
+                                        alpha: 0.2,
+                                      ),
                                       offset: const Offset(0, -3),
                                       blurRadius: 4,
                                     ),
@@ -401,7 +408,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                   ? (ku ? 'Dizivire...' : 'Dönüyor...')
                                   : _canSpin
                                   ? (ku ? 'Bizivirîne!' : 'Çevir!')
-                                  : (ku ? 'Sibê dîsa were!' : 'Yarın tekrar gel!'),
+                                  : (ku
+                                        ? 'Sibê dîsa were!'
+                                        : 'Yarın tekrar gel!'),
                               style: AppTypography.bodyLarge.copyWith(
                                 color: Colors.white,
                               ),
@@ -412,12 +421,19 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                           const SizedBox(height: 16),
                           Center(
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 10,
+                              ),
                               decoration: AppTheme.glassDecoration(context),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.access_time_rounded, color: AppTheme.gold, size: 16),
+                                  Icon(
+                                    Icons.access_time_rounded,
+                                    color: AppTheme.gold,
+                                    size: 16,
+                                  ),
                                   const SizedBox(width: 8),
                                   Text(
                                     ku
@@ -511,7 +527,9 @@ class _WheelPainter extends CustomPainter {
       )..layout();
       final textOffset = Offset(
         center.dx + math.cos(textAngle) * radius * 0.68 - textPainter.width / 2,
-        center.dy + math.sin(textAngle) * radius * 0.68 - textPainter.height / 2,
+        center.dy +
+            math.sin(textAngle) * radius * 0.68 -
+            textPainter.height / 2,
       );
       textPainter.paint(canvas, textOffset);
     }
@@ -571,7 +589,7 @@ class _PointerPainter extends CustomPainter {
       ..lineTo(size.width, 0)
       ..lineTo(size.width / 2, size.height + 3)
       ..close();
-    
+
     // Gölge çizimi
     canvas.drawPath(
       shadowPath,
@@ -588,7 +606,7 @@ class _PointerPainter extends CustomPainter {
 
     // Gövde
     canvas.drawPath(path, Paint()..color = AppTheme.gold);
-    
+
     // Kenarlık konturu
     canvas.drawPath(
       path,

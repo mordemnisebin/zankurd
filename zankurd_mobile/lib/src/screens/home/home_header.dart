@@ -189,9 +189,10 @@ class _StreakBadgeState extends State<_StreakBadge>
       duration: const Duration(milliseconds: 1200),
       vsync: this,
     )..repeat(reverse: true);
-    _scale = Tween<double>(begin: 1.0, end: 1.12).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _scale = Tween<double>(
+      begin: 1.0,
+      end: 1.12,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -212,9 +213,7 @@ class _StreakBadgeState extends State<_StreakBadge>
           ],
         ),
         borderRadius: BorderRadius.circular(AppRadius.sm),
-        border: Border.all(
-          color: AppTheme.gold.withValues(alpha: 0.45),
-        ),
+        border: Border.all(color: AppTheme.gold.withValues(alpha: 0.45)),
       ),
       child: Row(
         children: [

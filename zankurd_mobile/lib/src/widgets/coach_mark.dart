@@ -109,9 +109,7 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
 
     final highlightRect = rect.inflate(8);
     final showBelow = highlightRect.top < screenSize.height * 0.4;
-    final tooltipTop = showBelow
-        ? highlightRect.bottom + 16
-        : null;
+    final tooltipTop = showBelow ? highlightRect.bottom + 16 : null;
     final tooltipBottom = !showBelow
         ? screenSize.height - highlightRect.top + 16
         : null;
@@ -167,7 +165,10 @@ class _SpotlightPainter extends CustomPainter {
       overlayPath,
       holePath,
     );
-    canvas.drawPath(combined, Paint()..color = Colors.black.withValues(alpha: 0.72));
+    canvas.drawPath(
+      combined,
+      Paint()..color = Colors.black.withValues(alpha: 0.72),
+    );
     canvas.drawRRect(
       RRect.fromRectAndRadius(rect, const Radius.circular(16)),
       Paint()

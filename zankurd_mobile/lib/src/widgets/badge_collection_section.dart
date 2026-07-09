@@ -155,7 +155,9 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
             return Container(
               decoration: BoxDecoration(
                 color: AppTheme.surfaceColor(context),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
               ),
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               child: Column(
@@ -164,14 +166,19 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                     width: 40,
                     height: 5,
                     decoration: BoxDecoration(
-                      color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+                      color: AppTheme.borderColor(
+                        context,
+                      ).withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      const Icon(Icons.workspace_premium_outlined, color: AppTheme.gold),
+                      const Icon(
+                        Icons.workspace_premium_outlined,
+                        color: AppTheme.gold,
+                      ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
@@ -194,12 +201,13 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                     child: GridView.builder(
                       controller: scrollController,
                       itemCount: badges.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        childAspectRatio: 0.76,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 0.76,
+                          ),
                       itemBuilder: (context, index) {
                         final entry = badges[index];
                         final data = entry.value;

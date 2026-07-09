@@ -969,9 +969,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         avatarColor: '#6F61C0',
       ),
     ];
-    return pool
-        .where((p) => p.displayName.toLowerCase().contains(q))
-        .toList();
+    return pool.where((p) => p.displayName.toLowerCase().contains(q)).toList();
   }
 
   @override

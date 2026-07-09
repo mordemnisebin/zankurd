@@ -46,29 +46,32 @@ class ZankurdQuizOption extends StatelessWidget {
   Widget build(BuildContext context) {
     final (Color bg, Color border, Color textColor) = switch (state) {
       QuizOptionState.neutral => (
-          AppTheme.surfaceHiOf(context),
-          AppTheme.borderOf(context),
-          AppTheme.textPrimaryOf(context),
-        ),
+        AppTheme.surfaceHiOf(context),
+        AppTheme.borderOf(context),
+        AppTheme.textPrimaryOf(context),
+      ),
       QuizOptionState.selected => (
-          AppTheme.accent.withValues(alpha: 0.12),
-          AppTheme.accent,
-          AppTheme.accent,
-        ),
+        AppTheme.accent.withValues(alpha: 0.12),
+        AppTheme.accent,
+        AppTheme.accent,
+      ),
       QuizOptionState.correct => (
-          AppTheme.correct.withValues(alpha: 0.12),
-          AppTheme.correct,
-          AppTheme.correct,
-        ),
+        AppTheme.correct.withValues(alpha: 0.12),
+        AppTheme.correct,
+        AppTheme.correct,
+      ),
       QuizOptionState.wrong => (
-          AppTheme.wrong.withValues(alpha: 0.12),
-          AppTheme.wrong,
-          AppTheme.wrong,
-        ),
+        AppTheme.wrong.withValues(alpha: 0.12),
+        AppTheme.wrong,
+        AppTheme.wrong,
+      ),
     };
 
     final card = Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 14),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: 14,
+      ),
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(AppTheme.cardRadius),
@@ -102,13 +105,20 @@ class ZankurdQuizOption extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: textColor),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(color: textColor),
             ),
           ),
           // State icon (correct / wrong)
           if (state == QuizOptionState.correct)
-            Icon(AppTheme.correct == textColor ? Icons.check_circle : Icons.check_circle_outline,
-                color: textColor, size: 22)
+            Icon(
+              AppTheme.correct == textColor
+                  ? Icons.check_circle
+                  : Icons.check_circle_outline,
+              color: textColor,
+              size: 22,
+            )
           else if (state == QuizOptionState.wrong)
             Icon(Icons.cancel_outlined, color: textColor, size: 22),
         ],

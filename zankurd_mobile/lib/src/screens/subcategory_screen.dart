@@ -31,12 +31,16 @@ class SubcategoryScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: IconThemeData(
-          color: AppTheme.isLight(context) ? AppTheme.lightTextPrimary : Colors.white,
+          color: AppTheme.isLight(context)
+              ? AppTheme.lightTextPrimary
+              : Colors.white,
         ),
         title: Text(
           CategoryNames.localized(category, ku),
           style: TextStyle(
-            color: AppTheme.isLight(context) ? AppTheme.lightTextPrimary : Colors.white,
+            color: AppTheme.isLight(context)
+                ? AppTheme.lightTextPrimary
+                : Colors.white,
             fontWeight: FontWeight.w700,
           ),
         ),

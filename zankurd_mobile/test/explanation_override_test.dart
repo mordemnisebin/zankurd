@@ -7,17 +7,16 @@ QuizQuestion _q({
   String explanation = 'şablon açıklama',
   String? explanationKu,
   String? explanationTr,
-}) =>
-    QuizQuestion(
-      id: id,
-      category: 'Dîrok',
-      prompt: 'p',
-      answers: const ['a', 'b'],
-      correctAnswer: 'a',
-      explanation: explanation,
-      explanationKu: explanationKu,
-      explanationTr: explanationTr,
-    );
+}) => QuizQuestion(
+  id: id,
+  category: 'Dîrok',
+  prompt: 'p',
+  answers: const ['a', 'b'],
+  correctAnswer: 'a',
+  explanation: explanation,
+  explanationKu: explanationKu,
+  explanationTr: explanationTr,
+);
 
 void main() {
   test('override id için elle yazılmış açıklama döner (TR ve KU)', () {

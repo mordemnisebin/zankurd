@@ -12,7 +12,7 @@ import 'package:zankurd_mobile/src/screens/home/quick_play_grid.dart';
 void main() {
   testWidgets('Capture QuickPlay Before Screen', (WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 260));
-    
+
     final boundaryKey = GlobalKey();
 
     await tester.pumpWidget(
@@ -49,7 +49,8 @@ void main() {
 
     await tester.runAsync(() async {
       final RenderRepaintBoundary boundary =
-          boundaryKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData!.buffer.asUint8List();
@@ -63,7 +64,7 @@ void main() {
 
   testWidgets('Capture QuickPlay After Screen', (WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 260));
-    
+
     final boundaryKey = GlobalKey();
 
     await tester.pumpWidget(
@@ -100,7 +101,8 @@ void main() {
 
     await tester.runAsync(() async {
       final RenderRepaintBoundary boundary =
-          boundaryKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData!.buffer.asUint8List();

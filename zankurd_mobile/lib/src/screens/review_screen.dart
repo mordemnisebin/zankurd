@@ -139,7 +139,10 @@ class _SummaryTile extends StatelessWidget {
           ),
           Text(
             label,
-            style: TextStyle(color: AppTheme.textMutedColor(context), fontSize: 12),
+            style: TextStyle(
+              color: AppTheme.textMutedColor(context),
+              fontSize: 12,
+            ),
           ),
         ],
       ),
@@ -290,7 +293,9 @@ class _ReviewCard extends StatelessWidget {
                       color: bgColor,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: icon != null ? textColor : AppTheme.borderColor(context),
+                        color: icon != null
+                            ? textColor
+                            : AppTheme.borderColor(context),
                         width: icon != null ? 1.5 : 1,
                       ),
                     ),

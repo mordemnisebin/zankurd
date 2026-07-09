@@ -26,10 +26,7 @@ class HeroCard extends StatelessWidget {
     final gradient = LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [
-        AppTheme.secondaryAccent,
-        AppTheme.bgDeep,
-      ],
+      colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
     );
 
     return Container(
@@ -63,7 +60,7 @@ class HeroCard extends StatelessWidget {
               ),
             ),
           ),
-          
+
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -90,7 +87,9 @@ class HeroCard extends StatelessWidget {
                             width: 8,
                             height: 8,
                             decoration: BoxDecoration(
-                              color: AppTheme.gold.withValues(alpha: 0.6), // Online durum noktası
+                              color: AppTheme.gold.withValues(
+                                alpha: 0.6,
+                              ), // Online durum noktası
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
@@ -106,7 +105,9 @@ class HeroCard extends StatelessWidget {
                               isKu ? 'Odeya Zindî Vekirî' : 'Canlı Oda Açık',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: AppTypography.caption.copyWith(color: Colors.white),
+                              style: AppTypography.caption.copyWith(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ],

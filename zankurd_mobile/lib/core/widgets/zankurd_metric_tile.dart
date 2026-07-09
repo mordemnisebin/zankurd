@@ -31,7 +31,10 @@ class ZankurdMetricTile extends StatelessWidget {
     final accent = color ?? AppTheme.accent;
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg, horizontal: AppSpacing.md),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.lg,
+        horizontal: AppSpacing.md,
+      ),
       decoration: AppTheme.statCard(context, accent),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -40,7 +43,9 @@ class ZankurdMetricTile extends StatelessWidget {
           const SizedBox(height: AppSpacing.xs),
           Text(
             value,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: accent),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(color: accent),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.xxs),

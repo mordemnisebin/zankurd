@@ -40,7 +40,12 @@ class ZankurdCard extends StatelessWidget {
     final r = radius ?? AppTheme.cardRadius;
 
     final decoration = (gradient != null || glowColor != null)
-        ? AppTheme.premiumCard(context, gradient: gradient, glowColor: glowColor, radius: r)
+        ? AppTheme.premiumCard(
+            context,
+            gradient: gradient,
+            glowColor: glowColor,
+            radius: r,
+          )
         : AppTheme.cardDecoration(context, radius: r);
 
     final card = Container(

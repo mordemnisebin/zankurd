@@ -47,19 +47,17 @@ class BadgeWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       decoration: BoxDecoration(
         color: isUnlocked
-            ? (isDark
-                ? const Color(0xFF2A2A3E)
-                : const Color(0xFFF0F3FA))
+            ? (isDark ? const Color(0xFF2A2A3E) : const Color(0xFFF0F3FA))
             : (isDark
-                ? const Color(0xFF1A1A2E).withValues(alpha: 0.5)
-                : const Color(0xFFE8EDF7).withValues(alpha: 0.5)),
+                  ? const Color(0xFF1A1A2E).withValues(alpha: 0.5)
+                  : const Color(0xFFE8EDF7).withValues(alpha: 0.5)),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
           color: isUnlocked
               ? const Color(0xFFFFD700).withValues(alpha: 0.5)
               : (isDark
-                  ? const Color(0xFF2A3B5C).withValues(alpha: 0.3)
-                  : const Color(0xFFD9E1EF).withValues(alpha: 0.3)),
+                    ? const Color(0xFF2A3B5C).withValues(alpha: 0.3)
+                    : const Color(0xFFD9E1EF).withValues(alpha: 0.3)),
         ),
         boxShadow: isUnlocked
             ? [
@@ -92,16 +90,16 @@ class BadgeWidget extends StatelessWidget {
               color: isUnlocked
                   ? null
                   : (isDark
-                      ? const Color(0xFF2A3B5C).withValues(alpha: 0.4)
-                      : const Color(0xFFD9E1EF).withValues(alpha: 0.6)),
+                        ? const Color(0xFF2A3B5C).withValues(alpha: 0.4)
+                        : const Color(0xFFD9E1EF).withValues(alpha: 0.6)),
             ),
             child: Icon(
               _icon,
               color: isUnlocked
                   ? Colors.white
                   : (isDark
-                      ? const Color(0xFF909090)
-                      : const Color(0xFF656565)),
+                        ? const Color(0xFF909090)
+                        : const Color(0xFF656565)),
               size: 20,
             ),
           ),
@@ -117,12 +115,10 @@ class BadgeWidget extends StatelessWidget {
               fontSize: 10,
               fontWeight: FontWeight.w700,
               color: isUnlocked
-                  ? (isDark
-                      ? const Color(0xFFE8E8E8)
-                      : const Color(0xFF1A1A2E))
+                  ? (isDark ? const Color(0xFFE8E8E8) : const Color(0xFF1A1A2E))
                   : (isDark
-                      ? const Color(0xFF909090)
-                      : const Color(0xFF656565)),
+                        ? const Color(0xFF909090)
+                        : const Color(0xFF656565)),
             ),
           ),
           const SizedBox(height: 4),
@@ -148,9 +144,7 @@ class BadgeWidget extends StatelessWidget {
             Icon(
               Icons.lock_outline,
               size: 12,
-              color: isDark
-                  ? const Color(0xFF909090)
-                  : const Color(0xFF656565),
+              color: isDark ? const Color(0xFF909090) : const Color(0xFF656565),
             ),
         ],
       ),

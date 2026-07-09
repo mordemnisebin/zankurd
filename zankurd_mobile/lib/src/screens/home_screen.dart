@@ -546,7 +546,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               children: [
                 const Icon(
                   Icons.local_fire_department_rounded,
-                  color: AppTheme.lightTextPrimary, // Koyu Yeşil Kontrast (9.68:1)
+                  color:
+                      AppTheme.lightTextPrimary, // Koyu Yeşil Kontrast (9.68:1)
                   size: 22,
                 ),
                 const SizedBox(height: 1),
@@ -678,9 +679,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       if (!context.mounted) return;
 
       if (todayContest != null) {
-        await Navigator.of(context).push(
-          AppRoute.to(ContestScreen(repository: repo)),
-        );
+        await Navigator.of(
+          context,
+        ).push(AppRoute.to(ContestScreen(repository: repo)));
       } else {
         final dailyQuestions = await repo.loadDailyQuestions(limit: 10);
         if (!context.mounted) return;

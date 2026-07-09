@@ -56,7 +56,8 @@ class BadgeService {
     } catch (_) {
       preferences = null;
     }
-    final unlocked = preferences?.getStringList(_storageKey)?.toSet() ?? <String>{};
+    final unlocked =
+        preferences?.getStringList(_storageKey)?.toSet() ?? <String>{};
     return _instance = BadgeService._(preferences, unlocked);
   }
 
@@ -99,7 +100,9 @@ class BadgeService {
 
   /// Mükemmel oyun rozetini değerlendirir.
   Future<bool> evaluatePerfectGame(int correct, int total) async {
-    if (correct == total && total > 0 && !_unlockedBadges.contains('perfect_game')) {
+    if (correct == total &&
+        total > 0 &&
+        !_unlockedBadges.contains('perfect_game')) {
       _unlockedBadges.add('perfect_game');
       await _persist();
       return true;

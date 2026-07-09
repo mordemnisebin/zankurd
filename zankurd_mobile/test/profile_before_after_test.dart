@@ -44,8 +44,9 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
 
     await tester.runAsync(() async {
-      final boundary = boundaryKey.currentContext!.findRenderObject()
-          as RenderRepaintBoundary;
+      final boundary =
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       final image = await boundary.toImage(pixelRatio: 2.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final file = File('docs/screenshots/phase2c/profile_after.png');
