@@ -340,7 +340,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 160,
                       child: Center(
                         child: CircularProgressIndicator(
-                          color: AppTheme.accent,
+                          color: AppTheme.primaryGradientStart,
                         ),
                       ),
                     );
@@ -396,39 +396,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onRetry: _load,
               )
             : RefreshIndicator(
-                color: AppTheme.accent,
+                color: AppTheme.primaryGradientStart,
                 onRefresh: () async {
                   await Future.wait([_load(), _refreshMistakes()]);
                 },
                 child: ListView(
                   controller: widget.scrollController,
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(AppSpacing.page),
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(4, 8, 4, 16),
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.xxs,
+                        AppSpacing.xs,
+                        AppSpacing.xxs,
+                        AppSpacing.md,
+                      ),
                       child: Row(
                         children: [
                           Container(
                             width: 4,
                             height: 32,
-                            margin: const EdgeInsets.only(right: 12),
+                            margin: const EdgeInsets.only(right: AppSpacing.sm),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(2),
-                              gradient: const LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  AppTheme.accent,
-                                  AppTheme.primaryGradientEnd,
-                                ],
-                              ),
+                              gradient: AppTheme.accentGradient,
                             ),
                           ),
                           Text(
                             ku ? 'Profîl' : 'Profil',
-                            style: TextStyle(
+                            style: AppTypography.heading1.copyWith(
                               color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w800,
                               fontSize: 28,
                               letterSpacing: -0.5,
                             ),
@@ -518,108 +515,151 @@ class _ProfileScreenState extends State<ProfileScreen> {
       indent: 50,
       color: AppTheme.borderColor(context),
     );
-    return AppPanel(
-      padding: EdgeInsets.zero,
-      child: Column(
-        children: [
-          _menuRow(
-            leading: const Icon(
-              Icons.bookmark_outline,
-              color: AppTheme.gold,
-              size: 22,
-            ),
-            title: ku ? 'Pirsên Tomarkirî' : 'Kaydedilen Sorular',
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            onTap: () {
-              Navigator.of(context).push(
-                AppRoute.to(
-                  FavoriteQuestionsScreen(repository: widget.repository),
+
+    Widget sectionLabel(String text) {
+      return Padding(
+        padding: const EdgeInsets.only(
+          left: AppSpacing.xxs,
+          bottom: AppSpacing.xs,
+          top: AppSpacing.xxs,
+        ),
+        child: Text(
+          text,
+          style: AppTypography.caption.copyWith(
+            color: AppTheme.textMutedColor(context),
+            fontWeight: FontWeight.w800,
+            letterSpacing: 0.4,
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        sectionLabel(ku ? 'FÊRBÛN' : 'ÖĞRENME'),
+        AppPanel(
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              _menuRow(
+                leading: const Icon(
+                  Icons.bookmark_outline,
+                  color: AppTheme.gold,
+                  size: 22,
                 ),
-              );
-            },
-          ),
-          divider,
-          _menuRow(
-            leading: _practiceLoading
-                ? const SizedBox(
-                    width: 22,
-                    height: 22,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: AppTheme.accent,
+                title: ku ? 'Pirsên Tomarkirî' : 'Kaydedilen Sorular',
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(AppRadius.md),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    AppRoute.to(
+                      FavoriteQuestionsScreen(repository: widget.repository),
                     ),
-                  )
-                : const Icon(
-                    Icons.school_outlined,
-                    color: AppTheme.accent,
-                    size: 22,
-                  ),
-            title: ku ? 'Şaşiyên Min' : 'Yanlışlarım',
-            subtitle: _mistakeCount == 0
-                ? (ku ? 'Şaşiyek tune — aferîn!' : 'Hiç yanlışın yok — aferin!')
-                : (ku
-                      ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
-                      : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
-            onTap: _practiceLoading ? null : _startMistakePractice,
+                  );
+                },
+              ),
+              divider,
+              _menuRow(
+                leading: _practiceLoading
+                    ? const SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppTheme.primaryGradientStart,
+                        ),
+                      )
+                    : const Icon(
+                        Icons.school_outlined,
+                        color: AppTheme.primaryGradientStart,
+                        size: 22,
+                      ),
+                title: ku ? 'Şaşiyên Min' : 'Yanlışlarım',
+                subtitle: _mistakeCount == 0
+                    ? (ku
+                        ? 'Şaşiyek tune — aferîn!'
+                        : 'Hiç yanlışın yok — aferin!')
+                    : (ku
+                        ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
+                        : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(AppRadius.md),
+                ),
+                onTap: _practiceLoading ? null : _startMistakePractice,
+              ),
+            ],
           ),
-          divider,
-          _menuRow(
-            leading: const Icon(
-              Icons.storefront_outlined,
-              color: AppTheme.gold,
-              size: 22,
-            ),
-            title: ku ? 'Dukan' : 'Mağaza',
-            onTap: () {
-              Navigator.of(
-                context,
-              ).push(AppRoute.to(ShopScreen(repository: widget.repository)));
-            },
+        ),
+        const SizedBox(height: AppSpacing.md),
+        sectionLabel(ku ? 'HESAB' : 'HESAP'),
+        AppPanel(
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              _menuRow(
+                leading: const Icon(
+                  Icons.storefront_outlined,
+                  color: AppTheme.gold,
+                  size: 22,
+                ),
+                title: ku ? 'Dukan' : 'Mağaza',
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(AppRadius.md),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    AppRoute.to(ShopScreen(repository: widget.repository)),
+                  );
+                },
+              ),
+              divider,
+              _menuRow(
+                leading: const Icon(
+                  Icons.people_outline,
+                  color: AppTheme.primaryGradientStart,
+                  size: 22,
+                ),
+                title: ku ? 'Hevalên Min' : 'Arkadaşlarım',
+                onTap: () {
+                  Navigator.of(context).push(
+                    AppRoute.to(FriendsScreen(repository: widget.repository)),
+                  );
+                },
+              ),
+              divider,
+              _menuRow(
+                leading: const Icon(
+                  Icons.settings_outlined,
+                  color: AppTheme.secondaryAccent,
+                  size: 22,
+                ),
+                title: ku ? 'Mîheng' : 'Ayarlar',
+                onTap: () {
+                  Navigator.of(context).push(
+                    AppRoute.to(SettingsScreen(repository: widget.repository)),
+                  );
+                },
+              ),
+              divider,
+              _menuRow(
+                leading: const Icon(
+                  Icons.logout_rounded,
+                  color: AppTheme.wrong,
+                  size: 22,
+                ),
+                title: ku ? 'Derkeve' : 'Çıkış Yap',
+                titleColor: AppTheme.wrong,
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(AppRadius.md),
+                ),
+                onTap: () => _confirmSignOut(context),
+              ),
+            ],
           ),
-          divider,
-          _menuRow(
-            leading: const Icon(
-              Icons.people_outline,
-              color: AppTheme.accent,
-              size: 22,
-            ),
-            title: ku ? 'Hevalên Min' : 'Arkadaşlarım',
-            onTap: () {
-              Navigator.of(
-                context,
-              ).push(AppRoute.to(FriendsScreen(repository: widget.repository)));
-            },
-          ),
-          divider,
-          _menuRow(
-            leading: const Icon(
-              Icons.settings_outlined,
-              color: AppTheme.violet,
-              size: 22,
-            ),
-            title: ku ? 'Mîheng' : 'Ayarlar',
-            onTap: () {
-              Navigator.of(context).push(
-                AppRoute.to(SettingsScreen(repository: widget.repository)),
-              );
-            },
-          ),
-          divider,
-          _menuRow(
-            leading: const Icon(
-              Icons.logout_rounded,
-              color: AppTheme.wrong,
-              size: 22,
-            ),
-            title: ku ? 'Derkeve' : 'Çıkış Yap',
-            titleColor: AppTheme.wrong,
-            borderRadius: const BorderRadius.vertical(
-              bottom: Radius.circular(16),
-            ),
-            onTap: () => _confirmSignOut(context),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -884,28 +924,33 @@ class _ProfileHeroCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.military_tech_rounded,
-                          color: AppTheme.gold,
-                          size: 22,
-                        ),
-                        const SizedBox(width: AppSpacing.xxs),
-                        Text(
-                          ku ? 'Ast $level' : 'Seviye $level',
-                          style: AppTypography.bodyLarge.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
+                    const Icon(
+                      Icons.military_tech_rounded,
+                      color: AppTheme.gold,
+                      size: 22,
                     ),
-                    Text(
-                      '$xpInLevel / $xpNeeded XP',
-                      style: AppTypography.caption.copyWith(
-                        color: Colors.white.withValues(alpha: 0.78),
+                    const SizedBox(width: AppSpacing.xxs),
+                    Flexible(
+                      child: Text(
+                        ku ? 'Ast $level' : 'Seviye $level',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.bodyLarge.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.xs),
+                    Flexible(
+                      child: Text(
+                        '$xpInLevel / $xpNeeded XP',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.end,
+                        style: AppTypography.caption.copyWith(
+                          color: Colors.white.withValues(alpha: 0.78),
+                        ),
                       ),
                     ),
                   ],

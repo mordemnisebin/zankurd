@@ -207,12 +207,14 @@ class _StreakBadgeState extends State<_StreakBadge>
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppTheme.accent.withValues(alpha: 0.18),
+            AppTheme.gold.withValues(alpha: 0.22),
             AppTheme.primaryGradientStart.withValues(alpha: 0.12),
           ],
         ),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppTheme.accent.withValues(alpha: 0.4)),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        border: Border.all(
+          color: AppTheme.gold.withValues(alpha: 0.45),
+        ),
       ),
       child: Row(
         children: [
@@ -220,7 +222,7 @@ class _StreakBadgeState extends State<_StreakBadge>
             scale: _scale,
             child: const Icon(
               Icons.local_fire_department,
-              color: AppTheme.accent,
+              color: AppTheme.gold,
               size: 17,
             ),
           ),
@@ -228,7 +230,7 @@ class _StreakBadgeState extends State<_StreakBadge>
           Text(
             '${widget.value}',
             style: const TextStyle(
-              color: AppTheme.accent,
+              color: AppTheme.gold,
               fontWeight: FontWeight.w800,
               fontSize: 14,
             ),

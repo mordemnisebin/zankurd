@@ -97,7 +97,12 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
               }
 
               return ListView.builder(
-                padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.page,
+                  AppSpacing.xs,
+                  AppSpacing.page,
+                  AppSpacing.lg,
+                ),
                 itemCount: questions.length + 1,
                 itemBuilder: (context, index) {
                   if (index == 0) {

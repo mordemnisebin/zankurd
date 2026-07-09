@@ -1499,9 +1499,18 @@ void main() {
         child: Scaffold(body: ProfileScreen(repository: repository)),
       ),
     );
-    await tester.pumpAndSettle();
+    // pumpAndSettle bazen sonsuz progress indicator animasyonunda takılır;
+    // profil async yüklemesini sabit karelerle bekle.
+    await tester.pump();
+    for (var i = 0; i < 30 && find.text('Mağaza').evaluate().isEmpty; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
 
-    // Geniş düzende var olup mobil kopyada unutulmuş iki öğe:
+    expect(find.text('Kaydedilen Sorular'), findsOneWidget);
+    expect(find.text('Yanlışlarım'), findsOneWidget);
+    expect(find.text('ÖĞRENME'), findsOneWidget);
+    expect(find.text('HESAP'), findsOneWidget);
+
     await tester.scrollUntilVisible(
       find.text('Mağaza'),
       200,
@@ -1515,6 +1524,7 @@ void main() {
       scrollable: find.byType(Scrollable).first,
     );
     expect(find.text('Çıkış Yap'), findsOneWidget);
+    expect(find.text('Ayarlar'), findsOneWidget);
   });
 
   testWidgets('profile screen shows unlocked achievement showcase', (

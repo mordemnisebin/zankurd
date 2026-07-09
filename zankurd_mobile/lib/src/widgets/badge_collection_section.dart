@@ -40,7 +40,12 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
     if (_loading) {
       return const SizedBox(
         height: 100,
-        child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
+        child: Center(
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            color: AppTheme.primaryGradientStart,
+          ),
+        ),
       );
     }
 
@@ -92,7 +97,7 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
               child: Text(
                 ku ? 'Hemû' : 'Tümünü Gör',
                 style: const TextStyle(
-                  color: AppTheme.accent,
+                  color: AppTheme.primaryGradientStart,
                   fontWeight: FontWeight.w800,
                   fontSize: 12,
                 ),

@@ -175,20 +175,21 @@ class AppShadows {
 
 class AppTheme {
   // ============ Design Tokens ============
+  // Single source of truth: AppSpacing / AppRadius (no 18 vs 20 drift).
   /// Standard card corner radius used across all cards.
-  static const double cardRadius = 20;
+  static const double cardRadius = AppRadius.card;
 
   /// Standard small card corner radius for inner elements.
-  static const double cardRadiusSmall = 12;
+  static const double cardRadiusSmall = AppRadius.sm;
 
   /// Vertical gap between sections (e.g., section header → content).
-  static const double sectionGap = 24;
+  static const double sectionGap = AppSpacing.section;
 
   /// Vertical gap between cards within the same section.
-  static const double cardGap = 12;
+  static const double cardGap = AppSpacing.cardGap;
 
   /// Standard horizontal page padding.
-  static const double pagePadding = 18;
+  static const double pagePadding = AppSpacing.page;
 
   /// Standard card shadow for normal cards.
   static List<BoxShadow> cardShadow(BuildContext context) {

@@ -124,7 +124,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                       height: 20,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        color: AppTheme.accent,
+                        color: AppTheme.primaryGradientStart,
                       ),
                     ),
                 ],

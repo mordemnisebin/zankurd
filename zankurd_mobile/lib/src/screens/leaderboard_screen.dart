@@ -115,7 +115,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                   if (snap.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(
-                        color: AppTheme.accent,
+                        color: AppTheme.primaryGradientStart,
                         strokeWidth: 2.5,
                       ),
                     );

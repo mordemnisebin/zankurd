@@ -114,7 +114,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     _SettingsIconTitle(
                       icon: Icons.badge_outlined,
-                      color: AppTheme.accent,
+                      color: AppTheme.primaryGradientStart,
                       title: ku ? 'Navê lîstikê' : 'Oyuncu Adı',
                     ),
                     const SizedBox(height: AppSpacing.sm),
@@ -312,7 +312,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         icon: sound.enabled
                             ? Icons.volume_up_outlined
                             : Icons.volume_off_outlined,
-                        color: AppTheme.accent,
+                        color: AppTheme.primaryGradientStart,
                         title: ku ? 'Deng û mûzîk' : 'Ses efektleri',
                         trailing: Switch(
                           value: sound.enabled,
@@ -768,7 +768,9 @@ class _LangChip extends StatelessWidget {
         constraints: const BoxConstraints(minHeight: 44),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         decoration: BoxDecoration(
-          color: active ? AppTheme.accent : Colors.transparent,
+          color: active
+              ? AppTheme.primaryGradientStart
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(99),
         ),
         child: Text(
@@ -803,11 +805,7 @@ class _SettingsPageHeader extends StatelessWidget {
             margin: const EdgeInsets.only(right: AppSpacing.sm),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(2),
-              gradient: const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [AppTheme.accent, AppTheme.primaryGradientEnd],
-              ),
+              gradient: AppTheme.accentGradient,
             ),
           ),
           Expanded(

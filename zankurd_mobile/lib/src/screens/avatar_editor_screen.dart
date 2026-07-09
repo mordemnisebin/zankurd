@@ -169,7 +169,12 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                   ),
                 )
               : ListView(
-                  padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.page,
+                    AppSpacing.xs,
+                    AppSpacing.page,
+                    AppSpacing.lg,
+                  ),
                   children: [
                     Center(
                       child: PlayerAvatar(

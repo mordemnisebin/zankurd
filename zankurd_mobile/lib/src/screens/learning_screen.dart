@@ -130,7 +130,12 @@ class _LearningScreenState extends State<LearningScreen> {
                       );
                     }
                     return ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(18, 12, 18, 24),
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.page,
+                        AppSpacing.sm,
+                        AppSpacing.page,
+                        AppSpacing.lg,
+                      ),
                       itemCount: lessons.length,
                       itemBuilder: (ctx, i) => _LessonCard(
                         lesson: lessons[i],
@@ -452,7 +457,12 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
               children: [
                 // Slayt ilerleme göstergesi
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(18, 8, 18, 0),
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.page,
+                    AppSpacing.xs,
+                    AppSpacing.page,
+                    0,
+                  ),
                   child: Row(
                     children: [
                       Expanded(
