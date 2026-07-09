@@ -970,13 +970,22 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     return null;
   }
 
+  /// Çark guard'ı için gün anahtarı. Sunucudaki `can_spin_today` /
+  /// `award_spin_coins` RPC'leri `CURRENT_DATE` (UTC) ile gün sınırı çizer;
+  /// yerel saat kullanılırsa yerel gece yarısı ile UTC gece yarısı arasında
+  /// buton aktif görünüp sunucunun reddettiği "çark dönmüyor" tutarsızlığı
+  /// doğar. Ekrandaki geri sayım da UTC gece yarısını hedefler.
+  static String spinDayKey(DateTime now) {
+    final utc = now.toUtc();
+    return '${utc.year}-${utc.month}-${utc.day}';
+  }
+
   @override
   Future<bool> canSpinToday() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final lastSpinStr = prefs.getString('zankurd.last_spin_date');
-      final now = DateTime.now();
-      final todayStr = '${now.year}-${now.month}-${now.day}';
+      final todayStr = spinDayKey(DateTime.now());
       if (lastSpinStr == todayStr) {
         return false;
       }
@@ -1007,9 +1016,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (amount > 0) {
         try {
           final prefs = await SharedPreferences.getInstance();
-          final now = DateTime.now();
-          final todayStr = '${now.year}-${now.month}-${now.day}';
-          await prefs.setString('zankurd.last_spin_date', todayStr);
+          await prefs.setString(
+            'zankurd.last_spin_date',
+            spinDayKey(DateTime.now()),
+          );
         } catch (_) {}
       }
       return amount;
@@ -1347,15 +1357,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
                 params: {'p_category': category},
               )
               as List<dynamic>;
-      return res
-          .map((row) {
-            final map = Map<String, dynamic>.from(row as Map);
-            if (map['category'] == null || (map['category'] as String).isEmpty) {
-              map['category'] = category;
-            }
-            return Lesson.fromJson(map);
-          })
-          .toList();
+      return res.map((row) {
+        final map = Map<String, dynamic>.from(row as Map);
+        if (map['category'] == null || (map['category'] as String).isEmpty) {
+          map['category'] = category;
+        }
+        return Lesson.fromJson(map);
+      }).toList();
     } catch (e) {
       return _offline.loadLessonsByCategory(category);
     }
