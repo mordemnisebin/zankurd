@@ -9,6 +9,10 @@ import '../theme/app_theme.dart';
 import '../widgets/app_state.dart';
 
 /// Günlük contest ekranı: tema, leaderboard, quiz start.
+///
+/// **Release notu:** Quiz başlatma henüz bağlı değil; UI "Yakında" gösterir.
+/// Ana navigasyona bağlanmamalı (Pirs'teki ContestActivity tam akışlıdır;
+/// ZanKurd tarafında product wiring ayrı faz).
 class ContestScreen extends StatefulWidget {
   const ContestScreen({required this.repository, super.key});
 

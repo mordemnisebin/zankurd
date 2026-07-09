@@ -61,6 +61,7 @@ extension LangContext on BuildContext {
 
 /// Category names in both languages.
 class CategoryNames {
+  /// Stable category IDs (also used as keys in stores / SQL).
   static const Map<String, String> _kuToTr = {
     'Ziman': 'Dil',
     'Çand': 'Kültür',
@@ -72,8 +73,13 @@ class CategoryNames {
     'Paradigma': 'Paradigma',
   };
 
+  /// Optional Kurmanci display labels (ID stays the map key).
+  static const Map<String, String> _kuDisplay = {
+    'Cografya': 'Erdnîgarî',
+  };
+
   static String tr(String kuName) => _kuToTr[kuName] ?? kuName;
 
   static String localized(String kuName, bool isKu) =>
-      isKu ? kuName : tr(kuName);
+      isKu ? (_kuDisplay[kuName] ?? kuName) : tr(kuName);
 }

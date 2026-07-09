@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import '../data/zankurd_repository.dart';
@@ -15,9 +16,7 @@ class SettingsScreen extends StatefulWidget {
   const SettingsScreen({required this.repository, super.key});
 
   final ZanKurdRepository repository;
-  // pubspec.yaml'daki version alanıyla senkron tutulmalı; her release'te
-  // birlikte güncellenmezse burada eski sürüm görünür (bkz. 2026-07-04
-  // keşif turu bulgusu: 1.6.0+7 iken burada 1.5.0+6 gösteriliyordu).
+  /// Fallback if [PackageInfo] unavailable (tests / edge platforms).
   static const appVersion = '1.8.0+10';
 
   @override
@@ -28,6 +27,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final _nameController = TextEditingController();
   bool _deleting = false;
   bool _loadingName = true;
+  String _versionLabel = SettingsScreen.appVersion;
   bool _savingName = false;
   String _currentName = '';
   NotificationService? _notificationService;
@@ -39,6 +39,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     _loadPlayerName();
     _loadNotificationSettings();
+    _loadPackageVersion();
+  }
+
+  Future<void> _loadPackageVersion() async {
+    try {
+      final info = await PackageInfo.fromPlatform();
+      if (!mounted) return;
+      setState(() {
+        _versionLabel = '${info.version}+${info.buildNumber}';
+      });
+    } catch (_) {
+      // Keep static fallback (tests / unsupported platforms).
+    }
   }
 
   @override
@@ -480,7 +493,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ),
                             Text(
-                              '${ku ? 'Guherto' : 'Sürüm'} ${SettingsScreen.appVersion}',
+                              '${ku ? 'Guherto' : 'Sürüm'} $_versionLabel',
                               style: TextStyle(
                                 color: AppTheme.textMutedColor(context),
                                 fontSize: 12,
@@ -494,7 +507,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Text(
                       ku
                           ? 'Sepana pêşbirkê ya Kurmancî — ziman, çand, dîrok, '
-                                'edebiyat, cografya û muzîka Kurdî hîn bibe û pêşbirkê bike.'
+                                'edebiyat, erdnîgarî û muzîka Kurdî hîn bibe û pêşbirkê bike.'
                           : 'Kurmancî bilgi yarışması uygulaması — Kürt dili, kültürü, '
                                 'tarihi, edebiyatı, coğrafyası ve müziğini öğren, yarış.',
                       style: TextStyle(

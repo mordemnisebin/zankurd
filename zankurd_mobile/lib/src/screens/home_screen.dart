@@ -168,13 +168,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 final double collapsedHeight = kToolbarHeight + topPadding;
                 final isCollapsed =
                     constraints.maxHeight <= collapsedHeight + 20;
+                // Metni yalnızca collapse'ta koy: aksi halde header'daki
+                // "ZanKurd" ile çift find (test + Semantics) oluşur.
                 return AnimatedOpacity(
                   duration: const Duration(milliseconds: 150),
                   opacity: isCollapsed ? 1.0 : 0.0,
-                  child: const Text(
-                    'ZanKurd​',
+                  child: Text(
+                    isCollapsed ? 'ZanKurd' : '',
                     style: TextStyle(
-                      color: Colors.white,
+                      // Light mode: surface krem — white title kaybolmasın
+                      color: AppTheme.textPrimaryColor(context),
                       fontWeight: FontWeight.w800,
                       fontSize: 20,
                     ),

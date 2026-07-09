@@ -7,7 +7,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "av" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['ateş', 'ben', 'su', 'ev'],
     correctAnswer: 'su',
-    explanation: 'Görsel soru "av" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “av” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 1,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/av.webp'
@@ -18,7 +18,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "roj" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['Yüz (100)', 'gün/güneş', 'sözcük', 'Duygu/his'],
     correctAnswer: 'gün/güneş',
-    explanation: 'Görsel soru "roj" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “roj” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 2,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/roj.webp'
@@ -29,7 +29,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "mal" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['ev', 'ben', 'su', 'okul'],
     correctAnswer: 'ev',
-    explanation: 'Görsel soru "mal" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “mal” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 3,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/mal.webp'
@@ -40,7 +40,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "pirtûk" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['Beyaz', 'zanîn', 'kitap', 'soğuk'],
     correctAnswer: 'kitap',
-    explanation: 'Görsel soru "pirtûk" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “pirtûk” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 4,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/pirtuk.webp'
@@ -51,7 +51,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "zanîn" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['bilmek', 'Okumak', 'Gelmek', 'Yazmak'],
     correctAnswer: 'bilmek',
-    explanation: 'Görsel soru "zanîn" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “zanîn” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 5,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/zanin.webp'
@@ -62,7 +62,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "hatin" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['Yoğurt', 'were!', 'gelmek', 'Yukarı'],
     correctAnswer: 'gelmek',
-    explanation: 'Görsel soru "hatin" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “hatin” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 1,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/hatin.webp'
@@ -73,7 +73,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "çiya" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['İyi', 'Kar', 'dağ', 'yol'],
     correctAnswer: 'dağ',
-    explanation: 'Görsel soru "çiya" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “çiya” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 2,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/ciya.webp'
@@ -84,7 +84,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "dil" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['kalp/dil', 'Teşekkür', 'Nasılsın?', 'su içmek'],
     correctAnswer: 'kalp/dil',
-    explanation: 'Görsel soru "dil" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “dil” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 3,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/dil.webp'
@@ -95,7 +95,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "heval" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['sayılar', 'arkadaş', 'Yumurta', 'Kırmızı'],
     correctAnswer: 'arkadaş',
-    explanation: 'Görsel soru "heval" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “heval” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 4,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/heval.webp'
@@ -106,7 +106,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "bajar" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['zanîn', 'Küçük', 'heval', 'şehir'],
     correctAnswer: 'şehir',
-    explanation: 'Görsel soru "bajar" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “bajar” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 5,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/bajar.webp'
@@ -117,7 +117,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "nan" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['biçûk', 'Çocuk', 'ekmek', 'Büyük'],
     correctAnswer: 'ekmek',
-    explanation: 'Görsel soru "nan" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “nan” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 1,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/nan.webp'
@@ -128,7 +128,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "rê" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['dağ', 'nan', 'ben', 'yol'],
     correctAnswer: 'yol',
-    explanation: 'Görsel soru "rê" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “rê” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 2,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/re.webp'
@@ -139,7 +139,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "spas" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['teşekkür', 'Dört (4)', 'öğrenmek', 'Yumurta'],
     correctAnswer: 'teşekkür',
-    explanation: 'Görsel soru "spas" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “spas” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 3,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/spas.webp'
@@ -150,7 +150,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "xweş" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['Duygu/his', 'güzel/iyi', 'başlangıç', 'Yedi (7)'],
     correctAnswer: 'güzel/iyi',
-    explanation: 'Görsel soru "xweş" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “xweş” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 4,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/xwes.webp'
@@ -161,7 +161,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "sar" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['Küçük', 'soğuk', 'heval', 'Aşağı'],
     correctAnswer: 'soğuk',
-    explanation: 'Görsel soru "sar" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “sar” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 5,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/sar.webp'
@@ -172,7 +172,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "biçûk" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['Kitap', 'were!', 'küçük', 'heval'],
     correctAnswer: 'küçük',
-    explanation: 'Görsel soru "biçûk" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “biçûk” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 1,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/bicuk.webp'
@@ -183,7 +183,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "kevin" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['Elma', 'rast', 'eski', 'xweş'],
     correctAnswer: 'eski',
-    explanation: 'Görsel soru "kevin" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “kevin” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 2,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/kevin.webp'
@@ -194,7 +194,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "îro" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['biçûk', 'soğuk', 'bugün', 'kitap'],
     correctAnswer: 'bugün',
-    explanation: 'Görsel soru "îro" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “îro” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 3,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/iro.webp'
@@ -205,7 +205,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "duh" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['dağ', 'İyi', 'dün', 'duh'],
     correctAnswer: 'dün',
-    explanation: 'Görsel soru "duh" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “duh” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 4,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/duh.webp'
@@ -216,7 +216,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "nav" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['ergatîf', 'renkler', 'ad/isim', 'Kırmızı'],
     correctAnswer: 'ad/isim',
-    explanation: 'Görsel soru "nav" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “nav” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 5,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/nav.webp'
@@ -227,7 +227,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "zarok" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['zarok', 'çocuk', 'soğuk', 'Büyük'],
     correctAnswer: 'çocuk',
-    explanation: 'Görsel soru "zarok" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “zarok” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 1,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/zarok.webp'
@@ -238,7 +238,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "xwendekar" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['öğrenci', 'ergatîf', 'Üç (3)', 'Bir (1)'],
     correctAnswer: 'öğrenci',
-    explanation: 'Görsel soru "xwendekar" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “xwendekar” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 2,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/xwendekar.webp'
@@ -249,7 +249,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "rast" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['doğru', 'zarok', 'Siyah', 'were!'],
     correctAnswer: 'doğru',
-    explanation: 'Görsel soru "rast" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “rast” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 3,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/rast.webp'
@@ -260,7 +260,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "pir" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['duh', 'dün', 'min', 'çok'],
     correctAnswer: 'çok',
-    explanation: 'Görsel soru "pir" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “pir” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 4,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/pir.webp'
@@ -271,7 +271,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Görsel etiketi "destpêk" kavramını gösteriyor. Doğru anlam hangisidir?',
     answers: ['başlangıç', 'güzel/iyi', 'Duygu/his', 'Ben iyiyim'],
     correctAnswer: 'başlangıç',
-    explanation: 'Görsel soru "destpêk" kelimesini pekiştirir.',
+    explanation: 'Görsel ipucu, “destpêk” kavramını hatırlatır; doğru karşılığı seç.',
     difficulty: 5,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/destpek.webp'

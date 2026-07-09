@@ -127,35 +127,67 @@ class HeroCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
+              // Pirs-style hierarchy: one clear primary play CTA, then room actions
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: AppTheme.accentGradient,
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppTheme.primaryGradientStart.withValues(
+                          alpha: 0.28,
+                        ),
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: ElevatedButton.icon(
+                    onPressed: onQuickMatch,
+                    icon: const Icon(Icons.bolt_rounded, color: Colors.white),
+                    label: Text(
+                      isKu ? '1vs1 — Dest pê bike' : '1vs1 — Hemen oyna',
+                      style: AppTypography.bodyLarge.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
               Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      height: 48,
-                      decoration: BoxDecoration(
-                        gradient: AppTheme.accentGradient,
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppTheme.primaryGradientStart.withValues(alpha: 0.25),
-                            blurRadius: 8,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: ElevatedButton(
+                    child: SizedBox(
+                      height: 46,
+                      child: OutlinedButton(
                         onPressed: onCreateRoom,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          shadowColor: Colors.transparent,
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(
+                            color: Colors.white.withValues(alpha: 0.35),
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                           ),
                         ),
                         child: Text(
-                          isKu ? 'Odeyek Ava Bike' : 'Oda Kur',
-                          style: AppTypography.bodyLarge.copyWith(
-                            color: AppTheme.lightTextPrimary, // Koyu Yeşil Kontrastlı Metin (WCAG AA)
+                          isKu ? 'Oda ava bike' : 'Oda kur',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
@@ -163,58 +195,31 @@ class HeroCard extends StatelessWidget {
                   ),
                   const SizedBox(width: AppSpacing.xs),
                   Expanded(
-                    child: Container(
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.15),
-                        ),
-                      ),
-                      child: ElevatedButton(
+                    child: SizedBox(
+                      height: 46,
+                      child: OutlinedButton(
                         onPressed: onJoinRoom,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          shadowColor: Colors.transparent,
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(
+                            color: Colors.white.withValues(alpha: 0.35),
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                           ),
                         ),
                         child: Text(
-                          isKu ? 'Bi Kodê Tevlî Bibe' : 'Kodla Katıl',
-                          style: AppTypography.bodyLarge.copyWith(
+                          isKu ? 'Kodê tevlî bibe' : 'Kodla katıl',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.bodyMedium.copyWith(
                             color: Colors.white,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              SizedBox(
-                width: double.infinity,
-                height: 46,
-                child: OutlinedButton(
-                  onPressed: onQuickMatch,
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide(
-                      color: AppTheme.gold.withValues(alpha: 0.8),
-                      width: 1.5,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppRadius.sm),
-                    ),
-                  ),
-                  child: Text(
-                    // Secondary path: 1v1 queue (primary CTAs above = room)
-                    isKu ? '1vs1 — Zû dest pê bike' : '1vs1 — Hemen başla',
-                    style: AppTypography.bodyLarge.copyWith(
-                      color: AppTheme.gold,
-                    ),
-                  ),
-                ),
               ),
             ],
           ),

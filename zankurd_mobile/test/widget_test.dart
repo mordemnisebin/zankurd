@@ -816,13 +816,13 @@ void main() {
 
     expect(find.text('ZanKurd'), findsOneWidget);
     expect(find.textContaining('Arkadaşlarınla'), findsOneWidget);
-    expect(find.text('Oda Kur'), findsOneWidget);
-    expect(find.text('Kodla Katıl'), findsOneWidget);
+    expect(find.text('Oda kur'), findsOneWidget);
+    expect(find.text('Kodla katıl'), findsOneWidget);
     expect(find.text('Günün Yarışması'), findsOneWidget);
 
-    await tester.ensureVisible(find.text('Oda Kur'));
+    await tester.ensureVisible(find.text('Oda kur'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Oda Kur'));
+    await tester.tap(find.text('Oda kur'));
     await tester.pumpAndSettle();
 
     expect(find.text('Hevalên Zanînê'), findsOneWidget);
@@ -890,7 +890,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Bi Kodê Tevlî Bibe'), findsOneWidget);
+    expect(find.text('Kodê tevlî bibe'), findsOneWidget);
+    expect(find.text('Bi Kodê Tevlî Bibe'), findsNothing);
     expect(find.text('Bi Kodê Bikeve'), findsNothing);
   });
 
@@ -909,9 +910,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Kodla Katıl'));
+    await tester.ensureVisible(find.text('Kodla katıl'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Kodla Katıl'));
+    await tester.tap(find.text('Kodla katıl'));
     await tester.pumpAndSettle();
 
     expect(find.text('Odaya Katıl'), findsOneWidget);
@@ -933,8 +934,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Kodla Katıl'));
-    await tester.tap(find.text('Kodla Katıl'));
+    await tester.ensureVisible(find.text('Kodla katıl'));
+    await tester.tap(find.text('Kodla katıl'));
     await tester.pumpAndSettle();
 
     const code = 'ZK-ABCD';
@@ -963,8 +964,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('Arkadaşlarınla'), findsOneWidget);
-    expect(find.text('Oda Kur'), findsOneWidget);
-    expect(find.text('Kodla Katıl'), findsOneWidget);
+    expect(find.text('Oda kur'), findsOneWidget);
+    expect(find.text('Kodla katıl'), findsOneWidget);
   });
 
   testWidgets('room lobby remains usable in landscape', (tester) async {
@@ -1770,8 +1771,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      await tester.ensureVisible(find.text('Oda Kur'));
-      await tester.tap(find.text('Oda Kur'));
+      await tester.ensureVisible(find.text('Oda kur'));
+      await tester.tap(find.text('Oda kur'));
       await tester.pumpAndSettle();
 
       expect(find.byType(RoomScreen), findsNothing);
@@ -1799,7 +1800,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Kodla Katıl'));
+    await tester.tap(find.text('Kodla katıl'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField).last, 'ABCD12');
     await tester.tap(find.text('Katıl'));
@@ -1828,7 +1829,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Kodla Katıl'));
+    await tester.tap(find.text('Kodla katıl'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Katıl'));
     await tester.pumpAndSettle();
