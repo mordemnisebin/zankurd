@@ -349,6 +349,33 @@ class _RoomScreenState extends State<RoomScreen> {
                         ),
                       ],
                     ),
+                    if (room.players.length < 2) ...[
+                      const SizedBox(height: AppSpacing.xs),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 10,
+                            height: 10,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 1.5,
+                              color: AppTheme.primaryGradientStart
+                                  .withValues(alpha: 0.85),
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.xs),
+                          Expanded(
+                            child: Text(
+                              ku
+                                  ? 'Lîsteya lîstikvanan tê nûvekirin…'
+                                  : 'Oyuncu listesi güncelleniyor…',
+                              style: AppTypography.caption.copyWith(
+                                color: AppTheme.textMutedColor(context),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                     const SizedBox(height: AppSpacing.sm),
                     if (sorted.isEmpty)
                       Text(
