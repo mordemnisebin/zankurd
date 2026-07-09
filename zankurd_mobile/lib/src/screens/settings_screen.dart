@@ -18,7 +18,7 @@ class SettingsScreen extends StatefulWidget {
   // pubspec.yaml'daki version alanıyla senkron tutulmalı; her release'te
   // birlikte güncellenmezse burada eski sürüm görünür (bkz. 2026-07-04
   // keşif turu bulgusu: 1.6.0+7 iken burada 1.5.0+6 gösteriliyordu).
-  static const appVersion = '1.6.1+8';
+  static const appVersion = '1.8.0+10';
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();

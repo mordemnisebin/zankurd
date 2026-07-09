@@ -11,6 +11,8 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/kilim_pattern_painter.dart';
+import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 
 class RoomScreen extends StatefulWidget {
@@ -129,6 +131,18 @@ class _RoomScreenState extends State<RoomScreen> {
     super.dispose();
   }
 
+  Future<void> _copyRoomCode(BuildContext context, bool ku) async {
+    await Clipboard.setData(ClipboardData(text: room.code));
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '${room.code} ${ku ? "kopî kir" : "kopyalandı"}.',
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
@@ -136,6 +150,7 @@ class _RoomScreenState extends State<RoomScreen> {
       ..sort((a, b) => b.score.compareTo(a.score));
     final currentUserId = widget.repository.currentUserId;
     final isHost = room.hostId == null || room.hostId == currentUserId;
+    final canStart = ready && !starting && room.players.length >= 2;
 
     return Scaffold(
       body: Container(
@@ -144,9 +159,13 @@ class _RoomScreenState extends State<RoomScreen> {
         ),
         child: SafeArea(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.page,
+              AppSpacing.md,
+              AppSpacing.page,
+              AppSpacing.lg,
+            ),
             children: [
-              // Back + copy row
               Row(
                 children: [
                   IconButton(
@@ -158,21 +177,13 @@ class _RoomScreenState extends State<RoomScreen> {
                   ),
                   const Spacer(),
                   TextButton.icon(
-                    onPressed: () async {
-                      await Clipboard.setData(ClipboardData(text: room.code));
-                      if (!context.mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            '${room.code} ${ku ? "kopî kir" : "kopyalandı"}.',
-                          ),
-                        ),
-                      );
-                    },
-                    icon: Icon(Icons.copy_rounded, size: 16),
+                    onPressed: () => _copyRoomCode(context, ku),
+                    icon: const Icon(Icons.copy_rounded, size: 16),
                     label: Text(
                       room.code,
-                      style: TextStyle(fontWeight: FontWeight.w700),
+                      style: AppTypography.bodyLarge.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                     style: TextButton.styleFrom(
                       foregroundColor: AppTheme.textSubColor(context),
@@ -180,51 +191,137 @@ class _RoomScreenState extends State<RoomScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xxs),
 
-              // Room hero
-              AppPanel(
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0xFF2563EB), Color(0xFF1D4ED8)],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              // Brand hero — deep green (not generic blue Material)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                child: Stack(
                   children: [
-                    Text(
-                      ku ? 'Odeya Taybet' : 'Özel Oda',
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.7),
-                        fontSize: 13,
+                    AppPanel(
+                      gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AppTheme.secondaryAccent,
+                          AppTheme.bgDeep,
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            ku ? 'Odeya Taybet' : 'Özel Oda',
+                            style: AppTypography.caption.copyWith(
+                              color: Colors.white.withValues(alpha: 0.75),
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.xs),
+                          Text(
+                            room.name,
+                            style: AppTypography.heading1.copyWith(
+                              color: Colors.white,
+                              fontSize: 26,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          Wrap(
+                            spacing: AppSpacing.xs,
+                            runSpacing: AppSpacing.xs,
+                            children: [
+                              _Pill(label: room.code, icon: Icons.tag_rounded),
+                              _Pill(
+                                label: room.category,
+                                icon: Icons.category_outlined,
+                              ),
+                              if (isHost)
+                                _Pill(
+                                  label: ku ? 'Mêvandar' : 'Ev sahibi',
+                                  icon: Icons.star_rounded,
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: AppSpacing.md),
+                          // Large invite code for sharing
+                          Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () => _copyRoomCode(context, ku),
+                              borderRadius:
+                                  BorderRadius.circular(AppRadius.sm),
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.md,
+                                  vertical: AppSpacing.sm,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.1),
+                                  borderRadius:
+                                      BorderRadius.circular(AppRadius.sm),
+                                  border: Border.all(
+                                    color: Colors.white.withValues(alpha: 0.18),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            ku
+                                                ? 'Koda odeyê parve bike'
+                                                : 'Oda kodunu paylaş',
+                                            style: AppTypography.caption
+                                                .copyWith(
+                                              color: Colors.white
+                                                  .withValues(alpha: 0.7),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            room.code,
+                                            style: AppTypography.heading1
+                                                .copyWith(
+                                              color: AppTheme.gold,
+                                              letterSpacing: 2,
+                                              fontSize: 28,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.copy_all_rounded,
+                                      color: Colors.white
+                                          .withValues(alpha: 0.85),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    Text(
-                      room.name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 26,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        _Pill(label: room.code, icon: Icons.tag_rounded),
-                        const SizedBox(width: 8),
-                        _Pill(
-                          label: room.category,
-                          icon: Icons.category_outlined,
+                    Positioned.fill(
+                      child: IgnorePointer(
+                        child: CustomPaint(
+                          painter: const KilimPatternPainter(
+                            drawPattern: true,
+                            color: Colors.white,
+                            opacity: 0.05,
+                          ),
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.cardGap),
 
-              // Players panel
               AppPanel(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,34 +333,81 @@ class _RoomScreenState extends State<RoomScreen> {
                           color: AppTheme.textSubColor(context),
                           size: 20,
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(width: AppSpacing.xs),
                         Text(
                           ku ? 'Lîstikvan' : 'Oyuncular',
-                          style: TextStyle(
+                          style: AppTypography.heading2.copyWith(
                             color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17,
                           ),
                         ),
                         const Spacer(),
                         Text(
                           '${sorted.length}',
-                          style: TextStyle(
+                          style: AppTypography.caption.copyWith(
                             color: AppTheme.textMutedColor(context),
-                            fontSize: 13,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
-                    for (var i = 0; i < sorted.length; i++)
-                      _PlayerTile(rank: i + 1, player: sorted[i], isKu: ku),
+                    const SizedBox(height: AppSpacing.sm),
+                    if (sorted.isEmpty)
+                      Text(
+                        ku
+                            ? 'Hîn lîstikvan tune.'
+                            : 'Henüz oyuncu yok.',
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppTheme.textMutedColor(context),
+                        ),
+                      )
+                    else
+                      for (var i = 0; i < sorted.length; i++)
+                        _PlayerTile(
+                          rank: i + 1,
+                          player: sorted[i],
+                          isKu: ku,
+                          isHost: room.hostId != null &&
+                              sorted[i].id == room.hostId,
+                        ),
+                    if (room.players.length < 2) ...[
+                      const SizedBox(height: AppSpacing.sm),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(AppSpacing.sm),
+                        decoration: BoxDecoration(
+                          color: AppTheme.gold.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
+                          border: Border.all(
+                            color: AppTheme.gold.withValues(alpha: 0.28),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.person_add_alt_1_rounded,
+                              color: AppTheme.gold,
+                              size: 20,
+                            ),
+                            const SizedBox(width: AppSpacing.xs),
+                            Expanded(
+                              child: Text(
+                                ku
+                                    ? 'Hevalê xwe bi kodê vexwîne — herî kêm 2 lîstikvan pêwîst e.'
+                                    : 'Arkadaşını kodla davet et — en az 2 oyuncu gerekir.',
+                                style: AppTypography.caption.copyWith(
+                                  color: AppTheme.textPrimaryColor(context),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.cardGap),
 
-              // Ready + start panel
               AppPanel(
                 child: Column(
                   children: [
@@ -271,13 +415,16 @@ class _RoomScreenState extends State<RoomScreen> {
                       color: Colors.transparent,
                       child: SwitchListTile(
                         value: ready,
+                        activeThumbColor: AppTheme.primaryGradientStart,
+                        activeTrackColor: AppTheme.primaryGradientStart
+                            .withValues(alpha: 0.45),
                         onChanged: (v) {
                           setState(() => ready = v);
                           widget.repository.updateReady(room, v);
                         },
                         title: Text(
                           ku ? 'Amade Me' : 'Hazırım',
-                          style: TextStyle(
+                          style: AppTypography.bodyLarge.copyWith(
                             color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w800,
                           ),
@@ -286,78 +433,73 @@ class _RoomScreenState extends State<RoomScreen> {
                           ku
                               ? 'Rewşa te ji lîstikvanên din re ciyê-rast nîşan dide.'
                               : 'Odadaki durumun diğer oyunculara canlı yansır.',
-                          style: TextStyle(
+                          style: AppTypography.caption.copyWith(
                             color: AppTheme.textMutedColor(context),
-                            fontSize: 12,
                           ),
                         ),
                         contentPadding: EdgeInsets.zero,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: AppSpacing.sm),
                     if (room.players.length < 2) ...[
                       Text(
                         ku
                             ? 'Ji bo destpêkirina pêşbirkê herî kêm 2 lîstikvan divên.'
                             : 'Yarışı başlatmak için en az 2 oyuncu olmalıdır.',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: AppTypography.caption.copyWith(
                           color: AppTheme.wrong,
-                          fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: AppSpacing.xs),
                     ],
                     if (isHost) ...[
-                      SizedBox(
-                        width: double.infinity,
-                        child: FilledButton.icon(
-                          onPressed: ready && !starting && room.players.length >= 2 ? _startGameHost : null,
-                          icon: starting
-                              ? const SizedBox(
-                                  width: 16,
-                                  height: 16,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : Icon(Icons.play_arrow_rounded),
-                          label: Text(
-                            starting
-                                ? (ku ? 'Tê Amadekirin' : 'Hazırlanıyor')
-                                : (ku ? 'Pêşbirkê Dest Pê Bike' : 'Yarışı Başlat'),
-                          ),
-                        ),
+                      GeometricGradientButton(
+                        label: starting
+                            ? (ku ? 'Tê Amadekirin' : 'Hazırlanıyor')
+                            : (ku
+                                ? 'Pêşbirkê Dest Pê Bike'
+                                : 'Yarışı Başlat'),
+                        icon: Icons.play_arrow_rounded,
+                        isLoading: starting,
+                        onPressed: canStart ? _startGameHost : null,
                       ),
                     ] else ...[
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.sm,
+                          horizontal: AppSpacing.md,
+                        ),
                         decoration: BoxDecoration(
-                          color: AppTheme.accent.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: AppTheme.accent.withValues(alpha: 0.25)),
+                          color: AppTheme.primaryGradientStart
+                              .withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
+                          border: Border.all(
+                            color: AppTheme.primaryGradientStart
+                                .withValues(alpha: 0.28),
+                          ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const SizedBox(
                               width: 16,
                               height: 16,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(AppTheme.accent),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  AppTheme.primaryGradientStart,
+                                ),
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            const SizedBox(width: AppSpacing.sm),
                             Expanded(
                               child: Text(
                                 ku
                                     ? 'Li benda mêvandar e... Lîstik dê ji aliyê damezrîner ve bê destpêkirin.'
                                     : 'Ev sahibi bekleniyor... Yarışma, odayı kuran kişi tarafından başlatılacaktır.',
-                                style: const TextStyle(
-                                  color: AppTheme.accent,
+                                style: AppTypography.caption.copyWith(
+                                  color: AppTheme.primaryGradientStart,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 13,
                                 ),
@@ -432,22 +574,29 @@ class _Pill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: AppSpacing.xxs + 2,
+      ),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppRadius.xs),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, color: Colors.white, size: 15),
-          const SizedBox(width: 5),
-          Text(
-            label,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w800,
-              fontSize: 13,
+          const SizedBox(width: AppSpacing.xxs + 1),
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.caption.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w800,
+                fontSize: 13,
+              ),
             ),
           ),
         ],
@@ -461,11 +610,13 @@ class _PlayerTile extends StatelessWidget {
     required this.rank,
     required this.player,
     required this.isKu,
+    this.isHost = false,
   });
 
   final int rank;
   final Player player;
   final bool isKu;
+  final bool isHost;
 
   /// Depodan gelen durum metni Türkçe sabittir; KU modunda burada çevrilir.
   String _localizedState(String state) {
@@ -481,43 +632,75 @@ class _PlayerTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: AppSpacing.xs),
+      padding: const EdgeInsets.all(AppSpacing.sm),
       decoration: BoxDecoration(
         color: AppTheme.surfaceHiColor(context),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        border: isHost
+            ? Border.all(
+                color: AppTheme.gold.withValues(alpha: 0.35),
+              )
+            : null,
       ),
       child: Row(
         children: [
           CircleAvatar(
             radius: 16,
-            backgroundColor: AppTheme.correct.withValues(alpha: 0.15),
+            backgroundColor: AppTheme.secondaryAccent.withValues(alpha: 0.2),
             child: Text(
               '$rank',
-              style: TextStyle(
-                color: AppTheme.correct,
+              style: AppTypography.caption.copyWith(
+                color: AppTheme.secondaryAccent,
                 fontWeight: FontWeight.w700,
                 fontSize: 13,
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.sm - 2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  player.name,
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
-                  ),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        player.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.bodyLarge.copyWith(
+                          color: AppTheme.textPrimaryColor(context),
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    if (isHost) ...[
+                      const SizedBox(width: AppSpacing.xxs),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppTheme.gold.withValues(alpha: 0.18),
+                          borderRadius: BorderRadius.circular(AppRadius.xs),
+                        ),
+                        child: Text(
+                          isKu ? 'Host' : 'Host',
+                          style: AppTypography.caption.copyWith(
+                            color: AppTheme.gold,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
                 Text(
                   _localizedState(player.state),
-                  style: TextStyle(
+                  style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
-                    fontSize: 12,
                   ),
                 ),
               ],
@@ -528,14 +711,17 @@ class _PlayerTile extends StatelessWidget {
             children: [
               Text(
                 '${player.score}',
-                style: TextStyle(
+                style: AppTypography.bodyLarge.copyWith(
                   color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
                 '${player.streak} ${isKu ? "zincîr" : "seri"}',
-                style: TextStyle(color: AppTheme.textMutedColor(context), fontSize: 11),
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.textMutedColor(context),
+                  fontSize: 11,
+                ),
               ),
             ],
           ),

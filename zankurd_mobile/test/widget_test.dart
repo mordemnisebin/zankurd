@@ -29,6 +29,7 @@ import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
+import 'package:zankurd_mobile/src/widgets/styled_button.dart';
 import 'package:zankurd_mobile/main.dart';
 
 class _FakeAuthProvider extends AuthProvider {
@@ -1016,8 +1017,8 @@ void main() {
       findsOneWidget,
     );
 
-    final startButton = tester.widget<FilledButton>(
-      find.widgetWithText(FilledButton, 'Yarışı Başlat'),
+    final startButton = tester.widget<GeometricGradientButton>(
+      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
     );
     expect(startButton.onPressed, isNull);
   });
@@ -1050,8 +1051,8 @@ void main() {
       findsNothing,
     );
 
-    final startButton = tester.widget<FilledButton>(
-      find.widgetWithText(FilledButton, 'Yarışı Başlat'),
+    final startButton = tester.widget<GeometricGradientButton>(
+      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
     );
     expect(startButton.onPressed, isNotNull);
   });
@@ -1075,8 +1076,8 @@ void main() {
       await tester.pump();
 
       expect(find.text('Misafir'), findsNothing);
-      final disabledButton = tester.widget<FilledButton>(
-        find.widgetWithText(FilledButton, 'Yarışı Başlat'),
+      final disabledButton = tester.widget<GeometricGradientButton>(
+        find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
       );
       expect(disabledButton.onPressed, isNull);
 
@@ -1086,8 +1087,8 @@ void main() {
       expect(repository.pollCalls, greaterThan(0));
       expect(find.text('Misafir'), findsOneWidget);
 
-      final enabledButton = tester.widget<FilledButton>(
-        find.widgetWithText(FilledButton, 'Yarışı Başlat'),
+      final enabledButton = tester.widget<GeometricGradientButton>(
+        find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
       );
       expect(enabledButton.onPressed, isNotNull);
       expect(find.byType(QuizScreen), findsNothing);

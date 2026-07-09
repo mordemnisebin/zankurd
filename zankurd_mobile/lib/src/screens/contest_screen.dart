@@ -46,13 +46,6 @@ class _ContestScreenState extends State<ContestScreen> {
     super.dispose();
   }
 
-  void _startQuiz(Contest contest) {
-    // TODO: Quiz başlatma akışı (Faz C Task 4'te Result entegr.)
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Quiz başlayacak')));
-  }
-
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
@@ -68,7 +61,9 @@ class _ContestScreenState extends State<ContestScreen> {
             future: _contestFuture,
             builder: (ctx, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(
+                  child: CircularProgressIndicator(color: AppTheme.primaryGradientStart),
+                );
               }
               if (snapshot.hasError) {
                 return AppErrorState(
@@ -91,7 +86,6 @@ class _ContestScreenState extends State<ContestScreen> {
               return _ContestContent(
                 contest: contest,
                 repository: widget.repository,
-                onStartQuiz: () => _startQuiz(contest),
                 ku: ku,
               );
             },
@@ -106,13 +100,11 @@ class _ContestContent extends StatelessWidget {
   const _ContestContent({
     required this.contest,
     required this.repository,
-    required this.onStartQuiz,
     required this.ku,
   });
 
   final Contest contest;
   final ZanKurdRepository repository;
-  final VoidCallback onStartQuiz;
   final bool ku;
 
   @override
@@ -186,12 +178,24 @@ class _ContestContent extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
+              // Quiz entegrasyonu henüz yok — sahte "başlayacak" vaadi vermiyoruz.
               SizedBox(
                 width: double.infinity,
                 child: FilledButton.icon(
-                  onPressed: onStartQuiz,
-                  icon: const Icon(Icons.play_arrow_rounded),
-                  label: Text(ku ? 'Kontestê Dest Pê Bike' : 'Başla'),
+                  onPressed: null,
+                  icon: const Icon(Icons.hourglass_top_rounded),
+                  label: Text(ku ? 'Zû tê (nêzîk)' : 'Yakında'),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                ku
+                    ? 'Destpêkirina kontestê hîn amade nabe.'
+                    : 'Etkinlik başlatma henüz kullanıma açılmadı.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppTheme.textMutedColor(context),
+                  fontSize: 12,
                 ),
               ),
             ],
