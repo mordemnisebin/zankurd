@@ -7,7 +7,6 @@ import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/contest.dart';
-import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -54,14 +53,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  late List<QuizQuestion> _questions = widget.repository.questions;
   bool _roomActionLoading = false;
   bool _dailyLoading = false;
   int? _coinBalance;
   int _streak = 0;
   List<DailyMission> _missions = [];
   bool _missionsLoading = true;
-  late GameRoom _room;
   late AnimationController _loadAnimationController;
   String? _displayName;
 
@@ -79,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     } else {
       _loadAnimationController.forward();
     }
-    _room = repo.createRoom();
     _bootstrap();
     _refreshStreak();
     _loadMissions();
@@ -130,19 +126,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
 
     try {
-      final qs = await repo.loadQuestions(limit: 10);
+      // Soru havuzunu ısıt (home doğrudan quiz açmaz; matchmaking/oda/quiz ayrı).
+      await repo.loadQuestions(limit: 10);
       final coins = await repo.loadCoinBalance();
       if (!mounted) return;
-      setState(() {
-        _questions = qs.isEmpty ? repo.questions : qs;
-        _coinBalance = coins;
-      });
+      setState(() => _coinBalance = coins);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home bootstrap load failed');
-      if (!mounted) return;
-      setState(() {
-        _questions = repo.questions;
-      });
     }
   }
 
@@ -216,7 +206,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               loading: _roomActionLoading,
                               onCreateRoom: () => _createOnlineRoom(context),
                               onJoinRoom: () => _showJoinSheet(context),
-                              onQuickMatch: () => _openQuiz(context, _room),
+                              onQuickMatch: () => Navigator.of(context).push(
+                                AppRoute.to(
+                                  MatchmakingScreen(repository: repo),
+                                ),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -289,7 +283,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         loading: _roomActionLoading,
                         onCreateRoom: () => _createOnlineRoom(context),
                         onJoinRoom: () => _showJoinSheet(context),
-                        onQuickMatch: () => _openQuiz(context, _room),
+                        onQuickMatch: () => Navigator.of(context).push(
+                          AppRoute.to(MatchmakingScreen(repository: repo)),
+                        ),
                       ),
                     );
                   }
@@ -708,16 +704,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     } finally {
       if (mounted) setState(() => _dailyLoading = false);
     }
-  }
-
-  Future<void> _openQuiz(BuildContext context, GameRoom room) async {
-    await Navigator.of(context).push(
-      AppRoute.to(
-        QuizScreen(repository: repo, room: room, questions: _questions),
-      ),
-    );
-    _refreshCoins();
-    _loadMissions();
   }
 
   void _openRoom(BuildContext context, GameRoom room) {
