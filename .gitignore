@@ -25,3 +25,4 @@ design_review/
 phase1-desktop-current.png
 **/test/golden/failures/
 
+.aider*
