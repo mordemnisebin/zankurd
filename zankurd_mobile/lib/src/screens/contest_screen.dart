@@ -222,7 +222,11 @@ class _ContestContent extends StatelessWidget {
             if (snap.connectionState == ConnectionState.waiting) {
               return const Padding(
                 padding: EdgeInsets.all(24),
-                child: CircularProgressIndicator(),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppTheme.primaryGradientStart,
+                  ),
+                ),
               );
             }
             if (snap.hasError) {

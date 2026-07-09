@@ -273,7 +273,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
         child: SafeArea(
           child: _loading
               ? const Center(
-                  child: CircularProgressIndicator(color: AppTheme.accent),
+                  child: CircularProgressIndicator(
+                    color: AppTheme.primaryGradientStart,
+                  ),
                 )
               : _hasError
               ? Center(

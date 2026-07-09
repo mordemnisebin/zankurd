@@ -336,7 +336,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
       future: _friendsFuture,
       builder: (ctx, snap) {
         if (snap.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppTheme.primaryGradientStart,
+            ),
+          );
         }
         if (snap.hasError) {
           return AppErrorState(

@@ -35,7 +35,7 @@ class LoadingOverlay {
                     height: 64,
                     child: CircularProgressIndicator(
                       strokeWidth: 3,
-                      color: AppTheme.accent,
+                      color: AppTheme.primaryGradientStart,
                     ),
                   ),
                   if (message != null) ...[

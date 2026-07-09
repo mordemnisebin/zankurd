@@ -70,7 +70,9 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
             builder: (context, snapshot) {
               if (snapshot.connectionState != ConnectionState.done) {
                 return const Center(
-                  child: CircularProgressIndicator(color: AppTheme.accent),
+                  child: CircularProgressIndicator(
+                    color: AppTheme.primaryGradientStart,
+                  ),
                 );
               }
 

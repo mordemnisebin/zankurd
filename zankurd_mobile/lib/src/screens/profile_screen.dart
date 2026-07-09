@@ -382,7 +382,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: SafeArea(
         child: _loading
             ? const Center(
-                child: CircularProgressIndicator(color: AppTheme.accent),
+                child: CircularProgressIndicator(
+                  color: AppTheme.primaryGradientStart,
+                ),
               )
             : _loadFailed
             ? AppErrorState(

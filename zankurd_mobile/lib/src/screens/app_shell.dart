@@ -6,6 +6,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
+import '../widgets/branded_loader.dart';
 import '../widgets/coach_mark.dart';
 import 'categories_tab.dart';
 import 'home_screen.dart';
@@ -101,9 +102,7 @@ class _AppShellState extends State<AppShell> {
     final ku = context.isKu;
 
     if (_checkingOnboarding) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator(color: AppTheme.accent)),
-      );
+      return const Scaffold(body: BrandedLoaderCenter());
     }
 
     if (_showOnboarding) {
@@ -124,9 +123,7 @@ class _AppShellState extends State<AppShell> {
     }
 
     if (_checkingProfileName) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator(color: AppTheme.accent)),
-      );
+      return const Scaffold(body: BrandedLoaderCenter());
     }
 
     if (!_profileNameComplete) {
@@ -251,16 +248,17 @@ class _AppShellState extends State<AppShell> {
             return IconThemeData(
               size: selected ? 26 : 24,
               color: selected
-                  ? AppTheme.accent
+                  ? AppTheme.primaryGradientStart
                   : AppTheme.textMutedColor(context),
             );
           }),
-          indicatorColor: AppTheme.accent.withValues(alpha: 0.12),
+          // Primary CTA dili: coral (pembe accent değil)
+          indicatorColor: AppTheme.primaryGradientStart.withValues(alpha: 0.14),
           indicatorShape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
           overlayColor: WidgetStateProperty.all(
-            AppTheme.accent.withValues(alpha: 0.06),
+            AppTheme.primaryGradientStart.withValues(alpha: 0.06),
           ),
         ),
         child: DecoratedBox(

@@ -578,7 +578,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             ),
           ),
           if (_loadingCategories)
-            const Center(child: CircularProgressIndicator())
+            const Center(
+              child: CircularProgressIndicator(
+                color: AppTheme.primaryGradientStart,
+              ),
+            )
           else if (_categories.isEmpty)
             Center(
               child: Text(

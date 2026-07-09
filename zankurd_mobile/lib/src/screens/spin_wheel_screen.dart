@@ -205,7 +205,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
             SafeArea(
               child: _loading
                   ? const Center(
-                      child: CircularProgressIndicator(color: AppTheme.accent),
+                      child: CircularProgressIndicator(
+                        color: AppTheme.primaryGradientStart,
+                      ),
                     )
                   : ListView(
                       padding: const EdgeInsets.fromLTRB(

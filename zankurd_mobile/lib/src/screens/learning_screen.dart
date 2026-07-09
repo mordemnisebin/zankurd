@@ -103,7 +103,11 @@ class _LearningScreenState extends State<LearningScreen> {
                   future: _lessonsFuture,
                   builder: (ctx, snap) {
                     if (snap.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: AppTheme.primaryGradientStart,
+                        ),
+                      );
                     }
                     if (snap.hasError) {
                       return AppErrorState(
@@ -417,7 +421,11 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
           future: _slidesFuture,
           builder: (ctx, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppTheme.primaryGradientStart,
+                ),
+              );
             }
             if (snap.hasError) {
               return Center(

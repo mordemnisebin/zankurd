@@ -163,7 +163,11 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
         ),
         child: SafeArea(
           child: _loading
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: AppTheme.primaryGradientStart,
+                  ),
+                )
               : ListView(
                   padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
                   children: [
