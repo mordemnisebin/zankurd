@@ -190,7 +190,11 @@ class _ShopScreenState extends State<ShopScreen> {
 
       if (success) {
         HapticFeedback.lightImpact();
-        context.read<SoundProvider>().playCorrect(); // Reuse sound
+        // Ses çalınamazsa satın alma başarı mesajı engellenmesin
+        // (çark ekranındaki desenle aynı).
+        try {
+          context.read<SoundProvider>().playCorrect();
+        } catch (_) {}
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
