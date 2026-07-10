@@ -339,7 +339,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_0116',
     category: 'Ziman',
     prompt: 'Peyva Kurmancî "pir" bi Tirkî çi tê gotin?',
-    answers: ['Ben', 'ben', 'min', 'çok'],
+    answers: ['Ben', 'az', 'min', 'çok'],
     correctAnswer: 'çok',
     explanation: 'Doğru anlam: "pir" → "çok".',
     difficulty: 4,
@@ -1987,7 +1987,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_2349',
     category: 'Muzîk',
     prompt: 'Dengbêjlerin toplanıp icra yaptığı ortama ne denir?',
-    answers: ['Sûriye', 'Şarkı', 'şarkı', 'Dîwan'],
+    answers: ['Sûriye', 'Şarkı', 'Meydan', 'Dîwan'],
     correctAnswer: 'Dîwan',
     explanation:
         'Dengbêjlerin toplanıp sırayla icra ettiği ortama dîwan (dîwana dengbêjan) denir.',
@@ -2066,7 +2066,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_2417',
     category: 'Ziman',
     prompt: '"Agir" ne demek?',
-    answers: ['Eski', 'Elma', 'eski', 'Ateş'],
+    answers: ['Eski', 'Elma', 'Ekmek', 'Ateş'],
     correctAnswer: 'Ateş',
     explanation: '\'Agir\' → Ateş.',
     difficulty: 2,
@@ -3177,7 +3177,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'mase\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'mase\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -3228,7 +3228,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'berf\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'berf\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -3239,7 +3239,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'kûçik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'kûçik\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -3250,7 +3250,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'ba\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'ba\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -3281,7 +3281,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'pirtûk\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'pirtûk\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -3292,7 +3292,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'zarok\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'zarok\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -3340,7 +3340,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_5260',
     category: 'Ziman',
     prompt: 'Peyva Kurmancî "reng" bi Tirkî çi tê gotin?',
-    answers: ['bira', 'renk', 'reng', 'Renk'],
+    answers: ['bira', 'renk', 'reng', 'kaya'],
     correctAnswer: 'renk',
     explanation: '"reng" kelimesi "renk" demektir.',
     difficulty: 2,
@@ -3433,7 +3433,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'av\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'av\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -3474,7 +3474,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'derî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'derî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -3535,7 +3535,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'destpêk\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'destpêk\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -3591,7 +3591,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'deşt\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'deşt\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -3652,7 +3652,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'kaxiz\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'kaxiz\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -3673,7 +3673,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'xwendekar\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'xwendekar\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -3684,7 +3684,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'çav\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'çav\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -3702,7 +3702,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_5604',
     category: 'Ziman',
     prompt: 'Di Kurmancî de peyva "bav" bi Tirkî çi ye?',
-    answers: ['eski', 'baba', 'Ağız', 'ağız'],
+    answers: ['eski', 'baba', 'dede', 'ağız'],
     correctAnswer: 'baba',
     explanation: '"bav" kelimesi "baba" demektir.',
     difficulty: 1,
@@ -3735,7 +3735,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'şev\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'şev\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -3746,7 +3746,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'şêr\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'şêr\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -3798,7 +3798,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'pê\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'pê\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 2,
     type: QuestionType.trueFalse,
   ),
@@ -3809,7 +3809,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'diran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'diran\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -3880,7 +3880,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'okul\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'okul\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 2,
     type: QuestionType.trueFalse,
   ),
@@ -3918,7 +3918,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_5774',
     category: 'Ziman',
     prompt: 'Wateya Tirkî ya peyva "hesp" kîjan e?',
-    answers: ['at', 'Su', 'ateş', 'At'],
+    answers: ['at', 'Su', 'ateş', 'Eşek'],
     correctAnswer: 'at',
     explanation: 'Doğru anlam: "hesp" → "at".',
     difficulty: 1,
@@ -3938,7 +3938,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_5796',
     category: 'Ziman',
     prompt: 'Kurmancîde "gece" demek için hangi sözcük kullanılır?',
-    answers: ['şev', 'İyi', 'ben', 'Ben'],
+    answers: ['şev', 'İyi', 'ben', 'Sabah'],
     correctAnswer: 'şev',
     explanation: 'Doğru eşleştirme: "gece" → "şev".',
     difficulty: 2,
@@ -3981,7 +3981,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'pir\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'pir\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -3992,7 +3992,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'welat\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'welat\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -4144,7 +4144,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'derya\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'derya\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -4155,7 +4155,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Kew\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Kew\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -4196,7 +4196,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Govendên herêmî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Govendên herêmî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -4428,7 +4428,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Kıl çadır\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Kıl çadır\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -4439,7 +4439,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Tûrik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Tûrik\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -4545,7 +4545,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'pêncşem\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'pêncşem\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -4701,7 +4701,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Memê alan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Memê alan\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -4917,7 +4917,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'hewran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'hewran\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -4943,7 +4943,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Kew\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Kew\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -4999,7 +4999,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Qazîn\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Qazîn\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -5070,7 +5070,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'fistan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'fistan\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -5081,7 +5081,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'şahmaran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'şahmaran\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -5232,7 +5232,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'şal û şapik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'şal û şapik\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -5268,7 +5268,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Halk mutfağı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Halk mutfağı\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -5319,7 +5319,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Ağıt\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Ağıt\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -5423,7 +5423,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Mîrê Kor\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Mîrê Kor\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -5603,7 +5603,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Soran emirliği\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Soran emirliği\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -5742,7 +5742,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Mezopotamya\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Mezopotamya\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -5753,7 +5753,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Mahabad Cumhuriyeti\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Mahabad Cumhuriyeti\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -5764,7 +5764,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Dersim 1937\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Dersim 1937\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -5933,7 +5933,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'İhsan Nuri Paşa\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'İhsan Nuri Paşa\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -5976,7 +5976,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Ağrı İsyanları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Ağrı İsyanları\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -6189,7 +6189,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Celadet Bedirxan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Celadet Bedirxan\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -6328,7 +6328,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Mela mahmude bayazidi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Mela mahmude bayazidi\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -6355,7 +6355,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Hawar dergisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Hawar dergisi\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -6382,7 +6382,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Kürt teali cemiyeti\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Kürt teali cemiyeti\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -6556,7 +6556,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Bedirhan bey\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Bedirhan bey\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -6614,7 +6614,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Bedirhan Bey\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Bedirhan Bey\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -6690,7 +6690,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Qazi Muhammed\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Qazi Muhammed\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -6727,7 +6727,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Kürdistan gazetesi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Kürdistan gazetesi\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -6753,7 +6753,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Bitlis prensliği\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Bitlis prensliği\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -6806,7 +6806,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Cizre\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Cizre\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -6896,7 +6896,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Botan vadisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Botan vadisi\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -6955,7 +6955,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Zap vadisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Zap vadisi\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -7157,7 +7157,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'av\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'av\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -7248,7 +7248,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Kürdistan iklimi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Kürdistan iklimi\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -7338,7 +7338,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'erd\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'erd\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -7610,7 +7610,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Habur çayı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Habur çayı\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -7695,7 +7695,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Zap suyu\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Zap suyu\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -7706,7 +7706,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Dokan gölü\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Dokan gölü\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -7806,7 +7806,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Derbendihan gölü\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Derbendihan gölü\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -7965,7 +7965,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Zagros sıradağları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Zagros sıradağları\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -7976,7 +7976,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Fırat nehri\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Fırat nehri\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -8173,7 +8173,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Dicle nehri\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Dicle nehri\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -8272,7 +8272,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'gol\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'gol\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -8335,7 +8335,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Tendürek dağı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Tendürek dağı\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -8346,7 +8346,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Zap suyu\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Zap suyu\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -8398,7 +8398,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Hewa\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Hewa\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -8421,7 +8421,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Ehmedê xanî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Ehmedê xanî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -8448,7 +8448,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Kafiye\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Kafiye\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -8509,7 +8509,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'roman\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'roman\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -8535,7 +8535,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Yaşar kemal\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Yaşar kemal\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -8546,7 +8546,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Tema\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Tema\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -8767,7 +8767,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Cegerxwîn\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Cegerxwîn\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -8779,7 +8779,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Dewrêşê Evdî destanı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Dewrêşê Evdî destanı\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -8891,7 +8891,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Baba tahirê hemedanî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Baba tahirê hemedanî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -8919,7 +8919,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Helbest\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Helbest\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -9153,7 +9153,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Jîna nû dergisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Jîna nû dergisi\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -9342,7 +9342,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Şivanê kurd\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Şivanê kurd\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -9384,7 +9384,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Haris bitlisî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Haris bitlisî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -9395,7 +9395,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Qanadê Kurdo\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Qanadê Kurdo\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -9513,7 +9513,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Pertew begê hkarî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Pertew begê hkarî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -9697,7 +9697,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Baba Tahirê Hemedanî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Baba Tahirê Hemedanî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -9751,7 +9751,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Evdirehîm Rehmî Hekarî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Evdirehîm Rehmî Hekarî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -9799,7 +9799,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Melayê Cizîrî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Melayê Cizîrî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -9810,7 +9810,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Ronahî dergisi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Ronahî dergisi\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -9969,7 +9969,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Hasan cizrawî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Hasan cizrawî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -10110,7 +10110,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Kardeş türküler\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Kardeş türküler\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -10152,7 +10152,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'def\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'def\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -10163,7 +10163,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Behedînî ezgileri\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Behedînî ezgileri\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -10206,7 +10206,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Zurna\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Zurna\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -10454,7 +10454,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Stranbêj\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Stranbêj\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -10481,7 +10481,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'heyran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'heyran\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -10492,7 +10492,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'şakiro stranları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'şakiro stranları\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -10503,7 +10503,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Aram tigran\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Aram tigran\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -10589,7 +10589,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'dahol\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'dahol\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -10829,7 +10829,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'govend müziği\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'govend müziği\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -10881,7 +10881,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Meryem xan\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Meryem xan\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -10892,7 +10892,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Kilam\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Kilam\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -11172,7 +11172,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Ciwan Haco\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Ciwan Haco\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -11183,7 +11183,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Mihemed taha akreyî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Mihemed taha akreyî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -11242,7 +11242,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'makam\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'makam\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -11253,7 +11253,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Erdewan zaxoyî\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Erdewan zaxoyî\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -11362,7 +11362,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'dengbêjlik okulu\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'dengbêjlik okulu\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -11527,7 +11527,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'ahlaki-politik toplum\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'ahlaki-politik toplum\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -11554,7 +11554,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Ahlakilik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Ahlakilik\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -11678,7 +11678,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'toplumsal cinsiyet\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'toplumsal cinsiyet\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -11866,7 +11866,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Yerel meclis\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Yerel meclis\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -12452,7 +12452,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Tekelcilik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Tekelcilik\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -12572,7 +12572,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'demokratik modernite\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'demokratik modernite\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -12727,7 +12727,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'sosyal sözleşme\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'sosyal sözleşme\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -12830,7 +12830,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'özgürlük ölçütü\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'özgürlük ölçütü\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -12905,7 +12905,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'demokratik ittifak\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'demokratik ittifak\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -13120,7 +13120,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'ekolojik bilinç\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'ekolojik bilinç\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -13233,7 +13233,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'yerel meclis\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'yerel meclis\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -13303,7 +13303,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'anayasal güvence\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'anayasal güvence\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -13330,7 +13330,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'azınlık hakları\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'azınlık hakları\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -13367,7 +13367,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Meclis sistemi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Meclis sistemi\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -13620,7 +13620,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Adil yargılanma\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Adil yargılanma\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 3,
     type: QuestionType.trueFalse,
   ),
@@ -13647,7 +13647,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'toplumsal muhalefet\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'toplumsal muhalefet\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -13684,7 +13684,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'demokratik siyaset\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'demokratik siyaset\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -13787,7 +13787,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'statü talebi\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'statü talebi\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -13927,7 +13927,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Doğrudan katılım\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Doğrudan katılım\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
@@ -13981,7 +13981,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'cinsiyet kotası\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'cinsiyet kotası\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -14165,7 +14165,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Yerel irade\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Yerel irade\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -14224,7 +14224,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'katılımcı bütçe\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'katılımcı bütçe\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -14294,7 +14294,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'siyasi katılım\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'siyasi katılım\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -14418,7 +14418,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'sivil itaatsizlik\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'sivil itaatsizlik\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -14657,7 +14657,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'toplumsal barış\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'toplumsal barış\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -14969,7 +14969,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'anadilinde eğitim\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'anadilinde eğitim\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 5,
     type: QuestionType.trueFalse,
   ),
@@ -15071,7 +15071,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'yerel meclisler\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'yerel meclisler\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 1,
     type: QuestionType.trueFalse,
   ),
@@ -15092,7 +15092,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
-        '\'Barış hakkı\' hakkında verilen olumsuz iddia yanlıştır; doğru seçenek Şaş\'tır.',
+        '\'Barış hakkı\' için sorudaki iddia doğru değildir; doğru cevap \'Şaş\'tır.',
     difficulty: 4,
     type: QuestionType.trueFalse,
   ),
