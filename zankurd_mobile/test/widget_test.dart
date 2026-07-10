@@ -1481,7 +1481,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Doğru cevap'), findsOneWidget);
-    expect(find.textContaining(question.explanation), findsOneWidget);
+    // UI override haritasını kullanır (şablon explanation değil).
+    expect(
+      find.textContaining(question.getLocalizedExplanation(false)),
+      findsOneWidget,
+    );
   });
 
   testWidgets('favorite questions uses the shared empty state', (tester) async {
@@ -1928,12 +1932,13 @@ void main() {
     await tester.tap(find.text(answerText).first);
     await tester.pump();
 
+    final shown = question.getLocalizedExplanation(false);
     await tester.pump(const Duration(milliseconds: 400));
-    expect(find.text(question.explanation), findsNothing);
+    expect(find.text(shown), findsNothing);
 
     await tester.pump(const Duration(milliseconds: 600));
     await tester.pumpAndSettle();
 
-    expect(find.text(question.explanation), findsOneWidget);
+    expect(find.text(shown), findsOneWidget);
   });
 }

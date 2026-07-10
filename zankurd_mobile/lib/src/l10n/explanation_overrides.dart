@@ -713,4 +713,214 @@ const Map<String, ExplanationOverride> explanationOverrides = {
         '"Anadilde eğitim" talebi, kültürel ve dilsel haklar kategorisine '
         'girer. Azınlık dillerinin korunmasını hedefler.',
   ),
+
+  // ---- Ziman: en çok görülen temel kelimeler (görsel + sözlük) ----
+  'offline_0005': ExplanationOverride(
+    ku:
+        '"Av" di Kurmancî de tê wateya "su". Di jiyana rojane de av jiyan e; '
+        'di gotinan de jî (mînak "av û nan") bingeha xwarinê ye.',
+    tr:
+        '"Av", Kurmancî\'de "su" demektir. Günlük dilde temel bir kelimedir; '
+        '"av û nan" gibi deyimlerde de beslenmenin temelini anlatır.',
+  ),
+  'offline_0010': ExplanationOverride(
+    ku:
+        '"Roj" hem "gün" hem jî "güneş" e. Di çanda kurdî de roj ronahî û '
+        'hêviyê temsîl dike; navên wek Rojîn jî ji heman kokê tê.',
+    tr:
+        '"Roj" hem "gün" hem "güneş" anlamına gelir. Kürt kültüründe ışık ve '
+        'umutla bağdaştırılır; Rojîn gibi isimler de aynı kökten türetilir.',
+  ),
+  'offline_0015': ExplanationOverride(
+    ku:
+        '"Mal" tê wateya "ev / malbat". Di civaka kurdî de mal ne tenê avahî '
+        'ye; malbat û warê jiyanê ye. "Dibistan" jî tê wateya "okul".',
+    tr:
+        '"Mal" "ev / hane" demektir. Kürt toplumunda yalnız bina değil, aile '
+        've yaşam alanını da ifade eder. "Okul" karşılığı "dibistan"dır.',
+  ),
+  'offline_0016': ExplanationOverride(
+    ku:
+        '"Pirtûk" tê wateya "kitap". Peyva "pirtûkxane" jî "kitapxane/kütüphane" '
+        'ye; xwendin û zanîn bi pirtûkan tê parastin.',
+    tr:
+        '"Pirtûk" "kitap" demektir. "Pirtûkxane" kütüphane anlamına gelir; '
+        'okuma ve bilginin taşındığı temel nesnedir.',
+  ),
+  'offline_0020': ExplanationOverride(
+    ku:
+        'Di dîmenê de "pirtûk" tê nîşandan — wateya wê "kitap" e. Fêrkirina '
+        'peyvan bi dîmenê re hêsantir e ji bo destpêkeran.',
+    tr:
+        'Görsel "pirtûk" kelimesini gösterir; doğru Türkçe karşılık "kitap"tır. '
+        'Görselli kelime öğrenimi başlangıç seviyesinde pekiştirir.',
+  ),
+  'offline_0025': ExplanationOverride(
+    ku:
+        '"Zanîn" tê wateya "bilmek / bilgi". Navê sepanê ZanKurd jî ji "zanîn" '
+        'tê — fêrbûna bi kurdî ye.',
+    tr:
+        '"Zanîn" "bilmek / bilgi" demektir. Uygulamanın adı ZanKurd da aynı '
+        'kökten gelir: Kürtçe ile öğrenmek.',
+  ),
+  'offline_0030': ExplanationOverride(
+    ku:
+        '"Hatin" tê wateya "gelmek". Fermanî "were!" jî ji heman kokê ye: '
+        '"hatin" (gelmek) û "were" (gel!).',
+    tr:
+        '"Hatin" "gelmek" demektir. Emir kipi "were!" (gel!) aynı fiil '
+        'ailesindendir.',
+  ),
+  'offline_0035': ExplanationOverride(
+    ku:
+        '"Çiya" tê wateya "dağ". Di cografya û stranên kurdî de çiya gelek caran '
+        'wehşet, azadî û warê gelê çiyayî temsîl dike.',
+    tr:
+        '"Çiya" "dağ" demektir. Kürt coğrafyası ve türkülerinde dağ; yurt, '
+        'özgürlük ve dağ yaşamının simgesi olarak sık geçer.',
+  ),
+  'offline_0040': ExplanationOverride(
+    ku:
+        '"Dil" hem "kalp" hem jî "dil (ziman)" e. Di helbest û stranên kurdî de '
+        'dil cîhê hest û gotinê ye.',
+    tr:
+        '"Dil" hem "kalp" hem "dil (lisan)" anlamına gelebilir. Şiir ve '
+        'türkülerde duygu ve sözün yuvasıdır.',
+  ),
+  'offline_0045': ExplanationOverride(
+    ku:
+        '"Heval" tê wateya "arkadaş / yoldaş". Di civakê de hevaltî girêdaneke '
+        'xurt e; gelek caran "hevalê dil" jî tê gotin.',
+    tr:
+        '"Heval" "arkadaş / yoldaş" demektir. Toplumsal bağda güçlü bir yer '
+        'tutar; "gönül arkadaşı" anlamında da kullanılır.',
+  ),
+  'offline_0050': ExplanationOverride(
+    ku:
+        '"Bajar" tê wateya "şehir / kent". "Bajarok" jî tê wateya "kasaba". '
+        'Bajar warê bazirganî û jiyana hevpar e.',
+    tr:
+        '"Bajar" "şehir / kent" demektir. "Bajarok" ise kasaba anlamına gelir. '
+        'Kent, ortak yaşam ve ticaret alanıdır.',
+  ),
+  'offline_0055': ExplanationOverride(
+    ku:
+        '"Nan" tê wateya "ekmek". Di xwarina kurdî de nan bingeh e; "nan û av" '
+        'jiyanê temsîl dike.',
+    tr:
+        '"Nan" "ekmek" demektir. Kürt mutfağında temel besindir; "nan û av" '
+        'yaşamın sade ifadesidir.',
+  ),
+  'offline_0060': ExplanationOverride(
+    ku:
+        '"Rê" tê wateya "yol". Hem rêya fizîkî (şose) hem jî rêya jiyanê (rêya '
+        'rast) tê gotin.',
+    tr:
+        '"Rê" "yol" demektir. Hem fiziksel yol hem mecaz anlamda hayat yolu '
+        '("doğru yol") için kullanılır.',
+  ),
+  'offline_0062': ExplanationOverride(
+    ku:
+        'Ji bo "teşekkür" di Kurmancî de "spas" tê gotin. "Spas dikim" tê wateya '
+        '"teşekkür ederim".',
+    tr:
+        '"Teşekkür"ün Kurmancî karşılığı "spas"tır. "Spas dikim" = teşekkür '
+        'ederim.',
+  ),
+  'offline_0065': ExplanationOverride(
+    ku:
+        '"Spas" tê wateya "teşekkür". Di danûstandina rojane de rêzgirtinê nîşan '
+        'dide.',
+    tr: '"Spas" "teşekkür" demektir. Günlük iletişimde nezaket ve saygı ifadesidir.',
+  ),
+  'offline_0067': ExplanationOverride(
+    ku:
+        '"Xweş" tê wateya "güzel / iyi / hoş". "Xweş be!" jî wek "afiyet olsun / '
+        'iyi olsun" tê bikaranîn.',
+    tr:
+        '"Xweş" "güzel / iyi / hoş" demektir. "Xweş be!" afiyet olsun veya iyi '
+        'olsun anlamında kullanılır.',
+  ),
+  'offline_0070': ExplanationOverride(
+    ku:
+        'Di dîmenê de "xweş" tê nîşandan — wateya wê "güzel/iyi" ye. Ev peyv di '
+        'hevokên rojane de pir tê bikaranîn.',
+    tr:
+        'Görsel "xweş" kelimesini gösterir; anlamı "güzel/iyi"dir. Günlük '
+        'cümlelerde çok sık geçer.',
+  ),
+  'offline_0075': ExplanationOverride(
+    ku:
+        '"Sar" tê wateya "soğuk". Berevajî wê "germ" e (sıcak). Di hewayê û '
+        'xwarinê de tê bikaranîn.',
+    tr:
+        '"Sar" "soğuk" demektir. Karşıtı "germ" (sıcak)tır. Hem hava hem yemek '
+        'için kullanılır.',
+  ),
+
+  // ---- Cografya / Dîrok / Çand: sık geçen kavramlar ----
+  'offline_7058': ExplanationOverride(
+    ku:
+        'Mezopotamya herêma di navbera Dîcle û Firatê de ye. Jê re "warê du '
+        'çeman" jî tê gotin; yek ji kevintirîn navendên şaristaniyê ye.',
+    tr:
+        'Mezopotamya, Dicle ile Fırat arasındaki bölgedir. "İki nehir arası" '
+        'olarak da anılır; en eski uygarlık merkezlerinden biridir.',
+  ),
+  'offline_7135': ExplanationOverride(
+    ku:
+        'Cizîr (Cizre) navenda dîrokî ya Mîrgeha Botanê bû. Li ser Çemê Dîcle ye '
+        'û di çand û mîrîtiya kurdî de ciyekî sereke digire.',
+    tr:
+        'Cizre (Cizîr), Botan Mîrliği\'nin tarihî merkezidir. Dicle kıyısındadır '
+        've Kürt beyliği ile kültüründe kilit bir yer tutar.',
+  ),
+  'offline_7227': ExplanationOverride(
+    ku:
+        'Komkujiya Helebçeyê di 16ê Adara 1988an de pêk hat. Li ser gelê kurd '
+        'êrîşa kîmyewî hat kirin; yek ji trajediyên herî mezin ên sedsala 20an e.',
+    tr:
+        'Halepçe katliamı 16 Mart 1988\'de gerçekleşti. Kürt halkına karşı '
+        'kimyasal saldırı yapıldı; 20. yüzyılın en büyük trajedilerinden biridir.',
+  ),
+  'offline_7242': ExplanationOverride(
+    ku:
+        'Peymana Lozanê (1923) sînorên nû yên Rojhilata Navîn diyarkir. Cografya '
+        'kurdî di nav çar dewletan de hat dabeşkirin.',
+    tr:
+        'Lozan Antlaşması (1923) Ortadoğu\'nun yeni sınırlarını çizdi. Kürt '
+        'coğrafyası dört devlet arasında paylaştırıldı.',
+  ),
+  'offline_8149': ExplanationOverride(
+    ku:
+        'Geliyê Munzur li Dêrsimê (Tunceli) ye û wek parka neteweyî tê parastin. '
+        'Çemê Munzur û xwezaya wê ji bo herêmê pîroz tê dîtin.',
+    tr:
+        'Munzur vadisi Dersim (Tunceli)\'dedir ve milli park statüsündedir. '
+        'Munzur çayı ve doğası yöre için kutsaldır.',
+  ),
+  'offline_8155': ExplanationOverride(
+    ku:
+        'Çiyayê Sipan (Süphan) li bakurê Gola Wanê ye. Volkaneke vemirî ye û '
+        'yek ji bilindtirîn lûtkeyên herêmê ye.',
+    tr:
+        'Süphan Dağı, Van Gölü\'nün kuzeyindedir. Sönmüş bir volkandır ve '
+        'bölgenin en yüksek doruklarından biridir.',
+  ),
+  'offline_9405': ExplanationOverride(
+    ku:
+        '"Mem û Zîn" berhema klasîk a Ehmedê Xanî ye (sedsala 17an). Ev destana '
+        'evînê wek Şahnameya edebiyata kurdî tê dîtin.',
+    tr:
+        '"Mem û Zîn", Ehmedê Xanî\'nin 17. yüzyıldaki klasik eseridir. Bu aşk '
+        'destanı Kürt edebiyatının başyapıtı kabul edilir.',
+  ),
+  'offline_6053': ExplanationOverride(
+    ku:
+        '"Şal û şapik" cil û bergên kevneşopî yên mêran e: şal (şalwar/parçe) û '
+        'şapik (kiras). Di govend û şahiyan de jî tê li xwe kirin.',
+    tr:
+        '"Şal û şapik" geleneksel erkek giyim takımıdır: şal (şalvar/kuşam) ve '
+        'şapik (gömlek). Govend ve törenlerde de giyilir.',
+  ),
 };

@@ -45,12 +45,18 @@ void main() {
     }
   });
 
-  test('en az 25 elle yazılmış açıklama mevcut', () {
-    expect(explanationOverrides.length, greaterThanOrEqualTo(25));
+  test('en az 90 elle yazılmış açıklama mevcut', () {
+    expect(explanationOverrides.length, greaterThanOrEqualTo(90));
   });
 
   test('Edebiyat/Muzîk partisi eklendi (helbest, tembûr)', () {
     expect(explanationOverrides['offline_0654']?.tr, contains('şiir'));
     expect(explanationOverrides['offline_0892']?.tr, contains('telli'));
+  });
+
+  test('Ziman temel kelime partisi eklendi (av, roj, heval)', () {
+    expect(explanationOverrides['offline_0005']?.tr, contains('su'));
+    expect(explanationOverrides['offline_0010']?.ku, contains('Roj'));
+    expect(explanationOverrides['offline_0045']?.tr, contains('arkadaş'));
   });
 }
