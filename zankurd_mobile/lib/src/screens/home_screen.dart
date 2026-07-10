@@ -18,6 +18,7 @@ import 'home/quick_play_grid.dart';
 import 'home/section_header.dart';
 import '../widgets/animated_counter.dart';
 import '../widgets/kilim_pattern_painter.dart';
+import '../widgets/zana_daily_card.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
 import 'quiz_screen.dart';
@@ -222,6 +223,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               loading: _missionsLoading,
                             ),
                           ),
+                          const SizedBox(height: 20),
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(2),
+                            ZanaDailyCard(isKu: ku),
+                          ),
                         ],
                       ),
                     ),
@@ -334,8 +340,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     );
                   }
+                  if (index == 4) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(2),
+                        ZanaDailyCard(isKu: ku),
+                      ),
+                    );
+                  }
                   return null;
-                }, childCount: 4),
+                }, childCount: 5),
               ),
             ),
           SliverToBoxAdapter(child: SizedBox(height: bottomContentPadding)),
