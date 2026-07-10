@@ -116,7 +116,7 @@ class _CategoryBanner extends StatelessWidget {
         gradient: gradient,
         boxShadow: [
           BoxShadow(
-            color: gradient.colors.first.withValues(alpha: 0.25),
+            color: gradient.colors.first.withValues(alpha: 0.16),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -189,7 +189,7 @@ class _CategoryBanner extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
-                    fontSize: 30,
+                    fontSize: 26,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -259,44 +259,26 @@ class _SubcategoryCard extends StatelessWidget {
     final desc = isKu ? info.descriptionKu : info.descriptionTr;
     final icon = _iconForId(info.id);
     final tint = gradient.colors.first;
-    final surface = AppTheme.surfaceHiColor(context);
 
     return ClipRRect(
+      key: ValueKey('subcategory-card-${info.id}'),
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
         decoration: BoxDecoration(
-          // Kategori renginin yüzeye karıştığı hafif gradyan kimlik.
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color.alphaBlend(tint.withValues(alpha: 0.16), surface),
-              Color.alphaBlend(tint.withValues(alpha: 0.05), surface),
-            ],
-          ),
+          color: AppTheme.surfaceColor(context),
           borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(color: tint.withValues(alpha: 0.30), width: 1.1),
+          border: Border.all(color: tint.withValues(alpha: 0.22), width: 1.1),
           boxShadow: [
             BoxShadow(
-              color: tint.withValues(alpha: 0.14),
+              color: tint.withValues(alpha: 0.10),
               blurRadius: 14,
               offset: const Offset(0, 5),
+              spreadRadius: -6,
             ),
           ],
         ),
         child: Stack(
           children: [
-            Positioned.fill(
-              child: IgnorePointer(
-                child: CustomPaint(
-                  painter: KilimPatternPainter(
-                    drawPattern: true,
-                    color: tint,
-                    opacity: 0.05,
-                  ),
-                ),
-              ),
-            ),
             Positioned(
               right: -14,
               bottom: -18,
@@ -354,14 +336,16 @@ class _SubcategoryCard extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            Row(
+                            // Dar ekranda taşmamak için chip'ler sarmalanır.
+                            Wrap(
+                              spacing: 6,
+                              runSpacing: 4,
                               children: [
                                 _LevelChip(
                                   icon: Icons.stairs_rounded,
                                   label: isKu ? '5 ast' : '5 seviye',
                                   tint: tint,
                                 ),
-                                const SizedBox(width: 6),
                                 _LevelChip(
                                   icon: Icons.bolt_rounded,
                                   label: isKu ? 'Pêşbaz' : 'Yarış',
