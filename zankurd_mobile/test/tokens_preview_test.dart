@@ -5,8 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/dev/design_tokens_preview_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 void main() {
+  test('Pirs-inspired brand token contract stays stable', () {
+    expect(AppRadius.card, 16);
+    expect(AppTheme.brandOrange, const Color(0xFFF47A32));
+    expect(AppTheme.playGreen, const Color(0xFF58B96B));
+    expect(AppTheme.playPink, const Color(0xFFE72F8C));
+    expect(AppTheme.playCyan, const Color(0xFF3BC7C1));
+    expect(AppTheme.playPurple, const Color(0xFF8A62D3));
+    expect(AppTheme.lightBg, const Color(0xFFF4F5F7));
+  });
+
   testWidgets('Generate design tokens preview image', (
     WidgetTester tester,
   ) async {

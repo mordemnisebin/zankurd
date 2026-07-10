@@ -101,7 +101,7 @@ class AppRadius {
   static const double xl = 28;
   static const double pill = 99;
 
-  static const double card = 20;
+  static const double card = 16;
 }
 
 class AppGradients {
@@ -198,7 +198,12 @@ class AppTheme {
         ? const Color(0xFF081912)
         : const Color(0xFFE5DFD3);
     return [
-      BoxShadow(color: shadowColor, offset: const Offset(0, 4), blurRadius: 0),
+      BoxShadow(
+        color: shadowColor.withValues(alpha: isDark ? 0.24 : 0.12),
+        offset: const Offset(0, 8),
+        blurRadius: 18,
+        spreadRadius: -8,
+      ),
     ];
   }
 
@@ -206,9 +211,10 @@ class AppTheme {
   static List<BoxShadow> elevatedShadow(Color tint) {
     return [
       BoxShadow(
-        color: tint.withValues(alpha: 0.25),
-        offset: const Offset(0, 5),
-        blurRadius: 0,
+        color: tint.withValues(alpha: 0.18),
+        offset: const Offset(0, 8),
+        blurRadius: 18,
+        spreadRadius: -8,
       ),
     ];
   }
@@ -242,10 +248,17 @@ class AppTheme {
     );
   }
 
+  static const brandOrange = Color(0xFFF47A32);
+  static const brandOrangeWarm = Color(0xFFFF9F1C);
+  static const playGreen = Color(0xFF58B96B);
+  static const playPink = Color(0xFFE72F8C);
+  static const playCyan = Color(0xFF3BC7C1);
+  static const playPurple = Color(0xFF8A62D3);
+
   // ============ Dark Mode Palette (Kültürel Modern - Derin Yeşil & Mercan) ============
-  // Primary CTA / marka gradyanı — ana eylem butonları ve marka vurgusu.
-  static const primaryGradientStart = Color(0xFFE76F51); // Mercan
-  static const primaryGradientEnd = Color(0xFFF4A261); // Mercan-Turuncu
+  // Legacy token names retained for existing screen consumers.
+  static const primaryGradientStart = brandOrange;
+  static const primaryGradientEnd = brandOrangeWarm;
 
   // İkincil aksan — ikincil vurgu / yardımcı renk.
   static const secondaryAccent = Color(0xFF1E5F47); // Derin Yeşil
@@ -254,7 +267,7 @@ class AppTheme {
   static const gold = Color(0xFFE9C46A); // Sıcak Altın Sarısı
 
   // Bilgi/ipucu vurgusu — nadir kullan (ör. joker ipucu). Genel aksan için kullanma.
-  static const cyan = Color(0xFF26A69A); // Dengeli Mavi/Turkuaz
+  static const cyan = playCyan;
 
   // Dark backgrounds (Derin Orman Yeşili / Asil Toprak tonları)
   static const bg = Color(0xFF0F2C21);
@@ -274,21 +287,20 @@ class AppTheme {
   // Status colors
   // Legacy pembe vurgu — CTA için primaryGradientStart (coral) tercih et.
   // Doğru/yanlış renkleri correct/wrong; altın ödül gold.
-  static const accent = Color(0xFFD81B60);
+  static const accent = playPink;
   // İkincil yeşil aksan — yardımcı vurgu rengi.
-  static const violet = Color(0xFF81C784);
+  static const violet = playPurple;
   // Doğru cevap rengi — YALNIZCA doğru cevap geri bildiriminde kullan.
   static const correct = Color(0xFF2E7D32); // Dengeli Yeşil
   // Yanlış cevap rengi — YALNIZCA yanlış cevap geri bildiriminde kullan.
   static const wrong = Color(0xFFC62828); // Dengeli Kırmızı
 
-  // ============ Light Mode Palette (Premium Sıcak Krem/Bej) ============
-  // Yumuşak, modern ve göz yormayan, aynı zamanda renkleri patlatan arka planlar
-  static const lightBg = Color(0xFFFAF7F0); // Sıcak krem arka plan
-  static const lightBgDeep = Color(0xFFEFECE3);
+  // ============ Light Mode Palette ============
+  static const lightBg = Color(0xFFF4F5F7);
+  static const lightBgDeep = Color(0xFFE9EDEB);
   static const lightSurface = Color(0xFFFFFFFF);
-  static const lightSurfaceHi = Color(0xFFFAF8F5);
-  static const lightBorder = Color(0xFFE6DEC9);
+  static const lightSurfaceHi = Color(0xFFF8F9FA);
+  static const lightBorder = Color(0xFFDFE2E6);
   static const lightTextPrimary = Color(0xFF14241C);
   static const lightTextSub = Color(0xFF384A41);
   static const lightTextMuted = Color(0xFF78857E);
