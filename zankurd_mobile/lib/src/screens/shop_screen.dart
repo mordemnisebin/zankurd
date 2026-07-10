@@ -328,214 +328,240 @@ class _ShopScreenState extends State<ShopScreen> {
                           );
                           final canAfford = _coinBalance >= item.cost;
 
-                          return AppPanel(
+                          // Her ürün kendi renk kimliğini taşır: hafif
+                          // zemin tonu + renkli kenarlık/parıltı.
+                          final tint = item.themeColor;
+                          final surface = AppTheme.surfaceHiColor(context);
+                          return Container(
                             padding: const EdgeInsets.all(16),
-                            child: Container(
-                              decoration: isPurchased
-                                  ? BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                        AppRadius.sm,
-                                      ),
-                                    )
-                                  : null,
-                              child: Row(
-                                children: [
-                                  Stack(
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Container(
-                                        width: 52,
-                                        height: 52,
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              item.themeColor.withValues(
-                                                alpha: 0.28,
-                                              ),
-                                              item.themeColor.withValues(
-                                                alpha: 0.1,
-                                              ),
-                                            ],
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            AppRadius.sm,
-                                          ),
-                                          border: Border.all(
-                                            color: item.themeColor.withValues(
-                                              alpha: 0.4,
-                                            ),
-                                          ),
-                                        ),
-                                        child: Icon(
-                                          item.icon,
-                                          color: item.themeColor,
-                                          size: 26,
-                                        ),
-                                      ),
-                                      if (isPurchased)
-                                        Positioned(
-                                          right: -4,
-                                          top: -4,
-                                          child: Container(
-                                            padding: const EdgeInsets.all(2),
-                                            decoration: const BoxDecoration(
-                                              color: AppTheme.correct,
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: const Icon(
-                                              Icons.check,
-                                              size: 12,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                    ],
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Color.alphaBlend(
+                                    tint.withValues(alpha: 0.14),
+                                    surface,
                                   ),
-                                  const SizedBox(width: 14),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Flexible(
-                                              child: Text(
-                                                title,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  color:
-                                                      AppTheme.textPrimaryColor(
-                                                        context,
-                                                      ),
-                                                  fontWeight: FontWeight.w800,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
+                                  Color.alphaBlend(
+                                    tint.withValues(alpha: 0.04),
+                                    surface,
+                                  ),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                AppRadius.card,
+                              ),
+                              border: Border.all(
+                                color: tint.withValues(
+                                  alpha: isPurchased ? 0.18 : 0.30,
+                                ),
+                                width: 1.1,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: tint.withValues(alpha: 0.10),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Container(
+                                      width: 52,
+                                      height: 52,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            item.themeColor.withValues(
+                                              alpha: 0.28,
                                             ),
-                                            if (isPurchased) ...[
-                                              const SizedBox(width: 6),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                      horizontal: 6,
-                                                      vertical: 2,
-                                                    ),
-                                                decoration: BoxDecoration(
-                                                  color: AppTheme.correct
-                                                      .withValues(alpha: 0.15),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        AppRadius.xs,
-                                                      ),
-                                                ),
-                                                child: Text(
-                                                  ku ? 'Yê te' : 'Sende',
-                                                  style: const TextStyle(
-                                                    color: AppTheme.correct,
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w800,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                            item.themeColor.withValues(
+                                              alpha: 0.1,
+                                            ),
                                           ],
                                         ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          desc,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: AppTheme.textMutedColor(
-                                              context,
-                                            ),
-                                            fontSize: 12,
-                                          ),
+                                        borderRadius: BorderRadius.circular(
+                                          AppRadius.sm,
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  ConstrainedBox(
-                                    constraints: const BoxConstraints(
-                                      minWidth: 76,
-                                      minHeight: 46,
-                                    ),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: isPurchased
-                                            ? AppTheme.correct.withValues(
-                                                alpha: 0.18,
-                                              )
-                                            : (canAfford
-                                                  ? AppTheme
-                                                        .primaryGradientStart
-                                                  : AppTheme.surfaceHiColor(
-                                                      context,
-                                                    )),
-                                        foregroundColor: isPurchased
-                                            ? AppTheme.correct
-                                            : (canAfford
-                                                  ? Colors.white
-                                                  : AppTheme.textMutedColor(
-                                                      context,
-                                                    )),
-                                        elevation: 0,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 12,
-                                          vertical: 13,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            AppRadius.sm,
+                                        border: Border.all(
+                                          color: item.themeColor.withValues(
+                                            alpha: 0.4,
                                           ),
                                         ),
                                       ),
-                                      onPressed: (_loading || isPurchased)
-                                          ? null
-                                          : () => _purchase(item),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
+                                      child: Icon(
+                                        item.icon,
+                                        color: item.themeColor,
+                                        size: 26,
+                                      ),
+                                    ),
+                                    if (isPurchased)
+                                      Positioned(
+                                        right: -4,
+                                        top: -4,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(2),
+                                          decoration: const BoxDecoration(
+                                            color: AppTheme.correct,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Icon(
+                                            Icons.check,
+                                            size: 12,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                const SizedBox(width: 14),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
                                         children: [
-                                          if (isPurchased) ...[
-                                            const Icon(Icons.check, size: 14),
-                                            const SizedBox(width: 4),
-                                            Flexible(
-                                              child: Text(
-                                                ku ? 'Kirî' : 'Alındı',
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 12,
-                                                ),
+                                          Flexible(
+                                            child: Text(
+                                              title,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                color:
+                                                    AppTheme.textPrimaryColor(
+                                                      context,
+                                                    ),
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: 16,
                                               ),
                                             ),
-                                          ] else ...[
-                                            if (canAfford)
-                                              const Icon(
-                                                Icons.shopping_cart_outlined,
-                                                size: 14,
+                                          ),
+                                          if (isPurchased) ...[
+                                            const SizedBox(width: 6),
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 6,
+                                                    vertical: 2,
+                                                  ),
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.correct
+                                                    .withValues(alpha: 0.15),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                      AppRadius.xs,
+                                                    ),
                                               ),
-                                            const SizedBox(width: 4),
-                                            Text(
-                                              '${item.cost}c',
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w800,
-                                                fontSize: 13,
+                                              child: Text(
+                                                ku ? 'Yê te' : 'Sende',
+                                                style: const TextStyle(
+                                                  color: AppTheme.correct,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w800,
+                                                ),
                                               ),
                                             ),
                                           ],
                                         ],
                                       ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        desc,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: AppTheme.textMutedColor(
+                                            context,
+                                          ),
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                    minWidth: 76,
+                                    minHeight: 46,
+                                  ),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: isPurchased
+                                          ? AppTheme.correct.withValues(
+                                              alpha: 0.18,
+                                            )
+                                          : (canAfford
+                                                ? AppTheme.primaryGradientStart
+                                                : AppTheme.surfaceHiColor(
+                                                    context,
+                                                  )),
+                                      foregroundColor: isPurchased
+                                          ? AppTheme.correct
+                                          : (canAfford
+                                                ? Colors.white
+                                                : AppTheme.textMutedColor(
+                                                    context,
+                                                  )),
+                                      elevation: 0,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 13,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          AppRadius.sm,
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: (_loading || isPurchased)
+                                        ? null
+                                        : () => _purchase(item),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        if (isPurchased) ...[
+                                          const Icon(Icons.check, size: 14),
+                                          const SizedBox(width: 4),
+                                          Flexible(
+                                            child: Text(
+                                              ku ? 'Kirî' : 'Alındı',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ),
+                                        ] else ...[
+                                          if (canAfford)
+                                            const Icon(
+                                              Icons.shopping_cart_outlined,
+                                              size: 14,
+                                            ),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            '${item.cost}c',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                        ],
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           );
                         },

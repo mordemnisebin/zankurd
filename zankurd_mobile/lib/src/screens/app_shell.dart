@@ -200,6 +200,16 @@ class _AppShellState extends State<AppShell> {
     );
   }
 
+  /// Sekme başına kimlik rengi: Sereke coral, Kategorî orman yeşili,
+  /// Xwendin camgöbeği, Pêşbaz altın, Profil mor.
+  Color get _tabAccent => switch (_tab) {
+    1 => AppTheme.secondaryAccent,
+    2 => AppTheme.cyan,
+    3 => AppTheme.gold,
+    4 => AppTheme.violet,
+    _ => AppTheme.primaryGradientStart,
+  };
+
   Widget _buildScaffold(BuildContext context, bool ku) {
     return Scaffold(
       body: IndexedStack(
@@ -241,24 +251,24 @@ class _AppShellState extends State<AppShell> {
               fontSize: 11,
               fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
               letterSpacing: 0.1,
+              color: selected ? _tabAccent : null,
             );
           }),
           iconTheme: WidgetStateProperty.resolveWith((states) {
             final selected = states.contains(WidgetState.selected);
             return IconThemeData(
               size: selected ? 26 : 24,
-              color: selected
-                  ? AppTheme.primaryGradientStart
-                  : AppTheme.textMutedColor(context),
+              color: selected ? _tabAccent : AppTheme.textMutedColor(context),
             );
           }),
-          // Primary CTA dili: coral (pembe accent değil)
-          indicatorColor: AppTheme.primaryGradientStart.withValues(alpha: 0.14),
+          // Her sekme kendi kimlik rengini taşır; çubuk ekranla birlikte
+          // renk değiştirir (uyumlu ama ekran başına farklı).
+          indicatorColor: _tabAccent.withValues(alpha: 0.14),
           indicatorShape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
           overlayColor: WidgetStateProperty.all(
-            AppTheme.primaryGradientStart.withValues(alpha: 0.06),
+            _tabAccent.withValues(alpha: 0.06),
           ),
         ),
         child: DecoratedBox(
