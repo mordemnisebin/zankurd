@@ -34,8 +34,30 @@ Compress-Archive -Path * -DestinationPath ..\..\zankurd_web_release.zip -Force
 
 1. File Manager / FTP → public_html (veya domain root)
 2. Eski dosyaları yedekle, yenileri yükle
-3. `.htaccess` yüklü mü kontrol et (SPA 404 önler)
+3. `.htaccess` yüklü mü kontrol et (SPA 404 **ve Wasm MIME** için şart)
 4. HTTPS açık olsun
+
+### Wasm MIME tuzağı (2026-07-10)
+
+`flutter build web --wasm` sonrası Hostinger bazen şunları `text/plain` verir:
+- `main.dart.wasm` → olmalı **`application/wasm`**
+- `main.dart.mjs` → olmalı **`text/javascript`**
+
+Yanlış MIME = boş ekran + konsol: *Expected a JavaScript-or-Wasm module script*.
+
+Çözüm: `web/.htaccess` (build’e kopyalanır) içinde `AddType` + `Header set Content-Type`.
+Sadece `.htaccess` güncelleyip yeniden yüklemek genelde yeter.
+
+Kontrol (PowerShell):
+```powershell
+(Invoke-WebRequest https://www.zankurd.com/main.dart.wasm -Method Head).Headers['Content-Type']
+# beklenen: application/wasm
+```
+
+MIME düzelmezse Hostinger hPanel → MIME Types’tan elle ekle, veya Wasm’siz yedek:
+```powershell
+flutter build web --release
+```
 
 ## 4) 10 dakikalık smoke (yayın sonrası)
 

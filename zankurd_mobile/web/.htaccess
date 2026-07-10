@@ -1,5 +1,29 @@
-# Hostinger / Apache SPA fallback for Flutter web
-# Keeps client-side routes on index.html (refresh / deep link).
+# Hostinger / Apache — Flutter web (SPA + Wasm MIME)
+# Wasm deploy: .wasm ve .mjs mutlaka doğru Content-Type ister.
+# text/plain → tarayıcı modülü reddeder, ekran boş kalır.
+
+# --- MIME types (kritik) ---
+<IfModule mod_mime.c>
+  AddType application/wasm .wasm
+  AddType text/javascript .mjs
+  AddType application/javascript .js
+  AddType application/json .json
+  AddType font/ttf .ttf
+  AddType font/woff .woff
+  AddType font/woff2 .woff2
+</IfModule>
+
+# Bazı paylaşımlı hostlarda AddType yetmez; dosya bazlı zorla:
+<IfModule mod_headers.c>
+  <FilesMatch "\.wasm$">
+    Header set Content-Type "application/wasm"
+  </FilesMatch>
+  <FilesMatch "\.mjs$">
+    Header set Content-Type "text/javascript"
+  </FilesMatch>
+</IfModule>
+
+# --- SPA fallback (refresh / deep link) ---
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -8,9 +32,9 @@
   RewriteRule ^ index.html [L]
 </IfModule>
 
-# Optional: cache static assets (safe defaults)
+# --- Cache ---
 <IfModule mod_headers.c>
-  <FilesMatch "\.(js|css|png|jpg|jpeg|webp|woff2|ttf|svg)$">
+  <FilesMatch "\.(js|mjs|wasm|css|png|jpg|jpeg|webp|woff2|ttf|svg)$">
     Header set Cache-Control "public, max-age=604800"
   </FilesMatch>
   <FilesMatch "index\.html$">
