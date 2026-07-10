@@ -87,12 +87,13 @@ class _CategoriesTabState extends State<CategoriesTab> {
               child: Row(
                 children: [
                   Container(
+                    key: const ValueKey('categories-header-accent'),
                     width: 4,
                     height: 44,
                     margin: const EdgeInsets.only(right: AppSpacing.md),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
-                      gradient: AppGradients.accentVertical,
+                      color: AppTheme.brandOrange,
                     ),
                   ),
                   Expanded(
@@ -101,9 +102,9 @@ class _CategoriesTabState extends State<CategoriesTab> {
                       children: [
                         Text(
                           ku ? 'Kategorî' : 'Kategoriler',
-                          style: AppTypography.display.copyWith(
+                          style: AppTypography.heading1.copyWith(
                             color: AppTheme.textPrimaryColor(context),
-                            fontSize: 28,
+                            fontSize: 26,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.xxs),
@@ -161,6 +162,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                     itemBuilder: (context, index) {
                       final cat = _categories[index];
                       return _CategoryCard(
+                        key: ValueKey('category-card-$cat'),
                         category: cat,
                         index: index,
                         isKu: ku,
@@ -193,6 +195,7 @@ class _CategoryCard extends StatefulWidget {
     required this.isKu,
     required this.masteryLevel,
     required this.onTap,
+    super.key,
   });
 
   final String category;
@@ -326,6 +329,7 @@ class _CategoryCardState extends State<_CategoryCard>
                         top: AppSpacing.md,
                         right: AppSpacing.md,
                         child: Container(
+                          key: ValueKey('mastery-badge-${widget.category}'),
                           padding: const EdgeInsets.symmetric(
                             horizontal: 9,
                             vertical: 5,
@@ -337,13 +341,6 @@ class _CategoryCardState extends State<_CategoryCard>
                               color: AppTheme.gold.withValues(alpha: 0.60),
                               width: 1.1,
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppTheme.gold.withValues(alpha: 0.18),
-                                blurRadius: 10,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,

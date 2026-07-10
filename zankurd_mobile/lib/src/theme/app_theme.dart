@@ -144,15 +144,10 @@ class AppShadows {
   static List<BoxShadow> categoryCard(Color color) {
     return [
       BoxShadow(
-        color: color.withValues(alpha: 0.26),
-        offset: const Offset(0, 14),
-        blurRadius: 24,
-        spreadRadius: -12,
-      ),
-      BoxShadow(
-        color: color.withValues(alpha: 0.32),
-        offset: const Offset(0, 5),
-        blurRadius: 0,
+        color: color.withValues(alpha: 0.20),
+        offset: const Offset(0, 8),
+        blurRadius: 18,
+        spreadRadius: -8,
       ),
     ];
   }
