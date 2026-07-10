@@ -297,15 +297,22 @@ class _ScoreHeader extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.xs),
         Expanded(
-          child: TweenAnimationBuilder<int>(
-            tween: IntTween(begin: 0, end: streak),
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOutCubic,
-            builder: (context, value, _) => _Metric(
+          // Seri kutlaması: 2+ seride her artışta metrik "pop" yapar,
+          // alev dolu ikona döner — quiz içi mikro-ödül anı.
+          child: TweenAnimationBuilder<double>(
+            key: ValueKey('streak-pop-$streak'),
+            tween: Tween(begin: streak >= 2 ? 1.3 : 1.0, end: 1.0),
+            duration: const Duration(milliseconds: 340),
+            curve: Curves.easeOutBack,
+            builder: (context, scale, child) =>
+                Transform.scale(scale: scale, child: child),
+            child: _Metric(
               label: context.s('Rêz', 'Seri'),
-              value: '$value',
-              icon: Icons.local_fire_department_outlined,
-              iconColor: Colors.redAccent,
+              value: streak >= 2 ? 'x$streak' : '$streak',
+              icon: streak >= 2
+                  ? Icons.local_fire_department
+                  : Icons.local_fire_department_outlined,
+              iconColor: streak >= 2 ? Colors.orange : Colors.redAccent,
             ),
           ),
         ),

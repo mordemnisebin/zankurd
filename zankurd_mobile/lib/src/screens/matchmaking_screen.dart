@@ -816,16 +816,34 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                       ],
                     ),
                     const SizedBox(width: 24),
-                    Text(
-                      'VS',
-                      style: TextStyle(
-                        color: _found
-                            ? AppTheme.gold
-                            : AppTheme.primaryGradientStart,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 22,
-                        fontStyle: FontStyle.italic,
-                        letterSpacing: 1,
+                    // Eşleşme bulunduğunda VS altın renge döner ve
+                    // yarışma programı hissiyle "punch" yapar.
+                    TweenAnimationBuilder<double>(
+                      key: ValueKey('vs-punch-$_found'),
+                      tween: Tween(begin: _found ? 2.4 : 1.0, end: 1.0),
+                      duration: const Duration(milliseconds: 450),
+                      curve: Curves.easeOutBack,
+                      builder: (context, scale, child) =>
+                          Transform.scale(scale: scale, child: child),
+                      child: Text(
+                        'VS',
+                        style: TextStyle(
+                          color: _found
+                              ? AppTheme.gold
+                              : AppTheme.primaryGradientStart,
+                          fontWeight: FontWeight.w900,
+                          fontSize: _found ? 26 : 22,
+                          fontStyle: FontStyle.italic,
+                          letterSpacing: 1,
+                          shadows: _found
+                              ? [
+                                  Shadow(
+                                    color: AppTheme.gold.withValues(alpha: 0.7),
+                                    blurRadius: 14,
+                                  ),
+                                ]
+                              : null,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 24),

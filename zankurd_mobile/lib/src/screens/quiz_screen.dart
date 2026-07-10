@@ -711,17 +711,56 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildProgressBar(BuildContext context) {
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0, end: (index + 1) / widget.questions.length),
-      duration: const Duration(milliseconds: 350),
-      curve: Curves.easeOutCubic,
-      builder: (_, value, _) => LinearProgressIndicator(
-        value: value,
-        minHeight: 6,
-        borderRadius: BorderRadius.circular(99),
-        backgroundColor: AppTheme.surfaceHiColor(context),
-        color: AppTheme.accent,
-      ),
+    final total = widget.questions.length;
+    // Uzun setlerde nokta şeridi sıkışır; klasik bara geri dön.
+    if (total > 15) {
+      return TweenAnimationBuilder<double>(
+        tween: Tween(begin: 0, end: (index + 1) / total),
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeOutCubic,
+        builder: (_, value, _) => LinearProgressIndicator(
+          value: value,
+          minHeight: 6,
+          borderRadius: BorderRadius.circular(99),
+          backgroundColor: AppTheme.surfaceHiColor(context),
+          color: AppTheme.accent,
+        ),
+      );
+    }
+    // Yarışma şeridi: her soru bir segment — doğru yeşil, yanlış kırmızı
+    // dolar; aktif soru vurgulu bekler.
+    return Row(
+      children: [
+        for (var i = 0; i < total; i++) ...[
+          Expanded(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOutCubic,
+              height: i == index ? 8 : 6,
+              decoration: BoxDecoration(
+                color: i < answerRecords.length
+                    ? (answerRecords[i].selectedAnswer ==
+                              answerRecords[i].correctAnswer
+                          ? AppTheme.correct
+                          : AppTheme.wrong)
+                    : i == index
+                    ? AppTheme.accent
+                    : AppTheme.surfaceHiColor(context),
+                borderRadius: BorderRadius.circular(99),
+                boxShadow: i == index
+                    ? [
+                        BoxShadow(
+                          color: AppTheme.accent.withValues(alpha: 0.45),
+                          blurRadius: 6,
+                        ),
+                      ]
+                    : null,
+              ),
+            ),
+          ),
+          if (i != total - 1) const SizedBox(width: 4),
+        ],
+      ],
     );
   }
 
