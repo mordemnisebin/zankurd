@@ -22,31 +22,25 @@ class HeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Premium Derin Yeşil ve Orman tonlarında gradyan (ZanKurd kurumsal tonu)
-    final gradient = LinearGradient(
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-      colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
-    );
+    // Pirs-inspired: light'ta beyaz yüzey, dark'ta koyu surface;
+    // yeşil/turuncu vurgular içerikte taşınır.
+    final isLight = AppTheme.isLight(context);
+    final textPrimary = AppTheme.textPrimaryColor(context);
 
     return Container(
+      key: const ValueKey('home-multiplayer-hero'),
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        gradient: gradient,
+        color: isLight ? AppTheme.lightSurface : AppTheme.surface,
         borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.12),
+          color: isLight
+              ? AppTheme.lightBorder
+              : Colors.white.withValues(alpha: 0.12),
           width: 1.2,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: AppTheme.bgDeep.withValues(alpha: 0.4),
-            offset: const Offset(0, 10),
-            blurRadius: 28,
-            spreadRadius: -6,
-          ),
-        ],
+        boxShadow: AppTheme.cardShadow(context),
       ),
       child: Stack(
         children: [
@@ -55,7 +49,7 @@ class HeroCard extends StatelessWidget {
             child: CustomPaint(
               painter: KilimPatternPainter(
                 drawPattern: drawPattern,
-                color: Colors.white,
+                color: isLight ? AppTheme.playGreen : Colors.white,
                 opacity: 0.05, // %5 Opaklık
               ),
             ),
@@ -74,10 +68,11 @@ class HeroCard extends StatelessWidget {
                         vertical: AppSpacing.xxs,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.1),
+                        // Yeşil vurgu: canlı oda durum pilli.
+                        color: AppTheme.playGreen.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(AppRadius.pill),
                         border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.08),
+                          color: AppTheme.playGreen.withValues(alpha: 0.35),
                         ),
                       ),
                       child: Row(
@@ -87,13 +82,13 @@ class HeroCard extends StatelessWidget {
                             width: 8,
                             height: 8,
                             decoration: BoxDecoration(
-                              color: AppTheme.gold.withValues(
-                                alpha: 0.6,
-                              ), // Online durum noktası
+                              color: AppTheme.playGreen, // Online durum noktası
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppTheme.gold.withValues(alpha: 0.6),
+                                  color: AppTheme.playGreen.withValues(
+                                    alpha: 0.6,
+                                  ),
                                   blurRadius: 6,
                                 ),
                               ],
@@ -106,7 +101,9 @@ class HeroCard extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: AppTypography.caption.copyWith(
-                                color: Colors.white,
+                                color: isLight
+                                    ? AppTheme.playGreen
+                                    : Colors.white,
                               ),
                             ),
                           ),
@@ -122,7 +119,7 @@ class HeroCard extends StatelessWidget {
                     ? 'Bi hevalan re\npêşbikeve'
                     : 'Arkadaşlarınla\ncanlı yarış',
                 style: AppTypography.display.copyWith(
-                  color: Colors.white,
+                  color: textPrimary,
                   fontSize: 26,
                   height: 1.1,
                 ),
@@ -176,7 +173,9 @@ class HeroCard extends StatelessWidget {
                         onPressed: onCreateRoom,
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(
-                            color: Colors.white.withValues(alpha: 0.35),
+                            color: isLight
+                                ? AppTheme.lightBorder
+                                : Colors.white.withValues(alpha: 0.35),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(AppRadius.sm),
@@ -187,7 +186,7 @@ class HeroCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.bodyMedium.copyWith(
-                            color: Colors.white,
+                            color: textPrimary,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -202,7 +201,9 @@ class HeroCard extends StatelessWidget {
                         onPressed: onJoinRoom,
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(
-                            color: Colors.white.withValues(alpha: 0.35),
+                            color: isLight
+                                ? AppTheme.lightBorder
+                                : Colors.white.withValues(alpha: 0.35),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(AppRadius.sm),
@@ -213,7 +214,7 @@ class HeroCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.bodyMedium.copyWith(
-                            color: Colors.white,
+                            color: textPrimary,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

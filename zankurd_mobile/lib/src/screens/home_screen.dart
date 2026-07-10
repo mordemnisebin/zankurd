@@ -427,7 +427,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
             decoration: BoxDecoration(
-              color: AppTheme.primaryGradientStart,
+              // Turuncu header üzerinde okunur kalması için beyaz chip.
+              color: Colors.white.withValues(alpha: 0.22),
               borderRadius: BorderRadius.circular(5),
             ),
             child: Text(
@@ -473,7 +474,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         : '$greetingTr, ${currentName ?? 'Oyuncu'}!';
 
     return Container(
-      decoration: BoxDecoration(gradient: AppTheme.homeHeaderGradient),
+      key: const ValueKey('home-profile-header'),
+      decoration: const BoxDecoration(
+        // Pirs-inspired büyük turuncu karşılama/profil header'ı.
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [AppTheme.brandOrange, AppTheme.brandOrangeWarm],
+        ),
+      ),
       child: Stack(
         children: [
           Positioned.fill(
@@ -546,31 +555,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             width: 54,
             height: 54,
             decoration: BoxDecoration(
-              gradient: AppTheme.goldGradient,
+              // Turuncu header üzerinde yarı saydam beyaz chip.
+              color: Colors.white.withValues(alpha: 0.16),
               borderRadius: BorderRadius.circular(AppRadius.sm),
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.gold.withValues(alpha: 0.35),
-                  blurRadius: 14,
-                  offset: const Offset(0, 5),
-                ),
-              ],
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.22),
+                width: 1.2,
+              ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
                   Icons.local_fire_department_rounded,
-                  color:
-                      AppTheme.lightTextPrimary, // Koyu Yeşil Kontrast (9.68:1)
+                  color: Colors.white,
                   size: 22,
                 ),
                 const SizedBox(height: 1),
                 Text(
                   '$streak',
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.lightTextPrimary,
-                  ),
+                  style: AppTypography.caption.copyWith(color: Colors.white),
                 ),
               ],
             ),
@@ -594,15 +598,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Container(
+                // Mağazayı açan chip için min 44 px dokunma alanı.
+                constraints: const BoxConstraints(minHeight: 44, minWidth: 44),
+                alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.sm,
                   vertical: AppSpacing.xs,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.08),
+                  color: Colors.white.withValues(alpha: 0.16),
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                   border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.16),
+                    color: Colors.white.withValues(alpha: 0.22),
                     width: 1.2,
                   ),
                   boxShadow: [

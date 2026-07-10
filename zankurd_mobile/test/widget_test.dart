@@ -723,6 +723,23 @@ void main() {
     expect(find.text('Seviye 5'), findsNothing);
     expect(find.byIcon(Icons.diamond), findsNothing);
 
+    // Pirs-inspired sözleşme: turuncu profil header'ı ve multiplayer hero.
+    expect(find.byKey(const ValueKey('home-profile-header')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-multiplayer-hero')), findsOneWidget);
+    expect(find.text('Oda kur'), findsOneWidget);
+    expect(find.text('Kodla katıl'), findsOneWidget);
+    expect(find.text('1vs1 — Hemen oyna'), findsOneWidget);
+
+    final header = tester.widget<Container>(
+      find.byKey(const ValueKey('home-profile-header')),
+    );
+    final headerDecoration = header.decoration as BoxDecoration;
+    final headerGradient = headerDecoration.gradient as LinearGradient;
+    expect(headerGradient.colors, [
+      AppTheme.brandOrange,
+      AppTheme.brandOrangeWarm,
+    ]);
+
     final navTheme = tester.widget<NavigationBarTheme>(
       find.byType(NavigationBarTheme),
     );
