@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
+import '../../widgets/colorful_action_card.dart';
 
 /// Kompakt 2x2 "hemen oyna" ızgarası: 1v1 düello, günün yarışması, çark,
-/// turnuva. Bu dört aksiyon eskiden ayrı ayrı tam-genişlik kartlardı
-/// (bkz. docs/superpowers/specs/2026-07-04-auth-home-redesign-design.md);
-/// burada tek bir yoğun, hâlâ renkli ve okunaklı ızgarada birleşiyor.
+/// turnuva. Pirs-inspired ortak [ColorfulActionCard] ailesini kullanır:
+/// 1vs1 pembe, günlük yarışma turuncu, çark yeşil, turnuva turkuaz.
 class QuickPlayGrid extends StatelessWidget {
   const QuickPlayGrid({
     required this.isKu,
@@ -24,41 +24,45 @@ class QuickPlayGrid extends StatelessWidget {
   final VoidCallback onSpinWheel;
   final VoidCallback onTournament;
 
+  /// Gradient'in ikinci durağı: aynı rengin hafif koyulaştırılmışı.
+  static Color _deepen(Color color) =>
+      Color.alphaBlend(Colors.black.withValues(alpha: 0.16), color);
+
   @override
   Widget build(BuildContext context) {
     final tiles = [
-      _QuickPlayTile(
-        gradientColors: AppTheme.duelGradient,
-        icon: Icons.bolt_rounded,
+      ColorfulActionCard(
+        key: const ValueKey('quick-play-duel'),
         title: isKu ? 'Şerê 1vs1' : '1vs1 Düello',
         subtitle: isKu ? 'Zindî' : 'Canlı',
+        icon: Icons.bolt_rounded,
+        colors: [AppTheme.playPink, _deepen(AppTheme.playPink)],
         onTap: onDuel,
-        index: 0,
       ),
-      _QuickPlayTile(
-        gradientColors: const [AppTheme.gold, Color(0xFFFF8F00)],
-        icon: Icons.today_rounded,
+      ColorfulActionCard(
+        key: const ValueKey('quick-play-daily'),
         title: isKu ? 'Pêşbirka Rojê' : 'Günün Yarışması',
         subtitle: isKu ? '10 pirs' : '10 soru',
+        icon: Icons.today_rounded,
+        colors: const [AppTheme.brandOrange, AppTheme.brandOrangeWarm],
         loading: dailyQuizLoading,
         onTap: onDailyQuiz,
-        index: 1,
       ),
-      _QuickPlayTile(
-        gradientColors: const [AppTheme.violet, AppTheme.secondaryAccent],
-        icon: Icons.casino_outlined,
+      ColorfulActionCard(
+        key: const ValueKey('quick-play-wheel'),
         title: isKu ? 'Çerxa Rojê' : 'Günün Çarkı',
         subtitle: '100 coin',
+        icon: Icons.casino_outlined,
+        colors: [AppTheme.playGreen, _deepen(AppTheme.playGreen)],
         onTap: onSpinWheel,
-        index: 2,
       ),
-      _QuickPlayTile(
-        gradientColors: AppTheme.tournamentGradient,
-        icon: Icons.emoji_events_outlined,
+      ColorfulActionCard(
+        key: const ValueKey('quick-play-tournament'),
         title: isKu ? 'Turnuva' : 'Turnuva Modu',
         subtitle: isKu ? 'Bot kûpa' : 'Bot kupa',
+        icon: Icons.emoji_events_outlined,
+        colors: [AppTheme.playCyan, _deepen(AppTheme.playCyan)],
         onTap: onTournament,
-        index: 3,
       ),
     ];
 
@@ -83,234 +87,6 @@ class QuickPlayGrid extends StatelessWidget {
           itemBuilder: (context, index) => tiles[index],
         );
       },
-    );
-  }
-}
-
-class _QuickPlayTile extends StatefulWidget {
-  const _QuickPlayTile({
-    required this.gradientColors,
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-    required this.index,
-    this.loading = false,
-  });
-
-  final List<Color> gradientColors;
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final VoidCallback onTap;
-  final bool loading;
-  final int index;
-
-  @override
-  State<_QuickPlayTile> createState() => _QuickPlayTileState();
-}
-
-class _QuickPlayTileState extends State<_QuickPlayTile>
-    with SingleTickerProviderStateMixin {
-  bool _isPressed = false;
-  late final AnimationController _entryController;
-  late final Animation<double> _fadeAnimation;
-  late final Animation<Offset> _slideAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _entryController = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: this,
-    );
-    _fadeAnimation = CurvedAnimation(
-      parent: _entryController,
-      curve: Interval(
-        widget.index * 0.15,
-        0.6 + widget.index * 0.1,
-        curve: Curves.easeOut,
-      ),
-    );
-    _slideAnimation =
-        Tween<Offset>(begin: const Offset(0, 0.15), end: Offset.zero).animate(
-          CurvedAnimation(
-            parent: _entryController,
-            curve: Interval(
-              widget.index * 0.15,
-              0.6 + widget.index * 0.1,
-              curve: Curves.easeOut,
-            ),
-          ),
-        );
-    _entryController.forward();
-  }
-
-  @override
-  void dispose() {
-    _entryController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    const double shadowHeight = 4.0;
-
-    final shadowColor = widget.gradientColors.last.withValues(alpha: 0.42);
-
-    return FadeTransition(
-      opacity: _fadeAnimation,
-      child: SlideTransition(
-        position: _slideAnimation,
-        child: GestureDetector(
-          onTapDown: widget.loading
-              ? null
-              : (_) => setState(() => _isPressed = true),
-          onTapUp: widget.loading
-              ? null
-              : (_) {
-                  setState(() => _isPressed = false);
-                  widget.onTap();
-                },
-          onTapCancel: widget.loading
-              ? null
-              : () => setState(() => _isPressed = false),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeOut,
-            margin: EdgeInsets.only(
-              top: _isPressed ? shadowHeight : 0,
-              bottom: _isPressed ? 0 : shadowHeight,
-            ),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: widget.gradientColors,
-              ),
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.20),
-                width: 1.1,
-              ),
-              boxShadow: [
-                if (!_isPressed)
-                  BoxShadow(
-                    color: shadowColor,
-                    offset: const Offset(0, shadowHeight),
-                    blurRadius: 10,
-                    spreadRadius: -4,
-                  ),
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.12),
-                  blurRadius: 16,
-                  offset: const Offset(0, 8),
-                  spreadRadius: -4,
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              child: Stack(
-                children: [
-                  Positioned(
-                    right: -10,
-                    bottom: -12,
-                    child: Icon(
-                      widget.icon,
-                      size: 76,
-                      color: Colors.white.withValues(alpha: 0.08),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    top: 14,
-                    bottom: 14,
-                    child: Container(
-                      width: 3,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.40),
-                        borderRadius: const BorderRadius.horizontal(
-                          right: Radius.circular(2),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 10, 12, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          width: 28,
-                          height: 28,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.18),
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.15),
-                              width: 1,
-                            ),
-                          ),
-                          child: widget.loading
-                              ? const SizedBox(
-                                  width: 14,
-                                  height: 14,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2.0,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : Icon(
-                                  widget.icon,
-                                  color: Colors.white,
-                                  size: 15,
-                                ),
-                        ),
-                        const Spacer(),
-                        Text(
-                          widget.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.caption.copyWith(
-                            color: Colors.white,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.xs,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.16),
-                            borderRadius: BorderRadius.circular(AppRadius.pill),
-                            border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.12),
-                            ),
-                          ),
-                          child: Text(
-                            widget.subtitle,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.caption.copyWith(
-                              color: Colors.white.withValues(alpha: 0.90),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

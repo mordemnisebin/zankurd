@@ -1,9 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/screens/home/quick_play_grid.dart';
+import 'package:zankurd_mobile/src/widgets/colorful_action_card.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(home: Scaffold(body: child));
+
+  QuickPlayGrid buildGrid({bool dailyQuizLoading = false}) => QuickPlayGrid(
+    isKu: false,
+    dailyQuizLoading: dailyQuizLoading,
+    onDuel: () {},
+    onDailyQuiz: () {},
+    onSpinWheel: () {},
+    onTournament: () {},
+  );
+
+  testWidgets('uses four keyed colorful action cards', (tester) async {
+    await tester.pumpWidget(wrap(buildGrid()));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('quick-play-duel')), findsOneWidget);
+    expect(find.byKey(const ValueKey('quick-play-daily')), findsOneWidget);
+    expect(find.byKey(const ValueKey('quick-play-wheel')), findsOneWidget);
+    expect(find.byKey(const ValueKey('quick-play-tournament')), findsOneWidget);
+    expect(find.byType(ColorfulActionCard), findsNWidgets(4));
+  });
+
+  testWidgets('fits a narrow 360px viewport without overflow', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(360, 740));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(wrap(buildGrid()));
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets('renders all four quick-play tiles with Turkish labels', (
     tester,

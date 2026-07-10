@@ -57,9 +57,10 @@ class ZanaDailyCard extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
+              // Açık sıcak sarı yüzey (altın + sıcak turuncu blend).
               Color.alphaBlend(tint.withValues(alpha: 0.16), surface),
               Color.alphaBlend(
-                AppTheme.violet.withValues(alpha: 0.08),
+                AppTheme.brandOrangeWarm.withValues(alpha: 0.08),
                 surface,
               ),
             ],
@@ -82,14 +83,14 @@ class ZanaDailyCard extends StatelessWidget {
                   painter: const KilimPatternPainter(
                     drawPattern: true,
                     color: AppTheme.gold,
-                    opacity: 0.05,
+                    opacity: 0.04,
                   ),
                 ),
               ),
             ),
             Row(
               children: [
-                const RojMascot(size: 62, mood: RojMood.happy),
+                const RojMascot(size: 48, mood: RojMood.happy),
                 const SizedBox(width: AppSpacing.sm + 2),
                 Expanded(
                   child: Column(
@@ -132,7 +133,7 @@ class ZanaDailyCard extends StatelessWidget {
                       const SizedBox(height: 3),
                       Text(
                         saying.$2,
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.caption.copyWith(
                           color: AppTheme.textMutedColor(context),

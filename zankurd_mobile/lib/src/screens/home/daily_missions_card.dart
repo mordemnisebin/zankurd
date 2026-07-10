@@ -25,7 +25,7 @@ class DailyMissionsCard extends StatelessWidget {
         : completedCount / missions.length;
 
     return AppPanel(
-      glass: true,
+      // Pirs-inspired: büyük gradient/glass yerine beyaz/context yüzey.
       padding: const EdgeInsets.all(18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,12 +161,12 @@ class _MissionTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDone
             ? AppTheme.gold.withValues(alpha: 0.05)
-            : Colors.white.withValues(alpha: 0.03),
+            : AppTheme.surfaceHiColor(context).withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(16), // AppRadius.lg
         border: Border.all(
           color: isDone
               ? AppTheme.gold.withValues(alpha: 0.16)
-              : Colors.white.withValues(alpha: 0.06),
+              : AppTheme.borderColor(context).withValues(alpha: 0.4),
           width: 1.2,
         ),
         boxShadow: isDone
@@ -218,10 +218,20 @@ class _MissionTile extends StatelessWidget {
                 ),
               ),
               if (!isDone)
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
+                Container(
+                  margin: const EdgeInsets.only(left: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 3,
+                  ),
+                  decoration: BoxDecoration(
+                    // Altın reward chip'i (kompakt: dar kolonlarda taşmamalı).
+                    color: AppTheme.gold.withValues(alpha: 0.14),
+                    borderRadius: BorderRadius.circular(AppRadius.pill),
+                  ),
                   child: Text(
                     '+${mission.coinReward}',
+                    maxLines: 1,
                     style: const TextStyle(
                       fontSize: 13,
                       color: AppTheme.gold,
