@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
 
-/// Haftalık lig kademeleri. v1 sunum katmanıdır: kademe, canlı haftalık
-/// sıralamadaki yerden türetilir (küme düşme/çıkma mekaniği için sunucu
-/// tarafı ayrı bir iş kalemidir).
+/// Haftalık lig kademeleri. v1 sunum: canlı haftalık sıradan [forRank].
+/// Sunucu küme düşme/çıkma: `supabase/2026-07-10_weekly_league.sql`
+/// (`finalize_weekly_league`, `get_my_league_state`).
 enum LeagueTier {
   zer,
   ziv,
