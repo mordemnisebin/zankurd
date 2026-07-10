@@ -630,23 +630,23 @@ for cat in categories:
                 if t_idx % 2 == 0:
                     qtype = "multipleChoice"
                     if t_idx % 4 == 0:
-                        prompt = f'Di Kurmancî de peyva "{term}" bi Tirkî çi ye? (Şablon {t_idx})'
+                        prompt = f'Di Kurmancî de peyva "{term}" bi Tirkî çi ye?'
                         correct = meaning
                         explanation = f'"{term}" kelimesi "{meaning}" anlamına gelir.'
                     else:
-                        prompt = f'"{meaning}" anlamına gelen Kurmancî kelime hangisidir? (Şablon {t_idx})'
+                        prompt = f'"{meaning}" anlamına gelen Kurmancî kelime hangisidir?'
                         correct = term
                         explanation = f'"{meaning}" için doğru karşılık "{term}"tir.'
                 else:
                     qtype = "trueFalse"
                     is_correct = (t_idx % 4 == 1)
                     if is_correct:
-                        prompt = f'Peyva "{term}" "{meaning}" anlamına gelir. (Şablon {t_idx})'
+                        prompt = f'Peyva "{term}" "{meaning}" anlamına gelir.'
                         correct = "Rast"
                         explanation = f'"{term}" için doğru karşılık "{meaning}"tir.'
                     else:
                         other_meaning = seeds[(s_idx + 1) % len(seeds)][1]
-                        prompt = f'Peyva "{term}" "{other_meaning}" anlamına gelir. (Şablon {t_idx})'
+                        prompt = f'Peyva "{term}" "{other_meaning}" anlamına gelir.'
                         correct = "Şaş"
                         explanation = f'"{term}" kelimesi "{meaning}" demektir.'
                     
