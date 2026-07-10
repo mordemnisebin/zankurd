@@ -410,14 +410,19 @@ class _CategoryCardState extends State<_CategoryCard>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  CategoryNames.localized(
-                                    widget.category,
-                                    widget.isKu,
+                                // Uzun adlar ("Paradigma") kırpılmasın diye
+                                // tek satırda otomatik küçülür.
+                                FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    CategoryNames.localized(
+                                      widget.category,
+                                      widget.isKu,
+                                    ),
+                                    style: AppTypography.categoryTitle,
+                                    maxLines: 1,
                                   ),
-                                  style: AppTypography.categoryTitle,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: AppSpacing.sm),
                                 Row(

@@ -5,7 +5,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
-import '../widgets/app_panel.dart';
+import '../widgets/kilim_pattern_painter.dart';
 import 'level_screen.dart';
 
 class SubcategoryScreen extends StatelessWidget {
@@ -30,20 +30,9 @@ class SubcategoryScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
-          color: AppTheme.isLight(context)
-              ? AppTheme.lightTextPrimary
-              : Colors.white,
-        ),
-        title: Text(
-          CategoryNames.localized(category, ku),
-          style: TextStyle(
-            color: AppTheme.isLight(context)
-                ? AppTheme.lightTextPrimary
-                : Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        // Geri oku her zaman renkli banner'ın üzerinde durur.
+        iconTheme: const IconThemeData(color: Colors.white),
+        // Başlık banner'da büyük yazılıyor; app bar'da tekrar etmiyoruz.
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -100,6 +89,20 @@ class _CategoryBanner extends StatelessWidget {
   final LinearGradient gradient;
   final bool isKu;
 
+  static IconData _bannerIcon(String category) {
+    return switch (category) {
+      'Ziman' => Icons.translate_rounded,
+      'Çand' => Icons.diversity_2_rounded,
+      'Dîrok' => Icons.account_balance_rounded,
+      'Edebiyat' => Icons.auto_stories_rounded,
+      'Cografya' => Icons.terrain_rounded,
+      'Muzîk' => Icons.music_note_rounded,
+      'Siyaset' => Icons.gavel_rounded,
+      'Paradigma' => Icons.psychology_alt_rounded,
+      _ => Icons.school_rounded,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final topInset = MediaQuery.of(context).padding.top;
@@ -151,17 +154,26 @@ class _CategoryBanner extends StatelessWidget {
               ),
             ),
           ),
-          // Dekoratif daire
-          Positioned(
-            right: 20,
-            bottom: -20,
-            child: Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.04),
-                shape: BoxShape.circle,
+          // Kilim deseni filigranı — kültürel doku
+          Positioned.fill(
+            child: IgnorePointer(
+              child: CustomPaint(
+                painter: const KilimPatternPainter(
+                  drawPattern: true,
+                  color: Colors.white,
+                  opacity: 0.05,
+                ),
               ),
+            ),
+          ),
+          // Büyük filigran kategori ikonu — boşluğu dolduran görsel imza
+          Positioned(
+            right: -18,
+            bottom: -26,
+            child: Icon(
+              _bannerIcon(category),
+              size: 150,
+              color: Colors.white.withValues(alpha: 0.10),
             ),
           ),
           Padding(
@@ -246,77 +258,181 @@ class _SubcategoryCard extends StatelessWidget {
     final title = isKu ? info.nameKu : info.nameTr;
     final desc = isKu ? info.descriptionKu : info.descriptionTr;
     final icon = _iconForId(info.id);
+    final tint = gradient.colors.first;
+    final surface = AppTheme.surfaceHiColor(context);
 
-    return AppPanel(
-      padding: EdgeInsets.zero,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: gradient.colors.first.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(14), // AppRadius.lg
-                  border: Border.all(
-                    color: gradient.colors.first.withValues(alpha: 0.25),
-                    width: 1.2,
-                  ),
-                ),
-                child: Icon(icon, color: gradient.colors.first, size: 22),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      desc,
-                      style: TextStyle(
-                        color: AppTheme.textMutedColor(context),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: 28,
-                height: 28,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.04),
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: AppTheme.borderColor(
-                      context,
-                    ).withValues(alpha: 0.25),
-                    width: 1,
-                  ),
-                ),
-                child: Icon(
-                  Icons.chevron_right_rounded,
-                  color: AppTheme.textMutedColor(context),
-                  size: 18,
-                ),
-              ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(AppRadius.card),
+      child: Container(
+        decoration: BoxDecoration(
+          // Kategori renginin yüzeye karıştığı hafif gradyan kimlik.
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.alphaBlend(tint.withValues(alpha: 0.16), surface),
+              Color.alphaBlend(tint.withValues(alpha: 0.05), surface),
             ],
           ),
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          border: Border.all(color: tint.withValues(alpha: 0.30), width: 1.1),
+          boxShadow: [
+            BoxShadow(
+              color: tint.withValues(alpha: 0.14),
+              blurRadius: 14,
+              offset: const Offset(0, 5),
+            ),
+          ],
         ),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: IgnorePointer(
+                child: CustomPaint(
+                  painter: KilimPatternPainter(
+                    drawPattern: true,
+                    color: tint,
+                    opacity: 0.05,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              right: -14,
+              bottom: -18,
+              child: Icon(icon, size: 92, color: tint.withValues(alpha: 0.10)),
+            ),
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onTap,
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 56,
+                        height: 56,
+                        decoration: BoxDecoration(
+                          gradient: gradient,
+                          borderRadius: BorderRadius.circular(AppRadius.md),
+                          boxShadow: [
+                            BoxShadow(
+                              color: tint.withValues(alpha: 0.38),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Icon(icon, color: Colors.white, size: 26),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: AppTheme.textPrimaryColor(context),
+                                fontWeight: FontWeight.w800,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              desc,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: AppTheme.textMutedColor(context),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                _LevelChip(
+                                  icon: Icons.stairs_rounded,
+                                  label: isKu ? '5 ast' : '5 seviye',
+                                  tint: tint,
+                                ),
+                                const SizedBox(width: 6),
+                                _LevelChip(
+                                  icon: Icons.bolt_rounded,
+                                  label: isKu ? 'Pêşbaz' : 'Yarış',
+                                  tint: tint,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        width: 32,
+                        height: 32,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: tint.withValues(alpha: 0.14),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.arrow_forward_rounded,
+                          color: tint,
+                          size: 17,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LevelChip extends StatelessWidget {
+  const _LevelChip({
+    required this.icon,
+    required this.label,
+    required this.tint,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color tint;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: tint.withValues(alpha: 0.13),
+        borderRadius: BorderRadius.circular(AppRadius.xs),
+        border: Border.all(color: tint.withValues(alpha: 0.22)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 12, color: tint),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
       ),
     );
   }

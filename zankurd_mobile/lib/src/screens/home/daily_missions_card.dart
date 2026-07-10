@@ -138,6 +138,17 @@ class _MissionTile extends StatelessWidget {
   final DailyMission mission;
   final bool isKu;
 
+  /// Görev tipini tek tip bayrak yerine anlamlı bir ikonla gösterir.
+  static IconData _missionIcon(MissionType type) {
+    return switch (type) {
+      MissionType.answerCorrect => Icons.track_changes_rounded,
+      MissionType.completeQuiz => Icons.emoji_events_rounded,
+      MissionType.useWildcard => Icons.auto_awesome_rounded,
+      MissionType.keepStreak => Icons.local_fire_department_rounded,
+      MissionType.playCategory => Icons.category_rounded,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final ratio = (mission.progress / mission.target).clamp(0.0, 1.0);
@@ -184,7 +195,7 @@ class _MissionTile extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  isDone ? Icons.check_rounded : Icons.flag_rounded,
+                  isDone ? Icons.check_rounded : _missionIcon(mission.type),
                   color: isDone ? AppTheme.gold : AppTheme.accent,
                   size: 14,
                 ),

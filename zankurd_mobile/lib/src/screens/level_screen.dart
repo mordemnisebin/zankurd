@@ -297,6 +297,7 @@ class _LevelCardState extends State<_LevelCard> {
   @override
   Widget build(BuildContext context) {
     final badgeColor = _badgeColor(widget.level.number);
+    final surface = AppTheme.surfaceOf(context);
 
     return GestureDetector(
       onTapDown: widget.disabled
@@ -317,56 +318,63 @@ class _LevelCardState extends State<_LevelCard> {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppTheme.surfaceOf(context),
+            // Kademe renginin yüzeye karıştığı hafif kimlik gradyanı.
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color.alphaBlend(badgeColor.withValues(alpha: 0.13), surface),
+                Color.alphaBlend(badgeColor.withValues(alpha: 0.04), surface),
+              ],
+            ),
             borderRadius: BorderRadius.circular(16), // AppRadius.lg
             border: Border.all(
               color: _isPressed
-                  ? badgeColor.withValues(alpha: 0.4)
-                  : AppTheme.borderColor(context).withValues(alpha: 0.8),
+                  ? badgeColor.withValues(alpha: 0.45)
+                  : badgeColor.withValues(alpha: 0.26),
               width: 1.2,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.15),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
-                spreadRadius: -4,
+                color: badgeColor.withValues(alpha: _isPressed ? 0.20 : 0.12),
+                blurRadius: 14,
+                offset: const Offset(0, 5),
               ),
-              if (_isPressed)
-                BoxShadow(
-                  color: badgeColor.withValues(alpha: 0.15),
-                  blurRadius: 10,
-                  offset: const Offset(0, 2),
-                ),
             ],
           ),
           child: Row(
             children: [
               Container(
-                width: 48,
-                height: 48,
+                width: 52,
+                height: 52,
                 decoration: BoxDecoration(
-                  color: badgeColor.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(
-                    color: badgeColor.withValues(alpha: 0.25),
-                    width: 1.2,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      badgeColor,
+                      Color.alphaBlend(
+                        Colors.black.withValues(alpha: 0.22),
+                        badgeColor,
+                      ),
+                    ],
                   ),
+                  borderRadius: BorderRadius.circular(14),
                   boxShadow: [
                     BoxShadow(
-                      color: badgeColor.withValues(alpha: 0.08),
-                      blurRadius: 8,
-                      offset: const Offset(0, 3),
+                      color: badgeColor.withValues(alpha: 0.38),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
                 alignment: Alignment.center,
                 child: Text(
                   '${widget.level.number}',
-                  style: TextStyle(
-                    color: badgeColor,
+                  style: const TextStyle(
+                    color: Colors.white,
                     fontWeight: FontWeight.w800,
-                    fontSize: 20,
+                    fontSize: 22,
                   ),
                 ),
               ),
@@ -383,46 +391,76 @@ class _LevelCardState extends State<_LevelCard> {
                         fontSize: 16.5,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"} · ${widget.isKu ? "Zehmetî" : "Zorluk"} ${widget.level.difficultyLabel}',
-                      style: TextStyle(
-                        color: AppTheme.textMutedColor(context),
-                        fontSize: 12.5,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    const SizedBox(height: 5),
+                    Row(
+                      children: [
+                        _DifficultyStars(
+                          filled: widget.level.difficultyMax.clamp(1, 5),
+                          color: badgeColor,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"}',
+                          style: TextStyle(
+                            color: AppTheme.textMutedColor(context),
+                            fontSize: 12.5,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
               Container(
-                width: 36,
-                height: 36,
+                width: 38,
+                height: 38,
                 decoration: BoxDecoration(
-                  color: badgeColor.withValues(alpha: 0.1),
+                  color: badgeColor.withValues(alpha: 0.14),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: badgeColor.withValues(alpha: 0.2),
+                    color: badgeColor.withValues(alpha: 0.28),
                     width: 1,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: badgeColor.withValues(alpha: 0.05),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
                 ),
                 child: Icon(
                   Icons.play_arrow_rounded,
                   color: badgeColor,
-                  size: 22,
+                  size: 24,
                 ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Zorluğu metin yerine 5'li yıldız dizisiyle gösterir.
+class _DifficultyStars extends StatelessWidget {
+  const _DifficultyStars({required this.filled, required this.color});
+
+  final int filled;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (var i = 1; i <= 5; i++)
+          Padding(
+            padding: const EdgeInsets.only(right: 1.5),
+            child: Icon(
+              i <= filled ? Icons.star_rounded : Icons.star_outline_rounded,
+              size: 13,
+              color: i <= filled
+                  ? color
+                  : AppTheme.textMutedColor(context).withValues(alpha: 0.45),
+            ),
+          ),
+      ],
     );
   }
 }
