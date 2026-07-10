@@ -13,7 +13,10 @@ Widget wrap(Widget child) => MultiProvider(
   providers: [
     ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('tr')),
   ],
-  child: MaterialApp(theme: AppTheme.light(), home: Scaffold(body: child)),
+  child: MaterialApp(
+    theme: AppTheme.light(),
+    home: Scaffold(body: child),
+  ),
 );
 
 void main() {
