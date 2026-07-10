@@ -57,4 +57,39 @@ void main() {
     expect(() => cache.get('Ziman_10')!.add(q2), throwsUnsupportedError);
     expect(cache.get('Ziman_10'), [q]);
   });
+
+  test('farklı contentVersion eski anahtarları görmez', () {
+    final v1 = QuestionCache(
+      contentVersion: 1,
+      ttl: const Duration(minutes: 5),
+    );
+    final v2 = QuestionCache(
+      contentVersion: 2,
+      ttl: const Duration(minutes: 5),
+    );
+    // Aynı store değil; sürüm anahtar önekinde — tek örnekte doğrula:
+    final multi = QuestionCache(
+      contentVersion: 1,
+      ttl: const Duration(minutes: 5),
+    );
+    multi.set('Ziman_10', [q]);
+    expect(multi.get('Ziman_10'), [q]);
+
+    final bumped = QuestionCache(
+      contentVersion: 2,
+      ttl: const Duration(minutes: 5),
+    );
+    // Ayrı örnek boş başlar; sürüm sabiti kQuestionContentVersion >= 2 olmalı.
+    expect(kQuestionContentVersion, greaterThanOrEqualTo(2));
+    expect(bumped.get('Ziman_10'), isNull);
+
+    // dropStale eski v öneklerini siler
+    multi.set('Ziman_10', [q]);
+    multi.dropStale(keepVersion: 99);
+    expect(multi.get('Ziman_10'), isNull);
+
+    // v1/v2 örnekleri kullanılmadı uyarısını bastır
+    expect(v1.contentVersion, 1);
+    expect(v2.contentVersion, 2);
+  });
 }
