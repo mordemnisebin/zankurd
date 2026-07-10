@@ -723,7 +723,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           minHeight: 6,
           borderRadius: BorderRadius.circular(99),
           backgroundColor: AppTheme.surfaceHiColor(context),
-          color: AppTheme.accent,
+          color: AppTheme.brandOrange,
         ),
       );
     }
@@ -744,13 +744,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                           ? AppTheme.correct
                           : AppTheme.wrong)
                     : i == index
-                    ? AppTheme.accent
+                    ? AppTheme.brandOrange
                     : AppTheme.surfaceHiColor(context),
                 borderRadius: BorderRadius.circular(99),
                 boxShadow: i == index
                     ? [
                         BoxShadow(
-                          color: AppTheme.accent.withValues(alpha: 0.45),
+                          color: AppTheme.brandOrange.withValues(alpha: 0.45),
                           blurRadius: 6,
                         ),
                       ]
@@ -809,7 +809,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   Expanded(
                     child: FilledButton(
                       style: FilledButton.styleFrom(
-                        backgroundColor: Colors.orange,
+                        backgroundColor: AppTheme.brandOrangeWarm,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
                           vertical: AppSpacing.sm,
@@ -831,7 +831,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   Expanded(
                     child: FilledButton(
                       style: FilledButton.styleFrom(
-                        backgroundColor: AppTheme.accent,
+                        backgroundColor: AppTheme.playCyan,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
                           vertical: AppSpacing.sm,
@@ -874,8 +874,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 ],
               )
             : FilledButton.icon(
+                key: const ValueKey('quiz-next-button'),
                 style: FilledButton.styleFrom(
-                  backgroundColor: AppTheme.accent,
+                  backgroundColor: AppTheme.brandOrange,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   shape: RoundedRectangleBorder(
@@ -884,7 +885,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                     ), // AppRadius.lg
                   ),
                   elevation: 2,
-                  shadowColor: AppTheme.accent.withValues(alpha: 0.3),
+                  shadowColor: AppTheme.brandOrange.withValues(alpha: 0.3),
                 ),
                 onPressed: canPressNext ? () => _next() : null,
                 icon: Icon(
