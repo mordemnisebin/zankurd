@@ -9,6 +9,8 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
+import '../widgets/kilim_pattern_painter.dart';
+import '../widgets/screen_identity_header.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 
@@ -200,122 +202,158 @@ class _ContestContent extends StatelessWidget {
         AppSpacing.lg,
       ),
       children: [
-        Container(
-          padding: const EdgeInsets.all(AppSpacing.md),
-          decoration: BoxDecoration(
-            color: AppTheme.surfaceColor(context),
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(
-              color: AppTheme.primaryGradientStart.withValues(alpha: 0.3),
-              width: 1,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.emoji_events_outlined,
-                    color: AppTheme.primaryGradientStart,
-                    size: 32,
+        // Pêşbaz ailesi — altın kimlik.
+        ScreenIdentityHeader(
+          title: ku ? 'Çalakiya Rojê' : 'Günün Etkinliği',
+          subtitle: ku ? 'Beşdar bibe û xelatê bigire' : 'Katıl ve ödülü kap',
+          accent: AppTheme.gold,
+          icon: Icons.celebration_rounded,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          child: Container(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppTheme.surfaceOf(context),
+                  Color.alphaBlend(
+                    AppTheme.gold.withValues(alpha: 0.10),
+                    AppTheme.surfaceOf(context),
                   ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: Text(
-                      contest.themeNameKu,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
+                ],
+              ),
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              border: Border.all(
+                color: AppTheme.gold.withValues(alpha: 0.35),
+                width: 1.2,
+              ),
+              boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.10),
+            ),
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: IgnorePointer(
+                    child: CustomPaint(
+                      painter: KilimPatternPainter(
+                        drawPattern: true,
+                        color: AppTheme.gold,
+                        opacity: 0.04,
                       ),
                     ),
                   ),
-                ],
-              ),
-              if ((contest.themeDescriptionKu ?? '').isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  contest.themeDescriptionKu!,
-                  style: TextStyle(
-                    color: AppTheme.textMutedColor(context),
-                    fontSize: 13,
-                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 44,
+                          height: 44,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: AppTheme.goldGradient,
+                            boxShadow: AppTheme.glowShadow(
+                              AppTheme.gold,
+                              intensity: 0.22,
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.emoji_events_rounded,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
+                        Expanded(
+                          child: Text(
+                            contest.themeNameKu,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.heading2.copyWith(
+                              color: AppTheme.textPrimaryColor(context),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    if ((contest.themeDescriptionKu ?? '').isNotEmpty) ...[
+                      const SizedBox(height: AppSpacing.sm),
+                      Text(
+                        contest.themeDescriptionKu!,
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppTheme.textMutedColor(context),
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: AppSpacing.sm),
+                    Wrap(
+                      spacing: AppSpacing.xs,
+                      runSpacing: AppSpacing.xs,
+                      children: [
+                        _BadgeLabel(
+                          icon: Icons.category_outlined,
+                          label: categoryLabel,
+                        ),
+                        _BadgeLabel(
+                          icon: Icons.speed_outlined,
+                          label:
+                              '${contest.difficultyMin}-${contest.difficultyMax}',
+                        ),
+                        _BadgeLabel(
+                          icon: Icons.quiz_outlined,
+                          label: ku
+                              ? '${contest.questionCount} pirs'
+                              : '${contest.questionCount} soru',
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    GeometricGradientButton(
+                      label: starting
+                          ? (ku ? 'Tê amadekirin…' : 'Hazırlanıyor…')
+                          : (ku ? 'Çalakiyê dest pê bike' : 'Etkinliğe başla'),
+                      icon: Icons.play_arrow_rounded,
+                      isLoading: starting,
+                      onPressed: starting ? null : onStart,
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      ku
+                          ? 'Beşdariyê bike û pêşderçûnê de cîh bigire.'
+                          : 'Katıl ve sıralamada yerini al.',
+                      textAlign: TextAlign.center,
+                      style: AppTypography.caption.copyWith(
+                        color: AppTheme.textMutedColor(context),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    Text(
+                      ku
+                          ? 'Xelat: beşdarî ${contest.participationReward} · 1. ${contest.rank1Reward} coin'
+                          : 'Ödül: katılım ${contest.participationReward} · 1. ${contest.rank1Reward} coin',
+                      textAlign: TextAlign.center,
+                      style: AppTypography.caption.copyWith(
+                        color: AppTheme.gold,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ],
                 ),
               ],
-              const SizedBox(height: AppSpacing.sm),
-              Wrap(
-                spacing: AppSpacing.xs,
-                runSpacing: AppSpacing.xs,
-                children: [
-                  _BadgeLabel(
-                    icon: Icons.category_outlined,
-                    label: categoryLabel,
-                  ),
-                  _BadgeLabel(
-                    icon: Icons.speed_outlined,
-                    label: '${contest.difficultyMin}-${contest.difficultyMax}',
-                  ),
-                  _BadgeLabel(
-                    icon: Icons.quiz_outlined,
-                    label: ku
-                        ? '${contest.questionCount} pirs'
-                        : '${contest.questionCount} soru',
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.md),
-              GeometricGradientButton(
-                label: starting
-                    ? (ku ? 'Tê amadekirin…' : 'Hazırlanıyor…')
-                    : (ku ? 'Çalakiyê dest pê bike' : 'Etkinliğe başla'),
-                icon: Icons.play_arrow_rounded,
-                isLoading: starting,
-                onPressed: starting ? null : onStart,
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                ku
-                    ? 'Beşdariyê bike û pêşderçûnê de cîh bigire.'
-                    : 'Katıl ve sıralamada yerini al.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppTheme.textMutedColor(context),
-                  fontSize: 12,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                ku
-                    ? 'Xelat: beşdarî ${contest.participationReward} · 1. ${contest.rank1Reward} coin'
-                    : 'Ödül: katılım ${contest.participationReward} · 1. ${contest.rank1Reward} coin',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppTheme.gold,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
         const SizedBox(height: AppSpacing.section - 8),
-        Text(
-          ku ? 'Pêşderçûn' : 'Sıralama',
-          style: TextStyle(
-            color: AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.w800,
-            fontSize: 16,
-          ),
+        ScreenSectionLabel(
+          label: ku ? 'Pêşderçûn' : 'Sıralama',
+          accent: AppTheme.gold,
         ),
         const SizedBox(height: AppSpacing.sm),
         FutureBuilder<List<ContestLeaderboardRow>>(

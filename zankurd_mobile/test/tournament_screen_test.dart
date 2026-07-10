@@ -51,7 +51,8 @@ void main() {
 
         expect(find.text('Çeyrek Final'), findsAtLeast(1));
         expect(find.text('Maçı Başlat'), findsOneWidget);
-        expect(find.text('Turnuva Şeması'), findsOneWidget);
+        // ScreenSectionLabel uppercase sunum kullanır.
+        expect(find.text('TURNUVA ŞEMASI'), findsOneWidget);
       },
     );
   });

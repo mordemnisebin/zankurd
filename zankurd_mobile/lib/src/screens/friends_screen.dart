@@ -8,6 +8,7 @@ import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/screen_identity_header.dart';
 import 'room_screen.dart';
 
 /// Arkadaş listesi, oyuncu arama ve istek yönetimi ekranı.
@@ -178,16 +179,22 @@ class _FriendsScreenState extends State<FriendsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Sosyal bağ — camgöbeği kimlik (Xwendin/bağlantı ailesi).
+                ScreenIdentityHeader(
+                  title: ku ? 'Hevalên Min' : 'Arkadaşlarım',
+                  subtitle: ku
+                      ? 'Bigere, daxwaz bike û bi heval re bilîze'
+                      : 'Ara, istek at ve arkadaşınla oyna',
+                  accent: AppTheme.cyan,
+                  icon: Icons.people_alt_rounded,
+                ),
+                const SizedBox(height: AppSpacing.md),
                 _buildSearchSection(ku),
                 const SizedBox(height: 24),
                 _buildRequestsSection(ku),
-                Text(
-                  ku ? 'Hevalên Min' : 'Arkadaşlarım',
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
-                    fontSize: 16,
-                  ),
+                ScreenSectionLabel(
+                  label: ku ? 'Hevalên Min' : 'Arkadaşlarım',
+                  accent: AppTheme.cyan,
                 ),
                 const SizedBox(height: 12),
                 _buildFriendsSection(ku),
@@ -203,13 +210,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          ku ? 'Heval Bibîne' : 'Arkadaş Bul',
-          style: TextStyle(
-            color: AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.w800,
-            fontSize: 16,
-          ),
+        ScreenSectionLabel(
+          label: ku ? 'Heval Bibîne' : 'Arkadaş Bul',
+          accent: AppTheme.cyan,
         ),
         const SizedBox(height: 12),
         Row(
@@ -311,13 +314,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              ku ? 'Daxwazên Hevaltiyê' : 'Bekleyen İstekler',
-              style: TextStyle(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w800,
-                fontSize: 16,
-              ),
+            ScreenSectionLabel(
+              label: ku ? 'Daxwazên Hevaltiyê' : 'Bekleyen İstekler',
+              accent: AppTheme.cyan,
             ),
             const SizedBox(height: 12),
             ...requests.map(

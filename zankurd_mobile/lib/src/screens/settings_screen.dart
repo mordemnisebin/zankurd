@@ -11,6 +11,7 @@ import '../services/notification_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/screen_identity_header.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({required this.repository, super.key});
@@ -112,16 +113,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
               AppSpacing.lg,
             ),
             children: [
-              _SettingsPageHeader(
+              // Profil ailesi — mor kimlik (AppShell sekme 4).
+              ScreenIdentityHeader(
                 title: ku ? 'Vebijarkên Te' : 'Tercihlerin',
                 subtitle: ku
                     ? 'Hesab, dîmen û dengê xwe birêve bibe'
                     : 'Hesap, görünüm ve ses tercihlerini yönet',
+                accent: AppTheme.violet,
+                icon: Icons.settings_rounded,
               ),
               const SizedBox(height: AppSpacing.md),
 
               // ============ HESAP / ACCOUNT ============
-              _SettingsSectionHeader(label: ku ? 'Hesap' : 'Hesap'),
+              ScreenSectionLabel(
+                label: ku ? 'Hesap' : 'Hesap',
+                accent: AppTheme.violet,
+              ),
               AppPanel(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,7 +281,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: AppSpacing.cardGap),
 
               // ============ GÖRÜNÜM / APPEARANCE ============
-              _SettingsSectionHeader(label: ku ? 'Dîmen' : 'Görünüm'),
+              ScreenSectionLabel(
+                label: ku ? 'Dîmen' : 'Görünüm',
+                accent: AppTheme.violet,
+              ),
               AppPanel(
                 padding: EdgeInsets.zero,
                 child: Column(
@@ -314,8 +324,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: AppSpacing.cardGap),
 
               // ============ SES & BİLDİRİM / SOUND & NOTIFICATIONS ============
-              _SettingsSectionHeader(
+              ScreenSectionLabel(
                 label: ku ? 'Deng û Agahdarî' : 'Ses & Bildirim',
+                accent: AppTheme.violet,
               ),
               AppPanel(
                 padding: EdgeInsets.zero,
@@ -406,8 +417,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: AppSpacing.cardGap),
 
               // ============ HAKKINDA / ABOUT ============
-              _SettingsSectionHeader(
+              ScreenSectionLabel(
                 label: ku ? 'Derbarê Sepanê' : 'Uygulama Hakkında',
+                accent: AppTheme.violet,
               ),
               // How to play
               _ExpandableSection(
@@ -792,74 +804,6 @@ class _LangChip extends StatelessWidget {
             fontWeight: FontWeight.w700,
             fontSize: 12,
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SettingsPageHeader extends StatelessWidget {
-  const _SettingsPageHeader({required this.title, required this.subtitle});
-
-  final String title;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(4, AppSpacing.xs, 4, 0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 4,
-            height: 36,
-            margin: const EdgeInsets.only(right: AppSpacing.sm),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
-              gradient: AppTheme.accentGradient,
-            ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTypography.heading1.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xxs),
-                Text(
-                  subtitle,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SettingsSectionHeader extends StatelessWidget {
-  const _SettingsSectionHeader({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(4, AppSpacing.xs, 4, AppSpacing.xs),
-      child: Text(
-        label.toUpperCase(),
-        style: AppTypography.caption.copyWith(
-          color: AppTheme.textMutedColor(context),
-          letterSpacing: 1.1,
         ),
       ),
     );

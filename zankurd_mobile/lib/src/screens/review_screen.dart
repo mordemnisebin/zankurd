@@ -7,6 +7,7 @@ import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../widgets/screen_identity_header.dart';
 
 class ReviewScreen extends StatelessWidget {
   const ReviewScreen({required this.records, required this.room, super.key});
@@ -41,8 +42,26 @@ class ReviewScreen extends StatelessWidget {
                   ),
                 )
               : ListView(
-                  padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.page,
+                    AppSpacing.xs,
+                    AppSpacing.page,
+                    AppSpacing.lg,
+                  ),
                   children: [
+                    // Xwendin ailesi — camgöbeği kimlik (cevap inceleme).
+                    // AppBar "Cevaplar" taşıyor; kart başlığı özet olsun.
+                    ScreenIdentityHeader(
+                      title: context.s('Xulase', 'Özet'),
+                      subtitle: context.s(
+                        '$correct rast · $wrong şaş · $empty vala',
+                        '$correct doğru · $wrong yanlış · $empty boş',
+                      ),
+                      accent: AppTheme.cyan,
+                      icon: Icons.checklist_rounded,
+                      compact: true,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
                     _SummaryStrip(correct: correct, wrong: wrong, empty: empty),
                     const SizedBox(height: 16),
                     for (var i = 0; i < records.length; i++) ...[

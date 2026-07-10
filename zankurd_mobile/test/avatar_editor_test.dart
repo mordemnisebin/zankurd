@@ -54,10 +54,17 @@ void main() {
   );
 
   testWidgets('ikon seçimi önizlemeye yansır ve kaydedilir', (tester) async {
+    // Kimlik kartı + avatar + grid 600px viewport'ta sığmıyor.
+    tester.view.physicalSize = const Size(400, 1200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     final repo = _RecordingRepo();
     await tester.pumpWidget(shell(AvatarEditorScreen(repository: repo)));
     await tester.pumpAndSettle();
 
+    await scrollTo(tester, find.byKey(const ValueKey('avatar-icon-newroz')));
     await tester.tap(find.byKey(const ValueKey('avatar-icon-newroz')));
     await tester.pumpAndSettle();
 

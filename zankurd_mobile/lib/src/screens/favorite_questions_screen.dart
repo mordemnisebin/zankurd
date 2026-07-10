@@ -7,6 +7,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../widgets/screen_identity_header.dart';
 import 'quiz_screen.dart';
 
 class FavoriteQuestionsScreen extends StatefulWidget {
@@ -90,7 +91,32 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
 
               final questions = snapshot.data ?? const <QuizQuestion>[];
               if (questions.isEmpty) {
-                return const _EmptyFavorites();
+                // AppEmptyState LayoutBuilder ile maxHeight ister — ListView'da
+                // unbounded olur; Column + Expanded kullan.
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.page,
+                    AppSpacing.xs,
+                    AppSpacing.page,
+                    AppSpacing.lg,
+                  ),
+                  child: Column(
+                    children: [
+                      ScreenIdentityHeader(
+                        title: context.s('Tomarkirî', 'Kaydedilenler'),
+                        subtitle: context.s(
+                          'Pirsên bijarte yên te',
+                          'Favori soruların',
+                        ),
+                        accent: AppTheme.gold,
+                        icon: Icons.bookmark_rounded,
+                        compact: true,
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      const Expanded(child: _EmptyFavorites()),
+                    ],
+                  ),
+                );
               }
 
               return ListView.builder(
@@ -100,17 +126,32 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
                   AppSpacing.page,
                   AppSpacing.lg,
                 ),
-                itemCount: questions.length + 1,
+                itemCount: questions.length + 2,
                 itemBuilder: (context, index) {
                   if (index == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                      child: ScreenIdentityHeader(
+                        title: context.s('Tomarkirî', 'Kaydedilenler'),
+                        subtitle: context.s(
+                          '${questions.length} pirs · dîsa bilîze',
+                          '${questions.length} soru · yeniden oyna',
+                        ),
+                        accent: AppTheme.gold,
+                        icon: Icons.bookmark_rounded,
+                        compact: true,
+                      ),
+                    );
+                  }
+                  if (index == 1) {
                     return _buildPlayAllButton(context, questions);
                   }
-                  final question = questions[index - 1];
+                  final question = questions[index - 2];
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: _FavoriteQuestionTile(
                       question: question,
-                      onPlay: () => _playFrom(index - 1, questions),
+                      onPlay: () => _playFrom(index - 2, questions),
                       onRemove: () => _removeFavorite(question),
                     ),
                   );
@@ -153,15 +194,21 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: AppTheme.goldGradient,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.18),
+      ),
       child: ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppTheme.primaryGradientStart,
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AppRadius.md),
           ),
-          elevation: 2,
+          elevation: 0,
         ),
         onPressed: () {
           final room = widget.repository

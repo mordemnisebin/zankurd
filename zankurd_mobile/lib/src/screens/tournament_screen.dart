@@ -8,6 +8,7 @@ import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/kilim_pattern_painter.dart';
+import '../widgets/screen_identity_header.dart';
 import 'quiz_screen.dart';
 
 /// Günlük turnuva: 16 oyuncu, 4 tur, tur başına 4 soruluk maç.
@@ -321,6 +322,16 @@ class _TournamentScreenState extends State<TournamentScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          ScreenIdentityHeader(
+            title: ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
+            subtitle: ku
+                ? 'Bot turnuva · ${roundNames[bracket.currentRound]}'
+                : 'Bot turnuva · ${roundNames[bracket.currentRound]}',
+            accent: AppTheme.gold,
+            icon: Icons.emoji_events_rounded,
+            compact: true,
+          ),
+          const SizedBox(height: AppSpacing.md),
           _StatusCard(bracket: bracket, ku: ku),
           if (bracket.status == 'won') ...[
             const SizedBox(height: AppSpacing.md),
@@ -337,8 +348,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
             ),
           ],
           const SizedBox(height: AppSpacing.lg),
-          _TournamentSectionTitle(
-            title: ku ? 'Şemaya Turnuvayê' : 'Turnuva Şeması',
+          ScreenSectionLabel(
+            label: ku ? 'Şemaya Turnuvayê' : 'Turnuva Şeması',
+            accent: AppTheme.gold,
           ),
           const SizedBox(height: AppSpacing.sm),
           for (var i = 0; i < bracket.rounds.length; i++) ...[
@@ -351,7 +363,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
             const SizedBox(height: AppSpacing.md),
           ],
           if (_standings.isNotEmpty) ...[
-            _TournamentSectionTitle(title: ku ? 'Rêzkirin' : 'Sıralama'),
+            ScreenSectionLabel(
+              label: ku ? 'Rêzkirin' : 'Sıralama',
+              accent: AppTheme.gold,
+            ),
             const SizedBox(height: AppSpacing.sm),
             ..._standings.map((s) => _StandingRow(s: s)),
           ],
@@ -782,41 +797,6 @@ class _MatchRow extends StatelessWidget {
             textAlign: TextAlign.end,
             style: nameStyle(match.playerTwoId),
             overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _TournamentSectionTitle extends StatelessWidget {
-  const _TournamentSectionTitle({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 22,
-          margin: const EdgeInsets.only(right: AppSpacing.sm),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(2),
-            gradient: const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [AppTheme.accent, AppTheme.primaryGradientEnd],
-            ),
-          ),
-        ),
-        Expanded(
-          child: Text(
-            title,
-            style: AppTypography.heading2.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-            ),
           ),
         ),
       ],

@@ -15,6 +15,7 @@ import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/screen_identity_header.dart';
 
 /// Avatar/çerçeve/unvan düzenleyici. Kaydet ile repository'ye yazar ve
 /// pop(true) döner; çağıran ekran görünümünü tazeler.
@@ -176,6 +177,17 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                     AppSpacing.lg,
                   ),
                   children: [
+                    // Profil ailesi — mor kimlik.
+                    ScreenIdentityHeader(
+                      title: ku ? 'Rûyê Min' : 'Avatarım',
+                      subtitle: ku
+                          ? 'Sembol, reng û çarçove hilbijêre'
+                          : 'Simge, renk ve çerçeve seç',
+                      accent: AppTheme.violet,
+                      icon: Icons.face_retouching_natural_rounded,
+                      compact: true,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
                     Center(
                       child: PlayerAvatar(
                         key: const ValueKey('avatar-preview'),
