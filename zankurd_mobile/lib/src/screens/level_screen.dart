@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/level_progress_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/quiz_level.dart';
@@ -27,6 +28,24 @@ class LevelScreen extends StatefulWidget {
 
 class _LevelScreenState extends State<LevelScreen> {
   bool _loading = false;
+  Set<int> _playedLevels = const {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProgress();
+  }
+
+  Future<void> _loadProgress() async {
+    final store = await LevelProgressStore.load();
+    if (!mounted) return;
+    setState(() {
+      _playedLevels = {
+        for (var n = 1; n <= 5; n++)
+          if (store.isPlayed(widget.category, widget.subCategory, n)) n,
+      };
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +83,7 @@ class _LevelScreenState extends State<LevelScreen> {
                   levels: levels,
                   disabled: _loading,
                   isKu: ku,
+                  playedLevels: _playedLevels,
                   onOpen: _openLevel,
                 ),
               ),
@@ -102,6 +122,10 @@ class _LevelScreenState extends State<LevelScreen> {
           ),
         ),
       );
+      // Yoldaki düğümü "oynandı" olarak işaretle (altın halka + tik).
+      final store = await LevelProgressStore.load();
+      await store.markPlayed(widget.category, widget.subCategory, level.number);
+      await _loadProgress();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'level questions load failed');
       if (!mounted) return;
@@ -275,13 +299,23 @@ class _LevelPath extends StatelessWidget {
     required this.levels,
     required this.disabled,
     required this.isKu,
+    required this.playedLevels,
     required this.onOpen,
   });
 
   final List<QuizLevel> levels;
   final bool disabled;
   final bool isKu;
+  final Set<int> playedLevels;
   final ValueChanged<QuizLevel> onOpen;
+
+  /// Yoldaki "sıradaki" düğüm: oynanmamış ilk seviye.
+  int? get _nextNumber {
+    for (final level in levels) {
+      if (!playedLevels.contains(level.number)) return level.number;
+    }
+    return null;
+  }
 
   static const _rowHeight = 150.0;
   static const _nodeSize = 76.0;
@@ -325,6 +359,8 @@ class _LevelPath extends StatelessWidget {
                     level: levels[i],
                     disabled: disabled,
                     isKu: isKu,
+                    played: playedLevels.contains(levels[i].number),
+                    isNext: levels[i].number == _nextNumber,
                     onTap: () => onOpen(levels[i]),
                   ),
                 ),
@@ -342,12 +378,20 @@ class _LevelNode extends StatefulWidget {
     required this.level,
     required this.disabled,
     required this.isKu,
+    required this.played,
+    required this.isNext,
     required this.onTap,
   });
 
   final QuizLevel level;
   final bool disabled;
   final bool isKu;
+
+  /// Bu seviye daha önce oynandı (altın halka + tik rozeti).
+  final bool played;
+
+  /// Yolda sıradaki seviye (güçlü parıltı — "buradan devam et").
+  final bool isNext;
   final VoidCallback onTap;
 
   @override
@@ -385,49 +429,80 @@ class _LevelNodeState extends State<_LevelNode> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 76,
-                height: 76,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      color,
-                      Color.alphaBlend(
-                        Colors.black.withValues(alpha: 0.24),
-                        color,
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    width: 76,
+                    height: 76,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          color,
+                          Color.alphaBlend(
+                            Colors.black.withValues(alpha: 0.24),
+                            color,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.55),
-                    width: 3,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: color.withValues(alpha: 0.45),
-                      blurRadius: 16,
-                      offset: const Offset(0, 6),
+                      border: Border.all(
+                        color: widget.played
+                            ? AppTheme.gold
+                            : Colors.white.withValues(
+                                alpha: widget.isNext ? 0.9 : 0.55,
+                              ),
+                        width: 3,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: widget.isNext
+                              ? color.withValues(alpha: 0.7)
+                              : color.withValues(alpha: 0.45),
+                          blurRadius: widget.isNext ? 24 : 16,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: isFinal
-                    ? const Icon(
-                        Icons.emoji_events_rounded,
-                        color: Colors.white,
-                        size: 34,
-                      )
-                    : Text(
-                        '${widget.level.number}',
-                        style: const TextStyle(
+                    child: isFinal
+                        ? const Icon(
+                            Icons.emoji_events_rounded,
+                            color: Colors.white,
+                            size: 34,
+                          )
+                        : Text(
+                            '${widget.level.number}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 28,
+                            ),
+                          ),
+                  ),
+                  if (widget.played)
+                    Positioned(
+                      right: -2,
+                      top: -2,
+                      child: Container(
+                        width: 24,
+                        height: 24,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          gradient: AppTheme.goldGradient,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 1.5),
+                        ),
+                        child: const Icon(
+                          Icons.check_rounded,
                           color: Colors.white,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 28,
+                          size: 14,
                         ),
                       ),
+                    ),
+                ],
               ),
               const SizedBox(height: 8),
               Container(

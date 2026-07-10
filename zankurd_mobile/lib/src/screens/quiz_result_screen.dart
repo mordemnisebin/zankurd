@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../data/achievement_store.dart';
@@ -1256,65 +1258,119 @@ class _AchievementUnlocks extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppPanel(
       gradient: AppTheme.goldGradient,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Row(
-            children: [
-              Icon(Icons.workspace_premium_outlined, color: Colors.white),
-              const SizedBox(width: 8),
-              Text(
-                context.s('Rozeta Nû', 'Yeni Rozet'),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
-                ),
+          // Roj (güneş) ışını kutlaması: rozet açıldığında ışınlar bir kez
+          // dışa doğru açılıp söner — kültürel imzayı ödül anına bağlar.
+          Positioned.fill(
+            child: IgnorePointer(
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0, end: 1),
+                duration: const Duration(milliseconds: 1100),
+                curve: Curves.easeOutCubic,
+                builder: (_, v, _) =>
+                    CustomPaint(painter: _RojRaysPainter(progress: v)),
               ),
-            ],
+            ),
           ),
-          const SizedBox(height: 12),
-          for (final achievement in achievements)
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Container(
-                    width: 38,
-                    height: 38,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.18),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(achievement.icon, color: Colors.white),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          achievement.title(context.isKu),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Text(
-                          achievement.description(context.isKu),
-                          style: TextStyle(color: Colors.white70, fontSize: 12),
-                        ),
-                      ],
+                  Icon(Icons.workspace_premium_outlined, color: Colors.white),
+                  const SizedBox(width: 8),
+                  Text(
+                    context.s('Rozeta Nû', 'Yeni Rozet'),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
                     ),
                   ),
                 ],
               ),
-            ),
+              const SizedBox(height: 12),
+              for (final achievement in achievements)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 38,
+                        height: 38,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.18),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(achievement.icon, color: Colors.white),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              achievement.title(context.isKu),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Text(
+                              achievement.description(context.isKu),
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
         ],
       ),
     );
   }
+}
+
+/// Roj motifi: merkezden dışa açılan 12 ışın; progress ilerledikçe uzar
+/// ve şeffaflaşarak söner (tek seferlik kutlama parlaması).
+class _RojRaysPainter extends CustomPainter {
+  _RojRaysPainter({required this.progress});
+
+  final double progress;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (progress <= 0 || progress >= 1) return;
+    final center = Offset(size.width / 2, size.height / 2);
+    final maxR = size.longestSide * 0.55;
+    final paint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.40 * (1 - progress))
+      ..strokeWidth = 3
+      ..strokeCap = StrokeCap.round;
+    for (var i = 0; i < 12; i++) {
+      final angle = i * math.pi / 6;
+      final direction = Offset(math.cos(angle), math.sin(angle));
+      final inner = 18 + maxR * 0.45 * progress;
+      final outer = inner + maxR * 0.35 * progress;
+      canvas.drawLine(
+        center + direction * inner,
+        center + direction * outer,
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _RojRaysPainter oldDelegate) =>
+      oldDelegate.progress != progress;
 }
 
 class _MasteryPromotions extends StatelessWidget {
