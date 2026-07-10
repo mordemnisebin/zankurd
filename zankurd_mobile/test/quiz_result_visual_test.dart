@@ -37,9 +37,7 @@ QuizResultScreen buildScreen(MockZanKurdRepository repository) {
 }
 
 void main() {
-  testWidgets('solo vitrin brandOrange kutlama gradyanı taşır', (
-    tester,
-  ) async {
+  testWidgets('solo vitrin brandOrange kutlama gradyanı taşır', (tester) async {
     await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
@@ -57,7 +55,9 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.byKey(const ValueKey('result-home-button')));
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('result-home-button')),
+    );
     final button = tester.widget<FilledButton>(
       find.byKey(const ValueKey('result-home-button')),
     );
