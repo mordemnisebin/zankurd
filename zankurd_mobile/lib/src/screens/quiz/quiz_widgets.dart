@@ -322,7 +322,7 @@ class _ScoreHeader extends StatelessWidget {
             label: context.s('Pirs', 'Soru'),
             value: progress,
             icon: Icons.help_outline_rounded,
-            iconColor: AppTheme.accent,
+            iconColor: AppTheme.brandOrange,
           ),
         ),
         const SizedBox(width: AppSpacing.xs),
@@ -657,7 +657,7 @@ class _AnswerButton extends StatelessWidget {
         : wrong
         ? AppTheme.wrong
         : isChecking
-        ? AppTheme.accent
+        ? AppTheme.brandOrange
         : badgeColor.withValues(alpha: 0.40);
 
     // Metin rengi
@@ -671,7 +671,7 @@ class _AnswerButton extends StatelessWidget {
         : wrong
         ? const Color(0xFFD61A4C)
         : isChecking
-        ? const Color(0xFFFF6B6B)
+        ? AppTheme.brandOrange
         : badgeColor;
 
     final isPressed = selected;
@@ -720,9 +720,10 @@ class _AnswerButton extends StatelessWidget {
                   ? []
                   : [
                       BoxShadow(
-                        color: shadowColor.withValues(alpha: 0.30),
+                        color: shadowColor.withValues(alpha: 0.28),
                         offset: const Offset(0, 4),
-                        blurRadius: 0,
+                        blurRadius: 10,
+                        spreadRadius: -2,
                       ),
                     ],
             ),
@@ -980,7 +981,7 @@ class _WildcardButtonState extends State<_WildcardButton> {
         : 0.35;
 
     final borderColor = widget.isActive
-        ? AppTheme.accent
+        ? AppTheme.brandOrange
         : widget.cantAfford
         ? AppTheme.wrong.withValues(alpha: 0.5)
         : widget.isEnabled
@@ -988,7 +989,7 @@ class _WildcardButtonState extends State<_WildcardButton> {
         : AppTheme.borderColor(context);
 
     final bgColor = widget.isActive
-        ? AppTheme.accent.withValues(alpha: 0.15)
+        ? AppTheme.brandOrange.withValues(alpha: 0.15)
         : widget.cantAfford
         ? AppTheme.wrong.withValues(alpha: 0.05)
         : widget.isEnabled
@@ -996,7 +997,7 @@ class _WildcardButtonState extends State<_WildcardButton> {
         : null;
 
     final iconColor = widget.isActive
-        ? AppTheme.accent
+        ? AppTheme.brandOrange
         : widget.cantAfford
         ? AppTheme.wrong
         : widget.isEnabled
@@ -1402,7 +1403,7 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
           color: AppTheme.surfaceHiColor(context),
           borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
-            color: AppTheme.accent.withValues(alpha: 0.3),
+            color: AppTheme.brandOrange.withValues(alpha: 0.3),
             width: 1.2,
           ),
         ),
@@ -1413,7 +1414,7 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
               height: 20,
               child: CircularProgressIndicator(
                 strokeWidth: 2.5,
-                color: AppTheme.accent,
+                color: AppTheme.brandOrange,
               ),
             ),
             const SizedBox(width: 14),
@@ -1443,7 +1444,7 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
             ),
             Icon(
               Icons.hourglass_top_rounded,
-              color: AppTheme.accent.withValues(alpha: 0.6),
+              color: AppTheme.brandOrange.withValues(alpha: 0.6),
               size: 22,
             ),
           ],
