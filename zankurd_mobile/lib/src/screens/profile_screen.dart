@@ -787,20 +787,19 @@ class _ProfileHeroCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
         decoration: BoxDecoration(
+          // Profil sekmesinin kimlik rengi mor (bkz. AppShell._tabAccent);
+          // hero kartı aynı imzayı taşır.
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+            colors: [AppTheme.violet, AppTheme.bgDeep],
           ),
           borderRadius: BorderRadius.circular(AppRadius.card),
           border: Border.all(
             color: Colors.white.withValues(alpha: 0.12),
             width: 1.2,
           ),
-          boxShadow: AppTheme.glowShadow(
-            AppTheme.secondaryAccent,
-            intensity: 0.16,
-          ),
+          boxShadow: AppTheme.glowShadow(AppTheme.violet, intensity: 0.16),
         ),
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Stack(
