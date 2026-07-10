@@ -200,16 +200,6 @@ class _AppShellState extends State<AppShell> {
     );
   }
 
-  /// Sekme başına kimlik rengi: Sereke coral, Kategorî orman yeşili,
-  /// Xwendin camgöbeği, Pêşbaz altın, Profil mor.
-  Color get _tabAccent => switch (_tab) {
-    1 => AppTheme.secondaryAccent,
-    2 => AppTheme.cyan,
-    3 => AppTheme.gold,
-    4 => AppTheme.violet,
-    _ => AppTheme.primaryGradientStart,
-  };
-
   Widget _buildScaffold(BuildContext context, bool ku) {
     return Scaffold(
       body: IndexedStack(
@@ -243,32 +233,34 @@ class _AppShellState extends State<AppShell> {
           height: 68,
           backgroundColor: AppTheme.surfaceColor(context),
           surfaceTintColor: Colors.transparent,
-          shadowColor: Colors.black.withValues(alpha: 0.12),
-          elevation: 8,
+          shadowColor: Colors.black.withValues(alpha: 0.08),
+          elevation: 4,
           labelTextStyle: WidgetStateProperty.resolveWith((states) {
             final selected = states.contains(WidgetState.selected);
             return TextStyle(
               fontSize: 11,
               fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
               letterSpacing: 0.1,
-              color: selected ? _tabAccent : null,
+              color: selected ? AppTheme.brandOrange : null,
             );
           }),
           iconTheme: WidgetStateProperty.resolveWith((states) {
             final selected = states.contains(WidgetState.selected);
             return IconThemeData(
               size: selected ? 26 : 24,
-              color: selected ? _tabAccent : AppTheme.textMutedColor(context),
+              color: selected
+                  ? AppTheme.brandOrange
+                  : AppTheme.textMutedColor(context),
             );
           }),
-          // Her sekme kendi kimlik rengini taşır; çubuk ekranla birlikte
-          // renk değiştirir (uyumlu ama ekran başına farklı).
-          indicatorColor: _tabAccent.withValues(alpha: 0.14),
+          // Sekme kimlik renkleri içerik header'larında yaşar; bottom nav
+          // her sekmede sabit brandOrange kullanır.
+          indicatorColor: AppTheme.brandOrange.withValues(alpha: 0.14),
           indicatorShape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
           overlayColor: WidgetStateProperty.all(
-            _tabAccent.withValues(alpha: 0.06),
+            AppTheme.brandOrange.withValues(alpha: 0.06),
           ),
         ),
         child: DecoratedBox(

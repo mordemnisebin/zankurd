@@ -17,6 +17,7 @@ import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
@@ -630,6 +631,29 @@ void main() {
     expect(find.text('Hoş geldin, ZanKurd Oyuncusu!'), findsOneWidget);
     expect(find.text('Seviye 5'), findsNothing);
     expect(find.byIcon(Icons.diamond), findsNothing);
+
+    final navTheme = tester.widget<NavigationBarTheme>(
+      find.byType(NavigationBarTheme),
+    );
+    expect(navTheme.data.height, 68);
+    expect(navTheme.data.backgroundColor, AppTheme.lightSurface);
+    expect(
+      navTheme.data.indicatorColor,
+      AppTheme.brandOrange.withValues(alpha: 0.14),
+    );
+
+    await tester.tap(find.text('Kategoriler'));
+    await tester.pumpAndSettle();
+    expect(find.byType(CategoriesTab), findsOneWidget);
+
+    // Bottom nav seçili rengi sekmeyle değişmez; sabit brandOrange kalır.
+    final navThemeAfter = tester.widget<NavigationBarTheme>(
+      find.byType(NavigationBarTheme),
+    );
+    expect(
+      navThemeAfter.data.indicatorColor,
+      AppTheme.brandOrange.withValues(alpha: 0.14),
+    );
   });
 
   testWidgets('theme toggle changes visible home surface colors', (
