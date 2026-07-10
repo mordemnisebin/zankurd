@@ -198,7 +198,7 @@ class _CategoryHero extends StatelessWidget {
             gradient: gradient,
             boxShadow: [
               BoxShadow(
-                color: gradient.colors.first.withValues(alpha: 0.25),
+                color: gradient.colors.first.withValues(alpha: 0.16),
                 blurRadius: 20,
                 offset: const Offset(0, 4),
               ),
@@ -459,11 +459,12 @@ class _LevelNodeState extends State<_LevelNode> {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: widget.isNext
-                              ? color.withValues(alpha: 0.7)
-                              : color.withValues(alpha: 0.45),
-                          blurRadius: widget.isNext ? 24 : 16,
-                          offset: const Offset(0, 6),
+                          color: color.withValues(
+                            alpha: widget.isNext ? 0.32 : 0.20,
+                          ),
+                          blurRadius: widget.isNext ? 16 : 10,
+                          offset: const Offset(0, 5),
+                          spreadRadius: -2,
                         ),
                       ],
                     ),
@@ -477,7 +478,7 @@ class _LevelNodeState extends State<_LevelNode> {
                             '${widget.level.number}',
                             style: const TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w800,
                               fontSize: 28,
                             ),
                           ),
@@ -511,10 +512,7 @@ class _LevelNodeState extends State<_LevelNode> {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: Color.alphaBlend(
-                    color.withValues(alpha: 0.14),
-                    AppTheme.surfaceOf(context),
-                  ),
+                  color: AppTheme.surfaceColor(context),
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                   border: Border.all(color: color.withValues(alpha: 0.30)),
                 ),
