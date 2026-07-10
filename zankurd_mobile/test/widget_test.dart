@@ -649,10 +649,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Marka kimliği gereği uygulama koyu temayla açılır (bkz. ThemeProvider).
+    // Pirs-inspired sözleşme gereği uygulama açık temayla açılır (bkz. ThemeProvider).
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
     final home = tester.widget<Container>(
       find
@@ -664,14 +664,14 @@ void main() {
     );
     final decoration = home.decoration as BoxDecoration;
     final gradient = decoration.gradient as LinearGradient;
-    expect(gradient.colors.first, AppTheme.bg);
+    expect(gradient.colors.first, AppTheme.lightBg);
 
     theme.toggleDarkLight();
     await tester.pumpAndSettle();
 
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
   });
 

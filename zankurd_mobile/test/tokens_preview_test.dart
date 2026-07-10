@@ -18,6 +18,14 @@ void main() {
     expect(AppTheme.lightBg, const Color(0xFFF4F5F7));
   });
 
+  test('legacy token aliases resolve to Pirs-inspired tokens', () {
+    expect(AppTheme.primaryGradientStart, AppTheme.brandOrange);
+    expect(AppTheme.primaryGradientEnd, AppTheme.brandOrangeWarm);
+    expect(AppTheme.accent, AppTheme.playPink);
+    expect(AppTheme.cyan, AppTheme.playCyan);
+    expect(AppTheme.violet, AppTheme.playPurple);
+  });
+
   testWidgets('Generate design tokens preview image', (
     WidgetTester tester,
   ) async {
