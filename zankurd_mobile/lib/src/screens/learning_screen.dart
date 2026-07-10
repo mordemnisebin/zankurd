@@ -6,6 +6,7 @@ import '../models/lesson.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../widgets/screen_identity_header.dart';
 
 /// Kurmancî ders kategorilerini ve dersleri gösterir.
 class LearningScreen extends StatefulWidget {
@@ -80,7 +81,7 @@ class _LearningScreenState extends State<LearningScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              // Ekran kimliği: camgöbeği "öğrenme" bandı — Xwendin'in imzası.
+              // Ekran kimliği: playGreen "öğrenme" bandı — Xwendin'in imzası.
               Padding(
                 padding: const EdgeInsets.fromLTRB(
                   AppSpacing.page,
@@ -88,90 +89,14 @@ class _LearningScreenState extends State<LearningScreen> {
                   AppSpacing.page,
                   0,
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md,
-                      vertical: AppSpacing.sm + 2,
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [AppTheme.cyan, Color(0xFF14655B)],
-                      ),
-                      boxShadow: AppTheme.glowShadow(
-                        AppTheme.cyan,
-                        intensity: 0.18,
-                      ),
-                    ),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          right: -10,
-                          top: -14,
-                          child: Icon(
-                            Icons.menu_book_rounded,
-                            size: 72,
-                            color: Colors.white.withValues(alpha: 0.14),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 38,
-                              height: 38,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.18),
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.sm,
-                                ),
-                              ),
-                              child: const Icon(
-                                Icons.school_rounded,
-                                color: Colors.white,
-                                size: 22,
-                              ),
-                            ),
-                            const SizedBox(width: AppSpacing.sm),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    ku ? 'Kurmancî hîn bibe' : 'Kurmancî öğren',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  Text(
-                                    ku
-                                        ? 'Ders bi ders, mijar bi mijar'
-                                        : 'Ders ders, konu konu ilerle',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: Colors.white.withValues(
-                                        alpha: 0.8,
-                                      ),
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                child: ScreenIdentityHeader(
+                  title: ku ? 'Kurmancî hîn bibe' : 'Kurmancî öğren',
+                  subtitle: ku
+                      ? 'Ders bi ders, mijar bi mijar'
+                      : 'Ders ders, konu konu ilerle',
+                  accent: AppTheme.playGreen,
+                  icon: Icons.school_rounded,
+                  compact: true,
                 ),
               ),
               // Kategori sekmeler
@@ -183,6 +108,7 @@ class _LearningScreenState extends State<LearningScreen> {
                   children: _categories
                       .map(
                         (cat) => _CategoryTab(
+                          key: ValueKey('learning-tab-$cat'),
                           label: _categoryLabel(cat, ku),
                           isSelected: cat == _selectedCategory,
                           onTap: () => _selectCategory(cat),
@@ -198,7 +124,9 @@ class _LearningScreenState extends State<LearningScreen> {
                   builder: (ctx, snap) {
                     if (snap.connectionState == ConnectionState.waiting) {
                       return const Center(
-                        child: CircularProgressIndicator(color: AppTheme.cyan),
+                        child: CircularProgressIndicator(
+                          color: AppTheme.playGreen,
+                        ),
                       );
                     }
                     if (snap.hasError) {
@@ -277,6 +205,7 @@ class _CategoryTab extends StatelessWidget {
     required this.label,
     required this.isSelected,
     required this.onTap,
+    super.key,
   });
 
   final String label;
@@ -293,13 +222,8 @@ class _CategoryTab extends StatelessWidget {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
-            // Xwendin kimliği: seçili sekme camgöbeği imzayı taşır.
-            gradient: isSelected
-                ? const LinearGradient(
-                    colors: [AppTheme.cyan, Color(0xFF14655B)],
-                  )
-                : null,
-            color: isSelected ? null : Colors.transparent,
+            // Xwendin kimliği: seçili sekme düz playGreen dolgu taşır.
+            color: isSelected ? AppTheme.playGreen : Colors.transparent,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
               color: isSelected
@@ -307,9 +231,6 @@ class _CategoryTab extends StatelessWidget {
                   : AppTheme.borderColor(context).withValues(alpha: 0.5),
               width: 1,
             ),
-            boxShadow: isSelected
-                ? AppTheme.glowShadow(AppTheme.cyan, intensity: 0.25)
-                : null,
           ),
           child: Center(
             child: Text(
@@ -355,13 +276,13 @@ class _LessonCard extends StatelessWidget {
                 width: 56,
                 height: 56,
                 decoration: BoxDecoration(
-                  gradient: AppTheme.accentGradient,
+                  gradient: const LinearGradient(
+                    colors: [AppTheme.playGreen, Color(0xFF3E9A55)],
+                  ),
                   borderRadius: BorderRadius.circular(14),
                   boxShadow: [
                     BoxShadow(
-                      color: AppTheme.primaryGradientStart.withValues(
-                        alpha: 0.3,
-                      ),
+                      color: AppTheme.playGreen.withValues(alpha: 0.24),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -524,9 +445,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
           builder: (ctx, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: AppTheme.primaryGradientStart,
-                ),
+                child: CircularProgressIndicator(color: AppTheme.playGreen),
               );
             }
             if (snap.hasError) {
@@ -567,7 +486,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                             value: (_currentSlideIndex + 1) / slides.length,
                             minHeight: 6,
                             backgroundColor: AppTheme.surfaceHiColor(context),
-                            color: AppTheme.primaryGradientStart,
+                            color: AppTheme.playGreen,
                           ),
                         ),
                       ),
