@@ -537,6 +537,17 @@ void main() {
       lessThanOrEqualTo(844),
     );
     expect(tester.takeException(), isNull);
+
+    // Pirs-inspired sözleşme: onboarding açık temada, açık düz yüzeyde açılır.
+    expect(
+      Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
+      Brightness.light,
+    );
+    final surface = tester.widget<Container>(
+      find.byKey(const ValueKey('onboarding-surface')),
+    );
+    final decoration = surface.decoration as BoxDecoration;
+    expect(decoration.color, AppTheme.lightBg);
   });
 
   testWidgets('onboarding fits a tablet and web viewport', (tester) async {
@@ -556,6 +567,10 @@ void main() {
       lessThanOrEqualTo(800),
     );
     expect(tester.takeException(), isNull);
+    expect(
+      Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
+      Brightness.light,
+    );
   });
 
   testWidgets('app logo uses high quality image filtering', (tester) async {

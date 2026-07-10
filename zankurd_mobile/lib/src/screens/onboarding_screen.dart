@@ -62,9 +62,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        key: const ValueKey('onboarding-surface'),
+        decoration: BoxDecoration(color: AppTheme.bgOf(context)),
         child: Stack(
           children: [
             Positioned(
@@ -137,7 +136,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                   child: _AnimatedBrandLockup(
                                     scale: _brandScale,
                                     opacity: _brandOpacity,
-                                    logoWidth: compact ? 55 : 80,
+                                    logoWidth: compact ? 48 : 68,
                                     showTagline: !wideCompact,
                                   ),
                                 ),
@@ -274,7 +273,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     return [
       _OnboardingData(
         icon: Icons.menu_book_rounded,
-        color: AppTheme.primaryGradientStart,
+        color: AppTheme.playCyan,
         title: context.s('Hîn bibe', 'Öğren'),
         body: context.s(
           'Kurmancî peyv, çand û zanînê bi pirsên kurt fêr bibe.',
@@ -292,7 +291,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       ),
       _OnboardingData(
         icon: Icons.emoji_events_rounded,
-        color: AppTheme.gold,
+        color: AppTheme.playPink,
         title: context.s('Pêşbirkê bike', 'Yarış'),
         body: context.s(
           'Bi hevalan an botan re pêşbirkê bike û pûanên xwe zêde bike.',
@@ -310,7 +309,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       ),
       _OnboardingData(
         icon: Icons.local_fire_department_rounded,
-        color: AppTheme.violet,
+        color: AppTheme.brandOrange,
         title: context.s('Her roj vegere', 'Günlük ödüller'),
         body: context.s(
           'Pêşbirka rojê, çerxa rojane û rozetan bi rêzê veke.',
@@ -421,22 +420,23 @@ class _OnboardingPage extends StatelessWidget {
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 2),
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+                  colors: [
+                    data.color,
+                    Color.alphaBlend(
+                      Colors.black.withValues(alpha: 0.16),
+                      data.color,
+                    ),
+                  ],
                 ),
                 borderRadius: BorderRadius.circular(AppRadius.card),
                 border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.12),
+                  color: Colors.white.withValues(alpha: 0.22),
                   width: 1.2,
                 ),
-                boxShadow: AppTheme.glowShadow(
-                  data.color == AppTheme.gold
-                      ? AppTheme.gold
-                      : AppTheme.primaryGradientStart,
-                  intensity: 0.1,
-                ),
+                boxShadow: AppTheme.elevatedShadow(data.color),
               ),
               child: Stack(
                 children: [
@@ -576,9 +576,6 @@ class _OnboardingIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final glowColor = data.color == AppTheme.gold
-        ? AppTheme.gold
-        : AppTheme.accent;
     return Container(
       width: size,
       height: size,
@@ -587,23 +584,18 @@ class _OnboardingIcon extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            glowColor.withValues(alpha: 0.28),
-            Colors.white.withValues(alpha: 0.08),
+            Colors.white.withValues(alpha: 0.30),
+            Colors.white.withValues(alpha: 0.10),
           ],
         ),
         shape: BoxShape.circle,
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.22),
+          color: Colors.white.withValues(alpha: 0.36),
           width: 1.5,
         ),
-        boxShadow: AppTheme.glowShadow(glowColor, intensity: 0.18),
       ),
       child: Center(
-        child: Icon(
-          data.icon,
-          color: data.color == AppTheme.gold ? AppTheme.gold : Colors.white,
-          size: iconSize,
-        ),
+        child: Icon(data.icon, color: Colors.white, size: iconSize),
       ),
     );
   }

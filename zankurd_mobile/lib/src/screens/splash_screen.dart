@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
 import '../widgets/app_logo.dart';
 
 /// Uygulama açılışında gösterilen, büyük ve belirgin ZanKurd logolu ekran.
@@ -67,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppTheme.lightBg,
       body: Center(
         child: FadeTransition(
           opacity: _fade,
@@ -78,13 +79,13 @@ class _SplashScreenState extends State<SplashScreen>
               children: [
                 const AppLogo(width: 280),
                 const SizedBox(height: 28),
-                SizedBox(
+                const SizedBox(
                   width: 26,
                   height: 26,
                   child: CircularProgressIndicator(
                     strokeWidth: 2.4,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.black.withValues(alpha: 0.35),
+                      AppTheme.brandOrange,
                     ),
                   ),
                 ),
