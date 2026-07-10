@@ -22,6 +22,7 @@ import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
+import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
@@ -29,6 +30,7 @@ import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
+import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/src/widgets/styled_button.dart';
@@ -361,25 +363,38 @@ void main() {
       await tester.binding.setSurfaceSize(const Size(844, 390));
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
-      await tester.pumpWidget(
-        _testShell(
-          child: const SignInScreen(),
-          authProvider: _GateAuthProvider(),
-        ),
-      );
-      await tester.pumpAndSettle();
+      for (final mode in [ThemeMode.light, ThemeMode.dark]) {
+        // KeyedSubtree: provider create'leri her temada yeniden çalışsın.
+        await tester.pumpWidget(
+          KeyedSubtree(
+            key: ValueKey(mode),
+            child: _testShell(
+              child: const SignInScreen(),
+              authProvider: _GateAuthProvider(),
+              themeProvider: ThemeProvider(initialMode: mode),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
 
-      // Google butonu: beyaz dolgu -> koyu metin kontrast sağlamalı.
-      final googleLabel = tester.widget<Text>(
-        find.text('Google ile giriş yap'),
-      );
-      expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
+        // Google butonu: iki temada da beyaz dolgu -> koyu metin.
+        final googleLabel = tester.widget<Text>(
+          find.text('Google ile giriş yap'),
+        );
+        expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
 
-      // Misafir butonu: marka gradyanı dolgu -> beyaz metin kontrast sağlamalı.
-      final guestLabel = tester.widget<Text>(
-        find.text('Misafir olarak devam et'),
-      );
-      expect(guestLabel.style?.color, equals(Colors.white));
+        // Misafir butonu context yüzeyi kullanır: light'ta koyu metin,
+        // dark'ta beyaz metin.
+        final guestLabel = tester.widget<Text>(
+          find.text('Misafir olarak devam et'),
+        );
+        final guestLuminance = guestLabel.style?.color?.computeLuminance() ?? 0;
+        if (mode == ThemeMode.light) {
+          expect(guestLuminance, lessThan(0.4));
+        } else {
+          expect(guestLabel.style?.color, equals(Colors.white));
+        }
+      }
     },
   );
 
@@ -413,25 +428,86 @@ void main() {
     expect(authProvider.isAuthenticated, isTrue);
   });
 
-  testWidgets('auth form text stays readable on the dark auth background', (
+  testWidgets('auth form text stays readable in light and dark themes', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(844, 390));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
-    await tester.pumpWidget(
-      _testShell(
-        child: const SignInScreen(),
-        authProvider: _GateAuthProvider(),
-      ),
-    );
-    await tester.pumpAndSettle();
+    for (final mode in [ThemeMode.light, ThemeMode.dark]) {
+      // KeyedSubtree: provider create'leri her temada yeniden çalışsın.
+      await tester.pumpWidget(
+        KeyedSubtree(
+          key: ValueKey(mode),
+          child: _testShell(
+            child: const SignInScreen(),
+            authProvider: _GateAuthProvider(),
+            themeProvider: ThemeProvider(initialMode: mode),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
 
-    final title = tester.widget<Text>(find.text('ZanKurd\'a Hoş Geldin'));
-    final emailLabel = tester.widget<Text>(find.text('E-posta adresi'));
+      // Renkli welcome banner başlığı iki temada da beyaz kalır.
+      final title = tester.widget<Text>(find.text('ZanKurd\'a Hoş Geldin'));
+      expect(title.style?.color?.computeLuminance(), greaterThan(0.75));
 
-    expect(title.style?.color?.computeLuminance(), greaterThan(0.75));
-    expect(emailLabel.style?.color?.computeLuminance(), greaterThan(0.75));
+      // Form etiketi temayla birlikte renk değiştirir; sabit beyaz olmamalı.
+      final emailLabel = tester.widget<Text>(find.text('E-posta adresi'));
+      final labelLuminance = emailLabel.style?.color?.computeLuminance() ?? 0;
+      if (mode == ThemeMode.light) {
+        expect(labelLuminance, lessThan(0.3));
+      } else {
+        expect(labelLuminance, greaterThan(0.6));
+      }
+
+      expect(find.text('Misafir olarak devam et'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    }
+  });
+
+  testWidgets('sign up and name gate stay readable in light and dark themes', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    for (final mode in [ThemeMode.light, ThemeMode.dark]) {
+      // KeyedSubtree: provider create'leri her temada yeniden çalışsın.
+      await tester.pumpWidget(
+        KeyedSubtree(
+          key: ValueKey('signup-$mode'),
+          child: _testShell(
+            child: const SignUpScreen(),
+            authProvider: _GateAuthProvider(),
+            themeProvider: ThemeProvider(initialMode: mode),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Hesabını oluştur'), findsOneWidget);
+      expect(find.text('İleri'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+
+      await tester.pumpWidget(
+        KeyedSubtree(
+          key: ValueKey('name-gate-$mode'),
+          child: _testShell(
+            child: ProfileNameGateScreen(
+              repository: repository,
+              onCompleted: () {},
+            ),
+            themeProvider: ThemeProvider(initialMode: mode),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('player-name-field')), findsOneWidget);
+      expect(find.text('Oyuna Başla'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    }
   });
 
   testWidgets('guest sign in is reachable in the first mobile auth viewport', (

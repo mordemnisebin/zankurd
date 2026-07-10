@@ -98,10 +98,14 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                   child: Container(
                     width: double.infinity,
                     decoration: const BoxDecoration(
+                      // Pirs-inspired büyük turuncu karşılama header'ı.
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+                        colors: [
+                          AppTheme.brandOrange,
+                          AppTheme.brandOrangeWarm,
+                        ],
                       ),
                     ),
                     child: Stack(
@@ -164,7 +168,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                 ),
                                 _HeroValueRow(
                                   icon: Icons.emoji_events_rounded,
-                                  color: AppTheme.gold,
+                                  color: Colors.white,
                                   text: ku
                                       ? 'Lîstikê û serlêderên bibike'
                                       : 'Oyunları tamamla, ödül kazan',
@@ -172,7 +176,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                 const SizedBox(height: AppSpacing.xxs),
                                 _HeroValueRow(
                                   icon: Icons.people_rounded,
-                                  color: AppTheme.correct,
+                                  color: Colors.white,
                                   text: ku
                                       ? 'Bi hevalan re pêşbikeve'
                                       : 'Arkadaşlarınla yarış',
@@ -181,7 +185,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                   const SizedBox(height: AppSpacing.xxs),
                                   _HeroValueRow(
                                     icon: Icons.local_fire_department_rounded,
-                                    color: AppTheme.primaryGradientStart,
+                                    color: Colors.white,
                                     text: ku
                                         ? 'Zincîra xwe biparêze'
                                         : 'Serini koru, zincirini devam ettir',

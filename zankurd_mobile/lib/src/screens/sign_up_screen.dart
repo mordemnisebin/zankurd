@@ -173,185 +173,181 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   @override
   Widget build(BuildContext context) {
-    final glowColor1 = AppTheme.gold.withValues(alpha: 0.08);
-    final glowColor2 = AppTheme.secondaryAccent.withValues(alpha: 0.12);
+    final isDark = !AppTheme.isLight(context);
+    final glowColor1 = AppTheme.gold.withValues(alpha: isDark ? 0.08 : 0.05);
+    final glowColor2 = isDark
+        ? AppTheme.secondaryAccent.withValues(alpha: 0.12)
+        : AppTheme.borderOf(context).withValues(alpha: 0.06);
 
-    return Theme(
-      data: AppTheme.dark(),
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                gradient: AppTheme.darkAuthGradient,
-              ),
-            ),
-            // Soft Glow 1: Sağ Üst
-            Positioned(
-              top: -120,
-              right: -120,
-              child: Container(
-                width: 320,
-                height: 320,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [glowColor1, glowColor1.withValues(alpha: 0)],
-                  ),
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(decoration: BoxDecoration(color: AppTheme.bgOf(context))),
+          // Soft Glow 1: Sağ Üst
+          Positioned(
+            top: -120,
+            right: -120,
+            child: Container(
+              width: 320,
+              height: 320,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [glowColor1, glowColor1.withValues(alpha: 0)],
                 ),
               ),
             ),
-            // Soft Glow 2: Sol Alt
-            Positioned(
-              bottom: -140,
-              left: -140,
-              child: Container(
-                width: 360,
-                height: 360,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [glowColor2, glowColor2.withValues(alpha: 0)],
-                  ),
+          ),
+          // Soft Glow 2: Sol Alt
+          Positioned(
+            bottom: -140,
+            left: -140,
+            child: Container(
+              width: 360,
+              height: 360,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [glowColor2, glowColor2.withValues(alpha: 0)],
                 ),
               ),
             ),
-            // Main content
-            SafeArea(
-              child: _AuthScrollFrame(
-                child: Consumer<AuthProvider>(
-                  builder: (context, authProvider, _) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const SizedBox(height: AppSpacing.md),
-                        ScaleTransition(
-                          scale: LoadAnimationSequence.logoScaleAnimation(
-                            _animationController,
-                          ),
-                          child: _ProgressIndicator(currentStep: _currentStep),
+          ),
+          // Main content
+          SafeArea(
+            child: _AuthScrollFrame(
+              child: Consumer<AuthProvider>(
+                builder: (context, authProvider, _) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: AppSpacing.md),
+                      ScaleTransition(
+                        scale: LoadAnimationSequence.logoScaleAnimation(
+                          _animationController,
                         ),
-                        const SizedBox(height: AppSpacing.lg),
-                        FadeTransition(
-                          opacity: LoadAnimationSequence.titleFadeAnimation(
-                            _animationController,
+                        child: _ProgressIndicator(currentStep: _currentStep),
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+                      FadeTransition(
+                        opacity: LoadAnimationSequence.titleFadeAnimation(
+                          _animationController,
+                        ),
+                        child: Transform.translate(
+                          offset: Offset(
+                            0,
+                            LoadAnimationSequence.titleSlideAnimation(
+                              _animationController,
+                            ).value,
                           ),
-                          child: Transform.translate(
-                            offset: Offset(
-                              0,
-                              LoadAnimationSequence.titleSlideAnimation(
-                                _animationController,
-                              ).value,
-                            ),
-                            child: _SignUpHeroBanner(
-                              subtitle: _getStepSubtitle(context),
-                            ),
+                          child: _SignUpHeroBanner(
+                            subtitle: _getStepSubtitle(context),
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.lg),
-                        _AuthFormPanel(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              FadeTransition(
-                                opacity:
-                                    LoadAnimationSequence.formField1FadeAnimation(
-                                      _animationController,
-                                    ),
-                                child: _buildStepContent(context),
-                              ),
-                              const SizedBox(height: AppSpacing.lg),
-                              Row(
-                                children: [
-                                  if (_currentStep > 0)
-                                    Expanded(
-                                      child: OutlinedButton(
-                                        onPressed: authProvider.isLoading
-                                            ? null
-                                            : _previousStep,
-                                        style: OutlinedButton.styleFrom(
-                                          minimumSize: const Size(
-                                            double.infinity,
-                                            48,
-                                          ),
-                                          side: BorderSide(
-                                            color: AppTheme.borderColor(
-                                              context,
-                                            ).withValues(alpha: 0.8),
-                                            width: 1.2,
-                                          ),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              AppRadius.lg,
-                                            ),
-                                          ),
-                                        ),
-                                        child: Text(context.s('Paş', 'Geri')),
-                                      ),
-                                    ),
-                                  if (_currentStep > 0)
-                                    const SizedBox(width: AppSpacing.sm),
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+                      _AuthFormPanel(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            FadeTransition(
+                              opacity:
+                                  LoadAnimationSequence.formField1FadeAnimation(
+                                    _animationController,
+                                  ),
+                              child: _buildStepContent(context),
+                            ),
+                            const SizedBox(height: AppSpacing.lg),
+                            Row(
+                              children: [
+                                if (_currentStep > 0)
                                   Expanded(
-                                    child: GeometricGradientButton(
-                                      label: _currentStep == 2
-                                          ? context.s(
-                                              'Hesab Biafirîne',
-                                              'Hesap Oluştur',
-                                            )
-                                          : context.s('Pêş', 'İleri'),
-                                      icon: _currentStep == 2
-                                          ? Icons.check_circle_outline
-                                          : Icons.arrow_forward,
-                                      isLoading: authProvider.isLoading,
+                                    child: OutlinedButton(
                                       onPressed: authProvider.isLoading
                                           ? null
-                                          : (_currentStep == 2
-                                                ? () => _signUp(authProvider)
-                                                : _nextStep),
+                                          : _previousStep,
+                                      style: OutlinedButton.styleFrom(
+                                        minimumSize: const Size(
+                                          double.infinity,
+                                          48,
+                                        ),
+                                        side: BorderSide(
+                                          color: AppTheme.borderColor(
+                                            context,
+                                          ).withValues(alpha: 0.8),
+                                          width: 1.2,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            AppRadius.lg,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(context.s('Paş', 'Geri')),
                                     ),
                                   ),
-                                ],
-                              ),
-                              const SizedBox(height: AppSpacing.lg),
-                              Wrap(
-                                alignment: WrapAlignment.center,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  Text(
-                                    context.s(
-                                      'Hesabê te jixwe heye? ',
-                                      'Zaten hesabın var mı? ',
-                                    ),
+                                if (_currentStep > 0)
+                                  const SizedBox(width: AppSpacing.sm),
+                                Expanded(
+                                  child: GeometricGradientButton(
+                                    label: _currentStep == 2
+                                        ? context.s(
+                                            'Hesab Biafirîne',
+                                            'Hesap Oluştur',
+                                          )
+                                        : context.s('Pêş', 'İleri'),
+                                    icon: _currentStep == 2
+                                        ? Icons.check_circle_outline
+                                        : Icons.arrow_forward,
+                                    isLoading: authProvider.isLoading,
+                                    onPressed: authProvider.isLoading
+                                        ? null
+                                        : (_currentStep == 2
+                                              ? () => _signUp(authProvider)
+                                              : _nextStep),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: AppSpacing.lg),
+                            Wrap(
+                              alignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                Text(
+                                  context.s(
+                                    'Hesabê te jixwe heye? ',
+                                    'Zaten hesabın var mı? ',
+                                  ),
+                                  style: TextStyle(
+                                    color: AppTheme.textSubColor(context),
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () => Navigator.of(context).pop(),
+                                  child: Text(
+                                    context.s('Têkeve', 'Giriş Yap'),
                                     style: TextStyle(
-                                      color: AppTheme.textSubColor(context),
+                                      color: AppTheme.primaryGradientStart,
+                                      fontWeight: FontWeight.w700,
                                       fontSize: 14,
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: () => Navigator.of(context).pop(),
-                                    child: Text(
-                                      context.s('Têkeve', 'Giriş Yap'),
-                                      style: TextStyle(
-                                        color: AppTheme.primaryGradientStart,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: AppSpacing.xl),
-                      ],
-                    );
-                  },
-                ),
+                      ),
+                      const SizedBox(height: AppSpacing.xl),
+                    ],
+                  );
+                },
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -638,13 +634,14 @@ class _SignUpHeroBanner extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
+          // Pirs-inspired yeşil→turuncu compact welcome banner.
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+            colors: [AppTheme.playGreen, AppTheme.brandOrangeWarm],
           ),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
-          boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.1),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
+          boxShadow: AppTheme.elevatedShadow(AppTheme.playGreen),
         ),
         child: Stack(
           children: [
@@ -693,13 +690,21 @@ class _AuthFormPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = AppTheme.isLight(context);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.04),
+        color: isLight
+            ? AppTheme.lightSurface
+            : Colors.white.withValues(alpha: 0.04),
         borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+        border: Border.all(
+          color: isLight
+              ? AppTheme.lightBorder
+              : Colors.white.withValues(alpha: 0.1),
+        ),
+        boxShadow: isLight ? AppTheme.cardShadow(context) : null,
       ),
       child: child,
     );
