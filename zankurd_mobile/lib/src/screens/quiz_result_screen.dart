@@ -397,7 +397,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         : const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+            colors: [AppTheme.brandOrange, AppTheme.brandOrangeWarm],
           );
 
     final borderColor = is1v1
@@ -406,7 +406,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : isDraw
               ? AppTheme.borderColor(context)
               : AppTheme.wrong.withValues(alpha: 0.55))
-        : AppTheme.secondaryAccent.withValues(alpha: 0.45);
+        : AppTheme.brandOrange.withValues(alpha: 0.45);
 
     final headerTitle = is1v1
         ? (isWinner
@@ -469,6 +469,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(AppRadius.card),
                     child: Container(
+                      key: const ValueKey('result-score-header'),
                       decoration: BoxDecoration(
                         gradient: headerGradient,
                         borderRadius: BorderRadius.circular(AppRadius.card),
@@ -480,7 +481,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     : isDraw
                                     ? AppTheme.borderColor(context)
                                     : AppTheme.wrong)
-                              : AppTheme.secondaryAccent,
+                              : AppTheme.brandOrange,
                           intensity: 0.18,
                         ),
                       ),
@@ -980,7 +981,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               child: Container(
                                 width: 3,
                                 decoration: const BoxDecoration(
-                                  color: AppTheme.accent,
+                                  color: AppTheme.brandOrange,
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(16),
                                     bottomLeft: Radius.circular(16),
@@ -1028,8 +1029,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         SizedBox(
                           width: double.infinity,
                           child: FilledButton.icon(
+                            key: const ValueKey('result-home-button'),
                             style: FilledButton.styleFrom(
-                              backgroundColor: AppTheme.accent,
+                              backgroundColor: AppTheme.brandOrange,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                               shape: RoundedRectangleBorder(
