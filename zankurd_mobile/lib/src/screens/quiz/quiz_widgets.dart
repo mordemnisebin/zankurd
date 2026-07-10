@@ -883,12 +883,16 @@ class _OptionBadge extends StatelessWidget {
 // ─── Küçük etiket ────────────────────────────────────────────────────────────
 
 class _QuizQuestionIconBadge extends StatelessWidget {
-  const _QuizQuestionIconBadge({required this.icon});
+  const _QuizQuestionIconBadge({required this.icon, this.gradient});
 
   final IconData icon;
 
+  /// Kategori gradyanı verilirse rozet o kimliği taşır.
+  final LinearGradient? gradient;
+
   @override
   Widget build(BuildContext context) {
+    final g = gradient ?? AppTheme.accentGradient;
     return Container(
       key: const ValueKey('quiz-question-icon-badge'),
       width: 34,
@@ -896,8 +900,8 @@ class _QuizQuestionIconBadge extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: AppTheme.accentGradient,
-        boxShadow: AppTheme.elevatedShadow(AppTheme.accent),
+        gradient: g,
+        boxShadow: AppTheme.elevatedShadow(g.colors.first),
       ),
       child: Icon(icon, color: Colors.white, size: 18),
     );

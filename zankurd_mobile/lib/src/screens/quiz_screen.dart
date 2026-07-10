@@ -1101,8 +1101,29 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     final size = MediaQuery.sizeOf(context);
     final compactLandscape = size.width >= 700 && size.width > size.height;
     final questionIcon = CategoryVisuals.icon(question.category);
-    return AppPanel(
-      color: AppTheme.surfaceHiColor(context),
+    // Soru paneli kategori renk kimliğini taşır: hafif zemin tonu,
+    // renkli kenarlık/parıltı ve kategori gradyanlı ikon rozeti.
+    final catIndex = widget.repository.categories.indexOf(question.category);
+    final catGradient = AppTheme.categoryGradient(catIndex >= 0 ? catIndex : 0);
+    final catColor = catGradient.colors.first;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Color.alphaBlend(
+          catColor.withValues(alpha: 0.07),
+          AppTheme.surfaceHiColor(context),
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: catColor.withValues(alpha: 0.30), width: 1.2),
+        boxShadow: [
+          BoxShadow(
+            color: catColor.withValues(alpha: 0.12),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
       child: Stack(
         clipBehavior: Clip.hardEdge,
         children: [
@@ -1111,8 +1132,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
               child: CustomPaint(
                 painter: KilimPatternPainter(
                   drawPattern: true,
-                  color: AppTheme.textPrimaryColor(context),
-                  opacity: 0.04,
+                  color: catColor,
+                  opacity: 0.05,
                 ),
               ),
             ),
@@ -1125,9 +1146,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 key: const ValueKey('quiz-question-ghost-icon'),
                 questionIcon,
                 size: compactLandscape ? 88 : 112,
-                color: AppTheme.textPrimaryColor(
-                  context,
-                ).withValues(alpha: AppTheme.isLight(context) ? 0.045 : 0.06),
+                color: catColor.withValues(
+                  alpha: AppTheme.isLight(context) ? 0.08 : 0.11,
+                ),
               ),
             ),
           ),
@@ -1141,7 +1162,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        _QuizQuestionIconBadge(icon: questionIcon),
+                        _QuizQuestionIconBadge(
+                          icon: questionIcon,
+                          gradient: catGradient,
+                        ),
                         const SizedBox(width: 8),
                         Flexible(
                           child: _TinyTag(

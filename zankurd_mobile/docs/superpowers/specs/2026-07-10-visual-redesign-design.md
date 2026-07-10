@@ -54,6 +54,19 @@ Her adımdan sonra `dart analyze` + ilgili testler; sonunda tam paket +
 (önce/sonra karşılaştırması). Görsel iddiaları test eden before/after testleri
 bilinçli tasarım değişikliğiyle çelişirse test güncellenir ve raporda belirtilir.
 
+## Faz 2 (2026-07-10, kullanıcı talebiyle eklendi)
+
+- **K6 — Quiz kategori kimliği:** soru paneli artık kategori rengini taşır
+  (zemin tonu, kenarlık/parıltı, kategori-gradyanlı ikon rozeti, renkli
+  kilim/ghost filigran). Davranış ve test key'leri değişmedi.
+- **K7 — Seviye yolu:** `LevelScreen` düz kart listesinden serpantin bir
+  öğrenme yoluna dönüştü — kademe-renkli daire düğümler (5. seviye kupa),
+  kesikli S-kavisli patika (`_PathPainter`), başlık/yıldız/soru sayısı
+  etiketleri. `_openLevel` akışı ve parametreleri aynen korunur; her düğüm
+  `Semantics(button)` taşır.
+- Doğrulama: 373/373 test, `dart analyze` temiz, web build + Playwright
+  görüntüleri (`after-levels-path.png`, `after-quiz-category-identity.png`).
+
 ## Sonuç (2026-07-10, uygulandı)
 
 - K1–K5 uygulandı; `dart analyze` temiz, **373/373 test geçiyor**

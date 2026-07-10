@@ -59,19 +59,12 @@ class _LevelScreenState extends State<LevelScreen> {
                 isKu: ku,
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                child: Column(
-                  children: [
-                    for (final level in levels) ...[
-                      _LevelCard(
-                        level: level,
-                        disabled: _loading,
-                        isKu: ku,
-                        onTap: () => _openLevel(level),
-                      ),
-                      const SizedBox(height: 10),
-                    ],
-                  ],
+                padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
+                child: _LevelPath(
+                  levels: levels,
+                  disabled: _loading,
+                  isKu: ku,
+                  onOpen: _openLevel,
                 ),
               ),
             ],
@@ -266,8 +259,86 @@ class _CategoryHero extends StatelessWidget {
   }
 }
 
-class _LevelCard extends StatefulWidget {
-  const _LevelCard({
+/// Kademe rengi: her seviyenin yol üzerindeki kimliği.
+Color _levelColor(int n) => switch (n) {
+  1 => AppTheme.correct,
+  2 => const Color(0xFF2B5C8F),
+  3 => AppTheme.gold,
+  4 => AppTheme.primaryGradientStart,
+  _ => AppTheme.violet,
+};
+
+/// Seviyeleri düz liste yerine serpantin bir öğrenme yolunda gösterir:
+/// düğümler sağa-sola salınır, aralarını kademe-renkli kesikli patika bağlar.
+class _LevelPath extends StatelessWidget {
+  const _LevelPath({
+    required this.levels,
+    required this.disabled,
+    required this.isKu,
+    required this.onOpen,
+  });
+
+  final List<QuizLevel> levels;
+  final bool disabled;
+  final bool isKu;
+  final ValueChanged<QuizLevel> onOpen;
+
+  static const _rowHeight = 150.0;
+  static const _nodeSize = 76.0;
+  static const _xFractions = [0.26, 0.74, 0.30, 0.70, 0.34];
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final centers = [
+          for (var i = 0; i < levels.length; i++)
+            Offset(
+              width * _xFractions[i % _xFractions.length],
+              i * _rowHeight + _nodeSize / 2,
+            ),
+        ];
+        return SizedBox(
+          height: levels.length * _rowHeight,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: CustomPaint(
+                    painter: _PathPainter(
+                      centers: centers,
+                      colors: [
+                        for (final level in levels) _levelColor(level.number),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              for (var i = 0; i < levels.length; i++)
+                Positioned(
+                  left: (centers[i].dx - 90).clamp(0.0, width - 180),
+                  top: i * _rowHeight,
+                  width: 180,
+                  child: _LevelNode(
+                    level: levels[i],
+                    disabled: disabled,
+                    isKu: isKu,
+                    onTap: () => onOpen(levels[i]),
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// Yol üzerindeki tek seviye düğümü: gradyan daire + başlık/yıldız etiketi.
+class _LevelNode extends StatefulWidget {
+  const _LevelNode({
     required this.level,
     required this.disabled,
     required this.isKu,
@@ -280,130 +351,127 @@ class _LevelCard extends StatefulWidget {
   final VoidCallback onTap;
 
   @override
-  State<_LevelCard> createState() => _LevelCardState();
+  State<_LevelNode> createState() => _LevelNodeState();
 }
 
-class _LevelCardState extends State<_LevelCard> {
-  bool _isPressed = false;
-
-  Color _badgeColor(int n) => switch (n) {
-    1 => AppTheme.correct,
-    2 => const Color(0xFF2B5C8F),
-    3 => AppTheme.gold,
-    4 => AppTheme.primaryGradientStart,
-    _ => AppTheme.violet,
-  };
+class _LevelNodeState extends State<_LevelNode> {
+  bool _pressed = false;
 
   @override
   Widget build(BuildContext context) {
-    final badgeColor = _badgeColor(widget.level.number);
-    final surface = AppTheme.surfaceOf(context);
+    final color = _levelColor(widget.level.number);
+    final isFinal = widget.level.number >= 5;
 
-    return GestureDetector(
-      onTapDown: widget.disabled
-          ? null
-          : (_) => setState(() => _isPressed = true),
-      onTapUp: widget.disabled
-          ? null
-          : (_) {
-              setState(() => _isPressed = false);
-              widget.onTap();
-            },
-      onTapCancel: widget.disabled
-          ? null
-          : () => setState(() => _isPressed = false),
-      child: AnimatedScale(
-        scale: _isPressed ? 0.97 : 1.0,
-        duration: const Duration(milliseconds: 100),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            // Kademe renginin yüzeye karıştığı hafif kimlik gradyanı.
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Color.alphaBlend(badgeColor.withValues(alpha: 0.13), surface),
-                Color.alphaBlend(badgeColor.withValues(alpha: 0.04), surface),
-              ],
-            ),
-            borderRadius: BorderRadius.circular(16), // AppRadius.lg
-            border: Border.all(
-              color: _isPressed
-                  ? badgeColor.withValues(alpha: 0.45)
-                  : badgeColor.withValues(alpha: 0.26),
-              width: 1.2,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: badgeColor.withValues(alpha: _isPressed ? 0.20 : 0.12),
-                blurRadius: 14,
-                offset: const Offset(0, 5),
-              ),
-            ],
-          ),
-          child: Row(
+    return Semantics(
+      button: true,
+      enabled: !widget.disabled,
+      label: widget.level.title,
+      child: GestureDetector(
+        onTapDown: widget.disabled
+            ? null
+            : (_) => setState(() => _pressed = true),
+        onTapUp: widget.disabled
+            ? null
+            : (_) {
+                setState(() => _pressed = false);
+                widget.onTap();
+              },
+        onTapCancel: widget.disabled
+            ? null
+            : () => setState(() => _pressed = false),
+        child: AnimatedScale(
+          scale: _pressed ? 0.93 : 1.0,
+          duration: const Duration(milliseconds: 100),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 52,
-                height: 52,
+                width: 76,
+                height: 76,
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
+                  shape: BoxShape.circle,
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      badgeColor,
+                      color,
                       Color.alphaBlend(
-                        Colors.black.withValues(alpha: 0.22),
-                        badgeColor,
+                        Colors.black.withValues(alpha: 0.24),
+                        color,
                       ),
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.55),
+                    width: 3,
+                  ),
                   boxShadow: [
                     BoxShadow(
-                      color: badgeColor.withValues(alpha: 0.38),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
+                      color: color.withValues(alpha: 0.45),
+                      blurRadius: 16,
+                      offset: const Offset(0, 6),
                     ),
                   ],
                 ),
-                alignment: Alignment.center,
-                child: Text(
-                  '${widget.level.number}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 22,
-                  ),
-                ),
+                child: isFinal
+                    ? const Icon(
+                        Icons.emoji_events_rounded,
+                        color: Colors.white,
+                        size: 34,
+                      )
+                    : Text(
+                        '${widget.level.number}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 28,
+                        ),
+                      ),
               ),
-              const SizedBox(width: 14),
-              Expanded(
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: Color.alphaBlend(
+                    color.withValues(alpha: 0.14),
+                    AppTheme.surfaceOf(context),
+                  ),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  border: Border.all(color: color.withValues(alpha: 0.30)),
+                ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       widget.level.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppTheme.textPrimaryColor(context),
                         fontWeight: FontWeight.w800,
-                        fontSize: 16.5,
+                        fontSize: 13.5,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 3),
                     Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         _DifficultyStars(
                           filled: widget.level.difficultyMax.clamp(1, 5),
-                          color: badgeColor,
+                          color: color,
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(width: 6),
                         Text(
                           '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"}',
                           style: TextStyle(
                             color: AppTheme.textMutedColor(context),
-                            fontSize: 12.5,
+                            fontSize: 11,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -412,29 +480,64 @@ class _LevelCardState extends State<_LevelCard> {
                   ],
                 ),
               ),
-              Container(
-                width: 38,
-                height: 38,
-                decoration: BoxDecoration(
-                  color: badgeColor.withValues(alpha: 0.14),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: badgeColor.withValues(alpha: 0.28),
-                    width: 1,
-                  ),
-                ),
-                child: Icon(
-                  Icons.play_arrow_rounded,
-                  color: badgeColor,
-                  size: 24,
-                ),
-              ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+/// Düğüm merkezlerini kademe-renkli, kesikli S-kavisleriyle bağlar.
+class _PathPainter extends CustomPainter {
+  _PathPainter({required this.centers, required this.colors});
+
+  final List<Offset> centers;
+  final List<Color> colors;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    for (var i = 0; i < centers.length - 1; i++) {
+      final a = centers[i];
+      final b = centers[i + 1];
+      final midY = (a.dy + b.dy) / 2;
+      final path = Path()
+        ..moveTo(a.dx, a.dy)
+        ..cubicTo(a.dx, midY, b.dx, midY, b.dx, b.dy);
+      final paint = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 5
+        ..strokeCap = StrokeCap.round
+        ..color = Color.lerp(
+          colors[i],
+          colors[i + 1],
+          0.5,
+        )!.withValues(alpha: 0.55);
+      _drawDashed(canvas, path, paint);
+    }
+  }
+
+  void _drawDashed(Canvas canvas, Path path, Paint paint) {
+    const dash = 12.0;
+    const gap = 9.0;
+    for (final metric in path.computeMetrics()) {
+      var distance = 0.0;
+      while (distance < metric.length) {
+        canvas.drawPath(
+          metric.extractPath(
+            distance,
+            (distance + dash).clamp(0.0, metric.length),
+          ),
+          paint,
+        );
+        distance += dash + gap;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _PathPainter oldDelegate) =>
+      oldDelegate.centers != centers || oldDelegate.colors != colors;
 }
 
 /// Zorluğu metin yerine 5'li yıldız dizisiyle gösterir.
