@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
 import 'app_panel.dart';
+import 'roj_mascot.dart';
 
 class AppEmptyState extends StatelessWidget {
   const AppEmptyState({
@@ -31,6 +32,8 @@ class AppEmptyState extends StatelessWidget {
       actionLabel: actionLabel,
       onAction: onAction,
       actionIcon: actionIcon,
+      // Boş durumlarda Zana düşünceli hâliyle eşlik eder.
+      showMascot: true,
     );
   }
 }
@@ -73,7 +76,12 @@ class _AppStateScaffold extends StatelessWidget {
     this.actionLabel,
     this.onAction,
     this.actionIcon,
+    this.showMascot = false,
   });
+
+  /// true ise ikon halkası yerine Zana maskotu (düşünceli) gösterilir;
+  /// küçük ikon rozeti köşede kalır (mevcut testler ikonu bulmaya devam eder).
+  final bool showMascot;
 
   final IconData icon;
   final Color iconColor;
@@ -98,31 +106,53 @@ class _AppStateScaffold extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      width: 84,
-                      height: 84,
+                      width: showMascot ? 104 : 84,
+                      height: showMascot ? 104 : 84,
                       child: Stack(
                         alignment: Alignment.center,
+                        clipBehavior: Clip.none,
                         children: [
-                          Container(
-                            width: 84,
-                            height: 84,
-                            decoration: BoxDecoration(
-                              color: iconColor.withValues(alpha: 0.06),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          Container(
-                            width: 64,
-                            height: 64,
-                            decoration: BoxDecoration(
-                              color: iconColor.withValues(alpha: 0.14),
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: iconColor.withValues(alpha: 0.24),
+                          if (showMascot) ...[
+                            const RojMascot(size: 100, mood: RojMood.thinking),
+                            Positioned(
+                              right: -4,
+                              bottom: -2,
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: AppTheme.surfaceHiColor(context),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: iconColor.withValues(alpha: 0.35),
+                                  ),
+                                ),
+                                child: Icon(icon, color: iconColor, size: 16),
                               ),
                             ),
-                            child: Icon(icon, color: iconColor, size: 32),
-                          ),
+                          ] else ...[
+                            Container(
+                              width: 84,
+                              height: 84,
+                              decoration: BoxDecoration(
+                                color: iconColor.withValues(alpha: 0.06),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            Container(
+                              width: 64,
+                              height: 64,
+                              decoration: BoxDecoration(
+                                color: iconColor.withValues(alpha: 0.14),
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: iconColor.withValues(alpha: 0.24),
+                                ),
+                              ),
+                              child: Icon(icon, color: iconColor, size: 32),
+                            ),
+                          ],
                         ],
                       ),
                     ),

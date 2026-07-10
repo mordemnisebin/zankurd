@@ -6,11 +6,13 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
+import '../models/league_tier.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_state.dart';
 import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/roj_mascot.dart';
 import 'quiz_screen.dart';
 
 class LeaderboardScreen extends StatefulWidget {
@@ -78,6 +80,16 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     _tabController.dispose();
     _refreshTimer?.cancel();
     super.dispose();
+  }
+
+  /// Oturum sahibinin haftalık listedeki sırası; listede yoksa null.
+  int? _myRank(List<LeaderboardEntry> entries) {
+    final uid = widget.repository.currentUserId;
+    if (uid == null) return null;
+    for (final entry in entries) {
+      if (entry.playerId == uid) return entry.rank;
+    }
+    return null;
   }
 
   Future<void> _startQuickRace() async {
@@ -154,6 +166,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                       AppSpacing.xl,
                     ),
                     children: [
+                      if (_period == LeaderboardPeriod.weekly) ...[
+                        _LeagueBanner(myRank: _myRank(entries), isKu: ku),
+                        const SizedBox(height: AppSpacing.cardGap),
+                      ],
                       _Podium(entries: entries.take(3).toList(), isKu: ku),
                       const SizedBox(height: AppSpacing.cardGap),
                       for (final e in entries.skip(3))
@@ -165,6 +181,103 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// ─── Haftalık Lig Bandı ──────────────────────────────────────────────────────
+
+/// Haftalık ligde oyuncunun kademesini gösterir: Zêr / Zîv / Bronz.
+/// Kademe canlı haftalık sıradan türetilir; Zêr'de Zana kutlama yapar.
+class _LeagueBanner extends StatelessWidget {
+  const _LeagueBanner({required this.myRank, required this.isKu});
+
+  final int? myRank;
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    final tier = LeagueTier.forRank(myRank);
+    final color = tier.color;
+    final surface = AppTheme.surfaceHiColor(context);
+
+    return Container(
+      key: const ValueKey('league-banner'),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Color.alphaBlend(color.withValues(alpha: 0.22), surface),
+            Color.alphaBlend(color.withValues(alpha: 0.06), surface),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: color.withValues(alpha: 0.38), width: 1.1),
+        boxShadow: [
+          BoxShadow(
+            color: color.withValues(alpha: 0.14),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          if (tier == LeagueTier.zer)
+            const RojMascot(size: 44, mood: RojMood.celebrate)
+          else
+            Container(
+              width: 40,
+              height: 40,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.18),
+                shape: BoxShape.circle,
+                border: Border.all(color: color.withValues(alpha: 0.4)),
+              ),
+              child: Icon(tier.icon, color: color, size: 22),
+            ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  tier.label(isKu),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15,
+                  ),
+                ),
+                Text(
+                  myRank != null
+                      ? (isKu
+                            ? 'Rêza te ya heftane: #$myRank'
+                            : 'Bu haftaki sıran: #$myRank')
+                      : (isKu
+                            ? 'Vê heftê bilîze û bikeve lîgê!'
+                            : 'Bu hafta yarış, lige gir!'),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: AppTheme.textMutedColor(context),
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Icon(tier.icon, color: color.withValues(alpha: 0.55), size: 28),
+        ],
       ),
     );
   }
