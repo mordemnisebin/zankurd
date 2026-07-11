@@ -390,6 +390,7 @@ class _LobbyView extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Container(
+            key: const ValueKey('tournament-hero'),
             width: double.infinity,
             padding: const EdgeInsets.all(AppSpacing.lg),
             decoration: BoxDecoration(
@@ -399,7 +400,13 @@ class _LobbyView extends StatelessWidget {
                 colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
               ),
               border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
-              boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.14),
+              boxShadow: [
+                BoxShadow(
+                  color: AppTheme.gold.withValues(alpha: 0.14),
+                  blurRadius: 14,
+                  offset: const Offset(0, 5),
+                ),
+              ],
             ),
             child: Stack(
               children: [
@@ -422,10 +429,13 @@ class _LobbyView extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: AppTheme.goldGradient,
-                        boxShadow: AppTheme.glowShadow(
-                          AppTheme.gold,
-                          intensity: 0.3,
-                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppTheme.gold.withValues(alpha: 0.22),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
                       child: const Icon(
                         Icons.emoji_events_rounded,
@@ -490,13 +500,14 @@ class _LobbyView extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton(
+                        key: const ValueKey('tournament-primary-cta'),
                         onPressed: onStart,
                         style: FilledButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                             vertical: AppSpacing.md,
                           ),
-                          backgroundColor: AppTheme.gold,
-                          foregroundColor: AppTheme.bgDeep,
+                          backgroundColor: AppTheme.brandOrange,
+                          foregroundColor: Colors.white,
                         ),
                         child: Text(
                           ku ? 'Dest Bi Turnuvayê Bike' : 'Turnuvaya Başla',

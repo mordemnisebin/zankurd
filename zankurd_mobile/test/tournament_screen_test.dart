@@ -6,6 +6,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +37,13 @@ void main() {
 
       expect(find.text('ZanKurd Kupası'), findsOneWidget);
       expect(find.text('Turnuvaya Başla'), findsOneWidget);
+      final startButton = tester.widget<FilledButton>(
+        find.byKey(const ValueKey('tournament-primary-cta')),
+      );
+      expect(
+        startButton.style?.backgroundColor?.resolve({}),
+        AppTheme.brandOrange,
+      );
       expect(find.byIcon(Icons.emoji_events_rounded), findsOneWidget);
     });
 

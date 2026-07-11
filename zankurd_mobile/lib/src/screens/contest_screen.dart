@@ -213,6 +213,7 @@ class _ContestContent extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Container(
+            key: const ValueKey('contest-hero'),
             padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -231,7 +232,13 @@ class _ContestContent extends StatelessWidget {
                 color: AppTheme.gold.withValues(alpha: 0.35),
                 width: 1.2,
               ),
-              boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.10),
+              boxShadow: [
+                BoxShadow(
+                  color: AppTheme.gold.withValues(alpha: 0.12),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
             child: Stack(
               children: [
@@ -258,10 +265,13 @@ class _ContestContent extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: AppTheme.goldGradient,
-                            boxShadow: AppTheme.glowShadow(
-                              AppTheme.gold,
-                              intensity: 0.22,
-                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppTheme.gold.withValues(alpha: 0.2),
+                                blurRadius: 10,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
                           ),
                           child: const Icon(
                             Icons.emoji_events_rounded,
