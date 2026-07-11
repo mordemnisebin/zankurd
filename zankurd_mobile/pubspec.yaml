@@ -50,6 +50,9 @@ dependencies:
   # Ses efektleri (Sprint 1)
   audioplayers: ^6.1.0
 
+  # Metin-okuma (TTS) — soruları seslendirme
+  flutter_tts: ^4.2.2
+
   # Shimmer skeleton loading (Sprint 1)
   shimmer: ^3.0.0
 
