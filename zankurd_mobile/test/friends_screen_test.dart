@@ -33,6 +33,14 @@ void main() {
       expect(find.text('Diyar'), findsOneWidget);
       expect(find.text('Kabul'), findsOneWidget);
       expect(find.byIcon(Icons.close_rounded), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('friends-search-panel')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('friend-primary-action')),
+        findsNWidgets(2),
+      );
     });
 
     testWidgets('oyuncu arama sonuclari ve ekleme akisi calisir', (

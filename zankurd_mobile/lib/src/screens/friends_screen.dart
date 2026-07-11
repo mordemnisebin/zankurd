@@ -215,35 +215,50 @@ class _FriendsScreenState extends State<FriendsScreen> {
           accent: AppTheme.cyan,
         ),
         const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _searchController,
-                textInputAction: TextInputAction.search,
-                onSubmitted: (_) => _search(),
-                decoration: InputDecoration(
-                  hintText: ku ? 'Navê lîstikvanî...' : 'Oyuncu adı...',
-                  prefixIcon: const Icon(Icons.search),
-                  isDense: true,
+        Container(
+          key: const ValueKey('friends-search-panel'),
+          padding: const EdgeInsets.all(AppSpacing.xs),
+          decoration: BoxDecoration(
+            color: AppTheme.playCyan.withValues(alpha: 0.06),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(
+              color: AppTheme.playCyan.withValues(alpha: 0.28),
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _searchController,
+                  textInputAction: TextInputAction.search,
+                  onSubmitted: (_) => _search(),
+                  decoration: InputDecoration(
+                    hintText: ku ? 'Navê lîstikvanî...' : 'Oyuncu adı...',
+                    prefixIcon: const Icon(Icons.search),
+                    isDense: true,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 8),
-            FilledButton(
-              onPressed: _searching ? null : _search,
-              child: _searching
-                  ? const SizedBox(
-                      width: 16,
-                      height: 16,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: AppTheme.primaryGradientStart,
-                      ),
-                    )
-                  : Text(ku ? 'Bigere' : 'Ara'),
-            ),
-          ],
+              const SizedBox(width: 8),
+              FilledButton(
+                onPressed: _searching ? null : _search,
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppTheme.brandOrange,
+                  foregroundColor: Colors.white,
+                ),
+                child: _searching
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppTheme.primaryGradientStart,
+                        ),
+                      )
+                    : Text(ku ? 'Bigere' : 'Ara'),
+              ),
+            ],
+          ),
         ),
         if (_searchResults.isNotEmpty) ...[
           const SizedBox(height: 12),
@@ -258,6 +273,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     Expanded(
                       child: Text(
                         player.displayName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: AppTheme.textPrimaryColor(context),
                           fontWeight: FontWeight.w700,
@@ -395,6 +412,7 @@ class _FriendCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: AppPanel(
+        key: ValueKey('friend-row-${friend.friendName}'),
         child: Row(
           children: [
             PlayerAvatar(radius: 28, colorHex: friend.friendAvatarColor),
@@ -405,6 +423,8 @@ class _FriendCard extends StatelessWidget {
                 children: [
                   Text(
                     friend.friendName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppTheme.textPrimaryColor(context),
                       fontWeight: FontWeight.w700,
@@ -423,7 +443,12 @@ class _FriendCard extends StatelessWidget {
               ),
             ),
             FilledButton.tonal(
+              key: const ValueKey('friend-primary-action'),
               onPressed: onPlay,
+              style: FilledButton.styleFrom(
+                backgroundColor: AppTheme.playPink.withValues(alpha: 0.14),
+                foregroundColor: AppTheme.playPink,
+              ),
               child: Text(ku ? 'Bilîze' : 'Oyna'),
             ),
           ],
@@ -458,6 +483,8 @@ class _FriendRequestCard extends StatelessWidget {
             Expanded(
               child: Text(
                 request.fromUserName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w600,
@@ -472,6 +499,10 @@ class _FriendRequestCard extends StatelessWidget {
             ),
             FilledButton(
               onPressed: onAccept,
+              style: FilledButton.styleFrom(
+                backgroundColor: AppTheme.brandOrange,
+                foregroundColor: Colors.white,
+              ),
               child: Text(ku ? 'Qebûl' : 'Kabul'),
             ),
           ],
