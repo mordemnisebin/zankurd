@@ -179,6 +179,9 @@ class _RoomScreenState extends State<RoomScreen> {
                     icon: const Icon(Icons.copy_rounded, size: 16),
                     label: Text(
                       room.code,
+                      key: const ValueKey('room-code-toolbar'),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTypography.bodyLarge.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
@@ -200,7 +203,7 @@ class _RoomScreenState extends State<RoomScreen> {
                       gradient: const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+                        colors: [AppTheme.playCyan, Color(0xFF168E8A)],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,6 +281,9 @@ class _RoomScreenState extends State<RoomScreen> {
                                           const SizedBox(height: 2),
                                           Text(
                                             room.code,
+                                            key: const ValueKey('room-code'),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                             style: AppTypography.heading1
                                                 .copyWith(
                                                   color: AppTheme.gold,
@@ -348,15 +354,14 @@ class _RoomScreenState extends State<RoomScreen> {
                     if (room.players.length < 2) ...[
                       const SizedBox(height: AppSpacing.xs),
                       Row(
+                        key: const ValueKey('room-connection-state'),
                         children: [
                           SizedBox(
                             width: 10,
                             height: 10,
                             child: CircularProgressIndicator(
                               strokeWidth: 1.5,
-                              color: AppTheme.primaryGradientStart.withValues(
-                                alpha: 0.85,
-                              ),
+                              color: AppTheme.playCyan.withValues(alpha: 0.85),
                             ),
                           ),
                           const SizedBox(width: AppSpacing.xs),
@@ -384,6 +389,7 @@ class _RoomScreenState extends State<RoomScreen> {
                     else
                       for (var i = 0; i < sorted.length; i++)
                         _PlayerTile(
+                          key: ValueKey('room-player-tile-${i + 1}'),
                           rank: i + 1,
                           player: sorted[i],
                           isKu: ku,
@@ -438,9 +444,10 @@ class _RoomScreenState extends State<RoomScreen> {
                       color: Colors.transparent,
                       child: SwitchListTile(
                         value: ready,
-                        activeThumbColor: AppTheme.primaryGradientStart,
-                        activeTrackColor: AppTheme.primaryGradientStart
-                            .withValues(alpha: 0.45),
+                        activeThumbColor: AppTheme.playCyan,
+                        activeTrackColor: AppTheme.playCyan.withValues(
+                          alpha: 0.45,
+                        ),
                         onChanged: (v) {
                           setState(() => ready = v);
                           widget.repository.updateReady(room, v);
@@ -630,6 +637,7 @@ class _Pill extends StatelessWidget {
 
 class _PlayerTile extends StatelessWidget {
   const _PlayerTile({
+    super.key,
     required this.rank,
     required this.player,
     required this.isKu,
@@ -660,19 +668,21 @@ class _PlayerTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.surfaceHiColor(context),
         borderRadius: BorderRadius.circular(AppRadius.sm),
-        border: isHost
-            ? Border.all(color: AppTheme.gold.withValues(alpha: 0.35))
-            : null,
+        border: Border.all(
+          color: isHost
+              ? AppTheme.gold.withValues(alpha: 0.45)
+              : AppTheme.playCyan.withValues(alpha: 0.22),
+        ),
       ),
       child: Row(
         children: [
           CircleAvatar(
             radius: 16,
-            backgroundColor: AppTheme.secondaryAccent.withValues(alpha: 0.2),
+            backgroundColor: AppTheme.playCyan.withValues(alpha: 0.16),
             child: Text(
               '$rank',
               style: AppTypography.caption.copyWith(
-                color: AppTheme.secondaryAccent,
+                color: AppTheme.playCyan,
                 fontWeight: FontWeight.w700,
                 fontSize: 13,
               ),
