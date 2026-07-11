@@ -565,32 +565,27 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         ? (_mpPhase == _MultiplayerPhase.reveal)
         : _showExplanation;
 
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 680),
-        child: Column(
-          children: [
-            // ── Üst sabit alan ──
-            Padding(
-              padding: const EdgeInsets.fromLTRB(18, 8, 18, 0),
-              child: Column(
-                children: [
-                  _buildScoreHeader(),
-                  const SizedBox(height: 12),
-                  _buildProgressBar(context),
-                  _buildComboRow(),
-                ],
-              ),
-            ),
-
-            // ── Orta kaydırılabilir içerik ──
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final contentWidth = min(constraints.maxWidth - 24, 680.0);
+        return SizedBox.expand(
+          child: FittedBox(
+            key: const ValueKey('quiz-fitted-content'),
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.topCenter,
+            child: SizedBox(
+              width: contentWidth,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(6, 6, 6, 8),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
+                    _buildScoreHeader(),
+                    const SizedBox(height: 8),
+                    _buildProgressBar(context),
+                    _buildComboRow(),
+                    const SizedBox(height: 8),
                     _buildQuestionSwitcher(context, showExplanation: showExpl),
-                    // Multiplayer bekleme/reveal overlay
                     if (_isMultiplayer &&
                         answered &&
                         _mpPhase == _MultiplayerPhase.waiting)
@@ -598,22 +593,18 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                     if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
                       _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
                     if (widget.is1v1) ...[
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 8),
                       _LiveScoreboard(players: livePlayers),
                     ],
+                    const SizedBox(height: 6),
+                    _buildActionControls(),
                   ],
                 ),
               ),
             ),
-
-            // ── Alt sabit aksiyon alanı ──
-            Padding(
-              padding: const EdgeInsets.fromLTRB(18, 4, 18, 12),
-              child: _buildActionControls(),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -624,42 +615,63 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         ? (_mpPhase == _MultiplayerPhase.reveal)
         : _showExplanation;
 
-    return Row(
-      key: const ValueKey('quiz-landscape-layout'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          flex: 7,
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(18, 8, 10, 18),
-            children: [
-              _buildQuestionSwitcher(context, showExplanation: showExpl),
-              if (_isMultiplayer &&
-                  answered &&
-                  _mpPhase == _MultiplayerPhase.waiting)
-                _MultiplayerWaitingOverlay(isKu: _isKu),
-              if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
-                _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
-              const SizedBox(height: 12),
-              _buildProgressBar(context),
-              _buildComboRow(),
-              const SizedBox(height: 12),
-              _buildScoreHeader(),
-            ],
+    return LayoutBuilder(
+      builder: (context, constraints) => FittedBox(
+        key: const ValueKey('quiz-landscape-layout'),
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.topCenter,
+        child: SizedBox(
+          width: constraints.maxWidth,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildQuestionSwitcher(
+                        context,
+                        showExplanation: showExpl,
+                      ),
+                      if (_isMultiplayer &&
+                          answered &&
+                          _mpPhase == _MultiplayerPhase.waiting)
+                        _MultiplayerWaitingOverlay(isKu: _isKu),
+                      if (_isMultiplayer &&
+                          _mpPhase == _MultiplayerPhase.reveal)
+                        _RevealCountdown(
+                          seconds: _revealCountdown,
+                          isKu: _isKu,
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 270,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildScoreHeader(),
+                      const SizedBox(height: 6),
+                      _buildProgressBar(context),
+                      _buildComboRow(),
+                      const SizedBox(height: 6),
+                      _buildActionControls(),
+                      if (widget.is1v1) ...[
+                        const SizedBox(height: 8),
+                        _LiveScoreboard(players: livePlayers),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-        SizedBox(
-          width: 280,
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(8, 8, 18, 18),
-            children: [
-              _buildActionControls(),
-              const SizedBox(height: 12),
-              _LiveScoreboard(players: livePlayers),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -730,6 +742,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     // Yarışma şeridi: her soru bir segment — doğru yeşil, yanlış kırmızı
     // dolar; aktif soru vurgulu bekler.
     return Row(
+      key: const ValueKey('quiz-wildcard-row'),
       children: [
         for (var i = 0; i < total; i++) ...[
           Expanded(
@@ -1288,10 +1301,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// 1v1 çevrimiçi maçta kendi skor satırını tazeler ve rakibe yayınlar.
+  /// Çevrimiçi maçta kendi skor satırını tazeler ve diğer oyunculara yayınlar.
   /// Cevap verme, sonraki soru ve bitiş akışları bu tek bloğu paylaşır.
   void _syncMyDuelState({required bool answeredNow, bool finished = false}) {
-    if (!widget.is1v1 || widget.room.id == null) return;
+    if (!_isMultiplayer) return;
     final myIdx = livePlayers.indexWhere(
       (p) => _myId != null ? p.id == _myId : p.name == _myName,
     );
@@ -1380,7 +1393,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   bool get _isHost {
     final uid = widget.repository.currentUserId;
-    return uid != null && uid == widget.room.hostId;
+    if (uid == null) return false;
+    if (widget.room.hostId != null) return uid == widget.room.hostId;
+    return widget.room.players.isNotEmpty &&
+        widget.room.players.first.id == uid;
   }
 
   void _onRoomQuestionIndexChanged(int dbIndex) {
