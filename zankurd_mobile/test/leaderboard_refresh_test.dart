@@ -52,6 +52,12 @@ void main() {
     await tester.pumpAndSettle();
     final initialCalls = repository.loadCalls;
     expect(initialCalls, greaterThanOrEqualTo(1));
+    expect(find.byKey(const ValueKey('leaderboard-refresh-button')), findsOne);
+    expect(find.byKey(const ValueKey('leaderboard-podium')), findsOne);
+    expect(
+      find.byKey(const ValueKey('leaderboard-rank-row-4')),
+      findsOneWidget,
+    );
 
     signal.value += 1;
     await tester.pumpAndSettle();

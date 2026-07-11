@@ -348,6 +348,7 @@ class _Header extends StatelessWidget {
               ),
             ),
             child: IconButton(
+              key: const ValueKey('leaderboard-refresh-button'),
               onPressed: onRefresh,
               icon: Icon(
                 Icons.refresh_rounded,
@@ -442,6 +443,7 @@ class _Podium extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
+        key: const ValueKey('leaderboard-podium'),
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.sm,
           AppSpacing.md,
@@ -459,7 +461,13 @@ class _Podium extends StatelessWidget {
             color: Colors.white.withValues(alpha: 0.12),
             width: 1.2,
           ),
-          boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.14),
+          boxShadow: [
+            BoxShadow(
+              color: AppTheme.gold.withValues(alpha: 0.14),
+              blurRadius: 14,
+              offset: const Offset(0, 5),
+            ),
+          ],
         ),
         child: Stack(
           children: [
@@ -618,6 +626,7 @@ class _RankRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: ValueKey('leaderboard-rank-row-${entry.rank}'),
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
@@ -695,12 +704,18 @@ class _RankRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          Text(
-            '${entry.totalScore}',
-            style: const TextStyle(
-              color: AppTheme.gold,
-              fontWeight: FontWeight.w700,
-              fontSize: 16,
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 72),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                '${entry.totalScore}',
+                style: const TextStyle(
+                  color: AppTheme.gold,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                ),
+              ),
             ),
           ),
         ],
