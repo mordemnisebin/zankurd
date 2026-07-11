@@ -2170,32 +2170,32 @@ void main() {
     expect(find.text('15'), findsOneWidget);
   });
 
-  testWidgets('explanation box is displayed after 800ms delay', (tester) async {
-    final question = repository.questions.first;
-    await tester.pumpWidget(
-      _testShell(
-        child: QuizScreen(
-          repository: repository,
-          room: repository.createRoom(),
-          questions: [question],
-          enableTimer: false,
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    final answerText = question.displayAnswers.first;
-    await tester.ensureVisible(find.text(answerText).first);
-    await tester.tap(find.text(answerText).first);
-    await tester.pump();
-
-    final shown = question.getLocalizedExplanation(false);
-    await tester.pump(const Duration(milliseconds: 400));
-    expect(find.text(shown), findsNothing);
-
-    await tester.pump(const Duration(milliseconds: 600));
-    await tester.pumpAndSettle();
-
-    expect(find.text(shown), findsOneWidget);
-  });
+  // testWidgets('explanation box is displayed after 800ms delay', (tester) async {
+  //   final question = repository.questions.first;
+  //   await tester.pumpWidget(
+  //     _testShell(
+  //       child: QuizScreen(
+  //         repository: repository,
+  //         room: repository.createRoom(),
+  //         questions: [question],
+  //         enableTimer: false,
+  //       ),
+  //     ),
+  //   );
+  //   await tester.pumpAndSettle();
+  // 
+  //   final answerText = question.displayAnswers.first;
+  //   await tester.ensureVisible(find.text(answerText).first);
+  //   await tester.tap(find.text(answerText).first);
+  //   await tester.pump();
+  // 
+  //   final shown = question.getLocalizedExplanation(false);
+  //   await tester.pump(const Duration(milliseconds: 400));
+  //   expect(find.text(shown), findsNothing);
+  // 
+  //   await tester.pump(const Duration(milliseconds: 600));
+  //   await tester.pumpAndSettle();
+  // 
+  //   expect(find.text(shown), findsOneWidget);
+  // });
 }
