@@ -51,6 +51,12 @@ void main() {
 
     expect(find.text('1vs1 Düello'), findsOneWidget);
     expect(find.text('Rastgele eşleşme'), findsOneWidget);
+    final duelCard = tester.widget<Container>(
+      find.byKey(const ValueKey('matchmaking-duel-card')),
+    );
+    final decoration = duelCard.decoration! as BoxDecoration;
+    expect(decoration.border, isNotNull);
+    expect(decoration.gradient, isNotNull);
     expect(tester.takeException(), isNull);
   });
 

@@ -542,8 +542,24 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           // 1. Random Match Card
           GestureDetector(
             onTap: () => _startMatchmaking('Rastgele'),
-            child: AppPanel(
-              gradient: AppTheme.accentGradient,
+            child: Container(
+              key: const ValueKey('matchmaking-duel-card'),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [AppTheme.playPink, Color(0xFFB91F70)],
+                ),
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                border: Border.all(
+                  color: AppTheme.playPink.withValues(alpha: 0.7),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppTheme.playPink.withValues(alpha: 0.18),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
               padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
@@ -571,6 +587,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                             fontWeight: FontWeight.w800,
                             fontSize: 16,
                           ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 2),
                         Text(
@@ -581,6 +599,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                             color: Colors.white70,
                             fontSize: 12,
                           ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -668,6 +688,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   Widget _buildRadarSearch(String status, bool ku) {
     return Center(
       child: Column(
+        key: const ValueKey('matchmaking-waiting-state'),
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (_categoryName != null) ...[
