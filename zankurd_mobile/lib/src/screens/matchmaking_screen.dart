@@ -11,7 +11,6 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/player.dart';
 import '../widgets/player_avatar.dart';
-import '../widgets/app_panel.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/test_environment.dart';
