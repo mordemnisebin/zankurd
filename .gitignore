@@ -12,7 +12,10 @@ output/
 
 # Eğer varsa sanal ortam klasörleri
 venv/
+# Ortam değişkenleri ve gizli dosyalar
 .env
+.env.*
+!.env.example
 # Oturum artıkları ve yerel araç dizinleri
 .serena/
 .playwright-cli/
