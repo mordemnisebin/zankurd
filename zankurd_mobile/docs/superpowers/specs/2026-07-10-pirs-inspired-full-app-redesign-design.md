@@ -1,7 +1,11 @@
 # ZanKurd Pirs-Inspired Full App Redesign
 
 **Tarih:** 2026-07-10  
-**Durum:** Kullanıcı görsel yönü onayladı; uygulama planı öncesi son inceleme bekliyor.
+**Durum:** SÜPERSEDE EDİLDİ (2026-07-12) — kullanıcı turuncu marka rengini bırakıp
+tamamen yeni bir palet seçti. Güncel spec:
+[2026-07-12-bubblegum-arcade-redesign-design.md](2026-07-12-bubblegum-arcade-redesign-design.md).
+Bu dosya yalnızca tarihsel referans için tutuluyor; layout/erişilebilirlik ilkeleri
+büyük ölçüde yeni spec'e taşındı, renk sistemi geçersiz.
 
 ## Amaç
 
