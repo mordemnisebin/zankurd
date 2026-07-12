@@ -1028,146 +1028,183 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           ),
                         ),
                         const SizedBox(height: 14),
-                        SizedBox(
-                          width: double.infinity,
-                          child: FilledButton.icon(
-                            key: const ValueKey('result-home-button'),
-                            style: FilledButton.styleFrom(
-                              backgroundColor: AppTheme.brandOrange,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  16,
-                                ), // AppRadius.lg
-                              ),
-                              elevation: 2,
-                            ),
-                            onPressed: () {
-                              Navigator.of(
-                                context,
-                              ).popUntil((route) => route.isFirst);
-                            },
-                            icon: const Icon(Icons.replay_rounded),
-                            label: Text(
-                              context.s('Dîsa bilîze', 'Tekrar oyna'),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: OutlinedButton.icon(
-                                style: OutlinedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 14,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                ),
-                                onPressed: answerRecords.isEmpty
-                                    ? null
-                                    : () {
-                                        Navigator.of(context).push(
-                                          AppRoute.to(
-                                            ReviewScreen(
-                                              records: answerRecords,
-                                              room: room,
+                        // Pirs-tarzı 2×2 aksiyon grid'i: birincil (Dîsa
+                        // bilîze) dolgu, ikincil aksiyonlar outline. Paylaşım
+                        // çocuk modunda gizlenirse ikinci satır tek buton
+                        // olarak tam genişlik alır.
+                        Builder(
+                          builder: (context) {
+                            final allowShare = context
+                                .watch<ChildSafetyProvider>()
+                                .allowExternalShare;
+                            return Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: FilledButton.icon(
+                                        key: const ValueKey(
+                                          'result-home-button',
+                                        ),
+                                        style: FilledButton.styleFrom(
+                                          backgroundColor: AppTheme.brandOrange,
+                                          foregroundColor: Colors.white,
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 14,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              16,
                                             ),
                                           ),
-                                        );
-                                      },
-                                icon: const Icon(Icons.fact_check_outlined),
-                                label: Text(
-                                  context.s(
-                                    'Bersivan Bibîne',
-                                    'Cevapları İncele',
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 13.5,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // Çocuk modu: dış paylaşım butonu gizlenir.
-                            if (context
-                                .watch<ChildSafetyProvider>()
-                                .allowExternalShare) ...[
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: OutlinedButton.icon(
-                                  style: OutlinedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 14,
+                                          elevation: 2,
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(
+                                            context,
+                                          ).popUntil((route) => route.isFirst);
+                                        },
+                                        icon: const Icon(Icons.replay_rounded),
+                                        label: Text(
+                                          context.s(
+                                            'Dîsa bilîze',
+                                            'Tekrar oyna',
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 13.5,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: OutlinedButton.icon(
+                                        style: OutlinedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 14,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              16,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: answerRecords.isEmpty
+                                            ? null
+                                            : () {
+                                                Navigator.of(context).push(
+                                                  AppRoute.to(
+                                                    ReviewScreen(
+                                                      records: answerRecords,
+                                                      room: room,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                        icon: const Icon(
+                                          Icons.fact_check_outlined,
+                                        ),
+                                        label: Text(
+                                          context.s(
+                                            'Bersivan Bibîne',
+                                            'Cevapları İncele',
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 13.5,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  onPressed: () => ResultSharer.share(
-                                    context,
-                                    isKu: context.isKu,
-                                    score: score,
-                                    correctCount: correctCount,
-                                    totalQuestions: totalQuestions,
-                                    bestStreak: bestStreak,
-                                    category: room.category,
-                                  ),
-                                  icon: const Icon(Icons.share_rounded),
-                                  label: Text(
-                                    context.s('Parve Bike', 'Paylaş'),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 13.5,
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: OutlinedButton.icon(
+                                        style: OutlinedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 14,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              16,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            AppRoute.to(
+                                              LeaderboardScreen(
+                                                repository: repository,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        icon: const Icon(
+                                          Icons.emoji_events_outlined,
+                                        ),
+                                        label: Text(
+                                          context.s(
+                                            'Tabloya Pêşderçûnê',
+                                            'Liderlik Tablosu',
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 13.5,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    // Çocuk modu: dış paylaşım butonu gizlenir.
+                                    if (allowShare) ...[
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: OutlinedButton.icon(
+                                          style: OutlinedButton.styleFrom(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 14,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                          ),
+                                          onPressed: () => ResultSharer.share(
+                                            context,
+                                            isKu: context.isKu,
+                                            score: score,
+                                            correctCount: correctCount,
+                                            totalQuestions: totalQuestions,
+                                            bestStreak: bestStreak,
+                                            category: room.category,
+                                          ),
+                                          icon: const Icon(Icons.share_rounded),
+                                          label: Text(
+                                            context.s('Parve Bike', 'Paylaş'),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 13.5,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          width: double.infinity,
-                          child: OutlinedButton.icon(
-                            style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                AppRoute.to(
-                                  LeaderboardScreen(repository: repository),
-                                ),
-                              );
-                            },
-                            icon: const Icon(Icons.emoji_events_outlined),
-                            label: Text(
-                              context.s(
-                                'Tabloya Pêşderçûnê',
-                                'Liderlik Tablosu',
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 13.5,
-                              ),
-                            ),
-                          ),
+                              ],
+                            );
+                          },
                         ),
                       ],
                     ),
