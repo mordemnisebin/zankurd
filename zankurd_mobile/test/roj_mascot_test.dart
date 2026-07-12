@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 
-// Zana'nın 12 ışını artık tek altın renk yerine 4 Bubblegum Arcade
-// renginin (indigo/pembe/gökmavi/lime) dönüşümüyle çizilir — kilim
-// sınırındaki dönüşümlü renk şeridi hissi. Geometri/ifade değişmez.
+// Zana'nın 12 ışını altın + indigo dönüşümüyle çizilir — sakin, ritmik
+// iki renkli bir şerit (4 rengin kaotik dönüşümü küçük boyutta gürültü
+// gibi okunduğu için sadeleştirildi). Geometri/ifade değişmez.
 void main() {
+  test('ışın rengi deseni sakin iki renkli dönüşüm (altın/indigo)', () {
+    expect(RojMascot.rayColors, [AppTheme.gold, AppTheme.brandOrange]);
+  });
+
   testWidgets('RojMascot tüm ruh hâllerinde hatasız çizilir', (tester) async {
     for (final mood in RojMood.values) {
       await tester.pumpWidget(
-        MaterialApp(home: Center(child: RojMascot(mood: mood))),
+        MaterialApp(
+          home: Center(child: RojMascot(mood: mood)),
+        ),
       );
       await tester.pump();
       expect(tester.takeException(), isNull);
