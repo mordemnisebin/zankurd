@@ -243,62 +243,66 @@ class AppTheme {
     );
   }
 
-  static const brandOrange = Color(0xFFF47A32);
-  static const brandOrangeWarm = Color(0xFFFF9F1C);
-  static const playGreen = Color(0xFF58B96B);
-  static const playPink = Color(0xFFE72F8C);
-  static const playCyan = Color(0xFF3BC7C1);
-  static const playPurple = Color(0xFF8A62D3);
+  // ============ Bubblegum Arcade Palette (2026-07-12) ============
+  // Turuncu/mor bırakıldı; Kürt kimliği renkte değil, RojMascot (Zana)
+  // ışın motifinde taşınır. Bkz. docs/superpowers/specs/
+  // 2026-07-12-bubblegum-arcade-redesign-design.md
+  static const brandOrange = Color(0xFF6C5CE7); // İndigo — ana marka rengi
+  static const brandOrangeWarm = Color(0xFF8B7CF6); // Açık indigo (gradyan ucu)
+  static const playGreen = Color(0xFF8BC53F); // Lime — öğrenme kimliği
+  static const playPink = Color(0xFFFF3B81); // Sıcak pembe — 1v1/rekabet
+  static const playCyan = Color(0xFF38BDF8); // Gökmavi — oda/mod kartları
+  static const playPurple = Color(0xFF6C5CE7); // İndigo ile birleşti (ayrı mor yok)
 
-  // ============ Dark Mode Palette (Kültürel Modern - Derin Yeşil & Mercan) ============
+  // ============ Dark Mode Palette (Bubblegum Arcade — koyu ikincil tema) ============
   // Legacy token names retained for existing screen consumers.
   static const primaryGradientStart = brandOrange;
   static const primaryGradientEnd = brandOrangeWarm;
 
   // İkincil aksan — ikincil vurgu / yardımcı renk.
-  static const secondaryAccent = Color(0xFF1E5F47); // Derin Yeşil
+  static const secondaryAccent = Color(0xFF38BDF8); // Gökmavi
 
   // Ödül rengi — YALNIZCA coin / ödül / streak / ustalık rozeti göstergelerinde kullan.
-  static const gold = Color(0xFFE9C46A); // Sıcak Altın Sarısı
+  // Bilinçli olarak sabit tutuldu: renk sistemi değişse de ödül/coin anlamı korunur.
+  static const gold = Color(0xFFE9C46A);
 
   // Bilgi/ipucu vurgusu — nadir kullan (ör. joker ipucu). Genel aksan için kullanma.
   static const cyan = playCyan;
 
-  // Dark backgrounds (Derin Orman Yeşili / Asil Toprak tonları)
-  static const bg = Color(0xFF0F2C21);
-  static const bgDeep = Color(0xFF0A1F17);
-  static const surface = Color(0xFF163E30);
-  static const surfaceHi = Color(0xFF1F5240);
-  static const darkBg = Color(0xFF05140F);
+  // Dark backgrounds (İndigo-koyu tonlar)
+  static const bg = Color(0xFF15121F);
+  static const bgDeep = Color(0xFF0E0C16);
+  static const surface = Color(0xFF1E1A2E);
+  static const surfaceHi = Color(0xFF29233D);
+  static const darkBg = Color(0xFF0A0812);
 
   // Dark mode text
-  static const textPrimary = Color(0xFFF4F6F5);
-  static const textSub = Color(0xFFBCD0C9);
-  static const textMuted = Color(0xFF7F9C91);
+  static const textPrimary = Color(0xFFEFEBFA);
+  static const textSub = Color(0xFFB3A9D6);
+  static const textMuted = Color(0xFF988FBB);
 
   // Borders
-  static const border = Color(0xFF2C6B54);
+  static const border = Color(0xFF3A3252);
 
   // Status colors
-  // Legacy pembe vurgu — CTA için primaryGradientStart (coral) tercih et.
-  // Doğru/yanlış renkleri correct/wrong; altın ödül gold.
+  // Doğru/yanlış renkleri correct/wrong; altın ödül gold — bu üçü sabit kalır
+  // (quiz geri bildirim anlamı renk sisteminden bağımsız).
   static const accent = playPink;
-  // İkincil yeşil aksan — yardımcı vurgu rengi.
   static const violet = playPurple;
   // Doğru cevap rengi — YALNIZCA doğru cevap geri bildiriminde kullan.
-  static const correct = Color(0xFF2E7D32); // Dengeli Yeşil
+  static const correct = Color(0xFF2E7D32); // Dengeli Yeşil — değişmez
   // Yanlış cevap rengi — YALNIZCA yanlış cevap geri bildiriminde kullan.
-  static const wrong = Color(0xFFC62828); // Dengeli Kırmızı
+  static const wrong = Color(0xFFC62828); // Dengeli Kırmızı — değişmez
 
-  // ============ Light Mode Palette ============
-  static const lightBg = Color(0xFFF4F5F7);
-  static const lightBgDeep = Color(0xFFE9EDEB);
+  // ============ Light Mode Palette (varsayılan tema) ============
+  static const lightBg = Color(0xFFFAFAFF);
+  static const lightBgDeep = Color(0xFFF0EEFC);
   static const lightSurface = Color(0xFFFFFFFF);
-  static const lightSurfaceHi = Color(0xFFF8F9FA);
-  static const lightBorder = Color(0xFFDFE2E6);
-  static const lightTextPrimary = Color(0xFF14241C);
-  static const lightTextSub = Color(0xFF384A41);
-  static const lightTextMuted = Color(0xFF78857E);
+  static const lightSurfaceHi = Color(0xFFF7F6FE);
+  static const lightBorder = Color(0xFFE4E1F5);
+  static const lightTextPrimary = Color(0xFF211C34);
+  static const lightTextSub = Color(0xFF6E6791);
+  static const lightTextMuted = Color(0xFF9B94BC);
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
