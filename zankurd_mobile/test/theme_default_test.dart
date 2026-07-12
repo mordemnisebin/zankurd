@@ -18,14 +18,15 @@ class _GateAuthProvider extends AuthProvider {
   bool get isLoading => false;
 }
 
-// Regression: uygulama, kayıtlı bir tema tercihi yokken
-// koyu temayla açılmalı — onboarding dahil (main() ile aynı yol:
-// ThemeProvider.load()).
+// Bubblegum Arcade redesign (2026-07-12): uygulama artık açık-temayla
+// açılır (kayıtlı tercih yokken). Koyu tema ikincil ama tam desteklenir.
 void main() {
-  testWidgets('sıfır kurulumda onboarding koyu temayla açılır', (tester) async {
+  testWidgets('sıfır kurulumda onboarding açık temayla açılır', (
+    tester,
+  ) async {
     SharedPreferences.setMockInitialValues({});
     final themeProvider = await ThemeProvider.load();
-    expect(themeProvider.mode, ThemeMode.dark);
+    expect(themeProvider.mode, ThemeMode.light);
 
     await tester.pumpWidget(
       ZanKurdApp(
@@ -40,7 +41,15 @@ void main() {
     expect(find.byType(OnboardingScreen), findsOneWidget);
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
+  });
+
+  testWidgets('kayıtlı koyu tercih varsa koyu temayla açılır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({'zankurd.themeMode': 'dark'});
+    final themeProvider = await ThemeProvider.load();
+    expect(themeProvider.mode, ThemeMode.dark);
   });
 }
