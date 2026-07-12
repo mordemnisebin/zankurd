@@ -1,285 +1,218 @@
-import { useMemo, useState } from 'react'
-import {
-  Bell,
-  BookOpen,
-  Check,
-  Coins,
-  Copy,
-  Crown,
-  DoorOpen,
-  Flame,
-  Gamepad2,
-  LockKeyhole,
-  MessageCircleWarning,
-  Play,
-  Plus,
-  Radio,
-  RotateCcw,
-  ShieldQuestion,
-  Sparkles,
-  Trophy,
-  Users,
-  Zap,
-} from 'lucide-react'
-import './App.css';
-import { ThemeToggle } from './ThemeToggle';
-
-type Question = {
-  category: string
-  prompt: string
-  answers: string[]
-  correctAnswer: string
-  explanation: string
-}
-
-const questions: Question[] = [
-  {
-    category: 'Ziman',
-    prompt: 'Di Kurmancî de peyva "zanîn" bi Tirkî çi ye?',
-    answers: ['Bilmek', 'Gitmek', 'Okumak', 'Yazmak'],
-    correctAnswer: 'Bilmek',
-    explanation: '"Zanîn" bilgi ve bilmek anlamına gelir.',
-  },
-  {
-    category: 'Çand',
-    prompt: 'Newroz bi gelemperî kîjan rojê tê pîroz kirin?',
-    answers: ['21 Adar', '1 Gulan', '15 Hezîran', '29 Cotmeh'],
-    correctAnswer: '21 Adar',
-    explanation: 'Newroz baharın gelişiyle 21 Mart/Adar günü kutlanır.',
-  },
-  {
-    category: 'Edebiyat',
-    prompt: 'Mem û Zîn kimin eseri olarak bilinir?',
-    answers: ['Ehmedê Xanî', 'Cegerxwîn', 'Melayê Cizîrî', 'Feqiyê Teyran'],
-    correctAnswer: 'Ehmedê Xanî',
-    explanation: 'Mem û Zîn, Ehmedê Xanî ile özdeşleşmiş klasik bir eserdir.',
-  },
-]
-
-const players = [
-  { name: 'Rojda', score: 1240, streak: 4, status: 'Hazır' },
-  { name: 'Baran', score: 1180, streak: 3, status: 'Cevapladı' },
-  { name: 'Dilan', score: 960, streak: 2, status: 'Bekliyor' },
-  { name: 'Azad', score: 910, streak: 1, status: 'Hazır' },
-]
-
-const categories = ['Ziman', 'Çand', 'Dîrok', 'Edebiyat', 'Cografya', 'Muzîk']
+import { useState, useEffect } from 'react'
+import { BookOpen, Gamepad2, Globe, Sparkles, Trophy, Users, Zap, ArrowRight } from 'lucide-react'
+import './App.css'
+import { ThemeToggle } from './ThemeToggle'
 
 function App() {
-  const [activeQuestion, setActiveQuestion] = useState(0)
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
-  const [roomCode] = useState('ZK-4821')
+  const [isKu, setIsKu] = useState(true)
 
-  const question = questions[activeQuestion]
-  const isAnswered = selectedAnswer !== null
+  // SEO meta güncelleme
+  useEffect(() => {
+    document.title = 'ZanKurd — Pêşbirka Kurmancî | Kürtçe Bilgi Yarışması'
+    const metaDesc = document.querySelector('meta[name="description"]')
+    if (metaDesc) {
+      metaDesc.setAttribute('content',
+        'ZanKurd — Kurmancî ziman, çand, dîrok û edebiyatê hîn bibe û pêşbirkê bike. '
+        + 'Kürtçe dil, kültür, tarih ve edebiyat öğren, yarış.')
+    }
+  }, [])
 
-  const sortedPlayers = useMemo(
-    () => [...players].sort((a, b) => b.score - a.score),
-    [],
-  )
+  const t = (ku: string, tr: string) => isKu ? ku : tr
 
-  function nextQuestion() {
-    setActiveQuestion((current) => (current + 1) % questions.length)
-    setSelectedAnswer(null)
-  }
+  const features = [
+    {
+      icon: <Gamepad2 size={28} />,
+      titleKu: 'Pêşbirka Zû',
+      titleTr: 'Hızlı Yarış',
+      descKu: '10 pirsan tavilê bibersivîne û pûanan berhev bike.',
+      descTr: 'Hemen 10 soruyu cevapla ve puanları topla.',
+      color: '#F47A32',
+    },
+    {
+      icon: <Users size={28} />,
+      titleKu: 'Odeyên Zindî',
+      titleTr: 'Canlı Odalar',
+      descKu: 'Bi hevalên xwe re odeyê ava bike an jî bi kodê tevlî bibe.',
+      descTr: 'Arkadaşlarınla oda kur veya kodla katıl.',
+      color: '#1E5F47',
+    },
+    {
+      icon: <Trophy size={28} />,
+      titleKu: 'Pêşbirkên Rojane',
+      titleTr: 'Günlük Turnuvalar',
+      descKu: 'Her roj pêşbirka nû, tema nû û xelatên taybet.',
+      descTr: 'Her gün yeni yarışma, yeni tema ve özel ödüller.',
+      color: '#E9C46A',
+    },
+    {
+      icon: <BookOpen size={28} />,
+      titleKu: 'Fêr Bibe',
+      titleTr: 'Öğren',
+      descKu: 'Kurmancî gav bi gav, dersên kurt û mînakên rastîn.',
+      descTr: 'Kurmancîyi adım adım, kısa dersler ve gerçek örneklerle.',
+      color: '#2B5C8F',
+    },
+    {
+      icon: <Sparkles size={28} />,
+      titleKu: 'Joker û Alîkarî',
+      titleTr: 'Joker ve Yardımcılar',
+      descKu: '50/50, temaşevan, bersiva ducar û pirsa nû.',
+      descTr: '50/50, seyirci, çift cevap ve soru değiştirme.',
+      color: '#E72F8C',
+    },
+    {
+      icon: <Globe size={28} />,
+      titleKu: '8 Kategorî',
+      titleTr: '8 Kategori',
+      descKu: 'Ziman, Çand, Dîrok, Edebiyat, Cografya û hêj bêtir.',
+      descTr: 'Dil, Kültür, Tarih, Edebiyat, Coğrafya ve daha fazlası.',
+      color: '#8A62D3',
+    },
+  ]
 
   return (
-    <main className="app-shell">
-      <nav className="topbar" aria-label="Ana gezinme">
+    <div className="landing">
+      {/* Nav */}
+      <nav className="landing-nav">
         <div className="brand-mark">
           <div className="brand-symbol">ZK</div>
           <div>
             <strong>ZanKurd</strong>
-            <span>Pêşbirka Kurmancî</span>
+            <span>{t('Pêşbirka Kurmancî', 'Kurmancî Yarışması')}</span>
           </div>
         </div>
-        <ThemeToggle />
-        <div className="top-actions">
-          <button type="button" className="icon-button" aria-label="Bildirimler">
-            <Bell size={19} />
-          </button>
-          <button type="button" className="coin-pill">
-            <Coins size={18} />
-            2.450
-          </button>
+        <div className="nav-actions">
+          <div className="lang-switch">
+            <button
+              className={isKu ? 'active' : ''}
+              onClick={() => setIsKu(true)}
+              aria-label="Kurmancî"
+            >
+              KU
+            </button>
+            <button
+              className={!isKu ? 'active' : ''}
+              onClick={() => setIsKu(false)}
+              aria-label="Türkçe"
+            >
+              TR
+            </button>
+          </div>
+          <ThemeToggle />
         </div>
       </nav>
 
-      <section className="hero-band">
-        <div className="hero-copy">
-          <span className="eyebrow">
-            <Radio size={16} />
-            Canlı oda açık
-          </span>
-          <h1>Kurmancî bilgi yarışmasını odalarda canlı çöz.</h1>
+      {/* Hero */}
+      <section className="landing-hero">
+        <div className="hero-glow hero-glow-1" />
+        <div className="hero-glow hero-glow-2" />
+        <div className="hero-content">
+          <div className="hero-badge">
+            <Zap size={16} />
+            <span>{t('Zindî ye!', 'Canlı!')}</span>
+          </div>
+          <h1>
+            {t(
+              'Kurmancî hîn bibe û pêşbirkê bike',
+              'Kurmancî öğren ve yarışmaya katıl'
+            )}
+          </h1>
           <p>
-            Arkadaş daveti, rastgele eşleşme, jokerler, günlük turnuvalar ve
-            öğrenme alanı tek oyun akışında.
+            {t(
+              'Ziman, çand, dîrok û edebiyata Kurdî di serî de 8 kategoriyên cuda, '
+              + 'pêşbirkên zindî, odeyên hevalan, joker û xelatên rojane li benda te ne.',
+              'Dil, kültür, tarih ve edebiyat başta olmak üzere 8 farklı kategori, '
+              + 'canlı yarışmalar, arkadaş odaları, jokerler ve günlük ödüller seni bekliyor.'
+            )}
           </p>
+          <div className="hero-cta">
+            <a href="https://zankurd.com" className="cta-primary">
+              <span>{t('Dest Pê Bike', 'Hemen Başla')}</span>
+              <ArrowRight size={20} />
+            </a>
+            <a href="#features" className="cta-secondary">
+              {t('Bêtir Fêr Bibe', 'Daha Fazla Öğren')}
+            </a>
+          </div>
         </div>
-
-        <div className="quick-actions" aria-label="Hızlı işlemler">
-          <button type="button" className="primary-action">
-            <Plus size={20} />
-            Oda Kur
-          </button>
-          <button type="button" className="secondary-action">
-            <DoorOpen size={20} />
-            Kodla Katıl
-          </button>
-          <button type="button" className="secondary-action">
-            <Zap size={20} />
-            Rastgele
-          </button>
+        <div className="hero-visual">
+          <div className="hero-mockup">
+            <div className="mockup-screen">
+              <div className="mockup-question">
+                <span className="mockup-category">Ziman</span>
+                <p>{t(
+                  'Di Kurmancî de peyva "zanîn" bi Tirkî çi ye?',
+                  'Kurmancî\'de "zanîn" kelimesi Türkçe\'de nedir?'
+                )}</p>
+                <div className="mockup-answers">
+                  <div className="mockup-answer correct">{t('Bilmek', 'Bilmek')}</div>
+                  <div className="mockup-answer">{t('Gitmek', 'Gitmek')}</div>
+                  <div className="mockup-answer">{t('Okumak', 'Okumak')}</div>
+                  <div className="mockup-answer">{t('Yazmak', 'Yazmak')}</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="dashboard-grid">
-        <aside className="room-panel" aria-label="Oda bilgileri">
-          <div className="panel-heading">
-            <div>
-              <span className="section-label">Özel oda</span>
-              <h2>Hevalên Zanînê</h2>
-            </div>
-            <button type="button" className="icon-button" aria-label="Oda kodunu kopyala">
-              <Copy size={18} />
-            </button>
-          </div>
-
-          <div className="room-code">
-            <span>Oda kodu</span>
-            <strong>{roomCode}</strong>
-          </div>
-
-          <div className="player-list">
-            {sortedPlayers.map((player, index) => (
-              <div className="player-row" key={player.name}>
-                <div className="rank">{index + 1}</div>
-                <div>
-                  <strong>{player.name}</strong>
-                  <span>{player.status}</span>
-                </div>
-                <div className="score">
-                  <Flame size={15} />
-                  {player.score}
-                </div>
+      {/* Features */}
+      <section id="features" className="landing-features">
+        <div className="section-header">
+          <h2>{t('Hemû Taybetmendî', 'Tüm Özellikler')}</h2>
+          <p>{t(
+            'ZanKurd bi dehan taybetmendiyan ji bo fêrbûn û pêşbirkê hatîye amadekirin.',
+            'ZanKurd, öğrenme ve yarışma için onlarca özellikle hazırlandı.'
+          )}</p>
+        </div>
+        <div className="features-grid">
+          {features.map((f, i) => (
+            <div className="feature-card" key={i} style={{ '--accent': f.color } as React.CSSProperties}>
+              <div className="feature-icon" style={{ color: f.color }}>
+                {f.icon}
               </div>
-            ))}
-          </div>
-
-          <button type="button" className="start-button">
-            <Play size={19} />
-            Yarışı Başlat
-          </button>
-        </aside>
-
-        <section className="quiz-stage" aria-label="Aktif soru">
-          <div className="quiz-meta">
-            <span>{question.category}</span>
-            <strong>08</strong>
-          </div>
-
-          <h2>{question.prompt}</h2>
-
-          <div className="answer-grid">
-            {question.answers.map((answer) => {
-              const isSelected = selectedAnswer === answer
-              const isCorrect = isAnswered && answer === question.correctAnswer
-              const isWrong = isSelected && answer !== question.correctAnswer
-
-              return (
-                <button
-                  type="button"
-                  className={[
-                    'answer-option',
-                    isSelected ? 'selected' : '',
-                    isCorrect ? 'correct' : '',
-                    isWrong ? 'wrong' : '',
-                  ].join(' ')}
-                  key={answer}
-                  onClick={() => setSelectedAnswer(answer)}
-                >
-                  <span>{answer}</span>
-                  {isCorrect && <Check size={18} />}
-                </button>
-              )
-            })}
-          </div>
-
-          {isAnswered && (
-            <div className="explanation">
-              <ShieldQuestion size={19} />
-              <span>{question.explanation}</span>
+              <h3>{t(f.titleKu, f.titleTr)}</h3>
+              <p>{t(f.descKu, f.descTr)}</p>
             </div>
-          )}
-
-          <div className="joker-row" aria-label="Jokerler">
-            <button type="button">
-              <Sparkles size={18} />
-              50/50
-            </button>
-            <button type="button">
-              <Users size={18} />
-              Seyirci
-            </button>
-            <button type="button" onClick={nextQuestion}>
-              <RotateCcw size={18} />
-              Değiştir
-            </button>
-          </div>
-        </section>
-
-        <aside className="side-panel" aria-label="Turnuva ve istatistik">
-          <div className="stat-card accent">
-            <Trophy size={22} />
-            <div>
-              <span>Günün turnuvası</span>
-              <strong>21:00 - Ziman gecesi</strong>
-            </div>
-          </div>
-
-          <div className="mini-grid">
-            <div className="metric">
-              <Crown size={20} />
-              <strong>73%</strong>
-              <span>Başarı</span>
-            </div>
-            <div className="metric">
-              <Gamepad2 size={20} />
-              <strong>128</strong>
-              <span>Maç</span>
-            </div>
-          </div>
-
-          <div className="category-panel">
-            <div className="panel-heading compact">
-              <div>
-                <span className="section-label">Kategoriler</span>
-                <h2>Bugün aktif</h2>
-              </div>
-              <BookOpen size={20} />
-            </div>
-            <div className="category-list">
-              {categories.map((category) => (
-                <button type="button" key={category}>
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <button type="button" className="report-button">
-            <MessageCircleWarning size={18} />
-            Soruyu Bildir
-          </button>
-
-          <div className="privacy-note">
-            <LockKeyhole size={18} />
-            Puan ve cevap doğrulama backend tarafında yapılacak.
-          </div>
-        </aside>
+          ))}
+        </div>
       </section>
-    </main>
+
+      {/* CTA */}
+      <section className="landing-cta">
+        <div className="cta-card">
+          <h2>{t(
+            'Tu jî tevlî civata ZanKurd bibe!',
+            'Sen de ZanKurd topluluğuna katıl!'
+          )}</h2>
+          <p>{t(
+            'Bi hezaran lîstikvan her roj li vir in. Pêşbirkê bike, fêr bibe, xelatan bi dest bixe.',
+            'Binlerce oyuncu her gün burada. Yarış, öğren, ödülleri topla.'
+          )}</p>
+          <a href="https://zankurd.com" className="cta-primary cta-large">
+            <span>{t('Niha Tevlî Bibe', 'Şimdi Katıl')}</span>
+            <ArrowRight size={22} />
+          </a>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="landing-footer">
+        <div className="footer-content">
+          <div className="footer-brand">
+            <div className="brand-symbol footer-symbol">ZK</div>
+            <div>
+              <strong>ZanKurd</strong>
+              <span>© 2026 — {t('Hemû maf parastî ne.', 'Tüm hakları saklıdır.')}</span>
+            </div>
+          </div>
+          <div className="footer-links">
+            <a href="https://zankurd.com">{t('Sepan', 'Uygulama')}</a>
+            <a href="mailto:nisebinbawer47@gmail.com">{t('Têkilî', 'İletişim')}</a>
+          </div>
+        </div>
+      </footer>
+    </div>
   )
 }
 
