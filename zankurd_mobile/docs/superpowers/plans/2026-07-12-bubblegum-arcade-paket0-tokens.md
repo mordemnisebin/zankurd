@@ -1,5 +1,28 @@
 # Bubblegum Arcade — Paket 0 (Tasarım Temeli) Implementation Plan
 
+> **Durum (2026-07-13): TAMAMLANDI.** Paket 0 (Görev 1-4) uygulandı ve
+> doğrulandı — bkz. commit'ler `c8d024b`, `da28ce1`, `c5e9e90`. Ayrıca
+> orijinal kapsamın ötesinde, spec'in "Bileşen Dili"/"Paket 1" bölümünden
+> iki somut yerleşim değişikliği de uygulandı (aynı TDD disiplinizle):
+> - `QuickPlayGrid` küçük 2x2 grid'den Pirs-tarzı tam-genişlik tek-eylem
+>   kart listesine döndü (commit `43891e0`) — Ana Sayfa ve Bilîze'ye otomatik
+>   yansıdı (paylaşılan widget).
+> - Sonuç ekranı aksiyon butonları 2×2 grid düzenine döndü (commit `e0dcc2c`).
+>
+> Kod incelemesi sonucu şu ekranlarda **bilinçli olarak değişiklik
+> yapılmadı** (zaten hedeflenen düzeni taşıyor veya değiştirmek bilgi
+> kaybına yol açardı):
+> - `categories_tab.dart` — zaten mastery bilgili zengin kart grid'i;
+>   Pirs'in sade satır listesine çevirmek geriye gidiş olurdu.
+> - `leaderboard_screen.dart`'ın `_RankRow`'u — zaten rank+avatar+isim+skor
+>   tek satır düzeninde.
+> - Öğrenme yolu (`learning_screen.dart`) — spec'e göre düğüm-tabanlı yapı
+>   korunuyor, yalnız renk (Paket 0 ile otomatik) değişti.
+>
+> Tüm değişiklikler `dart analyze` temiz + `flutter test` 513/513 + web
+> build başarılı ile doğrulandı.
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Swap ZanKurd's brand color tokens (orange/purple → indigo/pink/sky/lime "Bubblegum Arcade" palette), flip the default theme from dark-first to light-first, and recolor the Zana/RojMascot rays — with zero layout or logic changes. This alone repaints every existing screen app-wide since all screens already consume `AppTheme` tokens.
