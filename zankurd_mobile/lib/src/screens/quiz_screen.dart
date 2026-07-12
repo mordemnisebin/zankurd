@@ -30,6 +30,8 @@ import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/kilim_pattern_painter.dart';
+import '../widgets/quiz_tutorial_overlay.dart';
+import '../services/tts_service.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz_result_screen.dart';
 
@@ -101,6 +103,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   StreamSubscription<List<Player>>? _playersSub;
   StreamSubscription<Map<String, dynamic>>? _realtimeSub;
   final Map<String, String> _opponentSelectedAnswers = {};
+  final Set<String> _answeredPlayerNames = {};
   Timer? _autoNextTimer;
   BotRace? _botRace;
   bool _isKu = true;
@@ -137,6 +140,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   StreamSubscription? _roomSub;
   Timer? _pollTimer;
 
+  // Quiz tutorial coach mark hedef anahtarları
+  final GlobalKey _timerTargetKey = GlobalKey();
+  final GlobalKey _answerAreaKey = GlobalKey();
+  final GlobalKey _comboKey = GlobalKey();
+  final GlobalKey _wildcardKey = GlobalKey();
+  final GlobalKey _nextButtonKey = GlobalKey();
+
+  // TTS (metin-okuma) servisi
+  TTSService? _ttsService;
+
   QuizQuestion get question => _questions[index];
   bool get answered => selectedAnswer.isNotEmpty;
   bool get isLastQuestion => index == widget.questions.length - 1;
@@ -151,6 +164,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _isKu = context.langProvider.isKu;
     _questions = List.of(widget.questions);
     _loadCoinBalance();
+    _loadTTSService();
 
     _timerController = AnimationController(
       vsync: this,
@@ -182,6 +196,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             lastTickSecond = remaining;
             if (remaining > 0 && remaining <= 5) {
               HapticFeedback.lightImpact();
+              context.read<SoundProvider>().playTick();
             }
           }
         }
@@ -214,6 +229,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   : senderName == name;
               if (senderName != null && !isSelf) {
                 setState(() {
+                  if (payload['answered'] == true) {
+                    _answeredPlayerNames.add(senderName);
+                  } else if (payload['answered'] == false) {
+                    _answeredPlayerNames.remove(senderName);
+                  }
+
                   final opponentIdx = livePlayers.indexWhere(
                     (p) => senderId != null
                         ? p.id == senderId
@@ -269,14 +290,27 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       livePlayers[idx] = livePlayers[idx].copyWith(
                         score: p.score,
                         streak: p.streak,
-                        state: p.state,
+                        state: _answeredPlayerNames.contains(p.name)
+                            ? (_isKu ? 'Bersiv da' : 'Cevapladı')
+                            : (_isKu
+                                  ? 'Li benda bersivê ye'
+                                  : 'Cevap bekliyor'),
                       );
                     } else {
-                      livePlayers.add(p);
+                      livePlayers.add(
+                        p.copyWith(
+                          state: _answeredPlayerNames.contains(p.name)
+                              ? (_isKu ? 'Bersiv da' : 'Cevapladı')
+                              : (_isKu
+                                    ? 'Li benda bersivê ye'
+                                    : 'Cevap bekliyor'),
+                        ),
+                      );
                     }
                   }
                   livePlayers.sort((a, b) => b.score.compareTo(a.score));
                 });
+                _checkMultiplayerSync();
               });
         }
       } else {
@@ -373,6 +407,37 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     });
   }
 
+  Future<void> _loadTTSService() async {
+    try {
+      final tts = await TTSService.load();
+      if (mounted) {
+        setState(() => _ttsService = tts);
+        // İlk soruyu otomatik oku (auto-read etkinse)
+        if (tts.autoRead && _questions.isNotEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) tts.speak(question.promptText);
+          });
+        }
+      }
+    } catch (_) {
+      // TTS kullanılamazsa sessizce devam et.
+    }
+  }
+
+  /// Soru metnini seslendir.
+  void _speakPrompt() {
+    final tts = _ttsService;
+    if (tts == null) return;
+    tts.speak(question.promptText);
+  }
+
+  /// Otomatik okuma etkinse soruyu seslendir.
+  void _tryAutoRead() {
+    final tts = _ttsService;
+    if (tts == null || !tts.autoRead) return;
+    tts.speak(question.promptText);
+  }
+
   List<Player> _composeBotRacePlayers() {
     final players = [
       Player(
@@ -432,6 +497,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _pollTimer?.cancel();
     _timerController.dispose();
     _explanationController.dispose();
+    _ttsService?.dispose();
     super.dispose();
   }
 
@@ -508,49 +574,57 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             ),
           ],
         ),
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: AppTheme.backgroundGradient(context),
-          ),
-          child: Stack(
-            children: [
-              SafeArea(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final landscape = constraints.maxWidth >= 700;
-                    if (landscape) {
-                      return _buildLandscapeLayout();
-                    }
-                    return _buildPortraitLayout();
-                  },
+        body: QuizTutorialOverlay(
+          isKu: _isKu,
+          timerKey: _timerTargetKey,
+          answerAreaKey: _answerAreaKey,
+          comboKey: _comboKey,
+          wildcardKey: _wildcardKey,
+          nextButtonKey: _nextButtonKey,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: AppTheme.backgroundGradient(context),
+            ),
+            child: Stack(
+              children: [
+                SafeArea(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final landscape = constraints.maxWidth >= 700;
+                      if (landscape) {
+                        return _buildLandscapeLayout();
+                      }
+                      return _buildPortraitLayout();
+                    },
+                  ),
                 ),
-              ),
-              // Vinyet yalnız aktif geri sayım baskısında: cevap verildikten
-              // (veya süre dolduktan) sonra kırmızı parlama sönmeli, yoksa
-              // açıklama okunurken ekran "alarm" modunda kalıyor (2026-07-05
-              // görsel QA bulgusu).
-              if (widget.enableTimer && !answered)
-                CriticalVignette(animation: _timerController),
-              WrongFlash(trigger: _shakeTrigger),
-              if (_showAnswerBurst)
-                ConfettiOverlay(
-                  particleCount: 24,
-                  duration: const Duration(milliseconds: 900),
-                  onFinished: () {
-                    setState(() {
-                      _showAnswerBurst = false;
-                    });
-                  },
-                ),
-              if (_showConfetti)
-                ConfettiOverlay(
-                  onFinished: () {
-                    setState(() {
-                      _showConfetti = false;
-                    });
-                  },
-                ),
-            ],
+                // Vinyet yalnız aktif geri sayım baskısında: cevap verildikten
+                // (veya süre dolduktan) sonra kırmızı parlama sönmeli, yoksa
+                // açıklama okunurken ekran "alarm" modunda kalıyor (2026-07-05
+                // görsel QA bulgusu).
+                if (widget.enableTimer && !answered)
+                  CriticalVignette(animation: _timerController),
+                WrongFlash(trigger: _shakeTrigger),
+                if (_showAnswerBurst)
+                  ConfettiOverlay(
+                    particleCount: 24,
+                    duration: const Duration(milliseconds: 900),
+                    onFinished: () {
+                      setState(() {
+                        _showAnswerBurst = false;
+                      });
+                    },
+                  ),
+                if (_showConfetti)
+                  ConfettiOverlay(
+                    onFinished: () {
+                      setState(() {
+                        _showConfetti = false;
+                      });
+                    },
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -564,6 +638,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     final showExpl = _isMultiplayer
         ? (_mpPhase == _MultiplayerPhase.reveal)
         : _showExplanation;
+
+    final screenHeight = MediaQuery.sizeOf(context).height;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -585,14 +661,24 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                     _buildProgressBar(context),
                     _buildComboRow(),
                     const SizedBox(height: 8),
-                    _buildQuestionSwitcher(context, showExplanation: showExpl),
+                    // Coach-mark GlobalKey'leri yalnız ilk soruda: panel
+                    // AnimatedSwitcher içinde olduğundan geçiş sırasında eski
+                    // ve yeni panel aynı anda yaşar; anahtar her soruda
+                    // geçilirse duplicate-GlobalKey hatası oluşur. Eğitim
+                    // turu zaten sadece ilk soruda gösterilir.
+                    _buildQuestionSwitcher(
+                      context,
+                      showExplanation: showExpl,
+                      timerKey: index == 0 ? _timerTargetKey : null,
+                      answerAreaKey: index == 0 ? _answerAreaKey : null,
+                    ),
                     if (_isMultiplayer &&
                         answered &&
                         _mpPhase == _MultiplayerPhase.waiting)
                       _MultiplayerWaitingOverlay(isKu: _isKu),
                     if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
                       _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
-                    if (widget.is1v1) ...[
+                    if (widget.is1v1 && screenHeight >= 800) ...[
                       const SizedBox(height: 8),
                       _LiveScoreboard(players: livePlayers),
                     ],
@@ -631,9 +717,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // Portrait'taki notla aynı: coach-mark anahtarları
+                      // yalnız ilk soruda geçilir (duplicate-GlobalKey).
                       _buildQuestionSwitcher(
                         context,
                         showExplanation: showExpl,
+                        timerKey: index == 0 ? _timerTargetKey : null,
+                        answerAreaKey: index == 0 ? _answerAreaKey : null,
                       ),
                       if (_isMultiplayer &&
                           answered &&
@@ -678,6 +768,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   /// Combo rozeti + puan uçuşu satırı. Rozet yokken yükseklik kaplamaz.
   Widget _buildComboRow() {
     return Padding(
+      key: _comboKey,
       padding: EdgeInsets.only(top: comboTierFor(streak) != null ? 10 : 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -777,7 +868,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildQuestionSwitcher(BuildContext context, {bool? showExplanation}) {
+  Widget _buildQuestionSwitcher(
+    BuildContext context, {
+    bool? showExplanation,
+    GlobalKey? timerKey,
+    GlobalKey? answerAreaKey,
+  }) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 280),
       switchInCurve: Curves.easeOutCubic,
@@ -794,7 +890,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       ),
       child: KeyedSubtree(
         key: ValueKey(index),
-        child: _buildQuestionPanel(context, showExplanation: showExplanation),
+        child: _buildQuestionPanel(
+          context,
+          showExplanation: showExplanation,
+          timerKey: timerKey,
+          answerAreaKey: answerAreaKey,
+        ),
       ),
     );
   }
@@ -811,11 +912,14 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         ? false
         : (answered && !completing);
 
+    final screenHeight = MediaQuery.sizeOf(context).height;
+    final isCompact = screenHeight < 750;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildWildcardRow(),
-        const SizedBox(height: AppSpacing.xs),
+        SizedBox(height: isCompact ? AppSpacing.xxs : AppSpacing.xs),
         showRatingBar
             ? Row(
                 children: [
@@ -886,38 +990,45 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   ),
                 ],
               )
-            : FilledButton.icon(
-                key: const ValueKey('quiz-next-button'),
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppTheme.brandOrange,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      AppRadius.md,
-                    ), // AppRadius.lg
+            // Coach-mark hedefi (GlobalKey) dış sarmalayıcıda; sabit
+            // 'quiz-next-button' anahtarı düğmenin üzerinde korunur.
+            : KeyedSubtree(
+                key: _nextButtonKey,
+                child: FilledButton.icon(
+                  key: const ValueKey('quiz-next-button'),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppTheme.brandOrange,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      vertical: isCompact ? AppSpacing.xs : AppSpacing.sm,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        AppRadius.md,
+                      ), // AppRadius.lg
+                    ),
+                    elevation: 2,
+                    shadowColor: AppTheme.brandOrange.withValues(alpha: 0.3),
                   ),
-                  elevation: 2,
-                  shadowColor: AppTheme.brandOrange.withValues(alpha: 0.3),
-                ),
-                onPressed: canPressNext ? () => _next() : null,
-                icon: Icon(
-                  _isMultiplayer
-                      ? Icons.hourglass_top_rounded
-                      : isLastQuestion
-                      ? Icons.flag_outlined
-                      : Icons.arrow_forward_rounded,
-                ),
-                label: Text(
-                  _isMultiplayer &&
-                          answered &&
-                          _mpPhase != _MultiplayerPhase.reveal
-                      ? context.s('Li benda hevrik...', 'Rakip bekleniyor...')
-                      : isLastQuestion
-                      ? context.s('Qediya', 'Bitir')
-                      : context.s('Piştre', 'Sonraki'),
-                  style: AppTypography.bodyLarge.copyWith(
-                    fontWeight: FontWeight.w800,
+                  onPressed: canPressNext ? () => _next() : null,
+                  icon: Icon(
+                    _isMultiplayer
+                        ? Icons.hourglass_top_rounded
+                        : isLastQuestion
+                        ? Icons.flag_outlined
+                        : Icons.arrow_forward_rounded,
+                  ),
+                  label: Text(
+                    _isMultiplayer &&
+                            answered &&
+                            _mpPhase != _MultiplayerPhase.reveal
+                        ? context.s('Li benda hevrik...', 'Rakip bekleniyor...')
+                        : isLastQuestion
+                        ? context.s('Qediya', 'Bitir')
+                        : context.s('Piştre', 'Sonraki'),
+                    style: AppTypography.bodyLarge.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ),
@@ -935,6 +1046,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       if (_isSoloMode) WildcardType.changeQuestion,
     ];
     return Row(
+      key: _wildcardKey,
       children: [
         for (var i = 0; i < jokers.length; i++) ...[
           if (i > 0) const SizedBox(width: AppSpacing.xxs),
@@ -1149,10 +1261,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   // ─── Soru paneli ─────────────────────────────────────────────────────────
 
-  Widget _buildQuestionPanel(BuildContext context, {bool? showExplanation}) {
+  Widget _buildQuestionPanel(
+    BuildContext context, {
+    bool? showExplanation,
+    GlobalKey? timerKey,
+    GlobalKey? answerAreaKey,
+  }) {
     final promptText = question.promptText;
     final size = MediaQuery.sizeOf(context);
     final compactLandscape = size.width >= 700 && size.width > size.height;
+    final isCompact = size.height < 750;
     final questionIcon = CategoryVisuals.icon(question.category);
     // Soru paneli kategori renk kimliğini taşır: hafif zemin tonu,
     // renkli kenarlık/parıltı ve kategori gradyanlı ikon rozeti.
@@ -1161,7 +1279,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     final catColor = catGradient.colors.first;
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(isCompact ? 10 : 16),
       decoration: BoxDecoration(
         color: Color.alphaBlend(
           catColor.withValues(alpha: 0.07),
@@ -1238,22 +1356,30 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  _CircularTimer(
-                    key: const ValueKey('quiz-circular-timer'),
-                    animation: _timerController,
-                    maxSeconds: 15,
-                    isPaused: answered,
+                  // Coach-mark hedefi (GlobalKey) dış sarmalayıcıda kalır ki
+                  // sabit 'quiz-circular-timer' anahtarı widget üzerinde korunsun.
+                  KeyedSubtree(
+                    key: timerKey,
+                    child: _CircularTimer(
+                      key: const ValueKey('quiz-circular-timer'),
+                      animation: _timerController,
+                      maxSeconds: 15,
+                      isPaused: answered,
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
+              SizedBox(height: isCompact ? 8 : 14),
               if (compactLandscape && question.hasImage)
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: 164,
-                      child: _QuestionImage(url: question.imageUrl!),
+                      child: _QuestionImage(
+                        url: question.imageUrl!,
+                        isCompact: isCompact,
+                      ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -1269,19 +1395,24 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                         showExplanation: showExplanation ?? _showExplanation,
                         suspense: _suspense,
                         opponentSelectedAnswers: _opponentSelectedAnswers,
+                        isCompact: isCompact,
+                        answerAreaKey: answerAreaKey,
                         onAnswer: _answer,
+                        onSpeakPrompt: _ttsService != null
+                            ? _speakPrompt
+                            : null,
                       ),
                     ),
                   ],
                 )
               else ...[
                 if (question.hasImage) ...[
-                  _QuestionImage(url: question.imageUrl!),
-                  const SizedBox(height: 14),
+                  _QuestionImage(url: question.imageUrl!, isCompact: isCompact),
+                  SizedBox(height: isCompact ? 8 : 14),
                 ],
                 _QuestionTextAndAnswers(
                   promptText: promptText,
-                  promptFontSize: compactLandscape ? 20 : 24,
+                  promptFontSize: compactLandscape ? 20 : (isCompact ? 20 : 24),
                   question: question,
                   selectedAnswer: selectedAnswer,
                   answered: answered,
@@ -1291,7 +1422,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   showExplanation: showExplanation ?? _showExplanation,
                   suspense: _suspense,
                   opponentSelectedAnswers: _opponentSelectedAnswers,
+                  isCompact: isCompact,
+                  answerAreaKey: answerAreaKey,
                   onAnswer: _answer,
+                  onSpeakPrompt: _ttsService != null ? _speakPrompt : null,
                 ),
               ],
             ],
@@ -1342,7 +1476,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     if (otherPlayers.isEmpty) return;
 
     final allOthersAnswered = otherPlayers.every(
-      (p) => p.state == 'Cevapladı' || p.state == 'Bersiv da',
+      (p) => _answeredPlayerNames.contains(p.name),
     );
 
     if (answered && allOthersAnswered && _mpPhase != _MultiplayerPhase.reveal) {
@@ -1427,6 +1561,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _showExplanation = false;
       _suspense = false;
       _opponentSelectedAnswers.clear();
+      _answeredPlayerNames.clear();
       _mpPhase = _MultiplayerPhase.answering;
       _revealCountdown = 0;
       _syncMyDuelState(answeredNow: false);
@@ -1497,6 +1632,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     if (!mounted) return;
     context.read<SoundProvider>().playWin();
 
+    // result: quiz rotası değiştirilirken çağıranın await'ine "tamamlandı"
+    // sinyali taşır (yarıda çıkışta null döner — bkz. level_screen).
     Navigator.of(context).pushReplacement(
       AppRoute.replace(
         QuizResultScreen(
@@ -1515,6 +1652,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           contestId: widget.contestId,
         ),
       ),
+      result: const {'completed': true},
     );
   }
 
@@ -1697,6 +1835,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             contestId: widget.contestId,
           ),
         ),
+        // Yarıda çıkıştan (null) ayırt etmek için tamamlanma sinyali.
+        result: const {'completed': true},
       );
       return;
     }
@@ -1716,6 +1856,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _showExplanation = false;
       _suspense = false;
       _opponentSelectedAnswers.clear();
+      _answeredPlayerNames.clear();
       // Multiplayer phase sıfırla
       _mpPhase = _MultiplayerPhase.answering;
       _revealCountdown = 0;
@@ -1724,6 +1865,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _markQuestionSeen();
     _loadFavoriteState();
     _startTimer();
+    _tryAutoRead();
   }
 
   void _recordAnswer(String answer) {

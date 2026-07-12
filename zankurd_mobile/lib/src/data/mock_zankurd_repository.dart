@@ -15,6 +15,7 @@ import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/room_message.dart';
 import '../models/tournament.dart';
 import '../utils/coin_calculator.dart';
 import 'offline_question_bank.dart';
@@ -323,6 +324,45 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<void> finishGame(GameRoom room) async {}
+
+  final List<RoomMessage> _roomMessages = [];
+  final Map<String, StreamController<List<RoomMessage>>> _roomChatControllers =
+      {};
+
+  @override
+  Future<void> sendRoomMessage({
+    required String roomId,
+    required String text,
+  }) async {
+    final msg = RoomMessage(
+      id: 'msg_${DateTime.now().millisecondsSinceEpoch}',
+      roomId: roomId,
+      senderId: 'user1',
+      senderName: _mockName,
+      senderAvatarColor: '#E94560',
+      text: text.trim(),
+      createdAt: DateTime.now().toUtc(),
+    );
+    _roomMessages.add(msg);
+    _roomChatControllers[roomId]?.add(List.of(_roomMessages));
+  }
+
+  @override
+  Stream<List<RoomMessage>> subscribeRoomMessages(String roomId) {
+    final existing = _roomChatControllers[roomId];
+    if (existing != null && !existing.isClosed) return existing.stream;
+    final controller = StreamController<List<RoomMessage>>.broadcast(
+      onCancel: () => _roomChatControllers.remove(roomId),
+    );
+    _roomChatControllers[roomId] = controller;
+    controller.add(List.of(_roomMessages));
+    return controller.stream;
+  }
+
+  @override
+  Future<List<RoomMessage>> loadRoomMessages(String roomId) async {
+    return List.of(_roomMessages);
+  }
 
   @override
   Future<Map<String, dynamic>> submitAnswer({
@@ -982,6 +1022,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
         friendName: 'ZanînBot',
         friendAvatarColor: '#E94560',
         createdAt: DateTime.now(),
+        totalScore: 2450,
+        level: 12,
+        gamesPlayed: 48,
+        lastActiveAt: DateTime.now().toUtc(),
       ),
       Friend(
         id: 'friend2',
@@ -990,8 +1034,20 @@ class MockZanKurdRepository implements ZanKurdRepository {
         friendName: 'KurdBot',
         friendAvatarColor: '#6F61C0',
         createdAt: DateTime.now(),
+        totalScore: 1820,
+        level: 9,
+        gamesPlayed: 31,
+        lastActiveAt:
+            DateTime.now().toUtc().subtract(const Duration(minutes: 10)),
       ),
     ];
+  }
+
+  @override
+  Future<List<Friend>> loadFriendsLeaderboard() async {
+    final friends = await loadFriends();
+    friends.sort((a, b) => b.totalScore.compareTo(a.totalScore));
+    return friends;
   }
 
   @override
@@ -1115,5 +1171,22 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<int> claimTournamentChampionReward() async {
     _mockCoins += TournamentConfig.coinBonusChampion;
     return TournamentConfig.coinBonusChampion;
+  }
+
+  @override
+  Future<bool> submitSuggestedQuestion({
+    required String category,
+    required String prompt,
+    required String optionA,
+    required String optionB,
+    required String optionC,
+    required String optionD,
+    required String correctOption,
+    String? explanation,
+    int difficulty = 3,
+  }) async {
+    // Mock: her zaman başarılı olarak dön.
+    // Canlı ortamda Supabase 'suggested_questions' tablosuna yazılır.
+    return true;
   }
 }

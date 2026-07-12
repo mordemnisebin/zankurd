@@ -133,11 +133,16 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                     top: compact ? 0 : 8,
                                     left: wideCompact ? 4 : 0,
                                   ),
-                                  child: _AnimatedBrandLockup(
-                                    scale: _brandScale,
-                                    opacity: _brandOpacity,
-                                    logoWidth: compact ? 48 : 68,
-                                    showTagline: !wideCompact,
+                                  // Kısa pencerelerde sabit başlık kutusunu
+                                  // taşırmasın diye gerekirse küçülür.
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: _AnimatedBrandLockup(
+                                      scale: _brandScale,
+                                      opacity: _brandOpacity,
+                                      logoWidth: compact ? 48 : 68,
+                                      showTagline: !wideCompact,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -325,6 +330,30 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           ku
               ? 'Rozetên taybetî bi encamên xwe ve bistîne'
               : 'Başarılarınla özel rozetler kazan',
+        ],
+      ),
+      // Değer önerisi: Neden Duolingo/Memrise değil de ZanKurd?
+      _OnboardingData(
+        icon: Icons.diamond_rounded,
+        color: AppTheme.violet,
+        title: context.s('Çima ZanKurd?', 'Neden ZanKurd?'),
+        body: context.s(
+          'Ne Duolingo, ne Memrise — ZanKurd Kurmancî kültürünü yarışarak öğrenmenin tek adresi. Canlı rekabet + kültürel derinlik.',
+          'Duolingo ya da Memrise değil — ZanKurd, Kurmancî kültürünü yarışarak öğrenmenin tek adresi. Canlı rekabet + kültürel derinlik.',
+        ),
+        bullets: [
+          ku
+              ? '8 kategori: Ziman, Dîrok, Çand, Edebiyat, Muzîk, Cografya, Siyaset, Paradigma'
+              : '8 kategori: Dil, Tarih, Kültür, Edebiyat, Müzik, Coğrafya, Siyaset, Paradigma',
+          ku
+              ? 'Jokerên stratejîk: 50/50, Demjimêr zêde, Pirsê biguherîne'
+              : 'Stratejik jokerler: 50/50, Süre uzat, Soru değiştir',
+          ku
+              ? 'Odeyên zindî: bi hevalan re pêşbirkê bike an 1vs1 duel'
+              : 'Canlı odalar: arkadaşlarınla yarış veya 1vs1 düello',
+          ku
+              ? 'Turnuvayên rojane: bilîze, pêşbikeve, bibe şampiyon'
+              : 'Günlük turnuvalar: oyna, yüksel, şampiyon ol',
         ],
       ),
     ];

@@ -9,6 +9,7 @@ import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/tournament_bracket_widget.dart';
 import 'quiz_screen.dart';
 
 /// Günlük turnuva: 16 oyuncu, 4 tur, tur başına 4 soruluk maç.
@@ -348,11 +349,36 @@ class _TournamentScreenState extends State<TournamentScreen> {
             ),
           ],
           const SizedBox(height: AppSpacing.lg),
+          // -- Bracket visualization --
           ScreenSectionLabel(
             label: ku ? 'Şemaya Turnuvayê' : 'Turnuva Şeması',
             accent: AppTheme.gold,
           ),
           const SizedBox(height: AppSpacing.sm),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(AppSpacing.md),
+              decoration: AppTheme.cardDecoration(context),
+              child: TournamentBracketWidget(
+                bracket: bracket,
+                userId: _userId,
+                ku: ku,
+                onTapMatch: (match, roundIndex) {
+                  // Only the user's active match in the current round is tappable
+                  if (roundIndex == bracket.currentRound &&
+                      (match.playerOneId == _userId ||
+                          match.playerTwoId == _userId) &&
+                      match.status != 'completed') {
+                    _startMatch();
+                  }
+                },
+              ),
+            ),
+          ),
+          // -- Legacy round list (collapsed below the bracket) --
+          const SizedBox(height: AppSpacing.md),
           for (var i = 0; i < bracket.rounds.length; i++) ...[
             _RoundSection(
               title: roundNames[i],
@@ -384,6 +410,29 @@ class _LobbyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Calculate time until next Saturday 20:00
+    final now = DateTime.now();
+    final daysUntilSaturday = (DateTime.saturday - now.weekday + 7) % 7;
+    final nextSaturday = DateTime(
+      now.year,
+      now.month,
+      now.day + (daysUntilSaturday == 0 ? 0 : daysUntilSaturday),
+      20,
+      0,
+    );
+    if (nextSaturday.isBefore(now) || nextSaturday.isAtSameMomentAs(now)) {
+      // If it's already Saturday after 20:00, next is next week
+      nextSaturday.add(const Duration(days: 7));
+    }
+    final remaining = nextSaturday.difference(now);
+    final remainingHours = remaining.inHours;
+    final remainingMinutes = remaining.inMinutes % 60;
+
+    final scheduleText = ku ? 'Her Şemî 20:00' : 'Her Cumartesi 20:00';
+    final countdownText = ku
+        ? 'Turnuvaya maye: $remainingHours saet $remainingMinutes deqîqe'
+        : 'Turnuvaya kalan: $remainingHours saat $remainingMinutes dakika';
+
     return Center(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -452,6 +501,49 @@ class _LobbyView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: AppSpacing.sm),
+                    // Tournament schedule badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.sm,
+                        vertical: AppSpacing.xxs,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(AppRadius.pill),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.3),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.schedule_rounded,
+                            size: 14,
+                            color: Colors.white70,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            scheduleText,
+                            style: AppTypography.caption.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    // Countdown
+                    Text(
+                      countdownText,
+                      textAlign: TextAlign.center,
+                      style: AppTypography.caption.copyWith(
+                        color: AppTheme.gold,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
                     // Honesty label: bot-filled bracket, not live multiplayer
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -499,9 +591,10 @@ class _LobbyView extends StatelessWidget {
                     const SizedBox(height: AppSpacing.lg),
                     SizedBox(
                       width: double.infinity,
-                      child: FilledButton(
+                      child: FilledButton.icon(
                         key: const ValueKey('tournament-primary-cta'),
                         onPressed: onStart,
+                        icon: const Icon(Icons.emoji_events_rounded, size: 20),
                         style: FilledButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                             vertical: AppSpacing.md,
@@ -509,8 +602,8 @@ class _LobbyView extends StatelessWidget {
                           backgroundColor: AppTheme.brandOrange,
                           foregroundColor: Colors.white,
                         ),
-                        child: Text(
-                          ku ? 'Dest Bi Turnuvayê Bike' : 'Turnuvaya Başla',
+                        label: Text(
+                          ku ? 'Tevlî Turnuvayê Bibe' : 'Turnuvaya Katıl',
                           style: AppTypography.bodyLarge.copyWith(
                             fontWeight: FontWeight.w800,
                           ),

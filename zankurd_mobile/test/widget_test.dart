@@ -344,6 +344,7 @@ void main() {
       'zankurd.onboarding.seen': true,
       'zankurd.profileName.completed': true,
       'zankurd.navTour.seen': true,
+      'zankurd.quiz_tutorial.seen': true,
     });
     AchievementStore.resetInstance();
     SeenQuestionStore.resetInstance();
@@ -1100,6 +1101,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.text('Kodla katıl'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Kodla katıl'));
     await tester.pumpAndSettle();
 
@@ -2183,19 +2185,19 @@ void main() {
   //     ),
   //   );
   //   await tester.pumpAndSettle();
-  // 
+  //
   //   final answerText = question.displayAnswers.first;
   //   await tester.ensureVisible(find.text(answerText).first);
   //   await tester.tap(find.text(answerText).first);
   //   await tester.pump();
-  // 
+  //
   //   final shown = question.getLocalizedExplanation(false);
   //   await tester.pump(const Duration(milliseconds: 400));
   //   expect(find.text(shown), findsNothing);
-  // 
+  //
   //   await tester.pump(const Duration(milliseconds: 600));
   //   await tester.pumpAndSettle();
-  // 
+  //
   //   expect(find.text(shown), findsOneWidget);
   // });
 }

@@ -26,6 +26,7 @@ import 'favorite_questions_screen.dart';
 import 'quiz_screen.dart';
 import 'friends_screen.dart';
 import 'settings_screen.dart';
+import 'suggest_question_screen.dart';
 import 'shop_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -584,10 +585,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     : (ku
                           ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
                           : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
+                onTap: _practiceLoading ? null : _startMistakePractice,
+              ),
+              divider,
+              _menuRow(
+                leading: const Icon(
+                  Icons.add_circle_outline,
+                  color: AppTheme.playCyan,
+                  size: 22,
+                ),
+                title: ku ? 'Pirs Pêşniyar Bike' : 'Soru Öner',
+                subtitle: ku
+                    ? 'Pirsa xwe pêşniyar bike, piştî pejirandinê were zêdekirin'
+                    : 'Kendi sorunu öner, onaylandıktan sonra eklensin',
                 borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(AppRadius.md),
                 ),
-                onTap: _practiceLoading ? null : _startMistakePractice,
+                onTap: () {
+                  Navigator.of(context).push(
+                    AppRoute.to(
+                      SuggestQuestionScreen(repository: widget.repository),
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -1490,9 +1510,22 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
         if (masteryCategoriesPlayed < 2) strongestCat = null;
         if (mistakeCategoriesPlayed < 2) weakestCat = null;
 
-        if (strongestCat == null && weakestCat == null) {
-          return const SizedBox.shrink();
+        // Build category bar data even if no strongest/weakest
+        final categoryBars = <_CategoryBarData>[];
+        for (final cat in categories) {
+          final corrects = masteryStore.correctCount(cat);
+          final mistakes = mistakesByCategory[cat] ?? 0;
+          if (corrects > 0 || mistakes > 0) {
+            categoryBars.add(_CategoryBarData(cat, corrects, mistakes));
+          }
         }
+        // Sort by correct count descending
+        categoryBars.sort((a, b) => b.correct.compareTo(a.correct));
+        final maxBar = categoryBars.isEmpty
+            ? 1
+            : categoryBars.map((e) => e.correct + e.mistakes).reduce(
+                  (a, b) => a > b ? a : b,
+                );
 
         return AppPanel(
           child: Column(
@@ -1502,7 +1535,6 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                 children: [
                   Icon(Icons.analytics_outlined, color: AppTheme.accent),
                   const SizedBox(width: 8),
-                  // Dar (iki sütunlu masaüstü) panelde başlık taşmasın.
                   Expanded(
                     child: Text(
                       isKu ? 'Analîza Performansê' : 'Performans Analizi',
@@ -1518,6 +1550,97 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 14),
+
+              // 📊 Category performance bars
+              if (categoryBars.isNotEmpty) ...[
+                Text(
+                  isKu
+                      ? 'Performansa li gor kategoriyan'
+                      : 'Kategorilere göre performans',
+                  style: TextStyle(
+                    color: AppTheme.textMutedColor(context),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                for (final bar in categoryBars) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 72,
+                          child: Text(
+                            isKu
+                                ? CategoryNames.localized(bar.category, true)
+                                : CategoryNames.localized(bar.category, false),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: TweenAnimationBuilder<double>(
+                              tween: Tween(
+                                begin: 0,
+                                end: (bar.correct + bar.mistakes) / maxBar,
+                              ),
+                              duration: const Duration(milliseconds: 700),
+                              curve: Curves.easeOutCubic,
+                              builder: (context, value, _) =>
+                                  LinearProgressIndicator(
+                                    value: value,
+                                    minHeight: 16,
+                                    backgroundColor:
+                                        AppTheme.surfaceColor(context),
+                                    color: AppTheme.correct,
+                                  ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        SizedBox(
+                          width: 40,
+                          child: Text(
+                            '${bar.correct}',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: AppTheme.correct,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                // Legend
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Row(
+                    children: [
+                      _LegendDot(color: AppTheme.correct, label: isKu ? 'Rast' : 'Doğru'),
+                      const SizedBox(width: 16),
+                      _LegendDot(color: AppTheme.wrong, label: isKu ? 'Şaş' : 'Yanlış'),
+                    ],
+                  ),
+                ),
+                if (strongestCat != null || weakestCat != null)
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Divider(),
+                  ),
+              ],
+
               if (strongestCat != null) ...[
                 Text(
                   isKu
@@ -1575,8 +1698,8 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
               if (weakestCat != null) ...[
                 Text(
                   isKu
-                      ? 'Kategoriya ku divê tu pêş bixî (Zayıf):'
-                      : 'Geliştirilmesi gereken alan (Zayıf):',
+                      ? 'Kategoriya ku divê tu pêş bixî:'
+                      : 'Geliştirilmesi gereken alan:',
                   style: TextStyle(
                     color: AppTheme.textMutedColor(context),
                     fontSize: 13,
@@ -1628,6 +1751,49 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+// ─── Category Bar Data Model ────────────────────────────────────────────────
+
+class _CategoryBarData {
+  const _CategoryBarData(this.category, this.correct, this.mistakes);
+  final String category;
+  final int correct;
+  final int mistakes;
+}
+
+// ─── Legend Dot ─────────────────────────────────────────────────────────────
+
+class _LegendDot extends StatelessWidget {
+  const _LegendDot({required this.color, required this.label});
+  final Color color;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+        const SizedBox(width: 4),
+        Text(
+          label,
+          style: TextStyle(
+            color: AppTheme.textMutedColor(context),
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
     );
   }
 }

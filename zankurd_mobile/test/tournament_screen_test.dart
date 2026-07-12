@@ -14,7 +14,9 @@ void main() {
   late MockZanKurdRepository repository;
 
   setUp(() {
-    SharedPreferences.setMockInitialValues({});
+    SharedPreferences.setMockInitialValues({
+      'zankurd.quiz_tutorial.seen': true,
+    });
     repository = MockZanKurdRepository();
   });
 
@@ -35,8 +37,8 @@ void main() {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      expect(find.text('ZanKurd Kupası'), findsOneWidget);
-      expect(find.text('Turnuvaya Başla'), findsOneWidget);
+      expect(find.text('Bot turnuva · günlük kupa'), findsOneWidget);
+      expect(find.text('Turnuvaya Katıl'), findsOneWidget);
       final startButton = tester.widget<FilledButton>(
         find.byKey(const ValueKey('tournament-primary-cta')),
       );
@@ -44,24 +46,27 @@ void main() {
         startButton.style?.backgroundColor?.resolve({}),
         AppTheme.brandOrange,
       );
-      expect(find.byIcon(Icons.emoji_events_rounded), findsOneWidget);
+      expect(find.byIcon(Icons.emoji_events_rounded), findsAtLeast(1));
     });
 
-    testWidgets(
-      'baslangic butonuna basildiginda ceyrek final eslesmesi yukleniyor',
-      (tester) async {
-        await tester.pumpWidget(createTestWidget());
-        await tester.pumpAndSettle();
+    testWidgets('baslangic butonuna basildiginda son 16 eslesmesi yukleniyor', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
 
-        final startButton = find.text('Turnuvaya Başla');
-        await tester.tap(startButton);
-        await tester.pumpAndSettle();
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('tournament-primary-cta')),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('tournament-primary-cta')));
+      await tester.pumpAndSettle();
 
-        expect(find.text('Çeyrek Final'), findsAtLeast(1));
-        expect(find.text('Maçı Başlat'), findsOneWidget);
-        // ScreenSectionLabel uppercase sunum kullanır.
-        expect(find.text('TURNUVA ŞEMASI'), findsOneWidget);
-      },
-    );
+      // 16 oyunculu kupada ilk tur "Son 16"dır.
+      expect(find.text('Son 16'), findsAtLeast(1));
+      expect(find.text('Maçı Başlat'), findsOneWidget);
+      // ScreenSectionLabel uppercase sunum kullanır.
+      expect(find.text('TURNUVA ŞEMASI'), findsOneWidget);
+    });
   });
 }

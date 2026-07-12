@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../models/friend.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/league_tier.dart';
@@ -35,13 +36,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late Future<List<LeaderboardEntry>> _future;
+  late Future<List<Friend>> _friendsFuture;
   Timer? _refreshTimer;
   LeaderboardPeriod _period = LeaderboardPeriod.weekly;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 1);
     _tabController.addListener(_onTabChanged);
     _loadData();
     _startAutoRefresh();
@@ -55,6 +57,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       LeaderboardPeriod.weekly,
       LeaderboardPeriod.monthly,
     ];
+    if (_tabController.index == 3) {
+      // Friends tab
+      setState(() {});
+      return;
+    }
     setState(() {
       _period = periods[_tabController.index];
     });
@@ -62,9 +69,16 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   }
 
   void _loadData() {
-    setState(() {
-      _future = widget.repository.loadLeaderboard(limit: 10, period: _period);
-    });
+    if (_tabController.index == 3) {
+      setState(() {
+        _friendsFuture =
+            widget.repository.loadFriendsLeaderboard();
+      });
+    } else {
+      setState(() {
+        _future = widget.repository.loadLeaderboard(limit: 10, period: _period);
+      });
+    }
   }
 
   void _startAutoRefresh() {
@@ -121,7 +135,67 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             _Header(ku: ku, onRefresh: _loadData),
             _PeriodTabs(controller: _tabController, ku: ku),
             Expanded(
-              child: FutureBuilder<List<LeaderboardEntry>>(
+              child: _tabController.index == 3
+                  ? _buildFriendsTab(ku)
+                  : _buildLeaderboardTab(ku),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFriendsTab(bool ku) {
+    return FutureBuilder<List<Friend>>(
+      future: _friendsFuture,
+      builder: (ctx, snap) {
+        if (snap.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppTheme.primaryGradientStart,
+              strokeWidth: 2.5,
+            ),
+          );
+        }
+        if (snap.hasError) {
+          return AppErrorState(
+            title: ku ? 'Heval nehatin barkirin' : 'Arkadaşlar yüklenemedi',
+            message: ku
+                ? 'Girêdanê kontrol bike û dîsa biceribîne.'
+                : 'Bağlantıyı kontrol edip tekrar dene.',
+            retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
+            onRetry: _loadData,
+          );
+        }
+        final friends = snap.data ?? [];
+        if (friends.isEmpty) {
+          return AppEmptyState(
+            icon: Icons.people_outline,
+            title: ku ? 'Heval tune' : 'Arkadaş yok',
+            message: ku
+                ? 'Arkadaş ekleyerek sıralamanı gör!'
+                : 'Arkadaş ekleyerek sıralamanı gör!',
+          );
+        }
+        return ListView(
+          controller: widget.scrollController,
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.page,
+            AppSpacing.xs,
+            AppSpacing.page,
+            AppSpacing.xl,
+          ),
+          children: [
+            for (final friend in friends)
+              _FriendRankRow(friend: friend, isKu: ku),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildLeaderboardTab(bool ku) {
+    return FutureBuilder<List<LeaderboardEntry>>(
                 future: _future,
                 builder: (ctx, snap) {
                   if (snap.connectionState == ConnectionState.waiting) {
@@ -177,12 +251,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                     ],
                   );
                 },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+              );
   }
 }
 
@@ -374,8 +443,8 @@ class _PeriodTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final labels = ku
-        ? ['Roj', 'Heft', 'Meh']
-        : ['Günlük', 'Haftalık', 'Aylık'];
+        ? ['Roj', 'Heft', 'Meh', 'Heval']
+        : ['Günlük', 'Haftalık', 'Aylık', 'Arkadaşlar'];
 
     return Container(
       margin: const EdgeInsets.fromLTRB(
@@ -712,6 +781,141 @@ class _RankRow extends StatelessWidget {
                 '${entry.totalScore}',
                 style: const TextStyle(
                   color: AppTheme.gold,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Friend Rank Row (Arkadaşlar tab) ─────────────────────────────────────────
+
+class _FriendRankRow extends StatelessWidget {
+  const _FriendRankRow({required this.friend, required this.isKu});
+
+  final Friend friend;
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    final online = friend.isOnline;
+    return Container(
+      key: ValueKey('friend-rank-row-${friend.friendId}'),
+      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      decoration: AppTheme.statCard(context, AppTheme.cyan).copyWith(
+        border: Border.all(
+          color: AppTheme.cyan.withValues(alpha: 0.22),
+        ),
+      ),
+      child: Row(
+        children: [
+          // Level badge
+          Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: AppTheme.surfaceHiColor(context),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: AppTheme.borderColor(context),
+                width: 1,
+              ),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              '${friend.level}',
+              style: TextStyle(
+                color: AppTheme.textSubColor(context),
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          // Avatar with online dot
+          SizedBox(
+            width: 40,
+            height: 40,
+            child: Stack(
+              children: [
+                PlayerAvatar(
+                  radius: 18,
+                  colorHex: friend.friendAvatarColor,
+                  displayName: friend.friendName,
+                ),
+                // Online status dot
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: online
+                          ? const Color(0xFF4CAF50)
+                          : const Color(0xFF9E9E9E),
+                      border: Border.all(
+                        color: AppTheme.surfaceColor(context),
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  friend.friendName,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w800,
+                    fontSize: 14,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 1),
+                Text(
+                  online
+                      ? (isKu ? 'Çevrimiçi' : 'Çevrimiçi')
+                      : (isKu ? 'Offline' : 'Offline'),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: online
+                        ? const Color(0xFF4CAF50)
+                        : AppTheme.textMutedColor(context),
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 72),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                '${friend.totalScore}',
+                style: const TextStyle(
+                  color: AppTheme.cyan,
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
                 ),

@@ -16,6 +16,8 @@ import 'home/daily_missions_card.dart';
 import 'home/hero_card.dart';
 import 'home/quick_play_grid.dart';
 import 'home/section_header.dart';
+import 'home/daily_theme_card.dart';
+import 'home/recommendation_card.dart';
 import '../widgets/animated_counter.dart';
 import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/zana_daily_card.dart';
@@ -27,6 +29,7 @@ import 'matchmaking_screen.dart';
 import 'contest_screen.dart';
 import 'spin_wheel_screen.dart';
 import 'tournament_screen.dart';
+import 'level_screen.dart';
 import 'shop_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -62,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool _missionsLoading = true;
   late AnimationController _loadAnimationController;
   String? _displayName;
+  int _refreshCounter = 0;
 
   ZanKurdRepository get repo => widget.repository;
 
@@ -96,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _refreshCoins();
     _loadMissions();
     _refreshStreak();
+    setState(() => _refreshCounter++);
   }
 
   Future<void> _refreshStreak() async {
@@ -228,6 +233,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             _heroFadeAnimation(2),
                             ZanaDailyCard(isKu: ku),
                           ),
+                          const SizedBox(height: 20),
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(3),
+                            DailyThemeCard(
+                              isKu: ku,
+                              onTap: () => _openCategoryLevels(
+                                context,
+                                DailyThemeCard.todayCategory,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(4),
+                            RecommendationCard(
+                              key: ValueKey('rec_card_$_refreshCounter'),
+                              isKu: ku,
+                              onTapCategory: (cat) =>
+                                  _openCategoryLevels(context, cat),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -349,8 +375,37 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     );
                   }
+                  if (index == 5) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(3),
+                        DailyThemeCard(
+                          isKu: ku,
+                          onTap: () => _openCategoryLevels(
+                            context,
+                            DailyThemeCard.todayCategory,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  if (index == 6) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(4),
+                        RecommendationCard(
+                          key: ValueKey('rec_card_$_refreshCounter'),
+                          isKu: ku,
+                          onTapCategory: (cat) =>
+                              _openCategoryLevels(context, cat),
+                        ),
+                      ),
+                    );
+                  }
                   return null;
-                }, childCount: 5),
+                }, childCount: 7),
               ),
             ),
           SliverToBoxAdapter(child: SizedBox(height: bottomContentPadding)),
@@ -747,6 +802,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       context,
     ).push(AppRoute.to(TournamentScreen(repository: repo)));
     _refreshCoins();
+  }
+
+  void _openCategoryLevels(BuildContext context, String category) {
+    Navigator.of(context).push(
+      AppRoute.to(
+        LevelScreen(repository: repo, category: category),
+      ),
+    );
   }
 
   Future<void> _refreshCoins() async {

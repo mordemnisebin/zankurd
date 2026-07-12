@@ -15,6 +15,7 @@ import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/room_message.dart';
 import '../models/tournament.dart';
 import '../utils/error_reporter.dart';
 import '../utils/question_cache.dart';
@@ -279,6 +280,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         categoryId: categoryId,
         limit: limit,
       );
+      // Onaylı havuz daralırsa (içerik denetimi vb.) boş liste ile quiz
+      // açmak yerine yerel bankaya düş.
+      if (result.isEmpty) {
+        return _offline.loadQuestions(categoryId: categoryId, limit: limit);
+      }
       _cache.set(key, result);
       return result;
     } catch (_) {
@@ -644,6 +650,61 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final id = room.id;
     if (id == null) return room.players;
     return _loadRoomPlayersById(id);
+  }
+
+  @override
+  Future<void> sendRoomMessage({
+    required String roomId,
+    required String text,
+  }) async {
+    final user = client.auth.currentUser;
+    if (user == null) return;
+    final name = await getProfileName();
+    final identity = await loadAvatarIdentity();
+    await client.from('room_messages').insert({
+      'room_id': roomId,
+      'sender_id': user.id,
+      'sender_name': name,
+      'sender_avatar_color': identity.colorHex,
+      'text': text.trim(),
+      'created_at': DateTime.now().toUtc().toIso8601String(),
+    });
+  }
+
+  @override
+  Stream<List<RoomMessage>> subscribeRoomMessages(String roomId) {
+    return client
+        .from('room_messages')
+        .stream(primaryKey: ['id'])
+        .eq('room_id', roomId)
+        .order('created_at')
+        .map(
+          (rows) => rows
+              .map(
+                (row) =>
+                    RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
+              )
+              .toList(),
+        );
+  }
+
+  @override
+  Future<List<RoomMessage>> loadRoomMessages(String roomId) async {
+    try {
+      final rows = await client
+          .from('room_messages')
+          .select('*')
+          .eq('room_id', roomId)
+          .order('created_at');
+      return rows
+          .map(
+            (row) =>
+                RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
+          )
+          .toList();
+    } catch (e) {
+      return _offline.loadRoomMessages(roomId);
+    }
   }
 
   @override
@@ -1499,6 +1560,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<List<Friend>> loadFriendsLeaderboard() async {
+    try {
+      final friends = await loadFriends();
+      friends.sort((a, b) => b.totalScore.compareTo(a.totalScore));
+      return friends;
+    } catch (e) {
+      return _offline.loadFriendsLeaderboard();
+    }
+  }
+
+  @override
   Future<List<FriendRequest>> loadPendingFriendRequests() async {
     try {
       final res = await client.rpc<List<dynamic>>(
@@ -1637,6 +1709,51 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return (_firstRow(response)?['coins'] as int?) ?? 0;
     } catch (e) {
       return _offline.claimTournamentChampionReward();
+    }
+  }
+
+  @override
+  Future<bool> submitSuggestedQuestion({
+    required String category,
+    required String prompt,
+    required String optionA,
+    required String optionB,
+    required String optionC,
+    required String optionD,
+    required String correctOption,
+    String? explanation,
+    int difficulty = 3,
+  }) async {
+    try {
+      final userId = currentUserId;
+      if (userId == null) return false;
+      await client.from('suggested_questions').insert({
+        'user_id': userId,
+        'category': category,
+        'prompt': prompt,
+        'option_a': optionA,
+        'option_b': optionB,
+        'option_c': optionC,
+        'option_d': optionD,
+        'correct_option': correctOption,
+        'explanation': explanation,
+        'difficulty': difficulty,
+        'status': 'pending',
+      });
+      return true;
+    } catch (e) {
+      // Çevrimdışı durumda mock'a düş.
+      return _offline.submitSuggestedQuestion(
+        category: category,
+        prompt: prompt,
+        optionA: optionA,
+        optionB: optionB,
+        optionC: optionC,
+        optionD: optionD,
+        correctOption: correctOption,
+        explanation: explanation,
+        difficulty: difficulty,
+      );
     }
   }
 }

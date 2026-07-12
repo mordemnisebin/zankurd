@@ -581,9 +581,10 @@ class AppTheme {
       _isDark(context) ? border : lightBorder;
 
   static ThemeData light() {
-    final base = dark();
-    return base.copyWith(
+    return ThemeData(
+      useMaterial3: true,
       brightness: Brightness.light,
+      fontFamily: 'Rubik',
       scaffoldBackgroundColor: lightBg,
       colorScheme: const ColorScheme(
         brightness: Brightness.light,
@@ -597,15 +598,26 @@ class AppTheme {
         surface: lightSurface,
         onSurface: lightTextPrimary,
       ),
-      appBarTheme: base.appBarTheme.copyWith(
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
         foregroundColor: lightTextPrimary,
-        titleTextStyle: base.appBarTheme.titleTextStyle?.copyWith(
+        titleTextStyle: TextStyle(
           color: lightTextPrimary,
+          fontFamily: 'Rubik',
+          fontWeight: FontWeight.w800,
+          fontSize: 20,
+          letterSpacing: -0.2,
         ),
-        iconTheme: const IconThemeData(color: lightTextPrimary),
+        iconTheme: IconThemeData(color: lightTextPrimary),
       ),
-      navigationBarTheme: base.navigationBarTheme.copyWith(
+      navigationBarTheme: NavigationBarThemeData(
         backgroundColor: lightSurface,
+        indicatorColor: accent.withValues(alpha: 0.18),
+        elevation: 0,
+        height: 68,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         iconTheme: WidgetStateProperty.resolveWith(
           (s) => IconThemeData(
             color: s.contains(WidgetState.selected) ? accent : lightTextMuted,
@@ -619,6 +631,16 @@ class AppTheme {
           ),
         ),
       ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: accent,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+        ),
+      ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: lightTextPrimary,
@@ -629,27 +651,62 @@ class AppTheme {
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
         ),
       ),
-      inputDecorationTheme: base.inputDecorationTheme.copyWith(
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? accent : lightTextMuted,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected)
+              ? accent.withValues(alpha: 0.4)
+              : lightBorder,
+        ),
+      ),
+      dividerTheme: const DividerThemeData(color: lightBorder, thickness: 1),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
         fillColor: lightSurfaceHi,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: lightBorder),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: lightBorder),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: accent, width: 2),
+        ),
         hintStyle: const TextStyle(color: lightTextMuted),
       ),
-      textTheme: base.textTheme.copyWith(
-        headlineSmall: base.textTheme.headlineSmall?.copyWith(
+      textTheme: const TextTheme(
+        headlineSmall: TextStyle(
+          fontWeight: FontWeight.w800,
           color: lightTextPrimary,
+          letterSpacing: -0.3,
+          height: 1.2,
         ),
-        titleLarge: base.textTheme.titleLarge?.copyWith(
+        titleLarge: TextStyle(
+          fontWeight: FontWeight.w700,
           color: lightTextPrimary,
+          letterSpacing: -0.2,
+          height: 1.25,
         ),
-        titleMedium: base.textTheme.titleMedium?.copyWith(
+        titleMedium: TextStyle(
+          fontWeight: FontWeight.w700,
           color: lightTextPrimary,
+          height: 1.3,
         ),
-        bodyLarge: base.textTheme.bodyLarge?.copyWith(color: lightTextSub),
-        bodyMedium: base.textTheme.bodyMedium?.copyWith(color: lightTextSub),
-        bodySmall: base.textTheme.bodySmall?.copyWith(color: lightTextMuted),
+        bodyLarge: TextStyle(color: lightTextSub, height: 1.45),
+        bodyMedium: TextStyle(color: lightTextSub, height: 1.4),
+        bodySmall: TextStyle(color: lightTextMuted, height: 1.35),
+        labelLarge: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 0.2),
       ),
-      snackBarTheme: base.snackBarTheme.copyWith(
+      snackBarTheme: SnackBarThemeData(
         backgroundColor: lightSurface,
-        contentTextStyle: TextStyle(color: lightTextPrimary),
+        contentTextStyle: const TextStyle(color: lightTextPrimary),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        behavior: SnackBarBehavior.floating,
       ),
     );
   }

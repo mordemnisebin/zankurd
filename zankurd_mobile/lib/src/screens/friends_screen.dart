@@ -409,13 +409,45 @@ class _FriendCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final online = friend.isOnline;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: AppPanel(
         key: ValueKey('friend-row-${friend.friendName}'),
         child: Row(
           children: [
-            PlayerAvatar(radius: 28, colorHex: friend.friendAvatarColor),
+            // Avatar with online dot
+            SizedBox(
+              width: 60,
+              height: 60,
+              child: Stack(
+                children: [
+                  PlayerAvatar(
+                    radius: 28,
+                    colorHex: friend.friendAvatarColor,
+                    displayName: friend.friendName,
+                  ),
+                  Positioned(
+                    bottom: 2,
+                    right: 2,
+                    child: Container(
+                      width: 14,
+                      height: 14,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: online
+                            ? const Color(0xFF4CAF50)
+                            : const Color(0xFF9E9E9E),
+                        border: Border.all(
+                          color: AppTheme.surfaceColor(context),
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -433,10 +465,15 @@ class _FriendCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    ku ? 'Heval' : 'Arkadaş',
+                    online
+                        ? (ku ? 'Çevrimiçi' : 'Çevrimiçi')
+                        : (ku ? 'Offline' : 'Offline'),
                     style: TextStyle(
-                      color: AppTheme.textMutedColor(context),
+                      color: online
+                          ? const Color(0xFF4CAF50)
+                          : AppTheme.textMutedColor(context),
                       fontSize: 12,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],

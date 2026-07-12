@@ -105,9 +105,10 @@ class _LiveScoreRow extends StatelessWidget {
 // ─── Soru görseli ────────────────────────────────────────────────────────────
 
 class _QuestionImage extends StatelessWidget {
-  const _QuestionImage({required this.url});
+  const _QuestionImage({required this.url, this.isCompact = false});
 
   final String url;
+  final bool isCompact;
 
   @override
   Widget build(BuildContext context) {
@@ -134,10 +135,11 @@ class _QuestionImage extends StatelessWidget {
                 const _QuestionImageFallback(),
           );
 
+    final double? forcedHeight = isCompact ? (size.height * 0.15).clamp(60.0, 100.0) : null;
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.sm),
-      child: isLandscapeTablet
-          ? SizedBox(width: double.infinity, height: maxHeight, child: image)
+      child: (isLandscapeTablet || forcedHeight != null)
+          ? SizedBox(width: double.infinity, height: forcedHeight ?? maxHeight, child: image)
           : AspectRatio(aspectRatio: 16 / 9, child: image),
     );
   }
@@ -174,6 +176,9 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.onAnswer,
     this.audiencePoll,
     this.opponentSelectedAnswers,
+    this.isCompact = false,
+    this.answerAreaKey,
+    this.onSpeakPrompt,
   });
 
   final String promptText;
@@ -186,6 +191,10 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final Map<String, double>? audiencePoll;
   final bool showExplanation;
   final Map<String, String>? opponentSelectedAnswers;
+  final bool isCompact;
+
+  /// Quiz turu için cevap alanını hedef gösteren GlobalKey.
+  final GlobalKey? answerAreaKey;
 
   /// Gerilim tutuşu: cevap seçildi ama sonuç henüz açıklanmadı.
   /// True iken doğru/yanlış renkleri gizlenir; seçilen şık "kontrol
@@ -193,31 +202,76 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final bool suspense;
   final ValueChanged<String> onAnswer;
 
+  /// Soru metnini seslendirmek için isteğe bağlı callback.
+  final VoidCallback? onSpeakPrompt;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          promptText,
-          style: AppTypography.heading2.copyWith(
-            color: AppTheme.textPrimaryColor(context),
-            fontSize: promptFontSize,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        for (final (index, answer) in question.displayAnswers.indexed)
-          AnimatedOpacity(
-            duration: const Duration(milliseconds: 250),
-            opacity: hiddenAnswers.contains(answer) ? 0.25 : 1,
-            child: IgnorePointer(
-              ignoring: hiddenAnswers.contains(answer),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                child: _buildAnswerButton(index, answer),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Text(
+                promptText,
+                style: AppTypography.heading2.copyWith(
+                  color: AppTheme.textPrimaryColor(context),
+                  fontSize: promptFontSize,
+                ),
               ),
             ),
+            if (onSpeakPrompt != null) ...[
+              const SizedBox(width: AppSpacing.xs),
+              InkWell(
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+                onTap: onSpeakPrompt,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppTheme.accent.withValues(alpha: 0.10),
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                    border: Border.all(
+                      color: AppTheme.accent.withValues(alpha: 0.25),
+                      width: 1.2,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.volume_up_rounded,
+                    color: AppTheme.accent,
+                    size: 22,
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+        SizedBox(height: isCompact ? AppSpacing.xs : AppSpacing.sm),
+        Container(
+          key: answerAreaKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final (index, answer) in question.displayAnswers.indexed)
+                AnimatedOpacity(
+                  duration: const Duration(milliseconds: 250),
+                  opacity: hiddenAnswers.contains(answer) ? 0.25 : 1,
+                  child: IgnorePointer(
+                    ignoring: hiddenAnswers.contains(answer),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        bottom: isCompact ? AppSpacing.xxs : AppSpacing.xs,
+                      ),
+                      child: _buildAnswerButton(index, answer),
+                    ),
+                  ),
+                ),
+            ],
           ),
+        ),
         _ExplanationBox(
           question: question,
           isKu: context.isKu,
@@ -250,6 +304,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       suspense: suspense,
       audiencePercent: audiencePoll?[answer],
       opponentNamesWhoSelected: opps,
+      isCompact: isCompact,
       onTap: () => onAnswer(answer),
     );
     final isWrongSelected =
@@ -603,6 +658,7 @@ class _AnswerButton extends StatelessWidget {
     this.suspense = false,
     this.audiencePercent,
     this.opponentNamesWhoSelected,
+    this.isCompact = false,
   });
 
   /// Görünüm sırası — A/B/C/D rozeti ve şık rengi için kullanılır.
@@ -619,6 +675,7 @@ class _AnswerButton extends StatelessWidget {
   final bool suspense;
   final double? audiencePercent;
   final List<String>? opponentNamesWhoSelected;
+  final bool isCompact;
 
   // A/B/C/D rozetleriyle eşleşen kenarlık renkleri
   static const _badgePalette = [
@@ -708,9 +765,9 @@ class _AnswerButton extends StatelessWidget {
             duration: const Duration(milliseconds: 150),
             curve: Curves.easeOutCubic,
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(
+            padding: EdgeInsets.symmetric(
               horizontal: AppSpacing.md,
-              vertical: AppSpacing.sm,
+              vertical: isCompact ? AppSpacing.xs : AppSpacing.sm,
             ),
             decoration: BoxDecoration(
               gradient: gradient,
@@ -745,6 +802,7 @@ class _AnswerButton extends StatelessWidget {
                         style: AppTypography.bodyLarge.copyWith(
                           color: textColor,
                           fontWeight: FontWeight.w800,
+                          fontSize: isCompact ? 14 : 16,
                         ),
                       ),
                     ),

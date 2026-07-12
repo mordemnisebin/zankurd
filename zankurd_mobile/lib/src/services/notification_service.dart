@@ -168,10 +168,15 @@ class NotificationService {
       );
 
       final scheduledTime = tz.TZDateTime.from(next, tz.local);
+      // Bildirim, zamanlama anında kayıtlı uygulama diliyle tek dilde kurulur
+      // (anahtar LanguageProvider._storageKey ile aynı olmalı).
+      final isKu = (_preferences?.getString('zankurd.language') ?? 'ku') != 'tr';
       await _localNotificationsPlugin.zonedSchedule(
         0,
         'ZanKurd',
-        'Pêşbirka rojê li benda te ye! Hêza hişê xwe biceribîne! / Günün yarışması seni bekliyor! Zihnini test et!',
+        isKu
+            ? 'Pêşbirka rojê li benda te ye! Hêza hişê xwe biceribîne!'
+            : 'Günün yarışması seni bekliyor! Zihnini test et!',
         scheduledTime,
         details,
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
@@ -191,6 +196,109 @@ class NotificationService {
       await _localNotificationsPlugin.cancelAll();
     } catch (e) {
       debugPrint('Failed to cancel notifications: $e');
+    }
+  }
+
+  /// Arkadaşlık isteği geldiğinde anlık bildirim gönderir.
+  Future<void> showFriendRequest(String fromName, {bool isKu = true}) async {
+    if (kIsWeb || !_enabled) return;
+    try {
+      final title = isKu ? 'Daxwaza Hevaltiyê' : 'Arkadaşlık İsteği';
+      final body = isKu
+          ? '$fromName dixwaze hevalê te be!'
+          : '$fromName seninle arkadaş olmak istiyor!';
+
+      const androidDetails = AndroidNotificationDetails(
+        'zankurd_friend_requests',
+        'ZanKurd Daxwazên Hevaltiyê',
+        channelDescription: 'Daxwazên hevaltiyê yên nû',
+        importance: Importance.high,
+        priority: Priority.high,
+      );
+      const details = NotificationDetails(
+        android: androidDetails,
+        iOS: DarwinNotificationDetails(),
+      );
+
+      await _localNotificationsPlugin.show(
+        1, // Different ID from daily reminder
+        title,
+        body,
+        details,
+      );
+    } catch (e) {
+      debugPrint('Failed to show friend request notification: $e');
+    }
+  }
+
+  /// Seri kaybetme uyarısı: kullanıcı bugün oynamazsa serisi kırılacak.
+  Future<void> scheduleStreakWarning({bool isKu = true}) async {
+    if (kIsWeb || !_enabled) return;
+    try {
+      // Schedule for 21:00 (9 PM) - a gentle reminder
+      final now = DateTime.now();
+      var scheduledTime = DateTime(now.year, now.month, now.day, 21, 0);
+      if (!scheduledTime.isAfter(now)) {
+        scheduledTime = scheduledTime.add(const Duration(days: 1));
+      }
+
+      const androidDetails = AndroidNotificationDetails(
+        'zankurd_streak_warning',
+        'ZanKurd Bîranîna Rêzê',
+        channelDescription: 'Bîranîna parastina rêza rojane',
+        importance: Importance.defaultImportance,
+        priority: Priority.defaultPriority,
+      );
+      const details = NotificationDetails(
+        android: androidDetails,
+        iOS: DarwinNotificationDetails(),
+      );
+
+      final tzTime = tz.TZDateTime.from(scheduledTime, tz.local);
+      await _localNotificationsPlugin.zonedSchedule(
+        2, // Different ID
+        isKu ? 'Rêza Te' : 'Serin',
+        isKu
+            ? 'Îro nelîstî! Seriya te dikare bişkê. Hema niha bilîze!'
+            : 'Bugün oynamadın! Serin kırılabilir. Hemen şimdi oyna!',
+        tzTime,
+        details,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+    } catch (e) {
+      debugPrint('Failed to schedule streak warning: $e');
+    }
+  }
+
+  /// Arkadaşlık isteği kabul edildi bildirimi.
+  Future<void> showFriendAccepted(String friendName, {bool isKu = true}) async {
+    if (kIsWeb || !_enabled) return;
+    try {
+      const androidDetails = AndroidNotificationDetails(
+        'zankurd_friend_requests',
+        'ZanKurd Daxwazên Hevaltiyê',
+        channelDescription: 'Daxwazên hevaltiyê yên nû',
+        importance: Importance.high,
+        priority: Priority.high,
+      );
+      final details = NotificationDetails(
+        android: androidDetails,
+        iOS: DarwinNotificationDetails(),
+      );
+
+      await _localNotificationsPlugin.show(
+        3,
+        isKu ? 'Hevaltiya Nû' : 'Yeni Arkadaşlık',
+        isKu
+            ? '$friendName daxwaza te qebûl kir!'
+            : '$friendName isteğini kabul etti!',
+        details,
+      );
+    } catch (e) {
+      debugPrint('Failed to show friend accepted notification: $e');
     }
   }
 }

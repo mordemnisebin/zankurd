@@ -10,6 +10,14 @@ class Friend {
   final String? friendAvatarColor; // Arkadaş avatar rengi
   final DateTime createdAt;
 
+  /// Skor / seviye bilgileri (leaderboard ve profile entegrasyonu için).
+  final int totalScore;
+  final int level;
+  final int gamesPlayed;
+
+  /// Son aktiflik zamanı; null ise hiç çevrimiçi olmamış sayılır.
+  final DateTime? lastActiveAt;
+
   const Friend({
     required this.id,
     required this.userId,
@@ -17,7 +25,18 @@ class Friend {
     required this.friendName,
     this.friendAvatarColor,
     required this.createdAt,
+    this.totalScore = 0,
+    this.level = 1,
+    this.gamesPlayed = 0,
+    this.lastActiveAt,
   });
+
+  /// Son 5 dakika içinde aktifse çevrimiçi sayılır.
+  bool get isOnline {
+    final last = lastActiveAt;
+    if (last == null) return false;
+    return DateTime.now().toUtc().difference(last).inMinutes < 5;
+  }
 
   Friend copyWith({
     String? id,
@@ -26,6 +45,10 @@ class Friend {
     String? friendName,
     String? friendAvatarColor,
     DateTime? createdAt,
+    int? totalScore,
+    int? level,
+    int? gamesPlayed,
+    DateTime? lastActiveAt,
   }) => Friend(
     id: id ?? this.id,
     userId: userId ?? this.userId,
@@ -33,6 +56,10 @@ class Friend {
     friendName: friendName ?? this.friendName,
     friendAvatarColor: friendAvatarColor ?? this.friendAvatarColor,
     createdAt: createdAt ?? this.createdAt,
+    totalScore: totalScore ?? this.totalScore,
+    level: level ?? this.level,
+    gamesPlayed: gamesPlayed ?? this.gamesPlayed,
+    lastActiveAt: lastActiveAt ?? this.lastActiveAt,
   );
 
   Map<String, dynamic> toJson() => {
@@ -42,6 +69,11 @@ class Friend {
     'friend_name': friendName,
     'friend_avatar_color': friendAvatarColor,
     'created_at': createdAt.toIso8601String(),
+    if (totalScore != 0) 'total_score': totalScore,
+    if (level != 1) 'level': level,
+    if (gamesPlayed != 0) 'games_played': gamesPlayed,
+    if (lastActiveAt != null)
+      'last_active_at': lastActiveAt!.toUtc().toIso8601String(),
   };
 
   static Friend fromJson(Map<String, dynamic> json) => Friend(
@@ -51,10 +83,17 @@ class Friend {
     friendName: json['friend_name'] as String,
     friendAvatarColor: json['friend_avatar_color'] as String?,
     createdAt: DateTime.parse(json['created_at'] as String),
+    totalScore: (json['total_score'] as num?)?.toInt() ?? 0,
+    level: (json['level'] as num?)?.toInt() ?? 1,
+    gamesPlayed: (json['games_played'] as num?)?.toInt() ?? 0,
+    lastActiveAt: json['last_active_at'] != null
+        ? DateTime.parse(json['last_active_at'] as String)
+        : null,
   );
 
   @override
-  String toString() => 'Friend(id: $id, friend: $friendName)';
+  String toString() =>
+      'Friend(id: $id, friend: $friendName, score: $totalScore)';
 }
 
 /// Arkadaş isteği — bekleyen bağlantı

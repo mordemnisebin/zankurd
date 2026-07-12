@@ -113,7 +113,7 @@ class _LevelScreenState extends State<LevelScreen> {
                 '${level.category} ${level.number}. ${context.isKu ? "Ast" : "Seviye"}',
             questionCount: questions.length,
           );
-      await Navigator.of(context).push(
+      final result = await Navigator.of(context).push(
         AppRoute.to(
           QuizScreen(
             repository: widget.repository,
@@ -122,9 +122,16 @@ class _LevelScreenState extends State<LevelScreen> {
           ),
         ),
       );
-      // Yoldaki düğümü "oynandı" olarak işaretle (altın halka + tik).
-      final store = await LevelProgressStore.load();
-      await store.markPlayed(widget.category, widget.subCategory, level.number);
+      // Yoldaki düğümü yalnız quiz gerçekten bitince işaretle: sonuç ekranı
+      // skor haritasıyla döner; yarıda bırakma null döner ve tik almamalı.
+      if (result is Map) {
+        final store = await LevelProgressStore.load();
+        await store.markPlayed(
+          widget.category,
+          widget.subCategory,
+          level.number,
+        );
+      }
       await _loadProgress();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'level questions load failed');

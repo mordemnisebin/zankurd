@@ -124,6 +124,16 @@ class HeroCard extends StatelessWidget {
                   height: 1.1,
                 ),
               ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                isKu
+                    ? 'Bi Kurmancî pêşbirk, turnuva û civak. Hîn bibe, pêşbikeve, biserkeve!'
+                    : 'Kurmancî dilinde quiz, turnuvalar ve topluluk. Öğren, yarış, başa çık!',
+                style: AppTypography.bodyMedium.copyWith(
+                  color: textPrimary.withValues(alpha: 0.8),
+                  height: 1.4,
+                ),
+              ),
               const SizedBox(height: AppSpacing.lg),
               // Pirs-style hierarchy: one clear primary play CTA, then room actions
               SizedBox(

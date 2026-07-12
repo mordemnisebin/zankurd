@@ -12,6 +12,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/kilim_pattern_painter.dart';
+import '../widgets/room_chat.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 
@@ -34,6 +35,7 @@ class _RoomScreenState extends State<RoomScreen> {
   bool ready = true;
   bool starting = false;
   bool quizOpened = false;
+  bool _chatOpen = false;
   StreamSubscription? _playersSub;
   StreamSubscription? _statusSub;
 
@@ -156,7 +158,10 @@ class _RoomScreenState extends State<RoomScreen> {
           gradient: AppTheme.backgroundGradient(context),
         ),
         child: SafeArea(
-          child: ListView(
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
             padding: const EdgeInsets.fromLTRB(
               AppSpacing.page,
               AppSpacing.md,
@@ -174,6 +179,19 @@ class _RoomScreenState extends State<RoomScreen> {
                     ),
                   ),
                   const Spacer(),
+                  IconButton(
+                    key: const ValueKey('room-chat-toggle'),
+                    onPressed: () => setState(() => _chatOpen = !_chatOpen),
+                    icon: Icon(
+                      _chatOpen
+                          ? Icons.chat_bubble_rounded
+                          : Icons.chat_bubble_outline_rounded,
+                      color: _chatOpen
+                          ? AppTheme.playCyan
+                          : AppTheme.textSubColor(context),
+                    ),
+                    tooltip: ku ? 'Sohbet' : 'Sohbet',
+                  ),
                   TextButton.icon(
                     onPressed: () => _copyRoomCode(context, ku),
                     icon: const Icon(Icons.copy_rounded, size: 16),
@@ -545,8 +563,19 @@ class _RoomScreenState extends State<RoomScreen> {
             ],
           ),
         ),
-      ),
-    );
+      // Room chat panel
+      if (room.id != null)
+        RoomChat(
+          repository: widget.repository,
+          roomId: room.id!,
+          visible: _chatOpen,
+          onToggle: () => setState(() => _chatOpen = false),
+        ),
+  ],
+),
+    ),
+  ),
+);
   }
 
   Future<void> _startGameHost() async {

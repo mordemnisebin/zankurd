@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
@@ -7,6 +9,7 @@ import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
+import 'quiz_screen.dart';
 
 /// Kurmancî ders kategorilerini ve dersleri gösterir.
 class LearningScreen extends StatefulWidget {
@@ -33,6 +36,7 @@ class _LearningScreenState extends State<LearningScreen> {
   late Future<List<Lesson>> _lessonsFuture;
   String _selectedCategory = _categories.first;
   Set<String> _completedIds = const {};
+  List<Lesson> _currentLessons = const [];
 
   @override
   void initState() {
@@ -42,7 +46,12 @@ class _LearningScreenState extends State<LearningScreen> {
   }
 
   void _loadLessons() {
-    _lessonsFuture = widget.repository.loadLessonsByCategory(_selectedCategory);
+    _lessonsFuture = widget.repository
+        .loadLessonsByCategory(_selectedCategory)
+        .then((lessons) {
+      if (mounted) setState(() => _currentLessons = lessons);
+      return lessons;
+    });
   }
 
   Future<void> _refreshCompleted() async {
@@ -65,7 +74,7 @@ class _LearningScreenState extends State<LearningScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(ku ? 'Xwendina' : 'Öğren'),
+        title: Text(ku ? 'Fêr Bibe' : 'Öğren'),
         titleTextStyle: TextStyle(
           color: AppTheme.textPrimaryColor(context),
           fontWeight: FontWeight.w900,
@@ -117,6 +126,8 @@ class _LearningScreenState extends State<LearningScreen> {
                       .toList(),
                 ),
               ),
+              // Kategori ilerleme göstergesi
+              _buildCategoryProgress(context, ku),
               // Derslerin listesi
               Expanded(
                 child: FutureBuilder<List<Lesson>>(
@@ -180,6 +191,59 @@ class _LearningScreenState extends State<LearningScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryProgress(BuildContext context, bool ku) {
+    final total = _currentLessons.length;
+    final completed =
+        _currentLessons.where((l) => _completedIds.contains(l.id)).length;
+    final ratio = total > 0 ? completed / total : 0.0;
+    final pct = (ratio * 100).round();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.page),
+      child: Column(
+        children: [
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Icon(Icons.auto_stories_rounded,
+                  size: 14, color: AppTheme.playGreen),
+              const SizedBox(width: 6),
+              Text(
+                ku
+                    ? 'Dersên qedandî: $completed / $total'
+                    : 'Tamamlanan ders: $completed / $total',
+                style: TextStyle(
+                  color: AppTheme.textSubColor(context),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '%$pct',
+                style: TextStyle(
+                  color: AppTheme.playGreen,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: ratio,
+              minHeight: 5,
+              backgroundColor: AppTheme.surfaceHiColor(context),
+              color: AppTheme.playGreen,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -399,14 +463,266 @@ class LessonDetailScreen extends StatefulWidget {
   State<LessonDetailScreen> createState() => _LessonDetailScreenState();
 }
 
-class _LessonDetailScreenState extends State<LessonDetailScreen> {
+class _LessonDetailScreenState extends State<LessonDetailScreen>
+    with TickerProviderStateMixin {
   late Future<List<LessonSlide>> _slidesFuture;
   int _currentSlideIndex = 0;
+
+  // Flashcard modu
+  bool _flashcardMode = false;
+  bool _isFlipped = false;
+  late final AnimationController _flipController;
+  late final Animation<double> _flipAnimation;
 
   @override
   void initState() {
     super.initState();
     _slidesFuture = widget.repository.loadLessonSlides(widget.lesson.id);
+    _flipController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    _flipAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _flipController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _flipController.dispose();
+    super.dispose();
+  }
+
+  void _toggleFlashcard() {
+    setState(() {
+      _flashcardMode = !_flashcardMode;
+      _isFlipped = false;
+      _flipController.reset();
+    });
+  }
+
+  void _toggleFlip() {
+    if (!_flashcardMode) return;
+    if (_isFlipped) {
+      _flipController.reverse();
+    } else {
+      _flipController.forward();
+    }
+    setState(() => _isFlipped = !_isFlipped);
+  }
+
+  void _onSpeakerTap(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          context.isKu
+              ? 'Telafûz wê zû were zêdekirin'
+              : 'Telaffuz yakında eklenecek',
+        ),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  Future<void> _startMiniQuiz() async {
+    final ku = context.isKu;
+    try {
+      final questions = await widget.repository.loadLevelQuestions(
+        category: widget.lesson.category,
+        difficultyMin: 1,
+        difficultyMax: 5,
+        limit: 5,
+      );
+
+      if (!mounted) return;
+
+      if (questions.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              ku
+                  ? 'Ji bo vê kategoriyê pirs nehatin dîtin'
+                  : 'Bu kategori için soru bulunamadı',
+            ),
+          ),
+        );
+        return;
+      }
+
+      final room = widget.repository
+          .createRoom(category: widget.lesson.category)
+          .copyWith(questionCount: questions.length);
+
+      if (!mounted) return;
+
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => QuizScreen(
+            repository: widget.repository,
+            room: room,
+            questions: questions,
+            practice: true,
+            enableTimer: true,
+          ),
+        ),
+      );
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              ku ? 'Quiz nehate barkirin' : 'Quiz yüklenemedi',
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  Widget _buildKuContentRow(LessonSlide slide, BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Text(
+            slide.contentKu,
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        const SizedBox(width: 4),
+        _SpeakerButton(
+          onTap: () => _onSpeakerTap(slide.contentKu),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFlashcard(
+    LessonSlide slide,
+    BuildContext context,
+    bool ku,
+  ) {
+    return GestureDetector(
+      onTap: _toggleFlip,
+      child: AnimatedBuilder(
+        animation: _flipAnimation,
+        builder: (context, child) {
+          final angle = _flipAnimation.value * math.pi;
+          final showFront = _flipAnimation.value < 0.5;
+          return Transform(
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateY(angle),
+            alignment: Alignment.center,
+            child: showFront
+                ? _buildFlashcardFront(slide, context)
+                : Transform(
+                    transform: Matrix4.identity()
+                      ..setEntry(3, 2, 0.001)
+                      ..rotateY(math.pi),
+                    alignment: Alignment.center,
+                    child: _buildFlashcardBack(slide, context, ku),
+                  ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildFlashcardFront(LessonSlide slide, BuildContext context) {
+    return AppPanel(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.touch_app_rounded,
+                  size: 14, color: AppTheme.textMuted),
+              const SizedBox(width: 6),
+              Text(
+                context.isKu
+                    ? 'Ji bo wergerê bitikîne'
+                    : 'Çeviri için dokun',
+                style: TextStyle(
+                  color: AppTheme.textMutedColor(context),
+                  fontSize: 11,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          _buildKuContentRow(slide, context),
+          if (slide.exampleKu != null) ...[
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppTheme.surfaceHiColor(context),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                slide.exampleKu!,
+                style: TextStyle(
+                  color: AppTheme.textSubColor(context),
+                  fontSize: 13,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFlashcardBack(
+    LessonSlide slide,
+    BuildContext context,
+    bool ku,
+  ) {
+    return AppPanel(
+      gradient: const LinearGradient(
+        colors: [AppTheme.playCyan, Color(0xFF2A9D8F)],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.25),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  ku ? 'Werger' : 'Çeviri',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            slide.contentTr ?? slide.contentKu,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void _markCompleted() async {
@@ -435,7 +751,20 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     return Scaffold(
-      appBar: AppBar(title: Text(widget.lesson.titleKu)),
+      appBar: AppBar(
+        title: Text(widget.lesson.titleKu),
+        actions: [
+          IconButton(
+            icon: Icon(
+              _flashcardMode
+                  ? Icons.flip_to_front_rounded
+                  : Icons.flip_to_back_rounded,
+            ),
+            tooltip: ku ? 'Moda kartan' : 'Flashcard modu',
+            onPressed: _toggleFlashcard,
+          ),
+        ],
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -521,50 +850,46 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                               ),
                             ),
                           ),
-                        AppPanel(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                slide.contentKu,
-                                style: TextStyle(
-                                  color: AppTheme.textPrimaryColor(context),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              if (slide.contentTr != null &&
-                                  slide.contentTr!.isNotEmpty) ...[
-                                const SizedBox(height: 6),
-                                Text(
-                                  slide.contentTr!,
-                                  style: TextStyle(
-                                    color: AppTheme.textSubColor(context),
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                              if (slide.exampleKu != null) ...[
-                                const SizedBox(height: 12),
-                                Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    color: AppTheme.surfaceHiColor(context),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Text(
-                                    slide.exampleKu!,
+                        if (_flashcardMode)
+                          _buildFlashcard(slide, context, ku)
+                        else
+                          AppPanel(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildKuContentRow(slide, context),
+                                if (slide.contentTr != null &&
+                                    slide.contentTr!.isNotEmpty) ...[
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    slide.contentTr!,
                                     style: TextStyle(
                                       color: AppTheme.textSubColor(context),
-                                      fontSize: 13,
-                                      fontStyle: FontStyle.italic,
+                                      fontSize: 14,
                                     ),
                                   ),
-                                ),
+                                ],
+                                if (slide.exampleKu != null) ...[
+                                  const SizedBox(height: 12),
+                                  Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.surfaceHiColor(context),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      slide.exampleKu!,
+                                      style: TextStyle(
+                                        color: AppTheme.textSubColor(context),
+                                        fontSize: 13,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ],
-                            ],
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
@@ -598,6 +923,19 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                           ),
                         ),
                       ),
+                      if (isLast) ...[
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: FilledButton.tonal(
+                            style: FilledButton.styleFrom(
+                              backgroundColor: AppTheme.playCyan,
+                              foregroundColor: Colors.white,
+                            ),
+                            onPressed: _startMiniQuiz,
+                            child: Text(ku ? 'Quiz-a Kurt' : 'Mini Quiz'),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -605,6 +943,63 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+/// Speaker / pronunciation button with subtle scale animation.
+class _SpeakerButton extends StatefulWidget {
+  const _SpeakerButton({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  State<_SpeakerButton> createState() => _SpeakerButtonState();
+}
+
+class _SpeakerButtonState extends State<_SpeakerButton>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _scaleController;
+  late final Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _scaleController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.25).animate(
+      CurvedAnimation(parent: _scaleController, curve: Curves.easeOutBack),
+    );
+  }
+
+  @override
+  void dispose() {
+    _scaleController.dispose();
+    super.dispose();
+  }
+
+  void _onTap() {
+    _scaleController.forward().then((_) => _scaleController.reverse());
+    widget.onTap();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      scale: _scaleAnimation,
+      child: IconButton(
+        icon: Icon(
+          Icons.volume_up_rounded,
+          color: AppTheme.playGreen,
+          size: 22,
+        ),
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+        onPressed: _onTap,
+        tooltip: context.isKu ? 'Telafûz' : 'Telaffuz',
       ),
     );
   }

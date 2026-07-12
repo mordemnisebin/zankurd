@@ -38,6 +38,7 @@ class SoundProvider extends ChangeNotifier {
   Future<void> playWin() => _play('sounds/win.mp3');
   Future<void> playCoin() => _play('sounds/coin.mp3');
   Future<void> playWildcard() => _play('sounds/wildcard.mp3');
+  Future<void> playTick() => _play('sounds/coin.mp3');
 
   Future<void> _play(String asset) async {
     if (!_enabled) return;

@@ -10,6 +10,7 @@ import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/room_message.dart';
 import '../models/tournament.dart';
 
 abstract class ZanKurdRepository {
@@ -167,8 +168,23 @@ abstract class ZanKurdRepository {
   /// Arkadaş listesini yükle.
   Future<List<Friend>> loadFriends();
 
+  /// Arkadaş liderlik tablosu (skora göre sıralı).
+  Future<List<Friend>> loadFriendsLeaderboard();
+
   /// Bekleyen arkadaş isteklerini yükle.
   Future<List<FriendRequest>> loadPendingFriendRequests();
+
+  /// Oda sohbet mesajı gönder.
+  Future<void> sendRoomMessage({
+    required String roomId,
+    required String text,
+  });
+
+  /// Oda sohbet mesajlarını canlı dinle.
+  Stream<List<RoomMessage>> subscribeRoomMessages(String roomId);
+
+  /// Oda sohbet mesajlarını tek seferlik yükle.
+  Future<List<RoomMessage>> loadRoomMessages(String roomId);
 
   /// Günlük görev tamamlamasını sunucuya senkronize et.
   Future<bool> syncMissionCompletion(
@@ -215,4 +231,18 @@ abstract class ZanKurdRepository {
 
   /// Turnuva ödülünü talep et (şampiyonluk).
   Future<int> claimTournamentChampionReward();
+
+  /// Kullanıcı tarafından önerilen soruyu Supabase 'suggested_questions'
+  /// tablosuna kaydeder. Onaylandıktan sonra soru havuzuna eklenir.
+  Future<bool> submitSuggestedQuestion({
+    required String category,
+    required String prompt,
+    required String optionA,
+    required String optionB,
+    required String optionC,
+    required String optionD,
+    required String correctOption,
+    String? explanation,
+    int difficulty = 3,
+  });
 }

@@ -167,7 +167,7 @@ class _AppShellState extends State<AppShell> {
               CoachMarkStep(
                 targetKey: _learningNavKey,
                 icon: Icons.school_rounded,
-                titleKu: 'Xwendin',
+                titleKu: 'Fêr Bibe',
                 titleTr: 'Öğren',
                 descriptionKu:
                     'Kurmancî gav bi gav, dersên kurt û mînakên rastîn bi vir hîn bibe.',
@@ -177,7 +177,7 @@ class _AppShellState extends State<AppShell> {
               CoachMarkStep(
                 targetKey: _leaderboardNavKey,
                 icon: Icons.leaderboard_rounded,
-                titleKu: 'Pêşbaz',
+                titleKu: 'Rêzbendî',
                 titleTr: 'Liderlik',
                 descriptionKu:
                     'Rêza xwe ya di nav lîstikvanên din de li vir bibîne.',
@@ -321,7 +321,7 @@ class _AppShellState extends State<AppShell> {
                   child: const Icon(Icons.school_outlined),
                 ),
                 selectedIcon: const Icon(Icons.school),
-                label: ku ? 'Xwendin' : 'Öğren',
+                label: ku ? 'Fêr Bibe' : 'Öğren',
               ),
               NavigationDestination(
                 icon: KeyedSubtree(
@@ -329,7 +329,7 @@ class _AppShellState extends State<AppShell> {
                   child: const Icon(Icons.leaderboard_outlined),
                 ),
                 selectedIcon: const Icon(Icons.leaderboard),
-                label: ku ? 'Pêşbaz' : 'Liderlik',
+                label: ku ? 'Rêzbendî' : 'Liderlik',
               ),
               NavigationDestination(
                 icon: KeyedSubtree(

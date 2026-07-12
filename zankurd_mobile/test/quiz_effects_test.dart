@@ -152,7 +152,9 @@ void main() {
     testWidgets('yanlış cevapta seçilen şık ShakeWrapper içinde', (
       tester,
     ) async {
-      SharedPreferences.setMockInitialValues({});
+      SharedPreferences.setMockInitialValues({
+        'zankurd.quiz_tutorial.seen': true,
+      });
       SeenQuestionStore.resetInstance();
       final repo = MockZanKurdRepository();
       final room = repo.createRoom();
@@ -212,7 +214,9 @@ void main() {
     });
 
     testWidgets('doğru cevapta mini konfeti patlaması görünür', (tester) async {
-      SharedPreferences.setMockInitialValues({});
+      SharedPreferences.setMockInitialValues({
+        'zankurd.quiz_tutorial.seen': true,
+      });
       SeenQuestionStore.resetInstance();
       final repo = MockZanKurdRepository();
       final room = repo.createRoom();

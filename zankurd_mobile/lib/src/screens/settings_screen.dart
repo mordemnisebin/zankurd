@@ -8,6 +8,7 @@ import '../providers/auth_provider.dart';
 import '../providers/sound_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/notification_service.dart';
+import '../services/tts_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
@@ -35,6 +36,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   NotificationService? _notificationService;
   bool _notificationsEnabled = false;
   String _notificationTime = '19:00';
+  TTSService? _ttsService;
+  bool _ttsAutoRead = false;
 
   @override
   void initState() {
@@ -42,6 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _loadPlayerName();
     _loadNotificationSettings();
     _loadPackageVersion();
+    _loadTTSSettings();
   }
 
   Future<void> _loadPackageVersion() async {
@@ -411,6 +415,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                     ],
+                    Divider(
+                      height: 1,
+                      indent: 56,
+                      color: AppTheme.borderColor(context),
+                    ),
+                    _SettingsToggleRow(
+                      icon: _ttsAutoRead
+                          ? Icons.record_voice_over_outlined
+                          : Icons.voice_over_off_outlined,
+                      color: AppTheme.accent,
+                      title: ku
+                          ? 'Pirsan bixweber bixwîne'
+                          : 'Soruları otomatik seslendir',
+                      subtitle: ku
+                          ? 'Her pirsa nû dengê xwe bixweber tê xwendin'
+                          : 'Her yeni soru otomatik sesli okunur',
+                      trailing: Switch(
+                        value: _ttsAutoRead,
+                        onChanged: _toggleTTSAutoRead,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -561,6 +586,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
       setState(() {
         _notificationsEnabled = value;
       });
+    }
+  }
+
+  Future<void> _loadTTSSettings() async {
+    try {
+      final tts = await TTSService.load();
+      if (mounted) {
+        setState(() {
+          _ttsService = tts;
+          _ttsAutoRead = tts.autoRead;
+        });
+      }
+    } catch (_) {
+      // TTS kullanılamazsa sessizce devam et.
+    }
+  }
+
+  Future<void> _toggleTTSAutoRead(bool value) async {
+    final tts = _ttsService;
+    if (tts == null) return;
+    await tts.setAutoRead(value);
+    if (mounted) {
+      setState(() => _ttsAutoRead = value);
     }
   }
 

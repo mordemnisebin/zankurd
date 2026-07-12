@@ -59,7 +59,7 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('Capture Hero Card Pattern Screen', (WidgetTester tester) async {
-    await tester.binding.setSurfaceSize(const Size(390, 380));
+    await tester.binding.setSurfaceSize(const Size(390, 460));
     final boundaryKey = GlobalKey();
 
     await tester.pumpWidget(
@@ -103,7 +103,7 @@ void main() {
   testWidgets('Capture Hero Card No Pattern Screen', (
     WidgetTester tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 380));
+    await tester.binding.setSurfaceSize(const Size(390, 460));
     final boundaryKey = GlobalKey();
 
     await tester.pumpWidget(
