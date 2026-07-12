@@ -48,9 +48,16 @@ class _RojMascotPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final faceR = size.width * 0.30;
 
-    // Kilim dilinde 12 üçgen ışın.
-    final rayPaint = Paint()..color = AppTheme.gold;
+    // Kilim dilinde 12 üçgen ışın — Bubblegum Arcade'in 4 rengi dönüşümlü
+    // kullanılır (kilim sınırındaki dönüşümlü renk şeridi hissi).
+    const rayColors = [
+      AppTheme.brandOrange, // İndigo
+      AppTheme.playPink, // Sıcak pembe
+      AppTheme.playCyan, // Gökmavi
+      AppTheme.playGreen, // Lime
+    ];
     for (var i = 0; i < 12; i++) {
+      final rayPaint = Paint()..color = rayColors[i % rayColors.length];
       final angle = i * math.pi / 6;
       final dir = Offset(math.cos(angle), math.sin(angle));
       final normal = Offset(-dir.dy, dir.dx);
