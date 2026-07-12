@@ -1,5 +1,9 @@
 # ZanKurd En İyi Sınıf Deneyim Tasarımı
 
+> **SÜPERSEDE EDİLDİ (2026-07-12).** Görsel/renk kararları
+> [2026-07-12-bubblegum-arcade-redesign-design.md](2026-07-12-bubblegum-arcade-redesign-design.md)
+> ile geçersiz kılındı. Bu dosya yalnızca tarihsel referans için tutuluyor.
+
 ## Hedef
 
 ZanKurd'u yönlendirilmiş öğrenme, canlı oyun ve Kürt kültürel kimliğini tek sade ürün mimarisinde birleştiren bir uygulamaya dönüştürmek.

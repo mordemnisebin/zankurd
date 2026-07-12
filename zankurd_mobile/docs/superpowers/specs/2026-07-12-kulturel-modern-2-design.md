@@ -1,5 +1,9 @@
 # ZanKurd Kültürel Modern 2.0 Tasarımı
 
+> **SÜPERSEDE EDİLDİ (2026-07-12).** Görsel/renk kararları
+> [2026-07-12-bubblegum-arcade-redesign-design.md](2026-07-12-bubblegum-arcade-redesign-design.md)
+> ile geçersiz kılındı. Bu dosya yalnızca tarihsel referans için tutuluyor.
+
 ## Amaç
 
 Claude artefaktındaki dört ana ekranı ve beş tasarım hamlesini mevcut Flutter uygulamasına taşımak; oyun akışlarını, erişilebilirliği ve açık tema seçeneğini korumak.
