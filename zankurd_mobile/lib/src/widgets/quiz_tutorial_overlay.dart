@@ -17,6 +17,7 @@ class QuizTutorialOverlay extends StatefulWidget {
     required this.comboKey,
     required this.wildcardKey,
     required this.nextButtonKey,
+    this.onReady,
     super.key,
   });
 
@@ -41,6 +42,12 @@ class QuizTutorialOverlay extends StatefulWidget {
   /// Sonraki soru butonu hedef anahtarı.
   final GlobalKey nextButtonKey;
 
+  /// Rehber gösterilmeyecekse hemen, gösterilecekse rehber kapanınca çağrılır.
+  ///
+  /// Quiz timer'ı bu sinyalden önce başlamamalı; aksi halde ilk kez quiz açan
+  /// kullanıcı rehberi okurken süre biter ve doğru cevap otomatik açılır.
+  final VoidCallback? onReady;
+
   @override
   State<QuizTutorialOverlay> createState() => _QuizTutorialOverlayState();
 }
@@ -51,6 +58,7 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
   final GlobalKey _stackKey = GlobalKey();
   bool _checking = true;
   bool _show = false;
+  bool _readyNotified = false;
 
   @override
   void initState() {
@@ -60,11 +68,15 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
 
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
+    final shouldShow = prefs.getBool(_seenKey) != true;
     if (!mounted) return;
     setState(() {
-      _show = prefs.getBool(_seenKey) != true;
+      _show = shouldShow;
       _checking = false;
     });
+    if (!shouldShow) {
+      _notifyReady();
+    }
   }
 
   Future<void> _finish() async {
@@ -72,6 +84,13 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
     await prefs.setBool(_seenKey, true);
     if (!mounted) return;
     setState(() => _show = false);
+    _notifyReady();
+  }
+
+  void _notifyReady() {
+    if (_readyNotified) return;
+    _readyNotified = true;
+    widget.onReady?.call();
   }
 
   @override

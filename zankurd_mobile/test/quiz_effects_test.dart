@@ -149,6 +149,43 @@ void main() {
   });
 
   group('Quiz efekt entegrasyonu', () {
+    testWidgets('ilk quiz rehberi açıkken timer cevabı otomatik açmaz', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues({});
+      SeenQuestionStore.resetInstance();
+      final repo = MockZanKurdRepository();
+      final room = repo.createRoom();
+      final question = repo.questions.first;
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider<LanguageProvider>(
+              create: (_) => LanguageProvider()..setLang('tr'),
+            ),
+            ChangeNotifierProvider<SoundProvider>(
+              create: (_) => SoundProvider(),
+            ),
+          ],
+          child: MaterialApp(
+            theme: AppTheme.dark(),
+            home: QuizScreen(
+              repository: repo,
+              room: room,
+              questions: [question],
+            ),
+          ),
+        ),
+      );
+
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 16));
+      await tester.pump(const Duration(seconds: 1));
+
+      expect(find.text(question.getLocalizedExplanation(false)), findsNothing);
+    });
+
     testWidgets('yanlış cevapta seçilen şık ShakeWrapper içinde', (
       tester,
     ) async {

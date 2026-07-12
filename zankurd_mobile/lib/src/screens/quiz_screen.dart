@@ -146,6 +146,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   Timer? _revealTickTimer;
   StreamSubscription? _roomSub;
   Timer? _pollTimer;
+  bool _questionFlowStarted = false;
 
   // Quiz tutorial coach mark hedef anahtarları
   final GlobalKey _timerTargetKey = GlobalKey();
@@ -350,7 +351,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     if (_questions.isNotEmpty) {
       _markQuestionSeen();
       _loadFavoriteState();
-      _startTimer();
     }
 
     if (_isMultiplayer) {
@@ -402,6 +402,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _timerController.value = 1.0;
       _timerController.reverse();
     }
+  }
+
+  void _startQuestionFlowOnce() {
+    if (_questionFlowStarted || _questions.isEmpty) return;
+    _questionFlowStarted = true;
+    _startTimer();
   }
 
   void _loadCoinBalance() {
@@ -552,6 +558,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           comboKey: _comboKey,
           wildcardKey: _wildcardKey,
           nextButtonKey: _nextButtonKey,
+          onReady: _startQuestionFlowOnce,
           child: Container(
             decoration: BoxDecoration(
               gradient: AppTheme.backgroundGradient(context),

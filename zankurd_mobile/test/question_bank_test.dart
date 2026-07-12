@@ -5,6 +5,9 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/offline_question_bank.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
+String _normalized(String value) =>
+    value.trim().toLowerCase().replaceAll(RegExp(r'\s+'), ' ');
+
 void main() {
   const validCategories = {
     'Ziman',
@@ -30,6 +33,25 @@ void main() {
         reason: '${question.id}: correctAnswer not in answers',
       );
     }
+  });
+
+  test('prompts do not leak the correct answer text', () {
+    final offenders = <String>[];
+    for (final question in offlineQuestionBank) {
+      final correct = _normalized(question.correctAnswer);
+      if (correct.length < 6) continue;
+
+      final prompt = _normalized(question.prompt);
+      if (prompt.contains(correct)) {
+        offenders.add('${question.id}: ${question.correctAnswer}');
+      }
+    }
+
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'Soru metni cevabı açıkça göstermemeli: $offenders',
+    );
   });
 
   test('every question uses a known category', () {
