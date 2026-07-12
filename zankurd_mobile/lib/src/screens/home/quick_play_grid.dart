@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/colorful_action_card.dart';
 
-/// Kompakt 2x2 "hemen oyna" ızgarası: 1v1 düello, günün yarışması, çark,
-/// turnuva. Pirs-inspired ortak [ColorfulActionCard] ailesini kullanır:
-/// 1vs1 pembe, günlük yarışma turuncu, çark yeşil, turnuva turkuaz.
+/// Tam-genişlik "hemen oyna" kart listesi: 1v1 düello, günün yarışması,
+/// çark, turnuva. Pirs'in tek-eylem, tam-genişlik mod kartı yerleşimini
+/// izler (küçük 2x2 ikon grid'i yerine). Ortak [ColorfulActionCard]
+/// ailesini kullanır: 1vs1 pembe, günlük yarışma indigo, çark lime,
+/// turnuva gökmavi.
 class QuickPlayGrid extends StatelessWidget {
   const QuickPlayGrid({
     required this.isKu,
@@ -66,27 +68,20 @@ class QuickPlayGrid extends StatelessWidget {
       ),
     ];
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final crossCount = constraints.maxWidth > 900 ? 4 : 2;
-        // Sabit bir tile yüksekliği kullanılır (aspect ratio değil): dar
-        // konteynerlerde (ör. iki sütunlu masaüstü bölünmesinde ~80px
-        // genişlik) aspectRatio tabanlı yükseklik hesaplaması metni
-        // taşırıyordu. mainAxisExtent genişlikten bağımsız, öngörülebilir
-        // bir yükseklik garanti eder.
-        return GridView.builder(
-          itemCount: tiles.length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossCount,
-            mainAxisSpacing: AppSpacing.sm,
-            crossAxisSpacing: AppSpacing.sm,
-            mainAxisExtent: 112,
+    // Pirs-tarzı: tam-genişlik, tek-eylem kartlar dikey listede — küçük
+    // grid yerine her mod tek satırda, taranması kolay ve büyük bir
+    // dokunma alanı taşır. Sabit yükseklik yerine içeriğe göre doğal
+    // boyutlanır (dar/geniş konteynerlerde taşma olmaz).
+    return Column(
+      children: [
+        for (var i = 0; i < tiles.length; i++)
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: i == tiles.length - 1 ? 0 : AppSpacing.sm,
+            ),
+            child: SizedBox(width: double.infinity, child: tiles[i]),
           ),
-          itemBuilder: (context, index) => tiles[index],
-        );
-      },
+      ],
     );
   }
 }

@@ -26,6 +26,35 @@ void main() {
     expect(find.byType(ColorfulActionCard), findsNWidgets(4));
   });
 
+  testWidgets(
+    'Pirs-tarzı tam-genişlik tek-sütun kart listesi (küçük grid değil)',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      await tester.pumpWidget(wrap(buildGrid()));
+      await tester.pumpAndSettle();
+
+      // Küçük 2 sütunlu grid artık yok; dikey tek-sütun liste kullanılır.
+      expect(find.byType(GridView), findsNothing);
+
+      final firstCardWidth = tester
+          .getSize(find.byKey(const ValueKey('quick-play-duel')))
+          .width;
+      final secondCardTop = tester
+          .getTopLeft(find.byKey(const ValueKey('quick-play-daily')))
+          .dy;
+      final firstCardBottom = tester
+          .getBottomLeft(find.byKey(const ValueKey('quick-play-duel')))
+          .dy;
+
+      // Her kart neredeyse tam genişlik kaplar (dar 2-sütun değil).
+      expect(firstCardWidth, greaterThan(300));
+      // İkinci kart, ilkinin altında (yan yana değil, alt alta).
+      expect(secondCardTop, greaterThanOrEqualTo(firstCardBottom));
+    },
+  );
+
   testWidgets('fits a narrow 360px viewport without overflow', (tester) async {
     await tester.binding.setSurfaceSize(const Size(360, 740));
     addTearDown(() => tester.binding.setSurfaceSize(null));
