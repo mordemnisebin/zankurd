@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -54,6 +56,15 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Alfabê'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('learning-path-node-lesson_1')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('learning-path-node-lesson_2')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('learning-mastery-goal')), findsOneWidget);
   });
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {
@@ -66,5 +77,44 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('seviye kaydı varsa önerilen başlangıç rozeti gösterilir', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.placement.v1.level': 'pesketi',
+    });
+    PlacementStore.resetInstance();
+    addTearDown(PlacementStore.resetInstance);
+
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    // Önerilen düğüm işaretlenir (kilit/tamamlanma değişmeden).
+    expect(
+      find.byKey(const ValueKey('lesson-recommended-badge')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('seviye kaydı yoksa önerilen rozet ilk düğümde olur', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    PlacementStore.resetInstance();
+    addTearDown(PlacementStore.resetInstance);
+
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+    // Destpêk/kayıt yok → ilk düğüm önerilir; rozet yine tek olur.
+    expect(
+      find.byKey(const ValueKey('lesson-recommended-badge')),
+      findsOneWidget,
+    );
   });
 }

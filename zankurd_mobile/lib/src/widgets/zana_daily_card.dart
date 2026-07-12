@@ -14,6 +14,8 @@ class ZanaDailyCard extends StatelessWidget {
   const ZanaDailyCard({
     required this.isKu,
     this.dayOverride,
+    this.onStart,
+    this.reviewReadyCount = 0,
     super.key = const ValueKey('zana-daily-card'),
   });
 
@@ -21,6 +23,12 @@ class ZanaDailyCard extends StatelessWidget {
 
   /// Test için sabit gün indeksi; null ise bugünden türetilir.
   final int? dayOverride;
+  final VoidCallback? onStart;
+
+  /// Tekrara hazır (SM-2) soru sayısı. >0 ise günlük hedef, öğrenme yerine
+  /// aralıklı tekrarı önceliklendirir; CTA aynı [onStart] akışını tetikler
+  /// (Fêr Bibe sekmesindeki "Bugünkü Tekrarlar" kartına yönlenir).
+  final int reviewReadyCount;
 
   static const List<_Saying> _sayings = [
     ('Zanîn ronahî ye.', 'Bilgi ışıktır.'),
@@ -47,6 +55,9 @@ class ZanaDailyCard extends StatelessWidget {
     final saying = _todaysSaying;
     const tint = AppTheme.gold;
     final surface = AppTheme.surfaceHiColor(context);
+    // Günlük hedef modunda hazır tekrar varsa, öğrenme yerine aralıklı
+    // tekrarı önceliklendir.
+    final hasReview = onStart != null && reviewReadyCount > 0;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.card),
@@ -106,7 +117,13 @@ class ZanaDailyCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Flexible(
                             child: Text(
-                              isKu ? 'Gotina Rojê' : 'Günün Sözü',
+                              hasReview
+                                  ? (isKu
+                                        ? 'Dubarekirinên Îro'
+                                        : 'Bugünkü Tekrarlar')
+                                  : onStart != null
+                                  ? (isKu ? 'Armanca Îro' : 'Bugünün hedefi')
+                                  : (isKu ? 'Gotina Rojê' : 'Günün Sözü'),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: AppTypography.caption.copyWith(
@@ -120,7 +137,15 @@ class ZanaDailyCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        saying.$1,
+                        hasReview
+                            ? (isKu
+                                  ? '$reviewReadyCount pirs li benda dubarekirinê'
+                                  : '$reviewReadyCount soru tekrara hazır')
+                            : onStart != null
+                            ? (isKu
+                                  ? 'Bi 3 bersivên rast zincîra xwe biparêze'
+                                  : '3 doğru cevapla serini koru')
+                            : saying.$1,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyLarge.copyWith(
@@ -132,13 +157,41 @@ class ZanaDailyCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        saying.$2,
+                        hasReview
+                            ? (isKu
+                                  ? 'Zana dubarekirinên te amade kir.'
+                                  : 'Zana tekrarlarını hazırladı.')
+                            : onStart != null
+                            ? (isKu
+                                  ? 'Zana rêya îro ji te re amade kir.'
+                                  : 'Zana bugünkü yolunu hazırladı.')
+                            : saying.$2,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.caption.copyWith(
                           color: AppTheme.textMutedColor(context),
                         ),
                       ),
+                      if (onStart != null) ...[
+                        const SizedBox(height: AppSpacing.sm),
+                        FilledButton.icon(
+                          onPressed: onStart,
+                          icon: Icon(
+                            hasReview
+                                ? Icons.refresh_rounded
+                                : Icons.arrow_forward_rounded,
+                          ),
+                          label: Text(
+                            hasReview
+                                ? (isKu
+                                      ? 'Dest bi dubarekirinê'
+                                      : 'Tekrara başla')
+                                : (isKu
+                                      ? 'Dest bi hînbûnê bike'
+                                      : 'Öğrenmeye başla'),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),

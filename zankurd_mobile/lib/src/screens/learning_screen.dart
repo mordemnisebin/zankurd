@@ -2,13 +2,19 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../data/placement_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/lesson.dart';
+import '../models/mini_guide.dart';
+import '../models/story.dart';
+import '../services/placement_scoring.dart';
 import '../theme/app_theme.dart';
+import 'story_screen.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/todays_review_card.dart';
 import 'quiz_screen.dart';
 
 /// Kurmancî ders kategorilerini ve dersleri gösterir.
@@ -37,21 +43,30 @@ class _LearningScreenState extends State<LearningScreen> {
   String _selectedCategory = _categories.first;
   Set<String> _completedIds = const {};
   List<Lesson> _currentLessons = const [];
+  PlacementLevel? _placementLevel;
 
   @override
   void initState() {
     super.initState();
     _loadLessons();
     _refreshCompleted();
+    _loadPlacementLevel();
+  }
+
+  Future<void> _loadPlacementLevel() async {
+    try {
+      final store = await PlacementStore.load();
+      if (mounted) setState(() => _placementLevel = store.level);
+    } catch (_) {}
   }
 
   void _loadLessons() {
     _lessonsFuture = widget.repository
         .loadLessonsByCategory(_selectedCategory)
         .then((lessons) {
-      if (mounted) setState(() => _currentLessons = lessons);
-      return lessons;
-    });
+          if (mounted) setState(() => _currentLessons = lessons);
+          return lessons;
+        });
   }
 
   Future<void> _refreshCompleted() async {
@@ -108,6 +123,41 @@ class _LearningScreenState extends State<LearningScreen> {
                   compact: true,
                 ),
               ),
+              // Akıllı tekrar (SM-2) ürün yüzü: yalnız hazır tekrar varsa
+              // dokunulabilir kart, yoksa sakin bir tamamlandı durumu.
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.page,
+                  AppSpacing.xs,
+                  AppSpacing.page,
+                  0,
+                ),
+                child: TodaysReviewCard(
+                  repository: widget.repository,
+                  isKu: ku,
+                ),
+              ),
+              // Hikâye modu girişi (metin tabanlı, sessiz). Ünite başında mini
+              // rehber de buradan açılır.
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.page,
+                  AppSpacing.xs,
+                  AppSpacing.page,
+                  0,
+                ),
+                child: OutlinedButton.icon(
+                  key: const ValueKey('learning-story-entry'),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          StoryScreen(story: cayxaneStory, guide: cayxaneGuide),
+                    ),
+                  ),
+                  icon: const Icon(Icons.auto_stories_rounded, size: 18),
+                  label: Text(ku ? 'Çîrok: Li Çayxanê' : 'Hikâye: Çay Evinde'),
+                ),
+              ),
               // Kategori sekmeler
               SizedBox(
                 height: 60,
@@ -160,6 +210,16 @@ class _LearningScreenState extends State<LearningScreen> {
                             : 'Henüz ders yok',
                       );
                     }
+                    final firstOpenIndex = lessons.indexWhere(
+                      (lesson) => !_completedIds.contains(lesson.id),
+                    );
+                    // Seviye belirlemeye göre önerilen başlangıç düğümü.
+                    // Yalnız görsel işaret: kilit/tamamlanma değişmez.
+                    final recommendedIndex =
+                        PlacementScoring.recommendedStartIndex(
+                          _placementLevel,
+                          lessons.length,
+                        );
                     return ListView.builder(
                       padding: const EdgeInsets.fromLTRB(
                         AppSpacing.page,
@@ -167,23 +227,48 @@ class _LearningScreenState extends State<LearningScreen> {
                         AppSpacing.page,
                         AppSpacing.lg,
                       ),
-                      itemCount: lessons.length,
-                      itemBuilder: (ctx, i) => _LessonCard(
-                        lesson: lessons[i],
-                        ku: ku,
-                        completed: _completedIds.contains(lessons[i].id),
-                        onTap: () async {
-                          await Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => LessonDetailScreen(
-                                lesson: lessons[i],
-                                repository: widget.repository,
-                              ),
-                            ),
+                      itemCount: lessons.length + 1,
+                      itemBuilder: (ctx, i) {
+                        if (i == lessons.length) {
+                          return _MasteryGoal(
+                            completed: firstOpenIndex == -1,
+                            ku: ku,
                           );
-                          _refreshCompleted();
-                        },
-                      ),
+                        }
+                        final completed = _completedIds.contains(lessons[i].id);
+                        final current =
+                            i ==
+                            (firstOpenIndex < 0
+                                ? lessons.length
+                                : firstOpenIndex);
+                        final locked = !completed && !current;
+                        return _LearningPathNode(
+                          key: ValueKey('learning-path-node-${lessons[i].id}'),
+                          index: i,
+                          completed: completed,
+                          current: current,
+                          locked: locked,
+                          child: _LessonCard(
+                            lesson: lessons[i],
+                            ku: ku,
+                            completed: completed,
+                            locked: locked,
+                            recommended: i == recommendedIndex,
+                            onTap: () async {
+                              if (locked) return;
+                              await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => LessonDetailScreen(
+                                    lesson: lessons[i],
+                                    repository: widget.repository,
+                                  ),
+                                ),
+                              );
+                              _refreshCompleted();
+                            },
+                          ),
+                        );
+                      },
                     );
                   },
                 ),
@@ -197,8 +282,9 @@ class _LearningScreenState extends State<LearningScreen> {
 
   Widget _buildCategoryProgress(BuildContext context, bool ku) {
     final total = _currentLessons.length;
-    final completed =
-        _currentLessons.where((l) => _completedIds.contains(l.id)).length;
+    final completed = _currentLessons
+        .where((l) => _completedIds.contains(l.id))
+        .length;
     final ratio = total > 0 ? completed / total : 0.0;
     final pct = (ratio * 100).round();
 
@@ -209,8 +295,11 @@ class _LearningScreenState extends State<LearningScreen> {
           const SizedBox(height: 8),
           Row(
             children: [
-              Icon(Icons.auto_stories_rounded,
-                  size: 14, color: AppTheme.playGreen),
+              Icon(
+                Icons.auto_stories_rounded,
+                size: 14,
+                color: AppTheme.playGreen,
+              ),
               const SizedBox(width: 6),
               Text(
                 ku
@@ -319,20 +408,27 @@ class _LessonCard extends StatelessWidget {
     required this.lesson,
     required this.ku,
     required this.completed,
+    required this.locked,
     required this.onTap,
+    this.recommended = false,
   });
 
   final Lesson lesson;
   final bool ku;
   final bool completed;
+  final bool locked;
   final VoidCallback onTap;
+
+  /// Seviye belirlemeye göre önerilen başlangıç düğümü mü. Yalnız görsel bir
+  /// işarettir; kilit/tamamlanma durumunu değiştirmez.
+  final bool recommended;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: GestureDetector(
-        onTap: onTap,
+        onTap: locked ? null : onTap,
         child: AppPanel(
           child: Row(
             children: [
@@ -385,6 +481,42 @@ class _LessonCard extends StatelessWidget {
                         fontSize: 12,
                       ),
                     ),
+                    if (recommended && !completed) ...[
+                      const SizedBox(height: 6),
+                      Container(
+                        key: const ValueKey('lesson-recommended-badge'),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 3,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppTheme.gold.withValues(alpha: 0.16),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: AppTheme.gold.withValues(alpha: 0.4),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.star_rounded,
+                              size: 12,
+                              color: AppTheme.gold,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              ku ? 'Pêşniyara te' : 'Sana önerilen',
+                              style: const TextStyle(
+                                color: AppTheme.gold,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 10.5,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -408,6 +540,11 @@ class _LessonCard extends StatelessWidget {
                     color: Colors.white,
                     size: 16,
                   ),
+                )
+              else if (locked)
+                Icon(
+                  Icons.lock_outline_rounded,
+                  color: AppTheme.textMutedColor(context),
                 )
               else
                 Icon(
@@ -445,6 +582,81 @@ class _LessonCard extends StatelessWidget {
       'daily_phrases': Icons.chat_rounded,
     };
     return icons[slug] ?? Icons.school_rounded;
+  }
+}
+
+class _LearningPathNode extends StatelessWidget {
+  const _LearningPathNode({
+    required this.index,
+    required this.completed,
+    required this.current,
+    required this.locked,
+    required this.child,
+    super.key,
+  });
+
+  final int index;
+  final bool completed;
+  final bool current;
+  final bool locked;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = completed
+        ? AppTheme.playGreen
+        : current
+        ? AppTheme.brandOrange
+        : AppTheme.borderColor(context);
+    return Stack(
+      children: [
+        Positioned(
+          left: 27,
+          top: 0,
+          bottom: 0,
+          child: Container(width: 3, color: color.withValues(alpha: 0.45)),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: index.isEven ? 0 : AppSpacing.lg),
+          child: Opacity(opacity: locked ? 0.58 : 1, child: child),
+        ),
+      ],
+    );
+  }
+}
+
+class _MasteryGoal extends StatelessWidget {
+  const _MasteryGoal({required this.completed, required this.ku});
+
+  final bool completed;
+  final bool ku;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: const ValueKey('learning-mastery-goal'),
+      margin: const EdgeInsets.only(top: AppSpacing.xs),
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: AppTheme.gold.withValues(alpha: completed ? 0.20 : 0.09),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: AppTheme.gold.withValues(alpha: 0.45)),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.workspace_premium_rounded, color: AppTheme.gold),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Text(
+              ku ? 'Armanca mastery ya kategoriyê' : 'Kategori mastery hedefi',
+              style: AppTypography.bodyLarge.copyWith(
+                color: AppTheme.textPrimaryColor(context),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -511,19 +723,6 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     setState(() => _isFlipped = !_isFlipped);
   }
 
-  void _onSpeakerTap(String text) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          context.isKu
-              ? 'Telafûz wê zû were zêdekirin'
-              : 'Telaffuz yakında eklenecek',
-        ),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
-
   Future<void> _startMiniQuiz() async {
     final ku = context.isKu;
     try {
@@ -562,7 +761,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
             room: room,
             questions: questions,
             practice: true,
-            enableTimer: true,
+            enableTimer: false,
+            experience: QuizExperience.learning,
           ),
         ),
       );
@@ -570,9 +770,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              ku ? 'Quiz nehate barkirin' : 'Quiz yüklenemedi',
-            ),
+            content: Text(ku ? 'Quiz nehate barkirin' : 'Quiz yüklenemedi'),
           ),
         );
       }
@@ -580,32 +778,17 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   }
 
   Widget _buildKuContentRow(LessonSlide slide, BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Text(
-            slide.contentKu,
-            style: TextStyle(
-              color: AppTheme.textPrimaryColor(context),
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-        const SizedBox(width: 4),
-        _SpeakerButton(
-          onTap: () => _onSpeakerTap(slide.contentKu),
-        ),
-      ],
+    return Text(
+      slide.contentKu,
+      style: TextStyle(
+        color: AppTheme.textPrimaryColor(context),
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 
-  Widget _buildFlashcard(
-    LessonSlide slide,
-    BuildContext context,
-    bool ku,
-  ) {
+  Widget _buildFlashcard(LessonSlide slide, BuildContext context, bool ku) {
     return GestureDetector(
       onTap: _toggleFlip,
       child: AnimatedBuilder(
@@ -640,13 +823,14 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
         children: [
           Row(
             children: [
-              const Icon(Icons.touch_app_rounded,
-                  size: 14, color: AppTheme.textMuted),
+              const Icon(
+                Icons.touch_app_rounded,
+                size: 14,
+                color: AppTheme.textMuted,
+              ),
               const SizedBox(width: 6),
               Text(
-                context.isKu
-                    ? 'Ji bo wergerê bitikîne'
-                    : 'Çeviri için dokun',
+                context.isKu ? 'Ji bo wergerê bitikîne' : 'Çeviri için dokun',
                 style: TextStyle(
                   color: AppTheme.textMutedColor(context),
                   fontSize: 11,
@@ -680,11 +864,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     );
   }
 
-  Widget _buildFlashcardBack(
-    LessonSlide slide,
-    BuildContext context,
-    bool ku,
-  ) {
+  Widget _buildFlashcardBack(LessonSlide slide, BuildContext context, bool ku) {
     return AppPanel(
       gradient: const LinearGradient(
         colors: [AppTheme.playCyan, Color(0xFF2A9D8F)],
@@ -943,63 +1123,6 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-/// Speaker / pronunciation button with subtle scale animation.
-class _SpeakerButton extends StatefulWidget {
-  const _SpeakerButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  State<_SpeakerButton> createState() => _SpeakerButtonState();
-}
-
-class _SpeakerButtonState extends State<_SpeakerButton>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _scaleController;
-  late final Animation<double> _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _scaleController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 200),
-    );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.25).animate(
-      CurvedAnimation(parent: _scaleController, curve: Curves.easeOutBack),
-    );
-  }
-
-  @override
-  void dispose() {
-    _scaleController.dispose();
-    super.dispose();
-  }
-
-  void _onTap() {
-    _scaleController.forward().then((_) => _scaleController.reverse());
-    widget.onTap();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ScaleTransition(
-      scale: _scaleAnimation,
-      child: IconButton(
-        icon: Icon(
-          Icons.volume_up_rounded,
-          color: AppTheme.playGreen,
-          size: 22,
-        ),
-        padding: EdgeInsets.zero,
-        constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-        onPressed: _onTap,
-        tooltip: context.isKu ? 'Telafûz' : 'Telaffuz',
       ),
     );
   }

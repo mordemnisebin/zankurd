@@ -40,7 +40,8 @@ class TournamentBracketWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             for (int i = 0; i < totalRounds; i++) ...[
-              if (i > 0) _ConnectorColumn(roundIndex: i, roundCount: totalRounds),
+              if (i > 0)
+                _ConnectorColumn(roundIndex: i, roundCount: totalRounds),
               _RoundColumn(
                 round: bracket.rounds[i],
                 roundName: _roundNames[i],
@@ -95,14 +96,14 @@ class _RoundColumn extends StatelessWidget {
             color: isActive
                 ? AppTheme.accent.withValues(alpha: 0.2)
                 : isCompleted
-                    ? AppTheme.gold.withValues(alpha: 0.15)
-                    : Colors.transparent,
+                ? AppTheme.gold.withValues(alpha: 0.15)
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(AppRadius.pill),
             border: isActive
                 ? Border.all(color: AppTheme.accent.withValues(alpha: 0.5))
                 : isCompleted
-                    ? Border.all(color: AppTheme.gold.withValues(alpha: 0.4))
-                    : null,
+                ? Border.all(color: AppTheme.gold.withValues(alpha: 0.4))
+                : null,
           ),
           child: Text(
             roundName,
@@ -110,8 +111,8 @@ class _RoundColumn extends StatelessWidget {
               color: isActive
                   ? AppTheme.accent
                   : isCompleted
-                      ? AppTheme.gold
-                      : AppTheme.textMutedColor(context),
+                  ? AppTheme.gold
+                  : AppTheme.textMutedColor(context),
               fontWeight: FontWeight.w800,
             ),
           ),
@@ -123,9 +124,7 @@ class _RoundColumn extends StatelessWidget {
             children: [
               for (final match in round.matches)
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: spacingFactor * 8,
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: spacingFactor * 8),
                   child: _BracketMatchCard(
                     match: match,
                     userId: userId,
@@ -143,10 +142,7 @@ class _RoundColumn extends StatelessWidget {
 
 /// Connector lines between rounds showing the bracket links.
 class _ConnectorColumn extends StatelessWidget {
-  const _ConnectorColumn({
-    required this.roundIndex,
-    required this.roundCount,
-  });
+  const _ConnectorColumn({required this.roundIndex, required this.roundCount});
 
   final int roundIndex;
   final int roundCount;
@@ -233,7 +229,8 @@ class _BracketMatchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCompleted = match.status == 'completed';
-    final hasPlayers = match.playerOneId.isNotEmpty && match.playerTwoId.isNotEmpty;
+    final hasPlayers =
+        match.playerOneId.isNotEmpty && match.playerTwoId.isNotEmpty;
     final isUserMatch =
         match.playerOneId == userId || match.playerTwoId == userId;
 
@@ -258,8 +255,8 @@ class _BracketMatchCard extends StatelessWidget {
             color: isUserMatch
                 ? AppTheme.accent.withValues(alpha: 0.5)
                 : isCompleted
-                    ? AppTheme.gold.withValues(alpha: 0.4)
-                    : AppTheme.borderColor(context).withValues(alpha: 0.6),
+                ? AppTheme.gold.withValues(alpha: 0.4)
+                : AppTheme.borderColor(context).withValues(alpha: 0.6),
             width: isUserMatch ? 1.5 : 0.8,
           ),
           boxShadow: isCompleted
@@ -305,8 +302,8 @@ class _BracketMatchCard extends StatelessWidget {
                       isCompleted
                           ? (ku ? 'Bİ DAWÎ BÛ' : 'BİTTİ')
                           : hasPlayers
-                              ? 'VS'
-                              : '—',
+                          ? 'VS'
+                          : '—',
                       style: TextStyle(
                         fontSize: 9,
                         fontWeight: FontWeight.w900,
@@ -370,8 +367,8 @@ class _PlayerSlot extends StatelessWidget {
         color: isWinner
             ? AppTheme.gold.withValues(alpha: 0.18)
             : isUser
-                ? AppTheme.accent.withValues(alpha: 0.06)
-                : null,
+            ? AppTheme.accent.withValues(alpha: 0.06)
+            : null,
         borderRadius: BorderRadius.circular(6),
         border: isWinner
             ? Border.all(
@@ -413,22 +410,25 @@ class _PlayerSlot extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 11,
-                fontWeight:
-                    isUser ? FontWeight.w800 : FontWeight.w600,
+                fontWeight: isUser ? FontWeight.w800 : FontWeight.w600,
                 color: isWinner
                     ? AppTheme.gold
                     : isDimmed
-                        ? AppTheme.textMutedColor(context)
-                        : isUser
-                            ? AppTheme.accent
-                            : AppTheme.textPrimaryColor(context),
+                    ? AppTheme.textMutedColor(context)
+                    : isUser
+                    ? AppTheme.accent
+                    : AppTheme.textPrimaryColor(context),
                 decoration: isDimmed ? TextDecoration.lineThrough : null,
               ),
             ),
           ),
           // Winner crown icon
           if (isWinner)
-            const Icon(Icons.emoji_events_rounded, size: 14, color: AppTheme.gold)
+            const Icon(
+              Icons.emoji_events_rounded,
+              size: 14,
+              color: AppTheme.gold,
+            )
           else if (isCompleted && hasPlayer)
             Icon(
               Icons.cancel_outlined,

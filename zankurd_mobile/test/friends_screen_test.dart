@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 
 void main() {
@@ -16,9 +17,16 @@ void main() {
     repository = MockZanKurdRepository();
   });
 
-  Widget createTestWidget() {
-    return ChangeNotifierProvider<LanguageProvider>(
-      create: (_) => LanguageProvider(initialLang: 'tr'),
+  Widget createTestWidget({bool childSafe = false}) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<LanguageProvider>(
+          create: (_) => LanguageProvider(initialLang: 'tr'),
+        ),
+        ChangeNotifierProvider<ChildSafetyProvider>(
+          create: (_) => ChildSafetyProvider(initialEnabled: childSafe),
+        ),
+      ],
       child: MaterialApp(home: FriendsScreen(repository: repository)),
     );
   }
@@ -41,6 +49,19 @@ void main() {
         find.byKey(const ValueKey('friend-primary-action')),
         findsNWidgets(2),
       );
+    });
+
+    testWidgets('çocuk modu açıkken arkadaş arama paneli gizlenir', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createTestWidget(childSafe: true));
+      await tester.pumpAndSettle();
+
+      // Arama/yeni istek kapalı.
+      expect(find.byKey(const ValueKey('friends-search-panel')), findsNothing);
+      // Mevcut arkadaşlar korunur (silinmez).
+      expect(find.text('ZanînBot'), findsOneWidget);
+      expect(tester.takeException(), isNull);
     });
 
     testWidgets('oyuncu arama sonuclari ve ekleme akisi calisir', (

@@ -228,10 +228,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
                             gradient: const LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
-                              colors: [
-                                accentColor,
-                                AppTheme.playPink,
-                              ],
+                              colors: [accentColor, AppTheme.playPink],
                             ),
                             boxShadow: [
                               BoxShadow(

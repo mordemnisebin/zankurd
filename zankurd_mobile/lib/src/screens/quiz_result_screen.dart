@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../data/achievement_store.dart';
 import '../data/mastery_store.dart';
@@ -10,6 +11,7 @@ import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../data/sync_manager.dart';
 import '../l10n/lang.dart';
+import '../providers/child_safety_provider.dart';
 import '../models/achievement.dart';
 import '../models/answer_record.dart';
 import '../models/player.dart';
@@ -1046,9 +1048,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 context,
                               ).popUntil((route) => route.isFirst);
                             },
-                            icon: const Icon(Icons.home_outlined),
+                            icon: const Icon(Icons.replay_rounded),
                             label: Text(
-                              context.s('Vegere malê', 'Ana ekrana dön'),
+                              context.s('Dîsa bilîze', 'Tekrar oyna'),
                               style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 fontSize: 15,
@@ -1096,38 +1098,43 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: OutlinedButton.icon(
-                                style: OutlinedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 14,
+                            // Çocuk modu: dış paylaşım butonu gizlenir.
+                            if (context
+                                .watch<ChildSafetyProvider>()
+                                .allowExternalShare) ...[
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: OutlinedButton.icon(
+                                  style: OutlinedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 14,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
                                   ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
+                                  onPressed: () => ResultSharer.share(
+                                    context,
+                                    isKu: context.isKu,
+                                    score: score,
+                                    correctCount: correctCount,
+                                    totalQuestions: totalQuestions,
+                                    bestStreak: bestStreak,
+                                    category: room.category,
                                   ),
-                                ),
-                                onPressed: () => ResultSharer.share(
-                                  context,
-                                  isKu: context.isKu,
-                                  score: score,
-                                  correctCount: correctCount,
-                                  totalQuestions: totalQuestions,
-                                  bestStreak: bestStreak,
-                                  category: room.category,
-                                ),
-                                icon: const Icon(Icons.share_rounded),
-                                label: Text(
-                                  context.s('Parve Bike', 'Paylaş'),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 13.5,
+                                  icon: const Icon(Icons.share_rounded),
+                                  label: Text(
+                                    context.s('Parve Bike', 'Paylaş'),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 13.5,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ],
                         ),
                         const SizedBox(height: 10),

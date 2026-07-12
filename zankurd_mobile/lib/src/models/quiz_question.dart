@@ -1,5 +1,6 @@
 import '../l10n/explanation_ku.dart';
 import '../l10n/explanation_overrides.dart';
+import 'question_metadata.dart';
 
 enum QuestionType { multipleChoice, trueFalse, visual }
 
@@ -16,6 +17,7 @@ class QuizQuestion {
     this.type = QuestionType.multipleChoice,
     this.imageUrl,
     this.difficulty = 2,
+    this.metadata,
   });
 
   final String id;
@@ -29,6 +31,11 @@ class QuizQuestion {
   final QuestionType type;
   final String? imageUrl;
   final int difficulty;
+
+  /// Editör/kalite meta verisi (opsiyonel, geriye uyumlu). Eski verilerde
+  /// `null`'dır ve [ContentQualityPolicy] bunu "uygun ama doğrulanmamış"
+  /// olarak ele alır.
+  final QuestionMetadata? metadata;
 
   bool get hasImage => imageUrl != null && imageUrl!.trim().isNotEmpty;
 

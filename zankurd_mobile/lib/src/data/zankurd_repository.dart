@@ -175,10 +175,7 @@ abstract class ZanKurdRepository {
   Future<List<FriendRequest>> loadPendingFriendRequests();
 
   /// Oda sohbet mesajı gönder.
-  Future<void> sendRoomMessage({
-    required String roomId,
-    required String text,
-  });
+  Future<void> sendRoomMessage({required String roomId, required String text});
 
   /// Oda sohbet mesajlarını canlı dinle.
   Stream<List<RoomMessage>> subscribeRoomMessages(String roomId);

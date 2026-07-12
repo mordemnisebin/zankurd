@@ -32,6 +32,5 @@ class RoomMessage {
   );
 
   @override
-  String toString() =>
-      'RoomMessage(id: $id, sender: $senderName, text: $text)';
+  String toString() => 'RoomMessage(id: $id, sender: $senderName, text: $text)';
 }

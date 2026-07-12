@@ -71,8 +71,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   void _loadData() {
     if (_tabController.index == 3) {
       setState(() {
-        _friendsFuture =
-            widget.repository.loadFriendsLeaderboard();
+        _friendsFuture = widget.repository.loadFriendsLeaderboard();
       });
     } else {
       setState(() {
@@ -196,62 +195,59 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
 
   Widget _buildLeaderboardTab(bool ku) {
     return FutureBuilder<List<LeaderboardEntry>>(
-                future: _future,
-                builder: (ctx, snap) {
-                  if (snap.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: AppTheme.primaryGradientStart,
-                        strokeWidth: 2.5,
-                      ),
-                    );
-                  }
-                  if (snap.hasError) {
-                    return AppErrorState(
-                      title: ku ? 'Tabloya barnekirî' : 'Yüklenemedi',
-                      message: ku
-                          ? 'Girêdanê kontrol bike û dîsa biceribîne.'
-                          : 'Bağlantıyı kontrol edip tekrar dene.',
-                      retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
-                      onRetry: _loadData,
-                    );
-                  }
-                  final entries = snap.data ?? [];
-                  if (entries.isEmpty) {
-                    return AppEmptyState(
-                      icon: Icons.emoji_events_outlined,
-                      title: ku ? 'Hîn xal tune' : 'Henüz puan yok',
-                      message: ku
-                          ? 'Pêşbirkekê dest pê bike.'
-                          : 'Bir yarış başlat; puanların burada görünür.',
-                      actionLabel: ku
-                          ? 'Pêşbirkê Dest Pê Bike'
-                          : 'Yarışa Başla',
-                      actionIcon: Icons.bolt_rounded,
-                      onAction: _startQuickRace,
-                    );
-                  }
-                  return ListView(
-                    controller: widget.scrollController,
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.page,
-                      AppSpacing.xs,
-                      AppSpacing.page,
-                      AppSpacing.xl,
-                    ),
-                    children: [
-                      if (_period == LeaderboardPeriod.weekly) ...[
-                        _LeagueBanner(myRank: _myRank(entries), isKu: ku),
-                        const SizedBox(height: AppSpacing.cardGap),
-                      ],
-                      _Podium(entries: entries.take(3).toList(), isKu: ku),
-                      const SizedBox(height: AppSpacing.cardGap),
-                      for (final e in entries.skip(3))
-                        _RankRow(entry: e, isKu: ku),
-                    ],
-                  );
-                },
-              );
+      future: _future,
+      builder: (ctx, snap) {
+        if (snap.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppTheme.primaryGradientStart,
+              strokeWidth: 2.5,
+            ),
+          );
+        }
+        if (snap.hasError) {
+          return AppErrorState(
+            title: ku ? 'Tabloya barnekirî' : 'Yüklenemedi',
+            message: ku
+                ? 'Girêdanê kontrol bike û dîsa biceribîne.'
+                : 'Bağlantıyı kontrol edip tekrar dene.',
+            retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
+            onRetry: _loadData,
+          );
+        }
+        final entries = snap.data ?? [];
+        if (entries.isEmpty) {
+          return AppEmptyState(
+            icon: Icons.emoji_events_outlined,
+            title: ku ? 'Hîn xal tune' : 'Henüz puan yok',
+            message: ku
+                ? 'Pêşbirkekê dest pê bike.'
+                : 'Bir yarış başlat; puanların burada görünür.',
+            actionLabel: ku ? 'Pêşbirkê Dest Pê Bike' : 'Yarışa Başla',
+            actionIcon: Icons.bolt_rounded,
+            onAction: _startQuickRace,
+          );
+        }
+        return ListView(
+          controller: widget.scrollController,
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.page,
+            AppSpacing.xs,
+            AppSpacing.page,
+            AppSpacing.xl,
+          ),
+          children: [
+            if (_period == LeaderboardPeriod.weekly) ...[
+              _LeagueBanner(myRank: _myRank(entries), isKu: ku),
+              const SizedBox(height: AppSpacing.cardGap),
+            ],
+            _Podium(entries: entries.take(3).toList(), isKu: ku),
+            const SizedBox(height: AppSpacing.cardGap),
+            for (final e in entries.skip(3)) _RankRow(entry: e, isKu: ku),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -812,9 +808,7 @@ class _FriendRankRow extends StatelessWidget {
         vertical: AppSpacing.sm,
       ),
       decoration: AppTheme.statCard(context, AppTheme.cyan).copyWith(
-        border: Border.all(
-          color: AppTheme.cyan.withValues(alpha: 0.22),
-        ),
+        border: Border.all(color: AppTheme.cyan.withValues(alpha: 0.22)),
       ),
       child: Row(
         children: [

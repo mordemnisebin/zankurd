@@ -109,9 +109,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: Text(ku ? 'Pirs Pêşniyar Bike' : 'Soru Öner'),
-      ),
+      appBar: AppBar(title: Text(ku ? 'Pirs Pêşniyar Bike' : 'Soru Öner')),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -168,9 +166,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                       ),
                     ),
                     hint: Text(
-                      ku
-                          ? 'Kategoriyekê hilbijêre...'
-                          : 'Bir kategori seç...',
+                      ku ? 'Kategoriyekê hilbijêre...' : 'Bir kategori seç...',
                     ),
                     items: categories.map((cat) {
                       return DropdownMenuItem(
@@ -183,9 +179,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return ku
-                            ? 'Kategorî pêwîst e'
-                            : 'Kategori zorunlu';
+                        return ku ? 'Kategorî pêwîst e' : 'Kategori zorunlu';
                       }
                       return null;
                     },
@@ -204,15 +198,11 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                   controller: _promptController,
                   maxLines: 3,
                   decoration: InputDecoration(
-                    hintText: ku
-                        ? 'Pirsa xwe binivîse...'
-                        : 'Soruyu yaz...',
+                    hintText: ku ? 'Pirsa xwe binivîse...' : 'Soruyu yaz...',
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return ku
-                          ? 'Pirs vala nabe'
-                          : 'Soru boş olamaz';
+                      return ku ? 'Pirs vala nabe' : 'Soru boş olamaz';
                     }
                     return null;
                   },
@@ -263,9 +253,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _SectionHeader(
                   icon: Icons.check_circle_outline,
                   color: AppTheme.gold,
-                  title: ku
-                      ? 'Bersiva Rast Hilbijêre'
-                      : 'Doğru Cevabı Seç',
+                  title: ku ? 'Bersiva Rast Hilbijêre' : 'Doğru Cevabı Seç',
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 AppPanel(
@@ -330,9 +318,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _SectionHeader(
                   icon: Icons.lightbulb_outline,
                   color: AppTheme.violet,
-                  title: ku
-                      ? 'Şîrove (Vebijarkî)'
-                      : 'Açıklama (İsteğe bağlı)',
+                  title: ku ? 'Şîrove (Vebijarkî)' : 'Açıklama (İsteğe bağlı)',
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 TextFormField(
@@ -411,9 +397,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                           )
                         : const Icon(Icons.send_rounded),
                     label: Text(
-                      ku
-                          ? 'Pirsê Bişîne'
-                          : 'Soruyu Gönder',
+                      ku ? 'Pirsê Bişîne' : 'Soruyu Gönder',
                       style: const TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 16,
@@ -438,9 +422,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: Text(ku ? 'Pirs Pêşniyar Bike' : 'Soru Öner'),
-      ),
+      appBar: AppBar(title: Text(ku ? 'Pirs Pêşniyar Bike' : 'Soru Öner')),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -495,9 +477,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                       width: double.infinity,
                       child: FilledButton(
                         onPressed: () => Navigator.of(context).pop(),
-                        child: Text(
-                          ku ? 'Vegere' : 'Geri Dön',
-                        ),
+                        child: Text(ku ? 'Vegere' : 'Geri Dön'),
                       ),
                     ),
                   ],

@@ -19,13 +19,13 @@ class _GateAuthProvider extends AuthProvider {
 }
 
 // Regression: uygulama, kayıtlı bir tema tercihi yokken
-// açık temayla açılmalı — onboarding dahil (main() ile aynı yol:
+// koyu temayla açılmalı — onboarding dahil (main() ile aynı yol:
 // ThemeProvider.load()).
 void main() {
-  testWidgets('sıfır kurulumda onboarding açık temayla açılır', (tester) async {
+  testWidgets('sıfır kurulumda onboarding koyu temayla açılır', (tester) async {
     SharedPreferences.setMockInitialValues({});
     final themeProvider = await ThemeProvider.load();
-    expect(themeProvider.mode, ThemeMode.light);
+    expect(themeProvider.mode, ThemeMode.dark);
 
     await tester.pumpWidget(
       ZanKurdApp(
@@ -40,7 +40,7 @@ void main() {
     expect(find.byType(OnboardingScreen), findsOneWidget);
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
   });
 }

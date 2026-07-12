@@ -77,7 +77,6 @@ class LessonSlide {
   final String? contentTr;
   final String? exampleKu;
   final String? imageUrl;
-  final String? audioUrl;
 
   const LessonSlide({
     required this.id,
@@ -87,7 +86,6 @@ class LessonSlide {
     this.contentTr,
     this.exampleKu,
     this.imageUrl,
-    this.audioUrl,
   });
 
   LessonSlide copyWith({
@@ -98,7 +96,6 @@ class LessonSlide {
     String? contentTr,
     String? exampleKu,
     String? imageUrl,
-    String? audioUrl,
   }) => LessonSlide(
     id: id ?? this.id,
     lessonId: lessonId ?? this.lessonId,
@@ -107,7 +104,6 @@ class LessonSlide {
     contentTr: contentTr ?? this.contentTr,
     exampleKu: exampleKu ?? this.exampleKu,
     imageUrl: imageUrl ?? this.imageUrl,
-    audioUrl: audioUrl ?? this.audioUrl,
   );
 
   Map<String, dynamic> toJson() => {
@@ -118,7 +114,6 @@ class LessonSlide {
     'content_tr': contentTr,
     'example_ku': exampleKu,
     'image_url': imageUrl,
-    'audio_url': audioUrl,
   };
 
   static LessonSlide fromJson(Map<String, dynamic> json) => LessonSlide(
@@ -129,7 +124,6 @@ class LessonSlide {
     contentTr: json['content_tr'] as String?,
     exampleKu: json['example_ku'] as String?,
     imageUrl: json['image_url'] as String?,
-    audioUrl: json['audio_url'] as String?,
   );
 
   @override

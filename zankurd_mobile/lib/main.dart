@@ -15,6 +15,8 @@ import 'src/data/sync_manager.dart';
 import 'src/data/zankurd_repository.dart';
 import 'src/l10n/lang.dart';
 import 'src/providers/auth_provider.dart';
+import 'src/providers/child_safety_provider.dart';
+import 'src/providers/reduced_motion_provider.dart';
 import 'src/providers/sound_provider.dart';
 import 'src/providers/theme_provider.dart';
 import 'src/screens/app_shell.dart';
@@ -65,6 +67,8 @@ Future<void> main() async {
   final languageProvider = await LanguageProvider.load();
   final themeProvider = await ThemeProvider.load();
   final soundProvider = await SoundProvider.load();
+  final reducedMotionProvider = await ReducedMotionProvider.load();
+  final childSafetyProvider = await ChildSafetyProvider.load();
 
   runApp(
     ZanKurdApp(
@@ -73,6 +77,8 @@ Future<void> main() async {
       languageProvider: languageProvider,
       themeProvider: themeProvider,
       soundProvider: soundProvider,
+      reducedMotionProvider: reducedMotionProvider,
+      childSafetyProvider: childSafetyProvider,
     ),
   );
 }
@@ -84,6 +90,8 @@ class ZanKurdApp extends StatelessWidget {
     this.languageProvider,
     this.themeProvider,
     this.soundProvider,
+    this.reducedMotionProvider,
+    this.childSafetyProvider,
     super.key,
   });
 
@@ -92,6 +100,8 @@ class ZanKurdApp extends StatelessWidget {
   final LanguageProvider? languageProvider;
   final ThemeProvider? themeProvider;
   final SoundProvider? soundProvider;
+  final ReducedMotionProvider? reducedMotionProvider;
+  final ChildSafetyProvider? childSafetyProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +115,12 @@ class ZanKurdApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (_) => themeProvider ?? ThemeProvider()),
         ChangeNotifierProvider(create: (_) => soundProvider ?? SoundProvider()),
+        ChangeNotifierProvider(
+          create: (_) => reducedMotionProvider ?? ReducedMotionProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => childSafetyProvider ?? ChildSafetyProvider(),
+        ),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) => MaterialApp(

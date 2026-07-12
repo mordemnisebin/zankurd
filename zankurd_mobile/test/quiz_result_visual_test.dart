@@ -3,12 +3,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
-Widget wrap(Widget child) => ChangeNotifierProvider(
-  create: (_) => LanguageProvider()..setLang('tr'),
+Widget wrap(Widget child) => MultiProvider(
+  providers: [
+    ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('tr')),
+    ChangeNotifierProvider(create: (_) => ChildSafetyProvider()),
+  ],
   child: MaterialApp(theme: AppTheme.light(), home: child),
 );
 
@@ -62,6 +66,7 @@ void main() {
       find.byKey(const ValueKey('result-home-button')),
     );
     expect(button.style?.backgroundColor?.resolve({}), AppTheme.brandOrange);
+    expect(find.text('Tekrar oyna'), findsOneWidget);
   });
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {

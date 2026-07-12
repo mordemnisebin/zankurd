@@ -17,9 +17,11 @@ import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
+import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
+import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
-import 'package:zankurd_mobile/src/screens/categories_tab.dart';
+import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
@@ -318,6 +320,12 @@ Widget _testShell({
         create: (_) => themeProvider ?? ThemeProvider(),
       ),
       ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
+      ChangeNotifierProvider<ReducedMotionProvider>(
+        create: (_) => ReducedMotionProvider(),
+      ),
+      ChangeNotifierProvider<ChildSafetyProvider>(
+        create: (_) => ChildSafetyProvider(),
+      ),
     ],
     child: Consumer<ThemeProvider>(
       builder: (context, theme, _) => MaterialApp(
@@ -639,16 +647,16 @@ void main() {
     );
     expect(tester.takeException(), isNull);
 
-    // Pirs-inspired sözleşme: onboarding açık temada, açık düz yüzeyde açılır.
+    // Kültürel Modern 2.0 sözleşmesi: onboarding koyu sahnede açılır.
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
     final surface = tester.widget<Container>(
       find.byKey(const ValueKey('onboarding-surface')),
     );
     final decoration = surface.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.lightBg);
+    expect(decoration.color, AppTheme.bg);
   });
 
   testWidgets('onboarding fits a tablet and web viewport', (tester) async {
@@ -670,7 +678,7 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
   });
 
@@ -754,6 +762,9 @@ void main() {
     expect(find.text('Oda kur'), findsOneWidget);
     expect(find.text('Kodla katıl'), findsOneWidget);
     expect(find.text('1vs1 — Hemen oyna'), findsOneWidget);
+    expect(find.text('Öğren'), findsOneWidget);
+    expect(find.text('Oyna'), findsOneWidget);
+    expect(find.text('Topluluk'), findsOneWidget);
 
     final header = tester.widget<Container>(
       find.byKey(const ValueKey('home-profile-header')),
@@ -769,15 +780,15 @@ void main() {
       find.byType(NavigationBarTheme),
     );
     expect(navTheme.data.height, 68);
-    expect(navTheme.data.backgroundColor, AppTheme.lightSurface);
+    expect(navTheme.data.backgroundColor, AppTheme.surface);
     expect(
       navTheme.data.indicatorColor,
       AppTheme.brandOrange.withValues(alpha: 0.14),
     );
 
-    await tester.tap(find.text('Kategoriler'));
+    await tester.tap(find.text('Öğren'));
     await tester.pumpAndSettle();
-    expect(find.byType(CategoriesTab), findsOneWidget);
+    expect(find.byType(LearningScreen), findsOneWidget);
 
     // Bottom nav seçili rengi sekmeyle değişmez; sabit brandOrange kalır.
     final navThemeAfter = tester.widget<NavigationBarTheme>(
@@ -806,10 +817,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Pirs-inspired sözleşme gereği uygulama açık temayla açılır (bkz. ThemeProvider).
+    // Kültürel Modern 2.0 sözleşmesi gereği uygulama koyu temayla açılır.
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
     final home = tester.widget<Container>(
       find
@@ -821,14 +832,14 @@ void main() {
     );
     final decoration = home.decoration as BoxDecoration;
     final gradient = decoration.gradient as LinearGradient;
-    expect(gradient.colors.first, AppTheme.lightBg);
+    expect(gradient.colors.first, AppTheme.bg);
 
     theme.toggleDarkLight();
     await tester.pumpAndSettle();
 
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
   });
 
@@ -1556,9 +1567,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Liderlik'));
+    await tester.ensureVisible(find.text('Topluluk'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Liderlik'));
+    await tester.tap(find.text('Topluluk'));
     await tester.pumpAndSettle();
 
     expect(find.text('Liderlik Tablosu'), findsOneWidget);
@@ -1576,6 +1587,9 @@ void main() {
             create: (_) => _turkishLang(),
           ),
           ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
+          ChangeNotifierProvider<ChildSafetyProvider>(
+            create: (_) => ChildSafetyProvider(),
+          ),
         ],
         child: MaterialApp(
           theme: AppTheme.dark(),

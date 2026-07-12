@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/placement_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
+import '../utils/test_environment.dart';
 import '../widgets/branded_loader.dart';
 import '../widgets/coach_mark.dart';
-import 'categories_tab.dart';
+import 'community_screen.dart';
 import 'home_screen.dart';
-import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
+import 'level_placement_screen.dart';
 import 'onboarding_screen.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
+import 'play_hub_screen.dart';
 import 'sign_in_screen.dart';
 
 class AppShell extends StatefulWidget {
@@ -33,6 +37,7 @@ class _AppShellState extends State<AppShell> {
 
   int _tab = 0;
   bool _showNavTour = false;
+  bool _placementPrompted = false;
 
   final GlobalKey _homeNavKey = GlobalKey();
   final GlobalKey _categoriesNavKey = GlobalKey();
@@ -156,33 +161,33 @@ class _AppShellState extends State<AppShell> {
               ),
               CoachMarkStep(
                 targetKey: _categoriesNavKey,
-                icon: Icons.grid_view_rounded,
-                titleKu: 'Kategorî',
-                titleTr: 'Kategoriler',
-                descriptionKu:
-                    'Hemû mijar (Ziman, Çand, Dîrok...) li vir bi asteyên cuda hatine rêzkirin.',
-                descriptionTr:
-                    'Tüm konular (Ziman, Çand, Dîrok...) burada seviyelere ayrılmış halde.',
-              ),
-              CoachMarkStep(
-                targetKey: _learningNavKey,
                 icon: Icons.school_rounded,
                 titleKu: 'Fêr Bibe',
                 titleTr: 'Öğren',
                 descriptionKu:
-                    'Kurmancî gav bi gav, dersên kurt û mînakên rastîn bi vir hîn bibe.',
+                    'Kurmancî bi rêya dersên gav bi gav û armancên mastery hîn bibe.',
                 descriptionTr:
-                    'Kurmancîyi adım adım, kısa derslerle ve gerçek örneklerle burada öğren.',
+                    'Kurmancîyi adım adım ders yolu ve mastery hedefleriyle öğren.',
+              ),
+              CoachMarkStep(
+                targetKey: _learningNavKey,
+                icon: Icons.sports_esports_rounded,
+                titleKu: 'Bilîze',
+                titleTr: 'Oyna',
+                descriptionKu:
+                    '1vs1, pêşbirka rojê, çerx û turnuva hemû li vir in.',
+                descriptionTr:
+                    '1vs1, günlük yarışma, çark ve turnuvaların hepsi burada.',
               ),
               CoachMarkStep(
                 targetKey: _leaderboardNavKey,
-                icon: Icons.leaderboard_rounded,
-                titleKu: 'Rêzbendî',
-                titleTr: 'Liderlik',
+                icon: Icons.groups_rounded,
+                titleKu: 'Civak',
+                titleTr: 'Topluluk',
                 descriptionKu:
-                    'Rêza xwe ya di nav lîstikvanên din de li vir bibîne.',
+                    'Di lîgên kategoriyan de pêşbikeve û bi hevalên xwe re bilîze.',
                 descriptionTr:
-                    'Diğer oyuncular arasındaki sıralamanı burada görürsün.',
+                    'Kategori liglerinde ilerle ve arkadaşlarınla birlikte oyna.',
               ),
               CoachMarkStep(
                 targetKey: _profileNavKey,
@@ -210,17 +215,11 @@ class _AppShellState extends State<AppShell> {
             displayName: _profileName,
             scrollController: _homeScrollController,
             refreshSignal: _homeRefresh,
-          ),
-          CategoriesTab(
-            repository: widget.repository,
-            scrollController: _categoriesScrollController,
+            onOpenLearning: () => setState(() => _tab = 1),
           ),
           LearningScreen(repository: widget.repository),
-          LeaderboardScreen(
-            repository: widget.repository,
-            scrollController: _leaderboardScrollController,
-            refreshSignal: _leaderboardRefresh,
-          ),
+          PlayHubScreen(repository: widget.repository),
+          CommunityScreen(repository: widget.repository),
           ProfileScreen(
             repository: widget.repository,
             refreshSignal: _profileRefresh,
@@ -310,14 +309,6 @@ class _AppShellState extends State<AppShell> {
               NavigationDestination(
                 icon: KeyedSubtree(
                   key: _categoriesNavKey,
-                  child: const Icon(Icons.grid_view_outlined),
-                ),
-                selectedIcon: const Icon(Icons.grid_view),
-                label: ku ? 'Kategorî' : 'Kategoriler',
-              ),
-              NavigationDestination(
-                icon: KeyedSubtree(
-                  key: _learningNavKey,
                   child: const Icon(Icons.school_outlined),
                 ),
                 selectedIcon: const Icon(Icons.school),
@@ -325,11 +316,19 @@ class _AppShellState extends State<AppShell> {
               ),
               NavigationDestination(
                 icon: KeyedSubtree(
-                  key: _leaderboardNavKey,
-                  child: const Icon(Icons.leaderboard_outlined),
+                  key: _learningNavKey,
+                  child: const Icon(Icons.sports_esports_outlined),
                 ),
-                selectedIcon: const Icon(Icons.leaderboard),
-                label: ku ? 'Rêzbendî' : 'Liderlik',
+                selectedIcon: const Icon(Icons.sports_esports),
+                label: ku ? 'Bilîze' : 'Oyna',
+              ),
+              NavigationDestination(
+                icon: KeyedSubtree(
+                  key: _leaderboardNavKey,
+                  child: const Icon(Icons.groups_outlined),
+                ),
+                selectedIcon: const Icon(Icons.groups),
+                label: ku ? 'Civak' : 'Topluluk',
               ),
               NavigationDestination(
                 icon: KeyedSubtree(
@@ -383,7 +382,11 @@ class _AppShellState extends State<AppShell> {
 
   Future<void> _maybeStartNavTour() async {
     final preferences = await SharedPreferences.getInstance();
-    if (preferences.getBool(_navTourSeenKey) == true) return;
+    if (preferences.getBool(_navTourSeenKey) == true) {
+      // Tur zaten görülmüş: seviye sınavını (gerekiyorsa) doğrudan sun.
+      _maybePromptPlacement();
+      return;
+    }
     // Alt menü nav bar'ının ilk frame'de layout'ta olması için bir çerçeve
     // bekle; aksi halde GlobalKey.currentContext henüz null olur.
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -396,5 +399,20 @@ class _AppShellState extends State<AppShell> {
     await preferences.setBool(_navTourSeenKey, true);
     if (!mounted) return;
     setState(() => _showNavTour = false);
+    _maybePromptPlacement();
+  }
+
+  /// İlk kullanımda (onboarding + profil adı + nav tur tamamlandıktan sonra)
+  /// seviye belirleme sınavını bir kez sunar. Test ortamında otomatik
+  /// açılmaz; kullanıcı ayarlardan istediğinde her zaman başlatabilir.
+  Future<void> _maybePromptPlacement() async {
+    if (_placementPrompted || isFlutterTestEnvironment) return;
+    _placementPrompted = true;
+    final store = await PlacementStore.load();
+    if (!store.shouldPrompt) return;
+    if (!mounted) return;
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(LevelPlacementScreen(repository: widget.repository)));
   }
 }

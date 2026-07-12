@@ -1037,8 +1037,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
         totalScore: 1820,
         level: 9,
         gamesPlayed: 31,
-        lastActiveAt:
-            DateTime.now().toUtc().subtract(const Duration(minutes: 10)),
+        lastActiveAt: DateTime.now().toUtc().subtract(
+          const Duration(minutes: 10),
+        ),
       ),
     ];
   }

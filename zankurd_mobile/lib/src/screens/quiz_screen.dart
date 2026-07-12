@@ -30,12 +30,14 @@ import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/kilim_pattern_painter.dart';
+import '../widgets/kilim_progress_bar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
-import '../services/tts_service.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz_result_screen.dart';
 
 part 'quiz/quiz_widgets.dart';
+
+enum QuizExperience { learning, competition }
 
 /// Multiplayer quiz turlarının ortak faz durumu.
 enum _MultiplayerPhase {
@@ -59,6 +61,7 @@ class QuizScreen extends StatefulWidget {
     this.dailyQuiz = false,
     this.enableTimer = true,
     this.is1v1 = false,
+    this.experience = QuizExperience.competition,
     this.contestId,
     super.key,
   });
@@ -78,6 +81,7 @@ class QuizScreen extends StatefulWidget {
 
   final bool enableTimer;
   final bool is1v1;
+  final QuizExperience experience;
 
   /// Günlük etkinlik (contest) quiz'i — sonuçta skor + ödül RPC.
   final String? contestId;
@@ -87,6 +91,9 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
+  bool get _isLearningExperience =>
+      widget.experience == QuizExperience.learning;
+  bool get _usesTimer => widget.enableTimer && !_isLearningExperience;
   int index = 0;
   int score = 0;
   int streak = 0;
@@ -147,9 +154,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   final GlobalKey _wildcardKey = GlobalKey();
   final GlobalKey _nextButtonKey = GlobalKey();
 
-  // TTS (metin-okuma) servisi
-  TTSService? _ttsService;
-
   QuizQuestion get question => _questions[index];
   bool get answered => selectedAnswer.isNotEmpty;
   bool get isLastQuestion => index == widget.questions.length - 1;
@@ -164,7 +168,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _isKu = context.langProvider.isKu;
     _questions = List.of(widget.questions);
     _loadCoinBalance();
-    _loadTTSService();
 
     _timerController = AnimationController(
       vsync: this,
@@ -180,7 +183,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         setState(() => _showExplanation = true);
       }
     });
-    if (widget.enableTimer) {
+    if (_usesTimer) {
       _timerController.addStatusListener((status) {
         if (status == AnimationStatus.dismissed) {
           if (!answered) {
@@ -394,7 +397,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _questionStopwatch
       ..reset()
       ..start();
-    if (widget.enableTimer) {
+    if (_usesTimer) {
       _timerController.stop();
       _timerController.value = 1.0;
       _timerController.reverse();
@@ -405,37 +408,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     widget.repository.loadCoinBalance().then((balance) {
       if (mounted) setState(() => _coinBalance = balance);
     });
-  }
-
-  Future<void> _loadTTSService() async {
-    try {
-      final tts = await TTSService.load();
-      if (mounted) {
-        setState(() => _ttsService = tts);
-        // İlk soruyu otomatik oku (auto-read etkinse)
-        if (tts.autoRead && _questions.isNotEmpty) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (mounted) tts.speak(question.promptText);
-          });
-        }
-      }
-    } catch (_) {
-      // TTS kullanılamazsa sessizce devam et.
-    }
-  }
-
-  /// Soru metnini seslendir.
-  void _speakPrompt() {
-    final tts = _ttsService;
-    if (tts == null) return;
-    tts.speak(question.promptText);
-  }
-
-  /// Otomatik okuma etkinse soruyu seslendir.
-  void _tryAutoRead() {
-    final tts = _ttsService;
-    if (tts == null || !tts.autoRead) return;
-    tts.speak(question.promptText);
   }
 
   List<Player> _composeBotRacePlayers() {
@@ -497,7 +469,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _pollTimer?.cancel();
     _timerController.dispose();
     _explanationController.dispose();
-    _ttsService?.dispose();
     super.dispose();
   }
 
@@ -602,7 +573,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 // (veya süre dolduktan) sonra kırmızı parlama sönmeli, yoksa
                 // açıklama okunurken ekran "alarm" modunda kalıyor (2026-07-05
                 // görsel QA bulgusu).
-                if (widget.enableTimer && !answered)
+                if (_usesTimer && !answered)
                   CriticalVignette(animation: _timerController),
                 WrongFlash(trigger: _shakeTrigger),
                 if (_showAnswerBurst)
@@ -656,10 +627,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    _buildScoreHeader(),
-                    const SizedBox(height: 8),
+                    if (!_isLearningExperience) ...[
+                      _buildScoreHeader(),
+                      const SizedBox(height: 8),
+                    ],
                     _buildProgressBar(context),
-                    _buildComboRow(),
+                    if (!_isLearningExperience) _buildComboRow(),
                     const SizedBox(height: 8),
                     // Coach-mark GlobalKey'leri yalnız ilk soruda: panel
                     // AnimatedSwitcher içinde olduğundan geçiş sırasında eski
@@ -744,10 +717,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildScoreHeader(),
-                      const SizedBox(height: 6),
+                      if (!_isLearningExperience) ...[
+                        _buildScoreHeader(),
+                        const SizedBox(height: 6),
+                      ],
                       _buildProgressBar(context),
-                      _buildComboRow(),
+                      if (!_isLearningExperience) _buildComboRow(),
                       const SizedBox(height: 6),
                       _buildActionControls(),
                       if (widget.is1v1) ...[
@@ -821,13 +796,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         tween: Tween(begin: 0, end: (index + 1) / total),
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeOutCubic,
-        builder: (_, value, _) => LinearProgressIndicator(
-          value: value,
-          minHeight: 6,
-          borderRadius: BorderRadius.circular(99),
-          backgroundColor: AppTheme.surfaceHiColor(context),
-          color: AppTheme.brandOrange,
-        ),
+        builder: (_, value, _) => KilimProgressBar(value: value, height: 8),
       );
     }
     // Yarışma şeridi: her soru bir segment — doğru yeşil, yanlış kırmızı
@@ -918,8 +887,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildWildcardRow(),
-        SizedBox(height: isCompact ? AppSpacing.xxs : AppSpacing.xs),
+        if (!_isLearningExperience) ...[
+          _buildWildcardRow(),
+          SizedBox(height: isCompact ? AppSpacing.xxs : AppSpacing.xs),
+        ],
         showRatingBar
             ? Row(
                 children: [
@@ -1398,9 +1369,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                         isCompact: isCompact,
                         answerAreaKey: answerAreaKey,
                         onAnswer: _answer,
-                        onSpeakPrompt: _ttsService != null
-                            ? _speakPrompt
-                            : null,
                       ),
                     ),
                   ],
@@ -1425,7 +1393,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   isCompact: isCompact,
                   answerAreaKey: answerAreaKey,
                   onAnswer: _answer,
-                  onSpeakPrompt: _ttsService != null ? _speakPrompt : null,
                 ),
               ],
             ],
@@ -1865,7 +1832,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _markQuestionSeen();
     _loadFavoriteState();
     _startTimer();
-    _tryAutoRead();
   }
 
   void _recordAnswer(String answer) {

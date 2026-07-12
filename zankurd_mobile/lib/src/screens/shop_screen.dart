@@ -130,8 +130,10 @@ class _ShopScreenState extends State<ShopScreen> {
       id: 'joker_pack_3',
       titleKu: 'Pakêta Jokeran (3)',
       titleTr: 'Joker Paketi (3)',
-      descKu: 'Ji bo pêşbirka bê 3 jokerên zêde: 50/50, temaşevan û bersiva ducar.',
-      descTr: 'Bir sonraki yarışma için 3 ekstra joker: 50/50, seyirci ve çift cevap.',
+      descKu:
+          'Ji bo pêşbirka bê 3 jokerên zêde: 50/50, temaşevan û bersiva ducar.',
+      descTr:
+          'Bir sonraki yarışma için 3 ekstra joker: 50/50, seyirci ve çift cevap.',
       cost: 350,
       icon: Icons.auto_fix_high_rounded,
       themeColor: AppTheme.playPink,

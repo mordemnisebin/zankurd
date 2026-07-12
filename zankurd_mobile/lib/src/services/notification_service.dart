@@ -170,7 +170,8 @@ class NotificationService {
       final scheduledTime = tz.TZDateTime.from(next, tz.local);
       // Bildirim, zamanlama anında kayıtlı uygulama diliyle tek dilde kurulur
       // (anahtar LanguageProvider._storageKey ile aynı olmalı).
-      final isKu = (_preferences?.getString('zankurd.language') ?? 'ku') != 'tr';
+      final isKu =
+          (_preferences?.getString('zankurd.language') ?? 'ku') != 'tr';
       await _localNotificationsPlugin.zonedSchedule(
         0,
         'ZanKurd',

@@ -89,4 +89,26 @@ void main() {
       expect(shadow.blurRadius, greaterThan(0));
     }
   });
+
+  testWidgets('cevap sonrası açıklama Zana sesiyle sunulur', (tester) async {
+    final repository = MockZanKurdRepository();
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      wrap(
+        QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text(question.correctAnswer));
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Açıklama · Zana'), findsOneWidget);
+  });
 }

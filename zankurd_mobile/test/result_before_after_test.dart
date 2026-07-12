@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
+import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
@@ -21,8 +22,11 @@ void main() {
     final boundaryKey = GlobalKey();
 
     await tester.pumpWidget(
-      ChangeNotifierProvider(
-        create: (_) => LanguageProvider(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => LanguageProvider()),
+          ChangeNotifierProvider(create: (_) => ChildSafetyProvider()),
+        ],
         child: MaterialApp(
           theme: AppTheme.dark(),
           debugShowCheckedModeBanner: false,

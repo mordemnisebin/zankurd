@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -12,12 +13,9 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/test_environment.dart';
-import 'home/daily_missions_card.dart';
 import 'home/hero_card.dart';
 import 'home/quick_play_grid.dart';
 import 'home/section_header.dart';
-import 'home/daily_theme_card.dart';
-import 'home/recommendation_card.dart';
 import '../widgets/animated_counter.dart';
 import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/zana_daily_card.dart';
@@ -29,7 +27,6 @@ import 'matchmaking_screen.dart';
 import 'contest_screen.dart';
 import 'spin_wheel_screen.dart';
 import 'tournament_screen.dart';
-import 'level_screen.dart';
 import 'shop_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,6 +35,7 @@ class HomeScreen extends StatefulWidget {
     this.displayName,
     this.scrollController,
     this.refreshSignal,
+    this.onOpenLearning,
     super.key,
   });
 
@@ -51,6 +49,7 @@ class HomeScreen extends StatefulWidget {
   /// Navigator dalında yaşarlar), bu yüzden dönüşte sekmeye tekrar
   /// basıldığında tazeleme burada yapılır.
   final Listenable? refreshSignal;
+  final VoidCallback? onOpenLearning;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -63,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int _streak = 0;
   List<DailyMission> _missions = [];
   bool _missionsLoading = true;
+  int _reviewReadyCount = 0;
   late AnimationController _loadAnimationController;
   String? _displayName;
   int _refreshCounter = 0;
@@ -84,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _bootstrap();
     _refreshStreak();
     _loadMissions();
+    _refreshReviewCount();
     widget.refreshSignal?.addListener(_handleRefreshSignal);
   }
 
@@ -100,12 +101,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _refreshCoins();
     _loadMissions();
     _refreshStreak();
+    _refreshReviewCount();
     setState(() => _refreshCounter++);
   }
 
   Future<void> _refreshStreak() async {
     final store = await StreakStore.load();
     if (mounted) setState(() => _streak = store.effectiveStreak());
+  }
+
+  Future<void> _refreshReviewCount() async {
+    try {
+      final store = await MistakeStore.load();
+      if (mounted) setState(() => _reviewReadyCount = store.readyCount);
+    } catch (_) {}
   }
 
   Future<void> _loadMissions() async {
@@ -222,36 +231,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           const SizedBox(height: 20),
                           _buildAnimatedCard(
                             _heroFadeAnimation(2),
-                            DailyMissionsCard(
+                            ZanaDailyCard(
                               isKu: ku,
-                              missions: _missions,
-                              loading: _missionsLoading,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          _buildAnimatedCard(
-                            _heroFadeAnimation(2),
-                            ZanaDailyCard(isKu: ku),
-                          ),
-                          const SizedBox(height: 20),
-                          _buildAnimatedCard(
-                            _heroFadeAnimation(3),
-                            DailyThemeCard(
-                              isKu: ku,
-                              onTap: () => _openCategoryLevels(
-                                context,
-                                DailyThemeCard.todayCategory,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          _buildAnimatedCard(
-                            _heroFadeAnimation(4),
-                            RecommendationCard(
-                              key: ValueKey('rec_card_$_refreshCounter'),
-                              isKu: ku,
-                              onTapCategory: (cat) =>
-                                  _openCategoryLevels(context, cat),
+                              onStart: widget.onOpenLearning,
+                              reviewReadyCount: _reviewReadyCount,
                             ),
                           ),
                         ],
@@ -358,54 +341,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
                         _heroFadeAnimation(2),
-                        DailyMissionsCard(
+                        ZanaDailyCard(
                           isKu: ku,
-                          missions: _missions,
-                          loading: _missionsLoading,
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 4) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(2),
-                        ZanaDailyCard(isKu: ku),
-                      ),
-                    );
-                  }
-                  if (index == 5) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(3),
-                        DailyThemeCard(
-                          isKu: ku,
-                          onTap: () => _openCategoryLevels(
-                            context,
-                            DailyThemeCard.todayCategory,
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 6) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(4),
-                        RecommendationCard(
-                          key: ValueKey('rec_card_$_refreshCounter'),
-                          isKu: ku,
-                          onTapCategory: (cat) =>
-                              _openCategoryLevels(context, cat),
+                          onStart: widget.onOpenLearning,
+                          reviewReadyCount: _reviewReadyCount,
                         ),
                       ),
                     );
                   }
                   return null;
-                }, childCount: 7),
+                }, childCount: 4),
               ),
             ),
           SliverToBoxAdapter(child: SizedBox(height: bottomContentPadding)),
@@ -802,14 +747,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       context,
     ).push(AppRoute.to(TournamentScreen(repository: repo)));
     _refreshCoins();
-  }
-
-  void _openCategoryLevels(BuildContext context, String category) {
-    Navigator.of(context).push(
-      AppRoute.to(
-        LevelScreen(repository: repo, category: category),
-      ),
-    );
   }
 
   Future<void> _refreshCoins() async {

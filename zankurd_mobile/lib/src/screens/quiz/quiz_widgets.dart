@@ -135,11 +135,17 @@ class _QuestionImage extends StatelessWidget {
                 const _QuestionImageFallback(),
           );
 
-    final double? forcedHeight = isCompact ? (size.height * 0.15).clamp(60.0, 100.0) : null;
+    final double? forcedHeight = isCompact
+        ? (size.height * 0.15).clamp(60.0, 100.0)
+        : null;
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.sm),
       child: (isLandscapeTablet || forcedHeight != null)
-          ? SizedBox(width: double.infinity, height: forcedHeight ?? maxHeight, child: image)
+          ? SizedBox(
+              width: double.infinity,
+              height: forcedHeight ?? maxHeight,
+              child: image,
+            )
           : AspectRatio(aspectRatio: 16 / 9, child: image),
     );
   }
@@ -178,7 +184,6 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     this.opponentSelectedAnswers,
     this.isCompact = false,
     this.answerAreaKey,
-    this.onSpeakPrompt,
   });
 
   final String promptText;
@@ -203,7 +208,6 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final ValueChanged<String> onAnswer;
 
   /// Soru metnini seslendirmek için isteğe bağlı callback.
-  final VoidCallback? onSpeakPrompt;
 
   @override
   Widget build(BuildContext context) {
@@ -222,31 +226,6 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                 ),
               ),
             ),
-            if (onSpeakPrompt != null) ...[
-              const SizedBox(width: AppSpacing.xs),
-              InkWell(
-                borderRadius: BorderRadius.circular(AppRadius.sm),
-                onTap: onSpeakPrompt,
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: AppTheme.accent.withValues(alpha: 0.10),
-                    borderRadius: BorderRadius.circular(AppRadius.sm),
-                    border: Border.all(
-                      color: AppTheme.accent.withValues(alpha: 0.25),
-                      width: 1.2,
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.volume_up_rounded,
-                    color: AppTheme.accent,
-                    size: 22,
-                  ),
-                ),
-              ),
-            ],
           ],
         ),
         SizedBox(height: isCompact ? AppSpacing.xs : AppSpacing.sm),
@@ -1408,7 +1387,9 @@ class _ExplanationBox extends StatelessWidget {
                                   const SizedBox(width: 6),
                                   Flexible(
                                     child: Text(
-                                      isKu ? 'Şîrove' : 'Açıklama',
+                                      isKu
+                                          ? 'Şîrove · Zana'
+                                          : 'Açıklama · Zana',
                                       overflow: TextOverflow.ellipsis,
                                       style: AppTypography.caption.copyWith(
                                         color: AppTheme.textSubColor(context),

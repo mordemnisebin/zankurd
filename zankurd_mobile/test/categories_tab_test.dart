@@ -50,6 +50,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('mastery-badge-Ziman')), findsOneWidget);
+    expect(find.text('Öğrenci · 25/100'), findsOneWidget);
   });
 
   testWidgets('kart dokunuşu SubcategoryScreen açar', (tester) async {

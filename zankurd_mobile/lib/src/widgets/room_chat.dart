@@ -63,12 +63,13 @@ class _RoomChatState extends State<RoomChat> {
   void _startListening() {
     if (_subscribed) return;
     _subscribed = true;
-    _subscription =
-        widget.repository.subscribeRoomMessages(widget.roomId).listen((msgs) {
-      if (!mounted) return;
-      setState(() => _messages = msgs);
-      _scrollToBottom();
-    });
+    _subscription = widget.repository
+        .subscribeRoomMessages(widget.roomId)
+        .listen((msgs) {
+          if (!mounted) return;
+          setState(() => _messages = msgs);
+          _scrollToBottom();
+        });
   }
 
   void _stopListening() {
@@ -251,9 +252,9 @@ class _RoomChatState extends State<RoomChat> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide(
-                          color: AppTheme.borderColor(context).withValues(
-                            alpha: 0.4,
-                          ),
+                          color: AppTheme.borderColor(
+                            context,
+                          ).withValues(alpha: 0.4),
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -320,8 +321,9 @@ class _MessageBubble extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment:
-            isMine ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isMine
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         children: [
           if (!isMine) ...[
             PlayerAvatar(
@@ -354,8 +356,9 @@ class _MessageBubble extends StatelessWidget {
                 ),
               ),
               child: Column(
-                crossAxisAlignment:
-                    isMine ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                crossAxisAlignment: isMine
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
                 children: [
                   if (!isMine)
                     Padding(

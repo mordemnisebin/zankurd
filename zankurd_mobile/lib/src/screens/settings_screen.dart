@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
+import '../data/placement_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../utils/app_route.dart';
+import 'level_placement_screen.dart';
 import '../providers/auth_provider.dart';
+import '../providers/child_safety_provider.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../providers/sound_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/notification_service.dart';
-import '../services/tts_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
@@ -36,8 +40,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   NotificationService? _notificationService;
   bool _notificationsEnabled = false;
   String _notificationTime = '19:00';
-  TTSService? _ttsService;
-  bool _ttsAutoRead = false;
 
   @override
   void initState() {
@@ -45,7 +47,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _loadPlayerName();
     _loadNotificationSettings();
     _loadPackageVersion();
-    _loadTTSSettings();
   }
 
   Future<void> _loadPackageVersion() async {
@@ -284,6 +285,103 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const SizedBox(height: AppSpacing.cardGap),
 
+              // ============ ÖĞRENME / LEARNING ============
+              ScreenSectionLabel(
+                label: ku ? 'Hînbûn' : 'Öğrenme',
+                accent: AppTheme.playGreen,
+              ),
+              AppPanel(
+                color: AppTheme.surfaceOf(context).withValues(alpha: 0.92),
+                child: InkWell(
+                  key: const ValueKey('retake-placement-action'),
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: _openPlacement,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.assignment_turned_in_outlined,
+                          color: AppTheme.playGreen,
+                          size: 22,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                ku
+                                    ? 'Asta xwe ji nû ve diyar bike'
+                                    : 'Seviyeni yeniden belirle',
+                                style: TextStyle(
+                                  color: AppTheme.textPrimaryColor(context),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const SizedBox(height: 3),
+                              FutureBuilder<PlacementStore>(
+                                future: PlacementStore.load(),
+                                builder: (context, snap) {
+                                  final level = snap.data?.level;
+                                  final String sub;
+                                  if (level == null) {
+                                    sub = ku
+                                        ? 'Kurt sînavek bê tade'
+                                        : 'Kısa, baskısız bir sınav';
+                                  } else {
+                                    final name = ku
+                                        ? level.labelKu
+                                        : level.labelTr;
+                                    sub = ku
+                                        ? 'Asta te ya niha: $name'
+                                        : 'Mevcut seviyen: $name';
+                                  }
+                                  return Text(
+                                    sub,
+                                    style: TextStyle(
+                                      color: AppTheme.textMutedColor(context),
+                                      fontSize: 12,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_rounded,
+                          color: AppTheme.textMutedColor(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.cardGap),
+
+              // ============ GÜVENLİK / SAFETY ============
+              ScreenSectionLabel(
+                label: ku ? 'Ewlekarî' : 'Güvenlik',
+                accent: AppTheme.playGreen,
+              ),
+              AppPanel(
+                padding: EdgeInsets.zero,
+                child: Consumer<ChildSafetyProvider>(
+                  builder: (context, child, _) => _SettingsToggleRow(
+                    icon: Icons.shield_outlined,
+                    color: AppTheme.playGreen,
+                    title: ku ? 'Moda zaroka ewle' : 'Güvenli çocuk modu',
+                    trailing: Switch(
+                      key: const ValueKey('child-safe-switch'),
+                      value: child.enabled,
+                      onChanged: (v) => _toggleChildSafety(child, v, ku),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.cardGap),
+
               // ============ GÖRÜNÜM / APPEARANCE ============
               ScreenSectionLabel(
                 label: ku ? 'Dîmen' : 'Görünüm',
@@ -321,6 +419,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               },
                             ),
                           ),
+                    ),
+                    Divider(
+                      height: 1,
+                      indent: 56,
+                      color: AppTheme.borderColor(context),
+                    ),
+                    Consumer<ReducedMotionProvider>(
+                      builder: (context, motion, _) => _SettingsToggleRow(
+                        icon: Icons.animation_outlined,
+                        color: AppTheme.violet,
+                        title: ku ? 'Tevgerê kêm bike' : 'Hareketi azalt',
+                        trailing: Switch(
+                          key: const ValueKey('reduce-motion-switch'),
+                          value: motion.userReduce,
+                          onChanged: (v) => motion.setUserReduce(v),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -415,27 +530,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                     ],
-                    Divider(
-                      height: 1,
-                      indent: 56,
-                      color: AppTheme.borderColor(context),
-                    ),
-                    _SettingsToggleRow(
-                      icon: _ttsAutoRead
-                          ? Icons.record_voice_over_outlined
-                          : Icons.voice_over_off_outlined,
-                      color: AppTheme.accent,
-                      title: ku
-                          ? 'Pirsan bixweber bixwîne'
-                          : 'Soruları otomatik seslendir',
-                      subtitle: ku
-                          ? 'Her pirsa nû dengê xwe bixweber tê xwendin'
-                          : 'Her yeni soru otomatik sesli okunur',
-                      trailing: Switch(
-                        value: _ttsAutoRead,
-                        onChanged: _toggleTTSAutoRead,
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -589,29 +683,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  Future<void> _loadTTSSettings() async {
-    try {
-      final tts = await TTSService.load();
-      if (mounted) {
-        setState(() {
-          _ttsService = tts;
-          _ttsAutoRead = tts.autoRead;
-        });
-      }
-    } catch (_) {
-      // TTS kullanılamazsa sessizce devam et.
-    }
-  }
-
-  Future<void> _toggleTTSAutoRead(bool value) async {
-    final tts = _ttsService;
-    if (tts == null) return;
-    await tts.setAutoRead(value);
-    if (mounted) {
-      setState(() => _ttsAutoRead = value);
-    }
-  }
-
   Future<void> _pickNotificationTime() async {
     final service = _notificationService;
     if (service == null) return;
@@ -625,6 +696,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
         _notificationTime = service.timeDisplay;
       });
     }
+  }
+
+  /// Çocuk modunu değiştirir. Açarken ne değiştiğini açıklayan bir onay
+  /// dialogu gösterir. (Yalnız cihaz tarafı — sunucu koruması yoktur.)
+  Future<void> _toggleChildSafety(
+    ChildSafetyProvider provider,
+    bool value,
+    bool ku,
+  ) async {
+    if (!value) {
+      await provider.setEnabled(false);
+      return;
+    }
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogCtx) => AlertDialog(
+        title: Text(ku ? 'Moda zaroka ewle' : 'Güvenli çocuk modu'),
+        content: Text(
+          ku
+              ? 'Ev mod li ser vê amûrê: lêgerîna hevalan, daxwazên nû, '
+                    'sohbeta odeyê û parvekirina derve digire. Dane nayên jêbirin; '
+                    'gava tu bigirî her tişt vedigere.'
+              : 'Bu mod bu cihazda: arkadaş aramayı, yeni istekleri, oda '
+                    'sohbetini ve dış paylaşımı kapatır. Hiçbir veri silinmez; '
+                    'kapattığında her şey geri gelir.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogCtx).pop(false),
+            child: Text(ku ? 'Betal' : 'Vazgeç'),
+          ),
+          FilledButton(
+            key: const ValueKey('child-safe-confirm'),
+            onPressed: () => Navigator.of(dialogCtx).pop(true),
+            child: Text(ku ? 'Veke' : 'Aç'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await provider.setEnabled(true);
+    }
+  }
+
+  Future<void> _openPlacement() async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(LevelPlacementScreen(repository: widget.repository)));
+    if (mounted) setState(() {}); // güncel seviyeyi yansıt
   }
 
   Future<void> _confirmDeleteAccount() async {

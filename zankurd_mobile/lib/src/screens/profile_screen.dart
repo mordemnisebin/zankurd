@@ -20,6 +20,7 @@ import '../models/avatar_identity.dart';
 import '../widgets/badge_collection_section.dart';
 import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/strength_map_section.dart';
 import '../widgets/weekly_performance_chart.dart';
 import 'avatar_editor_screen.dart';
 import 'favorite_questions_screen.dart';
@@ -356,6 +357,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(height: 14),
 
         _PedagogicalAnalyticsSection(isKu: ku),
+        const SizedBox(height: 14),
+        StrengthMapSection(isKu: ku, refreshSignal: widget.refreshSignal),
         if (_masteryStore != null) ...[
           const SizedBox(height: 14),
           _MasterySection(store: _masteryStore!, isKu: ku),
@@ -1523,9 +1526,9 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
         categoryBars.sort((a, b) => b.correct.compareTo(a.correct));
         final maxBar = categoryBars.isEmpty
             ? 1
-            : categoryBars.map((e) => e.correct + e.mistakes).reduce(
-                  (a, b) => a > b ? a : b,
-                );
+            : categoryBars
+                  .map((e) => e.correct + e.mistakes)
+                  .reduce((a, b) => a > b ? a : b);
 
         return AppPanel(
           child: Column(
@@ -1599,8 +1602,9 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                                   LinearProgressIndicator(
                                     value: value,
                                     minHeight: 16,
-                                    backgroundColor:
-                                        AppTheme.surfaceColor(context),
+                                    backgroundColor: AppTheme.surfaceColor(
+                                      context,
+                                    ),
                                     color: AppTheme.correct,
                                   ),
                             ),
@@ -1628,9 +1632,15 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 4),
                   child: Row(
                     children: [
-                      _LegendDot(color: AppTheme.correct, label: isKu ? 'Rast' : 'Doğru'),
+                      _LegendDot(
+                        color: AppTheme.correct,
+                        label: isKu ? 'Rast' : 'Doğru',
+                      ),
                       const SizedBox(width: 16),
-                      _LegendDot(color: AppTheme.wrong, label: isKu ? 'Şaş' : 'Yanlış'),
+                      _LegendDot(
+                        color: AppTheme.wrong,
+                        label: isKu ? 'Şaş' : 'Yanlış',
+                      ),
                     ],
                   ),
                 ),

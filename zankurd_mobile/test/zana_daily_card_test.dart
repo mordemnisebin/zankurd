@@ -35,4 +35,46 @@ void main() {
     expect(find.text('Dilop bi dilop gol çêdibe.'), findsOneWidget);
     expect(find.text('Gotina Rojê'), findsOneWidget);
   });
+
+  testWidgets('Zana tek günlük öğrenme hedefi ve CTA sunar', (tester) async {
+    var started = false;
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.dark(),
+        home: Scaffold(
+          body: ZanaDailyCard(isKu: false, onStart: () => started = true),
+        ),
+      ),
+    );
+
+    expect(find.text('Bugünün hedefi'), findsOneWidget);
+    expect(find.text('3 doğru cevapla serini koru'), findsOneWidget);
+    await tester.tap(find.text('Öğrenmeye başla'));
+    expect(started, isTrue);
+  });
+
+  testWidgets('hazır tekrar varsa Zana günlük hedefi tekrarı önceliklendirir', (
+    tester,
+  ) async {
+    var started = false;
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.dark(),
+        home: Scaffold(
+          body: ZanaDailyCard(
+            isKu: false,
+            onStart: () => started = true,
+            reviewReadyCount: 4,
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('Bugünün hedefi'), findsNothing);
+    expect(find.textContaining('4'), findsWidgets);
+    expect(find.text('Tekrara başla'), findsOneWidget);
+    await tester.tap(find.text('Tekrara başla'));
+    expect(started, isTrue);
+    expect(tester.takeException(), isNull);
+  });
 }

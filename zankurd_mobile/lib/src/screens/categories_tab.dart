@@ -28,6 +28,8 @@ class _CategoriesTabState extends State<CategoriesTab> {
   late List<String> _categories = widget.repository.categories;
   bool _loading = false;
   Map<String, MasteryLevel> _masteryLevels = {};
+  Map<String, int> _masteryCounts = {};
+  Map<String, int> _masteryThresholds = {};
 
   @override
   void initState() {
@@ -62,10 +64,18 @@ class _CategoriesTabState extends State<CategoriesTab> {
     final store = await MasteryStore.load();
     if (!mounted) return;
     final levels = <String, MasteryLevel>{};
+    final counts = <String, int>{};
+    final thresholds = <String, int>{};
     for (final cat in _categories) {
       levels[cat] = store.levelFor(cat);
+      counts[cat] = store.correctCount(cat);
+      thresholds[cat] = store.nextThreshold(cat);
     }
-    setState(() => _masteryLevels = levels);
+    setState(() {
+      _masteryLevels = levels;
+      _masteryCounts = counts;
+      _masteryThresholds = thresholds;
+    });
   }
 
   @override
@@ -167,6 +177,8 @@ class _CategoriesTabState extends State<CategoriesTab> {
                         index: index,
                         isKu: ku,
                         masteryLevel: _masteryLevels[cat] ?? MasteryLevel.none,
+                        masteryCount: _masteryCounts[cat] ?? 0,
+                        masteryThreshold: _masteryThresholds[cat] ?? 20,
                         onTap: () => Navigator.of(context).push(
                           AppRoute.to(
                             SubcategoryScreen(
@@ -194,6 +206,8 @@ class _CategoryCard extends StatefulWidget {
     required this.index,
     required this.isKu,
     required this.masteryLevel,
+    required this.masteryCount,
+    required this.masteryThreshold,
     required this.onTap,
     super.key,
   });
@@ -202,6 +216,8 @@ class _CategoryCard extends StatefulWidget {
   final int index;
   final bool isKu;
   final MasteryLevel masteryLevel;
+  final int masteryCount;
+  final int masteryThreshold;
   final VoidCallback onTap;
 
   @override
@@ -352,9 +368,8 @@ class _CategoryCardState extends State<_CategoryCard>
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                widget.isKu
-                                    ? widget.masteryLevel.titleKu
-                                    : widget.masteryLevel.titleTr,
+                                '${widget.isKu ? widget.masteryLevel.titleKu : widget.masteryLevel.titleTr}'
+                                ' · ${widget.masteryCount}/${widget.masteryThreshold}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(

@@ -38,7 +38,9 @@ class ResponsiveWrapper extends StatelessWidget {
                 border: Border.symmetric(
                   vertical: BorderSide.none,
                   horizontal: BorderSide(
-                    color: Theme.of(context).dividerColor.withValues(alpha: 0.3),
+                    color: Theme.of(
+                      context,
+                    ).dividerColor.withValues(alpha: 0.3),
                     width: 0.5,
                   ),
                 ),
