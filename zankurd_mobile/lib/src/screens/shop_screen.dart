@@ -11,19 +11,26 @@ import '../widgets/app_panel.dart';
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
 /// Statik yedek listedeki (`ShopItem._items`) her ikon burada da
 /// tanımlı olmalı — aksi halde canlı katalog jenerik çanta ikonuna düşer.
-IconData shopIconForName(String? name) => switch (name) {
-  'auto_awesome_motion_outlined' => Icons.auto_awesome_motion_outlined,
-  'favorite_border_rounded' => Icons.favorite_border_rounded,
-  'casino_outlined' => Icons.casino_outlined,
-  'palette_outlined' => Icons.palette_outlined,
-  'star_rounded' => Icons.star_rounded,
-  'auto_awesome_rounded' => Icons.auto_awesome_rounded,
-  'text_fields_rounded' => Icons.text_fields_rounded,
-  'text_format_rounded' => Icons.text_format_rounded,
-  'auto_fix_high_rounded' => Icons.auto_fix_high_rounded,
-  'diamond_rounded' => Icons.diamond_rounded,
-  _ => Icons.shopping_bag_outlined,
+///
+/// Map tabanlı arama kasıtlı: bir switch-expression'la yazıldığında web
+/// derlemesinde (dart2js) yalnızca ilk birkaç dal doğru eşleşiyor, sonraki
+/// dallar sessizce varsayılana düşüyordu (VM'de çalışan `flutter test` bunu
+/// yakalamadı — bu yüzden canlıda fark edildi).
+const Map<String, IconData> _shopIcons = {
+  'auto_awesome_motion_outlined': Icons.auto_awesome_motion_outlined,
+  'favorite_border_rounded': Icons.favorite_border_rounded,
+  'casino_outlined': Icons.casino_outlined,
+  'palette_outlined': Icons.palette_outlined,
+  'star_rounded': Icons.star_rounded,
+  'auto_awesome_rounded': Icons.auto_awesome_rounded,
+  'text_fields_rounded': Icons.text_fields_rounded,
+  'text_format_rounded': Icons.text_format_rounded,
+  'auto_fix_high_rounded': Icons.auto_fix_high_rounded,
+  'diamond_rounded': Icons.diamond_rounded,
 };
+
+IconData shopIconForName(String? name) =>
+    _shopIcons[name] ?? Icons.shopping_bag_outlined;
 
 /// `shop_items` tablosundaki `theme_color` (ör. "FF3B81") sütununu
 /// [Color]'a çevirir.
