@@ -8,6 +8,35 @@ import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
 
+/// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
+/// Statik yedek listedeki (`ShopItem._items`) her ikon burada da
+/// tanımlı olmalı — aksi halde canlı katalog jenerik çanta ikonuna düşer.
+IconData shopIconForName(String? name) => switch (name) {
+  'auto_awesome_motion_outlined' => Icons.auto_awesome_motion_outlined,
+  'favorite_border_rounded' => Icons.favorite_border_rounded,
+  'casino_outlined' => Icons.casino_outlined,
+  'palette_outlined' => Icons.palette_outlined,
+  'star_rounded' => Icons.star_rounded,
+  'auto_awesome_rounded' => Icons.auto_awesome_rounded,
+  'text_fields_rounded' => Icons.text_fields_rounded,
+  'text_format_rounded' => Icons.text_format_rounded,
+  'auto_fix_high_rounded' => Icons.auto_fix_high_rounded,
+  'diamond_rounded' => Icons.diamond_rounded,
+  _ => Icons.shopping_bag_outlined,
+};
+
+/// `shop_items` tablosundaki `theme_color` (ör. "FF3B81") sütununu
+/// [Color]'a çevirir.
+Color shopColorForHex(String? hex) {
+  if (hex == null) return AppTheme.accent;
+  try {
+    final cleanHex = hex.replaceAll('#', '');
+    return Color(int.parse('FF$cleanHex', radix: 16));
+  } catch (_) {
+    return AppTheme.accent;
+  }
+}
+
 class ShopItem {
   final String id;
   final String titleKu;
@@ -150,24 +179,6 @@ class _ShopScreenState extends State<ShopScreen> {
     ),
   ];
 
-  static IconData _getIconData(String? name) => switch (name) {
-    'auto_awesome_motion_outlined' => Icons.auto_awesome_motion_outlined,
-    'favorite_border_rounded' => Icons.favorite_border_rounded,
-    'casino_outlined' => Icons.casino_outlined,
-    'palette_outlined' => Icons.palette_outlined,
-    _ => Icons.shopping_bag_outlined,
-  };
-
-  static Color _getColor(String? hex) {
-    if (hex == null) return AppTheme.accent;
-    try {
-      final cleanHex = hex.replaceAll('#', '');
-      return Color(int.parse('FF$cleanHex', radix: 16));
-    } catch (_) {
-      return AppTheme.accent;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -193,8 +204,8 @@ class _ShopScreenState extends State<ShopScreen> {
                 descKu: row['desc_ku'] as String? ?? '',
                 descTr: row['desc_tr'] as String? ?? '',
                 cost: (row['cost'] as num?)?.toInt() ?? 100,
-                icon: _getIconData(row['icon_name'] as String?),
-                themeColor: _getColor(row['theme_color'] as String?),
+                icon: shopIconForName(row['icon_name'] as String?),
+                themeColor: shopColorForHex(row['theme_color'] as String?),
               );
             }).toList();
           }
