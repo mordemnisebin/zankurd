@@ -148,6 +148,17 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   Timer? _pollTimer;
   bool _questionFlowStarted = false;
 
+  // 1v1 online eşleşmede her iki taraf da bu ekrana kendi hızında ulaşır
+  // (matchmaking sonrası ayrı ayrı navigasyon); bariyer olmadan biri
+  // hâlâ geçiş ekranındayken diğeri soruları görüp saymaya başlayabilir.
+  // Bu yüzden karşı taraftan bir "hazır" broadcast'i gelene kadar (ya da
+  // kısa bir zaman aşımına kadar) soru akışı başlatılmaz.
+  bool _tutorialGateReady = false;
+  bool _opponentClientReady = false;
+  Timer? _readyPingTimer;
+  Timer? _readyTimeoutTimer;
+  bool get _needsOpponentReadyGate => widget.is1v1 && _isMultiplayer;
+
   // Quiz tutorial coach mark hedef anahtarları
   final GlobalKey _timerTargetKey = GlobalKey();
   final GlobalKey _answerAreaKey = GlobalKey();
@@ -231,6 +242,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
               final isSelf = _myId != null && senderId != null
                   ? senderId == _myId
                   : senderName == name;
+              if (senderName != null && !isSelf && payload['ready'] == true) {
+                _handleOpponentReady();
+                return;
+              }
               if (senderName != null && !isSelf) {
                 setState(() {
                   if (payload['answered'] == true) {
@@ -280,7 +295,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
               }
             });
 
-        if (!widget.is1v1) {
+        if (widget.is1v1) {
+          _startOpponentReadyHandshake();
+        } else {
           _playersSub = widget.repository
               .subscribeRoomPlayers(widget.room)
               .listen((players) {
@@ -410,6 +427,63 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _startTimer();
   }
 
+  /// Tutorial coach-mark'ı kapandı/atlandı — solo modda soru akışı hemen
+  /// başlar, 1v1 online'da ise karşı tarafın da hazır olması beklenir.
+  void _handleTutorialReady() {
+    _tutorialGateReady = true;
+    _maybeStartQuestionFlow();
+  }
+
+  void _maybeStartQuestionFlow() {
+    if (!_tutorialGateReady) return;
+    if (_needsOpponentReadyGate && !_opponentClientReady) return;
+    _startQuestionFlowOnce();
+  }
+
+  /// Matchmaking sonrası iki oyuncu da ayrı ayrı bu ekrana navigasyon
+  /// yapar; biri diğerinden çok önce ulaşabilir. Karşı taraftan "ready"
+  /// broadcast'i alınana (veya kısa bir süre sonra zaman aşımına
+  /// uğrayana) kadar soru sayacı başlamaz — aksi halde bir oyuncu henüz
+  /// geçiş ekranındayken diğeri soruları görüp cevaplamaya başlayabilir.
+  void _startOpponentReadyHandshake() {
+    _sendReadyPing();
+    _readyPingTimer = Timer.periodic(const Duration(milliseconds: 400), (_) {
+      if (_opponentClientReady) {
+        _readyPingTimer?.cancel();
+        return;
+      }
+      _sendReadyPing();
+    });
+    _readyTimeoutTimer = Timer(const Duration(seconds: 6), () {
+      if (!mounted || _opponentClientReady) return;
+      _handleOpponentReady();
+    });
+  }
+
+  void _sendReadyPing() {
+    final roomId = widget.room.id;
+    if (roomId == null) return;
+    widget.repository
+        .sendRoomBroadcast(roomId, {
+          'sender': _myName,
+          'sender_id': _myId,
+          'ready': true,
+        })
+        .catchError((_) {});
+  }
+
+  void _handleOpponentReady() {
+    if (_opponentClientReady) return;
+    _readyPingTimer?.cancel();
+    _readyTimeoutTimer?.cancel();
+    if (mounted) {
+      setState(() => _opponentClientReady = true);
+    } else {
+      _opponentClientReady = true;
+    }
+    _maybeStartQuestionFlow();
+  }
+
   void _loadCoinBalance() {
     widget.repository.loadCoinBalance().then((balance) {
       if (mounted) setState(() => _coinBalance = balance);
@@ -473,6 +547,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _revealTickTimer?.cancel();
     _roomSub?.cancel();
     _pollTimer?.cancel();
+    _readyPingTimer?.cancel();
+    _readyTimeoutTimer?.cancel();
     _timerController.dispose();
     _explanationController.dispose();
     super.dispose();
@@ -558,7 +634,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           comboKey: _comboKey,
           wildcardKey: _wildcardKey,
           nextButtonKey: _nextButtonKey,
-          onReady: _startQuestionFlowOnce,
+          onReady: _handleTutorialReady,
           child: Container(
             decoration: BoxDecoration(
               gradient: AppTheme.backgroundGradient(context),
@@ -601,6 +677,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       });
                     },
                   ),
+                if (_needsOpponentReadyGate &&
+                    !_opponentClientReady &&
+                    !_questionFlowStarted)
+                  _OpponentWaitingOverlay(isKu: _isKu),
               ],
             ),
           ),
@@ -1952,5 +2032,41 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         ),
       );
     }
+  }
+}
+
+/// 1v1 online eşleşmede karşı taraf henüz bu ekrana ulaşmadığında
+/// gösterilir; soru sayacının erken başlamasını görsel olarak da
+/// engeller (dokunuşları yutar).
+class _OpponentWaitingOverlay extends StatelessWidget {
+  const _OpponentWaitingOverlay({required this.isKu});
+
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: AbsorbPointer(
+        child: Container(
+          color: AppTheme.bg.withValues(alpha: 0.82),
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(color: AppTheme.gold),
+              const SizedBox(height: 16),
+              Text(
+                isKu ? 'Li benda hevrikê ye...' : 'Rakip bekleniyor...',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
