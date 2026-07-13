@@ -128,12 +128,11 @@ RETURNS TABLE (
 ) AS $$
 DECLARE
   v_user_id UUID;
-  v_correct_count INT;
+  v_entry_id UUID;
   v_score INT;
   v_rank INT;
   v_contest_category TEXT;
   v_participation_reward INT;
-  v_total_participants INT;
 BEGIN
   -- Current user
   v_user_id := auth.uid();
