@@ -464,11 +464,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _menuRow({
     required Widget leading,
+    required Color iconColor,
     required String title,
     String? subtitle,
     Color? titleColor,
     required VoidCallback? onTap,
     BorderRadius borderRadius = BorderRadius.zero,
+    Key? iconBadgeKey,
   }) {
     return InkWell(
       borderRadius: borderRadius,
@@ -477,7 +479,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            leading,
+            Container(
+              key: iconBadgeKey,
+              width: 40,
+              height: 40,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: iconColor.withValues(alpha: 0.14),
+                shape: BoxShape.circle,
+              ),
+              child: leading,
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -550,8 +562,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 leading: const Icon(
                   Icons.bookmark_outline,
                   color: AppTheme.gold,
-                  size: 22,
+                  size: 20,
                 ),
+                iconColor: AppTheme.gold,
                 title: ku ? 'Pirsên Tomarkirî' : 'Kaydedilen Sorular',
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(AppRadius.md),
@@ -568,8 +581,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _menuRow(
                 leading: _practiceLoading
                     ? const SizedBox(
-                        width: 22,
-                        height: 22,
+                        width: 20,
+                        height: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
                           color: AppTheme.primaryGradientStart,
@@ -578,8 +591,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     : const Icon(
                         Icons.school_outlined,
                         color: AppTheme.primaryGradientStart,
-                        size: 22,
+                        size: 20,
                       ),
+                iconColor: AppTheme.primaryGradientStart,
                 title: ku ? 'Şaşiyên Min' : 'Yanlışlarım',
                 subtitle: _mistakeCount == 0
                     ? (ku
@@ -595,8 +609,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 leading: const Icon(
                   Icons.add_circle_outline,
                   color: AppTheme.playCyan,
-                  size: 22,
+                  size: 20,
                 ),
+                iconColor: AppTheme.playCyan,
                 title: ku ? 'Pirs Pêşniyar Bike' : 'Soru Öner',
                 subtitle: ku
                     ? 'Pirsa xwe pêşniyar bike, piştî pejirandinê were zêdekirin'
@@ -622,11 +637,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             children: [
               _menuRow(
+                iconBadgeKey: const ValueKey('profile-menu-icon-Dukan'),
                 leading: const Icon(
                   Icons.storefront_outlined,
                   color: AppTheme.gold,
-                  size: 22,
+                  size: 20,
                 ),
+                iconColor: AppTheme.gold,
                 title: ku ? 'Dukan' : 'Mağaza',
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(AppRadius.md),
@@ -642,8 +659,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 leading: const Icon(
                   Icons.people_outline,
                   color: AppTheme.primaryGradientStart,
-                  size: 22,
+                  size: 20,
                 ),
+                iconColor: AppTheme.primaryGradientStart,
                 title: ku ? 'Hevalên Min' : 'Arkadaşlarım',
                 onTap: () {
                   Navigator.of(context).push(
@@ -656,8 +674,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 leading: const Icon(
                   Icons.settings_outlined,
                   color: AppTheme.secondaryAccent,
-                  size: 22,
+                  size: 20,
                 ),
+                iconColor: AppTheme.secondaryAccent,
                 title: ku ? 'Mîheng' : 'Ayarlar',
                 onTap: () {
                   Navigator.of(context).push(
@@ -670,8 +689,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 leading: const Icon(
                   Icons.logout_rounded,
                   color: AppTheme.wrong,
-                  size: 22,
+                  size: 20,
                 ),
+                iconColor: AppTheme.wrong,
                 title: ku ? 'Derkeve' : 'Çıkış Yap',
                 titleColor: AppTheme.wrong,
                 borderRadius: const BorderRadius.vertical(
