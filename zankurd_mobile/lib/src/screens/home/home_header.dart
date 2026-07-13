@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../l10n/lang.dart';
 import '../../providers/theme_provider.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/roj_mascot.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
@@ -21,28 +22,11 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // Logo badge — gradient arka planlı
-        Container(
+        // Zana maskotu — kültürel kimliğin ana ekrandaki ilk görünümü.
+        const SizedBox(
           width: 48,
           height: 48,
-          decoration: BoxDecoration(
-            gradient: AppTheme.accentGradient,
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: AppTheme.glowShadow(
-              AppTheme.primaryGradientStart,
-              intensity: 0.3,
-            ),
-          ),
-          alignment: Alignment.center,
-          child: const Text(
-            'ZK',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
-              fontSize: 17,
-              letterSpacing: -0.5,
-            ),
-          ),
+          child: RojMascot(key: ValueKey('home-header-roj-mascot'), size: 48),
         ),
         const SizedBox(width: 12),
         Expanded(

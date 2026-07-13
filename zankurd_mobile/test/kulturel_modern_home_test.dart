@@ -12,8 +12,11 @@ import 'package:zankurd_mobile/src/screens/home/quick_play_grid.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/widgets/zana_daily_card.dart';
 
+// Sereke ve Bilîze aynı 4 modu birebir tekrarlıyordu (bkz. tasarım
+// değerlendirmesi 2026-07-13). QuickPlayGrid artık yalnızca Bilîze'de;
+// Sereke oraya yönlendiren tek bir teaser gösterir (home-play-hub-teaser).
 void main() {
-  testWidgets('Sereke tek CTA hızlı oyunlar ve tek Zana çağrısı gösterir', (
+  testWidgets('Sereke tek CTA, Bilîze teaserı ve tek Zana çağrısı gösterir', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -38,7 +41,8 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
 
     expect(find.byType(HeroCard), findsOneWidget);
-    expect(find.byType(QuickPlayGrid), findsOneWidget);
+    expect(find.byType(QuickPlayGrid), findsNothing);
+    expect(find.byKey(const ValueKey('home-play-hub-teaser')), findsOneWidget);
     expect(find.byType(ZanaDailyCard), findsOneWidget);
     expect(find.byType(DailyMissionsCard), findsNothing);
     expect(find.byType(DailyThemeCard), findsNothing);

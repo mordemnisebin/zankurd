@@ -647,16 +647,16 @@ void main() {
     );
     expect(tester.takeException(), isNull);
 
-    // Bubblegum Arcade sözleşmesi: onboarding açık sahnede açılır.
+    // Koyu-öncelikli sözleşme: onboarding varsayılan koyu sahnede açılır.
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
     final surface = tester.widget<Container>(
       find.byKey(const ValueKey('onboarding-surface')),
     );
     final decoration = surface.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.lightBg);
+    expect(decoration.color, AppTheme.bg);
   });
 
   testWidgets('onboarding fits a tablet and web viewport', (tester) async {
@@ -678,7 +678,7 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
   });
 
@@ -733,7 +733,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd'), findsOneWidget);
-    expect(find.text('Günün Yarışması'), findsOneWidget);
+    expect(find.text('Hemen Oyna'), findsOneWidget);
   });
 
   testWidgets('home header exposes language and theme quick controls', (
@@ -780,7 +780,7 @@ void main() {
       find.byType(NavigationBarTheme),
     );
     expect(navTheme.data.height, 68);
-    expect(navTheme.data.backgroundColor, AppTheme.lightSurface);
+    expect(navTheme.data.backgroundColor, AppTheme.surface);
     expect(
       navTheme.data.indicatorColor,
       AppTheme.brandOrange.withValues(alpha: 0.14),
@@ -817,10 +817,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Bubblegum Arcade sözleşmesi gereği uygulama açık temayla açılır.
+    // Koyu-öncelikli sözleşme gereği uygulama koyu temayla açılır.
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
     final home = tester.widget<Container>(
       find
@@ -832,14 +832,14 @@ void main() {
     );
     final decoration = home.decoration as BoxDecoration;
     final gradient = decoration.gradient as LinearGradient;
-    expect(gradient.colors.first, AppTheme.lightBg);
+    expect(gradient.colors.first, AppTheme.bg);
 
     theme.toggleDarkLight();
     await tester.pumpAndSettle();
 
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
   });
 
@@ -860,7 +860,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
-    expect(find.text('Günün Yarışması'), findsNothing);
+    expect(find.text('Hemen Oyna'), findsNothing);
 
     await tester.enterText(
       find.byKey(const ValueKey('player-name-field')),
@@ -870,7 +870,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.savedName, 'Rojda Test');
-    expect(find.text('Günün Yarışması'), findsOneWidget);
+    expect(find.text('Hemen Oyna'), findsOneWidget);
   });
 
   test('unsupported provider auth error is user friendly', () {
@@ -988,7 +988,6 @@ void main() {
     expect(find.textContaining('Arkadaşlarınla'), findsOneWidget);
     expect(find.text('Oda kur'), findsOneWidget);
     expect(find.text('Kodla katıl'), findsOneWidget);
-    expect(find.text('Günün Yarışması'), findsOneWidget);
 
     await tester.ensureVisible(find.text('Oda kur'));
     await tester.pumpAndSettle();
@@ -1006,7 +1005,7 @@ void main() {
     expect(find.byType(QuizScreen), findsOneWidget);
   });
 
-  testWidgets('opens the daily quiz from the home screen', (tester) async {
+  testWidgets('opens the daily quiz from the play hub tab', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -1017,6 +1016,10 @@ void main() {
         languageProvider: _turkishLang(),
       ),
     );
+    await tester.pumpAndSettle();
+
+    // Günlük yarışma modu artık yalnızca Bilîze (Oyna) sekmesinde.
+    await tester.tap(find.text('Oyna'));
     await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.text('Günün Yarışması'));
@@ -1034,7 +1037,7 @@ void main() {
     expect(find.byType(QuizScreen), findsOneWidget);
   });
 
-  testWidgets('opens the spin wheel from the home screen', (tester) async {
+  testWidgets('opens the spin wheel from the play hub tab', (tester) async {
     await tester.pumpWidget(
       ZanKurdApp(
         repository: repository,
@@ -1042,6 +1045,10 @@ void main() {
         languageProvider: _turkishLang(),
       ),
     );
+    await tester.pumpAndSettle();
+
+    // Çark modu artık yalnızca Bilîze (Oyna) sekmesinde.
+    await tester.tap(find.text('Oyna'));
     await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.text('Günün Çarkı'));

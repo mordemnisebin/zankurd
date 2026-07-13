@@ -252,7 +252,9 @@ class AppTheme {
   static const playGreen = Color(0xFF8BC53F); // Lime — öğrenme kimliği
   static const playPink = Color(0xFFFF3B81); // Sıcak pembe — 1v1/rekabet
   static const playCyan = Color(0xFF38BDF8); // Gökmavi — oda/mod kartları
-  static const playPurple = Color(0xFF6C5CE7); // İndigo ile birleşti (ayrı mor yok)
+  static const playPurple = Color(
+    0xFF6C5CE7,
+  ); // İndigo ile birleşti (ayrı mor yok)
 
   // ============ Dark Mode Palette (Bubblegum Arcade — koyu ikincil tema) ============
   // Legacy token names retained for existing screen consumers.

@@ -7,26 +7,20 @@ import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
-import '../models/contest.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/test_environment.dart';
 import 'home/hero_card.dart';
-import 'home/quick_play_grid.dart';
-import 'home/section_header.dart';
 import '../widgets/animated_counter.dart';
 import '../widgets/kilim_pattern_painter.dart';
+import '../widgets/roj_mascot.dart';
 import '../widgets/zana_daily_card.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
-import 'quiz_screen.dart';
 import 'room_screen.dart';
 import 'matchmaking_screen.dart';
-import 'contest_screen.dart';
-import 'spin_wheel_screen.dart';
-import 'tournament_screen.dart';
 import 'shop_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -36,6 +30,7 @@ class HomeScreen extends StatefulWidget {
     this.scrollController,
     this.refreshSignal,
     this.onOpenLearning,
+    this.onOpenPlay,
     super.key,
   });
 
@@ -51,13 +46,16 @@ class HomeScreen extends StatefulWidget {
   final Listenable? refreshSignal;
   final VoidCallback? onOpenLearning;
 
+  /// "Zû Bilîze" bölümü kaldırıldı (Bilîze sekmesiyle bire bir aynıydı);
+  /// bunun yerine Bilîze sekmesine geçiş yapan kısa bir teaser gösterilir.
+  final VoidCallback? onOpenPlay;
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool _roomActionLoading = false;
-  bool _dailyLoading = false;
   int? _coinBalance;
   int _streak = 0;
   List<DailyMission> _missions = [];
@@ -248,30 +246,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         children: [
                           _buildAnimatedCard(
                             _heroFadeAnimation(1),
-                            SectionHeader(
-                              title: ku ? 'Zû Bilîze' : 'Hemen Oyna',
-                              subtitle: ku
-                                  ? 'Yarî, xelat û pêşbirkên rojane'
-                                  : 'Oyunlar, ödüller ve günlük yarışmalar',
-                              icon: Icons.flash_on_rounded,
-                              accentColor: AppTheme.gold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          _buildAnimatedCard(
-                            _heroFadeAnimation(1),
-                            QuickPlayGrid(
-                              isKu: ku,
-                              dailyQuizLoading: _dailyLoading,
-                              onDuel: () => Navigator.of(context).push(
-                                AppRoute.to(
-                                  MatchmakingScreen(repository: repo),
-                                ),
-                              ),
-                              onDailyQuiz: () => _openDailyQuiz(context, ku),
-                              onSpinWheel: () => _openSpinWheel(context),
-                              onTournament: () => _openTournament(context),
-                            ),
+                            _PlayHubTeaser(isKu: ku, onOpen: widget.onOpenPlay),
                           ),
                         ],
                       ),
@@ -309,34 +284,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
                         _heroFadeAnimation(1),
-                        SectionHeader(
-                          title: ku ? 'Zû Bilîze' : 'Hemen Oyna',
-                          subtitle: ku
-                              ? 'Yarî, xelat û pêşbirkên rojane'
-                              : 'Oyunlar, ödüller ve günlük yarışmalar',
-                        ),
+                        _PlayHubTeaser(isKu: ku, onOpen: widget.onOpenPlay),
                       ),
                     );
                   }
                   if (index == 2) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(1),
-                        QuickPlayGrid(
-                          isKu: ku,
-                          dailyQuizLoading: _dailyLoading,
-                          onDuel: () => Navigator.of(context).push(
-                            AppRoute.to(MatchmakingScreen(repository: repo)),
-                          ),
-                          onDailyQuiz: () => _openDailyQuiz(context, ku),
-                          onSpinWheel: () => _openSpinWheel(context),
-                          onTournament: () => _openTournament(context),
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 3) {
                     return Padding(
                       padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
@@ -350,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     );
                   }
                   return null;
-                }, childCount: 4),
+                }, childCount: 3),
               ),
             ),
           SliverToBoxAdapter(child: SizedBox(height: bottomContentPadding)),
@@ -533,6 +485,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             top: AppSpacing.lg,
             child: _buildCoinGemRow(_coinBalance),
           ),
+          Positioned(
+            right: AppSpacing.page,
+            bottom: AppSpacing.lg,
+            child: _buildAnimatedCard(
+              _heroFadeAnimation(0),
+              const RojMascot(
+                key: ValueKey('home-header-roj-mascot'),
+                size: 72,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -687,66 +650,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> _openDailyQuiz(BuildContext context, bool ku) async {
-    if (_dailyLoading) return;
-    setState(() => _dailyLoading = true);
-    try {
-      // Önce günlük etkinlik (contest) ekranı; yoksa klasik günün yarışması.
-      Contest? todayContest;
-      try {
-        todayContest = await repo.loadTodayContest();
-      } catch (_) {
-        todayContest = null;
-      }
-      if (!context.mounted) return;
-
-      if (todayContest != null) {
-        await Navigator.of(
-          context,
-        ).push(AppRoute.to(ContestScreen(repository: repo)));
-      } else {
-        final dailyQuestions = await repo.loadDailyQuestions(limit: 10);
-        if (!context.mounted) return;
-        final dailyRoom = repo.createRoom().copyWith(
-          name: ku ? 'Pêşbirka Rojê' : 'Günün Yarışması',
-          questionCount: dailyQuestions.length,
-        );
-        await Navigator.of(context).push(
-          AppRoute.to(
-            QuizScreen(
-              repository: repo,
-              room: dailyRoom,
-              questions: dailyQuestions,
-              dailyQuiz: true,
-            ),
-          ),
-        );
-      }
-      _refreshCoins();
-      _loadMissions();
-    } finally {
-      if (mounted) setState(() => _dailyLoading = false);
-    }
-  }
-
   void _openRoom(BuildContext context, GameRoom room) {
     Navigator.of(
       context,
     ).push(AppRoute.to(RoomScreen(repository: repo, initialRoom: room)));
-  }
-
-  Future<void> _openSpinWheel(BuildContext context) async {
-    await Navigator.of(
-      context,
-    ).push(AppRoute.to(SpinWheelScreen(repository: repo)));
-    _refreshCoins();
-  }
-
-  Future<void> _openTournament(BuildContext context) async {
-    await Navigator.of(
-      context,
-    ).push(AppRoute.to(TournamentScreen(repository: repo)));
-    _refreshCoins();
   }
 
   Future<void> _refreshCoins() async {
@@ -912,6 +819,69 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     ).whenComplete(() {
       WidgetsBinding.instance.addPostFrameCallback((_) => controller.dispose());
     });
+  }
+}
+
+/// Bilîze sekmesine kısa yol — tam mod listesi (Şerê 1vs1, Pêşbirka Rojê,
+/// Çerxa Rojê, Turnuva) artık yalnızca Bilîze'de gösteriliyor; burada aynı
+/// kartları tekrarlamak yerine oraya yönlendiren tek bir teaser var.
+class _PlayHubTeaser extends StatelessWidget {
+  const _PlayHubTeaser({required this.isKu, this.onOpen});
+
+  final bool isKu;
+  final VoidCallback? onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      key: const ValueKey('home-play-hub-teaser'),
+      onTap: onOpen,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppTheme.playCyan, AppTheme.violet],
+          ),
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          boxShadow: AppTheme.glowShadow(AppTheme.playCyan, intensity: 0.2),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    isKu ? 'Zû Bilîze' : 'Hemen Oyna',
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xxs),
+                  Text(
+                    isKu
+                        ? 'Çerx, turnuva û pêşbirkên rojane li Bilîze'
+                        : 'Çark, turnuva ve günlük yarışmalar Oyna sekmesinde',
+                    style: AppTypography.caption.copyWith(
+                      color: Colors.white.withValues(alpha: 0.85),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.arrow_circle_right_rounded,
+              color: Colors.white,
+              size: 32,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

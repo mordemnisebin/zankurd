@@ -216,6 +216,7 @@ class _AppShellState extends State<AppShell> {
             scrollController: _homeScrollController,
             refreshSignal: _homeRefresh,
             onOpenLearning: () => setState(() => _tab = 1),
+            onOpenPlay: () => setState(() => _tab = 2),
           ),
           LearningScreen(repository: widget.repository),
           PlayHubScreen(repository: widget.repository),

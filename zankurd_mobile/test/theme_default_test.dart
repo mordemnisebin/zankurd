@@ -18,15 +18,14 @@ class _GateAuthProvider extends AuthProvider {
   bool get isLoading => false;
 }
 
-// Bubblegum Arcade redesign (2026-07-12): uygulama artık açık-temayla
-// açılır (kayıtlı tercih yokken). Koyu tema ikincil ama tam desteklenir.
+// Koyu-öncelikli tasarım yönü (design-direction-2026-07): uygulama
+// varsayılan olarak koyu temayla açılır (kayıtlı tercih yokken). Açık
+// tema ikincil ama tam desteklenir.
 void main() {
-  testWidgets('sıfır kurulumda onboarding açık temayla açılır', (
-    tester,
-  ) async {
+  testWidgets('sıfır kurulumda onboarding koyu temayla açılır', (tester) async {
     SharedPreferences.setMockInitialValues({});
     final themeProvider = await ThemeProvider.load();
-    expect(themeProvider.mode, ThemeMode.light);
+    expect(themeProvider.mode, ThemeMode.dark);
 
     await tester.pumpWidget(
       ZanKurdApp(
@@ -41,15 +40,13 @@ void main() {
     expect(find.byType(OnboardingScreen), findsOneWidget);
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
   });
 
-  testWidgets('kayıtlı koyu tercih varsa koyu temayla açılır', (
-    tester,
-  ) async {
-    SharedPreferences.setMockInitialValues({'zankurd.themeMode': 'dark'});
+  testWidgets('kayıtlı açık tercih varsa açık temayla açılır', (tester) async {
+    SharedPreferences.setMockInitialValues({'zankurd.themeMode': 'light'});
     final themeProvider = await ThemeProvider.load();
-    expect(themeProvider.mode, ThemeMode.dark);
+    expect(themeProvider.mode, ThemeMode.light);
   });
 }
