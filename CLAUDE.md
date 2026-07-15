@@ -261,6 +261,23 @@ Local data (streak, achievements, mastery, seen questions, missions, XP) is stor
 - Run `flutter test` to validate question bank and data structures
 - Test on both Android emulator and real device before building APK
 
+## Design Spec Discipline
+
+Aynı anda yalnızca **bir** aktif "tam uygulama yeniden tasarımı" (full
+app/visual redesign) spec'i olabilir `zankurd_mobile/docs/superpowers/specs/`
+altında. Yeni bir tam-uygulama redesign spec'i yazmadan önce:
+1. Var olan aktif redesign spec'ini (varsa) süpersede edildiğini belirten
+   bir not ekleyerek kapat.
+2. Kapatılan spec'i `zankurd_mobile/docs/superpowers/specs/_archive/`
+   altına taşı.
+
+Bu kural yalnızca **tüm uygulamayı** kapsayan redesign spec'lerine
+uygulanır (ör. "Bubblegum Arcade"); tek bir ekran/paket için yazılan
+odaklı spec'ler (ör. "Faz D — Öğrenme Bölgesi") bu kısıtlamaya tabi
+değildir. Amaç: 2026-07-10/12 döneminde 48 saat içinde 5 çakışan
+tam-uygulama redesign spec'inin yazılmasına yol açan döngüyü önlemek
+(bkz. `zankurd_mobile/docs/superpowers/specs/2026-07-15-karmasiklik-giderme-design.md`).
+
 ## Dart/Flutter Conventions in This Project
 
 - **Imports:** Use relative imports for local files, absolute for packages (`package:zankurd_mobile/...`)
