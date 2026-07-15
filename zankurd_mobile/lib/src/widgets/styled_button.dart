@@ -28,6 +28,9 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
     final isEnabled = widget.onPressed != null && !widget.isLoading;
     final disabledColor = AppColors.disabledSurface(context);
 
+    final foregroundColor = isEnabled
+        ? AppTheme.lightTextPrimary
+        : AppTheme.textMutedColor(context);
     final shadowColor = isEnabled
         ? AppTheme.primaryGradientStart.withValues(alpha: 0.55)
         : disabledColor.withValues(alpha: 0.6);
@@ -64,17 +67,17 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
             mainAxisSize: MainAxisSize.max,
             children: [
               if (widget.isLoading)
-                const SizedBox(
+                SizedBox(
                   width: 20,
                   height: 20,
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    valueColor: AlwaysStoppedAnimation<Color>(foregroundColor),
                   ),
                 )
               else ...[
                 if (widget.icon != null) ...[
-                  Icon(widget.icon, color: Colors.white, size: 20),
+                  Icon(widget.icon, color: foregroundColor, size: 20),
                   const SizedBox(width: 8),
                 ],
                 Flexible(
@@ -82,8 +85,8 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
                     widget.label,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: foregroundColor,
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0,

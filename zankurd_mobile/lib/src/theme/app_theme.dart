@@ -243,18 +243,15 @@ class AppTheme {
     );
   }
 
-  // ============ Bubblegum Arcade Palette (2026-07-12) ============
-  // Turuncu/mor bırakıldı; Kürt kimliği renkte değil, RojMascot (Zana)
-  // ışın motifinde taşınır. Bkz. docs/superpowers/specs/
-  // 2026-07-12-bubblegum-arcade-redesign-design.md
-  static const brandOrange = Color(0xFF6C5CE7); // İndigo — ana marka rengi
-  static const brandOrangeWarm = Color(0xFF8B7CF6); // Açık indigo (gradyan ucu)
-  static const playGreen = Color(0xFF8BC53F); // Lime — öğrenme kimliği
-  static const playPink = Color(0xFFFF3B81); // Sıcak pembe — 1v1/rekabet
-  static const playCyan = Color(0xFF38BDF8); // Gökmavi — oda/mod kartları
-  static const playPurple = Color(
-    0xFF6C5CE7,
-  ); // İndigo ile birleşti (ayrı mor yok)
+  // ============ Ronahî Arcade Palette (2026-07-15) ============
+  // Google AI Studio referansının kompakt oyun hiyerarşisi; açık-varsayılan,
+  // turuncu/indigo ZanKurd kimliğiyle yeniden yorumlanır.
+  static const brandOrange = Color(0xFFE57832);
+  static const brandOrangeWarm = Color(0xFFF09A52);
+  static const playGreen = Color(0xFF4EA66A);
+  static const playPink = Color(0xFFD94D72);
+  static const playCyan = Color(0xFF2D8BD8);
+  static const playPurple = Color(0xFF5147C7);
 
   // ============ Dark Mode Palette (Bubblegum Arcade — koyu ikincil tema) ============
   // Legacy token names retained for existing screen consumers.
@@ -262,34 +259,34 @@ class AppTheme {
   static const primaryGradientEnd = brandOrangeWarm;
 
   // İkincil aksan — ikincil vurgu / yardımcı renk.
-  static const secondaryAccent = Color(0xFF38BDF8); // Gökmavi
+  static const secondaryAccent = playCyan;
 
   // Ödül rengi — YALNIZCA coin / ödül / streak / ustalık rozeti göstergelerinde kullan.
   // Bilinçli olarak sabit tutuldu: renk sistemi değişse de ödül/coin anlamı korunur.
-  static const gold = Color(0xFFE9C46A);
+  static const gold = Color(0xFFE9B949);
 
   // Bilgi/ipucu vurgusu — nadir kullan (ör. joker ipucu). Genel aksan için kullanma.
   static const cyan = playCyan;
 
-  // Dark backgrounds (İndigo-koyu tonlar)
-  static const bg = Color(0xFF15121F);
-  static const bgDeep = Color(0xFF0E0C16);
-  static const surface = Color(0xFF1E1A2E);
-  static const surfaceHi = Color(0xFF29233D);
-  static const darkBg = Color(0xFF0A0812);
+  // Dark backgrounds (nötr lacivert tonlar)
+  static const bg = Color(0xFF101217);
+  static const bgDeep = Color(0xFF0B0D12);
+  static const surface = Color(0xFF171C29);
+  static const surfaceHi = Color(0xFF202739);
+  static const darkBg = bg;
 
   // Dark mode text
-  static const textPrimary = Color(0xFFEFEBFA);
-  static const textSub = Color(0xFFB3A9D6);
-  static const textMuted = Color(0xFF988FBB);
+  static const textPrimary = Color(0xFFF5F7FC);
+  static const textSub = Color(0xFFC3CAD8);
+  static const textMuted = Color(0xFF929CAF);
 
   // Borders
-  static const border = Color(0xFF3A3252);
+  static const border = Color(0xFF30394C);
 
   // Status colors
   // Doğru/yanlış renkleri correct/wrong; altın ödül gold — bu üçü sabit kalır
   // (quiz geri bildirim anlamı renk sisteminden bağımsız).
-  static const accent = playPink;
+  static const accent = brandOrange;
   static const violet = playPurple;
   // Doğru cevap rengi — YALNIZCA doğru cevap geri bildiriminde kullan.
   static const correct = Color(0xFF2E7D32); // Dengeli Yeşil — değişmez
@@ -297,14 +294,14 @@ class AppTheme {
   static const wrong = Color(0xFFC62828); // Dengeli Kırmızı — değişmez
 
   // ============ Light Mode Palette (varsayılan tema) ============
-  static const lightBg = Color(0xFFFAFAFF);
-  static const lightBgDeep = Color(0xFFF0EEFC);
+  static const lightBg = Color(0xFFF5F7FC);
+  static const lightBgDeep = Color(0xFFEFF3FA);
   static const lightSurface = Color(0xFFFFFFFF);
-  static const lightSurfaceHi = Color(0xFFF7F6FE);
-  static const lightBorder = Color(0xFFE4E1F5);
-  static const lightTextPrimary = Color(0xFF211C34);
-  static const lightTextSub = Color(0xFF6E6791);
-  static const lightTextMuted = Color(0xFF9B94BC);
+  static const lightSurfaceHi = Color(0xFFEEF2FA);
+  static const lightBorder = Color(0xFFDCE3EF);
+  static const lightTextPrimary = Color(0xFF171B2E);
+  static const lightTextSub = Color(0xFF566078);
+  static const lightTextMuted = Color(0xFF7D879C);
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -330,11 +327,11 @@ class AppTheme {
     colors: [bg, bgDeep],
   );
 
-  // Home header gradient: Deep Green to Soft Green-Gold transition
+  // Home header gradient: referanstaki sıcak üst şeridin ZanKurd yorumu.
   static const homeHeaderGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF0B251C), Color(0xFF1A4E3B)],
+    colors: [Color(0xFFC45A13), Color(0xFF5147C7)],
   );
 
   // Legacy gradient aliases for backwards compatibility
@@ -443,7 +440,7 @@ class AppTheme {
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
         primary: accent,
-        onPrimary: Colors.white,
+        onPrimary: lightTextPrimary,
         secondary: violet,
         onSecondary: Colors.white,
         tertiary: cyan,
@@ -488,7 +485,7 @@ class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: accent,
-          foregroundColor: Colors.white,
+          foregroundColor: lightTextPrimary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -595,7 +592,7 @@ class AppTheme {
       colorScheme: const ColorScheme(
         brightness: Brightness.light,
         primary: accent,
-        onPrimary: Colors.white,
+        onPrimary: lightTextPrimary,
         secondary: violet,
         onSecondary: Colors.white,
         tertiary: cyan,
@@ -640,7 +637,7 @@ class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: accent,
-          foregroundColor: Colors.white,
+          foregroundColor: lightTextPrimary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

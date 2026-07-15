@@ -37,6 +37,11 @@ void main() {
     expect(find.text('Kodla Katıl'), findsOneWidget);
     expect(find.text('Arkadaşınla veya grupla oyna'), findsOneWidget);
     expect(find.text('Bir yarış seç'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-shop-card')),
+      260,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.text('Mağaza ve jokerler'), findsOneWidget);
     expect(
       find.text('Coin, çark ve joker hakların tek yerde.'),

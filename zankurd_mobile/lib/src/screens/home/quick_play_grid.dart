@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
-import '../../widgets/colorful_action_card.dart';
+import '../../widgets/reference_mode_card.dart';
 
 /// Tam-genişlik "hemen oyna" kart listesi: 1v1 düello, günün yarışması,
 /// çark, turnuva. Pirs'in tek-eylem, tam-genişlik mod kartı yerleşimini
-/// izler (küçük 2x2 ikon grid'i yerine). Ortak [ColorfulActionCard]
-/// ailesini kullanır: 1vs1 pembe, günlük yarışma indigo, çark lime,
-/// turnuva gökmavi.
+/// izler (küçük 2x2 ikon grid'i yerine). Açık yüzeyli
+/// [ReferenceModeCard] ailesi renk yoğunluğunu ikon ve ilerleme alanında tutar.
 class QuickPlayGrid extends StatelessWidget {
   const QuickPlayGrid({
     required this.isKu,
@@ -26,44 +25,40 @@ class QuickPlayGrid extends StatelessWidget {
   final VoidCallback onSpinWheel;
   final VoidCallback onTournament;
 
-  /// Gradient'in ikinci durağı: aynı rengin hafif koyulaştırılmışı.
-  static Color _deepen(Color color) =>
-      Color.alphaBlend(Colors.black.withValues(alpha: 0.16), color);
-
   @override
   Widget build(BuildContext context) {
     final tiles = [
-      ColorfulActionCard(
+      ReferenceModeCard(
         key: const ValueKey('quick-play-duel'),
         title: isKu ? 'Şerê 1vs1' : '1vs1 Düello',
         subtitle: isKu ? 'Zindî' : 'Canlı',
         icon: Icons.bolt_rounded,
-        colors: [AppTheme.playPink, _deepen(AppTheme.playPink)],
+        accent: AppTheme.playPink,
         onTap: onDuel,
       ),
-      ColorfulActionCard(
+      ReferenceModeCard(
         key: const ValueKey('quick-play-daily'),
         title: isKu ? 'Pêşbirka Rojê' : 'Günün Yarışması',
         subtitle: isKu ? '10 pirs' : '10 soru',
         icon: Icons.today_rounded,
-        colors: const [AppTheme.brandOrange, AppTheme.brandOrangeWarm],
+        accent: AppTheme.brandOrange,
         loading: dailyQuizLoading,
         onTap: onDailyQuiz,
       ),
-      ColorfulActionCard(
+      ReferenceModeCard(
         key: const ValueKey('quick-play-wheel'),
         title: isKu ? 'Çerxa Rojê' : 'Günün Çarkı',
         subtitle: '100 coin',
         icon: Icons.casino_outlined,
-        colors: [AppTheme.playGreen, _deepen(AppTheme.playGreen)],
+        accent: AppTheme.playGreen,
         onTap: onSpinWheel,
       ),
-      ColorfulActionCard(
+      ReferenceModeCard(
         key: const ValueKey('quick-play-tournament'),
         title: isKu ? 'Turnuva' : 'Turnuva Modu',
         subtitle: isKu ? 'Bot kûpa' : 'Bot kupa',
         icon: Icons.emoji_events_outlined,
-        colors: [AppTheme.playCyan, _deepen(AppTheme.playCyan)],
+        accent: AppTheme.playCyan,
         onTap: onTournament,
       ),
     ];

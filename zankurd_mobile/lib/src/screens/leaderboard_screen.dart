@@ -229,6 +229,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
           );
         }
         return ListView(
+          key: const ValueKey('leaderboard-compact-list'),
           controller: widget.scrollController,
           padding: const EdgeInsets.fromLTRB(
             AppSpacing.page,

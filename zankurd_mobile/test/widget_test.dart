@@ -659,7 +659,8 @@ void main() {
       find.byKey(const ValueKey('onboarding-surface')),
     );
     final decoration = surface.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.lightBg);
+    final gradient = decoration.gradient as LinearGradient;
+    expect(gradient.colors, [AppTheme.lightBg, AppTheme.lightBgDeep]);
   });
 
   testWidgets('onboarding fits a tablet and web viewport', (tester) async {
@@ -759,7 +760,7 @@ void main() {
     expect(find.text('Seviye 5'), findsNothing);
     expect(find.byIcon(Icons.diamond), findsNothing);
 
-    // Pirs-inspired sözleşme: turuncu profil header'ı ve multiplayer hero.
+    // Ronahî sözleşmesi: açık oyuncu header'ı ve multiplayer hero.
     expect(find.byKey(const ValueKey('home-profile-header')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-multiplayer-hero')), findsOneWidget);
     expect(find.text('Oda kur'), findsOneWidget);
@@ -774,8 +775,11 @@ void main() {
     final headerDecoration = header.decoration as BoxDecoration;
     final headerGradient = headerDecoration.gradient as LinearGradient;
     expect(headerGradient.colors, [
-      AppTheme.brandOrange,
-      AppTheme.brandOrangeWarm,
+      AppTheme.lightSurface,
+      Color.alphaBlend(
+        AppTheme.brandOrange.withValues(alpha: 0.13),
+        AppTheme.lightBg,
+      ),
     ]);
 
     final navTheme = tester.widget<NavigationBarTheme>(

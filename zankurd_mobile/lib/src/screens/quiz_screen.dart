@@ -902,17 +902,23 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         orElse: () =>
             Player(name: _isKu ? 'Hevrik' : 'Rakip', score: 0, state: ''),
       );
-      return _DuelScoreHeader(
-        player: player,
-        opponent: opponent,
-        progress: '${index + 1}/${widget.questions.length}',
+      return KeyedSubtree(
+        key: const ValueKey('quiz-status-strip'),
+        child: _DuelScoreHeader(
+          player: player,
+          opponent: opponent,
+          progress: '${index + 1}/${widget.questions.length}',
+        ),
       );
     }
-    return _ScoreHeader(
-      score: score,
-      streak: streak,
-      progress: '${index + 1}/${widget.questions.length}',
-      coinBalance: _coinBalance,
+    return KeyedSubtree(
+      key: const ValueKey('quiz-status-strip'),
+      child: _ScoreHeader(
+        score: score,
+        streak: streak,
+        progress: '${index + 1}/${widget.questions.length}',
+        coinBalance: _coinBalance,
+      ),
     );
   }
 
@@ -1381,12 +1387,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     final catGradient = AppTheme.categoryGradient(catIndex >= 0 ? catIndex : 0);
     final catColor = catGradient.colors.first;
     return Container(
+      key: const ValueKey('quiz-question-surface'),
       width: double.infinity,
       padding: EdgeInsets.all(isCompact ? 10 : 16),
       decoration: BoxDecoration(
         color: Color.alphaBlend(
-          catColor.withValues(alpha: 0.07),
-          AppTheme.surfaceHiColor(context),
+          catColor.withValues(alpha: AppTheme.isLight(context) ? 0.035 : 0.07),
+          AppTheme.surfaceColor(context),
         ),
         borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(color: catColor.withValues(alpha: 0.30), width: 1.2),
@@ -1508,11 +1515,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 )
               else ...[
                 if (question.hasImage) ...[
-                    _QuestionImage(
-                      url: question.imageUrl!,
-                      isCompact: isCompact,
-                      onReady: questionVisualReady,
-                    ),
+                  _QuestionImage(
+                    url: question.imageUrl!,
+                    isCompact: isCompact,
+                    onReady: questionVisualReady,
+                  ),
                   SizedBox(height: isCompact ? 8 : 14),
                 ],
                 _QuestionTextAndAnswers(
@@ -1645,16 +1652,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _opponentWaitTimer = Timer(
       Duration(seconds: max(20, widget.room.secondsPerQuestion)),
       () {
-      if (!mounted || !answered || _mpPhase != _MultiplayerPhase.waiting) {
-        return;
-      }
-      for (final player in livePlayers) {
-        final isMe = _myId != null
-            ? player.id == _myId
-            : player.name == _myName;
-        if (!isMe) _answeredPlayerNames.add(player.name);
-      }
-      _startRevealPhase();
+        if (!mounted || !answered || _mpPhase != _MultiplayerPhase.waiting) {
+          return;
+        }
+        for (final player in livePlayers) {
+          final isMe = _myId != null
+              ? player.id == _myId
+              : player.name == _myName;
+          if (!isMe) _answeredPlayerNames.add(player.name);
+        }
+        _startRevealPhase();
       },
     );
   }

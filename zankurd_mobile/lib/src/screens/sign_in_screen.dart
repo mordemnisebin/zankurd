@@ -203,8 +203,12 @@ class _SignInScreenState extends State<SignInScreen>
     return Scaffold(
       body: Stack(
         children: [
-          // Context-aware düz zemin (light: lightBg, dark: bg)
-          Container(decoration: BoxDecoration(color: AppTheme.bgOf(context))),
+          Container(
+            key: const ValueKey('sign-in-surface'),
+            decoration: BoxDecoration(
+              gradient: AppTheme.backgroundGradient(context),
+            ),
+          ),
           // Soft Glow 1: Sağ Üst
           Positioned(
             top: -120,

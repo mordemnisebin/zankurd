@@ -63,7 +63,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     return Scaffold(
       body: Container(
         key: const ValueKey('onboarding-surface'),
-        decoration: BoxDecoration(color: AppTheme.bgOf(context)),
+        decoration: BoxDecoration(
+          gradient: AppTheme.backgroundGradient(context),
+        ),
         child: Stack(
           children: [
             Positioned(
@@ -242,6 +244,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                           child: SizedBox(
                             width: double.infinity,
                             child: GeometricGradientButton(
+                              key: const ValueKey('onboarding-primary-action'),
                               onPressed: last
                                   ? widget.onComplete
                                   : () {

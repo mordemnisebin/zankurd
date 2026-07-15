@@ -856,23 +856,37 @@ class _ProfileHeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = AppTheme.isLight(context);
+    final foreground = AppTheme.textPrimaryColor(context);
+    final secondary = AppTheme.textSubColor(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
+        key: const ValueKey('profile-identity-card'),
         decoration: BoxDecoration(
-          // Profil sekmesinin kimlik rengi mor (bkz. AppShell._tabAccent);
-          // hero kartı aynı imzayı taşır.
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.violet, AppTheme.bgDeep],
+            colors: isLight
+                ? [
+                    AppTheme.lightSurface,
+                    Color.alphaBlend(
+                      AppTheme.playPurple.withValues(alpha: 0.12),
+                      AppTheme.lightSurfaceHi,
+                    ),
+                  ]
+                : const [AppTheme.violet, AppTheme.bgDeep],
           ),
           borderRadius: BorderRadius.circular(AppRadius.card),
           border: Border.all(
-            color: Colors.white.withValues(alpha: 0.12),
+            color: isLight
+                ? AppTheme.playPurple.withValues(alpha: 0.24)
+                : Colors.white.withValues(alpha: 0.12),
             width: 1.2,
           ),
-          boxShadow: AppTheme.glowShadow(AppTheme.violet, intensity: 0.16),
+          boxShadow: isLight
+              ? AppTheme.cardShadow(context)
+              : AppTheme.glowShadow(AppTheme.violet, intensity: 0.16),
         ),
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Stack(
@@ -882,8 +896,8 @@ class _ProfileHeroCard extends StatelessWidget {
                 child: CustomPaint(
                   painter: KilimPatternPainter(
                     drawPattern: true,
-                    color: Colors.white,
-                    opacity: 0.05,
+                    color: isLight ? AppTheme.playPurple : Colors.white,
+                    opacity: isLight ? 0.03 : 0.05,
                   ),
                 ),
               ),
@@ -895,7 +909,8 @@ class _ProfileHeroCard extends StatelessWidget {
                 child: Icon(
                   Icons.person_rounded,
                   size: 96,
-                  color: Colors.white.withValues(alpha: 0.06),
+                  color: (isLight ? AppTheme.playPurple : Colors.white)
+                      .withValues(alpha: 0.06),
                 ),
               ),
             ),
@@ -947,7 +962,7 @@ class _ProfileHeroCard extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTypography.heading2.copyWith(
-                              color: Colors.white,
+                              color: foreground,
                             ),
                           ),
                           if (showcaseTitle != null)
@@ -960,7 +975,7 @@ class _ProfileHeroCard extends StatelessWidget {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.16),
+                                color: AppTheme.gold.withValues(alpha: 0.14),
                                 borderRadius: BorderRadius.circular(
                                   AppRadius.pill,
                                 ),
@@ -982,7 +997,7 @@ class _ProfileHeroCard extends StatelessWidget {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: AppTypography.bodyMedium.copyWith(
-                                color: Colors.white.withValues(alpha: 0.72),
+                                color: secondary,
                                 fontSize: 13,
                               ),
                             ),
@@ -992,7 +1007,10 @@ class _ProfileHeroCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.md),
-                Divider(color: Colors.white.withValues(alpha: 0.18), height: 1),
+                Divider(
+                  color: AppTheme.borderColor(context).withValues(alpha: 0.70),
+                  height: 1,
+                ),
                 const SizedBox(height: AppSpacing.sm),
                 Row(
                   children: [
@@ -1008,7 +1026,7 @@ class _ProfileHeroCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyLarge.copyWith(
-                          color: Colors.white,
+                          color: foreground,
                         ),
                       ),
                     ),
@@ -1019,9 +1037,7 @@ class _ProfileHeroCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.end,
-                        style: AppTypography.caption.copyWith(
-                          color: Colors.white.withValues(alpha: 0.78),
-                        ),
+                        style: AppTypography.caption.copyWith(color: secondary),
                       ),
                     ),
                   ],
@@ -1033,7 +1049,9 @@ class _ProfileHeroCard extends StatelessWidget {
                     children: [
                       Container(
                         height: 8,
-                        color: Colors.white.withValues(alpha: 0.14),
+                        color: AppTheme.borderColor(
+                          context,
+                        ).withValues(alpha: 0.55),
                       ),
                       FractionallySizedBox(
                         widthFactor: levelProgress.clamp(0.0, 1.0),

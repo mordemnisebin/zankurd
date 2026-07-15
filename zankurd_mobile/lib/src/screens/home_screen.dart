@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         slivers: [
           SliverAppBar(
             // Mobilde ilk bakışta yarış aksiyonu görünür kalsın.
-            expandedHeight: 190,
+            expandedHeight: 200,
             floating: false,
             pinned: true,
             backgroundColor: AppTheme.surfaceColor(context),
@@ -492,84 +492,100 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final greeting = ku
         ? '$greetingKu, ${currentName ?? 'Lîstikvan'}!'
         : '$greetingTr, ${currentName ?? 'Oyuncu'}!';
+    final isLight = AppTheme.isLight(context);
+    final foreground = AppTheme.textPrimaryColor(context);
+    final muted = AppTheme.textSubColor(context);
 
-    return Container(
-      key: const ValueKey('home-profile-header'),
-      decoration: const BoxDecoration(
-        // Pirs-inspired büyük turuncu karşılama/profil header'ı.
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppTheme.brandOrange, AppTheme.brandOrangeWarm],
+    return KeyedSubtree(
+      key: const ValueKey('home-player-strip'),
+      child: Container(
+        key: const ValueKey('home-profile-header'),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: isLight
+                ? [
+                    AppTheme.lightSurface,
+                    Color.alphaBlend(
+                      AppTheme.brandOrange.withValues(alpha: 0.13),
+                      AppTheme.lightBg,
+                    ),
+                  ]
+                : [AppTheme.surface, AppTheme.surfaceHi],
+          ),
+          border: Border(
+            bottom: BorderSide(
+              color: AppTheme.borderColor(context).withValues(alpha: 0.65),
+            ),
+          ),
         ),
-      ),
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: CustomPaint(
-              painter: KilimPatternPainter(
-                drawPattern: true,
-                color: Colors.white,
-                opacity: 0.05,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: CustomPaint(
+                painter: KilimPatternPainter(
+                  drawPattern: true,
+                  color: isLight ? AppTheme.brandOrange : Colors.white,
+                  opacity: isLight ? 0.025 : 0.04,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            left: AppSpacing.page,
-            bottom: AppSpacing.lg,
-            child: _buildAnimatedCard(
-              _heroFadeAnimation(0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    greeting,
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: Colors.white.withValues(alpha: 0.75),
+            Positioned(
+              left: AppSpacing.page,
+              bottom: AppSpacing.lg,
+              child: _buildAnimatedCard(
+                _heroFadeAnimation(0),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      greeting,
+                      style: AppTypography.bodyMedium.copyWith(color: muted),
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.xxs),
-                  Text(
-                    'ZanKurd',
-                    style: AppTypography.display.copyWith(
-                      color: Colors.white,
-                      height: 1.0,
+                    const SizedBox(height: AppSpacing.xxs),
+                    Text(
+                      'ZanKurd',
+                      style: AppTypography.display.copyWith(
+                        color: foreground,
+                        height: 1.0,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  _buildPriorityMission(context, ku),
-                ],
+                    const SizedBox(height: AppSpacing.sm),
+                    _buildPriorityMission(context, ku),
+                  ],
+                ),
               ),
             ),
-          ),
-          if (_streak > 0)
+            if (_streak > 0)
+              Positioned(
+                top: AppSpacing.lg,
+                right: AppSpacing.page,
+                child: _buildStreakHexagon(_streak),
+              ),
+            Positioned(
+              left: AppSpacing.page,
+              top: AppSpacing.lg,
+              child: _buildCoinGemRow(_coinBalance),
+            ),
             Positioned(
               top: AppSpacing.lg,
               right: AppSpacing.page,
-              child: _buildStreakHexagon(_streak),
+              child: _buildHeaderQuickControls(context, ku),
             ),
-          Positioned(
-            left: AppSpacing.page,
-            top: AppSpacing.lg,
-            child: _buildCoinGemRow(_coinBalance),
-          ),
-          Positioned(
-            top: AppSpacing.lg,
-            right: AppSpacing.page,
-            child: _buildHeaderQuickControls(context, ku),
-          ),
-          Positioned(
-            right: AppSpacing.page,
-            bottom: AppSpacing.lg,
-            child: _buildAnimatedCard(
-              _heroFadeAnimation(0),
-              const RojMascot(
-                key: ValueKey('home-header-roj-mascot'),
-                size: 72,
+            Positioned(
+              right: AppSpacing.page,
+              bottom: AppSpacing.lg,
+              child: _buildAnimatedCard(
+                _heroFadeAnimation(0),
+                const RojMascot(
+                  key: ValueKey('home-header-roj-mascot'),
+                  size: 72,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

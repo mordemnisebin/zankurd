@@ -29,11 +29,32 @@ class ScreenIdentityHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLight = AppTheme.isLight(context);
-    // Açık temada da kart renkli kimlik taşır; metin her iki modda beyaz.
-    final end = Color.alphaBlend(
-      accent.withValues(alpha: isLight ? 0.55 : 0.35),
-      isLight ? const Color(0xFF1A2E24) : AppTheme.bgDeep,
-    );
+    final foreground = isLight
+        ? AppTheme.textPrimaryColor(context)
+        : Colors.white;
+    final secondary = isLight
+        ? AppTheme.textSubColor(context)
+        : Colors.white.withValues(alpha: 0.88);
+    final gradient = isLight
+        ? LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.alphaBlend(
+                accent.withValues(alpha: 0.14),
+                AppTheme.lightSurface,
+              ),
+              AppTheme.lightSurface,
+            ],
+          )
+        : LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              accent,
+              Color.alphaBlend(accent.withValues(alpha: 0.32), AppTheme.bgDeep),
+            ],
+          );
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.card),
@@ -46,13 +67,15 @@ class ScreenIdentityHeader extends StatelessWidget {
           compact ? AppSpacing.sm : AppSpacing.md,
         ),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [accent, end],
+          gradient: gradient,
+          border: Border.all(
+            color: isLight
+                ? accent.withValues(alpha: 0.22)
+                : Colors.white.withValues(alpha: 0.12),
           ),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
-          boxShadow: AppTheme.glowShadow(accent, intensity: 0.14),
+          boxShadow: isLight
+              ? AppTheme.softShadow(context)
+              : AppTheme.glowShadow(accent, intensity: 0.14),
         ),
         child: Stack(
           children: [
@@ -61,8 +84,8 @@ class ScreenIdentityHeader extends StatelessWidget {
                 child: CustomPaint(
                   painter: KilimPatternPainter(
                     drawPattern: true,
-                    color: Colors.white,
-                    opacity: 0.05,
+                    color: isLight ? accent : Colors.white,
+                    opacity: isLight ? 0.035 : 0.05,
                   ),
                 ),
               ),
@@ -74,7 +97,9 @@ class ScreenIdentityHeader extends StatelessWidget {
                 child: Icon(
                   icon,
                   size: compact ? 72 : 88,
-                  color: Colors.white.withValues(alpha: 0.07),
+                  color: (isLight ? accent : Colors.white).withValues(
+                    alpha: isLight ? 0.08 : 0.07,
+                  ),
                 ),
               ),
             ),
@@ -87,14 +112,18 @@ class ScreenIdentityHeader extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white.withValues(alpha: 0.16),
+                    color: (isLight ? accent : Colors.white).withValues(
+                      alpha: isLight ? 0.12 : 0.16,
+                    ),
                     border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.28),
+                      color: (isLight ? accent : Colors.white).withValues(
+                        alpha: isLight ? 0.28 : 0.28,
+                      ),
                     ),
                   ),
                   child: Icon(
                     icon,
-                    color: Colors.white,
+                    color: isLight ? accent : Colors.white,
                     size: compact ? 22 : 26,
                   ),
                 ),
@@ -108,7 +137,7 @@ class ScreenIdentityHeader extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.heading2.copyWith(
-                          color: Colors.white,
+                          color: foreground,
                           fontSize: compact ? 17 : 18,
                         ),
                       ),
@@ -118,7 +147,7 @@ class ScreenIdentityHeader extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyMedium.copyWith(
-                          color: Colors.white.withValues(alpha: 0.88),
+                          color: secondary,
                           fontWeight: FontWeight.w600,
                           fontSize: 13,
                         ),

@@ -8,20 +8,20 @@ import 'package:zankurd_mobile/src/dev/design_tokens_preview_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 void main() {
-  test('Bubblegum Arcade brand token contract stays stable', () {
+  test('Ronahî Arcade brand token contract stays stable', () {
     expect(AppRadius.card, 16);
-    expect(AppTheme.brandOrange, const Color(0xFF6C5CE7));
-    expect(AppTheme.playGreen, const Color(0xFF8BC53F));
-    expect(AppTheme.playPink, const Color(0xFFFF3B81));
-    expect(AppTheme.playCyan, const Color(0xFF38BDF8));
-    expect(AppTheme.playPurple, const Color(0xFF6C5CE7));
-    expect(AppTheme.lightBg, const Color(0xFFFAFAFF));
+    expect(AppTheme.brandOrange, const Color(0xFFE57832));
+    expect(AppTheme.playGreen, const Color(0xFF4EA66A));
+    expect(AppTheme.playPink, const Color(0xFFD94D72));
+    expect(AppTheme.playCyan, const Color(0xFF2D8BD8));
+    expect(AppTheme.playPurple, const Color(0xFF5147C7));
+    expect(AppTheme.lightBg, const Color(0xFFF5F7FC));
   });
 
-  test('legacy token aliases resolve to Bubblegum Arcade tokens', () {
+  test('legacy token aliases resolve to Ronahî Arcade tokens', () {
     expect(AppTheme.primaryGradientStart, AppTheme.brandOrange);
     expect(AppTheme.primaryGradientEnd, AppTheme.brandOrangeWarm);
-    expect(AppTheme.accent, AppTheme.playPink);
+    expect(AppTheme.accent, AppTheme.brandOrange);
     expect(AppTheme.cyan, AppTheme.playCyan);
     expect(AppTheme.violet, AppTheme.playPurple);
   });

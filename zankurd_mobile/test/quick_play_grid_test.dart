@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/screens/home/quick_play_grid.dart';
-import 'package:zankurd_mobile/src/widgets/colorful_action_card.dart';
+import 'package:zankurd_mobile/src/widgets/reference_mode_card.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(home: Scaffold(body: child));
@@ -15,7 +15,7 @@ void main() {
     onTournament: () {},
   );
 
-  testWidgets('uses four keyed colorful action cards', (tester) async {
+  testWidgets('uses four keyed reference mode cards', (tester) async {
     await tester.pumpWidget(wrap(buildGrid()));
     await tester.pumpAndSettle();
 
@@ -23,7 +23,7 @@ void main() {
     expect(find.byKey(const ValueKey('quick-play-daily')), findsOneWidget);
     expect(find.byKey(const ValueKey('quick-play-wheel')), findsOneWidget);
     expect(find.byKey(const ValueKey('quick-play-tournament')), findsOneWidget);
-    expect(find.byType(ColorfulActionCard), findsNWidgets(4));
+    expect(find.byType(ReferenceModeCard), findsNWidgets(4));
   });
 
   testWidgets(

@@ -194,6 +194,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final isLight = AppTheme.isLight(context);
+    final foreground = AppTheme.textPrimaryColor(context);
+    final secondary = AppTheme.textSubColor(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -225,21 +228,30 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                             width: double.infinity,
                             padding: const EdgeInsets.all(AppSpacing.lg),
                             decoration: BoxDecoration(
-                              gradient: const LinearGradient(
+                              gradient: LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
-                                colors: [
-                                  AppTheme.secondaryAccent,
-                                  AppTheme.bgDeep,
-                                ],
+                                colors: isLight
+                                    ? [
+                                        AppTheme.lightSurface,
+                                        Color.alphaBlend(
+                                          AppTheme.playPurple.withValues(
+                                            alpha: 0.11,
+                                          ),
+                                          AppTheme.lightSurfaceHi,
+                                        ),
+                                      ]
+                                    : const [
+                                        AppTheme.surfaceHi,
+                                        AppTheme.bgDeep,
+                                      ],
                               ),
                               border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.12),
+                                color: AppTheme.borderColor(
+                                  context,
+                                ).withValues(alpha: 0.72),
                               ),
-                              boxShadow: AppTheme.glowShadow(
-                                AppTheme.gold,
-                                intensity: 0.12,
-                              ),
+                              boxShadow: AppTheme.cardShadow(context),
                             ),
                             child: Stack(
                               children: [
@@ -248,8 +260,10 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                     child: CustomPaint(
                                       painter: KilimPatternPainter(
                                         drawPattern: true,
-                                        color: Colors.white,
-                                        opacity: 0.05,
+                                        color: isLight
+                                            ? AppTheme.playPurple
+                                            : Colors.white,
+                                        opacity: isLight ? 0.03 : 0.05,
                                       ),
                                     ),
                                   ),
@@ -270,7 +284,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                           : 'Her gün bir kez çevir!',
                                       textAlign: TextAlign.center,
                                       style: AppTypography.heading2.copyWith(
-                                        color: Colors.white,
+                                        color: foreground,
                                       ),
                                     ),
                                     const SizedBox(height: AppSpacing.xxs),
@@ -280,9 +294,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                           : 'Coin kazan ve serini sürdür',
                                       textAlign: TextAlign.center,
                                       style: AppTypography.bodyMedium.copyWith(
-                                        color: Colors.white.withValues(
-                                          alpha: 0.75,
-                                        ),
+                                        color: secondary,
                                       ),
                                     ),
                                   ],
@@ -394,6 +406,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                         SizedBox(
                           height: 52,
                           child: FilledButton.icon(
+                            key: const ValueKey('spin-primary-action'),
                             onPressed: (_canSpin && !_spinning) ? _spin : null,
                             icon: _spinning
                                 ? const SizedBox(
@@ -401,7 +414,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                     height: 18,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2.5,
-                                      color: Colors.white,
+                                      color: AppTheme.lightTextPrimary,
                                     ),
                                   )
                                 : Icon(Icons.casino_outlined),
@@ -414,7 +427,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                         ? 'Sibê dîsa were!'
                                         : 'Yarın tekrar gel!'),
                               style: AppTypography.bodyLarge.copyWith(
-                                color: Colors.white,
+                                color: AppTheme.lightTextPrimary,
                               ),
                             ),
                           ),
