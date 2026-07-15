@@ -1,0 +1,29 @@
+{
+  "generatedAtUtc": "2026-07-15T16:58:53.230637Z",
+  "stableFiles": [
+    "summary.md",
+    "summary.json",
+    "source_inventory.csv",
+    "unknown_sources.csv",
+    "physical_vs_canonical_counts.csv",
+    "source_role_distribution.csv",
+    "blockers.csv",
+    "critical_issues.csv",
+    "warnings.csv",
+    "structural_issues.csv",
+    "exact_duplicates.csv",
+    "near_duplicate_candidates.csv",
+    "cross_source_copies.csv",
+    "cross_source_divergences.csv",
+    "language_mixing_candidates.csv",
+    "answer_position_distribution.csv",
+    "answer_leaks.csv",
+    "explanation_quality_candidates.csv",
+    "metadata_gaps.csv",
+    "dynamic_fact_candidates.csv",
+    "image_asset_issues.csv",
+    "category_distribution.csv",
+    "difficulty_distribution.csv",
+    "generated_template_candidates.csv"
+  ]
+}
