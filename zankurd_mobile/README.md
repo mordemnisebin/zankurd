@@ -114,6 +114,17 @@ veya publish toplamına alınmadığını gösterir. Yeni soru kaynağı ekleme 
 kopyalarını global kanonik sayımda uzlaştırırken ilgisiz havuzların yanlışlıkla
 birleştirilmesini engeller.
 
+Faz 0B bulgularını production verisine yazmadan kaynak kayıtlarıyla yan yana
+doğrulamak için salt-okunur adjudication raporu üretilebilir:
+
+```powershell
+dart run tool/question_quality/adjudication/adjudication.dart report
+```
+
+Çıktılar `docs/audit/question_quality/adjudication_2026-07-15/` altındadır.
+Komut soru kaynaklarını, baseline'ı veya source manifesti değiştirmez ve hiçbir
+kaydı otomatik düzeltilebilir olarak işaretlemez.
+
 Windows'ta Android/Gradle build öncesi geçici dizini ASCII bir yola alın:
 
 ```powershell
