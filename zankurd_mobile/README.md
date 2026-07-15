@@ -64,9 +64,17 @@ flutter run `
 ## Doğrulama
 
 ```powershell
-flutter analyze
-flutter test
+dart analyze
+flutter test --exclude-tags preview
+
+Pushd widgetbook
+flutter pub get
+dart analyze
+Pop-Location
 ```
+
+Kök analiz yalnız ZanKurd uygulama paketini doğrular. Bağımsız Widgetbook
+paketi kendi bağımlılıkları ve analyzer ayarlarıyla ayrıca doğrulanmalıdır.
 
 Windows'ta Android/Gradle build öncesi geçici dizini ASCII bir yola alın:
 
