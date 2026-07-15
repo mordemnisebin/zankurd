@@ -1,0 +1,339 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "offline_runtime_bank", "description": "Primary bundled runtime bank",
+      "path": "lib/src/data/offline_question_bank.dart", "role": "runtime_primary",
+      "parser": "dart_quiz_question", "canonicalGroup": "runtime_questions",
+      "reportIncluded": true, "gateIncluded": true, "productionLike": true,
+      "precedence": 1000, "expectedRecordCount": 3125, "notes": "Read-only Dart constants",
+      "columns": {"locale": "ku-kmr"}
+    },
+    {
+      "id": "curated_runtime_bank", "description": "Curated bundled runtime bank",
+      "path": "lib/src/data/curated_question_bank.dart", "role": "runtime_secondary",
+      "parser": "dart_quiz_question", "canonicalGroup": "runtime_questions",
+      "reportIncluded": true, "gateIncluded": true, "productionLike": true,
+      "precedence": 950, "expectedRecordCount": 20, "notes": "Approved curated bank",
+      "columns": {"locale": "ku-kmr"}
+    },
+    {
+      "id": "live_kurmanci_export", "description": "Repository snapshot labelled as live Kurmancî questions",
+      "path": "supabase/2026-07-14_chat_all_kurmanci_questions_live.csv", "role": "runtime_secondary",
+      "parser": "csv", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": true, "productionLike": true,
+      "precedence": 900, "expectedRecordCount": 377, "notes": "Live-labelled read-only export",
+      "columns": {"id":"id","locale":"language_code","category":"category_key","prompt":"prompt","optionA":"option_a","optionB":"option_b","optionC":"option_c","optionD":"option_d","correct":"correct_option","explanation":"explanation","difficulty":"difficulty","sourceTitle":"source_title","sourceUrl":"source_url","status":"publication_status"}
+    },
+    {
+      "id": "active_import_ready", "description": "Active 10k import-ready bank",
+      "path": "supabase/questions_import_ready.csv", "role": "import_candidate",
+      "parser": "csv", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": true, "productionLike": true,
+      "precedence": 850, "expectedRecordCount": 10000, "notes": "Active import source",
+      "columns": {"id":"id","locale":"language_code","category":"category","prompt":"prompt","optionA":"option_a","optionB":"option_b","optionC":"option_c","optionD":"option_d","correct":"correct_option","explanation":"explanation","difficulty":"difficulty","imagePath":"image_url","sourceUrl":"source_url","status":"is_approved"}
+    },
+    {
+      "id": "wave2_publish_candidates", "description": "Manually curated publish candidates",
+      "path": "supabase/wave2_curated_publish_candidates.csv", "role": "publish_candidate",
+      "parser": "csv", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": true, "productionLike": true,
+      "precedence": 800, "expectedRecordCount": 49, "notes": "Publication candidates",
+      "columns": {"id":"review_id","locale":"language_code","category":"category_key","prompt":"corrected_prompt","optionA":"corrected_option_a","optionB":"corrected_option_b","optionC":"corrected_option_c","optionD":"corrected_option_d","correct":"corrected_correct_option","explanation":"corrected_explanation","sourceUrl":"better_source_url","status":"publication_status"}
+    },
+    {
+      "id": "rich_v2_csv_snapshot", "description": "Historical rich bank CSV copy",
+      "path": "supabase/rich_question_bank_v2_questions.csv", "role": "historical_snapshot",
+      "parser": "csv", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 500, "expectedRecordCount": 10000, "notes": "Physical copy excluded from gate",
+      "columns": {"id":"id","locale":"language_code","category":"category","prompt":"prompt","optionA":"option_a","optionB":"option_b","optionC":"option_c","optionD":"option_d","correct":"correct_option","explanation":"explanation","difficulty":"difficulty","imagePath":"image_url","sourceUrl":"source_url","status":"is_approved"}
+    },
+    {
+      "id": "generated_master_csv", "description": "Generated master snapshot",
+      "path": "supabase/2026-07-14_all_generated_questions_master.csv", "role": "historical_snapshot",
+      "parser": "csv", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 450, "expectedRecordCount": 285, "notes": "Report-only generated snapshot",
+      "columns": {"id":"id","locale":"language_code","category":"category_key","prompt":"prompt","optionA":"option_a","optionB":"option_b","optionC":"option_c","optionD":"option_d","correct":"correct_option","explanation":"explanation","difficulty":"difficulty","sourceTitle":"source_title","sourceUrl":"source_url","status":"publication_status"}
+    },
+    {
+      "id": "editorial_wave2_review", "description": "Generated editorial review queue",
+      "path": "supabase/2026-07-14_editorial_kurmanci_question_wave_2_for_ai_review.csv", "role": "candidate_pool",
+      "parser": "csv", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 400, "expectedRecordCount": 10000, "notes": "AI/manual review input",
+      "columns": {"id":"review_id","locale":"language_code","category":"category_key","prompt":"prompt","optionA":"option_a","optionB":"option_b","optionC":"option_c","optionD":"option_d","correct":"correct_option","explanation":"explanation","difficulty":"difficulty","sourceUrl":"source_url","status":"human_or_ai_review_status"}
+    },
+    {
+      "id": "open_web_master", "description": "Open web candidate master",
+      "path": "supabase/2026-07-14_open_web_candidate_pool_master.csv", "role": "candidate_pool",
+      "parser": "csv", "canonicalGroup": "open_web_candidates",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 350, "expectedRecordCount": 2444, "notes": "English candidate pool",
+      "columns": {"id":"candidate_id","category":"source_category","prompt":"prompt_en","optionA":"option_a_en","optionB":"option_b_en","optionC":"option_c_en","optionD":"option_d_en","correct":"correct_option","difficulty":"difficulty","sourceTitle":"source","status":"editorial_status"}
+    },
+    {
+      "id": "open_web_review_queue", "description": "Controlled open web review queue",
+      "path": "supabase/2026-07-14_open_web_controlled_review_queue.csv", "role": "candidate_pool",
+      "parser": "csv", "canonicalGroup": "open_web_candidates",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 350, "expectedRecordCount": 2444, "notes": "Review-only copy",
+      "columns": {"id":"candidate_id","category":"source_category","prompt":"prompt_en","optionA":"option_a_en","optionB":"option_b_en","optionC":"option_c_en","optionD":"option_d_en","correct":"correct_option","difficulty":"difficulty","sourceTitle":"source","status":"controlled_disposition"}
+    },
+    {
+      "id": "opentdb_candidate_pool", "description": "OpenTDB candidates",
+      "path": "supabase/2026-07-14_opentdb_candidate_pool.csv", "role": "candidate_pool",
+      "parser": "csv", "canonicalGroup": "opentdb_candidates",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 340, "expectedRecordCount": 300, "notes": "English candidate pool",
+      "columns": {"id":"candidate_id","category":"source_category","prompt":"prompt_en","optionA":"option_a_en","optionB":"option_b_en","optionC":"option_c_en","optionD":"option_d_en","correct":"correct_option","difficulty":"difficulty","sourceTitle":"source","status":"editorial_status"}
+    },
+    {
+      "id": "opentdb_remaining", "description": "Remaining OpenTDB candidates",
+      "path": "supabase/2026-07-14_opentdb_remaining_categories_candidates.csv", "role": "candidate_pool",
+      "parser": "csv", "canonicalGroup": "opentdb_candidates",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 340, "expectedRecordCount": 825, "notes": "English candidate pool",
+      "columns": {"id":"candidate_id","category":"source_category","prompt":"prompt_en","optionA":"option_a_en","optionB":"option_b_en","optionC":"option_c_en","optionD":"option_d_en","correct":"correct_option","difficulty":"difficulty","sourceTitle":"source","status":"editorial_status"}
+    },
+    {
+      "id": "wikidata_candidates", "description": "Wikidata candidates",
+      "path": "supabase/2026-07-14_wikidata_candidate_questions.csv", "role": "candidate_pool",
+      "parser": "csv", "canonicalGroup": "wikidata_candidates",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 340, "expectedRecordCount": 1319, "notes": "English candidate pool",
+      "columns": {"id":"candidate_id","category":"source_category","prompt":"question_en","optionA":"option_a_en","optionB":"option_b_en","optionC":"option_c_en","optionD":"option_d_en","correct":"correct_option","sourceTitle":"source","status":"editorial_status"}
+    },
+    {
+      "id": "translated_batches", "description": "Translated candidate batches",
+      "glob": "supabase/2026-07-14_*_translated_batch_*.csv", "role": "candidate_pool",
+      "parser": "csv", "canonicalGroup": "translated_candidates",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 330, "expectedRecordCount": null, "notes": "Report-only translated candidates",
+      "columns": {"id":"id","locale":"language_code","category":"category_key","prompt":"prompt","optionA":"option_a","optionB":"option_b","optionC":"option_c","optionD":"option_d","correct":"correct_option","explanation":"explanation","difficulty":"difficulty","sourceTitle":"source_title","sourceUrl":"source_url","status":"publication_status"}
+    },
+    {
+      "id": "wave2_quarantine", "description": "Wave 2 quarantine",
+      "path": "supabase/wave2_quarantine_for_further_review.csv", "role": "quarantine",
+      "parser": "csv", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 320, "expectedRecordCount": 9951, "notes": "Excluded from publish totals",
+      "columns": {"id":"review_id","locale":"language_code","category":"category_key","prompt":"corrected_prompt","optionA":"corrected_option_a","optionB":"corrected_option_b","optionC":"corrected_option_c","optionD":"corrected_option_d","correct":"corrected_correct_option","explanation":"corrected_explanation","sourceUrl":"better_source_url","status":"publication_status"}
+    },
+    {
+      "id": "wave2_reviewed", "description": "Wave 2 review output",
+      "path": "supabase/wave2_reviewed.csv", "role": "historical_snapshot",
+      "parser": "csv", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 310, "expectedRecordCount": 10000, "notes": "Review result snapshot",
+      "columns": {"id":"review_id","prompt":"corrected_prompt","optionA":"corrected_option_a","optionB":"corrected_option_b","optionC":"corrected_option_c","optionD":"corrected_option_d","correct":"corrected_correct_option","explanation":"corrected_explanation","sourceUrl":"better_source_url","status":"verdict"}
+    },
+    {
+      "id": "pure_kurdish_pilot", "description": "Generated pilot candidate JSON",
+      "path": "pure_kurdish_pilot_output.json", "role": "candidate_pool",
+      "parser": "json", "canonicalGroup": "pure_kurdish_candidates",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 300, "expectedRecordCount": 80, "notes": "Report-only pilot",
+      "columns": {"id":"id","category":"category","prompt":"prompt","options":"answers","correct":"correctAnswer","explanation":"explanation","difficulty":"difficulty","imagePath":"imageUrl","sourceUrl":"source_url"}
+    },
+    {
+      "id": "historical_question_sql", "description": "Historical question SQL snapshots",
+      "glob": "supabase/*question*.sql", "role": "historical_snapshot",
+      "parser": "sql_count", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 100, "expectedRecordCount": null, "notes": "Tuple count only; historical",
+      "columns": {}
+    },
+    {
+      "id": "historical_rich_sql", "description": "Historical rich bank SQL snapshots",
+      "glob": "supabase/rich_question_bank*.sql", "role": "historical_snapshot",
+      "parser": "sql_count", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 110, "expectedRecordCount": null, "notes": "Tuple count only; historical",
+      "columns": {}
+    },
+    {
+      "id": "historical_wave_sql", "description": "Dated question wave SQL snapshots",
+      "glob": "supabase/2026-07-1*_*.sql", "role": "historical_snapshot",
+      "parser": "sql_count", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 90, "expectedRecordCount": null, "notes": "Only files discovered as question-like are read",
+      "columns": {}
+    },
+    {
+      "id": "historical_rich_parts", "description": "Split historical rich bank SQL",
+      "glob": "supabase/rich_question_bank_v2_parts/*.sql", "role": "historical_snapshot",
+      "parser": "sql_count", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 120, "expectedRecordCount": null, "notes": "Tuple count only",
+      "columns": {}
+    },
+    {
+      "id": "historical_sql_chunks", "description": "Historical rich bank chunks",
+      "glob": "supabase_chunks/rich_bank_part_*.sql", "role": "historical_snapshot",
+      "parser": "sql_count", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 120, "expectedRecordCount": null, "notes": "Tuple count only",
+      "columns": {}
+    },
+    {
+      "id": "question_sql_utilities", "description": "Question-related SQL utilities, not question records",
+      "glob": "supabase/*questions*.sql", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "DDL/maintenance scripts",
+      "columns": {}
+    },
+    {
+      "id": "question_mock_repository", "description": "Mock repository logic",
+      "path": "lib/src/data/mock_zankurd_repository.dart", "role": "mock",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Not a source bank",
+      "columns": {}
+    },
+    {
+      "id": "question_tests", "description": "Existing question-related tests",
+      "glob": "test/**/*question*.dart", "role": "test_fixture",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Never production input",
+      "columns": {}
+    },
+    {
+      "id": "generated_question_reports", "description": "Previously generated reports",
+      "glob": "reports/*", "role": "generated_report",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Never recursively audited as questions",
+      "columns": {}
+    },
+    {
+      "id": "phase0b_design_report", "description": "Phase 0B design document",
+      "path": "docs/ZANKURD_QUESTION_QUALITY_GATE_DESIGN_2026-07-15.md", "role": "generated_report",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Documentation, not question input", "columns": {}
+    },
+    {
+      "id": "question_asset_readme", "description": "Question asset documentation",
+      "path": "assets/question_images/README.md", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Asset documentation", "columns": {}
+    },
+    {
+      "id": "development_plans", "description": "Development plans and specs",
+      "glob": "docs/superpowers/**", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Documentation, not question input", "columns": {}
+    },
+    {
+      "id": "pirs_reference_doc", "description": "Pirs reference blueprint",
+      "path": "docs/pirs_reference_blueprint.md", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Reference documentation", "columns": {}
+    },
+    {
+      "id": "quiz_ui_code", "description": "Quiz screen and widget implementation",
+      "glob": "lib/src/screens/**", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 100, "expectedRecordCount": null, "notes": "Runtime UI code, not a data source", "columns": {}
+    },
+    {
+      "id": "quiz_widget_code", "description": "Shared quiz widgets",
+      "glob": "lib/src/widgets/**", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 100, "expectedRecordCount": null, "notes": "Runtime UI code", "columns": {}
+    },
+    {
+      "id": "quiz_core_widget_code", "description": "Core quiz widgets",
+      "glob": "lib/core/widgets/**", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 100, "expectedRecordCount": null, "notes": "Runtime UI code", "columns": {}
+    },
+    {
+      "id": "question_model_code", "description": "Question and quiz model definitions",
+      "glob": "lib/src/models/**", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 100, "expectedRecordCount": null, "notes": "Schema code, not records", "columns": {}
+    },
+    {
+      "id": "question_service_code", "description": "Question policy and review services",
+      "glob": "lib/src/services/**", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 100, "expectedRecordCount": null, "notes": "Service code", "columns": {}
+    },
+    {
+      "id": "question_utility_code", "description": "Question cache and utility code",
+      "glob": "lib/src/utils/**", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 100, "expectedRecordCount": null, "notes": "Utility code", "columns": {}
+    },
+    {
+      "id": "question_dev_code", "description": "Development preview code",
+      "glob": "lib/src/dev/**", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 100, "expectedRecordCount": null, "notes": "Development-only code", "columns": {}
+    },
+    {
+      "id": "seen_question_store", "description": "Seen-question state store",
+      "path": "lib/src/data/seen_question_store.dart", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "State store, not question data", "columns": {}
+    },
+    {
+      "id": "root_question_tests", "description": "Root test files",
+      "glob": "test/*.dart", "role": "test_fixture",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Tests never enter production metrics", "columns": {}
+    },
+    {
+      "id": "nested_question_tests", "description": "Nested test files",
+      "glob": "test/**", "role": "test_fixture",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 900, "expectedRecordCount": null, "notes": "Tests never enter production metrics", "columns": {}
+    },
+    {
+      "id": "lesson_seed_utility", "description": "Lesson seed, not quiz question source",
+      "path": "supabase/2026-07-06_lesson_seed.sql", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Lesson content schema", "columns": {}
+    },
+    {
+      "id": "cleanup_seed_utility", "description": "Cleanup SQL utility",
+      "path": "supabase/cleanup_seed_v1.sql", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Maintenance SQL", "columns": {}
+    },
+    {
+      "id": "quiz_reward_rpc", "description": "Quiz reward RPC",
+      "path": "supabase/quiz_reward_rpc.sql", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Runtime RPC, no question records", "columns": {}
+    },
+    {
+      "id": "wave2_publish_sql_snapshot", "description": "SQL copy of curated publish candidates",
+      "path": "supabase/wave2_curated_publish_candidates.sql", "role": "historical_snapshot",
+      "parser": "sql_count", "canonicalGroup": "supabase_questions",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 1100, "expectedRecordCount": 49, "notes": "Historical SQL copy; count-only", "columns": {}
+    }
+  ]
+}

@@ -104,7 +104,7 @@ CLI kısa, kaynak yolu ve check kimliği içeren hata verir; secret, query param
 
 ## 17. Performans sınırları
 
-Dosyalar sırayla okunur; çıktı kayıtları bellekte tutulur. Near duplicate karşılaştırması kategori, token prefix ve uzunluk bucket'larıyla sınırlandırılır; bütün kayıtlar arasında O(n²) tarama yapılmaz. Kaynak ve issue fingerprintleri yeni dependency olmadan araç içinde yer alan deterministik SHA-256 uygulamasıyla hesaplanır; kanonik birleştirme kararı yalnız hash'e değil alan karşılaştırmasına da dayanır.
+Dosyalar sırayla okunur; çıktı kayıtları bellekte tutulur. Near duplicate karşılaştırması kategori, token prefix ve uzunluk bucket'larıyla sınırlandırılır; bütün kayıtlar arasında O(n²) tarama yapılmaz. Kaynak dosya fingerprintleri araç içindeki deterministik SHA-256 uygulamasıyla hesaplanır. Yüksek hacimli issue ve kanonik kimlikler iki bağımsız FNV-1a akışını birleştiren deterministik 128-bit fingerprint kullanır; birleştirme kararı yalnız hash'e değil alan karşılaştırmasına da dayanır.
 
 ## 18. Çıktı dosyaları
 
