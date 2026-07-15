@@ -151,4 +151,31 @@ void main() {
     runDuplicateChecks(records, diagnostics: diagnostics);
     expect(diagnostics.tokenizationCount, records.length);
   });
+
+  test('same near-duplicate candidate is emitted once', () {
+    final records = [
+      question(sourceId: 'a', sourcePath: 'a.csv', row: 1, id: 'q1'),
+      question(
+        sourceId: 'b',
+        sourcePath: 'b.csv',
+        row: 2,
+        id: 'q2',
+        prompt: 'Paytexta welatê Fransa kîjan bajar e?',
+      ),
+      question(
+        sourceId: 'c',
+        sourcePath: 'c.csv',
+        row: 3,
+        id: 'q3',
+        prompt: 'Paytexta dewleta Fransa kîjan bajar e?',
+      ),
+    ];
+    final near = runDuplicateChecks(
+      records,
+    ).where((issue) => issue.checkId == 'near_duplicate_candidate').toList();
+    expect(
+      near.map((issue) => issue.fingerprint).toSet(),
+      hasLength(near.length),
+    );
+  });
 }

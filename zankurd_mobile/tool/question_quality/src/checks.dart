@@ -174,6 +174,7 @@ List<AuditIssue> runDuplicateChecks(
   final buckets = <String, List<QuestionRecord>>{};
   final normalizedPrompts = <QuestionRecord, String>{};
   final tokenSets = <QuestionRecord, Set<String>>{};
+  final nearFingerprints = <String>{};
   for (final record in records) {
     final normalized = normalizeText(record.prompt);
     normalizedPrompts[record] = normalized;
@@ -204,15 +205,16 @@ List<AuditIssue> runDuplicateChecks(
             a.prompt.length / (b.prompt.isEmpty ? 1 : b.prompt.length);
         if (lengthRatio < 0.55 || lengthRatio > 1.8) continue;
         if (_jaccardSets(tokenSets[a]!, tokenSets[b]!) >= 0.55) {
-          issues.add(
-            _duplicateIssue(
-              b,
-              'near_duplicate_candidate',
-              Severity.warning,
-              'Near duplicate candidate.',
-              confidence: 'medium',
-            ),
+          final issue = _duplicateIssue(
+            b,
+            'near_duplicate_candidate',
+            Severity.warning,
+            'Near duplicate candidate.',
+            confidence: 'medium',
           );
+          if (nearFingerprints.add(issue.fingerprint)) {
+            issues.add(issue);
+          }
         }
       }
     }

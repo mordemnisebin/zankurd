@@ -27537,13 +27537,13 @@
     "severity": {
       "blocker": 59901,
       "critical": 41838,
-      "warning": 772050,
+      "warning": 79970,
       "info": 0
     },
     "gateSeverity": {
       "blocker": 3501,
       "critical": 3734,
-      "warning": 142016,
+      "warning": 20606,
       "info": 0
     },
     "checks": {
@@ -27554,7 +27554,7 @@
       "missing_category": 10000,
       "missing_difficulty": 27332,
       "missing_source_metadata": 53225,
-      "near_duplicate_candidate": 711493,
+      "near_duplicate_candidate": 19413,
       "short_explanation": 7332,
       "turkish_template": 5530
     }
