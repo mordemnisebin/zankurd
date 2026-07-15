@@ -252,6 +252,7 @@ Local data (streak, achievements, mastery, seen questions, missions, XP) is stor
 **Current Version:** 1.5.0+6 (pubspec.yaml) — last tagged release v1.3.0-internal.1 (2026-06-12)
 - `supabase/2026-07-03_reward_hardening.sql` canlıya uygulandı (2026-07-03): claim_* ödül RPC'leri, profiles.xp, questions.explanation_ku/tr, skor/XP guard trigger'ları canlıda aktif
 - `supabase/2026-07-03_matchmaking_fix.sql` canlıya uygulandı (2026-07-03): join_matchmaking + matchmaking_queue (realtime yayınında) canlıda aktif; online 1v1 eşleşmede sorular room_questions'tan okunur
+- `supabase/2026-07-13_curated_question_wave_1.sql` canlıya uygulandı (2026-07-15, Management API ile, `category`→`category_id` ve NULL option düzeltmesiyle): `curated_movement_wave_1` kaynaklı 8 soru (Siyaset/Paradigma/Çand) canlıda onaylı
 
 **Known Issues:**
 - Windows Profile-tab navigation can hang on some debug builds (pre-existing, not related to fonts or recent changes — don't investigate without explicit request)
