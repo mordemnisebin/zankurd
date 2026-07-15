@@ -492,15 +492,28 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final greeting = ku
         ? '$greetingKu, ${currentName ?? 'Lîstikvan'}!'
         : '$greetingTr, ${currentName ?? 'Oyuncu'}!';
+    final isLight = AppTheme.isLight(context);
+    final headerStart = isLight
+        ? Color.alphaBlend(
+            Colors.black.withValues(alpha: 0.12),
+            AppTheme.brandOrange,
+          )
+        : AppTheme.brandOrange;
+    final headerEnd = isLight
+        ? Color.alphaBlend(
+            Colors.black.withValues(alpha: 0.18),
+            AppTheme.brandOrangeWarm,
+          )
+        : AppTheme.brandOrangeWarm;
 
     return Container(
       key: const ValueKey('home-profile-header'),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         // Pirs-inspired büyük turuncu karşılama/profil header'ı.
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppTheme.brandOrange, AppTheme.brandOrangeWarm],
+          colors: [headerStart, headerEnd],
         ),
       ),
       child: Stack(
@@ -525,7 +538,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   Text(
                     greeting,
                     style: AppTypography.bodyMedium.copyWith(
-                      color: Colors.white.withValues(alpha: 0.75),
+                      color: Colors.white.withValues(alpha: 0.90),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xxs),
@@ -585,22 +598,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       required Widget child,
       required VoidCallback onTap,
     }) {
-      return Tooltip(
-        message: tooltip,
-        child: InkWell(
-          key: key,
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          child: Container(
-            width: 44,
-            height: 44,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: fill,
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-              border: Border.all(color: border),
+      return Semantics(
+        button: true,
+        label: tooltip,
+        excludeSemantics: true,
+        child: Tooltip(
+          message: tooltip,
+          child: InkWell(
+            key: key,
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(AppRadius.sm),
+            child: Container(
+              width: 44,
+              height: 44,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: fill,
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+                border: Border.all(color: border),
+              ),
+              child: child,
             ),
-            child: child,
           ),
         ),
       );
@@ -690,53 +708,62 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     return Row(
       children: [
-        GestureDetector(
-          onTap: () => Navigator.of(context)
-              .push(AppRoute.to(ShopScreen(repository: repo)))
-              .then((_) => _refreshCoins()),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                // Mağazayı açan chip için min 44 px dokunma alanı.
-                constraints: const BoxConstraints(minHeight: 44, minWidth: 44),
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: AppSpacing.xs,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.16),
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.22),
-                    width: 1.2,
+        Semantics(
+          button: true,
+          label: context.s('Dikan, hejmara coinan', 'Mağaza, coin bakiyesi'),
+          value: '$coinBalance',
+          excludeSemantics: true,
+          child: GestureDetector(
+            onTap: () => Navigator.of(context)
+                .push(AppRoute.to(ShopScreen(repository: repo)))
+                .then((_) => _refreshCoins()),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  // Mağazayı açan chip için min 44 px dokunma alanı.
+                  constraints: const BoxConstraints(
+                    minHeight: 44,
+                    minWidth: 44,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 8,
-                      offset: const Offset(0, 3),
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm,
+                    vertical: AppSpacing.xs,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.16),
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.22),
+                      width: 1.2,
                     ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.monetization_on_rounded,
-                      color: AppTheme.gold,
-                      size: 16,
-                    ),
-                    const SizedBox(width: AppSpacing.xxs),
-                    AnimatedCounter(
-                      value: coinBalance,
-                      style: AppTypography.caption.copyWith(
-                        color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.monetization_on_rounded,
+                        color: AppTheme.gold,
+                        size: 16,
+                      ),
+                      const SizedBox(width: AppSpacing.xxs),
+                      AnimatedCounter(
+                        value: coinBalance,
+                        style: AppTypography.caption.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -1139,44 +1166,70 @@ class _PlayHubTeaser extends StatelessWidget {
     final surface = AppTheme.surfaceHiColor(context);
     final accent = AppTheme.playCyan;
 
-    return GestureDetector(
-      key: const ValueKey('home-direct-play-entry'),
-      onTap: onOpen,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          color: Color.alphaBlend(accent.withValues(alpha: 0.12), surface),
+    return Semantics(
+      button: true,
+      label: isKu ? 'Pêşbaziyên din' : 'Yarış modları',
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          key: const ValueKey('home-direct-play-entry'),
+          onTap: onOpen,
           borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(color: accent.withValues(alpha: 0.42), width: 1.2),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    isKu ? 'Pêşbaziyên din' : 'Yarış modları',
-                    style: AppTypography.bodyLarge.copyWith(
-                      color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.xxs),
-                  Text(
-                    isKu
-                        ? '1vs1, ode, turnuva û pêşbirkên rojane'
-                        : 'Günün yarışması, düello, oda ve turnuva burada',
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textSubColor(context),
-                    ),
-                  ),
-                ],
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            decoration: BoxDecoration(
+              color: Color.alphaBlend(accent.withValues(alpha: 0.12), surface),
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              border: Border.all(
+                color: accent.withValues(alpha: 0.42),
+                width: 1.2,
               ),
             ),
-            Icon(Icons.arrow_circle_right_rounded, color: accent, size: 32),
-          ],
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        isKu ? 'Pêşbaziyên din' : 'Yarış modları',
+                        style: AppTypography.bodyLarge.copyWith(
+                          color: AppTheme.textPrimaryColor(context),
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.xxs),
+                      Text(
+                        isKu
+                            ? '1vs1, ode, turnuva û pêşbirkên rojane'
+                            : 'Günün yarışması, düello, oda ve turnuva burada',
+                        style: AppTypography.caption.copyWith(
+                          color: AppTheme.textSubColor(context),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: 44,
+                  height: 44,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: accent.withValues(alpha: 0.14),
+                    shape: BoxShape.circle,
+                  ),
+                  child: ExcludeSemantics(
+                    child: Icon(
+                      Icons.arrow_forward_rounded,
+                      color: accent,
+                      size: 24,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

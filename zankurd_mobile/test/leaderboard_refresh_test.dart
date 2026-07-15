@@ -53,6 +53,8 @@ void main() {
     final initialCalls = repository.loadCalls;
     expect(initialCalls, greaterThanOrEqualTo(1));
     expect(find.byKey(const ValueKey('leaderboard-refresh-button')), findsOne);
+    expect(find.byTooltip('Yenile'), findsOneWidget);
+    expect(find.bySemanticsLabel('Liderlik tablosunu yenile'), findsOneWidget);
     expect(find.byKey(const ValueKey('leaderboard-podium')), findsOne);
     expect(
       find.byKey(const ValueKey('leaderboard-rank-row-4')),

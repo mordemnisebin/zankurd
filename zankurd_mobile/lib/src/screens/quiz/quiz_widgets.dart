@@ -105,7 +105,11 @@ class _LiveScoreRow extends StatelessWidget {
 // ─── Soru görseli ────────────────────────────────────────────────────────────
 
 class _QuestionImage extends StatelessWidget {
-  const _QuestionImage({required this.url, this.isCompact = false, this.onReady});
+  const _QuestionImage({
+    required this.url,
+    this.isCompact = false,
+    this.onReady,
+  });
 
   final String url;
   final bool isCompact;
@@ -309,6 +313,56 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       return ShakeWrapper(trigger: 1, child: button);
     }
     return button;
+  }
+}
+
+class _TimeoutNotice extends StatelessWidget {
+  const _TimeoutNotice({required this.isKu});
+
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    final label = isKu ? 'Demjimêr · 00:00' : 'Zamanlayıcı · 00:00';
+    return Semantics(
+      key: const ValueKey('quiz-timeout-notice'),
+      liveRegion: true,
+      label: label,
+      excludeSemantics: true,
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.only(top: AppSpacing.xs),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.sm,
+          vertical: AppSpacing.xs,
+        ),
+        decoration: BoxDecoration(
+          color: AppTheme.wrong.withValues(alpha: 0.10),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
+          border: Border.all(color: AppTheme.wrong.withValues(alpha: 0.32)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const ExcludeSemantics(
+              child: Icon(
+                Icons.timer_off_outlined,
+                color: AppTheme.wrong,
+                size: 18,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.xs),
+            Text(
+              label,
+              style: AppTypography.caption.copyWith(
+                color: AppTheme.textPrimaryColor(context),
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

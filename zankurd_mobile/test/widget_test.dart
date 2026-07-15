@@ -774,10 +774,15 @@ void main() {
     );
     final headerDecoration = header.decoration as BoxDecoration;
     final headerGradient = headerDecoration.gradient as LinearGradient;
-    expect(headerGradient.colors, [
-      AppTheme.brandOrange,
-      AppTheme.brandOrangeWarm,
-    ]);
+    expect(headerGradient.colors, hasLength(2));
+    expect(
+      headerGradient.colors.first.computeLuminance(),
+      lessThan(AppTheme.brandOrange.computeLuminance()),
+    );
+    expect(
+      headerGradient.colors.last.computeLuminance(),
+      lessThan(AppTheme.brandOrangeWarm.computeLuminance()),
+    );
 
     final navTheme = tester.widget<NavigationBarTheme>(
       find.byType(NavigationBarTheme),

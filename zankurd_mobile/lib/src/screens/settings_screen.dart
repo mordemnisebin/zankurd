@@ -960,22 +960,34 @@ class _LangChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        constraints: const BoxConstraints(minHeight: 44),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-        decoration: BoxDecoration(
-          color: active ? AppTheme.primaryGradientStart : Colors.transparent,
-          borderRadius: BorderRadius.circular(99),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: active ? Colors.white : AppTheme.textMutedColor(context),
-            fontWeight: FontWeight.w700,
-            fontSize: 12,
+    final accessibleLabel = label == 'KU' ? 'Kurmancî' : 'Türkçe';
+    return Semantics(
+      button: true,
+      selected: active,
+      label: accessibleLabel,
+      excludeSemantics: true,
+      child: Tooltip(
+        message: accessibleLabel,
+        child: GestureDetector(
+          onTap: onTap,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            constraints: const BoxConstraints(minHeight: 44),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            decoration: BoxDecoration(
+              color: active
+                  ? AppTheme.primaryGradientStart
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(99),
+            ),
+            child: Text(
+              label,
+              style: TextStyle(
+                color: active ? Colors.white : AppTheme.textMutedColor(context),
+                fontWeight: FontWeight.w700,
+                fontSize: 12,
+              ),
+            ),
           ),
         ),
       ),
@@ -1006,7 +1018,7 @@ class _SettingsIconTitle extends StatelessWidget {
             color: color.withValues(alpha: 0.14),
             borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
-          child: Icon(icon, color: color, size: 18),
+          child: ExcludeSemantics(child: Icon(icon, color: color, size: 18)),
         ),
         const SizedBox(width: AppSpacing.sm),
         Expanded(
@@ -1039,46 +1051,52 @@ class _SettingsToggleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      child: Row(
-        children: [
-          Container(
-            width: 34,
-            height: 34,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
+    return Semantics(
+      container: true,
+      label: title,
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Row(
+          children: [
+            Container(
+              width: 34,
+              height: 34,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.14),
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+              ),
+              child: ExcludeSemantics(
+                child: Icon(icon, color: color, size: 18),
+              ),
             ),
-            child: Icon(icon, color: color, size: 18),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
-                ),
-                if (subtitle != null) ...[
-                  const SizedBox(height: 2),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    subtitle!,
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textMutedColor(context),
-                      fontWeight: FontWeight.w600,
+                    title,
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
                     ),
                   ),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle!,
+                      style: AppTypography.caption.copyWith(
+                        color: AppTheme.textMutedColor(context),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
-          trailing,
-        ],
+            trailing,
+          ],
+        ),
       ),
     );
   }

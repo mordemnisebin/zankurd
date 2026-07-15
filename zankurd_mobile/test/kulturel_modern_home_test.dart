@@ -54,9 +54,44 @@ void main() {
     expect(find.byType(ZanaDailyCard), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-race-entry')), findsOneWidget);
     expect(find.text('Pêşbirka rojê'), findsOneWidget);
+    expect(find.bySemanticsLabel('Tema'), findsOneWidget);
     expect(find.byType(DailyMissionsCard), findsNothing);
     expect(find.byType(DailyThemeCard), findsNothing);
   });
+
+  for (final size in <Size>[
+    const Size(320, 568),
+    const Size(844, 390),
+    const Size(390, 844),
+    const Size(768, 1024),
+    const Size(1440, 900),
+  ]) {
+    testWidgets(
+      'Ana sayfa ${size.width.toInt()}x${size.height.toInt()} taşmaz',
+      (tester) async {
+        await tester.binding.setSurfaceSize(size);
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        await tester.pumpWidget(
+          MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (_) => LanguageProvider()),
+              ChangeNotifierProvider(create: (_) => AuthProvider.test()),
+              ChangeNotifierProvider(create: (_) => ThemeProvider()),
+            ],
+            child: MaterialApp(
+              home: HomeScreen(
+                repository: MockZanKurdRepository(),
+                displayName: 'Zelal',
+                scrollController: ScrollController(),
+              ),
+            ),
+          ),
+        );
+        await tester.pump(const Duration(seconds: 1));
+        expect(tester.takeException(), isNull);
+      },
+    );
+  }
 
   test(
     'doğrudan oyun kartı ana header ile rekabet etmek için glow kullanmaz',

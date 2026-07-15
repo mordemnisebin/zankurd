@@ -412,13 +412,21 @@ class _Header extends StatelessWidget {
                 color: AppTheme.borderColor(context).withValues(alpha: 0.5),
               ),
             ),
-            child: IconButton(
-              key: const ValueKey('leaderboard-refresh-button'),
-              onPressed: onRefresh,
-              icon: Icon(
-                Icons.refresh_rounded,
-                color: AppTheme.textSubColor(context),
-                size: 20,
+            child: Semantics(
+              button: true,
+              label: ku
+                  ? 'Tabloya pêşderiyan nû bike'
+                  : 'Liderlik tablosunu yenile',
+              excludeSemantics: true,
+              child: IconButton(
+                key: const ValueKey('leaderboard-refresh-button'),
+                tooltip: ku ? 'Nû bike' : 'Yenile',
+                onPressed: onRefresh,
+                icon: Icon(
+                  Icons.refresh_rounded,
+                  color: AppTheme.textSubColor(context),
+                  size: 20,
+                ),
               ),
             ),
           ),

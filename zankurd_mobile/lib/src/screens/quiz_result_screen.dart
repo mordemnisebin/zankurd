@@ -402,10 +402,21 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     const Color(0xFF7F1D1D),
                   ],
                 ))
-        : const LinearGradient(
+        : LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.brandOrange, AppTheme.brandOrangeWarm],
+            colors: AppTheme.isLight(context)
+                ? [
+                    Color.alphaBlend(
+                      Colors.black.withValues(alpha: 0.12),
+                      AppTheme.brandOrange,
+                    ),
+                    Color.alphaBlend(
+                      Colors.black.withValues(alpha: 0.18),
+                      AppTheme.brandOrangeWarm,
+                    ),
+                  ]
+                : [AppTheme.brandOrange, AppTheme.brandOrangeWarm],
           );
 
     final borderColor = is1v1
@@ -1096,7 +1107,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     Expanded(
                                       child: OutlinedButton.icon(
                                         key: const ValueKey(
-                                          'result-review-wrong-button',
+                                          'result-exit-button',
                                         ),
                                         style: OutlinedButton.styleFrom(
                                           padding: const EdgeInsets.symmetric(
@@ -1108,26 +1119,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                             ),
                                           ),
                                         ),
-                                        onPressed: answerRecords.isEmpty
-                                            ? null
-                                            : () {
-                                                Navigator.of(context).push(
-                                                  AppRoute.to(
-                                                    ReviewScreen(
-                                                      records: answerRecords,
-                                                      room: room,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                        icon: const Icon(
-                                          Icons.fact_check_outlined,
-                                        ),
+                                        onPressed: () => Navigator.of(
+                                          context,
+                                        ).popUntil((route) => route.isFirst),
+                                        icon: const Icon(Icons.home_outlined),
                                         label: Text(
-                                          context.s(
-                                            'Bersivan Bibîne',
-                                            'Cevapları İncele',
-                                          ),
+                                          context.s('Sereke', 'Ana Sayfa'),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
@@ -1140,11 +1137,52 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ],
                                 ),
                                 const SizedBox(height: 10),
+                                Align(
+                                  alignment: AlignmentDirectional.centerStart,
+                                  child: Text(
+                                    context.s(
+                                      'Vebijarkên Te',
+                                      'Diğer seçenekler',
+                                    ),
+                                    style: AppTypography.caption.copyWith(
+                                      color: AppTheme.textMutedColor(context),
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: TextButton.icon(
+                                    key: const ValueKey(
+                                      'result-review-wrong-button',
+                                    ),
+                                    onPressed: answerRecords.isEmpty
+                                        ? null
+                                        : () => Navigator.of(context).push(
+                                            AppRoute.to(
+                                              ReviewScreen(
+                                                records: answerRecords,
+                                                room: room,
+                                              ),
+                                            ),
+                                          ),
+                                    icon: const Icon(Icons.fact_check_outlined),
+                                    label: Text(
+                                      context.s(
+                                        'Bersivan Bibîne',
+                                        'Cevapları İncele',
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 Row(
+                                  key: const ValueKey(
+                                    'result-secondary-actions',
+                                  ),
                                   children: [
                                     Expanded(
-                                      child: OutlinedButton.icon(
-                                        style: OutlinedButton.styleFrom(
+                                      child: TextButton.icon(
+                                        style: TextButton.styleFrom(
                                           padding: const EdgeInsets.symmetric(
                                             vertical: 14,
                                           ),
@@ -1183,11 +1221,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     ),
                                     const SizedBox(width: 8),
                                     Expanded(
-                                      child: OutlinedButton.icon(
+                                      child: TextButton.icon(
                                         key: const ValueKey(
                                           'result-leaderboard-button',
                                         ),
-                                        style: OutlinedButton.styleFrom(
+                                        style: TextButton.styleFrom(
                                           minimumSize: const Size.fromHeight(
                                             48,
                                           ),
@@ -1226,8 +1264,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     if (allowShare) ...[
                                       const SizedBox(width: 8),
                                       Expanded(
-                                        child: OutlinedButton.icon(
-                                          style: OutlinedButton.styleFrom(
+                                        child: TextButton.icon(
+                                          style: TextButton.styleFrom(
                                             padding: const EdgeInsets.symmetric(
                                               vertical: 14,
                                             ),
