@@ -19,12 +19,14 @@ import '../widgets/app_panel.dart';
 import '../widgets/screen_identity_header.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({required this.repository, super.key});
+  const SettingsScreen({
+    required this.repository,
+    this.packageInfoLoader,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
-
-  /// Fallback if [PackageInfo] unavailable (tests / edge platforms).
-  static const appVersion = '1.8.0+10';
+  final Future<PackageInfo> Function()? packageInfoLoader;
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -34,7 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final _nameController = TextEditingController();
   bool _deleting = false;
   bool _loadingName = true;
-  String _versionLabel = SettingsScreen.appVersion;
+  String _versionLabel = '—';
   bool _savingName = false;
   String _currentName = '';
   NotificationService? _notificationService;
@@ -51,14 +53,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _loadPackageVersion() async {
     try {
-      final info = await PackageInfo.fromPlatform();
+      final info =
+          await (widget.packageInfoLoader ?? PackageInfo.fromPlatform)();
       if (!mounted) return;
       setState(() {
         _versionLabel = '${info.version}+${info.buildNumber}';
       });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'settings_load');
-      // Keep static fallback (tests / unsupported platforms).
+      // Keep the neutral label on unsupported or unavailable platforms.
     }
   }
 

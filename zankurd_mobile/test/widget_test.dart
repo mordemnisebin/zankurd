@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -1975,6 +1976,71 @@ void main() {
     expect(find.text('Hesap İşlemleri'), findsOneWidget);
     expect(find.text('Bu alandaki işlemler geri alınamaz.'), findsOneWidget);
     expect(find.text('Hesabımı Sil'), findsOneWidget);
+  });
+
+  testWidgets('settings shows the package version in light and dark themes', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    for (final themeMode in [ThemeMode.light, ThemeMode.dark]) {
+      await tester.pumpWidget(
+        _testShell(
+          themeProvider: ThemeProvider(initialMode: themeMode),
+          child: SettingsScreen(
+            repository: repository,
+            packageInfoLoader: () async => PackageInfo(
+              appName: 'ZanKurd',
+              packageName: 'com.zankurd.app',
+              version: '9.8.7',
+              buildNumber: '654',
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.scrollUntilVisible(
+        find.text('Sürüm 9.8.7+654'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      final versionText = find.text('Sürüm 9.8.7+654');
+      expect(versionText, findsOneWidget);
+      expect(
+        Theme.of(tester.element(versionText)).brightness,
+        themeMode == ThemeMode.dark ? Brightness.dark : Brightness.light,
+      );
+
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pumpAndSettle();
+    }
+  });
+
+  testWidgets('settings uses a neutral version when package info fails', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _testShell(
+        child: SettingsScreen(
+          repository: repository,
+          packageInfoLoader: () async => throw StateError('unavailable'),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Sürüm —'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('Sürüm —'), findsOneWidget);
+    expect(find.textContaining('1.8.0+10'), findsNothing);
   });
 
   testWidgets('successful account deletion signs out to the auth gate', (
