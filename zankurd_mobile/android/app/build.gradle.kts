@@ -17,6 +17,40 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
+val requiredReleaseSigningFields =
+    listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
+val releaseSigningProblems = buildList {
+    if (!keystorePropertiesFile.isFile) {
+        add("android/key.properties")
+    } else {
+        addAll(
+            requiredReleaseSigningFields.filter { field ->
+                keystoreProperties.getProperty(field).isNullOrBlank()
+            },
+        )
+
+        val storeFilePath = keystoreProperties.getProperty("storeFile")?.trim()
+        if (!storeFilePath.isNullOrEmpty() && !rootProject.file(storeFilePath).isFile) {
+            add("storeFile (keystore file not found)")
+        }
+    }
+}
+val isReleaseTaskRequested =
+    gradle.startParameter.taskNames.any { taskName ->
+        taskName.contains("release", ignoreCase = true)
+    }
+
+if (isReleaseTaskRequested && releaseSigningProblems.isNotEmpty()) {
+    throw GradleException(
+        "Release signing configuration is missing or incomplete. " +
+            "Expected android/key.properties with non-empty fields: " +
+            "storeFile, storePassword, keyAlias, keyPassword; storeFile must point to an existing keystore. " +
+            "Missing or invalid: ${releaseSigningProblems.joinToString()}. " +
+            "Use a debug build for development (for example, flutter build apk --debug). " +
+            "The release build was stopped for security and will not fall back to debug signing.",
+    )
+}
+
 android {
     namespace = "com.zankurd.app"
     compileSdk = flutter.compileSdkVersion
@@ -40,7 +74,7 @@ android {
 
     signingConfigs {
         create("release") {
-            if (keystorePropertiesFile.exists()) {
+            if (releaseSigningProblems.isEmpty()) {
                 keyAlias = keystoreProperties["keyAlias"] as String
                 keyPassword = keystoreProperties["keyPassword"] as String
                 storeFile = rootProject.file(keystoreProperties["storeFile"] as String)
@@ -51,11 +85,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig = if (keystorePropertiesFile.exists()) {
-                signingConfigs.getByName("release")
-            } else {
-                signingConfigs.getByName("debug")
-            }
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 }
