@@ -41,7 +41,9 @@ QuizResultScreen buildScreen(MockZanKurdRepository repository) {
 }
 
 void main() {
-  testWidgets('solo vitrin brandOrange kutlama gradyanı taşır', (tester) async {
+  testWidgets('light solo vitrin okunaklı marka gradyanı taşır', (
+    tester,
+  ) async {
     await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
@@ -51,10 +53,20 @@ void main() {
     );
     final decoration = header.decoration as BoxDecoration;
     final gradient = decoration.gradient as LinearGradient;
-    expect(gradient.colors, [AppTheme.brandOrange, AppTheme.brandOrangeWarm]);
+    expect(gradient.colors, hasLength(2));
+    expect(
+      gradient.colors.first.computeLuminance(),
+      lessThan(AppTheme.brandOrange.computeLuminance()),
+    );
+    expect(
+      gradient.colors.last.computeLuminance(),
+      lessThan(AppTheme.brandOrangeWarm.computeLuminance()),
+    );
   });
 
-  testWidgets('ana CTA brandOrange dolgu taşır', (tester) async {
+  testWidgets('iki baskın CTA ve düşük ağırlıklı ikincil bölüm taşır', (
+    tester,
+  ) async {
     await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
@@ -67,6 +79,12 @@ void main() {
     );
     expect(button.style?.backgroundColor?.resolve({}), AppTheme.brandOrange);
     expect(find.text('Tekrar oyna'), findsOneWidget);
+    expect(find.byKey(const ValueKey('result-exit-button')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('result-secondary-actions')),
+      findsOneWidget,
+    );
+    expect(find.text('Diğer seçenekler'), findsOneWidget);
     expect(
       find.byKey(const ValueKey('result-review-wrong-button')),
       findsOneWidget,
@@ -83,4 +101,21 @@ void main() {
 
     expect(tester.takeException(), isNull);
   });
+
+  for (final size in <Size>[
+    const Size(320, 568),
+    const Size(844, 390),
+    const Size(768, 1024),
+    const Size(1440, 900),
+  ]) {
+    testWidgets('sonuç ${size.width.toInt()}x${size.height.toInt()} taşmaz', (
+      tester,
+    ) async {
+      await tester.binding.setSurfaceSize(size);
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+      await tester.pump(const Duration(seconds: 1));
+      expect(tester.takeException(), isNull);
+    });
+  }
 }

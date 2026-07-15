@@ -1,0 +1,14 @@
+{
+  "invalidCorrectAnswerReviewed": 31,
+  "answerLeaksReviewed": 62,
+  "duplicateOptionSampled": 200,
+  "crossSourceCorrectAnswerDifferences": 0,
+  "safeForAutomaticFixTrue": 0,
+  "recommendedFixWave1": 0,
+  "adjudicationCounts": {
+    "confirmed_data_defect": 73,
+    "cross_source_copy_artifact": 186,
+    "factual_verification_required": 13,
+    "parser_false_positive": 21
+  }
+}

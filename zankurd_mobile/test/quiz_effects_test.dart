@@ -149,6 +149,48 @@ void main() {
   });
 
   group('Quiz efekt entegrasyonu', () {
+    testWidgets('süre dolunca görünür ve canlı semantik bildirim gösterir', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues({
+        'zankurd.quiz_tutorial.seen': true,
+      });
+      SeenQuestionStore.resetInstance();
+      final repo = MockZanKurdRepository();
+      final room = repo.createRoom();
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider<LanguageProvider>(
+              create: (_) => LanguageProvider()..setLang('tr'),
+            ),
+            ChangeNotifierProvider<SoundProvider>(
+              create: (_) => SoundProvider(),
+            ),
+          ],
+          child: MaterialApp(
+            theme: AppTheme.dark(),
+            home: QuizScreen(
+              repository: repo,
+              room: room,
+              questions: [repo.questions.first],
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.pump(const Duration(seconds: 15));
+      await tester.pump();
+
+      final notice = find.byKey(const ValueKey('quiz-timeout-notice'));
+      expect(notice, findsOneWidget);
+      expect(find.text('Zamanlayıcı · 00:00'), findsOneWidget);
+      final semantics = tester.widget<Semantics>(notice);
+      expect(semantics.properties.liveRegion, isTrue);
+      expect(semantics.properties.label, 'Zamanlayıcı · 00:00');
+    });
+
     testWidgets('ilk quiz rehberi açıkken timer cevabı otomatik açmaz', (
       tester,
     ) async {

@@ -19,12 +19,14 @@ import '../widgets/app_panel.dart';
 import '../widgets/screen_identity_header.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({required this.repository, super.key});
+  const SettingsScreen({
+    required this.repository,
+    this.packageInfoLoader,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
-
-  /// Fallback if [PackageInfo] unavailable (tests / edge platforms).
-  static const appVersion = '1.8.0+10';
+  final Future<PackageInfo> Function()? packageInfoLoader;
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -34,7 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final _nameController = TextEditingController();
   bool _deleting = false;
   bool _loadingName = true;
-  String _versionLabel = SettingsScreen.appVersion;
+  String _versionLabel = '—';
   bool _savingName = false;
   String _currentName = '';
   NotificationService? _notificationService;
@@ -51,14 +53,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _loadPackageVersion() async {
     try {
-      final info = await PackageInfo.fromPlatform();
+      final info =
+          await (widget.packageInfoLoader ?? PackageInfo.fromPlatform)();
       if (!mounted) return;
       setState(() {
         _versionLabel = '${info.version}+${info.buildNumber}';
       });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'settings_load');
-      // Keep static fallback (tests / unsupported platforms).
+      // Keep the neutral label on unsupported or unavailable platforms.
     }
   }
 
@@ -957,22 +960,34 @@ class _LangChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        constraints: const BoxConstraints(minHeight: 44),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-        decoration: BoxDecoration(
-          color: active ? AppTheme.primaryGradientStart : Colors.transparent,
-          borderRadius: BorderRadius.circular(99),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: active ? Colors.white : AppTheme.textMutedColor(context),
-            fontWeight: FontWeight.w700,
-            fontSize: 12,
+    final accessibleLabel = label == 'KU' ? 'Kurmancî' : 'Türkçe';
+    return Semantics(
+      button: true,
+      selected: active,
+      label: accessibleLabel,
+      excludeSemantics: true,
+      child: Tooltip(
+        message: accessibleLabel,
+        child: GestureDetector(
+          onTap: onTap,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            constraints: const BoxConstraints(minHeight: 44),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            decoration: BoxDecoration(
+              color: active
+                  ? AppTheme.primaryGradientStart
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(99),
+            ),
+            child: Text(
+              label,
+              style: TextStyle(
+                color: active ? Colors.white : AppTheme.textMutedColor(context),
+                fontWeight: FontWeight.w700,
+                fontSize: 12,
+              ),
+            ),
           ),
         ),
       ),
@@ -1003,7 +1018,7 @@ class _SettingsIconTitle extends StatelessWidget {
             color: color.withValues(alpha: 0.14),
             borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
-          child: Icon(icon, color: color, size: 18),
+          child: ExcludeSemantics(child: Icon(icon, color: color, size: 18)),
         ),
         const SizedBox(width: AppSpacing.sm),
         Expanded(
@@ -1036,46 +1051,52 @@ class _SettingsToggleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      child: Row(
-        children: [
-          Container(
-            width: 34,
-            height: 34,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
+    return Semantics(
+      container: true,
+      label: title,
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Row(
+          children: [
+            Container(
+              width: 34,
+              height: 34,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.14),
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+              ),
+              child: ExcludeSemantics(
+                child: Icon(icon, color: color, size: 18),
+              ),
             ),
-            child: Icon(icon, color: color, size: 18),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
-                ),
-                if (subtitle != null) ...[
-                  const SizedBox(height: 2),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    subtitle!,
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textMutedColor(context),
-                      fontWeight: FontWeight.w600,
+                    title,
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
                     ),
                   ),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle!,
+                      style: AppTypography.caption.copyWith(
+                        color: AppTheme.textMutedColor(context),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
-          trailing,
-        ],
+            trailing,
+          ],
+        ),
       ),
     );
   }

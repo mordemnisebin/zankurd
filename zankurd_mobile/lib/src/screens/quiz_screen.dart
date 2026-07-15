@@ -770,6 +770,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                           ? _handleQuestionVisualReady
                           : null,
                     ),
+                    if (selectedAnswer == 'TIMEOUT')
+                      _TimeoutNotice(isKu: _isKu),
                     if (_isMultiplayer &&
                         answered &&
                         _mpPhase == _MultiplayerPhase.waiting)
@@ -826,6 +828,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                             ? _handleQuestionVisualReady
                             : null,
                       ),
+                      if (selectedAnswer == 'TIMEOUT')
+                        _TimeoutNotice(isKu: _isKu),
                       if (_isMultiplayer &&
                           answered &&
                           _mpPhase == _MultiplayerPhase.waiting)
@@ -1508,11 +1512,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 )
               else ...[
                 if (question.hasImage) ...[
-                    _QuestionImage(
-                      url: question.imageUrl!,
-                      isCompact: isCompact,
-                      onReady: questionVisualReady,
-                    ),
+                  _QuestionImage(
+                    url: question.imageUrl!,
+                    isCompact: isCompact,
+                    onReady: questionVisualReady,
+                  ),
                   SizedBox(height: isCompact ? 8 : 14),
                 ],
                 _QuestionTextAndAnswers(
@@ -1645,16 +1649,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _opponentWaitTimer = Timer(
       Duration(seconds: max(20, widget.room.secondsPerQuestion)),
       () {
-      if (!mounted || !answered || _mpPhase != _MultiplayerPhase.waiting) {
-        return;
-      }
-      for (final player in livePlayers) {
-        final isMe = _myId != null
-            ? player.id == _myId
-            : player.name == _myName;
-        if (!isMe) _answeredPlayerNames.add(player.name);
-      }
-      _startRevealPhase();
+        if (!mounted || !answered || _mpPhase != _MultiplayerPhase.waiting) {
+          return;
+        }
+        for (final player in livePlayers) {
+          final isMe = _myId != null
+              ? player.id == _myId
+              : player.name == _myName;
+          if (!isMe) _answeredPlayerNames.add(player.name);
+        }
+        _startRevealPhase();
       },
     );
   }
