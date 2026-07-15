@@ -66,9 +66,11 @@ bool _excluded(String path) =>
     path.startsWith('docs/') ||
     path.startsWith('reports/') ||
     path.startsWith('report/') ||
+    path.startsWith('release_packages/') ||
     path.startsWith('test/') ||
     path.startsWith('tests/') ||
     path.startsWith('tool/question_quality/') ||
+    RegExp(r'(^|/)node_modules/').hasMatch(path) ||
     RegExp(r'(^|/)readme(?:\.[^/]*)?$').hasMatch(path) ||
     path.contains('/.tmp/');
 

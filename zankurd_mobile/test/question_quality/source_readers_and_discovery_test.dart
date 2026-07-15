@@ -145,6 +145,18 @@ const bank = <QuizQuestion>[
       File(
         '${temp.path}/test/fixtures/question_bank.csv',
       ).writeAsStringSync('id,prompt,correct_option\n');
+      Directory(
+        '${temp.path}/release_packages/supabase_sql',
+      ).createSync(recursive: true);
+      File(
+        '${temp.path}/release_packages/supabase_sql/question_seed.sql',
+      ).writeAsStringSync('insert into public.questions values (1);');
+      Directory(
+        '${temp.path}/tools/playwright/node_modules/package',
+      ).createSync(recursive: true);
+      File(
+        '${temp.path}/tools/playwright/node_modules/package/questions.json',
+      ).writeAsStringSync('[{"question":"Pirs?"}]');
       File(
         '${temp.path}/README.md',
       ).writeAsStringSync('# Question audit report');
@@ -161,6 +173,8 @@ const bank = <QuizQuestion>[
         'docs/question_quality_report.csv',
         'reports/question_review.json',
         'test/fixtures/question_bank.csv',
+        'release_packages/supabase_sql/question_seed.sql',
+        'tools/playwright/node_modules/package/questions.json',
         'README.md',
       ]) {
         expect(discovered, isNot(contains(ignored)));
