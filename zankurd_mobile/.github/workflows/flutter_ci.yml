@@ -41,6 +41,9 @@ jobs:
       working-directory: widgetbook
       run: dart analyze
 
+    - name: Check question quality regressions
+      run: dart run tool/question_quality/question_quality_audit.dart gate
+
     - name: Run unit and widget tests with coverage
       run: flutter test --coverage
 

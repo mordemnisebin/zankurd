@@ -76,6 +76,44 @@ Pop-Location
 Kök analiz yalnız ZanKurd uygulama paketini doğrular. Bağımsız Widgetbook
 paketi kendi bağımlılıkları ve analyzer ayarlarıyla ayrıca doğrulanmalıdır.
 
+### Soru kalitesi denetimi
+
+Soru kaynaklarının rolleri `tool/question_quality/source_manifest.json`
+dosyasında açıkça tanımlanır. Bütün sınıflandırılmış kaynakların raporunu üretmek
+için:
+
+```powershell
+dart run tool/question_quality/question_quality_audit.dart report
+```
+
+Commitlenmiş baseline'a göre yalnız yeni veya artan kalite borcunu denetlemek
+için:
+
+```powershell
+dart run tool/question_quality/question_quality_audit.dart gate
+```
+
+Baseline otomatik yenilenmez. Mevcut rapor ve değişiklik özeti incelendikten
+sonra borç bilinçli olarak kabul edilecekse açık bayrak gerekir:
+
+```powershell
+dart run tool/question_quality/question_quality_audit.dart baseline --accept-current-debt
+```
+
+`Unclassified question source detected.` hatası yeni kaynağın sessizce runtime
+veya publish toplamına alınmadığını gösterir. Yeni soru kaynağı ekleme sırası:
+
+1. Dosyayı oluşturun.
+2. Manifestte açık bir rol, parser ve `canonicalGroup` tanımlayın.
+3. `report` modunu çalıştırıp physical/canonical ve cross-source etkisini inceleyin.
+4. `gate` etkisini doğrulayın.
+5. Yalnız bilinçli inceleme sonrasında baseline'ı açık kabul bayrağıyla yenileyin.
+6. CI sonucunu doğrulayın.
+
+`canonicalGroup`, aynı mantıksal bankanın farklı runtime/import/publish
+kopyalarını global kanonik sayımda uzlaştırırken ilgisiz havuzların yanlışlıkla
+birleştirilmesini engeller.
+
 Windows'ta Android/Gradle build öncesi geçici dizini ASCII bir yola alın:
 
 ```powershell
