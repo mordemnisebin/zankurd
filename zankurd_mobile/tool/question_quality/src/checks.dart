@@ -112,6 +112,52 @@ List<AuditIssue> runChecks(
         'High-confidence Turkish template in Kurmancî content.',
       );
     }
+    const dynamicPatterns = <String>[
+      'şu anki',
+      'şu anda',
+      'halen',
+      'bugün',
+      'başkan',
+      'nüfus',
+      'seçim',
+      'niha',
+      'îro',
+    ];
+    if (dynamicPatterns.any(prompt.contains)) {
+      add(
+        'dynamic_fact',
+        Severity.critical,
+        'Potentially time-sensitive fact requires source and review date.',
+        confidence: 'medium',
+      );
+    }
+    final combinedText = '$prompt ${normalizeText(record.explanation ?? '')}';
+    const generatedPatterns = <String>[
+      'todo',
+      'placeholder',
+      'lorem ipsum',
+      'generated',
+      'as an ai',
+      '```json',
+      '"correct_answer"',
+      'internal prompt',
+    ];
+    if (generatedPatterns.any(combinedText.contains)) {
+      add(
+        'generated_template',
+        Severity.warning,
+        'Generated/template residue requires editorial review.',
+        confidence: 'high',
+      );
+    }
+    final explanation = normalizeText(record.explanation ?? '');
+    if (correct.isNotEmpty && explanation == correct) {
+      add(
+        'explanation_answer_repeat',
+        Severity.warning,
+        'Explanation only repeats the correct answer.',
+      );
+    }
     if ((record.explanation ?? '').trim().length < 8) {
       add(
         'short_explanation',

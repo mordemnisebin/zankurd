@@ -178,4 +178,43 @@ void main() {
       hasLength(near.length),
     );
   });
+
+  test('dynamic current-fact wording is a review candidate', () {
+    final record = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.dart',
+      row: 1,
+      prompt: 'Şu anki başkan kimdir?',
+    );
+    expect(
+      runChecks([record]).map((issue) => issue.checkId),
+      contains('dynamic_fact'),
+    );
+  });
+
+  test('generated placeholder residue is reported', () {
+    final record = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.dart',
+      row: 1,
+      prompt: 'TODO placeholder question',
+    );
+    expect(
+      runChecks([record]).map((issue) => issue.checkId),
+      contains('generated_template'),
+    );
+  });
+
+  test('explanation that only repeats the answer is reported', () {
+    final record = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.dart',
+      row: 1,
+      explanation: 'Parîs.',
+    );
+    expect(
+      runChecks([record]).map((issue) => issue.checkId),
+      contains('explanation_answer_repeat'),
+    );
+  });
 }
