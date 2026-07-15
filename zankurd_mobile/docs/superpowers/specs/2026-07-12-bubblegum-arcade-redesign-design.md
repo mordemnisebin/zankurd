@@ -1,7 +1,7 @@
 # ZanKurd Bubblegum Arcade Yeniden Tasarımı
 
 **Tarih:** 2026-07-12
-**Durum:** Kullanıcı renk paleti, kültürel taşıyıcı ve yerleşim yönünü onayladı; uygulama planı öncesi son inceleme bekliyor.
+**Durum:** Palet, kültürel taşıyıcı ve yerleşim kararları uygulandı (`da28ce1`, `c5e9e90`, `43891e0`, `e0dcc2c`, `ce91c1a`). **Not (2026-07-15):** Bu dokümanın "Light/Dark Öncelik Değişikliği" bölümündeki açık-öncelikli karar `fc6d2dd` ile geri alındı — bkz. o bölümdeki güncelleme notu. Palet/bileşen kararları geçerliliğini korur.
 **Süpersede eder:** [2026-07-10-pirs-inspired-full-app-redesign-design.md](2026-07-10-pirs-inspired-full-app-redesign-design.md) (turuncu marka rengi bırakıldı).
 
 ## Amaç
@@ -76,6 +76,13 @@ Turuncu/mordan bağımsız, Kahoot tarzı saf oyun enerjisi taşıyan aile:
 - `playPurple` → indigo `#6C5CE7` ile birleştirilir (ayrı mor tutulmaz).
 
 ### Light/Dark Öncelik Değişikliği
+
+> **GÜNCELLEME (2026-07-15, `fc6d2dd`):** Bu bölümdeki açık-öncelikli karar
+> geri alındı — varsayılan tema tekrar **koyu** yapıldı ("TRT Bil Bakalım"
+> hissi ilk açılışta olsun diye, bkz. `theme_provider.dart`). Aşağıdaki
+> açık-mod zemin rengi (`#FAFAFF`) yalnızca kullanıcı elle açık temaya
+> geçtiğinde kullanılır; koyu mod zemin (`#15121F`) varsayılandır. Palet
+> (indigo/pembe/gökmavi/lime) değişmedi.
 
 Mevcut sistem **koyu-öncelikli** (`backgroundGradient` varsayılan `bgGradient`).
 Yeni sistem **açık-öncelikli** olur: `isLight(context)` mantığı ters çevrilir,
