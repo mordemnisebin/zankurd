@@ -26,6 +26,7 @@ import 'avatar_editor_screen.dart';
 import 'favorite_questions_screen.dart';
 import 'quiz_screen.dart';
 import 'friends_screen.dart';
+import 'community_screen.dart';
 import 'settings_screen.dart';
 import 'suggest_question_screen.dart';
 import 'shop_screen.dart';
@@ -434,6 +435,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               letterSpacing: -0.5,
                             ),
                           ),
+                          const Spacer(),
+                          Tooltip(
+                            message: ku ? 'Mîheng' : 'Ayarlar',
+                            child: IconButton.filledTonal(
+                              key: const ValueKey('profile-settings-top'),
+                              onPressed: () => Navigator.of(context).push(
+                                AppRoute.to(
+                                  SettingsScreen(repository: widget.repository),
+                                ),
+                              ),
+                              icon: const Icon(Icons.settings_outlined),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -672,6 +686,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               divider,
               _menuRow(
                 leading: const Icon(
+                  Icons.leaderboard_outlined,
+                  color: AppTheme.playCyan,
+                  size: 20,
+                ),
+                iconColor: AppTheme.playCyan,
+                title: ku ? 'Civak û Lîg' : 'Topluluk ve Ligler',
+                onTap: () {
+                  Navigator.of(context).push(
+                    AppRoute.to(CommunityScreen(repository: widget.repository)),
+                  );
+                },
+              ),
+              divider,
+              _menuRow(
+                leading: const Icon(
                   Icons.settings_outlined,
                   color: AppTheme.secondaryAccent,
                   size: 20,
@@ -738,7 +767,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (confirmed != true || !mounted) return;
     try {
       await this.context.read<AuthProvider>().signOut();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'profile_load');
       // AppShell zaten auth durumuna göre giriş ekranına döner.
     }
   }
@@ -1300,6 +1330,7 @@ class _MasterySection extends StatelessWidget {
     'Muzîk',
     'Siyaset',
     'Paradigma',
+    'Teknolojî',
   ];
 
   @override
@@ -1500,6 +1531,7 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
           'Muzîk',
           'Siyaset',
           'Paradigma',
+          'Teknolojî',
         ];
 
         var masteryCategoriesPlayed = 0;

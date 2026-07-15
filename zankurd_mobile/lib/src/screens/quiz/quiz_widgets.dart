@@ -105,10 +105,17 @@ class _LiveScoreRow extends StatelessWidget {
 // ─── Soru görseli ────────────────────────────────────────────────────────────
 
 class _QuestionImage extends StatelessWidget {
-  const _QuestionImage({required this.url, this.isCompact = false});
+  const _QuestionImage({required this.url, this.isCompact = false, this.onReady});
 
   final String url;
   final bool isCompact;
+  final VoidCallback? onReady;
+
+  void _notifyReady() {
+    final callback = onReady;
+    if (callback == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) => callback());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,13 +131,21 @@ class _QuestionImage extends StatelessWidget {
     final image = assetPath == null
         ? Image.network(
             url,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
+            loadingBuilder: (context, child, progress) {
+              if (progress == null) _notifyReady();
+              return child;
+            },
             errorBuilder: (context, error, stackTrace) =>
                 const _QuestionImageFallback(),
           )
         : Image.asset(
             assetPath,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
+            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+              if (wasSynchronouslyLoaded || frame != null) _notifyReady();
+              return child;
+            },
             errorBuilder: (context, error, stackTrace) =>
                 const _QuestionImageFallback(),
           );
@@ -781,7 +796,7 @@ class _AnswerButton extends StatelessWidget {
                         style: AppTypography.bodyLarge.copyWith(
                           color: textColor,
                           fontWeight: FontWeight.w800,
-                          fontSize: isCompact ? 14 : 16,
+                          fontSize: isCompact ? 15 : 17,
                         ),
                       ),
                     ),

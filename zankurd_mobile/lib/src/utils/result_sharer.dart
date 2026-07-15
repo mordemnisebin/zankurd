@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../widgets/share_result_card.dart';
+import 'error_reporter.dart';
 
 /// Quiz sonucunu markalı bir kart görseli olarak paylaşır.
 ///
@@ -59,7 +60,8 @@ class ResultSharer {
         await Share.shareXFiles([file], text: text);
         return;
       }
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'result_share_capture');
       // Görsel paylaşımı başarısız — metne düş.
     }
     await Share.share(text);
@@ -95,7 +97,8 @@ class ResultSharer {
       final image = await renderObject.toImage(pixelRatio: 3);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       return byteData?.buffer.asUint8List();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'result_share_send');
       return null;
     } finally {
       entry.remove();

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -35,6 +36,20 @@ void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
     XPStore.resetInstance();
+  });
+
+  test('kanonik rakip adı varsa oda listesinden aynı oyuncu seçilir', () {
+    const players = [
+      Player(id: 'host', name: 'Ben', score: 0, state: 'Hazır'),
+      Player(id: 'wrong', name: 'Dilan', score: 0, state: 'Hazır'),
+      Player(id: 'matched', name: 'Hogir', score: 0, state: 'Hazır'),
+    ];
+
+    expect(
+      selectOpponentPlayer(players, currentName: 'Ben', preferredName: 'Hogir')
+          ?.id,
+      'matched',
+    );
   });
 
   testWidgets('seçim menüsü 1vs1 girişini ve rastgele eşleşmeyi gösterir', (

@@ -7,6 +7,7 @@ import '../models/friend.dart';
 import '../providers/child_safety_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
@@ -74,7 +75,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
           context.isKu ? 'Lîstikvan nehat dîtin' : 'Oyuncu bulunamadı',
         );
       }
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'friends_load');
       if (mounted) {
         setState(() => _searching = false);
         _showMessage(
@@ -149,7 +151,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
           RoomScreen(repository: widget.repository, initialRoom: room),
         ),
       );
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'friends_action');
       if (mounted) {
         _showMessage(
           context.isKu ? 'Ode nehat avakirin' : 'Oda oluşturulamadı',

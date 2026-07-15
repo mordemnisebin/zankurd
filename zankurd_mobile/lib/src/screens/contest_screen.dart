@@ -58,17 +58,12 @@ class _ContestScreenState extends State<ContestScreen> {
     setState(() => _starting = true);
     final ku = context.isKu;
     try {
-      var questions = await widget.repository.loadLevelQuestions(
-        category: contest.category,
-        difficultyMin: contest.difficultyMin,
-        difficultyMax: contest.difficultyMax,
+      // Günlük yarışma, tema/kategori etiketinden bağımsız olarak ortak
+      // günlük havuzdan beslenir. Repository bu havuzu UTC gün seed'i ile
+      // seçtiği için aynı gün tüm oyuncular aynı soruları görür.
+      var questions = await widget.repository.loadDailyQuestions(
         limit: contest.questionCount,
       );
-      if (questions.isEmpty) {
-        questions = await widget.repository.loadDailyQuestions(
-          limit: contest.questionCount,
-        );
-      }
       if (questions.isEmpty) {
         questions = widget.repository.questions
             .take(contest.questionCount)

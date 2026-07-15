@@ -99,7 +99,7 @@ class SubcategoryConfig {
         id: 'klasik',
         nameKu: 'Klasîk',
         nameTr: 'Klasik Edebiyat',
-        descriptionKu: 'Edebiyata klasîk a kurdî',
+        descriptionKu: 'Wêjeya klasîk a kurdî',
         descriptionTr: 'Klasik Kürt edebiyatı eserleri',
       ),
       SubcategoryInfo(
@@ -115,7 +115,7 @@ class SubcategoryConfig {
         id: 'ciya_cem',
         nameKu: 'Çiya û Çem',
         nameTr: 'Dağlar & Nehirler',
-        descriptionKu: 'Cografyaya fizîkî ya Kurdistanê',
+        descriptionKu: 'Erdnîgarîya fizîkî ya Kurdistanê',
         descriptionTr: 'Kürdistan\'ın fiziki coğrafyası',
       ),
       SubcategoryInfo(
@@ -129,7 +129,7 @@ class SubcategoryConfig {
         id: 'sinor_duma',
         nameKu: 'Sînor û Awa',
         nameTr: 'Sınırlar & Coğrafi Yapı',
-        descriptionKu: 'Cografyaya siyasî û xweza',
+        descriptionKu: 'Erdnîgarîya siyasî û xwezayî',
         descriptionTr: 'Siyasi coğrafya ve doğa yapısı',
       ),
     ],
@@ -200,6 +200,29 @@ class SubcategoryConfig {
         nameTr: 'Jineoloji (Kadın Bilimi)',
         descriptionKu: 'Zanistiya jin û jiyanê',
         descriptionTr: 'Kadın ve yaşam bilimi çalışmaları',
+      ),
+    ],
+    'Teknolojî': [
+      SubcategoryInfo(
+        id: 'bingehên_teknolojiyê',
+        nameKu: 'Bingehên Teknolojiyê',
+        nameTr: 'Teknoloji Temelleri',
+        descriptionKu: 'Amûr, pergal û têgehên bingehîn',
+        descriptionTr: 'Temel araçlar, sistemler ve kavramlar',
+      ),
+      SubcategoryInfo(
+        id: 'programkirin',
+        nameKu: 'Programkirin',
+        nameTr: 'Programlama',
+        descriptionKu: 'Zimanên kodkirinê û algorîtma',
+        descriptionTr: 'Kodlama dilleri ve algoritmalar',
+      ),
+      SubcategoryInfo(
+        id: 'dijital_internet',
+        nameKu: 'Dîjîtal û Înternet',
+        nameTr: 'Dijital ve İnternet',
+        descriptionKu: 'Tor, protokol û ewlehiya dîjîtal',
+        descriptionTr: 'Ağlar, protokoller ve dijital güvenlik',
       ),
     ],
   };

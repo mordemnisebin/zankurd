@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/lang.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/kilim_pattern_painter.dart';
 
@@ -108,7 +109,7 @@ class DailyThemeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = _currentTheme;
-    final categoryName = isKu ? theme.categoryKu : theme.categoryTr;
+    final categoryName = CategoryNames.localized(theme.categoryKu, isKu);
     final message = isKu
         ? 'Îro pirsên kategoriya $categoryName li benda te ne!'
         : 'Bugün $categoryName kategorisinde sorular seni bekliyor!';

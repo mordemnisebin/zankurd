@@ -1,45 +1,42 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/category_visuals.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
 
 void main() {
-  const known = [
-    'Ziman',
-    'Çand',
-    'Dîrok',
-    'Edebiyat',
-    'Cografya',
-    'Muzîk',
-    'Siyaset',
-    'Paradigma',
-  ];
-
-  test('bilinen her kategori için ikon tanımlı', () {
-    for (final cat in known) {
-      expect(CategoryVisuals.icon(cat), isA<IconData>());
-      expect(
-        CategoryVisuals.icon(cat),
-        isNot(Icons.category_outlined),
-        reason: '$cat için özel ikon bekleniyor',
-      );
+  test('all supported categories retain explicit visual mappings', () {
+    const expectedImagePaths = {
+      'Ziman': 'assets/question_images/cat_ziman.webp',
+      'Çand': 'assets/question_images/cat_cand.webp',
+      'Dîrok': 'assets/question_images/cat_dirok.webp',
+      'Edebiyat': 'assets/question_images/cat_edebiyat.webp',
+      'Cografya': 'assets/question_images/cat_cografya.webp',
+      'Muzîk': 'assets/question_images/cat_muzik.webp',
+      'Siyaset': 'assets/question_images/cat_siyaset.webp',
+      'Paradigma': 'assets/question_images/cat_paradigma.webp',
+      'Teknolojî': 'assets/question_images/cat_paradigma.webp',
+    };
+    for (final category in expectedImagePaths.keys) {
+      expect(CategoryVisuals.icon(category), isNot(Icons.category_outlined));
+      expect(CategoryVisuals.imagePath(category), expectedImagePaths[category]);
     }
   });
 
-  test('bilinmeyen kategori fallback ikon döner', () {
-    expect(CategoryVisuals.icon('Yok'), Icons.category_outlined);
+  test('category mappings avoid dart2js string-switch expressions', () {
+    final source = File(
+      'lib/src/config/category_visuals.dart',
+    ).readAsStringSync();
+    expect(source, contains('static const Map<String, IconData>'));
+    expect(source, contains('static const Map<String, String>'));
+    expect(source, isNot(contains('=> switch (category)')));
   });
 
-  test('imagePath bilinen kategoriler için webp yolu döner', () {
-    // Görseller paket boyutu için WebP'ye taşındı (49MB -> ~4MB).
-    for (final cat in known) {
-      expect(CategoryVisuals.imagePath(cat), endsWith('.webp'));
-    }
-  });
-
-  test('bilinmeyen kategori imagePath fallback döner', () {
-    expect(
-      CategoryVisuals.imagePath('Yok'),
-      'assets/question_images/cat_ziman.webp',
-    );
+  test('category display labels use Kurmanci names', () {
+    expect(CategoryNames.localized('Edebiyat', true), 'Wêje');
+    expect(CategoryNames.localized('Cografya', true), 'Erdnîgarî');
+    expect(CategoryNames.localized('Paradigma', true), 'Paradîgma');
+    expect(CategoryNames.localized('Teknolojî', true), 'Teknolojî');
   });
 }

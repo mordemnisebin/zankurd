@@ -71,10 +71,15 @@ class CategoryNames {
     'Muzîk': 'Müzik',
     'Siyaset': 'Siyaset',
     'Paradigma': 'Paradigma',
+    'Teknolojî': 'Teknoloji',
   };
 
   /// Optional Kurmanci display labels (ID stays the map key).
-  static const Map<String, String> _kuDisplay = {'Cografya': 'Erdnîgarî'};
+  static const Map<String, String> _kuDisplay = {
+    'Edebiyat': 'Wêje',
+    'Cografya': 'Erdnîgarî',
+    'Paradigma': 'Paradîgma',
+  };
 
   static String tr(String kuName) => _kuToTr[kuName] ?? kuName;
 

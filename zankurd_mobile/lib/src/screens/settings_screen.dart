@@ -56,7 +56,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       setState(() {
         _versionLabel = '${info.version}+${info.buildNumber}';
       });
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'settings_load');
       // Keep static fallback (tests / unsupported platforms).
     }
   }
@@ -667,7 +668,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _notificationTime = service.timeDisplay;
         });
       }
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'settings_action');
       // Bildirim servisi başlatılamazsa sessizce devam et.
     }
   }

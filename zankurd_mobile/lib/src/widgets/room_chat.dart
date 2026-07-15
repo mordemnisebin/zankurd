@@ -6,6 +6,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/room_message.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import 'player_avatar.dart';
 
 /// Oda sohbet paneli. [RoomScreen] altında daraltılabilir alt panel olarak
@@ -65,11 +66,20 @@ class _RoomChatState extends State<RoomChat> {
     _subscribed = true;
     _subscription = widget.repository
         .subscribeRoomMessages(widget.roomId)
-        .listen((msgs) {
-          if (!mounted) return;
-          setState(() => _messages = msgs);
-          _scrollToBottom();
-        });
+        .listen(
+          (msgs) {
+            if (!mounted) return;
+            setState(() => _messages = msgs);
+            _scrollToBottom();
+          },
+          onError: (Object error, StackTrace stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'room chat realtime stream failed',
+            );
+          },
+        );
   }
 
   void _stopListening() {
@@ -100,8 +110,8 @@ class _RoomChatState extends State<RoomChat> {
         text: text,
       );
       _messageController.clear();
-    } catch (_) {
-      // swallow
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'room chat send failed');
     } finally {
       if (mounted) setState(() => _sending = false);
     }

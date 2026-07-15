@@ -7,6 +7,8 @@ class AnswerRecord {
     required this.correctAnswer,
     required this.selectedAnswer,
     required this.explanation,
+    this.responseMs,
+    this.pointsEarned = 0,
     this.imageUrl,
   });
 
@@ -17,6 +19,8 @@ class AnswerRecord {
   final String correctAnswer;
   final String? selectedAnswer;
   final String explanation;
+  final int? responseMs;
+  final int pointsEarned;
   final String? imageUrl;
 
   bool get isCorrect =>

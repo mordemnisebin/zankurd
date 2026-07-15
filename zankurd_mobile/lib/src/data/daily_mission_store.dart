@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/daily_mission.dart';
+import '../utils/error_reporter.dart';
 
 class DailyMissionStore {
   DailyMissionStore._(this._prefs, this._missions);
@@ -28,7 +29,9 @@ class DailyMissionStore {
     SharedPreferences? prefs;
     try {
       prefs = await SharedPreferences.getInstance();
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'daily_mission_load_preferences');
+    }
 
     final today = DateTime.now();
     final todayKey = _dateString(today);
@@ -58,7 +61,13 @@ class DailyMissionStore {
     SharedPreferences? prefs;
     try {
       prefs = await SharedPreferences.getInstance();
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'daily_mission_test_preferences',
+      );
+    }
     return _instance = DailyMissionStore._(prefs, missions);
   }
 

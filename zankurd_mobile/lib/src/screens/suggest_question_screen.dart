@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 
 /// Kullanıcıların yeni soru önerebileceği ekran.
@@ -81,7 +82,8 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
           _submitted = true;
         });
       }
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'suggested_question_submit');
       if (mounted) {
         setState(() => _submitting = false);
         ScaffoldMessenger.of(context).showSnackBar(

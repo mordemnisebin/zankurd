@@ -5,6 +5,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../utils/error_reporter.dart';
+
 /// Bildirim ayarlarını yöneten servis.
 /// flutter_local_notifications kullanılarak yerel günlük hatırlatıcılar zamanlanır.
 class NotificationService {
@@ -30,7 +32,8 @@ class NotificationService {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'notification_init');
       preferences = null;
     }
     final service = NotificationService._(
@@ -86,7 +89,9 @@ class NotificationService {
       tz.initializeTimeZones();
       try {
         tz.setLocalLocation(tz.getLocation('Europe/Istanbul'));
-      } catch (_) {}
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'notification_cancel');
+      }
 
       const AndroidInitializationSettings initializationSettingsAndroid =
           AndroidInitializationSettings('@mipmap/ic_launcher');

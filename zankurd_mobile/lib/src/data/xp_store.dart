@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/error_reporter.dart';
+
 class XPStore {
   XPStore._(this._preferences, this._totalXP);
 
@@ -40,7 +42,8 @@ class XPStore {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'xp_store_load');
       preferences = null;
     }
     final total = preferences?.getInt(_totalXPKey) ?? 0;
@@ -52,7 +55,8 @@ class XPStore {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'xp_store_persist');
       preferences = null;
     }
     return _instance = XPStore._(preferences, initialXP);

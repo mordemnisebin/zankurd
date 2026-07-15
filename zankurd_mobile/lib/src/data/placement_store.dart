@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/placement_scoring.dart';
+import '../utils/error_reporter.dart';
 
 /// Seviye belirleme sınavının sonucunu yerelde, sürümlü bir anahtarla tutar.
 ///
@@ -26,7 +27,8 @@ class PlacementStore {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'placement_store');
       preferences = null;
     }
     final level = PlacementLevel.fromStorageKey(

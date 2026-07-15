@@ -8,10 +8,10 @@ import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../utils/error_reporter.dart';
 import '../utils/test_environment.dart';
 import '../widgets/branded_loader.dart';
 import '../widgets/coach_mark.dart';
-import 'community_screen.dart';
 import 'home_screen.dart';
 import 'learning_screen.dart';
 import 'level_placement_screen.dart';
@@ -40,13 +40,10 @@ class _AppShellState extends State<AppShell> {
   bool _placementPrompted = false;
 
   final GlobalKey _homeNavKey = GlobalKey();
-  final GlobalKey _categoriesNavKey = GlobalKey();
-  final GlobalKey _learningNavKey = GlobalKey();
-  final GlobalKey _leaderboardNavKey = GlobalKey();
+  final GlobalKey _playNavKey = GlobalKey();
   final GlobalKey _profileNavKey = GlobalKey();
   final GlobalKey _shellStackKey = GlobalKey();
   final ValueNotifier<int> _homeRefresh = ValueNotifier<int>(0);
-  final ValueNotifier<int> _leaderboardRefresh = ValueNotifier<int>(0);
   final ValueNotifier<int> _profileRefresh = ValueNotifier<int>(0);
   bool _checkingOnboarding = true;
   bool _showOnboarding = false;
@@ -56,18 +53,12 @@ class _AppShellState extends State<AppShell> {
   bool _profileCheckStarted = false;
 
   late final ScrollController _homeScrollController;
-  late final ScrollController _categoriesScrollController;
-  late final ScrollController _leaderboardScrollController;
-  late final ScrollController _learningScrollController;
   late final ScrollController _profileScrollController;
 
   @override
   void initState() {
     super.initState();
     _homeScrollController = ScrollController();
-    _categoriesScrollController = ScrollController();
-    _leaderboardScrollController = ScrollController();
-    _learningScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
   }
@@ -75,12 +66,8 @@ class _AppShellState extends State<AppShell> {
   @override
   void dispose() {
     _homeScrollController.dispose();
-    _categoriesScrollController.dispose();
-    _leaderboardScrollController.dispose();
-    _learningScrollController.dispose();
     _profileScrollController.dispose();
     _homeRefresh.dispose();
-    _leaderboardRefresh.dispose();
     _profileRefresh.dispose();
     super.dispose();
   }
@@ -160,34 +147,13 @@ class _AppShellState extends State<AppShell> {
                     'Buradan başlarsın: hızlı oyunlar, günlük ödüller ve görevlerin burada.',
               ),
               CoachMarkStep(
-                targetKey: _categoriesNavKey,
-                icon: Icons.school_rounded,
-                titleKu: 'Fêr Bibe',
-                titleTr: 'Öğren',
-                descriptionKu:
-                    'Kurmancî bi rêya dersên gav bi gav û armancên mastery hîn bibe.',
-                descriptionTr:
-                    'Kurmancîyi adım adım ders yolu ve mastery hedefleriyle öğren.',
-              ),
-              CoachMarkStep(
-                targetKey: _learningNavKey,
+                targetKey: _playNavKey,
                 icon: Icons.sports_esports_rounded,
                 titleKu: 'Bilîze',
-                titleTr: 'Oyna',
-                descriptionKu:
-                    '1vs1, pêşbirka rojê, çerx û turnuva hemû li vir in.',
+                titleTr: 'Yarış',
+                descriptionKu: 'Hemû pêşbirktî û lîstikên te li vir in.',
                 descriptionTr:
-                    '1vs1, günlük yarışma, çark ve turnuvaların hepsi burada.',
-              ),
-              CoachMarkStep(
-                targetKey: _leaderboardNavKey,
-                icon: Icons.groups_rounded,
-                titleKu: 'Civak',
-                titleTr: 'Topluluk',
-                descriptionKu:
-                    'Di lîgên kategoriyan de pêşbikeve û bi hevalên xwe re bilîze.',
-                descriptionTr:
-                    'Kategori liglerinde ilerle ve arkadaşlarınla birlikte oyna.',
+                    'Günlük yarışma, 1v1, oda ve turnuvaların merkezi.',
               ),
               CoachMarkStep(
                 targetKey: _profileNavKey,
@@ -215,12 +181,12 @@ class _AppShellState extends State<AppShell> {
             displayName: _profileName,
             scrollController: _homeScrollController,
             refreshSignal: _homeRefresh,
-            onOpenLearning: () => setState(() => _tab = 1),
-            onOpenPlay: () => setState(() => _tab = 2),
+            onOpenLearning: () => Navigator.of(
+              context,
+            ).push(AppRoute.to(LearningScreen(repository: widget.repository))),
+            onOpenPlay: () => setState(() => _tab = 1),
           ),
-          LearningScreen(repository: widget.repository),
           PlayHubScreen(repository: widget.repository),
-          CommunityScreen(repository: widget.repository),
           ProfileScreen(
             repository: widget.repository,
             refreshSignal: _profileRefresh,
@@ -278,10 +244,8 @@ class _AppShellState extends State<AppShell> {
               if (_tab == i) {
                 final controller = switch (i) {
                   0 => _homeScrollController,
-                  1 => _categoriesScrollController,
-                  2 => _learningScrollController,
-                  3 => _leaderboardScrollController,
-                  4 => _profileScrollController,
+                  1 => null,
+                  2 => _profileScrollController,
                   _ => null,
                 };
                 if (controller != null && controller.hasClients) {
@@ -293,8 +257,7 @@ class _AppShellState extends State<AppShell> {
                 }
               } else {
                 if (i == 0) _homeRefresh.value++;
-                if (i == 3) _leaderboardRefresh.value++;
-                if (i == 4) _profileRefresh.value++;
+                if (i == 2) _profileRefresh.value++;
                 setState(() => _tab = i);
               }
             },
@@ -309,27 +272,11 @@ class _AppShellState extends State<AppShell> {
               ),
               NavigationDestination(
                 icon: KeyedSubtree(
-                  key: _categoriesNavKey,
-                  child: const Icon(Icons.school_outlined),
-                ),
-                selectedIcon: const Icon(Icons.school),
-                label: ku ? 'Fêr Bibe' : 'Öğren',
-              ),
-              NavigationDestination(
-                icon: KeyedSubtree(
-                  key: _learningNavKey,
+                  key: _playNavKey,
                   child: const Icon(Icons.sports_esports_outlined),
                 ),
                 selectedIcon: const Icon(Icons.sports_esports),
-                label: ku ? 'Bilîze' : 'Oyna',
-              ),
-              NavigationDestination(
-                icon: KeyedSubtree(
-                  key: _leaderboardNavKey,
-                  child: const Icon(Icons.groups_outlined),
-                ),
-                selectedIcon: const Icon(Icons.groups),
-                label: ku ? 'Civak' : 'Topluluk',
+                label: ku ? 'Pêşbazî' : 'Yarış',
               ),
               NavigationDestination(
                 icon: KeyedSubtree(
@@ -353,7 +300,8 @@ class _AppShellState extends State<AppShell> {
     String? name;
     try {
       name = await widget.repository.getProfileName();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'app_shell_preferences');
       name = null;
     }
     if (!mounted) return;
@@ -371,7 +319,9 @@ class _AppShellState extends State<AppShell> {
     String? name;
     try {
       name = await widget.repository.getProfileName();
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'app_shell_tour');
+    }
     if (!mounted) return;
     setState(() {
       _profileName = name;

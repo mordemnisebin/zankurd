@@ -6,6 +6,7 @@ import '../models/quiz_question.dart';
 import '../screens/quiz_screen.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../utils/error_reporter.dart';
 import 'kilim_pattern_painter.dart';
 
 /// "Bugünkü Tekrarlar" kartı — SM-2 aralıklı tekrar sisteminin ürün yüzü.
@@ -64,7 +65,8 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
           _loading = false;
         });
       }
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'todays_review_card');
       if (mounted) setState(() => _loading = false);
     }
   }

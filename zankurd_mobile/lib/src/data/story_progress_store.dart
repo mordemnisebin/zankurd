@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/error_reporter.dart';
+
 /// Hikâye ilerlemesini (mevcut düğüm id'si) yerelde tutar; devam etme ve
 /// yeniden başlatmayı destekler. `SharedPreferences` yoksa bellek-içi çalışır.
 class StoryProgressStore {
@@ -17,7 +19,8 @@ class StoryProgressStore {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'story_progress_store');
       preferences = null;
     }
     final map = <String, String>{};

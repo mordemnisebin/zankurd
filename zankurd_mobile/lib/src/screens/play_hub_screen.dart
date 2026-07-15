@@ -209,21 +209,21 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
           padding: const EdgeInsets.all(AppSpacing.page),
           children: [
             ScreenIdentityHeader(
-              title: ku ? 'Bilîze' : 'Oyna',
+              title: ku ? 'Pêşbazî' : 'Yarış',
               subtitle: ku
-                  ? 'Pêşbirk, turnuva û xelat li yek derê'
-                  : 'Yarışma, turnuva ve ödüller tek yerde',
+                  ? 'Pêşbirk, turnuva û xelat hemû li vir in'
+                  : 'Günlük yarışma, düello ve ödüller tek yerde',
               accent: AppTheme.brandOrange,
               icon: Icons.sports_esports_rounded,
             ),
             const SizedBox(height: AppSpacing.lg),
-            _GroupPlayPanel(
-              ku: ku,
-              loading: _roomActionLoading,
-              onCreateRoom: _createOnlineRoom,
-              onJoinRoom: _showJoinSheet,
+            _PlaySectionHeading(
+              title: ku ? 'Pêşbaziyek hilbijêre' : 'Bir yarış seç',
+              subtitle: ku
+                  ? 'Ji bo destpêkirinê yek ji modan hilbijêre.'
+                  : 'Başlamak için bir yarış modunu seç.',
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.sm),
             QuickPlayGrid(
               isKu: ku,
               dailyQuizLoading: _dailyLoading,
@@ -239,18 +239,51 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               ),
             ),
             const SizedBox(height: AppSpacing.md),
+            _GroupPlayPanel(
+              ku: ku,
+              loading: _roomActionLoading,
+              onCreateRoom: _createOnlineRoom,
+              onJoinRoom: _showJoinSheet,
+            ),
+            const SizedBox(height: AppSpacing.md),
             _SupportActions(
               ku: ku,
               onOpenShop: () => Navigator.of(
                 context,
               ).push(AppRoute.to(ShopScreen(repository: widget.repository))),
-              onOpenTournament: () => Navigator.of(context).push(
-                AppRoute.to(TournamentScreen(repository: widget.repository)),
-              ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _PlaySectionHeading extends StatelessWidget {
+  const _PlaySectionHeading({required this.title, required this.subtitle});
+
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: AppTypography.heading2.copyWith(
+            color: AppTheme.textPrimaryColor(context),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xxs),
+        Text(
+          subtitle,
+          style: AppTypography.caption.copyWith(
+            color: AppTheme.textSubColor(context),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -356,46 +389,22 @@ class _GroupPlayPanel extends StatelessWidget {
 }
 
 class _SupportActions extends StatelessWidget {
-  const _SupportActions({
-    required this.ku,
-    required this.onOpenShop,
-    required this.onOpenTournament,
-  });
+  const _SupportActions({required this.ku, required this.onOpenShop});
 
   final bool ku;
   final VoidCallback onOpenShop;
-  final VoidCallback onOpenTournament;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _SupportCard(
-            key: const ValueKey('play-hub-shop-card'),
-            icon: Icons.storefront_outlined,
-            color: AppTheme.gold,
-            title: ku ? 'Dukan û joker' : 'Mağaza ve jokerler',
-            subtitle: ku
-                ? 'Coin, çerx û mafên joker li yek derê.'
-                : 'Coin, çark ve joker hakların tek yerde.',
-            onTap: onOpenShop,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        Expanded(
-          child: _SupportCard(
-            key: const ValueKey('play-hub-tournament-card'),
-            icon: Icons.emoji_events_outlined,
-            color: AppTheme.playPink,
-            title: ku ? 'Turnuva û rêzbendî' : 'Turnuva ve sıralama',
-            subtitle: ku
-                ? 'Pêşbirka rojê, kupa û rêzbendiyê zû veke.'
-                : 'Günlük yarışma, kupa ve liderlik akışına hızlı geç.',
-            onTap: onOpenTournament,
-          ),
-        ),
-      ],
+    return _SupportCard(
+      key: const ValueKey('play-hub-shop-card'),
+      icon: Icons.storefront_outlined,
+      color: AppTheme.gold,
+      title: ku ? 'Dukan û joker' : 'Mağaza ve jokerler',
+      subtitle: ku
+          ? 'Coin, çerx û mafên joker li yek derê.'
+          : 'Coin, çark ve joker hakların tek yerde.',
+      onTap: onOpenShop,
     );
   }
 }
@@ -422,30 +431,48 @@ class _SupportCard extends StatelessWidget {
       onTap: onTap,
       child: AppPanel(
         padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Icon(icon, color: color, size: 24),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w900,
+            Container(
+              width: 38,
+              height: 38,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+                border: Border.all(color: color.withValues(alpha: 0.28)),
+              ),
+              child: Icon(icon, color: color, size: 21),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xxs),
+                  Text(
+                    subtitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textSubColor(context),
+                      height: 1.2,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: AppSpacing.xxs),
-            Text(
-              subtitle,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: AppTypography.caption.copyWith(
-                color: AppTheme.textSubColor(context),
-                height: 1.25,
-              ),
-            ),
+            const SizedBox(width: AppSpacing.xs),
+            Icon(Icons.chevron_right_rounded, color: color, size: 22),
           ],
         ),
       ),

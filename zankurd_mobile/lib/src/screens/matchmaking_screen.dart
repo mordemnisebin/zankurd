@@ -13,8 +13,28 @@ import '../models/player.dart';
 import '../widgets/player_avatar.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../utils/error_reporter.dart';
 import '../utils/test_environment.dart';
 import 'quiz_screen.dart';
+
+Player? selectOpponentPlayer(
+  Iterable<Player> players, {
+  required String currentName,
+  String? preferredName,
+}) {
+  final preferred = preferredName?.trim();
+  if (preferred != null && preferred.isNotEmpty) {
+    for (final player in players) {
+      if (player.name == preferred && player.name != currentName) {
+        return player;
+      }
+    }
+  }
+  for (final player in players) {
+    if (player.name != currentName) return player;
+  }
+  return null;
+}
 
 class MatchmakingScreen extends StatefulWidget {
   const MatchmakingScreen({required this.repository, super.key});
@@ -78,7 +98,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     _pulseController.dispose();
     _matchmakingSub?.cancel();
     _statusTimer?.cancel();
-    widget.repository.cancelMatchmaking().catchError((_) {});
+    widget.repository.cancelMatchmaking().catchError((error, stack) {
+      ErrorReporter.record(error, stack, reason: 'matchmaking_dispose_cancel');
+    });
     super.dispose();
   }
 
@@ -98,7 +120,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         _categories = cats;
         _loadingCategories = false;
       });
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'matchmaking_load_categories');
       if (mounted) {
         setState(() => _loadingCategories = false);
       }
@@ -132,6 +155,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           roomId: roomId,
           category: chosenCategory,
           currentName: _myName,
+          preferredName: matchedName,
         );
         if (opponent != null) {
           matchedName = opponent.name;
@@ -198,7 +222,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             _matchmakingSub?.cancel();
             _matchmakingSub = null;
             // Abort online queue
-            await widget.repository.cancelMatchmaking().catchError((_) {});
+            await widget.repository.cancelMatchmaking().catchError((error, stack) {
+              ErrorReporter.record(error, stack, reason: 'matchmaking_timeout_cancel');
+            });
 
             if (!mounted) return;
             // Ask user for bot fallback
@@ -248,7 +274,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           }
         });
       }
-    } catch (error) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'matchmaking_start');
       if (_isCancelled || !mounted) return;
       _matchmakingSub?.cancel();
       _statusTimer?.cancel();
@@ -316,6 +343,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     required String roomId,
     required String category,
     required String currentName,
+    String? preferredName,
   }) async {
     try {
       final roomPlayers = await widget.repository.loadRoomPlayers(
@@ -328,10 +356,14 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           questionCount: 0,
         ).copyWith(id: roomId),
       );
-      for (final player in roomPlayers) {
-        if (player.name != currentName) return player;
-      }
-    } catch (_) {}
+      return selectOpponentPlayer(
+        roomPlayers,
+        currentName: currentName,
+        preferredName: preferredName,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'matchmaking_load_opponent');
+    }
     return null;
   }
 
@@ -368,7 +400,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         if (res != null) {
           dbHostId = res['host_id'] as String?;
         }
-      } catch (_) {}
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'matchmaking_load_host');
+      }
     }
     if (!mounted) return;
 
@@ -409,7 +443,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       try {
         final roomQuestions = await widget.repository.loadRoomQuestions(room);
         if (roomQuestions.isNotEmpty) matchQuestions = roomQuestions;
-      } catch (_) {}
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'matchmaking_load_room_questions');
+      }
       if (_isCancelled || !mounted) return;
     }
 
@@ -426,7 +462,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           difficultyMax: 5,
           limit: 10,
         );
-      } catch (_) {}
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'matchmaking_load_questions');
+      }
       if (matchQuestions.isEmpty) {
         matchQuestions = widget.repository.questions;
       }

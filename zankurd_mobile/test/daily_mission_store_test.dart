@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/daily_mission_store.dart';
@@ -166,5 +168,32 @@ void main() {
       streakAlive: false,
     );
     expect(completed.any((m) => m.type == MissionType.playCategory), isTrue);
+  });
+
+  test('mission keys use ASCII slugs for every supported category', () {
+    expect(
+      DailyMission(
+        type: MissionType.playCategory,
+        target: 1,
+        coinReward: 25,
+        category: 'Siyaset',
+      ).missionKey,
+      'playCategory:siyaset',
+    );
+    expect(
+      DailyMission(
+        type: MissionType.playCategory,
+        target: 1,
+        coinReward: 25,
+        category: 'Paradigma',
+      ).missionKey,
+      'playCategory:paradigma',
+    );
+  });
+
+  test('category slug mapping avoids dart2js string-switch expressions', () {
+    final source = File('lib/src/models/daily_mission.dart').readAsStringSync();
+    expect(source, contains('static const Map<String, String>'));
+    expect(source, isNot(contains('=> switch (category)')));
   });
 }

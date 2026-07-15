@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/error_reporter.dart';
+
 /// "Güvenli çocuk modu" — YALNIZCA CİHAZ TARAFI teknik kilitler.
 ///
 /// ÖNEMLİ: Bu mod hukuki bir ebeveyn onayı sistemi DEĞİLDİR ve sunucu
@@ -24,7 +26,9 @@ class ChildSafetyProvider extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       value = prefs.getBool(_storageKey) ?? false;
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'child_safety_load');
+    }
     return ChildSafetyProvider(initialEnabled: value);
   }
 
@@ -35,7 +39,9 @@ class ChildSafetyProvider extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_storageKey, value);
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'child_safety_persist');
+    }
   }
 
   // --- Cihaz-tarafı özellik kapıları (mod açıkken kapalı) ---

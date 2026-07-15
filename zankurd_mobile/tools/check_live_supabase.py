@@ -213,12 +213,23 @@ def submit_answer(session: UserSession, room_id: str, question_id: str, option: 
         raise CheckFailed(f"answer did not award points: {data}")
 
 
+def finish_game(session: UserSession, room_id: str) -> None:
+    status, data = request(
+        "POST",
+        "/rest/v1/rpc/finish_room_game",
+        token=session.access_token,
+        body={"p_room_id": room_id},
+    )
+    expect_ok("finish_room_game RPC", status, data, {200})
+
+
 def assert_leaderboard_contains(user_ids: set[str]) -> None:
+    encoded_ids = ",".join(sorted(user_ids))
     status, data = request(
         "GET",
         "/rest/v1/leaderboard_entries"
         "?select=player_id,display_name,total_score,best_streak,rooms_played"
-        "&limit=50",
+        f"&player_id=in.({encoded_ids})",
     )
     expect_ok("leaderboard load", status, data, {200})
     seen = {row["player_id"] for row in data}
@@ -249,6 +260,7 @@ def main() -> int:
         question_id, correct_option = load_first_room_question(user_a.access_token, room_id)
         submit_answer(user_a, room_id, question_id, correct_option)
         submit_answer(user_b, room_id, question_id, correct_option)
+        finish_game(user_a, room_id)
         assert_leaderboard_contains({user_a.user_id, user_b.user_id})
 
         print(

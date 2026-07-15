@@ -178,7 +178,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       try {
         context.read<SoundProvider>().playWin();
         context.read<SoundProvider>().playCoin();
-      } catch (_) {}
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'spin result sound failed');
+      }
     }
   }
 

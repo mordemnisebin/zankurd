@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/error_reporter.dart';
+
 /// "Hareketi azalt" tercihini yönetir ve tüm uygulamaya sunar.
 ///
 /// Etkin değer, kullanıcı tercihi VEYA sistemin `disableAnimations` tercihiyle
@@ -27,7 +29,9 @@ class ReducedMotionProvider extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       value = prefs.getBool(_storageKey) ?? false;
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'reduced_motion_load');
+    }
     return ReducedMotionProvider(initialUserReduce: value);
   }
 
@@ -38,7 +42,9 @@ class ReducedMotionProvider extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_storageKey, value);
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'reduced_motion_persist');
+    }
   }
 
   /// Sistem `MediaQuery.disableAnimations` değerinden beslenir.

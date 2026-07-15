@@ -121,7 +121,7 @@ begin
           code, host_id, category_id, question_count,
           seconds_per_question, status
         )
-        values (v_room_code, v_player_id, v_category_id, 10, 15, 'lobby')
+        values (v_room_code, v_player_id, v_category_id, 10, 30, 'lobby')
         returning id into v_room_id;
         exit;
       exception

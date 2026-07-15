@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/mastery_level.dart';
+import '../utils/error_reporter.dart';
 
 class MasteryStore {
   MasteryStore._(this._preferences);
@@ -16,7 +17,8 @@ class MasteryStore {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'mastery_store');
       preferences = null;
     }
     return _instance = MasteryStore._(preferences);

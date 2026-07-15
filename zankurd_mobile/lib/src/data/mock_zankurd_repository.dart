@@ -15,16 +15,25 @@ import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../game/speed_score.dart';
 import '../models/room_message.dart';
+import '../utils/error_reporter.dart';
 import '../models/tournament.dart';
 import '../utils/coin_calculator.dart';
 import 'offline_question_bank.dart';
+import 'curated_question_bank.dart';
 import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
 import '../config/subcategory_config.dart';
+import '../services/question_content_policy.dart';
 
 class MockZanKurdRepository implements ZanKurdRepository {
   MockZanKurdRepository();
+
+  static const _contentPolicy = QuestionContentPolicy();
+
+  List<QuizQuestion> get _playableQuestions =>
+      questions.where(_contentPolicy.isPlayable).toList(growable: false);
 
   @override
   List<String> get categories => const [
@@ -36,10 +45,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
     'Muzîk',
     'Siyaset',
     'Paradigma',
+    'Teknolojî',
   ];
 
   @override
-  List<QuizQuestion> get questions => offlineQuestionBank;
+  List<QuizQuestion> get questions => [
+    ...curatedQuestionBank,
+    ...offlineQuestionBank,
+  ];
 
   @override
   String? get currentUserId => 'user';
@@ -107,12 +120,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
     String? categoryId,
     int limit = 10,
   }) async {
+    final playable = _playableQuestions;
     final pool = categoryId == null
-        ? questions
-        : questions
+        ? playable
+        : playable
               .where((question) => question.category == categoryId)
               .toList(growable: false);
-    return _selectFresh(pool.isEmpty ? questions : pool, limit);
+    return _selectFresh(pool.isEmpty ? playable : pool, limit);
   }
 
   @override
@@ -176,7 +190,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
     String? subCategory,
     int limit = 10,
   }) async {
-    final byCategoryAndDifficulty = questions
+    final playable = _playableQuestions;
+    final byCategoryAndDifficulty = playable
         .where(
           (question) =>
               question.category == category &&
@@ -205,15 +220,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
       }
     }
 
-    return _selectFresh(pool.isEmpty ? questions : pool, limit);
+    return _selectFresh(pool.isEmpty ? playable : pool, limit);
   }
 
   @override
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
-    final pool = questions
+    final playable = _playableQuestions;
+    final pool = playable
         .where((question) => question.category == room.category)
         .toList(growable: false);
-    return _selectFresh(pool.isEmpty ? questions : pool, room.questionCount);
+    return _selectFresh(pool.isEmpty ? playable : pool, room.questionCount);
   }
 
   /// Gün bazlı sabit tohum: aynı gün herkes aynı sırayı görür.
@@ -292,8 +308,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<GameRoom> createOnlineRoom({String category = 'Ziman'}) async {
-    return createRoom(category: category);
+  Future<GameRoom> createOnlineRoom({
+    String category = 'Ziman',
+    int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+  }) async {
+    return createRoom(
+      category: category,
+    ).copyWith(secondsPerQuestion: secondsPerQuestion);
   }
 
   @override
@@ -380,7 +401,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
     };
 
     final isCorrect = selectedOptionOptionKey == correctOptionKey;
-    return {'is_correct': isCorrect, 'points': isCorrect ? 100 : 0};
+    return {
+      'is_correct': isCorrect,
+      'points': SpeedScore.calculate(
+        responseMs: responseMs,
+        limitSeconds: room.secondsPerQuestion,
+        correct: isCorrect,
+      ),
+    };
   }
 
   final Set<String> _mockFavorites = {};
@@ -785,7 +813,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       final raw = prefs.getString(_avatarIdentityKey);
       if (raw == null || raw.isEmpty) return const AvatarIdentity();
       return AvatarIdentity.fromJson(jsonDecode(raw) as Map<String, dynamic>);
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'mock_load_avatar_identity');
       return const AvatarIdentity();
     }
   }
@@ -795,7 +824,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_avatarIdentityKey, jsonEncode(identity.toJson()));
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'mock_update_avatar_identity');
       // Offline/test ortamında sessizce yut; kozmetik veri kritik değil.
     }
   }

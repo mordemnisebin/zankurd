@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -12,11 +14,10 @@ import 'package:zankurd_mobile/src/screens/home/quick_play_grid.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/widgets/zana_daily_card.dart';
 
-// Sereke ve Bilîze aynı 4 modu birebir tekrarlıyordu (bkz. tasarım
-// değerlendirmesi 2026-07-13). QuickPlayGrid artık yalnızca Bilîze'de;
-// Sereke oraya yönlendiren tek bir teaser gösterir (home-play-hub-teaser).
+// Ana sayfa iki net giriş kapısı taşır: doğrudan yarış ve öğrenerek ilerleme.
+// Ayrıntılı oyun modları Oyna sekmesinde kalır.
 void main() {
-  testWidgets('Sereke tek CTA, Bilîze teaserı ve tek Zana çağrısı gösterir', (
+  testWidgets('Ana sayfa doğrudan yarış ve öğrenme girişlerini gösterir', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -41,10 +42,33 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
 
     expect(find.byType(HeroCard), findsOneWidget);
+    expect(find.text('Rast bikeve\npêşbirkê'), findsOneWidget);
+    expect(find.text('Pêşbaziyên din'), findsOneWidget);
+    expect(find.text('Mijar û mijaran bibîne'), findsOneWidget);
     expect(find.byType(QuickPlayGrid), findsNothing);
-    expect(find.byKey(const ValueKey('home-play-hub-teaser')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('home-direct-play-entry')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('home-learning-entry')), findsOneWidget);
     expect(find.byType(ZanaDailyCard), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-daily-race-entry')), findsOneWidget);
+    expect(find.text('Pêşbirka rojê'), findsOneWidget);
     expect(find.byType(DailyMissionsCard), findsNothing);
     expect(find.byType(DailyThemeCard), findsNothing);
   });
+
+  test(
+    'doğrudan oyun kartı ana header ile rekabet etmek için glow kullanmaz',
+    () {
+      final source = File(
+        'lib/src/screens/home_screen.dart',
+      ).readAsStringSync();
+      final teaserStart = source.indexOf('class _PlayHubTeaser');
+      final teaserSource = source.substring(teaserStart);
+      expect(teaserSource, contains('Color.alphaBlend'));
+      expect(teaserSource, contains('Yarış modları'));
+      expect(teaserSource, isNot(contains('glowShadow(AppTheme.playCyan')));
+    },
+  );
 }

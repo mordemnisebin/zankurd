@@ -18,14 +18,13 @@ class _GateAuthProvider extends AuthProvider {
   bool get isLoading => false;
 }
 
-// Koyu-öncelikli tasarım yönü (design-direction-2026-07): uygulama
-// varsayılan olarak koyu temayla açılır (kayıtlı tercih yokken). Açık
-// tema ikincil ama tam desteklenir.
+// Uygulama ilk açılışta aydınlık ve okunabilir temayı kullanır; kullanıcı
+// ana ekrandaki sabit tema düğmesinden koyuya geçebilir.
 void main() {
-  testWidgets('sıfır kurulumda onboarding koyu temayla açılır', (tester) async {
+  testWidgets('sıfır kurulumda onboarding açık temayla açılır', (tester) async {
     SharedPreferences.setMockInitialValues({});
     final themeProvider = await ThemeProvider.load();
-    expect(themeProvider.mode, ThemeMode.dark);
+    expect(themeProvider.mode, ThemeMode.light);
 
     await tester.pumpWidget(
       ZanKurdApp(
@@ -40,7 +39,7 @@ void main() {
     expect(find.byType(OnboardingScreen), findsOneWidget);
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
   });
 

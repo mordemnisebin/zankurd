@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/error_reporter.dart';
+
 /// Streak ve puan tabanlı rozet servisi.
 /// Mevcut AchievementStore'u tamamlar; ek rozetleri yönetir.
 class BadgeService {
@@ -53,7 +55,8 @@ class BadgeService {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'badge_service');
       preferences = null;
     }
     final unlocked =

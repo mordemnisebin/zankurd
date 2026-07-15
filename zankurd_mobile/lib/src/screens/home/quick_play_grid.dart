@@ -72,7 +72,7 @@ class QuickPlayGrid extends StatelessWidget {
     // grid yerine her mod tek satırda, taranması kolay ve büyük bir
     // dokunma alanı taşır. Sabit yükseklik yerine içeriğe göre doğal
     // boyutlanır (dar/geniş konteynerlerde taşma olmaz).
-    return Column(
+    final content = Column(
       children: [
         for (var i = 0; i < tiles.length; i++)
           Padding(
@@ -82,6 +82,18 @@ class QuickPlayGrid extends StatelessWidget {
             child: SizedBox(width: double.infinity, child: tiles[i]),
           ),
       ],
+    );
+
+    // Preview cards and compact embedded surfaces may be shorter than the
+    // complete mode list. Let those surfaces scroll instead of overflowing;
+    // the full play hub keeps its natural height inside its parent ListView.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.hasBoundedHeight && constraints.maxHeight < 500) {
+          return SingleChildScrollView(child: content);
+        }
+        return content;
+      },
     );
   }
 }

@@ -37,16 +37,16 @@ SEEDS = {
         {"term": "Melayê Cizîrî", "desc": "helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin"},
         {"term": "Feqiyê Teyran", "desc": "helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e"},
         {"term": "Ehmedê Xanî", "desc": "nivîskarê destana nemir a 'Mem û Zîn' ku hîmê ramanî yê kurdewariyê daniye"},
-        {"term": "Melayê Bateyî", "desc": "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye"},
+        {"term": "Melayê Bateyî", "desc": "helbestvanê ku Mewlûdaya Kurdî bi zaravayê kurmancî nivîsiye"},
         {"term": "kovara Hawarê", "desc": "kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye"},
         {"term": "Cegerxwîn", "desc": "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû"},
-        {"term": "Arabê Şamo", "desc": "nivîskarê romana 'Şivanê Kurd' ku wekî romana yekem a kurdî tê qebûlkirin"},
+        {"term": "Arabê Şamo", "desc": "nivîskarê kurd ê ku bi romana 'Şivanê Kurd' di wêjeya modern de tê naskirin"},
         {"term": "Mehmed Uzun", "desc": "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir"},
         {"term": "şevbêrkên wêjeyî", "desc": "civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin"},
         {"term": "Helbesta Azad", "desc": "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide"}
     ],
     "Dîrok": [
-        {"term": "Împaratoriya Medî", "desc": "hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin"},
+        {"term": "Împaratoriya Medî", "desc": "hêza antîk a li herêma Zagrosê ku di dîroka kevn a herêmê de cih digire"},
         {"term": "Dewleta Merwaniyan", "desc": "xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn"},
         {"term": "Mîrgeha Botan", "desc": "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû"},
         {"term": "Şerefname", "desc": "pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin"},
@@ -55,14 +55,14 @@ SEEDS = {
         {"term": "Mîrê Kor", "desc": "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike"},
         {"term": "Rojnameya Kurdistan", "desc": "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin"},
         {"term": "Mîrgeha Erdelanê", "desc": "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû"},
-        {"term": "Peymana Lozanê", "desc": "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir"}
+        {"term": "Peymana Lozanê", "desc": "peymana navdewletî ya sala 1923an ku piştî Şerê Cîhanê Yê Yekem çarçoveya hin sînorên herêmê ava kir"}
     ],
     "Cografya": [
         {"term": "çiyayên Zagrosê", "desc": "rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin"},
         {"term": "Newala Dîcleyê", "desc": "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze"},
         {"term": "Çemê Firatê", "desc": "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar"},
         {"term": "Çiyayê Cûdî", "desc": "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye"},
-        {"term": "Girê Mirazan", "desc": "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye"},
+        {"term": "Girê Mirazan", "desc": "şûna arkeolojîk a li nêzîkî bajarê Rihayê ku ji bo lêkolîna dîroka destpêkê girîng e"},
         {"term": "Gola Wanê", "desc": "gola herî mezin a herêmê ku avên wê şor û sodadar in"},
         {"term": "Çiyayê Sîpanê", "desc": "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê"},
         {"term": "Geliyê Zapê", "desc": "geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve"},
@@ -75,7 +75,7 @@ SEEDS = {
         {"term": "Kalo û Sersal", "desc": "şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin"},
         {"term": "Govenda Kurdî", "desc": "dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin"},
         {"term": "çanda koçeriyê", "desc": "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye"},
-        {"term": "misafirperweriya kurdî", "desc": "têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin"},
+        {"term": "mêvanperweriya kurdî", "desc": "têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin"},
         {"term": "kilimên kurdî", "desc": "elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin"},
         {"term": "Destana Memê Alan", "desc": "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne"},
         {"term": "hewran", "desc": "çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze"},
@@ -88,14 +88,14 @@ SEEDS = {
         {"term": "lîrîka klaman", "desc": "avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin"},
         {"term": "Şakiro", "desc": "dengbêjê mezin ê ku wekî 'Şahê Dengbêjan' tê naskirin û xwedî dengekî bêhempa bû"},
         {"term": "Hasan Cizrawî", "desc": "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine"},
-        {"term": "Meryem Xan", "desc": "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye"},
-        {"term": "Koma Wetan", "desc": "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê"},
+        {"term": "Meryem Xan", "desc": "stranbêja kurd ku dengê xwe li ser plakan tomar kiriye"},
+        {"term": "Koma Wetan", "desc": "koma muzîka rock a kurdî ya ku di salên 70an de derketibû holê"},
         {"term": "lawik", "desc": "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin"},
         {"term": "heyran", "desc": "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin"}
     ],
     "Siyaset": [
         {"term": "Radikal demokrasi", "desc": "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze"},
-        {"term": "eşseroktî", "desc": "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin"},
+        {"term": "hevserokatiyê", "desc": "sîstema hevseng a ku tê de jin û mêr bi hev re di saziyan de serokatiyê dikin"},
         {"term": "komûn û meclîs", "desc": "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan"},
         {"term": "peymana civakî", "desc": "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike"},
         {"term": "ademi-merkeziyet", "desc": "parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve"},
@@ -108,9 +108,9 @@ SEEDS = {
     "Paradigma": [
         {"term": "Konfederalîzma Demokratîk", "desc": "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê"},
         {"term": "Moderniteya Demokratîk", "desc": "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern"},
-        {"term": "Jineolojî", "desc": "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike"},
+        {"term": "Jineolojî", "desc": "di gotûbêja tevgerê de nêzîkatiyek ku azadiya civakê bi azadiya jinê ve girê dide"},
         {"term": "Ekolojiya Civakî", "desc": "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de"},
-        {"term": "aboriya komûnal", "desc": "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê"},
+        {"term": "aboriya komûnal", "desc": "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê tê avakirin, ne tenê li ser qezencê"},
         {"term": "civaka exlaqî-polîtîk", "desc": "civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide"},
         {"term": "rexneya patriyarkayê", "desc": "analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê"},
         {"term": "hiyerarşiya civakî", "desc": "avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike"},
@@ -140,6 +140,39 @@ TURKISH_STOPWORDS = [
 TURKISH_CHARACTERS = ["ı", "ğ", "ü", "ö"]
 KURDISH_CHARACTERS = ["ç", "ş", "ê", "î", "û"]
 
+# DB anahtarları korunur; soru metninde doğal Kurmancî kategori adları kullanılır.
+CATEGORY_LABELS = {
+    "Edebiyat": "wêje",
+    "Cografya": "erdnîgarî",
+}
+
+# Kategori düzeyindeki destekleyici kaynaklar; soru yayımlanmadan önce seed
+# düzeyinde ikinci bir kaynakla doğrulama yapılır.
+SOURCE_REGISTRY = {
+    "Ziman": "https://nykcc.org/oldsite/hawar-archive/",
+    "Edebiyat": "https://www.iranicaonline.org/articles/kurdish-written-literature/",
+    "Dîrok": "https://www.iranicaonline.org/articles/kurds-studies-of-modern-kurdish-history/",
+    "Cografya": "https://www.iranicaonline.org/articles/geology/",
+    "Çand": "https://www.iranicaonline.org/articles/oral-literature-in-iran/",
+    "Muzîk": "https://www.kurdipedia.org/docviewer.aspx?book=20220816235906428748&lng=3",
+    "Siyaset": "https://anfenglishmobile.com/kurdIstan/kjar-dan-10-boyutlu-bir-devrim-projesi-177521",
+    "Paradigma": "https://kongra-star.org/eng/about/",
+}
+
+# 8 şablon x 25 bağlam, her tohum için 200 ayrı prompt kombinasyonu sağlar;
+# bu, 1.500 soruluk kategorilerde tohum başına 150 soruyu da kapsar.
+VARIANT_CONTEXTS = [
+    "di destpêkê de", "di asta bingehîn de", "di asta navîn de",
+    "di asta pêşketî de", "di xwendina rojane de", "di lêkolîna kurt de",
+    "di gotûbêja dersê de", "di bîranîna dîrokî de", "di jiyana civakî de",
+    "di nirxandina zanînê de", "di berhevkirina têgehan de",
+    "di xwendina nivîsekê de", "di pirsên pratîkî de",
+    "di rêza yekem de", "di rêza duyem de", "di rêza sêyem de",
+    "di şertên nû de", "di şertên kevn de", "di mînakekê de",
+    "di berawirdkirinê de", "di pirsên kurt de", "di pirsên dirêj de",
+    "di xwendina komî de", "di xwendina kesane de", "di vekolîna têgehê de",
+]
+
 # ==========================================
 # 🛠️ GÜVENLİK VE FİLTRE MOTORU
 # ==========================================
@@ -159,6 +192,11 @@ def validate_question(q, attempt=1):
     for char in TURKISH_CHARACTERS:
         if char in all_text:
             return False, f"Türkçe karakter tespit edildi: {char}"
+
+    correct = q["correctAnswer"].strip().lower()
+    prompt = q["prompt"].strip().lower()
+    if len(correct) >= 6 and correct in prompt:
+        return False, "Doğru cevap prompt içinde açıkça geçiyor"
             
     # 3. Şık Varyans Kontrolü (SD Kontrolü)
     lengths = [len(a) for a in q["answers"]]
@@ -180,6 +218,10 @@ def validate_question(q, attempt=1):
         
     return True, "Geçerli"
 
+
+def normalize_prompt(prompt):
+    return re.sub(r"\s+", " ", prompt.strip().casefold())
+
 # ==========================================
 # 🧠 DART / TEMPLATE TABANLI GÜVENLİ JENERATÖR
 # ==========================================
@@ -189,46 +231,48 @@ def generate_fallback_kurdish_question(cat, seed, idx, attempt=1):
     """
     term = seed["term"]
     desc = seed["desc"]
+    label = CATEGORY_LABELS.get(cat, cat.lower())
+    context = VARIANT_CONTEXTS[idx % len(VARIANT_CONTEXTS)]
     
     # 8 Felsefi / Dilbilimsel Saf Kurmancî Şablon
     templates = [
         {
-            "prompt": f"Di warê {cat.lower()} de têgeha '{term}' bi kîjan pênaseya xwe ya bingehîn tê naskirin?",
+            "prompt": f"{context.capitalize()}, di warê {label} de têgeha '{term}' bi kîjan pênaseya xwe ya bingehîn tê naskirin?",
             "correct": desc,
             "type": "multipleChoice"
         },
         {
-            "prompt": f"Kîjan vebijark di çarçoveya {cat.lower()} de wateya têgeha '{term}' bi awayekî herî rast nîşan dide?",
+            "prompt": f"{context.capitalize()}, kîjan vebijark di çarçoveya {label} de wateya têgeha '{term}' bi awayekî herî rast nîşan dide?",
             "correct": f"Ew wekî '{desc}' tê pênasekirin.",
             "type": "multipleChoice"
         },
         {
-            "prompt": f"Têgeha '{term}' a ku di qada {cat.lower()} de derdikeve pêş, çi nîşan dide?",
+            "prompt": f"{context.capitalize()}, têgeha '{term}' a ku di qada {label} de derdikeve pêş, çi nîşan dide?",
             "correct": desc,
             "type": "multipleChoice"
         },
         {
-            "prompt": f"Ravekirina '{desc}' têkildarî kîjan têgeha {cat.lower()} ye?",
+            "prompt": f"{context.capitalize()}, ravekirina '{desc}' têkildarî kîjan têgeha {label} ye?",
             "correct": term,
             "type": "multipleChoice"
         },
         {
-            "prompt": f"Têgeha '{term.capitalize()}' di heman demê de wekî '{desc}' tê binavkirin.",
+            "prompt": f"{context.capitalize()}, di qada {label} de têgeha '{term.capitalize()}' di heman demê de wekî '{desc}' tê binavkirin.",
             "correct": "Rast",
             "type": "trueFalse"
         },
         {
-            "prompt": f"Têgeha '{term.capitalize()}' di qada {cat.lower()} de tu wateyê nîşan nade.",
+            "prompt": f"{context.capitalize()}, têgeha '{term.capitalize()}' di qada {label} de tu wateyê nîşan nade.",
             "correct": "Şaş",
             "type": "trueFalse"
         },
         {
-            "prompt": f"Di lêkolînên {cat.lower()} de, avahiya '{term}' wekî mijareke sereke tê qebûlkirin.",
+            "prompt": f"{context.capitalize()}, di lêkolînên {label} de, avahiya '{term}' wekî mijareke sereke tê qebûlkirin.",
             "correct": "Rast",
             "type": "trueFalse"
         },
         {
-            "prompt": f"Pênaseya '{desc}' bi tevahî li derveyî çarçoveya '{term}' dimîne.",
+            "prompt": f"{context.capitalize()}, di qada {label} de pênaseya '{desc}' bi tevahî li derveyî çarçoveya '{term}' dimîne.",
             "correct": "Şaş",
             "type": "trueFalse"
         }
@@ -257,7 +301,7 @@ def generate_fallback_kurdish_question(cat, seed, idx, attempt=1):
         "prompt": selected_template["prompt"],
         "answers": answers,
         "correctAnswer": selected_template["correct"],
-        "explanation": f"Têgeha '{term}' di bin sîwana {cat.lower()} de xwedî roleke giring e.",
+        "explanation": f"Têgeha '{term}' di bin sîwana {label} de xwedî roleke giring e.",
         "type": selected_template["type"]
     }
 
@@ -270,8 +314,9 @@ def generate_via_gemini(cat, seed, api_key):
     """
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
     
+    label = CATEGORY_LABELS.get(cat, cat.lower())
     prompt_instruction = f"""
-    Li ser kategoriya "{cat}" û mijara "{seed['term']}" (têkilî: {seed['desc']}) pirsiyarekê ava bike.
+    Li ser qada "{label}" û mijara "{seed['term']}" (têkilî: {seed['desc']}) pirsiyarekê ava bike.
     Pirsyar divê 100% bi Kurmanciya saf a akademîk be.
     
     Şema JSON:
@@ -327,10 +372,11 @@ def save_to_sql_file(questions, filename):
     print(f"\nSQL dosyası yazılıyor: {filename}...")
     sys.stdout.flush()
     with open(filename, "w", encoding="utf-8") as f:
-        f.write("-- Clean up existing pure Kurdish questions first\n")
-        f.write("DELETE FROM public.player_answers WHERE question_id IN (SELECT id FROM public.questions WHERE source_url = 'zankurd_pure_kurdish_v1');\n")
-        f.write("DELETE FROM public.room_questions WHERE question_id IN (SELECT id FROM public.questions WHERE source_url = 'zankurd_pure_kurdish_v1');\n")
-        f.write("DELETE FROM public.questions WHERE source_url = 'zankurd_pure_kurdish_v1';\n\n")
+        source_values = ", ".join(escape_sql(url) for url in SOURCE_REGISTRY.values())
+        f.write("-- Clean up existing editorial source rows first\n")
+        f.write(f"DELETE FROM public.player_answers WHERE question_id IN (SELECT id FROM public.questions WHERE source_url IN ({source_values}));\n")
+        f.write(f"DELETE FROM public.room_questions WHERE question_id IN (SELECT id FROM public.questions WHERE source_url IN ({source_values}));\n")
+        f.write(f"DELETE FROM public.questions WHERE source_url IN ({source_values});\n\n")
         
         chunk_size = 500
         for i in range(0, len(questions), chunk_size):
@@ -388,12 +434,56 @@ def save_to_sql_file(questions, filename):
                     f"true, "
                     f"'{q_type}', "
                     f"NULL, "
-                    f"'zankurd_pure_kurdish_v1')"
+                    f"{escape_sql(q['source_url'])})"
                 )
                 value_lines.append(line)
             
             f.write(",\n".join(value_lines))
             f.write(";\n\n")
+
+
+def generate_fast_bank(output_file):
+    """Tek-geçişli yerel üretim; tekrar denemeleri yalnızca kalite reddinde yapar."""
+    limits = {cat: 1250 for cat in SEEDS}
+    questions = []
+    seen = set()
+    question_id = 15000
+
+    for cat, limit in limits.items():
+        seeds = SEEDS[cat]
+        for index in range(limit):
+            seed_index = index % len(seeds)
+            seed = seeds[seed_index]
+            seed_variant = index // len(seeds)
+            accepted = None
+            for attempt in range(1, 9):
+                candidate = generate_fallback_kurdish_question(cat, seed, seed_variant, attempt)
+                valid, _ = validate_question(candidate, attempt)
+                key = normalize_prompt(candidate["prompt"])
+                if valid and key not in seen:
+                    accepted = candidate
+                    seen.add(key)
+                    break
+            if accepted is None:
+                raise RuntimeError(f"Kalite filtresi geçilemedi: {cat}/{index}")
+            questions.append({
+                "id": f"pure_{question_id}",
+                "category": cat,
+                "prompt": accepted["prompt"],
+                "answers": accepted["answers"],
+                "correctAnswer": accepted["correctAnswer"],
+                "explanation": accepted["explanation"],
+                "difficulty": 1 + (index % 5),
+                "type": accepted["type"],
+                "imageUrl": None,
+                "source_url": SOURCE_REGISTRY[cat],
+            })
+            question_id += 1
+        print(f"{cat}: {limit} soru hazırlandı")
+        sys.stdout.flush()
+
+    save_to_sql_file(questions, output_file)
+    print(f"Toplam üretilen soru sayısı: {len(questions)}")
 
 # ==========================================
 # 🏃 MAİN ENGINE
@@ -401,7 +491,9 @@ def save_to_sql_file(questions, filename):
 def main():
     print("=== Zankurd Pure Kurdish Generator (BÜYÜK ÜRETİM MODU) ===")
     sys.stdout.flush()
-    api_key = os.environ.get("GEMINI_API_KEY")
+    # Dış model üretimi açıkça istenmedikçe kullanılmaz; böylece dalga
+    # üretimi deterministik, denetlenebilir ve anahtar-bağımsız kalır.
+    api_key = os.environ.get("GEMINI_API_KEY") if os.environ.get("ZANKURD_USE_GEMINI") == "1" else None
     if api_key:
         print("Gemini API Key tespit edildi, canlı üretim modu aktif.")
     else:
@@ -409,7 +501,16 @@ def main():
     sys.stdout.flush()
         
     output_questions = []
+    seen_prompts = set()
     id_counter = 15000
+
+    output_file = os.environ.get(
+        "ZANKURD_OUTPUT_FILE",
+        "c:/Users/AMARGİ/Desktop/pirs kurmanci/zankurd_mobile/rich_question_bank_pure_kurdish.sql",
+    )
+    if os.environ.get("ZANKURD_FAST_MODE", "1") == "1":
+        generate_fast_bank(output_file)
+        return
     
     # Siyaset ve Paradigma 1.500'er adet, diğer 6 kategori 1.000'er adet
     questions_per_cat = {
@@ -449,11 +550,17 @@ def main():
                     question_data = generate_via_gemini(cat, seed, api_key)
                 
                 if not question_data:
-                    print(f"  [{generated_count + 1}/{limit}] Terim üretiliyor (Fallback, deneme {attempts_for_q}): {seed['term']}...")
-                    sys.stdout.flush()
+                    if generated_count % 100 == 0 or attempts_for_q > 5:
+                        print(f"  [{generated_count + 1}/{limit}] Terim üretiliyor (Fallback, deneme {attempts_for_q}): {seed['term']}...")
+                        sys.stdout.flush()
                     question_data = generate_fallback_kurdish_question(cat, seed, generated_count, attempts_for_q)
                     
                 is_valid, reason = validate_question(question_data, attempts_for_q)
+
+                prompt_key = normalize_prompt(question_data["prompt"])
+                if is_valid and prompt_key in seen_prompts:
+                    is_valid = False
+                    reason = "Prompta dubare hate dîtin"
                 
                 if is_valid:
                     new_q = {
@@ -466,9 +573,10 @@ def main():
                         "difficulty": 1 + (generated_count % 5),
                         "type": question_data["type"],
                         "imageUrl": None,
-                        "source_url": "zankurd_pure_kurdish_v1"
+                        "source_url": SOURCE_REGISTRY[cat]
                     }
                     output_questions.append(new_q)
+                    seen_prompts.add(prompt_key)
                     id_counter += 1
                     generated_count += 1
                     # Her 100 soruda bir durum logu yaz
@@ -477,15 +585,14 @@ def main():
                 else:
                     if attempts_for_q > 5 and attempts_for_q % 5 == 0:
                         print(f"    -> [Reddedildi] Neden: {reason}")
-                sys.stdout.flush()
+                if generated_count % 100 == 0:
+                    sys.stdout.flush()
                     
-    output_file = "c:/Users/AMARGİ/Desktop/pirs kurmanci/zankurd_mobile/rich_question_bank_pure_kurdish.sql"
     save_to_sql_file(output_questions, output_file)
     
     print("\n=== Büyük Üretim Başarıyla Tamamlandı ===")
     print(f"Toplam üretilen soru sayısı: {len(output_questions)}")
     print(f"Çıktı dosyası kaydedildi: {output_file}")
-    sys.stdout.flush()
 
 if __name__ == "__main__":
     main()

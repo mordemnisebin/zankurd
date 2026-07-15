@@ -18,6 +18,9 @@ String generateRoomCode([Random? random]) {
 }
 
 class GameRoom {
+  static const allowedSecondsPerQuestion = [20, 30, 45, 60];
+  static const defaultSecondsPerQuestion = 30;
+
   const GameRoom({
     this.id,
     required this.name,
@@ -26,6 +29,7 @@ class GameRoom {
     required this.players,
     required this.status,
     required this.questionCount,
+    this.secondsPerQuestion = defaultSecondsPerQuestion,
     this.hostId,
   });
 
@@ -36,6 +40,7 @@ class GameRoom {
   final List<Player> players;
   final RoomStatus status;
   final int questionCount;
+  final int secondsPerQuestion;
   final String? hostId;
 
   GameRoom copyWith({
@@ -46,6 +51,7 @@ class GameRoom {
     List<Player>? players,
     RoomStatus? status,
     int? questionCount,
+    int? secondsPerQuestion,
     String? hostId,
   }) {
     return GameRoom(
@@ -56,6 +62,7 @@ class GameRoom {
       players: players ?? this.players,
       status: status ?? this.status,
       questionCount: questionCount ?? this.questionCount,
+      secondsPerQuestion: secondsPerQuestion ?? this.secondsPerQuestion,
       hostId: hostId ?? this.hostId,
     );
   }

@@ -1,8 +1,43 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/models/question_metadata.dart';
 import 'package:zankurd_mobile/src/services/content_quality_policy.dart';
+import 'package:zankurd_mobile/src/services/question_content_policy.dart';
+import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
 void main() {
+  group('Soru yapısal kalite politikası', () {
+    const policy = QuestionContentPolicy();
+
+    test('görselli soru görsel yoksa oynanamaz', () {
+      const question = QuizQuestion(
+        id: 'visual-missing',
+        category: 'Rêziman',
+        prompt: 'Wateya peyvê çi ye?',
+        answers: ['A', 'B', 'C', 'D'],
+        correctAnswer: 'A',
+        explanation: 'Ravekirin',
+        type: QuestionType.visual,
+      );
+
+      expect(policy.validate(question), contains('visual_image_missing'));
+      expect(policy.isPlayable(question), isFalse);
+    });
+
+    test('geçerli soru oynanabilir', () {
+      const question = QuizQuestion(
+        id: 'valid',
+        category: 'Ziman',
+        prompt: 'Pirtûk çi ye?',
+        answers: ['Kitap', 'Masa', 'Su', 'Ev'],
+        correctAnswer: 'Kitap',
+        explanation: 'Pirtûk kitap demektir.',
+      );
+
+      expect(policy.validate(question), isEmpty);
+      expect(policy.isPlayable(question), isTrue);
+    });
+  });
+
   group('QuestionMetadata geriye uyumluluk', () {
     test('eski JSON (metadata alanı yok) güvenli varsayılana düşer', () {
       final meta = QuestionMetadata.fromJson(null);

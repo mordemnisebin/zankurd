@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/error_reporter.dart';
+
 /// Günlük oyun serisini (streak) yerelde izler.
 ///
 /// Kurallar: gün yerel saate göre hesaplanır; aynı gün içinde ikinci
@@ -19,7 +21,8 @@ class StreakStore {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak_store');
       preferences = null;
     }
     return _instance = StreakStore._(

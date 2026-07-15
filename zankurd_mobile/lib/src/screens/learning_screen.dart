@@ -10,6 +10,7 @@ import '../models/mini_guide.dart';
 import '../models/story.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import 'story_screen.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
@@ -57,7 +58,9 @@ class _LearningScreenState extends State<LearningScreen> {
     try {
       final store = await PlacementStore.load();
       if (mounted) setState(() => _placementLevel = store.level);
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'learning_load_progress');
+    }
   }
 
   void _loadLessons() {
@@ -73,7 +76,9 @@ class _LearningScreenState extends State<LearningScreen> {
     try {
       final ids = await widget.repository.loadCompletedLessonIds();
       if (mounted) setState(() => _completedIds = ids);
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'learning_load_placement');
+    }
   }
 
   void _selectCategory(String category) {
@@ -123,6 +128,20 @@ class _LearningScreenState extends State<LearningScreen> {
                   compact: true,
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.page,
+                  AppSpacing.sm,
+                  AppSpacing.page,
+                  0,
+                ),
+                child: _LearningSectionHeading(
+                  title: ku ? 'Armanca îro' : 'Bugünkü hedefin',
+                  subtitle: ku
+                      ? 'Dubarekirin û dersa dawî li vir in.'
+                      : 'Tekrarların ve kaldığın ders burada.',
+                ),
+              ),
               // Akıllı tekrar (SM-2) ürün yüzü: yalnız hazır tekrar varsa
               // dokunulabilir kart, yoksa sakin bir tamamlandı durumu.
               Padding(
@@ -158,6 +177,20 @@ class _LearningScreenState extends State<LearningScreen> {
                   label: Text(ku ? 'Çîrok: Li Çayxanê' : 'Hikâye: Çay Evinde'),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.page,
+                  AppSpacing.sm,
+                  AppSpacing.page,
+                  0,
+                ),
+                child: _LearningSectionHeading(
+                  title: ku ? 'Rêyên hînbûnê' : 'Öğrenme yolları',
+                  subtitle: ku
+                      ? 'Mijarek hilbijêre û gav bi gav pêşve here.'
+                      : 'Bir konu seç ve adım adım ilerle.',
+                ),
+              ),
               // Kategori sekmeler
               SizedBox(
                 height: 60,
@@ -174,6 +207,20 @@ class _LearningScreenState extends State<LearningScreen> {
                         ),
                       )
                       .toList(),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.page,
+                  AppSpacing.xs,
+                  AppSpacing.page,
+                  0,
+                ),
+                child: _LearningModeBar(
+                  isKu: ku,
+                  hasLesson: _currentLessons.isNotEmpty,
+                  onPractice: _openCategoryPractice,
+                  onFlashcards: _openCategoryFlashcards,
                 ),
               ),
               // Kategori ilerleme göstergesi
@@ -215,11 +262,17 @@ class _LearningScreenState extends State<LearningScreen> {
                     );
                     // Seviye belirlemeye göre önerilen başlangıç düğümü.
                     // Yalnız görsel işaret: kilit/tamamlanma değişmez.
-                    final recommendedIndex =
+                    final placementIndex =
                         PlacementScoring.recommendedStartIndex(
                           _placementLevel,
                           lessons.length,
                         );
+                    // Öneri kilitli bir düğüme düşerse kullanıcıyı erişemeyeceği
+                    // bir karta yönlendirme; ilk açık dersi işaretle.
+                    final recommendedIndex = firstOpenIndex >= 0 &&
+                            placementIndex > firstOpenIndex
+                        ? firstOpenIndex
+                        : placementIndex;
                     return ListView.builder(
                       padding: const EdgeInsets.fromLTRB(
                         AppSpacing.page,
@@ -278,6 +331,49 @@ class _LearningScreenState extends State<LearningScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _openCategoryPractice() async {
+    if (_currentLessons.isEmpty || !mounted) return;
+    final lesson = _currentLessons.first;
+    try {
+      final questions = await widget.repository.loadLevelQuestions(
+        category: lesson.category,
+        difficultyMin: 1,
+        difficultyMax: 5,
+        limit: 10,
+      );
+      if (!mounted || questions.isEmpty) return;
+      final room = widget.repository
+          .createRoom(category: lesson.category)
+          .copyWith(questionCount: questions.length);
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => QuizScreen(
+            repository: widget.repository,
+            room: room,
+            questions: questions,
+            enableTimer: false,
+            experience: QuizExperience.learning,
+          ),
+        ),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'learning_category_practice');
+    }
+  }
+
+  Future<void> _openCategoryFlashcards() async {
+    if (_currentLessons.isEmpty || !mounted) return;
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => LessonDetailScreen(
+          lesson: _currentLessons.first,
+          repository: widget.repository,
+        ),
+      ),
+    );
+    _refreshCompleted();
   }
 
   Widget _buildCategoryProgress(BuildContext context, bool ku) {
@@ -344,12 +440,155 @@ class _LearningScreenState extends State<LearningScreen> {
       'culture': ('Çand', 'Kültür'),
       'food': ('Xwarin', 'Yemek'),
       'animals': ('Ajal', 'Hayvanlar'),
-      'geography': ('Cografya', 'Coğrafya'),
+      'geography': ('Erdnîgarî', 'Coğrafya'),
       'emotions': ('Hestan', 'Duygular'),
       'time': ('Demjimêr', 'Zaman'),
     };
     final (kuLabel, trLabel) = labels[cat] ?? (cat, cat);
     return ku ? kuLabel : trLabel;
+  }
+
+}
+
+class _LearningModeBar extends StatelessWidget {
+  const _LearningModeBar({
+    required this.isKu,
+    required this.hasLesson,
+    required this.onPractice,
+    required this.onFlashcards,
+  });
+
+  final bool isKu;
+  final bool hasLesson;
+  final VoidCallback onPractice;
+  final VoidCallback onFlashcards;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _LearningModeButton(
+            icon: Icons.quiz_outlined,
+            label: isKu ? 'Pirsan' : 'Soru çöz',
+            color: AppTheme.playCyan,
+            enabled: hasLesson,
+            onTap: onPractice,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: _LearningModeButton(
+            icon: Icons.style_outlined,
+            label: isKu ? 'Kart' : 'Flaş kart',
+            color: AppTheme.violet,
+            enabled: hasLesson,
+            onTap: onFlashcards,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: _LearningModeButton(
+            icon: Icons.menu_book_outlined,
+            label: isKu ? 'Ders' : 'Dersler',
+            color: AppTheme.playGreen,
+            enabled: true,
+            onTap: () {},
+          ),
+        ),
+      ],
+    );
+  }
+
+}
+
+class _LearningModeButton extends StatelessWidget {
+  const _LearningModeButton({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.enabled,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final bool enabled;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      enabled: enabled,
+      label: label,
+      child: InkWell(
+        onTap: enabled ? onTap : null,
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: enabled ? 0.12 : 0.05),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
+            border: Border.all(
+              color: color.withValues(alpha: enabled ? 0.35 : 0.15),
+            ),
+          ),
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                color: color.withValues(alpha: enabled ? 1 : 0.45),
+                size: 18,
+              ),
+              const SizedBox(height: 2),
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: AppTheme.textPrimaryColor(context).withValues(
+                    alpha: enabled ? 1 : 0.5,
+                  ),
+                  fontSize: 10,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LearningSectionHeading extends StatelessWidget {
+  const _LearningSectionHeading({required this.title, required this.subtitle});
+
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: AppTypography.heading2.copyWith(
+            color: AppTheme.textPrimaryColor(context),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xxs),
+        Text(
+          subtitle,
+          style: AppTypography.caption.copyWith(
+            color: AppTheme.textSubColor(context),
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -430,29 +669,26 @@ class _LessonCard extends StatelessWidget {
       child: GestureDetector(
         onTap: locked ? null : onTap,
         child: AppPanel(
+          key: recommended && !completed
+              ? const ValueKey('learning-next-step')
+              : null,
           child: Row(
             children: [
               Container(
                 width: 56,
                 height: 56,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [AppTheme.playGreen, Color(0xFF3E9A55)],
-                  ),
+                  color: AppTheme.playGreen.withValues(alpha: 0.14),
                   borderRadius: BorderRadius.circular(14),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppTheme.playGreen.withValues(alpha: 0.24),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
+                  border: Border.all(
+                    color: AppTheme.playGreen.withValues(alpha: 0.34),
+                  ),
                 ),
                 child: Center(
                   child: Icon(
                     _iconForLesson(lesson.slug),
-                    color: Colors.white,
-                    size: 28,
+                    color: AppTheme.playGreen,
+                    size: 26,
                   ),
                 ),
               ),
@@ -496,17 +732,27 @@ class _LessonCard extends StatelessWidget {
                             color: AppTheme.gold.withValues(alpha: 0.4),
                           ),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
+                        child: Wrap(
+                          spacing: 4,
+                          runSpacing: 2,
                           children: [
                             const Icon(
                               Icons.star_rounded,
                               size: 12,
                               color: AppTheme.gold,
                             ),
-                            const SizedBox(width: 4),
                             Text(
-                              ku ? 'Pêşniyara te' : 'Sana önerilen',
+                              ku
+                                  ? 'Pêşniyara te'
+                                  : 'Sana önerilen',
+                              style: const TextStyle(
+                                color: AppTheme.gold,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 10.5,
+                              ),
+                            ),
+                            Text(
+                              ku ? 'Bidomîne' : 'Devam et',
                               style: const TextStyle(
                                 color: AppTheme.gold,
                                 fontWeight: FontWeight.w800,
@@ -766,7 +1012,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
           ),
         ),
       );
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'learning_load_story');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

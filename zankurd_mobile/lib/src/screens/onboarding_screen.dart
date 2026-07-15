@@ -343,7 +343,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         ),
         bullets: [
           ku
-              ? '8 kategori: Ziman, Dîrok, Çand, Edebiyat, Muzîk, Cografya, Siyaset, Paradigma'
+              ? '8 kategori: Ziman, Dîrok, Çand, Wêje, Muzîk, Erdnîgarî, Siyaset, Paradigma'
               : '8 kategori: Dil, Tarih, Kültür, Edebiyat, Müzik, Coğrafya, Siyaset, Paradigma',
           ku
               ? 'Jokerên stratejîk: 50/50, Demjimêr zêde, Pirsê biguherîne'
@@ -442,10 +442,13 @@ class _OnboardingPage extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          flex: compact ? 40 : 45,
+          // Görsel kimlik güçlü kalsın; metin ve madde listesi ilk bakışta
+          // daha fazla alan bulsun.
+          flex: compact ? 36 : 38,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(AppRadius.card),
             child: Container(
+              key: const ValueKey('onboarding-hero-panel'),
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 2),
               decoration: BoxDecoration(
@@ -494,7 +497,7 @@ class _OnboardingPage extends StatelessWidget {
         ),
         SizedBox(height: compact ? AppSpacing.md : AppSpacing.lg),
         Expanded(
-          flex: compact ? 60 : 55,
+          flex: compact ? 64 : 62,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

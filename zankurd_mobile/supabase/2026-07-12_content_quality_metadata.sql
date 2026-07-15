@@ -2,8 +2,7 @@
 -- İçerik Kalite & Editör Meta Verisi — questions tablosu genişletmesi
 -- Tarih: 2026-07-12
 --
--- DURUM: CANLIYA UYGULANMADI. Bu dosya yalnızca hazırlıktır; production
--- Supabase'e elle uygulanmalıdır. Uygulama tarafı (QuestionMetadata +
+-- DURUM: CANLIYA UYGULANDI (2026-07-14). Uygulama tarafı (QuestionMetadata +
 -- ContentQualityPolicy) bu kolonlar olmadan da geriye uyumlu çalışır:
 -- kolonlar yoksa istemci metadata'yı null kabul eder ve içerik görünür kalır.
 --
@@ -31,7 +30,8 @@ alter table public.questions
 create or replace view public.quiz_eligible_questions as
   select *
   from public.questions
-  where review_status is distinct from 'rejected';
+  where is_approved = true
+    and review_status is distinct from 'rejected';
 
 -- 3) Kullanıcı bildirimi: report_count artır; eşiği (5) aşınca ve rejected
 --    değilse needsReview'e çek. Mevcut report akışıyla uyumlu, güvenli.

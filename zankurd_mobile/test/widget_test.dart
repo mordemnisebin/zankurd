@@ -21,13 +21,13 @@ import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
-import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
+import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
@@ -167,7 +167,10 @@ class _DeleteTrackingRepository extends MockZanKurdRepository {
 
 class _FailingRoomRepository extends MockZanKurdRepository {
   @override
-  Future<GameRoom> createOnlineRoom({String category = 'Ziman'}) {
+  Future<GameRoom> createOnlineRoom({
+    String category = 'Ziman',
+    int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+  }) {
     return Future<GameRoom>.error(StateError('online room unavailable'));
   }
 }
@@ -647,16 +650,16 @@ void main() {
     );
     expect(tester.takeException(), isNull);
 
-    // Koyu-öncelikli sözleşme: onboarding varsayılan koyu sahnede açılır.
+    // Açık tema varsayılan sözleşmesi.
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
     final surface = tester.widget<Container>(
       find.byKey(const ValueKey('onboarding-surface')),
     );
     final decoration = surface.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.bg);
+    expect(decoration.color, AppTheme.lightBg);
   });
 
   testWidgets('onboarding fits a tablet and web viewport', (tester) async {
@@ -678,7 +681,7 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
   });
 
@@ -733,7 +736,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd'), findsOneWidget);
-    expect(find.text('Hemen Oyna'), findsOneWidget);
+    expect(find.text('Yarış modları'), findsOneWidget);
   });
 
   testWidgets('home header exposes language and theme quick controls', (
@@ -761,10 +764,9 @@ void main() {
     expect(find.byKey(const ValueKey('home-multiplayer-hero')), findsOneWidget);
     expect(find.text('Oda kur'), findsOneWidget);
     expect(find.text('Kodla katıl'), findsOneWidget);
-    expect(find.text('1vs1 — Hemen oyna'), findsOneWidget);
-    expect(find.text('Öğren'), findsOneWidget);
-    expect(find.text('Oyna'), findsOneWidget);
-    expect(find.text('Topluluk'), findsOneWidget);
+    expect(find.text('1vs1 — Hemen yarış'), findsOneWidget);
+    expect(find.text('Yarış'), findsOneWidget);
+    expect(find.text('Profil'), findsOneWidget);
 
     final header = tester.widget<Container>(
       find.byKey(const ValueKey('home-profile-header')),
@@ -780,15 +782,15 @@ void main() {
       find.byType(NavigationBarTheme),
     );
     expect(navTheme.data.height, 68);
-    expect(navTheme.data.backgroundColor, AppTheme.surface);
+    expect(navTheme.data.backgroundColor, AppTheme.lightSurface);
     expect(
       navTheme.data.indicatorColor,
       AppTheme.brandOrange.withValues(alpha: 0.14),
     );
 
-    await tester.tap(find.text('Öğren'));
+    await tester.tap(find.text('Yarış'));
     await tester.pumpAndSettle();
-    expect(find.byType(LearningScreen), findsOneWidget);
+    expect(find.byType(PlayHubScreen), findsOneWidget);
 
     // Bottom nav seçili rengi sekmeyle değişmez; sabit brandOrange kalır.
     final navThemeAfter = tester.widget<NavigationBarTheme>(
@@ -817,10 +819,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Koyu-öncelikli sözleşme gereği uygulama koyu temayla açılır.
+    // Açık tema varsayılan sözleşmesi.
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
     final home = tester.widget<Container>(
       find
@@ -832,14 +834,14 @@ void main() {
     );
     final decoration = home.decoration as BoxDecoration;
     final gradient = decoration.gradient as LinearGradient;
-    expect(gradient.colors.first, AppTheme.bg);
+    expect(gradient.colors.first, AppTheme.lightBg);
 
     theme.toggleDarkLight();
     await tester.pumpAndSettle();
 
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
   });
 
@@ -860,7 +862,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
-    expect(find.text('Hemen Oyna'), findsNothing);
+    expect(find.text('Yarış modları'), findsNothing);
 
     await tester.enterText(
       find.byKey(const ValueKey('player-name-field')),
@@ -870,7 +872,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.savedName, 'Rojda Test');
-    expect(find.text('Hemen Oyna'), findsOneWidget);
+    expect(find.text('Yarış modları'), findsOneWidget);
   });
 
   test('unsupported provider auth error is user friendly', () {
@@ -985,13 +987,16 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd'), findsOneWidget);
-    expect(find.textContaining('Arkadaşlarınla'), findsOneWidget);
+    expect(find.text('Hemen\nyarış'), findsOneWidget);
     expect(find.text('Oda kur'), findsOneWidget);
     expect(find.text('Kodla katıl'), findsOneWidget);
 
     await tester.ensureVisible(find.text('Oda kur'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Oda kur'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Odayı oluştur'));
     await tester.pumpAndSettle();
 
     expect(find.text('Hevalên Zanînê'), findsOneWidget);
@@ -1019,7 +1024,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Günlük yarışma modu artık yalnızca Bilîze (Oyna) sekmesinde.
-    await tester.tap(find.text('Oyna'));
+    await tester.tap(find.text('Yarış'));
     await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.text('Günün Yarışması'));
@@ -1048,7 +1053,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Çark modu artık yalnızca Bilîze (Oyna) sekmesinde.
-    await tester.tap(find.text('Oyna'));
+    await tester.tap(find.text('Yarış'));
     await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.text('Günün Çarkı'));
@@ -1148,7 +1153,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Arkadaşlarınla'), findsOneWidget);
+    expect(find.text('Hemen\nyarış'), findsOneWidget);
     expect(find.text('Oda kur'), findsOneWidget);
     expect(find.text('Kodla katıl'), findsOneWidget);
   });
@@ -1554,14 +1559,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Profil'), findsOneWidget);
-    await tester.scrollUntilVisible(
-      find.byIcon(Icons.settings_outlined),
-      120,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await tester.pumpAndSettle();
-
-    expect(find.byIcon(Icons.settings_outlined), findsOneWidget);
+    expect(find.byKey(const ValueKey('profile-settings-top')), findsOneWidget);
   });
 
   testWidgets('opens the leaderboard from the home screen', (tester) async {
@@ -1574,9 +1572,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Topluluk'));
+    await tester.tap(find.text('Profil'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Topluluk'));
+    await tester.ensureVisible(find.text('Topluluk ve Ligler'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Topluluk ve Ligler'));
     await tester.pumpAndSettle();
 
     expect(find.text('Liderlik Tablosu'), findsOneWidget);
@@ -2066,6 +2066,9 @@ void main() {
 
       await tester.ensureVisible(find.text('Oda kur'));
       await tester.tap(find.text('Oda kur'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Odayı oluştur'));
       await tester.pumpAndSettle();
 
       expect(find.byType(RoomScreen), findsNothing);

@@ -1,13 +1,13 @@
 # Soru Bankasi Kalite Raporu
 
-- Toplam satir: 955
-- Benzersiz prompt: 952
-- Tekrarlanan prompt grubu: 2
-- Tekrardan gelen fazla satir: 3
+- Toplam satir: 4386
+- Benzersiz prompt: 3840
+- Tekrarlanan prompt grubu: 308
+- Tekrardan gelen fazla satir: 546
 
 ## Yapisal bulgular
 
-- ANSWER_LEAK: 12
+- ANSWER_LEAK: 15
 
 ## Onerilen aksiyon
 
@@ -16,15 +16,18 @@ tek satir onayli kalir ve cevap sizintili satirlarin onayi kaldirilir.
 
 ## Cevap sizintisi detaylari
 
-- `09ee8855-9989-413f-902c-54c52c8722b5` 'edebiyat' in prompt
-- `0db5f493-43d8-4918-b1b5-d76145ae0b59` 'edebiyat' in prompt
-- `149cf5b1-1147-4111-b58b-eae6036eb3c2` 'edebiyat' in prompt
-- `1bc1d1cd-e273-4ecc-bbe3-19a3f870b565` 'edebiyat' in prompt
-- `244b3b1e-51f1-4f57-99fb-0104d4848037` 'edebiyat' in prompt
-- `2eba9a25-3ed5-4027-9d44-d7429c80df90` 'mahabad' in prompt
-- `3a287cc2-e435-49f5-8481-f791fb7322d8` 'edebiyat' in prompt
-- `4071753a-708f-4a1f-87ac-956de425746e` 'edebiyat' in prompt
-- `49ad383e-0eb4-46d2-8941-bcd12f6a9fde` 'edebiyat' in prompt
-- `83abb3ea-470e-404e-b18d-07252f54feb5` 'kültür' in prompt
-- `9f7b8b61-8be5-43d8-9c7c-f0450838d26e` 'edebiyat' in prompt
-- `e3862f30-9ccc-454e-a109-504dc2742206` 'edebiyat' in prompt
+- `061a7bdb-23da-4923-b086-52612a438cae` 'edebiyat' in prompt
+- `075c308e-63c4-4d1d-a7c4-31f642490432` 'edebiyat' in prompt
+- `0fdb8c11-a2a3-4239-b62b-b500ac497cfa` 'edebiyat' in prompt
+- `18296ba7-a512-4a26-a5a4-65a3f1ecdccc` 'edebiyat' in prompt
+- `1f345cc5-b602-4ea8-8927-d682ff0f0907` 'pencere' in prompt
+- `2827186b-2e7e-4937-8d36-7b60273dacfa` 'edebiyat' in prompt
+- `44ed6a92-1bdf-4586-a1da-50016a67481e` 'edebiyat' in prompt
+- `4953e36f-40b0-4c4b-b24f-66fe63f0b282` 'pencere' in prompt
+- `49efc11a-a3a3-4482-9cda-35fd20a6019e` 'edebiyat' in prompt
+- `ae5550d3-378b-464d-bc89-1128a8892ff7` 'edebiyat' in prompt
+- `c73a1d8c-82e3-4706-90ad-f988f658ab6d` 'pencere' in prompt
+- `d8c7405d-6df6-4c89-b893-16be57e89236` 'pencere' in prompt
+- `df1b4189-e646-407a-977f-a0e159f37826` 'edebiyat' in prompt
+- `ed84d446-99bd-46b6-af4c-2c3c23a12f04` 'edebiyat' in prompt
+- `f02052c0-b990-4ec9-8796-cc89b1adfc40` 'pencere' in prompt

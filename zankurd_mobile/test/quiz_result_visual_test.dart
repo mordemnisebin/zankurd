@@ -67,6 +67,10 @@ void main() {
     );
     expect(button.style?.backgroundColor?.resolve({}), AppTheme.brandOrange);
     expect(find.text('Tekrar oyna'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('result-review-wrong-button')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {

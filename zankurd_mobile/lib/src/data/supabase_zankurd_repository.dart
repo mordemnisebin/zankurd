@@ -23,6 +23,7 @@ import 'mock_zankurd_repository.dart';
 import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
 import '../config/subcategory_config.dart';
+import '../services/question_content_policy.dart';
 
 /// Supabase destekli üretim deposu.
 ///
@@ -31,6 +32,8 @@ import '../config/subcategory_config.dart';
 /// eklenen sahte davranışların sessizce üretime sızmasını önler.
 class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
+
+  static const _contentPolicy = QuestionContentPolicy();
 
   final MockZanKurdRepository _offline = MockZanKurdRepository();
 
@@ -287,7 +290,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }
       _cache.set(key, result);
       return result;
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadQuestions failed');
       return _offline.loadQuestions(categoryId: categoryId, limit: limit);
     }
   }
@@ -311,7 +315,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         randomize: true,
       );
 
-      var parsedQuestions = rows.map(_questionFromRow).toList();
+      var parsedQuestions = rows
+          .map(_questionFromRow)
+          .where(_contentPolicy.isPlayable)
+          .toList();
       if (subCategory != null) {
         final matched = parsedQuestions
             .where((q) => SubcategoryConfig.getSubcategoryId(q) == subCategory)
@@ -344,7 +351,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         difficultyMax: difficultyMax,
       );
       if (questions.isNotEmpty) return questions;
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadLevelQuestions failed');
       // Fall through to local examples if the rich schema is unavailable.
     }
 
@@ -373,10 +381,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .map((row) => row['questions'])
           .whereType<Map<String, dynamic>>()
           .map(_questionFromRow)
+          .where(_contentPolicy.isPlayable)
           .toList();
 
       if (roomQuestions.isNotEmpty) return roomQuestions;
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadRoomQuestions failed');
       // The SQL sync view/policy may not be installed yet. Use approved questions.
     }
 
@@ -391,7 +401,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // Soru sayısını öğren (SELECT ile aynı onay filtresiyle),
       // gün tohumlu pencereden çek.
       final total = await client
-          .from('questions')
+          .from('quiz_eligible_questions')
           .count(CountOption.exact)
           .eq('is_approved', true);
       if (total <= 0) return _offline.loadDailyQuestions(limit: limit);
@@ -401,16 +411,21 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final offset = maxOffset == 0 ? 0 : (seed * 37) % maxOffset;
 
       final rows = await client
-          .from('questions')
+          .from('quiz_eligible_questions')
           .select(_questionColumns)
           .eq('is_approved', true)
           .order('id')
           .range(offset, offset + windowSize - 1);
 
-      final pool = rows.map(_questionFromRow).toList()..shuffle(Random(seed));
+      final pool = rows
+          .map(_questionFromRow)
+          .where(_contentPolicy.isPlayable)
+          .toList()
+        ..shuffle(Random(seed));
       final selected = pool.take(limit).toList();
       if (selected.isNotEmpty) return selected;
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadDailyQuestions failed');
       // Şema/politika eksikse yerel soru bankasına düş.
     }
     return _offline.loadDailyQuestions(limit: limit);
@@ -427,7 +442,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     );
     final store = await SeenQuestionStore.load();
     final selected = store.preferUnseen(
-      rows.map(_questionFromRow).toList(),
+      rows.map(_questionFromRow).where(_contentPolicy.isPlayable).toList(),
       limit,
     );
     return _withRemoteVisualBlend(
@@ -447,7 +462,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }) async {
     return _retryOnNetworkFailure(() async {
       final query = client
-          .from('questions')
+          .from('quiz_eligible_questions')
           .select(_questionColumns)
           .eq('is_approved', true);
 
@@ -469,7 +484,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         // üzerinden hesaplanmalı; yoksa küçük kategorilerde offset filtreli
         // sonucun dışına düşer ve seçim hep aynı ilk kayıtlara sabitlenir.
         var countQuery = client
-            .from('questions')
+            .from('quiz_eligible_questions')
             .count(CountOption.exact)
             .eq('is_approved', true);
         if (categoryId != null) {
@@ -561,7 +576,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<GameRoom> createOnlineRoom({String category = 'Ziman'}) async {
+  Future<GameRoom> createOnlineRoom({
+    String category = 'Ziman',
+    int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+  }) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();
 
@@ -580,7 +598,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
               'host_id': user.id,
               'category_id': categoryId,
               'question_count': localRoom.questionCount,
-              'seconds_per_question': 15,
+              'seconds_per_question': secondsPerQuestion,
             })
             .select('id, code')
             .single();
@@ -607,6 +625,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       code: room['code'] as String,
       players: players,
       hostId: user.id,
+      secondsPerQuestion: secondsPerQuestion,
     );
   }
 
@@ -634,7 +653,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .eq('id', roomId)
           .single();
       hostId = hostRow['host_id'] as String?;
-    } catch (_) {}
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadRoom host lookup failed');
+    }
 
     return createRoom(category: category).copyWith(
       id: roomId,
@@ -642,6 +663,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       questionCount: room['question_count'] as int? ?? 10,
       players: players,
       hostId: hostId,
+      secondsPerQuestion:
+          (room['seconds_per_question'] as int?) ??
+          GameRoom.defaultSecondsPerQuestion,
     );
   }
 
@@ -843,6 +867,18 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       'reporter_id': user.id,
       'reason': reason.trim().isEmpty ? 'Kontrol edilmeli' : reason.trim(),
     });
+
+    // Editör kuyruğuna giden sayaç, eski rapor tablosuyla birlikte tutulur.
+    // RPC henüz uygulanmamış eski ortamlarda bildirim yine de kaydedilmiş olur.
+    try {
+      await client.rpc(
+        'report_question',
+        params: {'p_question_id': question.id},
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'report_question RPC failed');
+    }
+
   }
 
   @override
@@ -859,6 +895,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .map((row) => row['questions'])
           .whereType<Map<String, dynamic>>()
           .map(_questionFromRow)
+          .where(_contentPolicy.isPlayable)
           .toList();
 
       if (questions.isNotEmpty) return questions;
@@ -918,7 +955,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .eq('reason', 'purchase_$itemId')
           .limit(1);
       return rows.isNotEmpty;
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'hasPurchased failed');
       return false;
     }
   }
@@ -1041,6 +1079,18 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     return '${utc.year}-${utc.month}-${utc.day}';
   }
 
+  Future<bool> _hasUnusedExtraSpin() async {
+    final purchased = await client
+        .from('coin_transactions')
+        .count(CountOption.exact)
+        .eq('reason', 'purchase_spin_wheel_extra');
+    final used = await client
+        .from('coin_transactions')
+        .count(CountOption.exact)
+        .inFilter('reason', ['extra_spin:server', 'daily_spin:extra_purchase']);
+    return purchased > used;
+  }
+
   @override
   Future<bool> canSpinToday() async {
     try {
@@ -1048,9 +1098,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final lastSpinStr = prefs.getString('zankurd.last_spin_date');
       final todayStr = spinDayKey(DateTime.now());
       if (lastSpinStr == todayStr) {
-        return false;
+        return await _hasUnusedExtraSpin();
       }
-      return await client.rpc<bool>('can_spin_today');
+      final freeSpinAvailable = await client.rpc<bool>('can_spin_today');
+      return freeSpinAvailable || await _hasUnusedExtraSpin();
     } catch (error, stack) {
       _recordError(error, stack, reason: 'canSpinToday failed');
       return _offline.canSpinToday();
@@ -1065,12 +1116,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
       final success = row['success'] as bool? ?? false;
       if (!success) {
-        _recordError(
-          Exception(row['message'] ?? 'Award spin coins failed'),
-          StackTrace.current,
-          reason: 'awardSpinCoins RPC unsuccessful',
+        final extraRow = _firstRow(
+          await client.rpc<dynamic>('claim_extra_spin'),
         );
-        return 0;
+        return (extraRow?['amount'] as num?)?.toInt() ?? 0;
       }
 
       final amount = (row['reward_amount'] as num?)?.toInt() ?? 0;
@@ -1081,7 +1130,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             'zankurd.last_spin_date',
             spinDayKey(DateTime.now()),
           );
-        } catch (_) {}
+        } catch (error, stack) {
+          _recordError(error, stack, reason: 'awardSpinCoins preference update failed');
+        }
       }
       return amount;
     } catch (error, stack) {
@@ -1119,7 +1170,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           showcaseTitle: row['showcase_title'] as String?,
         );
       }).toList();
-    } catch (_) {
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadLeaderboard RPC failed');
       // RPC henüz kurulu değilse all-time view'a geri dön
       try {
         final rows = await client
@@ -1741,7 +1793,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'status': 'pending',
       });
       return true;
-    } catch (e) {
+    } catch (e, stack) {
+      _recordError(e, stack, reason: 'submitSuggestedQuestion failed');
       // Çevrimdışı durumda mock'a düş.
       return _offline.submitSuggestedQuestion(
         category: category,

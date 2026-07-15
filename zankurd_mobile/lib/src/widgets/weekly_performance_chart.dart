@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 
 class WeeklyPerformanceChart extends StatelessWidget {
   const WeeklyPerformanceChart({
@@ -235,7 +236,9 @@ class _ChartPainter extends CustomPainter {
       int weekday = 1;
       try {
         weekday = DateTime.parse(key).weekday;
-      } catch (_) {}
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'weekly_performance_chart');
+      }
 
       final weekdayLabel = _getWeekdayAbbreviation(weekday, isKu);
       textPainter.text = TextSpan(

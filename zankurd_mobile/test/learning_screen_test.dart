@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +19,20 @@ Widget wrap(Widget child) => MultiProvider(
 );
 
 void main() {
+  test(
+    'öğrenme yolu kartları ana hedefle rekabet etmek için glow kullanmaz',
+    () {
+      final source = File(
+        'lib/src/screens/learning_screen.dart',
+      ).readAsStringSync();
+      final lessonStart = source.indexOf('class _LessonCard');
+      final detailStart = source.indexOf('class LessonDetailScreen');
+      final lessonSource = source.substring(lessonStart, detailStart);
+      expect(lessonSource, contains('color: AppTheme.playGreen.withValues'));
+      expect(lessonSource, isNot(contains('gradient: const LinearGradient')));
+    },
+  );
+
   testWidgets('kimlik bandı playGreen ScreenIdentityHeader olur', (
     tester,
   ) async {
@@ -30,6 +46,10 @@ void main() {
     );
     expect(header.accent, AppTheme.playGreen);
     expect(find.text('Öğren'), findsOneWidget);
+    expect(find.text('Bugünkü hedefin'), findsOneWidget);
+    expect(find.text('Öğrenme yolları'), findsOneWidget);
+    expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
+    expect(find.text('Devam et'), findsOneWidget);
   });
 
   testWidgets('seçili sekme düz playGreen dolgu taşır', (tester) async {
@@ -64,6 +84,19 @@ void main() {
       find.byKey(const ValueKey('learning-path-node-lesson_2')),
       findsOneWidget,
     );
+    final lessonsList = find.byType(ListView).last;
+    for (
+      var i = 0;
+      i < 5 &&
+          find
+              .byKey(const ValueKey('learning-mastery-goal'))
+              .evaluate()
+              .isEmpty;
+      i++
+    ) {
+      await tester.drag(lessonsList, const Offset(0, -400));
+      await tester.pump();
+    }
     expect(find.byKey(const ValueKey('learning-mastery-goal')), findsOneWidget);
   });
 

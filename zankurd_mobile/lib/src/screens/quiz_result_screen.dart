@@ -10,6 +10,7 @@ import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../data/sync_manager.dart';
+import '../utils/error_reporter.dart';
 import '../l10n/lang.dart';
 import '../providers/child_safety_provider.dart';
 import '../models/achievement.dart';
@@ -113,7 +114,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         correctCount: widget.correctCount,
       );
       await repository.claimContestReward(id);
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz_result_save');
       // Silent fail — reward already claimed or network issue
     }
   }
@@ -180,7 +182,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final leveledUp = await xpStore.addXP(earnedXP);
     try {
       await repository.updateProfileXP(xpStore.totalXP);
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz_result_reward');
       SyncManager.instance.queueXP(xpStore.totalXP);
     }
 
@@ -353,6 +356,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       0,
       totalQuestions,
     );
+    final wrongRecords = answerRecords
+        .where((record) => !record.isCorrect && !record.isUnanswered)
+        .toList(growable: false);
     final accuracy = totalQuestions == 0
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
@@ -1060,9 +1066,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                           elevation: 2,
                                         ),
                                         onPressed: () {
-                                          Navigator.of(
-                                            context,
-                                          ).popUntil((route) => route.isFirst);
+                                          if (room.id != null) {
+                                            // Online odada sonuçtan çıkınca
+                                            // oda lobisi korunur; kullanıcı
+                                            // aynı grupla yeni tur başlatabilir.
+                                            Navigator.of(context).pop();
+                                          } else {
+                                            Navigator.of(context).popUntil(
+                                              (route) => route.isFirst,
+                                            );
+                                          }
                                         },
                                         icon: const Icon(Icons.replay_rounded),
                                         label: Text(
@@ -1082,6 +1095,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     const SizedBox(width: 8),
                                     Expanded(
                                       child: OutlinedButton.icon(
+                                        key: const ValueKey(
+                                          'result-review-wrong-button',
+                                        ),
                                         style: OutlinedButton.styleFrom(
                                           padding: const EdgeInsets.symmetric(
                                             vertical: 14,
@@ -1138,6 +1154,52 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                             ),
                                           ),
                                         ),
+                                        onPressed: wrongRecords.isEmpty
+                                            ? null
+                                            : () => Navigator.of(context).push(
+                                                AppRoute.to(
+                                                  ReviewScreen(
+                                                    records: wrongRecords,
+                                                    room: room,
+                                                  ),
+                                                ),
+                                              ),
+                                        icon: const Icon(
+                                          Icons.replay_circle_filled_rounded,
+                                        ),
+                                        label: Text(
+                                          context.s(
+                                            'Şaşî bixwîne',
+                                            'Yanlışları çalış',
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 13.5,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: OutlinedButton.icon(
+                                        key: const ValueKey(
+                                          'result-leaderboard-button',
+                                        ),
+                                        style: OutlinedButton.styleFrom(
+                                          minimumSize: const Size.fromHeight(
+                                            48,
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 14,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              16,
+                                            ),
+                                          ),
+                                        ),
                                         onPressed: () {
                                           Navigator.of(context).push(
                                             AppRoute.to(
@@ -1157,10 +1219,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                           ),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 13.5,
-                                          ),
                                         ),
                                       ),
                                     ),

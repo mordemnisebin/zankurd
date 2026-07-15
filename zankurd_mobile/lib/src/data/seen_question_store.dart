@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/quiz_question.dart';
+import '../utils/error_reporter.dart';
 
 /// Oyuncunun gördüğü soruları yerelde izler ve yeni seçimlerde
 /// görülmemiş soruları öne alır; böylece aynı sorular kısa sürede
@@ -23,7 +24,8 @@ class SeenQuestionStore {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'seen_question_store');
       preferences = null;
     }
     final seen = preferences?.getStringList(_storageKey)?.toSet() ?? <String>{};

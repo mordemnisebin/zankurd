@@ -1,6 +1,8 @@
 import 'package:in_app_review/in_app_review.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/error_reporter.dart';
+
 /// Uygulama içi mağaza değerlendirmesini doğru anda, bir kez ister.
 ///
 /// Tetikleyici: en az [_minQuizzes] quiz tamamlandıktan sonra, skoru
@@ -34,7 +36,8 @@ class ReviewService {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'review_service');
       preferences = null;
     }
     return _instance = ReviewService._(

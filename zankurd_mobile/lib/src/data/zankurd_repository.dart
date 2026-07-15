@@ -43,7 +43,10 @@ abstract class ZanKurdRepository {
 
   GameRoom createRoom({String category = 'Ziman'});
   GameRoom joinRoom(String code);
-  Future<GameRoom> createOnlineRoom({String category = 'Ziman'});
+  Future<GameRoom> createOnlineRoom({
+    String category = 'Ziman',
+    int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+  });
   Future<GameRoom> joinOnlineRoom(String code);
   Future<List<Player>> loadRoomPlayers(GameRoom room);
 

@@ -115,9 +115,7 @@ class HeroCard extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.md),
               Text(
-                isKu
-                    ? 'Bi hevalan re\npêşbikeve'
-                    : 'Arkadaşlarınla\ncanlı yarış',
+                isKu ? 'Rast bikeve\npêşbirkê' : 'Hemen\nyarış',
                 style: AppTypography.display.copyWith(
                   color: textPrimary,
                   fontSize: 26,
@@ -127,8 +125,8 @@ class HeroCard extends StatelessWidget {
               const SizedBox(height: AppSpacing.xs),
               Text(
                 isKu
-                    ? 'Bi Kurmancî pêşbirk, turnuva û civak. Hîn bibe, pêşbikeve, biserkeve!'
-                    : 'Kurmancî dilinde quiz, turnuvalar ve topluluk. Öğren, yarış, başa çık!',
+                    ? 'Pêşbirkekê hilbijêre an bi hevalên xwe re odeyek ava bike.'
+                    : 'Hemen bir yarış başlat veya arkadaşlarınla oda kur.',
                 style: AppTypography.bodyMedium.copyWith(
                   color: textPrimary.withValues(alpha: 0.8),
                   height: 1.4,
@@ -157,7 +155,7 @@ class HeroCard extends StatelessWidget {
                     onPressed: onQuickMatch,
                     icon: const Icon(Icons.bolt_rounded, color: Colors.white),
                     label: Text(
-                      isKu ? '1vs1 — Dest pê bike' : '1vs1 — Hemen oyna',
+                      isKu ? '1vs1 — Dest pê bike' : '1vs1 — Hemen yarış',
                       style: AppTypography.bodyLarge.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w800,

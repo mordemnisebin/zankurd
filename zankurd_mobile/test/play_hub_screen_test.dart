@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -34,16 +36,24 @@ void main() {
     expect(find.text('Oda Kur'), findsOneWidget);
     expect(find.text('Kodla Katıl'), findsOneWidget);
     expect(find.text('Arkadaşınla veya grupla oyna'), findsOneWidget);
+    expect(find.text('Bir yarış seç'), findsOneWidget);
     expect(find.text('Mağaza ve jokerler'), findsOneWidget);
     expect(
       find.text('Coin, çark ve joker hakların tek yerde.'),
       findsOneWidget,
     );
-    expect(find.text('Turnuva ve sıralama'), findsOneWidget);
+    expect(find.text('Turnuva ve sıralama'), findsNothing);
+    final source = File(
+      'lib/src/screens/play_hub_screen.dart',
+    ).readAsStringSync();
     expect(
-      find.text('Günlük yarışma, kupa ve liderlik akışına hızlı geç.'),
-      findsOneWidget,
+      source.indexOf('QuickPlayGrid('),
+      lessThan(source.indexOf('_GroupPlayPanel(')),
     );
+    final supportCard = tester.getSize(
+      find.byKey(const ValueKey('play-hub-shop-card')),
+    );
+    expect(supportCard.height, lessThan(100));
     expect(tester.takeException(), isNull);
   });
 }

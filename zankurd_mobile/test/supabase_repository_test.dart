@@ -183,6 +183,71 @@ void main() {
     expect(sql, contains('v_user_id::text'));
   });
 
+  test('Supabase çarkı satın alınmış ekstra hakkı RPC ile kullanır', () {
+    final source = File(
+      'lib/src/data/supabase_zankurd_repository.dart',
+    ).readAsStringSync();
+
+    expect(source, contains("client.rpc<bool>('can_spin_today')"));
+    expect(source, contains("client.rpc<dynamic>('claim_extra_spin')"));
+    expect(source, contains("'purchase_spin_wheel_extra'"));
+  });
+
+  test('turnuva bütünlüğü migrationı stage sıçramasını ve erken şampiyonluğu engeller', () {
+    final sql = File(
+      'supabase/2026-07-14_tournament_integrity_hardening.sql',
+    ).readAsStringSync();
+
+    expect(sql, contains('v_current_stage'));
+    expect(sql, contains('v_requested_rank > v_current_rank + 1'));
+    expect(sql, contains("p_stage <> 'lost'"));
+    expect(sql, contains("p_stage = 'won'"));
+    expect(sql, contains("v_current_stage <> 'final'"));
+    expect(sql, contains('RETURN QUERY SELECT FALSE'));
+    expect(sql, contains('ON CONFLICT (user_id, tournament_date) DO UPDATE'));
+  });
+
+  test('question reports also update the live content-quality counter', () {
+    final source = File(
+      'lib/src/data/supabase_zankurd_repository.dart',
+    ).readAsStringSync();
+
+    expect(source, contains("'report_question'"));
+    expect(source, contains("'p_question_id': question.id"));
+    expect(source, contains("reason: 'report_question RPC failed'"));
+  });
+
+  test('quiz question reads use the quality-eligible view', () {
+    final source = File(
+      'lib/src/data/supabase_zankurd_repository.dart',
+    ).readAsStringSync();
+
+    expect(source, contains("from('quiz_eligible_questions')"));
+    expect(source, isNot(contains("from('questions')\n          .select(_questionColumns)")));
+  });
+
+  test('suggested questions migration exposes a service-role moderation RPC', () {
+    final source = File(
+      'supabase/2026-07-13_suggested_questions_moderation.sql',
+    ).readAsStringSync();
+
+    expect(source, contains('moderate_suggested_question'));
+    expect(source, contains("p_status NOT IN ('approved', 'rejected')"));
+    expect(source, contains("auth.role() <> 'service_role'"));
+    expect(source, contains('reviewed_at'));
+  });
+
+  test('curated question wave is idempotent and approved', () {
+    final source = File(
+      'supabase/2026-07-13_curated_question_wave_1.sql',
+    ).readAsStringSync();
+
+    expect(source, contains("source_url = 'curated_movement_wave_1'"));
+    expect(source, contains("language_code, prompt"));
+    expect(source, contains("is_approved, question_type, image_url"));
+    expect(source, contains("'curated_movement_wave_1'"));
+  });
+
   test(
     'MockZanKurdRepository implements subscribeRoomBroadcast and sendRoomBroadcast',
     () async {

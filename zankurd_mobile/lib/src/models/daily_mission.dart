@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import '../l10n/lang.dart';
+
 enum MissionType {
   answerCorrect,
   completeQuiz,
@@ -31,22 +33,28 @@ class DailyMission {
       ? 'playCategory:${_categorySlug(category ?? '')}'
       : '${type.name}:$target';
 
-  static String _categorySlug(String category) => switch (category) {
-    'Ziman' => 'ziman',
-    'Çand' => 'cand',
-    'Dîrok' => 'dirok',
-    'Edebiyat' => 'edebiyat',
-    'Cografya' => 'cografya',
-    'Muzîk' => 'muzik',
-    _ => category.toLowerCase(),
+  static const Map<String, String> _categorySlugs = {
+    'Ziman': 'ziman',
+    'Çand': 'cand',
+    'Dîrok': 'dirok',
+    'Edebiyat': 'edebiyat',
+    'Cografya': 'cografya',
+    'Muzîk': 'muzik',
+    'Siyaset': 'siyaset',
+    'Paradigma': 'paradigma',
+    'Teknolojî': 'teknoloji',
   };
+
+  static String _categorySlug(String category) =>
+      _categorySlugs[category] ?? category.toLowerCase();
 
   String get labelKu => switch (type) {
     MissionType.answerCorrect => '$target bersivên rast bide',
     MissionType.completeQuiz => '$target pêşbirk biqedîne',
     MissionType.useWildcard => '$target joker bikar bîne',
     MissionType.keepStreak => 'Seriya xwe biparêze',
-    MissionType.playCategory => 'Di ${category ?? '?'} de bilîze',
+    MissionType.playCategory =>
+      'Di ${CategoryNames.localized(category ?? '?', true)} de bilîze',
   };
 
   String get labelTr => switch (type) {
@@ -117,6 +125,12 @@ class MissionDefinitions {
       target: 1,
       coinReward: 25,
       category: 'Muzîk',
+    ),
+    MissionDef(
+      type: MissionType.playCategory,
+      target: 1,
+      coinReward: 25,
+      category: 'Teknolojî',
     ),
   ];
 

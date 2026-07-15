@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../data/mastery_store.dart';
 import '../../data/mistake_store.dart';
 import '../../theme/app_theme.dart';
+import '../../utils/error_reporter.dart';
 import '../../widgets/kilim_pattern_painter.dart';
 
 /// "Senin İçin Önerilen" personalized recommendation card.
@@ -107,7 +108,8 @@ class _RecommendationCardState extends State<RecommendationCard> {
         _weakestCategoryTr = _trCategory(weakestCat);
         _loading = false;
       });
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'recommendation_card');
       if (!mounted) return;
       setState(() => _loading = false);
     }

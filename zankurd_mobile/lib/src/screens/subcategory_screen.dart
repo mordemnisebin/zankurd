@@ -99,6 +99,7 @@ class _CategoryBanner extends StatelessWidget {
       'Muzîk' => Icons.music_note_rounded,
       'Siyaset' => Icons.gavel_rounded,
       'Paradigma' => Icons.psychology_alt_rounded,
+      'Teknolojî' => Icons.devices_other_rounded,
       _ => Icons.school_rounded,
     };
   }

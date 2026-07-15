@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../data/mastery_store.dart';
 import '../data/mistake_store.dart';
+import '../l10n/lang.dart';
 import '../services/strength_analysis.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 
 /// Profildeki "Güçlü ve Geliştirilecek Alanlar" bölümü.
 ///
@@ -25,6 +27,7 @@ class StrengthMapSection extends StatefulWidget {
     'Muzîk',
     'Siyaset',
     'Paradigma',
+    'Teknolojî',
   ];
 
   @override
@@ -68,19 +71,11 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
           _loading = false;
         });
       }
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'strength_map_section');
       if (mounted) setState(() => _loading = false);
     }
   }
-
-  static String _trCategory(String ku) => switch (ku) {
-    'Ziman' => 'Dil',
-    'Çand' => 'Kültür',
-    'Dîrok' => 'Tarih',
-    'Cografya' => 'Coğrafya',
-    'Muzîk' => 'Müzik',
-    _ => ku,
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +204,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
     CategoryInsight insight,
     InsightTone tone,
   ) {
-    final name = ku ? insight.category : _trCategory(insight.category);
+    final name = CategoryNames.localized(insight.category, ku);
     final isStrength = tone == InsightTone.strength;
     // Renk + ikon + metin birlikte anlam taşır.
     final icon = isStrength

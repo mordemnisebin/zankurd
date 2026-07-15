@@ -258,6 +258,10 @@ class _RoomScreenState extends State<RoomScreen> {
                                       label: room.category,
                                       icon: Icons.category_outlined,
                                     ),
+                                    _Pill(
+                                      label: '${room.secondsPerQuestion} sn',
+                                      icon: Icons.timer_outlined,
+                                    ),
                                     if (isHost)
                                       _Pill(
                                         label: ku ? 'Mêvandar' : 'Ev sahibi',

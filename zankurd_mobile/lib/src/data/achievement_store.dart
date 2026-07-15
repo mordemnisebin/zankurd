@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/achievement.dart';
 import '../models/player.dart';
+import '../utils/error_reporter.dart';
 
 class AchievementIds {
   static const firstGame = 'first_game';
@@ -32,6 +33,9 @@ class AchievementStore {
     'Edebiyat',
     'Cografya',
     'Muzîk',
+    'Siyaset',
+    'Paradigma',
+    'Teknolojî',
   ];
 
   static const _unlockedKey = 'zankurd.achievements.unlocked';
@@ -114,7 +118,8 @@ class AchievementStore {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'achievement_store');
       preferences = null;
     }
     return _instance = AchievementStore._(

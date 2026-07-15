@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'offline_question_bank.dart';
+import '../utils/error_reporter.dart';
 
 /// Yanlış cevaplanan soruların kimliklerini ve tekrar zamanlarını yerelde tutar.
 ///
@@ -27,7 +28,8 @@ class MistakeStore {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'mistake_store_preferences');
       preferences = null;
     }
 
@@ -43,7 +45,9 @@ class MistakeStore {
             metadata[key] = Map<String, dynamic>.from(val);
           }
         });
-      } catch (_) {}
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'mistake_store_metadata');
+      }
     }
 
     final historyString = preferences?.getString(_historyKey);
@@ -59,7 +63,9 @@ class MistakeStore {
             };
           }
         });
-      } catch (_) {}
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'mistake_store_history');
+      }
     }
 
     return _instance = MistakeStore._(preferences, ids, metadata, history);
@@ -231,7 +237,8 @@ class MistakeStore {
       try {
         final parsed = DateTime.parse(key);
         return parsed.isBefore(cutoff);
-      } catch (_) {
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'mistake_store_date_parse');
         return true;
       }
     });

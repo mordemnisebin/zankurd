@@ -5,12 +5,28 @@ import '../l10n/lang.dart';
 import '../models/tournament.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/screen_identity_header.dart';
 import '../widgets/tournament_bracket_widget.dart';
 import 'quiz_screen.dart';
+
+bool tournamentMatchCompleted(Object? result) =>
+    result is Map && result['completed'] == true;
+
+int tournamentMatchScore(Object? result) {
+  if (!tournamentMatchCompleted(result)) return 0;
+  final value = (result as Map)['score'];
+  return value is num ? value.toInt() : 0;
+}
+
+int tournamentOpponentScore(Object? result) {
+  if (!tournamentMatchCompleted(result)) return 0;
+  final value = (result as Map)['opponentScore'];
+  return value is num ? value.toInt() : 0;
+}
 
 /// Günlük turnuva: 16 oyuncu, 4 tur, tur başına 4 soruluk maç.
 /// Lobi → şema → maç (bot yarışı quiz) → tur ilerlemesi.
@@ -71,7 +87,8 @@ class _TournamentScreenState extends State<TournamentScreen> {
         _standings = standings;
         _loading = false;
       });
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'tournament_load');
       if (!mounted) return;
       setState(() {
         _loading = false;
@@ -88,7 +105,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
     String name = '';
     try {
       name = await widget.repository.getProfileName();
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'tournament_action');
+    }
     if (!mounted) return;
     final ku = context.isKu;
     _userName = name.isEmpty ? (ku ? 'Tu' : 'Sen') : name;
@@ -171,7 +190,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             .toList();
       }
       if (!mounted) return;
-      await Navigator.of(context).push(
+      final result = await Navigator.of(context).push(
         AppRoute.to(
           QuizScreen(
             repository: widget.repository,
@@ -182,15 +201,19 @@ class _TournamentScreenState extends State<TournamentScreen> {
         ),
       );
       if (!mounted) return;
-      _advanceRound();
+      if (tournamentMatchCompleted(result)) {
+        _advanceRound(
+          userScore: tournamentMatchScore(result),
+          opponentScore: tournamentOpponentScore(result),
+        );
+      }
     } finally {
       if (mounted) setState(() => _matchLoading = false);
     }
   }
 
-  /// Maç sonrası turu kapatır ve bir üst tura geçer.
-  /// Not: Gerçek skor bağlantısı G3'te; şimdilik oyuncu tur atlar.
-  void _advanceRound() {
+  /// Maç sonrası gerçek quiz skoruna göre turu kapatır ve sonucu kaydeder.
+  void _advanceRound({int userScore = 0, int opponentScore = 0}) {
     final bracket = _bracket;
     if (bracket == null) return;
     final roundIndex = bracket.currentRound;
@@ -198,11 +221,47 @@ class _TournamentScreenState extends State<TournamentScreen> {
 
     // Bu turun tüm maçlarını sonuçlandır (kullanıcı + bot simülasyonu).
     final completed = round.matches.map((m) {
-      final winnerId = m.playerOneId == _userId || m.playerTwoId == _userId
-          ? _userId
+      final userIsPlayerOne = m.playerOneId == _userId;
+      final userIsPlayerTwo = m.playerTwoId == _userId;
+      final isUserMatch = userIsPlayerOne || userIsPlayerTwo;
+      final playerOneScore = isUserMatch && userIsPlayerOne
+          ? userScore
+          : isUserMatch
+          ? opponentScore
+          : m.playerOneScore;
+      final playerTwoScore = isUserMatch && userIsPlayerTwo
+          ? userScore
+          : isUserMatch
+          ? opponentScore
+          : m.playerTwoScore;
+      final winnerId = isUserMatch
+          ? (playerOneScore > playerTwoScore
+                ? m.playerOneId
+                : m.playerTwoId)
           : m.playerOneId;
-      return m.copyWith(status: 'completed', winnerId: winnerId);
+      return m.copyWith(
+        playerOneScore: playerOneScore,
+        playerTwoScore: playerTwoScore,
+        status: 'completed',
+        winnerId: winnerId,
+      );
     }).toList();
+
+    final userMatch = completed.firstWhere(
+      (m) => m.playerOneId == _userId || m.playerTwoId == _userId,
+      orElse: () => const TournamentMatch(
+        id: '',
+        playerOneId: '',
+        playerOneName: '',
+        playerTwoId: '',
+        playerTwoName: '',
+        playerOneScore: 0,
+        playerTwoScore: 0,
+        status: 'completed',
+        winnerId: '',
+      ),
+    );
+    final userLost = userMatch.id.isNotEmpty && userMatch.winnerId != _userId;
 
     final winners = completed
         .map(
@@ -219,7 +278,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
     );
 
     final isFinal = roundIndex == rounds.length - 1;
-    if (!isFinal) {
+    if (!isFinal && !userLost) {
       // Kazananları bir sonraki turun maçlarına yerleştir.
       final next = rounds[roundIndex + 1];
       final nextMatches = <TournamentMatch>[];
@@ -246,12 +305,12 @@ class _TournamentScreenState extends State<TournamentScreen> {
       _bracket = bracket.copyWith(
         rounds: rounds,
         currentRound: isFinal ? roundIndex : roundIndex + 1,
-        status: isFinal ? 'won' : 'active',
-        completedAt: isFinal ? DateTime.now() : null,
+        status: userLost ? 'eliminated' : (isFinal ? 'won' : 'active'),
+        completedAt: userLost || isFinal ? DateTime.now() : null,
       );
     });
 
-    if (isFinal) {
+    if (isFinal && !userLost) {
       widget.repository
           .logAnalyticsEvent('tournament_champion', null)
           .catchError((_) => false);
@@ -260,9 +319,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
     final stages = ['quarter', 'semi', 'final', 'won'];
     widget.repository
         .saveTournamentProgress(
-          stages[roundIndex.clamp(0, stages.length - 1)],
-          0,
-          0,
+          userLost ? 'lost' : stages[roundIndex.clamp(0, stages.length - 1)],
+          userScore,
+          opponentScore,
           winners.map((w) => w.name).toList(),
         )
         .catchError((_) => false);

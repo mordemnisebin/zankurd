@@ -2,6 +2,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/error_reporter.dart';
+
 class SoundProvider extends ChangeNotifier {
   // Sync default constructor — MultiProvider fallback ve testler için.
   SoundProvider() : _enabled = true, _playerFactory = null;
@@ -51,7 +53,8 @@ class SoundProvider extends ChangeNotifier {
       if (_player != null) {
         await _player!.play(AssetSource(asset));
       }
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'sound_provider');
       // Platform ses desteği yoksa veya dosya eksikse sessizce geç.
     }
   }

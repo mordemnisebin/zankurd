@@ -4,9 +4,11 @@ import 'package:provider/provider.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../models/avatar_identity.dart';
 import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
+import '../utils/error_reporter.dart';
 
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
 /// Statik yedek listedeki (`ShopItem._items`) her ikon burada da
@@ -31,6 +33,16 @@ const Map<String, IconData> _shopIcons = {
 
 IconData shopIconForName(String? name) =>
     _shopIcons[name] ?? Icons.shopping_bag_outlined;
+
+AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
+  if (itemId == 'avatar_frame_gold') {
+    return identity.copyWith(frameId: 'gold');
+  }
+  if (itemId == 'profile_badge_vip') {
+    return identity.copyWith(showcaseTitle: 'VIP');
+  }
+  return identity;
+}
 
 /// `shop_items` tablosundaki `theme_color` (ör. "FF3B81") sütununu
 /// [Color]'a çevirir.
@@ -80,6 +92,12 @@ class _ShopScreenState extends State<ShopScreen> {
   bool _loading = true;
   final Set<String> _purchasedItemIds = {};
   List<ShopItem> _dynamicItems = _items;
+
+  static const _supportedItemIds = {
+    'spin_wheel_extra',
+    'avatar_frame_gold',
+    'profile_badge_vip',
+  };
 
   static const List<ShopItem> _items = [
     ShopItem(
@@ -195,7 +213,9 @@ class _ShopScreenState extends State<ShopScreen> {
   Future<void> _loadBalance() async {
     try {
       final balance = await widget.repository.loadCoinBalance();
-      List<ShopItem> dynamicItems = _items;
+      List<ShopItem> dynamicItems = _items
+          .where((item) => _supportedItemIds.contains(item.id))
+          .toList();
 
       if (widget.repository is SupabaseZanKurdRepository) {
         try {
@@ -203,20 +223,28 @@ class _ShopScreenState extends State<ShopScreen> {
               (widget.repository as SupabaseZanKurdRepository).client;
           final rows = await client.from('shop_items').select().order('cost');
           if (rows.isNotEmpty) {
-            dynamicItems = rows.map((row) {
-              return ShopItem(
-                id: row['id'] as String,
-                titleKu: row['title_ku'] as String? ?? '',
-                titleTr: row['title_tr'] as String? ?? '',
-                descKu: row['desc_ku'] as String? ?? '',
-                descTr: row['desc_tr'] as String? ?? '',
-                cost: (row['cost'] as num?)?.toInt() ?? 100,
-                icon: shopIconForName(row['icon_name'] as String?),
-                themeColor: shopColorForHex(row['theme_color'] as String?),
-              );
-            }).toList();
+            dynamicItems = rows
+                .map((row) {
+                  return ShopItem(
+                    id: row['id'] as String,
+                    titleKu: row['title_ku'] as String? ?? '',
+                    titleTr: row['title_tr'] as String? ?? '',
+                    descKu: row['desc_ku'] as String? ?? '',
+                    descTr: row['desc_tr'] as String? ?? '',
+                    cost: (row['cost'] as num?)?.toInt() ?? 100,
+                    icon: shopIconForName(row['icon_name'] as String?),
+                    themeColor: shopColorForHex(row['theme_color'] as String?),
+                  );
+                })
+                .where((item) => _supportedItemIds.contains(item.id))
+                .toList();
           }
-        } catch (_) {
+        } catch (error, stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'shop catalog load failed; using fallback',
+          );
           // Fallback to static items if table is not configured or query fails
         }
       }
@@ -238,7 +266,8 @@ class _ShopScreenState extends State<ShopScreen> {
           _loading = false;
         });
       }
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'shop balance load failed');
       if (mounted) {
         setState(() => _loading = false);
       }
@@ -269,12 +298,20 @@ class _ShopScreenState extends State<ShopScreen> {
       if (!mounted) return;
 
       if (success) {
+        await _applyPurchaseEffect(item.id);
+        if (!mounted) return;
         HapticFeedback.lightImpact();
         // Ses çalınamazsa satın alma başarı mesajı engellenmesin
         // (çark ekranındaki desenle aynı).
         try {
           context.read<SoundProvider>().playCorrect();
-        } catch (_) {}
+        } catch (error, stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'shop success sound failed',
+          );
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -296,13 +333,32 @@ class _ShopScreenState extends State<ShopScreen> {
           ),
         );
       }
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'shop_purchase');
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(ku ? 'Çewtiyek çêbû.' : 'Bir hata oluştu.')),
       );
     } finally {
       _loadBalance();
+    }
+  }
+
+  Future<void> _applyPurchaseEffect(String itemId) async {
+    if (itemId != 'avatar_frame_gold' && itemId != 'profile_badge_vip') {
+      return;
+    }
+    try {
+      final identity = await widget.repository.loadAvatarIdentity();
+      await widget.repository.updateAvatarIdentity(
+        applyShopPurchaseEffect(itemId, identity),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'shop purchase effect failed: $itemId',
+      );
     }
   }
 

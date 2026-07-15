@@ -2,12 +2,14 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/room.dart';
+import '../providers/theme_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -22,6 +24,9 @@ import '../models/daily_mission.dart';
 import 'room_screen.dart';
 import 'matchmaking_screen.dart';
 import 'shop_screen.dart';
+import 'categories_tab.dart';
+import 'contest_screen.dart';
+import 'home/daily_race_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -112,7 +117,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     try {
       final store = await MistakeStore.load();
       if (mounted) setState(() => _reviewReadyCount = store.readyCount);
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home_load');
+    }
   }
 
   Future<void> _loadMissions() async {
@@ -162,7 +169,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         controller: widget.scrollController,
         slivers: [
           SliverAppBar(
-            expandedHeight: 230,
+            // Mobilde ilk bakışta yarış aksiyonu görünür kalsın.
+            expandedHeight: 190,
             floating: false,
             pinned: true,
             backgroundColor: AppTheme.surfaceColor(context),
@@ -229,10 +237,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           const SizedBox(height: 20),
                           _buildAnimatedCard(
                             _heroFadeAnimation(2),
-                            ZanaDailyCard(
-                              isKu: ku,
-                              onStart: widget.onOpenLearning,
-                              reviewReadyCount: _reviewReadyCount,
+                            KeyedSubtree(
+                              key: const ValueKey('home-learning-entry'),
+                              child: ZanaDailyCard(
+                                isKu: ku,
+                                onStart: widget.onOpenLearning,
+                                reviewReadyCount: _reviewReadyCount,
+                              ),
                             ),
                           ),
                         ],
@@ -247,6 +258,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           _buildAnimatedCard(
                             _heroFadeAnimation(1),
                             _PlayHubTeaser(isKu: ku, onOpen: widget.onOpenPlay),
+                          ),
+                          const SizedBox(height: 16),
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(2),
+                            DailyRaceCard(
+                              onTap: () => Navigator.of(context).push(
+                                AppRoute.to(
+                                  ContestScreen(repository: widget.repository),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(3),
+                            _CategoryEntry(
+                              isKu: ku,
+                              onOpen: () => Navigator.of(context).push(
+                                AppRoute.to(
+                                  CategoriesTab(repository: widget.repository),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -293,16 +327,50 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
                         _heroFadeAnimation(2),
-                        ZanaDailyCard(
+                        DailyRaceCard(
+                          onTap: () => Navigator.of(context).push(
+                            AppRoute.to(
+                              ContestScreen(repository: widget.repository),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  if (index == 3) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(3),
+                        _CategoryEntry(
                           isKu: ku,
-                          onStart: widget.onOpenLearning,
-                          reviewReadyCount: _reviewReadyCount,
+                          onOpen: () => Navigator.of(context).push(
+                            AppRoute.to(
+                              CategoriesTab(repository: widget.repository),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  if (index == 4) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(3),
+                        KeyedSubtree(
+                          key: const ValueKey('home-learning-entry'),
+                          child: ZanaDailyCard(
+                            isKu: ku,
+                            onStart: widget.onOpenLearning,
+                            reviewReadyCount: _reviewReadyCount,
+                          ),
                         ),
                       ),
                     );
                   }
                   return null;
-                }, childCount: 3),
+                }, childCount: 5),
               ),
             ),
           SliverToBoxAdapter(child: SizedBox(height: bottomContentPadding)),
@@ -486,6 +554,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             child: _buildCoinGemRow(_coinBalance),
           ),
           Positioned(
+            top: AppSpacing.lg,
+            right: AppSpacing.page,
+            child: _buildHeaderQuickControls(context, ku),
+          ),
+          Positioned(
             right: AppSpacing.page,
             bottom: AppSpacing.lg,
             child: _buildAnimatedCard(
@@ -498,6 +571,71 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildHeaderQuickControls(BuildContext context, bool ku) {
+    final themeProvider = context.watch<ThemeProvider>();
+    final border = Colors.white.withValues(alpha: 0.35);
+    final fill = Colors.white.withValues(alpha: 0.16);
+
+    Widget control({
+      required Key key,
+      required String tooltip,
+      required Widget child,
+      required VoidCallback onTap,
+    }) {
+      return Tooltip(
+        message: tooltip,
+        child: InkWell(
+          key: key,
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(AppRadius.sm),
+          child: Container(
+            width: 44,
+            height: 44,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: fill,
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+              border: Border.all(color: border),
+            ),
+            child: child,
+          ),
+        ),
+      );
+    }
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        control(
+          key: const ValueKey('home-language-toggle'),
+          tooltip: ku ? 'Ziman' : 'Dil',
+          onTap: context.langProvider.toggle,
+          child: Text(
+            ku ? 'KU' : 'TR',
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 12,
+            ),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.xs),
+        control(
+          key: const ValueKey('home-theme-toggle'),
+          tooltip: 'Tema',
+          onTap: themeProvider.toggleDarkLight,
+          child: Icon(
+            themeProvider.isDark
+                ? Icons.dark_mode_outlined
+                : Icons.light_mode_outlined,
+            color: Colors.white,
+            size: 19,
+          ),
+        ),
+      ],
     );
   }
 
@@ -627,10 +765,104 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Future<void> _createOnlineRoom(BuildContext context) async {
+    final categories = repo.categories;
+    var selectedCategory = categories.isNotEmpty ? categories.first : 'Ziman';
+    var selectedSeconds = GameRoom.defaultSecondsPerQuestion;
+
+    final confirmed = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheetContext) => StatefulBuilder(
+        builder: (context, setSheetState) {
+          final ku = context.isKu;
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    ku ? 'Ode ava bike' : 'Oda oluştur',
+                    style: AppTypography.heading2.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    ku
+                        ? 'Mijara û demê ji bo hemû lîstikvanan hilbijêre.'
+                        : 'Kategori ve soru süresini sen belirle.',
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: AppTheme.textMutedColor(context),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    ku ? 'Kategori' : 'Kategori',
+                    style: AppTypography.bodyLarge.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      for (final category in categories)
+                        ChoiceChip(
+                          label: Text(category),
+                          selected: category == selectedCategory,
+                          onSelected: (_) =>
+                              setSheetState(() => selectedCategory = category),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    ku ? 'Dem ji bo pirsê' : 'Süre / soru',
+                    style: AppTypography.bodyLarge.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    children: [
+                      for (final seconds in GameRoom.allowedSecondsPerQuestion)
+                        ChoiceChip(
+                          label: Text('$seconds sn'),
+                          selected: seconds == selectedSeconds,
+                          onSelected: (_) =>
+                              setSheetState(() => selectedSeconds = seconds),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 18),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      onPressed: () => Navigator.of(sheetContext).pop(true),
+                      icon: const Icon(Icons.add_home_work_outlined),
+                      label: Text(ku ? 'Ode ava bike' : 'Odayı oluştur'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+
     if (_roomActionLoading) return;
     setState(() => _roomActionLoading = true);
     try {
-      final room = await repo.createOnlineRoom();
+      final room = await repo.createOnlineRoom(
+        category: selectedCategory,
+        secondsPerQuestion: selectedSeconds,
+      );
       if (!context.mounted) return;
       _openRoom(context, room);
     } catch (error, stack) {
@@ -822,6 +1054,77 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 }
 
+class _CategoryEntry extends StatelessWidget {
+  const _CategoryEntry({required this.isKu, required this.onOpen});
+
+  final bool isKu;
+  final VoidCallback onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: isKu ? 'Mijar û mijaran bibîne' : 'Kategori ve konular',
+      child: GestureDetector(
+        key: const ValueKey('home-category-entry'),
+        onTap: onOpen,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceHiColor(context),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(color: AppTheme.violet.withValues(alpha: 0.35)),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 42,
+                height: 42,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppTheme.violet.withValues(alpha: 0.14),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                ),
+                child: const Icon(
+                  Icons.grid_view_rounded,
+                  color: AppTheme.violet,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      isKu ? 'Mijar û mijaran bibîne' : 'Kategori ve konular',
+                      style: AppTypography.bodyLarge.copyWith(
+                        color: AppTheme.textPrimaryColor(context),
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    Text(
+                      isKu
+                          ? 'Mijarên fêrbûnê û pêşbirkê bibîne'
+                          : 'Öğrenme ve yarışma konularına göz at',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.caption.copyWith(
+                        color: AppTheme.textSubColor(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right_rounded, color: AppTheme.violet),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Bilîze sekmesine kısa yol — tam mod listesi (Şerê 1vs1, Pêşbirka Rojê,
 /// Çerxa Rojê, Turnuva) artık yalnızca Bilîze'de gösteriliyor; burada aynı
 /// kartları tekrarlamak yerine oraya yönlendiren tek bir teaser var.
@@ -833,20 +1136,19 @@ class _PlayHubTeaser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final surface = AppTheme.surfaceHiColor(context);
+    final accent = AppTheme.playCyan;
+
     return GestureDetector(
-      key: const ValueKey('home-play-hub-teaser'),
+      key: const ValueKey('home-direct-play-entry'),
       onTap: onOpen,
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppTheme.playCyan, AppTheme.violet],
-          ),
+          color: Color.alphaBlend(accent.withValues(alpha: 0.12), surface),
           borderRadius: BorderRadius.circular(AppRadius.card),
-          boxShadow: AppTheme.glowShadow(AppTheme.playCyan, intensity: 0.2),
+          border: Border.all(color: accent.withValues(alpha: 0.42), width: 1.2),
         ),
         child: Row(
           children: [
@@ -855,29 +1157,25 @@ class _PlayHubTeaser extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isKu ? 'Zû Bilîze' : 'Hemen Oyna',
+                    isKu ? 'Pêşbaziyên din' : 'Yarış modları',
                     style: AppTypography.bodyLarge.copyWith(
-                      color: Colors.white,
+                      color: AppTheme.textPrimaryColor(context),
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xxs),
                   Text(
                     isKu
-                        ? 'Çerx, turnuva û pêşbirkên rojane li Bilîze'
-                        : 'Çark, turnuva ve günlük yarışmalar Oyna sekmesinde',
+                        ? '1vs1, ode, turnuva û pêşbirkên rojane'
+                        : 'Günün yarışması, düello, oda ve turnuva burada',
                     style: AppTypography.caption.copyWith(
-                      color: Colors.white.withValues(alpha: 0.85),
+                      color: AppTheme.textSubColor(context),
                     ),
                   ),
                 ],
               ),
             ),
-            const Icon(
-              Icons.arrow_circle_right_rounded,
-              color: Colors.white,
-              size: 32,
-            ),
+            Icon(Icons.arrow_circle_right_rounded, color: accent, size: 32),
           ],
         ),
       ),
