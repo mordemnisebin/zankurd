@@ -13,7 +13,7 @@ class DiscoveredSource {
 
 List<DiscoveredSource> discoverPotentialQuestionSources(Directory root) {
   final results = <DiscoveredSource>[];
-  const supported = {'.csv', '.json', '.sql', '.dart', '.md'};
+  const supported = {'.csv', '.json', '.sql', '.dart'};
   final rootPath = root.absolute.path.replaceAll('\\', '/');
   for (final entity in root.listSync(recursive: true, followLinks: false)) {
     if (entity is! File) continue;
@@ -63,9 +63,13 @@ bool _excluded(String path) =>
     path.startsWith('.git/') ||
     path.startsWith('.dart_tool/') ||
     path.startsWith('build/') ||
-    path.startsWith('docs/audit/question_quality/') ||
-    path.startsWith('test/question_quality/') ||
+    path.startsWith('docs/') ||
+    path.startsWith('reports/') ||
+    path.startsWith('report/') ||
+    path.startsWith('test/') ||
+    path.startsWith('tests/') ||
     path.startsWith('tool/question_quality/') ||
+    RegExp(r'(^|/)readme(?:\.[^/]*)?$').hasMatch(path) ||
     path.contains('/.tmp/');
 
 String _sample(File file, int limit) {

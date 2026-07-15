@@ -83,6 +83,34 @@ void main() {
     expect(ids, containsAll({'duplicate_option', 'invalid_correct_answer'}));
   });
 
+  test('valid answer index is not invalidated by a duplicate option', () {
+    final record = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.dart',
+      row: 1,
+      options: const ['A', 'A', 'C'],
+      correctIndex: 0,
+      correctText: 'A',
+    );
+    final ids = runChecks([record]).map((issue) => issue.checkId).toSet();
+    expect(ids, contains('duplicate_option'));
+    expect(ids, isNot(contains('invalid_correct_answer')));
+  });
+
+  test('punctuation-only options remain distinct', () {
+    final record = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.dart',
+      row: 1,
+      options: const ['?', '??', '?:'],
+      correctIndex: 1,
+      correctText: '??',
+    );
+    final ids = runChecks([record]).map((issue) => issue.checkId).toSet();
+    expect(ids, isNot(contains('duplicate_option')));
+    expect(ids, isNot(contains('invalid_correct_answer')));
+  });
+
   test('answer leak ignores short answers but catches meaningful answer', () {
     final short = question(
       sourceId: 'a',
@@ -103,6 +131,51 @@ void main() {
       isEmpty,
     );
     expect(runChecks([leak]).map((i) => i.checkId), contains('answer_leak'));
+  });
+
+  test('answer leak ignores answer-instruction wording and quoted example', () {
+    final instruction = question(
+      sourceId: 'instruction',
+      sourcePath: 'instruction.csv',
+      row: 1,
+      prompt: 'Görsel etiketi "rast" e. Doğru anlam hangisidir?',
+      options: const ['doğru', 'yanlış'],
+      correctIndex: 0,
+      correctText: 'doğru',
+    );
+    final example = question(
+      sourceId: 'example',
+      sourcePath: 'example.csv',
+      row: 2,
+      prompt: 'Di hevoka "Ez diçim malê" de lêker kîjan e?',
+      options: const ['diçim', 'Ez', 'malê'],
+      correctIndex: 0,
+      correctText: 'diçim',
+    );
+    expect(
+      runChecks([instruction]).where((i) => i.checkId == 'answer_leak'),
+      isEmpty,
+    );
+    expect(
+      runChecks([example]).where((i) => i.checkId == 'answer_leak'),
+      isEmpty,
+    );
+  });
+
+  test('answer leak still catches an exposed category answer', () {
+    final record = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.dart',
+      row: 1,
+      prompt: "'Newroz' görseli Çand içinde hangi kategoriye girer?",
+      options: const ['Çand', 'Werziş'],
+      correctIndex: 0,
+      correctText: 'Çand',
+    );
+    expect(
+      runChecks([record]).map((issue) => issue.checkId),
+      contains('answer_leak'),
+    );
   });
 
   test('Turkish template is marked heuristic critical', () {

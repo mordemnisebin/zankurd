@@ -126,7 +126,7 @@ const bank = <QuizQuestion>[
   });
 
   test(
-    'discovery excludes generated output but finds unknown question data',
+    'discovery excludes documentation and reports but finds unknown data',
     () {
       Directory(
         '${temp.path}/docs/audit/question_quality/2026-07-15',
@@ -134,6 +134,20 @@ const bank = <QuizQuestion>[
       File(
         '${temp.path}/docs/audit/question_quality/2026-07-15/summary.json',
       ).writeAsStringSync('{}');
+      File('${temp.path}/docs/question_quality_report.csv')
+        ..createSync(recursive: true)
+        ..writeAsStringSync('id,prompt,correct_option\n');
+      Directory('${temp.path}/reports').createSync();
+      File(
+        '${temp.path}/reports/question_review.json',
+      ).writeAsStringSync('[{"prompt":"Pirs?"}]');
+      Directory('${temp.path}/test/fixtures').createSync(recursive: true);
+      File(
+        '${temp.path}/test/fixtures/question_bank.csv',
+      ).writeAsStringSync('id,prompt,correct_option\n');
+      File(
+        '${temp.path}/README.md',
+      ).writeAsStringSync('# Question audit report');
       Directory('${temp.path}/data').createSync();
       File(
         '${temp.path}/data/new_questions.csv',
@@ -142,10 +156,15 @@ const bank = <QuizQuestion>[
         temp,
       ).map((item) => item.path).toList();
       expect(discovered, contains('data/new_questions.csv'));
-      expect(
-        discovered,
-        isNot(contains(contains('docs/audit/question_quality'))),
-      );
+      for (final ignored in <String>[
+        'docs/audit/question_quality/2026-07-15/summary.json',
+        'docs/question_quality_report.csv',
+        'reports/question_review.json',
+        'test/fixtures/question_bank.csv',
+        'README.md',
+      ]) {
+        expect(discovered, isNot(contains(ignored)));
+      }
     },
   );
 }

@@ -82,6 +82,13 @@ void main() {
       expect(normalizeText(' “Heval”   e?! '), '"heval" e');
     });
 
+    test('option normalization preserves punctuation-only answers', () {
+      expect(normalizeOption(' ? '), '?');
+      expect(normalizeOption('??'), '??');
+      expect(normalizeOption('?:'), '?:');
+      expect(normalizeOption(' Heval?! '), 'heval');
+    });
+
     test('stable hash is deterministic and SHA-256 sized', () {
       final first = sha256Hex('zankurd');
       expect(first, sha256Hex('zankurd'));

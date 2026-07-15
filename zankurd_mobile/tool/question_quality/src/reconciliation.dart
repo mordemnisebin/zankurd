@@ -53,8 +53,8 @@ List<String> _differentFields(QuestionRecord a, QuestionRecord b) {
   final fields = <String>[];
   if (normalizeText(a.prompt) != normalizeText(b.prompt)) fields.add('prompt');
   if (_listKey(a.options) != _listKey(b.options)) fields.add('options');
-  if (normalizeText(a.correctOptionText ?? '') !=
-      normalizeText(b.correctOptionText ?? '')) {
+  if (normalizeOption(a.correctOptionText ?? '') !=
+      normalizeOption(b.correctOptionText ?? '')) {
     fields.add('correctAnswer');
   }
   if (normalizeText(a.explanation ?? '') !=
@@ -71,4 +71,4 @@ List<String> _differentFields(QuestionRecord a, QuestionRecord b) {
 }
 
 String _listKey(List<String> values) =>
-    values.map(normalizeText).join('\u001f');
+    values.map(normalizeOption).join('\u001f');

@@ -47,7 +47,7 @@ List<AuditIssue> runChecks(
     if (record.options.any((value) => value.trim().isEmpty)) {
       add('empty_option', Severity.blocker, 'Question has an empty option.');
     }
-    final normalizedOptions = record.options.map(normalizeText).toList();
+    final normalizedOptions = record.options.map(normalizeOption).toList();
     if (normalizedOptions.toSet().length != normalizedOptions.length) {
       add(
         'duplicate_option',
@@ -56,14 +56,18 @@ List<AuditIssue> runChecks(
       );
     }
     final index = record.correctOptionIndex;
-    final correct = normalizeText(record.correctOptionText ?? '');
+    final correct = normalizeOption(record.correctOptionText ?? '');
     final indexInvalid =
         index != null && (index < 0 || index >= record.options.length);
-    final textMatches =
-        correct.isNotEmpty &&
-        normalizedOptions.where((value) => value == correct).length == 1;
-    if (indexInvalid ||
-        (!textMatches && (record.correctOptionText != null || index == null))) {
+    final textMatches = normalizedOptions.where((value) => value == correct);
+    final indexedTextMismatch =
+        index != null &&
+        !indexInvalid &&
+        record.correctOptionText != null &&
+        normalizedOptions[index] != correct;
+    final unresolvedTextAnswer =
+        index == null && (correct.isEmpty || textMatches.length != 1);
+    if (indexInvalid || indexedTextMismatch || unresolvedTextAnswer) {
       add(
         'invalid_correct_answer',
         Severity.blocker,
@@ -85,10 +89,7 @@ List<AuditIssue> runChecks(
       add('duplicate_id', Severity.blocker, 'Duplicate ID in the same source.');
     }
     final prompt = normalizeText(record.prompt);
-    if (correct.length >= 4 &&
-        RegExp(
-          r'(^|\s)' + RegExp.escape(correct) + r'($|\s)',
-        ).hasMatch(prompt)) {
+    if (_hasAnswerLeak(prompt, correct)) {
       add(
         'answer_leak',
         Severity.critical,
@@ -186,6 +187,27 @@ List<AuditIssue> runChecks(
   issues.sort(_compareIssues);
   mark('sort');
   return issues;
+}
+
+bool _hasAnswerLeak(String prompt, String correct) {
+  if (correct.length < 4) return false;
+  final answerPattern = RegExp(r'(^|\s)' + RegExp.escape(correct) + r'($|\s)');
+  if (!answerPattern.hasMatch(prompt)) return false;
+
+  if (correct == 'doğru' &&
+      (prompt.contains('doğru anlam') || prompt.contains('doğru cevap'))) {
+    return false;
+  }
+
+  if (prompt.contains('di hevoka')) {
+    final quotedExamples = RegExp(r'"[^"]*"').allMatches(prompt);
+    if (quotedExamples.any(
+      (match) => answerPattern.hasMatch(match.group(0)!),
+    )) {
+      return false;
+    }
+  }
+  return true;
 }
 
 List<AuditIssue> runDuplicateChecks(

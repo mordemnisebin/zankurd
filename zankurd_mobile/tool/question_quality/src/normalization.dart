@@ -25,21 +25,31 @@ String normalizeUnicode(String value) {
   return result;
 }
 
-String normalizeText(String value) => normalizeUnicode(value)
+String _normalizeBase(String value) => normalizeUnicode(value)
     .replaceAll(RegExp('[“”]'), '"')
     .replaceAll(RegExp('[‘’´`]'), "'")
     .trim()
     .toLowerCase()
-    .replaceAll(RegExp(r'[\s\u00a0]+', unicode: true), ' ')
-    .replaceAll(RegExp(r'[.!?,;:]+$', unicode: true), '')
-    .trim();
+    .replaceAll(RegExp(r'[\s\u00a0]+', unicode: true), ' ');
+
+String normalizeText(String value) => _normalizeBase(
+  value,
+).replaceAll(RegExp(r'[.!?,;:]+$', unicode: true), '').trim();
+
+String normalizeOption(String value) {
+  final normalized = _normalizeBase(value);
+  if (!RegExp(r'[\p{L}\p{N}]', unicode: true).hasMatch(normalized)) {
+    return normalized;
+  }
+  return normalized.replaceAll(RegExp(r'[.!?,;:]+$', unicode: true), '').trim();
+}
 
 String normalizedQuestionFingerprint({
   required String prompt,
   required List<String> options,
   String? category,
 }) {
-  final normalizedOptions = options.map(normalizeText).toList()..sort();
+  final normalizedOptions = options.map(normalizeOption).toList()..sort();
   return stableFingerprint(
     [
       normalizeText(prompt),
