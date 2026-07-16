@@ -24,6 +24,10 @@ abstract class ZanKurdRepository {
   Future<void> deleteMyAccount();
   Future<LeaderboardEntry?> getPlayerStats();
   Future<List<String>> loadCategories();
+
+  /// Kategori adına göre onaylı soru sayısı (kategori kartlarında gösterim).
+  /// Başarısızlıkta boş map döner; UI statik metne düşer.
+  Future<Map<String, int>> loadCategoryQuestionCounts();
   Future<List<QuizQuestion>> loadQuestions({
     String? categoryId,
     int limit = 10,

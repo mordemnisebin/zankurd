@@ -271,6 +271,31 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<Map<String, int>> loadCategoryQuestionCounts() async {
+    try {
+      final cats = await client
+          .from('categories')
+          .select('id, name')
+          .eq('is_active', true);
+      // ponytail: sekiz küçük exact-count isteği; kategori sayısı büyürse RPC.
+      final counts = await Future.wait(
+        cats.map((row) async {
+          final count = await client
+              .from('quiz_eligible_questions')
+              .count(CountOption.exact)
+              .eq('is_approved', true)
+              .eq('category_id', row['id'] as String);
+          return MapEntry(row['name'] as String, count);
+        }),
+      );
+      return Map.fromEntries(counts);
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadCategoryQuestionCounts failed');
+      return _offline.loadCategoryQuestionCounts();
+    }
+  }
+
+  @override
   Future<List<QuizQuestion>> loadQuestions({
     String? categoryId,
     int limit = 10,
@@ -417,11 +442,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .order('id')
           .range(offset, offset + windowSize - 1);
 
-      final pool = rows
-          .map(_questionFromRow)
-          .where(_contentPolicy.isPlayable)
-          .toList()
-        ..shuffle(Random(seed));
+      final pool =
+          rows.map(_questionFromRow).where(_contentPolicy.isPlayable).toList()
+            ..shuffle(Random(seed));
       final selected = pool.take(limit).toList();
       if (selected.isNotEmpty) return selected;
     } catch (error, stack) {
@@ -878,7 +901,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     } catch (error, stack) {
       _recordError(error, stack, reason: 'report_question RPC failed');
     }
-
   }
 
   @override
@@ -1131,7 +1153,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             spinDayKey(DateTime.now()),
           );
         } catch (error, stack) {
-          _recordError(error, stack, reason: 'awardSpinCoins preference update failed');
+          _recordError(
+            error,
+            stack,
+            reason: 'awardSpinCoins preference update failed',
+          );
         }
       }
       return amount;

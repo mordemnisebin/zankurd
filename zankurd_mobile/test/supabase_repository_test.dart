@@ -193,19 +193,22 @@ void main() {
     expect(source, contains("'purchase_spin_wheel_extra'"));
   });
 
-  test('turnuva bütünlüğü migrationı stage sıçramasını ve erken şampiyonluğu engeller', () {
-    final sql = File(
-      'supabase/2026-07-14_tournament_integrity_hardening.sql',
-    ).readAsStringSync();
+  test(
+    'turnuva bütünlüğü migrationı stage sıçramasını ve erken şampiyonluğu engeller',
+    () {
+      final sql = File(
+        'supabase/2026-07-14_tournament_integrity_hardening.sql',
+      ).readAsStringSync();
 
-    expect(sql, contains('v_current_stage'));
-    expect(sql, contains('v_requested_rank > v_current_rank + 1'));
-    expect(sql, contains("p_stage <> 'lost'"));
-    expect(sql, contains("p_stage = 'won'"));
-    expect(sql, contains("v_current_stage <> 'final'"));
-    expect(sql, contains('RETURN QUERY SELECT FALSE'));
-    expect(sql, contains('ON CONFLICT (user_id, tournament_date) DO UPDATE'));
-  });
+      expect(sql, contains('v_current_stage'));
+      expect(sql, contains('v_requested_rank > v_current_rank + 1'));
+      expect(sql, contains("p_stage <> 'lost'"));
+      expect(sql, contains("p_stage = 'won'"));
+      expect(sql, contains("v_current_stage <> 'final'"));
+      expect(sql, contains('RETURN QUERY SELECT FALSE'));
+      expect(sql, contains('ON CONFLICT (user_id, tournament_date) DO UPDATE'));
+    },
+  );
 
   test('question reports also update the live content-quality counter', () {
     final source = File(
@@ -223,19 +226,39 @@ void main() {
     ).readAsStringSync();
 
     expect(source, contains("from('quiz_eligible_questions')"));
-    expect(source, isNot(contains("from('questions')\n          .select(_questionColumns)")));
+    expect(
+      source,
+      isNot(contains("from('questions')\n          .select(_questionColumns)")),
+    );
   });
 
-  test('suggested questions migration exposes a service-role moderation RPC', () {
+  test('category counts use exact counts from the quality-eligible view', () {
     final source = File(
-      'supabase/2026-07-13_suggested_questions_moderation.sql',
+      'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
+    final method = source.substring(
+      source.indexOf('Future<Map<String, int>> loadCategoryQuestionCounts()'),
+      source.indexOf('Future<List<QuizQuestion>> loadQuestions({'),
+    );
 
-    expect(source, contains('moderate_suggested_question'));
-    expect(source, contains("p_status NOT IN ('approved', 'rejected')"));
-    expect(source, contains("auth.role() <> 'service_role'"));
-    expect(source, contains('reviewed_at'));
+    expect(method, contains("from('quiz_eligible_questions')"));
+    expect(method, contains('count(CountOption.exact)'));
+    expect(method, isNot(contains("from('questions')")));
   });
+
+  test(
+    'suggested questions migration exposes a service-role moderation RPC',
+    () {
+      final source = File(
+        'supabase/2026-07-13_suggested_questions_moderation.sql',
+      ).readAsStringSync();
+
+      expect(source, contains('moderate_suggested_question'));
+      expect(source, contains("p_status NOT IN ('approved', 'rejected')"));
+      expect(source, contains("auth.role() <> 'service_role'"));
+      expect(source, contains('reviewed_at'));
+    },
+  );
 
   test('curated question wave is idempotent and approved', () {
     final source = File(

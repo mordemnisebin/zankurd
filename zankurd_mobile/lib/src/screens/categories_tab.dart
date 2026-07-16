@@ -30,6 +30,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
   Map<String, MasteryLevel> _masteryLevels = {};
   Map<String, int> _masteryCounts = {};
   Map<String, int> _masteryThresholds = {};
+  Map<String, int> _questionCounts = {};
 
   @override
   void initState() {
@@ -58,6 +59,19 @@ class _CategoriesTabState extends State<CategoriesTab> {
     }
     if (mounted) setState(() => _loading = false);
     await _loadMastery();
+    await _loadQuestionCounts();
+  }
+
+  Future<void> _loadQuestionCounts() async {
+    try {
+      final counts = await widget.repository.loadCategoryQuestionCounts();
+      if (mounted && counts.isNotEmpty) {
+        setState(() => _questionCounts = counts);
+      }
+    } catch (error, stack) {
+      // Sayılar süs bilgisi; hata durumunda statik metin kalır.
+      ErrorReporter.record(error, stack, reason: 'category counts failed');
+    }
   }
 
   Future<void> _loadMastery() async {
@@ -88,128 +102,131 @@ class _CategoriesTabState extends State<CategoriesTab> {
     return Material(
       type: MaterialType.transparency,
       child: Container(
-      decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
-      child: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.xl,
-                AppSpacing.xl,
-                AppSpacing.xl,
-                AppSpacing.md,
-              ),
-              child: Row(
-                children: [
-                  if (canPop)
-                    IconButton(
-                      key: const ValueKey('categories-back-button'),
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(Icons.arrow_back),
-                      color: AppTheme.textPrimaryColor(context),
-                    ),
-                  Container(
-                    key: const ValueKey('categories-header-accent'),
-                    width: 4,
-                    height: 44,
-                    margin: const EdgeInsets.only(right: AppSpacing.md),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(2),
-                      color: AppTheme.brandOrange,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          ku ? 'Kategorî' : 'Kategoriler',
-                          style: AppTypography.heading1.copyWith(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontSize: 26,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.xxs),
-                        Text(
-                          ku
-                              ? 'Kategoriyekê hilbijêre û dest pê bike'
-                              : 'Bir kategori seç ve başla',
-                          style: AppTypography.bodyMedium.copyWith(
-                            color: AppTheme.textMutedColor(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (_loading)
-                    const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: AppTheme.primaryGradientStart,
+        decoration: BoxDecoration(
+          gradient: AppTheme.backgroundGradient(context),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.xl,
+                  AppSpacing.xl,
+                  AppSpacing.xl,
+                  AppSpacing.md,
+                ),
+                child: Row(
+                  children: [
+                    if (canPop)
+                      IconButton(
+                        key: const ValueKey('categories-back-button'),
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: const Icon(Icons.arrow_back),
+                        color: AppTheme.textPrimaryColor(context),
+                      ),
+                    Container(
+                      key: const ValueKey('categories-header-accent'),
+                      width: 4,
+                      height: 44,
+                      margin: const EdgeInsets.only(right: AppSpacing.md),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2),
+                        color: AppTheme.brandOrange,
                       ),
                     ),
-                ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            ku ? 'Kategorî' : 'Kategoriler',
+                            style: AppTypography.heading1.copyWith(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontSize: 26,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.xxs),
+                          Text(
+                            ku
+                                ? 'Kategoriyekê hilbijêre û dest pê bike'
+                                : 'Bir kategori seç ve başla',
+                            style: AppTypography.bodyMedium.copyWith(
+                              color: AppTheme.textMutedColor(context),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (_loading)
+                      const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppTheme.primaryGradientStart,
+                        ),
+                      ),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: _loading && _categories.isEmpty
-                  ? _buildSkeletonGrid(context)
-                  : LayoutBuilder(
-                      builder: (context, constraints) {
-                        final bottomPadding =
-                            MediaQuery.paddingOf(context).bottom +
-                                AppSpacing.xxl;
-                        final isNarrow = constraints.maxWidth <= 600;
-                        final crossCount = isNarrow ? 1 : 2;
-                        final aspectRatio = isNarrow
-                            ? (constraints.maxWidth / 190)
-                            : 0.92;
-                        return GridView.builder(
-                          controller: widget.scrollController,
-                          padding: EdgeInsets.fromLTRB(
-                            AppSpacing.page,
-                            AppSpacing.sm,
-                            AppSpacing.page,
-                            bottomPadding,
-                          ),
-                          itemCount: _categories.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: crossCount,
-                            mainAxisSpacing: AppSpacing.md,
-                            crossAxisSpacing: AppSpacing.md,
-                            childAspectRatio: aspectRatio,
-                          ),
-                          itemBuilder: (context, index) {
-                            final cat = _categories[index];
-                            return _CategoryCard(
-                              key: ValueKey('category-card-$cat'),
-                              category: cat,
-                              index: index,
-                              isKu: ku,
-                              masteryLevel:
-                                  _masteryLevels[cat] ?? MasteryLevel.none,
-                              masteryCount: _masteryCounts[cat] ?? 0,
-                              masteryThreshold: _masteryThresholds[cat] ?? 20,
-                              onTap: () => Navigator.of(context).push(
-                                AppRoute.to(
-                                  SubcategoryScreen(
-                                    repository: widget.repository,
-                                    category: cat,
+              Expanded(
+                child: _loading && _categories.isEmpty
+                    ? _buildSkeletonGrid(context)
+                    : LayoutBuilder(
+                        builder: (context, constraints) {
+                          final bottomPadding =
+                              MediaQuery.paddingOf(context).bottom +
+                              AppSpacing.xxl;
+                          final isNarrow = constraints.maxWidth <= 600;
+                          final crossCount = isNarrow ? 1 : 2;
+                          final aspectRatio = isNarrow
+                              ? (constraints.maxWidth / 190)
+                              : 0.92;
+                          return GridView.builder(
+                            controller: widget.scrollController,
+                            padding: EdgeInsets.fromLTRB(
+                              AppSpacing.page,
+                              AppSpacing.sm,
+                              AppSpacing.page,
+                              bottomPadding,
+                            ),
+                            itemCount: _categories.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: crossCount,
+                                  mainAxisSpacing: AppSpacing.md,
+                                  crossAxisSpacing: AppSpacing.md,
+                                  childAspectRatio: aspectRatio,
+                                ),
+                            itemBuilder: (context, index) {
+                              final cat = _categories[index];
+                              return _CategoryCard(
+                                key: ValueKey('category-card-$cat'),
+                                category: cat,
+                                index: index,
+                                isKu: ku,
+                                questionCount: _questionCounts[cat],
+                                masteryLevel:
+                                    _masteryLevels[cat] ?? MasteryLevel.none,
+                                masteryCount: _masteryCounts[cat] ?? 0,
+                                masteryThreshold: _masteryThresholds[cat] ?? 20,
+                                onTap: () => Navigator.of(context).push(
+                                  AppRoute.to(
+                                    SubcategoryScreen(
+                                      repository: widget.repository,
+                                      category: cat,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-            ),
-          ],
+                              );
+                            },
+                          );
+                        },
+                      ),
+              ),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -361,12 +378,16 @@ class _CategoryCard extends StatefulWidget {
     required this.masteryCount,
     required this.masteryThreshold,
     required this.onTap,
+    this.questionCount,
     super.key,
   });
 
   final String category;
   final int index;
   final bool isKu;
+
+  /// Kategorideki onaylı soru sayısı; null ise statik metin gösterilir.
+  final int? questionCount;
   final MasteryLevel masteryLevel;
   final int masteryCount;
   final int masteryThreshold;
@@ -447,10 +468,7 @@ class _CategoryCardState extends State<_CategoryCard>
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [
-                    gradientColors.first,
-                    gradientColors.last,
-                  ],
+                  colors: [gradientColors.first, gradientColors.last],
                 ),
                 border: Border.all(
                   color: Colors.white.withValues(alpha: 0.20),
@@ -567,14 +585,22 @@ class _CategoryCardState extends State<_CategoryCard>
                                 size: 14,
                               ),
                               const SizedBox(width: 5),
-                              Text(
-                                widget.isKu
-                                    ? '5 ast • pêşbaz'
-                                    : '5 seviye • yarış',
-                                style: TextStyle(
-                                  color: Colors.white.withValues(alpha: 0.85),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
+                              Flexible(
+                                child: Text(
+                                  widget.questionCount != null
+                                      ? (widget.isKu
+                                            ? '${widget.questionCount} pirs • 5 ast'
+                                            : '${widget.questionCount} soru • 5 seviye')
+                                      : (widget.isKu
+                                            ? '5 ast • pêşbaz'
+                                            : '5 seviye • yarış'),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: Colors.white.withValues(alpha: 0.85),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
                               const Spacer(),
@@ -626,8 +652,9 @@ class _CategoryCardState extends State<_CategoryCard>
                             child: LinearProgressIndicator(
                               value: hasProgress ? progress : 0.0,
                               minHeight: 5,
-                              backgroundColor:
-                                  Colors.white.withValues(alpha: 0.18),
+                              backgroundColor: Colors.white.withValues(
+                                alpha: 0.18,
+                              ),
                               valueColor: const AlwaysStoppedAnimation<Color>(
                                 Color(0xFFFFFFFF),
                               ),

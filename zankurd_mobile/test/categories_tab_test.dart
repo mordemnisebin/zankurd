@@ -19,6 +19,11 @@ Widget wrap(Widget child) => MultiProvider(
   ),
 );
 
+class _CountRepository extends MockZanKurdRepository {
+  @override
+  Future<Map<String, int>> loadCategoryQuestionCounts() async => {'Ziman': 321};
+}
+
 void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
@@ -51,6 +56,15 @@ void main() {
 
     // Pirs redesign: mastery badge has no key; use mastery title text
     expect(find.text('Öğrenci'), findsOneWidget);
+  });
+
+  testWidgets('kategori kartı gerçek soru sayısını gösterir', (tester) async {
+    await tester.pumpWidget(
+      wrap(CategoriesTab(repository: _CountRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('321 soru • 5 seviye'), findsOneWidget);
   });
 
   testWidgets('kart dokunuşu SubcategoryScreen açar', (tester) async {
