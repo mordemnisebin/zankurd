@@ -95,12 +95,10 @@ class _LearningScreenState extends State<LearningScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(ku ? 'Fêr Bibe' : 'Öğren'),
-        titleTextStyle: TextStyle(
+        titleTextStyle: AppTypography.heading1.copyWith(
           color: AppTheme.textPrimaryColor(context),
-          fontWeight: FontWeight.w900,
           fontSize: 22,
           letterSpacing: -0.3,
-          fontFamily: 'Rubik',
         ),
       ),
       body: Container(
@@ -401,18 +399,16 @@ class _LearningScreenState extends State<LearningScreen> {
                 ku
                     ? 'Dersên qedandî: $completed / $total'
                     : 'Tamamlanan ders: $completed / $total',
-                style: TextStyle(
+                style: AppTypography.caption.copyWith(
                   color: AppTheme.textSubColor(context),
-                  fontSize: 12,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               const Spacer(),
               Text(
                 '%$pct',
-                style: TextStyle(
+                style: AppTypography.caption.copyWith(
                   color: AppTheme.playGreen,
-                  fontSize: 12,
                   fontWeight: FontWeight.w800,
                 ),
               ),
@@ -547,7 +543,7 @@ class _LearningModeButton extends StatelessWidget {
                 label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: AppTypography.caption.copyWith(
                   color: AppTheme.textPrimaryColor(context).withValues(
                     alpha: enabled ? 1 : 0.5,
                   ),
@@ -627,12 +623,11 @@ class _CategoryTab extends StatelessWidget {
           child: Center(
             child: Text(
               label,
-              style: TextStyle(
+              style: AppTypography.caption.copyWith(
                 color: isSelected
                     ? Colors.white
                     : AppTheme.textPrimaryColor(context),
                 fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                fontSize: 12,
               ),
             ),
           ),
@@ -701,10 +696,9 @@ class _LessonCard extends StatelessWidget {
                       lesson.titleKu,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: AppTypography.bodyMedium.copyWith(
                         color: AppTheme.textPrimaryColor(context),
                         fontWeight: FontWeight.w700,
-                        fontSize: 14,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -712,9 +706,8 @@ class _LessonCard extends StatelessWidget {
                       lesson.descriptionKu ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: AppTypography.caption.copyWith(
                         color: AppTheme.textMutedColor(context),
-                        fontSize: 12,
                       ),
                     ),
                     if (recommended && !completed) ...[
@@ -745,7 +738,7 @@ class _LessonCard extends StatelessWidget {
                               ku
                                   ? 'Pêşniyara te'
                                   : 'Sana önerilen',
-                              style: const TextStyle(
+                              style: AppTypography.caption.copyWith(
                                 color: AppTheme.gold,
                                 fontWeight: FontWeight.w800,
                                 fontSize: 10.5,
@@ -753,7 +746,7 @@ class _LessonCard extends StatelessWidget {
                             ),
                             Text(
                               ku ? 'Bidomîne' : 'Devam et',
-                              style: const TextStyle(
+                              style: AppTypography.caption.copyWith(
                                 color: AppTheme.gold,
                                 fontWeight: FontWeight.w800,
                                 fontSize: 10.5,
@@ -1027,10 +1020,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   Widget _buildKuContentRow(LessonSlide slide, BuildContext context) {
     return Text(
       slide.contentKu,
-      style: TextStyle(
+      style: AppTypography.bodyLarge.copyWith(
         color: AppTheme.textPrimaryColor(context),
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
       ),
     );
   }
@@ -1078,7 +1069,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
               const SizedBox(width: 6),
               Text(
                 context.isKu ? 'Ji bo wergerê bitikîne' : 'Çeviri için dokun',
-                style: TextStyle(
+                style: AppTypography.caption.copyWith(
                   color: AppTheme.textMutedColor(context),
                   fontSize: 11,
                   fontStyle: FontStyle.italic,
@@ -1098,7 +1089,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
               ),
               child: Text(
                 slide.exampleKu!,
-                style: TextStyle(
+                style: AppTypography.bodyMedium.copyWith(
                   color: AppTheme.textSubColor(context),
                   fontSize: 13,
                   fontStyle: FontStyle.italic,
@@ -1129,10 +1120,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                 ),
                 child: Text(
                   ku ? 'Werger' : 'Çeviri',
-                  style: const TextStyle(
+                  style: AppTypography.caption.copyWith(
                     color: Colors.white,
                     fontSize: 11,
-                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
@@ -1141,10 +1131,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
           const SizedBox(height: 16),
           Text(
             slide.contentTr ?? slide.contentKu,
-            style: const TextStyle(
+            style: AppTypography.bodyLarge.copyWith(
               color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
             ),
           ),
         ],
@@ -1249,10 +1237,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                       const SizedBox(width: 12),
                       Text(
                         '${_currentSlideIndex + 1}/${slides.length}',
-                        style: TextStyle(
+                        style: AppTypography.caption.copyWith(
                           color: AppTheme.textSubColor(context),
                           fontWeight: FontWeight.w700,
-                          fontSize: 12,
                         ),
                       ),
                     ],
@@ -1290,9 +1277,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                                   const SizedBox(height: 6),
                                   Text(
                                     slide.contentTr!,
-                                    style: TextStyle(
+                                    style: AppTypography.bodyMedium.copyWith(
                                       color: AppTheme.textSubColor(context),
-                                      fontSize: 14,
                                     ),
                                   ),
                                 ],
@@ -1306,7 +1292,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                                     ),
                                     child: Text(
                                       slide.exampleKu!,
-                                      style: TextStyle(
+                                      style: AppTypography.bodyMedium.copyWith(
                                         color: AppTheme.textSubColor(context),
                                         fontSize: 13,
                                         fontStyle: FontStyle.italic,

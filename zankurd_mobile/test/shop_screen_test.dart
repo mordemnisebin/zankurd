@@ -83,7 +83,10 @@ void main() {
 
     // Ekstra çark 200c — bakiye 50c ile alınamamalı.
     await tester.tap(find.text('200c'));
-    await tester.pump();
+    await tester.pumpAndSettle();
+    // Confirm dialog appears — tap "Satin Al"
+    await tester.tap(find.text('Satın Al'));
+    await tester.pumpAndSettle();
 
     expect(find.text('Bakiye yetersiz!'), findsOneWidget);
     expect(repository.spendReasons, isEmpty);
@@ -98,6 +101,9 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('200c'));
+    await tester.pumpAndSettle();
+    // Confirm dialog: tap "Satın Al"
+    await tester.tap(find.text('Satın Al'));
     await tester.pumpAndSettle();
 
     expect(repository.spendReasons, ['purchase_spin_wheel_extra']);
@@ -116,15 +122,10 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.text('Alındı'), findsOneWidget);
+    expect(find.text('Sende'), findsOneWidget);
 
-    final purchasedButton = tester.widget<ElevatedButton>(
-      find.ancestor(
-        of: find.text('Alındı'),
-        matching: find.byType(ElevatedButton),
-      ),
-    );
-    expect(purchasedButton.onPressed, isNull);
+    // Purchased items cannot be re-purchased — no buy button shown
+    expect(find.text('200c'), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
@@ -136,6 +137,9 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('200c'));
+    await tester.pumpAndSettle();
+    // Confirm dialog: tap "Satın Al"
+    await tester.tap(find.text('Satın Al'));
     await tester.pumpAndSettle();
 
     expect(find.text('Satın alma başarısız oldu.'), findsOneWidget);

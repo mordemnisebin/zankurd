@@ -35,18 +35,14 @@ class HomeHeader extends StatelessWidget {
             children: [
               Text(
                 'ZanKurd',
-                style: TextStyle(
+                style: AppTypography.heading1.copyWith(
                   color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w900,
-                  fontSize: 22,
-                  letterSpacing: -0.5,
                 ),
               ),
               Text(
                 isKu ? 'Pêşbirka Kurmancî' : 'Kürtçe Yarışması',
-                style: TextStyle(
+                style: AppTypography.bodyMedium.copyWith(
                   color: AppTheme.textMutedColor(context),
-                  fontSize: 13,
                 ),
               ),
             ],
@@ -98,10 +94,9 @@ class _LanguageQuickToggle extends StatelessWidget {
           ),
           child: Text(
             isKu ? 'KU' : 'TR',
-            style: TextStyle(
+            style: AppTypography.caption.copyWith(
               color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w700,
-              fontSize: 12,
             ),
           ),
         ),
@@ -212,10 +207,9 @@ class _StreakBadgeState extends State<_StreakBadge>
           const SizedBox(width: 4),
           Text(
             '${widget.value}',
-            style: const TextStyle(
+            style: AppTypography.bodyMedium.copyWith(
               color: AppTheme.gold,
               fontWeight: FontWeight.w800,
-              fontSize: 14,
             ),
           ),
         ],
@@ -244,10 +238,9 @@ class _CoinBadge extends StatelessWidget {
           const SizedBox(width: 5),
           Text(
             value != null ? '$value' : '···',
-            style: const TextStyle(
+            style: AppTypography.bodyLarge.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.w800,
-              fontSize: 15,
             ),
           ),
         ],

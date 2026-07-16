@@ -65,17 +65,15 @@ class _StatTile extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               value,
-              style: TextStyle(
+              style: AppTypography.bodyLarge.copyWith(
                 color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w700,
-                fontSize: 17,
               ),
             ),
             Text(
               label,
-              style: TextStyle(
+              style: AppTypography.caption.copyWith(
                 color: AppTheme.textMutedColor(context),
-                fontSize: 11,
               ),
             ),
           ],

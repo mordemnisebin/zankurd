@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../data/placement_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
-import '../utils/test_environment.dart';
 import '../widgets/branded_loader.dart';
 import '../widgets/coach_mark.dart';
 import 'home_screen.dart';
 import 'learning_screen.dart';
-import 'level_placement_screen.dart';
 import 'onboarding_screen.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
@@ -37,7 +34,6 @@ class _AppShellState extends State<AppShell> {
 
   int _tab = 0;
   bool _showNavTour = false;
-  bool _placementPrompted = false;
 
   final GlobalKey _homeNavKey = GlobalKey();
   final GlobalKey _playNavKey = GlobalKey();
@@ -353,17 +349,10 @@ class _AppShellState extends State<AppShell> {
     _maybePromptPlacement();
   }
 
-  /// İlk kullanımda (onboarding + profil adı + nav tur tamamlandıktan sonra)
-  /// seviye belirleme sınavını bir kez sunar. Test ortamında otomatik
-  /// açılmaz; kullanıcı ayarlardan istediğinde her zaman başlatabilir.
+  /// Seviye belirleme sınavı artık otomatik açılmaz.
+  /// Manuel başlatma (ayarlar/menü) akışı başka yerde yönetilmelidir.
   Future<void> _maybePromptPlacement() async {
-    if (_placementPrompted || isFlutterTestEnvironment) return;
-    _placementPrompted = true;
-    final store = await PlacementStore.load();
-    if (!store.shouldPrompt) return;
-    if (!mounted) return;
-    await Navigator.of(
-      context,
-    ).push(AppRoute.to(LevelPlacementScreen(repository: widget.repository)));
+    // Bilerek boş bırakıldı.
+    return;
   }
 }

@@ -156,7 +156,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
     // Sunucuya kaydet; hata sessizce yutulur (yerel oyun sürer).
     widget.repository
         .saveTournamentProgress('r16', 0, 0, const [])
-        .catchError((_) => false);
+        .catchError((error, stack) {
+          ErrorReporter.record(error, stack, reason: 'tournament_save_initial_progress');
+          return false;
+        });
     widget.repository
         .logAnalyticsEvent('tournament_started', null)
         .catchError((_) => false);
@@ -324,7 +327,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
           opponentScore,
           winners.map((w) => w.name).toList(),
         )
-        .catchError((_) => false);
+        .catchError((error, stack) {
+          ErrorReporter.record(error, stack, reason: 'tournament_save_match_progress');
+          return false;
+        });
   }
 
   List<String> _roundNames(bool ku) => ku

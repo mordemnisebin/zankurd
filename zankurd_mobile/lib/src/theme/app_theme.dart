@@ -7,8 +7,8 @@ class AppColors {
 
   static Color disabledSurface(BuildContext context) =>
       AppTheme.isLight(context)
-      ? const Color(0xFFE4E0D6)
-      : const Color(0xFF284235);
+      ? const Color(0xFFEDE9E3)
+      : const Color(0xFF282A36);
 }
 
 class AppTypography {
@@ -41,9 +41,10 @@ class AppTypography {
     height: 1.45,
   );
 
+  // Slightly bigger for readability (14 → 15)
   static const TextStyle bodyMedium = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: 14,
+    fontSize: 15,
     height: 1.5,
   );
 
@@ -72,6 +73,19 @@ class AppTypography {
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
   );
+
+  // Quiz-specific text styles
+  static const TextStyle quizQuestion = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+    height: 1.5,
+  );
+
+  static const TextStyle quizAnswer = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    height: 1.4,
+  );
 }
 
 class AppSpacing {
@@ -89,6 +103,11 @@ class AppSpacing {
   static const double section = 28;
   static const double cardGap = 14;
   static const double gridGap = 16;
+
+  // Quiz-specific spacing
+  static const double quizQuestionGap = 20;
+  static const double quizOptionGap = 12;
+  static const double quizSectionGap = 32;
 }
 
 class AppRadius {
@@ -101,7 +120,8 @@ class AppRadius {
   static const double xl = 28;
   static const double pill = 99;
 
-  static const double card = 16;
+  // Slightly rounder (16 → 14)
+  static const double card = 14;
 }
 
 class AppGradients {
@@ -190,8 +210,8 @@ class AppTheme {
   static List<BoxShadow> cardShadow(BuildContext context) {
     final isDark = _isDark(context);
     final shadowColor = isDark
-        ? const Color(0xFF081912)
-        : const Color(0xFFE5DFD3);
+        ? const Color(0xFF0C0E14)
+        : const Color(0xFFE8E4DF);
     return [
       BoxShadow(
         color: shadowColor.withValues(alpha: isDark ? 0.24 : 0.12),
@@ -243,80 +263,80 @@ class AppTheme {
     );
   }
 
-  // ============ Bubblegum Arcade Palette (2026-07-12) ============
-  // Turuncu/mor bırakıldı; Kürt kimliği renkte değil, RojMascot (Zana)
-  // ışın motifinde taşınır. Bkz. docs/superpowers/specs/
-  // 2026-07-12-bubblegum-arcade-redesign-design.md
-  static const brandOrange = Color(0xFF6C5CE7); // İndigo — ana marka rengi
-  static const brandOrangeWarm = Color(0xFF8B7CF6); // Açık indigo (gradyan ucu)
+  // ============ Pirs-Inspired Modern Academic Palette (2026-07-16) ============
+  // Deep Indigo + Warm Gold kimliği; Kürt kültürel mirası Pirs temasından
+  // esinlenir. RojMascot (Zana) ışın motifinde taşınır.
+  // Bkz. docs/superpowers/specs/2026-07-16-pirs-theme-redesign.md
+
+  static const brandOrange = Color(0xFF2D3561); // Deep Indigo — ana marka rengi
+  static const brandOrangeWarm = Color(0xFF4B5AA8); // Açık indigo (gradyan ucu)
   static const playGreen = Color(0xFF8BC53F); // Lime — öğrenme kimliği
-  static const playPink = Color(0xFFFF3B81); // Sıcak pembe — 1v1/rekabet
-  static const playCyan = Color(0xFF38BDF8); // Gökmavi — oda/mod kartları
+  static const playPink = Color(0xFFFF3B81); // Sıcak pembe — 1v1/rekabet (legacy)
+  static const playCyan = Color(0xFF38BDF8); // Gökmavi — oda/mod kartları (legacy)
   static const playPurple = Color(
     0xFF6C5CE7,
-  ); // İndigo ile birleşti (ayrı mor yok)
+  ); // Eski indigo (legacy referans)
 
-  // ============ Dark Mode Palette (Bubblegum Arcade — koyu ikincil tema) ============
+  // ============ Dark Mode Palette (Pirs — koyu ikincil tema) ============
   // Legacy token names retained for existing screen consumers.
   static const primaryGradientStart = brandOrange;
   static const primaryGradientEnd = brandOrangeWarm;
 
-  // İkincil aksan — ikincil vurgu / yardımcı renk.
-  static const secondaryAccent = Color(0xFF38BDF8); // Gökmavi
+  // Secondary accent — Warm Gold
+  static const secondaryAccent = Color(0xFFC8963E);
 
-  // Ödül rengi — YALNIZCA coin / ödül / streak / ustalık rozeti göstergelerinde kullan.
-  // Bilinçli olarak sabit tutuldu: renk sistemi değişse de ödül/coin anlamı korunur.
+  // Reward color — ONLY for coin / reward / streak / mastery badge indicators.
+  // Intentionally kept stable: reward/coin meaning preserved across palette changes.
   static const gold = Color(0xFFE9C46A);
 
-  // Bilgi/ipucu vurgusu — nadir kullan (ör. joker ipucu). Genel aksan için kullanma.
+  // Info/tip highlight — rare use (e.g. joker hint). Do not use for general accent.
   static const cyan = playCyan;
 
-  // Dark backgrounds (İndigo-koyu tonlar)
-  static const bg = Color(0xFF15121F);
-  static const bgDeep = Color(0xFF0E0C16);
-  static const surface = Color(0xFF1E1A2E);
-  static const surfaceHi = Color(0xFF29233D);
-  static const darkBg = Color(0xFF0A0812);
+  // Dark backgrounds
+  static const bg = Color(0xFF12141C);
+  static const bgDeep = Color(0xFF0C0E14);
+  static const surface = Color(0xFF1C1E28);
+  static const surfaceHi = Color(0xFF242636);
+  static const darkBg = Color(0xFF12141C);
 
   // Dark mode text
-  static const textPrimary = Color(0xFFEFEBFA);
-  static const textSub = Color(0xFFB3A9D6);
-  static const textMuted = Color(0xFF988FBB);
+  static const textPrimary = Color(0xFFEEECF2);
+  static const textSub = Color(0xFFA9A4B8);
+  static const textMuted = Color(0xFF7F7A90);
 
   // Borders
-  static const border = Color(0xFF3A3252);
+  static const border = Color(0xFF2E2D3A);
 
   // Status colors
-  // Doğru/yanlış renkleri correct/wrong; altın ödül gold — bu üçü sabit kalır
-  // (quiz geri bildirim anlamı renk sisteminden bağımsız).
-  static const accent = playPink;
-  static const violet = playPurple;
-  // Doğru cevap rengi — YALNIZCA doğru cevap geri bildiriminde kullan.
-  static const correct = Color(0xFF2E7D32); // Dengeli Yeşil — değişmez
-  // Yanlış cevap rengi — YALNIZCA yanlış cevap geri bildiriminde kullan.
-  static const wrong = Color(0xFFC62828); // Dengeli Kırmızı — değişmez
+  // correct/wrong/gold — quiz feedback semantics independent of color system.
+  static const accent = primaryGradientStart; // Deep Indigo
+  static const violet = secondaryAccent; // Warm Gold
+  // Correct answer color — ONLY for correct answer feedback.
+  static const correct = Color(0xFF2E7D32); // Balanced Green — stable
+  // Wrong answer color — ONLY for wrong answer feedback.
+  static const wrong = Color(0xFFD35B4A); // Warm Coral — softer than pure red
 
-  // ============ Light Mode Palette (varsayılan tema) ============
-  static const lightBg = Color(0xFFFAFAFF);
-  static const lightBgDeep = Color(0xFFF0EEFC);
-  static const lightSurface = Color(0xFFFFFFFF);
-  static const lightSurfaceHi = Color(0xFFF7F6FE);
-  static const lightBorder = Color(0xFFE4E1F5);
-  static const lightTextPrimary = Color(0xFF211C34);
-  static const lightTextSub = Color(0xFF6E6791);
-  static const lightTextMuted = Color(0xFF9B94BC);
+  // ============ Light Mode Palette (default theme) ============
+  static const lightBg = Color(0xFFFBF9F6); // Warm off-white
+  static const lightBgDeep = Color(0xFFF0EBE6); // Warm off-white deeper
+  static const lightSurface = Color(0xFFFFFFFF); // Pure white
+  static const lightSurfaceHi = Color(0xFFF7F4F0); // Surface highlight
+  static const lightBorder = Color(0xFFE8E4DF);
+  static const lightTextPrimary = Color(0xFF1E1E24);
+  static const lightTextSub = Color(0xFF6B6776);
+  static const lightTextMuted = Color(0xFF9D98AB);
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
   static const ink = textPrimary;
   static const muted = textMuted;
   static const green = correct;
-  static const red = accent;
+  static const red = wrong;
   static const brown = gold;
   static const line = border;
 
   // ============ Gradient Constants ============
-  // Primary accent gradient: Coral to Orange
+  // Primary accent gradient: Deep Indigo to Light Indigo
   static const accentGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -387,7 +407,7 @@ class AppTheme {
   static const wrongGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [wrong, Color(0xFFD50000)],
+    colors: [wrong, Color(0xFFB03D2E)],
   );
 
   static List<BoxShadow> shadow3D(Color color) {
@@ -401,18 +421,16 @@ class AppTheme {
   }
 
   // Per-category gradients (index matches category list order)
+  // Pirs-inspired vibrant palette:
   static const List<List<Color>> categoryGradients = [
-    [Color(0xFF1E5F47), Color(0xFF0F3A2B)], // Ziman - asil orman yeşili
-    [Color(0xFFD65A31), Color(0xFF8B2600)], // Çand - terracotta / kil kırmızısı
-    [Color(0xFF2B5C8F), Color(0xFF1A3B5C)], // Dîrok - asil kobalt mavisi
-    [Color(0xFFE0A96D), Color(0xFF966C3B)], // Edebiyat - parşömen / sıcak bej
-    [Color(0xFF4C7063), Color(0xFF2B443B)], // Cografya - adaçayı yeşili
-    [Color(0xFFD4AF37), Color(0xFF8C6D1F)], // Muzîk - sıcak altın sarısı
-    [
-      Color(0xFFB83B5E),
-      Color(0xFF6A2C38),
-    ], // Siyaset - asil mürdüm / nar çiçeği
-    [Color(0xFF3282B8), Color(0xFF0F4C81)], // Paradigma - derin klasik mavi
+    [Color(0xFFC67A5C), Color(0xFF9B4A2E)], // Ziman - Warm terracotta
+    [Color(0xFF722F43), Color(0xFF4A1E2C)], // Çand - Rich burgundy
+    [Color(0xFF2B4F7E), Color(0xFF1A3460)], // Dîrok - Deep blue
+    [Color(0xFFD4A84B), Color(0xFFB8860B)], // Edebiyat - Amber/gold
+    [Color(0xFF3D6B4F), Color(0xFF1E4D2E)], // Cografya - Forest green
+    [Color(0xFFD4789E), Color(0xFFA84D6E)], // Muzîk - Rose pink
+    [Color(0xFF6B3A7A), Color(0xFF452250)], // Siyaset - Plum purple
+    [Color(0xFF2E7D7E), Color(0xFF1A5C5C)], // Paradigma - Teal
   ];
 
   static LinearGradient categoryGradient(int index) {
@@ -424,7 +442,7 @@ class AppTheme {
     );
   }
 
-  // Tek kullanımlık dekoratif gradyanlar (QuickPlayGrid tile'ları için).
+  // Decorative gradients for QuickPlayGrid tiles.
   static const List<Color> duelGradient = [
     Color(0xFFFF416C),
     Color(0xFFFF4B2B),
@@ -490,7 +508,7 @@ class AppTheme {
           backgroundColor: accent,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
         ),
@@ -500,7 +518,7 @@ class AppTheme {
           foregroundColor: textPrimary,
           side: const BorderSide(color: border),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
         ),
@@ -520,15 +538,15 @@ class AppTheme {
         filled: true,
         fillColor: surfaceHi,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
           borderSide: const BorderSide(color: border),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
           borderSide: const BorderSide(color: border),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
           borderSide: const BorderSide(color: accent, width: 2),
         ),
         hintStyle: const TextStyle(color: textMuted),
@@ -552,7 +570,7 @@ class AppTheme {
           height: 1.3,
         ),
         bodyLarge: TextStyle(color: textSub, height: 1.45),
-        bodyMedium: TextStyle(color: textSub, height: 1.4),
+        bodyMedium: TextStyle(color: textSub, height: 1.5),
         bodySmall: TextStyle(color: textMuted, height: 1.35),
         labelLarge: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 0.2),
       ),
@@ -642,7 +660,7 @@ class AppTheme {
           backgroundColor: accent,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
         ),
@@ -652,7 +670,7 @@ class AppTheme {
           foregroundColor: lightTextPrimary,
           side: const BorderSide(color: lightBorder),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
         ),
@@ -672,15 +690,15 @@ class AppTheme {
         filled: true,
         fillColor: lightSurfaceHi,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
           borderSide: const BorderSide(color: lightBorder),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
           borderSide: const BorderSide(color: lightBorder),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
           borderSide: const BorderSide(color: accent, width: 2),
         ),
         hintStyle: const TextStyle(color: lightTextMuted),
@@ -704,7 +722,7 @@ class AppTheme {
           height: 1.3,
         ),
         bodyLarge: TextStyle(color: lightTextSub, height: 1.45),
-        bodyMedium: TextStyle(color: lightTextSub, height: 1.4),
+        bodyMedium: TextStyle(color: lightTextSub, height: 1.5),
         bodySmall: TextStyle(color: lightTextMuted, height: 1.35),
         labelLarge: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 0.2),
       ),
@@ -719,7 +737,7 @@ class AppTheme {
 
   // ============ Glassmorphism Helpers ============
 
-  /// Glassmorphism efektli dekorasyon oluşturur.
+  /// Creates a glassmorphism effect decoration.
   static BoxDecoration glassDecoration(
     BuildContext context, {
     double borderRadius = 16,
@@ -746,7 +764,7 @@ class AppTheme {
     );
   }
 
-  /// Shimmer efekti için gradient.
+  /// Gradient for shimmer effect.
   static const shimmerGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -754,16 +772,16 @@ class AppTheme {
     stops: [0.0, 0.5, 1.0],
   );
 
-  // ============ Ek Gradient Tanımları ============
+  // ============ Additional Gradient Definitions ============
 
-  /// Profil ekranı rozet bölümü arka plan gradient'i.
+  /// Profile screen badge section background gradient.
   static const badgeGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [Color(0xFF1E5F47), Color(0xFF2C6B54)],
   );
 
-  /// Streak göstergesi gradient'i.
+  /// Streak indicator gradient.
   static const streakGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -772,7 +790,7 @@ class AppTheme {
 
   // ============ Premium Design Helpers ============
 
-  /// Yumuşak, dağınık gölge — kartlar ve paneller için.
+  /// Soft, diffuse shadow — for cards and panels.
   static List<BoxShadow> softShadow(BuildContext context) {
     final isDark = _isDark(context);
     return [
@@ -790,7 +808,7 @@ class AppTheme {
     ];
   }
 
-  /// Renkli neon ışıltı gölgesi — CTA butonlar ve öne çıkan elemanlar.
+  /// Colored neon glow shadow — CTA buttons and featured elements.
   static List<BoxShadow> glowShadow(Color color, {double intensity = 0.4}) {
     return [
       BoxShadow(
@@ -808,7 +826,7 @@ class AppTheme {
     ];
   }
 
-  /// Gradient arka planlı yuvarlak ikon konteyneri.
+  /// Gradient background circle icon container.
   static BoxDecoration iconCircle(
     List<Color> gradientColors, {
     double size = 44,
@@ -830,7 +848,7 @@ class AppTheme {
     );
   }
 
-  /// Premium kart dekorasyonu — gradient arka plan + glow + border.
+  /// Premium card decoration — gradient background + glow + border.
   static BoxDecoration premiumCard(
     BuildContext context, {
     LinearGradient? gradient,
@@ -853,12 +871,12 @@ class AppTheme {
     );
   }
 
-  /// Bölüm başlık aksanı — sol kenardaki renkli dikey çizgi.
+  /// Section title accent — colored vertical bar on the left edge.
   static BoxDecoration sectionAccent(Color color) {
     return BoxDecoration(borderRadius: BorderRadius.circular(2), color: color);
   }
 
-  /// Stat/metric kartı dekorasyonu (profil, sonuç ekranları).
+  /// Stat/metric card decoration (profile, result screens).
   static BoxDecoration statCard(BuildContext context, Color accentColor) {
     return BoxDecoration(
       color: surfaceColor(context),

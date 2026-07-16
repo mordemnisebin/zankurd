@@ -203,7 +203,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         const SizedBox(width: 10),
                         Text(
                           ku ? 'Karên Hesabê' : 'Hesap İşlemleri',
-                          style: TextStyle(
+                          style: AppTypography.bodyLarge.copyWith(
                             color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w700,
                             fontSize: 17,
@@ -216,9 +216,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ku
                           ? 'Ev kar nayên vegerandin.'
                           : 'Bu alandaki işlemler geri alınamaz.',
-                      style: TextStyle(
+                      style: AppTypography.caption.copyWith(
                         color: AppTheme.textMutedColor(context),
-                        fontSize: 12,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -268,9 +267,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ku
                                         ? 'Profîl, coin û pirsên tomarkirî tên jêbirin.'
                                         : 'Profil, coin ve kaydedilen soru verilerin silinir.',
-                                    style: TextStyle(
+                                    style: AppTypography.caption.copyWith(
                                       color: AppTheme.textMutedColor(context),
-                                      fontSize: 12,
                                     ),
                                   ),
                                 ],
@@ -343,9 +341,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   }
                                   return Text(
                                     sub,
-                                    style: TextStyle(
+                                    style: AppTypography.caption.copyWith(
                                       color: AppTheme.textMutedColor(context),
-                                      fontSize: 12,
                                     ),
                                   );
                                 },
@@ -605,13 +602,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             gradient: AppTheme.accentGradient,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'ZK',
-                              style: TextStyle(
+                              style: AppTypography.heading2.copyWith(
                                 color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
                               ),
                             ),
                           ),
@@ -622,7 +617,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           children: [
                             Text(
                               'ZanKurd',
-                              style: TextStyle(
+                              style: AppTypography.bodyLarge.copyWith(
                                 color: AppTheme.textPrimaryColor(context),
                                 fontWeight: FontWeight.w700,
                                 fontSize: 17,
@@ -630,9 +625,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             Text(
                               '${ku ? 'Guherto' : 'Sürüm'} $_versionLabel',
-                              style: TextStyle(
+                              style: AppTypography.caption.copyWith(
                                 color: AppTheme.textMutedColor(context),
-                                fontSize: 12,
                               ),
                             ),
                           ],
@@ -982,10 +976,9 @@ class _LangChip extends StatelessWidget {
             ),
             child: Text(
               label,
-              style: TextStyle(
+              style: AppTypography.caption.copyWith(
                 color: active ? Colors.white : AppTheme.textMutedColor(context),
                 fontWeight: FontWeight.w700,
-                fontSize: 12,
               ),
             ),
           ),

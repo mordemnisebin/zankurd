@@ -650,7 +650,17 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('${context.s('Ode', 'Oda')} ${widget.room.code}'),
+          // Solo/bot oyunda oda kodu anlamsız gürültü; kategori adı göster.
+          title: Text(
+            widget.room.id == null
+                ? (widget.room.category.isEmpty
+                      ? context.s('Pêşbirk', 'Yarışma')
+                      : CategoryNames.localized(
+                          widget.room.category,
+                          context.isKu,
+                        ))
+                : '${context.s('Ode', 'Oda')} ${widget.room.code}',
+          ),
           actions: [
             IconButton(
               onPressed: _toggleFavorite,
@@ -1802,7 +1812,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 totalQuestions: widget.questions.length,
                 room: widget.room,
               )
-              .catchError((_) => 0);
+              .catchError((error, stack) {
+                ErrorReporter.record(error, stack, reason: 'awardQuizCoins solo failed');
+                return 0;
+              });
 
     if (!mounted) return;
     context.read<SoundProvider>().playWin();
@@ -2004,7 +2017,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   totalQuestions: widget.questions.length,
                   room: widget.room,
                 )
-                .catchError((_) => 0);
+                .catchError((error, stack) {
+                  ErrorReporter.record(error, stack, reason: 'awardQuizCoins multiplayer failed');
+                  return 0;
+                });
       if (!mounted) return;
       context.read<SoundProvider>().playWin();
       Navigator.of(context).pushReplacement(

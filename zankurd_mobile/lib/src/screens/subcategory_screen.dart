@@ -107,31 +107,32 @@ class _CategoryBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final topInset = MediaQuery.of(context).padding.top;
-    final color1 = Colors.white.withValues(alpha: 0.08);
-    final color2 = Colors.white.withValues(alpha: 0.03);
+    final color1 = Colors.white.withValues(alpha: 0.10);
+    final color2 = Colors.white.withValues(alpha: 0.04);
 
     return Container(
-      height: 150 + topInset,
+      height: 160 + topInset,
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: gradient,
         boxShadow: [
           BoxShadow(
-            color: gradient.colors.first.withValues(alpha: 0.16),
-            blurRadius: 20,
-            offset: const Offset(0, 4),
+            color: gradient.colors.first.withValues(alpha: 0.22),
+            blurRadius: 24,
+            offset: const Offset(0, 6),
+            spreadRadius: -2,
           ),
         ],
       ),
       child: Stack(
         children: [
-          // Soft Glow 1
+          // Soft Glow 1 — larger, warmer
           Positioned(
-            right: -40,
-            top: -40,
+            right: -50,
+            top: -50,
             child: Container(
-              width: 180,
-              height: 180,
+              width: 200,
+              height: 200,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
@@ -143,10 +144,10 @@ class _CategoryBanner extends StatelessWidget {
           // Soft Glow 2
           Positioned(
             left: -50,
-            bottom: -50,
+            bottom: -60,
             child: Container(
-              width: 140,
-              height: 140,
+              width: 160,
+              height: 160,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
@@ -162,27 +163,60 @@ class _CategoryBanner extends StatelessWidget {
                 painter: const KilimPatternPainter(
                   drawPattern: true,
                   color: Colors.white,
-                  opacity: 0.05,
+                  opacity: 0.06,
                 ),
               ),
             ),
           ),
           // Büyük filigran kategori ikonu — boşluğu dolduran görsel imza
           Positioned(
-            right: -18,
-            bottom: -26,
+            right: -12,
+            bottom: -22,
             child: Icon(
               _bannerIcon(category),
-              size: 150,
+              size: 160,
               color: Colors.white.withValues(alpha: 0.10),
             ),
           ),
+          // Decorative dots
+          Positioned(
+            left: 24,
+            top: topInset + 8,
+            child: Container(
+              width: 6,
+              height: 6,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.35),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+            padding: const EdgeInsets.fromLTRB(24, 20, 24, 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Spacer(),
+                // Category icon in small circle
+                Container(
+                  width: 42,
+                  height: 42,
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(bottom: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.18),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.28),
+                      width: 1.1,
+                    ),
+                  ),
+                  child: Icon(
+                    _bannerIcon(category),
+                    color: Colors.white,
+                    size: 22,
+                  ),
+                ),
                 Text(
                   CategoryNames.localized(category, isKu),
                   maxLines: 2,
@@ -191,6 +225,14 @@ class _CategoryBanner extends StatelessWidget {
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
                     fontSize: 26,
+                    height: 1.15,
+                    shadows: [
+                      Shadow(
+                        color: Color(0x55000000),
+                        blurRadius: 10,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -201,8 +243,9 @@ class _CategoryBanner extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.8),
+                    color: Colors.white.withValues(alpha: 0.85),
                     fontSize: 13,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
@@ -271,9 +314,9 @@ class _SubcategoryCard extends StatelessWidget {
           border: Border.all(color: tint.withValues(alpha: 0.22), width: 1.1),
           boxShadow: [
             BoxShadow(
-              color: tint.withValues(alpha: 0.10),
-              blurRadius: 14,
-              offset: const Offset(0, 5),
+              color: tint.withValues(alpha: 0.12),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
               spreadRadius: -6,
             ),
           ],
@@ -290,25 +333,31 @@ class _SubcategoryCard extends StatelessWidget {
               child: InkWell(
                 onTap: onTap,
                 borderRadius: BorderRadius.circular(AppRadius.card),
+                splashColor: tint.withValues(alpha: 0.12),
+                highlightColor: tint.withValues(alpha: 0.06),
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
                       Container(
-                        width: 56,
-                        height: 56,
+                        width: 52,
+                        height: 52,
                         decoration: BoxDecoration(
                           gradient: gradient,
                           borderRadius: BorderRadius.circular(AppRadius.md),
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.22),
+                            width: 1.1,
+                          ),
                           boxShadow: [
                             BoxShadow(
-                              color: tint.withValues(alpha: 0.38),
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
+                              color: tint.withValues(alpha: 0.36),
+                              blurRadius: 12,
+                              offset: const Offset(0, 5),
                             ),
                           ],
                         ),
-                        child: Icon(icon, color: Colors.white, size: 26),
+                        child: Icon(icon, color: Colors.white, size: 24),
                       ),
                       const SizedBox(width: 14),
                       Expanded(
@@ -323,6 +372,7 @@ class _SubcategoryCard extends StatelessWidget {
                                 color: AppTheme.textPrimaryColor(context),
                                 fontWeight: FontWeight.w800,
                                 fontSize: 16,
+                                height: 1.2,
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -337,7 +387,6 @@ class _SubcategoryCard extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            // Dar ekranda taşmamak için chip'ler sarmalanır.
                             Wrap(
                               spacing: 6,
                               runSpacing: 4,
@@ -359,12 +408,16 @@ class _SubcategoryCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Container(
-                        width: 32,
-                        height: 32,
+                        width: 34,
+                        height: 34,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: tint.withValues(alpha: 0.14),
                           shape: BoxShape.circle,
+                          border: Border.all(
+                            color: tint.withValues(alpha: 0.24),
+                            width: 1,
+                          ),
                         ),
                         child: Icon(
                           Icons.arrow_forward_rounded,

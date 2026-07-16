@@ -11,7 +11,6 @@ import '../widgets/screen_identity_header.dart';
 import 'contest_screen.dart';
 import 'home/quick_play_grid.dart';
 import 'matchmaking_screen.dart';
-import 'quiz_screen.dart';
 import 'room_screen.dart';
 import 'shop_screen.dart';
 import 'spin_wheel_screen.dart';
@@ -33,28 +32,14 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   Future<void> _openDailyQuiz() async {
     setState(() => _dailyLoading = true);
     try {
-      final contest = await widget.repository.loadTodayContest();
+      // Her zaman ContestScreen'e yönlendir; contest yoksa ekran kendisi
+      // boş durum mesajı gösterir ("Hîn çalakî tune"). Eskiden contest
+      // null olduğunda sessizce generic quiz başlatılıyordu — bu, kullanıcının
+      // günlük yarışmaya katıldığını sanmasına yol açıyordu.
       if (!mounted) return;
-      if (contest != null) {
-        await Navigator.of(
-          context,
-        ).push(AppRoute.to(ContestScreen(repository: widget.repository)));
-        return;
-      }
-      final questions = await widget.repository.loadQuestions(limit: 10);
-      if (!mounted || questions.isEmpty) return;
-      final room = widget.repository.createRoom().copyWith(
-        questionCount: questions.length,
-      );
-      await Navigator.of(context).push(
-        AppRoute.to(
-          QuizScreen(
-            repository: widget.repository,
-            room: room,
-            questions: questions,
-          ),
-        ),
-      );
+      await Navigator.of(
+        context,
+      ).push(AppRoute.to(ContestScreen(repository: widget.repository)));
     } finally {
       if (mounted) setState(() => _dailyLoading = false);
     }

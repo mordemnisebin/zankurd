@@ -493,18 +493,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ? '$greetingKu, ${currentName ?? 'Lîstikvan'}!'
         : '$greetingTr, ${currentName ?? 'Oyuncu'}!';
     final isLight = AppTheme.isLight(context);
+    // Warm indigo-to-violet gradient — inviting without being corporate.
+    // Light mode: richer deeper tones; dark mode: same warmth but darker.
     final headerStart = isLight
-        ? Color.alphaBlend(
-            Colors.black.withValues(alpha: 0.12),
-            AppTheme.brandOrange,
-          )
-        : AppTheme.brandOrange;
+        ? const Color(0xFF4A3DB8)
+        : const Color(0xFF5B4DBC);
     final headerEnd = isLight
-        ? Color.alphaBlend(
-            Colors.black.withValues(alpha: 0.18),
-            AppTheme.brandOrangeWarm,
-          )
-        : AppTheme.brandOrangeWarm;
+        ? const Color(0xFF7B5EA7)
+        : const Color(0xFF8B6CD6);
 
     return Container(
       key: const ValueKey('home-profile-header'),
@@ -1089,62 +1085,142 @@ class _CategoryEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Pirs-inspired gradient card — vibrant indigo-to-violet with white text.
+    const gradientColors = [
+      Color(0xFF5B4DBC),
+      Color(0xFF7B68EE),
+    ];
+
     return Semantics(
       button: true,
       label: isKu ? 'Mijar û mijaran bibîne' : 'Kategori ve konular',
-      child: GestureDetector(
-        key: const ValueKey('home-category-entry'),
-        onTap: onOpen,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(AppSpacing.md),
-          decoration: BoxDecoration(
-            color: AppTheme.surfaceHiColor(context),
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(color: AppTheme.violet.withValues(alpha: 0.35)),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 42,
-                height: 42,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppTheme.violet.withValues(alpha: 0.14),
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                ),
-                child: const Icon(
-                  Icons.grid_view_rounded,
-                  color: AppTheme.violet,
-                ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          key: const ValueKey('home-category-entry'),
+          onTap: onOpen,
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: gradientColors,
               ),
-              const SizedBox(width: AppSpacing.sm),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.22),
+                width: 1.2,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: gradientColors.first.withValues(alpha: 0.32),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                  spreadRadius: -4,
+                ),
+              ],
+            ),
+            child: Stack(
+              children: [
+                // Decorative background icon
+                Positioned(
+                  right: -10,
+                  bottom: -16,
+                  child: Icon(
+                    Icons.grid_view_rounded,
+                    size: 72,
+                    color: Colors.white.withValues(alpha: 0.10),
+                  ),
+                ),
+                Row(
                   children: [
-                    Text(
-                      isKu ? 'Mijar û mijaran bibîne' : 'Kategori ve konular',
-                      style: AppTypography.bodyLarge.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w900,
+                    // Icon circle
+                    Container(
+                      width: 48,
+                      height: 48,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.18),
+                        borderRadius: BorderRadius.circular(AppRadius.md),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.28),
+                          width: 1.2,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.14),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.grid_view_rounded,
+                        color: Colors.white,
+                        size: 26,
                       ),
                     ),
-                    Text(
-                      isKu
-                          ? 'Mijarên fêrbûnê û pêşbirkê bibîne'
-                          : 'Öğrenme ve yarışma konularına göz at',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textSubColor(context),
+                    const SizedBox(width: AppSpacing.md),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            isKu
+                                ? 'Mijar û mijaran bibîne'
+                                : 'Kategori ve konular',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16,
+                              height: 1.2,
+                              shadows: [
+                                Shadow(
+                                  color: Color(0x55000000),
+                                  blurRadius: 8,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.xxs),
+                          Text(
+                            isKu
+                                ? 'Mijarên fêrbûnê û pêşbirkê bibîne'
+                                : 'Öğrenme ve yarışma konularına göz at',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.white.withValues(alpha: 0.82),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.xs),
+                    Container(
+                      width: 36,
+                      height: 36,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.18),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.chevron_right_rounded,
+                        color: Colors.white,
+                        size: 22,
                       ),
                     ),
                   ],
                 ),
-              ),
-              const Icon(Icons.chevron_right_rounded, color: AppTheme.violet),
-            ],
+              ],
+            ),
           ),
         ),
       ),

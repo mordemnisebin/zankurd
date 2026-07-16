@@ -1,0 +1,13 @@
+{
+  "mcp": {
+    "servers": {
+      "dart-flutter": {
+        "type": "stdio",
+        "command": "dart",
+        "args": [
+          "mcp-server"
+        ]
+      }
+    }
+  }
+}

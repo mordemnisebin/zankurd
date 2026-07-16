@@ -319,19 +319,17 @@ class _SignUpScreenState extends State<SignUpScreen>
                                     'Hesabê te jixwe heye? ',
                                     'Zaten hesabın var mı? ',
                                   ),
-                                  style: TextStyle(
+                                  style: AppTypography.bodyMedium.copyWith(
                                     color: AppTheme.textSubColor(context),
-                                    fontSize: 14,
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: () => Navigator.of(context).pop(),
                                   child: Text(
                                     context.s('Têkeve', 'Giriş Yap'),
-                                    style: TextStyle(
+                                    style: AppTypography.bodyMedium.copyWith(
                                       color: AppTheme.primaryGradientStart,
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 14,
                                     ),
                                   ),
                                 ),
@@ -576,10 +574,9 @@ class _ProgressHexagon extends StatelessWidget {
       child: Center(
         child: Text(
           '$number',
-          style: TextStyle(
+          style: AppTypography.bodyLarge.copyWith(
             color: isActive ? Colors.white : AppTheme.textMutedColor(context),
             fontWeight: FontWeight.w800,
-            fontSize: 16,
           ),
         ),
       ),

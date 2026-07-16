@@ -274,6 +274,137 @@ class _ShopScreenState extends State<ShopScreen> {
     }
   }
 
+  // ── Purchase confirmation dialog ──
+  Future<void> _confirmPurchase(ShopItem item) async {
+    final ku = context.isKu;
+    final title = ku ? item.titleKu : item.titleTr;
+    final desc = ku ? item.descKu : item.descTr;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) {
+        final isDark = Theme.of(ctx).brightness == Brightness.dark;
+        return AlertDialog(
+          backgroundColor: AppTheme.surfaceColor(ctx),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+          ),
+          title: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: item.themeColor.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                ),
+                child: Icon(item.icon, color: item.themeColor, size: 22),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(ctx),
+                    fontWeight: FontWeight.w800,
+                    fontSize: 17,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                desc,
+                style: TextStyle(
+                  color: AppTheme.textSubColor(ctx),
+                  fontSize: 14,
+                  height: 1.45,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? AppTheme.surfaceHi.withValues(alpha: 0.5)
+                      : AppTheme.lightSurfaceHi,
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  border: Border.all(
+                    color: AppTheme.borderColor(ctx).withValues(alpha: 0.4),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.monetization_on,
+                        color: AppTheme.gold, size: 22),
+                    const SizedBox(width: 8),
+                    Text(
+                      '${item.cost} coin',
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(ctx),
+                        fontWeight: FontWeight.w800,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.account_balance_wallet_outlined,
+                      size: 16, color: AppTheme.textMutedColor(ctx)),
+                  const SizedBox(width: 6),
+                  Text(
+                    ku
+                        ? 'Bakiyeya te: $_coinBalance coin'
+                        : 'Bakiyen: $_coinBalance coin',
+                    style: TextStyle(
+                      color: _coinBalance < item.cost
+                          ? AppTheme.wrong
+                          : AppTheme.textSubColor(ctx),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: Text(
+                ku ? 'Betal' : 'İptal',
+                style: TextStyle(color: AppTheme.textMutedColor(ctx)),
+              ),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              style: FilledButton.styleFrom(
+                backgroundColor: AppTheme.accent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                ),
+              ),
+              child: Text(ku ? 'Bikire' : 'Satın Al'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true && mounted) {
+      _purchase(item);
+    }
+  }
+
   Future<void> _purchase(ShopItem item) async {
     final ku = context.isKu;
     if (_coinBalance < item.cost) {
@@ -312,12 +443,13 @@ class _ShopScreenState extends State<ShopScreen> {
             reason: 'shop success sound failed',
           );
         }
+        final title = ku ? item.titleKu : item.titleTr;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               ku
-                  ? 'Te ${ku ? item.titleKu : item.titleTr} bi serkeftî kirî!'
-                  : '${ku ? item.titleKu : item.titleTr} başarıyla satın alındı!',
+                  ? 'Te $title bi serkeftî kirî!'
+                  : '$title başarıyla satın alındı!',
             ),
             backgroundColor: AppTheme.correct,
           ),
@@ -365,6 +497,7 @@ class _ShopScreenState extends State<ShopScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -387,325 +520,322 @@ class _ShopScreenState extends State<ShopScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              // Balance Panel
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: AppPanel(
-                  gradient: AppTheme.goldGradient,
-                  padding: const EdgeInsets.all(18),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              ku ? 'Bakiyeya Te' : 'Mevcut Bakiyen',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Colors.white.withValues(alpha: 0.86),
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              ku ? '$_coinBalance coin' : '$_coinBalance coin',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
-                                fontWeight: FontWeight.w800,
-                                height: 1.05,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Container(
-                        width: 54,
-                        height: 54,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.monetization_on,
-                          color: Colors.white,
-                          size: 32,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // Items List
+              // ── Coin balance panel ──
+              _buildBalancePanel(context, ku, isDark),
+              // ── Items grid ──
               Expanded(
-                child: _loading && _coinBalance == 0
+                child: _loading && _dynamicItems.isEmpty
                     ? const Center(
                         child: CircularProgressIndicator(
                           color: AppTheme.primaryGradientStart,
                         ),
                       )
-                    : ListView.separated(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-                        itemCount: _dynamicItems.length,
-                        separatorBuilder: (_, _) => const SizedBox(height: 12),
-                        itemBuilder: (context, index) {
-                          final item = _dynamicItems[index];
-                          final title = ku ? item.titleKu : item.titleTr;
-                          final desc = ku ? item.descKu : item.descTr;
-                          final isPurchased = _purchasedItemIds.contains(
-                            item.id,
-                          );
-                          final canAfford = _coinBalance >= item.cost;
-
-                          // Her ürün kendi renk kimliğini taşır: hafif
-                          // zemin tonu + renkli kenarlık/parıltı.
-                          final tint = item.themeColor;
-                          final surface = AppTheme.surfaceHiColor(context);
-                          return Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Color.alphaBlend(
-                                    tint.withValues(alpha: 0.14),
-                                    surface,
-                                  ),
-                                  Color.alphaBlend(
-                                    tint.withValues(alpha: 0.04),
-                                    surface,
-                                  ),
-                                ],
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                AppRadius.card,
-                              ),
-                              border: Border.all(
-                                color: tint.withValues(
-                                  alpha: isPurchased ? 0.18 : 0.30,
-                                ),
-                                width: 1.1,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: tint.withValues(alpha: 0.10),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Container(
-                                      width: 52,
-                                      height: 52,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            item.themeColor.withValues(
-                                              alpha: 0.28,
-                                            ),
-                                            item.themeColor.withValues(
-                                              alpha: 0.1,
-                                            ),
-                                          ],
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                          AppRadius.sm,
-                                        ),
-                                        border: Border.all(
-                                          color: item.themeColor.withValues(
-                                            alpha: 0.4,
-                                          ),
-                                        ),
-                                      ),
-                                      child: Icon(
-                                        item.icon,
-                                        color: item.themeColor,
-                                        size: 26,
-                                      ),
-                                    ),
-                                    if (isPurchased)
-                                      Positioned(
-                                        right: -4,
-                                        top: -4,
-                                        child: Container(
-                                          padding: const EdgeInsets.all(2),
-                                          decoration: const BoxDecoration(
-                                            color: AppTheme.correct,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Icon(
-                                            Icons.check,
-                                            size: 12,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                                const SizedBox(width: 14),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              title,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                color:
-                                                    AppTheme.textPrimaryColor(
-                                                      context,
-                                                    ),
-                                                fontWeight: FontWeight.w800,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                          if (isPurchased) ...[
-                                            const SizedBox(width: 6),
-                                            Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 6,
-                                                    vertical: 2,
-                                                  ),
-                                              decoration: BoxDecoration(
-                                                color: AppTheme.correct
-                                                    .withValues(alpha: 0.15),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                      AppRadius.xs,
-                                                    ),
-                                              ),
-                                              child: Text(
-                                                ku ? 'Yê te' : 'Sende',
-                                                style: const TextStyle(
-                                                  color: AppTheme.correct,
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w800,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ],
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        desc,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          color: AppTheme.textMutedColor(
-                                            context,
-                                          ),
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                ConstrainedBox(
-                                  constraints: const BoxConstraints(
-                                    minWidth: 76,
-                                    minHeight: 46,
-                                  ),
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: isPurchased
-                                          ? AppTheme.correct.withValues(
-                                              alpha: 0.18,
-                                            )
-                                          : (canAfford
-                                                ? AppTheme.primaryGradientStart
-                                                : AppTheme.surfaceHiColor(
-                                                    context,
-                                                  )),
-                                      foregroundColor: isPurchased
-                                          ? AppTheme.correct
-                                          : (canAfford
-                                                ? Colors.white
-                                                : AppTheme.textMutedColor(
-                                                    context,
-                                                  )),
-                                      elevation: 0,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 13,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          AppRadius.sm,
-                                        ),
-                                      ),
-                                    ),
-                                    onPressed: (_loading || isPurchased)
-                                        ? null
-                                        : () => _purchase(item),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        if (isPurchased) ...[
-                                          const Icon(Icons.check, size: 14),
-                                          const SizedBox(width: 4),
-                                          Flexible(
-                                            child: Text(
-                                              ku ? 'Kirî' : 'Alındı',
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                          ),
-                                        ] else ...[
-                                          if (canAfford)
-                                            const Icon(
-                                              Icons.shopping_cart_outlined,
-                                              size: 14,
-                                            ),
-                                          const SizedBox(width: 4),
-                                          Text(
-                                            '${item.cost}c',
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                        ],
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                    : _buildItemGrid(context, ku, isDark),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  // ────────────────────────────────────────────
+  //  Balance panel
+  // ────────────────────────────────────────────
+  Widget _buildBalancePanel(BuildContext context, bool ku, bool isDark) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+      child: AppPanel(
+        gradient: AppTheme.goldGradient,
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    ku ? 'Bakiyeya Te' : 'Mevcut Bakiyen',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.88),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '$_coinBalance coin',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w800,
+                      height: 1.05,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.22),
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.3),
+                  width: 1.5,
+                ),
+              ),
+              child: const Icon(
+                Icons.monetization_on,
+                color: Colors.white,
+                size: 32,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ────────────────────────────────────────────
+  //  Items grid
+  // ────────────────────────────────────────────
+  Widget _buildItemGrid(BuildContext context, bool ku, bool isDark) {
+    // Use 2 columns; on wide screens (>600dp) use 3.
+    final width = MediaQuery.of(context).size.width;
+    final crossAxisCount = width >= 600 ? 3 : 2;
+
+    return GridView.builder(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 12,
+        childAspectRatio: 0.72,
+      ),
+      itemCount: _dynamicItems.length,
+      itemBuilder: (context, index) {
+        final item = _dynamicItems[index];
+        return _buildShopCard(item, ku, isDark);
+      },
+    );
+  }
+
+  // ────────────────────────────────────────────
+  //  Single shop card
+  // ────────────────────────────────────────────
+  Widget _buildShopCard(ShopItem item, bool ku, bool isDark) {
+    final title = ku ? item.titleKu : item.titleTr;
+    final desc = ku ? item.descKu : item.descTr;
+    final isPurchased = _purchasedItemIds.contains(item.id);
+    final canAfford = _coinBalance >= item.cost;
+    final tint = item.themeColor;
+
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(AppRadius.card),
+      child: InkWell(
+        onTap: (_loading || isPurchased)
+            ? null
+            : () => _confirmPurchase(item),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        splashColor: tint.withValues(alpha: 0.15),
+        highlightColor: tint.withValues(alpha: 0.07),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(
+              color: tint.withValues(alpha: isPurchased ? 0.18 : 0.28),
+              width: 1.1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: tint.withValues(alpha: isPurchased ? 0.04 : 0.10),
+                blurRadius: 14,
+                offset: const Offset(0, 4),
+              ),
+            ],
+            color: isPurchased
+                ? AppTheme.surfaceColor(context).withValues(alpha: 0.7)
+                : AppTheme.surfaceColor(context),
+          ),
+          child: Stack(
+            children: [
+              // Card content
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Icon area
+                    Container(
+                      height: 72,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: isPurchased
+                              ? [
+                                  tint.withValues(alpha: 0.10),
+                                  tint.withValues(alpha: 0.04),
+                                ]
+                              : [
+                                  tint.withValues(alpha: 0.22),
+                                  tint.withValues(alpha: 0.08),
+                                ],
+                        ),
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
+                      ),
+                      alignment: Alignment.center,
+                      child: Icon(
+                        item.icon,
+                        color: isPurchased
+                            ? tint.withValues(alpha: 0.5)
+                            : tint,
+                        size: 32,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    // Title
+                    Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: isPurchased
+                            ? AppTheme.textMutedColor(context)
+                            : AppTheme.textPrimaryColor(context),
+                        fontWeight: FontWeight.w800,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    // Description
+                    Expanded(
+                      child: Text(
+                        desc,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: isPurchased
+                              ? AppTheme.textMutedColor(context)
+                                  .withValues(alpha: 0.7)
+                              : AppTheme.textMutedColor(context),
+                          fontSize: 11,
+                          height: 1.35,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    // Price + Action
+                    SizedBox(
+                      height: 38,
+                      child: isPurchased
+                          ? _buildOwnedChip(ku)
+                          : _buildBuyButton(item, ku, canAfford),
+                    ),
+                  ],
+                ),
+              ),
+              // Owned overlay indicator
+              if (isPurchased)
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: AppTheme.correct,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0x44000000),
+                          blurRadius: 6,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.check_rounded,
+                      size: 14,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ── "Owned" chip ──
+  Widget _buildOwnedChip(bool ku) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppTheme.correct.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(
+          color: AppTheme.correct.withValues(alpha: 0.3),
+        ),
+      ),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.check_rounded, size: 14, color: AppTheme.correct),
+          const SizedBox(width: 4),
+          Text(
+            ku ? 'Yê te' : 'Sende',
+            style: const TextStyle(
+              color: AppTheme.correct,
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ── Buy button ──
+  Widget _buildBuyButton(ShopItem item, bool ku, bool canAfford) {
+    return SizedBox(
+      width: double.infinity,
+      child: FilledButton.icon(
+        onPressed: _loading ? null : () => _confirmPurchase(item),
+        style: FilledButton.styleFrom(
+          backgroundColor: canAfford
+              ? AppTheme.accent
+              : AppTheme.surfaceHiColor(context),
+          disabledBackgroundColor: AppTheme.surfaceHiColor(context),
+          foregroundColor: canAfford
+              ? Colors.white
+              : AppTheme.textMutedColor(context),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+          ),
+          elevation: canAfford ? 2 : 0,
+          textStyle: const TextStyle(
+            fontWeight: FontWeight.w800,
+            fontSize: 12,
+          ),
+        ),
+        icon: Icon(
+          Icons.shopping_cart_outlined,
+          size: 15,
+          color: canAfford
+              ? Colors.white
+              : AppTheme.textMutedColor(context),
+        ),
+        label: Text('${item.cost}c'),
       ),
     );
   }

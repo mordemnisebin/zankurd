@@ -264,9 +264,8 @@ class _CategoryHero extends StatelessWidget {
                     const Spacer(),
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: AppTypography.heading1.copyWith(
                         color: Colors.white,
-                        fontWeight: FontWeight.w800,
                         fontSize: 28,
                         height: 1.05,
                       ),
@@ -274,9 +273,8 @@ class _CategoryHero extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       subtitle,
-                      style: TextStyle(
+                      style: AppTypography.bodyMedium.copyWith(
                         color: Colors.white.withValues(alpha: 0.8),
-                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -483,9 +481,8 @@ class _LevelNodeState extends State<_LevelNode> {
                           )
                         : Text(
                             '${widget.level.number}',
-                            style: const TextStyle(
+                            style: AppTypography.heading1.copyWith(
                               color: Colors.white,
-                              fontWeight: FontWeight.w800,
                               fontSize: 28,
                             ),
                           ),
@@ -531,7 +528,7 @@ class _LevelNodeState extends State<_LevelNode> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: AppTypography.bodyMedium.copyWith(
                         color: AppTheme.textPrimaryColor(context),
                         fontWeight: FontWeight.w800,
                         fontSize: 13.5,
@@ -549,7 +546,7 @@ class _LevelNodeState extends State<_LevelNode> {
                         const SizedBox(width: 6),
                         Text(
                           '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"}',
-                          style: TextStyle(
+                          style: AppTypography.caption.copyWith(
                             color: AppTheme.textMutedColor(context),
                             fontSize: 11,
                             fontWeight: FontWeight.w600,

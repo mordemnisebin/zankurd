@@ -317,10 +317,9 @@ class _LeagueBanner extends StatelessWidget {
                   tier.label(isKu),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: AppTypography.bodyLarge.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w800,
-                    fontSize: 15,
                   ),
                 ),
                 Text(
@@ -333,9 +332,8 @@ class _LeagueBanner extends StatelessWidget {
                             : 'Bu hafta yarış, lige gir!'),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
-                    fontSize: 12,
                   ),
                 ),
               ],
@@ -636,9 +634,8 @@ class _PodiumSlot extends StatelessWidget {
               if (entry.showcaseTitle != null)
                 Text(
                   entry.showcaseTitle!,
-                  style: const TextStyle(
+                  style: AppTypography.caption.copyWith(
                     color: AppTheme.gold,
-                    fontWeight: FontWeight.w700,
                     fontSize: 10,
                   ),
                   maxLines: 1,
@@ -673,7 +670,7 @@ class _PodiumSlot extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 '#${entry.rank}',
-                style: TextStyle(
+                style: AppTypography.bodyMedium.copyWith(
                   color: color.withValues(alpha: 0.8),
                   fontWeight: FontWeight.w700,
                   fontSize: 13,
@@ -728,10 +725,9 @@ class _RankRow extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               '${entry.rank}',
-              style: TextStyle(
+              style: AppTypography.bodyMedium.copyWith(
                 color: AppTheme.textSubColor(context),
                 fontWeight: FontWeight.w700,
-                fontSize: 14,
               ),
             ),
           ),
@@ -751,10 +747,9 @@ class _RankRow extends StatelessWidget {
               children: [
                 Text(
                   entry.displayName,
-                  style: TextStyle(
+                  style: AppTypography.bodyMedium.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w800,
-                    fontSize: 14,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -767,7 +762,7 @@ class _RankRow extends StatelessWidget {
                             ' · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
@@ -783,10 +778,9 @@ class _RankRow extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 '${entry.totalScore}',
-                style: const TextStyle(
+                style: AppTypography.bodyLarge.copyWith(
                   color: AppTheme.gold,
                   fontWeight: FontWeight.w700,
-                  fontSize: 16,
                 ),
               ),
             ),
@@ -835,10 +829,9 @@ class _FriendRankRow extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               '${friend.level}',
-              style: TextStyle(
+              style: AppTypography.bodyMedium.copyWith(
                 color: AppTheme.textSubColor(context),
                 fontWeight: FontWeight.w700,
-                fontSize: 14,
               ),
             ),
           ),
@@ -883,10 +876,9 @@ class _FriendRankRow extends StatelessWidget {
               children: [
                 Text(
                   friend.friendName,
-                  style: TextStyle(
+                  style: AppTypography.bodyMedium.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w800,
-                    fontSize: 14,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -898,7 +890,7 @@ class _FriendRankRow extends StatelessWidget {
                       : (isKu ? 'Offline' : 'Offline'),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: AppTypography.caption.copyWith(
                     color: online
                         ? const Color(0xFF4CAF50)
                         : AppTheme.textMutedColor(context),
@@ -916,10 +908,9 @@ class _FriendRankRow extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 '${friend.totalScore}',
-                style: const TextStyle(
+                style: AppTypography.bodyLarge.copyWith(
                   color: AppTheme.cyan,
                   fontWeight: FontWeight.w700,
-                  fontSize: 16,
                 ),
               ),
             ),

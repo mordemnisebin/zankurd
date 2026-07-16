@@ -7,8 +7,8 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 // doğrular — regresyonu (eski turuncuya dönüş) yakalar.
 void main() {
   test('marka rengi indigo Bubblegum Arcade paleti', () {
-    expect(AppTheme.brandOrange, const Color(0xFF6C5CE7));
-    expect(AppTheme.brandOrangeWarm, const Color(0xFF8B7CF6));
+    expect(AppTheme.brandOrange, const Color(0xFF2D3561));
+    expect(AppTheme.brandOrangeWarm, const Color(0xFF4B5AA8));
   });
 
   test('öğrenme rengi lime', () {
@@ -32,10 +32,10 @@ void main() {
   });
 
   test('açık mod zemin sıcak beyaz', () {
-    expect(AppTheme.lightBg, const Color(0xFFFAFAFF));
+    expect(AppTheme.lightBg, const Color(0xFFFBF9F6));
   });
 
   test('koyu mod zemin yeni indigo-koyu tonu', () {
-    expect(AppTheme.bg, const Color(0xFF15121F));
+    expect(AppTheme.bg, const Color(0xFF12141C));
   });
 }

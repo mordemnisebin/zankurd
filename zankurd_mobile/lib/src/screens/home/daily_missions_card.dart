@@ -62,9 +62,8 @@ class DailyMissionsCard extends StatelessWidget {
                       isKu ? 'Erkên Rojane' : 'Günlük Görevler',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: AppTypography.bodyLarge.copyWith(
                         fontWeight: FontWeight.w800,
-                        fontSize: 16,
                         color: AppTheme.textPrimaryColor(context),
                       ),
                     ),
@@ -72,8 +71,7 @@ class DailyMissionsCard extends StatelessWidget {
                     if (!loading)
                       Text(
                         '$completedCount/${missions.length} ${isKu ? 'temam' : 'tamamlandı'}',
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: AppTypography.caption.copyWith(
                           color: AppTheme.textMutedColor(context),
                           fontWeight: FontWeight.w500,
                         ),
@@ -120,8 +118,7 @@ class _MiniProgressRing extends StatelessWidget {
           ),
           Text(
             '${(progress * 100).round()}%',
-            style: TextStyle(
-              fontSize: 10,
+            style: AppTypography.caption.copyWith(
               fontWeight: FontWeight.w800,
               color: color,
             ),
@@ -206,8 +203,7 @@ class _MissionTile extends StatelessWidget {
                   label,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: AppTypography.bodyMedium.copyWith(
                     fontWeight: FontWeight.w700,
                     color: isDone
                         ? AppTheme.gold
@@ -232,8 +228,7 @@ class _MissionTile extends StatelessWidget {
                   child: Text(
                     '+${mission.coinReward}',
                     maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 13,
+                    style: AppTypography.caption.copyWith(
                       color: AppTheme.gold,
                       fontWeight: FontWeight.w800,
                     ),
@@ -281,8 +276,7 @@ class _MissionTile extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             '${mission.progress.clamp(0, mission.target)} / ${mission.target}',
-            style: TextStyle(
-              fontSize: 10.5,
+            style: AppTypography.caption.copyWith(
               color: AppTheme.textMutedColor(context),
               fontWeight: FontWeight.w600,
             ),

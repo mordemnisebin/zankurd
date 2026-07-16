@@ -81,8 +81,13 @@ class _CategoriesTabState extends State<CategoriesTab> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    // Ana sayfadan bağımsız route olarak da açılıyor; Material sarmalayıcı
+    // olmadan Text'ler sarı alt çizgiyle çizilir ve geri butonu kalmaz.
+    final canPop = Navigator.of(context).canPop();
 
-    return Container(
+    return Material(
+      type: MaterialType.transparency,
+      child: Container(
       decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: SafeArea(
         child: Column(
@@ -96,6 +101,13 @@ class _CategoriesTabState extends State<CategoriesTab> {
               ),
               child: Row(
                 children: [
+                  if (canPop)
+                    IconButton(
+                      key: const ValueKey('categories-back-button'),
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(Icons.arrow_back),
+                      color: AppTheme.textPrimaryColor(context),
+                    ),
                   Container(
                     key: const ValueKey('categories-header-accent'),
                     width: 4,
@@ -142,64 +154,204 @@ class _CategoriesTabState extends State<CategoriesTab> {
               ),
             ),
             Expanded(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final bottomPadding =
-                      MediaQuery.paddingOf(context).bottom + AppSpacing.xxl;
-                  int crossCount = 2;
-                  if (constraints.maxWidth > 1200) {
-                    crossCount = 5;
-                  } else if (constraints.maxWidth > 900) {
-                    crossCount = 4;
-                  } else if (constraints.maxWidth > 600) {
-                    crossCount = 3;
-                  }
-                  return GridView.builder(
-                    controller: widget.scrollController,
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.page,
-                      AppSpacing.sm,
-                      AppSpacing.page,
-                      bottomPadding,
-                    ),
-                    itemCount: _categories.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: crossCount,
-                      mainAxisSpacing: AppSpacing.gridGap,
-                      crossAxisSpacing: AppSpacing.gridGap,
-                      childAspectRatio: 0.84,
-                    ),
-                    itemBuilder: (context, index) {
-                      final cat = _categories[index];
-                      return _CategoryCard(
-                        key: ValueKey('category-card-$cat'),
-                        category: cat,
-                        index: index,
-                        isKu: ku,
-                        masteryLevel: _masteryLevels[cat] ?? MasteryLevel.none,
-                        masteryCount: _masteryCounts[cat] ?? 0,
-                        masteryThreshold: _masteryThresholds[cat] ?? 20,
-                        onTap: () => Navigator.of(context).push(
-                          AppRoute.to(
-                            SubcategoryScreen(
-                              repository: widget.repository,
-                              category: cat,
-                            ),
+              child: _loading && _categories.isEmpty
+                  ? _buildSkeletonGrid(context)
+                  : LayoutBuilder(
+                      builder: (context, constraints) {
+                        final bottomPadding =
+                            MediaQuery.paddingOf(context).bottom +
+                                AppSpacing.xxl;
+                        final isNarrow = constraints.maxWidth <= 600;
+                        final crossCount = isNarrow ? 1 : 2;
+                        final aspectRatio = isNarrow
+                            ? (constraints.maxWidth / 190)
+                            : 0.92;
+                        return GridView.builder(
+                          controller: widget.scrollController,
+                          padding: EdgeInsets.fromLTRB(
+                            AppSpacing.page,
+                            AppSpacing.sm,
+                            AppSpacing.page,
+                            bottomPadding,
                           ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+                          itemCount: _categories.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossCount,
+                            mainAxisSpacing: AppSpacing.md,
+                            crossAxisSpacing: AppSpacing.md,
+                            childAspectRatio: aspectRatio,
+                          ),
+                          itemBuilder: (context, index) {
+                            final cat = _categories[index];
+                            return _CategoryCard(
+                              key: ValueKey('category-card-$cat'),
+                              category: cat,
+                              index: index,
+                              isKu: ku,
+                              masteryLevel:
+                                  _masteryLevels[cat] ?? MasteryLevel.none,
+                              masteryCount: _masteryCounts[cat] ?? 0,
+                              masteryThreshold: _masteryThresholds[cat] ?? 20,
+                              onTap: () => Navigator.of(context).push(
+                                AppRoute.to(
+                                  SubcategoryScreen(
+                                    repository: widget.repository,
+                                    category: cat,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
             ),
           ],
         ),
       ),
+      ),
+    );
+  }
+
+  Widget _buildSkeletonGrid(BuildContext context) {
+    final skeletonCount = 6;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bottomPadding =
+            MediaQuery.paddingOf(context).bottom + AppSpacing.xxl;
+        final isNarrow = constraints.maxWidth <= 600;
+        final crossCount = isNarrow ? 1 : 2;
+        final aspectRatio = isNarrow ? (constraints.maxWidth / 190) : 0.92;
+        return GridView.builder(
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.page,
+            AppSpacing.sm,
+            AppSpacing.page,
+            bottomPadding,
+          ),
+          itemCount: skeletonCount,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossCount,
+            mainAxisSpacing: AppSpacing.md,
+            crossAxisSpacing: AppSpacing.md,
+            childAspectRatio: aspectRatio,
+          ),
+          itemBuilder: (context, index) => const _ShimmerCard(),
+        );
+      },
     );
   }
 }
 
+/// Shimmer / skeleton card shown while categories load.
+class _ShimmerCard extends StatefulWidget {
+  const _ShimmerCard();
+
+  @override
+  State<_ShimmerCard> createState() => _ShimmerCardState();
+}
+
+class _ShimmerCardState extends State<_ShimmerCard>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _anim;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    )..repeat();
+    _anim = Tween<double>(begin: -2, end: 2).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOutSine),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isLight = AppTheme.isLight(context);
+    final baseColor = isLight
+        ? const Color(0xFFE4E1F5)
+        : const Color(0xFF2A2540);
+    final shimmerColor = isLight
+        ? const Color(0xFFF0EEFC)
+        : const Color(0xFF352E50);
+
+    return AnimatedBuilder(
+      animation: _anim,
+      builder: (context, child) {
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment(-1.0 + _anim.value, -0.5),
+              end: Alignment(1.0 + _anim.value, 0.5),
+              colors: [baseColor, shimmerColor, baseColor],
+            ),
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Icon placeholder
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.25),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+                const Spacer(),
+                // Title placeholder
+                Container(
+                  width: double.infinity,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.25),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                // Subtitle placeholder
+                Container(
+                  width: 140,
+                  height: 14,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.18),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                // Progress bar placeholder
+                Container(
+                  width: double.infinity,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// Pirs-inspired vibrant category card with gradient background,
+/// prominent icon, clean typography, and a mastery progress bar.
 class _CategoryCard extends StatefulWidget {
   const _CategoryCard({
     required this.category,
@@ -262,13 +414,17 @@ class _CategoryCardState extends State<_CategoryCard>
 
   @override
   Widget build(BuildContext context) {
-    final gradient = AppTheme.categoryGradient(widget.index);
-    final glowColor = AppTheme
-        .categoryGradients[widget.index % AppTheme.categoryGradients.length]
-        .first;
-    final image = CategoryVisuals.imagePath(widget.category);
+    final gradientColors = AppTheme
+        .categoryGradients[widget.index % AppTheme.categoryGradients.length];
+    final glowColor = gradientColors.first;
     final icon = CategoryVisuals.icon(widget.category);
-    final radius = BorderRadius.circular(AppRadius.card);
+    final catName = CategoryNames.localized(widget.category, widget.isKu);
+
+    // Mastery progress (0.0 - 1.0)
+    final progress = widget.masteryThreshold > 0
+        ? (widget.masteryCount / widget.masteryThreshold).clamp(0.0, 1.0)
+        : 0.0;
+    final hasProgress = widget.masteryLevel != MasteryLevel.none;
 
     return FadeTransition(
       opacity: _fadeAnim,
@@ -282,185 +438,199 @@ class _CategoryCardState extends State<_CategoryCard>
           },
           onTapCancel: () => setState(() => _pressed = false),
           child: AnimatedScale(
-            scale: _pressed ? 0.975 : 1.0,
-            duration: const Duration(milliseconds: 120),
+            scale: _pressed ? 0.97 : 1.0,
+            duration: const Duration(milliseconds: 140),
             curve: Curves.easeOutCubic,
             child: Container(
-              decoration: AppTheme.categoryCardDecoration(glowColor),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    gradientColors.first,
+                    gradientColors.last,
+                  ],
+                ),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.20),
+                  width: 1.2,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: glowColor.withValues(alpha: 0.30),
+                    blurRadius: 22,
+                    offset: const Offset(0, 10),
+                    spreadRadius: -6,
+                  ),
+                  BoxShadow(
+                    color: glowColor.withValues(alpha: 0.12),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
               child: ClipRRect(
-                borderRadius: radius,
+                borderRadius: BorderRadius.circular(14),
                 child: Stack(
                   children: [
-                    Positioned.fill(
-                      child: Image.asset(
-                        image,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return DecoratedBox(
-                            decoration: BoxDecoration(
-                              gradient: AppGradients.categoryFallback(gradient),
-                            ),
-                            child: Center(
-                              child: Icon(
-                                icon,
-                                color: Colors.white.withValues(alpha: 0.74),
-                                size: 48,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Positioned.fill(
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: AppGradients.categoryImageOverlay(gradient),
-                        ),
-                      ),
-                    ),
-                    Positioned.fill(
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          borderRadius: radius,
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.08),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Decorative circles for depth
                     Positioned(
-                      right: -24,
-                      top: -24,
+                      right: -30,
+                      top: -30,
                       child: Container(
-                        width: 112,
-                        height: 112,
+                        width: 130,
+                        height: 130,
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.07),
+                          color: Colors.white.withValues(alpha: 0.06),
                           shape: BoxShape.circle,
                         ),
                       ),
                     ),
-                    if (widget.masteryLevel != MasteryLevel.none)
-                      Positioned(
-                        top: AppSpacing.md,
-                        right: AppSpacing.md,
-                        child: Container(
-                          key: ValueKey('mastery-badge-${widget.category}'),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 9,
-                            vertical: 5,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.55),
-                            borderRadius: BorderRadius.circular(AppRadius.md),
-                            border: Border.all(
-                              color: AppTheme.gold.withValues(alpha: 0.60),
-                              width: 1.1,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                widget.masteryLevel.icon,
-                                color: AppTheme.gold,
-                                size: 11,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                '${widget.isKu ? widget.masteryLevel.titleKu : widget.masteryLevel.titleTr}'
-                                ' · ${widget.masteryCount}/${widget.masteryThreshold}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ],
-                          ),
+                    Positioned(
+                      left: -20,
+                      bottom: -20,
+                      child: Container(
+                        width: 90,
+                        height: 90,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.04),
+                          shape: BoxShape.circle,
                         ),
                       ),
+                    ),
+                    // Large watermark icon
+                    Positioned(
+                      right: -16,
+                      bottom: -20,
+                      child: Icon(
+                        icon,
+                        size: 110,
+                        color: Colors.white.withValues(alpha: 0.08),
+                      ),
+                    ),
+                    // Content
                     Padding(
-                      padding: const EdgeInsets.all(AppSpacing.lg),
+                      padding: const EdgeInsets.all(20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // Icon in glassmorphic container
                           Container(
-                            width: 46,
-                            height: 46,
+                            width: 56,
+                            height: 56,
                             decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.20),
-                              borderRadius: BorderRadius.circular(AppRadius.md),
+                              color: Colors.white.withValues(alpha: 0.18),
+                              borderRadius: BorderRadius.circular(14),
                               border: Border.all(
                                 color: Colors.white.withValues(alpha: 0.25),
-                                width: 1.1,
+                                width: 1.2,
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.20),
-                                  blurRadius: 14,
-                                  offset: const Offset(0, 5),
+                                  color: Colors.black.withValues(alpha: 0.18),
+                                  blurRadius: 16,
+                                  offset: const Offset(0, 6),
                                 ),
                               ],
                             ),
-                            child: Icon(icon, color: Colors.white, size: 24),
+                            child: Icon(icon, color: Colors.white, size: 28),
                           ),
                           const Spacer(),
-                          Container(
-                            padding: const EdgeInsets.all(AppSpacing.sm),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.28),
-                              borderRadius: BorderRadius.circular(AppRadius.md),
-                              border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.15),
-                                width: 1.1,
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // Uzun adlar ("Paradigma") kırpılmasın diye
-                                // tek satırda otomatik küçülür.
-                                FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    CategoryNames.localized(
-                                      widget.category,
-                                      widget.isKu,
-                                    ),
-                                    style: AppTypography.categoryTitle,
-                                    maxLines: 1,
-                                  ),
-                                ),
-                                const SizedBox(height: AppSpacing.sm),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.layers_outlined,
-                                      color: Colors.white.withValues(
-                                        alpha: 0.82,
-                                      ),
-                                      size: 13,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    Flexible(
-                                      child: Text(
-                                        widget.isKu
-                                            ? '5 ast • pêşbaz'
-                                            : '5 seviye • yarış',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: AppTypography.categoryMeta,
-                                      ),
-                                    ),
-                                  ],
+                          // Category name
+                          Text(
+                            catName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 21,
+                              height: 1.15,
+                              letterSpacing: -0.3,
+                              shadows: [
+                                Shadow(
+                                  color: Color(0x66000000),
+                                  blurRadius: 10,
+                                  offset: Offset(0, 3),
                                 ),
                               ],
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          // Subtitle row
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.layers_outlined,
+                                color: Colors.white.withValues(alpha: 0.80),
+                                size: 14,
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                widget.isKu
+                                    ? '5 ast • pêşbaz'
+                                    : '5 seviye • yarış',
+                                style: TextStyle(
+                                  color: Colors.white.withValues(alpha: 0.85),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const Spacer(),
+                              // Mastery level badge
+                              if (hasProgress)
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 3,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withValues(alpha: 0.18),
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: AppTheme.gold.withValues(
+                                        alpha: 0.55,
+                                      ),
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        widget.masteryLevel.icon,
+                                        color: AppTheme.gold,
+                                        size: 12,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        widget.isKu
+                                            ? widget.masteryLevel.titleKu
+                                            : widget.masteryLevel.titleTr,
+                                        style: const TextStyle(
+                                          color: AppTheme.gold,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: 14),
+                          // Progress bar
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(3),
+                            child: LinearProgressIndicator(
+                              value: hasProgress ? progress : 0.0,
+                              minHeight: 5,
+                              backgroundColor:
+                                  Colors.white.withValues(alpha: 0.18),
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                Color(0xFFFFFFFF),
+                              ),
                             ),
                           ),
                         ],

@@ -44,9 +44,7 @@ class ErrorState extends StatelessWidget {
             Text(
               isKu ? 'Şaşiyek Çêbû' : 'Bir Hata Oluştu',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
+              style: AppTypography.heading2.copyWith(
                 color: AppTheme.textPrimaryOf(context),
               ),
             ),
@@ -54,8 +52,7 @@ class ErrorState extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14,
+              style: AppTypography.bodyMedium.copyWith(
                 color: AppTheme.textSubOf(context),
               ),
             ),

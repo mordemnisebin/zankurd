@@ -775,14 +775,9 @@ void main() {
     final headerDecoration = header.decoration as BoxDecoration;
     final headerGradient = headerDecoration.gradient as LinearGradient;
     expect(headerGradient.colors, hasLength(2));
-    expect(
-      headerGradient.colors.first.computeLuminance(),
-      lessThan(AppTheme.brandOrange.computeLuminance()),
-    );
-    expect(
-      headerGradient.colors.last.computeLuminance(),
-      lessThan(AppTheme.brandOrangeWarm.computeLuminance()),
-    );
+    // Pirs-inspired purple gradient on the profile header (light mode).
+    expect(headerGradient.colors.first, const Color(0xFF4A3DB8));
+    expect(headerGradient.colors.last, const Color(0xFF7B5EA7));
 
     final navTheme = tester.widget<NavigationBarTheme>(
       find.byType(NavigationBarTheme),
@@ -1049,6 +1044,9 @@ void main() {
   });
 
   testWidgets('opens the spin wheel from the play hub tab', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
     await tester.pumpWidget(
       ZanKurdApp(
         repository: repository,
@@ -1652,12 +1650,12 @@ void main() {
     expect(find.text('Yanlış'), findsOneWidget);
 
     await tester.scrollUntilVisible(
-      find.text('Cevapları İncele'),
+      find.text('İncele'),
       120,
       scrollable: find.byType(Scrollable).first,
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Cevapları İncele'));
+    await tester.tap(find.text('İncele'));
     await tester.pumpAndSettle();
 
     expect(find.text('Cevaplar'), findsOneWidget);

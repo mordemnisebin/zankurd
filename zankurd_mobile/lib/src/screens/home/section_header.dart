@@ -72,11 +72,8 @@ class SectionHeader extends StatelessWidget {
                       title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: AppTypography.heading1.copyWith(
                         color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w800,
-                        fontSize: 20,
-                        letterSpacing: -0.3,
                       ),
                     ),
                   ),
@@ -87,9 +84,8 @@ class SectionHeader extends StatelessWidget {
                 subtitle,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: AppTypography.bodyMedium.copyWith(
                   color: AppTheme.textMutedColor(context),
-                  fontSize: 13,
                   height: 1.3,
                 ),
               ),

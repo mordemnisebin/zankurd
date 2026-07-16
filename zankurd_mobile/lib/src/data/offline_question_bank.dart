@@ -4,7 +4,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0005',
     category: 'Ziman',
-    prompt: '"av" kavramını gösteren görselde doğru anlam hangisidir?',
+    prompt: 'Di wêneya ku têgiha "av" nîşan dide de, wateya rast kîjan e?',
     answers: ['ateş', 'ben', 'su', 'ev'],
     correctAnswer: 'su',
     explanation: 'Görsel \'av\' kavramını gösterir; doğru yanıt: su.',
@@ -15,7 +15,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0010',
     category: 'Ziman',
-    prompt: 'Görsel ipucu: "roj". Anlamı nedir?',
+    prompt: 'Nîşana wêneyê: "roj". Wateya wê çi ye?',
     answers: ['Yüz', 'gün/güneş', 'sözcük', 'Duygu/his'],
     correctAnswer: 'gün/güneş',
     explanation: 'Görsel \'roj\' kavramını gösterir; doğru yanıt: gün/güneş.',
@@ -26,7 +26,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0014',
     category: 'Ziman',
-    prompt: '"mal" kelimesinin Türkçe karşılığı "okul" midir?',
+    prompt: 'Wateya Tirkî ya "mal" "okul" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"mal" "ev" demektir; "dibistan" ise "okul" anlamına gelir.',
@@ -36,7 +36,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0015',
     category: 'Ziman',
-    prompt: 'Görsel "mal" diyor — doğru anlam hangisi?',
+    prompt: 'Wêne "mal" dibêje — wateya rast kîjan e?',
     answers: ['ev', 'ben', 'su', 'okul'],
     correctAnswer: 'ev',
     explanation: 'Görsel \'mal\' kavramını gösterir; doğru yanıt: ev.',
@@ -57,7 +57,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0020',
     category: 'Ziman',
-    prompt: '"pirtûk" görseli hangi anlama gelir?',
+    prompt: 'Wêneya "pirtûk" tê çi wateyê?',
     answers: ['Beyaz', 'zanîn', 'kitap', 'soğuk'],
     correctAnswer: 'kitap',
     explanation: 'Görsel \'pirtûk\' kavramını gösterir; doğru yanıt: kitap.',
@@ -68,7 +68,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0025',
     category: 'Ziman',
-    prompt: 'Görsel ipucu: "zanîn". Anlamı nedir?',
+    prompt: 'Nîşana wêneyê: "zanîn". Wateya wê çi ye?',
     answers: ['bilmek', 'Okumak', 'Gelmek', 'Yazmak'],
     correctAnswer: 'bilmek',
     explanation: 'Görsel \'zanîn\' kavramını gösterir; doğru yanıt: bilmek.',
@@ -79,7 +79,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0030',
     category: 'Ziman',
-    prompt: '"hatin" görseli hangi anlama gelir?',
+    prompt: 'Wêneya "hatin" tê çi wateyê?',
     answers: ['Yoğurt', 'were!', 'gelmek', 'Yukarı'],
     correctAnswer: 'gelmek',
     explanation: 'Görsel \'hatin\' kavramını gösterir; doğru yanıt: gelmek.',
@@ -90,7 +90,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0035',
     category: 'Ziman',
-    prompt: 'Bu görsel "çiya" için: doğru karşılık hangisi?',
+    prompt: 'Ev wêne ji bo "çiya" e: berambera rast kîjan e?',
     answers: ['İyi', 'Kar', 'dağ', 'yol'],
     correctAnswer: 'dağ',
     explanation: 'Görsel \'çiya\' kavramını gösterir; doğru yanıt: dağ.',
@@ -101,7 +101,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0040',
     category: 'Ziman',
-    prompt: '"dil" görseli hangi anlama gelir?',
+    prompt: 'Wêneya "dil" tê çi wateyê?',
     answers: ['kalp/dil', 'Teşekkür', 'Nasılsın?', 'su içmek'],
     correctAnswer: 'kalp/dil',
     explanation: 'Görsel \'dil\' kavramını gösterir; doğru yanıt: kalp/dil.',
@@ -112,7 +112,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0045',
     category: 'Ziman',
-    prompt: '"heval" görselinin doğru Türkçe karşılığı hangisidir?',
+    prompt: 'Wêneya "heval": berambera Tirkî ya rast kîjan e?',
     answers: ['şehir', 'arkadaş', 'kitap', 'yol'],
     correctAnswer: 'arkadaş',
     explanation: 'Görsel \'heval\' kavramını gösterir; doğru yanıt: arkadaş.',
@@ -123,7 +123,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0050',
     category: 'Ziman',
-    prompt: '"bajar" görseli hangi anlama gelir?',
+    prompt: 'Wêneya "bajar" tê çi wateyê?',
     answers: ['su', 'ev', 'kitap', 'şehir'],
     correctAnswer: 'şehir',
     explanation: 'Görsel \'bajar\' kavramını gösterir; doğru yanıt: şehir.',
@@ -134,7 +134,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0055',
     category: 'Ziman',
-    prompt: 'Görsel "nan" diyor — doğru anlam hangisi?',
+    prompt: 'Wêne "nan" dibêje — wateya rast kîjan e?',
     answers: ['su', 'yol', 'ekmek', 'dağ'],
     correctAnswer: 'ekmek',
     explanation: 'Görsel \'nan\' kavramını gösterir; doğru yanıt: ekmek.',
@@ -145,7 +145,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0060',
     category: 'Ziman',
-    prompt: 'Bu görsel "rê" için: doğru karşılık hangisi?',
+    prompt: 'Ev wêne ji bo "rê" e: berambera rast kîjan e?',
     answers: ['dağ', 'nan', 'ben', 'yol'],
     correctAnswer: 'yol',
     explanation: 'Görsel \'rê\' kavramını gösterir; doğru yanıt: yol.',
@@ -156,7 +156,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0062',
     category: 'Ziman',
-    prompt: '"teşekkür" anlamına gelen Kurmancî kelime hangisidir?',
+    prompt: 'Bi Kurmancî "teşekkür" çi ye?',
     answers: ['roj', 'mal', 'spas', 'av'],
     correctAnswer: 'spas',
     explanation: 'Doğru eşleştirme: "teşekkür" → "spas".',
@@ -166,7 +166,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0065',
     category: 'Ziman',
-    prompt: '"spas" görseli hangi anlama gelir?',
+    prompt: 'Wêneya "spas" tê çi wateyê?',
     answers: ['teşekkür', 'Dört', 'öğrenmek', 'Yumurta'],
     correctAnswer: 'teşekkür',
     explanation: 'Görsel \'spas\' kavramını gösterir; doğru yanıt: teşekkür.',
@@ -187,7 +187,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0070',
     category: 'Ziman',
-    prompt: 'Görsel "xweş" diyor — doğru anlam hangisi?',
+    prompt: 'Wêne "xweş" dibêje — wateya rast kîjan e?',
     answers: ['soğuk', 'güzel/iyi', 'gelmek', 'ekmek'],
     correctAnswer: 'güzel/iyi',
     explanation: 'Görsel \'xweş\' kavramını gösterir; doğru yanıt: güzel/iyi.',
@@ -198,7 +198,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0075',
     category: 'Ziman',
-    prompt: 'Resimdeki "sar" ne demektir?',
+    prompt: 'Di wêneyê de "sar" tê çi wateyê?',
     answers: ['sıcak', 'soğuk', 'arkadaş', 'dağ'],
     correctAnswer: 'soğuk',
     explanation: 'Görsel \'sar\' kavramını gösterir; doğru yanıt: soğuk.',
@@ -219,7 +219,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0080',
     category: 'Ziman',
-    prompt: 'Görsel "biçûk" diyor — doğru anlam hangisi?',
+    prompt: 'Wêne "biçûk" dibêje — wateya rast kîjan e?',
     answers: ['Kitap', 'were!', 'küçük', 'heval'],
     correctAnswer: 'küçük',
     explanation: 'Görsel \'biçûk\' kavramını gösterir; doğru yanıt: küçük.',
@@ -240,7 +240,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0083',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "kevin" = "eski".',
+    prompt: 'Rast e an şaş e: Kurmancî "kevin" = "eski".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"kevin" için doğru anlam "eski"tir.',
@@ -250,7 +250,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0085',
     category: 'Ziman',
-    prompt: '"kevin" kavramını gösteren görselde doğru anlam hangisidir?',
+    prompt: 'Di wêneya ku têgiha "kevin" nîşan dide de, wateya rast kîjan e?',
     answers: ['Elma', 'rast', 'eski', 'xweş'],
     correctAnswer: 'eski',
     explanation: 'Görsel \'kevin\' kavramını gösterir; doğru yanıt: eski.',
@@ -261,7 +261,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0090',
     category: 'Ziman',
-    prompt: '"îro" kavramını gösteren görselde doğru anlam hangisidir?',
+    prompt: 'Di wêneya ku têgiha "îro" nîşan dide de, wateya rast kîjan e?',
     answers: ['biçûk', 'soğuk', 'bugün', 'kitap'],
     correctAnswer: 'bugün',
     explanation: 'Görsel \'îro\' kavramını gösterir; doğru yanıt: bugün.',
@@ -272,7 +272,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0095',
     category: 'Ziman',
-    prompt: 'Görsel ipucu: "duh". Anlamı nedir?',
+    prompt: 'Nîşana wêneyê: "duh". Wateya wê çi ye?',
     answers: ['dağ', 'İyi', 'dün', 'duh'],
     correctAnswer: 'dün',
     explanation: 'Görsel \'duh\' kavramını gösterir; doğru yanıt: dün.',
@@ -283,7 +283,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0100',
     category: 'Ziman',
-    prompt: 'Görsel "nav" diyor — doğru anlam hangisi?',
+    prompt: 'Wêne "nav" dibêje — wateya rast kîjan e?',
     answers: ['ergatîf', 'renkler', 'ad/isim', 'Kırmızı'],
     correctAnswer: 'ad/isim',
     explanation: 'Görsel \'nav\' kavramını gösterir; doğru yanıt: ad/isim.',
@@ -294,7 +294,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0105',
     category: 'Ziman',
-    prompt: '"zarok" görselinin doğru Türkçe karşılığı hangisidir?',
+    prompt: 'Wêneya "zarok": berambera Tirkî ya rast kîjan e?',
     answers: ['zarok', 'çocuk', 'soğuk', 'Büyük'],
     correctAnswer: 'çocuk',
     explanation: 'Görsel \'zarok\' kavramını gösterir; doğru yanıt: çocuk.',
@@ -305,7 +305,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0110',
     category: 'Ziman',
-    prompt: '"xwendekar" görseli hangi anlama gelir?',
+    prompt: 'Wêneya "xwendekar" tê çi wateyê?',
     answers: ['öğrenci', 'ergatîf', 'Üç', 'Bir'],
     correctAnswer: 'öğrenci',
     explanation:
@@ -327,7 +327,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0115',
     category: 'Ziman',
-    prompt: 'Bu görsel hangi kavramı hatırlatır: "rast" — doğru anlamı seçin.',
+    prompt: 'Ev wêne kîjan têgihê tîne bîra we: "rast" — wateya rast hilbijêrin.',
     answers: ['doğru', 'zarok', 'Siyah', 'were!'],
     correctAnswer: 'doğru',
     explanation: 'Doğru yanıt: doğru.',
@@ -348,7 +348,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0120',
     category: 'Ziman',
-    prompt: '"pir" kavramını gösteren görselde doğru anlam hangisidir?',
+    prompt: 'Di wêneya ku têgiha "pir" nîşan dide de, wateya rast kîjan e?',
     answers: ['duh', 'dün', 'min', 'çok'],
     correctAnswer: 'çok',
     explanation: 'Görsel \'pir\' kavramını gösterir; doğru yanıt: çok.',
@@ -369,7 +369,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0125',
     category: 'Ziman',
-    prompt: 'Bu görsel "destpêk" için: doğru karşılık hangisi?',
+    prompt: 'Ev wêne ji bo "destpêk" e: berambera rast kîjan e?',
     answers: ['başlangıç', 'güzel/iyi', 'Duygu/his', 'Ben iyiyim'],
     correctAnswer: 'başlangıç',
     explanation:
@@ -381,7 +381,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0376',
     category: 'Çand',
-    prompt: 'Kürt kültüründe Newroz en çok hangi alanla ilişkilidir?',
+    prompt: 'Di çanda Kurdî de Newroz herî zêde bi kîjan qadê re têkildar e?',
     answers: [
       'Halka biçiminde toplu dans',
       'baharın gelişi ve yenilenme',
@@ -396,7 +396,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0379',
     category: 'Çand',
-    prompt: '\'Newroz\' görseli Çand içinde hangi kategoriye girer?',
+    prompt: 'Wêneya \'Newroz\' di Çandê de dikeve kîjan kategoriyê?',
     answers: ['Çand', 'Cografya', 'Ziman', 'Muzîk'],
     correctAnswer: 'Çand',
     explanation: 'Newroz Kürt kültürü kategorisinde ele alınır.',
@@ -407,7 +407,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0381',
     category: 'Çand',
-    prompt: 'Kürt kültüründe govend en çok hangi alanla ilişkilidir?',
+    prompt: 'Di çanda Kurdî de govend herî zêde bi kîjan qadê re têkildar e?',
     answers: [
       'Newroz bayramı',
       'Kına (hene) gecesi',
@@ -423,7 +423,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0384',
     category: 'Çand',
-    prompt: '\'govend\' etiketli görsel hangi alanla ilişkilidir?',
+    prompt: 'Wêneya bi etîketa \'govend\' bi kîjan qadê re têkildar e?',
     answers: ['Çand', 'Cografya', 'Ziman', 'Muzîk'],
     correctAnswer: 'Çand',
     explanation: 'govend Kürt kültürü kategorisinde ele alınır.',
@@ -434,7 +434,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0389',
     category: 'Çand',
-    prompt: 'Görsel ipucu \'dengbêj\': doğru kategori hangisidir?',
+    prompt: 'Nîşana wêneyê \'dengbêj\': kategoriya rast kîjan e?',
     answers: ['Çand', 'Cografya', 'Ziman', 'Muzîk'],
     correctAnswer: 'Çand',
     explanation: 'dengbêj Kürt kültürü kategorisinde ele alınır.',
@@ -445,7 +445,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0394',
     category: 'Çand',
-    prompt: 'Görseldeki \'kilim motifleri\' etiketi hangi alana aittir?',
+    prompt: 'Etîketa \'kilim motifleri\' ya di wêneyê de aîdî kîjan qadê ye?',
     answers: ['Çand', 'Cografya', 'Ziman', 'Muzîk'],
     correctAnswer: 'Çand',
     explanation: 'kilim motifleri Kürt kültürü kategorisinde ele alınır.',
@@ -456,7 +456,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0395',
     category: 'Çand',
-    prompt: 'Kürt kültüründe kilim motifleri hakkında hangisi daha doğrudur?',
+    prompt: 'Di çanda Kurdî de derbarê kilim motifleri de kîjan rasttir e?',
     answers: [
       'el sanatı ile ilişkilidir',
       'sadece sayı sistemidir',
@@ -472,7 +472,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0399',
     category: 'Çand',
-    prompt: '\'misafirperverlik\' görseli hangi kategoriyi işaret eder?',
+    prompt: 'Wêneya \'misafirperverlik\' kîjan kategoriyê nîşan dide?',
     answers: ['Çand', 'Cografya', 'Ziman', 'Muzîk'],
     correctAnswer: 'Çand',
     explanation: 'misafirperverlik Kürt kültürü kategorisinde ele alınır.',
@@ -483,7 +483,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0404',
     category: 'Çand',
-    prompt: 'Görselde \'yerel kıyafetler\' var — doğru kategori hangisi?',
+    prompt: 'Di wêneyê de \'yerel kıyafetler\' heye — kategoriya rast kîjan e?',
     answers: ['Çand', 'Cografya', 'Ziman', 'Muzîk'],
     correctAnswer: 'Çand',
     explanation: 'yerel kıyafetler Kürt kültürü kategorisinde ele alınır.',
@@ -494,7 +494,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0409',
     category: 'Çand',
-    prompt: 'Bu görseldeki \'ağıt\' Çand bağlamında nereye yakındır?',
+    prompt: '\'ağıt\' a di vê wêneyê de di çarçoveya Çandê de nêzîkî kîjan e?',
     answers: ['Çand', 'Cografya', 'Ziman', 'Muzîk'],
     correctAnswer: 'Çand',
     explanation: 'ağıt Kürt kültürü kategorisinde ele alınır.',
@@ -505,7 +505,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0414',
     category: 'Çand',
-    prompt: 'Görsel ipucu \'masal anlatımı\': doğru kategori hangisidir?',
+    prompt: 'Nîşana wêneyê \'masal anlatımı\': kategoriya rast kîjan e?',
     answers: ['Çand', 'Cografya', 'Ziman', 'Muzîk'],
     correctAnswer: 'Çand',
     explanation: 'masal anlatımı Kürt kültürü kategorisinde ele alınır.',
@@ -516,7 +516,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0415',
     category: 'Çand',
-    prompt: 'Kürt kültüründe masal anlatımı hakkında hangisi daha doğrudur?',
+    prompt: 'Di çanda Kurdî de derbarê masal anlatımı de kîjan rasttir e?',
     answers: [
       'sözlü kültür ile ilişkilidir',
       'sadece sayı sistemidir',
@@ -532,7 +532,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0419',
     category: 'Çand',
-    prompt: 'Görselde \'bayramlaşma\' var — doğru kategori hangisi?',
+    prompt: 'Di wêneyê de \'bayramlaşma\' heye — kategoriya rast kîjan e?',
     answers: ['Çand', 'Cografya', 'Ziman', 'Muzîk'],
     correctAnswer: 'Çand',
     explanation: 'bayramlaşma Kürt kültürü kategorisinde ele alınır.',
@@ -543,7 +543,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0424',
     category: 'Çand',
-    prompt: 'Görseldeki \'halk mutfağı\' etiketi hangi alana aittir?',
+    prompt: 'Etîketa \'halk mutfağı\' ya di wêneyê de aîdî kîjan qadê ye?',
     answers: ['Çand', 'Cografya', 'Ziman', 'Muzîk'],
     correctAnswer: 'Çand',
     explanation: 'halk mutfağı Kürt kültürü kategorisinde ele alınır.',
@@ -554,7 +554,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0425',
     category: 'Çand',
-    prompt: 'Kürt kültüründe halk mutfağı hakkında hangisi daha doğrudur?',
+    prompt: 'Di çanda Kurdî de derbarê halk mutfağı de kîjan rasttir e?',
     answers: [
       'sofra kültürü ile ilişkilidir',
       'sadece sayı sistemidir',
@@ -581,7 +581,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0529',
     category: 'Dîrok',
-    prompt: '\'birincil kaynak\' görseli hangi kategoriyi işaret eder?',
+    prompt: 'Wêneya \'birincil kaynak\' kîjan kategoriyê nîşan dide?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
     explanation:
@@ -593,7 +593,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0533',
     category: 'Dîrok',
-    prompt: 'Bu görseldeki \'sözlü tarih\' Dîrok bağlamında nereye yakındır?',
+    prompt: '\'sözlü tarih\' a di vê wêneyê de di çarçoveya Dîrokê de nêzîkî kîjan e?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
     explanation:
@@ -622,7 +622,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0537',
     category: 'Dîrok',
-    prompt: 'Görsel \'kronoloji\' diyor; hangi alanla bağdaşır?',
+    prompt: 'Wêne \'kronoloji\' dibêje; bi kîjan qadê re li hev dike?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
     explanation:
@@ -634,7 +634,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0541',
     category: 'Dîrok',
-    prompt: '\'arkeoloji\' görseli Dîrok içinde hangi kategoriye girer?',
+    prompt: 'Wêneya \'arkeoloji\' di Dîrokê de dikeve kîjan kategoriyê?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
     explanation:
@@ -663,7 +663,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0545',
     category: 'Dîrok',
-    prompt: '\'Mezopotamya\' etiketli görsel hangi alanla ilişkilidir?',
+    prompt: 'Wêneya bi etîketa \'Mezopotamya\' bi kîjan qadê re têkildar e?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
     explanation:
@@ -691,7 +691,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0549',
     category: 'Dîrok',
-    prompt: 'Görsel ipucu \'göç\': doğru kategori hangisidir?',
+    prompt: 'Nîşana wêneyê \'göç\': kategoriya rast kîjan e?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
     explanation:
@@ -703,7 +703,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0553',
     category: 'Dîrok',
-    prompt: '\'yerleşik yaşam\' görseli Dîrok içinde hangi kategoriye girer?',
+    prompt: 'Wêneya \'yerleşik yaşam\' di Dîrokê de dikeve kîjan kategoriyê?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
     explanation:
@@ -715,7 +715,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0557',
     category: 'Dîrok',
-    prompt: 'Görsel \'ticaret yolu\' diyor; hangi alanla bağdaşır?',
+    prompt: 'Wêne \'ticaret yolu\' dibêje; bi kîjan qadê re li hev dike?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
     explanation:
@@ -740,7 +740,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0565',
     category: 'Dîrok',
-    prompt: '\'tarihsel yorum\' etiketli görsel hangi alanla ilişkilidir?',
+    prompt: 'Wêneya bi etîketa \'tarihsel yorum\' bi kîjan qadê re têkildar e?',
     answers: ['Dîrok', 'Muzîk', 'Spor', 'Kimya'],
     correctAnswer: 'Dîrok',
     explanation:
@@ -752,7 +752,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0652',
     category: 'Edebiyat',
-    prompt: '\'çîrok\' görseli hangi anlatı türünü işaret eder?',
+    prompt: 'Wêneya \'çîrok\' kîjan cureyê vegotinê nîşan dide?',
     answers: ['hikâye', 'harita', 'ritim', 'takvim'],
     correctAnswer: 'hikâye',
     explanation: '\'çîrok\' Kurmancîde hikâye/anlatı anlamına gelir.',
@@ -763,7 +763,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0656',
     category: 'Edebiyat',
-    prompt: '\'helbest\' görseli hangi kategoriyi işaret eder?',
+    prompt: 'Wêneya \'helbest\' kîjan kategoriyê nîşan dide?',
     answers: ['Edebiyat', 'Cografya', 'Muzîk', 'Kimya'],
     correctAnswer: 'Edebiyat',
     explanation: 'helbest Kürt edebiyatı kategorisinde değerlendirilir.',
@@ -774,7 +774,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0659',
     category: 'Edebiyat',
-    prompt: 'Görsel ipucu \'roman\': doğru kategori hangisidir?',
+    prompt: 'Nîşana wêneyê \'roman\': kategoriya rast kîjan e?',
     answers: ['Edebiyat', 'Cografya', 'Muzîk', 'Kimya'],
     correctAnswer: 'Edebiyat',
     explanation: 'roman Kürt edebiyatı kategorisinde değerlendirilir.',
@@ -785,7 +785,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0662',
     category: 'Edebiyat',
-    prompt: 'Bu görseldeki \'destan\' en çok hangi anlatı biçimine yakındır?',
+    prompt: '\'destan\' a di vê wêneyê de herî zêde nêzîkî kîjan şêweya vegotinê ye?',
     answers: ['epik anlatı', 'kısa haber', 'alışveriş listesi', 'nota dizisi'],
     correctAnswer: 'epik anlatı',
     explanation:
@@ -797,7 +797,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0665',
     category: 'Edebiyat',
-    prompt: '\'karakter\' etiketli görsel hangi alanla ilişkilidir?',
+    prompt: 'Wêneya bi etîketa \'karakter\' bi kîjan qadê re têkildar e?',
     answers: ['Edebiyat', 'Cografya', 'Muzîk', 'Kimya'],
     correctAnswer: 'Edebiyat',
     explanation: 'karakter Kürt edebiyatı kategorisinde değerlendirilir.',
@@ -820,7 +820,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0670',
     category: 'Edebiyat',
-    prompt: 'Mecaz Kürt edebiyatıyla ilgili bir kavramdır.',
+    prompt: 'Mecaz têgihek e ku bi edebiyata Kurdî re têkildar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: 'mecaz edebi metinleri anlamada kullanılan bir kavramdır.',
@@ -830,7 +830,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0671',
     category: 'Edebiyat',
-    prompt: '\'mecaz\' etiketli görsel hangi alanla ilişkilidir?',
+    prompt: 'Wêneya bi etîketa \'mecaz\' bi kîjan qadê re têkildar e?',
     answers: ['Edebiyat', 'Cografya', 'Muzîk', 'Kimya'],
     correctAnswer: 'Edebiyat',
     explanation: 'mecaz Kürt edebiyatı kategorisinde değerlendirilir.',
@@ -841,7 +841,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0674',
     category: 'Edebiyat',
-    prompt: '\'kafiye\' görseli hangi kategoriyi işaret eder?',
+    prompt: 'Wêneya \'kafiye\' kîjan kategoriyê nîşan dide?',
     answers: ['Edebiyat', 'Cografya', 'Muzîk', 'Kimya'],
     correctAnswer: 'Edebiyat',
     explanation: 'kafiye Kürt edebiyatı kategorisinde değerlendirilir.',
@@ -852,7 +852,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0677',
     category: 'Edebiyat',
-    prompt: 'Görselde \'anlatıcı\' var — doğru kategori hangisi?',
+    prompt: 'Di wêneyê de \'anlatıcı\' heye — kategoriya rast kîjan e?',
     answers: ['Edebiyat', 'Cografya', 'Muzîk', 'Kimya'],
     correctAnswer: 'Edebiyat',
     explanation: 'anlatıcı Kürt edebiyatı kategorisinde değerlendirilir.',
@@ -863,7 +863,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0678',
     category: 'Edebiyat',
-    prompt: 'Kürt edebiyatında diyalog ne anlama gelir?',
+    prompt: 'Di edebiyata Kurdî de diyalog tê çi wateyê?',
     answers: [
       'karşılıklı konuşma',
       'coğrafi yön',
@@ -879,7 +879,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0680',
     category: 'Edebiyat',
-    prompt: '\'diyalog\' etiketli görsel hangi alanla ilişkilidir?',
+    prompt: 'Wêneya bi etîketa \'diyalog\' bi kîjan qadê re têkildar e?',
     answers: ['Edebiyat', 'Cografya', 'Muzîk', 'Kimya'],
     correctAnswer: 'Edebiyat',
     explanation: 'diyalog Kürt edebiyatı kategorisinde değerlendirilir.',
@@ -890,7 +890,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0745',
     category: 'Cografya',
-    prompt: 'Kürdistan coğrafyası bağlamında Kurmancîde "çiya" neye yakındır?',
+    prompt: 'Di çarçoveya erdnîgariya Kurdistanê de, di Kurmancî de "çiya" nêzîkî çi ye?',
     answers: ['dağ', 'müzik notası', 'edebi kişi', 'alışveriş fişi'],
     correctAnswer: 'dağ',
     explanation: '"çiya" coğrafya bağlamında "dağ" anlamına gelir.',
@@ -900,7 +900,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0748',
     category: 'Cografya',
-    prompt: 'Bu görseldeki \'çiya\' hangi yeryüzü şeklini anlatır?',
+    prompt: '\'çiya\' a di vê wêneyê de kîjan şiklê erdê vedibêje?',
     answers: ['dağ', 'göl', 'orman', 'ova'],
     correctAnswer: 'dağ',
     explanation: '\'çiya\' Kurmancîde dağ anlamına gelir.',
@@ -911,7 +911,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0752',
     category: 'Cografya',
-    prompt: '\'deşt\' etiketli görsel hangi alanla ilişkilidir?',
+    prompt: 'Wêneya bi etîketa \'deşt\' bi kîjan qadê re têkildar e?',
     answers: ['Cografya', 'Edebiyat', 'Muzîk', 'Dil bilgisi'],
     correctAnswer: 'Cografya',
     explanation: 'deşt coğrafi bir kavram olarak kullanılabilir.',
@@ -933,7 +933,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0756',
     category: 'Cografya',
-    prompt: 'Bu görseldeki \'av\' doğal çevrede hangi unsuru gösterir?',
+    prompt: '\'av\' a di vê wêneyê de di hawîrdora xwezayî de kîjan hêmanê nîşan dide?',
     answers: ['su', 'taş', 'rüzgâr', 'toprak'],
     correctAnswer: 'su',
     explanation: '\'av\' Kurmancîde su anlamına gelir.',
@@ -955,7 +955,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0760',
     category: 'Cografya',
-    prompt: 'Bu görseldeki \'çem\' hangi su varlığını anlatır?',
+    prompt: '\'çem\' a di vê wêneyê de kîjan hebûna avê vedibêje?',
     answers: ['nehir', 'çöl', 'tepe', 'mağara'],
     correctAnswer: 'nehir',
     explanation: '\'çem\' Kurmancîde nehir/ırmak anlamına gelir.',
@@ -966,7 +966,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0764',
     category: 'Cografya',
-    prompt: 'Görsel ipucu \'gol\': doğru kategori hangisidir?',
+    prompt: 'Nîşana wêneyê \'gol\': kategoriya rast kîjan e?',
     answers: ['Cografya', 'Edebiyat', 'Muzîk', 'Dil bilgisi'],
     correctAnswer: 'Cografya',
     explanation: 'gol coğrafi bir kavram olarak kullanılabilir.',
@@ -977,7 +977,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0768',
     category: 'Cografya',
-    prompt: 'Görseldeki \'daristan\' etiketi hangi alana aittir?',
+    prompt: 'Etîketa \'daristan\' ya di wêneyê de aîdî kîjan qadê ye?',
     answers: ['Cografya', 'Edebiyat', 'Muzîk', 'Dil bilgisi'],
     correctAnswer: 'Cografya',
     explanation: 'daristan coğrafi bir kavram olarak kullanılabilir.',
@@ -988,7 +988,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0772',
     category: 'Cografya',
-    prompt: 'Bu görseldeki \'newal\' hangi yeryüzü biçimine yakındır?',
+    prompt: '\'newal\' a di vê wêneyê de nêzîkî kîjan şiklê erdê ye?',
     answers: ['vadi', 'ada', 'zirve', 'kıyı'],
     correctAnswer: 'vadi',
     explanation: '\'newal\' Kurmancîde vadi anlamında kullanılır.',
@@ -999,7 +999,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0776',
     category: 'Cografya',
-    prompt: 'Görsel \'hewa\' diyor; hangi alanla bağdaşır?',
+    prompt: 'Wêne \'hewa\' dibêje; bi kîjan qadê re li hev dike?',
     answers: ['Cografya', 'Edebiyat', 'Muzîk', 'Dil bilgisi'],
     correctAnswer: 'Cografya',
     explanation: 'hewa coğrafi bir kavram olarak kullanılabilir.',
@@ -1010,7 +1010,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0780',
     category: 'Cografya',
-    prompt: 'Görsel ipucu \'erd\': doğru kategori hangisidir?',
+    prompt: 'Nîşana wêneyê \'erd\': kategoriya rast kîjan e?',
     answers: ['Cografya', 'Edebiyat', 'Muzîk', 'Dil bilgisi'],
     correctAnswer: 'Cografya',
     explanation: 'erd coğrafi bir kavram olarak kullanılabilir.',
@@ -1021,7 +1021,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0784',
     category: 'Cografya',
-    prompt: '\'sînor\' etiketli görsel hangi alanla ilişkilidir?',
+    prompt: 'Wêneya bi etîketa \'sînor\' bi kîjan qadê re têkildar e?',
     answers: ['Cografya', 'Edebiyat', 'Muzîk', 'Dil bilgisi'],
     correctAnswer: 'Cografya',
     explanation: 'sînor coğrafi bir kavram olarak kullanılabilir.',
@@ -1042,7 +1042,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0871',
     category: 'Muzîk',
-    prompt: 'Görselde \'dengbêj\' var — doğru kategori hangisi?',
+    prompt: 'Di wêneyê de \'dengbêj\' heye — kategoriya rast kîjan e?',
     answers: ['Muzîk', 'Dîrok', 'Cografya', 'Ziman'],
     correctAnswer: 'Muzîk',
     explanation: 'dengbêj Kürt müziği kategorisinde ele alınır.',
@@ -1063,7 +1063,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0875',
     category: 'Muzîk',
-    prompt: 'Görsel \'ritim\' diyor; hangi alanla bağdaşır?',
+    prompt: 'Wêne \'ritim\' dibêje; bi kîjan qadê re li hev dike?',
     answers: ['Muzîk', 'Dîrok', 'Cografya', 'Ziman'],
     correctAnswer: 'Muzîk',
     explanation: 'ritim Kürt müziği kategorisinde ele alınır.',
@@ -1074,7 +1074,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0879',
     category: 'Muzîk',
-    prompt: 'Görseldeki \'melodî\' etiketi hangi alana aittir?',
+    prompt: 'Etîketa \'melodî\' ya di wêneyê de aîdî kîjan qadê ye?',
     answers: ['Muzîk', 'Dîrok', 'Cografya', 'Ziman'],
     correctAnswer: 'Muzîk',
     explanation: 'melodî Kürt müziği kategorisinde ele alınır.',
@@ -1085,7 +1085,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0883',
     category: 'Muzîk',
-    prompt: 'Görsel \'stran\' diyor; hangi alanla bağdaşır?',
+    prompt: 'Wêne \'stran\' dibêje; bi kîjan qadê re li hev dike?',
     answers: ['Muzîk', 'Dîrok', 'Cografya', 'Ziman'],
     correctAnswer: 'Muzîk',
     explanation: 'stran Kürt müziği kategorisinde ele alınır.',
@@ -1096,7 +1096,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0887',
     category: 'Muzîk',
-    prompt: 'Bu görseldeki \'def\' Muzîk bağlamında nereye yakındır?',
+    prompt: '\'def\' a di vê wêneyê de di çarçoveya Muzîkê de nêzîkî kîjan e?',
     answers: ['Muzîk', 'Dîrok', 'Cografya', 'Ziman'],
     correctAnswer: 'Muzîk',
     explanation: 'def Kürt müziği kategorisinde ele alınır.',
@@ -1107,7 +1107,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0891',
     category: 'Muzîk',
-    prompt: 'Bu görseldeki \'erbane\' Muzîk bağlamında nereye yakındır?',
+    prompt: '\'erbane\' a di vê wêneyê de di çarçoveya Muzîkê de nêzîkî kîjan e?',
     answers: ['Muzîk', 'Dîrok', 'Cografya', 'Ziman'],
     correctAnswer: 'Muzîk',
     explanation: 'erbane Kürt müziği kategorisinde ele alınır.',
@@ -1118,7 +1118,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0894',
     category: 'Muzîk',
-    prompt: 'Görsel ipucu \'tembûr\': doğru kategori hangisidir?',
+    prompt: 'Nîşana wêneyê \'tembûr\': kategoriya rast kîjan e?',
     answers: ['Muzîk', 'Dîrok', 'Cografya', 'Ziman'],
     correctAnswer: 'Muzîk',
     explanation: 'tembûr Kürt müziği kategorisinde ele alınır.',
@@ -1129,7 +1129,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0895',
     category: 'Muzîk',
-    prompt: 'Kürt müziğinde telli çalgı ifadesi en çok hangi kavramı açıklar?',
+    prompt: 'Di muzîka Kurdî de biwêja amûra têldar herî zêde kîjan têgihê rave dike?',
     answers: ['tembûr', 'çiya', 'çîrok', 'newal'],
     correctAnswer: 'tembûr',
     explanation: 'Doğru yanıt: tembûr.',
@@ -1139,7 +1139,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0898',
     category: 'Muzîk',
-    prompt: '\'nota\' görseli Muzîk içinde hangi kategoriye girer?',
+    prompt: 'Wêneya \'nota\' di Muzîkê de dikeve kîjan kategoriyê?',
     answers: ['Muzîk', 'Dîrok', 'Cografya', 'Ziman'],
     correctAnswer: 'Muzîk',
     explanation: 'nota Kürt müziği kategorisinde ele alınır.',
@@ -1150,7 +1150,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0902',
     category: 'Muzîk',
-    prompt: 'Görselde \'koro\' var — doğru kategori hangisi?',
+    prompt: 'Di wêneyê de \'koro\' heye — kategoriya rast kîjan e?',
     answers: ['Muzîk', 'Dîrok', 'Cografya', 'Ziman'],
     correctAnswer: 'Muzîk',
     explanation: 'koro Kürt müziği kategorisinde ele alınır.',
@@ -1161,7 +1161,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_0906',
     category: 'Muzîk',
-    prompt: 'Bu görseldeki \'solo\' Muzîk bağlamında nereye yakındır?',
+    prompt: '\'solo\' a di vê wêneyê de di çarçoveya Muzîkê de nêzîkî kîjan e?',
     answers: ['Muzîk', 'Dîrok', 'Cografya', 'Ziman'],
     correctAnswer: 'Muzîk',
     explanation: 'solo Kürt müziği kategorisinde ele alınır.',
@@ -1626,7 +1626,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2232',
     category: 'Ziman',
-    prompt: 'Kurmancî çoğunlukla hangi yazı sistemiyle yazılır?',
+    prompt: 'Kurmancî bi piranî bi kîjan pergala nivîsandinê tê nivîsandin?',
     answers: [
       'Latin kökenli Hawar alfabesi',
       'Kiril alfabesi dışında hiçbir alfabe',
@@ -1688,7 +1688,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2246',
     category: 'Edebiyat',
-    prompt: 'İlk Kürt gazetesi hangi adı taşır?',
+    prompt: 'Rojnameya Kurdî ya pêşîn kîjan navî hildigire?',
     answers: ['Kürdistan', 'Hawar', 'Azadiya Welat', 'Rojnameya Nû'],
     correctAnswer: 'Kürdistan',
     explanation:
@@ -1699,7 +1699,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2248',
     category: 'Edebiyat',
-    prompt: 'Hawar dergisi Kürtçe için özellikle hangi katkıyla hatırlanır?',
+    prompt: 'Kovara Hawar bi taybetî bi kîjan tevkariyê tê bibîranîn?',
     answers: [
       'Latin temelli Kürt alfabesinin yaygınlaşması',
       'Birçok yazarın yurt dışında üretmesi nedeniyle',
@@ -1715,7 +1715,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2261',
     category: 'Çand',
-    prompt: 'Kürt kültüründe ağıtlar hangi işleve sıkça sahiptir?',
+    prompt: 'Di çanda Kurdî de zêmar bi giştî xwedî kîjan fonksiyonê ne?',
     answers: [
       'Misafirperverlik ve ilişki kurma isteğini',
       'Acıyı, kaybı ve toplumsal hafızayı aktarmak',
@@ -1731,7 +1731,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2266',
     category: 'Çand',
-    prompt: 'Kürt mutfağında dolma/yaprax en genel olarak nedir?',
+    prompt: 'Di pêjgeha Kurdî de dolma/yaprax bi awayekî giştî çi ye?',
     answers: [
       'İç harçla doldurulan sebze veya yaprak yemeği',
       'Acıyı, kaybı ve toplumsal hafızayı aktarmak',
@@ -1764,7 +1764,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2271',
     category: 'Çand',
-    prompt: 'Dew/doogh türü içecek hangi ana malzemeyle ilişkilidir?',
+    prompt: 'Vexwarina ji cureyê Dew/doogh bi kîjan madeya sereke re têkildar e?',
     answers: [
       'Yoğurt/ayran',
       'Kahve likörü',
@@ -1808,7 +1808,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2292',
     category: 'Paradigma',
-    prompt: 'Jineolojî en kısa nasıl açıklanabilir?',
+    prompt: 'Jineolojî çawa dikare bi awayekî herî kurt were ravekirin?',
     answers: [
       'Eğitim uygulaması için güvenli, analitik ve demokratik öğrenme amaçlandığı için',
       'Kadın özgürlüğünü toplumsal özgürlüğün temeli görmeyi',
@@ -1944,7 +1944,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2328',
     category: 'Paradigma',
-    prompt: '"Jin, jiyan, azadî" sloganında "jiyan" ne demektir?',
+    prompt: 'Di slogana "Jin, jiyan, azadî" de "jiyan" tê çi wateyê?',
     answers: ['Yaşam', 'Kadın', 'Onur', 'Özgürlük'],
     correctAnswer: 'Yaşam',
     explanation:
@@ -1955,7 +1955,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2329',
     category: 'Paradigma',
-    prompt: 'Demokratik konfederalizmin üç temel ekseni hangileridir?',
+    prompt: 'Sê tewereyên bingehîn ên Demokratik konfederalizmin kîjan in?',
     answers: [
       'Kadın özgürlüğü, ekoloji ve demokrasi',
       'Piyasa, mülkiyet ve rekabet',
@@ -1999,7 +1999,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2354',
     category: 'Cografya',
-    prompt: 'Kobanê şehri hangi ülkenin sınırları içindedir?',
+    prompt: 'Bajarê Kobanê di nav sînorên kîjan welatî de ye?',
     answers: ['Türkiye', 'İran', 'Suriye', 'Irak'],
     correctAnswer: 'Suriye',
     explanation:
@@ -2022,7 +2022,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2376',
     category: 'Cografya',
-    prompt: '"Hewlêr" hangi şehrin Kürtçe adıdır?',
+    prompt: '"Hewlêr" navê Kurdî yê kîjan bajarî ye?',
     answers: ['Musul', 'Süleymaniye', 'Kerkük', 'Erbil'],
     correctAnswer: 'Erbil',
     explanation:
@@ -2033,7 +2033,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2381',
     category: 'Muzîk',
-    prompt: '"Erbane" (def) hangi tür çalgıdır?',
+    prompt: '"Erbane" kîjan cureyê amûrê ye?',
     answers: ['Telli', 'Vurmalı', 'Yaylı', 'Üflemeli'],
     correctAnswer: 'Vurmalı',
     explanation: 'Erbane (def), çerçeveli/zilli bir vurmalı çalgıdır.',
@@ -2067,7 +2067,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2417',
     category: 'Ziman',
-    prompt: '"Agir" ne demek?',
+    prompt: '"Agir" tê çi wateyê?',
     answers: ['Eski', 'Elma', 'Ekmek', 'Ateş'],
     correctAnswer: 'Ateş',
     explanation: '\'Agir\' → Ateş.',
@@ -2094,7 +2094,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2430',
     category: 'Dîrok',
-    prompt: 'Mahabad Cumhuriyeti hangi yıl kurulmuştur?',
+    prompt: 'Komara Mahabadê di kîjan salê de hatiye damezrandin?',
     answers: ['1946', '1991', '1923', '1960'],
     correctAnswer: '1946',
     explanation:
@@ -2105,7 +2105,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2436',
     category: 'Cografya',
-    prompt: '"Dîcle" hangi nehrin adıdır?',
+    prompt: '"Dîcle" navê kîjan çem e?',
     answers: ['Fırat', 'Murat', 'Aras', 'Dicle'],
     correctAnswer: 'Dicle',
     explanation: '"Dîcle", Dicle Nehri\'nin Kürtçe/yerel adıdır.',
@@ -2131,7 +2131,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2451',
     category: 'Çand',
-    prompt: '"Newroz" sözcüğü hangi iki kelimeden oluşur?',
+    prompt: '"Newroz" ji kîjan du peyvan pêk tê?',
     answers: [
       'Masal/hikâye anlatan kişi',
       'el sanatı ile ilişkilidir',
@@ -2164,7 +2164,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2455',
     category: 'Çand',
-    prompt: '"Cejna Newrozê" ne demek?',
+    prompt: '"Cejna Newrozê" tê çi wateyê?',
     answers: ['Yas günü', 'Hasat günü', 'Kurban bayramı', 'Newroz bayramı'],
     correctAnswer: 'Newroz bayramı',
     explanation: '"Cejna Newrozê" Newroz bayramı demektir (cejn = bayram).',
@@ -2207,7 +2207,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2464',
     category: 'Cografya',
-    prompt: '"Semsûr" hangi şehrin Kürtçe adıdır?',
+    prompt: '"Semsûr" navê Kurdî yê kîjan bajarî ye?',
     answers: ['Adıyaman', 'Antep', 'Maraş', 'Malatya'],
     correctAnswer: 'Adıyaman',
     explanation: '"Semsûr", Adıyaman şehrinin Kürtçe adıdır.',
@@ -2217,7 +2217,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2467',
     category: 'Cografya',
-    prompt: 'Hewramî (Hawraman) bölgesi hangi iki ülkenin sınır kuşağındadır?',
+    prompt: 'Herêma Hewramî (Hawraman) di kêleka sînorê kîjan du welatan de ye?',
     answers: ['İran-Türkiye', 'Irak-Suriye', 'Türkiye-Suriye', 'İran-Irak'],
     correctAnswer: 'İran-Irak',
     explanation:
@@ -2243,7 +2243,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2481',
     category: 'Çand',
-    prompt: 'Kürt bayrağında yer alan üç temel renk hangileridir?',
+    prompt: 'Sê rengên bingehîn ên li ser ala Kurdî kîjan in?',
     answers: [
       'Siyah, kırmızı ve sarı',
       'Mavi, beyaz ve kırmızı',
@@ -2271,7 +2271,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2497',
     category: 'Cografya',
-    prompt: 'Amed, Riha ve Mêrdîn gibi şehirler hangi tarihî bölgede yer alır?',
+    prompt: 'Bajarên wek Amed, Riha ve Mêrdîn li kîjan herêma dîrokî cih digirin?',
     answers: [
       'Erbil (Hewlêr)',
       'Maraş (Kahramanmaraş)',
@@ -2287,7 +2287,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2499',
     category: 'Muzîk',
-    prompt: '"Mey" tarzı çalgılar hangi gruba girer?',
+    prompt: 'Amûrên bi şêwaza "Mey" dikevin kîjan komê?',
     answers: ['Telli', 'Üflemeli', 'Yaylı', 'Vurmalı'],
     correctAnswer: 'Üflemeli',
     explanation: 'Mey, kamıştan yapılan üflemeli bir çalgıdır.',
@@ -2314,7 +2314,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2503',
     category: 'Paradigma',
-    prompt: '"Toplumsal ekoloji" düşüncesi hangi ilişkiyi merkeze alır?',
+    prompt: 'Ramana "Toplumsal ekoloji" kîjan têkiliyê dike navend?',
     answers: [
       'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
       'Sadece sembolik değil, örgütsel ve kurumsal düzeyde',
@@ -2330,7 +2330,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2507',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "heft" hangi sayıdır?',
+    prompt: 'Di Kurmancî de "heft" kîjan hejmar e?',
     answers: ['Yedi', 'Dokuz', 'On', 'Beş'],
     correctAnswer: 'Yedi',
     explanation: '\'heft\' → Yedi.',
@@ -2340,7 +2340,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2508',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "deh" hangi sayıdır?',
+    prompt: 'Di Kurmancî de "deh" kîjan hejmar e?',
     answers: ['On', 'Yedi', 'Yirmi', 'Beş'],
     correctAnswer: 'On',
     explanation: '\'deh\' → On.',
@@ -2367,7 +2367,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2538',
     category: 'Ziman',
-    prompt: '"Çiya" ne demek?',
+    prompt: '"Çiya" tê çi wateyê?',
     answers: ['Ova', 'Nehir', 'Göl', 'Dağ'],
     correctAnswer: 'Dağ',
     explanation: '"Çiya" dağ demektir (ör. Çiyayê Agirî = Ağrı Dağı).',
@@ -2394,7 +2394,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2556',
     category: 'Cografya',
-    prompt: '"Behdînan" bölgesi ağırlıkla hangi ülkededir?',
+    prompt: 'Herêma "Behdînan" bi piranî di kîjan welatî de ye?',
     answers: [
       'Güney (Irak Kürdistanı)',
       'İran’daki Kürt bölgesi',
@@ -2410,7 +2410,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2565',
     category: 'Çand',
-    prompt: 'Kürt kültüründe "mîr" ne demek?',
+    prompt: 'Di çanda Kurdî de "mîr" tê çi wateyê?',
     answers: ['Yoğurt/ayran', 'Şîn (ağıt)', 'Bey/yönetici', 'Özgür eş yaşam'],
     correctAnswer: 'Bey/yönetici',
     explanation:
@@ -2433,7 +2433,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2584',
     category: 'Edebiyat',
-    prompt: 'İlk Kürtçe romanlar ağırlıkla hangi dönemde ortaya çıkmıştır?',
+    prompt: 'Romanên Kurdî yên pêşîn bi piranî di kîjan serdemê de derketine?',
     answers: ['15. yüzyıl', '12. yüzyıl', '17. yüzyıl', '20. yüzyıl'],
     correctAnswer: '20. yüzyıl',
     explanation:
@@ -2444,7 +2444,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2593',
     category: 'Paradigma',
-    prompt: '"Demokratik modernite" hangi değerleri esas alır?',
+    prompt: '"Demokratik modernite" kîjan nirxan esas digire?',
     answers: [
       'Demokrasi, kadın özgürlüğü ve ekoloji',
       'Ekoloji, kadın ve demokrasi krizlerini',
@@ -2476,7 +2476,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2596',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "goşt" ne demek?',
+    prompt: 'Di Kurmancî de "goşt" tê çi wateyê?',
     answers: ['Et', 'ateş', 'Su', 'At'],
     correctAnswer: 'Et',
     explanation: '\'goşt\' → Et.',
@@ -2486,7 +2486,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2599',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "mast" ne demek?',
+    prompt: 'Di Kurmancî de "mast" tê çi wateyê?',
     answers: ['Bal', 'Peynir', 'Yoğurt', 'Tereyağı'],
     correctAnswer: 'Yoğurt',
     explanation: '\'mast\' → Yoğurt.',
@@ -2496,7 +2496,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2606',
     category: 'Çand',
-    prompt: '"Bav û kal" deyimi neyi ifade eder?',
+    prompt: 'Biwêja "Bav û kal" çi îfade dike?',
     answers: ['Komşular', 'Misafirler', 'Atalar/ecdat', 'Çocuklar'],
     correctAnswer: 'Atalar/ecdat',
     explanation: '"Bav û kal" (baba ve dede) deyimi ataları/ecdadı ifade eder.',
@@ -2506,7 +2506,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2610',
     category: 'Dîrok',
-    prompt: 'Newroz hangi mevsim ve ayla özdeşleşir?',
+    prompt: 'Newroz bi kîjan demsal û mehê re têkildar e?',
     answers: [
       'Kış / Aralık',
       'Yaz / Temmuz',
@@ -2521,7 +2521,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2625',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "çûn" fiili ne demek?',
+    prompt: 'Di Kurmancî de lêkera "çûn" tê çi wateyê?',
     answers: ['Gitmek', 'Yemek', 'Görmek', 'Gelmek'],
     correctAnswer: 'Gitmek',
     explanation: '\'çûn\' → Gitmek.',
@@ -2531,7 +2531,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2628',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "dîtin" ne demek?',
+    prompt: 'Di Kurmancî de "dîtin" tê çi wateyê?',
     answers: ['Gitmek', 'Vermek', 'Görmek', 'Duymak'],
     correctAnswer: 'Görmek',
     explanation: '\'dîtin\' → Görmek.',
@@ -2541,7 +2541,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2629',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "kirin" fiili ne demek?',
+    prompt: 'Di Kurmancî de lêkera "kirin" tê çi wateyê?',
     answers: ['Hafıza/akıl', 'Yapmak/etmek', 'evet ve hayır', 'Gelecek zaman'],
     correctAnswer: 'Yapmak/etmek',
     explanation: '"Kirin" yapmak/etmek demektir.',
@@ -2551,7 +2551,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2638',
     category: 'Dîrok',
-    prompt: '"Hesenwayhîler" hangi bölgede hüküm sürmüş bir Kürt hanedanıdır?',
+    prompt: '"Hesenwayhîler" li kîjan herêmê hukim kiriye, xanedaneke Kurd e?',
     answers: [
       'Kafkasya (Gence-Ani çevresi)',
       'Batı İran / Zagros çevresi',
@@ -2567,7 +2567,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2639',
     category: 'Dîrok',
-    prompt: 'Newroz efsanesinde Dehak nasıl biri olarak anlatılır?',
+    prompt: 'Di efsaneya Newrozê de Dehak wek kesekî çawa tê vegotin?',
     answers: [
       'Kahraman bir asker',
       'Bilge bir hâkim',
@@ -2583,7 +2583,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2644',
     category: 'Cografya',
-    prompt: '"Erzirom" hangi şehrin Kürtçe-yerel söylenişidir?',
+    prompt: '"Erzirom" bilêvkirina Kurdî-herêmî ya kîjan bajarî ye?',
     answers: ['Kars', 'Erzurum', 'Erzincan', 'Ağrı'],
     correctAnswer: 'Erzurum',
     explanation: '"Erzirom", Erzurum şehrinin Kürtçe-yerel söylenişidir.',
@@ -2593,7 +2593,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2651',
     category: 'Siyaset',
-    prompt: 'Demokratik konfederalizm devlete karşı hangi tutumu benimser?',
+    prompt: 'Demokratik konfederalizm li hemberî dewletê kîjan helwestê dipejirîne?',
     answers: [
       'Devlet-dışı, tabandan örgütlenen öz yönetimi',
       'Devleti aşan, ona alternatif bir öz yönetim',
@@ -2625,7 +2625,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2658',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "bîst" hangi sayıdır?',
+    prompt: 'Di Kurmancî de "bîst" kîjan hejmar e?',
     answers: ['Yirmi', 'Vatan/ülke', 'güzel/iyi', 'Sabah/yarın'],
     correctAnswer: 'Yirmi',
     explanation: '"Bîst" yirmi demektir.',
@@ -2635,7 +2635,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2666',
     category: 'Çand',
-    prompt: 'Kurmancî\'de "bav" ne demek?',
+    prompt: 'Di Kurmancî de "bav" tê çi wateyê?',
     answers: ['Amca', 'Anne', 'Dede', 'Baba'],
     correctAnswer: 'Baba',
     explanation: '\'bav\' → Baba.',
@@ -2645,7 +2645,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2668',
     category: 'Dîrok',
-    prompt: 'Selahaddin Eyyubi hangi şehirde doğmuştur?',
+    prompt: 'Selahaddînê Eyûbî li kîjan bajarî ji dayik bûye?',
     answers: ['Bağdat', 'Kahire', 'Tikrit', 'İstanbul'],
     correctAnswer: 'Tikrit',
     explanation:
@@ -2656,7 +2656,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2669',
     category: 'Dîrok',
-    prompt: 'Eyyubiler hangi şehirleri uzun süre merkez edinmiştir?',
+    prompt: 'Eyyubiyan kîjan bajaran ji bo demek dirêj wek navend bi kar anîne?',
     answers: [
       'Pekin ve Tokyo',
       'Madrid ve Lizbon',
@@ -2671,7 +2671,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2674',
     category: 'Edebiyat',
-    prompt: 'Cigerxwîn eserlerini hangi dilde yazmıştır?',
+    prompt: 'Cigerxwîn berhemên xwe bi kîjan zimanî nivîsandiye?',
     answers: [
       'Kürtçe (Kurmancî)',
       'Siyabend û Xecê',
@@ -2686,7 +2686,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2682',
     category: 'Paradigma',
-    prompt: '"Ekolojik toplum" sanayi toplumundan hangi yönüyle ayrılır?',
+    prompt: '"Ekolojik toplum" ji civaka pîşesaziyê bi kîjan aliyê ve cuda dibe?',
     answers: [
       'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
       'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi',
@@ -2731,7 +2731,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2699',
     category: 'Edebiyat',
-    prompt: 'Mehmed Uzun eserlerini ağırlıkla hangi dilde yazmıştır?',
+    prompt: 'Mehmed Uzun berhemên xwe bi piranî bi kîjan zimanî nivîsandiye?',
     answers: [
       'Doğa ve kuşlar',
       'Kürtçe (Kurmancî)',
@@ -2747,7 +2747,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2705',
     category: 'Cografya',
-    prompt: '"Çiyayê Sîpan" (Süphan Dağı) hangi gölün yakınındadır?',
+    prompt: '"Çiyayê Sîpan" nêzîkî kîjan golê ye?',
     answers: ['Van Gölü', 'Eğirdir Gölü', 'Tuz Gölü', 'Beyşehir Gölü'],
     correctAnswer: 'Van Gölü',
     explanation:
@@ -2774,7 +2774,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2722',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "zer" hangi renktir?',
+    prompt: 'Di Kurmancî de "zer" kîjan reng e?',
     answers: ['Sarı', 'Kırmızı', 'Yeşil', 'Siyah'],
     correctAnswer: 'Sarı',
     explanation: '\'zer\' → Sarı.',
@@ -2784,7 +2784,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2724',
     category: 'Çand',
-    prompt: 'Kürt halk kültüründe dağlara verilen önem en çok neyle açıklanır?',
+    prompt: 'Di çanda gelêrî ya Kurdî de girîngiya ku ji çiyayan re tê dayîn herî zêde bi çi tê ravekirin?',
     answers: [
       'İranlılar ve birçok halk (Nevruz olarak)',
       'Tarih boyunca dağlık coğrafyada yaşamayla',
@@ -2800,7 +2800,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2727',
     category: 'Dîrok',
-    prompt: 'Selahaddin Eyyubi hangi savaşın ardından Kudüs\'ü geri almıştır?',
+    prompt: 'Selahaddînê Eyûbî piştî kîjan şerî Qudsê vegerand?',
     answers: [
       'Hıttin Savaşı (1187)',
       'Ankara Savaşı',
@@ -2816,7 +2816,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2741',
     category: 'Siyaset',
-    prompt: '"Barış ve demokratik siyaset" hangi yöntemi reddeder?',
+    prompt: '"Barış ve demokratik siyaset" kîjan rêbazê red dike?',
     answers: [
       'Kadın kotası',
       'Yerel meclis ve komünlerde',
@@ -2832,7 +2832,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2749',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "nivîsîn" ne demek?',
+    prompt: 'Di Kurmancî de "nivîsîn" tê çi wateyê?',
     answers: ['Yazmak', 'Çizmek', 'Okumak', 'Silmek'],
     correctAnswer: 'Yazmak',
     explanation: '"Nivîsîn" yazmak demektir.',
@@ -2842,7 +2842,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2780',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "aştî" ne demek?',
+    prompt: 'Di Kurmancî de "aştî" tê çi wateyê?',
     answers: ['Öfke', 'Barış', 'Savaş', 'Korku'],
     correctAnswer: 'Barış',
     explanation: '\'aştî\' → Barış.',
@@ -2879,7 +2879,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2790',
     category: 'Cografya',
-    prompt: '"Euphrates" hangi nehrin başka adıdır?',
+    prompt: '"Euphrates" navê din ê kîjan çem e?',
     answers: ['Aras', 'Ren', 'Dicle', 'Fırat'],
     correctAnswer: 'Fırat',
     explanation: '"Euphrates", Fırat Nehri\'nin (uluslararası) adıdır.',
@@ -2905,7 +2905,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2803',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "bîr" ne demek?',
+    prompt: 'Di Kurmancî de "bîr" tê çi wateyê?',
     answers: ['teşekkürler', 'Ben iyiyim', 'iyi günler', 'Hafıza/akıl'],
     correctAnswer: 'Hafıza/akıl',
     explanation:
@@ -2916,7 +2916,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2804',
     category: 'Ziman',
-    prompt: 'Kurmancî\'de "kar" ne demek?',
+    prompt: 'Di Kurmancî de "kar" tê çi wateyê?',
     answers: ['Oyun', 'Tatil', 'Uyku', 'İş'],
     correctAnswer: 'İş',
     explanation: '\'kar\' → İş.',
@@ -2943,7 +2943,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2818',
     category: 'Cografya',
-    prompt: '"Cizîr ve Botan" adları hangi tarihî bölgeyle anılır?',
+    prompt: 'Navên "Cizîr ve Botan" bi kîjan herêma dîrokî ve tên bibîranîn?',
     answers: [
       'Botan/Cizre bölgesi (güneydoğu)',
       'Herêma Kurdistanê ya Iraqê',
@@ -2959,7 +2959,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2820',
     category: 'Paradigma',
-    prompt: '"Demokratik modernite" hangi üç krizi aşmayı hedefler?',
+    prompt: '"Demokratik modernite" derbaskirina kîjan sê krîzan armanc dike?',
     answers: [
       'Borsa, döviz ve faiz sorunlarını',
       'Trafik, enflasyon ve işsizlik krizlerini',
@@ -2975,7 +2975,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_2823',
     category: 'Siyaset',
-    prompt: '"Demokratik çözüm" hangi değerleri önceler?',
+    prompt: '"Demokratik çözüm" kîjan nirxan pêşanî dike?',
     answers: [
       'Sınır, ordu ve bayrağı',
       'Eşitlik, özgürlük ve barışı',
@@ -3023,7 +3023,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5000',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "nanxane" = "yemekhane".',
+    prompt: 'Rast e an şaş e: Kurmancî "nanxane" = "yemekhane".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'nanxane\' Ziman alanında geçerli bir kavramdır.',
@@ -3084,7 +3084,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5035',
     category: 'Ziman',
-    prompt: '"stêrk" kelimesinin Türkçe karşılığı "yıldız" midir?',
+    prompt: 'Wateya Tirkî ya "stêrk" "yıldız" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'stêrk\' Ziman alanında geçerli bir kavramdır.',
@@ -3094,7 +3094,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5039',
     category: 'Ziman',
-    prompt: '"wêne" kelimesinin Türkçe karşılığı "ses" midir?',
+    prompt: 'Wateya Tirkî ya "wêne" "ses" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: '"wêne" = "resim/fotoğraf".',
@@ -3134,7 +3134,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5067',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "hesp" = "at".',
+    prompt: 'Rast e an şaş e: Kurmancî "hesp" = "at".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'hesp\' Ziman alanında geçerli bir kavramdır.',
@@ -3175,7 +3175,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5099',
     category: 'Ziman',
-    prompt: 'Kurmancîde "mase" denince kastedilen "sandalye" midir?',
+    prompt: 'Di Kurmancî de dema "mase" tê gotin, "sandalye" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3226,7 +3226,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5158',
     category: 'Ziman',
-    prompt: '"berf" kelimesinin Türkçe karşılığı "ateş" midir?',
+    prompt: 'Wateya Tirkî ya "berf" "ateş" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3237,7 +3237,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5168',
     category: 'Ziman',
-    prompt: '"kûçik" kelimesinin Türkçe karşılığı "kedi" midir?',
+    prompt: 'Wateya Tirkî ya "kûçik" "kedi" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3248,7 +3248,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5174',
     category: 'Ziman',
-    prompt: '"ba" kelimesinin Türkçe karşılığı "yağmur" midir?',
+    prompt: 'Wateya Tirkî ya "ba" "yağmur" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3279,7 +3279,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5204',
     category: 'Ziman',
-    prompt: '"pirtûk" kelimesinin Türkçe karşılığı "bilmek" midir?',
+    prompt: 'Wateya Tirkî ya "pirtûk" "bilmek" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3290,7 +3290,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5208',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "zarok" = "öğrenci".',
+    prompt: 'Rast e an şaş e: Kurmancî "zarok" = "öğrenci".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3361,7 +3361,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5268',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "pisîk" = "kedi".',
+    prompt: 'Rast e an şaş e: Kurmancî "pisîk" = "kedi".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"pisîk" kelimesinin karşılığı "kedi"dir.',
@@ -3411,7 +3411,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5301',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "şêr" = "aslan".',
+    prompt: 'Rast e an şaş e: Kurmancî "şêr" = "aslan".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "şêr" → "aslan".',
@@ -3421,7 +3421,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5305',
     category: 'Ziman',
-    prompt: '"gelmek" anlamına gelen Kurmancî kelime hangisidir?',
+    prompt: 'Bi Kurmancî "gelmek" çi ye?',
     answers: ['rabûn', 'ciwan', 'kursî', 'hatin'],
     correctAnswer: 'hatin',
     explanation: '"gelmek" kelimesinin karşılığı "hatin"dir.',
@@ -3431,7 +3431,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5307',
     category: 'Ziman',
-    prompt: 'Kurmancîde "av" denince kastedilen "gün/güneş" midir?',
+    prompt: 'Di Kurmancî de dema "av" tê gotin, "gün/güneş" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3442,7 +3442,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5314',
     category: 'Ziman',
-    prompt: '"ba" kelimesinin Türkçe karşılığı "rüzgar" midir?',
+    prompt: 'Wateya Tirkî ya "ba" "rüzgar" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "ba" → "rüzgar".',
@@ -3472,7 +3472,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5364',
     category: 'Ziman',
-    prompt: 'Kurmancîde "derî" denince kastedilen "pencere" midir?',
+    prompt: 'Di Kurmancî de dema "derî" tê gotin, "pencere" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3483,7 +3483,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5381',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "zanîn" = "bilmek".',
+    prompt: 'Rast e an şaş e: Kurmancî "zanîn" = "bilmek".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'zanîn\' Ziman alanında geçerli bir kavramdır.',
@@ -3513,7 +3513,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5394',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "deng" = "ses".',
+    prompt: 'Rast e an şaş e: Kurmancî "deng" = "ses".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"deng" kelimesinin karşılığı "ses"dir.',
@@ -3523,7 +3523,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5427',
     category: 'Ziman',
-    prompt: 'Kurmancîde "nan" denince kastedilen "ekmek" midir?',
+    prompt: 'Di Kurmancî de dema "nan" tê gotin, "ekmek" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "nan" → "ekmek".',
@@ -3533,7 +3533,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5433',
     category: 'Ziman',
-    prompt: '"destpêk" kelimesinin Türkçe karşılığı "ağaç" midir?',
+    prompt: 'Wateya Tirkî ya "destpêk" "ağaç" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3579,7 +3579,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5465',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "agir" = "ateş".',
+    prompt: 'Rast e an şaş e: Kurmancî "agir" = "ateş".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'agir\' Ziman alanında geçerli bir kavramdır.',
@@ -3589,7 +3589,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5475',
     category: 'Ziman',
-    prompt: '"deşt" kelimesinin Türkçe karşılığı "kaya" midir?',
+    prompt: 'Wateya Tirkî ya "deşt" "kaya" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3600,7 +3600,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5499',
     category: 'Ziman',
-    prompt: 'Kurmancîde "nanpêj" denince kastedilen "fırıncı" midir?',
+    prompt: 'Di Kurmancî de dema "nanpêj" tê gotin, "fırıncı" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "nanpêj" → "fırıncı".',
@@ -3661,7 +3661,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5565',
     category: 'Ziman',
-    prompt: '"jin" kelimesinin Türkçe karşılığı "kadın" midir?',
+    prompt: 'Wateya Tirkî ya "jin" "kadın" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"jin" kelimesinin karşılığı "kadın"dir.',
@@ -3671,7 +3671,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5591',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "xwendekar" = "doğru".',
+    prompt: 'Rast e an şaş e: Kurmancî "xwendekar" = "doğru".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3682,7 +3682,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5593',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "çav" = "burun".',
+    prompt: 'Rast e an şaş e: Kurmancî "çav" = "burun".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3733,7 +3733,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5631',
     category: 'Ziman',
-    prompt: 'Kurmancîde "şev" denince kastedilen "deniz" midir?',
+    prompt: 'Di Kurmancî de dema "şev" tê gotin, "deniz" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3744,7 +3744,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5632',
     category: 'Ziman',
-    prompt: '"şêr" kelimesinin Türkçe karşılığı "köpek" midir?',
+    prompt: 'Wateya Tirkî ya "şêr" "köpek" e?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3786,7 +3786,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5664',
     category: 'Ziman',
-    prompt: '"kaya" anlamına gelen Kurmancî kelime hangisidir?',
+    prompt: 'Bi Kurmancî "kaya" çi ye?',
     answers: ['zinar', 'nivîn', 'diçim', 'biçûk'],
     correctAnswer: 'zinar',
     explanation: '\'kaya\' → zinar.',
@@ -3796,7 +3796,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5675',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "pê" = "baş/kafa".',
+    prompt: 'Rast e an şaş e: Kurmancî "pê" = "baş/kafa".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3807,7 +3807,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5676',
     category: 'Ziman',
-    prompt: 'Kurmancîde "diran" denince kastedilen "saç" midir?',
+    prompt: 'Di Kurmancî de dema "diran" tê gotin, "saç" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3838,7 +3838,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5707',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "hewa" = "hava".',
+    prompt: 'Rast e an şaş e: Kurmancî "hewa" = "hava".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "hewa" → "hava".',
@@ -3878,7 +3878,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5722',
     category: 'Ziman',
-    prompt: 'Kurmancîde "ziman" denince kastedilen "okul" midir?',
+    prompt: 'Di Kurmancî de dema "ziman" tê gotin, "okul" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3889,7 +3889,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5733',
     category: 'Ziman',
-    prompt: 'Kurmancîde "cîhan" denince kastedilen "dünya" midir?',
+    prompt: 'Di Kurmancî de dema "cîhan" tê gotin, "dünya" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"cîhan" kelimesinin karşılığı "dünya"dir.',
@@ -3979,7 +3979,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5834',
     category: 'Ziman',
-    prompt: 'Kurmancîde "pir" denince kastedilen "başlangıç" midir?',
+    prompt: 'Di Kurmancî de dema "pir" tê gotin, "başlangıç" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -3990,7 +3990,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5848',
     category: 'Ziman',
-    prompt: 'Kurmancîde "welat" denince kastedilen "dünya" midir?',
+    prompt: 'Di Kurmancî de dema "welat" tê gotin, "dünya" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -4011,7 +4011,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5876',
     category: 'Ziman',
-    prompt: 'Kurmancîde "bajar" denince kastedilen "şehir" midir?',
+    prompt: 'Di Kurmancî de dema "bajar" tê gotin, "şehir" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: 'Doğru eşleştirme: "bajar" → "şehir".',
@@ -4092,7 +4092,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5920',
     category: 'Ziman',
-    prompt: 'Doğru mu, yanlış mı: Kurmancî "çûn" = "gitmek".',
+    prompt: 'Rast e an şaş e: Kurmancî "çûn" = "gitmek".',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '"çûn" kelimesinin karşılığı "gitmek"dir.',
@@ -4142,7 +4142,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5941',
     category: 'Ziman',
-    prompt: 'Kurmancîde "derya" denince kastedilen "yıldız" midir?',
+    prompt: 'Di Kurmancî de dema "derya" tê gotin, "yıldız" tê xwestin?',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -4164,7 +4164,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5968',
     category: 'Çand',
-    prompt: '\'destmal\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'destmal\' de ravekirina rast kîjan e?',
     answers: [
       'geleneksel kadın oyunları veya dansları',
       'Renkli, katmanlı uzun elbiseler (kras)',
@@ -4179,7 +4179,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5969',
     category: 'Çand',
-    prompt: 'Şıklardan hangisi \'şahmaran\' anlamına gelir?',
+    prompt: 'Kîjan vebijêrk tê wateya \'şahmaran\'?',
     answers: [
       'göçer yaşam tarzı ve dans ritmi',
       'doğu kültüründe mitolojik figür',
@@ -4205,7 +4205,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5973',
     category: 'Çand',
-    prompt: '\'şax\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'şax\' tê gotin, çi tê xwestin?',
     answers: [
       'yiyecek taşımak için dokunan torba',
       'Zulme karşı direniş ve yeniden doğuş',
@@ -4231,7 +4231,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_5988',
     category: 'Çand',
-    prompt: '\'Kilim motifleri\' ifadesi Çand bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'Kilim motifleri\' di çarçoveya Çandê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Kilim motifleri\' Çand alanında geçerli bir kavramdır.',
@@ -4241,7 +4241,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6020',
     category: 'Çand',
-    prompt: 'Çand açısından \'govendên herêmî\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Çandê ve ji bo \'govendên herêmî\' îfadeya rast kîjan e?',
     answers: [
       'Sosyal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı',
       'yöresel halk dansları',
@@ -4256,7 +4256,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6042',
     category: 'Çand',
-    prompt: '\'pêncşem\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'pêncşem\' tê gotin, çi tê xwestin?',
     answers: [
       'geleneksel ziyaret ve anma günü',
       'kültürel sembol ve renk hafızası',
@@ -4271,7 +4271,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6053',
     category: 'Çand',
-    prompt: '\'şal û şapik\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'şal û şapik\' de ravekirina rast kîjan e?',
     answers: [
       'geleneksel kaval benzeri çalgı',
       'geleneksel erkek giyim takımı',
@@ -4286,7 +4286,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6059',
     category: 'Çand',
-    prompt: '\'hewran\' için geçerli tanım hangisidir?',
+    prompt: 'Ji bo \'hewran\' pênaseya derbasdar kîjan e?',
     answers: [
       '"Nû" (yeni) + "roj" (gün)',
       'geleneksel kıl çadır yapımı',
@@ -4301,7 +4301,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6067',
     category: 'Çand',
-    prompt: '\'çilkez\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'çilkez\' de ya rast a zanîn çi ye?',
     answers: [
       'Dinî ilahi/sözlü kutsal metinler',
       'kültürel sembol ve renk hafızası',
@@ -4316,7 +4316,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6080',
     category: 'Çand',
-    prompt: '\'yerel kıyafetler\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'yerel kıyafetler\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'kimlik ve bölgesel çeşitlilik',
       'sofra kültürü ile ilişkilidir',
@@ -4331,7 +4331,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6083',
     category: 'Çand',
-    prompt: 'Çand çerçevesinde \'destmal\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Çandê de \'destmal\' tê çi wateyê?',
     answers: [
       'Kürt halk müziğinde ağıt benzeri ezgi',
       'Zulme karşı direniş ve yeniden doğuş',
@@ -4346,7 +4346,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6093',
     category: 'Çand',
-    prompt: '\'tûrik\' için geçerli tanım hangisidir?',
+    prompt: 'Ji bo \'tûrik\' pênaseya derbasdar kîjan e?',
     answers: [
       'geleneksel çobanlık ve doğa bilgisi',
       'koç katımı ve hayvancılık şenliği',
@@ -4361,7 +4361,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6117',
     category: 'Çand',
-    prompt: '\'nanê tenûrê\' konusunda hangisi doğrudur?',
+    prompt: 'Derbarê \'nanê tenûrê\' de kîjan rast e?',
     answers: [
       'tandırda pişirilen geleneksel ekmek',
       'Ekşili/etli sebze yemeği veya yahni',
@@ -4376,7 +4376,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6123',
     category: 'Çand',
-    prompt: '\'Bayramlaşma\' ifadesi Çand bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'Bayramlaşma\' di çarçoveya Çandê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Bayramlaşma\' Çand alanında geçerli bir kavramdır.',
@@ -4386,7 +4386,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6130',
     category: 'Çand',
-    prompt: '\'Govend\' ifadesi Çand bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'Govend\' di çarçoveya Çandê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Govend\' Çand alanında geçerli bir kavramdır.',
@@ -4396,7 +4396,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6136',
     category: 'Çand',
-    prompt: 'Hangisi \'koçerî\' kavramını doğru betimler?',
+    prompt: 'Kîjan têgiha \'koçerî\' rast şirove dike?',
     answers: [
       'hesinkarê ku li dijî zilmê rabû',
       'Dinî ilahi/sözlü kutsal metinler',
@@ -4411,7 +4411,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6143',
     category: 'Çand',
-    prompt: '\'helase\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'helase\' de ya rast a zanîn çi ye?',
     answers: [
       'Kültürel aidiyet ve coğrafi hafızayı',
       'yaşanmış ilginç olayların anlatımı',
@@ -4448,7 +4448,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6182',
     category: 'Çand',
-    prompt: 'Çand alanında \'memê alan\' neyi ifade eder?',
+    prompt: 'Di qada Çandê de \'memê alan\' çi îfade dike?',
     answers: [
       'Tavuk ve pirinçle yapılan geleneksel yemek',
       'Dil, kültür, yayıncılık, dayanışma ve kimlik aktarımı',
@@ -4463,7 +4463,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6189',
     category: 'Çand',
-    prompt: '\'cîranî\' kavramını doğru anlatan ifade hangisidir?',
+    prompt: 'Îfadeya ku têgiha \'cîranî\' rast vedibêje kîjan e?',
     answers: [
       'komşuluk ve toplumsal yardımlaşma',
       'Melek Tavus ve ışık/güneş motifi',
@@ -4478,7 +4478,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6206',
     category: 'Çand',
-    prompt: '\'dengbêj\' nasıl tanımlanır?',
+    prompt: '\'dengbêj\' çawa tê pênasekirin?',
     answers: [
       'toplumsal bağları güçlendirme',
       'geleneksel kaval benzeri çalgı',
@@ -4503,7 +4503,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6230',
     category: 'Çand',
-    prompt: '\'heftegiyan\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'heftegiyan\' de vebijêrka rast kîjan e?',
     answers: [
       'geleneksel erkek giyim takımı',
       'geleneksel yedi tahıllı çorba',
@@ -4533,7 +4533,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6263',
     category: 'Çand',
-    prompt: '\'kelaş\' ifadesi Çand bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'kelaş\' di çarçoveya Çandê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'kelaş\' Çand alanında geçerli bir kavramdır.',
@@ -4543,7 +4543,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6266',
     category: 'Çand',
-    prompt: '\'pêncşem\' Çand açısından anlamsız bir ifadedir.',
+    prompt: '\'pêncşem\' ji aliyê Çandê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -4569,7 +4569,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6325',
     category: 'Çand',
-    prompt: '\'bilûr\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'bilûr\' de ya rast a zanîn çi ye?',
     answers: [
       'Kürt halk takviminde yılbaşı kutlaması',
       'kaval benzeri geleneksel üflemeli çalgı',
@@ -4584,7 +4584,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6343',
     category: 'Çand',
-    prompt: 'Aşağıdakilerden hangisi \'tûtik\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'tûtik\' kîjan rast e?',
     answers: [
       'ayran ve su ikram etme kültürü',
       'Müzik ve ritüel/ezgi geleneği',
@@ -4599,7 +4599,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6365',
     category: 'Çand',
-    prompt: '\'zembîlfiroş\' konusunda hangisi doğrudur?',
+    prompt: 'Derbarê \'zembîlfiroş\' de kîjan rast e?',
     answers: [
       'lehengên destaneke evînê',
       'Toplu/kolektif bir kutlama',
@@ -4614,7 +4614,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6380',
     category: 'Çand',
-    prompt: '\'bêrîvan\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'bêrîvan\' de agahiya herî rast kîjan e?',
     answers: [
       'hunermendê ku kilaman ji ber dibêje',
       'Halkın direnişini ve özgürlük umudunu',
@@ -4629,7 +4629,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6406',
     category: 'Çand',
-    prompt: '\'govend\' ifadesinin doğru karşılığı hangisidir?',
+    prompt: 'Berambera rast a biwêja \'govend\' kîjan e?',
     answers: [
       'toplu halk oyunu',
       'yöresel kıyafet',
@@ -4659,7 +4659,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6457',
     category: 'Çand',
-    prompt: '\'şabaş\' nasıl tanımlanır?',
+    prompt: '\'şabaş\' çawa tê pênasekirin?',
     answers: [
       'Dinî ilahi/sözlü kutsal metinler',
       'göçebe Kürt aşiretlerinin barınağı',
@@ -4674,7 +4674,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6465',
     category: 'Çand',
-    prompt: 'Çand için \'sersal\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Çandê derbarê \'sersal\' de vebijêrka rast kîjan e?',
     answers: [
       'Kürt halk takviminde yılbaşı kutlaması',
       'kaval benzeri geleneksel üflemeli çalgı',
@@ -4689,7 +4689,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6481',
     category: 'Çand',
-    prompt: 'Çand alanında \'şevbêrk\' geçerli bir kavram olarak yer alır.',
+    prompt: 'Di qada Çandê de \'şevbêrk\' wek têgihek derbasdar cih digire.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'şevbêrk\' Çand alanında geçerli bir kavramdır.',
@@ -4710,7 +4710,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6509',
     category: 'Çand',
-    prompt: 'Aşağıdakilerden hangisi \'koçerî\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'koçerî\' kîjan rast e?',
     answers: [
       'Dinî ilahi/sözlü kutsal metinler',
       'doğu kültüründe mitolojik figür',
@@ -4725,7 +4725,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6523',
     category: 'Çand',
-    prompt: 'Çand bağlamında \'şîlan\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Çandê de \'şîlan\' çawa divê bê fêmkirin?',
     answers: [
       'tandırda pişirilen geleneksel ekmek',
       'Zulme karşı direniş ve yeniden doğuş',
@@ -4740,7 +4740,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6530',
     category: 'Çand',
-    prompt: '\'kelaş\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'kelaş\' tê gotin, çi tê xwestin?',
     answers: [
       'Halkın direnişini ve özgürlük umudunu',
       'hunermendê ku kilaman ji ber dibêje',
@@ -4755,7 +4755,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6533',
     category: 'Çand',
-    prompt: 'Hangisi \'masal anlatımı\' kavramını doğru betimler?',
+    prompt: 'Kîjan têgiha \'masal anlatımı\' rast şirove dike?',
     answers: [
       'kuşaktan kuşağa aktarılan anlatı',
       'geleneksel Kürt saç örgüsü modeli',
@@ -4770,7 +4770,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6538',
     category: 'Çand',
-    prompt: '\'şevbêrk\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'şevbêrk\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'Tarih boyunca dağlık coğrafyada yaşamayla',
       'kış gecelerinde yapılan sohbet toplantıları',
@@ -4785,7 +4785,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6541',
     category: 'Çand',
-    prompt: '\'qazîn\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'qazîn\' de vebijêrka rast kîjan e?',
     answers: [
       'geleneksel kadın oyunları veya dansları',
       'Kültürel aidiyet ve coğrafi hafızayı',
@@ -4800,7 +4800,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6542',
     category: 'Çand',
-    prompt: '\'şevbêrk\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'şevbêrk\' de agahiya herî rast kîjan e?',
     answers: [
       'Renkli, katmanlı uzun elbiseler (kras)',
       'İranlılar ve birçok halk (Nevruz olarak)',
@@ -4815,7 +4815,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6555',
     category: 'Çand',
-    prompt: 'Hangisi \'serzêr\' kavramını doğru betimler?',
+    prompt: 'Kîjan têgiha \'serzêr\' rast şirove dike?',
     answers: [
       'hunermendê ku kilaman ji ber dibêje',
       'tandırda pişirilen geleneksel ekmek',
@@ -4830,7 +4830,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6560',
     category: 'Çand',
-    prompt: '\'çilkez\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'çilkez\' de agahiya herî rast kîjan e?',
     answers: [
       'Bölge, lehçe, iklim, tarım ve komşu mutfaklarla etkileşim farklı olduğu için',
       'Dağlık iklimde mevsimsel dayanıklılık ve gıda güvenliği sağladığı için',
@@ -4845,7 +4845,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6575',
     category: 'Çand',
-    prompt: 'Hangisi \'şabaş\' kavramını doğru betimler?',
+    prompt: 'Kîjan têgiha \'şabaş\' rast şirove dike?',
     answers: [
       'yiyecek taşımak için dokunan torba',
       'Melek Tavus ve ışık/güneş motifi',
@@ -4860,7 +4860,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6581',
     category: 'Çand',
-    prompt: '\'nanê sêlê\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'nanê sêlê\' de ravekirina rast kîjan e?',
     answers: [
       'sözlü gelenek ile ilişkilidir',
       'geleneksel yedi tahıllı çorba',
@@ -4875,7 +4875,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6610',
     category: 'Çand',
-    prompt: '\'lûr\' nasıl tanımlanır?',
+    prompt: '\'lûr\' çawa tê pênasekirin?',
     answers: [
       'Kürt halk müziğinde ağıt benzeri ezgi',
       'el yapımı geleneksel Kürt ayakkabısı',
@@ -4890,7 +4890,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6626',
     category: 'Çand',
-    prompt: '\'ağıt\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'ağıt\' de agahiya herî rast kîjan e?',
     answers: [
       'meşhur Kürt halk hikayesi',
       'Dinî-toplumsal sınıfları',
@@ -4926,7 +4926,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6642',
     category: 'Çand',
-    prompt: '\'misafirperverlik\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'misafirperverlik\' tê gotin, çi tê xwestin?',
     answers: [
       'toplumsal dayanışma',
       'Yaşlıları/ihtiyarları',
@@ -4941,7 +4941,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6652',
     category: 'Çand',
-    prompt: '\'Kew\' yalnızca Çand dışı alanlara aittir.',
+    prompt: '\'Kew\' tenê aîdî qadên derveyî Çandê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -4972,7 +4972,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6684',
     category: 'Çand',
-    prompt: '\'heftegiyan\' ne anlama gelir?',
+    prompt: '\'heftegiyan\' tê çi wateyê?',
     answers: [
       'toplumsal bağları güçlendirme',
       'sözlü anlatım ve ezgili hikaye',
@@ -4987,7 +4987,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6696',
     category: 'Çand',
-    prompt: 'Çand alanında \'serzêr\' geçerli bir kavram olarak yer alır.',
+    prompt: 'Di qada Çandê de \'serzêr\' wek têgihek derbasdar cih digire.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'serzêr\' Çand alanında geçerli bir kavramdır.',
@@ -4997,7 +4997,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6707',
     category: 'Çand',
-    prompt: '\'Qazîn\' Çand açısından anlamsız bir ifadedir.',
+    prompt: '\'Qazîn\' ji aliyê Çandê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -5008,7 +5008,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6708',
     category: 'Çand',
-    prompt: 'Hangisi Çand içinde \'sînan\' kavramını doğru yerleştirir?',
+    prompt: 'Kîjan di Çandê de têgiha \'sînan\' rast bi cih dike?',
     answers: [
       'geleneksel taş işçiliği',
       'Köy odaları ve dîwanlar',
@@ -5023,7 +5023,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6716',
     category: 'Çand',
-    prompt: '\'bêrîvan\' ifadesinin doğru karşılığı hangisidir?',
+    prompt: 'Berambera rast a biwêja \'bêrîvan\' kîjan e?',
     answers: [
       'Höyük üzerinde gelişmiş eski tahkimli yerleşim',
       'Farklı halkların eşitlik ve barış içinde ortak yaşamını',
@@ -5038,7 +5038,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6722',
     category: 'Çand',
-    prompt: '\'fistan\' neyi ifade eder?',
+    prompt: '\'fistan\' çi îfade dike?',
     answers: [
       'el sanatı ile ilişkilidir',
       'lehengên destaneke evînê',
@@ -5053,7 +5053,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6730',
     category: 'Çand',
-    prompt: '\'serpêhatî\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'serpêhatî\' de vebijêrka rast kîjan e?',
     answers: [
       'düğünlerde geline takılan altınlar',
       'geleneksel hasat ve bereket şenliği',
@@ -5079,7 +5079,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6769',
     category: 'Çand',
-    prompt: '\'şahmaran\' yalnızca Çand dışı alanlara aittir.',
+    prompt: '\'şahmaran\' tenê aîdî qadên derveyî Çandê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -5090,7 +5090,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6773',
     category: 'Çand',
-    prompt: '\'şîlan\' ifadesinin doğru karşılığı hangisidir?',
+    prompt: 'Berambera rast a biwêja \'şîlan\' kîjan e?',
     answers: [
       'yabani gül ve bitkisel çay geleneği',
       'Çîrok (masal) ve kilam/stran (ezgi)',
@@ -5125,7 +5125,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6803',
     category: 'Çand',
-    prompt: 'Hangisi \'lûr\' kavramını doğru betimler?',
+    prompt: 'Kîjan têgiha \'lûr\' rast şirove dike?',
     answers: [
       'kınalı keklik ve doğa sevgisi sembolü',
       'Kürt halk müziğinde ağıt benzeri ezgi',
@@ -5140,7 +5140,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6809',
     category: 'Çand',
-    prompt: 'Aşağıdakilerden hangisi \'sînan\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'sînan\' kîjan rast e?',
     answers: [
       'geleneksel taş işçiliği',
       '21 Adar ile ilişkilidir',
@@ -5155,7 +5155,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6823',
     category: 'Çand',
-    prompt: 'Hangisi \'kilim motifleri\' kavramını doğru betimler?',
+    prompt: 'Kîjan têgiha \'kilim motifleri\' rast şirove dike?',
     answers: [
       'masallardaki altın saray motifi',
       'düğün ve kutlama ile ilişkilidir',
@@ -5170,7 +5170,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6835',
     category: 'Çand',
-    prompt: '\'qutik\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'qutik\' de ravekirina rast kîjan e?',
     answers: [
       'geleneksel Kürt yeleği veya giysisi',
       'Zulme karşı direniş ve yeniden doğuş',
@@ -5185,7 +5185,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6838',
     category: 'Çand',
-    prompt: '\'şax\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'şax\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'şırnak yöresine ait geleneksel dans',
       'göçebe Kürt aşiretlerinin barınağı',
@@ -5200,7 +5200,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6841',
     category: 'Çand',
-    prompt: 'Çand bağlamında \'reşmal\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Çandê de \'reşmal\' çawa divê bê fêmkirin?',
     answers: [
       'Resmi arşivlerde görünmeyen deneyimleri ve hafızayı kaydedebildiği için',
       'Dil, kültür, yayıncılık, dayanışma ve kimlik aktarımı',
@@ -5215,7 +5215,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6882',
     category: 'Çand',
-    prompt: 'Aşağıdakilerden hangisi \'halk mutfağı\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'halk mutfağı\' kîjan rast e?',
     answers: [
       'Kırmızı, yeşil ve sarı',
       'Dil ve kültürel haklar',
@@ -5251,7 +5251,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6937',
     category: 'Çand',
-    prompt: '\'bilûr\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'bilûr\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'Halay çekilir ve ateşin üstünden atlanır',
       'kaval benzeri geleneksel üflemeli çalgı',
@@ -5266,7 +5266,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6958',
     category: 'Çand',
-    prompt: '\'Halk mutfağı\' Çand açısından anlamsız bir ifadedir.',
+    prompt: '\'Halk mutfağı\' ji aliyê Çandê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -5277,7 +5277,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6971',
     category: 'Çand',
-    prompt: '\'sêpê\' için geçerli tanım hangisidir?',
+    prompt: 'Ji bo \'sêpê\' pênaseya derbasdar kîjan e?',
     answers: [
       'gündelik kültür ile ilişkilidir',
       'kültürel sembol ve renk hafızası',
@@ -5292,7 +5292,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6974',
     category: 'Çand',
-    prompt: '\'Qutik\' ifadesi Çand bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'Qutik\' di çarçoveya Çandê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Qutik\' Çand alanında geçerli bir kavramdır.',
@@ -5302,7 +5302,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_6986',
     category: 'Çand',
-    prompt: 'Aşağıdakilerden hangisi \'zembîlfiroş\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'zembîlfiroş\' kîjan rast e?',
     answers: [
       'Masal/hikâye anlatan kişi',
       'Toplu/kolektif bir kutlama',
@@ -5328,7 +5328,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7011',
     category: 'Dîrok',
-    prompt: 'Dîrok çerçevesinde \'Jiyan gazetesi\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Dîrokê de \'Jiyan gazetesi\' tê çi wateyê?',
     answers: [
       'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
       'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
@@ -5361,7 +5361,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7053',
     category: 'Dîrok',
-    prompt: 'Dîrok çerçevesinde \'Barzani Hareketi\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Dîrokê de \'Barzani Hareketi\' tê çi wateyê?',
     answers: [
       'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
       '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
@@ -5377,7 +5377,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7058',
     category: 'Dîrok',
-    prompt: 'Aşağıdakilerden hangisi \'Mezopotamya\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'Mezopotamya\' rave dike?',
     answers: [
       'Latin alfabesiyle basılan ilk Kürtçe dergi',
       '1946\'da kurulan ilk kısa ömürlü Kürt devleti',
@@ -5393,7 +5393,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7066',
     category: 'Dîrok',
-    prompt: '\'Dersim 1937\' hangi yönüyle bilinir?',
+    prompt: '\'Dersim 1937\' bi kîjan aliyê xwe ve tê nasîn?',
     answers: [
       'Irak\'ta kendini Kürdistan kralı ilan eden lider',
       'Kürdistan gazetesini çıkaran ilk Kürt gazeteci',
@@ -5421,7 +5421,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7097',
     category: 'Dîrok',
-    prompt: '\'Mîrê Kor\' Dîrok açısından anlamsız bir ifadedir.',
+    prompt: '\'Mîrê Kor\' ji aliyê Dîrokê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -5443,7 +5443,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7135',
     category: 'Dîrok',
-    prompt: '\'Cizre\' için geçerli tanım hangisidir?',
+    prompt: 'Ji bo \'Cizre\' pênaseya derbasdar kîjan e?',
     answers: [
       'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
       'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
@@ -5475,7 +5475,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7151',
     category: 'Dîrok',
-    prompt: '\'Baban Emirliği\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'Baban Emirliği\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       '1946\'da kurulan ilk kısa ömürlü Kürt devleti',
       'Döneminden kalan belge veya nesne (birincil kaynak)',
@@ -5491,7 +5491,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7163',
     category: 'Dîrok',
-    prompt: 'Dîrok bilgisinde \'Şeyh Said\' ile ilgili doğru olan hangisidir?',
+    prompt: 'Di zanîna Dîrokê de derbarê \'Şeyh Said\' de ya rast kîjan e?',
     answers: [
       'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
       '1925 yılında Kürt hakları için isyan eden lider',
@@ -5534,7 +5534,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7210',
     category: 'Dîrok',
-    prompt: 'Hangisi \'Mîrê Kor\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Mîrê Kor\' rast dide nasîn?',
     answers: [
       'Soran emirliğinin kör lakaplı güçlü lideri',
       'Döneminden kalan belge veya nesne (birincil kaynak)',
@@ -5559,7 +5559,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7223',
     category: 'Dîrok',
-    prompt: '\'Kasr-ı Şirin Antlaşması\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'Kasr-ı Şirin Antlaşması\' ravekirina herî dirust kîjan e?',
     answers: [
       'Osmanlı ve Safevi sınırını belirleyen antlaşma',
       'Irak\'ta kendini Kürdistan kralı ilan eden lider',
@@ -5575,7 +5575,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7227',
     category: 'Dîrok',
-    prompt: '\'Halepçe katliamı\' için geçerli tanım hangisidir?',
+    prompt: 'Ji bo \'Halepçe katliamı\' pênaseya derbasdar kîjan e?',
     answers: [
       '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
       '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş',
@@ -5591,7 +5591,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7228',
     category: 'Dîrok',
-    prompt: '\'Amida\' ifadesi Dîrok bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'Amida\' di çarçoveya Dîrokê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Amida\' Dîrok alanında geçerli bir kavramdır.',
@@ -5612,7 +5612,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7242',
     category: 'Dîrok',
-    prompt: 'Aşağıdakilerden hangisi \'Lozan Antlaşması\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'Lozan Antlaşması\' rave dike?',
     answers: [
       'Van gölü güneyinde hüküm sürmüş Kürt beyliği',
       'Şeref Han tarafından yazılan Kürt tarihi eseri',
@@ -5628,7 +5628,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7247',
     category: 'Dîrok',
-    prompt: 'Aşağıdakilerden hangisi \'Şengal\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Şengal\' kîjan rast e?',
     answers: [
       'Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi',
       'Selahaddin Eyyubi tarafından kurulan büyük devlet',
@@ -5660,7 +5660,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7257',
     category: 'Dîrok',
-    prompt: 'Dîrok alanında \'Qazi Muhammed\' neyi ifade eder?',
+    prompt: 'Di qada Dîrokê de \'Qazi Muhammed\' çi îfade dike?',
     answers: [
       'Süleymaniye merkezli güçlü Kürt prensliği',
       'Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı',
@@ -5676,7 +5676,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7260',
     category: 'Dîrok',
-    prompt: '\'Lozan Antlaşması\' kavramını doğru anlatan ifade hangisidir?',
+    prompt: 'Îfadeya ku têgiha \'Lozan Antlaşması\' rast vedibêje kîjan e?',
     answers: [
       'Osmanlı ve Safevi sınırını belirleyen antlaşma',
       'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
@@ -5692,7 +5692,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7293',
     category: 'Dîrok',
-    prompt: '\'Ağrı İsyanları\' hangi yönüyle bilinir?',
+    prompt: '\'Ağrı İsyanları\' bi kîjan aliyê xwe ve tê nasîn?',
     answers: [
       'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
       '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş',
@@ -5708,7 +5708,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7300',
     category: 'Dîrok',
-    prompt: 'Aşağıdakilerden hangisi \'Mela Mahmude Bayazidi\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Mela Mahmude Bayazidi\' kîjan rast e?',
     answers: [
       'Döneminden kalan belge veya nesne (birincil kaynak)',
       'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
@@ -5724,7 +5724,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7312',
     category: 'Dîrok',
-    prompt: '\'Şeyh Mahmud Berzenci\' ile ilgili doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'Şeyh Mahmud Berzenci\' de agahiya rast kîjan e?',
     answers: [
       'Irak\'ta kendini Kürdistan kralı ilan eden lider',
       'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
@@ -5773,7 +5773,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7334',
     category: 'Dîrok',
-    prompt: '\'Barzani Hareketi\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'Barzani Hareketi\' çi pêk tîne?',
     answers: [
       'Hoybun cemiyeti adına askeri liderlik yapan subay',
       'Irak rejimi tarafından Kürtlere yönelik soykırım',
@@ -5789,7 +5789,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7335',
     category: 'Dîrok',
-    prompt: '\'Ehmedê Xanî\' ile ilgili doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'Ehmedê Xanî\' de agahiya rast kîjan e?',
     answers: [
       'Kürdistan gazetesini çıkaran ilk Kürt gazeteci',
       '17. yüzyılda Kürt aydınlanma fikrini yazan şair',
@@ -5805,7 +5805,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7351',
     category: 'Dîrok',
-    prompt: 'Hangisi \'Şeyh Said\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Şeyh Said\' rast dide nasîn?',
     answers: [
       'Irak rejimi tarafından Kürtlere yönelik soykırım',
       'tanıklık ve anlatılarla geçmişi anlama yöntemi',
@@ -5821,7 +5821,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7360',
     category: 'Dîrok',
-    prompt: '\'Soran Emirliği\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'Soran Emirliği\' ravekirina herî dirust kîjan e?',
     answers: [
       'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
       'Ravanduz merkezli askeri güç biriktiren beylik',
@@ -5837,7 +5837,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7372',
     category: 'Dîrok',
-    prompt: 'Dîrok açısından \'Mervaniler\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Dîrokê ve ji bo \'Mervaniler\' îfadeya rast kîjan e?',
     answers: [
       'Osmanlı ve Safevi sınırını belirleyen antlaşma',
       'Kürt alfabesini geliştiren yayıncı ve aydın',
@@ -5916,7 +5916,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7417',
     category: 'Dîrok',
-    prompt: '\'tarihsel yorum\' neyi ifade eder?',
+    prompt: '\'tarihsel yorum\' çi îfade dike?',
     answers: [
       'Mısır, Suriye ve çevresi',
       'Batı İran / Zagros çevresi',
@@ -5942,7 +5942,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7443',
     category: 'Dîrok',
-    prompt: '\'Eyyubiler\' nasıl tanımlanır?',
+    prompt: '\'Eyyubiler\' çawa tê pênasekirin?',
     answers: [
       '17. yüzyılda Kürt aydınlanma fikrini yazan şair',
       'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
@@ -5958,7 +5958,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7451',
     category: 'Dîrok',
-    prompt: 'Dîrok bağlamında \'Ağrı İsyanları\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Dîrokê de \'Ağrı İsyanları\' çawa divê bê fêmkirin?',
     answers: [
       '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
       '1927-1930 yılları arasında Ağrı dağı çevresindeki direniş',
@@ -5985,7 +5985,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7474',
     category: 'Dîrok',
-    prompt: '\'sözlü tarih\' ifadesinin doğru karşılığı hangisidir?',
+    prompt: 'Berambera rast a biwêja \'sözlü tarih\' kîjan e?',
     answers: [
       'tanıklık ve anlatılarla geçmişi anlama yöntemi',
       'Merkezî yönetime bağlanmış / tasfiye edilmiş yapı',
@@ -6001,7 +6001,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7480',
     category: 'Dîrok',
-    prompt: 'Şıklardan hangisi \'Cizre\' anlamına gelir?',
+    prompt: 'Kîjan vebijêrk tê wateya \'Cizre\'?',
     answers: [
       'Selahaddin Eyyubi tarafından kurulan büyük devlet',
       'Botan emirliğinin ve tarihsel kültürün beşiği olan şehir',
@@ -6033,7 +6033,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7497',
     category: 'Dîrok',
-    prompt: '\'Mustafa Barzani\' hangi yönüyle bilinir?',
+    prompt: '\'Mustafa Barzani\' bi kîjan aliyê xwe ve tê nasîn?',
     answers: [
       'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet',
       'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
@@ -6049,7 +6049,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7507',
     category: 'Dîrok',
-    prompt: '\'göç\' nasıl tanımlanır?',
+    prompt: '\'göç\' çawa tê pênasekirin?',
     answers: [
       'Zulme karşı özgürlük ve direnişi',
       'bölgeler arası alışveriş güzergahı',
@@ -6091,7 +6091,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7528',
     category: 'Dîrok',
-    prompt: 'Hangisi \'Kürdistan Eyaleti\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Kürdistan Eyaleti\' rast dide nasîn?',
     answers: [
       'Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet',
       'Hoybun cemiyeti adına askeri liderlik yapan subay',
@@ -6107,7 +6107,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7560',
     category: 'Dîrok',
-    prompt: '\'ticaret yolu\' ifadesi Dîrok bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'ticaret yolu\' di çarçoveya Dîrokê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'ticaret yolu\' Dîrok alanında geçerli bir kavramdır.',
@@ -6117,7 +6117,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7569',
     category: 'Dîrok',
-    prompt: '\'kronoloji\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'kronoloji\' de ya rast a zanîn çi ye?',
     answers: [
       'olayları zaman sırasına koyma',
       'Kafkasya (Gence-Ani çevresi)',
@@ -6132,7 +6132,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7598',
     category: 'Dîrok',
-    prompt: '\'Kürdistan gazetesi\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'Kürdistan gazetesi\' tê gotin, çi tê xwestin?',
     answers: [
       'Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı',
       'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
@@ -6160,7 +6160,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7604',
     category: 'Dîrok',
-    prompt: '\'Eyyubiler\' ifadesi Dîrok bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'Eyyubiler\' di çarçoveya Dîrokê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Eyyubiler\' Dîrok alanında geçerli bir kavramdır.',
@@ -6198,7 +6198,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7633',
     category: 'Dîrok',
-    prompt: 'Hangisi \'Leyla Qasim\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Leyla Qasim\' rast dide nasîn?',
     answers: [
       'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
       'Selahaddin Eyyubi tarafından kurulan büyük devlet',
@@ -6214,7 +6214,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7643',
     category: 'Dîrok',
-    prompt: 'Dîrok bağlamında \'Mikdat Mithat Bedirxan\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Dîrokê de \'Mikdat Mithat Bedirxan\' çawa divê bê fêmkirin?',
     answers: [
       'Kürt coğrafyasını dört devlete bölen antlaşma',
       'Irak\'ta kendini Kürdistan kralı ilan eden lider',
@@ -6230,7 +6230,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7644',
     category: 'Dîrok',
-    prompt: '\'Amida\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'Amida\' ravekirina herî dirust kîjan e?',
     answers: [
       'Güney Kürdistan\'da uzun yıllar süren ulusal hareket',
       'Selahaddin Eyyubi tarafından kurulan büyük devlet',
@@ -6246,7 +6246,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7657',
     category: 'Dîrok',
-    prompt: 'Hangisi \'Bitlis Prensliği\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Bitlis Prensliği\' rast dide nasîn?',
     answers: [
       'Irak\'ta kendini Kürdistan kralı ilan eden lider',
       'Irak rejimi tarafından Kürtlere yönelik soykırım',
@@ -6262,7 +6262,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7666',
     category: 'Dîrok',
-    prompt: 'Dîrok çerçevesinde \'Bitlis Prensliği\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Dîrokê de \'Bitlis Prensliği\' tê çi wateyê?',
     answers: [
       'Irak\'ta kendini Kürdistan kralı ilan eden lider',
       'Selahaddin Eyyubi tarafından kurulan büyük devlet',
@@ -6278,7 +6278,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7668',
     category: 'Dîrok',
-    prompt: '\'Halepçe katliamı\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'Halepçe katliamı\' tê gotin, çi tê xwestin?',
     answers: [
       'Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi',
       'Irak\'ta kendini Kürdistan kralı ilan eden lider',
@@ -6294,7 +6294,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7669',
     category: 'Dîrok',
-    prompt: 'Dîrok çerçevesinde \'Şeyh Mahmud Berzenci\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Dîrokê de \'Şeyh Mahmud Berzenci\' tê çi wateyê?',
     answers: [
       '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
       'Irak\'ta kendini Kürdistan kralı ilan eden lider',
@@ -6310,7 +6310,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7680',
     category: 'Dîrok',
-    prompt: 'Dîrok açısından \'Jiyan gazetesi\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Dîrokê ve ji bo \'Jiyan gazetesi\' îfadeya rast kîjan e?',
     answers: [
       'Süleymaniye\'de basılan erken dönem Kürtçe gazete',
       '17. yüzyılda Kürt aydınlanma fikrini yazan şair',
@@ -6337,7 +6337,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7717',
     category: 'Dîrok',
-    prompt: 'Şıklardan hangisi \'Kürt Teali Cemiyeti\' anlamına gelir?',
+    prompt: 'Kîjan vebijêrk tê wateya \'Kürt Teali Cemiyeti\'?',
     answers: [
       'Dicle ve Fırat çevresindeki tarihsel bölge',
       'Aşiretlerden oluşturulan süvari birlikleri',
@@ -6364,7 +6364,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7753',
     category: 'Dîrok',
-    prompt: '\'Şengal\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'Şengal\' de vebijêrka rast kîjan e?',
     answers: [
       'Osmanlı döneminde özerk kalmış Kürt hükümdarlığı',
       'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
@@ -6391,7 +6391,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7763',
     category: 'Dîrok',
-    prompt: '\'Bohtan Emirliği\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'Bohtan Emirliği\' de vebijêrka rast kîjan e?',
     answers: [
       'Osmanlı döneminde (16. yüzyıl)',
       'Cizre merkezli önemli Kürt beyliği',
@@ -6406,7 +6406,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7777',
     category: 'Dîrok',
-    prompt: '\'Hawar dergisi\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'Hawar dergisi\' de vebijêrka rast kîjan e?',
     answers: [
       'Kürt coğrafyasını dört devlete bölen antlaşma',
       'Latin alfabesiyle basılan ilk Kürtçe dergi',
@@ -6422,7 +6422,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7778',
     category: 'Dîrok',
-    prompt: '\'Mervaniler\' neyi ifade eder?',
+    prompt: '\'Mervaniler\' çi îfade dike?',
     answers: [
       'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
       'Dicle ve Fırat çevresindeki tarihsel bölge',
@@ -6438,7 +6438,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7798',
     category: 'Dîrok',
-    prompt: 'Aşağıdakilerden hangisi \'İhsan Nuri Paşa\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'İhsan Nuri Paşa\' kîjan rast e?',
     answers: [
       'Hoybun cemiyeti adına askeri liderlik yapan subay',
       'Selahaddin Eyyubi tarafından kurulan büyük devlet',
@@ -6454,7 +6454,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7803',
     category: 'Dîrok',
-    prompt: 'Hangisi \'Mustafa Barzani\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Mustafa Barzani\' rast dide nasîn?',
     answers: [
       'Dersim bölgesinde yaşanan askeri harekat ve kriz',
       '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
@@ -6481,7 +6481,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7818',
     category: 'Dîrok',
-    prompt: '\'Baban emirliği\' ifadesi Dîrok bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'Baban emirliği\' di çarçoveya Dîrokê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Baban emirliği\' Dîrok alanında geçerli bir kavramdır.',
@@ -6491,7 +6491,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7832',
     category: 'Dîrok',
-    prompt: '\'Mîrê Kor\' ile ilgili doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'Mîrê Kor\' de agahiya rast kîjan e?',
     answers: [
       '1946\'da kurulan ilk kısa ömürlü Kürt devleti',
       'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
@@ -6522,7 +6522,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7848',
     category: 'Dîrok',
-    prompt: '\'Mahabad Cumhuriyeti\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'Mahabad Cumhuriyeti\' de agahiya herî rast kîjan e?',
     answers: [
       '1946\'da kurulan ilk kısa ömürlü Kürt devleti',
       'Soran emirliğinin kör lakaplı güçlü lideri',
@@ -6538,7 +6538,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7849',
     category: 'Dîrok',
-    prompt: '\'Kürdistan gazetesi\' için geçerli tanım hangisidir?',
+    prompt: 'Ji bo \'Kürdistan gazetesi\' pênaseya derbasdar kîjan e?',
     answers: [
       'Kürt alfabesini geliştiren yayıncı ve aydın',
       'Kürt örf adetlerini derleyen ilk araştırmacı',
@@ -6565,7 +6565,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7852',
     category: 'Dîrok',
-    prompt: '\'Hawar dergisi\' nasıl tanımlanır?',
+    prompt: '\'Hawar dergisi\' çawa tê pênasekirin?',
     answers: [
       'Latin alfabesiyle basılan ilk Kürtçe dergi',
       'Kürt örf adetlerini derleyen ilk araştırmacı',
@@ -6581,7 +6581,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7866',
     category: 'Dîrok',
-    prompt: '\'arkeoloji\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'arkeoloji\' de agahiya herî rast kîjan e?',
     answers: [
       'Osmanlı-Safevi dönemi (16-19. yüzyıl)',
       'yek ji wargehên herî kevn ên domdar',
@@ -6596,7 +6596,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7874',
     category: 'Dîrok',
-    prompt: '\'Med İmparatorluğu\' hangi yönüyle bilinir?',
+    prompt: '\'Med İmparatorluğu\' bi kîjan aliyê xwe ve tê nasîn?',
     answers: [
       'Cizre merkezli önemli Kürt beyliği',
       'Merkezîleşme ve doğrudan yönetim',
@@ -6612,7 +6612,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7878',
     category: 'Dîrok',
-    prompt: '\'Bedirhan Bey\' yalnızca Dîrok dışı alanlara aittir.',
+    prompt: '\'Bedirhan Bey\' tenê aîdî qadên derveyî Dîrokê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -6639,7 +6639,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7898',
     category: 'Dîrok',
-    prompt: '\'Soran Emirliği\' ne anlama gelir?',
+    prompt: '\'Soran Emirliği\' tê çi wateyê?',
     answers: [
       'Ravanduz merkezli askeri güç biriktiren beylik',
       '1988\'de Kürtlere karşı yapılan kimyasal saldırı',
@@ -6672,7 +6672,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7922',
     category: 'Dîrok',
-    prompt: 'Dîrok bağlamında \'Mervaniler\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Dîrokê de \'Mervaniler\' çawa divê bê fêmkirin?',
     answers: [
       'Diyarbakır merkezli ortaçağ Kürt hanedanlığı',
       'Döneminden kalan belge veya nesne (birincil kaynak)',
@@ -6709,7 +6709,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7969',
     category: 'Dîrok',
-    prompt: '\'Celadet Bedirxan\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Celadet Bedirxan\' de ya rast kîjan e?',
     answers: [
       'Kahire\'de 1898\'de basılan ilk Kürt gazetesi',
       'Kürt alfabesini geliştiren yayıncı ve aydın',
@@ -6725,7 +6725,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7980',
     category: 'Dîrok',
-    prompt: '\'Kürdistan gazetesi\' Dîrok açısından anlamsız bir ifadedir.',
+    prompt: '\'Kürdistan gazetesi\' ji aliyê Dîrokê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -6736,7 +6736,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_7983',
     category: 'Dîrok',
-    prompt: '\'yerleşik yaşam\' ifadesinin doğru karşılığı hangisidir?',
+    prompt: 'Berambera rast a biwêja \'yerleşik yaşam\' kîjan e?',
     answers: [
       'Osmanlı ve Safevi (İran)',
       'Orta Çağ (10-11. yüzyıl)',
@@ -6762,7 +6762,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8003',
     category: 'Dîrok',
-    prompt: 'Dîrok alanında \'Göç\' geçerli bir kavram olarak yer alır.',
+    prompt: 'Di qada Dîrokê de \'Göç\' wek têgihek derbasdar cih digire.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Göç\' Dîrok alanında geçerli bir kavramdır.',
@@ -6772,7 +6772,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8023',
     category: 'Dîrok',
-    prompt: 'Hangisi Dîrok içinde \'Hasankeyf\' kavramını doğru yerleştirir?',
+    prompt: 'Kîjan di Dîrokê de têgiha \'Hasankeyf\' rast bi cih dike?',
     answers: [
       'Irak rejimi tarafından idam edilen Kürt kadın aktivist',
       'Dicle nehri üzerinde yer alan binlerce yıllık tarihi kent',
@@ -6815,7 +6815,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8045',
     category: 'Dîrok',
-    prompt: '\'Halepçe katliamı\' ifadesi Dîrok bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'Halepçe katliamı\' di çarçoveya Dîrokê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Halepçe katliamı\' Dîrok alanında geçerli bir kavramdır.',
@@ -6835,7 +6835,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8066',
     category: 'Dîrok',
-    prompt: 'Hangisi \'Anfal operasyonu\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Anfal operasyonu\' rast dide nasîn?',
     answers: [
       'Hoybun cemiyeti adına askeri liderlik yapan subay',
       'Irak\'ta kendini Kürdistan kralı ilan eden lider',
@@ -6851,7 +6851,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8091',
     category: 'Dîrok',
-    prompt: '\'Eyyubiler\' kavramını doğru anlatan ifade hangisidir?',
+    prompt: 'Îfadeya ku têgiha \'Eyyubiler\' rast vedibêje kîjan e?',
     answers: [
       'Selahaddin Eyyubi tarafından kurulan büyük devlet',
       '19. yüzyılda özerklik mücadelesi veren Kürt emiri',
@@ -6878,7 +6878,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8108',
     category: 'Cografya',
-    prompt: '\'Behdînan bölgesi\' coğrafyada neyi ifade eder?',
+    prompt: '\'Behdînan bölgesi\' di erdnîgariyê de çi îfade dike?',
     answers: [
       'Nuh\'un gemisinin indiğine inanılan tarihi dağ',
       'Karacadağ lavlarının oluşturduğu taşlık plato',
@@ -6905,7 +6905,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8141',
     category: 'Cografya',
-    prompt: 'Aşağıdakilerden hangisi \'Derbendihan gölü\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Derbendihan gölü\' kîjan rast e?',
     answers: [
       'Botan çayının oluşturduğu derin kanyon vadi',
       'Güney Kürdistan\'ın en verimli tarım ovası',
@@ -6921,7 +6921,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8149',
     category: 'Cografya',
-    prompt: 'Cografya bağlamında \'Munzur vadisi\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Cografyaê de \'Munzur vadisi\' çawa divê bê fêmkirin?',
     answers: [
       'Fırat\'ın kollarının suladığı büyük tarım ovası',
       'Karacadağ lavlarının oluşturduğu taşlık plato',
@@ -6937,7 +6937,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8155',
     category: 'Cografya',
-    prompt: 'Cografya alanında \'Süphan dağı\' neyi ifade eder?',
+    prompt: 'Di qada Cografyaê de \'Süphan dağı\' çi îfade dike?',
     answers: [
       'Tunceli\'de yer alan milli park statüsündeki vadi',
       'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
@@ -6953,7 +6953,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8178',
     category: 'Cografya',
-    prompt: '\'Zap vadisi\' Cografya açısından anlamsız bir ifadedir.',
+    prompt: '\'Zap vadisi\' ji aliyê Cografyaê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -7006,7 +7006,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8213',
     category: 'Cografya',
-    prompt: 'Cografya alanında \'Zap vadisi\' neyi ifade eder?',
+    prompt: 'Di qada Cografyaê de \'Zap vadisi\' çi îfade dike?',
     answers: [
       'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
       'dik kayalıklar arasından Zap suyunun aktığı derin vadi',
@@ -7022,7 +7022,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8220',
     category: 'Cografya',
-    prompt: '\'Zap vadisi\' hangi coğrafi unsurdur?',
+    prompt: '\'Zap vadisi\' kîjan hêmana erdnîgariyê ye?',
     answers: [
       'Süleymaniye yakınlarında yer alan yapay baraj gölü',
       'Musul ovasının ortasında yükselen stratejik dağ',
@@ -7038,7 +7038,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8230',
     category: 'Cografya',
-    prompt: '\'Şehrizor ovası\' hangi coğrafi unsurdur?',
+    prompt: '\'Şehrizor ovası\' kîjan hêmana erdnîgariyê ye?',
     answers: [
       'Süleymaniye güneyindeki tarihi verimli düzlük',
       'Hakkari dağlarını yararak akan hırçın akarsu',
@@ -7070,7 +7070,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8247',
     category: 'Cografya',
-    prompt: 'Aşağıdakilerden hangisi \'Süphan dağı\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Süphan dağı\' kîjan rast e?',
     answers: [
       'Karacadağ lavlarının oluşturduğu taşlık plato',
       'Tunceli\'de yer alan milli park statüsündeki vadi',
@@ -7096,7 +7096,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8255',
     category: 'Cografya',
-    prompt: 'Aşağıdakilerden hangisi \'Zagros sıradağları\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Zagros sıradağları\' kîjan rast e?',
     answers: [
       'Siirt yöresinden geçip Dicle\'ye dökülen nehir',
       'dünyanın en büyük ikinci krater gölüne sahip dağ',
@@ -7123,7 +7123,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8263',
     category: 'Cografya',
-    prompt: 'Aşağıdakilerden hangisi \'Botan çayı\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Botan çayı\' kîjan rast e?',
     answers: [
       'Dersim coğrafyasının en engebeli sıradağları',
       'Fırat\'ın kollarının suladığı büyük tarım ovası',
@@ -7139,7 +7139,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8284',
     category: 'Cografya',
-    prompt: '\'Kandil dağları\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Kandil dağları\' de ya rast kîjan e?',
     answers: [
       'Garzan çayı yakınlarındaki dağlık kütle',
       'karasal ve dağlık alanlarda soğuk kışlar',
@@ -7166,7 +7166,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8316',
     category: 'Cografya',
-    prompt: 'Cografya alanında \'meşe ormanları\' neyi ifade eder?',
+    prompt: 'Di qada Cografyaê de \'meşe ormanları\' çi îfade dike?',
     answers: [
       'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
       'dünyanın en büyük ikinci krater gölüne sahip dağ',
@@ -7198,7 +7198,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8331',
     category: 'Cografya',
-    prompt: 'Cografya için \'Urmiye gölü\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Cografyaê derbarê \'Urmiye gölü\' de vebijêrka rast kîjan e?',
     answers: [
       'Doğu Kürdistan\'da yer alan tuzlu göl havzası',
       'Hakkari dağlarını yararak akan hırçın akarsu',
@@ -7214,7 +7214,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8336',
     category: 'Cografya',
-    prompt: '\'Şengal dağı\' coğrafyada neyi ifade eder?',
+    prompt: '\'Şengal dağı\' di erdnîgariyê de çi îfade dike?',
     answers: [
       'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
       'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
@@ -7230,7 +7230,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8356',
     category: 'Cografya',
-    prompt: 'Cografya bağlamında \'Halgurd dağı\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Cografyaê de \'Halgurd dağı\' çawa divê bê fêmkirin?',
     answers: [
       'Irak Kürdistanı sınırlarında yer alan en yüksek zirve',
       'dik kayalıklar arasından Zap suyunun aktığı derin vadi',
@@ -7257,7 +7257,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8361',
     category: 'Cografya',
-    prompt: 'Aşağıdakilerden hangisi \'Bingöl dağları\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Bingöl dağları\' kîjan rast e?',
     answers: [
       'Tunceli\'de yer alan milli park statüsündeki vadi',
       'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
@@ -7273,7 +7273,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8367',
     category: 'Cografya',
-    prompt: 'Cografya açısından \'gol\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Cografyaê ve ji bo \'gol\' îfadeya rast kîjan e?',
     answers: ['çiya', 'göl', 'erd', 'Van'],
     correctAnswer: 'göl',
     explanation: '\'gol\' → göl.',
@@ -7283,7 +7283,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8376',
     category: 'Cografya',
-    prompt: 'Aşağıdakilerden hangisi \'Muş ovası\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Muş ovası\' kîjan rast e?',
     answers: [
       'Süleymaniye güneyindeki tarihi verimli düzlük',
       'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası',
@@ -7368,7 +7368,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8473',
     category: 'Cografya',
-    prompt: '\'Van gölü\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Van gölü\' de ya rast kîjan e?',
     answers: [
       'Garzan çayı yakınlarındaki dağlık kütle',
       'dünyanın en büyük sodalı gölü olan havza',
@@ -7383,7 +7383,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8479',
     category: 'Cografya',
-    prompt: '\'Yüksekova\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'Yüksekova\' ravekirina herî dirust kîjan e?',
     answers: [
       'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
       'Tunceli\'de yer alan milli park statüsündeki vadi',
@@ -7399,7 +7399,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8480',
     category: 'Cografya',
-    prompt: '\'Karacadağ\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'Karacadağ\' de vebijêrka rast kîjan e?',
     answers: [
       'Diyarbakır ovasında yer alan yayvan bazaltik volkan',
       'Tunceli\'de yer alan milli park statüsündeki vadi',
@@ -7431,7 +7431,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8512',
     category: 'Cografya',
-    prompt: 'Cografya için \'Halgurd dağı\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Cografyaê derbarê \'Halgurd dağı\' de vebijêrka rast kîjan e?',
     answers: [
       'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
       'Irak Kürdistanı sınırlarında yer alan en yüksek zirve',
@@ -7480,7 +7480,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8539',
     category: 'Cografya',
-    prompt: 'Cografya bağlamında \'Kürdistan iklimi\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Cografyaê de \'Kürdistan iklimi\' çawa divê bê fêmkirin?',
     answers: [
       'Basra Körfezi (Şattülarap üzerinden)',
       'dünyanın en büyük sodalı gölü olan havza',
@@ -7496,7 +7496,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8545',
     category: 'Cografya',
-    prompt: 'Cografya bağlamında \'Bingöl dağları\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Cografyaê de \'Bingöl dağları\' çawa divê bê fêmkirin?',
     answers: [
       'birçok nehrin kaynağını aldığı yüksek yaylaklar',
       'Van gölü kuzeyinde yer alan sönmüş volkanik dağ',
@@ -7512,7 +7512,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8561',
     category: 'Cografya',
-    prompt: '\'akdeniz iklimi\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'akdeniz iklimi\' ravekirina herî dirust kîjan e?',
     answers: [
       'Musul ovasının ortasında yükselen stratejik dağ',
       'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim',
@@ -7528,7 +7528,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8574',
     category: 'Cografya',
-    prompt: 'Cografya açısından \'Siverek ovası\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Cografyaê ve ji bo \'Siverek ovası\' îfadeya rast kîjan e?',
     answers: [
       'Dersim coğrafyasının en engebeli sıradağları',
       'Karacadağ lavlarının oluşturduğu taşlık plato',
@@ -7587,7 +7587,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8615',
     category: 'Cografya',
-    prompt: '\'çem\' konusunda hangisi doğrudur?',
+    prompt: 'Derbarê \'çem\' de kîjan rast e?',
     answers: ['Bitlis', 'akarsu', 'Dêrsim', 'newal'],
     correctAnswer: 'akarsu',
     explanation: '\'çem\' → akarsu.',
@@ -7640,7 +7640,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8672',
     category: 'Cografya',
-    prompt: 'Cografya için \'Dicle bölümü\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Cografyaê derbarê \'Dicle bölümü\' de vebijêrka rast kîjan e?',
     answers: [
       'Dünyanın en eski sürekli yerleşimlerinden biri olmasıyla',
       'Diyarbakır ve Şırnak\'ı kapsayan nehir havzası',
@@ -7656,7 +7656,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8678',
     category: 'Cografya',
-    prompt: '\'sînor\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'sînor\' bi awayekî rast çawa tê ravekirin?',
     answers: ['Kuzey', 'sînor', 'Erbil', 'sınır'],
     correctAnswer: 'sınır',
     explanation: '\'sînor\' → sınır.',
@@ -7666,7 +7666,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8686',
     category: 'Cografya',
-    prompt: '\'Munzur dağları\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Munzur dağları\' de ya rast kîjan e?',
     answers: [
       'Musul ovasının ortasında yükselen stratejik dağ',
       'Dersim coğrafyasının en engebeli sıradağları',
@@ -7715,7 +7715,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8715',
     category: 'Cografya',
-    prompt: '\'hewa\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'hewa\' de ravekirina rast kîjan e?',
     answers: ['vadi', 'deşt', 'hava', 'hewa'],
     correctAnswer: 'hava',
     explanation: '\'hewa\' → hava.',
@@ -7741,7 +7741,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8739',
     category: 'Cografya',
-    prompt: 'Cografya bağlamında \'Muş ovası\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Cografyaê de \'Muş ovası\' çawa divê bê fêmkirin?',
     answers: [
       'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
       'Fırat\'ın kollarının suladığı büyük tarım ovası',
@@ -7767,7 +7767,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8757',
     category: 'Cografya',
-    prompt: '\'Yukarı Fırat bölümü\' coğrafyada neyi ifade eder?',
+    prompt: '\'Yukarı Fırat bölümü\' di erdnîgariyê de çi îfade dike?',
     answers: [
       'Karacadağ lavlarının oluşturduğu taşlık plato',
       'Tunceli\'de yer alan milli park statüsündeki vadi',
@@ -7826,7 +7826,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8783',
     category: 'Cografya',
-    prompt: 'Cografya alanında \'av\' neyi ifade eder?',
+    prompt: 'Di qada Cografyaê de \'av\' çi îfade dike?',
     answers: ['Ağrı', 'av', 'deşt', 'su'],
     correctAnswer: 'su',
     explanation: '\'av\' → su.',
@@ -7836,7 +7836,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8803',
     category: 'Cografya',
-    prompt: 'Cografya bağlamında \'Hazar gölü\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Cografyaê de \'Hazar gölü\' çawa divê bê fêmkirin?',
     answers: [
       'Hakkari dağlarını yararak akan hırçın akarsu',
       'krater gölüne sahip aktif volkanik dağ',
@@ -7867,7 +7867,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8828',
     category: 'Cografya',
-    prompt: 'Cografya çerçevesinde \'Garzan çayı\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Cografyaê de \'Garzan çayı\' tê çi wateyê?',
     answers: [
       'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
       'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
@@ -7883,7 +7883,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8830',
     category: 'Cografya',
-    prompt: 'Aşağıdakilerden hangisi \'Behdînan bölgesi\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Behdînan bölgesi\' kîjan rast e?',
     answers: [
       'Botan çayının oluşturduğu derin kanyon vadi',
       'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
@@ -7931,7 +7931,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8852',
     category: 'Cografya',
-    prompt: 'Hangisi \'Urmiye gölü\' yerini doğru tanımlar?',
+    prompt: 'Kîjan cihê \'Urmiye gölü\' rast tarîf dike?',
     answers: [
       'Fırat\'ın kollarının suladığı büyük tarım ovası',
       'Dersim coğrafyasının en engebeli sıradağları',
@@ -7947,7 +7947,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8861',
     category: 'Cografya',
-    prompt: '\'Karacadağ\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'Karacadağ\' de agahiya herî rast kîjan e?',
     answers: [
       'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
       'Cizre ve Silopi düzlüklerini kapsayan verimli ova',
@@ -8028,7 +8028,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8902',
     category: 'Cografya',
-    prompt: '\'newal\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'newal\' de vebijêrka rast kîjan e?',
     answers: ['vadi', 'çiya', 'Irak', 'Îran'],
     correctAnswer: 'vadi',
     explanation: '\'newal\' → vadi.',
@@ -8054,7 +8054,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8916',
     category: 'Cografya',
-    prompt: '\'Aras nehri\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Aras nehri\' de ya rast kîjan e?',
     answers: [
       'Kürdistan coğrafyasını baştan başa bölen dağlar',
       'Kürdistan coğrafyasının kuzeybatı yüksek kesimi',
@@ -8070,7 +8070,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8921',
     category: 'Cografya',
-    prompt: '\'Nemrut krateri\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Nemrut krateri\' de ya rast kîjan e?',
     answers: [
       'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
       'Musul ovasının ortasında yükselen stratejik dağ',
@@ -8107,7 +8107,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8941',
     category: 'Cografya',
-    prompt: '\'Botan çayı\' coğrafyada neyi ifade eder?',
+    prompt: '\'Botan çayı\' di erdnîgariyê de çi îfade dike?',
     answers: [
       'Siirt yöresinden geçip Dicle\'ye dökülen nehir',
       'Dersim coğrafyasının en engebeli sıradağları',
@@ -8123,7 +8123,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8947',
     category: 'Cografya',
-    prompt: 'Cografya çerçevesinde \'Zagros sıradağları\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Cografyaê de \'Zagros sıradağları\' tê çi wateyê?',
     answers: [
       'Kürdistan dağlarının tipik bitki örtüsü ve ağacı',
       'Kürdistan coğrafyasını baştan başa bölen dağlar',
@@ -8155,7 +8155,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8965',
     category: 'Cografya',
-    prompt: 'Aşağıdakilerden hangisi \'Yüksekova\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'Yüksekova\' rave dike?',
     answers: [
       'Hakkari\'de yer alan yüksek rakımlı tektonik ova',
       'Kars ve Iğdır sınırlarından geçip Hazar\'a dökülen su',
@@ -8171,7 +8171,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8977',
     category: 'Cografya',
-    prompt: '\'Dicle nehri\' yalnızca Cografya dışı alanlara aittir.',
+    prompt: '\'Dicle nehri\' tenê aîdî qadên derveyî Cografyaê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -8182,7 +8182,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8986',
     category: 'Cografya',
-    prompt: '\'Şengal dağı\' hangi coğrafi unsurdur?',
+    prompt: '\'Şengal dağı\' kîjan hêmana erdnîgariyê ye?',
     answers: [
       'Kürdistan coğrafyasını baştan başa bölen dağlar',
       'Akdeniz\'e yakın Kürt bölgelerinde görülen iklim',
@@ -8198,7 +8198,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_8992',
     category: 'Cografya',
-    prompt: '\'Karacadağ\' ifadesi Cografya bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'Karacadağ\' di çarçoveya Cografyaê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Karacadağ\' Cografya alanında geçerli bir kavramdır.',
@@ -8224,7 +8224,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9029',
     category: 'Cografya',
-    prompt: 'Aşağıdakilerden hangisi \'Van gölü\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Van gölü\' kîjan rast e?',
     answers: [
       'Garzan çayı yakınlarındaki dağlık kütle',
       'dünyanın en büyük sodalı gölü olan havza',
@@ -8239,7 +8239,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9032',
     category: 'Cografya',
-    prompt: '\'meşe ormanları\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'meşe ormanları\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'Süleymaniye yakınlarında yer alan yapay baraj gölü',
       'Diyarbakır ovasında yer alan yayvan bazaltik volkan',
@@ -8255,7 +8255,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9036',
     category: 'Cografya',
-    prompt: 'Hangisi \'Tendürek dağı\' yerini doğru tanımlar?',
+    prompt: 'Kîjan cihê \'Tendürek dağı\' rast tarîf dike?',
     answers: [
       'Taş mimarisi ve Mezopotamya manzarası',
       'Diyala nehri üzerinde kurulmuş baraj gölü',
@@ -8281,7 +8281,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9072',
     category: 'Cografya',
-    prompt: 'Hangisi \'Munzur vadisi\' yerini doğru tanımlar?',
+    prompt: 'Kîjan cihê \'Munzur vadisi\' rast tarîf dike?',
     answers: [
       'Tunceli\'de yer alan milli park statüsündeki vadi',
       'Batman\'dan geçip Dicle\'ye dökülen önemli akarsu',
@@ -8307,7 +8307,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9087',
     category: 'Cografya',
-    prompt: 'Cografya çerçevesinde \'deşt\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Cografyaê de \'deşt\' tê çi wateyê?',
     answers: ['gol', 'ova', 'Muş', 'Amed'],
     correctAnswer: 'ova',
     explanation: '\'deşt\' → ova.',
@@ -8317,7 +8317,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9096',
     category: 'Cografya',
-    prompt: 'Cografya açısından \'Garzan çayı\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Cografyaê ve ji bo \'Garzan çayı\' îfadeya rast kîjan e?',
     answers: [
       'birçok nehrin kaynağını aldığı yüksek yaylaklar',
       'Nuh\'un gemisinin indiğine inanılan tarihi dağ',
@@ -8380,7 +8380,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9157',
     category: 'Cografya',
-    prompt: 'Cografya çerçevesinde \'Dicle nehri\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Cografyaê de \'Dicle nehri\' tê çi wateyê?',
     answers: [
       'Dersim coğrafyasının en engebeli sıradağları',
       'Diyarbakır surlarının altından geçen nehir',
@@ -8396,7 +8396,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9161',
     category: 'Cografya',
-    prompt: '\'Hewa\' Cografya açısından anlamsız bir ifadedir.',
+    prompt: '\'Hewa\' ji aliyê Cografyaê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -8430,7 +8430,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9207',
     category: 'Edebiyat',
-    prompt: '\'Ronahî dergisi\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'Ronahî dergisi\' çi pêk tîne?',
     answers: [
       'Şam\'da Latin alfabesiyle çıkarılan edebi dergi',
       'Klasik Kürt şiirinin önemli isimleri olmaları',
@@ -8446,7 +8446,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9210',
     category: 'Edebiyat',
-    prompt: '\'Kafiye\' Edebiyat açısından anlamsız bir ifadedir.',
+    prompt: '\'Kafiye\' ji aliyê Edebiyatê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -8457,7 +8457,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9215',
     category: 'Edebiyat',
-    prompt: 'Hangisi \'çîrok\' kavramını doğru betimler?',
+    prompt: 'Kîjan têgiha \'çîrok\' rast şirove dike?',
     answers: ['Destan', 'helbest', 'Kahire', 'hikaye'],
     correctAnswer: 'hikaye',
     explanation: '\'çîrok\' → hikaye.',
@@ -8467,7 +8467,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9227',
     category: 'Edebiyat',
-    prompt: 'Edebiyat alanında \'Cegerxwîn\' neyi ifade eder?',
+    prompt: 'Di qada Edebiyatê de \'Cegerxwîn\' çi îfade dike?',
     answers: [
       'Mevlid-i Şerif\'i Kürtçe yazan klasik şair',
       'modern Kürt şiirinin öncü toplumcu şairi',
@@ -8482,7 +8482,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9266',
     category: 'Edebiyat',
-    prompt: '\'diyalog\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'diyalog\' tê gotin, çi tê xwestin?',
     answers: [
       'Celadet Alî Bedirxan',
       'kahramanlık anlatısı',
@@ -8497,7 +8497,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9280',
     category: 'Edebiyat',
-    prompt: 'Aşağıda \'roman\' için doğru olan hangisidir?',
+    prompt: 'Li jêr ji bo \'roman\' ya rast kîjan e?',
     answers: ['Ehmedê Xanî', '17. yüzyıl', 'uzun anlatı', '20. yüzyıl'],
     correctAnswer: 'uzun anlatı',
     explanation: '\'roman\' → uzun anlatı.',
@@ -8507,7 +8507,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9284',
     category: 'Edebiyat',
-    prompt: '\'roman\' yalnızca Edebiyat dışı alanlara aittir.',
+    prompt: '\'roman\' tenê aîdî qadên derveyî Edebiyatê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -8544,7 +8544,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9318',
     category: 'Edebiyat',
-    prompt: '\'Tema\' yalnızca Edebiyat dışı alanlara aittir.',
+    prompt: '\'Tema\' tenê aîdî qadên derveyî Edebiyatê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -8589,7 +8589,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9378',
     category: 'Edebiyat',
-    prompt: '\'Feqiyê Teyran\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Feqiyê Teyran\' de ya rast kîjan e?',
     answers: [
       'destana gelêrî ya ku bingeha Mem û Zînê ye',
       'Mevlid-i Şerif\'i Kürtçe yazan klasik şair',
@@ -8614,7 +8614,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9387',
     category: 'Edebiyat',
-    prompt: '\'Ronahî dergisi\' kavramını doğru anlatan ifade hangisidir?',
+    prompt: 'Îfadeya ku têgiha \'Ronahî dergisi\' rast vedibêje kîjan e?',
     answers: [
       'Şam\'da Latin alfabesiyle çıkarılan edebi dergi',
       'Kürt edebiyatının bilinen en eski klasik şairlerinden',
@@ -8642,7 +8642,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9405',
     category: 'Edebiyat',
-    prompt: 'Edebiyat açısından \'Mem û Zîn\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Edebiyatê ve ji bo \'Mem û Zîn\' îfadeya rast kîjan e?',
     answers: [
       'Klasik Kürt şiirinin önemli isimleri olmaları',
       'Doğu Kürdistan\'ın meşhur modern şair ve yazarı',
@@ -8658,7 +8658,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9408',
     category: 'Edebiyat',
-    prompt: 'Edebiyat çerçevesinde \'Mestûre Kurdistanî\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Edebiyatê de \'Mestûre Kurdistanî\' tê çi wateyê?',
     answers: [
       'Erdelan beyliğinde yaşamış ünlü kadın şair',
       'Şivanê Kurd adlı ilk Kürtçe romanın yazarı',
@@ -8674,7 +8674,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9409',
     category: 'Edebiyat',
-    prompt: 'Edebiyat için \'Ehmedê Xasî\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Edebiyatê derbarê \'Ehmedê Xasî\' de vebijêrka rast kîjan e?',
     answers: [
       '1935 yılında basılan ilk modern Kürtçe roman',
       'Masallar, destanlar ve dengbêj anlatıları',
@@ -8689,7 +8689,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9410',
     category: 'Edebiyat',
-    prompt: '\'Memê Alan destanı\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'Memê Alan destanı\' de ya rast a zanîn çi ye?',
     answers: [
       'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı',
       'İlk Kürt gazetesi Kürdistan’ın yayımlanmasıyla ilişkilidir',
@@ -8705,7 +8705,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9411',
     category: 'Edebiyat',
-    prompt: 'Edebiyat için \'Arabê Şamo\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Edebiyatê derbarê \'Arabê Şamo\' de vebijêrka rast kîjan e?',
     answers: [
       'Şivanê Kurd adlı ilk Kürtçe romanın yazarı',
       'Erivan\'da uzun yıllar basılan Kürtçe gazete',
@@ -8749,7 +8749,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9434',
     category: 'Edebiyat',
-    prompt: '\'Riya Taza gazetesi\' nasıl tanımlanır?',
+    prompt: '\'Riya Taza gazetesi\' çawa tê pênasekirin?',
     answers: [
       'Erivan\'da uzun yıllar basılan Kürtçe gazete',
       'Şivanê Kurd adlı ilk Kürtçe romanın yazarı',
@@ -8765,7 +8765,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9443',
     category: 'Edebiyat',
-    prompt: '\'Cegerxwîn\' yalnızca Edebiyat dışı alanlara aittir.',
+    prompt: '\'Cegerxwîn\' tenê aîdî qadên derveyî Edebiyatê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -8788,7 +8788,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9456',
     category: 'Edebiyat',
-    prompt: '\'Xanî Mektebi\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'Xanî Mektebi\' ravekirina herî dirust kîjan e?',
     answers: [
       'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
       'Modern dönemde roman/gazete gibi türlerin gelişmesi',
@@ -8804,7 +8804,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9459',
     category: 'Edebiyat',
-    prompt: '\'anlatıcı\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'anlatıcı\' çi pêk tîne?',
     answers: [
       'hikayeyi aktaran ses',
       'Kürtçe (Kurmancî)',
@@ -8872,7 +8872,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9507',
     category: 'Edebiyat',
-    prompt: '\'Riya Taza gazetesi\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'Riya Taza gazetesi\' tê gotin, çi tê xwestin?',
     answers: [
       'Erivan\'da uzun yıllar basılan Kürtçe gazete',
       'Hawar dergisini çıkaran edebi ekolün kurucusu',
@@ -8998,7 +8998,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9594',
     category: 'Edebiyat',
-    prompt: 'Hangisi \'Nûbihara Biçukan\' kavramını doğru betimler?',
+    prompt: 'Kîjan têgiha \'Nûbihara Biçukan\' rast şirove dike?',
     answers: [
       'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
       'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
@@ -9014,7 +9014,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9612',
     category: 'Edebiyat',
-    prompt: '\'kafiye\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'kafiye\' çi pêk tîne?',
     answers: ['Mem ve Zîn', 'Dengbêjler', 'Kürdistan', 'ses uyumu'],
     correctAnswer: 'ses uyumu',
     explanation: '\'kafiye\' → ses uyumu.',
@@ -9035,7 +9035,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9623',
     category: 'Edebiyat',
-    prompt: '\'tema\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'tema\' de vebijêrka rast kîjan e?',
     answers: ['ana düşünce', 'bilmeceler', 'Mem ve Zîn', 'uzun anlatı'],
     correctAnswer: 'ana düşünce',
     explanation: '\'tema\' → ana düşünce.',
@@ -9071,7 +9071,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9636',
     category: 'Edebiyat',
-    prompt: 'Aşağıdakilerden hangisi \'Ferhad û Şîrîn\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Ferhad û Şîrîn\' kîjan rast e?',
     answers: [
       'Kürt sözlü edebiyatının en hüzünlü destanlarından biri',
       'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi',
@@ -9103,7 +9103,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9706',
     category: 'Edebiyat',
-    prompt: 'Aşağıdakilerden hangisi \'Masture Erdelan\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Masture Erdelan\' kîjan rast e?',
     answers: [
       'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
       'Kürt edebiyatının bilinen en eski klasik şairlerinden',
@@ -9119,7 +9119,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9716',
     category: 'Edebiyat',
-    prompt: '\'Hêmin Mukriyanî\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Hêmin Mukriyanî\' de ya rast kîjan e?',
     answers: [
       'Hawar dergisini çıkaran edebi ekolün kurucusu',
       'klasik Kürt edebiyatında önemli yeri olan şair',
@@ -9135,7 +9135,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9724',
     category: 'Edebiyat',
-    prompt: '\'Hawar Ekolü\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'Hawar Ekolü\' ravekirina herî dirust kîjan e?',
     answers: [
       'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
       'Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi',
@@ -9179,7 +9179,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9749',
     category: 'Edebiyat',
-    prompt: 'Edebiyat için \'Qanadê Kurdo\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Edebiyatê derbarê \'Qanadê Kurdo\' de vebijêrka rast kîjan e?',
     answers: [
       'modern Kürt hikayeciliğinin kurucu isimlerinden',
       'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
@@ -9211,7 +9211,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9777',
     category: 'Edebiyat',
-    prompt: 'Aşağıdakilerden hangisi \'Memê Alan destanı\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'Memê Alan destanı\' rave dike?',
     answers: [
       'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
       'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı',
@@ -9227,7 +9227,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9778',
     category: 'Edebiyat',
-    prompt: 'Edebiyat bilgisinde \'Nalî\' ile ilgili doğru olan hangisidir?',
+    prompt: 'Di zanîna Edebiyatê de derbarê \'Nalî\' de ya rast kîjan e?',
     answers: [
       'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
       'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
@@ -9243,7 +9243,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9789',
     category: 'Edebiyat',
-    prompt: 'Hangisi \'Kamuran Bedirxan\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Kamuran Bedirxan\' rast dide nasîn?',
     answers: [
       'Kürtçe gramer kitapları yazan dilbilimci ve yazar',
       'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
@@ -9259,7 +9259,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9810',
     category: 'Edebiyat',
-    prompt: '\'Xanî Mektebi\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'Xanî Mektebi\' de agahiya herî rast kîjan e?',
     answers: [
       'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
       'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
@@ -9275,7 +9275,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9812',
     category: 'Edebiyat',
-    prompt: 'Edebiyat alanında \'Masture Erdelan\' neyi ifade eder?',
+    prompt: 'Di qada Edebiyatê de \'Masture Erdelan\' çi îfade dike?',
     answers: [
       'Kürt sözlü edebiyatının en hüzünlü destanlarından biri',
       'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair',
@@ -9291,7 +9291,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9820',
     category: 'Edebiyat',
-    prompt: '\'Nalî\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Nalî\' de ya rast kîjan e?',
     answers: [
       'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
       'tarihte divan yazmış ilk Kürt kadın tarihçi ve şair',
@@ -9351,7 +9351,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9880',
     category: 'Edebiyat',
-    prompt: '\'Ehmedê Xasî\' hangi yönüyle bilinir?',
+    prompt: '\'Ehmedê Xasî\' bi kîjan aliyê xwe ve tê nasîn?',
     answers: [
       'modern Kürt şiirinin öncü toplumcu şairi',
       'Erivan\'da uzun yıllar basılan Kürtçe gazete',
@@ -9366,7 +9366,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9892',
     category: 'Edebiyat',
-    prompt: '\'Nûbihara Biçukan\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'Nûbihara Biçukan\' ravekirina herî dirust kîjan e?',
     answers: [
       'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
       'mistik aşk ve felsefe içeren meşhur şiir divanı',
@@ -9393,7 +9393,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9916',
     category: 'Edebiyat',
-    prompt: '\'Qanadê Kurdo\' Edebiyat açısından anlamsız bir ifadedir.',
+    prompt: '\'Qanadê Kurdo\' ji aliyê Edebiyatê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -9421,7 +9421,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9923',
     category: 'Edebiyat',
-    prompt: 'Edebiyat alanında \'Destan\' geçerli bir kavram olarak yer alır.',
+    prompt: 'Di qada Edebiyatê de \'Destan\' wek têgihek derbasdar cih digire.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Destan\' Edebiyat alanında geçerli bir kavramdır.',
@@ -9431,7 +9431,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9936',
     category: 'Edebiyat',
-    prompt: 'Edebiyat için \'Qedrîcan\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Edebiyatê derbarê \'Qedrîcan\' de vebijêrka rast kîjan e?',
     answers: [
       'Kürt edebiyatının bilinen en eski klasik şairlerinden',
       'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
@@ -9447,7 +9447,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9942',
     category: 'Edebiyat',
-    prompt: '\'Pertew Begê Hkarî\' hangi yönüyle bilinir?',
+    prompt: '\'Pertew Begê Hkarî\' bi kîjan aliyê xwe ve tê nasîn?',
     answers: [
       'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
       'Hakkari emirliğinde yetişmiş klasik divan şairi',
@@ -9495,7 +9495,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9972',
     category: 'Edebiyat',
-    prompt: '\'Qedrîcan\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'Qedrîcan\' ravekirina herî dirust kîjan e?',
     answers: [
       'Kürt edebiyatının bilinen en eski klasik şairlerinden',
       'erken dönem Kürtçe edebi ve siyasi yayınlardan biri',
@@ -9522,7 +9522,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9996',
     category: 'Edebiyat',
-    prompt: 'Hangisi \'Qanadê Kurdo\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Qanadê Kurdo\' rast dide nasîn?',
     answers: [
       'modern Kürt şiirinde ve nesrinde iz bırakmış yazar',
       'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
@@ -9538,7 +9538,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_9997',
     category: 'Edebiyat',
-    prompt: '\'Xanî Mektebi\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'Xanî Mektebi\' çi pêk tîne?',
     answers: [
       'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
       'Dil ve alfabe çalışmalarını yaygınlaştırdığı için',
@@ -9554,7 +9554,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10002',
     category: 'Edebiyat',
-    prompt: 'Edebiyat çerçevesinde \'Kamuran Bedirxan\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Edebiyatê de \'Kamuran Bedirxan\' tê çi wateyê?',
     answers: [
       'Kürtçe gramer kitapları yazan dilbilimci ve yazar',
       'Soranice klasik şiir okulunun en büyük divan şairi',
@@ -9570,7 +9570,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10024',
     category: 'Edebiyat',
-    prompt: 'Edebiyat açısından \'Melayê Bateyî\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Edebiyatê ve ji bo \'Melayê Bateyî\' îfadeya rast kîjan e?',
     answers: [
       'Kürt tiyatrosunun kurucu oyun yazarlarından',
       'klasik dönemde Kürtçe eserler yazmış şair',
@@ -9603,7 +9603,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10069',
     category: 'Edebiyat',
-    prompt: 'Edebiyat bağlamında \'Hawar Ekolü\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Edebiyatê de \'Hawar Ekolü\' çawa divê bê fêmkirin?',
     answers: [
       'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
       'Kürt edebiyatının bilinen en eski klasik şairlerinden',
@@ -9619,7 +9619,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10071',
     category: 'Edebiyat',
-    prompt: 'Edebiyat açısından \'Elî Herîrî\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Edebiyatê ve ji bo \'Elî Herîrî\' îfadeya rast kîjan e?',
     answers: [
       'Kürt edebiyatının bilinen en eski klasik şairlerinden',
       'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
@@ -9652,7 +9652,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10089',
     category: 'Edebiyat',
-    prompt: 'Edebiyat için \'Yaşar Kemal\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Edebiyatê derbarê \'Yaşar Kemal\' de vebijêrka rast kîjan e?',
     answers: [
       'Kürt kökenli, dünya çapında tanınan usta romancı',
       'Kürtçe gramer kitapları yazan dilbilimci ve yazar',
@@ -9668,7 +9668,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10104',
     category: 'Edebiyat',
-    prompt: 'Edebiyat alanında \'Yaşar Kemal\' neyi ifade eder?',
+    prompt: 'Di qada Edebiyatê de \'Yaşar Kemal\' çi îfade dike?',
     answers: [
       'Hakkari emirliğinde yetişmiş klasik divan şairi',
       'Kürt kökenli, dünya çapında tanınan usta romancı',
@@ -9706,7 +9706,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10143',
     category: 'Edebiyat',
-    prompt: '\'Feqiyê Teyran\' ifadesi Edebiyat bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'Feqiyê Teyran\' di çarçoveya Edebiyatê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Feqiyê Teyran\' Edebiyat alanında geçerli bir kavramdır.',
@@ -9716,7 +9716,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10145',
     category: 'Edebiyat',
-    prompt: '\'Memê Alan destanı\' ne anlama gelir?',
+    prompt: '\'Memê Alan destanı\' tê çi wateyê?',
     answers: [
       'Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar',
       'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
@@ -9732,7 +9732,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10157',
     category: 'Edebiyat',
-    prompt: '\'Hawar Ekolü\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'Hawar Ekolü\' de vebijêrka rast kîjan e?',
     answers: [
       'Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım',
       'Kürt dili ve edebiyatı üzerine çalışan akademisyen',
@@ -9781,7 +9781,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10188',
     category: 'Edebiyat',
-    prompt: 'Edebiyat için \'Şêrko Bêkes\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Edebiyatê derbarê \'Şêrko Bêkes\' de vebijêrka rast kîjan e?',
     answers: [
       'Doğu Kürdistan\'ın meşhur modern şair ve yazarı',
       'Kürt şiirine serbest tarzı getiren büyük şair',
@@ -9797,7 +9797,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10202',
     category: 'Edebiyat',
-    prompt: '\'Melayê Cizîrî\' yalnızca Edebiyat dışı alanlara aittir.',
+    prompt: '\'Melayê Cizîrî\' tenê aîdî qadên derveyî Edebiyatê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -9819,7 +9819,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10228',
     category: 'Edebiyat',
-    prompt: 'Edebiyat bağlamında \'destan\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Edebiyatê de \'destan\' çawa divê bê fêmkirin?',
     answers: [
       'kahramanlık anlatısı',
       'Medrese öğrencisi/talebe',
@@ -9834,7 +9834,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10230',
     category: 'Edebiyat',
-    prompt: '\'Nûbihara Biçukan\' ne anlama gelir?',
+    prompt: '\'Nûbihara Biçukan\' tê çi wateyê?',
     answers: [
       'Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük',
       'mistik aşk ve felsefe içeren meşhur şiir divanı',
@@ -9850,7 +9850,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10237',
     category: 'Edebiyat',
-    prompt: 'Aşağıdakilerden hangisi \'helbest\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'helbest\' rave dike?',
     answers: ['1932', 'helbest', 'roman', 'şiir'],
     correctAnswer: 'şiir',
     explanation: '\'helbest\' → şiir.',
@@ -9860,7 +9860,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10260',
     category: 'Edebiyat',
-    prompt: '\'Elî Herîrî\' ile ilgili doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'Elî Herîrî\' de agahiya rast kîjan e?',
     answers: [
       'Kürt edebiyatının bilinen en eski klasik şairlerinden',
       'Soranice klasik şiir okulunun en büyük divan şairi',
@@ -9876,7 +9876,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10271',
     category: 'Edebiyat',
-    prompt: '\'Dewrêşê Evdî destanı\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'Dewrêşê Evdî destanı\' de ravekirina rast kîjan e?',
     answers: [
       'Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı',
       'Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol',
@@ -9909,7 +9909,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10304',
     category: 'Muzîk',
-    prompt: '\'Eyşeqan\' ifadesinin doğru karşılığı hangisidir?',
+    prompt: 'Berambera rast a biwêja \'Eyşeqan\' kîjan e?',
     answers: [
       'müziği kağıda dökmek için kullanılan evrensel işaretler',
       'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı',
@@ -9935,7 +9935,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10314',
     category: 'Muzîk',
-    prompt: '\'serhad ezgileri\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'serhad ezgileri\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
       'erbane veya defi ustalıkla çalan ritim sanatçısı',
@@ -9951,7 +9951,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10320',
     category: 'Muzîk',
-    prompt: 'Aşağıdakilerden hangisi \'dengbêjlik okulu\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'dengbêjlik okulu\' kîjan rast e?',
     answers: [
       'kış gecesi sohbetlerinde icra edilen sözlü müzik',
       'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
@@ -9978,7 +9978,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10333',
     category: 'Muzîk',
-    prompt: 'Şıklardan hangisi \'zurna\' anlamına gelir?',
+    prompt: 'Kîjan vebijêrk tê wateya \'zurna\'?',
     answers: [
       'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
       'tek bir sanatçının şarkı söylemesi veya çalması',
@@ -10009,7 +10009,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10352',
     category: 'Muzîk',
-    prompt: 'Muzîk bağlamında \'dengbêjlik okulu\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Muzîkê de \'dengbêjlik okulu\' çawa divê bê fêmkirin?',
     answers: [
       'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
       'Kürt halk müziğinde en kutsal sayılan telli saz',
@@ -10025,7 +10025,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10372',
     category: 'Muzîk',
-    prompt: '\'melodî\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'melodî\' de vebijêrka rast kîjan e?',
     answers: [
       'topluluk halinde şarkı söyleme biçimi',
       'Kürt coğrafyasında da çalınan yaylı çalgı',
@@ -10050,7 +10050,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10379',
     category: 'Muzîk',
-    prompt: '\'makam\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'makam\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem',
       'Kürt müziğine rock ve caz esintileri getiren sanatçı',
@@ -10066,7 +10066,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10410',
     category: 'Muzîk',
-    prompt: 'Muzîk bilgisinde \'nota\' ile ilgili doğru olan hangisidir?',
+    prompt: 'Di zanîna Muzîkê de derbarê \'nota\' de ya rast kîjan e?',
     answers: [
       'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
       'Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar',
@@ -10082,7 +10082,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10411',
     category: 'Muzîk',
-    prompt: 'Muzîk alanında \'Defbaz\' geçerli bir kavram olarak yer alır.',
+    prompt: 'Di qada Muzîkê de \'Defbaz\' wek têgihek derbasdar cih digire.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Defbaz\' Muzîk alanında geçerli bir kavramdır.',
@@ -10092,7 +10092,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10423',
     category: 'Muzîk',
-    prompt: '\'tembûr\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'tembûr\' de vebijêrka rast kîjan e?',
     answers: [
       'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
       'Kürt halk müziğinde en kutsal sayılan telli saz',
@@ -10108,7 +10108,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10426',
     category: 'Muzîk',
-    prompt: '\'Kardeş türküler\' yalnızca Muzîk dışı alanlara aittir.',
+    prompt: '\'Kardeş türküler\' tenê aîdî qadên derveyî Muzîkê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -10119,7 +10119,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10427',
     category: 'Muzîk',
-    prompt: '\'hîran\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'hîran\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'Kürt coğrafyasında da çalınan yaylı çalgı',
       'müziğin temelini oluşturan düzenli vuruşlar',
@@ -10134,7 +10134,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10433',
     category: 'Muzîk',
-    prompt: 'Aşağıdakilerden hangisi \'Aram Tigran\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Aram Tigran\' kîjan rast e?',
     answers: [
       'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
       'çobanların da çaldığı üflemeli geleneksel enstrüman',
@@ -10150,7 +10150,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10435',
     category: 'Muzîk',
-    prompt: '\'def\' Muzîk açısından anlamsız bir ifadedir.',
+    prompt: '\'def\' ji aliyê Muzîkê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -10172,7 +10172,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10463',
     category: 'Muzîk',
-    prompt: 'Şıklardan hangisi \'lawik\' anlamına gelir?',
+    prompt: 'Kîjan vebijêrk tê wateya \'lawik\'?',
     answers: [
       'Kürt müziğine rock ve caz esintileri getiren sanatçı',
       'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü',
@@ -10188,7 +10188,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10480',
     category: 'Muzîk',
-    prompt: '\'botan ezgileri\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'botan ezgileri\' tê gotin, çi tê xwestin?',
     answers: [
       'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
       'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
@@ -10215,7 +10215,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10498',
     category: 'Muzîk',
-    prompt: 'Hangisi Muzîk içinde \'Koma Amed\' kavramını doğru yerleştirir?',
+    prompt: 'Kîjan di Muzîkê de têgiha \'Koma Amed\' rast bi cih dike?',
     answers: [
       'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
       '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
@@ -10232,7 +10232,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10537',
     category: 'Muzîk',
-    prompt: 'Hangisi \'Aynur Doğan\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Aynur Doğan\' rast dide nasîn?',
     answers: [
       'Kürt müziğine rock ve caz esintileri getiren sanatçı',
       'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
@@ -10248,7 +10248,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10547',
     category: 'Muzîk',
-    prompt: '\'Erdewan Zaxoyî\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Erdewan Zaxoyî\' de ya rast kîjan e?',
     answers: [
       'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses',
       'Bahdinan bölgesinin sevilen devrimci müzisyeni',
@@ -10264,7 +10264,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10554',
     category: 'Muzîk',
-    prompt: '\'botan ezgileri\' konusunda hangisi doğrudur?',
+    prompt: 'Derbarê \'botan ezgileri\' de kîjan rast e?',
     answers: [
       'Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik',
       'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
@@ -10290,7 +10290,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10566',
     category: 'Muzîk',
-    prompt: '\'nota\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'nota\' de agahiya herî rast kîjan e?',
     answers: [
       'müziği kağıda dökmek için kullanılan evrensel işaretler',
       'halaylarda çalınan hareketli ve ritmik halk şarkıları',
@@ -10306,7 +10306,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10572',
     category: 'Muzîk',
-    prompt: 'Aşağıdakilerden hangisi \'Hasan Cizrawî\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'Hasan Cizrawî\' kîjan rast e?',
     answers: [
       'Kürt halkının ulusal duygularını seslendiren ozan',
       'tek bir sanatçının şarkı söylemesi veya çalması',
@@ -10322,7 +10322,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10595',
     category: 'Muzîk',
-    prompt: 'Hangisi Muzîk içinde \'çeng\' kavramını doğru yerleştirir?',
+    prompt: 'Kîjan di Muzîkê de têgiha \'çeng\' rast bi cih dike?',
     answers: [
       'Kürt tasavvuf ve halk müziğinde kullanılan vurmalı çalgı',
       'Kürt müziğine rock ve caz esintileri getiren sanatçı',
@@ -10339,7 +10339,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10606',
     category: 'Muzîk',
-    prompt: '\'şevbêrk müziği\' ifadesinin doğru karşılığı hangisidir?',
+    prompt: 'Berambera rast a biwêja \'şevbêrk müziği\' kîjan e?',
     answers: [
       'kış gecesi sohbetlerinde icra edilen sözlü müzik',
       'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
@@ -10355,7 +10355,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10613',
     category: 'Muzîk',
-    prompt: '\'çeng\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'çeng\' de vebijêrka rast kîjan e?',
     answers: [
       'antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı',
       'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
@@ -10372,7 +10372,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10615',
     category: 'Muzîk',
-    prompt: '\'Meryem Xan\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Meryem Xan\' de ya rast kîjan e?',
     answers: [
       'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
       'çobanların da çaldığı üflemeli geleneksel enstrüman',
@@ -10404,7 +10404,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10653',
     category: 'Muzîk',
-    prompt: '\'Eyşeqan\' neyi ifade eder?',
+    prompt: '\'Eyşeqan\' çi îfade dike?',
     answers: [
       '90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu',
       'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
@@ -10452,7 +10452,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10658',
     category: 'Muzîk',
-    prompt: '\'Stranbêj\' yalnızca Muzîk dışı alanlara aittir.',
+    prompt: '\'Stranbêj\' tenê aîdî qadên derveyî Muzîkê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -10463,7 +10463,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10715',
     category: 'Muzîk',
-    prompt: '\'Mihemed Taha Akreyî\' hangi yönüyle bilinir?',
+    prompt: '\'Mihemed Taha Akreyî\' bi kîjan aliyê xwe ve tê nasîn?',
     answers: [
       'kilamların okunduğu serbest ritimli vokal tarzı',
       'Bahdinan bölgesinin popüler klasik halk sanatçısı',
@@ -10490,7 +10490,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10762',
     category: 'Muzîk',
-    prompt: '\'şakiro stranları\' Muzîk açısından anlamsız bir ifadedir.',
+    prompt: '\'şakiro stranları\' ji aliyê Muzîkê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -10501,7 +10501,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10803',
     category: 'Muzîk',
-    prompt: '\'Aram tigran\' Muzîk açısından anlamsız bir ifadedir.',
+    prompt: '\'Aram tigran\' ji aliyê Muzîkê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -10512,7 +10512,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10813',
     category: 'Muzîk',
-    prompt: '\'şabaş geleneği\' ne anlama gelir?',
+    prompt: '\'şabaş geleneği\' tê çi wateyê?',
     answers: [
       'müzisyenlere para atarak taltif etme adeti',
       'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
@@ -10544,7 +10544,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10853',
     category: 'Muzîk',
-    prompt: 'Muzîk açısından \'makam\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Muzîkê ve ji bo \'makam\' îfadeya rast kîjan e?',
     answers: [
       'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
       'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem',
@@ -10587,7 +10587,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10863',
     category: 'Muzîk',
-    prompt: '\'dahol\' yalnızca Muzîk dışı alanlara aittir.',
+    prompt: '\'dahol\' tenê aîdî qadên derveyî Muzîkê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -10598,7 +10598,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10871',
     category: 'Muzîk',
-    prompt: '\'serhad ezgileri\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'serhad ezgileri\' ravekirina herî dirust kîjan e?',
     answers: [
       'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
       'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
@@ -10614,7 +10614,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10874',
     category: 'Muzîk',
-    prompt: 'Aşağıdakilerden hangisi \'serhad ezgileri\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'serhad ezgileri\' kîjan rast e?',
     answers: [
       'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
       'kilamların okunduğu serbest ritimli vokal tarzı',
@@ -10630,7 +10630,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10875',
     category: 'Muzîk',
-    prompt: 'Aşağıda \'govend müziği\' için doğru olan hangisidir?',
+    prompt: 'Li jêr ji bo \'govend müziği\' ya rast kîjan e?',
     answers: [
       'halaylarda çalınan hareketli ve ritmik halk şarkıları',
       'Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem',
@@ -10646,7 +10646,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10878',
     category: 'Muzîk',
-    prompt: 'Muzîk çerçevesinde \'Kardeş Türküler\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Muzîkê de \'Kardeş Türküler\' tê çi wateyê?',
     answers: [
       'kış gecesi sohbetlerinde icra edilen sözlü müzik',
       'Kürt müziğini çok kültürlü ortamda icra eden grup',
@@ -10662,7 +10662,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10882',
     category: 'Muzîk',
-    prompt: 'Muzîk alanında \'zembîlfiroş stranı\' neyi ifade eder?',
+    prompt: 'Di qada Muzîkê de \'zembîlfiroş stranı\' çi îfade dike?',
     answers: [
       'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü',
       'Kürt müziğine rock ve caz esintileri getiren sanatçı',
@@ -10678,7 +10678,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10903',
     category: 'Muzîk',
-    prompt: '\'şevbêrk müziği\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'şevbêrk müziği\' de vebijêrka rast kîjan e?',
     answers: [
       'usta-çırak ilişkisiyle yürüyen müzikal aktarım',
       'kış gecesi sohbetlerinde icra edilen sözlü müzik',
@@ -10704,7 +10704,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10926',
     category: 'Muzîk',
-    prompt: 'Muzîk açısından \'Mihemed Şêxo\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Muzîkê ve ji bo \'Mihemed Şêxo\' îfadeya rast kîjan e?',
     answers: [
       'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
       'Kürt halkının ulusal duygularını seslendiren ozan',
@@ -10720,7 +10720,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10927',
     category: 'Muzîk',
-    prompt: 'Muzîk alanında \'şabaş geleneği\' neyi ifade eder?',
+    prompt: 'Di qada Muzîkê de \'şabaş geleneği\' çi îfade dike?',
     answers: [
       'Kürt coğrafyasında da çalınan yaylı çalgı',
       'müzisyenlere para atarak taltif etme adeti',
@@ -10736,7 +10736,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10930',
     category: 'Muzîk',
-    prompt: '\'dengbêj evi\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'dengbêj evi\' çi pêk tîne?',
     answers: [
       'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
       'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
@@ -10768,7 +10768,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10940',
     category: 'Muzîk',
-    prompt: 'Muzîk açısından \'Şivan Perwer\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Muzîkê ve ji bo \'Şivan Perwer\' îfadeya rast kîjan e?',
     answers: [
       'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
       'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
@@ -10784,7 +10784,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10962',
     category: 'Muzîk',
-    prompt: '\'şakiro stranları\' ne anlama gelir?',
+    prompt: '\'şakiro stranları\' tê çi wateyê?',
     answers: [
       'halaylarda çalınan hareketli ve ritmik halk şarkıları',
       'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
@@ -10800,7 +10800,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_10963',
     category: 'Muzîk',
-    prompt: 'Muzîk bağlamında \'Ciwan Haco\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Muzîkê de \'Ciwan Haco\' çawa divê bê fêmkirin?',
     answers: [
       'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
       'Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj',
@@ -10838,7 +10838,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11008',
     category: 'Muzîk',
-    prompt: '\'Aynur Doğan\' hakkında doğru olan hangisidir?',
+    prompt: 'Derbarê \'Aynur Doğan\' de ya rast kîjan e?',
     answers: [
       'çobanların da çaldığı üflemeli geleneksel enstrüman',
       'modern dönemde Kürt halk müziğini icra eden sanatçı',
@@ -10864,7 +10864,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11013',
     category: 'Muzîk',
-    prompt: '\'stran\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'stran\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'fîqa şivanan (kaval)',
       'Kürtçe şarkı veya melodi',
@@ -10901,7 +10901,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11056',
     category: 'Muzîk',
-    prompt: 'Hangisi \'dengbêj evi\' kavramını doğru betimler?',
+    prompt: 'Kîjan têgiha \'dengbêj evi\' rast şirove dike?',
     answers: [
       'Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan',
       'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
@@ -10918,7 +10918,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11068',
     category: 'Muzîk',
-    prompt: 'Aşağıda \'behedînî ezgileri\' için doğru olan hangisidir?',
+    prompt: 'Li jêr ji bo \'behedînî ezgileri\' ya rast kîjan e?',
     answers: [
       'Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı',
       'Duhok ve Zaho yöresine has müzikal tarz',
@@ -10934,7 +10934,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11077',
     category: 'Muzîk',
-    prompt: '\'botan ezgileri\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'botan ezgileri\' de agahiya herî rast kîjan e?',
     answers: [
       'Şırnak ve Cizre yöresinin ritmik ve makamsal müziği',
       'Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı',
@@ -10950,7 +10950,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11087',
     category: 'Muzîk',
-    prompt: '\'zurna\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'zurna\' ravekirina herî dirust kîjan e?',
     answers: [
       'tek bir sanatçının şarkı söylemesi veya çalması',
       'Kürt halkının ulusal duygularını seslendiren ozan',
@@ -10965,7 +10965,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11093',
     category: 'Muzîk',
-    prompt: '\'şabaş geleneği\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'şabaş geleneği\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'müzisyenlere para atarak taltif etme adeti',
       'Kürt halk müziğinde bir başka ezgi tarzı',
@@ -10981,7 +10981,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11103',
     category: 'Muzîk',
-    prompt: 'Hangisi \'Koma Amed\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Koma Amed\' rast dide nasîn?',
     answers: [
       'müziği kağıda dökmek için kullanılan evrensel işaretler',
       'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
@@ -10998,7 +10998,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11107',
     category: 'Muzîk',
-    prompt: 'Muzîk bilgisinde \'kemençe\' ile ilgili doğru olan hangisidir?',
+    prompt: 'Di zanîna Muzîkê de derbarê \'kemençe\' de ya rast kîjan e?',
     answers: [
       'müziğin temelini oluşturan düzenli vuruşlar',
       'klasik Bahdinan müziğinin efsanevi sesi',
@@ -11013,7 +11013,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11123',
     category: 'Muzîk',
-    prompt: '\'Şakiro\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'Şakiro\' de ravekirina rast kîjan e?',
     answers: [
       'Kürt halk müziğinde bir başka ezgi tarzı',
       'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses',
@@ -11044,7 +11044,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11127',
     category: 'Muzîk',
-    prompt: 'Muzîk için \'Koma Wetan\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Muzîkê derbarê \'Koma Wetan\' de vebijêrka rast kîjan e?',
     answers: [
       'Kürt coğrafyasında da çalınan yaylı çalgı',
       'tarihteki ilk Kürtçe rock grubunun adı',
@@ -11093,7 +11093,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11136',
     category: 'Muzîk',
-    prompt: '\'ritim\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'ritim\' de vebijêrka rast kîjan e?',
     answers: [
       'seslerin ardışık dizilmesiyle oluşan ezgi',
       'yüksek sesli, açık havada çalınan nefesli çalgı',
@@ -11108,7 +11108,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11143',
     category: 'Muzîk',
-    prompt: '\'stranbêj\' ifadesinin doğru karşılığı hangisidir?',
+    prompt: 'Berambera rast a biwêja \'stranbêj\' kîjan e?',
     answers: [
       'Kürtlerin \'şahê dengbêjan\' dediği güçlü ses',
       'seslerin ardışık dizilmesiyle oluşan ezgi',
@@ -11123,7 +11123,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11152',
     category: 'Muzîk',
-    prompt: '\'Eyşeqan\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'Eyşeqan\' çi pêk tîne?',
     answers: [
       'Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden',
       'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
@@ -11139,7 +11139,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11154',
     category: 'Muzîk',
-    prompt: '\'kilam\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'kilam\' de vebijêrka rast kîjan e?',
     answers: [
       'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
       'Kürt müziğine rock ve caz esintileri getiren sanatçı',
@@ -11155,7 +11155,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11160',
     category: 'Muzîk',
-    prompt: 'Aşağıdakilerden hangisi \'hîran\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'hîran\' rave dike?',
     answers: [
       'Duhok ve Zaho yöresine has müzikal tarz',
       'Kürt coğrafyasında da çalınan yaylı çalgı',
@@ -11170,7 +11170,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11162',
     category: 'Muzîk',
-    prompt: '\'Ciwan Haco\' Muzîk açısından anlamsız bir ifadedir.',
+    prompt: '\'Ciwan Haco\' ji aliyê Muzîkê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -11181,7 +11181,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11171',
     category: 'Muzîk',
-    prompt: '\'Mihemed taha akreyî\' yalnızca Muzîk dışı alanlara aittir.',
+    prompt: '\'Mihemed taha akreyî\' tenê aîdî qadên derveyî Muzîkê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -11192,7 +11192,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11172',
     category: 'Muzîk',
-    prompt: 'Aşağıdakilerden hangisi \'kilam\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'kilam\' rave dike?',
     answers: [
       'çobanların da çaldığı üflemeli geleneksel enstrüman',
       'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
@@ -11208,7 +11208,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11180',
     category: 'Muzîk',
-    prompt: '\'dengbêj makamı\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'dengbêj makamı\' çi pêk tîne?',
     answers: [
       'Bahdinan bölgesinin sevilen devrimci müzisyeni',
       'kilamların okunduğu serbest ritimli vokal tarzı',
@@ -11224,7 +11224,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11189',
     category: 'Muzîk',
-    prompt: 'Hangisi Muzîk içinde \'Ciwan Haco\' kavramını doğru yerleştirir?',
+    prompt: 'Kîjan di Muzîkê de têgiha \'Ciwan Haco\' rast bi cih dike?',
     answers: [
       'Kürt müziğine rock ve caz esintileri getiren sanatçı',
       'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
@@ -11262,7 +11262,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11200',
     category: 'Muzîk',
-    prompt: '\'dahol\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'dahol\' de ravekirina rast kîjan e?',
     answers: [
       'zurna ile birlikte çalınan ritim sazı',
       'Enstrümansız ve doğaçlama ezgili',
@@ -11287,7 +11287,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11227',
     category: 'Muzîk',
-    prompt: '\'defbaz\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'defbaz\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
       'Kürt halkının ulusal duygularını seslendiren ozan',
@@ -11303,7 +11303,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11238',
     category: 'Muzîk',
-    prompt: 'Muzîk alanında \'Kemençe\' geçerli bir kavram olarak yer alır.',
+    prompt: 'Di qada Muzîkê de \'Kemençe\' wek têgihek derbasdar cih digire.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Kemençe\' Muzîk alanında geçerli bir kavramdır.',
@@ -11313,7 +11313,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11294',
     category: 'Muzîk',
-    prompt: 'Muzîk açısından \'erbane\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Muzîkê ve ji bo \'erbane\' îfadeya rast kîjan e?',
     answers: [
       'halk müziğinde yaygın olarak çalınan zilli tef',
       'kış gecesi sohbetlerinde icra edilen sözlü müzik',
@@ -11328,7 +11328,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11295',
     category: 'Muzîk',
-    prompt: 'Muzîk için \'tembûr\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Muzîkê derbarê \'tembûr\' de vebijêrka rast kîjan e?',
     answers: [
       'Kürt halk müziğinde en kutsal sayılan telli saz',
       'müziğin temelini oluşturan düzenli vuruşlar',
@@ -11371,7 +11371,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11341',
     category: 'Muzîk',
-    prompt: 'Muzîk bağlamında \'Mihemed Taha Akreyî\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Muzîkê de \'Mihemed Taha Akreyî\' çawa divê bê fêmkirin?',
     answers: [
       'erken dönem Kürt müziği kayıtlarını yapan dengbêj',
       'kış gecesi sohbetlerinde icra edilen sözlü müzik',
@@ -11387,7 +11387,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11356',
     category: 'Muzîk',
-    prompt: 'Hangisi \'Karapetê Xaço\' kişisini doğru tanıtır?',
+    prompt: 'Kîjan kesê/a \'Karapetê Xaço\' rast dide nasîn?',
     answers: [
       'Kürt müziğini çok kültürlü ortamda icra eden grup',
       'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
@@ -11435,7 +11435,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11383',
     category: 'Muzîk',
-    prompt: '\'heyran\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'heyran\' de agahiya herî rast kîjan e?',
     answers: [
       'halaylarda çalınan hareketli ve ritmik halk şarkıları',
       'Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü',
@@ -11461,7 +11461,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11420',
     category: 'Muzîk',
-    prompt: 'Muzîk açısından \'govend müziği\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Muzîkê ve ji bo \'govend müziği\' îfadeya rast kîjan e?',
     answers: [
       'halaylarda çalınan hareketli ve ritmik halk şarkıları',
       'Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen',
@@ -11477,7 +11477,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11422',
     category: 'Muzîk',
-    prompt: 'Muzîk çerçevesinde \'Mihemed Şêxo\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Muzîkê de \'Mihemed Şêxo\' tê çi wateyê?',
     answers: [
       'Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı',
       'tek bir sanatçının şarkı söylemesi veya çalması',
@@ -11493,7 +11493,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11428',
     category: 'Muzîk',
-    prompt: 'Muzîk çerçevesinde \'lawik\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Muzîkê de \'lawik\' tê çi wateyê?',
     answers: [
       'daha çok aşk ve yiğitlik üzerine söylenen müzik türü',
       'dengbêjlerin söylediği destansı veya aşk temalı şarkı',
@@ -11509,7 +11509,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11431',
     category: 'Muzîk',
-    prompt: 'Şıklardan hangisi \'dengbêj\' anlamına gelir?',
+    prompt: 'Kîjan vebijêrk tê wateya \'dengbêj\'?',
     answers: [
       'Duhok ve Zaho yöresine has müzikal tarz',
       'zurna ile birlikte çalınan ritim sazı',
@@ -11536,7 +11536,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11471',
     category: 'Paradigma',
-    prompt: '\'ekolojik bilinç\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'ekolojik bilinç\' de vebijêrka rast kîjan e?',
     answers: [
       'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
       'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi',
@@ -11563,7 +11563,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11493',
     category: 'Paradigma',
-    prompt: 'Şıklardan hangisi \'demokratik ittifak\' anlamına gelir?',
+    prompt: 'Kîjan vebijêrk tê wateya \'demokratik ittifak\'?',
     answers: [
       'farklı ezilen kesimlerin eşitlikçi birlikteliği',
       'halkın kendi kendini yönetme ve örgütleme biçimi',
@@ -11579,7 +11579,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11508',
     category: 'Paradigma',
-    prompt: '\'antikapitalizm\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'antikapitalizm\' de ya rast a zanîn çi ye?',
     answers: [
       'kapitalist moderniteye alternatif yaşam sistemi',
       'Yerel toplumun kendi karar süreçlerine katılması',
@@ -11595,7 +11595,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11511',
     category: 'Paradigma',
-    prompt: '\'hiyerarşi\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'hiyerarşi\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
       'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme',
@@ -11628,7 +11628,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11538',
     category: 'Paradigma',
-    prompt: '\'özgürlük ölçütü\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'özgürlük ölçütü\' tê gotin, çi tê xwestin?',
     answers: [
       'komünlerin üstünde yer alan koordinasyon ve karar organı',
       'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi',
@@ -11644,7 +11644,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11543',
     category: 'Paradigma',
-    prompt: '\'özgür eş yaşam\' nasıl tanımlanır?',
+    prompt: '\'özgür eş yaşam\' çawa tê pênasekirin?',
     answers: [
       'kadın bilincini ve jineolojiyi geliştiren okullar',
       'kapitalizmin kâr ve sömürü mantığına karşı duruş',
@@ -11660,7 +11660,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11556',
     category: 'Paradigma',
-    prompt: 'Paradigma çerçevesinde \'sosyal sözleşme\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Paradigmaê de \'sosyal sözleşme\' tê çi wateyê?',
     answers: [
       'kantonların ve komünlerin ortak kurucu metni',
       'toplumun kendini koruma ve örgütleme hakkı',
@@ -11687,7 +11687,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11583',
     category: 'Paradigma',
-    prompt: '\'eş başkanlık\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'eş başkanlık\' de vebijêrka rast kîjan e?',
     answers: [
       'yönetim organlarında kadın-erkek eşit temsil sistemi',
       'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
@@ -11703,7 +11703,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11584',
     category: 'Paradigma',
-    prompt: '\'komün\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'komün\' çi pêk tîne?',
     answers: [
       'komünlerin üstünde yer alan koordinasyon ve karar organı',
       'tekelci olmayan, topluma hizmet eden bilim anlayışı',
@@ -11719,7 +11719,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11587',
     category: 'Paradigma',
-    prompt: '\'cinsiyet özgürlükçü\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'cinsiyet özgürlükçü\' de agahiya herî rast kîjan e?',
     answers: [
       'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
       'Yerel toplumun kendi karar süreçlerine katılması',
@@ -11735,7 +11735,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11588',
     category: 'Paradigma',
-    prompt: 'Paradigma alanında \'ahlaki güç\' neyi ifade eder?',
+    prompt: 'Di qada Paradigmaê de \'ahlaki güç\' çi îfade dike?',
     answers: [
       'tekelci olmayan, topluma hizmet eden bilim anlayışı',
       'yasalara gerek kalmadan toplumun kendini yönetebilmesi',
@@ -11751,7 +11751,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11591',
     category: 'Paradigma',
-    prompt: '\'ataerkillik\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'ataerkillik\' tê gotin, çi tê xwestin?',
     answers: [
       'erkeği egemen kılan, kadını ezen toplumsal yapı',
       'halkın temsilciler olmadan doğrudan karar alması',
@@ -11767,7 +11767,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11597',
     category: 'Paradigma',
-    prompt: '\'patriyarka eleştirisi\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'patriyarka eleştirisi\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'erkek egemen sistemin yapısını deşifre etme',
       'devletçi olmayan, tabana dayalı federasyon',
@@ -11783,7 +11783,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11599',
     category: 'Paradigma',
-    prompt: '\'komünal ekonomi\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'komünal ekonomi\' çi pêk tîne?',
     answers: [
       'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
       'kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi',
@@ -11816,7 +11816,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11624',
     category: 'Paradigma',
-    prompt: 'Paradigma alanında \'kadın özgürlüğü\' neyi ifade eder?',
+    prompt: 'Di qada Paradigmaê de \'kadın özgürlüğü\' çi îfade dike?',
     answers: [
       'toplumsal özgürleşmenin en temel kriteri',
       'Ekoloji, kadın ve demokrasi krizlerini',
@@ -11832,7 +11832,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11649',
     category: 'Paradigma',
-    prompt: '\'meclis\' için geçerli tanım hangisidir?',
+    prompt: 'Ji bo \'meclis\' pênaseya derbasdar kîjan e?',
     answers: [
       'komünlerin üstünde yer alan koordinasyon ve karar organı',
       'halkın doğrudan yönetime ve karar süreçlerine katılımı',
@@ -11848,7 +11848,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11655',
     category: 'Paradigma',
-    prompt: '\'demokratik siyaset\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'demokratik siyaset\' de agahiya herî rast kîjan e?',
     answers: [
       'komünlerin üstünde yer alan koordinasyon ve karar organı',
       'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim',
@@ -11875,7 +11875,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11713',
     category: 'Paradigma',
-    prompt: '\'ahlaki-politik toplum\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'ahlaki-politik toplum\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'devletçi olmayan, halkların komünal gelişim çizgisi',
       'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
@@ -11891,7 +11891,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11715',
     category: 'Paradigma',
-    prompt: 'Şıklardan hangisi \'pozitivizm\' anlamına gelir?',
+    prompt: 'Kîjan vebijêrk tê wateya \'pozitivizm\'?',
     answers: [
       'Toplum ile doğa arasında uyumlu, sürdürülebilir bir ilişkiyi',
       'sadece maddi olguları kabul eden, dogmatik bilim anlayışı',
@@ -11907,7 +11907,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11727',
     category: 'Paradigma',
-    prompt: '\'demokratik komünalizm\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'demokratik komünalizm\' de vebijêrka rast kîjan e?',
     answers: [
       'kantonların ve komünlerin ortak kurucu metni',
       'komün yaşamına ve dayanışmaya dayalı sistem',
@@ -11923,7 +11923,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11728',
     category: 'Paradigma',
-    prompt: 'Aşağıda \'ulus devlet\' için doğru olan hangisidir?',
+    prompt: 'Li jêr ji bo \'ulus devlet\' ya rast kîjan e?',
     answers: [
       'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
       'toplumun kendi kendini koruma ve yürütme refleksidir',
@@ -11967,7 +11967,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11746',
     category: 'Paradigma',
-    prompt: '\'demokratik siyaset\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'demokratik siyaset\' de ravekirina rast kîjan e?',
     answers: [
       'kendi kararlarını alan, etik değerlere sahip toplum',
       'halkın doğrudan yönetime ve karar süreçlerine katılımı',
@@ -12017,7 +12017,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11789',
     category: 'Paradigma',
-    prompt: '\'demokratik modernite akademisi\' konusunda hangisi doğrudur?',
+    prompt: 'Derbarê \'demokratik modernite akademisi\' de kîjan rast e?',
     answers: [
       'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi',
       'alternatif bilim ve yaşam arayışının okulu',
@@ -12033,7 +12033,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11792',
     category: 'Paradigma',
-    prompt: '\'demokratik bilim\' konusunda hangisi doğrudur?',
+    prompt: 'Derbarê \'demokratik bilim\' de kîjan rast e?',
     answers: [
       'tekelci olmayan, topluma hizmet eden bilim anlayışı',
       'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
@@ -12060,7 +12060,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11813',
     category: 'Paradigma',
-    prompt: '\'demokratik ulus\' için geçerli tanım hangisidir?',
+    prompt: 'Ji bo \'demokratik ulus\' pênaseya derbasdar kîjan e?',
     answers: [
       'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
       'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
@@ -12092,7 +12092,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11838',
     category: 'Paradigma',
-    prompt: '\'demokratik uygarlık\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'demokratik uygarlık\' de ravekirina rast kîjan e?',
     answers: [
       'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi',
       'Eğitim uygulaması için güvenli, analitik ve demokratik öğrenme amaçlandığı için',
@@ -12120,7 +12120,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11846',
     category: 'Paradigma',
-    prompt: '\'demokratik kanton\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'demokratik kanton\' çi pêk tîne?',
     answers: [
       'yerel özerkliğe sahip idari ve toplumsal birim',
       'Dünya çapında kadın özgürlüğü sembolü olmuştur',
@@ -12181,7 +12181,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11886',
     category: 'Paradigma',
-    prompt: '\'toplumsal sözleşme\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'toplumsal sözleşme\' de vebijêrka rast kîjan e?',
     answers: [
       'toplumun bir arada yaşama ilkelerini belirleyen belge',
       'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
@@ -12209,7 +12209,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11893',
     category: 'Paradigma',
-    prompt: 'Aşağıdakilerden hangisi \'ekolojik toplum\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'ekolojik toplum\' rave dike?',
     answers: [
       'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
       'Kimliklerin devlet zoru olmadan birlikteliğini',
@@ -12249,7 +12249,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11917',
     category: 'Paradigma',
-    prompt: 'Aşağıdakilerden hangisi \'eş başkanlık\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'eş başkanlık\' rave dike?',
     answers: [
       'ortak vatanda çok kültürlü ve eşitlikçi birliktelik',
       'insanın doğanın bir parçası olduğunu anlama durumu',
@@ -12265,7 +12265,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11948',
     category: 'Paradigma',
-    prompt: '\'ulus devlet\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'ulus devlet\' ravekirina herî dirust kîjan e?',
     answers: [
       'toplumun en küçük ve doğrudan katılımcı yönetim birimi',
       'Toplum ile doğa arasında uyumlu, sürdürülebilir bir ilişkiyi',
@@ -12281,7 +12281,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11953',
     category: 'Paradigma',
-    prompt: '\'pozitivizm\' nasıl tanımlanır?',
+    prompt: '\'pozitivizm\' çawa tê pênasekirin?',
     answers: [
       'komünlerin üstünde yer alan koordinasyon ve karar organı',
       'sadece maddi olguları kabul eden, dogmatik bilim anlayışı',
@@ -12313,7 +12313,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11956',
     category: 'Paradigma',
-    prompt: '\'hiyerarşi\' için geçerli tanım hangisidir?',
+    prompt: 'Ji bo \'hiyerarşi\' pênaseya derbasdar kîjan e?',
     answers: [
       'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
       'toplumda alt-üst ilişkisi kuran baskıcı örgütlenme',
@@ -12329,7 +12329,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11957',
     category: 'Paradigma',
-    prompt: '\'toplumsal cinsiyet\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'toplumsal cinsiyet\' tê gotin, çi tê xwestin?',
     answers: [
       'economic and political centralization crisis',
       'kapitalist moderniteye alternatif yaşam sistemi',
@@ -12356,7 +12356,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11996',
     category: 'Paradigma',
-    prompt: '\'antikapitalizm\' neyi ifade eder?',
+    prompt: '\'antikapitalizm\' çi îfade dike?',
     answers: [
       'Demokratik örgütlenmenin yalnızca merkezi devletle sınırlı olmadığını',
       'kapitalizmin kâr ve sömürü mantığına karşı duruş',
@@ -12372,7 +12372,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_11999',
     category: 'Paradigma',
-    prompt: '\'antikapitalizm\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'antikapitalizm\' ravekirina herî dirust kîjan e?',
     answers: [
       'kâr amaçlı doğayı tahrip eden sanayileşme modeli',
       'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
@@ -12388,7 +12388,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12000',
     category: 'Paradigma',
-    prompt: 'Aşağıdakilerden hangisi \'sivil toplum\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'sivil toplum\' rave dike?',
     answers: [
       'devlet dışı, toplumsal örgütlenme alanları',
       'Endüstriyalizm, kapitalizm ve ulus-devlet',
@@ -12461,7 +12461,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12055',
     category: 'Paradigma',
-    prompt: '\'kapitalist modernite\' ne anlama gelir?',
+    prompt: '\'kapitalist modernite\' tê çi wateyê?',
     answers: [
       'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
       'kâr amaçlı doğayı tahrip eden sanayileşme modeli',
@@ -12477,7 +12477,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12069',
     category: 'Paradigma',
-    prompt: '\'komünal mülkiyet\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'komünal mülkiyet\' tê gotin, çi tê xwestin?',
     answers: [
       'toprağın ve araçların topluma ait olması',
       'toplumsal özgürleşmenin en temel kriteri',
@@ -12493,7 +12493,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12073',
     category: 'Paradigma',
-    prompt: '\'kadın akademileri\' konusunda hangisi doğrudur?',
+    prompt: 'Derbarê \'kadın akademileri\' de kîjan rast e?',
     answers: [
       'insanın doğanın bir parçası olduğunu anlama durumu',
       'kadın bilincini ve jineolojiyi geliştiren okullar',
@@ -12521,7 +12521,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12096',
     category: 'Paradigma',
-    prompt: '\'sosyal sözleşme\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'sosyal sözleşme\' çi pêk tîne?',
     answers: [
       'kantonların ve komünlerin ortak kurucu metni',
       'Toplumun kendini koruma ve örgütleme hakkını',
@@ -12537,7 +12537,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12100',
     category: 'Paradigma',
-    prompt: 'Şıklardan hangisi \'kapitalist modernite\' anlamına gelir?',
+    prompt: 'Kîjan vebijêrk tê wateya \'kapitalist modernite\'?',
     answers: [
       'baskı ve sahiplenmeye dayanmayan eşit ortak yaşam',
       'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
@@ -12581,7 +12581,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12118',
     category: 'Paradigma',
-    prompt: '\'komün\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'komün\' de vebijêrka rast kîjan e?',
     answers: [
       'toplumun en küçük ve doğrudan katılımcı yönetim birimi',
       'tekelci olmayan, topluma hizmet eden bilim anlayışı',
@@ -12608,7 +12608,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12122',
     category: 'Paradigma',
-    prompt: '\'ataerkillik\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'ataerkillik\' de vebijêrka rast kîjan e?',
     answers: [
       'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
       'tahakküm ve sömürünün olmadığı eşitlikçi düzen',
@@ -12634,7 +12634,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12131',
     category: 'Paradigma',
-    prompt: '\'özgür eş yaşam\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'özgür eş yaşam\' tê gotin, çi tê xwestin?',
     answers: [
       'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
       'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
@@ -12661,7 +12661,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12138',
     category: 'Paradigma',
-    prompt: '\'demokratik bilim\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'demokratik bilim\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'toplumun kendi kendini koruma ve yürütme refleksidir',
       'tekelci olmayan, topluma hizmet eden bilim anlayışı',
@@ -12677,7 +12677,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12156',
     category: 'Paradigma',
-    prompt: '\'ulus devlet\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'ulus devlet\' tê gotin, çi tê xwestin?',
     answers: [
       'toplumun kendi kendini koruma ve yürütme refleksidir',
       'tek tipleştirici, sınırları kutsallaştıran devlet yapısı',
@@ -12693,7 +12693,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12157',
     category: 'Paradigma',
-    prompt: '\'kadın özgürlüğü\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'kadın özgürlüğü\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'toplumsal özgürleşmenin en temel kriteri',
       'Toplumun doğrudan ve örgütlü katılımını',
@@ -12709,7 +12709,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12158',
     category: 'Paradigma',
-    prompt: '\'cinsiyet özgürlükçü\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'cinsiyet özgürlükçü\' tê gotin, çi tê xwestin?',
     answers: [
       'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
       'cinsel baskı ve ayrımcılığa karşı eşitlikçi ilke',
@@ -12725,7 +12725,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12173',
     category: 'Paradigma',
-    prompt: '\'sosyal sözleşme\' Paradigma açısından anlamsız bir ifadedir.',
+    prompt: '\'sosyal sözleşme\' ji aliyê Paradigmaê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -12736,7 +12736,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12193',
     category: 'Paradigma',
-    prompt: '\'demokratik ulus\' kavramını doğru anlatan ifade hangisidir?',
+    prompt: 'Îfadeya ku têgiha \'demokratik ulus\' rast vedibêje kîjan e?',
     answers: [
       'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim',
       'insanın doğanın bir parçası olduğunu anlama durumu',
@@ -12768,7 +12768,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12219',
     category: 'Paradigma',
-    prompt: '\'ahlaki-politik toplum\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'ahlaki-politik toplum\' de ya rast a zanîn çi ye?',
     answers: [
       'toplumun bir arada yaşama ilkelerini belirleyen belge',
       'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
@@ -12796,7 +12796,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12236',
     category: 'Paradigma',
-    prompt: '\'endüstriyalizm\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'endüstriyalizm\' çi pêk tîne?',
     answers: [
       'kâr amaçlı doğayı tahrip eden sanayileşme modeli',
       'mahalle ve köylerde halkın kararlar aldığı kurul',
@@ -12812,7 +12812,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12238',
     category: 'Paradigma',
-    prompt: '\'komünal ekonomi\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'komünal ekonomi\' tê gotin, çi tê xwestin?',
     answers: [
       'Yerel toplumun kendi karar süreçlerine katılması',
       'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi',
@@ -12828,7 +12828,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12259',
     category: 'Paradigma',
-    prompt: '\'özgürlük ölçütü\' yalnızca Paradigma dışı alanlara aittir.',
+    prompt: '\'özgürlük ölçütü\' tenê aîdî qadên derveyî Paradigmaê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -12839,7 +12839,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12261',
     category: 'Paradigma',
-    prompt: '\'hiyerarşisiz toplum\' ne anlama gelir?',
+    prompt: '\'hiyerarşisiz toplum\' tê çi wateyê?',
     answers: [
       'Tahakküm ile doğa tahribatı arasındaki ilişkiyi',
       'halkın temsilciler olmadan doğrudan karar alması',
@@ -12855,7 +12855,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12269',
     category: 'Paradigma',
-    prompt: 'Aşağıda \'toplumsal cinsiyet\' için doğru olan hangisidir?',
+    prompt: 'Li jêr ji bo \'toplumsal cinsiyet\' ya rast kîjan e?',
     answers: [
       'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
       'erkek egemen sistemin yapısını deşifre etme',
@@ -12871,7 +12871,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12291',
     category: 'Paradigma',
-    prompt: '\'politikleşme\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'politikleşme\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'toplumun bir arada yaşama ilkelerini belirleyen belge',
       'komünlerin üstünde yer alan koordinasyon ve karar organı',
@@ -12887,7 +12887,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12294',
     category: 'Paradigma',
-    prompt: 'Aşağıdakilerden hangisi \'ekolojik toplum\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'ekolojik toplum\' kîjan rast e?',
     answers: [
       'doğayı sömürmeyen, onunla uyumlu yaşayan toplum',
       'yerel özerkliğe sahip idari ve toplumsal birim',
@@ -12914,7 +12914,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12312',
     category: 'Paradigma',
-    prompt: '\'tekelcilik\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'tekelcilik\' de ravekirina rast kîjan e?',
     answers: [
       'Toplumun kendini koruma ve örgütleme hakkını',
       'economic and political centralization crisis',
@@ -12930,7 +12930,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12331',
     category: 'Paradigma',
-    prompt: '\'doğrudan demokrasi\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'doğrudan demokrasi\' de agahiya herî rast kîjan e?',
     answers: [
       'halkın temsilciler olmadan doğrudan karar alması',
       'Yerel toplumun kendi karar süreçlerine katılması',
@@ -12946,7 +12946,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12344',
     category: 'Paradigma',
-    prompt: 'Paradigma bağlamında \'kooperatifçilik\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Paradigmaê de \'kooperatifçilik\' çawa divê bê fêmkirin?',
     answers: [
       'komünal ekonominin temel dayanışma birimi',
       'devletçi olmayan, tabana dayalı federasyon',
@@ -12962,7 +12962,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12363',
     category: 'Paradigma',
-    prompt: 'Şıklardan hangisi \'politikleşme\' anlamına gelir?',
+    prompt: 'Kîjan vebijêrk tê wateya \'politikleşme\'?',
     answers: [
       'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim',
       'Doğayı tahrip eden endüstriyalizm ve kâr odaklı büyümeyi',
@@ -12978,7 +12978,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12366',
     category: 'Paradigma',
-    prompt: '\'öz savunma\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'öz savunma\' de ravekirina rast kîjan e?',
     answers: [
       'komün yaşamına ve dayanışmaya dayalı sistem',
       'doğayla uyumlu, geri dönüşümlü üretim tarzı',
@@ -13016,7 +13016,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12386',
     category: 'Paradigma',
-    prompt: 'Aşağıda \'ekolojik bilinç\' için doğru olan hangisidir?',
+    prompt: 'Li jêr ji bo \'ekolojik bilinç\' ya rast kîjan e?',
     answers: [
       'baskı ve sahiplenmeye dayanmayan eşit ortak yaşam',
       'Doğayı yalnızca sömürü nesnesi olarak görmemesiyle',
@@ -13032,7 +13032,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12391',
     category: 'Paradigma',
-    prompt: 'Paradigma çerçevesinde \'devletçi uygarlık\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Paradigmaê de \'devletçi uygarlık\' tê çi wateyê?',
     answers: [
       'sınıflı, hiyerarşik ve devlet odaklı tarih çizgisi',
       'devletçi olmayan, halkların komünal gelişim çizgisi',
@@ -13048,7 +13048,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12401',
     category: 'Paradigma',
-    prompt: 'Aşağıdakilerden hangisi \'demokratik komünalizm\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'demokratik komünalizm\' kîjan rast e?',
     answers: [
       'komün yaşamına ve dayanışmaya dayalı sistem',
       'economic and political centralization crisis',
@@ -13064,7 +13064,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12407',
     category: 'Paradigma',
-    prompt: '\'öz savunma\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'öz savunma\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'alternatif bilim ve yaşam arayışının okulu',
       'komün yaşamına ve dayanışmaya dayalı sistem',
@@ -13090,7 +13090,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12427',
     category: 'Paradigma',
-    prompt: '\'kooperatifçilik\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'kooperatifçilik\' de vebijêrka rast kîjan e?',
     answers: [
       'komünal ekonominin temel dayanışma birimi',
       'devlet dışı, toplumsal örgütlenme alanları',
@@ -13129,7 +13129,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12459',
     category: 'Paradigma',
-    prompt: 'Paradigma bağlamında \'pozitivizm\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Paradigmaê de \'pozitivizm\' çawa divê bê fêmkirin?',
     answers: [
       'toplumun bir arada yaşama ilkelerini belirleyen belge',
       'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi',
@@ -13166,7 +13166,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12477',
     category: 'Paradigma',
-    prompt: '\'kadın akademileri\' nasıl tanımlanır?',
+    prompt: '\'kadın akademileri\' çawa tê pênasekirin?',
     answers: [
       'kadın bilincini ve jineolojiyi geliştiren okullar',
       'endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü',
@@ -13182,7 +13182,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12484',
     category: 'Paradigma',
-    prompt: '\'patriyarka eleştirisi\' konusunda hangisi doğrudur?',
+    prompt: 'Derbarê \'patriyarka eleştirisi\' de kîjan rast e?',
     answers: [
       'doğayla uyumlu, geri dönüşümlü üretim tarzı',
       'erkek egemen sistemin yapısını deşifre etme',
@@ -13215,7 +13215,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12506',
     category: 'Paradigma',
-    prompt: '\'ekolojik endüstri\' kavramını doğru anlatan ifade hangisidir?',
+    prompt: 'Îfadeya ku têgiha \'ekolojik endüstri\' rast vedibêje kîjan e?',
     answers: [
       'toplumun kendini koruma ve örgütleme hakkı',
       'kantonların ve komünlerin ortak kurucu metni',
@@ -13242,7 +13242,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12547',
     category: 'Paradigma',
-    prompt: '\'demokratik konfederal\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'demokratik konfederal\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'devletçi olmayan, tabana dayalı federasyon',
       'kantonların ve komünlerin ortak kurucu metni',
@@ -13269,7 +13269,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12635',
     category: 'Paradigma',
-    prompt: '\'ataerkillik\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'ataerkillik\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'kapitalist moderniteye alternatif yaşam sistemi',
       'erkeği egemen kılan, kadını ezen toplumsal yapı',
@@ -13285,7 +13285,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12637',
     category: 'Paradigma',
-    prompt: '\'meclis\' neyi ifade eder?',
+    prompt: '\'meclis\' çi îfade dike?',
     answers: [
       'doğa tahribatının hiyerarşiyle ilişkisini kuran bilim',
       'toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi',
@@ -13301,7 +13301,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12653',
     category: 'Siyaset',
-    prompt: '\'anayasal güvence\' yalnızca Siyaset dışı alanlara aittir.',
+    prompt: '\'anayasal güvence\' tenê aîdî qadên derveyî Siyasetê ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -13312,7 +13312,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12660',
     category: 'Siyaset',
-    prompt: '\'toplumsal barış\' nasıl tanımlanır?',
+    prompt: '\'toplumsal barış\' çawa tê pênasekirin?',
     answers: [
       'Demokratik konfederalizm ve demokratik ulus tartışması',
       'Toplumun bütününün özgürleşmesinin koşulu sayıldığı için',
@@ -13350,7 +13350,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12681',
     category: 'Siyaset',
-    prompt: '\'müzakere\' konusunda hangisi doğrudur?',
+    prompt: 'Derbarê \'müzakere\' de kîjan rast e?',
     answers: [
       'sorunları diyalog yoluyla çözme yöntemi',
       'yerel kararların alındığı halk meclisleri',
@@ -13376,7 +13376,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12703',
     category: 'Siyaset',
-    prompt: '\'hakikat komisyonu\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'hakikat komisyonu\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'merkezden atanan kayyum yerine seçilmiş yerel yönetici gücü',
       'Müzakere, demokratik reform ve hakların güvenceye alınması',
@@ -13392,7 +13392,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12713',
     category: 'Siyaset',
-    prompt: 'Aşağıdakilerden hangisi \'toplumsal barış\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'toplumsal barış\' kîjan rast e?',
     answers: [
       'halkların kendi kimliğiyle tanınma ve yönetilme hakkı',
       'sadece çoğunluğun değil azınlığın da dinlendiği yapı',
@@ -13408,7 +13408,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12742',
     category: 'Siyaset',
-    prompt: 'Hangisi \'temsili demokrasi\' kavramını doğru betimler?',
+    prompt: 'Kîjan têgiha \'temsili demokrasi\' rast şirove dike?',
     answers: [
       'vatandaşların karar alma süreçlerine müdahil olması',
       'halkın sadece seçimlerle yönetime katıldığı sistem',
@@ -13424,7 +13424,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12743',
     category: 'Siyaset',
-    prompt: 'Siyaset alanında \'yerel demokrasi\' neyi ifade eder?',
+    prompt: 'Di qada Siyasetê de \'yerel demokrasi\' çi îfade dike?',
     answers: [
       'farklı muhalif grupların ortak barış platformu',
       'Tabandan doğrudan ve sürekli katılımı önceler',
@@ -13440,7 +13440,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12745',
     category: 'Siyaset',
-    prompt: 'Siyaset çerçevesinde \'çoğulcu demokrasi\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Siyasetê de \'çoğulcu demokrasi\' tê çi wateyê?',
     answers: [
       'farklı kimliklerin ve inançların eşit kabul edilmesi',
       'Farklı halkların eşit ve dayanışmacı birlikteliğini',
@@ -13456,7 +13456,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12755',
     category: 'Siyaset',
-    prompt: '\'yerel demokrasi\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'yerel demokrasi\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'kararların halka en yakın birimlerde alınması',
       'Devleti aşan, ona alternatif bir öz yönetim',
@@ -13522,7 +13522,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12771',
     category: 'Siyaset',
-    prompt: '\'demokratik ittifaklar\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'demokratik ittifaklar\' çi pêk tîne?',
     answers: [
       'gücün tek merkezden yerel birimlere dağıtılması',
       'anayasal güvence ve kültürel hakların tanınması',
@@ -13538,7 +13538,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12774',
     category: 'Siyaset',
-    prompt: '\'demokratik uzlaşı\' ne anlama gelir?',
+    prompt: '\'demokratik uzlaşı\' tê çi wateyê?',
     answers: [
       'hakların kanunla koruma altına alınması',
       'Kimlik, dil, statü ve haklar sorunu olarak',
@@ -13554,7 +13554,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12776',
     category: 'Siyaset',
-    prompt: '\'toplumsal uzlaşı\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'toplumsal uzlaşı\' çi pêk tîne?',
     answers: [
       'resmi ve kamusal alanlarda anadilinin kullanılması',
       'Yerel yönetim, eğitim ve ekonomi gibi alanlarda',
@@ -13570,7 +13570,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12779',
     category: 'Siyaset',
-    prompt: '\'statü hakkı\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'statü hakkı\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'Demokratik konfederalizm ve demokratik ulus tartışması',
       'halkların kendi kimliğiyle tanınma ve yönetilme hakkı',
@@ -13586,7 +13586,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12780',
     category: 'Siyaset',
-    prompt: '\'toplumsal muhalefet\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'toplumsal muhalefet\' de vebijêrka rast kîjan e?',
     answers: [
       'Yerel demokrasi, kadın özgürlüğü, ekoloji ve çoğulculuk',
       'halkların kendi kimliğiyle tanınma ve yönetilme hakkı',
@@ -13602,7 +13602,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12818',
     category: 'Siyaset',
-    prompt: '\'doğrudan katılım\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'doğrudan katılım\' de ravekirina rast kîjan e?',
     answers: [
       'Kadın-erkek eşit temsili ve ortak yönetimi',
       'halkın siyasi kararlara bizzat dahil olması',
@@ -13629,7 +13629,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12832',
     category: 'Siyaset',
-    prompt: '\'barışçıl çözüm\' nasıl tanımlanır?',
+    prompt: '\'barışçıl çözüm\' çawa tê pênasekirin?',
     answers: [
       'çatışmaları silah yerine diyalogla çözme iradesi',
       'protesto, örgütlenme ve ifade özgürlüğü hakları',
@@ -13656,7 +13656,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12854',
     category: 'Siyaset',
-    prompt: '\'sivil katılım\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'sivil katılım\' de ya rast a zanîn çi ye?',
     answers: [
       'adaletsiz yasalara karşı barışçıl protesto biçimi',
       'toplumun dışarıdan baskı olmadan kendini yönetmesi',
@@ -13693,7 +13693,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12875',
     category: 'Siyaset',
-    prompt: '\'kuvvetler ayrılığı\' kavramını doğru anlatan ifade hangisidir?',
+    prompt: 'Îfadeya ku têgiha \'kuvvetler ayrılığı\' rast vedibêje kîjan e?',
     answers: [
       'Müzakere, demokratik reform ve hakların güvenceye alınması',
       'farklı etnik ve inanç gruplarının huzurlu birlikteliği',
@@ -13720,7 +13720,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12882',
     category: 'Siyaset',
-    prompt: '\'barış süreci\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'barış süreci\' de vebijêrka rast kîjan e?',
     answers: [
       'bağımsız ve tarafsız mahkemelerde savunma hakkı',
       'çatışmalı ortamı diyalogla sonlandırma aşaması',
@@ -13753,7 +13753,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12899',
     category: 'Siyaset',
-    prompt: '\'ademi merkeziyetçilik\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'ademi merkeziyetçilik\' ravekirina herî dirust kîjan e?',
     answers: [
       'Hem reel sosyalizmi hem kapitalizmi olduğu gibi',
       'gücün tek merkezden yerel birimlere dağıtılması',
@@ -13769,7 +13769,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12901',
     category: 'Siyaset',
-    prompt: '\'kuvvetler ayrılığı\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'kuvvetler ayrılığı\' ravekirina herî dirust kîjan e?',
     answers: [
       'Devleti aşan, ona alternatif bir öz yönetim',
       'Devlet-dışı, tabandan örgütlenen öz yönetimi',
@@ -13796,7 +13796,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12946',
     category: 'Siyaset',
-    prompt: '\'adil yargılanma\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'adil yargılanma\' de vebijêrka rast kîjan e?',
     answers: [
       'Farklı kimlik ve inançların bir arada yaşamasını',
       'farklı muhalif grupların ortak barış platformu',
@@ -13845,7 +13845,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12965',
     category: 'Siyaset',
-    prompt: '\'yerel özerklik şartı\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'yerel özerklik şartı\' de ravekirina rast kîjan e?',
     answers: [
       'belediyeler ve yerel kurulların oluşturduğu yönetim',
       'yerel yönetimlerin gücünü artıran uluslararası belge',
@@ -13861,7 +13861,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12981',
     category: 'Siyaset',
-    prompt: '\'anadilinde eğitim\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'anadilinde eğitim\' de vebijêrka rast kîjan e?',
     answers: [
       'Eşit yurttaşlık ve hakların tanınmasını',
       'halkların kendi diliyle eğitim alma hakkı',
@@ -13877,7 +13877,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12985',
     category: 'Siyaset',
-    prompt: '\'radikal demokrasi\' hakkında doğru olan seçenek hangisidir?',
+    prompt: 'Derbarê \'radikal demokrasi\' de vebijêrka rast kîjan e?',
     answers: [
       'Demokratik konfederalizm ve demokratik ulus tartışması',
       'sadece çoğunluğun değil azınlığın da dinlendiği yapı',
@@ -13893,7 +13893,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_12989',
     category: 'Siyaset',
-    prompt: 'Siyaset bağlamında \'idari özerklik\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Siyasetê de \'idari özerklik\' çawa divê bê fêmkirin?',
     answers: [
       'Tabandan doğrudan ve sürekli katılımı önceler',
       'Kimliğin ve kültürün kuşaklara aktarımı için',
@@ -13909,7 +13909,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13010',
     category: 'Siyaset',
-    prompt: 'Siyaset bağlamında \'toplumsal muhalefet\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Siyasetê de \'toplumsal muhalefet\' çawa divê bê fêmkirin?',
     answers: [
       'Kapitalist modernite ve merkezi ulus-devlet eleştirisi',
       'Yasal düzenlemeler ve demokratik entegrasyon adımları',
@@ -13936,7 +13936,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13030',
     category: 'Siyaset',
-    prompt: 'Siyaset bağlamında \'yerel irade\' nasıl anlaşılmalıdır?',
+    prompt: 'Di çarçoveya Siyasetê de \'yerel irade\' çawa divê bê fêmkirin?',
     answers: [
       'Toplulukların yerel olarak kendi işlerini yönetmesini',
       'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
@@ -13963,7 +13963,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13040',
     category: 'Siyaset',
-    prompt: '\'azınlık hakları\' için en isabetli açıklama hangisidir?',
+    prompt: 'Ji bo \'azınlık hakları\' ravekirina herî dirust kîjan e?',
     answers: [
       'çoğunluğa karşı farklı olan grupların korunması',
       'çatışmaları silah yerine diyalogla çözme iradesi',
@@ -13990,7 +13990,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13067',
     category: 'Siyaset',
-    prompt: 'Aşağıdakilerden hangisi \'ademi merkeziyetçilik\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'ademi merkeziyetçilik\' kîjan rast e?',
     answers: [
       'Kimlik, dil, kültürel haklar, statü ve demokratik temsil',
       'Demokratik konfederalizm ve demokratik ulus tartışması',
@@ -14023,7 +14023,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13081',
     category: 'Siyaset',
-    prompt: '\'çoğulcu demokrasi\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'çoğulcu demokrasi\' çi pêk tîne?',
     answers: [
       'siyasette kadın katılımını güvenceye alan yasal oran',
       'kendi yasalarını yapabilen yerel parlamento yetkisi',
@@ -14051,7 +14051,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13102',
     category: 'Siyaset',
-    prompt: '\'parti eş başkanlığı\' dendiğinde kastedilen nedir?',
+    prompt: 'Dema \'parti eş başkanlığı\' tê gotin, çi tê xwestin?',
     answers: [
       'Yerel yönetim, eğitim ve ekonomi gibi alanlarda',
       'partilerde kadının eşit söz sahibi olma sistemi',
@@ -14067,7 +14067,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13117',
     category: 'Siyaset',
-    prompt: 'Siyaset çerçevesinde \'siyasi ahlak\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Siyasetê de \'siyasi ahlak\' tê çi wateyê?',
     answers: [
       'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
       'Örgütsel yapının feshi ve silahlı mücadelenin sonlandırılması',
@@ -14083,7 +14083,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13122',
     category: 'Siyaset',
-    prompt: 'Siyaset açısından \'barış hakkı\' için doğru ifade hangisidir?',
+    prompt: 'Ji aliyê Siyasetê ve ji bo \'barış hakkı\' îfadeya rast kîjan e?',
     answers: [
       'toplumun dışarıdan baskı olmadan kendini yönetmesi',
       'sadece çoğunluğun değil azınlığın da dinlendiği yapı',
@@ -14099,7 +14099,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13124',
     category: 'Siyaset',
-    prompt: '\'anadili hakkı\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'anadili hakkı\' de ya rast a zanîn çi ye?',
     answers: [
       'Silah bırakma ve örgütsel yapıyı feshetme çağrısı',
       'toplumun savaşsız bir ortamda yaşama evrensel hakkı',
@@ -14115,7 +14115,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13125',
     category: 'Siyaset',
-    prompt: 'Aşağıdakilerden hangisi \'sivil katılım\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'sivil katılım\' kîjan rast e?',
     answers: [
       'resmi ve kamusal alanlarda anadilinin kullanılması',
       'bütçe harcamalarını halkın meclislerle belirlemesi',
@@ -14147,7 +14147,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13148',
     category: 'Siyaset',
-    prompt: '\'siyasi katılım\' için geçerli tanım hangisidir?',
+    prompt: 'Ji bo \'siyasi katılım\' pênaseya derbasdar kîjan e?',
     answers: [
       'vatandaşların karar alma süreçlerine müdahil olması',
       'toplumun dışarıdan baskı olmadan kendini yönetmesi',
@@ -14174,7 +14174,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13158',
     category: 'Siyaset',
-    prompt: '\'statü hakkı\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'statü hakkı\' de ravekirina rast kîjan e?',
     answers: [
       'Toplulukların yerel olarak kendi işlerini yönetmesini',
       'belediyeler ve yerel kurulların oluşturduğu yönetim',
@@ -14190,7 +14190,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13166',
     category: 'Siyaset',
-    prompt: '\'sivil katılım\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'sivil katılım\' de agahiya herî rast kîjan e?',
     answers: [
       'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
       'yerelde kendi kendini yönetme ve karar alma statüsü',
@@ -14206,7 +14206,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13169',
     category: 'Siyaset',
-    prompt: '\'toplumsal adalet\' ne anlama gelir?',
+    prompt: '\'toplumsal adalet\' tê çi wateyê?',
     answers: [
       'kaynakların ve hakların eşit paylaşılması ilkesi',
       'protesto, örgütlenme ve ifade özgürlüğü hakları',
@@ -14233,7 +14233,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13171',
     category: 'Siyaset',
-    prompt: 'Siyaset alanında \'siyasi ahlak\' neyi ifade eder?',
+    prompt: 'Di qada Siyasetê de \'siyasi ahlak\' çi îfade dike?',
     answers: [
       'Örgütsel yapının feshi ve silahlı mücadelenin sonlandırılması',
       'Kimlik, dil, kültürel haklar, statü ve demokratik temsil',
@@ -14249,7 +14249,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13193',
     category: 'Siyaset',
-    prompt: 'Aşağıdakilerden hangisi \'yerel özerklik şartı\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'yerel özerklik şartı\' kîjan rast e?',
     answers: [
       'yerel yönetimlerin gücünü artıran uluslararası belge',
       'baskı ve tasfiye yerine diyalogu seçen siyaset tarzı',
@@ -14265,7 +14265,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13228',
     category: 'Siyaset',
-    prompt: '\'parti eş başkanlığı\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'parti eş başkanlığı\' de ya rast a zanîn çi ye?',
     answers: [
       'kararların tek lider yerine kurullarla alınması',
       'partilerde kadının eşit söz sahibi olma sistemi',
@@ -14319,7 +14319,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13265',
     category: 'Siyaset',
-    prompt: 'Aşağıdakilerden hangisi \'anadili hakkı\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'anadili hakkı\' rave dike?',
     answers: [
       'bütçe harcamalarını halkın meclislerle belirlemesi',
       'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
@@ -14335,7 +14335,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13269',
     category: 'Siyaset',
-    prompt: 'Siyaset alanında \'eş başkanlık\' neyi ifade eder?',
+    prompt: 'Di qada Siyasetê de \'eş başkanlık\' çi îfade dike?',
     answers: [
       'Müzakere ve demokratik çözüme',
       'yönetimde eşit temsil sistemidir',
@@ -14367,7 +14367,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13296',
     category: 'Siyaset',
-    prompt: '\'insan hakları\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'insan hakları\' çi pêk tîne?',
     answers: [
       'barışçıl çözüm için toplumun ortak karara varması',
       'Farklı kimlik ve inançların bir arada yaşamasını',
@@ -14383,7 +14383,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13313',
     category: 'Siyaset',
-    prompt: '\'katılımcı bütçe\' ile kastedilen doğru nedir?',
+    prompt: 'Bi \'katılımcı bütçe\' çi tê xwestin? ya rast çi ye?',
     answers: [
       'kendi yasalarını yapabilen yerel parlamento yetkisi',
       'resmi ve kamusal alanlarda anadilinin kullanılması',
@@ -14427,7 +14427,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13382',
     category: 'Siyaset',
-    prompt: '\'sivil itaatsizlik\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'sivil itaatsizlik\' de ya rast a zanîn çi ye?',
     answers: [
       'barışçıl çözüm için toplumun ortak karara varması',
       'her bireyin doğuştan sahip olduğu evrensel haklar',
@@ -14443,7 +14443,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13390',
     category: 'Siyaset',
-    prompt: '\'meşruiyet\' hakkında bilinen doğru nedir?',
+    prompt: 'Derbarê \'meşruiyet\' de ya rast a zanîn çi ye?',
     answers: [
       'Silah bırakma ve örgütsel yapıyı feshetme çağrısı',
       'kaynakların ve hakların eşit paylaşılması ilkesi',
@@ -14459,7 +14459,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13391',
     category: 'Siyaset',
-    prompt: 'Hangisi \'hakikat komisyonu\' kavramını doğru betimler?',
+    prompt: 'Kîjan têgiha \'hakikat komisyonu\' rast şirove dike?',
     answers: [
       'Müzakere, demokratik reform ve hakların güvenceye alınması',
       'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
@@ -14475,7 +14475,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13393',
     category: 'Siyaset',
-    prompt: '\'meşruiyet\' kavramını doğru anlatan ifade hangisidir?',
+    prompt: 'Îfadeya ku têgiha \'meşruiyet\' rast vedibêje kîjan e?',
     answers: [
       'Farklı kimlik ve inançların bir arada yaşamasını',
       'kararların tek lider yerine kurullarla alınması',
@@ -14491,7 +14491,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13394',
     category: 'Siyaset',
-    prompt: '\'siyasi özerklik\' doğru şekilde nasıl açıklanır?',
+    prompt: '\'siyasi özerklik\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'halkın sadece seçimlerle yönetime katıldığı sistem',
       'kendi yasalarını yapabilen yerel parlamento yetkisi',
@@ -14507,7 +14507,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13428',
     category: 'Siyaset',
-    prompt: 'Aşağıda \'yerel özerklik şartı\' için doğru olan hangisidir?',
+    prompt: 'Li jêr ji bo \'yerel özerklik şartı\' ya rast kîjan e?',
     answers: [
       'yerel yönetimlerin gücünü artıran uluslararası belge',
       'kendi yasalarını yapabilen yerel parlamento yetkisi',
@@ -14523,7 +14523,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13432',
     category: 'Siyaset',
-    prompt: 'Aşağıdakilerden hangisi \'kuvvetler ayrılığı\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'kuvvetler ayrılığı\' kîjan rast e?',
     answers: [
       'yasama, yürütme ve yargının bağımsız olması',
       'halkın siyasi kararlara bizzat dahil olması',
@@ -14562,7 +14562,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13474',
     category: 'Siyaset',
-    prompt: '\'doğrudan katılım\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'doğrudan katılım\' çi pêk tîne?',
     answers: [
       'kararların halka en yakın birimlerde alınması',
       'Kimlik, dil, statü ve haklar sorunu olarak',
@@ -14578,7 +14578,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13483',
     category: 'Siyaset',
-    prompt: 'Aşağıdakilerden hangisi \'siyasi özerklik\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'siyasi özerklik\' rave dike?',
     answers: [
       'kendi yasalarını yapabilen yerel parlamento yetkisi',
       'belediyeler ve yerel kurulların oluşturduğu yönetim',
@@ -14627,7 +14627,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13513',
     category: 'Siyaset',
-    prompt: '\'temsili demokrasi\' ifadesi Siyaset bağlamında anlamlıdır.',
+    prompt: 'Biwêja \'temsili demokrasi\' di çarçoveya Siyasetê de watedar e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -14666,7 +14666,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13527',
     category: 'Siyaset',
-    prompt: '\'meşruiyet\' ne anlama gelir?',
+    prompt: '\'meşruiyet\' tê çi wateyê?',
     answers: [
       'kaynakların ve hakların eşit paylaşılması ilkesi',
       'yönetimin halkın rızasına ve hukuka uygun olması',
@@ -14693,7 +14693,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13547',
     category: 'Siyaset',
-    prompt: 'Aşağıdakilerden hangisi \'demokratik anayasa\' için doğrudur?',
+    prompt: 'Li jêr ji bo \'demokratik anayasa\' kîjan rast e?',
     answers: [
       'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
       'çoğunluğa karşı farklı olan grupların korunması',
@@ -14726,7 +14726,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13557',
     category: 'Siyaset',
-    prompt: '\'toplumsal adalet\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'toplumsal adalet\' de vebijêrka rast kîjan e?',
     answers: [
       'protesto, örgütlenme ve ifade özgürlüğü hakları',
       'Farklı kimlik ve inançların bir arada yaşamasını',
@@ -14742,7 +14742,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13574',
     category: 'Siyaset',
-    prompt: '\'demokratik uzlaşı\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'demokratik uzlaşı\' çi pêk tîne?',
     answers: [
       'Eşit yurttaşlık ve hakların tanınmasını',
       'yasama, yürütme ve yargının bağımsız olması',
@@ -14790,7 +14790,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13590',
     category: 'Siyaset',
-    prompt: 'Aşağıda \'azınlık hakları\' için doğru olan hangisidir?',
+    prompt: 'Li jêr ji bo \'azınlık hakları\' ya rast kîjan e?',
     answers: [
       'çoğunluğa karşı farklı olan grupların korunması',
       'Farklı kimlik ve inançların bir arada yaşamasını',
@@ -14806,7 +14806,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13597',
     category: 'Siyaset',
-    prompt: '\'demokratik haklar beyannamesi\' için geçerli tanım hangisidir?',
+    prompt: 'Ji bo \'demokratik haklar beyannamesi\' pênaseya derbasdar kîjan e?',
     answers: [
       'Kadın özgürlüğü ve çoğulcu öz yönetimle',
       'Kürt siyasi yapıları ve belediyeler',
@@ -14822,7 +14822,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13600',
     category: 'Siyaset',
-    prompt: '\'meclis sistemi\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'meclis sistemi\' de agahiya herî rast kîjan e?',
     answers: [
       'kararların tek lider yerine kurullarla alınması',
       'tüm farklı kesimleri kapsayan özgürlükçü anayasa',
@@ -14838,7 +14838,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13604',
     category: 'Siyaset',
-    prompt: '\'demokratik haklar\' kavramını doğru anlatan ifade hangisidir?',
+    prompt: 'Îfadeya ku têgiha \'demokratik haklar\' rast vedibêje kîjan e?',
     answers: [
       'çatışmalı ortamı diyalogla sonlandırma aşaması',
       'anayasal güvence ve kültürel hakların tanınması',
@@ -14888,7 +14888,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13643',
     category: 'Siyaset',
-    prompt: '\'insan hakları\' ifadesinin doğru karşılığı hangisidir?',
+    prompt: 'Berambera rast a biwêja \'insan hakları\' kîjan e?',
     answers: [
       'dernekler ve inisiyatiflerle yönetime müdahil olma',
       'kaynakların ve hakların eşit paylaşılması ilkesi',
@@ -14904,7 +14904,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13647',
     category: 'Siyaset',
-    prompt: 'Siyaset alanında \'demokratik uzlaşı\' neyi ifade eder?',
+    prompt: 'Di qada Siyasetê de \'demokratik uzlaşı\' çi îfade dike?',
     answers: [
       'yasama, yürütme ve yargının bağımsız olması',
       'Kadın-erkek eşit temsili ve ortak yönetimi',
@@ -14920,7 +14920,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13649',
     category: 'Siyaset',
-    prompt: 'Siyaset için \'eş başkanlık\' hakkında doğru seçenek hangisidir?',
+    prompt: 'Ji bo Siyasetê derbarê \'eş başkanlık\' de vebijêrka rast kîjan e?',
     answers: [
       'temel hakları listeleyen kurucu belge',
       'Meclisler, örgütlenme ve müzakere',
@@ -14935,7 +14935,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13654',
     category: 'Siyaset',
-    prompt: '\'anadili hakkı\' kavramı neyi karşılar?',
+    prompt: 'Têgiha \'anadili hakkı\' çi pêk tîne?',
     answers: [
       'yerelde kendi kendini yönetme ve karar alma statüsü',
       'toplumun dışarıdan baskı olmadan kendini yönetmesi',
@@ -14951,7 +14951,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13657',
     category: 'Siyaset',
-    prompt: 'Siyaset alanında \'toplumsal uzlaşı\' neyi ifade eder?',
+    prompt: 'Di qada Siyasetê de \'toplumsal uzlaşı\' çi îfade dike?',
     answers: [
       'barışçıl çözüm için toplumun ortak karara varması',
       'bütçe harcamalarını halkın meclislerle belirlemesi',
@@ -14978,7 +14978,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13691',
     category: 'Siyaset',
-    prompt: '\'demokratik siyaset\' konusunda hangisi doğrudur?',
+    prompt: 'Derbarê \'demokratik siyaset\' de kîjan rast e?',
     answers: [
       'Yasal düzenlemeler ve demokratik entegrasyon adımları',
       'belediyeler ve yerel kurulların oluşturduğu yönetim',
@@ -14994,7 +14994,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13729',
     category: 'Siyaset',
-    prompt: '\'müzakere\' ile bağdaşan doğru açıklama hangisidir?',
+    prompt: 'Derbarê \'müzakere\' de ravekirina rast kîjan e?',
     answers: [
       'Kadın özgürlüğü ve çoğulcu öz yönetimle',
       'Kadın-erkek eşit temsili ve ortak yönetimi',
@@ -15009,7 +15009,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13732',
     category: 'Siyaset',
-    prompt: 'Aşağıdakilerden hangisi \'özyönetim hakkı\' kavramını açıklar?',
+    prompt: 'Li jêr kîjan têgiha \'özyönetim hakkı\' rave dike?',
     answers: [
       'her bireyin doğuştan sahip olduğu evrensel haklar',
       'toplumun dışarıdan baskı olmadan kendini yönetmesi',
@@ -15036,7 +15036,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13745',
     category: 'Siyaset',
-    prompt: '\'çoğulculuk\' ile ilgili en doğru bilgi hangisidir?',
+    prompt: 'Derbarê \'çoğulculuk\' de agahiya herî rast kîjan e?',
     answers: [
       'Yasal düzenlemeler ve demokratik entegrasyon adımları',
       'Demokratik konfederalizm ve demokratik ulus tartışması',
@@ -15090,7 +15090,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13767',
     category: 'Siyaset',
-    prompt: '\'Barış hakkı\' Siyaset açısından anlamsız bir ifadedir.',
+    prompt: '\'Barış hakkı\' ji aliyê Siyasetê ve biwêjek bêwate ye.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -15118,7 +15118,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13783',
     category: 'Siyaset',
-    prompt: '\'yerel irade\' ifadesinin doğru karşılığı hangisidir?',
+    prompt: 'Berambera rast a biwêja \'yerel irade\' kîjan e?',
     answers: [
       'geçmişteki acıları araştırıp toplumsal barışı kuran kurul',
       'farklı etnik ve inanç gruplarının huzurlu birlikteliği',
@@ -15151,7 +15151,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13799',
     category: 'Siyaset',
-    prompt: '\'yerel demokrasi\' nasıl tanımlanır?',
+    prompt: '\'yerel demokrasi\' çawa tê pênasekirin?',
     answers: [
       'kararların halka en yakın birimlerde alınması',
       'halkın siyasi kararlara bizzat dahil olması',
@@ -15167,7 +15167,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13813',
     category: 'Siyaset',
-    prompt: 'Siyaset çerçevesinde \'yerel yönetim\' ne anlama gelir?',
+    prompt: 'Di çarçoveya Siyasetê de \'yerel yönetim\' tê çi wateyê?',
     answers: [
       'Kapitalist modernite ve merkezi ulus-devlet eleştirisi',
       'siyasette dürüstlük ve toplumsal yararı önceleme ilkeleri',
@@ -15183,7 +15183,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_13817',
     category: 'Siyaset',
-    prompt: '\'cinsiyet kotası\' ile ilgili doğru seçenek hangisidir?',
+    prompt: 'Derbarê \'cinsiyet kotası\' de vebijêrka rast kîjan e?',
     answers: [
       'Toplulukların yerel olarak kendi işlerini yönetmesini',
       'siyasette kadın katılımını güvenceye alan yasal oran',

@@ -387,12 +387,10 @@ class _SignInScreenState extends State<SignInScreen>
                                             textAlign: TextAlign.center,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
+                                            style: AppTypography.caption.copyWith(
                                               color: AppTheme.textMutedColor(
                                                 context,
                                               ),
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 12,
                                             ),
                                           ),
                                         ),
@@ -501,7 +499,7 @@ class _SignInScreenState extends State<SignInScreen>
                                                   'Şîfre ji bîr kir?',
                                                   'Parolayı unuttun mu?',
                                                 ),
-                                                style: TextStyle(
+                                                style: AppTypography.bodyMedium.copyWith(
                                                   color: AppTheme.textSubColor(
                                                     context,
                                                   ),
@@ -546,9 +544,8 @@ class _SignInScreenState extends State<SignInScreen>
                                           'Hesabê te tune? ',
                                           'Hesabın yok mu? ',
                                         ),
-                                        style: TextStyle(
+                                        style: AppTypography.bodyMedium.copyWith(
                                           color: AppTheme.textSubColor(context),
-                                          fontSize: 14,
                                         ),
                                       ),
                                       GestureDetector(
@@ -559,10 +556,9 @@ class _SignInScreenState extends State<SignInScreen>
                                         },
                                         child: Text(
                                           context.s('Tomar bibe', 'Kaydol'),
-                                          style: TextStyle(
+                                          style: AppTypography.bodyMedium.copyWith(
                                             color: AppTheme.accent,
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 14,
                                           ),
                                         ),
                                       ),
@@ -663,12 +659,10 @@ class _SignInScreenState extends State<SignInScreen>
                                         textAlign: TextAlign.center,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
+                                        style: AppTypography.caption.copyWith(
                                           color: AppTheme.textMutedColor(
                                             context,
                                           ),
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 12,
                                         ),
                                       ),
                                     ),
@@ -819,9 +813,8 @@ class _SignInScreenState extends State<SignInScreen>
                                       'Hesabê te tune? ',
                                       'Hesabın yok mu? ',
                                     ),
-                                    style: TextStyle(
+                                    style: AppTypography.bodyMedium.copyWith(
                                       color: AppTheme.textSubColor(context),
-                                      fontSize: 14,
                                     ),
                                   ),
                                   GestureDetector(
@@ -832,10 +825,9 @@ class _SignInScreenState extends State<SignInScreen>
                                     },
                                     child: Text(
                                       context.s('Tomar bibe', 'Kaydol'),
-                                      style: TextStyle(
+                                      style: AppTypography.bodyMedium.copyWith(
                                         color: AppTheme.accent,
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 14,
                                       ),
                                     ),
                                   ),
@@ -1235,10 +1227,9 @@ class _LanguageChip extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: TextStyle(
+          style: AppTypography.caption.copyWith(
             color: active ? Colors.white : AppTheme.textMutedColor(context),
             fontWeight: FontWeight.w800,
-            fontSize: 12,
             letterSpacing: 0.5,
           ),
         ),

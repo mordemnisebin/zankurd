@@ -49,8 +49,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('mastery-badge-Ziman')), findsOneWidget);
-    expect(find.text('Öğrenci · 25/100'), findsOneWidget);
+    // Pirs redesign: mastery badge has no key; use mastery title text
+    expect(find.text('Öğrenci'), findsOneWidget);
   });
 
   testWidgets('kart dokunuşu SubcategoryScreen açar', (tester) async {

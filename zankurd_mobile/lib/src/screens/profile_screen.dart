@@ -235,9 +235,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Text(
                       ku ? 'Kurdî / Tirkî' : 'Kürtçe / Türkçe',
-                      style: TextStyle(
+                      style: AppTypography.caption.copyWith(
                         color: AppTheme.textMutedColor(context),
-                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -256,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               Text(
                 ku ? 'Statîstîkên Min' : 'İstatistiklerim',
-                style: TextStyle(
+                style: AppTypography.bodyLarge.copyWith(
                   color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w700,
                   fontSize: 17,
@@ -313,7 +312,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Text(
                 ku ? 'Performansa Heftane' : 'Haftalık Performans',
-                style: TextStyle(
+                style: AppTypography.bodyLarge.copyWith(
                   color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w800,
                   fontSize: 15,
@@ -520,9 +519,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: TextStyle(
+                      style: AppTypography.caption.copyWith(
                         color: AppTheme.textMutedColor(context),
-                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -821,7 +819,7 @@ class _Tab extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(
+        style: AppTypography.bodyMedium.copyWith(
           color: active ? Colors.white : AppTheme.textMutedColor(context),
           fontWeight: FontWeight.w800,
           fontSize: 13,
@@ -1095,7 +1093,7 @@ class _StatTile extends StatelessWidget {
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTypography.heading2.copyWith(color: color, fontSize: 17),
+            style: AppTypography.bodyLarge.copyWith(color: color, fontSize: 17),
           ),
           Text(
             label,
@@ -1142,9 +1140,8 @@ class _AchievementShowcase extends StatelessWidget {
                 children: [
                   Text(
                     isKu ? 'Hemû Rozet' : 'Tüm Rozetler',
-                    style: TextStyle(
+                    style: AppTypography.heading2.copyWith(
                       color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w700,
                       fontSize: 20,
                     ),
                   ),
@@ -1203,12 +1200,11 @@ class _AchievementShowcase extends StatelessWidget {
                                   definition.title(isKu),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
+                                  style: AppTypography.caption.copyWith(
                                     color: isUnlocked
                                         ? AppTheme.textPrimaryColor(context)
                                         : AppTheme.textMutedColor(context),
                                     fontWeight: FontWeight.w800,
-                                    fontSize: 12,
                                   ),
                                 ),
                                 const SizedBox(height: 2),
@@ -1216,7 +1212,7 @@ class _AchievementShowcase extends StatelessWidget {
                                   definition.description(isKu),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
+                                  style: AppTypography.caption.copyWith(
                                     color: AppTheme.textMutedColor(context),
                                     fontSize: 9,
                                   ),
@@ -1249,7 +1245,7 @@ class _AchievementShowcase extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 isKu ? 'Rozet' : 'Rozetler',
-                style: TextStyle(
+                style: AppTypography.bodyLarge.copyWith(
                   color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w700,
                   fontSize: 17,
@@ -1349,7 +1345,7 @@ class _MasterySection extends StatelessWidget {
                   isKu ? 'Ustalîya Kategoriyê' : 'Kategori Ustalığı',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: AppTypography.bodyLarge.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w700,
                     fontSize: 17,
@@ -1397,7 +1393,7 @@ class _MasteryRow extends StatelessWidget {
             width: 76,
             child: Text(
               CategoryNames.localized(category, isKu),
-              style: TextStyle(
+              style: AppTypography.bodyMedium.copyWith(
                 color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w700,
                 fontSize: 13,
@@ -1422,10 +1418,9 @@ class _MasteryRow extends StatelessWidget {
                     : (isKu ? level.titleKu : level.titleTr),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: AppTypography.caption.copyWith(
                   color: badgeColor,
                   fontSize: 10,
-                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
@@ -1447,7 +1442,7 @@ class _MasteryRow extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   isMamoste ? '✓' : '$count/$threshold',
-                  style: TextStyle(
+                  style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
                     fontSize: 9,
                   ),
@@ -1483,10 +1478,9 @@ class _AchievementChip extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             achievement.title(isKu),
-            style: TextStyle(
+            style: AppTypography.caption.copyWith(
               color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w800,
-              fontSize: 12,
             ),
           ),
         ],
@@ -1595,7 +1589,7 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                       isKu ? 'Analîza Performansê' : 'Performans Analizi',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: AppTypography.bodyLarge.copyWith(
                         color: AppTheme.textPrimaryColor(context),
                         fontWeight: FontWeight.w700,
                         fontSize: 17,
@@ -1612,9 +1606,8 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                   isKu
                       ? 'Performansa li gor kategoriyan'
                       : 'Kategorilere göre performans',
-                  style: TextStyle(
+                  style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
-                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -1632,9 +1625,8 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                                 : CategoryNames.localized(bar.category, false),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: AppTypography.caption.copyWith(
                               color: AppTheme.textPrimaryColor(context),
-                              fontSize: 12,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -1668,9 +1660,8 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                           child: Text(
                             '${bar.correct}',
                             textAlign: TextAlign.right,
-                            style: TextStyle(
+                            style: AppTypography.caption.copyWith(
                               color: AppTheme.correct,
-                              fontSize: 12,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
@@ -1708,7 +1699,7 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                   isKu
                       ? 'Kategoriya te ya herî bihêz:'
                       : 'En güçlü olduğun kategori:',
-                  style: TextStyle(
+                  style: AppTypography.bodyMedium.copyWith(
                     color: AppTheme.textMutedColor(context),
                     fontSize: 13,
                   ),
@@ -1730,10 +1721,9 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                       ),
                       child: Text(
                         strongestCat,
-                        style: TextStyle(
+                        style: AppTypography.bodyMedium.copyWith(
                           color: AppTheme.correct,
                           fontWeight: FontWeight.bold,
-                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -1745,9 +1735,8 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                             : '$maxCorrect doğru cevap',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: AppTypography.bodyMedium.copyWith(
                           color: AppTheme.textPrimaryColor(context),
-                          fontSize: 13,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -1762,7 +1751,7 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                   isKu
                       ? 'Kategoriya ku divê tu pêş bixî:'
                       : 'Geliştirilmesi gereken alan:',
-                  style: TextStyle(
+                  style: AppTypography.bodyMedium.copyWith(
                     color: AppTheme.textMutedColor(context),
                     fontSize: 13,
                   ),
@@ -1784,10 +1773,9 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                       ),
                       child: Text(
                         weakestCat,
-                        style: TextStyle(
+                        style: AppTypography.bodyMedium.copyWith(
                           color: Colors.orange,
                           fontWeight: FontWeight.bold,
-                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -1799,9 +1787,8 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                             : '$maxMistakes aktif yanlış soru',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: AppTypography.bodyMedium.copyWith(
                           color: AppTheme.textPrimaryColor(context),
-                          fontSize: 13,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -1849,7 +1836,7 @@ class _LegendDot extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           label,
-          style: TextStyle(
+          style: AppTypography.caption.copyWith(
             color: AppTheme.textMutedColor(context),
             fontSize: 10,
             fontWeight: FontWeight.w600,

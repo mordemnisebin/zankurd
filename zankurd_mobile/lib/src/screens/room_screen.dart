@@ -639,7 +639,10 @@ class _RoomScreenState extends State<RoomScreen> {
     });
     final questions = await widget.repository
         .loadRoomQuestions(room)
-        .catchError((_) => widget.repository.questions);
+        .catchError((error, stack) {
+          ErrorReporter.record(error, stack, reason: 'loadRoomQuestions fallback');
+          return widget.repository.questions;
+        });
     if (!mounted) return;
     setState(() => starting = false);
     Navigator.of(context).push(

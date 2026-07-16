@@ -434,10 +434,8 @@ class _BadgeLabel extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             label,
-            style: const TextStyle(
+            style: AppTypography.caption.copyWith(
               color: AppTheme.primaryGradientStart,
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
             ),
           ),
         ],
@@ -478,7 +476,7 @@ class _LeaderboardRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(_rankEmoji(row.rank), style: const TextStyle(fontSize: 18)),
+          Text(_rankEmoji(row.rank), style: AppTypography.bodyLarge),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -488,10 +486,9 @@ class _LeaderboardRow extends StatelessWidget {
                   row.displayName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: AppTypography.bodyMedium.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w700,
-                    fontSize: 13,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -499,9 +496,8 @@ class _LeaderboardRow extends StatelessWidget {
                   ku
                       ? '${row.correctCount} rast · ${row.score} pûan'
                       : '${row.correctCount} doğru · ${row.score} puan',
-                  style: TextStyle(
+                  style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
-                    fontSize: 11,
                   ),
                 ),
               ],
@@ -515,10 +511,9 @@ class _LeaderboardRow extends StatelessWidget {
             ),
             child: Text(
               '${row.score}',
-              style: const TextStyle(
+              style: AppTypography.caption.copyWith(
                 color: AppTheme.primaryGradientStart,
                 fontWeight: FontWeight.w800,
-                fontSize: 13,
               ),
             ),
           ),

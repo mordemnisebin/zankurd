@@ -64,31 +64,37 @@ void main() {
     );
   });
 
-  testWidgets('iki baskın CTA ve düşük ağırlıklı ikincil bölüm taşır', (
-    tester,
-  ) async {
+  testWidgets('primary CTA ve ikincil butonları taşır', (tester) async {
     await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
+    // Primary: play again
+    expect(find.text('Tekrar oyna'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('result-play-again-button')),
+      findsOneWidget,
+    );
+
+    // Secondary: review
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('result-review-button')),
+    );
+    expect(find.text('İncele'), findsOneWidget);
+
+    // Secondary: home
     await tester.ensureVisible(
       find.byKey(const ValueKey('result-home-button')),
     );
-    final button = tester.widget<FilledButton>(
+    final homeBtn = tester.widget<TextButton>(
       find.byKey(const ValueKey('result-home-button')),
     );
-    expect(button.style?.backgroundColor?.resolve({}), AppTheme.brandOrange);
-    expect(find.text('Tekrar oyna'), findsOneWidget);
-    expect(find.byKey(const ValueKey('result-exit-button')), findsOneWidget);
-    expect(
-      find.byKey(const ValueKey('result-secondary-actions')),
-      findsOneWidget,
-    );
-    expect(find.text('Diğer seçenekler'), findsOneWidget);
-    expect(
-      find.byKey(const ValueKey('result-review-wrong-button')),
-      findsOneWidget,
-    );
+    expect(homeBtn.onPressed, isNotNull);
+    expect(find.text('Ana Sayfa'), findsOneWidget);
+
+    // Subtle links
+    expect(find.text('Sadece yanlışlar'), findsOneWidget);
+    expect(find.text('Liderlik tablosu'), findsOneWidget);
   });
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {

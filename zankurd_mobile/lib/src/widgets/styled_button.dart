@@ -34,16 +34,20 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
 
     const double shadowHeight = 4.0;
 
-    return GestureDetector(
-      onTapDown: isEnabled ? (_) => setState(() => _isPressed = true) : null,
-      onTapUp: isEnabled
-          ? (_) {
-              setState(() => _isPressed = false);
-              widget.onPressed?.call();
-            }
-          : null,
-      onTapCancel: isEnabled ? () => setState(() => _isPressed = false) : null,
-      child: AnimatedContainer(
+    return Semantics(
+      button: true,
+      label: widget.label,
+      enabled: isEnabled,
+      child: GestureDetector(
+        onTapDown: isEnabled ? (_) => setState(() => _isPressed = true) : null,
+        onTapUp: isEnabled
+            ? (_) {
+                setState(() => _isPressed = false);
+                widget.onPressed?.call();
+              }
+            : null,
+        onTapCancel: isEnabled ? () => setState(() => _isPressed = false) : null,
+        child: AnimatedContainer(
         duration: const Duration(milliseconds: 90),
         curve: Curves.easeOut,
         height: 48,
@@ -94,6 +98,7 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

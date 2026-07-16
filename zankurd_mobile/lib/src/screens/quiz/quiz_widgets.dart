@@ -725,21 +725,11 @@ class _AnswerButton extends StatelessWidget {
   final List<String>? opponentNamesWhoSelected;
   final bool isCompact;
 
-  // A/B/C/D rozetleriyle eşleşen kenarlık renkleri
-  static const _badgePalette = [
-    Color(0xFFD65A31), // A — Terracotta / Kil Kırmızısı
-    Color(0xFF2B5C8F), // B — Asil Kobalt Mavisi
-    Color(0xFF1E5F47), // C — Derin Orman Yeşili
-    Color(0xFFD4AF37), // D — Sıcak Altın Sarısı
-  ];
-
   @override
   Widget build(BuildContext context) {
     final wrong =
         (!suspense && selected && !correct && disabled) || firstAttemptWrong;
     final isChecking = selected && (suspense || !disabled);
-
-    final badgeColor = _badgePalette[index % _badgePalette.length];
 
     // Gradient belirleme
     final Gradient gradient = correct
@@ -757,13 +747,16 @@ class _AnswerButton extends StatelessWidget {
             ],
           );
 
+    // Dinlenme halinde nötr kenarlık: dört şıkkın dört ayrı renkte
+    // çerçevesi paneli karmaşıklaştırıyordu (Pirs referansı: sakin beyaz
+    // satırlar, renk yalnız rozette ve durum geri bildiriminde).
     final Color borderColor = correct
         ? AppTheme.correct
         : wrong
         ? AppTheme.wrong
         : isChecking
         ? AppTheme.brandOrange
-        : badgeColor.withValues(alpha: 0.40);
+        : AppTheme.borderColor(context);
 
     // Metin rengi
     final Color textColor = (correct || wrong || isChecking)
@@ -777,7 +770,7 @@ class _AnswerButton extends StatelessWidget {
         ? const Color(0xFFD61A4C)
         : isChecking
         ? AppTheme.brandOrange
-        : badgeColor;
+        : Colors.black;
 
     final isPressed = selected;
     final letter = String.fromCharCode(65 + (index % 26));
@@ -809,7 +802,31 @@ class _AnswerButton extends StatelessWidget {
         child: InkWell(
           onTap: disabled ? null : onTap,
           borderRadius: BorderRadius.circular(AppRadius.md),
-          child: AnimatedContainer(
+          child: TweenAnimationBuilder<double>(
+            key: ValueKey('shake_$wrong'),
+            duration: const Duration(milliseconds: 300),
+            tween: Tween<double>(begin: 0.0, end: wrong ? 1.0 : 0.0),
+            builder: (context, t, child) {
+              if (!wrong) return child!;
+              final shake = sin(t * 4 * pi) * (1.0 - t) * 4.0;
+              return Transform.translate(
+                offset: Offset(shake, 0),
+                child: child,
+              );
+            },
+            child: TweenAnimationBuilder<double>(
+              key: ValueKey('bounce_$correct'),
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeOutBack,
+              tween: Tween<double>(
+                begin: correct ? 0.95 : 1.0,
+                end: 1.0,
+              ),
+              builder: (context, scale, child) => Transform.scale(
+                scale: scale,
+                child: child,
+              ),
+              child: AnimatedContainer(
             duration: const Duration(milliseconds: 150),
             curve: Curves.easeOutCubic,
             width: double.infinity,
@@ -822,8 +839,22 @@ class _AnswerButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadius.md),
               border: Border.all(color: borderColor, width: 2.0),
               boxShadow: isPressed
-                  ? []
+                  ? (correct
+                      ? [
+                          BoxShadow(
+                            color: Colors.white.withValues(alpha: 0.15),
+                            blurRadius: 10,
+                            spreadRadius: 0,
+                          ),
+                        ]
+                      : [])
                   : [
+                      if (correct)
+                        BoxShadow(
+                          color: Colors.white.withValues(alpha: 0.15),
+                          blurRadius: 10,
+                          spreadRadius: 0,
+                        ),
                       BoxShadow(
                         color: shadowColor.withValues(alpha: 0.28),
                         offset: const Offset(0, 4),
@@ -865,12 +896,14 @@ class _AnswerButton extends StatelessWidget {
                               Icons.check_circle_outline,
                               key: ValueKey('correct_icon'),
                               color: Colors.white,
+                              size: 28,
                             )
                           : wrong
                           ? const Icon(
                               Icons.cancel_outlined,
                               key: ValueKey('wrong_icon'),
                               color: Colors.white,
+                              size: 28,
                             )
                           : const SizedBox.shrink(key: ValueKey('empty_icon')),
                     ),
@@ -934,10 +967,12 @@ class _AnswerButton extends StatelessWidget {
                   ),
                 ],
               ],
-            ),
-          ),
-        ),
-      ),
+            ), // Column
+          ), // AnimatedContainer
+        ), // bounce TweenAnimationBuilder
+      ), // shake TweenAnimationBuilder
+    ), // InkWell
+  ), // AnimatedPadding
     );
   }
 }
@@ -957,12 +992,12 @@ class _OptionBadge extends StatelessWidget {
   final bool stateActive;
   final Color stateColor;
 
-  /// TRT tarzı çok-renkli şıklar: A kırmızı, B mavi, C yeşil, D amber.
+  /// TRT tarzı çok-renkli şıklar: A kırmızı, B mavi, C yeşil, D amber (canlı tonlar).
   static const _palette = [
-    Color(0xFFD65A31),
-    Color(0xFF2B5C8F),
-    Color(0xFF1E5F47),
-    Color(0xFFD4AF37),
+    Color(0xFFE8482F),
+    Color(0xFF1A6FCF),
+    Color(0xFF0D8A4C),
+    Color(0xFFE6B800),
   ];
 
   @override
