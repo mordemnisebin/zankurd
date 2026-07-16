@@ -4,6 +4,24 @@ import 'package:zankurd_mobile/src/screens/splash_screen.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 
 void main() {
+  testWidgets('logo karesini gizlemek için her temada beyaz zemin kullanır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData.dark(),
+        home: const SplashScreen(
+          next: SizedBox.shrink(),
+          duration: Duration(hours: 1),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
+    expect(scaffold.backgroundColor, Colors.white);
+  });
+
   testWidgets('logoyu büyük gösterir', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(

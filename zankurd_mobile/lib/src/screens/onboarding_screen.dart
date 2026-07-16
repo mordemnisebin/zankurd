@@ -108,7 +108,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                       : AppSpacing.xs;
                   final headerHeight = compact
                       ? 90.0
-                      : (constraints.maxHeight < 720 ? 115.0 : 150.0);
+                      : (constraints.maxHeight < 720 ? 140.0 : 180.0);
                   final buttonMaxWidth = wide ? 520.0 : double.infinity;
 
                   return Padding(
@@ -140,7 +140,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                     child: _AnimatedBrandLockup(
                                       scale: _brandScale,
                                       opacity: _brandOpacity,
-                                      logoWidth: compact ? 48 : 68,
+                                      logoWidth: compact ? 48 : 96,
                                       showTagline: !wideCompact,
                                     ),
                                   ),
