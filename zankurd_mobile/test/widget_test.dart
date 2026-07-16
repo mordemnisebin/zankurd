@@ -1315,7 +1315,8 @@ void main() {
     await tester.tap(find.text(question.displayAnswers.first).first);
     await tester.pumpAndSettle();
 
-    expect(find.text('Doğru cevap'), findsOneWidget);
+    // Yarışma modunda tur içi açıklama gösterilmez (çözümler oyun sonunda).
+    expect(find.text('Doğru cevap'), findsNothing);
   });
 
   testWidgets('quiz question panel renders the polished visual accents', (
@@ -1630,11 +1631,9 @@ void main() {
       final nextButton = last
           ? find.byIcon(Icons.flag_outlined)
           : find.byIcon(Icons.arrow_forward_rounded);
-      await tester.scrollUntilVisible(
-        nextButton,
-        120,
-        scrollable: find.byType(Scrollable).last,
-      );
+      // Açıklama paneli yarışma modunda artık gösterilmediği için içerik
+      // ekrana sığar; kaydırılabilir alan olmayabilir.
+      await tester.ensureVisible(nextButton.last);
       await tester.pumpAndSettle();
       await tester.tap(nextButton.last);
       await tester.pumpAndSettle();
@@ -1751,6 +1750,8 @@ void main() {
             room: room,
             questions: [question],
             enableTimer: false,
+            // Tur içi açıklama yalnız Öğrenme Bölgesi'nde gösterilir.
+            experience: QuizExperience.learning,
           ),
         ),
       ),

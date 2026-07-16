@@ -42,11 +42,10 @@ Offline bankada aynı aileden kalan 3 prompt da düzeltildi
 
 ## Durum
 
-- SQL migration **hazır ama canlıya UYGULANMADI** — otonom oturumda canlı
-  üretim DB yazımı onay gerektirdiği için bekletildi.
-- Uygulamak için (Supabase SQL Editor veya Management API):
-  dosyayı olduğu gibi çalıştır (`begin/commit` içerir).
-- Uygulama sonrası beklenen onaylı soru sayısı: 3.836 → 3.769.
+- SQL migration **2026-07-16'da kullanıcı onayıyla CANLIYA UYGULANDI**
+  (Management API). Doğrulama: onaylı soru 3.836 → 3.769; 98 `Bi Kurmancî`
+  + 25 `Di wêneyê de` promptu canlıda; `Görsel*` şablonu onaylılarda 0;
+  yedek tablo `questions_editorial_backup_20260716` 342 satır.
 - Kategori başına onaylı soru sayısı kaldırmalardan sonra da her seviye
   için yeterli (en çok etkilenen Dîrok ~-22, Cografya ~-17).
 

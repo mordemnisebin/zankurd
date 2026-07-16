@@ -100,6 +100,8 @@ void main() {
           room: repository.createRoom(),
           questions: [question],
           enableTimer: false,
+          // Tur içi açıklama artık yalnız Öğrenme Bölgesi'nde gösterilir.
+          experience: QuizExperience.learning,
         ),
       ),
     );

@@ -737,10 +737,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   // ─── Portrait layout: sabit header, kaydırılabilir orta, sabit alt bar ──
 
   Widget _buildPortraitLayout() {
-    // Multiplayer'da açıklama sadece reveal phase'de gösterilir.
-    final showExpl = _isMultiplayer
-        ? (_mpPhase == _MultiplayerPhase.reveal)
-        : _showExplanation;
+    // Yarışma modlarında (solo/1v1/oda) tur içinde açıklama gösterilmez:
+    // panel altta belirince FittedBox tüm soruyu küçültüp gözü yoruyordu
+    // (2026-07-16 kullanıcı geri bildirimi). Çözümler oyun sonunda
+    // ReviewScreen'de ("Vekolîn"). Öğrenme Bölgesi'nde anında açıklama
+    // pedagojik olarak gerekli, orada kalır.
+    final showExpl = _isLearningExperience && _showExplanation;
 
     final screenHeight = MediaQuery.sizeOf(context).height;
 
@@ -807,9 +809,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   // ─── Landscape layout: mevcut yapı korunuyor ────────────────────────────
 
   Widget _buildLandscapeLayout() {
-    final showExpl = _isMultiplayer
-        ? (_mpPhase == _MultiplayerPhase.reveal)
-        : _showExplanation;
+    // Portrait ile aynı kural: tur içi açıklama yalnız Öğrenme Bölgesi'nde.
+    final showExpl = _isLearningExperience && _showExplanation;
 
     return LayoutBuilder(
       builder: (context, constraints) => FittedBox(
