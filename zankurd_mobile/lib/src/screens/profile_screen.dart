@@ -26,7 +26,6 @@ import 'avatar_editor_screen.dart';
 import 'favorite_questions_screen.dart';
 import 'quiz_screen.dart';
 import 'friends_screen.dart';
-import 'community_screen.dart';
 import 'settings_screen.dart';
 import 'suggest_question_screen.dart';
 import 'shop_screen.dart';
@@ -681,21 +680,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () {
                   Navigator.of(context).push(
                     AppRoute.to(FriendsScreen(repository: widget.repository)),
-                  );
-                },
-              ),
-              divider,
-              _menuRow(
-                leading: const Icon(
-                  Icons.leaderboard_outlined,
-                  color: AppTheme.playCyan,
-                  size: 20,
-                ),
-                iconColor: AppTheme.playCyan,
-                title: ku ? 'Civak û Lîg' : 'Topluluk ve Ligler',
-                onTap: () {
-                  Navigator.of(context).push(
-                    AppRoute.to(CommunityScreen(repository: widget.repository)),
                   );
                 },
               ),

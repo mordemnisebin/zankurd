@@ -1560,7 +1560,7 @@ void main() {
     expect(find.byKey(const ValueKey('profile-settings-top')), findsOneWidget);
   });
 
-  testWidgets('opens the leaderboard from the home screen', (tester) async {
+  testWidgets('opens the leaderboard from the bottom nav', (tester) async {
     await tester.pumpWidget(
       ZanKurdApp(
         repository: repository,
@@ -1570,11 +1570,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Profil'));
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Topluluk ve Ligler'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Topluluk ve Ligler'));
+    // Profil > 'Topluluk ve Ligler' kaldırıldı (Rêz sekmesiyle mükerrerdi,
+    // 2026-07-18 Faz 9). Ana yol artık doğrudan alt nav'daki Liderlik sekmesi
+    // (KU'da 'Rêz', TR'de 'Liderlik').
+    await tester.tap(find.text('Liderlik'));
     await tester.pumpAndSettle();
 
     expect(find.text('Liderlik Tablosu'), findsOneWidget);
