@@ -861,19 +861,11 @@ class _ProfileHeroCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
         decoration: BoxDecoration(
-          // Profil sekmesinin kimlik rengi mor (bkz. AppShell._tabAccent);
-          // hero kartı aynı imzayı taşır.
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppTheme.violet, AppTheme.bgDeep],
-          ),
+          // Kategorî/mockup-4 dili: koyu düz yüzey + altın sınır — büyük
+          // gradyan hero kalıntısı yerine.
+          color: AppTheme.surfaceColor(context),
           borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.12),
-            width: 1.2,
-          ),
-          boxShadow: AppTheme.glowShadow(AppTheme.violet, intensity: 0.16),
+          border: Border.all(color: AppTheme.gold.withValues(alpha: 0.35)),
         ),
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Stack(
@@ -883,20 +875,9 @@ class _ProfileHeroCard extends StatelessWidget {
                 child: CustomPaint(
                   painter: KilimPatternPainter(
                     drawPattern: true,
-                    color: Colors.white,
+                    color: AppTheme.gold,
                     opacity: 0.05,
                   ),
-                ),
-              ),
-            ),
-            Positioned(
-              right: -8,
-              top: -12,
-              child: IgnorePointer(
-                child: Icon(
-                  Icons.person_rounded,
-                  size: 96,
-                  color: Colors.white.withValues(alpha: 0.06),
                 ),
               ),
             ),
@@ -940,7 +921,7 @@ class _ProfileHeroCard extends StatelessWidget {
                                 color: AppTheme.correct,
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: AppTheme.bgDeep,
+                                  color: AppTheme.surfaceColor(context),
                                   width: 2,
                                 ),
                               ),
@@ -964,7 +945,7 @@ class _ProfileHeroCard extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTypography.heading2.copyWith(
-                              color: Colors.white,
+                              color: AppTheme.textPrimaryColor(context),
                             ),
                           ),
                           if (showcaseTitle != null)
@@ -977,7 +958,7 @@ class _ProfileHeroCard extends StatelessWidget {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.16),
+                                color: AppTheme.gold.withValues(alpha: 0.16),
                                 borderRadius: BorderRadius.circular(
                                   AppRadius.pill,
                                 ),
@@ -999,7 +980,7 @@ class _ProfileHeroCard extends StatelessWidget {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: AppTypography.bodyMedium.copyWith(
-                                color: Colors.white.withValues(alpha: 0.72),
+                                color: AppTheme.textSubColor(context),
                                 fontSize: 13,
                               ),
                             ),
@@ -1009,7 +990,7 @@ class _ProfileHeroCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.md),
-                Divider(color: Colors.white.withValues(alpha: 0.18), height: 1),
+                Divider(color: AppTheme.borderColor(context), height: 1),
                 const SizedBox(height: AppSpacing.sm),
                 Row(
                   children: [
@@ -1025,7 +1006,7 @@ class _ProfileHeroCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyLarge.copyWith(
-                          color: Colors.white,
+                          color: AppTheme.textPrimaryColor(context),
                         ),
                       ),
                     ),
@@ -1037,7 +1018,7 @@ class _ProfileHeroCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.end,
                         style: AppTypography.caption.copyWith(
-                          color: Colors.white.withValues(alpha: 0.78),
+                          color: AppTheme.textSubColor(context),
                         ),
                       ),
                     ),
@@ -1050,7 +1031,7 @@ class _ProfileHeroCard extends StatelessWidget {
                     children: [
                       Container(
                         height: 8,
-                        color: Colors.white.withValues(alpha: 0.14),
+                        color: AppTheme.borderColor(context),
                       ),
                       FractionallySizedBox(
                         widthFactor: levelProgress.clamp(0.0, 1.0),

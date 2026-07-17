@@ -4,10 +4,8 @@ import '../../theme/app_theme.dart';
 import '../../widgets/colorful_action_card.dart';
 
 /// Tam-genişlik "hemen oyna" kart listesi: 1v1 düello, günün yarışması,
-/// çark, turnuva. Pirs'in tek-eylem, tam-genişlik mod kartı yerleşimini
-/// izler (küçük 2x2 ikon grid'i yerine). Ortak [ColorfulActionCard]
-/// ailesini kullanır: 1vs1 pembe, günlük yarışma indigo, çark lime,
-/// turnuva gökmavi.
+/// çark, turnuva. Kategorî'nin kompakt satır diliyle tutarlı [ColorfulActionCard]
+/// ailesini kullanır — her mod kendi kimlik rengini ikon çipinde taşır.
 class QuickPlayGrid extends StatelessWidget {
   const QuickPlayGrid({
     required this.isKu,

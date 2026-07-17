@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
 
-/// Pirs-inspired renkli oyun/aksiyon kartı.
-///
-/// Gradient zemin, sol üstte yuvarlak ikon konteyneri, sağ altta büyük
-/// filigran ikonu ve altta başlık/alt başlık taşır. [loading] açıkken
-/// dokunuşları yok sayar ve bir progress göstergesi gösterir.
+/// Oyun/aksiyon mod kartı — Kategorî'nin kompakt satır diliyle tutarlı:
+/// koyu düz yüzey + sol renkli ikon çipi + başlık/alt başlık + sağ ok.
+/// Eski "Pirs-inspired" büyük gradyan zemin + köşe filigran ikon deseni
+/// (Faz 0-6'da mockup'ta referansı olmadığı için hiç güncellenmemişti)
+/// burada terk edildi; her modun kimlik rengi artık ikon çipinde yaşıyor.
 class ColorfulActionCard extends StatelessWidget {
   const ColorfulActionCard({
     required this.title,
@@ -29,6 +29,8 @@ class ColorfulActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tint = colors.first;
+
     return Semantics(
       button: true,
       enabled: !loading,
@@ -39,128 +41,72 @@ class ColorfulActionCard extends StatelessWidget {
           onTap: loading ? null : onTap,
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Ink(
+            padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: colors,
-              ),
+              color: AppTheme.surfaceColor(context),
               borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.18),
-                width: 1.2,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: colors.first.withValues(alpha: 0.30),
-                  blurRadius: 18,
-                  offset: const Offset(0, 8),
-                  spreadRadius: -4,
-                ),
-              ],
+              border: Border.all(color: tint.withValues(alpha: 0.35)),
             ),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                minHeight: 72,
-                minWidth: 44,
-              ),
-              child: Stack(
+              constraints: const BoxConstraints(minHeight: 44),
+              child: Row(
                 children: [
-                  // Decorative glow circle top-right
-                  Positioned(
-                    right: -20,
-                    top: -20,
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.06),
-                        shape: BoxShape.circle,
-                      ),
+                  Container(
+                    width: 48,
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: tint.withValues(alpha: 0.16),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
                     ),
+                    child: Icon(icon, color: tint, size: 24),
                   ),
-                  // Large watermark icon bottom-right
-                  Positioned(
-                    right: 8,
-                    bottom: -6,
-                    child: Icon(icon, size: 78, color: Colors.white12),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(18, 18, 18, 16),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // Icon in glass container at top-left
-                        Container(
-                          width: 44,
-                          height: 44,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.18),
-                            borderRadius: BorderRadius.circular(
-                              AppRadius.sm,
-                            ),
-                            border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.26),
-                              width: 1.1,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.14),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Icon(icon, color: Colors.white, size: 24),
-                        ),
-                        const SizedBox(height: 14),
                         Text(
                           title,
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.heading2.copyWith(
-                            color: Colors.white,
-                            shadows: const [
-                              Shadow(
-                                color: Color(0x44000000),
-                                blurRadius: 8,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
+                            color: AppTheme.textPrimaryColor(context),
                           ),
                         ),
                         if (loading)
-                          const Padding(
-                            padding: EdgeInsets.only(top: AppSpacing.sm),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6),
                             child: SizedBox(
-                              width: 18,
-                              height: 18,
+                              width: 16,
+                              height: 16,
                               child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2.4,
+                                color: tint,
+                                strokeWidth: 2.2,
                               ),
                             ),
                           )
                         else if (subtitle != null)
                           Padding(
-                            padding: const EdgeInsets.only(top: AppSpacing.xxs),
+                            padding: const EdgeInsets.only(top: 2),
                             child: Text(
                               subtitle!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Colors.white.withValues(alpha: 0.84),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
+                              style: AppTypography.caption.copyWith(
+                                color: AppTheme.textSubColor(context),
                               ),
                             ),
                           ),
                       ],
                     ),
                   ),
+                  if (!loading)
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppTheme.textMutedColor(context),
+                    ),
                 ],
               ),
             ),

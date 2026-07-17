@@ -5,8 +5,10 @@ import 'kilim_pattern_painter.dart';
 
 /// İkincil ekranların ortak kimlik kartı.
 ///
-/// Ana sekmelerdeki (profil mor, xwendin camgöbeği, pêşbaz altın) imza dilini
-/// taşır: accent gradyan, kilim filigranı, ikon rozeti, tema-aware gölge.
+/// Kategorî/mockup-4 diliyle tutarlı: koyu düz yüzey + accent renkli ikon
+/// çipi + accent renkli ince sınır. Her ekran kendi kimlik rengini
+/// [accent] ile taşımaya devam eder; yalnızca büyük gradyan hero + köşe
+/// filigran ikon deseni (eski "Pirs-inspired" kalıntısı) terk edildi.
 /// Davranış / route değişmez — yalnızca sunum.
 class ScreenIdentityHeader extends StatelessWidget {
   const ScreenIdentityHeader({
@@ -28,13 +30,6 @@ class ScreenIdentityHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLight = AppTheme.isLight(context);
-    // Açık temada da kart renkli kimlik taşır; metin her iki modda beyaz.
-    final end = Color.alphaBlend(
-      accent.withValues(alpha: isLight ? 0.55 : 0.35),
-      isLight ? const Color(0xFF1A2E24) : AppTheme.bgDeep,
-    );
-
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
@@ -46,13 +41,8 @@ class ScreenIdentityHeader extends StatelessWidget {
           compact ? AppSpacing.sm : AppSpacing.md,
         ),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [accent, end],
-          ),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
-          boxShadow: AppTheme.glowShadow(accent, intensity: 0.14),
+          color: AppTheme.surfaceColor(context),
+          border: Border.all(color: accent.withValues(alpha: 0.35)),
         ),
         child: Stack(
           children: [
@@ -61,20 +51,9 @@ class ScreenIdentityHeader extends StatelessWidget {
                 child: CustomPaint(
                   painter: KilimPatternPainter(
                     drawPattern: true,
-                    color: Colors.white,
+                    color: accent,
                     opacity: 0.05,
                   ),
-                ),
-              ),
-            ),
-            Positioned(
-              right: -6,
-              top: -10,
-              child: IgnorePointer(
-                child: Icon(
-                  icon,
-                  size: compact ? 72 : 88,
-                  color: Colors.white.withValues(alpha: 0.07),
                 ),
               ),
             ),
@@ -87,14 +66,11 @@ class ScreenIdentityHeader extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white.withValues(alpha: 0.16),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.28),
-                    ),
+                    color: accent.withValues(alpha: 0.16),
                   ),
                   child: Icon(
                     icon,
-                    color: Colors.white,
+                    color: accent,
                     size: compact ? 22 : 26,
                   ),
                 ),
@@ -108,7 +84,7 @@ class ScreenIdentityHeader extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.heading2.copyWith(
-                          color: Colors.white,
+                          color: AppTheme.textPrimaryColor(context),
                           fontSize: compact ? 17 : 18,
                         ),
                       ),
@@ -118,7 +94,7 @@ class ScreenIdentityHeader extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyMedium.copyWith(
-                          color: Colors.white.withValues(alpha: 0.88),
+                          color: AppTheme.textSubColor(context),
                           fontWeight: FontWeight.w600,
                           fontSize: 13,
                         ),
