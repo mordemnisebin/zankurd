@@ -291,7 +291,8 @@ class _AppShellState extends State<AppShell> {
               NavigationDestination(
                 icon: const Icon(Icons.emoji_events_outlined),
                 selectedIcon: const Icon(Icons.emoji_events),
-                label: ku ? 'Lîstik' : 'Liderlik',
+                // "Lîstik" Kurmancî'de "oyun" demek; sıralama sekmesi "Rêz".
+                label: ku ? 'Rêz' : 'Liderlik',
               ),
               NavigationDestination(
                 icon: KeyedSubtree(

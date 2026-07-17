@@ -43,13 +43,12 @@ void main() {
 
     expect(find.byType(HeroCard), findsOneWidget);
     expect(find.text('Rast bikeve\npêşbirkê'), findsOneWidget);
-    expect(find.text('Pêşbaziyên din'), findsOneWidget);
-    expect(find.text('Mijar û mijaran bibîne'), findsOneWidget);
+    // Sekmelerle mükerrer olan oyun/kategori teaser kartları kaldırıldı;
+    // günlük ders quizi kartı ana giriş oldu.
+    expect(find.text('Pêşbaziyên din'), findsNothing);
+    expect(find.text('Mijar û mijaran bibîne'), findsNothing);
+    expect(find.byKey(const ValueKey('home-daily-lesson')), findsOneWidget);
     expect(find.byType(QuickPlayGrid), findsNothing);
-    expect(
-      find.byKey(const ValueKey('home-direct-play-entry')),
-      findsOneWidget,
-    );
     expect(find.byKey(const ValueKey('home-learning-entry')), findsOneWidget);
     expect(find.byType(ZanaDailyCard), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-race-entry')), findsOneWidget);
@@ -95,17 +94,11 @@ void main() {
     );
   }
 
-  test(
-    'doğrudan oyun kartı ana header ile rekabet etmek için glow kullanmaz',
-    () {
-      final source = File(
-        'lib/src/screens/home_screen.dart',
-      ).readAsStringSync();
-      final teaserStart = source.indexOf('class _PlayHubTeaser');
-      final teaserSource = source.substring(teaserStart);
-      expect(teaserSource, contains('Color.alphaBlend'));
-      expect(teaserSource, contains('Yarış modları'));
-      expect(teaserSource, isNot(contains('glowShadow(AppTheme.playCyan')));
-    },
-  );
+  test('oyun/kategori teaser kartları sekmelerle mükerrer olduğu için yok', () {
+    final source = File(
+      'lib/src/screens/home_screen.dart',
+    ).readAsStringSync();
+    expect(source, isNot(contains('class _PlayHubTeaser')));
+    expect(source, isNot(contains('class _CategoryEntry')));
+  });
 }

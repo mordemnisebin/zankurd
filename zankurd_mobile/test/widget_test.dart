@@ -737,7 +737,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd'), findsOneWidget);
-    expect(find.text('Yarış modları'), findsOneWidget);
+    expect(find.text('Günün Dersi'), findsOneWidget);
   });
 
   testWidgets('home header exposes language and theme quick controls', (
@@ -863,7 +863,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
-    expect(find.text('Yarış modları'), findsNothing);
+    expect(find.text('Günün Dersi'), findsNothing);
 
     await tester.enterText(
       find.byKey(const ValueKey('player-name-field')),
@@ -873,7 +873,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.savedName, 'Rojda Test');
-    expect(find.text('Yarış modları'), findsOneWidget);
+    expect(find.text('Günün Dersi'), findsOneWidget);
   });
 
   test('unsupported provider auth error is user friendly', () {

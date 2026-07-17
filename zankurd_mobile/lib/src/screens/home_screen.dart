@@ -22,10 +22,10 @@ import '../widgets/roj_mascot.dart';
 import '../widgets/zana_daily_card.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
+import 'quiz_screen.dart';
 import 'room_screen.dart';
 import 'matchmaking_screen.dart';
 import 'shop_screen.dart';
-import 'categories_tab.dart';
 import 'contest_screen.dart';
 import 'leaderboard_screen.dart';
 import 'home/daily_race_card.dart';
@@ -233,7 +233,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 _DailyLessonHero(
                   isKu: ku,
                   reviewReadyCount: _reviewReadyCount,
-                  onStart: widget.onOpenLearning,
+                  onStart: _reviewReadyCount > 0
+                      ? widget.onOpenLearning
+                      : _startDailyQuiz,
                 ),
               ),
             ),
@@ -291,28 +293,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildAnimatedCard(
-                            _heroFadeAnimation(1),
-                            _PlayHubTeaser(isKu: ku, onOpen: widget.onOpenPlay),
-                          ),
-                          const SizedBox(height: 16),
-                          _buildAnimatedCard(
                             _heroFadeAnimation(2),
                             DailyRaceCard(
                               onTap: () => Navigator.of(context).push(
                                 AppRoute.to(
                                   ContestScreen(repository: widget.repository),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          _buildAnimatedCard(
-                            _heroFadeAnimation(3),
-                            _CategoryEntry(
-                              isKu: ku,
-                              onOpen: () => Navigator.of(context).push(
-                                AppRoute.to(
-                                  CategoriesTab(repository: widget.repository),
                                 ),
                               ),
                             ),
@@ -352,15 +337,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     return Padding(
                       padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
-                        _heroFadeAnimation(1),
-                        _PlayHubTeaser(isKu: ku, onOpen: widget.onOpenPlay),
-                      ),
-                    );
-                  }
-                  if (index == 2) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 24),
-                      child: _buildAnimatedCard(
                         _heroFadeAnimation(2),
                         DailyRaceCard(
                           onTap: () => Navigator.of(context).push(
@@ -372,23 +348,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     );
                   }
-                  if (index == 3) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 24),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(3),
-                        _CategoryEntry(
-                          isKu: ku,
-                          onOpen: () => Navigator.of(context).push(
-                            AppRoute.to(
-                              CategoriesTab(repository: widget.repository),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 4) {
+                  if (index == 2) {
                     return Padding(
                       padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
@@ -405,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     );
                   }
                   return null;
-                }, childCount: 5),
+                }, childCount: 3),
               ),
             ),
           SliverToBoxAdapter(
@@ -946,6 +906,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         curve: Interval(startTime, endTime, curve: Curves.easeOut),
       ),
     );
+  }
+
+  /// "Dersê rojane" kartı: karışık kategorili 10 soruluk günlük solo quiz.
+  /// (Kart 10 soru vaat eder; ders ağacına değil gerçek quize gider.)
+  Future<void> _startDailyQuiz() async {
+    if (_roomActionLoading) return;
+    setState(() => _roomActionLoading = true);
+    try {
+      final questions = await repo.loadDailyQuestions(limit: 10);
+      if (!mounted || questions.isEmpty) return;
+      final room = repo
+          .createRoom()
+          .copyWith(
+            name: context.isKu ? 'Dersê rojane' : 'Günün Dersi',
+            questionCount: questions.length,
+          );
+      await Navigator.of(context).push(
+        AppRoute.to(
+          QuizScreen(repository: repo, room: room, questions: questions),
+        ),
+      );
+      if (mounted) _handleRefreshSignal();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home daily quiz');
+    } finally {
+      if (mounted) setState(() => _roomActionLoading = false);
+    }
   }
 
   Future<void> _createOnlineRoom(BuildContext context) async {
@@ -1513,241 +1500,6 @@ class _MiniLeaderboardState extends State<_MiniLeaderboard> {
                 ),
         ),
       ],
-    );
-  }
-}
-
-class _CategoryEntry extends StatelessWidget {
-  const _CategoryEntry({required this.isKu, required this.onOpen});
-
-  final bool isKu;
-  final VoidCallback onOpen;
-
-  @override
-  Widget build(BuildContext context) {
-    // Mockup koyu-yeşil kimliği — kategoriye giriş kartı.
-    const gradientColors = [
-      Color(0xFF2F7D4F),
-      Color(0xFF1E5F47),
-    ];
-
-    return Semantics(
-      button: true,
-      label: isKu ? 'Mijar û mijaran bibîne' : 'Kategori ve konular',
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          key: const ValueKey('home-category-entry'),
-          onTap: onOpen,
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: gradientColors,
-              ),
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.22),
-                width: 1.2,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: gradientColors.first.withValues(alpha: 0.32),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                  spreadRadius: -4,
-                ),
-              ],
-            ),
-            child: Stack(
-              children: [
-                // Decorative background icon
-                Positioned(
-                  right: -10,
-                  bottom: -16,
-                  child: Icon(
-                    Icons.grid_view_rounded,
-                    size: 72,
-                    color: Colors.white.withValues(alpha: 0.10),
-                  ),
-                ),
-                Row(
-                  children: [
-                    // Icon circle
-                    Container(
-                      width: 48,
-                      height: 48,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.18),
-                        borderRadius: BorderRadius.circular(AppRadius.md),
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.28),
-                          width: 1.2,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.14),
-                            blurRadius: 12,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: const Icon(
-                        Icons.grid_view_rounded,
-                        color: Colors.white,
-                        size: 26,
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.md),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            isKu
-                                ? 'Mijar û mijaran bibîne'
-                                : 'Kategori ve konular',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16,
-                              height: 1.2,
-                              shadows: [
-                                Shadow(
-                                  color: Color(0x55000000),
-                                  blurRadius: 8,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: AppSpacing.xxs),
-                          Text(
-                            isKu
-                                ? 'Mijarên fêrbûnê û pêşbirkê bibîne'
-                                : 'Öğrenme ve yarışma konularına göz at',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.82),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.xs),
-                    Container(
-                      width: 36,
-                      height: 36,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.18),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.chevron_right_rounded,
-                        color: Colors.white,
-                        size: 22,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Bilîze sekmesine kısa yol — tam mod listesi (Şerê 1vs1, Pêşbirka Rojê,
-/// Çerxa Rojê, Turnuva) artık yalnızca Bilîze'de gösteriliyor; burada aynı
-/// kartları tekrarlamak yerine oraya yönlendiren tek bir teaser var.
-class _PlayHubTeaser extends StatelessWidget {
-  const _PlayHubTeaser({required this.isKu, this.onOpen});
-
-  final bool isKu;
-  final VoidCallback? onOpen;
-
-  @override
-  Widget build(BuildContext context) {
-    final surface = AppTheme.surfaceHiColor(context);
-    final accent = AppTheme.playCyan;
-
-    return Semantics(
-      button: true,
-      label: isKu ? 'Pêşbaziyên din' : 'Yarış modları',
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          key: const ValueKey('home-direct-play-entry'),
-          onTap: onOpen,
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            decoration: BoxDecoration(
-              color: Color.alphaBlend(accent.withValues(alpha: 0.12), surface),
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(
-                color: accent.withValues(alpha: 0.42),
-                width: 1.2,
-              ),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        isKu ? 'Pêşbaziyên din' : 'Yarış modları',
-                        style: AppTypography.bodyLarge.copyWith(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.xxs),
-                      Text(
-                        isKu
-                            ? '1vs1, ode, turnuva û pêşbirkên rojane'
-                            : 'Günün yarışması, düello, oda ve turnuva burada',
-                        style: AppTypography.caption.copyWith(
-                          color: AppTheme.textSubColor(context),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 44,
-                  height: 44,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: accent.withValues(alpha: 0.14),
-                    shape: BoxShape.circle,
-                  ),
-                  child: ExcludeSemantics(
-                    child: Icon(
-                      Icons.arrow_forward_rounded,
-                      color: accent,
-                      size: 24,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
