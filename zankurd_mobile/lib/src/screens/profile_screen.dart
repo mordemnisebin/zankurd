@@ -308,63 +308,87 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Divider(color: AppTheme.surfaceHiColor(context)),
-              ),
-              Text(
-                ku ? 'Performansa Heftane' : 'Haftalık Performans',
-                style: AppTypography.bodyLarge.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w800,
-                  fontSize: 15,
-                ),
-              ),
-              const SizedBox(height: 12),
-              FutureBuilder<MistakeStore>(
-                future: MistakeStore.load(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return SizedBox(
-                      height: 160,
-                      child: Center(
-                        child: Text(
-                          ku
-                              ? 'Performans nehat barkirin.'
-                              : 'Performans yüklenemedi.',
-                          style: TextStyle(
-                            color: AppTheme.textMutedColor(context),
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  if (!snapshot.hasData) {
-                    return const SizedBox(
-                      height: 160,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: AppTheme.primaryGradientStart,
-                        ),
-                      ),
-                    );
-                  }
-                  final history = snapshot.data!.getLast7DaysHistory();
-                  return WeeklyPerformanceChart(history: history, isKu: ku);
-                },
-              ),
             ],
           ),
         ),
         const SizedBox(height: 14),
 
-        _PedagogicalAnalyticsSection(isKu: ku),
-        const SizedBox(height: 14),
-        StrengthMapSection(isKu: ku, refreshSignal: widget.refreshSignal),
-        if (_masteryStore != null) ...[
-          const SizedBox(height: 14),
-          _MasterySection(store: _masteryStore!, isKu: ku),
-        ],
+        // Detaylı analiz (grafik, kategori ustalığı, güçlü/zayıf yön) —
+        // mockup 10'un sadeliğine uymak için varsayılan kapalı.
+        AppPanel(
+          child: Theme(
+            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            child: Material(
+              type: MaterialType.transparency,
+              child: ExpansionTile(
+                tilePadding: EdgeInsets.zero,
+                childrenPadding: const EdgeInsets.only(top: 12),
+                title: Text(
+                  ku ? 'Analîza Berfireh' : 'Detaylı İstatistik',
+                  style: AppTypography.bodyLarge.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15,
+                  ),
+                ),
+                children: [
+                  Text(
+                    ku ? 'Performansa Heftane' : 'Haftalık Performans',
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w800,
+                      fontSize: 15,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  FutureBuilder<MistakeStore>(
+                    future: MistakeStore.load(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return SizedBox(
+                          height: 160,
+                          child: Center(
+                            child: Text(
+                              ku
+                                  ? 'Performans nehat barkirin.'
+                                  : 'Performans yüklenemedi.',
+                              style: TextStyle(
+                                color: AppTheme.textMutedColor(context),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      if (!snapshot.hasData) {
+                        return const SizedBox(
+                          height: 160,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: AppTheme.primaryGradientStart,
+                            ),
+                          ),
+                        );
+                      }
+                      final history = snapshot.data!.getLast7DaysHistory();
+                      return WeeklyPerformanceChart(history: history, isKu: ku);
+                    },
+                  ),
+                  const SizedBox(height: 14),
+                  _PedagogicalAnalyticsSection(isKu: ku),
+                  const SizedBox(height: 14),
+                  StrengthMapSection(
+                    isKu: ku,
+                    refreshSignal: widget.refreshSignal,
+                  ),
+                  if (_masteryStore != null) ...[
+                    const SizedBox(height: 14),
+                    _MasterySection(store: _masteryStore!, isKu: ku),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ),
       ],
     );
 

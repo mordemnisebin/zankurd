@@ -605,7 +605,33 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: AppSpacing.lg),
+                              const SizedBox(height: AppSpacing.sm),
+                              // Mockup 8: doğruluk kademesine göre 3 yıldız
+                              // (bu boşluk daha önce boştu, net yükseklik
+                              // artışı yok — ~450px doğrulanmış).
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  for (var i = 0; i < 3; i++)
+                                    Icon(
+                                      Icons.star_rounded,
+                                      size: i == 1 ? 30 : 22,
+                                      color:
+                                          i <
+                                              (accuracy >= 80
+                                                  ? 3
+                                                  : accuracy >= 50
+                                                  ? 2
+                                                  : 1)
+                                          ? AppTheme.gold
+                                          : Colors.white.withValues(
+                                              alpha: 0.18,
+                                            ),
+                                    ),
+                                ],
+                              ),
+                              const SizedBox(height: AppSpacing.xxs),
                               // BIG score number
                               Text(
                                 '$score',
