@@ -75,13 +75,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Alfabê'), findsOneWidget);
+    expect(find.text('Silavkirin'), findsOneWidget);
     expect(
-      find.byKey(const ValueKey('learning-path-node-lesson_1')),
+      find.byKey(const ValueKey('learning-path-node-everyday_1')),
       findsOneWidget,
     );
     expect(
-      find.byKey(const ValueKey('learning-path-node-lesson_2')),
+      find.byKey(const ValueKey('learning-path-node-everyday_2')),
       findsOneWidget,
     );
     final lessonsList = find.byType(ListView).last;

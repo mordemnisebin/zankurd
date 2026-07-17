@@ -62,23 +62,23 @@ void main() {
     test('loadLessonsByCategory returns lessons', () async {
       final lessons = await repo.loadLessonsByCategory('everyday');
       expect(lessons, isNotEmpty);
-      expect(lessons.first.slug, 'alphabet');
+      expect(lessons.first.slug, 'everyday_1');
     });
 
     test('loadLesson returns lesson data', () async {
-      final lesson = await repo.loadLesson('lesson_1');
+      final lesson = await repo.loadLesson('everyday_1');
       expect(lesson, isNotNull);
-      expect(lesson?['slug'], 'alphabet');
+      expect(lesson?['slug'], 'everyday_1');
     });
 
     test('loadLessonSlides returns slides', () async {
-      final slides = await repo.loadLessonSlides('lesson_1');
+      final slides = await repo.loadLessonSlides('everyday_1');
       expect(slides, isNotEmpty);
       expect(slides.first.order, 1);
     });
 
     test('markLessonCompleted returns true', () async {
-      final marked = await repo.markLessonCompleted('lesson_1');
+      final marked = await repo.markLessonCompleted('everyday_1');
       expect(marked, true);
     });
   });

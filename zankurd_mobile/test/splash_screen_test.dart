@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/screens/splash_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 
 void main() {
-  testWidgets('logo karesini gizlemek için her temada beyaz zemin kullanır', (
+  testWidgets('koyu temada beyaz flaş yapmadan tema zeminini kullanır', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -18,8 +19,10 @@ void main() {
     );
     await tester.pump();
 
+    // Logo kendi beyaz karesini taşıdığı için Scaffold zemini artık
+    // tema-duyarlı: koyu modda koyu, açık modda açık (2026-07-17 fix).
     final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
-    expect(scaffold.backgroundColor, Colors.white);
+    expect(scaffold.backgroundColor, AppTheme.bg);
   });
 
   testWidgets('logoyu büyük gösterir', (tester) async {

@@ -18,6 +18,7 @@ void main() {
     'Muzîk',
     'Siyaset',
     'Paradigma',
+    'Teknolojî',
   };
 
   test('all question ids are unique', () {

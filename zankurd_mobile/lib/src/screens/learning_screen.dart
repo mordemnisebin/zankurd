@@ -163,16 +163,26 @@ class _LearningScreenState extends State<LearningScreen> {
                   AppSpacing.page,
                   0,
                 ),
-                child: OutlinedButton.icon(
-                  key: const ValueKey('learning-story-entry'),
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          StoryScreen(story: cayxaneStory, guide: cayxaneGuide),
+                // Dar ekranlarda (360px) ikon+metin taşmasını önlemek için
+                // tam genişlik: intrinsic genişlik dar viewport'ta sığmıyordu.
+                child: SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    key: const ValueKey('learning-story-entry'),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => StoryScreen(
+                          story: cayxaneStory,
+                          guide: cayxaneGuide,
+                        ),
+                      ),
+                    ),
+                    icon: const Icon(Icons.auto_stories_rounded, size: 18),
+                    label: Text(
+                      ku ? 'Çîrok: Li Çayxanê' : 'Hikâye: Çay Evinde',
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  icon: const Icon(Icons.auto_stories_rounded, size: 18),
-                  label: Text(ku ? 'Çîrok: Li Çayxanê' : 'Hikâye: Çay Evinde'),
                 ),
               ),
               Padding(
@@ -395,16 +405,22 @@ class _LearningScreenState extends State<LearningScreen> {
                 color: AppTheme.playGreen,
               ),
               const SizedBox(width: 6),
-              Text(
-                ku
-                    ? 'Dersên qedandî: $completed / $total'
-                    : 'Tamamlanan ders: $completed / $total',
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textSubColor(context),
-                  fontWeight: FontWeight.w600,
+              // Kategori başına ders sayısı arttıkça metin uzayabilir; dar
+              // ekranda (360px) taşmasın diye Expanded + ellipsis.
+              Expanded(
+                child: Text(
+                  ku
+                      ? 'Dersên qedandî: $completed / $total'
+                      : 'Tamamlanan ders: $completed / $total',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.caption.copyWith(
+                    color: AppTheme.textSubColor(context),
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-              const Spacer(),
+              const SizedBox(width: 6),
               Text(
                 '%$pct',
                 style: AppTypography.caption.copyWith(

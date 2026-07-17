@@ -44431,7 +44431,7 @@ const offlineQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'offline_curated_30017',
     category: 'Ziman',
-    prompt: "Ji bo silava 'êvarbaş' bersiva herî guncav kîjan e?",
+    prompt: "Kesek dema derbasî êvarê dibe silav dide te; tu jî bi heman peyva silavê bersivê didî. Ev peyv çi ye?",
     answers: ['Spas, ez baş im', 'Rojbaş', 'Êvarbaş', 'Şevbaş'],
     correctAnswer: 'Êvarbaş',
     explanation: "Dema kesek dibêje 'êvarbaş', em bi heman şêweyî dibêjin 'êvarbaş'.",
