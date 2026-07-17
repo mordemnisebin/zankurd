@@ -68,6 +68,11 @@ class _CommunityScreenState extends State<CommunityScreen> {
                     'Ziman',
                     'Dîrok',
                     'Çand',
+                    'Wêje',
+                    'Muzîk',
+                    'Erdnîgarî',
+                    'Siyaset',
+                    'Teknolojî',
                   ])
                     Padding(
                       padding: const EdgeInsets.only(right: AppSpacing.xs),

@@ -63,6 +63,13 @@ class SubcategoryConfig {
         descriptionKu: 'Dastan û lehengên kurdî',
         descriptionTr: 'Kürt destanları ve kahramanları',
       ),
+      SubcategoryInfo(
+        id: 'tistonek',
+        nameKu: 'Tiştonek / Bilmece',
+        nameTr: 'Bilmeceler & Zekâ',
+        descriptionKu: 'Bilmeceyên kurdî yên gelêrî',
+        descriptionTr: 'Geleneksel Kürt bilmeceleri ve zeka soruları',
+      ),
     ],
     'Dîrok': [
       SubcategoryInfo(

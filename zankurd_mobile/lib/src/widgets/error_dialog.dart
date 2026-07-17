@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 
 class ErrorDialog {
@@ -8,16 +9,20 @@ class ErrorDialog {
     required String title,
     required String message,
     VoidCallback? onRetry,
-    String retryLabel = 'Tekrar Dene',
-    String dismissLabel = 'Kapat',
+    String? retryLabel,
+    String? dismissLabel,
   }) {
+    final ku = context.isKu;
+    final finalRetryLabel = retryLabel ?? (ku ? 'Dîsa biceribîne' : 'Tekrar Dene');
+    final finalDismissLabel = dismissLabel ?? (ku ? 'Bigire' : 'Kapat');
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: AppTheme.surface,
+        backgroundColor: AppTheme.surfaceColor(context),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: AppTheme.border),
+          side: BorderSide(color: AppTheme.borderColor(context)),
         ),
         title: Row(
           children: [
@@ -35,11 +40,11 @@ class ErrorDialog {
                 onRetry();
               },
               icon: const Icon(Icons.refresh),
-              label: Text(retryLabel),
+              label: Text(finalRetryLabel),
             ),
           OutlinedButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(dismissLabel),
+            child: Text(finalDismissLabel),
           ),
         ],
       ),
@@ -49,9 +54,11 @@ class ErrorDialog {
   static void showOfflineMode(BuildContext context) {
     show(
       context,
-      title: 'Çevrimdışı Mod',
-      message:
-          'İnternet bağlantısı yok. Soruları çevrimdışı olarak yüklüyorum.',
+      title: context.s('Moda Ne li Serhêl', 'Çevrimdışı Mod'),
+      message: context.s(
+        'Girêdana înternetê tune. Pirs wekî ne li serhêl tên barkirin.',
+        'İnternet bağlantısı yok. Soruları çevrimdışı olarak yüklüyorum.',
+      ),
     );
   }
 }

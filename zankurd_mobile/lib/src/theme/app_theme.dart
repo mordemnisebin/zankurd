@@ -50,7 +50,7 @@ class AppTypography {
 
   static const TextStyle caption = TextStyle(
     fontWeight: FontWeight.w700,
-    fontSize: 12,
+    fontSize: 12.5,
     height: 1.35,
     letterSpacing: 0.2,
   );
@@ -58,7 +58,7 @@ class AppTypography {
   static const categoryTitle = TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.w900,
-    fontSize: 19,
+    fontSize: 20,
     height: 1.05,
     letterSpacing: 0,
     shadows: [
@@ -68,7 +68,7 @@ class AppTypography {
 
   static const categoryMeta = TextStyle(
     color: Colors.white,
-    fontSize: 11.5,
+    fontSize: 12,
     height: 1.2,
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
@@ -268,53 +268,57 @@ class AppTheme {
   // esinlenir. RojMascot (Zana) ışın motifinde taşınır.
   // Bkz. docs/superpowers/specs/2026-07-16-pirs-theme-redesign.md
 
-  static const brandOrange = Color(0xFF2D3561); // Deep Indigo — ana marka rengi
-  static const brandOrangeWarm = Color(0xFF4B5AA8); // Açık indigo (gradyan ucu)
-  static const playGreen = Color(0xFF8BC53F); // Lime — öğrenme kimliği
-  static const playPink = Color(0xFFFF3B81); // Sıcak pembe — 1v1/rekabet (legacy)
-  static const playCyan = Color(0xFF38BDF8); // Gökmavi — oda/mod kartları (legacy)
+  // Onaylı mockup sistemi (2026-07-17): Kürdistan yeşili ana aksan,
+  // kâğıt-altın ikincil, koyu-sıcak zemin. Bkz.
+  // docs/superpowers/specs/2026-07-17-onayli-mockup-hizalama-plan.md
+  static const brandOrange = Color(0xFF3DA968); // Kürdistan yeşili — ana aksan
+  static const brandOrangeWarm = Color(0xFF2F7D4F); // Koyu yeşil (gradyan ucu)
+  static const playGreen = Color(0xFF3DA968); // Öğrenme kimliği (yeşil)
+  static const playPink = Color(0xFFC9503C); // Nar kırmızısı — 1v1/rekabet (mockup paleti)
+  static const playCyan = Color(0xFF2E9E93); // Teal — oda/mod kartları (mockup paleti)
   static const playPurple = Color(
-    0xFF6C5CE7,
-  ); // Eski indigo (legacy referans)
+    0xFF6B3A7A,
+  ); // Erik moru — mockup kategori paleti tonu
 
   // ============ Dark Mode Palette (Pirs — koyu ikincil tema) ============
   // Legacy token names retained for existing screen consumers.
   static const primaryGradientStart = brandOrange;
   static const primaryGradientEnd = brandOrangeWarm;
 
-  // Secondary accent — Warm Gold
-  static const secondaryAccent = Color(0xFFC8963E);
+  // Secondary accent — Pirinç Altını
+  static const secondaryAccent = Color(0xFFE7B53C);
 
   // Reward color — ONLY for coin / reward / streak / mastery badge indicators.
   // Intentionally kept stable: reward/coin meaning preserved across palette changes.
-  static const gold = Color(0xFFE9C46A);
+  static const gold = Color(0xFFE7B53C);
 
   // Info/tip highlight — rare use (e.g. joker hint). Do not use for general accent.
   static const cyan = playCyan;
 
-  // Dark backgrounds
-  static const bg = Color(0xFF12141C);
-  static const bgDeep = Color(0xFF0C0E14);
-  static const surface = Color(0xFF1C1E28);
-  static const surfaceHi = Color(0xFF242636);
-  static const darkBg = Color(0xFF12141C);
+  // Dark backgrounds — koyu-sıcak yeşilimsi mürekkep (mockup sistemi)
+  static const bg = Color(0xFF0B0F0D);
+  static const bgDeep = Color(0xFF07100C);
+  static const surface = Color(0xFF16211B);
+  static const surfaceHi = Color(0xFF1E2C24);
+  static const darkBg = Color(0xFF0B0F0D);
 
   // Dark mode text
-  static const textPrimary = Color(0xFFEEECF2);
-  static const textSub = Color(0xFFA9A4B8);
-  static const textMuted = Color(0xFF7F7A90);
+  static const textPrimary = Color(0xFFF4F1E9);
+  static const textSub = Color(0xFF93A29A);
+  // WCAG AA: koyu zeminde (bg) 4.5:1 kontrastı geçecek kadar açık tutulur.
+  static const textMuted = Color(0xFF7E8C84);
 
   // Borders
-  static const border = Color(0xFF2E2D3A);
+  static const border = Color(0xFF26332B);
 
   // Status colors
   // correct/wrong/gold — quiz feedback semantics independent of color system.
   static const accent = primaryGradientStart; // Deep Indigo
   static const violet = secondaryAccent; // Warm Gold
   // Correct answer color — ONLY for correct answer feedback.
-  static const correct = Color(0xFF2E7D32); // Balanced Green — stable
+  static const correct = Color(0xFF3DA968); // Kürdistan yeşili — mockup
   // Wrong answer color — ONLY for wrong answer feedback.
-  static const wrong = Color(0xFFD35B4A); // Warm Coral — softer than pure red
+  static const wrong = Color(0xFFE5533D); // Nar kırmızısı — mockup
 
   // ============ Light Mode Palette (default theme) ============
   static const lightBg = Color(0xFFFBF9F6); // Warm off-white
@@ -323,8 +327,8 @@ class AppTheme {
   static const lightSurfaceHi = Color(0xFFF7F4F0); // Surface highlight
   static const lightBorder = Color(0xFFE8E4DF);
   static const lightTextPrimary = Color(0xFF1E1E24);
-  static const lightTextSub = Color(0xFF6B6776);
-  static const lightTextMuted = Color(0xFF9D98AB);
+  static const lightTextSub = Color(0xFF4A4655); // WCAG AA kontrast orani artirildi
+  static const lightTextMuted = Color(0xFF6F6A7E); // WCAG AA kontrast orani artirildi
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -443,9 +447,10 @@ class AppTheme {
   }
 
   // Decorative gradients for QuickPlayGrid tiles.
+  // Nar kırmızısı — mockup paleti (eski pembe-magenta bırakıldı).
   static const List<Color> duelGradient = [
-    Color(0xFFFF416C),
-    Color(0xFFFF4B2B),
+    Color(0xFFE5533D),
+    Color(0xFFB6402F),
   ];
   static const List<Color> tournamentGradient = [
     Color(0xFF00BFA5),

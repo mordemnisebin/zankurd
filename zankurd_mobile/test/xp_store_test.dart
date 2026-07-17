@@ -78,4 +78,18 @@ void main() {
     expect(store.totalXP, 5000);
     expect(store.currentLevel, 4);
   });
+
+  test('clear resets XP values in memory and preferences', () async {
+    final store = await XPStore.load();
+    await store.addXP(500);
+    expect(store.totalXP, 500);
+
+    await store.clear();
+    expect(store.totalXP, 0);
+
+    XPStore.resetInstance();
+    final reloaded = await XPStore.load();
+    expect(reloaded.totalXP, 0);
+  });
 }
+

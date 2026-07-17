@@ -3,6 +3,14 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../data/xp_store.dart';
+import '../data/streak_store.dart';
+import '../data/mistake_store.dart';
+import '../data/seen_question_store.dart';
+import '../data/achievement_store.dart';
+import '../data/mastery_store.dart';
+import '../data/daily_mission_store.dart';
+import '../data/sync_manager.dart';
 import '../utils/error_reporter.dart';
 
 /// Supabase tabanlı kimlik sağlayıcı.
@@ -149,6 +157,68 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> signOut() async {
+    try {
+      final xpStore = await XPStore.load();
+      await xpStore.clear();
+      XPStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'XPStore clear on signOut failed');
+    }
+
+    try {
+      final streakStore = await StreakStore.load();
+      await streakStore.clear();
+      StreakStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'StreakStore clear on signOut failed');
+    }
+
+    try {
+      final mistakeStore = await MistakeStore.load();
+      await mistakeStore.clear();
+      MistakeStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'MistakeStore clear on signOut failed');
+    }
+
+    try {
+      final seenStore = await SeenQuestionStore.load();
+      await seenStore.clear();
+      SeenQuestionStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'SeenQuestionStore clear on signOut failed');
+    }
+
+    try {
+      final achievementStore = await AchievementStore.load();
+      await achievementStore.clear();
+      AchievementStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'AchievementStore clear on signOut failed');
+    }
+
+    try {
+      final masteryStore = await MasteryStore.load();
+      await masteryStore.clear();
+      MasteryStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'MasteryStore clear on signOut failed');
+    }
+
+    try {
+      final missionStore = await DailyMissionStore.load();
+      await missionStore.clear();
+      DailyMissionStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'DailyMissionStore clear on signOut failed');
+    }
+
+    try {
+      await SyncManager.instance.clearQueue();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'SyncManager clear on signOut failed');
+    }
+
     final client = _client;
     if (client == null) {
       _mockAuthenticated = false;

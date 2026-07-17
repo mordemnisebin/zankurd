@@ -278,7 +278,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     return [
       _OnboardingData(
         icon: Icons.menu_book_rounded,
-        color: AppTheme.playCyan,
+        color: const Color(0xFF2E9E93), // teal — palet tonu
         title: context.s('Hîn bibe', 'Öğren'),
         body: context.s(
           'Kurmancî peyv, çand û zanînê bi pirsên kurt fêr bibe.',
@@ -296,7 +296,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       ),
       _OnboardingData(
         icon: Icons.emoji_events_rounded,
-        color: AppTheme.playPink,
+        color: const Color(0xFFB86A3E), // terracotta — palet tonu
         title: context.s('Pêşbirkê bike', 'Yarış'),
         body: context.s(
           'Bi hevalan an botan re pêşbirkê bike û pûanên xwe zêde bike.',
@@ -338,8 +338,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         color: AppTheme.violet,
         title: context.s('Çima ZanKurd?', 'Neden ZanKurd?'),
         body: context.s(
-          'Ne Duolingo, ne Memrise — ZanKurd Kurmancî kültürünü yarışarak öğrenmenin tek adresi. Canlı rekabet + kültürel derinlik.',
-          'Duolingo ya da Memrise değil — ZanKurd, Kurmancî kültürünü yarışarak öğrenmenin tek adresi. Canlı rekabet + kültürel derinlik.',
+          'ZanKurd cihê yekane ye ku tu bi pêşbirkê çand û zimanê Kurmancî fêr dibî. Pêşbirka zindî + kûrahiya çandî.',
+          'ZanKurd, Kurmancî kültürünü yarışarak öğrenmenin tek adresi. Canlı rekabet + kültürel derinlik.',
         ),
         bullets: [
           ku

@@ -74,8 +74,9 @@ class _StoryScreenState extends State<StoryScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: AppTheme.surfaceOf(context),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        side: BorderSide(color: AppTheme.borderColor(context)),
       ),
       builder: (ctx) => _MiniGuideView(guide: guide, isKu: context.isKu),
     );

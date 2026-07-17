@@ -133,6 +133,17 @@ class AchievementStore {
 
   static void resetInstance() => _instance = null;
 
+  Future<void> clear() async {
+    _unlockedIds.clear();
+    _answeredQuestions = 0;
+    _playedCategories.clear();
+    _dailyQuizCompletions = 0;
+    await _preferences?.remove(_unlockedKey);
+    await _preferences?.remove(_answeredKey);
+    await _preferences?.remove(_categoriesKey);
+    await _preferences?.remove(_dailyQuizKey);
+  }
+
   final SharedPreferences? _preferences;
   final Set<String> _unlockedIds;
   int _answeredQuestions;

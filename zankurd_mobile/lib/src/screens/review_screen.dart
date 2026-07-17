@@ -298,8 +298,8 @@ class _ReviewCard extends StatelessWidget {
                     textColor = AppTheme.wrong;
                     icon = Icons.close;
                   } else {
-                    bgColor = AppTheme.surfaceHi;
-                    textColor = AppTheme.textMuted;
+                    bgColor = AppTheme.surfaceHiColor(context);
+                    textColor = AppTheme.textMutedColor(context);
                   }
 
                   return Container(

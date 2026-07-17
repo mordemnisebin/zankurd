@@ -26,6 +26,17 @@ class MasteryStore {
 
   static void resetInstance() => _instance = null;
 
+  Future<void> clear() async {
+    final prefs = _preferences;
+    if (prefs == null) return;
+    final keys = prefs.getKeys();
+    for (final key in keys) {
+      if (key.startsWith(_keyPrefix)) {
+        await prefs.remove(key);
+      }
+    }
+  }
+
   int correctCount(String category) =>
       _preferences?.getInt('$_keyPrefix$category') ?? 0;
 

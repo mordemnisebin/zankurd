@@ -288,6 +288,7 @@ class _ShopScreenState extends State<ShopScreen> {
           backgroundColor: AppTheme.surfaceColor(ctx),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.lg),
+            side: BorderSide(color: AppTheme.borderColor(ctx)),
           ),
           title: Row(
             children: [

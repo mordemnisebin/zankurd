@@ -128,4 +128,25 @@ void main() {
     expect(restored.isUnlocked(AchievementIds.firstGame), isTrue);
     expect(restored.unlockedAchievements.length, 1);
   });
+
+  test('clear wipes out both in-memory and persistent data', () async {
+    final store = await AchievementStore.load();
+    await store.recordQuizResult(
+      category: 'Ziman',
+      totalQuestions: 3,
+      correctCount: 2,
+      bestStreak: 2,
+      dailyStreak: 1,
+      userScore: 230,
+    );
+
+    expect(store.isUnlocked(AchievementIds.firstGame), isTrue);
+
+    await store.clear();
+    expect(store.isUnlocked(AchievementIds.firstGame), isFalse);
+
+    AchievementStore.resetInstance();
+    final restored = await AchievementStore.load();
+    expect(restored.isUnlocked(AchievementIds.firstGame), isFalse);
+  });
 }

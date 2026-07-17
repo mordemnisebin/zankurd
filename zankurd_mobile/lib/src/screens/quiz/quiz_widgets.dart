@@ -1145,65 +1145,68 @@ class _WildcardButtonState extends State<_WildcardButton> {
         ? baseColor
         : AppTheme.textMutedColor(context);
 
-    return GestureDetector(
-      onTapDown: widget.isEnabled
-          ? (_) => setState(() => _pressed = true)
-          : null,
-      onTapUp: widget.isEnabled
-          ? (_) {
-              setState(() => _pressed = false);
-              widget.onTap();
-            }
-          : null,
-      onTapCancel: widget.isEnabled
-          ? () => setState(() => _pressed = false)
-          : null,
-      child: AnimatedScale(
-        scale: _pressed ? 0.94 : 1.0,
-        duration: const Duration(milliseconds: 80),
-        child: Opacity(
-          opacity: opacity,
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 3),
-            constraints: const BoxConstraints(minHeight: 48),
-            decoration: BoxDecoration(
-              color: bgColor ?? Colors.transparent,
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-              border: Border.all(color: borderColor, width: 1.5),
-            ),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 22,
-                    height: 22,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: iconColor.withValues(
-                        alpha: widget.isEnabled ? 0.16 : 0.10,
+    return Tooltip(
+      message: widget.type.label(widget.isKu),
+      child: GestureDetector(
+        onTapDown: widget.isEnabled
+            ? (_) => setState(() => _pressed = true)
+            : null,
+        onTapUp: widget.isEnabled
+            ? (_) {
+                setState(() => _pressed = false);
+                widget.onTap();
+              }
+            : null,
+        onTapCancel: widget.isEnabled
+            ? () => setState(() => _pressed = false)
+            : null,
+        child: AnimatedScale(
+          scale: _pressed ? 0.94 : 1.0,
+          duration: const Duration(milliseconds: 80),
+          child: Opacity(
+            opacity: opacity,
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(vertical: 3),
+              constraints: const BoxConstraints(minHeight: 48),
+              decoration: BoxDecoration(
+                color: bgColor ?? Colors.transparent,
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+                border: Border.all(color: borderColor, width: 1.5),
+              ),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 22,
+                      height: 22,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: iconColor.withValues(
+                          alpha: widget.isEnabled ? 0.16 : 0.10,
+                        ),
+                      ),
+                      child: Icon(
+                        widget.cantAfford ? Icons.lock_outline : widget.type.icon,
+                        size: 14,
+                        color: iconColor,
                       ),
                     ),
-                    child: Icon(
-                      widget.cantAfford ? Icons.lock_outline : widget.type.icon,
-                      size: 14,
-                      color: iconColor,
+                    const SizedBox(height: 1),
+                    Text(
+                      '${widget.type.coinCost}c',
+                      style: AppTypography.caption.copyWith(
+                        fontWeight: FontWeight.w700,
+                        height: 1.0,
+                        color: iconColor,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 1),
-                  Text(
-                    '${widget.type.coinCost}c',
-                    style: AppTypography.caption.copyWith(
-                      fontWeight: FontWeight.w700,
-                      height: 1.0,
-                      color: iconColor,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

@@ -711,6 +711,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogCtx) => AlertDialog(
+        backgroundColor: AppTheme.surfaceOf(context),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: AppTheme.borderColor(context)),
+        ),
         title: Text(ku ? 'Moda zaroka ewle' : 'Güvenli çocuk modu'),
         content: Text(
           ku
@@ -964,10 +969,15 @@ class _LangChip extends StatelessWidget {
         message: accessibleLabel,
         child: GestureDetector(
           onTap: onTap,
+          behavior: HitTestBehavior.opaque,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 180),
-            constraints: const BoxConstraints(minHeight: 44),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            constraints: const BoxConstraints(
+              minHeight: 48,
+              minWidth: 54,
+            ),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
             decoration: BoxDecoration(
               color: active
                   ? AppTheme.primaryGradientStart
@@ -976,9 +986,9 @@ class _LangChip extends StatelessWidget {
             ),
             child: Text(
               label,
-              style: AppTypography.caption.copyWith(
+              style: AppTypography.bodyMedium.copyWith(
                 color: active ? Colors.white : AppTheme.textMutedColor(context),
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
               ),
             ),
           ),

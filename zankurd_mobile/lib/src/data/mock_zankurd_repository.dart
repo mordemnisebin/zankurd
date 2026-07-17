@@ -950,54 +950,473 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return const [];
   }
 
+  static const Map<String, List<Lesson>> _lessonsData = {
+    'everyday': [
+      Lesson(
+        id: 'everyday_1',
+        slug: 'everyday_1',
+        titleKu: 'Silavkirin',
+        titleTr: 'Selamlaşma',
+        category: 'everyday',
+        iconName: 'waving_hand',
+        order: 1,
+      ),
+      Lesson(
+        id: 'everyday_2',
+        slug: 'everyday_2',
+        titleKu: 'Nasandin',
+        titleTr: 'Tanışma',
+        category: 'everyday',
+        iconName: 'handshake',
+        order: 2,
+      ),
+      Lesson(
+        id: 'everyday_3',
+        slug: 'everyday_3',
+        titleKu: 'Pratikên Rojane',
+        titleTr: 'Günlük Pratik İfadeler',
+        category: 'everyday',
+        iconName: 'forum',
+        order: 3,
+      ),
+    ],
+    'grammar': [
+      Lesson(
+        id: 'grammar_1',
+        slug: 'grammar_1',
+        titleKu: 'Cînavkên Kesane',
+        titleTr: 'Şahıs Zamirleri',
+        category: 'grammar',
+        iconName: 'g_translate',
+        order: 1,
+      ),
+      Lesson(
+        id: 'grammar_2',
+        slug: 'grammar_2',
+        titleKu: 'Tewandin',
+        titleTr: 'Büküm (Hal Çekimi)',
+        category: 'grammar',
+        iconName: 'sort_by_alpha',
+        order: 2,
+      ),
+    ],
+    'culture': [
+      Lesson(
+        id: 'culture_1',
+        slug: 'culture_1',
+        titleKu: 'Folklor û Govend',
+        titleTr: 'Folklor & Halay',
+        category: 'culture',
+        iconName: 'music_note',
+        order: 1,
+      ),
+      Lesson(
+        id: 'culture_2',
+        slug: 'culture_2',
+        titleKu: 'Cejn û Cejndarî',
+        titleTr: 'Bayramlar',
+        category: 'culture',
+        iconName: 'celebration',
+        order: 2,
+      ),
+    ],
+    'food': [
+      Lesson(
+        id: 'food_1',
+        slug: 'food_1',
+        titleKu: 'Xwarinên Bingehîn',
+        titleTr: 'Temel Yemekler',
+        category: 'food',
+        iconName: 'restaurant',
+        order: 1,
+      ),
+      Lesson(
+        id: 'food_2',
+        slug: 'food_2',
+        titleKu: 'Fêkî û Keskahî',
+        titleTr: 'Meyve & Sebzeler',
+        category: 'food',
+        iconName: 'local_grocery_store',
+        order: 2,
+      ),
+    ],
+    'animals': [
+      Lesson(
+        id: 'animals_1',
+        slug: 'animals_1',
+        titleKu: 'Heywanên Malê',
+        titleTr: 'Evcil Hayvanlar',
+        category: 'animals',
+        iconName: 'pets',
+        order: 1,
+      ),
+      Lesson(
+        id: 'animals_2',
+        slug: 'animals_2',
+        titleKu: 'Heywanên Kovî',
+        titleTr: 'Yabani Hayvanlar',
+        category: 'animals',
+        iconName: 'forest',
+        order: 2,
+      ),
+    ],
+    'geography': [
+      Lesson(
+        id: 'geography_1',
+        slug: 'geography_1',
+        titleKu: 'Erdnîgarîya Kurdistanê',
+        titleTr: 'Coğrafya',
+        category: 'geography',
+        iconName: 'map',
+        order: 1,
+      ),
+      Lesson(
+        id: 'geography_2',
+        slug: 'geography_2',
+        titleKu: 'Aliyên Erdnîgarî',
+        titleTr: 'Yönler',
+        category: 'geography',
+        iconName: 'explore',
+        order: 2,
+      ),
+    ],
+    'emotions': [
+      Lesson(
+        id: 'emotions_1',
+        slug: 'emotions_1',
+        titleKu: 'Hestên Erênî',
+        titleTr: 'Olumlu Duygular',
+        category: 'emotions',
+        iconName: 'sentiment_very_satisfied',
+        order: 1,
+      ),
+      Lesson(
+        id: 'emotions_2',
+        slug: 'emotions_2',
+        titleKu: 'Hestên Neyênî',
+        titleTr: 'Olumsuz Duygular',
+        category: 'emotions',
+        iconName: 'sentiment_very_dissatisfied',
+        order: 2,
+      ),
+    ],
+    'time': [
+      Lesson(
+        id: 'time_1',
+        slug: 'time_1',
+        titleKu: 'Roj û Meh',
+        titleTr: 'Günler & Aylar',
+        category: 'time',
+        iconName: 'calendar_month',
+        order: 1,
+      ),
+      Lesson(
+        id: 'time_2',
+        slug: 'time_2',
+        titleKu: 'Serdem û Demjimêr',
+        titleTr: 'Zaman Dilimleri',
+        category: 'time',
+        iconName: 'schedule',
+        order: 2,
+      ),
+    ],
+  };
+
+  static const Map<String, List<LessonSlide>> _slidesData = {
+    'everyday_1': [
+      LessonSlide(
+        id: 'everyday_1_s1',
+        lessonId: 'everyday_1',
+        order: 1,
+        contentKu: 'Di Kurmancî de silavên bingehîn:\n\n• Rojbaş: Günaydın / İyi günler\n• Êvarbaş: İyi akşamlar\n• Şevbaş: İyi geceler',
+        contentTr: 'Kürtçede temel selamlaşma ifadeleri.',
+      ),
+      LessonSlide(
+        id: 'everyday_1_s2',
+        lessonId: 'everyday_1',
+        order: 2,
+        contentKu: 'Rewş pirsîn:\n\n• Çonî? / Tu çawa yî?: Nasılsın?\n• Ez baş im, spas dikim: İyiyim, teşekkür ederim.',
+        contentTr: 'Hal hatır sorma kalıpları.',
+      ),
+    ],
+    'everyday_2': [
+      LessonSlide(
+        id: 'everyday_2_s1',
+        lessonId: 'everyday_2',
+        order: 1,
+        contentKu: 'Nav pirsîn:\n\n• Navê te çi ye?: Adın ne?\n• Navê min Azad e: Benim adım Azad.',
+        contentTr: 'İsim sorma ve kendini tanıtma.',
+      ),
+      LessonSlide(
+        id: 'everyday_2_s2',
+        lessonId: 'everyday_2',
+        order: 2,
+        contentKu: 'Welat / Cî pirsîn:\n\n• Tu ji ku derê yî?: Nerelisin?\n• Ez ji Amedê me: Amedliyim.',
+        contentTr: 'Memleket sorma ve belirtme.',
+      ),
+    ],
+    'everyday_3': [
+      LessonSlide(
+        id: 'everyday_3_s1',
+        lessonId: 'everyday_3',
+        order: 1,
+        contentKu: 'Sernavên pratik di jiyana rojane de:\n\n• Fermo: Buyurun\n• Kerem bike: Buyur / Geç\n• Spas: Teşekkürler / Sağ ol',
+        contentTr: 'Günlük hayatta en çok kullanılan pratik hitaplar.',
+      ),
+      LessonSlide(
+        id: 'everyday_3_s2',
+        lessonId: 'everyday_3',
+        order: 2,
+        contentKu: 'Daxwaz û daxwazî:\n\n• Ji kerema xwe: Lütfen\n• Bibexşîne: Özür dilerim / Affet',
+        contentTr: 'Rica ve özür dileme kalıpları.',
+      ),
+    ],
+    'grammar_1': [
+      LessonSlide(
+        id: 'grammar_1_s1',
+        lessonId: 'grammar_1',
+        order: 1,
+        contentKu: 'Cînavkên kesane yên xwerû:\n\n• Ez: Ben\n• Tu: Sen\n• Ew: O',
+        contentTr: 'Yalın hal şahıs zamirleri.',
+      ),
+      LessonSlide(
+        id: 'grammar_1_s2',
+        lessonId: 'grammar_1',
+        order: 2,
+        contentKu: 'Cînavkên kesane yên pirjimar:\n\n• Em: Biz\n• Hûn: Siz\n• Ew: Onlar',
+        contentTr: 'Çoğul şahıs zamirleri.',
+      ),
+    ],
+    'grammar_2': [
+      LessonSlide(
+        id: 'grammar_2_s1',
+        lessonId: 'grammar_2',
+        order: 1,
+        contentKu: 'Cînavkên tewandî:\n\n• Min: Beni / Bana / Benim\n• Te: Seni / Sana / Senin\n• Wî (nêr) / Wê (mê): Onu / Ona / Onun',
+        contentTr: 'Bükümlü hal şahıs zamirleri.',
+      ),
+      LessonSlide(
+        id: 'grammar_2_s2',
+        lessonId: 'grammar_2',
+        order: 2,
+        contentKu: 'Mînak:\n\n• Ez nan dixwim (Şimdiki zaman - yalın zamir)\n• Min nan xwar (Geçmiş zaman - bükümlü zamir)',
+        contentTr: 'Ergatif yapı örneği.',
+      ),
+    ],
+    'culture_1': [
+      LessonSlide(
+        id: 'culture_1_s1',
+        lessonId: 'culture_1',
+        order: 1,
+        contentKu: 'Kevneşopiya Govendê:\n\n• Govend: Halay\n• Dilan: Düğün / Eğlence\n• Şahî: Şenlik',
+        contentTr: 'Kürt halk kültürü ve halay gelenekleri.',
+      ),
+      LessonSlide(
+        id: 'culture_1_s2',
+        lessonId: 'culture_1',
+        order: 2,
+        contentKu: 'Dengbêjî:\n\nDengbêjî, parastin û ragihandina dîrok û çanda kurdî ya bi riya stran û kilaman e.',
+        contentTr: 'Dengbêjlik kültürü hakkında bilgi.',
+      ),
+    ],
+    'culture_2': [
+      LessonSlide(
+        id: 'culture_2_s1',
+        lessonId: 'culture_2',
+        order: 1,
+        contentKu: 'Newroz:\n\nNewroz cejna neteweyî û nûbûna xwezayê ye ku di 21ê Adarê de tê pîrozkirin.',
+        contentTr: 'Newroz bayramı ve önemi.',
+      ),
+      LessonSlide(
+        id: 'culture_2_s2',
+        lessonId: 'culture_2',
+        order: 2,
+        contentKu: 'Cejnên olî:\n\n• Cejna Remezanê: Ramazan Bayramı\n• Cejna Qurbanê: Kurban Bayramı',
+        contentTr: 'Kültürdeki dini bayramlar.',
+      ),
+    ],
+    'food_1': [
+      LessonSlide(
+        id: 'food_1_s1',
+        lessonId: 'food_1',
+        order: 1,
+        contentKu: 'Xwarin û vexwarinên bingehîn:\n\n• Nan: Ekmek\n• Av: Su\n• Goşt: Et\n• Mast: Yoğurt',
+        contentTr: 'Temel gıdalar ve anlamları.',
+      ),
+      LessonSlide(
+        id: 'food_1_s2',
+        lessonId: 'food_1',
+        order: 2,
+        contentKu: 'Danên xwarinê:\n\n• Taştê: Kahvaltı\n• Firo / Firvîn: Öğle yemeği\n• Şîv: Akşam yemeği',
+        contentTr: 'Öğün isimleri.',
+      ),
+    ],
+    'food_2': [
+      LessonSlide(
+        id: 'food_2_s1',
+        lessonId: 'food_2',
+        order: 1,
+        contentKu: 'Fêkiyên sereke:\n\n• Sêv: Elma\n• Hinar: Nar\n• Tirî: Üzüm\n• Hejîr: İncir',
+        contentTr: 'Meyve isimleri.',
+      ),
+      LessonSlide(
+        id: 'food_2_s2',
+        lessonId: 'food_2',
+        order: 2,
+        contentKu: 'Keskahî û sebze:\n\n• Pîvaz: Soğan\n• Sîr: Sarımsak\n• Bacan: Patlıcan / Domates',
+        contentTr: 'Sebze isimleri.',
+      ),
+    ],
+    'animals_1': [
+      LessonSlide(
+        id: 'animals_1_s1',
+        lessonId: 'animals_1',
+        order: 1,
+        contentKu: 'Heywanên kedî:\n\n• Kûçik / Seg: Köpek\n• Pisîk: Kedi\n• Hesp: At',
+        contentTr: 'Evcil hayvanlar.',
+      ),
+      LessonSlide(
+        id: 'animals_1_s2',
+        lessonId: 'animals_1',
+        order: 2,
+        contentKu: 'Heywanên çandiniyê:\n\n• Çêlek: İnek\n• Mîh: Koyun\n• Bizin: Keçi',
+        contentTr: 'Çiftlik hayvanları.',
+      ),
+    ],
+    'animals_2': [
+      LessonSlide(
+        id: 'animals_2_s1',
+        lessonId: 'animals_2',
+        order: 1,
+        contentKu: 'Heywanên kovî:\n\n• Şêr: Aslan\n• Gur: Kurt\n• Rûvî: Tilki\n• Hirç: Ayı',
+        contentTr: 'Yabani hayvanlar.',
+      ),
+      LessonSlide(
+        id: 'animals_2_s2',
+        lessonId: 'animals_2',
+        order: 2,
+        contentKu: 'Balindeyên esmanî:\n\n• Teyr / Qertel: Kartal\n• Kevok: Güvercin\n• Qijak: Karga',
+        contentTr: 'Kuş türleri.',
+      ),
+    ],
+    'geography_1': [
+      LessonSlide(
+        id: 'geography_1_s1',
+        lessonId: 'geography_1',
+        order: 1,
+        contentKu: 'Çiyayên navdar:\n\n• Çiyayê Cudî\n• Çiyayê Agirî\n• Çiyayê Sîpan',
+        contentTr: 'Bölgedeki önemli dağlar.',
+      ),
+      LessonSlide(
+        id: 'geography_1_s2',
+        lessonId: 'geography_1',
+        order: 2,
+        contentKu: 'Çemên sereke:\n\n• Çemê Dîcle: Dicle Nehri\n• Çemê Firat: Fırat Nehri',
+        contentTr: 'Bölgedeki önemli akarsular.',
+      ),
+    ],
+    'geography_2': [
+      LessonSlide(
+        id: 'geography_2_s1',
+        lessonId: 'geography_2',
+        order: 1,
+        contentKu: 'Aliyên sereke:\n\n• Bakur: Kuzey\n• Başûr: Güney\n• Rojhilat: Doğu\n• Rojava: Batı',
+        contentTr: 'Ana coğrafi yönler.',
+      ),
+      LessonSlide(
+        id: 'geography_2_s2',
+        lessonId: 'geography_2',
+        order: 2,
+        contentKu: 'Aliyên din:\n\n• Jor / Jorîn: Yukarı\n• Jêr / Jêrîn: Aşağı\n• Navîn: Orta',
+        contentTr: 'Diğer yön ve konum ifadeleri.',
+      ),
+    ],
+    'emotions_1': [
+      LessonSlide(
+        id: 'emotions_1_s1',
+        lessonId: 'emotions_1',
+        order: 1,
+        contentKu: 'Hestên erênî:\n\n• Kêfxweş: Mutlu\n• Dilşad: Sevinçli\n• Evîndar: Aşık',
+        contentTr: 'Olumlu duygu durumları.',
+      ),
+      LessonSlide(
+        id: 'emotions_1_s2',
+        lessonId: 'emotions_1',
+        order: 2,
+        contentKu: 'Hestên civakî:\n\n• Aştî: Barış\n• Hêvî: Umut\n• Bawerî: İnanç / Güven',
+        contentTr: 'Toplumsal olumlu kavramlar.',
+      ),
+    ],
+    'emotions_2': [
+      LessonSlide(
+        id: 'emotions_2_s1',
+        lessonId: 'emotions_2',
+        order: 1,
+        contentKu: 'Hestên neyênî:\n\n• Xemgîn: Üzgün\n• Hêrsbûyî: Öfkeli\n• Tirsandî: Korkmuş',
+        contentTr: 'Olumsuz duygu durumları.',
+      ),
+      LessonSlide(
+        id: 'emotions_2_s2',
+        lessonId: 'emotions_2',
+        order: 2,
+        contentKu: 'Mînakên din:\n\n• Bêhêvî: Umutsuz\n• Dilşikestî: Kalbi kırık',
+        contentTr: 'Diğer olumsuz duygu ifadeleri.',
+      ),
+    ],
+    'time_1': [
+      LessonSlide(
+        id: 'time_1_s1',
+        lessonId: 'time_1',
+        order: 1,
+        contentKu: 'Rojên hefteyê:\n\n• Duşem (Pzt), Sêşem (Salı), Çarşem (Çar)\n• Pêncşem (Per), În (Cuma)\n• Şemî (Cmt), Yekşem (Paz)',
+        contentTr: 'Haftanın günleri.',
+      ),
+      LessonSlide(
+        id: 'time_1_s2',
+        lessonId: 'time_1',
+        order: 2,
+        contentKu: 'Mehnên serê salê:\n\n• Rêbendan (Ocak), Reşemeh (Şubat), Adar (Mart)\n• Nîsan (Nisan), Gulan (Mayıs), Hezîran (Haziran)',
+        contentTr: 'Yılın ilk 6 ayı.',
+      ),
+    ],
+    'time_2': [
+      LessonSlide(
+        id: 'time_2_s1',
+        lessonId: 'time_2',
+        order: 1,
+        contentKu: 'Demên rojê:\n\n• Sibeh: Sabah\n• Nîvro: Öğle\n• Êvar: Akşam\n• Şev: Gece',
+        contentTr: 'Günün bölümleri.',
+      ),
+      LessonSlide(
+        id: 'time_2_s2',
+        lessonId: 'time_2',
+        order: 2,
+        contentKu: 'Demên nêzîk:\n\n• Duh: Dün\n• Îro: Bugün\n• Sibe: Yarın',
+        contentTr: 'Zaman belirteçleri.',
+      ),
+    ],
+  };
+
   @override
   Future<List<Lesson>> loadLessonsByCategory(String category) async {
-    return [
-      Lesson(
-        id: 'lesson_1',
-        slug: 'alphabet',
-        titleKu: 'Alfabê',
-        titleTr: 'Alfabe',
-        category: category,
-        iconName: 'abc',
-      ),
-      Lesson(
-        id: 'lesson_2',
-        slug: 'numbers',
-        titleKu: 'Hejmar',
-        titleTr: 'Sayılar',
-        category: category,
-        iconName: '123',
-      ),
-    ];
+    return _lessonsData[category] ?? const [];
   }
 
   @override
   Future<Map<String, dynamic>?> loadLesson(String lessonId) async {
-    return {
-      'id': lessonId,
-      'slug': 'alphabet',
-      'title_ku': 'Alfabê',
-      'category': 'everyday',
-    };
+    for (final list in _lessonsData.values) {
+      for (final lesson in list) {
+        if (lesson.id == lessonId) {
+          return lesson.toJson();
+        }
+      }
+    }
+    return null;
   }
 
   @override
   Future<List<LessonSlide>> loadLessonSlides(String lessonId) async {
-    return [
-      LessonSlide(
-        id: 'slide_1',
-        lessonId: lessonId,
-        order: 1,
-        contentKu: 'A, B, C, Ç, D, E, Ê, F, G, H',
-      ),
-      LessonSlide(
-        id: 'slide_2',
-        lessonId: lessonId,
-        order: 2,
-        contentKu: 'I, Î, J, K, L, M, N, O, Ö, P',
-      ),
-    ];
+    return _slidesData[lessonId] ?? const [];
   }
 
   @override

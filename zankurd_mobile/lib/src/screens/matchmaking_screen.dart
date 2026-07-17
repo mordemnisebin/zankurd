@@ -61,6 +61,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   int _opponentLevel = 1;
   String _myName = 'Lîstikvan';
   bool _isCancelled = false;
+  bool _cancelling = false;
 
   bool _searchingStarted = false;
   List<String> _categories = const [];
@@ -102,6 +103,34 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       ErrorReporter.record(error, stack, reason: 'matchmaking_dispose_cancel');
     });
     super.dispose();
+  }
+
+  Future<void> _handleCancelAndPop() async {
+    if (_cancelling) return;
+    setState(() {
+      _cancelling = true;
+      _statusTextKu = 'Tê betalkirin...';
+      _statusTextTr = 'İptal ediliyor...';
+    });
+
+    _matchmakingSub?.cancel();
+    _matchmakingSub = null;
+    _statusTimer?.cancel();
+    _statusTimer = null;
+
+    try {
+      await widget.repository.cancelMatchmaking();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'matchmaking_cancel_and_pop');
+    }
+
+    if (mounted) {
+      setState(() {
+        _isCancelled = true;
+        _cancelling = false;
+      });
+      Navigator.of(context).pop();
+    }
   }
 
   Future<void> _loadCategoriesOnly() async {
@@ -297,7 +326,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       barrierDismissible: false,
       builder: (context) => AlertDialog(
         backgroundColor: AppTheme.surfaceColor(context),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: AppTheme.borderColor(context)),
+        ),
         title: Text(
           ku ? 'Dema Gerînê Qediya' : 'Arama Süresi Doldu',
           style: TextStyle(
@@ -492,21 +524,34 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         ? (_statusTextKu ?? 'Tê gerîn...')
         : (_statusTextTr ?? 'Aranıyor...');
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
+    return PopScope(
+      canPop: !_searchingStarted || _cancelling || _found,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        _handleCancelAndPop();
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
+          leading: _searchingStarted
+              ? IconButton(
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  onPressed: _cancelling ? null : _handleCancelAndPop,
+                )
+              : null,
         ),
-        child: SafeArea(
-          child: _searchingStarted
-              ? _buildRadarSearch(status, ku)
-              : _buildSelectionMenu(ku),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: AppTheme.backgroundGradient(context),
+          ),
+          child: SafeArea(
+            child: _searchingStarted
+                ? _buildRadarSearch(status, ku)
+                : _buildSelectionMenu(ku),
+          ),
         ),
       ),
     );
@@ -583,7 +628,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               key: const ValueKey('matchmaking-duel-card'),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [AppTheme.playPink, Color(0xFFB91F70)],
+                  colors: [AppTheme.playPink, Color(0xFF933527)],
                 ),
                 borderRadius: BorderRadius.circular(AppRadius.card),
                 border: Border.all(
@@ -723,6 +768,28 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   }
 
   Widget _buildRadarSearch(String status, bool ku) {
+    if (_cancelling) {
+      return Center(
+        child: Column(
+          key: const ValueKey('matchmaking-cancelling-state'),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CircularProgressIndicator(
+              color: AppTheme.primaryGradientStart,
+            ),
+            const SizedBox(height: 24),
+            Text(
+              status,
+              style: TextStyle(
+                color: AppTheme.textPrimaryColor(context),
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
     return Center(
       child: Column(
         key: const ValueKey('matchmaking-waiting-state'),
@@ -1075,10 +1142,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                   vertical: 14,
                 ),
               ),
-              onPressed: () {
-                _isCancelled = true;
-                Navigator.of(context).pop();
-              },
+              onPressed: _cancelling ? null : _handleCancelAndPop,
               icon: const Icon(Icons.close_rounded, size: 18),
               label: Text(
                 ku ? 'Betal bike' : 'İptal Et',

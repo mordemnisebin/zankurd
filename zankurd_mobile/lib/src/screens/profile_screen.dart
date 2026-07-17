@@ -281,7 +281,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       _StatTile(
                         label: ku ? 'Rêze' : 'Sıralama',
-                        value: '#${_stats!.rank}',
+                        // Hiç oyun yokken sahte görünen sıra gösterme.
+                        value: _stats!.roomsPlayed > 0
+                            ? '#${_stats!.rank}'
+                            : '—',
                         color: AppTheme.gold,
                         icon: Icons.leaderboard_rounded,
                       ),
@@ -908,27 +911,43 @@ class _ProfileHeroCard extends StatelessWidget {
                       onTap: onEditAvatar,
                       child: Stack(
                         children: [
-                          PlayerAvatar(
-                            radius: 34,
-                            photoUrl: avatarIdentity.photoUrl,
-                            iconId: avatarIdentity.iconId,
-                            colorHex: avatarIdentity.colorHex,
-                            frameId: avatarIdentity.frameId,
-                            displayName: displayName,
+                          // Mockup 10: altın halkalı avatar.
+                          Container(
+                            padding: const EdgeInsets.all(2.5),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppTheme.gold,
+                                width: 2.5,
+                              ),
+                            ),
+                            child: PlayerAvatar(
+                              radius: 34,
+                              photoUrl: avatarIdentity.photoUrl,
+                              iconId: avatarIdentity.iconId,
+                              colorHex: avatarIdentity.colorHex,
+                              frameId: avatarIdentity.frameId,
+                              displayName: displayName,
+                            ),
                           ),
+                          // Mockup 10: yeşil kamera rozeti.
                           Positioned(
                             right: 0,
                             bottom: 0,
                             child: Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: AppTheme.correct,
                                 shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppTheme.bgDeep,
+                                  width: 2,
+                                ),
                               ),
                               child: const Icon(
-                                Icons.edit,
+                                Icons.photo_camera,
                                 size: 12,
-                                color: AppTheme.secondaryAccent,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -1121,8 +1140,9 @@ class _AchievementShowcase extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       backgroundColor: AppTheme.surfaceColor(context),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        side: BorderSide(color: AppTheme.borderColor(context)),
       ),
       builder: (sheetContext) {
         return Container(

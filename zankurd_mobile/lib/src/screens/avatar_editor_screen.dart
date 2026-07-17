@@ -265,31 +265,50 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                     _SectionTitle(ku ? 'Reng' : 'Renk'),
                     AppPanel(
                       child: Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
+                        spacing: 6,
+                        runSpacing: 6,
                         children: [
                           for (final hex in avatarColors)
-                            GestureDetector(
-                              key: ValueKey('avatar-color-$hex'),
-                              onTap: () => setState(
-                                () => _identity = _identity.copyWith(
-                                  colorHex: hex,
-                                ),
-                              ),
-                              child: Container(
-                                width: 36,
-                                height: 36,
-                                decoration: BoxDecoration(
-                                  color: colorFrom(
-                                    hex,
-                                    fallback: AppTheme.accent,
+                            ClipOval(
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  key: ValueKey('avatar-color-$hex'),
+                                  onTap: () => setState(
+                                    () => _identity = _identity.copyWith(
+                                      colorHex: hex,
+                                    ),
                                   ),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: _identity.colorHex == hex
-                                        ? Colors.white
-                                        : Colors.transparent,
-                                    width: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Container(
+                                      width: 36,
+                                      height: 36,
+                                      decoration: BoxDecoration(
+                                        color: colorFrom(
+                                          hex,
+                                          fallback: AppTheme.accent,
+                                        ),
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: _identity.colorHex == hex
+                                              ? Colors.white
+                                              : Colors.transparent,
+                                          width: 3,
+                                        ),
+                                        boxShadow: _identity.colorHex == hex
+                                            ? [
+                                                BoxShadow(
+                                                  color: Colors.black.withValues(
+                                                    alpha: 0.25,
+                                                  ),
+                                                  blurRadius: 4,
+                                                  offset: const Offset(0, 2),
+                                                ),
+                                              ]
+                                            : null,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),

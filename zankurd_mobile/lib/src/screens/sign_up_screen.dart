@@ -166,7 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen>
       } else if (authProvider.errorMessage != null) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text(authProvider.errorMessage!)));
+        ).showSnackBar(SnackBar(content: Text(context.translateAuthError(authProvider.errorMessage!))));
       }
     }
   }
@@ -179,6 +179,8 @@ class _SignUpScreenState extends State<SignUpScreen>
         ? AppTheme.secondaryAccent.withValues(alpha: 0.12)
         : AppTheme.borderOf(context).withValues(alpha: 0.06);
 
+    final keyboardOpen = MediaQuery.viewInsetsOf(context).bottom > 0;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -187,13 +189,17 @@ class _SignUpScreenState extends State<SignUpScreen>
           Positioned(
             top: -120,
             right: -120,
-            child: Container(
-              width: 320,
-              height: 320,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [glowColor1, glowColor1.withValues(alpha: 0)],
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 250),
+              opacity: keyboardOpen ? 0.0 : 1.0,
+              child: Container(
+                width: 320,
+                height: 320,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [glowColor1, glowColor1.withValues(alpha: 0)],
+                  ),
                 ),
               ),
             ),
@@ -202,13 +208,17 @@ class _SignUpScreenState extends State<SignUpScreen>
           Positioned(
             bottom: -140,
             left: -140,
-            child: Container(
-              width: 360,
-              height: 360,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [glowColor2, glowColor2.withValues(alpha: 0)],
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 250),
+              opacity: keyboardOpen ? 0.0 : 1.0,
+              child: Container(
+                width: 360,
+                height: 360,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [glowColor2, glowColor2.withValues(alpha: 0)],
+                  ),
                 ),
               ),
             ),

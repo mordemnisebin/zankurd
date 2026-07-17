@@ -152,11 +152,12 @@ class _SignInScreenState extends State<SignInScreen>
             'Girêdana vesazkirina şîfreyê ji e-peyama te re hat şandin.',
             'Parola sıfırlama bağlantısı e-postana gönderildi.',
           )
-        : authProvider.errorMessage ??
-              context.s(
+        : (authProvider.errorMessage != null
+            ? context.translateAuthError(authProvider.errorMessage!)
+            : context.s(
                 'Vesazkirina şîfreyê bi ser neket.',
                 'Parola sıfırlama başarısız.',
-              );
+              ));
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(message)));
@@ -167,10 +168,7 @@ class _SignInScreenState extends State<SignInScreen>
   }
 
   void _showAuthError(String message) {
-    final localized =
-        message == 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.'
-        ? context.s('Girêdan çênebû. Înternet an DNS kontrol bike.', message)
-        : message;
+    final localized = context.translateAuthError(message);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(localized), behavior: SnackBarBehavior.floating),
     );
@@ -200,6 +198,8 @@ class _SignInScreenState extends State<SignInScreen>
         ? AppTheme.secondaryAccent.withValues(alpha: 0.12)
         : AppTheme.borderOf(context).withValues(alpha: 0.06);
 
+    final keyboardOpen = MediaQuery.viewInsetsOf(context).bottom > 0;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -209,13 +209,17 @@ class _SignInScreenState extends State<SignInScreen>
           Positioned(
             top: -120,
             right: -120,
-            child: Container(
-              width: 320,
-              height: 320,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [glowColor1, glowColor1.withValues(alpha: 0)],
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 250),
+              opacity: keyboardOpen ? 0.0 : 1.0,
+              child: Container(
+                width: 320,
+                height: 320,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [glowColor1, glowColor1.withValues(alpha: 0)],
+                  ),
                 ),
               ),
             ),
@@ -224,13 +228,17 @@ class _SignInScreenState extends State<SignInScreen>
           Positioned(
             bottom: -140,
             left: -140,
-            child: Container(
-              width: 360,
-              height: 360,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [glowColor2, glowColor2.withValues(alpha: 0)],
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 250),
+              opacity: keyboardOpen ? 0.0 : 1.0,
+              child: Container(
+                width: 360,
+                height: 360,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [glowColor2, glowColor2.withValues(alpha: 0)],
+                  ),
                 ),
               ),
             ),
@@ -1206,10 +1214,16 @@ class _LanguageChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+      behavior: HitTestBehavior.opaque,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 240),
         curve: Curves.easeInOut,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+        constraints: const BoxConstraints(
+          minHeight: 36,
+          minWidth: 36,
+        ),
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
           gradient: active ? AppTheme.accentGradient : null,
           borderRadius: BorderRadius.circular(20),
@@ -1227,7 +1241,7 @@ class _LanguageChip extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: AppTypography.caption.copyWith(
+          style: AppTypography.bodyMedium.copyWith(
             color: active ? Colors.white : AppTheme.textMutedColor(context),
             fontWeight: FontWeight.w800,
             letterSpacing: 0.5,

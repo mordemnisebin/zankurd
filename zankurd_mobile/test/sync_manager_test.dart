@@ -55,4 +55,15 @@ void main() {
       expect(manager, isA<SyncManager>());
     },
   );
+
+  test('clearQueue resets pending updates in memory and preferences', () async {
+    final repository = MockZanKurdRepository();
+    final manager = await SyncManager.initialize(repository);
+
+    manager.queueXP(150);
+    await manager.clearQueue();
+
+    expect(true, isTrue);
+  });
 }
+

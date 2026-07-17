@@ -651,16 +651,16 @@ void main() {
     );
     expect(tester.takeException(), isNull);
 
-    // Açık tema varsayılan sözleşmesi.
+    // Koyu tema varsayılan sözleşmesi (2026-07-17 mockup sistemi).
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
     final surface = tester.widget<Container>(
       find.byKey(const ValueKey('onboarding-surface')),
     );
     final decoration = surface.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.lightBg);
+    expect(decoration.color, AppTheme.bg);
   });
 
   testWidgets('onboarding fits a tablet and web viewport', (tester) async {
@@ -682,7 +682,7 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
   });
 
@@ -736,8 +736,8 @@ void main() {
     await tester.tap(find.text('Misafir olarak devam et'));
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd'), findsOneWidget);
-    expect(find.text('Yarış modları'), findsOneWidget);
+    expect(find.byType(HomeScreen), findsOneWidget);
+    expect(find.text('Günün Dersi'), findsOneWidget);
   });
 
   testWidgets('home header exposes language and theme quick controls', (
@@ -755,12 +755,12 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd'), findsOneWidget);
     expect(find.text('Hoş geldin, ZanKurd Oyuncusu!'), findsOneWidget);
     expect(find.text('Seviye 5'), findsNothing);
     expect(find.byIcon(Icons.diamond), findsNothing);
 
-    // Pirs-inspired sözleşme: turuncu profil header'ı ve multiplayer hero.
+    // Pirs/mockup-3 sözleşmesi: ince karşılama satırı + multiplayer hero;
+    // kalın gradyan banner yok.
     expect(find.byKey(const ValueKey('home-profile-header')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-multiplayer-hero')), findsOneWidget);
     expect(find.text('Oda kur'), findsOneWidget);
@@ -769,21 +769,11 @@ void main() {
     expect(find.text('Yarış'), findsOneWidget);
     expect(find.text('Profil'), findsOneWidget);
 
-    final header = tester.widget<Container>(
-      find.byKey(const ValueKey('home-profile-header')),
-    );
-    final headerDecoration = header.decoration as BoxDecoration;
-    final headerGradient = headerDecoration.gradient as LinearGradient;
-    expect(headerGradient.colors, hasLength(2));
-    // Pirs-inspired purple gradient on the profile header (light mode).
-    expect(headerGradient.colors.first, const Color(0xFF4A3DB8));
-    expect(headerGradient.colors.last, const Color(0xFF7B5EA7));
-
     final navTheme = tester.widget<NavigationBarTheme>(
       find.byType(NavigationBarTheme),
     );
     expect(navTheme.data.height, 68);
-    expect(navTheme.data.backgroundColor, AppTheme.lightSurface);
+    expect(navTheme.data.backgroundColor, AppTheme.surface);
     expect(
       navTheme.data.indicatorColor,
       AppTheme.brandOrange.withValues(alpha: 0.14),
@@ -820,10 +810,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Açık tema varsayılan sözleşmesi.
+    // Koyu tema varsayılan sözleşmesi (2026-07-17 mockup sistemi).
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
     final home = tester.widget<Container>(
       find
@@ -835,14 +825,14 @@ void main() {
     );
     final decoration = home.decoration as BoxDecoration;
     final gradient = decoration.gradient as LinearGradient;
-    expect(gradient.colors.first, AppTheme.lightBg);
+    expect(gradient.colors.first, AppTheme.bg);
 
     theme.toggleDarkLight();
     await tester.pumpAndSettle();
 
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
   });
 
@@ -863,7 +853,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
-    expect(find.text('Yarış modları'), findsNothing);
+    expect(find.text('Günün Dersi'), findsNothing);
 
     await tester.enterText(
       find.byKey(const ValueKey('player-name-field')),
@@ -873,7 +863,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.savedName, 'Rojda Test');
-    expect(find.text('Yarış modları'), findsOneWidget);
+    expect(find.text('Günün Dersi'), findsOneWidget);
   });
 
   test('unsupported provider auth error is user friendly', () {
@@ -987,7 +977,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd'), findsOneWidget);
+    expect(find.byType(HomeScreen), findsOneWidget);
     expect(find.text('Hemen\nyarış'), findsOneWidget);
     expect(find.text('Oda kur'), findsOneWidget);
     expect(find.text('Kodla katıl'), findsOneWidget);
@@ -1157,6 +1147,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    // Mockup 3 sıralamasında hızlı-oyun kartı metrik + günlük ders altında;
+    // landscape'te görünür olması için kaydırılır.
+    await tester.scrollUntilVisible(find.text('Hemen\nyarış'), 120);
     expect(find.text('Hemen\nyarış'), findsOneWidget);
     expect(find.text('Oda kur'), findsOneWidget);
     expect(find.text('Kodla katıl'), findsOneWidget);

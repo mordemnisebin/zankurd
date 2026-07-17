@@ -190,23 +190,28 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     await _spinController.forward();
     HapticFeedback.mediumImpact();
 
-    if (mounted) {
-      setState(() {
-        _spinning = false;
-        _canSpin = false;
-        _wonAmount = won;
-        _showConfetti = true;
-      });
-      // Prize-reveal scale animation
-      _prizeAnimController.reset();
-      _prizeAnimController.forward();
+    // Çark animasyonunun tam oturması için kısa nefes molası
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    if (!mounted) return;
 
-      try {
-        context.read<SoundProvider>().playWin();
-        context.read<SoundProvider>().playCoin();
-      } catch (error, stack) {
-        ErrorReporter.record(error, stack, reason: 'spin result sound failed');
-      }
+    setState(() {
+      _spinning = false;
+      _canSpin = false;
+      _wonAmount = won;
+      _showConfetti = true;
+    });
+
+    // Prize-reveal scale animasyonu
+    _prizeAnimController.reset();
+    await _prizeAnimController.forward();
+
+    // Ödül kartı tamamen açıldıktan sonra sesi çal
+    if (!mounted) return;
+    try {
+      context.read<SoundProvider>().playWin();
+      context.read<SoundProvider>().playCoin();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'spin result sound failed');
     }
   }
 

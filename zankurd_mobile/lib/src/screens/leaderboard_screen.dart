@@ -886,8 +886,8 @@ class _FriendRankRow extends StatelessWidget {
                 const SizedBox(height: 1),
                 Text(
                   online
-                      ? (isKu ? 'Çevrimiçi' : 'Çevrimiçi')
-                      : (isKu ? 'Offline' : 'Offline'),
+                      ? (isKu ? 'Serhêl' : 'Çevrimiçi')
+                      : (isKu ? 'Ne li serhêl' : 'Çevrimdışı'),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.caption.copyWith(

@@ -179,9 +179,10 @@ class _CategoriesTabState extends State<CategoriesTab> {
                               AppSpacing.xxl;
                           final isNarrow = constraints.maxWidth <= 600;
                           final crossCount = isNarrow ? 1 : 2;
+                          // Mockup 4 kompakt satır yüksekliği (~110px).
                           final aspectRatio = isNarrow
-                              ? (constraints.maxWidth / 190)
-                              : 0.92;
+                              ? (constraints.maxWidth / 120)
+                              : 2.6;
                           return GridView.builder(
                             controller: widget.scrollController,
                             padding: EdgeInsets.fromLTRB(
@@ -239,7 +240,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
             MediaQuery.paddingOf(context).bottom + AppSpacing.xxl;
         final isNarrow = constraints.maxWidth <= 600;
         final crossCount = isNarrow ? 1 : 2;
-        final aspectRatio = isNarrow ? (constraints.maxWidth / 190) : 0.92;
+        final aspectRatio = isNarrow ? (constraints.maxWidth / 120) : 2.6;
         return GridView.builder(
           padding: EdgeInsets.fromLTRB(
             AppSpacing.page,
@@ -446,221 +447,172 @@ class _CategoryCardState extends State<_CategoryCard>
         ? (widget.masteryCount / widget.masteryThreshold).clamp(0.0, 1.0)
         : 0.0;
     final hasProgress = widget.masteryLevel != MasteryLevel.none;
+    // İçeriği yetersiz kategori (ör. 3 soruluk Teknolojî) oynanabilir gibi
+    // sunulmaz; "yakında" olarak işaretlenir ve dokunuş kapatılır.
+    final comingSoon =
+        widget.questionCount != null && widget.questionCount! < 20;
 
     return FadeTransition(
       opacity: _fadeAnim,
       child: SlideTransition(
         position: _slideAnim,
         child: GestureDetector(
-          onTapDown: (_) => setState(() => _pressed = true),
-          onTapUp: (_) {
-            setState(() => _pressed = false);
-            widget.onTap();
-          },
+          onTapDown: comingSoon ? null : (_) => setState(() => _pressed = true),
+          onTapUp: comingSoon
+              ? null
+              : (_) {
+                  setState(() => _pressed = false);
+                  widget.onTap();
+                },
           onTapCancel: () => setState(() => _pressed = false),
           child: AnimatedScale(
             scale: _pressed ? 0.97 : 1.0,
             duration: const Duration(milliseconds: 140),
             curve: Curves.easeOutCubic,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [gradientColors.first, gradientColors.last],
+            // Onaylı mockup 4: koyu yüzeyli kompakt satır — solda kategori
+            // renkli ikon çipi, ortada ad + soru sayısı, sağda mastery rozeti;
+            // altta ince ilerleme çubuğu.
+            child: Opacity(
+              opacity: comingSoon ? 0.55 : 1.0,
+              child: Container(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                  color: AppTheme.surfaceColor(context),
+                  border: Border.all(color: glowColor.withValues(alpha: 0.35)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: glowColor.withValues(alpha: 0.10),
+                      blurRadius: 14,
+                      offset: const Offset(0, 5),
+                      spreadRadius: -4,
+                    ),
+                  ],
                 ),
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.20),
-                  width: 1.2,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: glowColor.withValues(alpha: 0.30),
-                    blurRadius: 22,
-                    offset: const Offset(0, 10),
-                    spreadRadius: -6,
-                  ),
-                  BoxShadow(
-                    color: glowColor.withValues(alpha: 0.12),
-                    blurRadius: 6,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(14),
-                child: Stack(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Decorative circles for depth
-                    Positioned(
-                      right: -30,
-                      top: -30,
-                      child: Container(
-                        width: 130,
-                        height: 130,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.06),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: -20,
-                      bottom: -20,
-                      child: Container(
-                        width: 90,
-                        height: 90,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.04),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
-                    // Large watermark icon
-                    Positioned(
-                      right: -16,
-                      bottom: -20,
-                      child: Icon(
-                        icon,
-                        size: 110,
-                        color: Colors.white.withValues(alpha: 0.08),
-                      ),
-                    ),
-                    // Content
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Icon in glassmorphic container
-                          Container(
-                            width: 56,
-                            height: 56,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.18),
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.25),
-                                width: 1.2,
+                    Row(
+                      children: [
+                        // Pirs imzası: kategori kimliğini illüstrasyon taşır.
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
+                          child: Image.asset(
+                            CategoryVisuals.imagePath(widget.category),
+                            width: 52,
+                            height: 52,
+                            fit: BoxFit.cover,
+                            filterQuality: FilterQuality.high,
+                            errorBuilder: (_, _, _) => Container(
+                              width: 52,
+                              height: 52,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.sm,
+                                ),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    gradientColors.first,
+                                    gradientColors.last,
+                                  ],
+                                ),
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.18),
-                                  blurRadius: 16,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ],
-                            ),
-                            child: Icon(icon, color: Colors.white, size: 28),
-                          ),
-                          const Spacer(),
-                          // Category name
-                          Text(
-                            catName,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 21,
-                              height: 1.15,
-                              letterSpacing: -0.3,
-                              shadows: [
-                                Shadow(
-                                  color: Color(0x66000000),
-                                  blurRadius: 10,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
+                              child: Icon(icon, color: Colors.white, size: 26),
                             ),
                           ),
-                          const SizedBox(height: 6),
-                          // Subtitle row
-                          Row(
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(
-                                Icons.layers_outlined,
-                                color: Colors.white.withValues(alpha: 0.80),
-                                size: 14,
-                              ),
-                              const SizedBox(width: 5),
-                              Flexible(
-                                child: Text(
-                                  widget.questionCount != null
-                                      ? (widget.isKu
-                                            ? '${widget.questionCount} pirs • 5 ast'
-                                            : '${widget.questionCount} soru • 5 seviye')
-                                      : (widget.isKu
-                                            ? '5 ast • pêşbaz'
-                                            : '5 seviye • yarış'),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Colors.white.withValues(alpha: 0.85),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                              Text(
+                                catName,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTypography.heading2.copyWith(
+                                  color: AppTheme.textPrimaryColor(context),
                                 ),
                               ),
-                              const Spacer(),
-                              // Mastery level badge
-                              if (hasProgress)
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 3,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: 0.18),
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      color: AppTheme.gold.withValues(
-                                        alpha: 0.55,
-                                      ),
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        widget.masteryLevel.icon,
-                                        color: AppTheme.gold,
-                                        size: 12,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        widget.isKu
-                                            ? widget.masteryLevel.titleKu
-                                            : widget.masteryLevel.titleTr,
-                                        style: const TextStyle(
-                                          color: AppTheme.gold,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                              const SizedBox(height: 3),
+                              Text(
+                                comingSoon
+                                    ? (widget.isKu
+                                          ? 'Nêzîk de tê…'
+                                          : 'Yakında geliyor…')
+                                    : widget.questionCount != null
+                                    ? (widget.isKu
+                                          ? '${widget.questionCount} pirs • 5 ast'
+                                          : '${widget.questionCount} soru • 5 seviye')
+                                    : (widget.isKu
+                                          ? '5 ast • pêşbaz'
+                                          : '5 seviye • yarış'),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTypography.caption.copyWith(
+                                  color: AppTheme.textSubColor(context),
                                 ),
+                              ),
                             ],
                           ),
-                          const SizedBox(height: 14),
-                          // Progress bar
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(3),
-                            child: LinearProgressIndicator(
-                              value: hasProgress ? progress : 0.0,
-                              minHeight: 5,
-                              backgroundColor: Colors.white.withValues(
-                                alpha: 0.18,
-                              ),
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                Color(0xFFFFFFFF),
+                        ),
+                        if (hasProgress)
+                          Container(
+                            margin: const EdgeInsets.only(left: 6),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: AppTheme.gold.withValues(alpha: 0.55),
                               ),
                             ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  widget.masteryLevel.icon,
+                                  color: AppTheme.gold,
+                                  size: 12,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  widget.isKu
+                                      ? widget.masteryLevel.titleKu
+                                      : widget.masteryLevel.titleTr,
+                                  style: const TextStyle(
+                                    color: AppTheme.gold,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        else
+                          Icon(
+                            comingSoon
+                                ? Icons.hourglass_empty_rounded
+                                : Icons.chevron_right_rounded,
+                            color: AppTheme.textMutedColor(context),
                           ),
-                        ],
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(3),
+                      child: LinearProgressIndicator(
+                        value: hasProgress ? progress : 0.0,
+                        minHeight: 5,
+                        backgroundColor: AppTheme.borderColor(context),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          gradientColors.first,
+                        ),
                       ),
                     ),
                   ],

@@ -60,6 +60,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   final SupabaseClient client;
   final _cache = QuestionCache();
+  final Map<String, Map<String, dynamic>> _profileCache = {};
 
   /// Oda başına tek realtime kanalı; gönderme ve dinleme paylaşır.
   /// Eskiden her broadcast'te yeni kanal açılıyordu (nesne sızıntısı).
@@ -762,7 +763,52 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .from('room_players')
         .stream(primaryKey: ['room_id', 'player_id'])
         .eq('room_id', roomId)
-        .asyncMap((_) => _loadRoomPlayersById(roomId));
+        .asyncMap((rows) async {
+          final List<Player> players = [];
+          final List<String> missingProfileIds = [];
+
+          for (final row in rows) {
+            final playerId = row['player_id'] as String;
+            if (!_profileCache.containsKey(playerId)) {
+              missingProfileIds.add(playerId);
+            }
+          }
+
+          if (missingProfileIds.isNotEmpty) {
+            try {
+              final profiles = await client
+                  .from('profiles')
+                  .select('id, display_name, avatar_icon, avatar_color, avatar_url, avatar_frame, showcase_title')
+                  .inFilter('id', missingProfileIds);
+              for (final p in profiles) {
+                final id = p['id'] as String;
+                _profileCache[id] = p;
+              }
+            } catch (e, s) {
+              _recordError(e, s, reason: 'Failed to fetch missing profiles');
+            }
+          }
+
+          for (final row in rows) {
+            final playerId = row['player_id'] as String;
+            final cachedProfile = _profileCache[playerId];
+            final name = cachedProfile?['display_name'] as String? ?? 'Oyuncu';
+            final ready = row['is_ready'] as bool? ?? false;
+            players.add(Player(
+              id: playerId,
+              name: name,
+              score: row['score'] as int? ?? 0,
+              streak: row['streak'] as int? ?? 0,
+              state: ready ? 'Hazır' : 'Bekliyor',
+              avatarIcon: cachedProfile?['avatar_icon'] as String?,
+              avatarColor: cachedProfile?['avatar_color'] as String?,
+              avatarUrl: cachedProfile?['avatar_url'] as String?,
+              avatarFrame: cachedProfile?['avatar_frame'] as String?,
+              showcaseTitle: cachedProfile?['showcase_title'] as String?,
+            ));
+          }
+          return players;
+        });
   }
 
   @override
@@ -1258,11 +1304,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .order('joined_at');
 
     return rows.map((row) {
-      final profile = row['profiles'] as Map<String, dynamic>?;
+      final playerId = row['player_id'] as String;
+      final rawProfile = row['profiles'] as Map<String, dynamic>?;
+      if (rawProfile != null) {
+        _profileCache[playerId] = rawProfile;
+      }
+
+      final profile = _profileCache[playerId] ?? rawProfile;
       final name = profile?['display_name'] as String? ?? 'Oyuncu';
       final ready = row['is_ready'] as bool? ?? false;
       return Player(
-        id: row['player_id'] as String?,
+        id: playerId,
         name: name,
         score: row['score'] as int? ?? 0,
         streak: row['streak'] as int? ?? 0,
