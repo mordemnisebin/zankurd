@@ -141,8 +141,8 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 const SizedBox(height: 4),
                 Text(
                   ku
-                      ? 'Soru öneriniz alındı, onaylandıktan sonra eklenecek!'
-                      : 'Soru öneriniz alındı, onaylandıktan sonra eklenecek!',
+                      ? 'Ji bo dewlemendkirina pirsan, pirsa xwe ya nû ji me re bişîne.'
+                      : 'Soru havuzunu zenginleştirmek için yeni sorunu bizimle paylaş.',
                   style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
                   ),
@@ -466,8 +466,8 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                     const SizedBox(height: AppSpacing.sm),
                     Text(
                       ku
-                          ? 'Soru öneriniz alındı, onaylandıktan sonra eklenecek!'
-                          : 'Soru öneriniz alındı, onaylandıktan sonra eklenecek!',
+                          ? 'Pêşniyara te hat hildan. Piştî pejirandinê, tu yê 50 zêr û xelata Rozeta Nivîskar qezenc bikî!'
+                          : 'Soru öneriniz alındı! Onaylandıktan sonra 50 jeton ve özel Yazar Rozeti kazanacaksınız!',
                       textAlign: TextAlign.center,
                       style: AppTypography.bodyMedium.copyWith(
                         color: AppTheme.textSubColor(context),
