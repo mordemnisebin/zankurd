@@ -877,6 +877,23 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 ),
                               ),
                             ),
+                            // Mockup 8 hazine sandığı — üretilmiş kutlama aksanı.
+                            Positioned(
+                              right: 6,
+                              top: 0,
+                              bottom: 0,
+                              child: IgnorePointer(
+                                child: Opacity(
+                                  opacity: 0.6,
+                                  child: Image.asset(
+                                    'assets/illustrations/treasure_chest.png',
+                                    height: 60,
+                                    fit: BoxFit.contain,
+                                    filterQuality: FilterQuality.high,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
