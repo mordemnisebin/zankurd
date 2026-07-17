@@ -82,6 +82,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // Ekstra çark 200c — bakiye 50c ile alınamamalı.
+    await tester.ensureVisible(find.text('200c'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('200c'));
     await tester.pumpAndSettle();
     // Confirm dialog appears — tap "Satin Al"
@@ -100,6 +102,8 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.text('200c'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('200c'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın Al"
@@ -136,6 +140,8 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.text('200c'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('200c'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın Al"

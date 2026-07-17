@@ -341,8 +341,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.monetization_on,
-                        color: AppTheme.gold, size: 22),
+                    Icon(Icons.monetization_on, color: AppTheme.gold, size: 22),
                     const SizedBox(width: 8),
                     Text(
                       '${item.cost} coin',
@@ -359,8 +358,11 @@ class _ShopScreenState extends State<ShopScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.account_balance_wallet_outlined,
-                      size: 16, color: AppTheme.textMutedColor(ctx)),
+                  Icon(
+                    Icons.account_balance_wallet_outlined,
+                    size: 16,
+                    color: AppTheme.textMutedColor(ctx),
+                  ),
                   const SizedBox(width: 6),
                   Text(
                     ku
@@ -523,7 +525,7 @@ class _ShopScreenState extends State<ShopScreen> {
             children: [
               // ── Coin balance panel ──
               _buildBalancePanel(context, ku, isDark),
-              // ── Items grid ──
+              // ── Items ──
               Expanded(
                 child: _loading && _dynamicItems.isEmpty
                     ? const Center(
@@ -531,7 +533,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           color: AppTheme.primaryGradientStart,
                         ),
                       )
-                    : _buildItemGrid(context, ku, isDark),
+                    : _buildItemsList(context, ku, isDark),
               ),
             ],
           ),
@@ -605,26 +607,137 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   // ────────────────────────────────────────────
-  //  Items grid
+  //  Items list: mockup-11 style "en popüler" hero + grid
   // ────────────────────────────────────────────
-  Widget _buildItemGrid(BuildContext context, bool ku, bool isDark) {
+  Widget _buildItemsList(BuildContext context, bool ku, bool isDark) {
+    if (_dynamicItems.isEmpty) {
+      return Center(
+        child: Text(
+          ku ? 'Hîn tiştek di dukanê de tune.' : 'Mağazada henüz ürün yok.',
+          style: TextStyle(color: AppTheme.textMutedColor(context)),
+        ),
+      );
+    }
+
+    final heroItem = _dynamicItems.reduce((a, b) => b.cost > a.cost ? b : a);
+    final restItems = _dynamicItems.where((i) => i.id != heroItem.id).toList();
+
     // Use 2 columns; on wide screens (>600dp) use 3.
     final width = MediaQuery.of(context).size.width;
     final crossAxisCount = width >= 600 ? 3 : 2;
 
-    return GridView.builder(
+    return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount,
-        mainAxisSpacing: 12,
-        crossAxisSpacing: 12,
-        childAspectRatio: 0.72,
+      children: [
+        _buildHeroCard(heroItem, ku, isDark),
+        if (restItems.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          GridView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+              mainAxisSpacing: 12,
+              crossAxisSpacing: 12,
+              childAspectRatio: 0.72,
+            ),
+            itemCount: restItems.length,
+            itemBuilder: (context, index) =>
+                _buildShopCard(restItems[index], ku, isDark),
+          ),
+        ],
+      ],
+    );
+  }
+
+  // ── Hero card (mockup 11: "EN POPÜLER" büyük öne çıkan kart) ──
+  Widget _buildHeroCard(ShopItem item, bool ku, bool isDark) {
+    final title = ku ? item.titleKu : item.titleTr;
+    final desc = ku ? item.descKu : item.descTr;
+    final isPurchased = _purchasedItemIds.contains(item.id);
+    final canAfford = _coinBalance >= item.cost;
+
+    return AppPanel(
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          item.themeColor.withValues(alpha: 0.28),
+          AppTheme.surfaceColor(context).withValues(alpha: 0.0),
+        ],
       ),
-      itemCount: _dynamicItems.length,
-      itemBuilder: (context, index) {
-        final item = _dynamicItems[index];
-        return _buildShopCard(item, ku, isDark);
-      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: item.themeColor,
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+            ),
+            child: Text(
+              ku ? 'BABETÊ HERÎ BABET' : 'EN POPÜLER',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 11,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.3,
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Row(
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: item.themeColor.withValues(alpha: 0.22),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                ),
+                alignment: Alignment.center,
+                child: Icon(item.icon, color: item.themeColor, size: 32),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(context),
+                        fontWeight: FontWeight.w800,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      desc,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: AppTheme.textMutedColor(context),
+                        fontSize: 13,
+                        height: 1.3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            height: 44,
+            child: isPurchased
+                ? _buildOwnedChip(ku)
+                : _buildBuyButton(item, ku, canAfford),
+          ),
+        ],
+      ),
     );
   }
 
@@ -642,9 +755,7 @@ class _ShopScreenState extends State<ShopScreen> {
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: InkWell(
-        onTap: (_loading || isPurchased)
-            ? null
-            : () => _confirmPurchase(item),
+        onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
         borderRadius: BorderRadius.circular(AppRadius.card),
         splashColor: tint.withValues(alpha: 0.15),
         highlightColor: tint.withValues(alpha: 0.07),
@@ -696,9 +807,7 @@ class _ShopScreenState extends State<ShopScreen> {
                       alignment: Alignment.center,
                       child: Icon(
                         item.icon,
-                        color: isPurchased
-                            ? tint.withValues(alpha: 0.5)
-                            : tint,
+                        color: isPurchased ? tint.withValues(alpha: 0.5) : tint,
                         size: 32,
                       ),
                     ),
@@ -725,8 +834,9 @@ class _ShopScreenState extends State<ShopScreen> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: isPurchased
-                              ? AppTheme.textMutedColor(context)
-                                  .withValues(alpha: 0.7)
+                              ? AppTheme.textMutedColor(
+                                  context,
+                                ).withValues(alpha: 0.7)
                               : AppTheme.textMutedColor(context),
                           fontSize: 11,
                           height: 1.35,
@@ -782,9 +892,7 @@ class _ShopScreenState extends State<ShopScreen> {
       decoration: BoxDecoration(
         color: AppTheme.correct.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(
-          color: AppTheme.correct.withValues(alpha: 0.3),
-        ),
+        border: Border.all(color: AppTheme.correct.withValues(alpha: 0.3)),
       ),
       alignment: Alignment.center,
       child: Row(
@@ -824,17 +932,12 @@ class _ShopScreenState extends State<ShopScreen> {
             borderRadius: BorderRadius.circular(AppRadius.pill),
           ),
           elevation: canAfford ? 2 : 0,
-          textStyle: const TextStyle(
-            fontWeight: FontWeight.w800,
-            fontSize: 12,
-          ),
+          textStyle: const TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
         ),
         icon: Icon(
           Icons.shopping_cart_outlined,
           size: 15,
-          color: canAfford
-              ? Colors.white
-              : AppTheme.textMutedColor(context),
+          color: canAfford ? Colors.white : AppTheme.textMutedColor(context),
         ),
         label: Text('${item.cost}c'),
       ),
