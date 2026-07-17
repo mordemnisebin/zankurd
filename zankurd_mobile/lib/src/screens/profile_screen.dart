@@ -908,27 +908,43 @@ class _ProfileHeroCard extends StatelessWidget {
                       onTap: onEditAvatar,
                       child: Stack(
                         children: [
-                          PlayerAvatar(
-                            radius: 34,
-                            photoUrl: avatarIdentity.photoUrl,
-                            iconId: avatarIdentity.iconId,
-                            colorHex: avatarIdentity.colorHex,
-                            frameId: avatarIdentity.frameId,
-                            displayName: displayName,
+                          // Mockup 10: altın halkalı avatar.
+                          Container(
+                            padding: const EdgeInsets.all(2.5),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppTheme.gold,
+                                width: 2.5,
+                              ),
+                            ),
+                            child: PlayerAvatar(
+                              radius: 34,
+                              photoUrl: avatarIdentity.photoUrl,
+                              iconId: avatarIdentity.iconId,
+                              colorHex: avatarIdentity.colorHex,
+                              frameId: avatarIdentity.frameId,
+                              displayName: displayName,
+                            ),
                           ),
+                          // Mockup 10: yeşil kamera rozeti.
                           Positioned(
                             right: 0,
                             bottom: 0,
                             child: Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: AppTheme.correct,
                                 shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppTheme.bgDeep,
+                                  width: 2,
+                                ),
                               ),
                               child: const Icon(
-                                Icons.edit,
+                                Icons.photo_camera,
                                 size: 12,
-                                color: AppTheme.secondaryAccent,
+                                color: Colors.white,
                               ),
                             ),
                           ),
