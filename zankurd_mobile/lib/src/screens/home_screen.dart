@@ -1525,10 +1525,10 @@ class _CategoryEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Pirs-inspired gradient card — vibrant indigo-to-violet with white text.
+    // Mockup koyu-yeşil kimliği — kategoriye giriş kartı.
     const gradientColors = [
-      Color(0xFF5B4DBC),
-      Color(0xFF7B68EE),
+      Color(0xFF2F7D4F),
+      Color(0xFF1E5F47),
     ];
 
     return Semantics(
