@@ -65,7 +65,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('500 coin'), findsOneWidget);
-    expect(find.text('Ekstra Çark Çevirme'), findsOneWidget);
+    expect(find.text('Ekstra Çevirme'), findsOneWidget);
     expect(find.text('Altın Çerçeve'), findsOneWidget);
     expect(find.text('VIP Rozeti'), findsOneWidget);
     expect(find.text('Joker Paketi'), findsNothing);

@@ -187,13 +187,15 @@ class HeroCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                           ),
                         ),
-                        child: Text(
-                          isKu ? 'Oda ava bike' : 'Oda kur',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.bodyMedium.copyWith(
-                            color: textPrimary,
-                            fontWeight: FontWeight.w700,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            isKu ? 'Oda ava bike' : 'Oda kur',
+                            maxLines: 1,
+                            style: AppTypography.bodyMedium.copyWith(
+                              color: textPrimary,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),
@@ -215,13 +217,15 @@ class HeroCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                           ),
                         ),
-                        child: Text(
-                          isKu ? 'Kodê tevlî bibe' : 'Kodla katıl',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.bodyMedium.copyWith(
-                            color: textPrimary,
-                            fontWeight: FontWeight.w700,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            isKu ? 'Kodê tevlî bibe' : 'Kodla katıl',
+                            maxLines: 1,
+                            style: AppTypography.bodyMedium.copyWith(
+                              color: textPrimary,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),

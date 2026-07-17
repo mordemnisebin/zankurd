@@ -664,13 +664,17 @@ class _Metric extends StatelessWidget {
               Icon(icon, size: 14, color: iconColor),
               const SizedBox(width: AppSpacing.xxs),
               Flexible(
-                child: Text(
-                  value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w900,
+                // "10/10" gibi iki haneli değerler dar metrik kutusunda
+                // taşabiliyordu; FittedBox gerektiğinde otomatik küçültür.
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    value,
+                    maxLines: 1,
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
                 ),
               ),

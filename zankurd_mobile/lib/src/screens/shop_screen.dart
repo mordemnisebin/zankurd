@@ -122,8 +122,8 @@ class _ShopScreenState extends State<ShopScreen> {
     ),
     ShopItem(
       id: 'spin_wheel_extra',
-      titleKu: 'Zivirîna Zêde ya Çerxê',
-      titleTr: 'Ekstra Çark Çevirme',
+      titleKu: 'Zivirîna Zêde',
+      titleTr: 'Ekstra Çevirme',
       descKu: 'Ji bo çerxa rojane mafekî zivirînê yê nû dide.',
       descTr: 'Bugün çarkı tekrar çevirebilmek için ekstra bir hak tanımlar.',
       cost: 200,
