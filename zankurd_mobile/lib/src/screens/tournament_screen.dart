@@ -508,15 +508,13 @@ class _LobbyView extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(AppSpacing.lg),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
-              ),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
+              // Kategorî/mockup-4 dili: koyu düz yüzey + altın sınır —
+              // büyük gradyan hero kalıntısı yerine.
+              color: AppTheme.surfaceColor(context),
+              border: Border.all(color: AppTheme.gold.withValues(alpha: 0.35)),
               boxShadow: [
                 BoxShadow(
-                  color: AppTheme.gold.withValues(alpha: 0.14),
+                  color: AppTheme.gold.withValues(alpha: 0.10),
                   blurRadius: 14,
                   offset: const Offset(0, 5),
                 ),
@@ -529,7 +527,7 @@ class _LobbyView extends StatelessWidget {
                     child: CustomPaint(
                       painter: KilimPatternPainter(
                         drawPattern: true,
-                        color: Colors.white,
+                        color: AppTheme.gold,
                         opacity: 0.05,
                       ),
                     ),
@@ -562,7 +560,7 @@ class _LobbyView extends StatelessWidget {
                       ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
                       textAlign: TextAlign.center,
                       style: AppTypography.heading1.copyWith(
-                        color: Colors.white,
+                        color: AppTheme.textPrimaryColor(context),
                       ),
                     ),
                     const SizedBox(height: AppSpacing.sm),
@@ -573,25 +571,25 @@ class _LobbyView extends StatelessWidget {
                         vertical: AppSpacing.xxs,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.15),
+                        color: AppTheme.surfaceHiColor(context),
                         borderRadius: BorderRadius.circular(AppRadius.pill),
                         border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.3),
+                          color: AppTheme.borderColor(context),
                         ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.schedule_rounded,
                             size: 14,
-                            color: Colors.white70,
+                            color: AppTheme.textSubColor(context),
                           ),
                           const SizedBox(width: 6),
                           Text(
                             scheduleText,
                             style: AppTypography.caption.copyWith(
-                              color: Colors.white,
+                              color: AppTheme.textPrimaryColor(context),
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -639,7 +637,7 @@ class _LobbyView extends StatelessWidget {
                           : '16 oyuncu (bot) · 4 tur · ${TournamentConfig.questionsPerMatch} soru/maç',
                       textAlign: TextAlign.center,
                       style: AppTypography.bodyMedium.copyWith(
-                        color: Colors.white.withValues(alpha: 0.78),
+                        color: AppTheme.textSubColor(context),
                       ),
                     ),
                     const SizedBox(height: AppSpacing.xxs),
@@ -649,7 +647,7 @@ class _LobbyView extends StatelessWidget {
                           : 'Bot rakiplere karşı yarış — şampiyon kupayı alır!',
                       textAlign: TextAlign.center,
                       style: AppTypography.caption.copyWith(
-                        color: Colors.white.withValues(alpha: 0.65),
+                        color: AppTheme.textMutedColor(context),
                         fontWeight: FontWeight.w600,
                       ),
                     ),

@@ -22,16 +22,19 @@ const Map<String, IconData> avatarIcons = {
   'kupa': Icons.emoji_events_rounded,
 };
 
-/// Avatar arka plan renk paleti (hex, '#RRGGBB').
+/// Avatar arka plan renk paleti (hex, '#RRGGBB'). Marka ailesinden — jenerik
+/// Tailwind tonları yerine kategori paletiyle aynı kimlik. DB'de saklanan
+/// eski hex değerleri (varsa) yine [colorFrom] ile render edilmeye devam
+/// eder; bu liste yalnızca yeni seçimde sunulan seçenekleri belirler.
 const List<String> avatarColors = [
-  '#E94560',
-  '#7C3AED',
-  '#2563EB',
-  '#10B981',
-  '#F59E0B',
-  '#EC4899',
-  '#0EA5E9',
-  '#F97316',
+  '#E5533D', // nar kırmızısı
+  '#E7B53C', // pirinç altını
+  '#3DA968', // Kürdistan yeşili
+  '#2E9E93', // teal
+  '#6B3A7A', // erik moru
+  '#C67A5C', // terracotta
+  '#2B4F7E', // deniz mavisi
+  '#D4789E', // gül pembesi
 ];
 
 IconData? iconFor(String? id) => id == null ? null : avatarIcons[id];

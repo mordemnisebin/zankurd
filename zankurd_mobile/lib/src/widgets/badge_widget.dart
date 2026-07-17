@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 /// Rozet görsel widget'ı — profil ekranında ve sonuç ekranında kullanılır.
 class BadgeWidget extends StatelessWidget {
   const BadgeWidget({
@@ -39,30 +41,24 @@ class BadgeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOutCubic,
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       decoration: BoxDecoration(
         color: isUnlocked
-            ? (isDark ? const Color(0xFF2A2A3E) : const Color(0xFFF0F3FA))
-            : (isDark
-                  ? const Color(0xFF1A1A2E).withValues(alpha: 0.5)
-                  : const Color(0xFFE8EDF7).withValues(alpha: 0.5)),
+            ? AppTheme.surfaceHiColor(context)
+            : AppTheme.surfaceColor(context).withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
           color: isUnlocked
-              ? const Color(0xFFFFD700).withValues(alpha: 0.5)
-              : (isDark
-                    ? const Color(0xFF2A3B5C).withValues(alpha: 0.3)
-                    : const Color(0xFFD9E1EF).withValues(alpha: 0.3)),
+              ? AppTheme.gold.withValues(alpha: 0.5)
+              : AppTheme.borderColor(context).withValues(alpha: 0.6),
         ),
         boxShadow: isUnlocked
             ? [
                 BoxShadow(
-                  color: const Color(0xFFFFD700).withValues(alpha: 0.15),
+                  color: AppTheme.gold.withValues(alpha: 0.15),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -80,26 +76,14 @@ class BadgeWidget extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: isUnlocked
-                  ? const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Color(0xFFFFD700), Color(0xFFFFC700)],
-                    )
-                  : null,
-              color: isUnlocked
-                  ? null
-                  : (isDark
-                        ? const Color(0xFF2A3B5C).withValues(alpha: 0.4)
-                        : const Color(0xFFD9E1EF).withValues(alpha: 0.6)),
+              gradient: isUnlocked ? AppTheme.goldGradient : null,
+              color: isUnlocked ? null : AppTheme.borderColor(context),
             ),
             child: Icon(
               _icon,
               color: isUnlocked
                   ? Colors.white
-                  : (isDark
-                        ? const Color(0xFF909090)
-                        : const Color(0xFF656565)),
+                  : AppTheme.textMutedColor(context),
               size: 20,
             ),
           ),
@@ -115,10 +99,8 @@ class BadgeWidget extends StatelessWidget {
               fontSize: 10,
               fontWeight: FontWeight.w700,
               color: isUnlocked
-                  ? (isDark ? const Color(0xFFE8E8E8) : const Color(0xFF1A1A2E))
-                  : (isDark
-                        ? const Color(0xFF909090)
-                        : const Color(0xFF656565)),
+                  ? AppTheme.textPrimaryColor(context)
+                  : AppTheme.textMutedColor(context),
             ),
           ),
           const SizedBox(height: 4),
@@ -128,15 +110,15 @@ class BadgeWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
               decoration: BoxDecoration(
-                color: const Color(0xFF00D68F).withValues(alpha: 0.15),
+                color: AppTheme.correct.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Text(
                 isKu ? '✓ Vekirî' : '✓ Kazanıldı',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 8.5,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF00D68F),
+                  color: AppTheme.correct,
                 ),
               ),
             )
@@ -144,7 +126,7 @@ class BadgeWidget extends StatelessWidget {
             Icon(
               Icons.lock_outline,
               size: 12,
-              color: isDark ? const Color(0xFF909090) : const Color(0xFF656565),
+              color: AppTheme.textMutedColor(context),
             ),
         ],
       ),

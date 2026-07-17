@@ -41,7 +41,12 @@ void main() {
   test('override haritası boş alan içermez', () {
     for (final entry in explanationOverrides.entries) {
       expect(entry.value.ku.trim(), isNotEmpty, reason: '${entry.key} ku boş');
-      expect(entry.value.tr.trim(), isNotEmpty, reason: '${entry.key} tr boş');
+      // tr opsiyoneldir (verilmezse şablona düşer); yalnız doluysa boş
+      // olmamalı.
+      final tr = entry.value.tr;
+      if (tr != null) {
+        expect(tr.trim(), isNotEmpty, reason: '${entry.key} tr boş');
+      }
     }
   });
 

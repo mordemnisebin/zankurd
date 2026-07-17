@@ -128,7 +128,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descTr: 'Bugün çarkı tekrar çevirebilmek için ekstra bir hak tanımlar.',
       cost: 200,
       icon: Icons.casino_outlined,
-      themeColor: Color(0xFF2B5C8F),
+      themeColor: AppTheme.correct,
     ),
     ShopItem(
       id: 'premium_colors',

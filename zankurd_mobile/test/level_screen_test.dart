@@ -35,14 +35,18 @@ void main() {
     expect(find.byIcon(Icons.emoji_events_rounded), findsOneWidget);
   });
 
-  testWidgets('düğüm numarası w800 ve yumuşak gölge taşır', (tester) async {
+  testWidgets('düğüm numarası heading1 ağırlığı ve yumuşak gölge taşır', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       wrap(LevelScreen(repository: MockZanKurdRepository(), category: 'Ziman')),
     );
     await tester.pumpAndSettle();
 
     final numberText = tester.widget<Text>(find.text('1'));
-    expect(numberText.style?.fontWeight, FontWeight.w800);
+    // Rubik ailesinde w800 yüzü yok; heading1 bilinçli olarak w900'e
+    // sabitlendi (bkz. app_theme.dart yorum satırı).
+    expect(numberText.style?.fontWeight, FontWeight.w900);
   });
 
   testWidgets('etiket chip yüzey renginde kalır', (tester) async {

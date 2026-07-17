@@ -707,7 +707,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       child: Text(
         ':',
         style: TextStyle(
-          color: Color(0xFFB3A9D6),
+          color: AppTheme.gold,
           fontWeight: FontWeight.w800,
           fontSize: 22,
         ),
@@ -725,27 +725,29 @@ class _WheelPainter extends CustomPainter {
   final List<int> rewards;
   final double angle;
 
-  // Vibrant game palette — each segment gets a rich, saturated look.
+  // Marka ailesinden: kategori kartlarında zaten kullanılan
+  // AppTheme.categoryGradients ile aynı 8 renk — eski "gökkuşağı" oyuncak
+  // paleti (coral/sky/hot-pink) yerine tutarlı bir kimlik.
   static const _segmentColors = [
-    Color(0xFFFF6B6B), // coral
-    Color(0xFFFFD93D), // gold-yellow
-    Color(0xFF6BCB77), // vibrant green
-    Color(0xFF4D96FF), // bright blue
-    Color(0xFFFF8C42), // orange
-    Color(0xFFC586FF), // amethyst
-    Color(0xFF38BDF8), // sky
-    Color(0xFFFF3B81), // hot pink
+    AppTheme.gold,
+    AppTheme.correct,
+    Color(0xFFC67A5C), // terracotta
+    Color(0xFF2E7D7E), // teal
+    AppTheme.wrong,
+    Color(0xFF6B3A7A), // erik moru
+    Color(0xFFD4A84B), // amber
+    Color(0xFF3D6B4F), // orman yeşili
   ];
 
   static const _segmentDarkColors = [
-    Color(0xFFCC3333),
-    Color(0xFFE6B800),
-    Color(0xFF3D9D4F),
-    Color(0xFF2D6FCC),
-    Color(0xFFCC6A2A),
-    Color(0xFF8C4ACC),
-    Color(0xFF1A8FBF),
-    Color(0xFFCC1F5E),
+    Color(0xFFB8872E),
+    AppTheme.brandOrangeWarm,
+    Color(0xFF9B4A2E),
+    Color(0xFF1A5C5C),
+    Color(0xFFB6402F),
+    Color(0xFF452250),
+    Color(0xFFB8860B),
+    Color(0xFF1E4D2E),
   ];
 
   @override
