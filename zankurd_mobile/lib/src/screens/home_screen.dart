@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +15,6 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/test_environment.dart';
 import 'home/hero_card.dart';
-import '../widgets/animated_counter.dart';
-import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/zana_daily_card.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
@@ -66,7 +63,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int? _coinBalance;
   int _streak = 0;
   List<DailyMission> _missions = [];
-  bool _missionsLoading = true;
   int _reviewReadyCount = 0;
   late AnimationController _loadAnimationController;
   String? _displayName;
@@ -129,7 +125,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     if (mounted) {
       setState(() {
         _missions = List.from(store.missions);
-        _missionsLoading = false;
       });
     }
   }
@@ -170,39 +165,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: CustomScrollView(
         controller: widget.scrollController,
         slivers: [
-          SliverAppBar(
-            // Mobilde ilk bakışta yarış aksiyonu görünür kalsın.
-            expandedHeight: 190,
-            floating: false,
-            pinned: true,
-            backgroundColor: AppTheme.surfaceColor(context),
-            elevation: 0,
-            title: LayoutBuilder(
-              builder: (context, constraints) {
-                final double topPadding = MediaQuery.of(context).padding.top;
-                final double collapsedHeight = kToolbarHeight + topPadding;
-                final isCollapsed =
-                    constraints.maxHeight <= collapsedHeight + 20;
-                // Metni yalnızca collapse'ta koy: aksi halde header'daki
-                // "ZanKurd" ile çift find (test + Semantics) oluşur.
-                return AnimatedOpacity(
-                  duration: const Duration(milliseconds: 150),
-                  opacity: isCollapsed ? 1.0 : 0.0,
-                  child: Text(
-                    isCollapsed ? 'ZanKurd' : '',
-                    style: TextStyle(
-                      // Light mode: surface krem — white title kaybolmasın
-                      color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w800,
-                      fontSize: 20,
-                    ),
-                  ),
-                );
-              },
-            ),
-            centerTitle: false,
-            flexibleSpace: FlexibleSpaceBar(
-              background: _buildGeometricHeader(context, ku),
+          // Pirs/mockup-3 sadeliği: kalın banner yerine ince karşılama satırı;
+          // içerik ilk bakışta bir kart daha fazla görünür.
+          SliverSafeArea(
+            bottom: false,
+            sliver: SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.page,
+                  AppSpacing.md,
+                  AppSpacing.page,
+                  0,
+                ),
+                child: _buildCompactHeader(context, ku),
+              ),
             ),
           ),
           SliverToBoxAdapter(
@@ -389,8 +365,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final total = _missions.length;
 
     Widget chip(IconData icon, Color color, String value, String label) {
-      return Expanded(
-        child: Container(
+      return Container(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           decoration: BoxDecoration(
             color: AppTheme.surfaceColor(context),
@@ -415,7 +390,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ],
           ),
-        ),
       );
     }
 
@@ -427,25 +401,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       children: [
         Row(
           children: [
-            chip(
-              Icons.local_fire_department,
-              AppTheme.wrong,
-              '$_streak',
-              ku ? 'Zincîr' : 'Seri',
+            Expanded(
+              child: chip(
+                Icons.local_fire_department,
+                AppTheme.wrong,
+                '$_streak',
+                ku ? 'Zincîr' : 'Seri',
+              ),
             ),
             const SizedBox(width: 10),
-            chip(
-              Icons.monetization_on,
-              AppTheme.gold,
-              _coinBalance == null ? '—' : '$_coinBalance',
-              ku ? 'Xeruz' : 'Coin',
+            // Coin çipi aynı zamanda mağaza girişidir (eski banner çipinin
+            // görevi buraya taşındı).
+            Expanded(
+              child: Semantics(
+                button: true,
+                label: ku ? 'Dikan' : 'Mağaza',
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context)
+                      .push(AppRoute.to(ShopScreen(repository: repo)))
+                      .then((_) => _refreshCoins()),
+                  child: chip(
+                    Icons.monetization_on,
+                    AppTheme.gold,
+                    _coinBalance == null ? '—' : '$_coinBalance',
+                    ku ? 'Xeruz' : 'Coin',
+                  ),
+                ),
+              ),
             ),
             const SizedBox(width: 10),
-            chip(
-              Icons.task_alt,
-              AppTheme.correct,
-              total == 0 ? '0' : '$completed/$total',
-              ku ? 'Misyon' : 'Görev',
+            Expanded(
+              child: chip(
+                Icons.task_alt,
+                AppTheme.correct,
+                total == 0 ? '0' : '$completed/$total',
+                ku ? 'Misyon' : 'Görev',
+              ),
             ),
           ],
         ),
@@ -496,93 +487,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildPriorityMission(BuildContext context, bool ku) {
-    if (_missionsLoading || _missions.isEmpty) return const SizedBox.shrink();
-    final incomplete = _missions.where((m) => !m.completed).toList();
-    if (incomplete.isEmpty) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.stars, color: AppTheme.gold, size: 14),
-            const SizedBox(width: 6),
-            Text(
-              ku ? 'Hemû misyon temam bûn!' : 'Tüm görevler tamamlandı!',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-    incomplete.sort((a, b) => b.coinReward.compareTo(a.coinReward));
-    final priorityMission = incomplete.first;
-    final missionTitle = ku ? priorityMission.labelKu : priorityMission.labelTr;
-    final rewardText = '+${priorityMission.coinReward} Coin';
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.flash_on, color: AppTheme.gold, size: 14),
-          const SizedBox(width: 6),
-          Text(
-            ku ? 'Misyona Rojê: ' : 'Günün Görevi: ',
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.8),
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          Flexible(
-            child: Text(
-              missionTitle,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-            decoration: BoxDecoration(
-              // Turuncu header üzerinde okunur kalması için beyaz chip.
-              color: Colors.white.withValues(alpha: 0.22),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Text(
-              rewardText,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 9,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildGeometricHeader(BuildContext context, bool ku) {
+  /// Pirs/mockup-3 karşılama satırı: avatar + selam + KU/tema kontrolleri.
+  /// Kalın banner yok; coin/mağaza girişi metrik şeridindeki Xeruz çipinde.
+  Widget _buildCompactHeader(BuildContext context, bool ku) {
     final isTest = isFlutterTestEnvironment;
     final hour = DateTime.now().hour;
     final String greetingKu;
@@ -609,91 +516,48 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final greeting = ku
         ? '$greetingKu, ${currentName ?? 'Lîstikvan'}!'
         : '$greetingTr, ${currentName ?? 'Oyuncu'}!';
-    final isLight = AppTheme.isLight(context);
-    // Onaylı mockup masthead'i: koyu Kürdistan yeşili yayın kimliği.
-    final headerStart = isLight
-        ? const Color(0xFF14503A)
-        : const Color(0xFF0B251C);
-    final headerEnd = isLight
-        ? const Color(0xFF1F6B4E)
-        : const Color(0xFF1A4E3B);
 
-    return Container(
+    return Row(
       key: const ValueKey('home-profile-header'),
-      decoration: BoxDecoration(
-        // Pirs-inspired büyük turuncu karşılama/profil header'ı.
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [headerStart, headerEnd],
+      children: [
+        PlayerAvatar(radius: 24, displayName: currentName ?? 'Z'),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                greeting,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTypography.heading2.copyWith(
+                  color: AppTheme.textPrimaryColor(context),
+                  fontSize: 19,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                ku ? 'Amadeyî yanga nû?' : 'Yeni yarışa hazır mısın?',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.textSubColor(context),
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: CustomPaint(
-              painter: KilimPatternPainter(
-                drawPattern: true,
-                color: Colors.white,
-                opacity: 0.05,
-              ),
-            ),
-          ),
-          Positioned(
-            left: AppSpacing.page,
-            bottom: AppSpacing.lg,
-            child: _buildAnimatedCard(
-              _heroFadeAnimation(0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    greeting,
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: Colors.white.withValues(alpha: 0.90),
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.xxs),
-                  Text(
-                    'ZanKurd',
-                    style: AppTypography.display.copyWith(
-                      color: Colors.white,
-                      height: 1.0,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  _buildPriorityMission(context, ku),
-                ],
-              ),
-            ),
-          ),
-          if (_streak > 0)
-            Positioned(
-              top: AppSpacing.lg,
-              right: AppSpacing.page,
-              child: _buildStreakHexagon(_streak),
-            ),
-          Positioned(
-            left: AppSpacing.page,
-            top: AppSpacing.lg,
-            child: _buildCoinGemRow(_coinBalance),
-          ),
-          Positioned(
-            top: AppSpacing.lg,
-            right: AppSpacing.page,
-            child: _buildHeaderQuickControls(context, ku),
-          ),
-          // Zana maskotu günlük kartında yaşar; masthead sade kalır
-          // (coin illüstrasyonuyla kalite uyumu için kaldırıldı).
-        ],
-      ),
+        const SizedBox(width: AppSpacing.xs),
+        _buildHeaderQuickControls(context, ku),
+      ],
     );
   }
 
   Widget _buildHeaderQuickControls(BuildContext context, bool ku) {
     final themeProvider = context.watch<ThemeProvider>();
-    final border = Colors.white.withValues(alpha: 0.35);
-    final fill = Colors.white.withValues(alpha: 0.16);
+    final border = AppTheme.borderColor(context);
+    final fill = AppTheme.surfaceColor(context);
 
     Widget control({
       required Key key,
@@ -727,154 +591,43 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       );
     }
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        control(
-          key: const ValueKey('home-language-toggle'),
-          tooltip: ku ? 'Ziman' : 'Dil',
-          onTap: context.langProvider.toggle,
-          child: Text(
-            ku ? 'KU' : 'TR',
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w800,
-              fontSize: 12,
+    // InkWell'ler için Material atası (Scaffold dışı testler dahil güvenli).
+    return Material(
+      type: MaterialType.transparency,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          control(
+            key: const ValueKey('home-language-toggle'),
+            tooltip: ku ? 'Ziman' : 'Dil',
+            onTap: context.langProvider.toggle,
+            child: Text(
+              ku ? 'KU' : 'TR',
+              style: TextStyle(
+                color: AppTheme.textPrimaryColor(context),
+                fontWeight: FontWeight.w800,
+                fontSize: 12,
+              ),
             ),
           ),
-        ),
-        const SizedBox(width: AppSpacing.xs),
-        control(
-          key: const ValueKey('home-theme-toggle'),
-          tooltip: 'Tema',
-          onTap: themeProvider.toggleDarkLight,
-          child: Icon(
-            themeProvider.isDark
-                ? Icons.dark_mode_outlined
-                : Icons.light_mode_outlined,
-            color: Colors.white,
-            size: 19,
+          const SizedBox(width: AppSpacing.xs),
+          control(
+            key: const ValueKey('home-theme-toggle'),
+            tooltip: 'Tema',
+            onTap: themeProvider.toggleDarkLight,
+            child: Icon(
+              themeProvider.isDark
+                  ? Icons.dark_mode_outlined
+                  : Icons.light_mode_outlined,
+              color: AppTheme.textPrimaryColor(context),
+              size: 19,
+            ),
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildStreakHexagon(int streak) {
-    final pulseAnim = Tween<double>(begin: 1.0, end: 1.06).animate(
-      CurvedAnimation(
-        parent: _loadAnimationController,
-        curve: Curves.easeInOut,
+        ],
       ),
     );
-
-    return AnimatedBuilder(
-      animation: pulseAnim,
-      builder: (context, child) {
-        return Transform.scale(
-          scale: pulseAnim.value,
-          child: Container(
-            width: 54,
-            height: 54,
-            decoration: BoxDecoration(
-              // Turuncu header üzerinde yarı saydam beyaz chip.
-              color: Colors.white.withValues(alpha: 0.16),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.22),
-                width: 1.2,
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.local_fire_department_rounded,
-                  color: Colors.white,
-                  size: 22,
-                ),
-                const SizedBox(height: 1),
-                Text(
-                  '$streak',
-                  style: AppTypography.caption.copyWith(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 
-  Widget _buildCoinGemRow(int? coinBalance) {
-    if (coinBalance == null) return const SizedBox.shrink();
-
-    return Row(
-      children: [
-        Semantics(
-          button: true,
-          label: context.s('Dikan, hejmara coinan', 'Mağaza, coin bakiyesi'),
-          value: '$coinBalance',
-          excludeSemantics: true,
-          child: GestureDetector(
-            onTap: () => Navigator.of(context)
-                .push(AppRoute.to(ShopScreen(repository: repo)))
-                .then((_) => _refreshCoins()),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  // Mağazayı açan chip için min 44 px dokunma alanı.
-                  constraints: const BoxConstraints(
-                    minHeight: 44,
-                    minWidth: 44,
-                  ),
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.sm,
-                    vertical: AppSpacing.xs,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.16),
-                    borderRadius: BorderRadius.circular(AppRadius.sm),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.22),
-                      width: 1.2,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
-                        blurRadius: 8,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.monetization_on_rounded,
-                        color: AppTheme.gold,
-                        size: 16,
-                      ),
-                      const SizedBox(width: AppSpacing.xxs),
-                      AnimatedCounter(
-                        value: coinBalance,
-                        style: AppTypography.caption.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 
   Widget _buildAnimatedCard(Animation<double> animation, Widget child) {
     return ScaleTransition(

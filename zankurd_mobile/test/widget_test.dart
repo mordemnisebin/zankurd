@@ -736,7 +736,7 @@ void main() {
     await tester.tap(find.text('Misafir olarak devam et'));
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd'), findsOneWidget);
+    expect(find.byType(HomeScreen), findsOneWidget);
     expect(find.text('Günün Dersi'), findsOneWidget);
   });
 
@@ -755,12 +755,12 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd'), findsOneWidget);
     expect(find.text('Hoş geldin, ZanKurd Oyuncusu!'), findsOneWidget);
     expect(find.text('Seviye 5'), findsNothing);
     expect(find.byIcon(Icons.diamond), findsNothing);
 
-    // Pirs-inspired sözleşme: turuncu profil header'ı ve multiplayer hero.
+    // Pirs/mockup-3 sözleşmesi: ince karşılama satırı + multiplayer hero;
+    // kalın gradyan banner yok.
     expect(find.byKey(const ValueKey('home-profile-header')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-multiplayer-hero')), findsOneWidget);
     expect(find.text('Oda kur'), findsOneWidget);
@@ -768,16 +768,6 @@ void main() {
     expect(find.text('1vs1 — Hemen yarış'), findsOneWidget);
     expect(find.text('Yarış'), findsOneWidget);
     expect(find.text('Profil'), findsOneWidget);
-
-    final header = tester.widget<Container>(
-      find.byKey(const ValueKey('home-profile-header')),
-    );
-    final headerDecoration = header.decoration as BoxDecoration;
-    final headerGradient = headerDecoration.gradient as LinearGradient;
-    expect(headerGradient.colors, hasLength(2));
-    // Masthead koyu-yeşil gradyanı (koyu mod varsayılanı — 2026-07-17 mockup).
-    expect(headerGradient.colors.first, const Color(0xFF0B251C));
-    expect(headerGradient.colors.last, const Color(0xFF1A4E3B));
 
     final navTheme = tester.widget<NavigationBarTheme>(
       find.byType(NavigationBarTheme),
@@ -987,7 +977,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd'), findsOneWidget);
+    expect(find.byType(HomeScreen), findsOneWidget);
     expect(find.text('Hemen\nyarış'), findsOneWidget);
     expect(find.text('Oda kur'), findsOneWidget);
     expect(find.text('Kodla katıl'), findsOneWidget);
