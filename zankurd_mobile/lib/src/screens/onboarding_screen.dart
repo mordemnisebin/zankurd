@@ -338,7 +338,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         color: AppTheme.violet,
         title: context.s('Çima ZanKurd?', 'Neden ZanKurd?'),
         body: context.s(
-          'Ne Duolingo, ne Memrise — ZanKurd Kurmancî kültürünü yarışarak öğrenmenin tek adresi. Canlı rekabet + kültürel derinlik.',
+          'Ne Duolingo, ne Memrise — ZanKurd cihê yekane ye ku tu bi pêşbirkê çand û zimanê Kurmancî fêr dibî. Pêşbirka zindî + kûrahiya çandî.',
           'Duolingo ya da Memrise değil — ZanKurd, Kurmancî kültürünü yarışarak öğrenmenin tek adresi. Canlı rekabet + kültürel derinlik.',
         ),
         bullets: [
