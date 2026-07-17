@@ -275,11 +275,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             _heroFadeAnimation(2),
                             KeyedSubtree(
                               key: const ValueKey('home-learning-entry'),
-                              child: ZanaDailyCard(
-                                isKu: ku,
-                                onStart: widget.onOpenLearning,
-                                reviewReadyCount: _reviewReadyCount,
-                              ),
+                              // Sakin kapanış: Zana + günün sözü (CTA'sız).
+                              child: ZanaDailyCard(isKu: ku),
                             ),
                           ),
                         ],
@@ -354,11 +351,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         _heroFadeAnimation(3),
                         KeyedSubtree(
                           key: const ValueKey('home-learning-entry'),
-                          child: ZanaDailyCard(
-                            isKu: ku,
-                            onStart: widget.onOpenLearning,
-                            reviewReadyCount: _reviewReadyCount,
-                          ),
+                          // Sakin kapanış: Zana + günün sözü. Öğrenme/tekrar
+                          // CTA'sı tek yerde (Dersê rojane) yaşar — üç ayrı
+                          // "günlük hedef" karmaşası olmasın (Pirs sadeliği).
+                          child: ZanaDailyCard(isKu: ku),
                         ),
                       ),
                     );

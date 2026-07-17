@@ -495,21 +495,34 @@ class _CategoryCardState extends State<_CategoryCard>
                   children: [
                     Row(
                       children: [
-                        Container(
-                          width: 52,
-                          height: 52,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                gradientColors.first,
-                                gradientColors.last,
-                              ],
+                        // Pirs imzası: kategori kimliğini illüstrasyon taşır.
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
+                          child: Image.asset(
+                            CategoryVisuals.imagePath(widget.category),
+                            width: 52,
+                            height: 52,
+                            fit: BoxFit.cover,
+                            filterQuality: FilterQuality.high,
+                            errorBuilder: (_, _, _) => Container(
+                              width: 52,
+                              height: 52,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.sm,
+                                ),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    gradientColors.first,
+                                    gradientColors.last,
+                                  ],
+                                ),
+                              ),
+                              child: Icon(icon, color: Colors.white, size: 26),
                             ),
                           ),
-                          child: Icon(icon, color: Colors.white, size: 26),
                         ),
                         const SizedBox(width: AppSpacing.sm),
                         Expanded(
