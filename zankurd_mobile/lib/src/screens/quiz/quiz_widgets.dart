@@ -372,13 +372,11 @@ class _ScoreHeader extends StatelessWidget {
   const _ScoreHeader({
     required this.score,
     required this.streak,
-    required this.progress,
     required this.coinBalance,
   });
 
   final int score;
   final int streak;
-  final String progress;
   final int coinBalance;
 
   @override
@@ -417,15 +415,6 @@ class _ScoreHeader extends StatelessWidget {
                   : Icons.local_fire_department_outlined,
               iconColor: streak >= 2 ? Colors.orange : Colors.redAccent,
             ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.xs),
-        Expanded(
-          child: _Metric(
-            label: context.s('Pirs', 'Soru'),
-            value: progress,
-            icon: Icons.help_outline_rounded,
-            iconColor: AppTheme.brandOrange,
           ),
         ),
         const SizedBox(width: AppSpacing.xs),

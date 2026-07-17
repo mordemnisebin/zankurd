@@ -931,7 +931,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     return _ScoreHeader(
       score: score,
       streak: streak,
-      progress: '${index + 1}/${widget.questions.length}',
       coinBalance: _coinBalance,
     );
   }
