@@ -18,13 +18,13 @@ class _GateAuthProvider extends AuthProvider {
   bool get isLoading => false;
 }
 
-// Uygulama ilk açılışta aydınlık ve okunabilir temayı kullanır; kullanıcı
-// ana ekrandaki sabit tema düğmesinden koyuya geçebilir.
+// Onaylı mockup sistemi (2026-07-17) koyu-öncelikli; uygulama ilk açılışta
+// koyu-sıcak temayla açılır. Kullanıcı ayarlardan açığa geçebilir.
 void main() {
-  testWidgets('sıfır kurulumda onboarding açık temayla açılır', (tester) async {
+  testWidgets('sıfır kurulumda onboarding koyu temayla açılır', (tester) async {
     SharedPreferences.setMockInitialValues({});
     final themeProvider = await ThemeProvider.load();
-    expect(themeProvider.mode, ThemeMode.light);
+    expect(themeProvider.mode, ThemeMode.dark);
 
     await tester.pumpWidget(
       ZanKurdApp(
@@ -39,7 +39,7 @@ void main() {
     expect(find.byType(OnboardingScreen), findsOneWidget);
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
   });
 

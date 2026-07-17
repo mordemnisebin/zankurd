@@ -8,6 +8,7 @@ import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../models/leaderboard_entry.dart';
 import '../models/room.dart';
 import '../providers/theme_provider.dart';
 import '../theme/app_theme.dart';
@@ -26,7 +27,9 @@ import 'matchmaking_screen.dart';
 import 'shop_screen.dart';
 import 'categories_tab.dart';
 import 'contest_screen.dart';
+import 'leaderboard_screen.dart';
 import 'home/daily_race_card.dart';
+import '../widgets/player_avatar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -203,6 +206,38 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               background: _buildGeometricHeader(context, ku),
             ),
           ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.page,
+                AppSpacing.md,
+                AppSpacing.page,
+                0,
+              ),
+              child: _buildAnimatedCard(
+                _heroFadeAnimation(0),
+                _buildMetricStrip(context, ku),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.page,
+                AppSpacing.md,
+                AppSpacing.page,
+                0,
+              ),
+              child: _buildAnimatedCard(
+                _heroFadeAnimation(1),
+                _DailyLessonHero(
+                  isKu: ku,
+                  reviewReadyCount: _reviewReadyCount,
+                  onStart: widget.onOpenLearning,
+                ),
+              ),
+            ),
+          ),
           if (isWide)
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(
@@ -373,9 +408,136 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 }, childCount: 5),
               ),
             ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.page,
+                AppSpacing.lg,
+                AppSpacing.page,
+                0,
+              ),
+              child: _buildAnimatedCard(
+                _heroFadeAnimation(3),
+                _MiniLeaderboard(repository: widget.repository, isKu: ku),
+              ),
+            ),
+          ),
           SliverToBoxAdapter(child: SizedBox(height: bottomContentPadding)),
         ],
       ),
+    );
+  }
+
+  // Onaylı mockup 3 imza öğesi: 3 kompakt metrik çip + haftalık zincir barı.
+  Widget _buildMetricStrip(BuildContext context, bool ku) {
+    final completed = _missions.where((m) => m.completed).length;
+    final total = _missions.length;
+
+    Widget chip(IconData icon, Color color, String value, String label) {
+      return Expanded(
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceColor(context),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(color: AppTheme.borderColor(context)),
+          ),
+          child: Column(
+            children: [
+              Icon(icon, color: color, size: 22),
+              const SizedBox(height: 6),
+              Text(
+                value,
+                style: AppTypography.heading2.copyWith(
+                  color: AppTheme.textPrimaryColor(context),
+                ),
+              ),
+              Text(
+                label,
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.textSubColor(context),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    const weekTarget = 7;
+    final progress = (_streak.clamp(0, weekTarget)) / weekTarget;
+
+    return Column(
+      key: const ValueKey('home-metric-strip'),
+      children: [
+        Row(
+          children: [
+            chip(
+              Icons.local_fire_department,
+              AppTheme.wrong,
+              '$_streak',
+              ku ? 'Zincîr' : 'Seri',
+            ),
+            const SizedBox(width: 10),
+            chip(
+              Icons.monetization_on,
+              AppTheme.gold,
+              _coinBalance == null ? '—' : '$_coinBalance',
+              ku ? 'Xeruz' : 'Coin',
+            ),
+            const SizedBox(width: 10),
+            chip(
+              Icons.task_alt,
+              AppTheme.correct,
+              total == 0 ? '0' : '$completed/$total',
+              ku ? 'Misyon' : 'Görev',
+            ),
+          ],
+        ),
+        if (_streak > 0) ...[
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            decoration: BoxDecoration(
+              color: AppTheme.surfaceColor(context),
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              border: Border.all(color: AppTheme.borderColor(context)),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  '$_streak / $weekTarget',
+                  style: AppTypography.heading2.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Stack(
+                      children: [
+                        Container(height: 9, color: AppTheme.borderColor(context)),
+                        FractionallySizedBox(
+                          widthFactor: progress == 0 ? 0.02 : progress,
+                          child: Container(
+                            height: 9,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [AppTheme.gold, AppTheme.correct],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ],
     );
   }
 
@@ -493,14 +655,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ? '$greetingKu, ${currentName ?? 'Lîstikvan'}!'
         : '$greetingTr, ${currentName ?? 'Oyuncu'}!';
     final isLight = AppTheme.isLight(context);
-    // Warm indigo-to-violet gradient — inviting without being corporate.
-    // Light mode: richer deeper tones; dark mode: same warmth but darker.
+    // Onaylı mockup masthead'i: koyu Kürdistan yeşili yayın kimliği.
     final headerStart = isLight
-        ? const Color(0xFF4A3DB8)
-        : const Color(0xFF5B4DBC);
+        ? const Color(0xFF14503A)
+        : const Color(0xFF0B251C);
     final headerEnd = isLight
-        ? const Color(0xFF7B5EA7)
-        : const Color(0xFF8B6CD6);
+        ? const Color(0xFF1F6B4E)
+        : const Color(0xFF1A4E3B);
 
     return Container(
       key: const ValueKey('home-profile-header'),
@@ -1074,6 +1235,285 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     ).whenComplete(() {
       WidgetsBinding.instance.addPostFrameCallback((_) => controller.dispose());
     });
+  }
+}
+
+/// Onaylı mockup 3 "Dersê rojane" kartı: sıcak zeminli, üretilmiş coin
+/// illüstrasyonlu günlük ders/tekrar girişi. CTA [onStart] akışını (öğrenme
+/// sekmesi) tetikler; hazır tekrar varsa aralıklı tekrarı önceliklendirir.
+class _DailyLessonHero extends StatelessWidget {
+  const _DailyLessonHero({
+    required this.isKu,
+    required this.reviewReadyCount,
+    this.onStart,
+  });
+
+  final bool isKu;
+  final int reviewReadyCount;
+  final VoidCallback? onStart;
+
+  @override
+  Widget build(BuildContext context) {
+    final hasReview = reviewReadyCount > 0;
+    final title = hasReview
+        ? (isKu ? 'Dubarekirinên Îro' : 'Bugünkü Tekrarlar')
+        : (isKu ? 'Dersê rojane' : 'Günün Dersi');
+    final count = hasReview ? reviewReadyCount : 10;
+    final subtitle = hasReview
+        ? (isKu ? 'Li benda dubarekirinê ne' : 'Tekrara hazır')
+        : (isKu ? 'Dawî bike û xelat bistîne!' : 'Bitir ve ödül kazan!');
+    final ctaLabel = hasReview
+        ? (isKu ? 'Dest bi dubarekirinê' : 'Tekrara başla')
+        : (isKu ? 'Destpêk bike' : 'Başla');
+
+    return Container(
+      key: const ValueKey('home-daily-lesson'),
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [Color(0xFF2A2412), Color(0xFF1B2A1E)],
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: const Color(0xFF4A3D1C)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.menu_book_rounded,
+                          color: AppTheme.gold,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 6),
+                        Flexible(
+                          child: Text(
+                            title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.caption.copyWith(
+                              color: const Color(0xFFE9CF8F),
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '$count ',
+                            style: AppTypography.display.copyWith(
+                              color: Colors.white,
+                              fontSize: 30,
+                              height: 1.0,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'Pirs',
+                            style: AppTypography.heading2.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.caption.copyWith(
+                        color: const Color(0xFFD9C9A0),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Image.asset(
+                'assets/illustrations/daily_coins.png',
+                width: 120,
+                height: 84,
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.high,
+              ),
+            ],
+          ),
+          if (onStart != null) ...[
+            const SizedBox(height: AppSpacing.sm),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                onPressed: onStart,
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppTheme.wrong,
+                  foregroundColor: Colors.white,
+                ),
+                child: Text(ctaLabel),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _MiniLeaderboard extends StatefulWidget {
+  const _MiniLeaderboard({required this.repository, required this.isKu});
+
+  final ZanKurdRepository repository;
+  final bool isKu;
+
+  @override
+  State<_MiniLeaderboard> createState() => _MiniLeaderboardState();
+}
+
+class _MiniLeaderboardState extends State<_MiniLeaderboard> {
+  List<LeaderboardEntry>? _top;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    // Test ortamında ağ/async liderlik yüklemesi pumpAndSettle'ı zorlamasın
+    // ve mevcut oda testlerindeki oyuncu-adı nöbetçileriyle çakışmasın.
+    if (isFlutterTestEnvironment) return;
+    try {
+      final entries = await widget.repository.loadLeaderboard(limit: 3);
+      if (mounted) setState(() => _top = entries);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home mini leaderboard');
+      if (mounted) setState(() => _top = const []);
+    }
+  }
+
+  static const _medalColors = [
+    AppTheme.gold,
+    Color(0xFFB8C0C4),
+    Color(0xFFC17A44),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final ku = widget.isKu;
+    final entries = _top;
+    // Yüklenene kadar (ve boşsa) gizli kalır — sonsuz spinner pumpAndSettle'ı
+    // bloke etmesin ve boş liderlik yer kaplamasın.
+    if (entries == null || entries.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              ku ? 'Lîsteya bilind' : 'Liderlik',
+              style: AppTypography.heading2.copyWith(
+                color: AppTheme.textPrimaryColor(context),
+              ),
+            ),
+            GestureDetector(
+              onTap: () => Navigator.of(context).push(
+                AppRoute.to(LeaderboardScreen(repository: widget.repository)),
+              ),
+              child: Text(
+                ku ? 'Hemûyê bibîne ›' : 'Tümünü gör ›',
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.textSubColor(context),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Container(
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceColor(context),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(color: AppTheme.borderColor(context)),
+          ),
+          child: Column(
+                  children: [
+                    for (var i = 0; i < entries.length; i++)
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          AppSpacing.sm,
+                          i == 0 ? AppSpacing.sm : 6,
+                          AppSpacing.sm,
+                          i == entries.length - 1 ? AppSpacing.sm : 6,
+                        ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 24,
+                              child: Text(
+                                '${entries[i].rank}',
+                                textAlign: TextAlign.center,
+                                style: AppTypography.heading2.copyWith(
+                                  color: _medalColors[i.clamp(0, 2)],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            PlayerAvatar(
+                              radius: 16,
+                              photoUrl: entries[i].avatarUrl,
+                              iconId: entries[i].avatarIcon,
+                              colorHex: entries[i].avatarColor,
+                              displayName: entries[i].displayName,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                entries[i].displayName,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTypography.bodyLarge.copyWith(
+                                  color: AppTheme.textPrimaryColor(context),
+                                ),
+                              ),
+                            ),
+                            const Icon(
+                              Icons.monetization_on,
+                              color: AppTheme.gold,
+                              size: 15,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              '${entries[i].totalScore}',
+                              style: AppTypography.bodyLarge.copyWith(
+                                color: AppTheme.textPrimaryColor(context),
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+        ),
+      ],
+    );
   }
 }
 

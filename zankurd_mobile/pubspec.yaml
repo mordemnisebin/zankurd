@@ -103,6 +103,7 @@ flutter:
     - assets/zankurd.webp
     - assets/sounds/
     - assets/animations/
+    - assets/illustrations/
 
   fonts:
     - family: Rubik

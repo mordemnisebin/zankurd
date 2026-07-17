@@ -8,17 +8,18 @@ import 'package:zankurd_mobile/src/dev/design_tokens_preview_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 void main() {
-  test('Bubblegum Arcade brand token contract stays stable', () {
+  test('mockup brand token contract stays stable', () {
     expect(AppRadius.card, 14);
-    expect(AppTheme.brandOrange, const Color(0xFF2D3561));
-    expect(AppTheme.playGreen, const Color(0xFF8BC53F));
-    expect(AppTheme.playPink, const Color(0xFFFF3B81));
-    expect(AppTheme.playCyan, const Color(0xFF38BDF8));
-    expect(AppTheme.playPurple, const Color(0xFF6C5CE7));
+    expect(AppTheme.brandOrange, const Color(0xFF3DA968));
+    expect(AppTheme.brandOrangeWarm, const Color(0xFF2F7D4F));
+    expect(AppTheme.playGreen, const Color(0xFF3DA968));
+    expect(AppTheme.gold, const Color(0xFFE7B53C));
+    expect(AppTheme.bg, const Color(0xFF0B0F0D));
+    expect(AppTheme.surface, const Color(0xFF16211B));
     expect(AppTheme.lightBg, const Color(0xFFFBF9F6));
   });
 
-  test('legacy token aliases resolve to Pirs theme tokens', () {
+  test('legacy token aliases resolve to theme tokens', () {
     expect(AppTheme.primaryGradientStart, AppTheme.brandOrange);
     expect(AppTheme.primaryGradientEnd, AppTheme.brandOrangeWarm);
     expect(AppTheme.accent, AppTheme.primaryGradientStart);
