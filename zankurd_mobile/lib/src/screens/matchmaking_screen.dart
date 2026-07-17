@@ -583,7 +583,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               key: const ValueKey('matchmaking-duel-card'),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [AppTheme.playPink, Color(0xFFB91F70)],
+                  colors: [AppTheme.playPink, Color(0xFF933527)],
                 ),
                 borderRadius: BorderRadius.circular(AppRadius.card),
                 border: Border.all(

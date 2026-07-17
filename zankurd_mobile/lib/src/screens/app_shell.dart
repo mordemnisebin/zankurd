@@ -10,7 +10,9 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/branded_loader.dart';
 import '../widgets/coach_mark.dart';
+import 'categories_tab.dart';
 import 'home_screen.dart';
+import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
 import 'onboarding_screen.dart';
 import 'profile_name_gate_screen.dart';
@@ -40,6 +42,7 @@ class _AppShellState extends State<AppShell> {
   final GlobalKey _profileNavKey = GlobalKey();
   final GlobalKey _shellStackKey = GlobalKey();
   final ValueNotifier<int> _homeRefresh = ValueNotifier<int>(0);
+  final ValueNotifier<int> _leaderboardRefresh = ValueNotifier<int>(0);
   final ValueNotifier<int> _profileRefresh = ValueNotifier<int>(0);
   bool _checkingOnboarding = true;
   bool _showOnboarding = false;
@@ -64,6 +67,7 @@ class _AppShellState extends State<AppShell> {
     _homeScrollController.dispose();
     _profileScrollController.dispose();
     _homeRefresh.dispose();
+    _leaderboardRefresh.dispose();
     _profileRefresh.dispose();
     super.dispose();
   }
@@ -180,9 +184,14 @@ class _AppShellState extends State<AppShell> {
             onOpenLearning: () => Navigator.of(
               context,
             ).push(AppRoute.to(LearningScreen(repository: widget.repository))),
-            onOpenPlay: () => setState(() => _tab = 1),
+            onOpenPlay: () => setState(() => _tab = 2),
           ),
+          CategoriesTab(repository: widget.repository),
           PlayHubScreen(repository: widget.repository),
+          LeaderboardScreen(
+            repository: widget.repository,
+            refreshSignal: _leaderboardRefresh,
+          ),
           ProfileScreen(
             repository: widget.repository,
             refreshSignal: _profileRefresh,
@@ -240,8 +249,7 @@ class _AppShellState extends State<AppShell> {
               if (_tab == i) {
                 final controller = switch (i) {
                   0 => _homeScrollController,
-                  1 => null,
-                  2 => _profileScrollController,
+                  4 => _profileScrollController,
                   _ => null,
                 };
                 if (controller != null && controller.hasClients) {
@@ -253,7 +261,8 @@ class _AppShellState extends State<AppShell> {
                 }
               } else {
                 if (i == 0) _homeRefresh.value++;
-                if (i == 2) _profileRefresh.value++;
+                if (i == 3) _leaderboardRefresh.value++;
+                if (i == 4) _profileRefresh.value++;
                 setState(() => _tab = i);
               }
             },
@@ -267,12 +276,22 @@ class _AppShellState extends State<AppShell> {
                 label: ku ? 'Sereke' : 'Ana Sayfa',
               ),
               NavigationDestination(
+                icon: const Icon(Icons.grid_view_outlined),
+                selectedIcon: const Icon(Icons.grid_view_rounded),
+                label: ku ? 'Kategorî' : 'Kategori',
+              ),
+              NavigationDestination(
                 icon: KeyedSubtree(
                   key: _playNavKey,
                   child: const Icon(Icons.sports_esports_outlined),
                 ),
                 selectedIcon: const Icon(Icons.sports_esports),
                 label: ku ? 'Pêşbazî' : 'Yarış',
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.emoji_events_outlined),
+                selectedIcon: const Icon(Icons.emoji_events),
+                label: ku ? 'Lîstik' : 'Liderlik',
               ),
               NavigationDestination(
                 icon: KeyedSubtree(

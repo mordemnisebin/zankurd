@@ -274,11 +274,11 @@ class AppTheme {
   static const brandOrange = Color(0xFF3DA968); // Kürdistan yeşili — ana aksan
   static const brandOrangeWarm = Color(0xFF2F7D4F); // Koyu yeşil (gradyan ucu)
   static const playGreen = Color(0xFF3DA968); // Öğrenme kimliği (yeşil)
-  static const playPink = Color(0xFFFF3B81); // Sıcak pembe — 1v1/rekabet (legacy)
-  static const playCyan = Color(0xFF38BDF8); // Gökmavi — oda/mod kartları (legacy)
+  static const playPink = Color(0xFFC9503C); // Nar kırmızısı — 1v1/rekabet (mockup paleti)
+  static const playCyan = Color(0xFF2E9E93); // Teal — oda/mod kartları (mockup paleti)
   static const playPurple = Color(
-    0xFF6C5CE7,
-  ); // Eski indigo (legacy referans)
+    0xFF6B3A7A,
+  ); // Erik moru — mockup kategori paleti tonu
 
   // ============ Dark Mode Palette (Pirs — koyu ikincil tema) ============
   // Legacy token names retained for existing screen consumers.
@@ -447,9 +447,10 @@ class AppTheme {
   }
 
   // Decorative gradients for QuickPlayGrid tiles.
+  // Nar kırmızısı — mockup paleti (eski pembe-magenta bırakıldı).
   static const List<Color> duelGradient = [
-    Color(0xFFFF416C),
-    Color(0xFFFF4B2B),
+    Color(0xFFE5533D),
+    Color(0xFFB6402F),
   ];
   static const List<Color> tournamentGradient = [
     Color(0xFF00BFA5),
