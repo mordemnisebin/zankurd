@@ -50,7 +50,7 @@ class AppTypography {
 
   static const TextStyle caption = TextStyle(
     fontWeight: FontWeight.w700,
-    fontSize: 12,
+    fontSize: 12.5,
     height: 1.35,
     letterSpacing: 0.2,
   );
@@ -58,7 +58,7 @@ class AppTypography {
   static const categoryTitle = TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.w900,
-    fontSize: 19,
+    fontSize: 20,
     height: 1.05,
     letterSpacing: 0,
     shadows: [
@@ -68,7 +68,7 @@ class AppTypography {
 
   static const categoryMeta = TextStyle(
     color: Colors.white,
-    fontSize: 11.5,
+    fontSize: 12,
     height: 1.2,
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
@@ -327,8 +327,8 @@ class AppTheme {
   static const lightSurfaceHi = Color(0xFFF7F4F0); // Surface highlight
   static const lightBorder = Color(0xFFE8E4DF);
   static const lightTextPrimary = Color(0xFF1E1E24);
-  static const lightTextSub = Color(0xFF6B6776);
-  static const lightTextMuted = Color(0xFF9D98AB);
+  static const lightTextSub = Color(0xFF4A4655); // WCAG AA kontrast orani artirildi
+  static const lightTextMuted = Color(0xFF6F6A7E); // WCAG AA kontrast orani artirildi
 
   // Compat aliases for screens not yet migrated
   static const page = bg;

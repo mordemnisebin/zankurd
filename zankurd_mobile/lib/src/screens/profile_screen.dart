@@ -1140,8 +1140,9 @@ class _AchievementShowcase extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       backgroundColor: AppTheme.surfaceColor(context),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        side: BorderSide(color: AppTheme.borderColor(context)),
       ),
       builder: (sheetContext) {
         return Container(

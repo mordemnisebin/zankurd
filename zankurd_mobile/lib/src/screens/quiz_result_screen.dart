@@ -1029,118 +1029,124 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     const SizedBox(height: 16),
                   ],
                   // ── Actions ──────────────────────────────────────────
-                  const SizedBox(height: 4),
-                  // Primary: Play Again
-                  SizedBox(
-                    width: double.infinity,
-                    height: 52,
-                    child: FilledButton.icon(
-                      key: const ValueKey('result-play-again-button'),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: AppTheme.brandOrange,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        elevation: 2,
-                      ),
-                      onPressed: () {
-                        if (room.id != null) {
-                          // Online odada sonuçtan çıkınca oda lobisi korunur.
-                          Navigator.of(context).pop();
-                        } else {
-                          Navigator.of(context)
-                              .popUntil((route) => route.isFirst);
-                        }
-                      },
-                      icon: const Icon(Icons.replay_rounded, size: 20),
-                      label: Text(
-                        context.s('Dîsa bilîze', 'Tekrar oyna'),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  // Secondary row: Review + Home
+                  const SizedBox(height: 12),
+                  // Primary Actions Row: Play Again & Review
                   Row(
                     children: [
                       Expanded(
-                        child: OutlinedButton.icon(
-                          key: const ValueKey('result-review-button'),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(48),
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
+                        flex: 3,
+                        child: SizedBox(
+                          height: 52,
+                          child: FilledButton.icon(
+                            key: const ValueKey('result-play-again-button'),
+                            style: FilledButton.styleFrom(
+                              backgroundColor: AppTheme.brandOrange,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              elevation: 2,
                             ),
-                          ),
-                          onPressed: answerRecords.isEmpty
-                              ? null
-                              : () => Navigator.of(context).push(
-                                    AppRoute.to(
-                                      ReviewScreen(
-                                        records: answerRecords,
-                                        room: room,
-                                      ),
-                                    ),
-                                  ),
-                          icon: const Icon(Icons.fact_check_outlined,
-                              size: 20),
-                          label: Text(
-                            context.s('Vekolîn', 'İncele'),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
+                            onPressed: () {
+                              if (room.id != null) {
+                                Navigator.of(context).pop();
+                              } else {
+                                Navigator.of(context)
+                                    .popUntil((route) => route.isFirst);
+                              }
+                            },
+                            icon: const Icon(Icons.replay_rounded, size: 20),
+                            label: Text(
+                              context.s('Dîsa bilîze', 'Tekrar oyna'),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 10),
                       Expanded(
-                        child: TextButton.icon(
-                          key: const ValueKey('result-home-button'),
-                          style: TextButton.styleFrom(
-                            minimumSize: const Size.fromHeight(48),
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
+                        flex: 2,
+                        child: SizedBox(
+                          height: 52,
+                          child: OutlinedButton.icon(
+                            key: const ValueKey('result-review-button'),
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
                             ),
-                          ),
-                          onPressed: () => Navigator.of(context)
-                              .popUntil((route) => route.isFirst),
-                          icon: const Icon(Icons.home_outlined, size: 20),
-                          label: Text(
-                            context.s('Sereke', 'Ana Sayfa'),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
+                            onPressed: answerRecords.isEmpty
+                                ? null
+                                : () => Navigator.of(context).push(
+                                      AppRoute.to(
+                                        ReviewScreen(
+                                          records: answerRecords,
+                                          room: room,
+                                        ),
+                                      ),
+                                    ),
+                            icon: const Icon(Icons.fact_check_outlined, size: 18),
+                            label: Text(
+                              context.s('Vekolîn', 'İncele'),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 12),
                   // Subtle secondary links
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
+                    padding: const EdgeInsets.only(top: 4),
                     child: Wrap(
                       alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       runSpacing: 4,
                       children: [
+                        TextButton(
+                          key: const ValueKey('result-home-button'),
+                          style: TextButton.styleFrom(
+                            visualDensity: VisualDensity.compact,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                          ),
+                          onPressed: () => Navigator.of(context)
+                              .popUntil((route) => route.isFirst),
+                          child: Text(
+                            context.s('Sereke', 'Ana Sayfa'),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppTheme.textMutedColor(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '·',
+                          style: TextStyle(
+                            color: AppTheme.textMutedColor(context)
+                                .withValues(alpha: 0.4),
+                          ),
+                        ),
                         TextButton(
                           style: TextButton.styleFrom(
                             visualDensity: VisualDensity.compact,
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
+                              horizontal: 8,
                               vertical: 4,
                             ),
                           ),
@@ -1174,7 +1180,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           style: TextButton.styleFrom(
                             visualDensity: VisualDensity.compact,
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
+                              horizontal: 8,
                               vertical: 4,
                             ),
                           ),

@@ -682,6 +682,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final confirmed = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
+      backgroundColor: AppTheme.surfaceColor(context),
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        side: BorderSide(color: AppTheme.borderColor(context)),
+      ),
       builder: (sheetContext) => StatefulBuilder(
         builder: (context, setSheetState) {
           final ku = context.isKu;
@@ -815,8 +820,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       context: context,
       isScrollControlled: true,
       backgroundColor: AppTheme.surfaceOf(context),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        side: BorderSide(color: AppTheme.borderColor(context)),
       ),
       builder: (sheetCtx) {
         final fieldLabel = ku ? 'Koda odeyê' : 'Oda kodu';

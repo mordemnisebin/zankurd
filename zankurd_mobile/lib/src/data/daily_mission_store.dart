@@ -73,6 +73,16 @@ class DailyMissionStore {
 
   static void resetInstance() => _instance = null;
 
+  Future<void> clear() async {
+    for (final mission in _missions) {
+      mission.progress = 0;
+      mission.completed = false;
+    }
+    await _prefs?.remove(_dateKey);
+    await _prefs?.remove(_progressKey);
+    await _prefs?.remove(_completedKey);
+  }
+
   Future<List<DailyMission>> reportQuizCompleted({
     required int correctAnswers,
     required String category,

@@ -95,4 +95,16 @@ class StreakStore {
       await preferences.setString(_lastDayKey, lastDay);
     }
   }
+
+  Future<void> clear() async {
+    _current = 0;
+    _best = 0;
+    _lastDay = null;
+    final preferences = _preferences;
+    if (preferences == null) return;
+    await preferences.remove(_currentKey);
+    await preferences.remove(_bestKey);
+    await preferences.remove(_lastDayKey);
+  }
 }
+

@@ -59,4 +59,20 @@ void main() {
     expect(restored.effectiveStreak(now: DateTime(2026, 6, 13)), 2);
     expect(restored.best, 2);
   });
+
+  test('clear resets streak values in memory and preferences', () async {
+    final store = await StreakStore.load();
+    await store.recordPlay(now: DateTime(2026, 6, 12));
+    expect(store.effectiveStreak(now: DateTime(2026, 6, 12)), 1);
+
+    await store.clear();
+    expect(store.effectiveStreak(now: DateTime(2026, 6, 12)), 0);
+    expect(store.best, 0);
+
+    StreakStore.resetInstance();
+    final reloaded = await StreakStore.load();
+    expect(reloaded.effectiveStreak(now: DateTime(2026, 6, 12)), 0);
+    expect(reloaded.best, 0);
+  });
 }
+

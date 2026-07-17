@@ -143,5 +143,23 @@ void main() {
       final store2 = await MasteryStore.load();
       expect(store2.correctCount('Ziman'), 0);
     });
+
+    test('clear metodu tum kategorileri ve verileri sifirlar', () async {
+      final store = await MasteryStore.load();
+      await store.addCorrect('Ziman', 25);
+      await store.addCorrect('Cand', 15);
+
+      expect(store.correctCount('Ziman'), 25);
+      expect(store.correctCount('Cand'), 15);
+
+      await store.clear();
+      expect(store.correctCount('Ziman'), 0);
+      expect(store.correctCount('Cand'), 0);
+
+      MasteryStore.resetInstance();
+      final restored = await MasteryStore.load();
+      expect(restored.correctCount('Ziman'), 0);
+      expect(restored.correctCount('Cand'), 0);
+    });
   });
 }

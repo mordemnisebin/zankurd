@@ -94,4 +94,10 @@ class XPStore {
     final levelAfter = currentLevel;
     return levelAfter > levelBefore;
   }
+
+  Future<void> clear() async {
+    _totalXP = 0;
+    await _preferences?.remove(_totalXPKey);
+  }
 }
+

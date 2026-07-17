@@ -149,10 +149,12 @@ class SyncManager {
   }
 
   void queueXP(int xp) {
-    developer.log('Queueing XP update offline: $xp XP', name: 'SyncManager');
+    final playerId = _repository.currentUserId;
+    developer.log('Queueing XP update offline: $xp XP for user: $playerId', name: 'SyncManager');
     _queue.add({
       'type': 'sync_xp',
       'xp': xp,
+      'playerId': playerId,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
     });
     _saveQueue();
@@ -174,6 +176,12 @@ class SyncManager {
       return;
     }
 
+    final currentUserId = repo.currentUserId;
+    if (currentUserId == null) {
+      developer.log('No authenticated user. Skipping sync.', name: 'SyncManager');
+      return;
+    }
+
     developer.log(
       'Syncing ${_queue.length} pending updates to Supabase...',
       name: 'SyncManager',
@@ -182,6 +190,17 @@ class SyncManager {
 
     for (final item in _queue) {
       final type = item['type'] as String?;
+      final itemPlayerId = item['playerId'] as String?;
+
+      if (itemPlayerId != null && itemPlayerId != currentUserId) {
+        developer.log(
+          'Skipping sync item: belongs to different user ($itemPlayerId), current is $currentUserId',
+          name: 'SyncManager',
+        );
+        failedItems.add(item);
+        continue;
+      }
+
       try {
         if (type == 'sync_xp') {
           final xp = item['xp'] as int;
@@ -201,6 +220,13 @@ class SyncManager {
     _queue.addAll(failedItems);
     await _saveQueue();
   }
+
+  Future<void> clearQueue() async {
+    _queue.clear();
+    await _saveQueue();
+    developer.log('Sync queue cleared.', name: 'SyncManager');
+  }
+
 
   Future<List<ConnectivityResult>> _checkConnectivity() async {
     try {

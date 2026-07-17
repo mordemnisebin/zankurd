@@ -11,6 +11,56 @@ class _Rule {
 }
 
 final List<_Rule> _rules = [
+  // 'Kurmancî "biçûk" ≈ "küçük".'
+  _Rule(
+    RegExp(r'^Kurmancî "([^"]+)" ≈ "([^"]+)"\.$'),
+    (m) => 'Kurmancî "${m[1]}" ≈ "${m[2]}".',
+  ),
+  // '"kevin" kelimesi "eski" demektir.'
+  _Rule(
+    RegExp(r'^"([^"]+)" kelimesi "([^"]+)" demektir\.$'),
+    (m) => 'Peyva "${m[1]}" tê wateya "${m[2]}".',
+  ),
+  // 'Doğru yanıt: doğru.'
+  _Rule(
+    RegExp(r'^Doğru yanıt: ([^.]+)\.$'),
+    (m) => 'Bersiva rast: ${m[1]}.',
+  ),
+  // ''çîrok' Kurmancîde hikâye/anlatı anlamına gelir.'
+  _Rule(
+    RegExp(r"^'([^']+)' Kurmancîde ([^.]+) anlamına gelir\.$"),
+    (m) => '\'${m[1]}\' bi Kurmancî tê wateya ${m[2]}.',
+  ),
+  // ''newal' Kurmancîde vadi anlamında kullanılır.'
+  _Rule(
+    RegExp(r"^'([^']+)' Kurmancîde ([^.]+) anlamında kullanılır\.$"),
+    (m) => '\'${m[1]}\' bi Kurmancî di wateya ${m[2]} de tê bikaranîn.',
+  ),
+  // '"erê" evet, "na" hayır demektir.'
+  _Rule(
+    RegExp(r'^"([^"]+)" ([^,]+), "([^"]+)" ([^ ]+) demektir\.$'),
+    (m) => '"${m[1]}" tê wateya ${m[2]}, "${m[3]}" jî tê wateya ${m[4]}.',
+  ),
+  // ''güzel/iyi' → xweş.'
+  _Rule(
+    RegExp(r"^'([^']+)' → ([^.]+)\.$"),
+    (m) => '\'${m[1]}\' → ${m[2]}.',
+  ),
+  // 'Görsel 'av' kavramını gösterir; doğru yanıt: su.'
+  _Rule(
+    RegExp(r"^Görsel '([^']+)' kavramını gösterir; doğru yanıt: ([^.]+)\.$"),
+    (m) => 'Wêne têgeha "${m[1]}" nîşan dide; bersiva rast: ${m[2]}.',
+  ),
+  // 'Doğru anlam: "pirtûk" → "kitap".'
+  _Rule(
+    RegExp(r'^Doğru anlam: "([^"]+)" → "([^"]+)"\.$'),
+    (m) => 'Wateya rast: "${m[1]}" → "${m[2]}".',
+  ),
+  // 'Doğru eşleştirme: "teşekkür" → "spas".'
+  _Rule(
+    RegExp(r'^Doğru eşleştirme: "([^"]+)" → "([^"]+)"\.$'),
+    (m) => 'Hevdûkirina rast: "${m[1]}" → "${m[2]}".',
+  ),
   // '"av" kelimesi "su" anlamına gelir.'
   _Rule(
     RegExp(r'^"([^"]+)" kelimesi "([^"]+)" anlamına gelir\.$'),
@@ -127,7 +177,7 @@ final List<_Rule> _rules = [
     RegExp(
       r'^Tarih; kültür, ekonomi, dil, göç, kaynak ve gündelik yaşamı da inceler\.$',
     ),
-    (m) => 'Dîrok çand, abor, ziman, koç, çavkanî û jiyana rojane jî vedikole.',
+    (m) => 'Dîrok çand, aborî, ziman, koç, çavkanî û jiyana rojane jî vedikole.',
   ),
   _Rule(
     RegExp(r'^(.+), Kürt edebiyatı alanında (.+) anlamında kullanılır\.$'),

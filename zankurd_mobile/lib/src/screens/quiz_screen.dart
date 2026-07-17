@@ -594,6 +594,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     final leave = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppTheme.surfaceColor(context),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: AppTheme.borderColor(context)),
+        ),
         title: Text(context.s('Ji pêşbirkê derkevî?', 'Yarıştan çıkılsın mı?')),
         content: Text(
           context.s(
@@ -2181,6 +2186,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
+          backgroundColor: AppTheme.surfaceColor(context),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(color: AppTheme.borderColor(context)),
+          ),
           title: Text(context.s('Pirsê ragihîne', 'Soruyu bildir')),
           content: TextField(
             controller: controller,

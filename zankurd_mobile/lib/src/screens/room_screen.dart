@@ -38,6 +38,7 @@ class _RoomScreenState extends State<RoomScreen> {
   bool starting = false;
   bool quizOpened = false;
   bool _chatOpen = false;
+  bool _leaving = false;
   StreamSubscription? _playersSub;
   StreamSubscription? _statusSub;
 
@@ -131,8 +132,33 @@ class _RoomScreenState extends State<RoomScreen> {
     _playersSub?.cancel();
     _statusSub?.cancel();
     _pausePolling();
-    widget.repository.updateReady(room, false).catchError((_) {});
+    if (!_leaving) {
+      widget.repository.updateReady(room, false).catchError((_) {});
+    }
     super.dispose();
+  }
+
+  Future<void> _leaveRoom() async {
+    if (_leaving) return;
+    setState(() {
+      _leaving = true;
+    });
+
+    _playersSub?.cancel();
+    _playersSub = null;
+    _statusSub?.cancel();
+    _statusSub = null;
+    _pausePolling();
+
+    try {
+      await widget.repository.updateReady(room, false);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'room_leave_update_ready_failed');
+    }
+
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   Future<void> _copyRoomCode(BuildContext context, bool ku) async {
@@ -154,32 +180,67 @@ class _RoomScreenState extends State<RoomScreen> {
     final isHost = room.hostId == null || room.hostId == currentUserId;
     final canStart = ready && !starting && room.players.length >= 2;
 
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.page,
-                    AppSpacing.md,
-                    AppSpacing.page,
-                    AppSpacing.lg,
+    if (_leaving) {
+      return Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: AppTheme.backgroundGradient(context),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const CircularProgressIndicator(
+                  color: AppTheme.playCyan,
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  ku ? 'Tê betalkirin...' : 'İptal ediliyor...',
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
                   ),
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          icon: Icon(
-                            Icons.arrow_back_rounded,
-                            color: AppTheme.textSubColor(context),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    return PopScope(
+      canPop: _leaving,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        _leaveRoom();
+      },
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: AppTheme.backgroundGradient(context),
+          ),
+          child: SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.page,
+                      AppSpacing.md,
+                      AppSpacing.page,
+                      AppSpacing.lg,
+                    ),
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: _leaving ? null : _leaveRoom,
+                            icon: Icon(
+                              Icons.arrow_back_rounded,
+                              color: AppTheme.textSubColor(context),
+                            ),
                           ),
-                        ),
                         const Spacer(),
                         // Çocuk modu: serbest metin oda sohbeti kapalı.
                         if (context.watch<ChildSafetyProvider>().allowRoomChat)
@@ -250,10 +311,6 @@ class _RoomScreenState extends State<RoomScreen> {
                                   spacing: AppSpacing.xs,
                                   runSpacing: AppSpacing.xs,
                                   children: [
-                                    _Pill(
-                                      label: room.code,
-                                      icon: Icons.tag_rounded,
-                                    ),
                                     _Pill(
                                       label: room.category,
                                       icon: Icons.category_outlined,
@@ -607,8 +664,9 @@ class _RoomScreenState extends State<RoomScreen> {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Future<void> _startGameHost() async {
     setState(() => starting = true);
