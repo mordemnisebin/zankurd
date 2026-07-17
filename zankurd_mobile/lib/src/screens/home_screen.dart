@@ -18,7 +18,6 @@ import '../utils/test_environment.dart';
 import 'home/hero_card.dart';
 import '../widgets/animated_counter.dart';
 import '../widgets/kilim_pattern_painter.dart';
-import '../widgets/roj_mascot.dart';
 import '../widgets/zana_daily_card.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
@@ -688,17 +687,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             right: AppSpacing.page,
             child: _buildHeaderQuickControls(context, ku),
           ),
-          Positioned(
-            right: AppSpacing.page,
-            bottom: AppSpacing.lg,
-            child: _buildAnimatedCard(
-              _heroFadeAnimation(0),
-              const RojMascot(
-                key: ValueKey('home-header-roj-mascot'),
-                size: 72,
-              ),
-            ),
-          ),
+          // Zana maskotu günlük kartında yaşar; masthead sade kalır
+          // (coin illüstrasyonuyla kalite uyumu için kaldırıldı).
         ],
       ),
     );

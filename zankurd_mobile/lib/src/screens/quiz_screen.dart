@@ -1161,13 +1161,36 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       WildcardType.doubleAnswer,
       if (_isSoloMode) WildcardType.changeQuestion,
     ];
-    return Row(
-      key: _wildcardKey,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        for (var i = 0; i < jokers.length; i++) ...[
-          if (i > 0) const SizedBox(width: AppSpacing.xxs),
-          Expanded(child: _buildWildcardButton(jokers[i])),
-        ],
+        Row(
+          key: _wildcardKey,
+          children: [
+            for (var i = 0; i < jokers.length; i++) ...[
+              if (i > 0) const SizedBox(width: AppSpacing.xxs),
+              Expanded(child: _buildWildcardButton(jokers[i])),
+            ],
+          ],
+        ),
+        // Hiç coini olmayan yeni oyuncuya kilitler "her şey paralı" gibi
+        // görünmesin: coinin nereden kazanılacağını tek satırla söyle.
+        if (_coinBalance == 0)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text(
+              context.s(
+                'Quizê biqedîne, coin qezenc bike û jokeran veke',
+                'Quizi bitir, coin kazan ve jokerleri aç',
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.caption.copyWith(
+                color: AppTheme.textMutedColor(context),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
       ],
     );
   }

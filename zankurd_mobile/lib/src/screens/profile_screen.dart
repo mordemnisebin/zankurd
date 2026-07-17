@@ -281,7 +281,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       _StatTile(
                         label: ku ? 'Rêze' : 'Sıralama',
-                        value: '#${_stats!.rank}',
+                        // Hiç oyun yokken sahte görünen sıra gösterme.
+                        value: _stats!.roomsPlayed > 0
+                            ? '#${_stats!.rank}'
+                            : '—',
                         color: AppTheme.gold,
                         icon: Icons.leaderboard_rounded,
                       ),
