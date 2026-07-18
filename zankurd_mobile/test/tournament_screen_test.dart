@@ -33,14 +33,20 @@ void main() {
   }
 
   group('TournamentScreen Tests', () {
-    test('turnuva sonucu yalnızca tamamlanan quiz için ilerlemeye izin verir', () {
-      expect(tournamentMatchCompleted(const {'completed': true}), isTrue);
-      expect(tournamentMatchCompleted(const {'completed': false}), isFalse);
-      expect(tournamentMatchCompleted(null), isFalse);
-      expect(tournamentMatchScore(const {'completed': true, 'score': 120}), 120);
-      expect(tournamentMatchScore(const {'completed': true}), 0);
-      expect(tournamentMatchScore(null), 0);
-    });
+    test(
+      'turnuva sonucu yalnızca tamamlanan quiz için ilerlemeye izin verir',
+      () {
+        expect(tournamentMatchCompleted(const {'completed': true}), isTrue);
+        expect(tournamentMatchCompleted(const {'completed': false}), isFalse);
+        expect(tournamentMatchCompleted(null), isFalse);
+        expect(
+          tournamentMatchScore(const {'completed': true, 'score': 120}),
+          120,
+        );
+        expect(tournamentMatchScore(const {'completed': true}), 0);
+        expect(tournamentMatchScore(null), 0);
+      },
+    );
 
     testWidgets('lobi ekrani dogru sekilde yukleniyor', (tester) async {
       await tester.pumpWidget(createTestWidget());
@@ -53,7 +59,7 @@ void main() {
       );
       expect(
         startButton.style?.backgroundColor?.resolve({}),
-        AppTheme.brandOrange,
+        AppTheme.brandGreen,
       );
       expect(find.byIcon(Icons.emoji_events_rounded), findsAtLeast(1));
     });

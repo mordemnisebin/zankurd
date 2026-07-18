@@ -197,21 +197,30 @@ void main() {
     expect(source, isNot(contains('=> switch (category)')));
   });
 
-  test('clear metodu gorevleri ve SharedPreferences verilerini sifirlar', () async {
-    final missions = [
-      DailyMission(type: MissionType.completeQuiz, target: 3, coinReward: 60, progress: 2, completed: false),
-    ];
-    final store = await DailyMissionStore.loadForTest(missions);
-    expect(missions[0].progress, 2);
+  test(
+    'clear metodu gorevleri ve SharedPreferences verilerini sifirlar',
+    () async {
+      final missions = [
+        DailyMission(
+          type: MissionType.completeQuiz,
+          target: 3,
+          coinReward: 60,
+          progress: 2,
+          completed: false,
+        ),
+      ];
+      final store = await DailyMissionStore.loadForTest(missions);
+      expect(missions[0].progress, 2);
 
-    await store.clear();
-    expect(missions[0].progress, 0);
-    expect(missions[0].completed, isFalse);
+      await store.clear();
+      expect(missions[0].progress, 0);
+      expect(missions[0].completed, isFalse);
 
-    // Persist edilmis verinin de temizlendigini dogrulamak icin
-    final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getString('zankurd.missions.date'), isNull);
-    expect(prefs.getStringList('zankurd.missions.progress'), isNull);
-    expect(prefs.getStringList('zankurd.missions.completed'), isNull);
-  });
+      // Persist edilmis verinin de temizlendigini dogrulamak icin
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getString('zankurd.missions.date'), isNull);
+      expect(prefs.getStringList('zankurd.missions.progress'), isNull);
+      expect(prefs.getStringList('zankurd.missions.completed'), isNull);
+    },
+  );
 }

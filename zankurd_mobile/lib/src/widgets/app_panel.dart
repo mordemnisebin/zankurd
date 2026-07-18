@@ -13,6 +13,7 @@ class AppPanel extends StatelessWidget {
     this.color,
     this.borderRadius,
     this.glass = false,
+    this.cardType = CardType.secondary,
   });
 
   final Widget child;
@@ -23,6 +24,10 @@ class AppPanel extends StatelessWidget {
 
   /// true ise arkasını bulanıklaştıran glassmorphism görünümü kullanır.
   final bool glass;
+
+  /// Kart öncelik tipi (primary / secondary / info).
+  /// Gradient verilirse her zaman primary efekti uygulanır.
+  final CardType cardType;
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +51,32 @@ class AppPanel extends StatelessWidget {
       );
     }
 
+    if (gradient != null) {
+      return Container(
+        width: double.infinity,
+        padding: padding,
+        decoration: AppTheme.premiumCard(
+          context,
+          gradient: gradient as LinearGradient,
+          radius: br.topLeft.x,
+        ),
+        child: child,
+      );
+    }
+
+    final decoration = AppTheme.cardDecorationByType(
+      context,
+      type: cardType,
+      radius: br.topLeft.x,
+    );
+
     return Container(
       width: double.infinity,
       padding: padding,
-      decoration:
-          AppTheme.premiumCard(
-            context,
-            gradient: gradient is LinearGradient
-                ? gradient as LinearGradient
-                : null,
-            radius: br.topLeft.x,
-          ).copyWith(
-            color: gradient == null
-                ? (color ?? AppTheme.surfaceColor(context))
-                : null,
-            gradient: gradient,
-            borderRadius: br,
-            border: gradient == null
-                ? Border.all(
-                    color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-                    width: 1.0,
-                  )
-                : null,
-            boxShadow: AppShadows.panel(context),
-          ),
+      decoration: decoration.copyWith(
+        color: color ?? AppTheme.surfaceColor(context),
+        borderRadius: br,
+      ),
       child: child,
     );
   }

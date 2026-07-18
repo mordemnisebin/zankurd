@@ -103,8 +103,8 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          AppTheme.brandOrange,
-                          AppTheme.brandOrangeWarm,
+                          AppTheme.brandGreen,
+                          AppTheme.brandGreenDeep,
                         ],
                       ),
                     ),

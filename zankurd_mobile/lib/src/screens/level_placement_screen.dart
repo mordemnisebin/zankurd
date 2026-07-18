@@ -206,7 +206,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
       PlacementLevel.navin => (Icons.trending_up_rounded, AppTheme.gold),
       PlacementLevel.pesketi => (
         Icons.workspace_premium_rounded,
-        AppTheme.brandOrange,
+        AppTheme.brandGreen,
       ),
     };
     return Center(

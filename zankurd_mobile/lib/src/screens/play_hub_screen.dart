@@ -180,8 +180,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
           ),
         );
       },
-    );
-    controller.dispose();
+    ).whenComplete(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) => controller.dispose());
+    });
   }
 
   @override
@@ -198,7 +199,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               subtitle: ku
                   ? 'Pêşbirk, turnuva û xelat hemû li vir in'
                   : 'Günlük yarışma, düello ve ödüller tek yerde',
-              accent: AppTheme.brandOrange,
+              accent: AppTheme.brandGreen,
               icon: Icons.sports_esports_rounded,
             ),
             const SizedBox(height: AppSpacing.lg),

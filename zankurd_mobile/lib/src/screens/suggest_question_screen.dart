@@ -221,7 +221,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _AnswerField(
                   controller: _optionAController,
                   label: 'A',
-                  color: const Color(0xFFD65A31),
+                  color: AppTheme.answerOptionColors[0],
                   isCorrect: _correctOption == 'A',
                   ku: ku,
                 ),
@@ -229,7 +229,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _AnswerField(
                   controller: _optionBController,
                   label: 'B',
-                  color: const Color(0xFF2B5C8F),
+                  color: AppTheme.answerOptionColors[1],
                   isCorrect: _correctOption == 'B',
                   ku: ku,
                 ),
@@ -237,7 +237,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _AnswerField(
                   controller: _optionCController,
                   label: 'C',
-                  color: const Color(0xFF1E5F47),
+                  color: AppTheme.answerOptionColors[2],
                   isCorrect: _correctOption == 'C',
                   ku: ku,
                 ),
@@ -245,7 +245,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _AnswerField(
                   controller: _optionDController,
                   label: 'D',
-                  color: const Color(0xFFD4AF37),
+                  color: AppTheme.answerOptionColors[3],
                   isCorrect: _correctOption == 'D',
                   ku: ku,
                 ),
@@ -264,14 +264,8 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: ['A', 'B', 'C', 'D'].map((letter) {
                       final selected = _correctOption == letter;
-                      final colors = const [
-                        Color(0xFFD65A31),
-                        Color(0xFF2B5C8F),
-                        Color(0xFF1E5F47),
-                        Color(0xFFD4AF37),
-                      ];
                       final idx = letter.codeUnitAt(0) - 65;
-                      final color = colors[idx];
+                      final color = AppTheme.answerOptionColors[idx];
                       return GestureDetector(
                         onTap: () => setState(() => _correctOption = letter),
                         child: AnimatedContainer(
@@ -337,7 +331,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 // Zorluk seviyesi
                 _SectionHeader(
                   icon: Icons.speed_rounded,
-                  color: AppTheme.brandOrange,
+                  color: AppTheme.brandGreen,
                   title: ku
                       ? 'Astê Zehmetiyê: $_difficulty'
                       : 'Zorluk Seviyesi: $_difficulty',
@@ -363,7 +357,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                           min: 1,
                           max: 5,
                           divisions: 4,
-                          activeColor: AppTheme.brandOrange,
+                          activeColor: AppTheme.brandGreen,
                           label: '$_difficulty',
                           onChanged: (value) {
                             setState(() => _difficulty = value.round());

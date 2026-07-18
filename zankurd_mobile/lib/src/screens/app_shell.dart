@@ -199,41 +199,50 @@ class _AppShellState extends State<AppShell> {
           ),
         ],
       ),
-      bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          height: 68,
-          backgroundColor: AppTheme.surfaceColor(context),
-          surfaceTintColor: Colors.transparent,
-          shadowColor: Colors.black.withValues(alpha: 0.08),
-          elevation: 4,
-          labelTextStyle: WidgetStateProperty.resolveWith((states) {
-            final selected = states.contains(WidgetState.selected);
-            return TextStyle(
-              fontSize: 11,
-              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-              letterSpacing: 0.1,
-              color: selected ? AppTheme.brandOrange : null,
-            );
-          }),
-          iconTheme: WidgetStateProperty.resolveWith((states) {
-            final selected = states.contains(WidgetState.selected);
-            return IconThemeData(
-              size: selected ? 26 : 24,
-              color: selected
-                  ? AppTheme.brandOrange
-                  : AppTheme.textMutedColor(context),
-            );
-          }),
-          // Sekme kimlik renkleri içerik header'larında yaşar; bottom nav
-          // her sekmede sabit brandOrange kullanır.
-          indicatorColor: AppTheme.brandOrange.withValues(alpha: 0.14),
-          indicatorShape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-          ),
-          overlayColor: WidgetStateProperty.all(
-            AppTheme.brandOrange.withValues(alpha: 0.06),
-          ),
-        ),
+bottomNavigationBar: NavigationBarTheme(
+  data: NavigationBarThemeData(
+    height: 68,
+    backgroundColor: AppTheme.surfaceColor(context),
+    surfaceTintColor: Colors.transparent,
+    shadowColor: Colors.black.withValues(alpha: 0.10),
+    elevation: 6,
+    labelTextStyle: WidgetStateProperty.resolveWith((states) {
+      final selected = states.contains(WidgetState.selected);
+      final color = selected
+          ? AppTheme.brandGreen
+          : AppTheme.textMutedColor(context);
+      return TextStyle(
+        fontSize: 11,
+        fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
+        letterSpacing: 0.2,
+        color: color,
+      );
+    }),
+    iconTheme: WidgetStateProperty.resolveWith((states) {
+      final selected = states.contains(WidgetState.selected);
+      final color = selected
+          ? AppTheme.brandGreen
+          : AppTheme.textMutedColor(context);
+      return IconThemeData(
+        size: selected ? 26 : 24,
+        color: color,
+      );
+    }),
+    // Aktif sekme göstergesi: alt şerit (underline) stili
+    // Sadece alt kısım yuvarlak → pill yerine şerit görünümü.
+    indicatorColor: AppTheme.brandGreen.withValues(alpha: 0.22),
+    indicatorShape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(AppRadius.sm),
+        topRight: Radius.circular(AppRadius.sm),
+        bottomLeft: Radius.circular(AppRadius.xs),
+        bottomRight: Radius.circular(AppRadius.xs),
+      ),
+    ),
+    overlayColor: WidgetStateProperty.all(
+      AppTheme.brandGreen.withValues(alpha: 0.10),
+    ),
+  ),
         child: DecoratedBox(
           decoration: BoxDecoration(
             border: Border(

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
 
 import '../data/achievement_store.dart';
@@ -409,14 +410,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 ? [
                     Color.alphaBlend(
                       Colors.black.withValues(alpha: 0.12),
-                      AppTheme.brandOrange,
+                      AppTheme.brandGreen,
                     ),
                     Color.alphaBlend(
                       Colors.black.withValues(alpha: 0.18),
-                      AppTheme.brandOrangeWarm,
+                      AppTheme.brandGreenDeep,
                     ),
                   ]
-                : [AppTheme.brandOrange, AppTheme.brandOrangeWarm],
+                : [AppTheme.brandGreen, AppTheme.brandGreenDeep],
           );
 
     final borderColor = is1v1
@@ -425,7 +426,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : isDraw
               ? AppTheme.borderColor(context)
               : AppTheme.wrong.withValues(alpha: 0.55))
-        : AppTheme.brandOrange.withValues(alpha: 0.45);
+        : AppTheme.brandGreen.withValues(alpha: 0.45);
 
     final headerTitle = is1v1
         ? (isWinner
@@ -469,32 +470,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           ),
         ),
         title: Text(context.s('Encam', 'Sonuç')),
-        actions: [
-          Builder(
-            builder: (ctx) {
-              final allowShare = ctx
-                  .watch<ChildSafetyProvider>()
-                  .allowExternalShare;
-              if (!allowShare) return const SizedBox.shrink();
-              return Padding(
-                padding: const EdgeInsets.only(right: 4),
-                child: IconButton(
-                  icon: const Icon(Icons.share_rounded),
-                  tooltip: context.s('Parve Bike', 'Paylaş'),
-                  onPressed: () => ResultSharer.share(
-                    context,
-                    isKu: context.isKu,
-                    score: score,
-                    correctCount: correctCount,
-                    totalQuestions: totalQuestions,
-                    bestStreak: bestStreak,
-                    category: room.category,
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -526,7 +501,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     : isDraw
                                     ? AppTheme.borderColor(context)
                                     : AppTheme.wrong)
-                              : AppTheme.brandOrange,
+                              : AppTheme.brandGreen,
                           intensity: 0.18,
                         ),
                       ),
@@ -706,8 +681,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     color: AppTheme.textMutedColor(context),
                                   ),
                                   _StatPill(
-                                    icon:
-                                        Icons.local_fire_department_rounded,
+                                    icon: Icons.local_fire_department_rounded,
                                     value: '$bestStreak',
                                     label: context.s('Serî', 'Seri'),
                                     color: AppTheme.gold,
@@ -741,6 +715,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   if (_dailyStreak > 0) ...[
                     const SizedBox(height: 16),
                     AppPanel(
+                      cardType: CardType.primary,
                       color: AppTheme.surfaceHiColor(context),
                       child: Row(
                         children: [
@@ -1040,7 +1015,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               child: Container(
                                 width: 3,
                                 decoration: const BoxDecoration(
-                                  color: AppTheme.brandOrange,
+                                  color: AppTheme.brandGreen,
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(16),
                                     bottomLeft: Radius.circular(16),
@@ -1066,7 +1041,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           child: FilledButton.icon(
                             key: const ValueKey('result-play-again-button'),
                             style: FilledButton.styleFrom(
-                              backgroundColor: AppTheme.brandOrange,
+                              backgroundColor: AppTheme.brandGreen,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
@@ -1077,8 +1052,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               if (room.id != null) {
                                 Navigator.of(context).pop();
                               } else {
-                                Navigator.of(context)
-                                    .popUntil((route) => route.isFirst);
+                                Navigator.of(
+                                  context,
+                                ).popUntil((route) => route.isFirst);
                               }
                             },
                             icon: const Icon(Icons.replay_rounded, size: 20),
@@ -1096,13 +1072,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       ),
                       const SizedBox(width: 10),
                       Expanded(
-                        flex: 2,
                         child: SizedBox(
                           height: 52,
                           child: OutlinedButton.icon(
                             key: const ValueKey('result-review-button'),
                             style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
                               ),
@@ -1110,14 +1087,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             onPressed: answerRecords.isEmpty
                                 ? null
                                 : () => Navigator.of(context).push(
-                                      AppRoute.to(
-                                        ReviewScreen(
-                                          records: answerRecords,
-                                          room: room,
-                                        ),
+                                    AppRoute.to(
+                                      ReviewScreen(
+                                        records: answerRecords,
+                                        room: room,
                                       ),
                                     ),
-                            icon: const Icon(Icons.fact_check_outlined, size: 18),
+                                  ),
+                            icon: const Icon(
+                              Icons.fact_check_outlined,
+                              size: 18,
+                            ),
                             label: Text(
                               context.s('Vekolîn', 'İncele'),
                               maxLines: 1,
@@ -1125,6 +1105,75 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               style: const TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  // İkinci satır: Pirs'in 2x2 aksiyon deseni — paylaş
+                  // (izinliyse) + mağaza değerlendirmesi.
+                  Row(
+                    children: [
+                      if (context
+                          .watch<ChildSafetyProvider>()
+                          .allowExternalShare) ...[
+                        Expanded(
+                          child: SizedBox(
+                            height: 48,
+                            child: OutlinedButton.icon(
+                              key: const ValueKey('result-share-button'),
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                              ),
+                              onPressed: () => ResultSharer.share(
+                                context,
+                                isKu: context.isKu,
+                                score: score,
+                                correctCount: correctCount,
+                                totalQuestions: totalQuestions,
+                                bestStreak: bestStreak,
+                                category: room.category,
+                              ),
+                              icon: const Icon(Icons.share_rounded, size: 18),
+                              label: Text(
+                                context.s('Parve bike', 'Paylaş'),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                      ],
+                      Expanded(
+                        child: SizedBox(
+                          height: 48,
+                          child: OutlinedButton.icon(
+                            key: const ValueKey('result-rate-button'),
+                            style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                            onPressed: () =>
+                                InAppReview.instance.openStoreListing(),
+                            icon: const Icon(Icons.star_rounded, size: 18),
+                            label: Text(
+                              context.s('Me binirxîne', 'Bizi değerlendir'),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13,
                               ),
                             ),
                           ),
@@ -1150,8 +1199,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               vertical: 4,
                             ),
                           ),
-                          onPressed: () => Navigator.of(context)
-                              .popUntil((route) => route.isFirst),
+                          onPressed: () => Navigator.of(
+                            context,
+                          ).popUntil((route) => route.isFirst),
                           child: Text(
                             context.s('Sereke', 'Ana Sayfa'),
                             style: TextStyle(
@@ -1164,8 +1214,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         Text(
                           '·',
                           style: TextStyle(
-                            color: AppTheme.textMutedColor(context)
-                                .withValues(alpha: 0.4),
+                            color: AppTheme.textMutedColor(
+                              context,
+                            ).withValues(alpha: 0.4),
                           ),
                         ),
                         TextButton(
@@ -1179,15 +1230,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           onPressed: wrongRecords.isEmpty
                               ? null
                               : () => Navigator.of(context).push(
-                                    AppRoute.to(
-                                      ReviewScreen(
-                                        records: wrongRecords,
-                                        room: room,
-                                      ),
+                                  AppRoute.to(
+                                    ReviewScreen(
+                                      records: wrongRecords,
+                                      room: room,
                                     ),
                                   ),
+                                ),
                           child: Text(
-                            context.s('Tenê şaşiyan bibîne', 'Sadece yanlışlar'),
+                            context.s(
+                              'Tenê şaşiyan bibîne',
+                              'Sadece yanlışlar',
+                            ),
                             style: TextStyle(
                               fontSize: 12,
                               color: AppTheme.textMutedColor(context),
@@ -1198,8 +1252,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         Text(
                           '·',
                           style: TextStyle(
-                            color: AppTheme.textMutedColor(context)
-                                .withValues(alpha: 0.4),
+                            color: AppTheme.textMutedColor(
+                              context,
+                            ).withValues(alpha: 0.4),
                           ),
                         ),
                         TextButton(
@@ -1218,10 +1273,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             );
                           },
                           child: Text(
-                            context.s(
-                              'Tabloya pêşderçûnê',
-                              'Liderlik tablosu',
-                            ),
+                            context.s('Tabloya pêşderçûnê', 'Liderlik tablosu'),
                             style: TextStyle(
                               fontSize: 12,
                               color: AppTheme.textMutedColor(context),
@@ -1263,10 +1315,15 @@ class _RaceStandings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user =
-        (userIdentity ??
-                Player(name: context.s('Tu', 'Tu'), score: 0, state: ''))
-            .copyWith(score: userScore, state: 'Player');
+    // Repository katmanı yerel oyuncu için sabit 'Tu' adı üretir (i18n
+    // katmanı değil); bu widget "sen" etiketini burada, gösterim anında
+    // yerelleştirir — userIdentity'nin ham adı görmezden gelinir.
+    final user = (userIdentity ?? const Player(name: '', score: 0, state: ''))
+        .copyWith(
+          name: context.s('Tu', 'Sen'),
+          score: userScore,
+          state: 'Player',
+        );
     final standings = [user, ...opponents]
       ..sort((a, b) => b.score.compareTo(a.score));
     final userRank =
@@ -1326,6 +1383,7 @@ class _AchievementUnlocks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppPanel(
+      cardType: CardType.primary,
       gradient: AppTheme.goldGradient,
       child: Stack(
         children: [

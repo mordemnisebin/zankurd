@@ -26,19 +26,11 @@ void main() {
 
   test('yanlış cevap veya süre aşımı hız bonusu vermez', () {
     expect(
-      SpeedScore.calculate(
-        responseMs: 2_000,
-        limitSeconds: 30,
-        correct: false,
-      ),
+      SpeedScore.calculate(responseMs: 2_000, limitSeconds: 30, correct: false),
       0,
     );
     expect(
-      SpeedScore.calculate(
-        responseMs: 31_000,
-        limitSeconds: 30,
-        correct: true,
-      ),
+      SpeedScore.calculate(responseMs: 31_000, limitSeconds: 30, correct: true),
       0,
     );
   });

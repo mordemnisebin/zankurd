@@ -484,6 +484,7 @@ class _LevelNodeState extends State<_LevelNode> {
                             style: AppTypography.heading1.copyWith(
                               color: Colors.white,
                               fontSize: 28,
+                              fontWeight: FontWeight.w900,
                             ),
                           ),
                   ),

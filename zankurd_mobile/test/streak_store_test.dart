@@ -75,4 +75,3 @@ void main() {
     expect(reloaded.best, 0);
   });
 }
-

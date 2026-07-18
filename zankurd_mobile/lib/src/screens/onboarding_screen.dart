@@ -314,7 +314,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       ),
       _OnboardingData(
         icon: Icons.local_fire_department_rounded,
-        color: AppTheme.brandOrange,
+        color: AppTheme.brandGreen,
         title: context.s('Her roj vegere', 'Günlük ödüller'),
         body: context.s(
           'Pêşbirka rojê, çerxa rojane û rozetan bi rêzê veke.',

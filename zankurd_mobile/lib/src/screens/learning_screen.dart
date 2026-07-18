@@ -679,11 +679,10 @@ class _LessonCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12),
       child: GestureDetector(
         onTap: locked ? null : onTap,
-        child: AppPanel(
-          key: recommended && !completed
-              ? const ValueKey('learning-next-step')
-              : null,
-          child: Row(
+ child: AppPanel(
+   key: recommended && !completed ? const ValueKey("learning-next-step") : null,
+   cardType: recommended && !completed ? CardType.primary : CardType.secondary,
+   child: Row(
             children: [
               Container(
                 width: 56,
@@ -861,7 +860,7 @@ class _LearningPathNode extends StatelessWidget {
     final color = completed
         ? AppTheme.playGreen
         : current
-        ? AppTheme.brandOrange
+        ? AppTheme.brandGreen
         : AppTheme.borderColor(context);
     return Stack(
       children: [
@@ -1072,6 +1071,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
 
   Widget _buildFlashcardFront(LessonSlide slide, BuildContext context) {
     return AppPanel(
+  cardType: CardType.secondary,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

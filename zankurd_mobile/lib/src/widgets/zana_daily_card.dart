@@ -71,7 +71,7 @@ class ZanaDailyCard extends StatelessWidget {
               // Açık sıcak sarı yüzey (altın + sıcak turuncu blend).
               Color.alphaBlend(tint.withValues(alpha: 0.16), surface),
               Color.alphaBlend(
-                AppTheme.brandOrangeWarm.withValues(alpha: 0.08),
+                AppTheme.brandGreenDeep.withValues(alpha: 0.08),
                 surface,
               ),
             ],

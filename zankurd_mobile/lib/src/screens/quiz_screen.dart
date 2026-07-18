@@ -215,10 +215,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
               (_timerController.value * widget.room.secondsPerQuestion).ceil();
           if (remaining != lastTickSecond) {
             lastTickSecond = remaining;
-            if (remaining > 0 && remaining <= 5) {
-              HapticFeedback.lightImpact();
-              context.read<SoundProvider>().playTick();
-            }
+        if (remaining > 0 && [5, 3, 1].contains(remaining)) {
+          HapticFeedback.lightImpact();
+          context.read<SoundProvider>().playTick();
+        }
           }
         }
       });
@@ -964,13 +964,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                           ? AppTheme.correct
                           : AppTheme.wrong)
                     : i == index
-                    ? AppTheme.brandOrange
+                    ? AppTheme.brandGreen
                     : AppTheme.surfaceHiColor(context),
                 borderRadius: BorderRadius.circular(99),
                 boxShadow: i == index
                     ? [
                         BoxShadow(
-                          color: AppTheme.brandOrange.withValues(alpha: 0.45),
+                          color: AppTheme.brandGreen.withValues(alpha: 0.45),
                           blurRadius: 6,
                         ),
                       ]
@@ -1046,7 +1046,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   Expanded(
                     child: FilledButton(
                       style: FilledButton.styleFrom(
-                        backgroundColor: AppTheme.brandOrangeWarm,
+                        backgroundColor: AppTheme.brandGreenDeep,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
                           vertical: AppSpacing.sm,
@@ -1117,7 +1117,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 child: FilledButton.icon(
                   key: const ValueKey('quiz-next-button'),
                   style: FilledButton.styleFrom(
-                    backgroundColor: AppTheme.brandOrange,
+                    backgroundColor: AppTheme.brandGreen,
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(
                       vertical: isCompact ? AppSpacing.xs : AppSpacing.sm,
@@ -1128,7 +1128,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       ), // AppRadius.lg
                     ),
                     elevation: 2,
-                    shadowColor: AppTheme.brandOrange.withValues(alpha: 0.3),
+                    shadowColor: AppTheme.brandGreen.withValues(alpha: 0.3),
                   ),
                   onPressed: canPressNext ? () => _next() : null,
                   icon: Icon(

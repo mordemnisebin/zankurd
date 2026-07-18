@@ -8,23 +8,20 @@ import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/leaderboard_entry.dart';
-import '../models/room.dart';
 import '../providers/theme_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/test_environment.dart';
-import 'home/hero_card.dart';
 import '../widgets/zana_daily_card.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
 import 'quiz_screen.dart';
-import 'room_screen.dart';
-import 'matchmaking_screen.dart';
 import 'shop_screen.dart';
 import 'contest_screen.dart';
 import 'leaderboard_screen.dart';
 import 'home/daily_race_card.dart';
+import 'home/play_teaser_card.dart';
 import '../widgets/player_avatar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -157,9 +154,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     final bottomContentPadding = MediaQuery.paddingOf(context).bottom + 112;
-    final width = MediaQuery.sizeOf(context).width;
-    final isWide = width > 720;
 
+    return LayoutBuilder(
+      builder: (context, constraints) => _buildBody(
+        context,
+        ku,
+        bottomContentPadding,
+        constraints.maxWidth > 720,
+      ),
+    );
+  }
+
+  Widget _buildBody(
+    BuildContext context,
+    bool ku,
+    double bottomContentPadding,
+    bool isWide,
+  ) {
     return Container(
       decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: CustomScrollView(
@@ -195,26 +206,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.page,
-                AppSpacing.md,
-                AppSpacing.page,
-                0,
-              ),
-              child: _buildAnimatedCard(
-                _heroFadeAnimation(1),
-                _DailyLessonHero(
-                  isKu: ku,
-                  reviewReadyCount: _reviewReadyCount,
-                  onStart: _reviewReadyCount > 0
-                      ? widget.onOpenLearning
-                      : _startDailyQuiz,
-                ),
-              ),
-            ),
-          ),
           if (isWide)
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(
@@ -234,16 +225,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         children: [
                           _buildAnimatedCard(
                             _heroFadeAnimation(0),
-                            HeroCard(
+                            _DailyLessonHero(
                               isKu: ku,
-                              loading: _roomActionLoading,
-                              onCreateRoom: () => _createOnlineRoom(context),
-                              onJoinRoom: () => _showJoinSheet(context),
-                              onQuickMatch: () => Navigator.of(context).push(
-                                AppRoute.to(
-                                  MatchmakingScreen(repository: repo),
-                                ),
-                              ),
+                              reviewReadyCount: _reviewReadyCount,
+                              onStart: _reviewReadyCount > 0
+                                  ? widget.onOpenLearning
+                                  : _startDailyQuiz,
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -274,14 +261,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               ),
                             ),
                           ),
+                          if (widget.onOpenPlay != null) ...[
+                            const SizedBox(height: 20),
+                            _buildAnimatedCard(
+                              _heroFadeAnimation(2),
+                              PlayTeaserCard(onTap: widget.onOpenPlay!),
+                            ),
+                          ],
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-            )
-          else
+            ),
+          if (!isWide)
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.page,
@@ -294,14 +288,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   if (index == 0) {
                     return _buildAnimatedCard(
                       _heroFadeAnimation(0),
-                      HeroCard(
+                      _DailyLessonHero(
                         isKu: ku,
-                        loading: _roomActionLoading,
-                        onCreateRoom: () => _createOnlineRoom(context),
-                        onJoinRoom: () => _showJoinSheet(context),
-                        onQuickMatch: () => Navigator.of(context).push(
-                          AppRoute.to(MatchmakingScreen(repository: repo)),
-                        ),
+                        reviewReadyCount: _reviewReadyCount,
+                        onStart: _reviewReadyCount > 0
+                            ? widget.onOpenLearning
+                            : _startDailyQuiz,
                       ),
                     );
                   }
@@ -320,23 +312,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     );
                   }
-                  if (index == 2) {
+                  if (index == 2 && widget.onOpenPlay != null) {
                     return Padding(
                       padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
-                        _heroFadeAnimation(3),
-                        KeyedSubtree(
-                          key: const ValueKey('home-learning-entry'),
-                          // Sakin kapanış: Zana + günün sözü. Öğrenme/tekrar
-                          // CTA'sı tek yerde (Dersê rojane) yaşar — üç ayrı
-                          // "günlük hedef" karmaşası olmasın (Pirs sadeliği).
-                          child: ZanaDailyCard(isKu: ku),
-                        ),
+                        _heroFadeAnimation(2),
+                        PlayTeaserCard(onTap: widget.onOpenPlay!),
                       ),
                     );
                   }
-                  return null;
-                }, childCount: 3),
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: _buildAnimatedCard(
+                      _heroFadeAnimation(3),
+                      KeyedSubtree(
+                        key: const ValueKey('home-learning-entry'),
+                        // Sakin kapanış: Zana + günün sözü. Öğrenme/tekrar
+                        // CTA'sı tek yerde (Dersê rojane) yaşar — üç ayrı
+                        // "günlük hedef" karmaşası olmasın (Pirs sadeliği).
+                        child: ZanaDailyCard(isKu: ku),
+                      ),
+                    ),
+                  );
+                }, childCount: widget.onOpenPlay != null ? 4 : 3),
               ),
             ),
           SliverToBoxAdapter(
@@ -366,30 +364,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     Widget chip(IconData icon, Color color, String value, String label) {
       return Container(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-          decoration: BoxDecoration(
-            color: AppTheme.surfaceColor(context),
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(color: AppTheme.borderColor(context)),
-          ),
-          child: Column(
-            children: [
-              Icon(icon, color: color, size: 22),
-              const SizedBox(height: 6),
-              Text(
-                value,
-                style: AppTypography.heading2.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                ),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        decoration: BoxDecoration(
+          color: AppTheme.surfaceColor(context),
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          border: Border.all(color: AppTheme.borderColor(context)),
+        ),
+        child: Column(
+          children: [
+            Icon(icon, color: color, size: 22),
+            const SizedBox(height: 6),
+            Text(
+              value,
+              style: AppTypography.heading2.copyWith(
+                color: AppTheme.textPrimaryColor(context),
               ),
-              Text(
-                label,
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textSubColor(context),
-                ),
+            ),
+            Text(
+              label,
+              style: AppTypography.caption.copyWith(
+                color: AppTheme.textSubColor(context),
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       );
     }
 
@@ -463,7 +461,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     borderRadius: BorderRadius.circular(6),
                     child: Stack(
                       children: [
-                        Container(height: 9, color: AppTheme.borderColor(context)),
+                        Container(
+                          height: 9,
+                          color: AppTheme.borderColor(context),
+                        ),
                         FractionallySizedBox(
                           widthFactor: progress == 0 ? 0.02 : progress,
                           child: Container(
@@ -628,7 +629,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-
   Widget _buildAnimatedCard(Animation<double> animation, Widget child) {
     return ScaleTransition(
       scale: animation,
@@ -655,12 +655,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     try {
       final questions = await repo.loadDailyQuestions(limit: 10);
       if (!mounted || questions.isEmpty) return;
-      final room = repo
-          .createRoom()
-          .copyWith(
-            name: context.isKu ? 'Dersê rojane' : 'Günün Dersi',
-            questionCount: questions.length,
-          );
+      final room = repo.createRoom().copyWith(
+        name: context.isKu ? 'Dersê rojane' : 'Günün Dersi',
+        questionCount: questions.length,
+      );
       await Navigator.of(context).push(
         AppRoute.to(
           QuizScreen(repository: repo, room: room, questions: questions),
@@ -674,135 +672,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> _createOnlineRoom(BuildContext context) async {
-    final categories = repo.categories;
-    var selectedCategory = categories.isNotEmpty ? categories.first : 'Ziman';
-    var selectedSeconds = GameRoom.defaultSecondsPerQuestion;
-
-    final confirmed = await showModalBottomSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: AppTheme.surfaceColor(context),
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        side: BorderSide(color: AppTheme.borderColor(context)),
-      ),
-      builder: (sheetContext) => StatefulBuilder(
-        builder: (context, setSheetState) {
-          final ku = context.isKu;
-          return SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    ku ? 'Ode ava bike' : 'Oda oluştur',
-                    style: AppTypography.heading2.copyWith(
-                      color: AppTheme.textPrimaryColor(context),
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    ku
-                        ? 'Mijara û demê ji bo hemû lîstikvanan hilbijêre.'
-                        : 'Kategori ve soru süresini sen belirle.',
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: AppTheme.textMutedColor(context),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    ku ? 'Kategori' : 'Kategori',
-                    style: AppTypography.bodyLarge.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      for (final category in categories)
-                        ChoiceChip(
-                          label: Text(category),
-                          selected: category == selectedCategory,
-                          onSelected: (_) =>
-                              setSheetState(() => selectedCategory = category),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    ku ? 'Dem ji bo pirsê' : 'Süre / soru',
-                    style: AppTypography.bodyLarge.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    children: [
-                      for (final seconds in GameRoom.allowedSecondsPerQuestion)
-                        ChoiceChip(
-                          label: Text('$seconds sn'),
-                          selected: seconds == selectedSeconds,
-                          onSelected: (_) =>
-                              setSheetState(() => selectedSeconds = seconds),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: 18),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton.icon(
-                      onPressed: () => Navigator.of(sheetContext).pop(true),
-                      icon: const Icon(Icons.add_home_work_outlined),
-                      label: Text(ku ? 'Ode ava bike' : 'Odayı oluştur'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-    if (confirmed != true || !mounted) return;
-
-    if (_roomActionLoading) return;
-    setState(() => _roomActionLoading = true);
-    try {
-      final room = await repo.createOnlineRoom(
-        category: selectedCategory,
-        secondsPerQuestion: selectedSeconds,
-      );
-      if (!context.mounted) return;
-      _openRoom(context, room);
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'createOnlineRoom failed');
-      if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.isKu
-                ? 'Odeya serhêl nehate vekirin. Ji kerema xwe dîsa biceribîne.'
-                : 'Çevrimiçi oda açılamadı. Lütfen tekrar deneyin.',
-          ),
-        ),
-      );
-    } finally {
-      if (mounted) setState(() => _roomActionLoading = false);
-    }
-  }
-
-  void _openRoom(BuildContext context, GameRoom room) {
-    Navigator.of(
-      context,
-    ).push(AppRoute.to(RoomScreen(repository: repo, initialRoom: room)));
-  }
-
   Future<void> _refreshCoins() async {
     try {
       final coins = await repo.loadCoinBalance();
@@ -810,163 +679,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'coin refresh failed');
     }
-  }
-
-  void _showJoinSheet(BuildContext context) {
-    final controller = TextEditingController();
-    final formKey = GlobalKey<FormState>();
-    final ku = context.isKu;
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: AppTheme.surfaceOf(context),
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        side: BorderSide(color: AppTheme.borderColor(context)),
-      ),
-      builder: (sheetCtx) {
-        final fieldLabel = ku ? 'Koda odeyê' : 'Oda kodu';
-        final inputTextStyle = AppTypography.bodyLarge.copyWith(
-          color: AppTheme.textPrimaryColor(context),
-          fontWeight: FontWeight.w700,
-          letterSpacing: 0.6,
-        );
-        final hintTextStyle = AppTypography.bodyLarge.copyWith(
-          color: AppTheme.textSubColor(context),
-          fontWeight: FontWeight.w500,
-        );
-        final fieldBorderRadius = BorderRadius.circular(AppRadius.sm);
-
-        return Padding(
-          padding: EdgeInsets.fromLTRB(
-            AppSpacing.md,
-            AppSpacing.md,
-            AppSpacing.md,
-            MediaQuery.viewInsetsOf(sheetCtx).bottom + AppSpacing.md,
-          ),
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  ku ? 'Tevlî Odeyê Bibe' : 'Odaya Katıl',
-                  style: AppTypography.heading1.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  fieldLabel,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textSubColor(context),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                TextFormField(
-                  key: const ValueKey('join-room-code-field'),
-                  controller: controller,
-                  textCapitalization: TextCapitalization.characters,
-                  style: inputTextStyle,
-                  cursorColor: AppColors.focus,
-                  decoration: InputDecoration(
-                    hintText: 'ZK-XXXX',
-                    hintStyle: hintTextStyle,
-                    filled: true,
-                    fillColor: AppTheme.surfaceHiColor(context),
-                    prefixIcon: Icon(
-                      Icons.tag_rounded,
-                      color: AppTheme.textSubColor(context),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md,
-                      vertical: AppSpacing.sm,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppTheme.borderColor(context),
-                      ),
-                      borderRadius: fieldBorderRadius,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.focus,
-                        width: 2,
-                      ),
-                      borderRadius: fieldBorderRadius,
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppTheme.wrong),
-                      borderRadius: fieldBorderRadius,
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppTheme.wrong,
-                        width: 2,
-                      ),
-                      borderRadius: fieldBorderRadius,
-                    ),
-                    errorStyle: const TextStyle(
-                      color: AppTheme.wrong,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  validator: (value) {
-                    if ((value ?? '').trim().isEmpty) {
-                      return ku ? 'Koda odeyê pêwîst e.' : 'Oda kodu gerekli.';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                    onPressed: () async {
-                      if (!formKey.currentState!.validate()) return;
-                      try {
-                        final room = await repo.joinOnlineRoom(
-                          controller.text.trim(),
-                        );
-                        if (!sheetCtx.mounted) return;
-                        Navigator.of(sheetCtx).pop();
-                        if (!context.mounted) return;
-                        _openRoom(context, room);
-                      } catch (error, stack) {
-                        ErrorReporter.record(
-                          error,
-                          stack,
-                          reason: 'joinOnlineRoom failed',
-                        );
-                        if (!sheetCtx.mounted) return;
-                        Navigator.of(sheetCtx).pop();
-                        if (!context.mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              context.isKu
-                                  ? 'Tevlî odeya serhêl nebû. Ji kerema xwe kodê kontrol bike.'
-                                  : 'Çevrimiçi odaya katılınamadı. Lütfen kodu kontrol edin.',
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    icon: Icon(Icons.meeting_room_outlined),
-                    label: Text(ku ? 'Tevlî Bibe' : 'Katıl'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    ).whenComplete(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) => controller.dispose());
-    });
   }
 }
 
@@ -1185,64 +897,64 @@ class _MiniLeaderboardState extends State<_MiniLeaderboard> {
             border: Border.all(color: AppTheme.borderColor(context)),
           ),
           child: Column(
-                  children: [
-                    for (var i = 0; i < entries.length; i++)
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(
-                          AppSpacing.sm,
-                          i == 0 ? AppSpacing.sm : 6,
-                          AppSpacing.sm,
-                          i == entries.length - 1 ? AppSpacing.sm : 6,
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 24,
-                              child: Text(
-                                '${entries[i].rank}',
-                                textAlign: TextAlign.center,
-                                style: AppTypography.heading2.copyWith(
-                                  color: _medalColors[i.clamp(0, 2)],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            PlayerAvatar(
-                              radius: 16,
-                              photoUrl: entries[i].avatarUrl,
-                              iconId: entries[i].avatarIcon,
-                              colorHex: entries[i].avatarColor,
-                              displayName: entries[i].displayName,
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                entries[i].displayName,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTypography.bodyLarge.copyWith(
-                                  color: AppTheme.textPrimaryColor(context),
-                                ),
-                              ),
-                            ),
-                            const Icon(
-                              Icons.monetization_on,
-                              color: AppTheme.gold,
-                              size: 15,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              '${entries[i].totalScore}',
-                              style: AppTypography.bodyLarge.copyWith(
-                                color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ],
+            children: [
+              for (var i = 0; i < entries.length; i++)
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.sm,
+                    i == 0 ? AppSpacing.sm : 6,
+                    AppSpacing.sm,
+                    i == entries.length - 1 ? AppSpacing.sm : 6,
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 24,
+                        child: Text(
+                          '${entries[i].rank}',
+                          textAlign: TextAlign.center,
+                          style: AppTypography.heading2.copyWith(
+                            color: _medalColors[i.clamp(0, 2)],
+                          ),
                         ),
                       ),
-                  ],
+                      const SizedBox(width: 8),
+                      PlayerAvatar(
+                        radius: 16,
+                        photoUrl: entries[i].avatarUrl,
+                        iconId: entries[i].avatarIcon,
+                        colorHex: entries[i].avatarColor,
+                        displayName: entries[i].displayName,
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          entries[i].displayName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.bodyLarge.copyWith(
+                            color: AppTheme.textPrimaryColor(context),
+                          ),
+                        ),
+                      ),
+                      const Icon(
+                        Icons.monetization_on,
+                        color: AppTheme.gold,
+                        size: 15,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${entries[i].totalScore}',
+                        style: AppTypography.bodyLarge.copyWith(
+                          color: AppTheme.textPrimaryColor(context),
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+            ],
+          ),
         ),
       ],
     );

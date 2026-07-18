@@ -748,7 +748,7 @@ class _AnswerButton extends StatelessWidget {
         : wrong
         ? AppTheme.wrong
         : isChecking
-        ? AppTheme.brandOrange
+        ? AppTheme.brandGreen
         : AppTheme.borderColor(context);
 
     // Metin rengi
@@ -762,7 +762,7 @@ class _AnswerButton extends StatelessWidget {
         : wrong
         ? const Color(0xFFD61A4C)
         : isChecking
-        ? AppTheme.brandOrange
+        ? AppTheme.brandGreen
         : Colors.black;
 
     final isPressed = selected;
@@ -811,161 +811,166 @@ class _AnswerButton extends StatelessWidget {
               key: ValueKey('bounce_$correct'),
               duration: const Duration(milliseconds: 400),
               curve: Curves.easeOutBack,
-              tween: Tween<double>(
-                begin: correct ? 0.95 : 1.0,
-                end: 1.0,
-              ),
-              builder: (context, scale, child) => Transform.scale(
-                scale: scale,
-                child: child,
-              ),
+              tween: Tween<double>(begin: correct ? 0.95 : 1.0, end: 1.0),
+              builder: (context, scale, child) =>
+                  Transform.scale(scale: scale, child: child),
               child: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
-            curve: Curves.easeOutCubic,
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(
-              horizontal: AppSpacing.md,
-              vertical: isCompact ? AppSpacing.xs : AppSpacing.sm,
-            ),
-            decoration: BoxDecoration(
-              gradient: gradient,
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              border: Border.all(color: borderColor, width: 2.0),
-              boxShadow: isPressed
-                  ? (correct
-                      ? [
-                          BoxShadow(
-                            color: Colors.white.withValues(alpha: 0.15),
-                            blurRadius: 10,
-                            spreadRadius: 0,
-                          ),
-                        ]
-                      : [])
-                  : [
-                      if (correct)
-                        BoxShadow(
-                          color: Colors.white.withValues(alpha: 0.15),
-                          blurRadius: 10,
-                          spreadRadius: 0,
-                        ),
-                      BoxShadow(
-                        color: shadowColor.withValues(alpha: 0.28),
-                        offset: const Offset(0, 4),
-                        blurRadius: 10,
-                        spreadRadius: -2,
-                      ),
-                    ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    _OptionBadge(
-                      index: index,
-                      stateActive: stateActive,
-                      stateColor: borderColor,
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Expanded(
-                      child: Text(
-                        answer,
-                        style: AppTypography.bodyLarge.copyWith(
-                          color: textColor,
-                          fontWeight: FontWeight.w800,
-                          fontSize: isCompact ? 15 : 17,
-                        ),
-                      ),
-                    ),
-                    AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 250),
-                      transitionBuilder: (child, animation) => ScaleTransition(
-                        scale: animation,
-                        child: FadeTransition(opacity: animation, child: child),
-                      ),
-                      child: correct
-                          ? const Icon(
-                              Icons.check_circle_outline,
-                              key: ValueKey('correct_icon'),
-                              color: Colors.white,
-                              size: 28,
-                            )
-                          : wrong
-                          ? const Icon(
-                              Icons.cancel_outlined,
-                              key: ValueKey('wrong_icon'),
-                              color: Colors.white,
-                              size: 28,
-                            )
-                          : const SizedBox.shrink(key: ValueKey('empty_icon')),
-                    ),
-                  ],
+                duration: const Duration(milliseconds: 150),
+                curve: Curves.easeOutCubic,
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppSpacing.md,
+                  vertical: isCompact ? AppSpacing.xs : AppSpacing.sm,
                 ),
-                if (audiencePercent != null) ...[
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(AppRadius.xs),
-                          child: LinearProgressIndicator(
-                            value: audiencePercent!.clamp(0.0, 1.0),
-                            minHeight: 5,
-                            backgroundColor: Colors.white.withValues(
-                              alpha: 0.24,
+                decoration: BoxDecoration(
+                  gradient: gradient,
+                  borderRadius: BorderRadius.circular(AppRadius.md),
+                  border: Border.all(color: borderColor, width: 2.0),
+                  boxShadow: isPressed
+                      ? (correct
+                            ? [
+                                BoxShadow(
+                                  color: Colors.white.withValues(alpha: 0.15),
+                                  blurRadius: 10,
+                                  spreadRadius: 0,
+                                ),
+                              ]
+                            : [])
+                      : [
+                          if (correct)
+                            BoxShadow(
+                              color: Colors.white.withValues(alpha: 0.15),
+                              blurRadius: 10,
+                              spreadRadius: 0,
                             ),
-                            color: Colors.white,
+                          BoxShadow(
+                            color: shadowColor.withValues(alpha: 0.28),
+                            offset: const Offset(0, 4),
+                            blurRadius: 10,
+                            spreadRadius: -2,
+                          ),
+                        ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        _OptionBadge(
+                          index: index,
+                          stateActive: stateActive,
+                          stateColor: borderColor,
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
+                        Expanded(
+                          child: Text(
+                            answer,
+                            style: AppTypography.bodyLarge.copyWith(
+                              color: textColor,
+                              fontWeight: FontWeight.w800,
+                              fontSize: isCompact ? 15 : 17,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: AppSpacing.xs),
-                      Text(
-                        '${(audiencePercent! * 100).round()}%',
-                        style: AppTypography.caption.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: textColor.withValues(alpha: 0.9),
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 250),
+                          transitionBuilder: (child, animation) =>
+                              ScaleTransition(
+                                scale: animation,
+                                child: FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                              ),
+                          child: correct
+                              ? const Icon(
+                                  Icons.check_circle_outline,
+                                  key: ValueKey('correct_icon'),
+                                  color: Colors.white,
+                                  size: 28,
+                                )
+                              : wrong
+                              ? const Icon(
+                                  Icons.cancel_outlined,
+                                  key: ValueKey('wrong_icon'),
+                                  color: Colors.white,
+                                  size: 28,
+                                )
+                              : const SizedBox.shrink(
+                                  key: ValueKey('empty_icon'),
+                                ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-                if (opponentNamesWhoSelected != null &&
-                    opponentNamesWhoSelected!.isNotEmpty) ...[
-                  const SizedBox(height: 6),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: opponentNamesWhoSelected!
-                        .map(
-                          (name) => Container(
-                            margin: const EdgeInsets.only(left: AppSpacing.xxs),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.xxs,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.15),
+                      ],
+                    ),
+                    if (audiencePercent != null) ...[
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ClipRRect(
                               borderRadius: BorderRadius.circular(AppRadius.xs),
-                            ),
-                            child: Text(
-                              '$name 👀',
-                              style: AppTypography.caption.copyWith(
+                              child: LinearProgressIndicator(
+                                value: audiencePercent!.clamp(0.0, 1.0),
+                                minHeight: 5,
+                                backgroundColor: Colors.white.withValues(
+                                  alpha: 0.24,
+                                ),
                                 color: Colors.white,
-                                fontWeight: FontWeight.w800,
                               ),
                             ),
                           ),
-                        )
-                        .toList(),
-                  ),
-                ],
-              ],
-            ), // Column
-          ), // AnimatedContainer
-        ), // bounce TweenAnimationBuilder
-      ), // shake TweenAnimationBuilder
-    ), // InkWell
-  ), // AnimatedPadding
+                          const SizedBox(width: AppSpacing.xs),
+                          Text(
+                            '${(audiencePercent! * 100).round()}%',
+                            style: AppTypography.caption.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: textColor.withValues(alpha: 0.9),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                    if (opponentNamesWhoSelected != null &&
+                        opponentNamesWhoSelected!.isNotEmpty) ...[
+                      const SizedBox(height: 6),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: opponentNamesWhoSelected!
+                            .map(
+                              (name) => Container(
+                                margin: const EdgeInsets.only(
+                                  left: AppSpacing.xxs,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.xxs,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withValues(alpha: 0.15),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.xs,
+                                  ),
+                                ),
+                                child: Text(
+                                  '$name 👀',
+                                  style: AppTypography.caption.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ],
+                  ],
+                ), // Column
+              ), // AnimatedContainer
+            ), // bounce TweenAnimationBuilder
+          ), // shake TweenAnimationBuilder
+        ), // InkWell
+      ), // AnimatedPadding
     );
   }
 }
@@ -985,13 +990,7 @@ class _OptionBadge extends StatelessWidget {
   final bool stateActive;
   final Color stateColor;
 
-  /// TRT tarzı çok-renkli şıklar: A kırmızı, B mavi, C yeşil, D amber (canlı tonlar).
-  static const _palette = [
-    Color(0xFFE8482F),
-    Color(0xFF1A6FCF),
-    Color(0xFF0D8A4C),
-    Color(0xFFE6B800),
-  ];
+  static const _palette = AppTheme.answerOptionColors;
 
   @override
   Widget build(BuildContext context) {
@@ -1115,7 +1114,7 @@ class _WildcardButtonState extends State<_WildcardButton> {
         : 0.35;
 
     final borderColor = widget.isActive
-        ? AppTheme.brandOrange
+        ? AppTheme.brandGreen
         : widget.cantAfford
         ? AppTheme.wrong.withValues(alpha: 0.5)
         : widget.isEnabled
@@ -1123,7 +1122,7 @@ class _WildcardButtonState extends State<_WildcardButton> {
         : AppTheme.borderColor(context);
 
     final bgColor = widget.isActive
-        ? AppTheme.brandOrange.withValues(alpha: 0.15)
+        ? AppTheme.brandGreen.withValues(alpha: 0.15)
         : widget.cantAfford
         ? AppTheme.wrong.withValues(alpha: 0.05)
         : widget.isEnabled
@@ -1131,7 +1130,7 @@ class _WildcardButtonState extends State<_WildcardButton> {
         : null;
 
     final iconColor = widget.isActive
-        ? AppTheme.brandOrange
+        ? AppTheme.brandGreen
         : widget.cantAfford
         ? AppTheme.wrong
         : widget.isEnabled
@@ -1160,12 +1159,12 @@ class _WildcardButtonState extends State<_WildcardButton> {
             opacity: opacity,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(vertical: 3),
-              constraints: const BoxConstraints(minHeight: 48),
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              constraints: const BoxConstraints(minHeight: 36),
               decoration: BoxDecoration(
                 color: bgColor ?? Colors.transparent,
                 borderRadius: BorderRadius.circular(AppRadius.sm),
-                border: Border.all(color: borderColor, width: 1.5),
+                border: Border.all(color: borderColor, width: 1.0),
               ),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
@@ -1174,8 +1173,8 @@ class _WildcardButtonState extends State<_WildcardButton> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 22,
-                      height: 22,
+                      width: 18,
+                      height: 18,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -1184,8 +1183,10 @@ class _WildcardButtonState extends State<_WildcardButton> {
                         ),
                       ),
                       child: Icon(
-                        widget.cantAfford ? Icons.lock_outline : widget.type.icon,
-                        size: 14,
+                        widget.cantAfford
+                            ? Icons.lock_outline
+                            : widget.type.icon,
+                        size: 12,
                         color: iconColor,
                       ),
                     ),
@@ -1239,8 +1240,8 @@ class _CircularTimerState extends State<_CircularTimer>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.3).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.elasticOut),
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.12).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
 
     widget.animation.addListener(_handleAnimationTick);
@@ -1542,7 +1543,7 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
           color: AppTheme.surfaceHiColor(context),
           borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
-            color: AppTheme.brandOrange.withValues(alpha: 0.3),
+            color: AppTheme.brandGreen.withValues(alpha: 0.3),
             width: 1.2,
           ),
         ),
@@ -1553,7 +1554,7 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
               height: 20,
               child: CircularProgressIndicator(
                 strokeWidth: 2.5,
-                color: AppTheme.brandOrange,
+                color: AppTheme.brandGreen,
               ),
             ),
             const SizedBox(width: 14),
@@ -1583,7 +1584,7 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
             ),
             Icon(
               Icons.hourglass_top_rounded,
-              color: AppTheme.brandOrange.withValues(alpha: 0.6),
+              color: AppTheme.brandGreen.withValues(alpha: 0.6),
               size: 22,
             ),
           ],

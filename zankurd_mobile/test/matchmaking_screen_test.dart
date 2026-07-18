@@ -46,8 +46,11 @@ void main() {
     ];
 
     expect(
-      selectOpponentPlayer(players, currentName: 'Ben', preferredName: 'Hogir')
-          ?.id,
+      selectOpponentPlayer(
+        players,
+        currentName: 'Ben',
+        preferredName: 'Hogir',
+      )?.id,
       'matched',
     );
   });

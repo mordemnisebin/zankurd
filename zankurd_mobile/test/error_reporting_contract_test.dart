@@ -15,9 +15,6 @@ void main() {
       expect(source, contains('catch (error, stack)'));
     }
 
-    expect(
-      sources.last,
-      isNot(contains('catch (_)')),
-    );
+    expect(sources.last, isNot(contains('catch (_)')));
   });
 }

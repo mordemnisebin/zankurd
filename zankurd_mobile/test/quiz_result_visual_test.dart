@@ -56,11 +56,11 @@ void main() {
     expect(gradient.colors, hasLength(2));
     expect(
       gradient.colors.first.computeLuminance(),
-      lessThan(AppTheme.brandOrange.computeLuminance()),
+      lessThan(AppTheme.brandGreen.computeLuminance()),
     );
     expect(
       gradient.colors.last.computeLuminance(),
-      lessThan(AppTheme.brandOrangeWarm.computeLuminance()),
+      lessThan(AppTheme.brandGreenDeep.computeLuminance()),
     );
   });
 
@@ -77,14 +77,16 @@ void main() {
     );
 
     // Secondary: review
-    await tester.ensureVisible(
+    await tester.scrollUntilVisible(
       find.byKey(const ValueKey('result-review-button')),
+      200,
     );
     expect(find.text('İncele'), findsOneWidget);
 
     // Secondary: home
-    await tester.ensureVisible(
+    await tester.scrollUntilVisible(
       find.byKey(const ValueKey('result-home-button')),
+      200,
     );
     final homeBtn = tester.widget<TextButton>(
       find.byKey(const ValueKey('result-home-button')),

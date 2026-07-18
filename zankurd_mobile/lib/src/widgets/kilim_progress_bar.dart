@@ -8,7 +8,7 @@ class KilimProgressBar extends StatelessWidget {
   const KilimProgressBar({
     required this.value,
     this.height = 8,
-    this.color = AppTheme.brandOrange,
+    this.color = AppTheme.brandGreen,
     super.key,
   });
 

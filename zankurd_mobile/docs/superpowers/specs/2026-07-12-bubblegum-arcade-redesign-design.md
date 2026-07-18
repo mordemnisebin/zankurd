@@ -47,8 +47,10 @@ mantığı**:
 - Tam-genişlik, tek-eylem mod kartları (küçük 2×2 ikon grid yerine).
 - Kategori seçimi: ayrı, sade bir tam-ekran liste (renkli daire ikon + isim +
   bedel rozeti), gömülü sekme/grid değil.
-- Sonuç ekranında 2×2 aksiyon buton grid'i (Dîsa Bilîze / Berdewam Bibe / Parve
-  Bike / Me Binirxîne).
+- Sonuç ekranında net, sıralı 1-2 birincil aksiyon (Dîsa Bilîze + Mala Vegere).
+  **Düzeltme (2026-07-18):** bu satır önceden "2×2 grid" diyordu; gerçek Pirs
+  mockup'ı (`ÖRNEK TASARIM/...(8).png`) yalnız iki dikey buton gösteriyor,
+  grid değil — bkz. `ZANKURD_KAPSAMLI_DENETIM_2026-07-18.md`.
 - Üst bar: coin bakiyesi + avatar, karşılama altında büyük, vurgulu Zana kartı.
 
 Birebir alınmayacaklar: Pirs'in mor rengi, logosu, illüstrasyonları, metinleri,

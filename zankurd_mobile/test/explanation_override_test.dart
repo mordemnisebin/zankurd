@@ -43,10 +43,7 @@ void main() {
       expect(entry.value.ku.trim(), isNotEmpty, reason: '${entry.key} ku boş');
       // tr opsiyoneldir (verilmezse şablona düşer); yalnız doluysa boş
       // olmamalı.
-      final tr = entry.value.tr;
-      if (tr != null) {
-        expect(tr.trim(), isNotEmpty, reason: '${entry.key} tr boş');
-      }
+      expect(entry.value.tr.trim(), isNotEmpty, reason: '${entry.key} tr boş');
     }
   });
 

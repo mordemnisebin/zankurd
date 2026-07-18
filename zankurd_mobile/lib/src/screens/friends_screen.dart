@@ -252,7 +252,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
               FilledButton(
                 onPressed: _searching ? null : _search,
                 style: FilledButton.styleFrom(
-                  backgroundColor: AppTheme.brandOrange,
+                  backgroundColor: AppTheme.brandGreen,
                   foregroundColor: Colors.white,
                 ),
                 child: _searching
@@ -546,7 +546,7 @@ class _FriendRequestCard extends StatelessWidget {
             FilledButton(
               onPressed: onAccept,
               style: FilledButton.styleFrom(
-                backgroundColor: AppTheme.brandOrange,
+                backgroundColor: AppTheme.brandGreen,
                 foregroundColor: Colors.white,
               ),
               child: Text(ku ? 'Qebûl' : 'Kabul'),

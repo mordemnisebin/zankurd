@@ -8,8 +8,8 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 // dönüş) yakalar.
 void main() {
   test('marka rengi Kürdistan yeşili', () {
-    expect(AppTheme.brandOrange, const Color(0xFF3DA968));
-    expect(AppTheme.brandOrangeWarm, const Color(0xFF2F7D4F));
+    expect(AppTheme.brandGreen, const Color(0xFF3DA968));
+    expect(AppTheme.brandGreenDeep, const Color(0xFF2A7A4E));
   });
 
   test('öğrenme rengi yeşil', () {
@@ -32,8 +32,8 @@ void main() {
 
   test('koyu mod zemin koyu-sıcak yeşilimsi', () {
     expect(AppTheme.bg, const Color(0xFF0B0F0D));
-    expect(AppTheme.surface, const Color(0xFF16211B));
-    expect(AppTheme.border, const Color(0xFF26332B));
+    expect(AppTheme.surface, const Color(0xFF1E3028));
+    expect(AppTheme.border, const Color(0xFF2E4038));
   });
 
   test('koyu mod metin kâğıt tonu', () {

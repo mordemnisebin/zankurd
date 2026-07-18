@@ -131,7 +131,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                       margin: const EdgeInsets.only(right: AppSpacing.md),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2),
-                        color: AppTheme.brandOrange,
+                        color: AppTheme.brandGreen,
                       ),
                     ),
                     Expanded(

@@ -1156,6 +1156,7 @@ class _AchievementShowcase extends StatelessWidget {
                   ),
                   IconButton(
                     icon: const Icon(Icons.close),
+                    tooltip: isKu ? 'Bigire' : 'Kapat',
                     onPressed: () => Navigator.pop(sheetContext),
                   ),
                 ],

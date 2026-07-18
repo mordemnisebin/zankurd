@@ -8,7 +8,7 @@ import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 // gibi okunduğu için sadeleştirildi). Geometri/ifade değişmez.
 void main() {
   test('ışın rengi deseni sakin iki renkli dönüşüm (altın/indigo)', () {
-    expect(RojMascot.rayColors, [AppTheme.gold, AppTheme.brandOrange]);
+    expect(RojMascot.rayColors, [AppTheme.gold, AppTheme.brandGreen]);
   });
 
   testWidgets('RojMascot tüm ruh hâllerinde hatasız çizilir', (tester) async {

@@ -51,35 +51,39 @@ void main() {
     });
   }
 
-  testWidgets('Capture Quiz Result After Screen', (tester) async {
-    final repository = MockZanKurdRepository();
-    final room = repository.createRoom();
+  testWidgets(
+    'Capture Quiz Result After Screen',
+    (tester) async {
+      final repository = MockZanKurdRepository();
+      final room = repository.createRoom();
 
-    await capture(
-      tester,
-      filename: 'result_after.png',
-      screen: QuizResultScreen(
-        repository: repository,
-        room: room,
-        score: 1840,
-        correctCount: 8,
-        wrongCount: 2,
-        totalQuestions: 10,
-        bestStreak: 5,
-        coinsAwarded: 120,
-        answerRecords: const [
-          AnswerRecord(
-            id: 'q1',
-            category: 'Ziman',
-            prompt: 'Ev gotin çi wateyê dide?',
-            answers: ['A', 'B', 'C', 'D'],
-            correctAnswer: 'A',
-            selectedAnswer: 'A',
-            explanation: 'Rast bersiv A ye.',
-          ),
-        ],
-      ),
-    );
-  }, skip: true, // Pirs redesign: layout overflow in QuizResultScreen
-    tags: ['preview']);
+      await capture(
+        tester,
+        filename: 'result_after.png',
+        screen: QuizResultScreen(
+          repository: repository,
+          room: room,
+          score: 1840,
+          correctCount: 8,
+          wrongCount: 2,
+          totalQuestions: 10,
+          bestStreak: 5,
+          coinsAwarded: 120,
+          answerRecords: const [
+            AnswerRecord(
+              id: 'q1',
+              category: 'Ziman',
+              prompt: 'Ev gotin çi wateyê dide?',
+              answers: ['A', 'B', 'C', 'D'],
+              correctAnswer: 'A',
+              selectedAnswer: 'A',
+              explanation: 'Rast bersiv A ye.',
+            ),
+          ],
+        ),
+      );
+    },
+    skip: true, // Pirs redesign: layout overflow in QuizResultScreen
+    tags: ['preview'],
+  );
 }

@@ -10,18 +10,18 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 void main() {
   test('mockup brand token contract stays stable', () {
     expect(AppRadius.card, 14);
-    expect(AppTheme.brandOrange, const Color(0xFF3DA968));
-    expect(AppTheme.brandOrangeWarm, const Color(0xFF2F7D4F));
+    expect(AppTheme.brandGreen, const Color(0xFF3DA968));
+    expect(AppTheme.brandGreenDeep, const Color(0xFF2A7A4E));
     expect(AppTheme.playGreen, const Color(0xFF3DA968));
     expect(AppTheme.gold, const Color(0xFFE7B53C));
     expect(AppTheme.bg, const Color(0xFF0B0F0D));
-    expect(AppTheme.surface, const Color(0xFF16211B));
+    expect(AppTheme.surface, const Color(0xFF1E3028));
     expect(AppTheme.lightBg, const Color(0xFFFBF9F6));
   });
 
   test('legacy token aliases resolve to theme tokens', () {
-    expect(AppTheme.primaryGradientStart, AppTheme.brandOrange);
-    expect(AppTheme.primaryGradientEnd, AppTheme.brandOrangeWarm);
+    expect(AppTheme.primaryGradientStart, AppTheme.brandGreen);
+    expect(AppTheme.primaryGradientEnd, AppTheme.brandGreenDeep);
     expect(AppTheme.accent, AppTheme.primaryGradientStart);
     expect(AppTheme.cyan, AppTheme.playCyan);
     expect(AppTheme.violet, AppTheme.secondaryAccent);

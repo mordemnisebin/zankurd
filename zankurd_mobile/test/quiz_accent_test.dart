@@ -16,7 +16,7 @@ Widget wrap(Widget child) => MultiProvider(
 );
 
 void main() {
-  testWidgets('Sonraki CTA brandOrange dolgu taşır', (tester) async {
+  testWidgets('Sonraki CTA brandGreen dolgu taşır', (tester) async {
     final repository = MockZanKurdRepository();
     await tester.pumpWidget(
       wrap(
@@ -33,10 +33,10 @@ void main() {
     final button = tester.widget<FilledButton>(
       find.byKey(const ValueKey('quiz-next-button')),
     );
-    expect(button.style?.backgroundColor?.resolve({}), AppTheme.brandOrange);
+    expect(button.style?.backgroundColor?.resolve({}), AppTheme.brandGreen);
   });
 
-  testWidgets('aktif soru segmenti brandOrange bekler', (tester) async {
+  testWidgets('aktif soru segmenti brandGreen bekler', (tester) async {
     final repository = MockZanKurdRepository();
     await tester.pumpWidget(
       wrap(
@@ -54,7 +54,7 @@ void main() {
         .widgetList<AnimatedContainer>(find.byType(AnimatedContainer))
         .where((c) {
           final deco = c.decoration;
-          return deco is BoxDecoration && deco.color == AppTheme.brandOrange;
+          return deco is BoxDecoration && deco.color == AppTheme.brandGreen;
         });
     expect(segments, isNotEmpty);
   });

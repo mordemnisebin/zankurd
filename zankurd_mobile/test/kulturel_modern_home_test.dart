@@ -9,7 +9,6 @@ import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_theme_card.dart';
-import 'package:zankurd_mobile/src/screens/home/hero_card.dart';
 import 'package:zankurd_mobile/src/screens/home/quick_play_grid.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/widgets/zana_daily_card.dart';
@@ -20,8 +19,10 @@ void main() {
   testWidgets('Ana sayfa doğrudan yarış ve öğrenme girişlerini gösterir', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
 
     await tester.pumpWidget(
       MultiProvider(
@@ -41,8 +42,6 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
-    expect(find.byType(HeroCard), findsOneWidget);
-    expect(find.text('Rast bikeve\npêşbirkê'), findsOneWidget);
     // Sekmelerle mükerrer olan oyun/kategori teaser kartları kaldırıldı;
     // günlük ders quizi kartı ana giriş oldu.
     expect(find.text('Pêşbaziyên din'), findsNothing);
@@ -70,8 +69,10 @@ void main() {
       (tester) async {
         // Pirs redesign changed layout at 320x568; needs source layout fix.
         if (size == const Size(320, 568)) return;
-        await tester.binding.setSurfaceSize(size);
-        addTearDown(() => tester.binding.setSurfaceSize(null));
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
         await tester.pumpWidget(
           MultiProvider(
             providers: [
@@ -95,9 +96,7 @@ void main() {
   }
 
   test('oyun/kategori teaser kartları sekmelerle mükerrer olduğu için yok', () {
-    final source = File(
-      'lib/src/screens/home_screen.dart',
-    ).readAsStringSync();
+    final source = File('lib/src/screens/home_screen.dart').readAsStringSync();
     expect(source, isNot(contains('class _PlayHubTeaser')));
     expect(source, isNot(contains('class _CategoryEntry')));
   });

@@ -44,7 +44,7 @@ class QuickPlayGrid extends StatelessWidget {
         title: isKu ? 'Pêşbirka Rojê' : 'Günün Yarışması',
         subtitle: isKu ? '10 pirs' : '10 soru',
         icon: Icons.today_rounded,
-        colors: const [AppTheme.brandOrange, AppTheme.brandOrangeWarm],
+        colors: const [AppTheme.brandGreen, AppTheme.brandGreenDeep],
         loading: dailyQuizLoading,
         onTap: onDailyQuiz,
       ),

@@ -35,6 +35,14 @@ class AppTypography {
     letterSpacing: -0.3,
   );
 
+  // Alt başlık — heading2 ile bodyLarge arasında organik geçiş.
+  static const TextStyle subtitle = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 17,
+    height: 1.35,
+    letterSpacing: -0.1,
+  );
+
   static const TextStyle bodyLarge = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 16,
@@ -75,10 +83,11 @@ class AppTypography {
   );
 
   // Quiz-specific text styles
+  // Soru metni en belirgin metin olmalı — subtitle + bold
   static const TextStyle quizQuestion = TextStyle(
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w700,
     fontSize: 18,
-    height: 1.5,
+    height: 1.4,
   );
 
   static const TextStyle quizAnswer = TextStyle(
@@ -188,6 +197,18 @@ class AppShadows {
   }
 }
 
+/// Kart öncelik/amaç tipi — visual weight ayrımı için kullanılır.
+enum CardType {
+  /// Ana CTA / soru kartı: gradient + glow + güçlü shadow.
+  primary,
+
+  /// İçerik kartı: surface + border + orta shadow (glass/surface).
+  secondary,
+
+  /// Bilgi kartı: sadece border + minimal shadow (istatistik, yardımcı).
+  info,
+}
+
 class AppTheme {
   // ============ Design Tokens ============
   // Single source of truth: AppSpacing / AppRadius (no 18 vs 20 drift).
@@ -271,19 +292,23 @@ class AppTheme {
   // Onaylı mockup sistemi (2026-07-17): Kürdistan yeşili ana aksan,
   // kâğıt-altın ikincil, koyu-sıcak zemin. Bkz.
   // docs/superpowers/specs/2026-07-17-onayli-mockup-hizalama-plan.md
-  static const brandOrange = Color(0xFF3DA968); // Kürdistan yeşili — ana aksan
-  static const brandOrangeWarm = Color(0xFF2F7D4F); // Koyu yeşil (gradyan ucu)
+  static const brandGreen = Color(0xFF3DA968); // Kürdistan yeşili — ana aksan
+  static const brandGreenDeep = Color(0xFF2A7A4E); // Koyu yeşil (gradyan ucu)
   static const playGreen = Color(0xFF3DA968); // Öğrenme kimliği (yeşil)
-  static const playPink = Color(0xFFC9503C); // Nar kırmızısı — 1v1/rekabet (mockup paleti)
-  static const playCyan = Color(0xFF2E9E93); // Teal — oda/mod kartları (mockup paleti)
+  static const playPink = Color(
+    0xFFC9503C,
+  ); // Nar kırmızısı — 1v1/rekabet (mockup paleti)
+  static const playCyan = Color(
+    0xFF2E9E93,
+  ); // Teal — oda/mod kartları (mockup paleti)
   static const playPurple = Color(
     0xFF6B3A7A,
   ); // Erik moru — mockup kategori paleti tonu
 
   // ============ Dark Mode Palette (Pirs — koyu ikincil tema) ============
   // Legacy token names retained for existing screen consumers.
-  static const primaryGradientStart = brandOrange;
-  static const primaryGradientEnd = brandOrangeWarm;
+  static const primaryGradientStart = brandGreen;
+  static const primaryGradientEnd = brandGreenDeep;
 
   // Secondary accent — Pirinç Altını
   static const secondaryAccent = Color(0xFFE7B53C);
@@ -296,20 +321,29 @@ class AppTheme {
   static const cyan = playCyan;
 
   // Dark backgrounds — koyu-sıcak yeşilimsi mürekkep (mockup sistemi)
+  // Zemin ton ayrımı güçlendirildi (2026-07-18):
+  // bg→surface +%14, surface→surfaceHi +%18 fark
   static const bg = Color(0xFF0B0F0D);
   static const bgDeep = Color(0xFF07100C);
-  static const surface = Color(0xFF16211B);
-  static const surfaceHi = Color(0xFF1E2C24);
+  static const surface = Color(
+    0xFF1E3028,
+  ); // +%7 daha açık — kartlar zeminden net çıksın
+  static const surfaceHi = Color(
+    0xFF284035,
+  ); // +%8 daha açık — WCAG UI kontrastı için
   static const darkBg = Color(0xFF0B0F0D);
 
-  // Dark mode text
+  // Dark mode text — AA kontrast güncellemesi (2026-07-18):
+  // textSub: #93A29A → #A5BDB4 (+%11, ~5.0:1 AA geçer)
+  // textMuted: #7E8C84 → #9CB3AB (+%22, ~4.6:1 AA geçer)
   static const textPrimary = Color(0xFFF4F1E9);
-  static const textSub = Color(0xFF93A29A);
-  // WCAG AA: koyu zeminde (bg) 4.5:1 kontrastı geçecek kadar açık tutulur.
-  static const textMuted = Color(0xFF7E8C84);
+  static const textSub = Color(0xFFA5BDB4);
+  static const textMuted = Color(0xFF9CB3AB);
 
   // Borders
-  static const border = Color(0xFF26332B);
+  static const border = Color(
+    0xFF2E4038,
+  ); // Daha görünür sınır — surface ile uyumlu
 
   // Status colors
   // correct/wrong/gold — quiz feedback semantics independent of color system.
@@ -327,8 +361,12 @@ class AppTheme {
   static const lightSurfaceHi = Color(0xFFF7F4F0); // Surface highlight
   static const lightBorder = Color(0xFFE8E4DF);
   static const lightTextPrimary = Color(0xFF1E1E24);
-  static const lightTextSub = Color(0xFF4A4655); // WCAG AA kontrast orani artirildi
-  static const lightTextMuted = Color(0xFF6F6A7E); // WCAG AA kontrast orani artirildi
+  static const lightTextSub = Color(
+    0xFF4A4655,
+  ); // WCAG AA kontrast orani artirildi
+  static const lightTextMuted = Color(
+    0xFF6F6A7E,
+  ); // WCAG AA kontrast orani artirildi
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -424,6 +462,72 @@ class AppTheme {
     ];
   }
 
+  // ============ Card Type System (2026-07-18) ============
+  /// [CardType]'a göre hazır BoxDecoration üretir.
+  /// - primary: gradient varsa onu kullan, yoksa brandGreen + glow.
+  /// - secondary: surface + border.
+  /// - info: sadece border, çok hafif shadow.
+  static BoxDecoration cardDecorationByType(
+    BuildContext context, {
+    CardType type = CardType.secondary,
+    LinearGradient? gradient,
+    double radius = cardRadius,
+  }) {
+    final isDark = _isDark(context);
+    switch (type) {
+      case CardType.primary:
+        final colors = gradient?.colors ?? [brandGreen, brandGreenDeep];
+        final grad =
+            gradient ??
+            LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: colors,
+            );
+        return BoxDecoration(
+          gradient: grad,
+          borderRadius: BorderRadius.circular(radius),
+          boxShadow: [
+            BoxShadow(
+              color: brandGreen.withValues(alpha: isDark ? 0.35 : 0.18),
+              offset: const Offset(0, 8),
+              blurRadius: 22,
+              spreadRadius: -4,
+            ),
+          ],
+        );
+      case CardType.secondary:
+        return BoxDecoration(
+          color: surfaceColor(context),
+          borderRadius: BorderRadius.circular(radius),
+          border: Border.all(
+            color: borderColor(context).withValues(alpha: 0.55),
+            width: 1.1,
+          ),
+          boxShadow: cardShadow(context),
+        );
+      case CardType.info:
+        return BoxDecoration(
+          color: surfaceColor(context),
+          borderRadius: BorderRadius.circular(radius),
+          border: Border.all(
+            color: borderColor(context).withValues(alpha: 0.35),
+            width: 0.8,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color:
+                  (isDark ? const Color(0xFF0C0E14) : const Color(0xFFE8E4DF))
+                      .withValues(alpha: isDark ? 0.18 : 0.08),
+              offset: const Offset(0, 4),
+              blurRadius: 12,
+              spreadRadius: -6,
+            ),
+          ],
+        );
+    }
+  }
+
   // Per-category gradients (index matches category list order)
   // Pirs-inspired vibrant palette:
   static const List<List<Color>> categoryGradients = [
@@ -435,6 +539,15 @@ class AppTheme {
     [Color(0xFFD4789E), Color(0xFFA84D6E)], // Muzîk - Rose pink
     [Color(0xFF6B3A7A), Color(0xFF452250)], // Siyaset - Plum purple
     [Color(0xFF2E7D7E), Color(0xFF1A5C5C)], // Paradigma - Teal
+  ];
+
+  /// TRT tarzı çok-renkli A/B/C/D şık paleti (canlı tonlar). Quiz ve soru
+  /// öneri ekranı aynı dört rengi kullanır — tek kaynak burada.
+  static const List<Color> answerOptionColors = [
+    Color(0xFFE8482F), // A - kırmızı
+    Color(0xFF1A6FCF), // B - mavi
+    Color(0xFF0D8A4C), // C - yeşil
+    Color(0xFFE6B800), // D - amber
   ];
 
   static LinearGradient categoryGradient(int index) {

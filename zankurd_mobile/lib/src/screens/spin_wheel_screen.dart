@@ -741,7 +741,7 @@ class _WheelPainter extends CustomPainter {
 
   static const _segmentDarkColors = [
     Color(0xFFB8872E),
-    AppTheme.brandOrangeWarm,
+    AppTheme.brandGreenDeep,
     Color(0xFF9B4A2E),
     Color(0xFF1A5C5C),
     Color(0xFFB6402F),

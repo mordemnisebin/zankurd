@@ -662,7 +662,7 @@ class _LobbyView extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                             vertical: AppSpacing.md,
                           ),
-                          backgroundColor: AppTheme.brandOrange,
+                          backgroundColor: AppTheme.brandGreen,
                           foregroundColor: Colors.white,
                         ),
                         label: Text(
@@ -750,9 +750,10 @@ class _ChampionBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      gradient: AppTheme.goldGradient,
-      child: Row(
+return AppPanel(
+  cardType: CardType.primary,
+  gradient: AppTheme.goldGradient,
+  child: Row(
         children: [
           const Icon(Icons.emoji_events_rounded, color: Colors.white, size: 32),
           const SizedBox(width: AppSpacing.sm),

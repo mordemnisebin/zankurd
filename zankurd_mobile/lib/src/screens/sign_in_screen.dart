@@ -875,7 +875,7 @@ class _SignInHeroBanner extends StatelessWidget {
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.playGreen, AppTheme.brandOrangeWarm],
+            colors: [AppTheme.playGreen, AppTheme.brandGreenDeep],
           ),
           border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
           boxShadow: AppTheme.elevatedShadow(AppTheme.playGreen),
@@ -1082,13 +1082,13 @@ class _GuestSignInButton extends StatelessWidget {
                         height: 28,
                         decoration: BoxDecoration(
                           color: isLight
-                              ? AppTheme.brandOrange.withValues(alpha: 0.12)
+                              ? AppTheme.brandGreen.withValues(alpha: 0.12)
                               : Colors.white.withValues(alpha: 0.15),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
                           Icons.person_rounded,
-                          color: isLight ? AppTheme.brandOrange : Colors.white,
+                          color: isLight ? AppTheme.brandGreen : Colors.white,
                           size: 16,
                         ),
                       ),

@@ -92,4 +92,3 @@ void main() {
     expect(reloaded.totalXP, 0);
   });
 }
-

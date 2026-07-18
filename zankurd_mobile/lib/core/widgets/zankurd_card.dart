@@ -3,8 +3,11 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 /// Reusable card component using ZanKurd's design tokens.
 ///
-/// Wraps [AppTheme.cardDecoration] for surface cards and
-/// [AppTheme.premiumCard] for gradient/glow variants.
+/// - [CardType.primary] → gradient + glow, ana CTA / soru kartı.
+/// - [CardType.secondary] → surface + border, standart içerik kartı.
+/// - [CardType.info] → sade border + minimal shadow, istatistik/yardımcı kart.
+///
+/// Explicit [gradient] / [glowColor] verilirse bunlar öncelikli olur.
 /// Supports optional tap handling.
 class ZankurdCard extends StatelessWidget {
   const ZankurdCard({
@@ -14,6 +17,7 @@ class ZankurdCard extends StatelessWidget {
     this.gradient,
     this.glowColor,
     this.radius,
+    this.cardType = CardType.secondary,
     this.onTap,
   });
 
@@ -23,7 +27,7 @@ class ZankurdCard extends StatelessWidget {
   /// Inner padding (default: [AppTheme.pagePadding]).
   final EdgeInsetsGeometry? padding;
 
-  /// Optional gradient background (uses [AppTheme.premiumCard] when provided).
+  /// Optional gradient background (overrides [cardType] decoration).
   final LinearGradient? gradient;
 
   /// Optional glow shadow colour (paired with [gradient]).
@@ -32,6 +36,9 @@ class ZankurdCard extends StatelessWidget {
   /// Corner radius (default: [AppTheme.cardRadius] = 16).
   final double? radius;
 
+  /// Visual weight tipi (primary / secondary / info).
+  final CardType cardType;
+
   /// Optional tap callback — wraps the card in a [GestureDetector].
   final VoidCallback? onTap;
 
@@ -39,14 +46,21 @@ class ZankurdCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final r = radius ?? AppTheme.cardRadius;
 
-    final decoration = (gradient != null || glowColor != null)
-        ? AppTheme.premiumCard(
-            context,
-            gradient: gradient,
-            glowColor: glowColor,
-            radius: r,
-          )
-        : AppTheme.cardDecoration(context, radius: r);
+    late final Decoration decoration;
+    if (gradient != null || glowColor != null) {
+      decoration = AppTheme.premiumCard(
+        context,
+        gradient: gradient,
+        glowColor: glowColor,
+        radius: r,
+      );
+    } else {
+      decoration = AppTheme.cardDecorationByType(
+        context,
+        type: cardType,
+        radius: r,
+      );
+    }
 
     final card = Container(
       padding: padding ?? const EdgeInsets.all(AppTheme.pagePadding),
