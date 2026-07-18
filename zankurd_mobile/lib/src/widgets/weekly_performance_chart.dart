@@ -63,7 +63,9 @@ class WeeklyPerformanceChart extends StatelessWidget {
                   maxVal: maxVal,
                   progress: progress,
                   isKu: isKu,
-                  gridLineColor: AppTheme.borderColor(context).withValues(alpha: 0.5),
+                  gridLineColor: AppTheme.borderColor(
+                    context,
+                  ).withValues(alpha: 0.5),
                   labelColor: mutedTextColor,
                   correctColor: AppTheme.correct,
                   wrongColor: AppTheme.wrong,

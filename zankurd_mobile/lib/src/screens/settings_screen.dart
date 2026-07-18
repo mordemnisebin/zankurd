@@ -972,10 +972,7 @@ class _LangChip extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 180),
-            constraints: const BoxConstraints(
-              minHeight: 48,
-              minWidth: 54,
-            ),
+            constraints: const BoxConstraints(minHeight: 48, minWidth: 54),
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
             decoration: BoxDecoration(

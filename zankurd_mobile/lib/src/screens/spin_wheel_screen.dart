@@ -179,10 +179,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     final target =
         2 * math.pi * 5 - (winnerIndex * segment + segment / 2) - math.pi / 2;
 
-    _rotation = Tween<double>(
-      begin: 0,
-      end: target,
-    ).animate(
+    _rotation = Tween<double>(begin: 0, end: target).animate(
       CurvedAnimation(parent: _spinController, curve: Curves.easeOutQuart),
     );
     _spinController.reset();
@@ -318,13 +315,8 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                     AppTheme.violet.withValues(alpha: 0.6),
                   ],
           ),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.15),
-          ),
-          boxShadow: AppTheme.glowShadow(
-            AppTheme.gold,
-            intensity: 0.15,
-          ),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
+          boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.15),
         ),
         child: Column(
           children: [
@@ -462,10 +454,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         opacity: _prizeOpacity,
         child: AppPanel(
           gradient: AppTheme.goldGradient,
-          padding: const EdgeInsets.symmetric(
-            vertical: 16,
-            horizontal: 18,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
           child: Row(
             children: [
               Container(
@@ -559,8 +548,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
               onPressed: enabled ? _spin : null,
               style: FilledButton.styleFrom(
                 backgroundColor: enabled ? AppTheme.accent : null,
-                disabledBackgroundColor:
-                    AppTheme.surfaceHiColor(context),
+                disabledBackgroundColor: AppTheme.surfaceHiColor(context),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                 ),
@@ -580,19 +568,19 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       ),
                     )
                   : Icon(
-                      enabled
-                          ? Icons.casino_outlined
-                          : Icons.lock_outlined,
+                      enabled ? Icons.casino_outlined : Icons.lock_outlined,
                       size: 22,
                     ),
               label: Text(
                 _spinning
                     ? (ku ? 'Dizivire...' : 'Dönüyor...')
                     : enabled
-                        ? (ku ? 'Bizivirîne!' : 'Çevir!')
-                        : (ku ? 'Sibê dîsa were!' : 'Yarın tekrar gel!'),
+                    ? (ku ? 'Bizivirîne!' : 'Çevir!')
+                    : (ku ? 'Sibê dîsa were!' : 'Yarın tekrar gel!'),
                 style: AppTypography.bodyLarge.copyWith(
-                  color: enabled ? Colors.white : AppTheme.textMutedColor(context),
+                  color: enabled
+                      ? Colors.white
+                      : AppTheme.textMutedColor(context),
                 ),
               ),
             ),
@@ -618,14 +606,8 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: isDark
-              ? [
-                  AppTheme.surfaceHi.withValues(alpha: 0.9),
-                  AppTheme.surface,
-                ]
-              : [
-                  AppTheme.lightSurfaceHi,
-                  AppTheme.lightSurface,
-                ],
+              ? [AppTheme.surfaceHi.withValues(alpha: 0.9), AppTheme.surface]
+              : [AppTheme.lightSurfaceHi, AppTheme.lightSurface],
         ),
       ),
       child: Column(
@@ -775,7 +757,10 @@ class _WheelPainter extends CustomPainter {
       );
 
       final paint = Paint()
-        ..shader = gradient.createShader(rect, textDirection: TextDirection.ltr);
+        ..shader = gradient.createShader(
+          rect,
+          textDirection: TextDirection.ltr,
+        );
 
       canvas.drawArc(
         Rect.fromCircle(center: center, radius: innerRadius),
@@ -816,12 +801,8 @@ class _WheelPainter extends CustomPainter {
         textDirection: TextDirection.ltr,
       )..layout();
       final textOffset = Offset(
-        center.dx +
-            math.cos(textAngle) * textRadius -
-            textPainter.width / 2,
-        center.dy +
-            math.sin(textAngle) * textRadius -
-            textPainter.height / 2,
+        center.dx + math.cos(textAngle) * textRadius - textPainter.width / 2,
+        center.dy + math.sin(textAngle) * textRadius - textPainter.height / 2,
       );
       textPainter.paint(canvas, textOffset);
     }
@@ -847,8 +828,7 @@ class _WheelPainter extends CustomPainter {
         center.dy + math.sin(currentLedAngle) * ledRadius,
       );
 
-      final intensity =
-          math.sin(i * (2 * math.pi / ledCount) * 2 - angle * 5);
+      final intensity = math.sin(i * (2 * math.pi / ledCount) * 2 - angle * 5);
       final isLit = intensity > 0.0;
 
       if (isLit) {
@@ -905,7 +885,10 @@ class _PointerPainter extends CustomPainter {
     );
     canvas.drawPath(
       path,
-      Paint()..shader = gradient.createShader(Rect.fromLTWH(0, 0, size.width, size.height)),
+      Paint()
+        ..shader = gradient.createShader(
+          Rect.fromLTWH(0, 0, size.width, size.height),
+        ),
     );
 
     // White border

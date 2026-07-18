@@ -778,7 +778,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             try {
               final profiles = await client
                   .from('profiles')
-                  .select('id, display_name, avatar_icon, avatar_color, avatar_url, avatar_frame, showcase_title')
+                  .select(
+                    'id, display_name, avatar_icon, avatar_color, avatar_url, avatar_frame, showcase_title',
+                  )
                   .inFilter('id', missingProfileIds);
               for (final p in profiles) {
                 final id = p['id'] as String;
@@ -794,18 +796,20 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             final cachedProfile = _profileCache[playerId];
             final name = cachedProfile?['display_name'] as String? ?? 'Oyuncu';
             final ready = row['is_ready'] as bool? ?? false;
-            players.add(Player(
-              id: playerId,
-              name: name,
-              score: row['score'] as int? ?? 0,
-              streak: row['streak'] as int? ?? 0,
-              state: ready ? 'Hazır' : 'Bekliyor',
-              avatarIcon: cachedProfile?['avatar_icon'] as String?,
-              avatarColor: cachedProfile?['avatar_color'] as String?,
-              avatarUrl: cachedProfile?['avatar_url'] as String?,
-              avatarFrame: cachedProfile?['avatar_frame'] as String?,
-              showcaseTitle: cachedProfile?['showcase_title'] as String?,
-            ));
+            players.add(
+              Player(
+                id: playerId,
+                name: name,
+                score: row['score'] as int? ?? 0,
+                streak: row['streak'] as int? ?? 0,
+                state: ready ? 'Hazır' : 'Bekliyor',
+                avatarIcon: cachedProfile?['avatar_icon'] as String?,
+                avatarColor: cachedProfile?['avatar_color'] as String?,
+                avatarUrl: cachedProfile?['avatar_url'] as String?,
+                avatarFrame: cachedProfile?['avatar_frame'] as String?,
+                showcaseTitle: cachedProfile?['showcase_title'] as String?,
+              ),
+            );
           }
           return players;
         });

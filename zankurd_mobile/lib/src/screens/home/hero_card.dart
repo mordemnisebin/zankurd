@@ -116,9 +116,7 @@ class HeroCard extends StatelessWidget {
               const SizedBox(height: AppSpacing.md),
               Text(
                 isKu ? 'Rast bikeve\npêşbirkê' : 'Hemen\nyarış',
-                style: AppTypography.heading1.copyWith(
-                  color: textPrimary,
-                ),
+                style: AppTypography.heading1.copyWith(color: textPrimary),
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(

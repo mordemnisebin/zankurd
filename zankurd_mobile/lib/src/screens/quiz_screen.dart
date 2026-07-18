@@ -215,10 +215,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
               (_timerController.value * widget.room.secondsPerQuestion).ceil();
           if (remaining != lastTickSecond) {
             lastTickSecond = remaining;
-        if (remaining > 0 && [5, 3, 1].contains(remaining)) {
-          HapticFeedback.lightImpact();
-          context.read<SoundProvider>().playTick();
-        }
+            if (remaining > 0 && [5, 3, 1].contains(remaining)) {
+              HapticFeedback.lightImpact();
+              context.read<SoundProvider>().playTick();
+            }
           }
         }
       });
@@ -1841,7 +1841,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 room: widget.room,
               )
               .catchError((error, stack) {
-                ErrorReporter.record(error, stack, reason: 'awardQuizCoins solo failed');
+                ErrorReporter.record(
+                  error,
+                  stack,
+                  reason: 'awardQuizCoins solo failed',
+                );
                 return 0;
               });
 
@@ -2046,7 +2050,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   room: widget.room,
                 )
                 .catchError((error, stack) {
-                  ErrorReporter.record(error, stack, reason: 'awardQuizCoins multiplayer failed');
+                  ErrorReporter.record(
+                    error,
+                    stack,
+                    reason: 'awardQuizCoins multiplayer failed',
+                  );
                   return 0;
                 });
       if (!mounted) return;

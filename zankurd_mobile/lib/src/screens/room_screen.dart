@@ -153,7 +153,11 @@ class _RoomScreenState extends State<RoomScreen> {
     try {
       await widget.repository.updateReady(room, false);
     } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'room_leave_update_ready_failed');
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'room_leave_update_ready_failed',
+      );
     }
 
     if (mounted) {
@@ -190,9 +194,7 @@ class _RoomScreenState extends State<RoomScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CircularProgressIndicator(
-                  color: AppTheme.playCyan,
-                ),
+                const CircularProgressIndicator(color: AppTheme.playCyan),
                 const SizedBox(height: 24),
                 Text(
                   ku ? 'Tê betalkirin...' : 'İptal ediliyor...',
@@ -241,432 +243,441 @@ class _RoomScreenState extends State<RoomScreen> {
                               color: AppTheme.textSubColor(context),
                             ),
                           ),
-                        const Spacer(),
-                        // Çocuk modu: serbest metin oda sohbeti kapalı.
-                        if (context.watch<ChildSafetyProvider>().allowRoomChat)
-                          IconButton(
-                            key: const ValueKey('room-chat-toggle'),
-                            onPressed: () =>
-                                setState(() => _chatOpen = !_chatOpen),
-                            icon: Icon(
-                              _chatOpen
-                                  ? Icons.chat_bubble_rounded
-                                  : Icons.chat_bubble_outline_rounded,
-                              color: _chatOpen
-                                  ? AppTheme.playCyan
-                                  : AppTheme.textSubColor(context),
-                            ),
-                            tooltip: ku ? 'Sohbet' : 'Sohbet',
-                          ),
-                        TextButton.icon(
-                          onPressed: () => _copyRoomCode(context, ku),
-                          icon: const Icon(Icons.copy_rounded, size: 16),
-                          label: Text(
-                            room.code,
-                            key: const ValueKey('room-code-toolbar'),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.bodyLarge.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          style: TextButton.styleFrom(
-                            foregroundColor: AppTheme.textSubColor(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.xxs),
-
-                    // Brand hero — deep green (not generic blue Material)
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(AppRadius.card),
-                      child: Stack(
-                        children: [
-                          AppPanel(
-                            gradient: const LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [AppTheme.playCyan, Color(0xFF168E8A)],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  ku ? 'Odeya Taybet' : 'Özel Oda',
-                                  style: AppTypography.caption.copyWith(
-                                    color: Colors.white.withValues(alpha: 0.75),
-                                  ),
-                                ),
-                                const SizedBox(height: AppSpacing.xs),
-                                Text(
-                                  room.name,
-                                  style: AppTypography.heading1.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 26,
-                                  ),
-                                ),
-                                const SizedBox(height: AppSpacing.sm),
-                                Wrap(
-                                  spacing: AppSpacing.xs,
-                                  runSpacing: AppSpacing.xs,
-                                  children: [
-                                    _Pill(
-                                      label: room.category,
-                                      icon: Icons.category_outlined,
-                                    ),
-                                    _Pill(
-                                      label: '${room.secondsPerQuestion} sn',
-                                      icon: Icons.timer_outlined,
-                                    ),
-                                    if (isHost)
-                                      _Pill(
-                                        label: ku ? 'Mêvandar' : 'Ev sahibi',
-                                        icon: Icons.star_rounded,
-                                      ),
-                                  ],
-                                ),
-                                const SizedBox(height: AppSpacing.md),
-                                // Large invite code for sharing
-                                Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () => _copyRoomCode(context, ku),
-                                    borderRadius: BorderRadius.circular(
-                                      AppRadius.sm,
-                                    ),
-                                    child: Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: AppSpacing.md,
-                                        vertical: AppSpacing.sm,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white.withValues(
-                                          alpha: 0.1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                          AppRadius.sm,
-                                        ),
-                                        border: Border.all(
-                                          color: Colors.white.withValues(
-                                            alpha: 0.18,
-                                          ),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  ku
-                                                      ? 'Koda odeyê parve bike'
-                                                      : 'Oda kodunu paylaş',
-                                                  style: AppTypography.caption
-                                                      .copyWith(
-                                                        color: Colors.white
-                                                            .withValues(
-                                                              alpha: 0.7,
-                                                            ),
-                                                      ),
-                                                ),
-                                                const SizedBox(height: 2),
-                                                Text(
-                                                  room.code,
-                                                  key: const ValueKey(
-                                                    'room-code',
-                                                  ),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: AppTypography.heading1
-                                                      .copyWith(
-                                                        color: AppTheme.gold,
-                                                        letterSpacing: 2,
-                                                        fontSize: 28,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Icon(
-                                            Icons.copy_all_rounded,
-                                            color: Colors.white.withValues(
-                                              alpha: 0.85,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Positioned.fill(
-                            child: IgnorePointer(
-                              child: CustomPaint(
-                                painter: const KilimPatternPainter(
-                                  drawPattern: true,
-                                  color: Colors.white,
-                                  opacity: 0.05,
-                                ),
+                          const Spacer(),
+                          // Çocuk modu: serbest metin oda sohbeti kapalı.
+                          if (context
+                              .watch<ChildSafetyProvider>()
+                              .allowRoomChat)
+                            IconButton(
+                              key: const ValueKey('room-chat-toggle'),
+                              onPressed: () =>
+                                  setState(() => _chatOpen = !_chatOpen),
+                              icon: Icon(
+                                _chatOpen
+                                    ? Icons.chat_bubble_rounded
+                                    : Icons.chat_bubble_outline_rounded,
+                                color: _chatOpen
+                                    ? AppTheme.playCyan
+                                    : AppTheme.textSubColor(context),
                               ),
+                              tooltip: ku ? 'Sohbet' : 'Sohbet',
+                            ),
+                          TextButton.icon(
+                            onPressed: () => _copyRoomCode(context, ku),
+                            icon: const Icon(Icons.copy_rounded, size: 16),
+                            label: Text(
+                              room.code,
+                              key: const ValueKey('room-code-toolbar'),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypography.bodyLarge.copyWith(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppTheme.textSubColor(context),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: AppSpacing.cardGap),
+                      const SizedBox(height: AppSpacing.xxs),
 
-                    AppPanel(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.group_outlined,
-                                color: AppTheme.textSubColor(context),
-                                size: 20,
+                      // Brand hero — deep green (not generic blue Material)
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(AppRadius.card),
+                        child: Stack(
+                          children: [
+                            AppPanel(
+                              gradient: const LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [AppTheme.playCyan, Color(0xFF168E8A)],
                               ),
-                              const SizedBox(width: AppSpacing.xs),
-                              Text(
-                                ku ? 'Lîstikvan' : 'Oyuncular',
-                                style: AppTypography.heading2.copyWith(
-                                  color: AppTheme.textPrimaryColor(context),
-                                ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                '${sorted.length}',
-                                style: AppTypography.caption.copyWith(
-                                  color: AppTheme.textMutedColor(context),
-                                ),
-                              ),
-                            ],
-                          ),
-                          if (room.players.length < 2) ...[
-                            const SizedBox(height: AppSpacing.xs),
-                            Row(
-                              key: const ValueKey('room-connection-state'),
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                  height: 10,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 1.5,
-                                    color: AppTheme.playCyan.withValues(
-                                      alpha: 0.85,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    ku ? 'Odeya Taybet' : 'Özel Oda',
+                                    style: AppTypography.caption.copyWith(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.75,
+                                      ),
                                     ),
                                   ),
+                                  const SizedBox(height: AppSpacing.xs),
+                                  Text(
+                                    room.name,
+                                    style: AppTypography.heading1.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 26,
+                                    ),
+                                  ),
+                                  const SizedBox(height: AppSpacing.sm),
+                                  Wrap(
+                                    spacing: AppSpacing.xs,
+                                    runSpacing: AppSpacing.xs,
+                                    children: [
+                                      _Pill(
+                                        label: room.category,
+                                        icon: Icons.category_outlined,
+                                      ),
+                                      _Pill(
+                                        label: '${room.secondsPerQuestion} sn',
+                                        icon: Icons.timer_outlined,
+                                      ),
+                                      if (isHost)
+                                        _Pill(
+                                          label: ku ? 'Mêvandar' : 'Ev sahibi',
+                                          icon: Icons.star_rounded,
+                                        ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: AppSpacing.md),
+                                  // Large invite code for sharing
+                                  Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () => _copyRoomCode(context, ku),
+                                      borderRadius: BorderRadius.circular(
+                                        AppRadius.sm,
+                                      ),
+                                      child: Container(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: AppSpacing.md,
+                                          vertical: AppSpacing.sm,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withValues(
+                                            alpha: 0.1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            AppRadius.sm,
+                                          ),
+                                          border: Border.all(
+                                            color: Colors.white.withValues(
+                                              alpha: 0.18,
+                                            ),
+                                          ),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    ku
+                                                        ? 'Koda odeyê parve bike'
+                                                        : 'Oda kodunu paylaş',
+                                                    style: AppTypography.caption
+                                                        .copyWith(
+                                                          color: Colors.white
+                                                              .withValues(
+                                                                alpha: 0.7,
+                                                              ),
+                                                        ),
+                                                  ),
+                                                  const SizedBox(height: 2),
+                                                  Text(
+                                                    room.code,
+                                                    key: const ValueKey(
+                                                      'room-code',
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: AppTypography
+                                                        .heading1
+                                                        .copyWith(
+                                                          color: AppTheme.gold,
+                                                          letterSpacing: 2,
+                                                          fontSize: 28,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.copy_all_rounded,
+                                              color: Colors.white.withValues(
+                                                alpha: 0.85,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Positioned.fill(
+                              child: IgnorePointer(
+                                child: CustomPaint(
+                                  painter: const KilimPatternPainter(
+                                    drawPattern: true,
+                                    color: Colors.white,
+                                    opacity: 0.05,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.cardGap),
+
+                      AppPanel(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.group_outlined,
+                                  color: AppTheme.textSubColor(context),
+                                  size: 20,
                                 ),
                                 const SizedBox(width: AppSpacing.xs),
-                                Expanded(
-                                  child: Text(
-                                    ku
-                                        ? 'Lîsteya lîstikvanan tê nûvekirin…'
-                                        : 'Oyuncu listesi güncelleniyor…',
-                                    style: AppTypography.caption.copyWith(
-                                      color: AppTheme.textMutedColor(context),
-                                    ),
+                                Text(
+                                  ku ? 'Lîstikvan' : 'Oyuncular',
+                                  style: AppTypography.heading2.copyWith(
+                                    color: AppTheme.textPrimaryColor(context),
+                                  ),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  '${sorted.length}',
+                                  style: AppTypography.caption.copyWith(
+                                    color: AppTheme.textMutedColor(context),
                                   ),
                                 ),
                               ],
                             ),
-                          ],
-                          const SizedBox(height: AppSpacing.sm),
-                          if (sorted.isEmpty)
-                            Text(
-                              ku ? 'Hîn lîstikvan tune.' : 'Henüz oyuncu yok.',
-                              style: AppTypography.bodyMedium.copyWith(
-                                color: AppTheme.textMutedColor(context),
-                              ),
-                            )
-                          else
-                            for (var i = 0; i < sorted.length; i++)
-                              _PlayerTile(
-                                key: ValueKey('room-player-tile-${i + 1}'),
-                                rank: i + 1,
-                                player: sorted[i],
-                                isKu: ku,
-                                isHost:
-                                    room.hostId != null &&
-                                    sorted[i].id == room.hostId,
-                              ),
-                          if (room.players.length < 2) ...[
-                            const SizedBox(height: AppSpacing.sm),
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(AppSpacing.sm),
-                              decoration: BoxDecoration(
-                                color: AppTheme.gold.withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.sm,
-                                ),
-                                border: Border.all(
-                                  color: AppTheme.gold.withValues(alpha: 0.28),
-                                ),
-                              ),
-                              child: Row(
+                            if (room.players.length < 2) ...[
+                              const SizedBox(height: AppSpacing.xs),
+                              Row(
+                                key: const ValueKey('room-connection-state'),
                                 children: [
-                                  const Icon(
-                                    Icons.person_add_alt_1_rounded,
-                                    color: AppTheme.gold,
-                                    size: 20,
+                                  SizedBox(
+                                    width: 10,
+                                    height: 10,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 1.5,
+                                      color: AppTheme.playCyan.withValues(
+                                        alpha: 0.85,
+                                      ),
+                                    ),
                                   ),
                                   const SizedBox(width: AppSpacing.xs),
                                   Expanded(
                                     child: Text(
                                       ku
-                                          ? 'Hevalê xwe bi kodê vexwîne — herî kêm 2 lîstikvan pêwîst e.'
-                                          : 'Arkadaşını kodla davet et — en az 2 oyuncu gerekir.',
+                                          ? 'Lîsteya lîstikvanan tê nûvekirin…'
+                                          : 'Oyuncu listesi güncelleniyor…',
                                       style: AppTypography.caption.copyWith(
-                                        color: AppTheme.textPrimaryColor(
-                                          context,
-                                        ),
-                                        fontWeight: FontWeight.w600,
+                                        color: AppTheme.textMutedColor(context),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.cardGap),
-
-                    AppPanel(
-                      child: Column(
-                        children: [
-                          Material(
-                            color: Colors.transparent,
-                            child: SwitchListTile(
-                              value: ready,
-                              activeThumbColor: AppTheme.playCyan,
-                              activeTrackColor: AppTheme.playCyan.withValues(
-                                alpha: 0.45,
-                              ),
-                              onChanged: (v) {
-                                setState(() => ready = v);
-                                widget.repository.updateReady(room, v);
-                              },
-                              title: Text(
-                                ku ? 'Amade Me' : 'Hazırım',
-                                style: AppTypography.bodyLarge.copyWith(
-                                  color: AppTheme.textPrimaryColor(context),
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                              subtitle: Text(
+                            ],
+                            const SizedBox(height: AppSpacing.sm),
+                            if (sorted.isEmpty)
+                              Text(
                                 ku
-                                    ? 'Rewşa te ji lîstikvanên din re ciyê-rast nîşan dide.'
-                                    : 'Odadaki durumun diğer oyunculara canlı yansır.',
-                                style: AppTypography.caption.copyWith(
+                                    ? 'Hîn lîstikvan tune.'
+                                    : 'Henüz oyuncu yok.',
+                                style: AppTypography.bodyMedium.copyWith(
                                   color: AppTheme.textMutedColor(context),
                                 ),
-                              ),
-                              contentPadding: EdgeInsets.zero,
-                            ),
-                          ),
-                          const SizedBox(height: AppSpacing.sm),
-                          if (room.players.length < 2) ...[
-                            Text(
-                              ku
-                                  ? 'Ji bo destpêkirina pêşbirkê herî kêm 2 lîstikvan divên.'
-                                  : 'Yarışı başlatmak için en az 2 oyuncu olmalıdır.',
-                              textAlign: TextAlign.center,
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.wrong,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.xs),
-                          ],
-                          if (isHost) ...[
-                            GeometricGradientButton(
-                              label: starting
-                                  ? (ku ? 'Tê Amadekirin' : 'Hazırlanıyor')
-                                  : (ku
-                                        ? 'Pêşbirkê Dest Pê Bike'
-                                        : 'Yarışı Başlat'),
-                              icon: Icons.play_arrow_rounded,
-                              isLoading: starting,
-                              onPressed: canStart ? _startGameHost : null,
-                            ),
-                          ] else ...[
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: AppSpacing.sm,
-                                horizontal: AppSpacing.md,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppTheme.primaryGradientStart.withValues(
-                                  alpha: 0.1,
+                              )
+                            else
+                              for (var i = 0; i < sorted.length; i++)
+                                _PlayerTile(
+                                  key: ValueKey('room-player-tile-${i + 1}'),
+                                  rank: i + 1,
+                                  player: sorted[i],
+                                  isKu: ku,
+                                  isHost:
+                                      room.hostId != null &&
+                                      sorted[i].id == room.hostId,
                                 ),
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.sm,
-                                ),
-                                border: Border.all(
-                                  color: AppTheme.primaryGradientStart
-                                      .withValues(alpha: 0.28),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 16,
-                                    height: 16,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        AppTheme.primaryGradientStart,
-                                      ),
+                            if (room.players.length < 2) ...[
+                              const SizedBox(height: AppSpacing.sm),
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(AppSpacing.sm),
+                                decoration: BoxDecoration(
+                                  color: AppTheme.gold.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.sm,
+                                  ),
+                                  border: Border.all(
+                                    color: AppTheme.gold.withValues(
+                                      alpha: 0.28,
                                     ),
                                   ),
-                                  const SizedBox(width: AppSpacing.sm),
-                                  Expanded(
-                                    child: Text(
-                                      ku
-                                          ? 'Li benda mêvandar e... Lîstik dê ji aliyê damezrîner ve bê destpêkirin.'
-                                          : 'Ev sahibi bekleniyor... Yarışma, odayı kuran kişi tarafından başlatılacaktır.',
-                                      style: AppTypography.caption.copyWith(
-                                        color: AppTheme.primaryGradientStart,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 13,
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.person_add_alt_1_rounded,
+                                      color: AppTheme.gold,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: AppSpacing.xs),
+                                    Expanded(
+                                      child: Text(
+                                        ku
+                                            ? 'Hevalê xwe bi kodê vexwîne — herî kêm 2 lîstikvan pêwîst e.'
+                                            : 'Arkadaşını kodla davet et — en az 2 oyuncu gerekir.',
+                                        style: AppTypography.caption.copyWith(
+                                          color: AppTheme.textPrimaryColor(
+                                            context,
+                                          ),
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
+                            ],
                           ],
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: AppSpacing.cardGap),
+
+                      AppPanel(
+                        child: Column(
+                          children: [
+                            Material(
+                              color: Colors.transparent,
+                              child: SwitchListTile(
+                                value: ready,
+                                activeThumbColor: AppTheme.playCyan,
+                                activeTrackColor: AppTheme.playCyan.withValues(
+                                  alpha: 0.45,
+                                ),
+                                onChanged: (v) {
+                                  setState(() => ready = v);
+                                  widget.repository.updateReady(room, v);
+                                },
+                                title: Text(
+                                  ku ? 'Amade Me' : 'Hazırım',
+                                  style: AppTypography.bodyLarge.copyWith(
+                                    color: AppTheme.textPrimaryColor(context),
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  ku
+                                      ? 'Rewşa te ji lîstikvanên din re ciyê-rast nîşan dide.'
+                                      : 'Odadaki durumun diğer oyunculara canlı yansır.',
+                                  style: AppTypography.caption.copyWith(
+                                    color: AppTheme.textMutedColor(context),
+                                  ),
+                                ),
+                                contentPadding: EdgeInsets.zero,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.sm),
+                            if (room.players.length < 2) ...[
+                              Text(
+                                ku
+                                    ? 'Ji bo destpêkirina pêşbirkê herî kêm 2 lîstikvan divên.'
+                                    : 'Yarışı başlatmak için en az 2 oyuncu olmalıdır.',
+                                textAlign: TextAlign.center,
+                                style: AppTypography.caption.copyWith(
+                                  color: AppTheme.wrong,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: AppSpacing.xs),
+                            ],
+                            if (isHost) ...[
+                              GeometricGradientButton(
+                                label: starting
+                                    ? (ku ? 'Tê Amadekirin' : 'Hazırlanıyor')
+                                    : (ku
+                                          ? 'Pêşbirkê Dest Pê Bike'
+                                          : 'Yarışı Başlat'),
+                                icon: Icons.play_arrow_rounded,
+                                isLoading: starting,
+                                onPressed: canStart ? _startGameHost : null,
+                              ),
+                            ] else ...[
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: AppSpacing.sm,
+                                  horizontal: AppSpacing.md,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppTheme.primaryGradientStart
+                                      .withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.sm,
+                                  ),
+                                  border: Border.all(
+                                    color: AppTheme.primaryGradientStart
+                                        .withValues(alpha: 0.28),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    const SizedBox(
+                                      width: 16,
+                                      height: 16,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                              AppTheme.primaryGradientStart,
+                                            ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: AppSpacing.sm),
+                                    Expanded(
+                                      child: Text(
+                                        ku
+                                            ? 'Li benda mêvandar e... Lîstik dê ji aliyê damezrîner ve bê destpêkirin.'
+                                            : 'Ev sahibi bekleniyor... Yarışma, odayı kuran kişi tarafından başlatılacaktır.',
+                                        style: AppTypography.caption.copyWith(
+                                          color: AppTheme.primaryGradientStart,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              // Room chat panel
-              if (room.id != null)
-                RoomChat(
-                  repository: widget.repository,
-                  roomId: room.id!,
-                  visible: _chatOpen,
-                  onToggle: () => setState(() => _chatOpen = false),
-                ),
-            ],
+                // Room chat panel
+                if (room.id != null)
+                  RoomChat(
+                    repository: widget.repository,
+                    roomId: room.id!,
+                    visible: _chatOpen,
+                    onToggle: () => setState(() => _chatOpen = false),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Future<void> _startGameHost() async {
     setState(() => starting = true);
@@ -698,7 +709,11 @@ class _RoomScreenState extends State<RoomScreen> {
     final questions = await widget.repository
         .loadRoomQuestions(room)
         .catchError((error, stack) {
-          ErrorReporter.record(error, stack, reason: 'loadRoomQuestions fallback');
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'loadRoomQuestions fallback',
+          );
           return widget.repository.questions;
         });
     if (!mounted) return;

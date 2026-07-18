@@ -65,31 +65,31 @@ class _GradientButton extends StatelessWidget {
       button: true,
       label: label,
       child: GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-        decoration: BoxDecoration(
-          gradient: gradient,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Row(
-          children: [
-            Icon(icon, color: Colors.white, size: 20),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                label,
-                style: AppTypography.bodyMedium.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+          decoration: BoxDecoration(
+            gradient: gradient,
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: Row(
+            children: [
+              Icon(icon, color: Colors.white, size: 20),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  label,
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
       ),
     );
   }

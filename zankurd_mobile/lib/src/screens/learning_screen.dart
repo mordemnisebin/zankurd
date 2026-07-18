@@ -277,8 +277,8 @@ class _LearningScreenState extends State<LearningScreen> {
                         );
                     // Öneri kilitli bir düğüme düşerse kullanıcıyı erişemeyeceği
                     // bir karta yönlendirme; ilk açık dersi işaretle.
-                    final recommendedIndex = firstOpenIndex >= 0 &&
-                            placementIndex > firstOpenIndex
+                    final recommendedIndex =
+                        firstOpenIndex >= 0 && placementIndex > firstOpenIndex
                         ? firstOpenIndex
                         : placementIndex;
                     return ListView.builder(
@@ -459,7 +459,6 @@ class _LearningScreenState extends State<LearningScreen> {
     final (kuLabel, trLabel) = labels[cat] ?? (cat, cat);
     return ku ? kuLabel : trLabel;
   }
-
 }
 
 class _LearningModeBar extends StatelessWidget {
@@ -511,7 +510,6 @@ class _LearningModeBar extends StatelessWidget {
       ],
     );
   }
-
 }
 
 class _LearningModeButton extends StatelessWidget {
@@ -560,9 +558,9 @@ class _LearningModeButton extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTypography.caption.copyWith(
-                  color: AppTheme.textPrimaryColor(context).withValues(
-                    alpha: enabled ? 1 : 0.5,
-                  ),
+                  color: AppTheme.textPrimaryColor(
+                    context,
+                  ).withValues(alpha: enabled ? 1 : 0.5),
                   fontSize: 10,
                   fontWeight: FontWeight.w800,
                 ),
@@ -679,10 +677,14 @@ class _LessonCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12),
       child: GestureDetector(
         onTap: locked ? null : onTap,
- child: AppPanel(
-   key: recommended && !completed ? const ValueKey("learning-next-step") : null,
-   cardType: recommended && !completed ? CardType.primary : CardType.secondary,
-   child: Row(
+        child: AppPanel(
+          key: recommended && !completed
+              ? const ValueKey("learning-next-step")
+              : null,
+          cardType: recommended && !completed
+              ? CardType.primary
+              : CardType.secondary,
+          child: Row(
             children: [
               Container(
                 width: 56,
@@ -750,9 +752,7 @@ class _LessonCard extends StatelessWidget {
                               color: AppTheme.gold,
                             ),
                             Text(
-                              ku
-                                  ? 'Pêşniyara te'
-                                  : 'Sana önerilen',
+                              ku ? 'Pêşniyara te' : 'Sana önerilen',
                               style: AppTypography.caption.copyWith(
                                 color: AppTheme.gold,
                                 fontWeight: FontWeight.w800,
@@ -1071,7 +1071,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
 
   Widget _buildFlashcardFront(LessonSlide slide, BuildContext context) {
     return AppPanel(
-  cardType: CardType.secondary,
+      cardType: CardType.secondary,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1147,9 +1147,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
           const SizedBox(height: 16),
           Text(
             slide.contentTr ?? slide.contentKu,
-            style: AppTypography.bodyLarge.copyWith(
-              color: Colors.white,
-            ),
+            style: AppTypography.bodyLarge.copyWith(color: Colors.white),
           ),
         ],
       ),

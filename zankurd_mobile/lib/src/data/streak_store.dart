@@ -107,4 +107,3 @@ class StreakStore {
     await preferences.remove(_lastDayKey);
   }
 }
-

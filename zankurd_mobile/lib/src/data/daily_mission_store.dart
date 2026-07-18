@@ -30,7 +30,11 @@ class DailyMissionStore {
     try {
       prefs = await SharedPreferences.getInstance();
     } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'daily_mission_load_preferences');
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'daily_mission_load_preferences',
+      );
     }
 
     final today = DateTime.now();

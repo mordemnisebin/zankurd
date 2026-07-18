@@ -102,10 +102,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [
-                          AppTheme.brandGreen,
-                          AppTheme.brandGreenDeep,
-                        ],
+                        colors: [AppTheme.brandGreen, AppTheme.brandGreenDeep],
                       ),
                     ),
                     child: Stack(

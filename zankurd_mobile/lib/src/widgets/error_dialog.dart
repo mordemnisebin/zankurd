@@ -13,7 +13,8 @@ class ErrorDialog {
     String? dismissLabel,
   }) {
     final ku = context.isKu;
-    final finalRetryLabel = retryLabel ?? (ku ? 'Dîsa biceribîne' : 'Tekrar Dene');
+    final finalRetryLabel =
+        retryLabel ?? (ku ? 'Dîsa biceribîne' : 'Tekrar Dene');
     final finalDismissLabel = dismissLabel ?? (ku ? 'Bigire' : 'Kapat');
 
     showDialog(

@@ -45,7 +45,6 @@ class MockZanKurdRepository implements ZanKurdRepository {
     'Muzîk',
     'Siyaset',
     'Paradigma',
-    'Teknolojî',
   ];
 
   @override
@@ -1128,14 +1127,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'everyday_1_s1',
         lessonId: 'everyday_1',
         order: 1,
-        contentKu: 'Di Kurmancî de silavên bingehîn:\n\n• Rojbaş: Günaydın / İyi günler\n• Êvarbaş: İyi akşamlar\n• Şevbaş: İyi geceler',
+        contentKu:
+            'Di Kurmancî de silavên bingehîn:\n\n• Rojbaş: Günaydın / İyi günler\n• Êvarbaş: İyi akşamlar\n• Şevbaş: İyi geceler',
         contentTr: 'Kürtçede temel selamlaşma ifadeleri.',
       ),
       LessonSlide(
         id: 'everyday_1_s2',
         lessonId: 'everyday_1',
         order: 2,
-        contentKu: 'Rewş pirsîn:\n\n• Çonî? / Tu çawa yî?: Nasılsın?\n• Ez baş im, spas dikim: İyiyim, teşekkür ederim.',
+        contentKu:
+            'Rewş pirsîn:\n\n• Çonî? / Tu çawa yî?: Nasılsın?\n• Ez baş im, spas dikim: İyiyim, teşekkür ederim.',
         contentTr: 'Hal hatır sorma kalıpları.',
       ),
     ],
@@ -1144,14 +1145,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'everyday_2_s1',
         lessonId: 'everyday_2',
         order: 1,
-        contentKu: 'Nav pirsîn:\n\n• Navê te çi ye?: Adın ne?\n• Navê min Azad e: Benim adım Azad.',
+        contentKu:
+            'Nav pirsîn:\n\n• Navê te çi ye?: Adın ne?\n• Navê min Azad e: Benim adım Azad.',
         contentTr: 'İsim sorma ve kendini tanıtma.',
       ),
       LessonSlide(
         id: 'everyday_2_s2',
         lessonId: 'everyday_2',
         order: 2,
-        contentKu: 'Welat / Cî pirsîn:\n\n• Tu ji ku derê yî?: Nerelisin?\n• Ez ji Amedê me: Amedliyim.',
+        contentKu:
+            'Welat / Cî pirsîn:\n\n• Tu ji ku derê yî?: Nerelisin?\n• Ez ji Amedê me: Amedliyim.',
         contentTr: 'Memleket sorma ve belirtme.',
       ),
     ],
@@ -1160,14 +1163,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'everyday_3_s1',
         lessonId: 'everyday_3',
         order: 1,
-        contentKu: 'Sernavên pratik di jiyana rojane de:\n\n• Fermo: Buyurun\n• Kerem bike: Buyur / Geç\n• Spas: Teşekkürler / Sağ ol',
+        contentKu:
+            'Sernavên pratik di jiyana rojane de:\n\n• Fermo: Buyurun\n• Kerem bike: Buyur / Geç\n• Spas: Teşekkürler / Sağ ol',
         contentTr: 'Günlük hayatta en çok kullanılan pratik hitaplar.',
       ),
       LessonSlide(
         id: 'everyday_3_s2',
         lessonId: 'everyday_3',
         order: 2,
-        contentKu: 'Daxwaz û daxwazî:\n\n• Ji kerema xwe: Lütfen\n• Bibexşîne: Özür dilerim / Affet',
+        contentKu:
+            'Daxwaz û daxwazî:\n\n• Ji kerema xwe: Lütfen\n• Bibexşîne: Özür dilerim / Affet',
         contentTr: 'Rica ve özür dileme kalıpları.',
       ),
     ],
@@ -1176,14 +1181,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'grammar_1_s1',
         lessonId: 'grammar_1',
         order: 1,
-        contentKu: 'Cînavkên kesane yên xwerû:\n\n• Ez: Ben\n• Tu: Sen\n• Ew: O',
+        contentKu:
+            'Cînavkên kesane yên xwerû:\n\n• Ez: Ben\n• Tu: Sen\n• Ew: O',
         contentTr: 'Yalın hal şahıs zamirleri.',
       ),
       LessonSlide(
         id: 'grammar_1_s2',
         lessonId: 'grammar_1',
         order: 2,
-        contentKu: 'Cînavkên kesane yên pirjimar:\n\n• Em: Biz\n• Hûn: Siz\n• Ew: Onlar',
+        contentKu:
+            'Cînavkên kesane yên pirjimar:\n\n• Em: Biz\n• Hûn: Siz\n• Ew: Onlar',
         contentTr: 'Çoğul şahıs zamirleri.',
       ),
     ],
@@ -1192,14 +1199,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'grammar_2_s1',
         lessonId: 'grammar_2',
         order: 1,
-        contentKu: 'Cînavkên tewandî:\n\n• Min: Beni / Bana / Benim\n• Te: Seni / Sana / Senin\n• Wî (nêr) / Wê (mê): Onu / Ona / Onun',
+        contentKu:
+            'Cînavkên tewandî:\n\n• Min: Beni / Bana / Benim\n• Te: Seni / Sana / Senin\n• Wî (nêr) / Wê (mê): Onu / Ona / Onun',
         contentTr: 'Bükümlü hal şahıs zamirleri.',
       ),
       LessonSlide(
         id: 'grammar_2_s2',
         lessonId: 'grammar_2',
         order: 2,
-        contentKu: 'Mînak:\n\n• Ez nan dixwim (Şimdiki zaman - yalın zamir)\n• Min nan xwar (Geçmiş zaman - bükümlü zamir)',
+        contentKu:
+            'Mînak:\n\n• Ez nan dixwim (Şimdiki zaman - yalın zamir)\n• Min nan xwar (Geçmiş zaman - bükümlü zamir)',
         contentTr: 'Ergatif yapı örneği.',
       ),
     ],
@@ -1208,14 +1217,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'culture_1_s1',
         lessonId: 'culture_1',
         order: 1,
-        contentKu: 'Kevneşopiya Govendê:\n\n• Govend: Halay\n• Dilan: Düğün / Eğlence\n• Şahî: Şenlik',
+        contentKu:
+            'Kevneşopiya Govendê:\n\n• Govend: Halay\n• Dilan: Düğün / Eğlence\n• Şahî: Şenlik',
         contentTr: 'Kürt halk kültürü ve halay gelenekleri.',
       ),
       LessonSlide(
         id: 'culture_1_s2',
         lessonId: 'culture_1',
         order: 2,
-        contentKu: 'Dengbêjî:\n\nDengbêjî, parastin û ragihandina dîrok û çanda kurdî ya bi riya stran û kilaman e.',
+        contentKu:
+            'Dengbêjî:\n\nDengbêjî, parastin û ragihandina dîrok û çanda kurdî ya bi riya stran û kilaman e.',
         contentTr: 'Dengbêjlik kültürü hakkında bilgi.',
       ),
     ],
@@ -1224,14 +1235,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'culture_2_s1',
         lessonId: 'culture_2',
         order: 1,
-        contentKu: 'Newroz:\n\nNewroz cejna neteweyî û nûbûna xwezayê ye ku di 21ê Adarê de tê pîrozkirin.',
+        contentKu:
+            'Newroz:\n\nNewroz cejna neteweyî û nûbûna xwezayê ye ku di 21ê Adarê de tê pîrozkirin.',
         contentTr: 'Newroz bayramı ve önemi.',
       ),
       LessonSlide(
         id: 'culture_2_s2',
         lessonId: 'culture_2',
         order: 2,
-        contentKu: 'Cejnên olî:\n\n• Cejna Remezanê: Ramazan Bayramı\n• Cejna Qurbanê: Kurban Bayramı',
+        contentKu:
+            'Cejnên olî:\n\n• Cejna Remezanê: Ramazan Bayramı\n• Cejna Qurbanê: Kurban Bayramı',
         contentTr: 'Kültürdeki dini bayramlar.',
       ),
     ],
@@ -1240,14 +1253,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'food_1_s1',
         lessonId: 'food_1',
         order: 1,
-        contentKu: 'Xwarin û vexwarinên bingehîn:\n\n• Nan: Ekmek\n• Av: Su\n• Goşt: Et\n• Mast: Yoğurt',
+        contentKu:
+            'Xwarin û vexwarinên bingehîn:\n\n• Nan: Ekmek\n• Av: Su\n• Goşt: Et\n• Mast: Yoğurt',
         contentTr: 'Temel gıdalar ve anlamları.',
       ),
       LessonSlide(
         id: 'food_1_s2',
         lessonId: 'food_1',
         order: 2,
-        contentKu: 'Danên xwarinê:\n\n• Taştê: Kahvaltı\n• Firo / Firvîn: Öğle yemeği\n• Şîv: Akşam yemeği',
+        contentKu:
+            'Danên xwarinê:\n\n• Taştê: Kahvaltı\n• Firo / Firvîn: Öğle yemeği\n• Şîv: Akşam yemeği',
         contentTr: 'Öğün isimleri.',
       ),
     ],
@@ -1256,14 +1271,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'food_2_s1',
         lessonId: 'food_2',
         order: 1,
-        contentKu: 'Fêkiyên sereke:\n\n• Sêv: Elma\n• Hinar: Nar\n• Tirî: Üzüm\n• Hejîr: İncir',
+        contentKu:
+            'Fêkiyên sereke:\n\n• Sêv: Elma\n• Hinar: Nar\n• Tirî: Üzüm\n• Hejîr: İncir',
         contentTr: 'Meyve isimleri.',
       ),
       LessonSlide(
         id: 'food_2_s2',
         lessonId: 'food_2',
         order: 2,
-        contentKu: 'Keskahî û sebze:\n\n• Pîvaz: Soğan\n• Sîr: Sarımsak\n• Bacan: Patlıcan / Domates',
+        contentKu:
+            'Keskahî û sebze:\n\n• Pîvaz: Soğan\n• Sîr: Sarımsak\n• Bacan: Patlıcan / Domates',
         contentTr: 'Sebze isimleri.',
       ),
     ],
@@ -1272,14 +1289,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'animals_1_s1',
         lessonId: 'animals_1',
         order: 1,
-        contentKu: 'Heywanên kedî:\n\n• Kûçik / Seg: Köpek\n• Pisîk: Kedi\n• Hesp: At',
+        contentKu:
+            'Heywanên kedî:\n\n• Kûçik / Seg: Köpek\n• Pisîk: Kedi\n• Hesp: At',
         contentTr: 'Evcil hayvanlar.',
       ),
       LessonSlide(
         id: 'animals_1_s2',
         lessonId: 'animals_1',
         order: 2,
-        contentKu: 'Heywanên çandiniyê:\n\n• Çêlek: İnek\n• Mîh: Koyun\n• Bizin: Keçi',
+        contentKu:
+            'Heywanên çandiniyê:\n\n• Çêlek: İnek\n• Mîh: Koyun\n• Bizin: Keçi',
         contentTr: 'Çiftlik hayvanları.',
       ),
     ],
@@ -1288,14 +1307,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'animals_2_s1',
         lessonId: 'animals_2',
         order: 1,
-        contentKu: 'Heywanên kovî:\n\n• Şêr: Aslan\n• Gur: Kurt\n• Rûvî: Tilki\n• Hirç: Ayı',
+        contentKu:
+            'Heywanên kovî:\n\n• Şêr: Aslan\n• Gur: Kurt\n• Rûvî: Tilki\n• Hirç: Ayı',
         contentTr: 'Yabani hayvanlar.',
       ),
       LessonSlide(
         id: 'animals_2_s2',
         lessonId: 'animals_2',
         order: 2,
-        contentKu: 'Balindeyên esmanî:\n\n• Teyr / Qertel: Kartal\n• Kevok: Güvercin\n• Qijak: Karga',
+        contentKu:
+            'Balindeyên esmanî:\n\n• Teyr / Qertel: Kartal\n• Kevok: Güvercin\n• Qijak: Karga',
         contentTr: 'Kuş türleri.',
       ),
     ],
@@ -1304,14 +1325,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'geography_1_s1',
         lessonId: 'geography_1',
         order: 1,
-        contentKu: 'Çiyayên navdar:\n\n• Çiyayê Cudî\n• Çiyayê Agirî\n• Çiyayê Sîpan',
+        contentKu:
+            'Çiyayên navdar:\n\n• Çiyayê Cudî\n• Çiyayê Agirî\n• Çiyayê Sîpan',
         contentTr: 'Bölgedeki önemli dağlar.',
       ),
       LessonSlide(
         id: 'geography_1_s2',
         lessonId: 'geography_1',
         order: 2,
-        contentKu: 'Çemên sereke:\n\n• Çemê Dîcle: Dicle Nehri\n• Çemê Firat: Fırat Nehri',
+        contentKu:
+            'Çemên sereke:\n\n• Çemê Dîcle: Dicle Nehri\n• Çemê Firat: Fırat Nehri',
         contentTr: 'Bölgedeki önemli akarsular.',
       ),
     ],
@@ -1320,14 +1343,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'geography_2_s1',
         lessonId: 'geography_2',
         order: 1,
-        contentKu: 'Aliyên sereke:\n\n• Bakur: Kuzey\n• Başûr: Güney\n• Rojhilat: Doğu\n• Rojava: Batı',
+        contentKu:
+            'Aliyên sereke:\n\n• Bakur: Kuzey\n• Başûr: Güney\n• Rojhilat: Doğu\n• Rojava: Batı',
         contentTr: 'Ana coğrafi yönler.',
       ),
       LessonSlide(
         id: 'geography_2_s2',
         lessonId: 'geography_2',
         order: 2,
-        contentKu: 'Aliyên din:\n\n• Jor / Jorîn: Yukarı\n• Jêr / Jêrîn: Aşağı\n• Navîn: Orta',
+        contentKu:
+            'Aliyên din:\n\n• Jor / Jorîn: Yukarı\n• Jêr / Jêrîn: Aşağı\n• Navîn: Orta',
         contentTr: 'Diğer yön ve konum ifadeleri.',
       ),
     ],
@@ -1336,14 +1361,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'emotions_1_s1',
         lessonId: 'emotions_1',
         order: 1,
-        contentKu: 'Hestên erênî:\n\n• Kêfxweş: Mutlu\n• Dilşad: Sevinçli\n• Evîndar: Aşık',
+        contentKu:
+            'Hestên erênî:\n\n• Kêfxweş: Mutlu\n• Dilşad: Sevinçli\n• Evîndar: Aşık',
         contentTr: 'Olumlu duygu durumları.',
       ),
       LessonSlide(
         id: 'emotions_1_s2',
         lessonId: 'emotions_1',
         order: 2,
-        contentKu: 'Hestên civakî:\n\n• Aştî: Barış\n• Hêvî: Umut\n• Bawerî: İnanç / Güven',
+        contentKu:
+            'Hestên civakî:\n\n• Aştî: Barış\n• Hêvî: Umut\n• Bawerî: İnanç / Güven',
         contentTr: 'Toplumsal olumlu kavramlar.',
       ),
     ],
@@ -1352,14 +1379,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'emotions_2_s1',
         lessonId: 'emotions_2',
         order: 1,
-        contentKu: 'Hestên neyênî:\n\n• Xemgîn: Üzgün\n• Hêrsbûyî: Öfkeli\n• Tirsandî: Korkmuş',
+        contentKu:
+            'Hestên neyênî:\n\n• Xemgîn: Üzgün\n• Hêrsbûyî: Öfkeli\n• Tirsandî: Korkmuş',
         contentTr: 'Olumsuz duygu durumları.',
       ),
       LessonSlide(
         id: 'emotions_2_s2',
         lessonId: 'emotions_2',
         order: 2,
-        contentKu: 'Mînakên din:\n\n• Bêhêvî: Umutsuz\n• Dilşikestî: Kalbi kırık',
+        contentKu:
+            'Mînakên din:\n\n• Bêhêvî: Umutsuz\n• Dilşikestî: Kalbi kırık',
         contentTr: 'Diğer olumsuz duygu ifadeleri.',
       ),
     ],
@@ -1368,14 +1397,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'time_1_s1',
         lessonId: 'time_1',
         order: 1,
-        contentKu: 'Rojên hefteyê:\n\n• Duşem (Pzt), Sêşem (Salı), Çarşem (Çar)\n• Pêncşem (Per), În (Cuma)\n• Şemî (Cmt), Yekşem (Paz)',
+        contentKu:
+            'Rojên hefteyê:\n\n• Duşem (Pzt), Sêşem (Salı), Çarşem (Çar)\n• Pêncşem (Per), În (Cuma)\n• Şemî (Cmt), Yekşem (Paz)',
         contentTr: 'Haftanın günleri.',
       ),
       LessonSlide(
         id: 'time_1_s2',
         lessonId: 'time_1',
         order: 2,
-        contentKu: 'Mehnên serê salê:\n\n• Rêbendan (Ocak), Reşemeh (Şubat), Adar (Mart)\n• Nîsan (Nisan), Gulan (Mayıs), Hezîran (Haziran)',
+        contentKu:
+            'Mehnên serê salê:\n\n• Rêbendan (Ocak), Reşemeh (Şubat), Adar (Mart)\n• Nîsan (Nisan), Gulan (Mayıs), Hezîran (Haziran)',
         contentTr: 'Yılın ilk 6 ayı.',
       ),
     ],
@@ -1384,7 +1415,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'time_2_s1',
         lessonId: 'time_2',
         order: 1,
-        contentKu: 'Demên rojê:\n\n• Sibeh: Sabah\n• Nîvro: Öğle\n• Êvar: Akşam\n• Şev: Gece',
+        contentKu:
+            'Demên rojê:\n\n• Sibeh: Sabah\n• Nîvro: Öğle\n• Êvar: Akşam\n• Şev: Gece',
         contentTr: 'Günün bölümleri.',
       ),
       LessonSlide(

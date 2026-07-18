@@ -6,7 +6,9 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 // Golden tests skipped — Pirs theme redesign (2026-07-16) changed all colors.
 // Regenerate goldens once the new Pirs palette stabilizes.
 void main() {
-  testWidgets('ZankurdSectionHeader with subtitle dark builds without error', (tester) async {
+  testWidgets('ZankurdSectionHeader with subtitle dark builds without error', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.dark(),
@@ -23,9 +25,11 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    });
+  });
 
-  testWidgets('ZankurdSectionHeader with action light builds without error', (tester) async {
+  testWidgets('ZankurdSectionHeader with action light builds without error', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.light(),
@@ -43,5 +47,5 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    });
+  });
 }

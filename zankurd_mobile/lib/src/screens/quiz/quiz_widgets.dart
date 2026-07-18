@@ -1411,10 +1411,12 @@ class _ExplanationBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Şablon/boş açıklamada kutu hiç açılmaz (getLocalizedExplanation '' döner).
+    final explanationText = question.getLocalizedExplanation(isKu);
     return AnimatedSize(
       duration: const Duration(milliseconds: 350),
       curve: Curves.easeOutCubic,
-      child: visible
+      child: visible && explanationText.isNotEmpty
           ? TweenAnimationBuilder<double>(
               tween: Tween(begin: 0.0, end: 1.0),
               duration: const Duration(milliseconds: 400),
@@ -1503,7 +1505,7 @@ class _ExplanationBox extends StatelessWidget {
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                question.getLocalizedExplanation(isKu),
+                                explanationText,
                                 style: AppTypography.bodyMedium.copyWith(
                                   color: AppTheme.textSubColor(context),
                                   height: 1.4,

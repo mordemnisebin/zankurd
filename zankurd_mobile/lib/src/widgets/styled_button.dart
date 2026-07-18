@@ -46,59 +46,61 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
                 widget.onPressed?.call();
               }
             : null,
-        onTapCancel: isEnabled ? () => setState(() => _isPressed = false) : null,
+        onTapCancel: isEnabled
+            ? () => setState(() => _isPressed = false)
+            : null,
         child: AnimatedContainer(
-        duration: const Duration(milliseconds: 90),
-        curve: Curves.easeOut,
-        height: 48,
-        margin: EdgeInsets.only(
-          top: _isPressed ? shadowHeight : 0,
-          bottom: _isPressed ? 0 : shadowHeight,
-        ),
-        decoration: BoxDecoration(
-          gradient: isEnabled
-              ? AppTheme.accentGradient
-              : LinearGradient(colors: [disabledColor, disabledColor]),
-          borderRadius: BorderRadius.circular(AppRadius.lg),
-          boxShadow: AppShadows.button(shadowColor, pressed: _isPressed),
-        ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              if (widget.isLoading)
-                const SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  ),
-                )
-              else ...[
-                if (widget.icon != null) ...[
-                  Icon(widget.icon, color: Colors.white, size: 20),
-                  const SizedBox(width: 8),
-                ],
-                Flexible(
-                  child: Text(
-                    widget.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0,
+          duration: const Duration(milliseconds: 90),
+          curve: Curves.easeOut,
+          height: 48,
+          margin: EdgeInsets.only(
+            top: _isPressed ? shadowHeight : 0,
+            bottom: _isPressed ? 0 : shadowHeight,
+          ),
+          decoration: BoxDecoration(
+            gradient: isEnabled
+                ? AppTheme.accentGradient
+                : LinearGradient(colors: [disabledColor, disabledColor]),
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            boxShadow: AppShadows.button(shadowColor, pressed: _isPressed),
+          ),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                if (widget.isLoading)
+                  const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                else ...[
+                  if (widget.icon != null) ...[
+                    Icon(widget.icon, color: Colors.white, size: 20),
+                    const SizedBox(width: 8),
+                  ],
+                  Flexible(
+                    child: Text(
+                      widget.label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0,
+                      ),
                     ),
                   ),
-                ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }

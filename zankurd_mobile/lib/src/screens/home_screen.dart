@@ -18,9 +18,7 @@ import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
 import 'quiz_screen.dart';
 import 'shop_screen.dart';
-import 'contest_screen.dart';
 import 'leaderboard_screen.dart';
-import 'home/daily_race_card.dart';
 import 'home/play_teaser_card.dart';
 import '../widgets/player_avatar.dart';
 
@@ -251,23 +249,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildAnimatedCard(
-                            _heroFadeAnimation(2),
-                            DailyRaceCard(
-                              onTap: () => Navigator.of(context).push(
-                                AppRoute.to(
-                                  ContestScreen(repository: widget.repository),
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (widget.onOpenPlay != null) ...[
-                            const SizedBox(height: 20),
+                          // Günlük yarışma girişi Pêşbazî sekmesinde yaşar;
+                          // home'da üçüncü bir günlük CTA karmaşası olmasın.
+                          if (widget.onOpenPlay != null)
                             _buildAnimatedCard(
                               _heroFadeAnimation(2),
                               PlayTeaserCard(onTap: widget.onOpenPlay!),
                             ),
-                          ],
                         ],
                       ),
                     ),
@@ -297,22 +285,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     );
                   }
-                  if (index == 1) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 24),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(2),
-                        DailyRaceCard(
-                          onTap: () => Navigator.of(context).push(
-                            AppRoute.to(
-                              ContestScreen(repository: widget.repository),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 2 && widget.onOpenPlay != null) {
+                  if (index == 1 && widget.onOpenPlay != null) {
                     return Padding(
                       padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
@@ -334,7 +307,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     ),
                   );
-                }, childCount: widget.onOpenPlay != null ? 4 : 3),
+                }, childCount: widget.onOpenPlay != null ? 3 : 2),
               ),
             ),
           SliverToBoxAdapter(

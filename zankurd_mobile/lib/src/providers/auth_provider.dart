@@ -178,7 +178,11 @@ class AuthProvider extends ChangeNotifier {
       await mistakeStore.clear();
       MistakeStore.resetInstance();
     } catch (e, s) {
-      ErrorReporter.record(e, s, reason: 'MistakeStore clear on signOut failed');
+      ErrorReporter.record(
+        e,
+        s,
+        reason: 'MistakeStore clear on signOut failed',
+      );
     }
 
     try {
@@ -186,7 +190,11 @@ class AuthProvider extends ChangeNotifier {
       await seenStore.clear();
       SeenQuestionStore.resetInstance();
     } catch (e, s) {
-      ErrorReporter.record(e, s, reason: 'SeenQuestionStore clear on signOut failed');
+      ErrorReporter.record(
+        e,
+        s,
+        reason: 'SeenQuestionStore clear on signOut failed',
+      );
     }
 
     try {
@@ -194,7 +202,11 @@ class AuthProvider extends ChangeNotifier {
       await achievementStore.clear();
       AchievementStore.resetInstance();
     } catch (e, s) {
-      ErrorReporter.record(e, s, reason: 'AchievementStore clear on signOut failed');
+      ErrorReporter.record(
+        e,
+        s,
+        reason: 'AchievementStore clear on signOut failed',
+      );
     }
 
     try {
@@ -202,7 +214,11 @@ class AuthProvider extends ChangeNotifier {
       await masteryStore.clear();
       MasteryStore.resetInstance();
     } catch (e, s) {
-      ErrorReporter.record(e, s, reason: 'MasteryStore clear on signOut failed');
+      ErrorReporter.record(
+        e,
+        s,
+        reason: 'MasteryStore clear on signOut failed',
+      );
     }
 
     try {
@@ -210,7 +226,11 @@ class AuthProvider extends ChangeNotifier {
       await missionStore.clear();
       DailyMissionStore.resetInstance();
     } catch (e, s) {
-      ErrorReporter.record(e, s, reason: 'DailyMissionStore clear on signOut failed');
+      ErrorReporter.record(
+        e,
+        s,
+        reason: 'DailyMissionStore clear on signOut failed',
+      );
     }
 
     try {

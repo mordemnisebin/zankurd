@@ -68,11 +68,7 @@ class ScreenIdentityHeader extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: accent.withValues(alpha: 0.16),
                   ),
-                  child: Icon(
-                    icon,
-                    color: accent,
-                    size: compact ? 22 : 26,
-                  ),
+                  child: Icon(icon, color: accent, size: compact ? 22 : 26),
                 ),
                 const SizedBox(width: AppSpacing.sm + 2),
                 Expanded(

@@ -27,7 +27,6 @@ class StrengthMapSection extends StatefulWidget {
     'Muzîk',
     'Siyaset',
     'Paradigma',
-    'Teknolojî',
   ];
 
   @override

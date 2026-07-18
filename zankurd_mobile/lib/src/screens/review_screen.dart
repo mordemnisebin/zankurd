@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../l10n/explanation_ku.dart';
 import '../l10n/lang.dart';
 import '../models/answer_record.dart';
+import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
@@ -179,6 +179,12 @@ class _ReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isCorrect = record.isCorrect;
     final bool isUnanswered = record.isUnanswered;
+    // Override > şablon eleme > yerelleştirme; boşsa açıklama kutusu gizlenir.
+    final String explanationText = resolveRawExplanation(
+      id: record.id,
+      explanation: record.explanation,
+      isKu: context.isKu,
+    );
 
     final Color headerColor;
     final IconData headerIcon;
@@ -339,7 +345,7 @@ class _ReviewCard extends StatelessWidget {
                     ),
                   );
                 }),
-                if (record.explanation.isNotEmpty) ...[
+                if (explanationText.isNotEmpty) ...[
                   const SizedBox(height: 12),
                   Container(
                     padding: const EdgeInsets.all(12),
@@ -361,9 +367,7 @@ class _ReviewCard extends StatelessWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
-                            context.isKu
-                                ? explanationToKu(record.explanation)
-                                : record.explanation,
+                            explanationText,
                             style: TextStyle(
                               color: AppTheme.textSubColor(context),
                               height: 1.4,

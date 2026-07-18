@@ -150,7 +150,10 @@ class SyncManager {
 
   void queueXP(int xp) {
     final playerId = _repository.currentUserId;
-    developer.log('Queueing XP update offline: $xp XP for user: $playerId', name: 'SyncManager');
+    developer.log(
+      'Queueing XP update offline: $xp XP for user: $playerId',
+      name: 'SyncManager',
+    );
     _queue.add({
       'type': 'sync_xp',
       'xp': xp,
@@ -178,7 +181,10 @@ class SyncManager {
 
     final currentUserId = repo.currentUserId;
     if (currentUserId == null) {
-      developer.log('No authenticated user. Skipping sync.', name: 'SyncManager');
+      developer.log(
+        'No authenticated user. Skipping sync.',
+        name: 'SyncManager',
+      );
       return;
     }
 
@@ -226,7 +232,6 @@ class SyncManager {
     await _saveQueue();
     developer.log('Sync queue cleared.', name: 'SyncManager');
   }
-
 
   Future<List<ConnectivityResult>> _checkConnectivity() async {
     try {

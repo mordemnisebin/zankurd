@@ -35,6 +35,27 @@ Kod yorum ve string'ler için: Kodda Türkçe/Kürtçe yorum varsa koru, ama yen
 
 ---
 
+## Ürün Kimliği (2026-07-18 kararı)
+
+**ZanKurd kültür-öncelikli bir öğrenme uygulamasıdır; oyun mekanikleri
+(coin, joker, yarış) araçtır, amaç değildir.** Pirs'i kopyalayarak Pirs'i
+yenemeyiz; farklılaştırıcımız kültürel derinliktir: dengbêj/kilim görsel
+dili, Kurmancî unvanlar (Xwendekar/Pispor/Mamoste), gerçek öğretici
+açıklamalar. Yeni özellik/tasarım kararı bu ilkeyle çelişiyorsa ilke
+kazanır. Şablon (bilgi taşımayan) açıklama göstermek yasaktır —
+`isTemplateExplanation` guard'ı bunları UI'da gizler; çözüm şablonu
+göstermek değil, gerçek açıklama yazmaktır.
+
+**Maskot adı ZANA'dır** (kullanıcıya görünen tüm metinlerde). `RojMascot`
+sınıf adı maskotun görsel motifine (roj = güneş) atıftır, ad değildir;
+yeniden adlandırma churn'üne gerek yok ama kullanıcıya görünen hiçbir
+yerde "Roj" adı kullanılmaz.
+
+**Dondurulmuş yüzeyler (2026-07-18):** Friends ekranı (profil menüsünden
+çekildi) ve home'daki DailyRaceCard (günlük yarışma girişi yalnız Pêşbazî
+sekmesinde). Kod silinmedi; kullanım verisi gerekçe göstermeden geri
+açılmaz.
+
 ## Project Overview
 
 **Zankurd** is a Kurmanci-language live quiz application with two main components:

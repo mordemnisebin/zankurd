@@ -97,21 +97,52 @@ class QuizQuestion {
   }
 
   String getLocalizedExplanation(bool isKu) {
-    // Öncelik: soruya özel açıklama (DB) > elle yazılmış override > şablon.
-    if (isKu) {
-      if (explanationKu != null && explanationKu!.trim().isNotEmpty) {
-        return explanationKu!;
-      }
-      final override = explanationOverrides[id];
-      if (override != null) return override.ku;
-      return explanationToKu(explanation);
-    } else {
-      if (explanationTr != null && explanationTr!.trim().isNotEmpty) {
-        return explanationTr!;
-      }
-      final override = explanationOverrides[id];
-      if (override != null) return override.tr;
-      return explanation;
+    // Öncelik: soruya özel açıklama (DB) > elle yazılmış override > ham metin.
+    // Şablon-üretimi (bilgi taşımayan) açıklamalar her seviyede elenir;
+    // boş dönüş "açıklama gösterme" demektir.
+    final db = isKu ? explanationKu : explanationTr;
+    if (db != null && db.trim().isNotEmpty && !isTemplateExplanation(db)) {
+      return db;
     }
+    return resolveRawExplanation(id: id, explanation: explanation, isKu: isKu);
   }
+}
+
+/// Üretim-şablonu, bilgi taşımayan açıklama desenleri. Bunları göstermek
+/// hiç açıklama göstermemekten kötüdür (özensizlik sinyali verir).
+final List<RegExp> _templateExplanationPatterns = [
+  RegExp(r"^Ev ravekirin têgeha '.*' nîşan dide\.$"),
+  RegExp(r"^'.*' di vê kategoriyê de têgeheke girîng e\.$"),
+  RegExp(r"^Têgeha '.*' di qada .* de bi vê ravekirinê tê bikaranîn\.$"),
+  RegExp(r"^Ev ravekirin bi '.*' û qada .* re girêdayî ye\.$"),
+  // Yalnız doğru cevabı tekrar eden şablonlar (cevap zaten ekranda).
+  RegExp(r"^Görsel '.*' kavramını gösterir; doğru yanıt: .*\.$"),
+  RegExp(r'iddia doğru değildir; doğru cevap'),
+  RegExp(r'^Doğru yanıt: [^.]+\.$'),
+  RegExp(r'^Görsel soru ".*" kelimesini pekiştirir\.$'),
+  // Döngüsel kategori cümleleri ("X, Y kategorisinde ele alınır").
+  RegExp(
+    r'(kategorisinde ele alınır|kategorisinde değerlendirilir'
+    r'|geçerli bir kavramdır|bir kavram olarak kullanılabilir)\.$',
+  ),
+  // Canlı DB'deki görsel-soru şablonu.
+  RegExp(r'^Pirsa wêneyî peyva'),
+];
+
+bool isTemplateExplanation(String text) {
+  final t = text.trim();
+  return t.isEmpty || _templateExplanationPatterns.any((p) => p.hasMatch(t));
+}
+
+/// Ham (tek dilli) açıklama taşıyan yerler (QuizQuestion, AnswerRecord) için
+/// ortak çözümleme: override > şablon eleme > yerelleştirme.
+String resolveRawExplanation({
+  required String id,
+  required String explanation,
+  required bool isKu,
+}) {
+  final override = explanationOverrides[id];
+  if (override != null) return isKu ? override.ku : override.tr;
+  if (isTemplateExplanation(explanation)) return '';
+  return isKu ? explanationToKu(explanation) : explanation;
 }

@@ -50,8 +50,8 @@ void main() {
     expect(find.byType(QuickPlayGrid), findsNothing);
     expect(find.byKey(const ValueKey('home-learning-entry')), findsOneWidget);
     expect(find.byType(ZanaDailyCard), findsOneWidget);
-    expect(find.byKey(const ValueKey('home-daily-race-entry')), findsOneWidget);
-    expect(find.text('Pêşbirka rojê'), findsOneWidget);
+    // Günlük yarışma girişi Pêşbazî sekmesine taşındı; home'da yok.
+    expect(find.byKey(const ValueKey('home-daily-race-entry')), findsNothing);
     expect(find.bySemanticsLabel('Tema'), findsOneWidget);
     expect(find.byType(DailyMissionsCard), findsNothing);
     expect(find.byType(DailyThemeCard), findsNothing);

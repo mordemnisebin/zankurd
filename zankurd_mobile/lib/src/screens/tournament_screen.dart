@@ -154,12 +154,17 @@ class _TournamentScreenState extends State<TournamentScreen> {
       );
     });
     // Sunucuya kaydet; hata sessizce yutulur (yerel oyun sürer).
-    widget.repository
-        .saveTournamentProgress('r16', 0, 0, const [])
-        .catchError((error, stack) {
-          ErrorReporter.record(error, stack, reason: 'tournament_save_initial_progress');
-          return false;
-        });
+    widget.repository.saveTournamentProgress('r16', 0, 0, const []).catchError((
+      error,
+      stack,
+    ) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'tournament_save_initial_progress',
+      );
+      return false;
+    });
     widget.repository
         .logAnalyticsEvent('tournament_started', null)
         .catchError((_) => false);
@@ -238,9 +243,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
           ? opponentScore
           : m.playerTwoScore;
       final winnerId = isUserMatch
-          ? (playerOneScore > playerTwoScore
-                ? m.playerOneId
-                : m.playerTwoId)
+          ? (playerOneScore > playerTwoScore ? m.playerOneId : m.playerTwoId)
           : m.playerOneId;
       return m.copyWith(
         playerOneScore: playerOneScore,
@@ -328,7 +331,11 @@ class _TournamentScreenState extends State<TournamentScreen> {
           winners.map((w) => w.name).toList(),
         )
         .catchError((error, stack) {
-          ErrorReporter.record(error, stack, reason: 'tournament_save_match_progress');
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'tournament_save_match_progress',
+          );
           return false;
         });
   }
@@ -750,10 +757,10 @@ class _ChampionBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-return AppPanel(
-  cardType: CardType.primary,
-  gradient: AppTheme.goldGradient,
-  child: Row(
+    return AppPanel(
+      cardType: CardType.primary,
+      gradient: AppTheme.goldGradient,
+      child: Row(
         children: [
           const Icon(Icons.emoji_events_rounded, color: Colors.white, size: 32),
           const SizedBox(width: AppSpacing.sm),

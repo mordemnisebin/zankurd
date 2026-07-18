@@ -35,7 +35,6 @@ class AchievementStore {
     'Muzîk',
     'Siyaset',
     'Paradigma',
-    'Teknolojî',
   ];
 
   static const _unlockedKey = 'zankurd.achievements.unlocked';

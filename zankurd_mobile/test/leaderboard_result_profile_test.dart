@@ -410,7 +410,8 @@ void main() {
       scrollable: find.byType(Scrollable).first,
     );
     expect(find.text('Mağaza'), findsOneWidget);
-    expect(find.text('Arkadaşlarım'), findsOneWidget);
+    // Arkadaşlar ekranı donduruldu; menüde görünmez.
+    expect(find.text('Arkadaşlarım'), findsNothing);
     await tester.scrollUntilVisible(
       find.text('Çıkış Yap'),
       200,

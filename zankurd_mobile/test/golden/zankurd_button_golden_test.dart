@@ -12,10 +12,7 @@ void main() {
         theme: AppTheme.dark(),
         home: Scaffold(
           body: Center(
-            child: ZankurdButton(
-              label: 'Destpê Bike',
-              icon: Icons.play_arrow,
-            ),
+            child: ZankurdButton(label: 'Destpê Bike', icon: Icons.play_arrow),
           ),
         ),
       ),
@@ -24,7 +21,9 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('ZankurdButton outlined light builds without error', (tester) async {
+  testWidgets('ZankurdButton outlined light builds without error', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.light(),

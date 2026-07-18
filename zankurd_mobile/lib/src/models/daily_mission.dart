@@ -126,12 +126,6 @@ class MissionDefinitions {
       coinReward: 25,
       category: 'Muzîk',
     ),
-    MissionDef(
-      type: MissionType.playCategory,
-      target: 1,
-      coinReward: 25,
-      category: 'Teknolojî',
-    ),
   ];
 
   /// Verilen gün tohumundan 3 görev üretir. Aynı gün = aynı 3 görev.

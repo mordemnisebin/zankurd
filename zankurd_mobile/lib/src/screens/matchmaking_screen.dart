@@ -251,8 +251,15 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             _matchmakingSub?.cancel();
             _matchmakingSub = null;
             // Abort online queue
-            await widget.repository.cancelMatchmaking().catchError((error, stack) {
-              ErrorReporter.record(error, stack, reason: 'matchmaking_timeout_cancel');
+            await widget.repository.cancelMatchmaking().catchError((
+              error,
+              stack,
+            ) {
+              ErrorReporter.record(
+                error,
+                stack,
+                reason: 'matchmaking_timeout_cancel',
+              );
             });
 
             if (!mounted) return;
@@ -476,7 +483,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         final roomQuestions = await widget.repository.loadRoomQuestions(room);
         if (roomQuestions.isNotEmpty) matchQuestions = roomQuestions;
       } catch (error, stack) {
-        ErrorReporter.record(error, stack, reason: 'matchmaking_load_room_questions');
+        ErrorReporter.record(
+          error,
+          stack,
+          reason: 'matchmaking_load_room_questions',
+        );
       }
       if (_isCancelled || !mounted) return;
     }
@@ -495,7 +506,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           limit: 10,
         );
       } catch (error, stack) {
-        ErrorReporter.record(error, stack, reason: 'matchmaking_load_questions');
+        ErrorReporter.record(
+          error,
+          stack,
+          reason: 'matchmaking_load_questions',
+        );
       }
       if (matchQuestions.isEmpty) {
         matchQuestions = widget.repository.questions;

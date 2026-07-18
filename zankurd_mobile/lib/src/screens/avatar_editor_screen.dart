@@ -299,9 +299,8 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                                         boxShadow: _identity.colorHex == hex
                                             ? [
                                                 BoxShadow(
-                                                  color: Colors.black.withValues(
-                                                    alpha: 0.25,
-                                                  ),
+                                                  color: Colors.black
+                                                      .withValues(alpha: 0.25),
                                                   blurRadius: 4,
                                                   offset: const Offset(0, 2),
                                                 ),

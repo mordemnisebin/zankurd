@@ -164,9 +164,13 @@ class _SignUpScreenState extends State<SignUpScreen>
         }
         Navigator.of(context).pop();
       } else if (authProvider.errorMessage != null) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(context.translateAuthError(authProvider.errorMessage!))));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              context.translateAuthError(authProvider.errorMessage!),
+            ),
+          ),
+        );
       }
     }
   }

@@ -22,10 +22,7 @@ final List<_Rule> _rules = [
     (m) => 'Peyva "${m[1]}" tê wateya "${m[2]}".',
   ),
   // 'Doğru yanıt: doğru.'
-  _Rule(
-    RegExp(r'^Doğru yanıt: ([^.]+)\.$'),
-    (m) => 'Bersiva rast: ${m[1]}.',
-  ),
+  _Rule(RegExp(r'^Doğru yanıt: ([^.]+)\.$'), (m) => 'Bersiva rast: ${m[1]}.'),
   // ''çîrok' Kurmancîde hikâye/anlatı anlamına gelir.'
   _Rule(
     RegExp(r"^'([^']+)' Kurmancîde ([^.]+) anlamına gelir\.$"),
@@ -42,10 +39,7 @@ final List<_Rule> _rules = [
     (m) => '"${m[1]}" tê wateya ${m[2]}, "${m[3]}" jî tê wateya ${m[4]}.',
   ),
   // ''güzel/iyi' → xweş.'
-  _Rule(
-    RegExp(r"^'([^']+)' → ([^.]+)\.$"),
-    (m) => '\'${m[1]}\' → ${m[2]}.',
-  ),
+  _Rule(RegExp(r"^'([^']+)' → ([^.]+)\.$"), (m) => '\'${m[1]}\' → ${m[2]}.'),
   // 'Görsel 'av' kavramını gösterir; doğru yanıt: su.'
   _Rule(
     RegExp(r"^Görsel '([^']+)' kavramını gösterir; doğru yanıt: ([^.]+)\.$"),
@@ -177,7 +171,8 @@ final List<_Rule> _rules = [
     RegExp(
       r'^Tarih; kültür, ekonomi, dil, göç, kaynak ve gündelik yaşamı da inceler\.$',
     ),
-    (m) => 'Dîrok çand, aborî, ziman, koç, çavkanî û jiyana rojane jî vedikole.',
+    (m) =>
+        'Dîrok çand, aborî, ziman, koç, çavkanî û jiyana rojane jî vedikole.',
   ),
   _Rule(
     RegExp(r'^(.+), Kürt edebiyatı alanında (.+) anlamında kullanılır\.$'),

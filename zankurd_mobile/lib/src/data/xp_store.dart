@@ -100,4 +100,3 @@ class XPStore {
     await _preferences?.remove(_totalXPKey);
   }
 }
-

@@ -25,7 +25,6 @@ import '../widgets/weekly_performance_chart.dart';
 import 'avatar_editor_screen.dart';
 import 'favorite_questions_screen.dart';
 import 'quiz_screen.dart';
-import 'friends_screen.dart';
 import 'settings_screen.dart';
 import 'suggest_question_screen.dart';
 import 'shop_screen.dart';
@@ -695,21 +694,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               divider,
               _menuRow(
                 leading: const Icon(
-                  Icons.people_outline,
-                  color: AppTheme.primaryGradientStart,
-                  size: 20,
-                ),
-                iconColor: AppTheme.primaryGradientStart,
-                title: ku ? 'Hevalên Min' : 'Arkadaşlarım',
-                onTap: () {
-                  Navigator.of(context).push(
-                    AppRoute.to(FriendsScreen(repository: widget.repository)),
-                  );
-                },
-              ),
-              divider,
-              _menuRow(
-                leading: const Icon(
                   Icons.settings_outlined,
                   color: AppTheme.secondaryAccent,
                   size: 20,
@@ -1336,7 +1320,6 @@ class _MasterySection extends StatelessWidget {
     'Muzîk',
     'Siyaset',
     'Paradigma',
-    'Teknolojî',
   ];
 
   @override
@@ -1535,7 +1518,6 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
           'Muzîk',
           'Siyaset',
           'Paradigma',
-          'Teknolojî',
         ];
 
         var masteryCategoriesPlayed = 0;

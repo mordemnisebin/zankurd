@@ -153,11 +153,11 @@ class _SignInScreenState extends State<SignInScreen>
             'Parola sıfırlama bağlantısı e-postana gönderildi.',
           )
         : (authProvider.errorMessage != null
-            ? context.translateAuthError(authProvider.errorMessage!)
-            : context.s(
-                'Vesazkirina şîfreyê bi ser neket.',
-                'Parola sıfırlama başarısız.',
-              ));
+              ? context.translateAuthError(authProvider.errorMessage!)
+              : context.s(
+                  'Vesazkirina şîfreyê bi ser neket.',
+                  'Parola sıfırlama başarısız.',
+                ));
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(message)));
@@ -395,11 +395,13 @@ class _SignInScreenState extends State<SignInScreen>
                                             textAlign: TextAlign.center,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
-                                            style: AppTypography.caption.copyWith(
-                                              color: AppTheme.textMutedColor(
-                                                context,
-                                              ),
-                                            ),
+                                            style: AppTypography.caption
+                                                .copyWith(
+                                                  color:
+                                                      AppTheme.textMutedColor(
+                                                        context,
+                                                      ),
+                                                ),
                                           ),
                                         ),
                                       ),
@@ -507,12 +509,14 @@ class _SignInScreenState extends State<SignInScreen>
                                                   'Şîfre ji bîr kir?',
                                                   'Parolayı unuttun mu?',
                                                 ),
-                                                style: AppTypography.bodyMedium.copyWith(
-                                                  color: AppTheme.textSubColor(
-                                                    context,
-                                                  ),
-                                                  fontSize: 13,
-                                                ),
+                                                style: AppTypography.bodyMedium
+                                                    .copyWith(
+                                                      color:
+                                                          AppTheme.textSubColor(
+                                                            context,
+                                                          ),
+                                                      fontSize: 13,
+                                                    ),
                                               ),
                                             ),
                                           ),
@@ -552,9 +556,12 @@ class _SignInScreenState extends State<SignInScreen>
                                           'Hesabê te tune? ',
                                           'Hesabın yok mu? ',
                                         ),
-                                        style: AppTypography.bodyMedium.copyWith(
-                                          color: AppTheme.textSubColor(context),
-                                        ),
+                                        style: AppTypography.bodyMedium
+                                            .copyWith(
+                                              color: AppTheme.textSubColor(
+                                                context,
+                                              ),
+                                            ),
                                       ),
                                       GestureDetector(
                                         onTap: () {
@@ -564,10 +571,11 @@ class _SignInScreenState extends State<SignInScreen>
                                         },
                                         child: Text(
                                           context.s('Tomar bibe', 'Kaydol'),
-                                          style: AppTypography.bodyMedium.copyWith(
-                                            color: AppTheme.accent,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                          style: AppTypography.bodyMedium
+                                              .copyWith(
+                                                color: AppTheme.accent,
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                         ),
                                       ),
                                     ],
@@ -1218,10 +1226,7 @@ class _LanguageChip extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 240),
         curve: Curves.easeInOut,
-        constraints: const BoxConstraints(
-          minHeight: 36,
-          minWidth: 36,
-        ),
+        constraints: const BoxConstraints(minHeight: 36, minWidth: 36),
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
