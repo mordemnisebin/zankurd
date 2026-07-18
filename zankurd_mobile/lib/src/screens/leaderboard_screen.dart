@@ -444,9 +444,11 @@ class _PeriodTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Kısa etiketler: 4 eşit sekme 390px'te uzun TR etiketleri kırpıyordu
+    // ("Haftalı…", "Arkada…").
     final labels = ku
         ? ['Roj', 'Heft', 'Meh', 'Heval']
-        : ['Günlük', 'Haftalık', 'Aylık', 'Arkadaşlar'];
+        : ['Gün', 'Hafta', 'Ay', 'Arkadaş'];
 
     return Container(
       margin: const EdgeInsets.fromLTRB(
@@ -483,6 +485,8 @@ class _PeriodTabs extends StatelessWidget {
           ),
         ),
         indicatorSize: TabBarIndicatorSize.tab,
+        // Varsayılan 16px label padding 4 sekmede "Arkadaş"ı kırpıyordu.
+        labelPadding: const EdgeInsets.symmetric(horizontal: 4),
         dividerColor: Colors.transparent,
         tabs: [for (final label in labels) Tab(text: label)],
       ),

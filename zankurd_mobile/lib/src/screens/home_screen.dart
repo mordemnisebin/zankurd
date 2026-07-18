@@ -487,9 +487,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       }
     }
     final currentName = _displayName ?? widget.displayName;
+    // Selamda yalnız ilk kelime: uzun adlar tek satıra sığmayıp
+    // "Hoş geldin, ZanKur…" diye kırpılıyordu; tam ad Profil'de yaşar.
+    final shortName = currentName?.trim().split(RegExp(r'\s+')).first;
     final greeting = ku
-        ? '$greetingKu, ${currentName ?? 'Lîstikvan'}!'
-        : '$greetingTr, ${currentName ?? 'Oyuncu'}!';
+        ? '$greetingKu, ${shortName ?? 'Lîstikvan'}!'
+        : '$greetingTr, ${shortName ?? 'Oyuncu'}!';
 
     return Row(
       key: const ValueKey('home-profile-header'),
@@ -500,13 +503,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                greeting,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.heading2.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                  fontSize: 19,
+              // Elips yerine sığdır: uzun selam+ad kombinasyonları
+              // ("İyi Akşamlar, ZanKurd!") kırpılmak yerine hafif küçülür.
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  greeting,
+                  maxLines: 1,
+                  style: AppTypography.heading2.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontSize: 19,
+                  ),
                 ),
               ),
               const SizedBox(height: 2),

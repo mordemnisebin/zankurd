@@ -419,7 +419,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Hoş geldin, ZanKurd Oyuncusu!'), findsOneWidget);
+    // Selamda yalnız adın ilk kelimesi kullanılır (uzun ad kırpılmasın).
+    expect(find.text('Hoş geldin, ZanKurd!'), findsOneWidget);
     expect(find.text('Seviye 5'), findsNothing);
     expect(find.byIcon(Icons.diamond), findsNothing);
 

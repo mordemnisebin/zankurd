@@ -1191,6 +1191,17 @@ class _WildcardButtonState extends State<_WildcardButton> {
                       ),
                     ),
                     const SizedBox(height: 1),
+                    // Ad + fiyat: yalnız ikon+fiyat yeni kullanıcıya jokerin
+                    // ne yaptığını söylemiyordu (tooltip uzun basışta kalır).
+                    Text(
+                      widget.type.label(widget.isKu),
+                      style: AppTypography.caption.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 9,
+                        height: 1.0,
+                        color: iconColor,
+                      ),
+                    ),
                     Text(
                       '${widget.type.coinCost}c',
                       style: AppTypography.caption.copyWith(
