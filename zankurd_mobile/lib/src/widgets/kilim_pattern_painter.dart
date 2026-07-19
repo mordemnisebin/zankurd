@@ -11,46 +11,14 @@ class KilimPatternPainter extends CustomPainter {
   final Color color;
   final double opacity;
 
+  // Pirs hizası (2026-07-20): kilim/elmas kültürel motifi kaldırıldı.
+  // Painter no-op'a indirildi — çağrı yerleri (drawPattern/color/opacity)
+  // geriye-uyum için korundu ama artık hiçbir şey çizilmez.
   @override
   void paint(Canvas canvas, Size size) {
-    if (!drawPattern) return;
-
-    final paint = Paint()
-      ..color = color.withValues(alpha: opacity)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0;
-
-    final path = Path();
-
-    // Kilim geometrisi: Elmas ve zikzak örgü dokusu
-    final double stepX = 24.0;
-    final double stepY = 24.0;
-
-    for (double x = -stepX; x < size.width + stepX; x += stepX) {
-      for (double y = -stepY; y < size.height + stepY; y += stepY) {
-        // Elmas baklava motifi
-        path.moveTo(x + stepX / 2, y);
-        path.lineTo(x + stepX, y + stepY / 2);
-        path.lineTo(x + stepX / 2, y + stepY);
-        path.lineTo(x, y + stepY / 2);
-        path.close();
-
-        // İç geometrik zikzak dolgusu (küçük motif detayları)
-        path.moveTo(x + stepX * 0.25, y + stepY * 0.5);
-        path.lineTo(x + stepX * 0.5, y + stepY * 0.25);
-        path.lineTo(x + stepX * 0.75, y + stepY * 0.5);
-        path.lineTo(x + stepX * 0.5, y + stepY * 0.75);
-        path.close();
-      }
-    }
-
-    canvas.drawPath(path, paint);
+    // Kültürel motif kaldırıldı: arka plan dokusu çizilmez.
   }
 
   @override
-  bool shouldRepaint(covariant KilimPatternPainter oldDelegate) {
-    return oldDelegate.drawPattern != drawPattern ||
-        oldDelegate.color != color ||
-        oldDelegate.opacity != opacity;
-  }
+  bool shouldRepaint(covariant KilimPatternPainter oldDelegate) => false;
 }
