@@ -844,23 +844,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         ),
                     ],
                   ),
-                  // İkincil CTA: mağaza değerlendirmesi text buton.
-                  Center(
-                    child: TextButton.icon(
-                      key: const ValueKey('result-rate-button'),
-                      onPressed: () => InAppReview.instance.openStoreListing(),
-                      icon: const Icon(Icons.star_rounded, size: 18),
-                      label: Text(
-                        context.s('Binirxîne', 'Değerlendir'),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 12),
                   // Subtle secondary links
                   Padding(
@@ -954,6 +937,36 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           },
                           child: Text(
                             context.s('Tabloya pêşderçûnê', 'Liderlik tablosu'),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppTheme.textMutedColor(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '·',
+                          style: TextStyle(
+                            color: AppTheme.textMutedColor(
+                              context,
+                            ).withValues(alpha: 0.4),
+                          ),
+                        ),
+                        // Değerlendir: öne çıkan CTA değil, soluk link — her
+                        // sonuç ekranında birincil aksiyonla yarışmasın.
+                        TextButton(
+                          key: const ValueKey('result-rate-button'),
+                          style: TextButton.styleFrom(
+                            visualDensity: VisualDensity.compact,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                          ),
+                          onPressed: () =>
+                              InAppReview.instance.openStoreListing(),
+                          child: Text(
+                            context.s('Binirxîne', 'Değerlendir'),
                             style: TextStyle(
                               fontSize: 12,
                               color: AppTheme.textMutedColor(context),
