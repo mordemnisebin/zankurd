@@ -311,16 +311,11 @@ class AppTheme {
   // Pirs hizası: ana marka aksanı turuncu (isim geriye-uyum için korundu).
   static const brandGreen = Color(0xFFF5931E); // Pirs turuncusu — ana aksan
   static const brandGreenDeep = Color(0xFFE06E12); // Koyu turuncu (gradyan ucu)
-  static const playGreen = Color(0xFF3DA968); // Öğrenme kimliği (yeşil)
-  static const playPink = Color(
-    0xFFC9503C,
-  ); // Nar kırmızısı — 1v1/rekabet (mockup paleti)
-  static const playCyan = Color(
-    0xFF2E9E93,
-  ); // Teal — oda/mod kartları (mockup paleti)
-  static const playPurple = Color(
-    0xFF6B3A7A,
-  ); // Erik moru — mockup kategori paleti tonu
+  // Pirs hizası: parlak/doygun accent seti (eski mat kültürel tonlar yerine).
+  static const playGreen = Color(0xFF22C55E); // Canlı yeşil — öğrenme kimliği
+  static const playPink = Color(0xFFEC4899); // Parlak pembe — 1v1/rekabet
+  static const playCyan = Color(0xFF14B8A6); // Parlak teal — oda/mod kartları
+  static const playPurple = Color(0xFF8B5CF6); // Parlak mor
 
   // ============ Dark Mode Palette (Pirs — koyu ikincil tema) ============
   // Legacy token names retained for existing screen consumers.
@@ -548,14 +543,16 @@ class AppTheme {
   // Per-category gradients (index matches category list order)
   // Pirs-inspired vibrant palette:
   static const List<List<Color>> categoryGradients = [
-    [Color(0xFFC67A5C), Color(0xFF9B4A2E)], // Ziman - Warm terracotta
-    [Color(0xFF722F43), Color(0xFF4A1E2C)], // Çand - Rich burgundy
-    [Color(0xFF2B4F7E), Color(0xFF1A3460)], // Dîrok - Deep blue
-    [Color(0xFFD4A84B), Color(0xFFB8860B)], // Edebiyat - Amber/gold
-    [Color(0xFF3D6B4F), Color(0xFF1E4D2E)], // Cografya - Forest green
-    [Color(0xFFD4789E), Color(0xFFA84D6E)], // Muzîk - Rose pink
-    [Color(0xFF6B3A7A), Color(0xFF452250)], // Siyaset - Plum purple
-    [Color(0xFF2E7D7E), Color(0xFF1A5C5C)], // Paradigma - Teal
+    // Pirs hizası: parlak/doygun kategori renkleri (eski mat kültürel tonlar
+    // yerine) — her kategori canlı bir kimlik rengi taşır.
+    [Color(0xFFFB8C3C), Color(0xFFF97316)], // Ziman - parlak turuncu
+    [Color(0xFFF0468C), Color(0xFFDB2777)], // Çand - parlak pembe
+    [Color(0xFF3B82F6), Color(0xFF2563EB)], // Dîrok - parlak mavi
+    [Color(0xFFFBBF24), Color(0xFFF59E0B)], // Edebiyat - parlak amber
+    [Color(0xFF22C55E), Color(0xFF16A34A)], // Cografya - parlak yeşil
+    [Color(0xFFFB7185), Color(0xFFE11D48)], // Muzîk - parlak gül kırmızısı
+    [Color(0xFFA855F7), Color(0xFF7C3AED)], // Siyaset - parlak mor
+    [Color(0xFF2DD4BF), Color(0xFF0D9488)], // Paradigma - parlak teal
   ];
 
   /// TRT tarzı çok-renkli A/B/C/D şık paleti (canlı tonlar). Quiz ve soru

@@ -12,7 +12,7 @@ void main() {
     expect(AppRadius.card, 14);
     expect(AppTheme.brandGreen, const Color(0xFFF5931E));
     expect(AppTheme.brandGreenDeep, const Color(0xFFE06E12));
-    expect(AppTheme.playGreen, const Color(0xFF3DA968));
+    expect(AppTheme.playGreen, const Color(0xFF22C55E));
     expect(AppTheme.gold, const Color(0xFFE7B53C));
     expect(AppTheme.bg, const Color(0xFF0B0F0D));
     expect(AppTheme.surface, const Color(0xFF1E3028));

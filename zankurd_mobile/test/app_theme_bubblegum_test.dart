@@ -13,7 +13,7 @@ void main() {
   });
 
   test('öğrenme rengi yeşil', () {
-    expect(AppTheme.playGreen, const Color(0xFF3DA968));
+    expect(AppTheme.playGreen, const Color(0xFF22C55E));
   });
 
   test('ödül/ikincil altını pirinç tonu', () {
