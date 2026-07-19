@@ -59,9 +59,14 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   AvatarIdentity _myIdentity = const AvatarIdentity();
   AvatarIdentity _opponentIdentity = const AvatarIdentity();
   int _opponentLevel = 1;
-  String _myName = 'Lîstikvan';
+  String? _profileName;
+
+  String get _myName => _profileName ?? (context.isKu ? 'Lîstikvan' : 'Oyuncu');
   bool _isCancelled = false;
   bool _cancelling = false;
+  // Bot diyaloğu açıkken arka plan sayacı gizlenir (zamanlayıcı zaten durmuş
+  // olur; ekranda donuk "X sn" çipi kalmasın).
+  bool _botPromptOpen = false;
 
   bool _searchingStarted = false;
   List<String> _categories = const [];
@@ -143,7 +148,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       final cats = await widget.repository.loadCategories();
       if (!mounted) return;
       setState(() {
-        _myName = name;
+        _profileName = name;
         _myIdentity = identity;
         _myLevel = level;
         _categories = cats;
@@ -264,7 +269,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
             if (!mounted) return;
             // Ask user for bot fallback
+            setState(() => _botPromptOpen = true);
             final playWithBot = await _showBotPrompt();
+            if (mounted) setState(() => _botPromptOpen = false);
             if (!mounted) return;
             if (playWithBot == true) {
               final botNames = [
@@ -554,6 +561,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           leading: _searchingStarted
               ? IconButton(
                   icon: const Icon(Icons.arrow_back_rounded),
+                  tooltip: context.isKu ? 'Vegere' : 'Geri',
                   onPressed: _cancelling ? null : _handleCancelAndPop,
                 )
               : null,
@@ -573,212 +581,207 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   }
 
   Widget _buildSelectionMenu(bool ku) {
-    return Center(
-      child: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        children: [
-          Container(
-            padding: const EdgeInsets.all(24),
+    // Dikey ortalama yok: hero kart üstten başlar, boşluk alta kalır.
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+      children: [
+        Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceHiColor(context),
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(
+              color: AppTheme.borderColor(context),
+              width: 1.2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.15),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              Container(
+                width: 64,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: AppTheme.primaryGradientStart.withValues(alpha: 0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.sports_esports_outlined,
+                  color: AppTheme.primaryGradientStart,
+                  size: 32,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                ku ? 'Şerê 1vs1' : '1vs1 Düello',
+                style: TextStyle(
+                  color: AppTheme.textPrimaryColor(context),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 24,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                ku
+                    ? 'Bi hevalan re an bi lîstikvanên din re bi awayekî zindî pêşbikeve.'
+                    : 'Arkadaşlarınla veya diğer oyuncularla canlı yarış.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppTheme.textSubColor(context),
+                  fontSize: 13,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+        // 1. Random Match Card
+        GestureDetector(
+          onTap: () => _startMatchmaking('Rastgele'),
+          child: Container(
+            key: const ValueKey('matchmaking-duel-card'),
             decoration: BoxDecoration(
-              color: AppTheme.surfaceHiColor(context),
-              borderRadius: BorderRadius.circular(24),
+              // Rastgele eşleşme birincil CTA: kırmızı (tehlike anlamı)
+              // yerine oda/mod kimliğiyle tutarlı teal-yeşil gradyan.
+              gradient: const LinearGradient(
+                colors: [AppTheme.playCyan, Color(0xFF1E6E66)],
+              ),
+              borderRadius: BorderRadius.circular(AppRadius.card),
               border: Border.all(
-                color: AppTheme.borderColor(context),
-                width: 1.2,
+                color: AppTheme.playCyan.withValues(alpha: 0.7),
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.15),
-                  blurRadius: 15,
-                  offset: const Offset(0, 8),
+                  color: AppTheme.playCyan.withValues(alpha: 0.18),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
-            child: Column(
+            padding: const EdgeInsets.all(20),
+            child: Row(
               children: [
                 Container(
-                  width: 64,
-                  height: 64,
+                  width: 44,
+                  height: 44,
                   decoration: BoxDecoration(
-                    color: AppTheme.primaryGradientStart.withValues(
-                      alpha: 0.15,
-                    ),
-                    shape: BoxShape.circle,
+                    color: Colors.white.withValues(alpha: 0.18),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(
-                    Icons.sports_esports_outlined,
-                    color: AppTheme.primaryGradientStart,
-                    size: 32,
+                  child: const Icon(Icons.shuffle_rounded, color: Colors.white),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        ku ? 'Hevrikîya rastgele' : 'Rastgele eşleşme',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        ku
+                            ? 'Bêyî hilbijartina kategoriyê rasterast bikeve rêzê.'
+                            : 'Kategori seçmeden doğrudan sıraya gir.',
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 12,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  ku ? 'Şerê 1vs1' : '1vs1 Düello',
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w900,
-                    fontSize: 24,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  ku
-                      ? 'Bi hevalan re an bi lîstikvanên din re bi awayekî zindî pêşbikeve.'
-                      : 'Arkadaşlarınla veya diğer oyuncularla canlı yarış.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppTheme.textSubColor(context),
-                    fontSize: 13,
-                  ),
+                const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Colors.white70,
+                  size: 16,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 20),
-          // 1. Random Match Card
-          GestureDetector(
-            onTap: () => _startMatchmaking('Rastgele'),
-            child: Container(
-              key: const ValueKey('matchmaking-duel-card'),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [AppTheme.playPink, Color(0xFF933527)],
-                ),
-                borderRadius: BorderRadius.circular(AppRadius.card),
-                border: Border.all(
-                  color: AppTheme.playPink.withValues(alpha: 0.7),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppTheme.playPink.withValues(alpha: 0.18),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                children: [
-                  Container(
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.18),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(
-                      Icons.shuffle_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          ku ? 'Hevrikîya rastgele' : 'Rastgele eşleşme',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          ku
-                              ? 'Bêyî hilbijartina kategoriyê rasterast bikeve rêzê.'
-                              : 'Kategori seçmeden doğrudan sıraya gir.',
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 12,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Colors.white70,
-                    size: 16,
-                  ),
-                ],
-              ),
+        ),
+        const SizedBox(height: 16),
+        // 2. Category selection label
+        Padding(
+          padding: const EdgeInsets.only(left: 4, bottom: 10),
+          child: Text(
+            ku ? 'Li gorî kategoriyê li hev bîne' : 'Kategoriye göre eşleş',
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
+              fontWeight: FontWeight.w800,
+              fontSize: 15,
             ),
           ),
-          const SizedBox(height: 16),
-          // 2. Category selection label
-          Padding(
-            padding: const EdgeInsets.only(left: 4, bottom: 10),
+        ),
+        if (_loadingCategories)
+          const Center(
+            child: CircularProgressIndicator(
+              color: AppTheme.primaryGradientStart,
+            ),
+          )
+        else if (_categories.isEmpty)
+          Center(
             child: Text(
-              ku ? 'Li gorî kategoriyê li hev bîne' : 'Kategoriye göre eşleş',
-              style: TextStyle(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w800,
-                fontSize: 15,
-              ),
+              ku ? 'Kategorî nehatin dîtin.' : 'Kategoriler bulunamadı.',
+              style: TextStyle(color: AppTheme.textMutedColor(context)),
             ),
-          ),
-          if (_loadingCategories)
-            const Center(
-              child: CircularProgressIndicator(
-                color: AppTheme.primaryGradientStart,
-              ),
-            )
-          else if (_categories.isEmpty)
-            Center(
-              child: Text(
-                ku ? 'Kategorî nehatin dîtin.' : 'Kategoriler bulunamadı.',
-                style: TextStyle(color: AppTheme.textMutedColor(context)),
-              ),
-            )
-          else
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: _categories.map((category) {
-                final isSelected = _selectedCategory == category;
-                return GestureDetector(
-                  onTap: () {
-                    setState(() => _selectedCategory = category);
-                    _startMatchmaking(category);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppTheme.surfaceHiColor(context),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: isSelected
-                            ? AppTheme.primaryGradientStart
-                            : AppTheme.borderColor(context),
-                        width: isSelected ? 2 : 1.2,
-                      ),
-                    ),
-                    child: Text(
-                      CategoryNames.localized(category, ku),
-                      style: TextStyle(
-                        color: isSelected
-                            ? AppTheme.primaryGradientStart
-                            : AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13.5,
-                      ),
+          )
+        else
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: _categories.map((category) {
+              final isSelected = _selectedCategory == category;
+              return GestureDetector(
+                onTap: () {
+                  setState(() => _selectedCategory = category);
+                  _startMatchmaking(category);
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppTheme.surfaceHiColor(context),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: isSelected
+                          ? AppTheme.primaryGradientStart
+                          : AppTheme.borderColor(context),
+                      width: isSelected ? 2 : 1.2,
                     ),
                   ),
-                );
-              }).toList(),
-            ),
-        ],
-      ),
+                  child: Text(
+                    CategoryNames.localized(category, ku),
+                    style: TextStyle(
+                      color: isSelected
+                          ? AppTheme.primaryGradientStart
+                          : AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13.5,
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+      ],
     );
   }
 
@@ -1109,34 +1112,39 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           ],
           if (!_found) ...[
             const SizedBox(height: 12),
-            // Elapsed wait — display only; timer logic unchanged
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-              decoration: BoxDecoration(
-                color: AppTheme.surfaceHiColor(context),
-                borderRadius: BorderRadius.circular(AppRadius.pill),
-                border: Border.all(
-                  color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+            // Geçen bekleme süresi — yalnız gösterim; zamanlayıcı mantığı
+            // değişmez. Bot diyaloğu açıkken çip gizlenir.
+            if (!_botPromptOpen)
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: AppTheme.surfaceHiColor(context),
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                  border: Border.all(
+                    color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+                  ),
+                ),
+                child: Text(
+                  ku
+                      ? 'Lîstikvan tê gerîn… $_secondsElapsed sn'
+                      : 'Rakip aranıyor… $_secondsElapsed sn',
+                  style: TextStyle(
+                    color: AppTheme.textSubColor(context),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-              child: Text(
-                ku
-                    ? '$_secondsElapsed sn · navînî ~30 sn'
-                    : '$_secondsElapsed sn · ortalama ~30 sn',
-                style: TextStyle(
-                  color: AppTheme.textSubColor(context),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
             const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Text(
                 ku
-                    ? 'Hevalek tê gerîn. Dikare betal bikî.'
-                    : 'Rakip aranıyor. İstediğin zaman iptal edebilirsin.',
+                    ? 'Hevalek tê gerîn. Heger lîstikvanek zindî neyê dîtin, tu ê bi botekê re bîyî eşleşkirin. Dikare betal bikî.'
+                    : 'Rakip aranıyor. Canlı rakip bulunamazsa botla eşleşirsin. İstediğin zaman iptal edebilirsin.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppTheme.textMutedColor(context),

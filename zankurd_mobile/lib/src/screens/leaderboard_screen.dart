@@ -14,6 +14,7 @@ import '../widgets/app_state.dart';
 import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/roj_mascot.dart';
+import 'friends_screen.dart';
 import 'quiz_screen.dart';
 
 class LeaderboardScreen extends StatefulWidget {
@@ -39,6 +40,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   late Future<List<Friend>> _friendsFuture;
   Timer? _refreshTimer;
   LeaderboardPeriod _period = LeaderboardPeriod.weekly;
+
+  /// Filtre geçişinde önceki veri korunur: gri boş ekran yerine mevcut
+  /// liste + ince yükleme çubuğu gösterilir (2026-07-19 canlı denetim P1).
+  List<LeaderboardEntry>? _lastEntries;
+  List<Friend>? _lastFriends;
 
   @override
   void initState() {
@@ -71,11 +77,17 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   void _loadData() {
     if (_tabController.index == 3) {
       setState(() {
-        _friendsFuture = widget.repository.loadFriendsLeaderboard();
+        _friendsFuture = widget.repository
+            .loadFriendsLeaderboard()
+            .timeout(const Duration(seconds: 10))
+            .then((friends) => _lastFriends = friends);
       });
     } else {
       setState(() {
-        _future = widget.repository.loadLeaderboard(limit: 10, period: _period);
+        _future = widget.repository
+            .loadLeaderboard(limit: 10, period: _period)
+            .timeout(const Duration(seconds: 10))
+            .then((entries) => _lastEntries = entries);
       });
     }
   }
@@ -148,7 +160,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     return FutureBuilder<List<Friend>>(
       future: _friendsFuture,
       builder: (ctx, snap) {
-        if (snap.connectionState == ConnectionState.waiting) {
+        final stale = _lastFriends;
+        if (snap.connectionState == ConnectionState.waiting && stale == null) {
           return const Center(
             child: CircularProgressIndicator(
               color: AppTheme.primaryGradientStart,
@@ -156,7 +169,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             ),
           );
         }
-        if (snap.hasError) {
+        if (snap.hasError && stale == null) {
           return AppErrorState(
             title: ku ? 'Heval nehatin barkirin' : 'Arkadaşlar yüklenemedi',
             message: ku
@@ -166,27 +179,45 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             onRetry: _loadData,
           );
         }
-        final friends = snap.data ?? [];
+        final friends = snap.data ?? stale ?? [];
         if (friends.isEmpty) {
           return AppEmptyState(
             icon: Icons.people_outline,
             title: ku ? 'Heval tune' : 'Arkadaş yok',
             message: ku
-                ? 'Arkadaş ekleyerek sıralamanı gör!'
+                ? 'Hevalan lê zêde bike û rêza xwe bibîne!'
                 : 'Arkadaş ekleyerek sıralamanı gör!',
+            actionLabel: ku ? 'Heval lê zêde bike' : 'Arkadaş ekle',
+            actionIcon: Icons.person_add_alt_rounded,
+            onAction: () {
+              Navigator.of(
+                context,
+              ).push(AppRoute.to(FriendsScreen(repository: widget.repository)));
+            },
           );
         }
-        return ListView(
-          controller: widget.scrollController,
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.page,
-            AppSpacing.xs,
-            AppSpacing.page,
-            AppSpacing.xl,
-          ),
+        return Column(
           children: [
-            for (final friend in friends)
-              _FriendRankRow(friend: friend, isKu: ku),
+            if (snap.connectionState == ConnectionState.waiting)
+              const LinearProgressIndicator(
+                minHeight: 2,
+                color: AppTheme.primaryGradientStart,
+              ),
+            Expanded(
+              child: ListView(
+                controller: widget.scrollController,
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.page,
+                  AppSpacing.xs,
+                  AppSpacing.page,
+                  AppSpacing.xl,
+                ),
+                children: [
+                  for (final friend in friends)
+                    _FriendRankRow(friend: friend, isKu: ku),
+                ],
+              ),
+            ),
           ],
         );
       },
@@ -197,7 +228,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     return FutureBuilder<List<LeaderboardEntry>>(
       future: _future,
       builder: (ctx, snap) {
-        if (snap.connectionState == ConnectionState.waiting) {
+        final stale = _lastEntries;
+        if (snap.connectionState == ConnectionState.waiting && stale == null) {
           return const Center(
             child: CircularProgressIndicator(
               color: AppTheme.primaryGradientStart,
@@ -205,7 +237,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             ),
           );
         }
-        if (snap.hasError) {
+        if (snap.hasError && stale == null) {
           return AppErrorState(
             title: ku ? 'Tabloya barnekirî' : 'Yüklenemedi',
             message: ku
@@ -215,7 +247,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             onRetry: _loadData,
           );
         }
-        final entries = snap.data ?? [];
+        final entries = snap.data ?? stale ?? [];
         if (entries.isEmpty) {
           return AppEmptyState(
             icon: Icons.emoji_events_outlined,
@@ -228,22 +260,35 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             onAction: _startQuickRace,
           );
         }
-        return ListView(
-          controller: widget.scrollController,
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.page,
-            AppSpacing.xs,
-            AppSpacing.page,
-            AppSpacing.xl,
-          ),
+        return Column(
           children: [
-            if (_period == LeaderboardPeriod.weekly) ...[
-              _LeagueBanner(myRank: _myRank(entries), isKu: ku),
-              const SizedBox(height: AppSpacing.cardGap),
-            ],
-            _Podium(entries: entries.take(3).toList(), isKu: ku),
-            const SizedBox(height: AppSpacing.cardGap),
-            for (final e in entries.skip(3)) _RankRow(entry: e, isKu: ku),
+            // Filtre/yenileme sırasında mevcut liste korunur; ince çubuk
+            // yükleme sinyali verir — gri boş ekran yerine.
+            if (snap.connectionState == ConnectionState.waiting)
+              const LinearProgressIndicator(
+                minHeight: 2,
+                color: AppTheme.primaryGradientStart,
+              ),
+            Expanded(
+              child: ListView(
+                controller: widget.scrollController,
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.page,
+                  AppSpacing.xs,
+                  AppSpacing.page,
+                  AppSpacing.xl,
+                ),
+                children: [
+                  if (_period == LeaderboardPeriod.weekly) ...[
+                    _LeagueBanner(myRank: _myRank(entries), isKu: ku),
+                    const SizedBox(height: AppSpacing.cardGap),
+                  ],
+                  _Podium(entries: entries.take(3).toList(), isKu: ku),
+                  const SizedBox(height: AppSpacing.cardGap),
+                  for (final e in entries.skip(3)) _RankRow(entry: e, isKu: ku),
+                ],
+              ),
+            ),
           ],
         );
       },
@@ -526,19 +571,36 @@ class _Podium extends StatelessWidget {
           AppSpacing.md,
         ),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
+          // Dalga 5: koyu zeytin gradyan yerine sade, göz yormayan zemin.
+          // Light'ta açık krem; dark'ta mevcut yüzey üzerine ince altın
+          // tonlama. Vurgu yalnız yeşil/altın kenarlıkta.
+          gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.secondaryAccent, AppTheme.bgDeep],
+            colors: AppTheme.isLight(context)
+                ? [
+                    Color.alphaBlend(
+                      AppTheme.gold.withValues(alpha: 0.10),
+                      AppTheme.lightSurface,
+                    ),
+                    AppTheme.lightSurfaceHi,
+                  ]
+                : [
+                    Color.alphaBlend(
+                      AppTheme.gold.withValues(alpha: 0.08),
+                      AppTheme.surfaceColor(context),
+                    ),
+                    AppTheme.surfaceColor(context),
+                  ],
           ),
           borderRadius: BorderRadius.circular(AppRadius.card),
           border: Border.all(
-            color: Colors.white.withValues(alpha: 0.12),
+            color: AppTheme.gold.withValues(alpha: 0.32),
             width: 1.2,
           ),
           boxShadow: [
             BoxShadow(
-              color: AppTheme.gold.withValues(alpha: 0.14),
+              color: AppTheme.gold.withValues(alpha: 0.10),
               blurRadius: 14,
               offset: const Offset(0, 5),
             ),
@@ -551,8 +613,8 @@ class _Podium extends StatelessWidget {
                 child: CustomPaint(
                   painter: KilimPatternPainter(
                     drawPattern: true,
-                    color: Colors.white,
-                    opacity: 0.05,
+                    color: AppTheme.gold,
+                    opacity: 0.06,
                   ),
                 ),
               ),
@@ -577,15 +639,18 @@ class _PodiumSlot extends StatelessWidget {
   static const _gold = Color(0xFFFFB800);
   static const _silver = Color(0xFF9AA6B4);
   static const _bronze = Color(0xFFB66A3A);
+  // Açık krem zeminde okunur kalması için koyu gümüş/bronz varyantları.
+  static const _silverLight = Color(0xFF5B6B7C);
+  static const _bronzeLight = Color(0xFF8A4E24);
 
-  Color get _color {
+  Color _colorFor(bool isLight) {
     switch (entry.rank) {
       case 1:
         return _gold;
       case 2:
-        return _silver;
+        return isLight ? _silverLight : _silver;
       default:
-        return _bronze;
+        return isLight ? _bronzeLight : _bronze;
     }
   }
 
@@ -596,7 +661,7 @@ class _PodiumSlot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = _color;
+    final color = _colorFor(AppTheme.isLight(context));
     final avatarR = isCenter ? 26.0 : 21.0;
     final nameFontSz = isCenter ? 13.5 : 12.0;
     final scoreFontSz = isCenter ? 15.5 : 13.5;
@@ -627,7 +692,7 @@ class _PodiumSlot extends StatelessWidget {
               Text(
                 entry.displayName,
                 style: AppTypography.bodyLarge.copyWith(
-                  color: AppTheme.textPrimary,
+                  color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w800,
                   fontSize: nameFontSz,
                 ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -126,48 +127,59 @@ class _AppShellState extends State<AppShell> {
       );
     }
 
-    return Stack(
-      key: _shellStackKey,
-      children: [
-        _buildScaffold(context, ku),
-        if (_showNavTour)
-          CoachMarkOverlay(
-            isKu: ku,
-            onFinished: _finishNavTour,
-            ancestorKey: _shellStackKey,
-            steps: [
-              CoachMarkStep(
-                targetKey: _homeNavKey,
-                icon: Icons.home_rounded,
-                titleKu: 'Sereke',
-                titleTr: 'Ana Sayfa',
-                descriptionKu:
-                    'Vir e ku tu dest pê dikî: yariyên zû, xelatên rojane û misyonên te li vir in.',
-                descriptionTr:
-                    'Buradan başlarsın: hızlı oyunlar, günlük ödüller ve görevlerin burada.',
-              ),
-              CoachMarkStep(
-                targetKey: _playNavKey,
-                icon: Icons.sports_esports_rounded,
-                titleKu: 'Bilîze',
-                titleTr: 'Yarış',
-                descriptionKu: 'Hemû pêşbirktî û lîstikên te li vir in.',
-                descriptionTr:
-                    'Günlük yarışma, 1v1, oda ve turnuvaların merkezi.',
-              ),
-              CoachMarkStep(
-                targetKey: _profileNavKey,
-                icon: Icons.person_rounded,
-                titleKu: 'Profîl',
-                titleTr: 'Profil',
-                descriptionKu:
-                    'Rozet, hevalên te, Turnuva û mîhengên te hemû li vir in.',
-                descriptionTr:
-                    'Rozetlerin, arkadaşların, Turnuva ve ayarların hepsi burada.',
-              ),
-            ],
-          ),
-      ],
+    // Web'de tarayıcı Geri kök rotayı (AppShell, splash sonrası tek rota)
+    // pop edince beyaz boş sayfa oluşuyordu (2026-07-19 canlı denetim P1).
+    // Kök rota hiç pop edilmez; geri, ana sekmeye düşer. Mobilde ana
+    // sekmedeyken sistem geri normal çıkış yapar.
+    return PopScope(
+      canPop: !kIsWeb && _tab == 0,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) return;
+        if (_tab != 0) setState(() => _tab = 0);
+      },
+      child: Stack(
+        key: _shellStackKey,
+        children: [
+          _buildScaffold(context, ku),
+          if (_showNavTour)
+            CoachMarkOverlay(
+              isKu: ku,
+              onFinished: _finishNavTour,
+              ancestorKey: _shellStackKey,
+              steps: [
+                CoachMarkStep(
+                  targetKey: _homeNavKey,
+                  icon: Icons.home_rounded,
+                  titleKu: 'Sereke',
+                  titleTr: 'Ana Sayfa',
+                  descriptionKu:
+                      'Vir e ku tu dest pê dikî: yariyên zû, xelatên rojane û misyonên te li vir in.',
+                  descriptionTr:
+                      'Buradan başlarsın: hızlı oyunlar, günlük ödüller ve görevlerin burada.',
+                ),
+                CoachMarkStep(
+                  targetKey: _playNavKey,
+                  icon: Icons.sports_esports_rounded,
+                  titleKu: 'Bilîze',
+                  titleTr: 'Yarış',
+                  descriptionKu: 'Hemû pêşbirktî û lîstikên te li vir in.',
+                  descriptionTr:
+                      'Günlük yarışma, 1v1, oda ve turnuvaların merkezi.',
+                ),
+                CoachMarkStep(
+                  targetKey: _profileNavKey,
+                  icon: Icons.person_rounded,
+                  titleKu: 'Profîl',
+                  titleTr: 'Profil',
+                  descriptionKu:
+                      'Rozet, hevalên te, Turnuva û mîhengên te hemû li vir in.',
+                  descriptionTr:
+                      'Rozetlerin, arkadaşların, Turnuva ve ayarların hepsi burada.',
+                ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 

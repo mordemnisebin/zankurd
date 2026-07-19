@@ -118,7 +118,7 @@ class _ContestScreenState extends State<ContestScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(ku ? 'Çalakî' : 'Etkinlik')),
+      appBar: AppBar(title: Text(ku ? 'Pêşbirka Rojê' : 'Günün Yarışması')),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -147,12 +147,18 @@ class _ContestScreenState extends State<ContestScreen> {
               }
               final contest = snapshot.data;
               if (contest == null) {
+                // Dürüst boş durum: isim eşleşmesi (Pêşbirka Rojê) + net
+                // "yakında" mesajı + geri yolu. Kullanıcı ölü ekranda
+                // kalmaz (2026-07-19 canlı denetim P1 bulgusu).
                 return AppEmptyState(
                   icon: Icons.celebration_outlined,
-                  title: ku ? 'Hîn çalakî tune' : 'Henüz etkinlik yok',
+                  title: ku ? 'Pêşbirka Rojê' : 'Günün Yarışması',
                   message: ku
-                      ? 'Sibê çalakiya nû tê.'
-                      : 'Yarın yeni etkinlik başlar.',
+                      ? 'Îro pêşbirka rojê venemayî. Sibê pêşbirka nû tê — paşê dîsa were!'
+                      : 'Bugünün yarışması kalmadı. Yarın yeni yarışma gelir — sonra yine gel!',
+                  actionLabel: ku ? 'Biçe Sereke' : 'Ana Sayfaya Dön',
+                  actionIcon: Icons.home_rounded,
+                  onAction: () => Navigator.of(context).pop(),
                 );
               }
               return _ContestContent(

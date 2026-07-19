@@ -194,7 +194,12 @@ class AchievementStore {
       AchievementIds.mistakesCleared,
     );
     unlockWhen(
+      // Yalnızca GERÇEK bot rakipler sayılır: gerçek insan rakibi yenince
+      // "Bot Têk Bir" rozeti açılmamalı (2026-07 canlı denetim bulgusu).
+      // Botlar BotRace.toPlayers() ile state=='Bot' üretir; online oyuncular
+      // 'Hazır'/'Bekliyor'/'Cevapladı' durumlarında gelir.
       opponents.isNotEmpty &&
+          opponents.every((opponent) => opponent.state == 'Bot') &&
           opponents.every((opponent) => userScore > opponent.score),
       AchievementIds.botWinner,
     );

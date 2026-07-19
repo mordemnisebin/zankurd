@@ -183,7 +183,6 @@ class _RoomScreenState extends State<RoomScreen> {
     final currentUserId = widget.repository.currentUserId;
     final isHost = room.hostId == null || room.hostId == currentUserId;
     final canStart = ready && !starting && room.players.length >= 2;
-
     if (_leaving) {
       return Scaffold(
         body: Container(
@@ -238,12 +237,15 @@ class _RoomScreenState extends State<RoomScreen> {
                         children: [
                           IconButton(
                             onPressed: _leaving ? null : _leaveRoom,
+                            tooltip: ku ? 'Ji odeyê derkeve' : 'Odadan ayrıl',
                             icon: Icon(
                               Icons.arrow_back_rounded,
                               color: AppTheme.textSubColor(context),
                             ),
                           ),
                           const Spacer(),
+                          // Oda kodu chip'i kaldırıldı — hero kart zaten
+                          // büyük paylaşım kodunu gösteriyor.
                           // Çocuk modu: serbest metin oda sohbeti kapalı.
                           if (context
                               .watch<ChildSafetyProvider>()
@@ -262,22 +264,6 @@ class _RoomScreenState extends State<RoomScreen> {
                               ),
                               tooltip: ku ? 'Sohbet' : 'Sohbet',
                             ),
-                          TextButton.icon(
-                            onPressed: () => _copyRoomCode(context, ku),
-                            icon: const Icon(Icons.copy_rounded, size: 16),
-                            label: Text(
-                              room.code,
-                              key: const ValueKey('room-code-toolbar'),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTypography.bodyLarge.copyWith(
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            style: TextButton.styleFrom(
-                              foregroundColor: AppTheme.textSubColor(context),
-                            ),
-                          ),
                         ],
                       ),
                       const SizedBox(height: AppSpacing.xxs),
@@ -328,6 +314,16 @@ class _RoomScreenState extends State<RoomScreen> {
                                       if (isHost)
                                         _Pill(
                                           label: ku ? 'Mêvandar' : 'Ev sahibi',
+                                          icon: Icons.star_rounded,
+                                        ),
+                                      // Guest tarafında da mêvandar bilgisi
+                                      // görünsün: host'ta 3 çip, guest'te 2
+                                      // çip kalıyordu (bilgi asimetrisi).
+                                      if (!isHost)
+                                        _Pill(
+                                          label: ku
+                                              ? 'Mêvandar: ${_hostName(room)}'
+                                              : 'Ev sahibi: ${_hostName(room)}',
                                           icon: Icons.star_rounded,
                                         ),
                                     ],
@@ -508,43 +504,28 @@ class _RoomScreenState extends State<RoomScreen> {
                                 ),
                             if (room.players.length < 2) ...[
                               const SizedBox(height: AppSpacing.sm),
-                              Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(AppSpacing.sm),
-                                decoration: BoxDecoration(
-                                  color: AppTheme.gold.withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(
-                                    AppRadius.sm,
+                              // Tek inline şerit: davet ipucu (başlatma
+                              // uyarısı aşağıdaki hazır panelinde).
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.person_add_alt_1_rounded,
+                                    color: AppTheme.gold,
+                                    size: 18,
                                   ),
-                                  border: Border.all(
-                                    color: AppTheme.gold.withValues(
-                                      alpha: 0.28,
-                                    ),
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.person_add_alt_1_rounded,
-                                      color: AppTheme.gold,
-                                      size: 20,
-                                    ),
-                                    const SizedBox(width: AppSpacing.xs),
-                                    Expanded(
-                                      child: Text(
-                                        ku
-                                            ? 'Hevalê xwe bi kodê vexwîne — herî kêm 2 lîstikvan pêwîst e.'
-                                            : 'Arkadaşını kodla davet et — en az 2 oyuncu gerekir.',
-                                        style: AppTypography.caption.copyWith(
-                                          color: AppTheme.textPrimaryColor(
-                                            context,
-                                          ),
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                  const SizedBox(width: AppSpacing.xs),
+                                  Expanded(
+                                    child: Text(
+                                      ku
+                                          ? 'Hevalê xwe bi kodê vexwîne.'
+                                          : 'Arkadaşını kodla davet et.',
+                                      style: AppTypography.caption.copyWith(
+                                        color: AppTheme.textMutedColor(context),
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ],
                           ],
@@ -587,14 +568,45 @@ class _RoomScreenState extends State<RoomScreen> {
                             ),
                             const SizedBox(height: AppSpacing.sm),
                             if (room.players.length < 2) ...[
-                              Text(
-                                ku
-                                    ? 'Ji bo destpêkirina pêşbirkê herî kêm 2 lîstikvan divên.'
-                                    : 'Yarışı başlatmak için en az 2 oyuncu olmalıdır.',
-                                textAlign: TextAlign.center,
-                                style: AppTypography.caption.copyWith(
-                                  color: AppTheme.wrong,
-                                  fontWeight: FontWeight.bold,
+                              // Tek inline uyarı şeridi: "2 oyuncu gerekli"
+                              // mesajı yalnızca burada görünür.
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.sm,
+                                  vertical: AppSpacing.xs + 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppTheme.wrong.withValues(alpha: 0.08),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.sm,
+                                  ),
+                                  border: Border.all(
+                                    color: AppTheme.wrong.withValues(
+                                      alpha: 0.25,
+                                    ),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.group_add_outlined,
+                                      color: AppTheme.wrong,
+                                      size: 18,
+                                    ),
+                                    const SizedBox(width: AppSpacing.xs),
+                                    Expanded(
+                                      child: Text(
+                                        ku
+                                            ? 'Ji bo destpêkirina pêşbirkê herî kêm 2 lîstikvan divên.'
+                                            : 'Yarışı başlatmak için en az 2 oyuncu olmalıdır.',
+                                        style: AppTypography.caption.copyWith(
+                                          color: AppTheme.wrong,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               const SizedBox(height: AppSpacing.xs),
@@ -732,6 +744,14 @@ class _RoomScreenState extends State<RoomScreen> {
   }
 }
 
+/// Mêvandarın (ev sahibinin) görünen adı — guest lobi çipi için.
+String _hostName(GameRoom room) {
+  for (final player in room.players) {
+    if (player.id != null && player.id == room.hostId) return player.name;
+  }
+  return room.players.isNotEmpty ? room.players.first.name : '—';
+}
+
 class _Pill extends StatelessWidget {
   const _Pill({required this.label, required this.icon});
 
@@ -855,7 +875,7 @@ class _PlayerTile extends StatelessWidget {
                           borderRadius: BorderRadius.circular(AppRadius.xs),
                         ),
                         child: Text(
-                          isKu ? 'Host' : 'Host',
+                          isKu ? 'Mêvandar' : 'Ev sahibi',
                           style: AppTypography.caption.copyWith(
                             color: AppTheme.gold,
                             fontSize: 10,

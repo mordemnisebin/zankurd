@@ -19,6 +19,7 @@ import '../models/room_message.dart';
 import '../models/tournament.dart';
 import '../utils/error_reporter.dart';
 import '../utils/question_cache.dart';
+import '../config/category_visibility.dart';
 import 'mock_zankurd_repository.dart';
 import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
@@ -267,7 +268,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .select('name')
           .eq('is_active', true)
           .order('name');
-      return rows.map((row) => row['name'] as String).toList();
+      // Uygulama içi gizli kategoriler (içerik hazır olana dek) listeden
+      // düşülür; veritabanına dokunulmaz.
+      return visibleCategories(rows.map((row) => row['name'] as String));
     });
   }
 
@@ -422,7 +425,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
     try {
-      final seed = MockZanKurdRepository.dailySeed();
+      final seed = MockZanKurdRepository.dailySeedFor(currentUserId);
 
       // Soru sayısını öğren (SELECT ile aynı onay filtresiyle),
       // gün tohumlu pencereden çek.

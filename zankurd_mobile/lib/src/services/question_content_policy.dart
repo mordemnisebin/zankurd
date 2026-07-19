@@ -1,3 +1,4 @@
+import '../config/category_visibility.dart';
 import '../models/quiz_question.dart';
 
 /// Son kullanıcıya gösterilmeden önce sorunun yapısal oynanabilirliğini
@@ -5,7 +6,13 @@ import '../models/quiz_question.dart';
 class QuestionContentPolicy {
   const QuestionContentPolicy();
 
-  bool isPlayable(QuizQuestion question) => validate(question).isEmpty;
+  bool isPlayable(QuizQuestion question) {
+    // Gizli kategori (ör. içeriği hazır olmayan Teknolojî) hiçbir akışta
+    // oynanabilir değildir — quiz seçimi, günlük soru ve offline banka
+    // sızıntıları bu tek noktadan kapanır.
+    if (!isCategoryVisible(question.category)) return false;
+    return validate(question).isEmpty;
+  }
 
   List<String> validate(QuizQuestion question) {
     final issues = <String>[];

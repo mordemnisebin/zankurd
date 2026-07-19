@@ -257,6 +257,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                         // ── Prize reveal ──
                         if (_wonAmount != null)
                           _buildPrizeReveal(context, ku, _wonAmount!),
+                        // ── Günlük hak durumu (her durumda görünür) ──
+                        _buildSpinStatusChip(context, ku),
+                        const SizedBox(height: AppSpacing.sm),
                         // ── Spin button ──
                         _buildSpinButton(context, ku),
                         // ── Countdown ──
@@ -305,17 +308,16 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
           horizontal: AppSpacing.lg,
         ),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          // Sarı/gold gradyan üzerinde beyaz metin kontrastı zayıftı;
+          // her iki temada da koyu yeşil zemin + gold vurgu kullanılır.
+          gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: isDark
-                ? [AppTheme.secondaryAccent, AppTheme.bgDeep]
-                : [
-                    AppTheme.secondaryAccent.withValues(alpha: 0.7),
-                    AppTheme.violet.withValues(alpha: 0.6),
-                  ],
+            colors: [AppTheme.brandGreenDeep, Color(0xFF17503A)],
           ),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
+          border: Border.all(
+            color: AppTheme.gold.withValues(alpha: isDark ? 0.30 : 0.45),
+          ),
           boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.15),
         ),
         child: Column(
@@ -431,11 +433,11 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
               ),
             ),
           ),
-          // Pointer (top arrow)
+          // Pointer (top arrow) — belirgin merkez gösterge üçgeni
           Positioned(
             top: 0,
             child: CustomPaint(
-              size: const Size(32, 28),
+              size: const Size(44, 40),
               painter: _PointerPainter(),
             ),
           ),
@@ -500,6 +502,54 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  // ────────────────────────────────────────────
+  //  Günlük hak durumu çipi
+  // ────────────────────────────────────────────
+  Widget _buildSpinStatusChip(BuildContext context, bool ku) {
+    final hasRight = _canSpin;
+    final label = hasRight
+        ? (ku ? 'Mafê te yê îro amade ye' : 'Bugünkü hakkın hazır')
+        : (ku
+              ? 'Mafê îro bi dawî bû — sibê were (${_formatDuration(_timeUntilNextSpin)})'
+              : 'Bugünkü hak bitti — yarın gel (${_formatDuration(_timeUntilNextSpin)})');
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        color: (hasRight ? AppTheme.correct : AppTheme.gold).withValues(
+          alpha: 0.12,
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(
+          color: (hasRight ? AppTheme.correct : AppTheme.gold).withValues(
+            alpha: 0.35,
+          ),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            hasRight ? Icons.check_circle_outline : Icons.lock_clock_outlined,
+            size: 16,
+            color: hasRight ? AppTheme.correct : AppTheme.gold,
+          ),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              label,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppTheme.textSubColor(context),
+                fontSize: 12.5,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -707,28 +757,20 @@ class _WheelPainter extends CustomPainter {
   final List<int> rewards;
   final double angle;
 
-  // Marka ailesinden: kategori kartlarında zaten kullanılan
-  // AppTheme.categoryGradients ile aynı 8 renk — eski "gökkuşağı" oyuncak
-  // paleti (coral/sky/hot-pink) yerine tutarlı bir kimlik.
+  // Marka paletinin 4 tonu: yeşil / hardal / teal / koyu yeşil — eski
+  // 8-renkli gökkuşağı yerine sakin, tutarlı kimlik. 8 dilim bu 4 tonu
+  // dönüşümlü kullanır.
   static const _segmentColors = [
-    AppTheme.gold,
-    AppTheme.correct,
-    Color(0xFFC67A5C), // terracotta
+    AppTheme.brandGreen,
+    Color(0xFFD4A84B), // hardal
     Color(0xFF2E7D7E), // teal
-    AppTheme.wrong,
-    Color(0xFF6B3A7A), // erik moru
-    Color(0xFFD4A84B), // amber
-    Color(0xFF3D6B4F), // orman yeşili
+    Color(0xFF3D6B4F), // koyu/orman yeşili
   ];
 
   static const _segmentDarkColors = [
-    Color(0xFFB8872E),
     AppTheme.brandGreenDeep,
-    Color(0xFF9B4A2E),
-    Color(0xFF1A5C5C),
-    Color(0xFFB6402F),
-    Color(0xFF452250),
     Color(0xFFB8860B),
+    Color(0xFF1A5C5C),
     Color(0xFF1E4D2E),
   ];
 
@@ -895,9 +937,9 @@ class _PointerPainter extends CustomPainter {
     canvas.drawPath(
       path,
       Paint()
-        ..color = Colors.white.withValues(alpha: 0.8)
+        ..color = Colors.white.withValues(alpha: 0.95)
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2,
+        ..strokeWidth = 2.6,
     );
   }
 

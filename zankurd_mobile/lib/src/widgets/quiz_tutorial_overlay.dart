@@ -18,6 +18,7 @@ class QuizTutorialOverlay extends StatefulWidget {
     required this.wildcardKey,
     required this.nextButtonKey,
     this.onReady,
+    this.timerSeconds = 15,
     super.key,
   });
 
@@ -47,6 +48,9 @@ class QuizTutorialOverlay extends StatefulWidget {
   /// Quiz timer'ı bu sinyalden önce başlamamalı; aksi halde ilk kez quiz açan
   /// kullanıcı rehberi okurken süre biter ve doğru cevap otomatik açılır.
   final VoidCallback? onReady;
+
+  /// Soru başına süre (sn) — Demjimêr adımındaki açıklama metni bunu gösterir.
+  final int timerSeconds;
 
   @override
   State<QuizTutorialOverlay> createState() => _QuizTutorialOverlayState();
@@ -106,56 +110,29 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
             isKu: widget.isKu,
             onFinished: _finish,
             ancestorKey: _stackKey,
+            // Dalga 5: 5 adım 2'ye indirildi. Sayaç + cevaplama tek
+            // balonda; joker öğretimi ilk kullanımda contextual ipucu
+            // olarak quiz içinde gösterilir (bkz. _maybeShowWildcardHint).
             steps: [
               CoachMarkStep(
                 targetKey: widget.timerKey,
                 icon: Icons.timer_outlined,
-                titleKu: 'Demjimêr',
-                titleTr: 'Zamanlayıcı',
+                titleKu: 'Demjimêr + Bersiv',
+                titleTr: 'Süre + Cevap',
                 descriptionKu:
-                    '15 saniyede bersivê bide. Berî ku dem biqede bersiva xwe hilbijêre.',
+                    '${widget.timerSeconds} saniyeyê de bersiva rast hilbijêre; her bersiva rast pûanan qezenc dike.',
                 descriptionTr:
-                    '15 saniyede cevap ver. Süre dolmadan şıkkını seç.',
-              ),
-              CoachMarkStep(
-                targetKey: widget.answerAreaKey,
-                icon: Icons.touch_app_outlined,
-                titleKu: 'Bersiv Hilbijêre',
-                titleTr: 'Cevap Seç',
-                descriptionKu:
-                    'Bersiva rast hilbijêre. Her bersiva rast pûanan qezenc dike.',
-                descriptionTr:
-                    'Doğru şıkkı seç. Her doğru cevap puan kazandırır.',
-              ),
-              CoachMarkStep(
-                targetKey: widget.comboKey,
-                icon: Icons.local_fire_department_outlined,
-                titleKu: 'Rêz / Kombo',
-                titleTr: 'Seri / Kombo',
-                descriptionKu:
-                    'Rêz çêke û bonûs pûanan qezenc bike! Bi bersivên rast ên li pey hev rêza xwe mezin bike.',
-                descriptionTr:
-                    'Seri yaptıkça bonus puan kazan! Peş peşe doğru cevaplarla serini büyüt.',
-              ),
-              CoachMarkStep(
-                targetKey: widget.wildcardKey,
-                icon: Icons.auto_awesome_outlined,
-                titleKu: 'Joker',
-                titleTr: 'Jokerler',
-                descriptionKu:
-                    'Bi jokeran pirsên zor derbas bike. Ji %50, temaşevan, bersiva ducarî alîkariyan bikar bîne.',
-                descriptionTr:
-                    'Jokerlerle zor soruları aş. %50, seyirci, çift cevap gibi yardımcıları kullan.',
+                    '${widget.timerSeconds} saniyede doğru şıkkı seç; her doğru cevap puan kazandırır.',
               ),
               CoachMarkStep(
                 targetKey: widget.nextButtonKey,
                 icon: Icons.arrow_forward_outlined,
-                titleKu: 'Pirsa Din',
-                titleTr: 'Sonraki Soru',
+                titleKu: 'Rêz + Pirsa Din',
+                titleTr: 'Seri + Sonraki Soru',
                 descriptionKu:
-                    'Piştî bersivê derbasî pirsa din bibe. Di pirsa dawî de pêşbirkê biqedîne.',
+                    'Bersivên rast ên li pey hev rêzê mezin dikin û bonûs tînin. Piştî bersivê vir bitikîne û derbasî pirsa din bibe.',
                 descriptionTr:
-                    'Cevap verdikten sonra sonraki soruya geç. Son soruda yarışmayı bitir.',
+                    'Peş peşe doğru cevaplar serini büyütür, bonus kazandırır. Cevapladıktan sonra buradan sonraki soruya geç.',
               ),
             ],
           ),

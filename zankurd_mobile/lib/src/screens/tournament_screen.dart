@@ -5,6 +5,7 @@ import '../l10n/lang.dart';
 import '../models/tournament.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../utils/duration_format.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
@@ -198,6 +199,21 @@ class _TournamentScreenState extends State<TournamentScreen> {
             .toList();
       }
       if (!mounted) return;
+      // Maç ekranına versus bandı: rakip adı + tur bilgisi (bracket verisi
+      // zaten var; yalnız UI'a taşınır).
+      final ku = context.isKu;
+      final bracket = _bracket;
+      String? versusBanner;
+      final match = _userMatch;
+      if (bracket != null && match != null) {
+        final opponentName = match.playerOneId == _userId
+            ? match.playerTwoName
+            : match.playerOneName;
+        final roundName = _roundNames(ku)[bracket.currentRound];
+        versusBanner = ku
+            ? 'Maça Te · $roundName · Li dijî $opponentName'
+            : 'Maçın · $roundName · Rakip: $opponentName';
+      }
       final result = await Navigator.of(context).push(
         AppRoute.to(
           QuizScreen(
@@ -205,6 +221,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             room: widget.repository.createRoom(),
             questions: questions,
             botRace: true,
+            versusBannerText: versusBanner,
           ),
         ),
       );
@@ -397,15 +414,17 @@ class _TournamentScreenState extends State<TournamentScreen> {
         children: [
           ScreenIdentityHeader(
             title: ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
-            subtitle: ku
-                ? 'Bot turnuva · ${roundNames[bracket.currentRound]}'
-                : 'Bot turnuva · ${roundNames[bracket.currentRound]}',
+            // Tur bilgisi yalnızca maç kartında gösterilir; burada tekrar
+            // edilmez (üst üste 3 kartta aynı bilgi vardı).
+            subtitle: ku ? 'Bot turnuva' : 'Bot turnuva',
             accent: AppTheme.gold,
             icon: Icons.emoji_events_rounded,
             compact: true,
           ),
           const SizedBox(height: AppSpacing.md),
-          _StatusCard(bracket: bracket, ku: ku),
+          // Durum kartı yalnızca turnuva aktif değilken (elendi/kazandı)
+          // anlam taşır; aktif oyunda maç kartı zaten bağlamı verir.
+          if (bracket.status != 'active') _StatusCard(bracket: bracket, ku: ku),
           if (bracket.status == 'won') ...[
             const SizedBox(height: AppSpacing.md),
             _ChampionBanner(ku: ku),
@@ -422,7 +441,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
           ],
           const SizedBox(height: AppSpacing.lg),
           // -- Bracket visualization --
-          ScreenSectionLabel(
+          _TournamentSectionTitle(
             label: ku ? 'Şemaya Turnuvayê' : 'Turnuva Şeması',
             accent: AppTheme.gold,
           ),
@@ -461,7 +480,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             const SizedBox(height: AppSpacing.md),
           ],
           if (_standings.isNotEmpty) ...[
-            ScreenSectionLabel(
+            _TournamentSectionTitle(
               label: ku ? 'Rêzkirin' : 'Sıralama',
               accent: AppTheme.gold,
             ),
@@ -497,18 +516,23 @@ class _LobbyView extends StatelessWidget {
       nextSaturday.add(const Duration(days: 7));
     }
     final remaining = nextSaturday.difference(now);
-    final remainingHours = remaining.inHours;
-    final remainingMinutes = remaining.inMinutes % 60;
+    final remainingText = formatDurationHuman(remaining, ku: ku);
 
     final scheduleText = ku ? 'Her Şemî 20:00' : 'Her Cumartesi 20:00';
     final countdownText = ku
-        ? 'Turnuvaya maye: $remainingHours saet $remainingMinutes deqîqe'
-        : 'Turnuvaya kalan: $remainingHours saat $remainingMinutes dakika';
+        ? 'Turnuvaya maye: $remainingText'
+        : 'Turnuvaya kalan: $remainingText';
 
-    return Center(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        child: ClipRRect(
+    // Dikey ortalama yok: hero kart üstten başlar, boşluk alta kalır.
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.lg,
+        AppSpacing.lg,
+        AppSpacing.lg,
+        AppSpacing.lg,
+      ),
+      children: [
+        ClipRRect(
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Container(
             key: const ValueKey('tournament-hero'),
@@ -686,6 +710,43 @@ class _LobbyView extends StatelessWidget {
             ),
           ),
         ),
+      ],
+    );
+  }
+}
+
+/// Bölüm başlığı — all-caps etiket patlaması yerine standart gövde başlığı:
+/// sol accent çizgisi + normal büyük/küçük harf, okunabilir ağırlık.
+class _TournamentSectionTitle extends StatelessWidget {
+  const _TournamentSectionTitle({required this.label, required this.accent});
+
+  final String label;
+  final Color accent;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(2, AppSpacing.xs, 2, AppSpacing.xs),
+      child: Row(
+        children: [
+          Container(
+            width: 3,
+            height: 16,
+            decoration: AppTheme.sectionAccent(accent),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.bodyLarge.copyWith(
+                color: AppTheme.textPrimaryColor(context),
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

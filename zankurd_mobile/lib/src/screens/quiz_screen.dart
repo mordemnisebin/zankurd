@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../config/category_visuals.dart';
 import '../data/mistake_store.dart';
@@ -63,6 +64,7 @@ class QuizScreen extends StatefulWidget {
     this.is1v1 = false,
     this.experience = QuizExperience.competition,
     this.contestId,
+    this.versusBannerText,
     super.key,
   });
 
@@ -85,6 +87,10 @@ class QuizScreen extends StatefulWidget {
 
   /// Günlük etkinlik (contest) quiz'i — sonuçta skor + ödül RPC.
   final String? contestId;
+
+  /// Turnuva maçı gibi versus bağlamı olan akışlarda ekran üstünde
+  /// gösterilen bant metni (örn. "Çaryeka Final · Li dijî Azad").
+  final String? versusBannerText;
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -150,6 +156,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   StreamSubscription? _roomSub;
   Timer? _pollTimer;
   bool _questionFlowStarted = false;
+  // Tutorial açıkken ertelenen multiplayer soru sayacı (bkz. _syncToQuestionIndex).
+  bool _timerDeferredForTutorial = false;
 
   // 1v1 online eşleşmede her iki taraf da bu ekrana kendi hızında ulaşır
   // (matchmaking sonrası ayrı ayrı navigasyon); bariyer olmadan biri
@@ -452,6 +460,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   void _handleTutorialReady() {
     _tutorialGateReady = true;
     _maybeStartQuestionFlow();
+    // Tutorial açıkken oda index senkronu sayacı ertelediyse şimdi başlat.
+    if (_timerDeferredForTutorial) {
+      _timerDeferredForTutorial = false;
+      if (!answered) _startTimer();
+    }
   }
 
   void _maybeStartQuestionFlow() {
@@ -669,71 +682,86 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           actions: [
             IconButton(
               onPressed: _toggleFavorite,
+              tooltip: context.s('Tomar bike', 'Kaydet'),
               icon: Icon(favorite ? Icons.bookmark : Icons.bookmark_border),
             ),
             IconButton(
               onPressed: _reportQuestion,
+              tooltip: context.s('Raporte bike', 'Bildir'),
               icon: const Icon(Icons.report_gmailerrorred_outlined),
             ),
           ],
         ),
-        body: QuizTutorialOverlay(
-          isKu: _isKu,
-          timerKey: _timerTargetKey,
-          answerAreaKey: _answerAreaKey,
-          comboKey: _comboKey,
-          wildcardKey: _wildcardKey,
-          nextButtonKey: _nextButtonKey,
-          onReady: _handleTutorialReady,
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: AppTheme.backgroundGradient(context),
-            ),
-            child: Stack(
-              children: [
-                SafeArea(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      final landscape = constraints.maxWidth >= 700;
-                      if (landscape) {
-                        return _buildLandscapeLayout();
-                      }
-                      return _buildPortraitLayout();
-                    },
+        body: Column(
+          children: [
+            // Turnuva/versus bandı: rakip adı + tur bilgisi (UI-only).
+            if (widget.versusBannerText != null)
+              SafeArea(
+                bottom: false,
+                child: _VersusBanner(text: widget.versusBannerText!),
+              ),
+            Expanded(
+              child: QuizTutorialOverlay(
+                isKu: _isKu,
+                timerKey: _timerTargetKey,
+                answerAreaKey: _answerAreaKey,
+                comboKey: _comboKey,
+                wildcardKey: _wildcardKey,
+                nextButtonKey: _nextButtonKey,
+                onReady: _handleTutorialReady,
+                timerSeconds: widget.room.secondsPerQuestion,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: AppTheme.backgroundGradient(context),
+                  ),
+                  child: Stack(
+                    children: [
+                      SafeArea(
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            final landscape = constraints.maxWidth >= 700;
+                            if (landscape) {
+                              return _buildLandscapeLayout();
+                            }
+                            return _buildPortraitLayout();
+                          },
+                        ),
+                      ),
+                      // Vinyet yalnız aktif geri sayım baskısında: cevap verildikten
+                      // (veya süre dolduktan) sonra kırmızı parlama sönmeli, yoksa
+                      // açıklama okunurken ekran "alarm" modunda kalıyor (2026-07-05
+                      // görsel QA bulgusu).
+                      if (_usesTimer && !answered)
+                        CriticalVignette(animation: _timerController),
+                      WrongFlash(trigger: _shakeTrigger),
+                      if (_showAnswerBurst)
+                        ConfettiOverlay(
+                          particleCount: 24,
+                          duration: const Duration(milliseconds: 900),
+                          onFinished: () {
+                            setState(() {
+                              _showAnswerBurst = false;
+                            });
+                          },
+                        ),
+                      if (_showConfetti)
+                        ConfettiOverlay(
+                          onFinished: () {
+                            setState(() {
+                              _showConfetti = false;
+                            });
+                          },
+                        ),
+                      if (_needsOpponentReadyGate &&
+                          !_opponentClientReady &&
+                          !_questionFlowStarted)
+                        _OpponentWaitingOverlay(isKu: _isKu),
+                    ],
                   ),
                 ),
-                // Vinyet yalnız aktif geri sayım baskısında: cevap verildikten
-                // (veya süre dolduktan) sonra kırmızı parlama sönmeli, yoksa
-                // açıklama okunurken ekran "alarm" modunda kalıyor (2026-07-05
-                // görsel QA bulgusu).
-                if (_usesTimer && !answered)
-                  CriticalVignette(animation: _timerController),
-                WrongFlash(trigger: _shakeTrigger),
-                if (_showAnswerBurst)
-                  ConfettiOverlay(
-                    particleCount: 24,
-                    duration: const Duration(milliseconds: 900),
-                    onFinished: () {
-                      setState(() {
-                        _showAnswerBurst = false;
-                      });
-                    },
-                  ),
-                if (_showConfetti)
-                  ConfettiOverlay(
-                    onFinished: () {
-                      setState(() {
-                        _showConfetti = false;
-                      });
-                    },
-                  ),
-                if (_needsOpponentReadyGate &&
-                    !_opponentClientReady &&
-                    !_questionFlowStarted)
-                  _OpponentWaitingOverlay(isKu: _isKu),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -788,7 +816,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                           : null,
                     ),
                     if (selectedAnswer == 'TIMEOUT')
-                      _TimeoutNotice(isKu: _isKu),
+                      _TimeoutNotice(
+                        isKu: _isKu,
+                        correctAnswer: question.correctAnswer,
+                      ),
                     if (_isMultiplayer &&
                         answered &&
                         _mpPhase == _MultiplayerPhase.waiting)
@@ -845,7 +876,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                             : null,
                       ),
                       if (selectedAnswer == 'TIMEOUT')
-                        _TimeoutNotice(isKu: _isKu),
+                        _TimeoutNotice(
+                          isKu: _isKu,
+                          correctAnswer: question.correctAnswer,
+                        ),
                       if (_isMultiplayer &&
                           answered &&
                           _mpPhase == _MultiplayerPhase.waiting)
@@ -947,40 +981,55 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       );
     }
     // Yarışma şeridi: her soru bir segment — doğru yeşil, yanlış kırmızı
-    // dolar; aktif soru vurgulu bekler.
-    return Row(
-      key: const ValueKey('quiz-wildcard-row'),
-      children: [
-        for (var i = 0; i < total; i++) ...[
-          Expanded(
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeOutCubic,
-              height: i == index ? 8 : 6,
-              decoration: BoxDecoration(
-                color: i < answerRecords.length
-                    ? (answerRecords[i].selectedAnswer ==
-                              answerRecords[i].correctAnswer
-                          ? AppTheme.correct
-                          : AppTheme.wrong)
-                    : i == index
-                    ? AppTheme.brandGreen
-                    : AppTheme.surfaceHiColor(context),
-                borderRadius: BorderRadius.circular(99),
-                boxShadow: i == index
-                    ? [
-                        BoxShadow(
-                          color: AppTheme.brandGreen.withValues(alpha: 0.45),
-                          blurRadius: 6,
-                        ),
-                      ]
-                    : null,
+    // dolar; aktif soru vurgulu bekler. Renk anlamı tooltip + semantics
+    // ile açıklanır (kırmızı segment "yanlış cevap" demektir).
+    return Semantics(
+      label: context.s(
+        'Pêşkeftin: kesk rast, sor şaş',
+        'İlerleme: yeşil doğru, kırmızı yanlış',
+      ),
+      child: Tooltip(
+        message: context.s(
+          'Kesk = rast, sor = şaş',
+          'Yeşil = doğru, kırmızı = yanlış',
+        ),
+        child: Row(
+          key: const ValueKey('quiz-wildcard-row'),
+          children: [
+            for (var i = 0; i < total; i++) ...[
+              Expanded(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOutCubic,
+                  height: i == index ? 8 : 6,
+                  decoration: BoxDecoration(
+                    color: i < answerRecords.length
+                        ? (answerRecords[i].selectedAnswer ==
+                                  answerRecords[i].correctAnswer
+                              ? AppTheme.correct
+                              : AppTheme.wrong)
+                        : i == index
+                        ? AppTheme.brandGreen
+                        : AppTheme.surfaceHiColor(context),
+                    borderRadius: BorderRadius.circular(99),
+                    boxShadow: i == index
+                        ? [
+                            BoxShadow(
+                              color: AppTheme.brandGreen.withValues(
+                                alpha: 0.45,
+                              ),
+                              blurRadius: 6,
+                            ),
+                          ]
+                        : null,
+                  ),
+                ),
               ),
-            ),
-          ),
-          if (i != total - 1) const SizedBox(width: 4),
-        ],
-      ],
+              if (i != total - 1) const SizedBox(width: 4),
+            ],
+          ],
+        ),
+      ),
     );
   }
 
@@ -1026,9 +1075,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         !completing;
 
     // Multiplayer'da "Sonraki" butonu devre dışı: geçiş otomatik.
+    // Gerilim tutuşu (sonuç bekleniyor) sırasında da kilitli: hızlı dokunuş
+    // skor uygulanmadan soruyu ilerletmesin. Tutuş en fazla ~8 sn sürer
+    // (submitAnswer zaman aşımı sonrası yerel değerlendirme).
     final bool canPressNext = _isMultiplayer
         ? false
-        : (answered && !completing);
+        : (answered && !completing && !_suspense);
 
     final screenHeight = MediaQuery.sizeOf(context).height;
     final isCompact = screenHeight < 750;
@@ -1040,6 +1092,23 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           _buildWildcardRow(),
           SizedBox(height: isCompact ? AppSpacing.xxs : AppSpacing.xs),
         ],
+        // Çift Cevap ilk denemesi yanlışsa: reveal görüntüsü olmadan
+        // ikinci şık beklenir; kullanıcıya net ipucu verilir.
+        if (!answered && _firstAttemptAnswer.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+            child: Text(
+              context.s(
+                'Bersiva ducarî: şıkka din hilbijêre',
+                'Çift cevap: bir şık daha seç',
+              ),
+              textAlign: TextAlign.center,
+              style: AppTypography.caption.copyWith(
+                color: AppTheme.gold,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
         showRatingBar
             ? Row(
                 children: [
@@ -1179,7 +1248,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         ),
         // Hiç coini olmayan yeni oyuncuya kilitler "her şey paralı" gibi
         // görünmesin: coinin nereden kazanılacağını tek satırla söyle.
-        if (_coinBalance == 0)
+        if (_coinBalance == 0 && index == 0)
           Padding(
             padding: const EdgeInsets.only(top: 6),
             child: Text(
@@ -1216,12 +1285,54 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     );
   }
 
-  void _onWildcardTap(WildcardType type) => switch (type) {
-    WildcardType.fiftyFifty => _useFiftyFifty(),
-    WildcardType.audience => _useAudience(),
-    WildcardType.doubleAnswer => _activateDoubleAnswer(),
-    WildcardType.changeQuestion => _changeQuestion(),
-  };
+  void _onWildcardTap(WildcardType type) {
+    // Joker öğretimi tutorial turundan buraya taşındı: ilk kullanımda
+    // tek seferlik contextual ipucu (her joker türü için ayrı).
+    _maybeShowWildcardHint(type);
+    switch (type) {
+      case WildcardType.fiftyFifty:
+        _useFiftyFifty();
+      case WildcardType.audience:
+        _useAudience();
+      case WildcardType.doubleAnswer:
+        _activateDoubleAnswer();
+      case WildcardType.changeQuestion:
+        _changeQuestion();
+    }
+  }
+
+  Future<void> _maybeShowWildcardHint(WildcardType type) async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'zankurd.wildcard_hint.${type.name}';
+    if (prefs.getBool(key) == true) return;
+    await prefs.setBool(key, true);
+    if (!mounted) return;
+    final hint = switch (type) {
+      WildcardType.fiftyFifty => context.s(
+        'Du bersivên şaş tên jêbirin',
+        'İki yanlış şık kaldırılır',
+      ),
+      WildcardType.audience => context.s(
+        'Temaşevan bersivan dinirxînin',
+        'Seyirci oy dağılımını görürsün',
+      ),
+      WildcardType.doubleAnswer => context.s(
+        'Hêlka du bersivan: carinan şaş jî qebûl e',
+        'Çift cevap: ilk deneme yanlışsa bir hak daha',
+      ),
+      WildcardType.changeQuestion => context.s(
+        'Pirs bi pirsa nû tê guhertin',
+        'Soru yenisiyle değiştirilir',
+      ),
+    };
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(hint),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
 
   // ─── Joker mekanikleri ───────────────────────────────────────────────────
 
@@ -1508,7 +1619,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                     child: _CircularTimer(
                       key: const ValueKey('quiz-circular-timer'),
                       animation: _timerController,
-                      maxSeconds: 15,
+                      // Gerçek kaynak room.secondsPerQuestion'dır; sabit 15
+                      // lobi çipiyle (örn. 30 sn) çelişiyordu.
+                      maxSeconds: widget.room.secondsPerQuestion,
                       isPaused: answered,
                     ),
                   ),
@@ -1772,7 +1885,14 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     });
     _markQuestionSeen();
     _loadFavoriteState();
-    _startTimer();
+    // Tutorial (coach-mark) açıkken sayaç arkadan işlemesin: ilk kez odaya
+    // giren oyuncu rehberi okurken süre yememeli. Rehber kapanınca
+    // _handleTutorialReady ertelenen sayacı başlatır.
+    if (_tutorialGateReady) {
+      _startTimer();
+    } else {
+      _timerDeferredForTutorial = true;
+    }
   }
 
   Future<void> _pollRoomIndex() async {
@@ -1881,12 +2001,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
     _timerController.stop();
 
-    // Multiplayer'da açıklama reveal phase'de gösterilir, hemen değil.
-    if (!_isMultiplayer) {
-      _explanationController.forward(from: 0);
-    }
-
-    // Çift Cevap aktifse ve ilk deneme yanlışsa: göster ama kilitleme
+    // Çift Cevap aktifse ve ilk deneme yanlışsa: göster ama kilitleme.
+    // NOT: açıklama burada tetiklenmez — aksi halde reveal görüntüsü
+    // (kırmızı şık + açıklama) oluşurken "Piştre" hâlâ devre dışı kalır ve
+    // kullanıcı ikinci şıkkı seçmesi gerektiğini anlamadan takılı kalırdı
+    // (2026-07-19 canlı denetim P0 bulgusu).
     if (_wildcard.doubleAnswerActivated &&
         _firstAttemptAnswer.isEmpty &&
         answer != question.correctAnswer) {
@@ -1895,10 +2014,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       return;
     }
 
+    // Multiplayer'da açıklama reveal phase'de gösterilir, hemen değil.
+    if (!_isMultiplayer) {
+      _explanationController.forward(from: 0);
+    }
+
     // Optimistically select it to disable buttons immediately.
     // TIMEOUT dışında kısa bir "gerilim tutuşu" ile sonuç açıklanması
     // geciktirilir (TV-şovu ritmi); testte beklemeden geçilir.
     final isTimeout = answer == 'TIMEOUT';
+    final questionIndex = index;
     setState(() {
       selectedAnswer = answer;
       _suspense = !isTimeout;
@@ -1907,19 +2032,25 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     if (!isTimeout && !isFlutterTestEnvironment) {
       await Future.delayed(const Duration(milliseconds: 400));
     }
-    if (!mounted) return;
+    // Bekleme sırasında soru ilerlediyse (ör. hızlı "Piştre") sonucu
+    // yeni soruya uygulama — eski cevabın skor bulaşmasını önler.
+    if (!mounted || index != questionIndex) return;
 
     final optionKey = question.optionKeyForAnswer(answer);
 
     try {
-      final result = await widget.repository.submitAnswer(
-        room: widget.room,
-        question: question,
-        selectedOptionOptionKey: optionKey,
-        responseMs: responseMs,
-      );
+      // Zaman aşımı: ağ takılırsa gerilim tutuşu sonsuza dek sürmez;
+      // catch bloğundaki yerel değerlendirme devreye girer.
+      final result = await widget.repository
+          .submitAnswer(
+            room: widget.room,
+            question: question,
+            selectedOptionOptionKey: optionKey,
+            responseMs: responseMs,
+          )
+          .timeout(const Duration(seconds: 8));
 
-      if (!mounted) return;
+      if (!mounted || index != questionIndex) return;
 
       if (result['is_correct'] == true) {
         HapticFeedback.lightImpact();
@@ -1979,7 +2110,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'submitAnswer failed');
       // Fallback local logic if network fails during answer submit
-      if (!mounted) return;
+      if (!mounted || index != questionIndex) return;
       final correct = answer == question.correctAnswer;
       _trackMistake(correct);
       if (correct) {
@@ -2251,6 +2382,52 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 /// 1v1 online eşleşmede karşı taraf henüz bu ekrana ulaşmadığında
 /// gösterilir; soru sayacının erken başlamasını görsel olarak da
 /// engeller (dokunuşları yutar).
+/// Turnuva maçı üst bandı: tur + rakip bilgisi (salt görüntü, state'e girmez).
+class _VersusBanner extends StatelessWidget {
+  const _VersusBanner({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppTheme.accent.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: AppTheme.accent.withValues(alpha: 0.35)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.emoji_events_outlined,
+            size: 16,
+            color: AppTheme.accent,
+          ),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: AppTheme.textSubColor(context),
+                fontSize: 12.5,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _OpponentWaitingOverlay extends StatelessWidget {
   const _OpponentWaitingOverlay({required this.isKu});
 

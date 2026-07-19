@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../config/category_visibility.dart';
 import '../config/category_visuals.dart';
 import '../data/mastery_store.dart';
 import '../data/zankurd_repository.dart';
@@ -25,7 +26,10 @@ class CategoriesTab extends StatefulWidget {
 }
 
 class _CategoriesTabState extends State<CategoriesTab> {
-  late List<String> _categories = widget.repository.categories;
+  // Gizli kategoriler (içerik hazır olana dek) listede gösterilmez.
+  late List<String> _categories = visibleCategories(
+    widget.repository.categories,
+  );
   bool _loading = false;
   Map<String, MasteryLevel> _masteryLevels = {};
   Map<String, int> _masteryCounts = {};
@@ -42,7 +46,9 @@ class _CategoriesTabState extends State<CategoriesTab> {
     setState(() => _loading = true);
     try {
       final cats = await widget.repository.loadCategories();
-      if (mounted && cats.isNotEmpty) setState(() => _categories = cats);
+      if (mounted && cats.isNotEmpty) {
+        setState(() => _categories = visibleCategories(cats));
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'categories load failed');
       if (mounted) {
@@ -120,6 +126,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                     if (canPop)
                       IconButton(
                         key: const ValueKey('categories-back-button'),
+                        tooltip: ku ? 'Vegere' : 'Geri',
                         onPressed: () => Navigator.of(context).pop(),
                         icon: const Icon(Icons.arrow_back),
                         color: AppTheme.textPrimaryColor(context),
@@ -456,166 +463,183 @@ class _CategoryCardState extends State<_CategoryCard>
       opacity: _fadeAnim,
       child: SlideTransition(
         position: _slideAnim,
-        child: GestureDetector(
-          onTapDown: comingSoon ? null : (_) => setState(() => _pressed = true),
-          onTapUp: comingSoon
-              ? null
-              : (_) {
-                  setState(() => _pressed = false);
-                  widget.onTap();
-                },
-          onTapCancel: () => setState(() => _pressed = false),
-          child: AnimatedScale(
-            scale: _pressed ? 0.97 : 1.0,
-            duration: const Duration(milliseconds: 140),
-            curve: Curves.easeOutCubic,
-            // Onaylı mockup 4: koyu yüzeyli kompakt satır — solda kategori
-            // renkli ikon çipi, ortada ad + soru sayısı, sağda mastery rozeti;
-            // altta ince ilerleme çubuğu.
-            child: Opacity(
-              opacity: comingSoon ? 0.55 : 1.0,
-              child: Container(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  color: AppTheme.surfaceColor(context),
-                  border: Border.all(color: glowColor.withValues(alpha: 0.35)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: glowColor.withValues(alpha: 0.10),
-                      blurRadius: 14,
-                      offset: const Offset(0, 5),
-                      spreadRadius: -4,
+        // Ekran okuyucuda kart "group" değil "button" olarak duyurulsun.
+        child: Semantics(
+          button: !comingSoon,
+          label: comingSoon
+              ? '$catName — ${widget.isKu ? 'Nêzîk de tê' : 'Yakında'}'
+              : widget.questionCount != null
+              ? '$catName, ${widget.questionCount} ${widget.isKu ? 'pirs' : 'soru'}'
+              : catName,
+          child: GestureDetector(
+            onTapDown: comingSoon
+                ? null
+                : (_) => setState(() => _pressed = true),
+            onTapUp: comingSoon
+                ? null
+                : (_) {
+                    setState(() => _pressed = false);
+                    widget.onTap();
+                  },
+            onTapCancel: () => setState(() => _pressed = false),
+            child: AnimatedScale(
+              scale: _pressed ? 0.97 : 1.0,
+              duration: const Duration(milliseconds: 140),
+              curve: Curves.easeOutCubic,
+              // Onaylı mockup 4: koyu yüzeyli kompakt satır — solda kategori
+              // renkli ikon çipi, ortada ad + soru sayısı, sağda mastery rozeti;
+              // altta ince ilerleme çubuğu.
+              child: Opacity(
+                opacity: comingSoon ? 0.55 : 1.0,
+                child: Container(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppRadius.card),
+                    color: AppTheme.surfaceColor(context),
+                    border: Border.all(
+                      color: glowColor.withValues(alpha: 0.35),
                     ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        // Pirs imzası: kategori kimliğini illüstrasyon taşır.
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(AppRadius.sm),
-                          child: Image.asset(
-                            CategoryVisuals.imagePath(widget.category),
-                            width: 52,
-                            height: 52,
-                            fit: BoxFit.cover,
-                            filterQuality: FilterQuality.high,
-                            errorBuilder: (_, _, _) => Container(
+                    boxShadow: [
+                      BoxShadow(
+                        color: glowColor.withValues(alpha: 0.10),
+                        blurRadius: 14,
+                        offset: const Offset(0, 5),
+                        spreadRadius: -4,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          // Pirs imzası: kategori kimliğini illüstrasyon taşır.
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
+                            child: Image.asset(
+                              CategoryVisuals.imagePath(widget.category),
                               width: 52,
                               height: 52,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.sm,
+                              fit: BoxFit.cover,
+                              filterQuality: FilterQuality.high,
+                              errorBuilder: (_, _, _) => Container(
+                                width: 52,
+                                height: 52,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.sm,
+                                  ),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      gradientColors.first,
+                                      gradientColors.last,
+                                    ],
+                                  ),
                                 ),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    gradientColors.first,
-                                    gradientColors.last,
-                                  ],
+                                child: Icon(
+                                  icon,
+                                  color: Colors.white,
+                                  size: 26,
                                 ),
                               ),
-                              child: Icon(icon, color: Colors.white, size: 26),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: AppSpacing.sm),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                catName,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTypography.heading2.copyWith(
-                                  color: AppTheme.textPrimaryColor(context),
-                                ),
-                              ),
-                              const SizedBox(height: 3),
-                              Text(
-                                comingSoon
-                                    ? (widget.isKu
-                                          ? 'Nêzîk de tê…'
-                                          : 'Yakında geliyor…')
-                                    : widget.questionCount != null
-                                    ? (widget.isKu
-                                          ? '${widget.questionCount} pirs • 5 ast'
-                                          : '${widget.questionCount} soru • 5 seviye')
-                                    : (widget.isKu
-                                          ? '5 ast • pêşbaz'
-                                          : '5 seviye • yarış'),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTypography.caption.copyWith(
-                                  color: AppTheme.textSubColor(context),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (hasProgress)
-                          Container(
-                            margin: const EdgeInsets.only(left: 6),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 3,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: AppTheme.gold.withValues(alpha: 0.55),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
+                          const SizedBox(width: AppSpacing.sm),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(
-                                  widget.masteryLevel.icon,
-                                  color: AppTheme.gold,
-                                  size: 12,
-                                ),
-                                const SizedBox(width: 4),
                                 Text(
-                                  widget.isKu
-                                      ? widget.masteryLevel.titleKu
-                                      : widget.masteryLevel.titleTr,
-                                  style: const TextStyle(
-                                    color: AppTheme.gold,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w800,
+                                  catName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.heading2.copyWith(
+                                    color: AppTheme.textPrimaryColor(context),
+                                  ),
+                                ),
+                                const SizedBox(height: 3),
+                                Text(
+                                  comingSoon
+                                      ? (widget.isKu
+                                            ? 'Nêzîk de tê…'
+                                            : 'Yakında geliyor…')
+                                      : widget.questionCount != null
+                                      ? (widget.isKu
+                                            ? '${widget.questionCount} pirs • 5 ast'
+                                            : '${widget.questionCount} soru • 5 seviye')
+                                      : (widget.isKu
+                                            ? '5 ast • pêşbaz'
+                                            : '5 seviye • yarış'),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.caption.copyWith(
+                                    color: AppTheme.textSubColor(context),
                                   ),
                                 ),
                               ],
                             ),
-                          )
-                        else
-                          Icon(
-                            comingSoon
-                                ? Icons.hourglass_empty_rounded
-                                : Icons.chevron_right_rounded,
-                            color: AppTheme.textMutedColor(context),
                           ),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(3),
-                      child: LinearProgressIndicator(
-                        value: hasProgress ? progress : 0.0,
-                        minHeight: 5,
-                        backgroundColor: AppTheme.borderColor(context),
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          gradientColors.first,
+                          if (hasProgress)
+                            Container(
+                              margin: const EdgeInsets.only(left: 6),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 3,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: AppTheme.gold.withValues(alpha: 0.55),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    widget.masteryLevel.icon,
+                                    color: AppTheme.gold,
+                                    size: 12,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    widget.isKu
+                                        ? widget.masteryLevel.titleKu
+                                        : widget.masteryLevel.titleTr,
+                                    style: const TextStyle(
+                                      color: AppTheme.gold,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          else
+                            Icon(
+                              comingSoon
+                                  ? Icons.hourglass_empty_rounded
+                                  : Icons.chevron_right_rounded,
+                              color: AppTheme.textMutedColor(context),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(3),
+                        child: LinearProgressIndicator(
+                          value: hasProgress ? progress : 0.0,
+                          minHeight: 5,
+                          backgroundColor: AppTheme.borderColor(context),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            gradientColors.first,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

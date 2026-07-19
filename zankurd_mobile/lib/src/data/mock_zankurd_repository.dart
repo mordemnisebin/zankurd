@@ -246,9 +246,24 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return now.year * 10000 + now.month * 100 + now.day;
   }
 
+  /// Gün tohumunu kullanıcıya özg varyasyonla birleştirir: aynı kullanıcı
+  /// aynı gün aynı soru setini görür ama farklı kullanıcılar (ve tekrar
+  /// koşuları farklı günlerde) farklı sıralar alır. Yalnızca seçim
+  /// sırasını etkiler; veri kaynağına dokunmaz (2026-07-19 denetim P1:
+  /// aynı gün iki koşuda Q1 aynı soruydu).
+  static int dailySeedFor(String? userId) {
+    final base = dailySeed();
+    if (userId == null || userId.isEmpty) return base;
+    var hash = 0;
+    for (final unit in userId.codeUnits) {
+      hash = (hash * 31 + unit) & 0x7fffffff;
+    }
+    return base ^ hash;
+  }
+
   @override
   Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
-    final pool = [...questions]..shuffle(Random(dailySeed()));
+    final pool = [...questions]..shuffle(Random(dailySeedFor(currentUserId)));
     return _withVisualBlend(pool.take(limit).toList(), questions, limit);
   }
 
