@@ -4,8 +4,27 @@
 > dokümanları tarihseldir; eski oturum raporları `arsiv/` klasörüne taşınmıştır.
 > Bu dosya ile başka bir doküman çelişirse bu dosya geçerlidir.
 >
-> Son güncelleme: 2026-07-19
+> Son güncelleme: 2026-07-20
 > Bu belge, projenin gerçek durumunu özetler. Pazarlama dili değil, mühendislik gerçeği içerir.
+
+---
+
+## 0. TASARIM YÖNÜ — PIVOT (2026-07-20, kullanıcı kararı)
+
+**ZanKurd artık Pirs (Pêşbirka Kurdî) formatına hizalanır.** Önceki
+"koyu-öncelikli + kültürel-derinlik" yönü BIRAKILDI. Uygulanan (commit'li,
+push'lı, canlıda):
+
+- **Açık tema varsayılan** + **turuncu marka** (`AppTheme.brandGreen`=`0xFFF5931E`)
+- **Parlak Pirs accent + kategori renkleri**; **kilim motifi kaldırıldı**
+  (`KilimPatternPainter` no-op); **kategori kartları kompakt**; Yarış hub 3 mod
+- **KORUNAN** (kullanıcı kararı): Kurmancî unvanlar (Xwendekar/Pispor/Mamoste)
+  ve Zana maskotu + günün sözü
+- Eski koyu/kültürel mockup ve redesign spec'leri (ÖRNEK TASARIM, bubblegum,
+  visual-redesign vb.) SİLİNDİ — çelişki yaratmasınlar diye.
+
+Kalan: kilim ölü-kod temizliği, mağaza earn-coin-cta overflow (390x844).
+Detay: memory `[[design-direction-2026-07]]` ve CLAUDE.md kimlik bölümü.
 
 ---
 
