@@ -62,7 +62,7 @@ açılmaz.
 - **zankurd_mobile**: Flutter mobile app (Android/iOS/Web) — the primary product
 - **zankurd**: React + Vite prototype for web dashboard (secondary, less active)
 
-Both projects target Kurmanci speakers and include a 2250+ question bank, multiplayer rooms, leaderboard, and coin reward systems.
+Both projects target Kurmanci speakers and include a 3.100+ question bank (offline bank: 3.147 questions across 9 categories, counted 2026-07-19), multiplayer rooms, leaderboard, and coin reward systems.
 
 ## Architecture
 
@@ -237,7 +237,7 @@ final response = await supabaseClient.from('questions').select();
 The question bank is validated in `test/question_bank_test.dart`:
 - All question IDs must be unique
 - Correct answer must exist in the answers list
-- Categories must be in the known set: Ziman, Çand, Dîrok, Edebiyat, Cografya, Muzîk
+- Categories must be in the known set: Ziman, Çand, Dîrok, Edebiyat, Cografya, Muzîk, Siyaset, Paradigma, Teknolojî
 - Difficulty must be 1-5
 - Answer options must be unique per question
 
@@ -270,7 +270,9 @@ Local data (streak, achievements, mastery, seen questions, missions, XP) is stor
 
 ## Release State & Important Notes
 
-**Current Version:** 1.9.0+12 (pubspec.yaml) — last tagged release v1.9.0-internal.1 (2026-07-18)
+**Current Version:** 1.9.1+13 (pubspec.yaml, tek doğru sürüm kaynağı — bkz. kök `CURRENT_STATUS.md`) — last tagged release v1.9.0-internal.1 (2026-07-18)
+
+AnalyticsService artık STUB değildir: Firebase Analytics'e bağlı gerçek implementasyondur (init başarısızsa graceful degrade; cihazda olay doğrulaması henüz yapılmadı). NotificationService de MOCK/Timer simülasyonu değildir: `flutter_local_notifications` ile gerçek yerel günlük hatırlatıcılar zamanlanır. Online 1v1 (Supabase realtime) gerçektir ancak iki gerçek cihazla uçtan uca test edilmemiştir.
 - `supabase/2026-07-03_reward_hardening.sql` canlıya uygulandı (2026-07-03): claim_* ödül RPC'leri, profiles.xp, questions.explanation_ku/tr, skor/XP guard trigger'ları canlıda aktif
 - `supabase/2026-07-03_matchmaking_fix.sql` canlıya uygulandı (2026-07-03): join_matchmaking + matchmaking_queue (realtime yayınında) canlıda aktif; online 1v1 eşleşmede sorular room_questions'tan okunur
 - `supabase/2026-07-13_curated_question_wave_1.sql` canlıya uygulandı (2026-07-15, Management API ile, `category`→`category_id` ve NULL option düzeltmesiyle): `curated_movement_wave_1` kaynaklı 8 soru (Siyaset/Paradigma/Çand) canlıda onaylı
