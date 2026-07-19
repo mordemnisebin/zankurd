@@ -10,6 +10,7 @@ import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
+import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
@@ -118,6 +119,9 @@ void main() {
 
     await tester.pumpWidget(
       testShell(
+        // Bu test kasıtlı koyu panel okunabilirliğini doğrular; açık-varsayılan
+        // olsa da burada koyu temayı zorlarız.
+        themeProvider: ThemeProvider(initialMode: ThemeMode.dark),
         child: LeaderboardScreen(repository: _SingleWinnerRepository()),
       ),
     );

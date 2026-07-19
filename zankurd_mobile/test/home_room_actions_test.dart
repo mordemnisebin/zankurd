@@ -82,7 +82,7 @@ void main() {
     expect(find.byType(QuizScreen), findsOneWidget);
   });
 
-  testWidgets('opens the spin wheel from the play hub tab', (tester) async {
+  testWidgets('play hub routes rewards through the shop card', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -95,16 +95,12 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Çark modu artık yalnızca Bilîze (Oyna) sekmesinde.
     await tester.tap(find.text('Yarış'));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Günün Çarkı'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Günün Çarkı'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Çevir!'), findsOneWidget);
+    // Çark bir ödüldür: yarışma grid'inden çıkarıldı, mağaza kartından erişilir.
+    expect(find.byKey(const ValueKey('play-hub-shop-card')), findsOneWidget);
+    expect(find.byKey(const ValueKey('quick-play-wheel')), findsNothing);
   });
 
   testWidgets('kurdish home room join action uses compact label', (

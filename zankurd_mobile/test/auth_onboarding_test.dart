@@ -313,16 +313,16 @@ void main() {
     );
     expect(tester.takeException(), isNull);
 
-    // Koyu tema varsayılan sözleşmesi (2026-07-17 mockup sistemi).
+    // Açık tema varsayılan sözleşmesi (Pirs hizası).
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
     final surface = tester.widget<Container>(
       find.byKey(const ValueKey('onboarding-surface')),
     );
     final decoration = surface.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.bg);
+    expect(decoration.color, AppTheme.lightBg);
   });
 
   testWidgets('onboarding fits a tablet and web viewport', (tester) async {
@@ -344,7 +344,7 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
   });
 
@@ -439,7 +439,7 @@ void main() {
       find.byType(NavigationBarTheme),
     );
     expect(navTheme.data.height, 68);
-    expect(navTheme.data.backgroundColor, AppTheme.surface);
+    expect(navTheme.data.backgroundColor, AppTheme.lightSurface);
     expect(
       navTheme.data.indicatorColor,
       AppTheme.brandGreen.withValues(alpha: 0.22),
@@ -476,10 +476,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Koyu tema varsayılan sözleşmesi (2026-07-17 mockup sistemi).
+    // Açık tema varsayılan sözleşmesi (Pirs hizası: parlak ilk izlenim).
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
     final home = tester.widget<Container>(
       find
@@ -491,14 +491,14 @@ void main() {
     );
     final decoration = home.decoration as BoxDecoration;
     final gradient = decoration.gradient as LinearGradient;
-    expect(gradient.colors.first, AppTheme.bg);
+    expect(gradient.colors.first, AppTheme.lightBg);
 
     theme.toggleDarkLight();
     await tester.pumpAndSettle();
 
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
   });
 
