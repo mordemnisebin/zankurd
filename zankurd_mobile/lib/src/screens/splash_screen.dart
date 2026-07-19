@@ -31,6 +31,23 @@ class _SplashScreenState extends State<SplashScreen>
   late final Animation<double> _scale;
   Timer? _timer;
 
+  // İkon "tofu" (boş kutu) sorunu: MaterialIcons web fontu ilk ikon
+  // rasterize edilene kadar yüklenmez; geç yüklenirse ana ekranda ikonlar
+  // boş kutu görünüyordu. Splash'te gizli bir ikon seti çizerek fontu
+  // peşinen yüklüyoruz (precache).
+  static const _precacheIcons = [
+    Icons.home_rounded,
+    Icons.leaderboard_rounded,
+    Icons.person_rounded,
+    Icons.settings_rounded,
+    Icons.play_arrow_rounded,
+    Icons.star_rounded,
+    Icons.check_rounded,
+    Icons.close_rounded,
+    Icons.timer_outlined,
+    Icons.emoji_events_rounded,
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -69,30 +86,51 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.bgOf(context),
-      body: Center(
-        child: FadeTransition(
-          opacity: _fade,
-          child: ScaleTransition(
-            scale: _scale,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const AppLogo(width: 280),
-                const SizedBox(height: 28),
-                const SizedBox(
-                  width: 26,
-                  height: 26,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2.4,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      AppTheme.brandGreen,
+      body: Stack(
+        children: [
+          // Gizli ikon katmanı — font precache (görünmez, layout etkilemez).
+          Positioned(
+            left: -1000,
+            top: -1000,
+            child: ExcludeSemantics(
+              child: Row(
+                children: [
+                  for (final icon in _precacheIcons)
+                    Icon(
+                      icon,
+                      size: 24,
+                      color: AppTheme.textMutedColor(context),
                     ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
+          Center(
+            child: FadeTransition(
+              opacity: _fade,
+              child: ScaleTransition(
+                scale: _scale,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const AppLogo(width: 280),
+                    const SizedBox(height: 28),
+                    const SizedBox(
+                      width: 26,
+                      height: 26,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.4,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppTheme.brandGreen,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

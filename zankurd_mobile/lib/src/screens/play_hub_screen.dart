@@ -7,7 +7,6 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
-import '../widgets/screen_identity_header.dart';
 import 'contest_screen.dart';
 import 'home/quick_play_grid.dart';
 import 'matchmaking_screen.dart';
@@ -194,15 +193,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.page),
           children: [
-            ScreenIdentityHeader(
-              title: ku ? 'Pêşbazî' : 'Yarış',
-              subtitle: ku
-                  ? 'Pêşbirk, turnuva û xelat hemû li vir in'
-                  : 'Günlük yarışma, düello ve ödüller tek yerde',
-              accent: AppTheme.brandGreen,
-              icon: Icons.sports_esports_rounded,
-            ),
-            const SizedBox(height: AppSpacing.lg),
+            // Büyük 'Pêşbazî' tanıtım kartı kaldırıldı — bölüm başlığı
+            // ekranı tanıtmaya yeter.
             _PlaySectionHeading(
               title: ku ? 'Pêşbaziyek hilbijêre' : 'Bir yarış seç',
               subtitle: ku

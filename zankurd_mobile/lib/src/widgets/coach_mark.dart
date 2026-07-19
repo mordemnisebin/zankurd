@@ -54,6 +54,9 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
   int _index = 0;
   Rect? _rect;
   int _measuredForIndex = -1;
+  // Gerçekten GÖSTERİLEN adım sayısı: hedefi mount olmayan adımlar atlanır,
+  // sayaç yine de ilk görülen adımda "1/..." başlasın diye ayrı tutulur.
+  int _shownCount = 0;
 
   @override
   void initState() {
@@ -81,6 +84,7 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
       setState(() {
         _rect = topLeft & box.size;
         _measuredForIndex = _index;
+        _shownCount++;
       });
     });
   }
@@ -108,7 +112,19 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
     }
 
     final highlightRect = rect.inflate(8);
-    final showBelow = highlightRect.top < screenSize.height * 0.4;
+    // Tooltip için tahmini yükseklik: hedefin altında yer yoksa (balon
+    // karartılmış alanın dışına taşıp okunamaz hale geliyorsa) üstte göster.
+    const estimatedBubbleHeight = 220.0;
+    var showBelow = highlightRect.top < screenSize.height * 0.4;
+    final fitsBelow =
+        highlightRect.bottom + 16 + estimatedBubbleHeight <=
+        screenSize.height - 16;
+    final fitsAbove = highlightRect.top - 16 - estimatedBubbleHeight >= 16;
+    if (showBelow && !fitsBelow && fitsAbove) {
+      showBelow = false;
+    } else if (!showBelow && !fitsAbove && fitsBelow) {
+      showBelow = true;
+    }
     final tooltipTop = showBelow ? highlightRect.bottom + 16 : null;
     final tooltipBottom = !showBelow
         ? screenSize.height - highlightRect.top + 16
@@ -135,7 +151,7 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
               bottom: tooltipBottom,
               child: _CoachMarkBubble(
                 step: step,
-                index: _index,
+                index: _shownCount - 1,
                 total: widget.steps.length,
                 isKu: widget.isKu,
                 onNext: _next,

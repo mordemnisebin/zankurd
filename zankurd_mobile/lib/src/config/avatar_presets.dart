@@ -37,6 +37,33 @@ const List<String> avatarColors = [
   '#D4789E', // gül pembesi
 ];
 
+/// Harf avatarları için marka ailesinden türetilmiş 8 ton. Kullanıcı adı
+/// hash'i bu palete eşlenir; böylece herkes aynı tek renge (ör. tek kırmızı)
+/// düşmez. Tonlar beyaz harfle okunaklı kalacak doygunlukta seçildi —
+/// çok açık pastel kullanılmadı (kontrast kuralı).
+const List<Color> avatarNamePalette = [
+  Color(0xFF3DA968), // Kürdistan yeşili
+  Color(0xFF2E9E93), // teal
+  Color(0xFF2B4F7E), // deniz mavisi
+  Color(0xFF6B3A7A), // erik moru
+  Color(0xFF722F43), // bordo
+  Color(0xFFC67A5C), // terracotta
+  Color(0xFFB8860B), // koyu amber
+  Color(0xFFA84D6E), // gül kurusu
+];
+
+/// İsme bağlı deterministik avatar rengi üretir (basit, kararlı hash).
+/// Aynı isim her oturumda aynı rengi alır; boş isimde ilk palet rengi döner.
+Color avatarColorForName(String? name) {
+  final trimmed = name?.trim() ?? '';
+  if (trimmed.isEmpty) return avatarNamePalette.first;
+  var hash = 0;
+  for (final unit in trimmed.codeUnits) {
+    hash = (hash * 31 + unit) & 0x7FFFFFFF;
+  }
+  return avatarNamePalette[hash % avatarNamePalette.length];
+}
+
 IconData? iconFor(String? id) => id == null ? null : avatarIcons[id];
 
 /// '#RRGGBB' hex'ini çözer; bozuk/boş girdide [fallback] döner.

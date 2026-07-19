@@ -116,7 +116,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                       horizontalPadding,
                       verticalPadding,
                       horizontalPadding,
-                      compact ? 10 : 12,
+                      // CTA'ya sabit bottom-safe mesafe (SafeArea içinde).
+                      16,
                     ),
                     child: Column(
                       children: [
@@ -137,12 +138,27 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                   // taşırmasın diye gerekirse küçülür.
                                   child: FittedBox(
                                     fit: BoxFit.scaleDown,
-                                    child: _AnimatedBrandLockup(
-                                      scale: _brandScale,
-                                      opacity: _brandOpacity,
-                                      logoWidth: compact ? 48 : 96,
-                                      showTagline: !wideCompact,
-                                    ),
+                                    // Dev beyaz logo kartı yalnız 1. slaytta;
+                                    // diğer slaytlarda küçük wordmark yeterli.
+                                    child: _page == 0
+                                        ? _AnimatedBrandLockup(
+                                            scale: _brandScale,
+                                            opacity: _brandOpacity,
+                                            logoWidth: compact ? 48 : 96,
+                                            showTagline: !wideCompact,
+                                          )
+                                        : Text(
+                                            'ZanKurd',
+                                            style: AppTypography.heading2
+                                                .copyWith(
+                                                  color:
+                                                      AppTheme.textPrimaryColor(
+                                                        context,
+                                                      ),
+                                                  fontWeight: FontWeight.w900,
+                                                  letterSpacing: -0.3,
+                                                ),
+                                          ),
                                   ),
                                 ),
                               ),
@@ -277,8 +293,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     final ku = context.isKu;
     return [
       _OnboardingData(
-        icon: Icons.menu_book_rounded,
-        color: const Color(0xFF2E9E93), // teal — palet tonu
+        icon: Icons.school_rounded,
+        color: AppTheme.brandGreen,
         title: context.s('Hîn bibe', 'Öğren'),
         body: context.s(
           'Kurmancî peyv, çand û zanînê bi pirsên kurt fêr bibe.',
@@ -312,13 +328,15 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           ku ? 'Turnuva — ji bo kûpayê pêşbikeve' : 'Turnuva — kupa için yarış',
         ],
       ),
+      // 3. slayt: günlük ödüller + "Neden ZanKurd?" değer önerisi birleşti
+      // (4 slayt → 3 slayt; daha kısa ilk izlenim).
       _OnboardingData(
-        icon: Icons.local_fire_department_rounded,
-        color: AppTheme.brandGreen,
-        title: context.s('Her roj vegere', 'Günlük ödüller'),
+        icon: Icons.auto_awesome_rounded,
+        color: AppTheme.gold,
+        title: context.s('Çima ZanKurd?', 'Neden ZanKurd?'),
         body: context.s(
-          'Pêşbirka rojê, çerxa rojane û rozetan bi rêzê veke.',
-          'Günün yarışması, günlük çark ve rozetlerle ilerle.',
+          'Kurmancî çand û zimanê bi pêşbirkê fêr bibe; her roj vegere, xelat bistîne.',
+          'Kurmancî kültürünü yarışarak öğren; her gün dön, ödül kazan.',
         ),
         bullets: [
           ku
@@ -328,32 +346,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               ? 'Zincîra xwe biparêze û bonus bistîne'
               : 'Seriyi koru, bonus kazan',
           ku
-              ? 'Rozetên taybetî bi encamên xwe ve bistîne'
-              : 'Başarılarınla özel rozetler kazan',
-        ],
-      ),
-      // Değer önerisi: Neden Duolingo/Memrise değil de ZanKurd?
-      _OnboardingData(
-        icon: Icons.diamond_rounded,
-        color: AppTheme.violet,
-        title: context.s('Çima ZanKurd?', 'Neden ZanKurd?'),
-        body: context.s(
-          'ZanKurd cihê yekane ye ku tu bi pêşbirkê çand û zimanê Kurmancî fêr dibî. Pêşbirka zindî + kûrahiya çandî.',
-          'ZanKurd, Kurmancî kültürünü yarışarak öğrenmenin tek adresi. Canlı rekabet + kültürel derinlik.',
-        ),
-        bullets: [
+              ? 'Jokerên stratejîk: 50/50, Demjimêr zêde'
+              : 'Stratejik jokerler: 50/50, Süre uzat',
           ku
-              ? '8 kategori: Ziman, Dîrok, Çand, Wêje, Muzîk, Erdnîgarî, Siyaset, Paradigma'
-              : '8 kategori: Dil, Tarih, Kültür, Edebiyat, Müzik, Coğrafya, Siyaset, Paradigma',
-          ku
-              ? 'Jokerên stratejîk: 50/50, Demjimêr zêde, Pirsê biguherîne'
-              : 'Stratejik jokerler: 50/50, Süre uzat, Soru değiştir',
-          ku
-              ? 'Odeyên zindî: bi hevalan re pêşbirkê bike an 1vs1 duel'
-              : 'Canlı odalar: arkadaşlarınla yarış veya 1vs1 düello',
-          ku
-              ? 'Turnuvayên rojane: bilîze, pêşbikeve, bibe şampiyon'
-              : 'Günlük turnuvalar: oyna, yüksel, şampiyon ol',
+              ? 'Turnuvayên rojane — bibe şampiyon'
+              : 'Günlük turnuvalar — şampiyon ol',
         ],
       ),
     ];
@@ -481,6 +478,26 @@ class _OnboardingPage extends StatelessWidget {
                           opacity: 0.05,
                         ),
                       ),
+                    ),
+                  ),
+                  // Ölü dikey alanı dolduran, içerikle ilişkili arka plan
+                  // ikonları (dekoratif; erişilebilirlik dışı).
+                  Positioned(
+                    top: 18,
+                    left: 22,
+                    child: Icon(
+                      data.icon,
+                      size: 34,
+                      color: Colors.white.withValues(alpha: 0.16),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 16,
+                    right: 24,
+                    child: Icon(
+                      data.icon,
+                      size: 44,
+                      color: Colors.white.withValues(alpha: 0.12),
                     ),
                   ),
                   Center(
@@ -612,22 +629,24 @@ class _OnboardingIcon extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Colors.white.withValues(alpha: 0.30),
-            Colors.white.withValues(alpha: 0.10),
-          ],
-        ),
+        // Beyaz plaka + marka renkli glif: stock-icon hissini azaltır,
+        // renkli panel zemininde net ayrışır.
+        color: Colors.white,
         shape: BoxShape.circle,
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.36),
+          color: Colors.white.withValues(alpha: 0.9),
           width: 1.5,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.18),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Center(
-        child: Icon(data.icon, color: Colors.white, size: iconSize),
+        child: Icon(data.icon, color: data.color, size: iconSize),
       ),
     );
   }

@@ -9,6 +9,22 @@ class AppColors {
       AppTheme.isLight(context)
       ? const Color(0xFFEDE9E3)
       : const Color(0xFF282A36);
+
+  /// İkon zemin tonu (menü/istatistik ikon karoları). Light'ta hafif pastel
+  /// kalır; dark'ta alfa yükselir ki koyu zeminde ikon kaybolmasın — ama
+  /// hiçbir zaman açık temadan taşan düz pastel ("yapışkan not") kullanılmaz.
+  static Color iconTileBg(BuildContext context, Color color) =>
+      color.withValues(alpha: AppTheme.isLight(context) ? 0.14 : 0.24);
+
+  /// Aksan metin rengini yüzeye göre uyarlar. Dark temada koyu aksanlar
+  /// (ör. brandGreenDeep, deniz mavisi) yüzeyde boğulduğu için aydınlatılır;
+  /// light temada renk olduğu gibi döner.
+  static Color toneOnSurface(BuildContext context, Color color) {
+    if (AppTheme.isLight(context)) return color;
+    final hsl = HSLColor.fromColor(color);
+    if (hsl.lightness >= 0.55) return color;
+    return hsl.withLightness((hsl.lightness + 0.22).clamp(0.0, 0.72)).toColor();
+  }
 }
 
 class AppTypography {
@@ -570,12 +586,24 @@ class AppTheme {
     Color(0xFF00897B),
   ];
 
+  // ============ Renk Disiplini (Dalga 5) ============
+  // Kural: kırmızı SADECE tehlike/silme ve yanlış-cevap geri bildirimidir;
+  // genel CTA kartlarında kırmızı kullanılmaz. Kırmızı CTA kartı gereken
+  // yerler için hazır teal/yeşil alternatif:
+  static const ctaTeal = Color(0xFF2E9E93); // Kırmızı CTA alternatifi (teal)
+  static const ctaTealDeep = Color(0xFF1F6E66); // Gradyan ucu
+  static const List<Color> ctaTealGradient = [ctaTeal, ctaTealDeep];
+  // Marka yeşili CTA alternatifi (ana aksanla uyumlu ikincil CTA):
+  static const List<Color> ctaGreenGradient = [brandGreen, brandGreenDeep];
+
   static ThemeData dark() {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
       fontFamily: 'Rubik',
       scaffoldBackgroundColor: darkBg,
+      // Klavye odağı görünürlüğü (WCAG 2.4.7): belirgin marka rengi vurgusu.
+      focusColor: accent.withValues(alpha: 0.35),
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
         primary: accent,
@@ -728,6 +756,8 @@ class AppTheme {
       brightness: Brightness.light,
       fontFamily: 'Rubik',
       scaffoldBackgroundColor: lightBg,
+      // Klavye odağı görünürlüğü (WCAG 2.4.7): belirgin marka rengi vurgusu.
+      focusColor: accent.withValues(alpha: 0.30),
       colorScheme: const ColorScheme(
         brightness: Brightness.light,
         primary: accent,
@@ -996,13 +1026,19 @@ class AppTheme {
 
   /// Stat/metric card decoration (profile, result screens).
   static BoxDecoration statCard(BuildContext context, Color accentColor) {
+    final isDark = _isDark(context);
+    // Dark temada kenarlık ve gölge güçlendirilir; aksi halde kart sınırı
+    // koyu zeminde silik kalıyordu (istatistik kart kontrast sorunu).
     return BoxDecoration(
       color: surfaceColor(context),
       borderRadius: BorderRadius.circular(cardRadiusSmall),
-      border: Border.all(color: accentColor.withValues(alpha: 0.2)),
+      border: Border.all(
+        color: accentColor.withValues(alpha: isDark ? 0.38 : 0.2),
+        width: isDark ? 1.1 : 1.0,
+      ),
       boxShadow: [
         BoxShadow(
-          color: accentColor.withValues(alpha: 0.08),
+          color: accentColor.withValues(alpha: isDark ? 0.14 : 0.08),
           blurRadius: 12,
           offset: const Offset(0, 4),
         ),

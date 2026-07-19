@@ -5,10 +5,22 @@ import 'package:flutter/material.dart';
 /// Logonun arka planı beyaz olduğundan, koyu zeminlerde okunabilmesi için
 /// [onCard] true verildiğinde beyaz yuvarlatılmış bir kart içine yerleştirilir.
 class AppLogo extends StatelessWidget {
-  const AppLogo({this.width = 160, this.onCard = false, super.key});
+  const AppLogo({
+    this.width = 160,
+    this.onCard = false,
+    this.cardRadius = 24,
+    this.cardPadding = const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+    super.key,
+  });
 
   final double width;
   final bool onCard;
+
+  /// Beyaz kartın köşe yarıçapı (sayfadaki kartlarla eşitlenebilir).
+  final double cardRadius;
+
+  /// Beyaz kartın iç boşluğu (logo kutusu küçültülebilir).
+  final EdgeInsets cardPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +33,10 @@ class AppLogo extends StatelessWidget {
     );
     if (!onCard) return image;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+      padding: cardPadding,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(cardRadius),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.18),

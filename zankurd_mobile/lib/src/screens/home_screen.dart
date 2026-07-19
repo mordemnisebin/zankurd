@@ -151,7 +151,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final bottomContentPadding = MediaQuery.paddingOf(context).bottom + 112;
+    final size = MediaQuery.sizeOf(context);
+    final isLandscape = size.width > size.height;
+    // Landscape'te alt nav'a yapışan içerik için ekstra nefes payı (faz1 P3).
+    final bottomContentPadding =
+        MediaQuery.paddingOf(context).bottom + (isLandscape ? 140 : 112);
 
     return LayoutBuilder(
       builder: (context, constraints) => _buildBody(
@@ -335,7 +339,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final completed = _missions.where((m) => m.completed).length;
     final total = _missions.length;
 
-    Widget chip(IconData icon, Color color, String value, String label) {
+    Widget chip(
+      IconData icon,
+      Color color,
+      String value,
+      String label, {
+      bool tappable = false,
+      String? micro,
+    }) {
       return Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         decoration: BoxDecoration(
@@ -353,12 +364,40 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 color: AppTheme.textPrimaryColor(context),
               ),
             ),
-            Text(
-              label,
-              style: AppTypography.caption.copyWith(
-                color: AppTheme.textSubColor(context),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textSubColor(context),
+                    ),
+                  ),
+                ),
+                if (tappable) ...[
+                  const SizedBox(width: 2),
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    size: 14,
+                    color: AppTheme.textMutedColor(context),
+                  ),
+                ],
+              ],
             ),
+            if (micro != null)
+              Text(
+                micro,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.textMutedColor(context),
+                  fontSize: 10,
+                ),
+              ),
           ],
         ),
       );
@@ -373,11 +412,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         Row(
           children: [
             Expanded(
-              child: chip(
-                Icons.local_fire_department,
-                AppTheme.wrong,
-                '$_streak',
-                ku ? 'Zincîr' : 'Seri',
+              // Zincir çipi: seri koruma akışına (öğrenme sekmesi) bağlı.
+              child: Semantics(
+                button: true,
+                label: ku ? 'Zincîr' : 'Seri',
+                child: GestureDetector(
+                  onTap: widget.onOpenLearning,
+                  child: chip(
+                    Icons.local_fire_department,
+                    AppTheme.wrong,
+                    '$_streak',
+                    ku ? 'Zincîr' : 'Seri',
+                    tappable: widget.onOpenLearning != null,
+                    micro: ku ? 'Nemire!' : 'Kırılmasın!',
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: 10),
@@ -396,17 +445,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     AppTheme.gold,
                     _coinBalance == null ? '—' : '$_coinBalance',
                     ku ? 'Xeruz' : 'Coin',
+                    tappable: true,
                   ),
                 ),
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
-              child: chip(
-                Icons.task_alt,
-                AppTheme.correct,
-                total == 0 ? '0' : '$completed/$total',
-                ku ? 'Misyon' : 'Görev',
+              // Misyon çipi: günlük görevlerin yaşadığı öğrenme akışına bağlı.
+              child: Semantics(
+                button: true,
+                label: ku ? 'Misyon' : 'Görev',
+                child: GestureDetector(
+                  onTap: widget.onOpenLearning,
+                  child: chip(
+                    Icons.task_alt,
+                    AppTheme.correct,
+                    total == 0 ? '0' : '$completed/$total',
+                    ku ? 'Misyon' : 'Görev',
+                    tappable: widget.onOpenLearning != null,
+                  ),
+                ),
               ),
             ),
           ],
@@ -414,6 +473,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         if (_streak > 0) ...[
           const SizedBox(height: 12),
           Container(
+            // Dokunma/okunabilirlik için min 44px yükseklik (WCAG 2.5.5).
+            constraints: const BoxConstraints(minHeight: 44),
+            alignment: Alignment.centerLeft,
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             decoration: BoxDecoration(
               color: AppTheme.surfaceColor(context),
@@ -680,6 +742,21 @@ class _DailyLessonHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasReview = reviewReadyCount > 0;
+    final isLight = AppTheme.isLight(context);
+    // Light tema: koyu hero yerine sıcak altın tonlu açık yüzey (faz1 P3).
+    final gradientColors = isLight
+        ? const [Color(0xFFFFF3D6), Color(0xFFFCE9C4)]
+        : const [Color(0xFF2A2412), Color(0xFF1B2A1E)];
+    final borderColor = isLight
+        ? AppTheme.gold.withValues(alpha: 0.45)
+        : const Color(0xFF4A3D1C);
+    final titleColor = isLight
+        ? const Color(0xFF8A6D1F)
+        : const Color(0xFFE9CF8F);
+    final valueColor = isLight ? AppTheme.lightTextPrimary : Colors.white;
+    final subtitleColor = isLight
+        ? const Color(0xFF7A6330)
+        : const Color(0xFFD9C9A0);
     final title = hasReview
         ? (isKu ? 'Dubarekirinên Îro' : 'Bugünkü Tekrarlar')
         : (isKu ? 'Dersê rojane' : 'Günün Dersi');
@@ -691,110 +768,123 @@ class _DailyLessonHero extends StatelessWidget {
         ? (isKu ? 'Dest bi dubarekirinê' : 'Tekrara başla')
         : (isKu ? 'Destpêk bike' : 'Başla');
 
-    return Container(
-      key: const ValueKey('home-daily-lesson'),
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [Color(0xFF2A2412), Color(0xFF1B2A1E)],
-        ),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: const Color(0xFF4A3D1C)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // 320px sınıfı dar ekranlarda ikinci satır truncate oluyordu;
+        // minimum genişlikte kısa varyant kullanılır.
+        final narrow = constraints.maxWidth < 340;
+        final effectiveSubtitle = narrow && !hasReview
+            ? (isKu ? 'Xelat bistîne!' : 'Ödül kazan!')
+            : subtitle;
+
+        return Container(
+          key: const ValueKey('home-daily-lesson'),
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: gradientColors,
+            ),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(color: borderColor),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(
-                          Icons.menu_book_rounded,
-                          color: AppTheme.gold,
-                          size: 16,
-                        ),
-                        const SizedBox(width: 6),
-                        Flexible(
-                          child: Text(
-                            title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.caption.copyWith(
-                              color: const Color(0xFFE9CF8F),
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: 0.3,
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.menu_book_rounded,
+                              color: AppTheme.gold,
+                              size: 16,
                             ),
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(
+                                title,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTypography.caption.copyWith(
+                                  color: titleColor,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 0.3,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '$count ',
+                                style: AppTypography.display.copyWith(
+                                  color: valueColor,
+                                  fontSize: 30,
+                                  height: 1.0,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Pirs',
+                                style: AppTypography.heading2.copyWith(
+                                  color: valueColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          effectiveSubtitle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.caption.copyWith(
+                            color: subtitleColor,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 6),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: '$count ',
-                            style: AppTypography.display.copyWith(
-                              color: Colors.white,
-                              fontSize: 30,
-                              height: 1.0,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'Pirs',
-                            style: AppTypography.heading2.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
+                  ),
+                  const SizedBox(width: 8),
+                  Image.asset(
+                    'assets/illustrations/daily_coins.png',
+                    width: 120,
+                    height: 84,
+                    fit: BoxFit.contain,
+                    filterQuality: FilterQuality.high,
+                  ),
+                ],
+              ),
+              if (onStart != null) ...[
+                const SizedBox(height: AppSpacing.sm),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: onStart,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppTheme.wrong,
+                      foregroundColor: Colors.white,
+                      // Dokunma hedefi min 44px (WCAG 2.5.5).
+                      minimumSize: const Size.fromHeight(48),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.caption.copyWith(
-                        color: const Color(0xFFD9C9A0),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+                    child: Text(ctaLabel),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Image.asset(
-                'assets/illustrations/daily_coins.png',
-                width: 120,
-                height: 84,
-                fit: BoxFit.contain,
-                filterQuality: FilterQuality.high,
-              ),
+              ],
             ],
           ),
-          if (onStart != null) ...[
-            const SizedBox(height: AppSpacing.sm),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: onStart,
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppTheme.wrong,
-                  foregroundColor: Colors.white,
-                ),
-                child: Text(ctaLabel),
-              ),
-            ),
-          ],
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -857,14 +947,30 @@ class _MiniLeaderboardState extends State<_MiniLeaderboard> {
                 color: AppTheme.textPrimaryColor(context),
               ),
             ),
-            GestureDetector(
-              onTap: () => Navigator.of(context).push(
-                AppRoute.to(LeaderboardScreen(repository: widget.repository)),
-              ),
-              child: Text(
-                ku ? 'Hemûyê bibîne ›' : 'Tümünü gör ›',
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textSubColor(context),
+            Semantics(
+              button: true,
+              label: ku ? 'Hemûyê bibîne' : 'Tümünü gör',
+              child: Material(
+                type: MaterialType.transparency,
+                child: InkWell(
+                  onTap: () => Navigator.of(context).push(
+                    AppRoute.to(
+                      LeaderboardScreen(repository: widget.repository),
+                    ),
+                  ),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  // Dokunma hedefi min 44px yükseklik (WCAG 2.5.5).
+                  child: Container(
+                    constraints: const BoxConstraints(minHeight: 44),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      ku ? 'Hemûyê bibîne ›' : 'Tümünü gör ›',
+                      style: AppTypography.caption.copyWith(
+                        color: AppTheme.textSubColor(context),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),

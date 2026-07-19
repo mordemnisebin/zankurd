@@ -34,7 +34,9 @@ class QuickPlayGrid extends StatelessWidget {
       ColorfulActionCard(
         key: const ValueKey('quick-play-duel'),
         title: isKu ? 'Şerê 1vs1' : '1vs1 Düello',
-        subtitle: isKu ? 'Zindî' : 'Canlı',
+        // Dürüstlük: canlı rakip bulunamazsa ~30 sn sonra bot teklif
+        // ediliyor; kart bunu baştan söylesin.
+        subtitle: isKu ? 'Bot + Zindî' : 'Bot + Canlı',
         icon: Icons.bolt_rounded,
         colors: [AppTheme.playPink, _deepen(AppTheme.playPink)],
         onTap: onDuel,

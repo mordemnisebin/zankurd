@@ -33,7 +33,12 @@ class PlayerAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = colorFrom(colorHex, fallback: AppTheme.accent);
+    // Renk önceliği: kullanıcının seçtiği hex > isim-hash paleti.
+    // Böylece renksiz avatarlar tek bir doygun renge (eski tek kırmızı/tek
+    // aksan sorunu) değil, marka paletinden 8 tona dağılır.
+    final bg = colorHex != null
+        ? colorFrom(colorHex, fallback: AppTheme.accent)
+        : avatarColorForName(displayName);
     final frame = frameFromId(frameId);
 
     Widget core = _buildCore(bg);

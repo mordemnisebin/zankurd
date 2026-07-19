@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
-import 'kilim_pattern_painter.dart';
 import 'roj_mascot.dart';
 
 /// Günün sözü: (Kurmancî atasözü, Türkçe karşılığı).
@@ -53,8 +52,8 @@ class ZanaDailyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final saying = _todaysSaying;
-    const tint = AppTheme.gold;
     final surface = AppTheme.surfaceHiColor(context);
+    final isLight = AppTheme.isLight(context);
     // Günlük hedef modunda hazır tekrar varsa, öğrenme yerine aralıklı
     // tekrarı önceliklendir.
     final hasReview = onStart != null && reviewReadyCount > 0;
@@ -62,140 +61,134 @@ class ZanaDailyCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
+        // Yükseklik "Zû bilîze" teaser kartıyla aynı minimuma sabitlenir.
+        constraints: const BoxConstraints(minHeight: 92),
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              // Açık sıcak sarı yüzey (altın + sıcak turuncu blend).
-              Color.alphaBlend(tint.withValues(alpha: 0.16), surface),
-              Color.alphaBlend(
-                AppTheme.brandGreenDeep.withValues(alpha: 0.08),
-                surface,
-              ),
-            ],
-          ),
+          // Premium/sade: doygun altın gradyan yerine nötr yüzey + sol ince
+          // marka yeşili accent çizgisi (accent, Stack içinde ayrı çubuk;
+          // borderRadius + tek tip olmayan Border birlikte çizilemez).
+          color: surface,
           borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(color: tint.withValues(alpha: 0.30), width: 1.1),
-          boxShadow: [
-            BoxShadow(
-              color: tint.withValues(alpha: 0.10),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          border: Border.all(color: AppTheme.borderColor(context)),
+          boxShadow: isLight ? AppTheme.cardShadow(context) : null,
         ),
         child: Stack(
           children: [
-            Positioned.fill(
-              child: IgnorePointer(
-                child: CustomPaint(
-                  painter: const KilimPatternPainter(
-                    drawPattern: true,
-                    color: AppTheme.gold,
-                    opacity: 0.04,
-                  ),
-                ),
-              ),
+            // Sol ince yeşil accent çizgisi.
+            const Positioned(
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: 3,
+              child: ColoredBox(color: AppTheme.brandGreen),
             ),
-            Row(
-              children: [
-                const RojMascot(size: 48, mood: RojMood.happy),
-                const SizedBox(width: AppSpacing.sm + 2),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.format_quote_rounded,
-                            color: AppTheme.gold,
-                            size: 15,
+            Padding(
+              padding: const EdgeInsets.only(left: 6),
+              child: Row(
+                children: [
+                  const RojMascot(size: 48, mood: RojMood.happy),
+                  const SizedBox(width: AppSpacing.sm + 2),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.format_quote_rounded,
+                              color: AppTheme.brandGreen,
+                              size: 15,
+                            ),
+                            const SizedBox(width: 4),
+                            Flexible(
+                              child: Text(
+                                hasReview
+                                    ? (isKu
+                                          ? 'Dubarekirinên Îro'
+                                          : 'Bugünkü Tekrarlar')
+                                    : onStart != null
+                                    ? (isKu ? 'Armanca Îro' : 'Bugünün hedefi')
+                                    : (isKu ? 'Gotina Rojê' : 'Günün Sözü'),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTypography.caption.copyWith(
+                                  color: AppTheme.brandGreen,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 0.4,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        // Tek italik stil: yalnızca günün sözü italik.
+                        Text(
+                          hasReview
+                              ? (isKu
+                                    ? '$reviewReadyCount pirs li benda dubarekirinê'
+                                    : '$reviewReadyCount soru tekrara hazır')
+                              : onStart != null
+                              ? (isKu
+                                    ? 'Bi 3 bersivên rast zincîra xwe biparêze'
+                                    : '3 doğru cevapla serini koru')
+                              : saying.$1,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.bodyLarge.copyWith(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w700,
+                            fontStyle: hasReview || onStart != null
+                                ? FontStyle.normal
+                                : FontStyle.italic,
+                            height: 1.25,
                           ),
-                          const SizedBox(width: 4),
-                          Flexible(
-                            child: Text(
+                        ),
+                        const SizedBox(height: 3),
+                        // Çeviri / açıklama: 12px gri.
+                        Text(
+                          hasReview
+                              ? (isKu
+                                    ? 'Zana dubarekirinên te amade kir.'
+                                    : 'Zana tekrarlarını hazırladı.')
+                              : onStart != null
+                              ? (isKu
+                                    ? 'Zana rêya îro ji te re amade kir.'
+                                    : 'Zana bugünkü yolunu hazırladı.')
+                              : saying.$2,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.caption.copyWith(
+                            color: AppTheme.textMutedColor(context),
+                            fontSize: 12,
+                          ),
+                        ),
+                        if (onStart != null) ...[
+                          const SizedBox(height: AppSpacing.sm),
+                          FilledButton.icon(
+                            onPressed: onStart,
+                            icon: Icon(
+                              hasReview
+                                  ? Icons.refresh_rounded
+                                  : Icons.arrow_forward_rounded,
+                            ),
+                            label: Text(
                               hasReview
                                   ? (isKu
-                                        ? 'Dubarekirinên Îro'
-                                        : 'Bugünkü Tekrarlar')
-                                  : onStart != null
-                                  ? (isKu ? 'Armanca Îro' : 'Bugünün hedefi')
-                                  : (isKu ? 'Gotina Rojê' : 'Günün Sözü'),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.gold,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 0.4,
-                              ),
+                                        ? 'Dest bi dubarekirinê'
+                                        : 'Tekrara başla')
+                                  : (isKu
+                                        ? 'Dest bi hînbûnê bike'
+                                        : 'Öğrenmeye başla'),
                             ),
                           ),
                         ],
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        hasReview
-                            ? (isKu
-                                  ? '$reviewReadyCount pirs li benda dubarekirinê'
-                                  : '$reviewReadyCount soru tekrara hazır')
-                            : onStart != null
-                            ? (isKu
-                                  ? 'Bi 3 bersivên rast zincîra xwe biparêze'
-                                  : '3 doğru cevapla serini koru')
-                            : saying.$1,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTypography.bodyLarge.copyWith(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w800,
-                          fontStyle: FontStyle.italic,
-                          height: 1.25,
-                        ),
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        hasReview
-                            ? (isKu
-                                  ? 'Zana dubarekirinên te amade kir.'
-                                  : 'Zana tekrarlarını hazırladı.')
-                            : onStart != null
-                            ? (isKu
-                                  ? 'Zana rêya îro ji te re amade kir.'
-                                  : 'Zana bugünkü yolunu hazırladı.')
-                            : saying.$2,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTypography.caption.copyWith(
-                          color: AppTheme.textMutedColor(context),
-                        ),
-                      ),
-                      if (onStart != null) ...[
-                        const SizedBox(height: AppSpacing.sm),
-                        FilledButton.icon(
-                          onPressed: onStart,
-                          icon: Icon(
-                            hasReview
-                                ? Icons.refresh_rounded
-                                : Icons.arrow_forward_rounded,
-                          ),
-                          label: Text(
-                            hasReview
-                                ? (isKu
-                                      ? 'Dest bi dubarekirinê'
-                                      : 'Tekrara başla')
-                                : (isKu
-                                      ? 'Dest bi hînbûnê bike'
-                                      : 'Öğrenmeye başla'),
-                          ),
-                        ),
                       ],
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
