@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -27,6 +28,12 @@ import 'src/widgets/responsive_wrapper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Web'de ekran okuyucu kullanıcıları gizli "Enable accessibility" butonuna
+  // bağımlı kalmasın: semantik ağaç uygulama açılışında otomatik kurulur.
+  if (kIsWeb) {
+    SemanticsBinding.instance.ensureSemantics();
+  }
 
   // Crash raporlama (web'de Crashlytics desteklenmez).
   try {

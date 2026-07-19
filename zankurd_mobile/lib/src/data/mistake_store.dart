@@ -254,6 +254,21 @@ class MistakeStore {
     return result;
   }
 
+  /// Tüm zamanların toplam doğru cevap sayısı (günlük geçmiş üzerinden).
+  int get totalCorrect =>
+      _history.values.fold(0, (sum, d) => sum + (d['correct'] ?? 0));
+
+  /// Tüm zamanların toplam yanlış cevap sayısı (günlük geçmiş üzerinden).
+  int get totalWrong =>
+      _history.values.fold(0, (sum, d) => sum + (d['wrong'] ?? 0));
+
+  /// Doğruluk oranı (0–100); hiç cevap yoksa null.
+  double? get accuracyPercent {
+    final total = totalCorrect + totalWrong;
+    if (total == 0) return null;
+    return totalCorrect / total * 100;
+  }
+
   static String _dayKey(DateTime day) =>
       '${day.year.toString().padLeft(4, '0')}-'
       '${day.month.toString().padLeft(2, '0')}-'

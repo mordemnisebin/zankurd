@@ -126,6 +126,33 @@ class NotificationService {
     }
   }
 
+  /// Sistem düzeyinde bildirim izni verilmiş mi?
+  /// Web'de (yerel bildirim yok) ve izin sorgulanamayan platformlarda
+  /// engel çıkarmamak için true döner.
+  Future<bool> hasSystemPermission() async {
+    if (kIsWeb) return true;
+    try {
+      final android = _localNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >();
+      if (android != null) {
+        return await android.areNotificationsEnabled() ?? true;
+      }
+      final ios = _localNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >();
+      if (ios != null) {
+        final options = await ios.checkPermissions();
+        return options?.isEnabled ?? true;
+      }
+    } catch (e) {
+      debugPrint('Failed to check notification permission: $e');
+    }
+    return true;
+  }
+
   Future<void> setEnabled(bool value) async {
     _enabled = value;
     await _preferences?.setBool(_enabledKey, value);

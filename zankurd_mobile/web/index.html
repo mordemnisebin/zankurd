@@ -31,6 +31,15 @@
 
   <title>ZanKurd</title>
   <link rel="manifest" href="manifest.json">
+  <style>
+    /* Erişilebilirlik: klavye/ekran okuyucu focus göstergesi belirgin olsun.
+       Varsayılan 1px ince halka yerine 2px marka yeşili halka. */
+    flt-semantics:focus,
+    flt-semantics [tabindex]:focus {
+      outline: 2px solid #3DA968 !important;
+      outline-offset: 1px;
+    }
+  </style>
 </head>
 <body>
   <!--
