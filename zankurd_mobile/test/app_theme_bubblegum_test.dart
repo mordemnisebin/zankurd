@@ -7,9 +7,9 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 // token'lara yansıdığını doğrular — regresyonu (eski indigo/pembe palete
 // dönüş) yakalar.
 void main() {
-  test('marka rengi Kürdistan yeşili', () {
-    expect(AppTheme.brandGreen, const Color(0xFF3DA968));
-    expect(AppTheme.brandGreenDeep, const Color(0xFF2A7A4E));
+  test('marka rengi Pirs turuncusu', () {
+    expect(AppTheme.brandGreen, const Color(0xFFF5931E));
+    expect(AppTheme.brandGreenDeep, const Color(0xFFE06E12));
   });
 
   test('öğrenme rengi yeşil', () {

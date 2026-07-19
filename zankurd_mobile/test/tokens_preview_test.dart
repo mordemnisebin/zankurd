@@ -10,8 +10,8 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 void main() {
   test('mockup brand token contract stays stable', () {
     expect(AppRadius.card, 14);
-    expect(AppTheme.brandGreen, const Color(0xFF3DA968));
-    expect(AppTheme.brandGreenDeep, const Color(0xFF2A7A4E));
+    expect(AppTheme.brandGreen, const Color(0xFFF5931E));
+    expect(AppTheme.brandGreenDeep, const Color(0xFFE06E12));
     expect(AppTheme.playGreen, const Color(0xFF3DA968));
     expect(AppTheme.gold, const Color(0xFFE7B53C));
     expect(AppTheme.bg, const Color(0xFF0B0F0D));

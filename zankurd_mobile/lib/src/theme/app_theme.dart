@@ -308,8 +308,9 @@ class AppTheme {
   // Onaylı mockup sistemi (2026-07-17): Kürdistan yeşili ana aksan,
   // kâğıt-altın ikincil, koyu-sıcak zemin. Bkz.
   // docs/superpowers/specs/2026-07-17-onayli-mockup-hizalama-plan.md
-  static const brandGreen = Color(0xFF3DA968); // Kürdistan yeşili — ana aksan
-  static const brandGreenDeep = Color(0xFF2A7A4E); // Koyu yeşil (gradyan ucu)
+  // Pirs hizası: ana marka aksanı turuncu (isim geriye-uyum için korundu).
+  static const brandGreen = Color(0xFFF5931E); // Pirs turuncusu — ana aksan
+  static const brandGreenDeep = Color(0xFFE06E12); // Koyu turuncu (gradyan ucu)
   static const playGreen = Color(0xFF3DA968); // Öğrenme kimliği (yeşil)
   static const playPink = Color(
     0xFFC9503C,

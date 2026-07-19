@@ -37,14 +37,17 @@ Kod yorum ve string'ler için: Kodda Türkçe/Kürtçe yorum varsa koru, ama yen
 
 ## Ürün Kimliği (2026-07-18 kararı)
 
-**ZanKurd kültür-öncelikli bir öğrenme uygulamasıdır; oyun mekanikleri
-(coin, joker, yarış) araçtır, amaç değildir.** Pirs'i kopyalayarak Pirs'i
-yenemeyiz; farklılaştırıcımız kültürel derinliktir: dengbêj/kilim görsel
-dili, Kurmancî unvanlar (Xwendekar/Pispor/Mamoste), gerçek öğretici
-açıklamalar. Yeni özellik/tasarım kararı bu ilkeyle çelişiyorsa ilke
-kazanır. Şablon (bilgi taşımayan) açıklama göstermek yasaktır —
-`isTemplateExplanation` guard'ı bunları UI'da gizler; çözüm şablonu
-göstermek değil, gerçek açıklama yazmaktır.
+**YÖN DEĞİŞİKLİĞİ (2026-07-20, kullanıcı kararı): ZanKurd artık Pirs
+(Pêşbirka Kurdî) formatına hizalanır.** Önceki "kültür-öncelikli,
+farklılaştırıcı kültürel derinlik" ilkesi bu tarihte kullanıcı tarafından
+açıkça bırakıldı; hedef Pirs'e birçok bakımdan benzemek: açık/parlak tema
+varsayılan, Pirs turuncu paleti, jenerik quiz görünümü. Kültürel öğeler
+(Zana maskotu + günün sözü, dengbêj/kilim motifleri, Kurmancî unvanlar
+Xwendekar/Pispor/Mamoste) kaldırılıyor/jenerikleştiriliyor. Yeni
+tasarım/özellik kararı Pirs-hizası ile çelişiyorsa Pirs-hizası kazanır.
+Şablon (bilgi taşımayan) açıklama göstermek yine de yasaktır —
+`isTemplateExplanation` guard'ı bunları UI'da gizler; çözüm gerçek
+açıklama yazmaktır.
 
 **Maskot adı ZANA'dır** (kullanıcıya görünen tüm metinlerde). `RojMascot`
 sınıf adı maskotun görsel motifine (roj = güneş) atıftır, ad değildir;
