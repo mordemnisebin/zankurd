@@ -7,8 +7,8 @@ import '../l10n/lang.dart';
 import '../models/avatar_identity.dart';
 import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
-import '../widgets/app_panel.dart';
 import '../utils/error_reporter.dart';
+import 'spin_wheel_screen.dart';
 
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
 /// Statik yedek listedeki (`ShopItem._items`) her ikon burada da
@@ -104,7 +104,7 @@ class _ShopScreenState extends State<ShopScreen> {
       id: 'joker_bundle',
       titleKu: 'Paketa Jokeran',
       titleTr: 'Joker Paketi',
-      descKu: 'Hemû jokaran ji bo pêşbirka bê nû dike.',
+      descKu: 'Hemû joker ji bo pêşbirka bê têne nûkirin.',
       descTr: 'Bir sonraki yarışma için tüm joker haklarını sıfırlar.',
       cost: 500,
       icon: Icons.auto_awesome_motion_outlined,
@@ -381,6 +381,21 @@ class _ShopScreenState extends State<ShopScreen> {
             ],
           ),
           actions: [
+            if (_coinBalance < item.cost)
+              // Yetersiz bakiye: coin kazanma yoluna yönlendiren ikincil buton.
+              TextButton.icon(
+                onPressed: () {
+                  Navigator.of(ctx).pop(false);
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) =>
+                          SpinWheelScreen(repository: widget.repository),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.casino_outlined, size: 18),
+                label: Text(ku ? 'Coin qezenc bike' : 'Coin kazan'),
+              ),
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(false),
               child: Text(
@@ -389,7 +404,11 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
             ),
             FilledButton(
-              onPressed: () => Navigator.of(ctx).pop(true),
+              // Bakiye yetersizse 'Bikire' gri disabled kalır; kullanıcı
+              // 'Coin qezenc bike' ile çarka yönlendirilir.
+              onPressed: _coinBalance < item.cost
+                  ? null
+                  : () => Navigator.of(ctx).pop(true),
               style: FilledButton.styleFrom(
                 backgroundColor: AppTheme.accent,
                 shape: RoundedRectangleBorder(
@@ -515,6 +534,48 @@ class _ShopScreenState extends State<ShopScreen> {
             fontWeight: FontWeight.w700,
           ),
         ),
+        actions: [
+          // Dalga 5: devasa bakiye kartı yerine kompakt coin chip'i.
+          Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Center(
+              child: Container(
+                key: const ValueKey('shop-coin-chip'),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: AppTheme.gold.withValues(alpha: 0.14),
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                  border: Border.all(
+                    color: AppTheme.gold.withValues(alpha: 0.38),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.monetization_on,
+                      color: AppTheme.gold,
+                      size: 18,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      '$_coinBalance coin',
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: AppTheme.textPrimaryColor(context),
+                        fontWeight: FontWeight.w800,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -523,8 +584,6 @@ class _ShopScreenState extends State<ShopScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              // ── Coin balance panel ──
-              _buildBalancePanel(context, ku, isDark),
               // ── Items ──
               Expanded(
                 child: _loading && _dynamicItems.isEmpty
@@ -543,64 +602,59 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   // ────────────────────────────────────────────
-  //  Balance panel
+  //  Bakiye 0 iken üstte görünen coin kazanma mini-CTA'sı
   // ────────────────────────────────────────────
-  Widget _buildBalancePanel(BuildContext context, bool ku, bool isDark) {
+  Widget _buildEarnCoinCta(BuildContext context, bool ku) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-      child: AppPanel(
-        gradient: AppTheme.goldGradient,
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    ku ? 'Bakiyeya Te' : 'Mevcut Bakiyen',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.88),
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '$_coinBalance coin',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w800,
-                      height: 1.05,
-                    ),
-                  ),
-                ],
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        child: InkWell(
+          key: const ValueKey('shop-earn-coin-cta'),
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => SpinWheelScreen(repository: widget.repository),
               ),
+            );
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            decoration: BoxDecoration(
+              color: AppTheme.gold.withValues(alpha: 0.10),
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              border: Border.all(color: AppTheme.gold.withValues(alpha: 0.35)),
             ),
-            Container(
-              width: 56,
-              height: 56,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.22),
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.3),
-                  width: 1.5,
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.casino_outlined,
+                  color: AppTheme.gold,
+                  size: 22,
                 ),
-              ),
-              child: const Icon(
-                Icons.monetization_on,
-                color: Colors.white,
-                size: 32,
-              ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    ku
+                        ? 'Bakiyeya te 0 e — çerxa rojane bizivire û coin qezenc bike!'
+                        : 'Bakiyen 0 — günlük çarkı çevir, coin kazan!',
+                    maxLines: 2,
+                    style: TextStyle(
+                      color: AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppTheme.textMutedColor(context),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -629,6 +683,7 @@ class _ShopScreenState extends State<ShopScreen> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       children: [
+        if (!_loading && _coinBalance == 0) _buildEarnCoinCta(context, ku),
         _buildHeroCard(heroItem, ku, isDark),
         if (restItems.isNotEmpty) ...[
           const SizedBox(height: 16),
@@ -651,92 +706,143 @@ class _ShopScreenState extends State<ShopScreen> {
     );
   }
 
-  // ── Hero card (mockup 11: "EN POPÜLER" büyük öne çıkan kart) ──
+  // ── Hero: öne çıkan ürün — grid kartıyla aynı dilin 2 kat büyük hücresi ──
   Widget _buildHeroCard(ShopItem item, bool ku, bool isDark) {
     final title = ku ? item.titleKu : item.titleTr;
     final desc = ku ? item.descKu : item.descTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
     final canAfford = _coinBalance >= item.cost;
+    final tint = item.themeColor;
 
-    return AppPanel(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          item.themeColor.withValues(alpha: 0.28),
-          AppTheme.surfaceColor(context).withValues(alpha: 0.0),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: item.themeColor,
-              borderRadius: BorderRadius.circular(AppRadius.pill),
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(AppRadius.card),
+      child: InkWell(
+        onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        splashColor: tint.withValues(alpha: 0.15),
+        highlightColor: tint.withValues(alpha: 0.07),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(
+              color: tint.withValues(alpha: isPurchased ? 0.18 : 0.28),
+              width: 1.1,
             ),
-            child: Text(
-              ku ? 'BABETÊ HERÎ BABET' : 'EN POPÜLER',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.3,
+            boxShadow: [
+              BoxShadow(
+                color: tint.withValues(alpha: isPurchased ? 0.04 : 0.10),
+                blurRadius: 14,
+                offset: const Offset(0, 4),
               ),
-            ),
+            ],
+            color: isPurchased
+                ? AppTheme.surfaceColor(context).withValues(alpha: 0.7)
+                : AppTheme.surfaceColor(context),
           ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: item.themeColor.withValues(alpha: 0.22),
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                ),
-                alignment: Alignment.center,
-                child: Icon(item.icon, color: item.themeColor, size: 32),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryColor(context),
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppTheme.brandGreen,
+                      borderRadius: BorderRadius.circular(AppRadius.pill),
+                    ),
+                    child: Text(
+                      ku ? 'YA HERÎ TÊ XWASTIN' : 'EN POPÜLER',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
                         fontWeight: FontWeight.w800,
-                        fontSize: 18,
+                        letterSpacing: 0.3,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      desc,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: AppTheme.textMutedColor(context),
-                        fontSize: 13,
-                        height: 1.3,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    // Grid kartındaki ikon bloğunun büyük hâli.
+                    Container(
+                      width: 72,
+                      height: 72,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: isPurchased
+                              ? [
+                                  tint.withValues(alpha: 0.10),
+                                  tint.withValues(alpha: 0.04),
+                                ]
+                              : [
+                                  tint.withValues(alpha: 0.22),
+                                  tint.withValues(alpha: 0.08),
+                                ],
+                        ),
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
+                      ),
+                      alignment: Alignment.center,
+                      child: Icon(
+                        item.icon,
+                        color: isPurchased ? tint.withValues(alpha: 0.5) : tint,
+                        size: 36,
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            maxLines: 2,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              color: isPurchased
+                                  ? AppTheme.textMutedColor(context)
+                                  : AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w800,
+                              fontSize: 17,
+                              height: 1.2,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            desc,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: AppTheme.textMutedColor(context),
+                              fontSize: 13,
+                              height: 1.3,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 14),
+                SizedBox(
+                  width: double.infinity,
+                  height: 44,
+                  child: isPurchased
+                      ? _buildOwnedChip(ku)
+                      : _buildBuyButton(item, ku, canAfford),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            height: 44,
-            child: isPurchased
-                ? _buildOwnedChip(ku)
-                : _buildBuyButton(item, ku, canAfford),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -812,17 +918,18 @@ class _ShopScreenState extends State<ShopScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    // Title
+                    // Title — uzun adlar kesilmesin: 2 satır, ellipsis yok.
                     Text(
                       title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      overflow: TextOverflow.clip,
                       style: TextStyle(
                         color: isPurchased
                             ? AppTheme.textMutedColor(context)
                             : AppTheme.textPrimaryColor(context),
                         fontWeight: FontWeight.w800,
                         fontSize: 14,
+                        height: 1.2,
                       ),
                     ),
                     const SizedBox(height: 4),

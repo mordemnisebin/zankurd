@@ -199,12 +199,13 @@ final List<_Rule> _rules = [
 ];
 
 /// Bilinen Türkçe şablonu Kurmancî'ye çevirir; eşleşme yoksa metni
-/// olduğu gibi döndürür.
+/// genel bir Kurmancî çerçeveyle döndürür (içerik çevrilemediğinde
+/// ham Türkçe kalıbı doğrudan göstermemek için).
 String explanationToKu(String explanation) {
   final text = explanation.trim();
   for (final rule in _rules) {
     final match = rule.pattern.firstMatch(text);
     if (match != null) return rule.build(match);
   }
-  return explanation;
+  return 'Şirove: $text';
 }

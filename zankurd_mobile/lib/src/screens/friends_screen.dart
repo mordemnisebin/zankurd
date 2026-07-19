@@ -277,7 +277,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
               child: AppPanel(
                 child: Row(
                   children: [
-                    PlayerAvatar(radius: 22, colorHex: player.avatarColor),
+                    PlayerAvatar(
+                      radius: 22,
+                      colorHex: player.avatarColor,
+                      displayName: player.displayName,
+                    ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -524,7 +528,7 @@ class _FriendRequestCard extends StatelessWidget {
       child: AppPanel(
         child: Row(
           children: [
-            PlayerAvatar(radius: 24),
+            PlayerAvatar(radius: 24, displayName: request.fromUserName),
             const SizedBox(width: 12),
             Expanded(
               child: Text(

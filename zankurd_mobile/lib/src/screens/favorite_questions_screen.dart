@@ -55,7 +55,11 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
       appBar: AppBar(
         title: Text(context.s('Tomarkirî', 'Kaydedilenler')),
         actions: [
-          IconButton(onPressed: _reload, icon: Icon(Icons.refresh_rounded)),
+          IconButton(
+            onPressed: _reload,
+            tooltip: context.s('Nû bike', 'Yenile'),
+            icon: Icon(Icons.refresh_rounded),
+          ),
         ],
       ),
       body: Container(

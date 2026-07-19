@@ -193,7 +193,7 @@ class _ReviewCard extends StatelessWidget {
     if (isUnanswered) {
       headerColor = AppTheme.gold;
       headerIcon = Icons.help_outline;
-      headerText = context.s('VALA MA', 'BOŞ BIRAKILDI');
+      headerText = context.s('Vala ma', 'BOŞ BIRAKILDI');
     } else if (isCorrect) {
       headerColor = AppTheme.correct;
       headerIcon = Icons.check_circle_outline;

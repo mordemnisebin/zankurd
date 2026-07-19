@@ -42,13 +42,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
   NotificationService? _notificationService;
   bool _notificationsEnabled = false;
   String _notificationTime = '19:00';
+  bool _systemPermissionDenied = false;
 
   @override
   void initState() {
     super.initState();
+    // 'Tomar Bike' yalnız isim gerçekten değiştiğinde aktif olur (dirty-state).
+    _nameController.addListener(() {
+      if (mounted) setState(() {});
+    });
     _loadPlayerName();
     _loadNotificationSettings();
     _loadPackageVersion();
+  }
+
+  bool get _isNameDirty {
+    final name = _nameController.text.trim();
+    return name.isNotEmpty && name != _currentName;
   }
 
   Future<void> _loadPackageVersion() async {
@@ -122,17 +132,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               AppSpacing.lg,
             ),
             children: [
-              // Profil ailesi — mor kimlik (AppShell sekme 4).
-              ScreenIdentityHeader(
-                title: ku ? 'Vebijarkên Te' : 'Tercihlerin',
-                subtitle: ku
-                    ? 'Hesab, dîmen û dengê xwe birêve bibe'
-                    : 'Hesap, görünüm ve ses tercihlerini yönet',
-                accent: AppTheme.violet,
-                icon: Icons.settings_rounded,
-              ),
-              const SizedBox(height: AppSpacing.md),
-
               // ============ HESAP / ACCOUNT ============
               ScreenSectionLabel(
                 label: ku ? 'Hesap' : 'Hesap',
@@ -145,7 +144,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _SettingsIconTitle(
                       icon: Icons.badge_outlined,
                       color: AppTheme.primaryGradientStart,
-                      title: ku ? 'Navê lîstikê' : 'Oyuncu Adı',
+                      title: ku ? 'Navê lîstikvanê' : 'Oyuncu Adı',
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     TextField(
@@ -167,7 +166,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton.icon(
-                        onPressed: _loadingName || _savingName
+                        onPressed: _loadingName || _savingName || !_isNameDirty
                             ? null
                             : _savePlayerName,
                         icon: _savingName
@@ -484,6 +483,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onChanged: _toggleNotifications,
                       ),
                     ),
+                    if (_notificationsEnabled && _systemPermissionDenied)
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          AppSpacing.md,
+                          0,
+                          AppSpacing.md,
+                          AppSpacing.md,
+                        ),
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(AppSpacing.sm),
+                          decoration: BoxDecoration(
+                            color: AppTheme.wrong.withValues(alpha: 0.08),
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
+                            border: Border.all(
+                              color: AppTheme.wrong.withValues(alpha: 0.28),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.notifications_off_outlined,
+                                color: AppTheme.wrong,
+                                size: 20,
+                              ),
+                              const SizedBox(width: AppSpacing.sm),
+                              Expanded(
+                                child: Text(
+                                  ku
+                                      ? 'Destûra agahdariyê nehat dayîn; ji '
+                                            'mîhengên sîstemê veke.'
+                                      : 'Bildirim izni verilmedi; sistem '
+                                            'ayarlarından açın.',
+                                  style: AppTypography.caption.copyWith(
+                                    color: AppTheme.wrong,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     if (_notificationsEnabled) ...[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(
@@ -664,6 +706,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _notificationsEnabled = service.enabled;
           _notificationTime = service.timeDisplay;
         });
+        if (service.enabled) {
+          // Uygulama içi tercih açık ama sistem izni kapatılmış olabilir
+          // (kullanıcı sistem ayarlarından engellemiştir) — uyarı göster.
+          final granted = await service.hasSystemPermission();
+          if (mounted && !granted) {
+            setState(() => _systemPermissionDenied = true);
+          }
+        }
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'settings_action');
@@ -675,11 +725,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final service = _notificationService;
     if (service == null) return;
     await service.setEnabled(value);
-    if (mounted) {
-      setState(() {
-        _notificationsEnabled = value;
-      });
+    if (!mounted) return;
+    setState(() {
+      _notificationsEnabled = value;
+      _systemPermissionDenied = false;
+    });
+    if (value) {
+      final granted = await service.hasSystemPermission();
+      if (!mounted || granted) return;
+      setState(() => _systemPermissionDenied = true);
+      _showSystemPermissionDialog();
     }
+  }
+
+  /// Sistem bildirim izni reddedilmişse kullanıcıyı bilgilendirir.
+  void _showSystemPermissionDialog() {
+    final ku = context.isKu;
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppTheme.surfaceOf(context),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: AppTheme.borderColor(context)),
+        ),
+        title: Text(
+          ku ? 'Destûra agahdariyê tune ye' : 'Bildirim izni verilmedi',
+        ),
+        content: Text(
+          ku
+              ? 'Pergal destûra agahdariyan nade ZanKurd. Ji kerema xwe ji '
+                    'mîhengên sîstema amûrê ve agahdariyên ZanKurd veke.'
+              : 'Sistem, ZanKurd için bildirimlere izin vermiyor. Lütfen '
+                    'cihazının sistem ayarlarından ZanKurd bildirimlerini aç.',
+        ),
+        actions: [
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(ku ? 'Baş e' : 'Tamam'),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _pickNotificationTime() async {

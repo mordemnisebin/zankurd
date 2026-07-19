@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -272,7 +272,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      context.isKu ? 'Asta Te Bilind Bû!' : 'Tebrikler!',
+                      context.isKu ? 'Asta Te Bilind Bû!' : 'Seviyen Yükseldi!',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
@@ -646,7 +646,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     _ResultRewardChip(
                                       icon: Icons.bolt_rounded,
                                       label: '+$_earnedXP XP',
-                                      color: AppTheme.accent,
+                                      // Koyu sonuç kartında accent (koyu
+                                      // yeşil) soluk kalıyordu; kazanım
+                                      // hissi için aydınlatılmış yeşil.
+                                      color: Color.alphaBlend(
+                                        Colors.white.withValues(alpha: 0.35),
+                                        AppTheme.accent,
+                                      ),
                                     ),
                                 ],
                               ),
@@ -674,18 +680,20 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     label: context.s('Şaş', 'Yanlış'),
                                     color: AppTheme.wrong,
                                   ),
-                                  _StatPill(
-                                    icon: Icons.hourglass_empty_rounded,
-                                    value: '$unanswered',
-                                    label: context.s('Vala', 'Boş'),
-                                    color: AppTheme.textMutedColor(context),
-                                  ),
-                                  _StatPill(
-                                    icon: Icons.local_fire_department_rounded,
-                                    value: '$bestStreak',
-                                    label: context.s('Serî', 'Seri'),
-                                    color: AppTheme.gold,
-                                  ),
+                                  if (unanswered > 0)
+                                    _StatPill(
+                                      icon: Icons.hourglass_empty_rounded,
+                                      value: '$unanswered',
+                                      label: context.s('Vala', 'Boş'),
+                                      color: AppTheme.textMutedColor(context),
+                                    ),
+                                  if (bestStreak > 0)
+                                    _StatPill(
+                                      icon: Icons.local_fire_department_rounded,
+                                      value: '$bestStreak',
+                                      label: context.s('Serî', 'Seri'),
+                                      color: AppTheme.gold,
+                                    ),
                                 ],
                               ),
                             ],
@@ -715,7 +723,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   if (_dailyStreak > 0) ...[
                     const SizedBox(height: 16),
                     AppPanel(
-                      cardType: CardType.primary,
+                      cardType: CardType.secondary,
                       color: AppTheme.surfaceHiColor(context),
                       child: Row(
                         children: [
@@ -761,11 +769,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   const SizedBox(height: 16),
                   // ── Actions ──────────────────────────────────────────
                   const SizedBox(height: 12),
-                  // Primary Actions Row: Play Again & Review
+                  // Dalga 5: tek baskın CTA. Birincil dolgulu "Dîsa bilîze";
+                  // Vekolîn + Parve bike yanında ikon buton, değerlendirme
+                  // text butona indi.
                   Row(
                     children: [
                       Expanded(
-                        flex: 3,
                         child: SizedBox(
                           height: 52,
                           child: FilledButton.icon(
@@ -800,120 +809,57 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        // 3:2 oranı: flex 1'de "İncele" kırpılıyordu ("İnc…").
-                        flex: 2,
-                        child: SizedBox(
-                          height: 52,
-                          child: OutlinedButton.icon(
-                            key: const ValueKey('result-review-button'),
-                            style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                            ),
-                            onPressed: answerRecords.isEmpty
-                                ? null
-                                : () => Navigator.of(context).push(
-                                    AppRoute.to(
-                                      ReviewScreen(
-                                        records: answerRecords,
-                                        room: room,
-                                      ),
-                                    ),
+                      const SizedBox(width: 8),
+                      IconButton(
+                        key: const ValueKey('result-review-button'),
+                        tooltip: context.s('Vekolîn', 'İncele'),
+                        onPressed: answerRecords.isEmpty
+                            ? null
+                            : () => Navigator.of(context).push(
+                                AppRoute.to(
+                                  ReviewScreen(
+                                    records: answerRecords,
+                                    room: room,
                                   ),
-                            icon: const Icon(
-                              Icons.fact_check_outlined,
-                              size: 18,
-                            ),
-                            label: Text(
-                              context.s('Vekolîn', 'İncele'),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14,
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
+                        icon: const Icon(Icons.fact_check_outlined),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  // İkinci satır: Pirs'in 2x2 aksiyon deseni — paylaş
-                  // (izinliyse) + mağaza değerlendirmesi.
-                  Row(
-                    children: [
                       if (context
                           .watch<ChildSafetyProvider>()
-                          .allowExternalShare) ...[
-                        Expanded(
-                          child: SizedBox(
-                            height: 48,
-                            child: OutlinedButton.icon(
-                              key: const ValueKey('result-share-button'),
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                              ),
-                              onPressed: () => ResultSharer.share(
-                                context,
-                                isKu: context.isKu,
-                                score: score,
-                                correctCount: correctCount,
-                                totalQuestions: totalQuestions,
-                                bestStreak: bestStreak,
-                                category: room.category,
-                              ),
-                              icon: const Icon(Icons.share_rounded, size: 18),
-                              label: Text(
-                                context.s('Parve bike', 'Paylaş'),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
+                          .allowExternalShare)
+                        IconButton(
+                          key: const ValueKey('result-share-button'),
+                          tooltip: context.s('Parve bike', 'Paylaş'),
+                          onPressed: () => ResultSharer.share(
+                            context,
+                            isKu: context.isKu,
+                            score: score,
+                            correctCount: correctCount,
+                            totalQuestions: totalQuestions,
+                            bestStreak: bestStreak,
+                            category: room.category,
                           ),
+                          icon: const Icon(Icons.share_rounded),
                         ),
-                        const SizedBox(width: 10),
-                      ],
-                      Expanded(
-                        child: SizedBox(
-                          height: 48,
-                          child: OutlinedButton.icon(
-                            key: const ValueKey('result-rate-button'),
-                            style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                            ),
-                            onPressed: () =>
-                                InAppReview.instance.openStoreListing(),
-                            icon: const Icon(Icons.star_rounded, size: 18),
-                            label: Text(
-                              // Kısa etiket: "Bizi değerlendir" 2'li satırda
-                              // kırpılıyordu ("Bizi değerlen…").
-                              context.s('Binirxîne', 'Değerlendir'),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
+                    ],
+                  ),
+                  // İkincil CTA: mağaza değerlendirmesi text buton.
+                  Center(
+                    child: TextButton.icon(
+                      key: const ValueKey('result-rate-button'),
+                      onPressed: () => InAppReview.instance.openStoreListing(),
+                      icon: const Icon(Icons.star_rounded, size: 18),
+                      label: Text(
+                        context.s('Binirxîne', 'Değerlendir'),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13,
                         ),
                       ),
-                    ],
+                    ),
                   ),
                   const SizedBox(height: 12),
                   // Subtle secondary links
@@ -1116,122 +1062,93 @@ class _AchievementUnlocks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Sonuç kartından görsel olarak daha zayıf: tam gold gradyan blok yerine
+    // sade yüzey + ince gold sınır; rozet bilgisi ikincil kalır.
     return AppPanel(
-      cardType: CardType.primary,
-      gradient: AppTheme.goldGradient,
-      child: Stack(
+      color: AppTheme.surfaceHiColor(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Roj (güneş) ışını kutlaması: rozet açıldığında ışınlar bir kez
-          // dışa doğru açılıp söner — kültürel imzayı ödül anına bağlar.
-          Positioned.fill(
-            child: IgnorePointer(
-              child: TweenAnimationBuilder<double>(
-                tween: Tween(begin: 0, end: 1),
-                duration: const Duration(milliseconds: 1100),
-                curve: Curves.easeOutCubic,
-                builder: (_, v, _) =>
-                    CustomPaint(painter: _RojRaysPainter(progress: v)),
-              ),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              Row(
+              Container(
+                width: 30,
+                height: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppTheme.gold.withValues(alpha: 0.14),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: AppTheme.gold.withValues(alpha: 0.35),
+                  ),
+                ),
+                child: const Icon(
+                  Icons.workspace_premium_outlined,
+                  color: AppTheme.gold,
+                  size: 17,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  context.s('Rozeta Nû', 'Yeni Rozet'),
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          for (final achievement in achievements)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Row(
                 children: [
-                  Icon(Icons.workspace_premium_outlined, color: Colors.white),
-                  const SizedBox(width: 8),
-                  Text(
-                    context.s('Rozeta Nû', 'Yeni Rozet'),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18,
+                  Container(
+                    width: 34,
+                    height: 34,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppTheme.gold.withValues(alpha: 0.10),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      achievement.icon,
+                      color: AppTheme.gold,
+                      size: 19,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          achievement.title(context.isKu),
+                          style: TextStyle(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          achievement.description(context.isKu),
+                          style: TextStyle(
+                            color: AppTheme.textMutedColor(context),
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
-              for (final achievement in achievements)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 38,
-                        height: 38,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.18),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Icon(achievement.icon, color: Colors.white),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              achievement.title(context.isKu),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(
-                              achievement.description(context.isKu),
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-            ],
-          ),
+            ),
         ],
       ),
     );
   }
-}
-
-/// Roj motifi: merkezden dışa açılan 12 ışın; progress ilerledikçe uzar
-/// ve şeffaflaşarak söner (tek seferlik kutlama parlaması).
-class _RojRaysPainter extends CustomPainter {
-  _RojRaysPainter({required this.progress});
-
-  final double progress;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (progress <= 0 || progress >= 1) return;
-    final center = Offset(size.width / 2, size.height / 2);
-    final maxR = size.longestSide * 0.55;
-    final paint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.40 * (1 - progress))
-      ..strokeWidth = 3
-      ..strokeCap = StrokeCap.round;
-    for (var i = 0; i < 12; i++) {
-      final angle = i * math.pi / 6;
-      final direction = Offset(math.cos(angle), math.sin(angle));
-      final inner = 18 + maxR * 0.45 * progress;
-      final outer = inner + maxR * 0.35 * progress;
-      canvas.drawLine(
-        center + direction * inner,
-        center + direction * outer,
-        paint,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _RojRaysPainter oldDelegate) =>
-      oldDelegate.progress != progress;
 }
 
 class _MasteryPromotions extends StatelessWidget {
@@ -1314,9 +1231,9 @@ class _ResultRewardChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
+        color: color.withValues(alpha: 0.20),
         borderRadius: BorderRadius.circular(99),
-        border: Border.all(color: color.withValues(alpha: 0.35)),
+        border: Border.all(color: color.withValues(alpha: 0.55)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -1452,7 +1369,7 @@ class _StatPill extends StatelessWidget {
         Text(
           value,
           style: TextStyle(
-            color: Colors.white,
+            color: AppTheme.textPrimaryColor(context),
             fontWeight: FontWeight.w800,
             fontSize: 15,
           ),
@@ -1461,7 +1378,7 @@ class _StatPill extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.60),
+            color: AppTheme.textMutedColor(context),
             fontSize: 11,
           ),
         ),

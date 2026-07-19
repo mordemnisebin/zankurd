@@ -192,6 +192,7 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                       ),
                       IconButton(
                         onPressed: () => Navigator.pop(context),
+                        tooltip: ku ? 'Bigire' : 'Kapat',
                         icon: const Icon(Icons.close),
                       ),
                     ],

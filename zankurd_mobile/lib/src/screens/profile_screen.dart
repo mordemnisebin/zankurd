@@ -62,6 +62,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int _xpInLevel = 0;
   int _xpNeeded = 1000;
   double _levelProgress = 0.0;
+  int? _coinBalance;
+  double? _accuracyPercent;
 
   @override
   void initState() {
@@ -138,6 +140,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _refreshMistakes();
   }
 
+  /// İstatistiği olmayan kullanıcıyı doğrudan hızlı yarışa götürür.
+  Future<void> _startQuickRace() async {
+    final questions = await widget.repository.loadQuestions(limit: 10);
+    if (!mounted) return;
+    final raceQuestions = questions.isEmpty
+        ? widget.repository.questions
+        : questions;
+    Navigator.of(context).push(
+      AppRoute.to(
+        QuizScreen(
+          repository: widget.repository,
+          room: widget.repository.createRoom(),
+          questions: raceQuestions,
+        ),
+      ),
+    );
+  }
+
   Future<void> _load() async {
     setState(() => _loading = true);
     try {
@@ -147,6 +167,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final achievementStore = await AchievementStore.load();
       final masteryStore = await MasteryStore.load();
       final xpStore = await XPStore.load();
+      // Coin bakiyesi + doğruluk oranı istatistik kartları için (UI-only).
+      int? coinBalance;
+      try {
+        coinBalance = await widget.repository.loadCoinBalance();
+      } catch (_) {
+        coinBalance = null;
+      }
+      final mistakeStore = await MistakeStore.load();
       if (mounted) {
         setState(() {
           _currentName = name;
@@ -158,6 +186,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _xpInLevel = xpStore.xpInCurrentLevel;
           _xpNeeded = xpStore.xpNeededForNextLevel;
           _levelProgress = xpStore.levelProgress;
+          _coinBalance = coinBalance;
+          _accuracyPercent = mistakeStore.accuracyPercent;
           _loading = false;
           _loadFailed = false;
         });
@@ -192,7 +222,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final langProvider = context.langProvider;
     final width = MediaQuery.sizeOf(context).width;
     final isWide = width > 720;
 
@@ -214,38 +243,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         profileHero,
         const SizedBox(height: AppSpacing.cardGap),
 
-        // Language toggle
-        AppPanel(
-          child: Row(
-            children: [
-              const Icon(Icons.language, color: AppTheme.violet, size: 22),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      ku ? 'Ziman' : 'Dil',
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    Text(
-                      ku ? 'Kurdî / Tirkî' : 'Kürtçe / Türkçe',
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              _LangToggle(isKu: ku, onToggle: langProvider.toggle),
-            ],
-          ),
-        ),
-        const SizedBox(height: 14),
-
         // Stats
         AppPanel(
           child: Column(
@@ -261,11 +258,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const SizedBox(height: 14),
               if (_stats == null)
-                Text(
-                  ku
-                      ? 'Hîn dîroka lîstikê ya serhêl tune.\nBi yekê re bikevin an yek çêbikin.'
-                      : 'Henüz çevrimiçi oyun geçmişin yok.\nBir odaya katıl veya oluştur.',
-                  style: const TextStyle(color: AppTheme.textMuted),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      ku
+                          ? 'Hîn dîroka lîstikê ya serhêl tune.\nBi yekê re bikevin an yek çêbikin.'
+                          : 'Henüz çevrimiçi oyun geçmişin yok.\nBir odaya katıl veya oluştur.',
+                      style: const TextStyle(color: AppTheme.textMuted),
+                    ),
+                    const SizedBox(height: 12),
+                    FilledButton.icon(
+                      key: const ValueKey('profile-stats-start-cta'),
+                      onPressed: _startQuickRace,
+                      icon: const Icon(Icons.bolt_rounded, size: 18),
+                      label: Text(ku ? 'Îro dest pê bike' : 'Bugün başla'),
+                    ),
+                  ],
                 )
               else
                 LayoutBuilder(
@@ -303,6 +312,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         value: '${_stats!.roomsPlayed}',
                         color: AppTheme.correct,
                         icon: Icons.sports_esports_rounded,
+                      ),
+                      _StatTile(
+                        label: ku ? 'Xeruz' : 'Coin',
+                        value: _coinBalance == null ? '—' : '$_coinBalance',
+                        color: AppTheme.gold,
+                        icon: Icons.monetization_on_rounded,
+                      ),
+                      _StatTile(
+                        label: ku ? 'Rastî' : 'Doğruluk',
+                        value: _accuracyPercent == null
+                            ? '—'
+                            : '%${_accuracyPercent!.round()}',
+                        color: AppTheme.cyan,
+                        icon: Icons.track_changes_rounded,
                       ),
                     ],
                   ),
@@ -459,19 +482,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               letterSpacing: -0.5,
                             ),
                           ),
-                          const Spacer(),
-                          Tooltip(
-                            message: ku ? 'Mîheng' : 'Ayarlar',
-                            child: IconButton.filledTonal(
-                              key: const ValueKey('profile-settings-top'),
-                              onPressed: () => Navigator.of(context).push(
-                                AppRoute.to(
-                                  SettingsScreen(repository: widget.repository),
-                                ),
-                              ),
-                              icon: const Icon(Icons.settings_outlined),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -523,7 +533,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: iconColor.withValues(alpha: 0.14),
+                color: AppColors.iconTileBg(context, iconColor),
                 shape: BoxShape.circle,
               ),
               child: leading,
@@ -767,63 +777,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-class _LangToggle extends StatelessWidget {
-  const _LangToggle({required this.isKu, required this.onToggle});
-
-  final bool isKu;
-  final VoidCallback onToggle;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onToggle,
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.surfaceHiOf(context),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppTheme.borderColor(context)),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _Tab(label: 'KU', active: isKu, onTap: onToggle),
-            _Tab(label: 'TR', active: !isKu, onTap: onToggle),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _Tab extends StatelessWidget {
-  const _Tab({required this.label, required this.active, required this.onTap});
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      constraints: const BoxConstraints(minHeight: 44),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-      decoration: BoxDecoration(
-        color: active ? AppTheme.accent : Colors.transparent,
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Text(
-        label,
-        style: AppTypography.bodyMedium.copyWith(
-          color: active ? Colors.white : AppTheme.textMutedColor(context),
-          fontWeight: FontWeight.w800,
-          fontSize: 13,
-        ),
-      ),
-    );
-  }
-}
-
 class _ProfileHeroCard extends StatelessWidget {
   const _ProfileHeroCard({
     required this.ku,
@@ -965,17 +918,7 @@ class _ProfileHeroCard extends StatelessWidget {
                               ),
                             )
                           else
-                            Text(
-                              ku
-                                  ? 'Di tabloya pêşderçûnê de ev nav xuya dike'
-                                  : 'Liderlik tablosunda bu isim görünür',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTypography.bodyMedium.copyWith(
-                                color: AppTheme.textSubColor(context),
-                                fontSize: 13,
-                              ),
-                            ),
+                            const SizedBox.shrink(),
                         ],
                       ),
                     ),
@@ -1075,7 +1018,7 @@ class _StatTile extends StatelessWidget {
             height: 28,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.14),
+              color: AppColors.iconTileBg(context, color),
               borderRadius: BorderRadius.circular(AppRadius.xs),
             ),
             child: Icon(icon, color: color, size: 16),
@@ -1085,7 +1028,10 @@ class _StatTile extends StatelessWidget {
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTypography.bodyLarge.copyWith(color: color, fontSize: 17),
+            style: AppTypography.bodyLarge.copyWith(
+              color: AppColors.toneOnSurface(context, color),
+              fontSize: 17,
+            ),
           ),
           Text(
             label,
@@ -1229,6 +1175,50 @@ class _AchievementShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Henüz rozet kazanılmamışsa şerit yerine tek satırlık kompakt kart.
+    if (achievements.isEmpty) {
+      return AppPanel(
+        padding: EdgeInsets.zero,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          onTap: () => _showAllAchievementsSheet(context),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.workspace_premium_outlined,
+                  color: AppTheme.gold,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    isKu
+                        ? 'Rozet 0/${AchievementStore.definitions.length} — pêşbirkekê biqedîne û rozeta yekem veke'
+                        : 'Rozet 0/${AchievementStore.definitions.length} — bir yarış tamamla, ilk rozeti aç',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: AppTheme.textMutedColor(context),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppTheme.textMutedColor(context),
+                  size: 18,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
     return AppPanel(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
