@@ -186,10 +186,12 @@ class _CategoriesTabState extends State<CategoriesTab> {
                               AppSpacing.xxl;
                           final isNarrow = constraints.maxWidth <= 600;
                           final crossCount = isNarrow ? 1 : 2;
-                          // Mockup 4 kompakt satır yüksekliği (~110px).
+                          // Pirs hizası: kompakt satır yüksekliği (~120px) — hem
+                          // dar (1 sütun) hem geniş (2 sütun) düzende. Eski geniş
+                          // düzen (2.6) kartları aşırı boş/uzun yapıyordu.
                           final aspectRatio = isNarrow
                               ? (constraints.maxWidth / 120)
-                              : 2.6;
+                              : ((constraints.maxWidth / 2) / 120);
                           return GridView.builder(
                             controller: widget.scrollController,
                             padding: EdgeInsets.fromLTRB(
@@ -247,7 +249,9 @@ class _CategoriesTabState extends State<CategoriesTab> {
             MediaQuery.paddingOf(context).bottom + AppSpacing.xxl;
         final isNarrow = constraints.maxWidth <= 600;
         final crossCount = isNarrow ? 1 : 2;
-        final aspectRatio = isNarrow ? (constraints.maxWidth / 120) : 2.6;
+        final aspectRatio = isNarrow
+            ? (constraints.maxWidth / 120)
+            : ((constraints.maxWidth / 2) / 120);
         return GridView.builder(
           padding: EdgeInsets.fromLTRB(
             AppSpacing.page,

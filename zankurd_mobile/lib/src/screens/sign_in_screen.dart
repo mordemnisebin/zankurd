@@ -819,14 +819,15 @@ class _SignInHeroBanner extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(compact ? AppSpacing.md : AppSpacing.lg),
         decoration: BoxDecoration(
-          // Pirs-inspired yeşil→turuncu compact welcome banner.
+          // Pirs hizası: turuncu compact welcome banner (eski yeşil→turuncu
+          // çakışması giderildi).
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.playGreen, AppTheme.brandGreenDeep],
+            colors: [AppTheme.brandGreen, AppTheme.brandGreenDeep],
           ),
           border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
-          boxShadow: AppTheme.elevatedShadow(AppTheme.playGreen),
+          boxShadow: AppTheme.elevatedShadow(AppTheme.brandGreen),
         ),
         child: Stack(
           children: [
