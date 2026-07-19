@@ -4,6 +4,14 @@ Pirs_apk_extracted/
 output/
 *.zip
 
+# Kök seviyedeki oturum ekran görüntüleri (ürün asset'i değil)
+/tour-*.jpeg
+/live-*.jpeg
+/fazA-*.jpeg
+/fazB-*.jpeg
+/pirs_*.jpg
+/zankurd.png
+
 # Mobil ve test araçlarının bağımlılıkları/önbellekleri
 .playwright-mcp/
 .agents/

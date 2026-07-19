@@ -926,8 +926,8 @@ class _FriendRankRow extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: online
-                          ? const Color(0xFF4CAF50)
-                          : const Color(0xFF9E9E9E),
+                          ? AppTheme.brandGreen
+                          : AppTheme.textMuted,
                       border: Border.all(
                         color: AppTheme.surfaceColor(context),
                         width: 2,
@@ -961,7 +961,7 @@ class _FriendRankRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.caption.copyWith(
                     color: online
-                        ? const Color(0xFF4CAF50)
+                        ? AppTheme.brandGreen
                         : AppTheme.textMutedColor(context),
                     fontSize: 11,
                     fontWeight: FontWeight.w600,

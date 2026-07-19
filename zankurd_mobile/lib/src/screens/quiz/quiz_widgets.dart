@@ -1342,12 +1342,12 @@ class _CircularTimerState extends State<_CircularTimer>
     if (progress > 0.5) {
       return Color.lerp(
         const Color(0xFFFFC107), // Amber
-        const Color(0xFF4CAF50), // Green
+        AppTheme.brandGreen, // Green
         (progress - 0.5) * 2,
       )!;
     } else {
       return Color.lerp(
-        const Color(0xFFF44336), // Red
+        AppTheme.wrong, // Red
         const Color(0xFFFFC107), // Amber
         progress * 2,
       )!;
