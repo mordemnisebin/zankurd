@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/colorful_action_card.dart';
 
-/// Tam-genişlik "hemen oyna" kart listesi: 1v1 düello, günün yarışması,
-/// çark, turnuva. Kategorî'nin kompakt satır diliyle tutarlı [ColorfulActionCard]
-/// ailesini kullanır — her mod kendi kimlik rengini ikon çipinde taşır.
+/// Tam-genişlik yarışma modu listesi: 1v1 düello, günün yarışması, turnuva.
+/// Yalnız gerçek "yarış" modları burada; çark bir ödüldür ve mağazada durur
+/// (yarışma kararını kalabalıklaştırmasın). Kategorî'nin kompakt satır diliyle
+/// tutarlı [ColorfulActionCard] ailesini kullanır — her mod kendi kimlik
+/// rengini ikon çipinde taşır.
 class QuickPlayGrid extends StatelessWidget {
   const QuickPlayGrid({
     required this.isKu,
     required this.dailyQuizLoading,
     required this.onDuel,
     required this.onDailyQuiz,
-    required this.onSpinWheel,
     required this.onTournament,
     super.key,
   });
@@ -21,7 +22,6 @@ class QuickPlayGrid extends StatelessWidget {
   final bool dailyQuizLoading;
   final VoidCallback onDuel;
   final VoidCallback onDailyQuiz;
-  final VoidCallback onSpinWheel;
   final VoidCallback onTournament;
 
   /// Gradient'in ikinci durağı: aynı rengin hafif koyulaştırılmışı.
@@ -49,14 +49,6 @@ class QuickPlayGrid extends StatelessWidget {
         colors: const [AppTheme.brandGreen, AppTheme.brandGreenDeep],
         loading: dailyQuizLoading,
         onTap: onDailyQuiz,
-      ),
-      ColorfulActionCard(
-        key: const ValueKey('quick-play-wheel'),
-        title: isKu ? 'Çerxa Rojê' : 'Günün Çarkı',
-        subtitle: '100 coin',
-        icon: Icons.casino_outlined,
-        colors: [AppTheme.playGreen, _deepen(AppTheme.playGreen)],
-        onTap: onSpinWheel,
       ),
       ColorfulActionCard(
         key: const ValueKey('quick-play-tournament'),

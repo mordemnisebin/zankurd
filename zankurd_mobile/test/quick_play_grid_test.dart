@@ -11,19 +11,19 @@ void main() {
     dailyQuizLoading: dailyQuizLoading,
     onDuel: () {},
     onDailyQuiz: () {},
-    onSpinWheel: () {},
     onTournament: () {},
   );
 
-  testWidgets('uses four keyed colorful action cards', (tester) async {
+  testWidgets('uses three keyed colorful action cards', (tester) async {
     await tester.pumpWidget(wrap(buildGrid()));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('quick-play-duel')), findsOneWidget);
     expect(find.byKey(const ValueKey('quick-play-daily')), findsOneWidget);
-    expect(find.byKey(const ValueKey('quick-play-wheel')), findsOneWidget);
     expect(find.byKey(const ValueKey('quick-play-tournament')), findsOneWidget);
-    expect(find.byType(ColorfulActionCard), findsNWidgets(4));
+    // Çark (ödül) artık burada değil — mağazada durur.
+    expect(find.byKey(const ValueKey('quick-play-wheel')), findsNothing);
+    expect(find.byType(ColorfulActionCard), findsNWidgets(3));
   });
 
   testWidgets(
@@ -65,7 +65,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('renders all four quick-play tiles with Turkish labels', (
+  testWidgets('renders all three quick-play tiles with Turkish labels', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -75,7 +75,6 @@ void main() {
           dailyQuizLoading: false,
           onDuel: () {},
           onDailyQuiz: () {},
-          onSpinWheel: () {},
           onTournament: () {},
         ),
       ),
@@ -83,11 +82,12 @@ void main() {
 
     expect(find.text('1vs1 Düello'), findsOneWidget);
     expect(find.text('Günün Yarışması'), findsOneWidget);
-    expect(find.text('Günün Çarkı'), findsOneWidget);
     expect(find.text('Turnuva Modu'), findsOneWidget);
+    // Çark artık yarışma grid'inde değil.
+    expect(find.text('Günün Çarkı'), findsNothing);
   });
 
-  testWidgets('renders all four quick-play tiles with Kurdish labels', (
+  testWidgets('renders all three quick-play tiles with Kurdish labels', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -97,7 +97,6 @@ void main() {
           dailyQuizLoading: false,
           onDuel: () {},
           onDailyQuiz: () {},
-          onSpinWheel: () {},
           onTournament: () {},
         ),
       ),
@@ -105,14 +104,13 @@ void main() {
 
     expect(find.text('Şerê 1vs1'), findsOneWidget);
     expect(find.text('Pêşbirka Rojê'), findsOneWidget);
-    expect(find.text('Çerxa Rojê'), findsOneWidget);
     expect(find.text('Turnuva'), findsOneWidget);
+    expect(find.text('Çerxa Rojê'), findsNothing);
   });
 
   testWidgets('tapping a tile invokes its own callback only', (tester) async {
     var duelTapped = false;
     var dailyQuizTapped = false;
-    var spinWheelTapped = false;
     var tournamentTapped = false;
 
     await tester.pumpWidget(
@@ -122,7 +120,6 @@ void main() {
           dailyQuizLoading: false,
           onDuel: () => duelTapped = true,
           onDailyQuiz: () => dailyQuizTapped = true,
-          onSpinWheel: () => spinWheelTapped = true,
           onTournament: () => tournamentTapped = true,
         ),
       ),
@@ -134,7 +131,6 @@ void main() {
     expect(tournamentTapped, isTrue);
     expect(duelTapped, isFalse);
     expect(dailyQuizTapped, isFalse);
-    expect(spinWheelTapped, isFalse);
   });
 
   testWidgets(
@@ -149,7 +145,6 @@ void main() {
             dailyQuizLoading: true,
             onDuel: () {},
             onDailyQuiz: () => tapped = true,
-            onSpinWheel: () {},
             onTournament: () {},
           ),
         ),

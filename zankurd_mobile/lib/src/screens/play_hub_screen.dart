@@ -12,7 +12,6 @@ import 'home/quick_play_grid.dart';
 import 'matchmaking_screen.dart';
 import 'room_screen.dart';
 import 'shop_screen.dart';
-import 'spin_wheel_screen.dart';
 import 'tournament_screen.dart';
 
 class PlayHubScreen extends StatefulWidget {
@@ -196,10 +195,10 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             // Büyük 'Pêşbazî' tanıtım kartı kaldırıldı — bölüm başlığı
             // ekranı tanıtmaya yeter.
             _PlaySectionHeading(
-              title: ku ? 'Pêşbaziyek hilbijêre' : 'Bir yarış seç',
+              title: ku ? 'Çawa dixwazî pêşbaz bibî?' : 'Nasıl yarışmak istersin?',
               subtitle: ku
-                  ? 'Ji bo destpêkirinê yek ji modan hilbijêre.'
-                  : 'Başlamak için bir yarış modunu seç.',
+                  ? 'Yek ji modan hilbijêre û dest pê bike.'
+                  : 'Bir mod seç ve başla.',
             ),
             const SizedBox(height: AppSpacing.sm),
             QuickPlayGrid(
@@ -209,9 +208,6 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 AppRoute.to(MatchmakingScreen(repository: widget.repository)),
               ),
               onDailyQuiz: _openDailyQuiz,
-              onSpinWheel: () => Navigator.of(context).push(
-                AppRoute.to(SpinWheelScreen(repository: widget.repository)),
-              ),
               onTournament: () => Navigator.of(context).push(
                 AppRoute.to(TournamentScreen(repository: widget.repository)),
               ),
