@@ -142,6 +142,11 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // E-posta formu artık genişleyen bölümde; önce aç (tasarım: tek
+      // birincil CTA = Google, form varsayılan kapalı).
+      await tester.tap(find.text('Veya e-posta ile'));
+      await tester.pumpAndSettle();
+
       // Renkli welcome banner başlığı iki temada da beyaz kalır.
       final title = tester.widget<Text>(find.text('ZanKurd\'a Hoş Geldin'));
       expect(title.style?.color?.computeLuminance(), greaterThan(0.75));

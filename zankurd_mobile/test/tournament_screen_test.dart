@@ -80,8 +80,8 @@ void main() {
       // 16 oyunculu kupada ilk tur "Son 16"dır.
       expect(find.text('Son 16'), findsAtLeast(1));
       expect(find.text('Maçı Başlat'), findsOneWidget);
-      // ScreenSectionLabel uppercase sunum kullanır.
-      expect(find.text('TURNUVA ŞEMASI'), findsOneWidget);
+      // Bölüm başlığı standart stilde (all-caps patlaması kaldırıldı).
+      expect(find.text('Turnuva Şeması'), findsOneWidget);
     });
   });
 }

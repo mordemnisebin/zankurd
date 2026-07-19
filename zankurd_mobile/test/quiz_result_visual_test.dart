@@ -76,12 +76,15 @@ void main() {
       findsOneWidget,
     );
 
-    // Secondary: review
+    // Secondary: review (Dalga 5: ikon buton + tooltip)
     await tester.scrollUntilVisible(
       find.byKey(const ValueKey('result-review-button')),
       200,
     );
-    expect(find.text('İncele'), findsOneWidget);
+    final reviewBtn = tester.widget<IconButton>(
+      find.byKey(const ValueKey('result-review-button')),
+    );
+    expect(reviewBtn.tooltip, 'İncele');
 
     // Secondary: home
     await tester.scrollUntilVisible(

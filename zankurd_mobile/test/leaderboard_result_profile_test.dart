@@ -159,7 +159,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Profil'), findsOneWidget);
-    expect(find.byKey(const ValueKey('profile-settings-top')), findsOneWidget);
+    // Dalga 5: başlıktaki dişli ikon kaldırıldı; ayarlar girişi HESAP
+    // menüsündeki 'Ayarlar' satırına tekleştirildi.
+    expect(find.byKey(const ValueKey('profile-settings-top')), findsNothing);
   });
 
   testWidgets('opens the leaderboard from the bottom nav', (tester) async {
@@ -242,13 +244,14 @@ void main() {
     expect(find.text('Doğru'), findsOneWidget);
     expect(find.text('Yanlış'), findsOneWidget);
 
+    // Dalga 5: "İncele" ikon butona indi (tooltip'li); anahtarla bulunur.
     await tester.scrollUntilVisible(
-      find.text('İncele'),
+      find.byKey(const ValueKey('result-review-button')),
       120,
       scrollable: find.byType(Scrollable).first,
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('İncele'));
+    await tester.tap(find.byKey(const ValueKey('result-review-button')));
     await tester.pumpAndSettle();
 
     expect(find.text('Cevaplar'), findsOneWidget);

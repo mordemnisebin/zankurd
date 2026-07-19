@@ -188,7 +188,12 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('quiz-circular-timer')), findsOneWidget);
-    expect(find.text('15'), findsOneWidget);
+    // Sayaç artık odanın gerçek süresini gösterir (varsayılan 30 sn);
+    // önceden sabit 15'e kilitliydi ve lobi çipiyle çelişiyordu.
+    expect(
+      find.text('${repository.createRoom().secondsPerQuestion}'),
+      findsOneWidget,
+    );
   });
 
   // testWidgets('explanation box is displayed after 800ms delay', (tester) async {

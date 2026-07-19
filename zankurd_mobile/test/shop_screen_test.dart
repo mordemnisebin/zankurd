@@ -86,11 +86,16 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('200c'));
     await tester.pumpAndSettle();
-    // Confirm dialog appears — tap "Satin Al"
-    await tester.tap(find.text('Satın Al'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Bakiye yetersiz!'), findsOneWidget);
+    // Dalga 5: yetersiz bakiyede onay dialogunda 'Satın Al' gri disabled
+    // olur ve 'Coin kazan' ikincil butonu görünür; harcama yapılmaz.
+    final buyButton = tester.widget<FilledButton>(
+      find.ancestor(
+        of: find.text('Satın Al'),
+        matching: find.byType(FilledButton),
+      ),
+    );
+    expect(buyButton.onPressed, isNull);
+    expect(find.text('Coin kazan'), findsOneWidget);
     expect(repository.spendReasons, isEmpty);
     expect(tester.takeException(), isNull);
   });

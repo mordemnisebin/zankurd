@@ -185,10 +185,13 @@ void main() {
 
       final notice = find.byKey(const ValueKey('quiz-timeout-notice'));
       expect(notice, findsOneWidget);
-      expect(find.text('Zamanlayıcı · 00:00'), findsOneWidget);
+      // Dalga 5: timeout bandı artık süre + doğru cevabı birlikte bildirir.
+      final expected =
+          'Süre doldu! Doğru cevap: ${repo.questions.first.correctAnswer}';
+      expect(find.text(expected), findsOneWidget);
       final semantics = tester.widget<Semantics>(notice);
       expect(semantics.properties.liveRegion, isTrue);
-      expect(semantics.properties.label, 'Zamanlayıcı · 00:00');
+      expect(semantics.properties.label, expected);
     });
 
     testWidgets('ilk quiz rehberi açıkken timer cevabı otomatik açmaz', (
