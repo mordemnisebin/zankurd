@@ -348,13 +348,24 @@ void main() {
     );
   });
 
-  testWidgets('app logo uses high quality image filtering', (tester) async {
+  testWidgets('app logo renders Pirs-hizali turuncu gradyan wordmark', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       const MaterialApp(home: Scaffold(body: AppLogo(width: 160))),
     );
 
-    final image = tester.widget<Image>(find.byType(Image));
-    expect(image.filterQuality, FilterQuality.high);
+    expect(find.text('ZanKurd'), findsOneWidget);
+    final container = tester.widget<Container>(
+      find
+          .descendant(
+            of: find.byType(AppLogo),
+            matching: find.byType(Container),
+          )
+          .first,
+    );
+    final decoration = container.decoration as BoxDecoration;
+    expect(decoration.gradient, isNotNull);
   });
 
   testWidgets('auth screen asks for language before sign in', (tester) async {
