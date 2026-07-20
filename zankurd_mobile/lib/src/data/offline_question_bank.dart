@@ -15211,7 +15211,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20000',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di qada ziman de têgeha \'ergatîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'ergatîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide',
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
@@ -15229,7 +15229,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20001',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\'?',
     answers: [
       'paşgirên tewandinê',
       'cînavkên tewandî',
@@ -15245,7 +15245,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20002',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di xwendina ziman de têgeha \'ergatîf\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'ergatîf\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'ergatîf\' di vê kategoriyê de têgeheke giring e.',
@@ -15256,7 +15256,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20003',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ravekirina \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'ergatîf\' û qada ziman re girêdayî ye.',
@@ -15267,7 +15267,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20004',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ergatîf\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ergatîf\' bi awayekî rast temam dike?',
     answers: [
       'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide',
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
@@ -15285,7 +15285,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20005',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di qada ziman de têgeha \'ergatîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'ergatîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
@@ -15303,7 +15303,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20006',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\'?',
     answers: ['ergatîf', 'paşgirên tewandinê', 'daçekên hevedudanî', 'ezafe'],
     correctAnswer: 'ergatîf',
     explanation: 'Ev ravekirin têgeha \'ergatîf\' nîşan dide.',
@@ -15314,7 +15314,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20007',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di xwendina ziman de têgeha \'ergatîf\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'ergatîf\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'ergatîf\' di vê kategoriyê de têgeheke giring e.',
@@ -15325,7 +15325,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20008',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ravekirina \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'ergatîf\' û qada ziman re girêdayî ye.',
@@ -15336,7 +15336,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20009',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ergatîf\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ergatîf\' bi awayekî rast temam dike?',
     answers: [
       'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin',
       'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide',
@@ -15354,7 +15354,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20010',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di qada ziman de têgeha \'ergatîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'ergatîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide',
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
@@ -15372,7 +15372,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20011',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\'?',
     answers: [
       'cînavkên tewandî',
       'daçekên hevedudanî',
@@ -15388,7 +15388,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20012',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di xwendina ziman de têgeha \'ergatîf\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'ergatîf\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'ergatîf\' di vê kategoriyê de têgeheke giring e.',
@@ -15399,7 +15399,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20013',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ravekirina \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'ergatîf\' û qada ziman re girêdayî ye.',
@@ -15410,7 +15410,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20014',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ergatîf\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ergatîf\' bi awayekî rast temam dike?',
     answers: [
       'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide',
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
@@ -15571,7 +15571,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20025',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di qada ziman de têgeha \'tewandin\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'tewandin\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
@@ -15589,7 +15589,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20026',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\'?',
     answers: ['cînavkên tewandî', 'rênivîsa Hawarê', 'tewandin', 'ezafe'],
     correctAnswer: 'tewandin',
     explanation: 'Ev ravekirin têgeha \'tewandin\' nîşan dide.',
@@ -15600,7 +15600,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20027',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di xwendina ziman de têgeha \'tewandin\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'tewandin\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'tewandin\' di vê kategoriyê de têgeheke giring e.',
@@ -15611,7 +15611,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20028',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ravekirina \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'tewandin\' û qada ziman re girêdayî ye.',
@@ -15622,7 +15622,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20029',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'tewandin\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'tewandin\' bi awayekî rast temam dike?',
     answers: [
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
@@ -15640,7 +15640,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20030',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di qada ziman de têgeha \'tewandin\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'tewandin\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide',
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
@@ -15658,7 +15658,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20031',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\'?',
     answers: ['tewandin', 'ergatîf', 'paşgirên tewandinê', 'cînavkên tewandî'],
     correctAnswer: 'tewandin',
     explanation: 'Ev ravekirin têgeha \'tewandin\' nîşan dide.',
@@ -15669,7 +15669,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20032',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di xwendina ziman de têgeha \'tewandin\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'tewandin\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'tewandin\' di vê kategoriyê de têgeheke giring e.',
@@ -15680,7 +15680,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20033',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ravekirina \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'tewandin\' û qada ziman re girêdayî ye.',
@@ -15691,7 +15691,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20034',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'tewandin\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'tewandin\' bi awayekî rast temam dike?',
     answers: [
       'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide',
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
@@ -15709,7 +15709,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20035',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di qada ziman de têgeha \'tewandin\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'tewandin\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
@@ -15727,7 +15727,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20036',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\'?',
     answers: [
       'daçekên hevedudanî',
       'cînavkên tewandî',
@@ -15743,7 +15743,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20037',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di xwendina ziman de têgeha \'tewandin\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'tewandin\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'tewandin\' di vê kategoriyê de têgeheke giring e.',
@@ -15754,7 +15754,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20038',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ravekirina \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'tewandin\' û qada ziman re girêdayî ye.',
@@ -15765,7 +15765,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20039',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'tewandin\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'tewandin\' bi awayekî rast temam dike?',
     answers: [
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
       'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin',
@@ -15921,7 +15921,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20050',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di qada ziman de têgeha \'ezafe\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'ezafe\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
       'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn',
@@ -15939,7 +15939,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20051',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\'?',
     answers: ['tewandin', 'cînavkên kesane', 'ezafe', 'rênivîsa Hawarê'],
     correctAnswer: 'ezafe',
     explanation: 'Ev ravekirin têgeha \'ezafe\' nîşan dide.',
@@ -15950,7 +15950,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20052',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di xwendina ziman de têgeha \'ezafe\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'ezafe\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'ezafe\' di vê kategoriyê de têgeheke giring e.',
@@ -15961,7 +15961,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20053',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ravekirina \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'ezafe\' û qada ziman re girêdayî ye.',
@@ -15972,7 +15972,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20054',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ezafe\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ezafe\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
       'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin',
@@ -15990,7 +15990,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20055',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di qada ziman de têgeha \'ezafe\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'ezafe\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin',
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
@@ -16008,7 +16008,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20056',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\'?',
     answers: [
       'ezafe',
       'cînavkên tewandî',
@@ -16024,7 +16024,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20057',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di xwendina ziman de têgeha \'ezafe\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'ezafe\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'ezafe\' di vê kategoriyê de têgeheke giring e.',
@@ -16035,7 +16035,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20058',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ravekirina \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'ezafe\' û qada ziman re girêdayî ye.',
@@ -16046,7 +16046,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20059',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ezafe\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ezafe\' bi awayekî rast temam dike?',
     answers: [
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
       'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide',
@@ -16064,7 +16064,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20060',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di qada ziman de têgeha \'ezafe\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'ezafe\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
@@ -16082,7 +16082,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20061',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\'?',
     answers: ['daçekên hevedudanî', 'cînavkên tewandî', 'ezafe', 'ergatîf'],
     correctAnswer: 'ezafe',
     explanation: 'Ev ravekirin têgeha \'ezafe\' nîşan dide.',
@@ -16093,7 +16093,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20062',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di xwendina ziman de têgeha \'ezafe\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'ezafe\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'ezafe\' di vê kategoriyê de têgeheke giring e.',
@@ -16104,7 +16104,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20063',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ravekirina \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'ezafe\' û qada ziman re girêdayî ye.',
@@ -16115,7 +16115,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20064',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ezafe\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'ezafe\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
       'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin',
@@ -16271,7 +16271,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20075',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di qada ziman de têgeha \'cînavkên tewandî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'cînavkên tewandî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
@@ -16289,7 +16289,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20076',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\'?',
     answers: ['ergatîf', 'ezafe', 'cînavkên tewandî', 'daçekên hevedudanî'],
     correctAnswer: 'cînavkên tewandî',
     explanation: 'Ev ravekirin têgeha \'cînavkên tewandî\' nîşan dide.',
@@ -16300,7 +16300,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20077',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di xwendina ziman de têgeha \'cînavkên tewandî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'cînavkên tewandî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'cînavkên tewandî\' di vê kategoriyê de têgeheke giring e.',
@@ -16311,7 +16311,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20078',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ravekirina \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -16323,7 +16323,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20079',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên tewandî\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên tewandî\' bi awayekî rast temam dike?',
     answers: [
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
@@ -16341,7 +16341,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20080',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di qada ziman de têgeha \'cînavkên tewandî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'cînavkên tewandî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
@@ -16359,7 +16359,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20081',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\'?',
     answers: ['cînavkên tewandî', 'cînavkên kesane', 'tewandin', 'ergatîf'],
     correctAnswer: 'cînavkên tewandî',
     explanation: 'Ev ravekirin têgeha \'cînavkên tewandî\' nîşan dide.',
@@ -16370,7 +16370,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20082',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di xwendina ziman de têgeha \'cînavkên tewandî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'cînavkên tewandî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'cînavkên tewandî\' di vê kategoriyê de têgeheke giring e.',
@@ -16381,7 +16381,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20083',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ravekirina \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -16393,7 +16393,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20084',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên tewandî\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên tewandî\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
@@ -16411,7 +16411,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20085',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di qada ziman de têgeha \'cînavkên tewandî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'cînavkên tewandî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
@@ -16429,7 +16429,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20086',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\'?',
     answers: [
       'dema borî ya dûr',
       'tewandin',
@@ -16445,7 +16445,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20087',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di xwendina ziman de têgeha \'cînavkên tewandî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'cînavkên tewandî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'cînavkên tewandî\' di vê kategoriyê de têgeheke giring e.',
@@ -16456,7 +16456,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20088',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ravekirina \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -16468,7 +16468,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20089',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên tewandî\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên tewandî\' bi awayekî rast temam dike?',
     answers: [
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
@@ -16631,7 +16631,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20100',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di qada ziman de têgeha \'daçekên hevedudanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'daçekên hevedudanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin',
       'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide',
@@ -16649,7 +16649,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20101',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\'?',
     answers: [
       'cînavkên kesane',
       'ezafe',
@@ -16665,7 +16665,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20102',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di xwendina ziman de têgeha \'daçekên hevedudanî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'daçekên hevedudanî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -16677,7 +16677,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20103',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ravekirina \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -16689,7 +16689,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20104',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'daçekên hevedudanî\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'daçekên hevedudanî\' bi awayekî rast temam dike?',
     answers: [
       'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin',
       'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn',
@@ -16707,7 +16707,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20105',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di qada ziman de têgeha \'daçekên hevedudanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'daçekên hevedudanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
@@ -16725,7 +16725,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20106',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\'?',
     answers: [
       'daçekên hevedudanî',
       'cînavkên kesane',
@@ -16741,7 +16741,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20107',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di xwendina ziman de têgeha \'daçekên hevedudanî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'daçekên hevedudanî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -16753,7 +16753,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20108',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ravekirina \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -16765,7 +16765,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20109',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'daçekên hevedudanî\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'daçekên hevedudanî\' bi awayekî rast temam dike?',
     answers: [
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
@@ -16783,7 +16783,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20110',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di qada ziman de têgeha \'daçekên hevedudanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'daçekên hevedudanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin',
       'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn',
@@ -16801,7 +16801,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20111',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\'?',
     answers: [
       'cînavkên kesane',
       'lêkera gerguhêz',
@@ -16817,7 +16817,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20112',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di xwendina ziman de têgeha \'daçekên hevedudanî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'daçekên hevedudanî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -16829,7 +16829,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20113',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ravekirina \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -16841,7 +16841,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20114',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'daçekên hevedudanî\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'daçekên hevedudanî\' bi awayekî rast temam dike?',
     answers: [
       'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin',
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
@@ -17006,7 +17006,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20125',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di qada ziman de têgeha \'lêkera gerguhêz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'lêkera gerguhêz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
       'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide',
@@ -17024,7 +17024,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20126',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\'?',
     answers: ['rênivîsa Hawarê', 'ergatîf', 'lêkera gerguhêz', 'tewandin'],
     correctAnswer: 'lêkera gerguhêz',
     explanation: 'Ev ravekirin têgeha \'lêkera gerguhêz\' nîşan dide.',
@@ -17035,7 +17035,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20127',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di xwendina ziman de têgeha \'lêkera gerguhêz\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'lêkera gerguhêz\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'lêkera gerguhêz\' di vê kategoriyê de têgeheke giring e.',
@@ -17046,7 +17046,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20128',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ravekirina \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -17058,7 +17058,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20129',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'lêkera gerguhêz\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'lêkera gerguhêz\' bi awayekî rast temam dike?',
     answers: [
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
@@ -17076,7 +17076,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20130',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di qada ziman de têgeha \'lêkera gerguhêz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'lêkera gerguhêz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
@@ -17094,7 +17094,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20131',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\'?',
     answers: [
       'lêkera gerguhêz',
       'ergatîf',
@@ -17110,7 +17110,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20132',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di xwendina ziman de têgeha \'lêkera gerguhêz\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'lêkera gerguhêz\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'lêkera gerguhêz\' di vê kategoriyê de têgeheke giring e.',
@@ -17121,7 +17121,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20133',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ravekirina \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -17133,7 +17133,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20134',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'lêkera gerguhêz\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'lêkera gerguhêz\' bi awayekî rast temam dike?',
     answers: [
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
@@ -17151,7 +17151,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20135',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di qada ziman de têgeha \'lêkera gerguhêz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'lêkera gerguhêz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
@@ -17169,7 +17169,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20136',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\'?',
     answers: [
       'daçekên hevedudanî',
       'dema borî ya dûr',
@@ -17185,7 +17185,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20137',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di xwendina ziman de têgeha \'lêkera gerguhêz\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'lêkera gerguhêz\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'lêkera gerguhêz\' di vê kategoriyê de têgeheke giring e.',
@@ -17196,7 +17196,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20138',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ravekirina \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -17208,7 +17208,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20139',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'lêkera gerguhêz\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'lêkera gerguhêz\' bi awayekî rast temam dike?',
     answers: [
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
@@ -17376,7 +17376,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20150',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di qada ziman de têgeha \'rênivîsa Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'rênivîsa Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
       'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide',
@@ -17394,7 +17394,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20151',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\'?',
     answers: [
       'lêkera gerguhêz',
       'daçekên hevedudanî',
@@ -17410,7 +17410,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20152',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di xwendina ziman de têgeha \'rênivîsa Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'rênivîsa Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'rênivîsa Hawarê\' di vê kategoriyê de têgeheke giring e.',
@@ -17421,7 +17421,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20153',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ravekirina \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -17433,7 +17433,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20154',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'rênivîsa Hawarê\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'rênivîsa Hawarê\' bi awayekî rast temam dike?',
     answers: [
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
       'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide',
@@ -17451,7 +17451,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20155',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di qada ziman de têgeha \'rênivîsa Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'rênivîsa Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin',
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
@@ -17469,7 +17469,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20156',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\'?',
     answers: [
       'rênivîsa Hawarê',
       'dema borî ya dûr',
@@ -17485,7 +17485,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20157',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di xwendina ziman de têgeha \'rênivîsa Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'rênivîsa Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'rênivîsa Hawarê\' di vê kategoriyê de têgeheke giring e.',
@@ -17496,7 +17496,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20158',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ravekirina \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -17508,7 +17508,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20159',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'rênivîsa Hawarê\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'rênivîsa Hawarê\' bi awayekî rast temam dike?',
     answers: [
       'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn',
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
@@ -17526,7 +17526,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20160',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di qada ziman de têgeha \'rênivîsa Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'rênivîsa Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
@@ -17544,7 +17544,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20161',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\'?',
     answers: [
       'paşgirên tewandinê',
       'ezafe',
@@ -17560,7 +17560,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20162',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di xwendina ziman de têgeha \'rênivîsa Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'rênivîsa Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'rênivîsa Hawarê\' di vê kategoriyê de têgeheke giring e.',
@@ -17571,7 +17571,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20163',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ravekirina \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -17583,7 +17583,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20164',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'rênivîsa Hawarê\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'rênivîsa Hawarê\' bi awayekî rast temam dike?',
     answers: [
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
@@ -17746,7 +17746,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20175',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di qada ziman de têgeha \'cînavkên kesane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'cînavkên kesane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn',
       'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin',
@@ -17764,7 +17764,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20176',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\'?',
     answers: [
       'lêkera gerguhêz',
       'cînavkên tewandî',
@@ -17780,7 +17780,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20177',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di xwendina ziman de têgeha \'cînavkên kesane\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'cînavkên kesane\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'cînavkên kesane\' di vê kategoriyê de têgeheke giring e.',
@@ -17791,7 +17791,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20178',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ravekirina \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -17803,7 +17803,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20179',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên kesane\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên kesane\' bi awayekî rast temam dike?',
     answers: [
       'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn',
       'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin',
@@ -17821,7 +17821,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20180',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di qada ziman de têgeha \'cînavkên kesane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'cînavkên kesane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
@@ -17839,7 +17839,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20181',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\'?',
     answers: [
       'cînavkên kesane',
       'daçekên hevedudanî',
@@ -17855,7 +17855,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20182',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di xwendina ziman de têgeha \'cînavkên kesane\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'cînavkên kesane\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'cînavkên kesane\' di vê kategoriyê de têgeheke giring e.',
@@ -17866,7 +17866,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20183',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ravekirina \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -17878,7 +17878,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20184',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên kesane\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên kesane\' bi awayekî rast temam dike?',
     answers: [
       'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin',
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
@@ -17896,7 +17896,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20185',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di qada ziman de têgeha \'cînavkên kesane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'cînavkên kesane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn',
       'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin',
@@ -17914,7 +17914,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20186',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\'?',
     answers: [
       'daçekên hevedudanî',
       'paşgirên tewandinê',
@@ -17930,7 +17930,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20187',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di xwendina ziman de têgeha \'cînavkên kesane\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'cînavkên kesane\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'cînavkên kesane\' di vê kategoriyê de têgeheke giring e.',
@@ -17941,7 +17941,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20188',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ravekirina \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -17953,7 +17953,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20189',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên kesane\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'cînavkên kesane\' bi awayekî rast temam dike?',
     answers: [
       'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn',
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
@@ -18121,7 +18121,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20200',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di qada ziman de têgeha \'dema borî ya dûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'dema borî ya dûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide',
       'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn',
@@ -18139,7 +18139,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20201',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\'?',
     answers: [
       'cînavkên kesane',
       'lêkera gerguhêz',
@@ -18155,7 +18155,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20202',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di xwendina ziman de têgeha \'dema borî ya dûr\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'dema borî ya dûr\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'dema borî ya dûr\' di vê kategoriyê de têgeheke giring e.',
@@ -18166,7 +18166,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20203',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ravekirina \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -18178,7 +18178,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20204',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'dema borî ya dûr\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'dema borî ya dûr\' bi awayekî rast temam dike?',
     answers: [
       'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide',
       'cînavkên wekî \'min, te, wî, wê, me, we, wan\' ku di bin tewandinê de ne',
@@ -18196,7 +18196,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20205',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di qada ziman de têgeha \'dema borî ya dûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'dema borî ya dûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'peyvên wekî \'di... de, bi... re, ji... re\' ku têkiliyên cih nîşan didin',
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
@@ -18214,7 +18214,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20206',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\'?',
     answers: ['dema borî ya dûr', 'ergatîf', 'tewandin', 'paşgirên tewandinê'],
     correctAnswer: 'dema borî ya dûr',
     explanation: 'Ev ravekirin têgeha \'dema borî ya dûr\' nîşan dide.',
@@ -18225,7 +18225,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20207',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di xwendina ziman de têgeha \'dema borî ya dûr\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'dema borî ya dûr\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'dema borî ya dûr\' di vê kategoriyê de têgeheke giring e.',
@@ -18236,7 +18236,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20208',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ravekirina \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -18248,7 +18248,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20209',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'dema borî ya dûr\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'dema borî ya dûr\' bi awayekî rast temam dike?',
     answers: [
       'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide',
       'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin',
@@ -18266,7 +18266,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20210',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di qada ziman de têgeha \'dema borî ya dûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'dema borî ya dûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide',
       'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide',
@@ -18284,7 +18284,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20211',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\'?',
     answers: [
       'tewandin',
       'paşgirên tewandinê',
@@ -18300,7 +18300,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20212',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di xwendina ziman de têgeha \'dema borî ya dûr\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'dema borî ya dûr\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'dema borî ya dûr\' di vê kategoriyê de têgeheke giring e.',
@@ -18311,7 +18311,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20213',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ravekirina \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -18323,7 +18323,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20214',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'dema borî ya dûr\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'dema borî ya dûr\' bi awayekî rast temam dike?',
     answers: [
       'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide',
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
@@ -18491,7 +18491,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20225',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di qada ziman de têgeha \'paşgirên tewandinê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'paşgirên tewandinê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin',
       'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn',
@@ -18509,7 +18509,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20226',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\'?',
     answers: [
       'cînavkên kesane',
       'dema borî ya dûr',
@@ -18525,7 +18525,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20227',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, di xwendina ziman de têgeha \'paşgirên tewandinê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'paşgirên tewandinê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -18537,7 +18537,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20228',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ravekirina \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -18549,7 +18549,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20229',
     category: 'Ziman',
     prompt:
-        'Di asta destpêkê, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'paşgirên tewandinê\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'paşgirên tewandinê\' bi awayekî rast temam dike?',
     answers: [
       'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin',
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
@@ -18567,7 +18567,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20230',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di qada ziman de têgeha \'paşgirên tewandinê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'paşgirên tewandinê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
       'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide',
@@ -18585,7 +18585,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20231',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\'?',
     answers: [
       'paşgirên tewandinê',
       'lêkera gerguhêz',
@@ -18601,7 +18601,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20232',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, di xwendina ziman de têgeha \'paşgirên tewandinê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'paşgirên tewandinê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -18613,7 +18613,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20233',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ravekirina \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -18625,7 +18625,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20234',
     category: 'Ziman',
     prompt:
-        'Di asta navîn de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'paşgirên tewandinê\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'paşgirên tewandinê\' bi awayekî rast temam dike?',
     answers: [
       'nîşanderên wekî \'ez, tu, ew, em, hûn, ew\' ên ku bo kesan tên bikaranîn',
       'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide',
@@ -18643,7 +18643,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20235',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di qada ziman de têgeha \'paşgirên tewandinê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada ziman de têgeha \'paşgirên tewandinê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin',
       'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê',
@@ -18661,7 +18661,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20236',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\'?',
+        'Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\'?',
     answers: [
       'daçekên hevedudanî',
       'tewandin',
@@ -18677,7 +18677,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20237',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, di xwendina ziman de têgeha \'paşgirên tewandinê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina ziman de têgeha \'paşgirên tewandinê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -18689,7 +18689,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20238',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ravekirina \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\' bi tevahî ji qada ziman dûr e.',
+        'Ravekirina \'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin\' bi tevahî ji qada ziman dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -18701,7 +18701,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20239',
     category: 'Ziman',
     prompt:
-        'Di asta pêşketî de, ji bo dersa ziman kîjan vebijark ravekirina têgeha \'paşgirên tewandinê\' bi awayekî rast temam dike?',
+        'Ji bo dersa ziman kîjan vebijark ravekirina têgeha \'paşgirên tewandinê\' bi awayekî rast temam dike?',
     answers: [
       'hêmanên wekî \'-î, -ê, -an\' ku di tewandina navdêran de cih digirin',
       'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de',
@@ -18866,7 +18866,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20250',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di qada edebiyat de têgeha \'Melayê Cizîrî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Melayê Cizîrî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
@@ -18884,7 +18884,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20251',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\'?',
     answers: ['Melayê Cizîrî', 'kovara Hawarê', 'Helbesta Azad', 'Ehmedê Xanî'],
     correctAnswer: 'Melayê Cizîrî',
     explanation: 'Ev ravekirin têgeha \'Melayê Cizîrî\' nîşan dide.',
@@ -18895,7 +18895,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20252',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di xwendina edebiyat de têgeha \'Melayê Cizîrî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Melayê Cizîrî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Melayê Cizîrî\' di vê kategoriyê de têgeheke giring e.',
@@ -18906,7 +18906,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20253',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ravekirina \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -18918,7 +18918,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20254',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Cizîrî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Cizîrî\' bi awayekî rast temam dike?',
     answers: [
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
@@ -18936,7 +18936,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20255',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di qada edebiyat de têgeha \'Melayê Cizîrî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Melayê Cizîrî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
@@ -18954,7 +18954,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20256',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\'?',
     answers: [
       'Melayê Bateyî',
       'Helbesta Azad',
@@ -18970,7 +18970,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20257',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di xwendina edebiyat de têgeha \'Melayê Cizîrî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Melayê Cizîrî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Melayê Cizîrî\' di vê kategoriyê de têgeheke giring e.',
@@ -18981,7 +18981,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20258',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ravekirina \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -18993,7 +18993,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20259',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Cizîrî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Cizîrî\' bi awayekî rast temam dike?',
     answers: [
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
       'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e',
@@ -19011,7 +19011,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20260',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di qada edebiyat de têgeha \'Melayê Cizîrî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Melayê Cizîrî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin',
       'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e',
@@ -19029,7 +19029,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20261',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\'?',
     answers: ['Melayê Cizîrî', 'Arabê Şamo', 'Feqiyê Teyran', 'Helbesta Azad'],
     correctAnswer: 'Melayê Cizîrî',
     explanation: 'Ev ravekirin têgeha \'Melayê Cizîrî\' nîşan dide.',
@@ -19040,7 +19040,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20262',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di xwendina edebiyat de têgeha \'Melayê Cizîrî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Melayê Cizîrî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Melayê Cizîrî\' di vê kategoriyê de têgeheke giring e.',
@@ -19051,7 +19051,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20263',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ravekirina \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -19063,7 +19063,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20264',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Cizîrî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Cizîrî\' bi awayekî rast temam dike?',
     answers: [
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
@@ -19226,7 +19226,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20275',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di qada edebiyat de têgeha \'Feqiyê Teyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Feqiyê Teyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
@@ -19244,7 +19244,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20276',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\'?',
     answers: ['Feqiyê Teyran', 'Arabê Şamo', 'Cegerxwîn', 'şevbêrkên wêjeyî'],
     correctAnswer: 'Feqiyê Teyran',
     explanation: 'Ev ravekirin têgeha \'Feqiyê Teyran\' nîşan dide.',
@@ -19255,7 +19255,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20277',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di xwendina edebiyat de têgeha \'Feqiyê Teyran\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Feqiyê Teyran\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Feqiyê Teyran\' di vê kategoriyê de têgeheke giring e.',
@@ -19266,7 +19266,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20278',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ravekirina \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -19278,7 +19278,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20279',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Feqiyê Teyran\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Feqiyê Teyran\' bi awayekî rast temam dike?',
     answers: [
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
@@ -19296,7 +19296,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20280',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di qada edebiyat de têgeha \'Feqiyê Teyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Feqiyê Teyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e',
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
@@ -19314,7 +19314,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20281',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\'?',
     answers: [
       'Ehmedê Xanî',
       'Helbesta Azad',
@@ -19330,7 +19330,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20282',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di xwendina edebiyat de têgeha \'Feqiyê Teyran\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Feqiyê Teyran\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Feqiyê Teyran\' di vê kategoriyê de têgeheke giring e.',
@@ -19341,7 +19341,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20283',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ravekirina \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -19353,7 +19353,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20284',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Feqiyê Teyran\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Feqiyê Teyran\' bi awayekî rast temam dike?',
     answers: [
       'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e',
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
@@ -19371,7 +19371,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20285',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di qada edebiyat de têgeha \'Feqiyê Teyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Feqiyê Teyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin',
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
@@ -19389,7 +19389,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20286',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\'?',
     answers: ['Feqiyê Teyran', 'Melayê Cizîrî', 'Mehmed Uzun', 'Melayê Bateyî'],
     correctAnswer: 'Feqiyê Teyran',
     explanation: 'Ev ravekirin têgeha \'Feqiyê Teyran\' nîşan dide.',
@@ -19400,7 +19400,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20287',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di xwendina edebiyat de têgeha \'Feqiyê Teyran\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Feqiyê Teyran\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Feqiyê Teyran\' di vê kategoriyê de têgeheke giring e.',
@@ -19411,7 +19411,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20288',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ravekirina \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -19423,7 +19423,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20289',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Feqiyê Teyran\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Feqiyê Teyran\' bi awayekî rast temam dike?',
     answers: [
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
@@ -19586,7 +19586,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20300',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di qada edebiyat de têgeha \'Ehmedê Xanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Ehmedê Xanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
       'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir',
@@ -19604,7 +19604,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20301',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\'?',
     answers: ['Ehmedê Xanî', 'Feqiyê Teyran', 'Mehmed Uzun', 'kovara Hawarê'],
     correctAnswer: 'Ehmedê Xanî',
     explanation: 'Ev ravekirin têgeha \'Ehmedê Xanî\' nîşan dide.',
@@ -19615,7 +19615,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20302',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di xwendina edebiyat de têgeha \'Ehmedê Xanî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Ehmedê Xanî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Ehmedê Xanî\' di vê kategoriyê de têgeheke giring e.',
@@ -19626,7 +19626,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20303',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ravekirina \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -19638,7 +19638,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20304',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Ehmedê Xanî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Ehmedê Xanî\' bi awayekî rast temam dike?',
     answers: [
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
@@ -19656,7 +19656,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20305',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di qada edebiyat de têgeha \'Ehmedê Xanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Ehmedê Xanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
@@ -19674,7 +19674,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20306',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\'?',
     answers: [
       'şevbêrkên wêjeyî',
       'Melayê Bateyî',
@@ -19690,7 +19690,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20307',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di xwendina edebiyat de têgeha \'Ehmedê Xanî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Ehmedê Xanî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Ehmedê Xanî\' di vê kategoriyê de têgeheke giring e.',
@@ -19701,7 +19701,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20308',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ravekirina \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -19713,7 +19713,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20309',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Ehmedê Xanî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Ehmedê Xanî\' bi awayekî rast temam dike?',
     answers: [
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
@@ -19731,7 +19731,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20310',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di qada edebiyat de têgeha \'Ehmedê Xanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Ehmedê Xanî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e',
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
@@ -19749,7 +19749,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20311',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\'?',
     answers: ['Ehmedê Xanî', 'Helbesta Azad', 'Mehmed Uzun', 'Feqiyê Teyran'],
     correctAnswer: 'Ehmedê Xanî',
     explanation: 'Ev ravekirin têgeha \'Ehmedê Xanî\' nîşan dide.',
@@ -19760,7 +19760,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20312',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di xwendina edebiyat de têgeha \'Ehmedê Xanî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Ehmedê Xanî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Ehmedê Xanî\' di vê kategoriyê de têgeheke giring e.',
@@ -19771,7 +19771,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20313',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ravekirina \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -19783,7 +19783,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20314',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Ehmedê Xanî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Ehmedê Xanî\' bi awayekî rast temam dike?',
     answers: [
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
@@ -19941,7 +19941,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20325',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di qada edebiyat de têgeha \'Melayê Bateyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Melayê Bateyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
@@ -19959,7 +19959,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20326',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\'?',
     answers: ['Melayê Bateyî', 'Ehmedê Xanî', 'Mehmed Uzun', 'Melayê Cizîrî'],
     correctAnswer: 'Melayê Bateyî',
     explanation: 'Ev ravekirin têgeha \'Melayê Bateyî\' nîşan dide.',
@@ -19970,7 +19970,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20327',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di xwendina edebiyat de têgeha \'Melayê Bateyî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Melayê Bateyî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Melayê Bateyî\' di vê kategoriyê de têgeheke giring e.',
@@ -19981,7 +19981,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20328',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ravekirina \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -19993,7 +19993,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20329',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Bateyî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Bateyî\' bi awayekî rast temam dike?',
     answers: [
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
@@ -20011,7 +20011,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20330',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di qada edebiyat de têgeha \'Melayê Bateyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Melayê Bateyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
@@ -20029,7 +20029,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20331',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\'?',
     answers: [
       'şevbêrkên wêjeyî',
       'Ehmedê Xanî',
@@ -20045,7 +20045,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20332',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di xwendina edebiyat de têgeha \'Melayê Bateyî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Melayê Bateyî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Melayê Bateyî\' di vê kategoriyê de têgeheke giring e.',
@@ -20056,7 +20056,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20333',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ravekirina \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -20068,7 +20068,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20334',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Bateyî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Bateyî\' bi awayekî rast temam dike?',
     answers: [
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
       'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin',
@@ -20086,7 +20086,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20335',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di qada edebiyat de têgeha \'Melayê Bateyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Melayê Bateyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
       'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e',
@@ -20104,7 +20104,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20336',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\'?',
     answers: ['Melayê Bateyî', 'Cegerxwîn', 'kovara Hawarê', 'Ehmedê Xanî'],
     correctAnswer: 'Melayê Bateyî',
     explanation: 'Ev ravekirin têgeha \'Melayê Bateyî\' nîşan dide.',
@@ -20115,7 +20115,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20337',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di xwendina edebiyat de têgeha \'Melayê Bateyî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Melayê Bateyî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Melayê Bateyî\' di vê kategoriyê de têgeheke giring e.',
@@ -20126,7 +20126,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20338',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ravekirina \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -20138,7 +20138,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20339',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Bateyî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Melayê Bateyî\' bi awayekî rast temam dike?',
     answers: [
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
       'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir',
@@ -20301,7 +20301,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20350',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di qada edebiyat de têgeha \'kovara Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'kovara Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir',
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
@@ -20319,7 +20319,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20351',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\'?',
     answers: ['kovara Hawarê', 'Arabê Şamo', 'Feqiyê Teyran', 'Mehmed Uzun'],
     correctAnswer: 'kovara Hawarê',
     explanation: 'Ev ravekirin têgeha \'kovara Hawarê\' nîşan dide.',
@@ -20330,7 +20330,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20352',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di xwendina edebiyat de têgeha \'kovara Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'kovara Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'kovara Hawarê\' di vê kategoriyê de têgeheke giring e.',
@@ -20341,7 +20341,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20353',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ravekirina \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -20353,7 +20353,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20354',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'kovara Hawarê\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'kovara Hawarê\' bi awayekî rast temam dike?',
     answers: [
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
@@ -20371,7 +20371,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20355',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di qada edebiyat de têgeha \'kovara Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'kovara Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
@@ -20389,7 +20389,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20356',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\'?',
     answers: [
       'Melayê Bateyî',
       'Feqiyê Teyran',
@@ -20405,7 +20405,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20357',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di xwendina edebiyat de têgeha \'kovara Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'kovara Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'kovara Hawarê\' di vê kategoriyê de têgeheke giring e.',
@@ -20416,7 +20416,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20358',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ravekirina \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -20428,7 +20428,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20359',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'kovara Hawarê\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'kovara Hawarê\' bi awayekî rast temam dike?',
     answers: [
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
@@ -20446,7 +20446,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20360',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di qada edebiyat de têgeha \'kovara Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'kovara Hawarê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
@@ -20464,7 +20464,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20361',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\'?',
     answers: ['kovara Hawarê', 'Ehmedê Xanî', 'Arabê Şamo', 'Cegerxwîn'],
     correctAnswer: 'kovara Hawarê',
     explanation: 'Ev ravekirin têgeha \'kovara Hawarê\' nîşan dide.',
@@ -20475,7 +20475,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20362',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di xwendina edebiyat de têgeha \'kovara Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'kovara Hawarê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'kovara Hawarê\' di vê kategoriyê de têgeheke giring e.',
@@ -20486,7 +20486,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20363',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ravekirina \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -20498,7 +20498,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20364',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'kovara Hawarê\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'kovara Hawarê\' bi awayekî rast temam dike?',
     answers: [
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
@@ -20661,7 +20661,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20375',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di qada edebiyat de têgeha \'Cegerxwîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Cegerxwîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
@@ -20679,7 +20679,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20376',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\'?',
     answers: ['Cegerxwîn', 'Feqiyê Teyran', 'Arabê Şamo', 'Melayê Cizîrî'],
     correctAnswer: 'Cegerxwîn',
     explanation: 'Ev ravekirin têgeha \'Cegerxwîn\' nîşan dide.',
@@ -20690,7 +20690,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20377',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di xwendina edebiyat de têgeha \'Cegerxwîn\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Cegerxwîn\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Cegerxwîn\' di vê kategoriyê de têgeheke giring e.',
@@ -20701,7 +20701,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20378',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ravekirina \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -20713,7 +20713,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20379',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Cegerxwîn\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Cegerxwîn\' bi awayekî rast temam dike?',
     answers: [
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
       'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin',
@@ -20731,7 +20731,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20380',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di qada edebiyat de têgeha \'Cegerxwîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Cegerxwîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
@@ -20749,7 +20749,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20381',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\'?',
     answers: ['Melayê Cizîrî', 'Feqiyê Teyran', 'Cegerxwîn', 'Mehmed Uzun'],
     correctAnswer: 'Cegerxwîn',
     explanation: 'Ev ravekirin têgeha \'Cegerxwîn\' nîşan dide.',
@@ -20760,7 +20760,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20382',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di xwendina edebiyat de têgeha \'Cegerxwîn\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Cegerxwîn\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Cegerxwîn\' di vê kategoriyê de têgeheke giring e.',
@@ -20771,7 +20771,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20383',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ravekirina \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -20783,7 +20783,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20384',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Cegerxwîn\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Cegerxwîn\' bi awayekî rast temam dike?',
     answers: [
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
@@ -20801,7 +20801,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20385',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di qada edebiyat de têgeha \'Cegerxwîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Cegerxwîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin',
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
@@ -20819,7 +20819,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20386',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\'?',
     answers: ['Cegerxwîn', 'şevbêrkên wêjeyî', 'kovara Hawarê', 'Arabê Şamo'],
     correctAnswer: 'Cegerxwîn',
     explanation: 'Ev ravekirin têgeha \'Cegerxwîn\' nîşan dide.',
@@ -20830,7 +20830,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20387',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di xwendina edebiyat de têgeha \'Cegerxwîn\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Cegerxwîn\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Cegerxwîn\' di vê kategoriyê de têgeheke giring e.',
@@ -20841,7 +20841,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20388',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ravekirina \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -20853,7 +20853,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20389',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Cegerxwîn\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Cegerxwîn\' bi awayekî rast temam dike?',
     answers: [
       'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin',
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
@@ -21021,7 +21021,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20400',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di qada edebiyat de têgeha \'Arabê Şamo\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Arabê Şamo\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
@@ -21039,7 +21039,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20401',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\'?',
     answers: ['Arabê Şamo', 'kovara Hawarê', 'Melayê Bateyî', 'Ehmedê Xanî'],
     correctAnswer: 'Arabê Şamo',
     explanation: 'Ev ravekirin têgeha \'Arabê Şamo\' nîşan dide.',
@@ -21050,7 +21050,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20402',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di xwendina edebiyat de têgeha \'Arabê Şamo\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Arabê Şamo\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Arabê Şamo\' di vê kategoriyê de têgeheke giring e.',
@@ -21061,7 +21061,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20403',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ravekirina \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -21073,7 +21073,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20404',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Arabê Şamo\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Arabê Şamo\' bi awayekî rast temam dike?',
     answers: [
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
@@ -21091,7 +21091,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20405',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di qada edebiyat de têgeha \'Arabê Şamo\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Arabê Şamo\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
@@ -21109,7 +21109,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20406',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\'?',
     answers: ['Helbesta Azad', 'Melayê Bateyî', 'Arabê Şamo', 'Mehmed Uzun'],
     correctAnswer: 'Arabê Şamo',
     explanation: 'Ev ravekirin têgeha \'Arabê Şamo\' nîşan dide.',
@@ -21120,7 +21120,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20407',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di xwendina edebiyat de têgeha \'Arabê Şamo\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Arabê Şamo\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Arabê Şamo\' di vê kategoriyê de têgeheke giring e.',
@@ -21131,7 +21131,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20408',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ravekirina \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -21143,7 +21143,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20409',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Arabê Şamo\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Arabê Şamo\' bi awayekî rast temam dike?',
     answers: [
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
@@ -21161,7 +21161,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20410',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di qada edebiyat de têgeha \'Arabê Şamo\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Arabê Şamo\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
@@ -21179,7 +21179,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20411',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\'?',
     answers: ['Arabê Şamo', 'şevbêrkên wêjeyî', 'Melayê Cizîrî', 'Mehmed Uzun'],
     correctAnswer: 'Arabê Şamo',
     explanation: 'Ev ravekirin têgeha \'Arabê Şamo\' nîşan dide.',
@@ -21190,7 +21190,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20412',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di xwendina edebiyat de têgeha \'Arabê Şamo\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Arabê Şamo\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Arabê Şamo\' di vê kategoriyê de têgeheke giring e.',
@@ -21201,7 +21201,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20413',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ravekirina \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -21213,7 +21213,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20414',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Arabê Şamo\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Arabê Şamo\' bi awayekî rast temam dike?',
     answers: [
       'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir',
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
@@ -21376,7 +21376,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20425',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di qada edebiyat de têgeha \'Mehmed Uzun\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Mehmed Uzun\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
       'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin',
@@ -21394,7 +21394,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20426',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\'?',
     answers: ['Mehmed Uzun', 'Helbesta Azad', 'Ehmedê Xanî', 'kovara Hawarê'],
     correctAnswer: 'Mehmed Uzun',
     explanation: 'Ev ravekirin têgeha \'Mehmed Uzun\' nîşan dide.',
@@ -21405,7 +21405,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20427',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di xwendina edebiyat de têgeha \'Mehmed Uzun\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Mehmed Uzun\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mehmed Uzun\' di vê kategoriyê de têgeheke giring e.',
@@ -21416,7 +21416,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20428',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ravekirina \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -21428,7 +21428,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20429',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Mehmed Uzun\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Mehmed Uzun\' bi awayekî rast temam dike?',
     answers: [
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
       'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye',
@@ -21446,7 +21446,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20430',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di qada edebiyat de têgeha \'Mehmed Uzun\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Mehmed Uzun\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir',
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
@@ -21464,7 +21464,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20431',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\'?',
     answers: ['Cegerxwîn', 'Feqiyê Teyran', 'Mehmed Uzun', 'Melayê Cizîrî'],
     correctAnswer: 'Mehmed Uzun',
     explanation: 'Ev ravekirin têgeha \'Mehmed Uzun\' nîşan dide.',
@@ -21475,7 +21475,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20432',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di xwendina edebiyat de têgeha \'Mehmed Uzun\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Mehmed Uzun\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mehmed Uzun\' di vê kategoriyê de têgeheke giring e.',
@@ -21486,7 +21486,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20433',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ravekirina \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -21498,7 +21498,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20434',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Mehmed Uzun\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Mehmed Uzun\' bi awayekî rast temam dike?',
     answers: [
       'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir',
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
@@ -21516,7 +21516,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20435',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di qada edebiyat de têgeha \'Mehmed Uzun\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Mehmed Uzun\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
@@ -21534,7 +21534,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20436',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\'?',
     answers: ['Mehmed Uzun', 'Feqiyê Teyran', 'Ehmedê Xanî', 'kovara Hawarê'],
     correctAnswer: 'Mehmed Uzun',
     explanation: 'Ev ravekirin têgeha \'Mehmed Uzun\' nîşan dide.',
@@ -21545,7 +21545,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20437',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di xwendina edebiyat de têgeha \'Mehmed Uzun\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Mehmed Uzun\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mehmed Uzun\' di vê kategoriyê de têgeheke giring e.',
@@ -21556,7 +21556,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20438',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ravekirina \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -21568,7 +21568,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20439',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Mehmed Uzun\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Mehmed Uzun\' bi awayekî rast temam dike?',
     answers: [
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
@@ -21731,7 +21731,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20450',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di qada edebiyat de têgeha \'şevbêrkên wêjeyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'şevbêrkên wêjeyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
@@ -21749,7 +21749,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20451',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\'?',
     answers: [
       'şevbêrkên wêjeyî',
       'Melayê Cizîrî',
@@ -21765,7 +21765,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20452',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di xwendina edebiyat de têgeha \'şevbêrkên wêjeyî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'şevbêrkên wêjeyî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'şevbêrkên wêjeyî\' di vê kategoriyê de têgeheke giring e.',
@@ -21776,7 +21776,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20453',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ravekirina \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -21788,7 +21788,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20454',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'şevbêrkên wêjeyî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'şevbêrkên wêjeyî\' bi awayekî rast temam dike?',
     answers: [
       'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir',
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
@@ -21806,7 +21806,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20455',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di qada edebiyat de têgeha \'şevbêrkên wêjeyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'şevbêrkên wêjeyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin',
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
@@ -21824,7 +21824,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20456',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\'?',
     answers: [
       'Helbesta Azad',
       'Melayê Bateyî',
@@ -21840,7 +21840,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20457',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di xwendina edebiyat de têgeha \'şevbêrkên wêjeyî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'şevbêrkên wêjeyî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'şevbêrkên wêjeyî\' di vê kategoriyê de têgeheke giring e.',
@@ -21851,7 +21851,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20458',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ravekirina \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -21863,7 +21863,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20459',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'şevbêrkên wêjeyî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'şevbêrkên wêjeyî\' bi awayekî rast temam dike?',
     answers: [
       'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin',
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
@@ -21881,7 +21881,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20460',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di qada edebiyat de têgeha \'şevbêrkên wêjeyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'şevbêrkên wêjeyî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
@@ -21899,7 +21899,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20461',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\'?',
     answers: ['şevbêrkên wêjeyî', 'Ehmedê Xanî', 'Cegerxwîn', 'Helbesta Azad'],
     correctAnswer: 'şevbêrkên wêjeyî',
     explanation: 'Ev ravekirin têgeha \'şevbêrkên wêjeyî\' nîşan dide.',
@@ -21910,7 +21910,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20462',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di xwendina edebiyat de têgeha \'şevbêrkên wêjeyî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'şevbêrkên wêjeyî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'şevbêrkên wêjeyî\' di vê kategoriyê de têgeheke giring e.',
@@ -21921,7 +21921,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20463',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ravekirina \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -21933,7 +21933,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20464',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'şevbêrkên wêjeyî\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'şevbêrkên wêjeyî\' bi awayekî rast temam dike?',
     answers: [
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
@@ -22096,7 +22096,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20475',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di qada edebiyat de têgeha \'Helbesta Azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Helbesta Azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'helbestvanê klasîk ê ku bi berhema \'Şêx Sen\'an\' û axaftina bi çûkan re navdar e',
       'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû',
@@ -22114,7 +22114,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20476',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\'?',
     answers: ['Helbesta Azad', 'Arabê Şamo', 'kovara Hawarê', 'Ehmedê Xanî'],
     correctAnswer: 'Helbesta Azad',
     explanation: 'Ev ravekirin têgeha \'Helbesta Azad\' nîşan dide.',
@@ -22125,7 +22125,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20477',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, di xwendina edebiyat de têgeha \'Helbesta Azad\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Helbesta Azad\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Helbesta Azad\' di vê kategoriyê de têgeheke giring e.',
@@ -22136,7 +22136,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20478',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ravekirina \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -22148,7 +22148,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20479',
     category: 'Edebiyat',
     prompt:
-        'Di asta destpêkê, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Helbesta Azad\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Helbesta Azad\' bi awayekî rast temam dike?',
     answers: [
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
       'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir',
@@ -22166,7 +22166,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20480',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di qada edebiyat de têgeha \'Helbesta Azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Helbesta Azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
@@ -22184,7 +22184,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20481',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\'?',
     answers: [
       'şevbêrkên wêjeyî',
       'Melayê Bateyî',
@@ -22200,7 +22200,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20482',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, di xwendina edebiyat de têgeha \'Helbesta Azad\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Helbesta Azad\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Helbesta Azad\' di vê kategoriyê de têgeheke giring e.',
@@ -22211,7 +22211,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20483',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ravekirina \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -22223,7 +22223,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20484',
     category: 'Edebiyat',
     prompt:
-        'Di asta navîn de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Helbesta Azad\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Helbesta Azad\' bi awayekî rast temam dike?',
     answers: [
       'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide',
       'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye',
@@ -22241,7 +22241,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20485',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di qada edebiyat de têgeha \'Helbesta Azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada edebiyat de têgeha \'Helbesta Azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin',
       'nivîskarê romana \'Şivanê Kurd\' ku wekî romana yekem a kurdî tê qebûlkirin',
@@ -22259,7 +22259,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20486',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\'?',
+        'Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\'?',
     answers: [
       'Helbesta Azad',
       'Ehmedê Xanî',
@@ -22275,7 +22275,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20487',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, di xwendina edebiyat de têgeha \'Helbesta Azad\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina edebiyat de têgeha \'Helbesta Azad\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Helbesta Azad\' di vê kategoriyê de têgeheke giring e.',
@@ -22286,7 +22286,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20488',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ravekirina \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\' bi tevahî ji qada edebiyat dûr e.',
+        'Ravekirina \'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide\' bi tevahî ji qada edebiyat dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -22298,7 +22298,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20489',
     category: 'Edebiyat',
     prompt:
-        'Di asta pêşketî de, ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Helbesta Azad\' bi awayekî rast temam dike?',
+        'Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \'Helbesta Azad\' bi awayekî rast temam dike?',
     answers: [
       'nivîskarê destana nemir a \'Mem û Zîn\' ku hîmê ramanî yê kurdewariyê daniye',
       'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin',
@@ -22461,7 +22461,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20500',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di qada dîrok de têgeha \'Împaratoriya Medî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Împaratoriya Medî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
@@ -22479,7 +22479,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20501',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\'?',
     answers: ['Mîrê Kor', 'Şerefname', 'Împaratoriya Medî', 'Mîrgeha Erdelanê'],
     correctAnswer: 'Împaratoriya Medî',
     explanation: 'Ev ravekirin têgeha \'Împaratoriya Medî\' nîşan dide.',
@@ -22490,7 +22490,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20502',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di xwendina dîrok de têgeha \'Împaratoriya Medî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Împaratoriya Medî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Împaratoriya Medî\' di vê kategoriyê de têgeheke giring e.',
@@ -22501,7 +22501,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20503',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ravekirina \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -22513,7 +22513,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20504',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Împaratoriya Medî\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Împaratoriya Medî\' bi awayekî rast temam dike?',
     answers: [
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
@@ -22531,7 +22531,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20505',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di qada dîrok de têgeha \'Împaratoriya Medî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Împaratoriya Medî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
@@ -22549,7 +22549,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20506',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\'?',
     answers: [
       'Împaratoriya Medî',
       'Mîrê Kor',
@@ -22565,7 +22565,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20507',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di xwendina dîrok de têgeha \'Împaratoriya Medî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Împaratoriya Medî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Împaratoriya Medî\' di vê kategoriyê de têgeheke giring e.',
@@ -22576,7 +22576,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20508',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ravekirina \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -22588,7 +22588,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20509',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Împaratoriya Medî\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Împaratoriya Medî\' bi awayekî rast temam dike?',
     answers: [
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
@@ -22606,7 +22606,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20510',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di qada dîrok de têgeha \'Împaratoriya Medî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Împaratoriya Medî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
@@ -22624,7 +22624,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20511',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\'?',
     answers: [
       'Mîrgeha Erdelanê',
       'Dewleta Merwaniyan',
@@ -22640,7 +22640,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20512',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di xwendina dîrok de têgeha \'Împaratoriya Medî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Împaratoriya Medî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Împaratoriya Medî\' di vê kategoriyê de têgeheke giring e.',
@@ -22651,7 +22651,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20513',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ravekirina \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -22663,7 +22663,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20514',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Împaratoriya Medî\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Împaratoriya Medî\' bi awayekî rast temam dike?',
     answers: [
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
@@ -22831,7 +22831,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20525',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di qada dîrok de têgeha \'Dewleta Merwaniyan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Dewleta Merwaniyan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn',
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
@@ -22849,7 +22849,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20526',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\'?',
     answers: [
       'Mîrgeha Erdelanê',
       'Şerefname',
@@ -22865,7 +22865,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20527',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di xwendina dîrok de têgeha \'Dewleta Merwaniyan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Dewleta Merwaniyan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -22877,7 +22877,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20528',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ravekirina \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -22889,7 +22889,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20529',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Dewleta Merwaniyan\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Dewleta Merwaniyan\' bi awayekî rast temam dike?',
     answers: [
       'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn',
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
@@ -22907,7 +22907,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20530',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di qada dîrok de têgeha \'Dewleta Merwaniyan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Dewleta Merwaniyan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî',
       'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû',
@@ -22925,7 +22925,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20531',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\'?',
     answers: ['Dewleta Merwaniyan', 'Mîrgeha Botan', 'Şerefname', 'Mîrê Kor'],
     correctAnswer: 'Dewleta Merwaniyan',
     explanation: 'Ev ravekirin têgeha \'Dewleta Merwaniyan\' nîşan dide.',
@@ -22936,7 +22936,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20532',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di xwendina dîrok de têgeha \'Dewleta Merwaniyan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Dewleta Merwaniyan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -22948,7 +22948,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20533',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ravekirina \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -22960,7 +22960,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20534',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Dewleta Merwaniyan\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Dewleta Merwaniyan\' bi awayekî rast temam dike?',
     answers: [
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
@@ -22978,7 +22978,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20535',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di qada dîrok de têgeha \'Dewleta Merwaniyan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Dewleta Merwaniyan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn',
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
@@ -22996,7 +22996,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20536',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\'?',
     answers: [
       'Peymana Lozanê',
       'Rojnameya Kurdistan',
@@ -23012,7 +23012,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20537',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di xwendina dîrok de têgeha \'Dewleta Merwaniyan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Dewleta Merwaniyan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -23024,7 +23024,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20538',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ravekirina \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -23036,7 +23036,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20539',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Dewleta Merwaniyan\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Dewleta Merwaniyan\' bi awayekî rast temam dike?',
     answers: [
       'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn',
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
@@ -23206,7 +23206,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20550',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di qada dîrok de têgeha \'Mîrgeha Botan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Mîrgeha Botan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû',
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
@@ -23224,7 +23224,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20551',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\'?',
     answers: [
       'Rojnameya Kurdistan',
       'Şerefname',
@@ -23240,7 +23240,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20552',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di xwendina dîrok de têgeha \'Mîrgeha Botan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Mîrgeha Botan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mîrgeha Botan\' di vê kategoriyê de têgeheke giring e.',
@@ -23251,7 +23251,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20553',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ravekirina \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -23263,7 +23263,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20554',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Botan\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Botan\' bi awayekî rast temam dike?',
     answers: [
       'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû',
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
@@ -23281,7 +23281,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20555',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di qada dîrok de têgeha \'Mîrgeha Botan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Mîrgeha Botan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî',
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
@@ -23299,7 +23299,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20556',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\'?',
     answers: [
       'Mîrgeha Botan',
       'Selaheddînê Eyûbî',
@@ -23315,7 +23315,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20557',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di xwendina dîrok de têgeha \'Mîrgeha Botan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Mîrgeha Botan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mîrgeha Botan\' di vê kategoriyê de têgeheke giring e.',
@@ -23326,7 +23326,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20558',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ravekirina \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -23338,7 +23338,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20559',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Botan\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Botan\' bi awayekî rast temam dike?',
     answers: [
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
@@ -23356,7 +23356,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20560',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di qada dîrok de têgeha \'Mîrgeha Botan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Mîrgeha Botan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû',
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
@@ -23374,7 +23374,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20561',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\'?',
     answers: [
       'Mîrgeha Erdelanê',
       'Rojnameya Kurdistan',
@@ -23390,7 +23390,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20562',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di xwendina dîrok de têgeha \'Mîrgeha Botan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Mîrgeha Botan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mîrgeha Botan\' di vê kategoriyê de têgeheke giring e.',
@@ -23401,7 +23401,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20563',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ravekirina \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -23413,7 +23413,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20564',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Botan\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Botan\' bi awayekî rast temam dike?',
     answers: [
       'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû',
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
@@ -23581,7 +23581,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20575',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di qada dîrok de têgeha \'Şerefname\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Şerefname\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
       'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû',
@@ -23599,7 +23599,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20576',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\'?',
     answers: [
       'Selaheddînê Eyûbî',
       'Împaratoriya Medî',
@@ -23615,7 +23615,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20577',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di xwendina dîrok de têgeha \'Şerefname\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Şerefname\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Şerefname\' di vê kategoriyê de têgeheke giring e.',
@@ -23626,7 +23626,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20578',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ravekirina \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Şerefname\' û qada dîrok re girêdayî ye.',
@@ -23637,7 +23637,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20579',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Şerefname\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Şerefname\' bi awayekî rast temam dike?',
     answers: [
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
       'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir',
@@ -23655,7 +23655,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20580',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di qada dîrok de têgeha \'Şerefname\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Şerefname\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir',
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
@@ -23673,7 +23673,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20581',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\'?',
     answers: [
       'Şerefname',
       'Împaratoriya Medî',
@@ -23689,7 +23689,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20582',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di xwendina dîrok de têgeha \'Şerefname\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Şerefname\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Şerefname\' di vê kategoriyê de têgeheke giring e.',
@@ -23700,7 +23700,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20583',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ravekirina \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Şerefname\' û qada dîrok re girêdayî ye.',
@@ -23711,7 +23711,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20584',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Şerefname\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Şerefname\' bi awayekî rast temam dike?',
     answers: [
       'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî',
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
@@ -23729,7 +23729,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20585',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di qada dîrok de têgeha \'Şerefname\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Şerefname\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
       'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû',
@@ -23747,7 +23747,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20586',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\'?',
     answers: [
       'Selaheddînê Eyûbî',
       'Mîrê Kor',
@@ -23763,7 +23763,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20587',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di xwendina dîrok de têgeha \'Şerefname\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Şerefname\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Şerefname\' di vê kategoriyê de têgeheke giring e.',
@@ -23774,7 +23774,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20588',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ravekirina \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Şerefname\' û qada dîrok re girêdayî ye.',
@@ -23785,7 +23785,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20589',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Şerefname\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Şerefname\' bi awayekî rast temam dike?',
     answers: [
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
       'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû',
@@ -23951,7 +23951,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20600',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di qada dîrok de têgeha \'Kovara Jîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Kovara Jîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî',
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
@@ -23969,7 +23969,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20601',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\'?',
     answers: [
       'Peymana Lozanê',
       'Rojnameya Kurdistan',
@@ -23985,7 +23985,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20602',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di xwendina dîrok de têgeha \'Kovara Jîn\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Kovara Jîn\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Kovara Jîn\' di vê kategoriyê de têgeheke giring e.',
@@ -23996,7 +23996,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20603',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ravekirina \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Kovara Jîn\' û qada dîrok re girêdayî ye.',
@@ -24007,7 +24007,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20604',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Kovara Jîn\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Kovara Jîn\' bi awayekî rast temam dike?',
     answers: [
       'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî',
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
@@ -24025,7 +24025,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20605',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di qada dîrok de têgeha \'Kovara Jîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Kovara Jîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
@@ -24043,7 +24043,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20606',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\'?',
     answers: [
       'Kovara Jîn',
       'Rojnameya Kurdistan',
@@ -24059,7 +24059,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20607',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di xwendina dîrok de têgeha \'Kovara Jîn\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Kovara Jîn\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Kovara Jîn\' di vê kategoriyê de têgeheke giring e.',
@@ -24070,7 +24070,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20608',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ravekirina \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Kovara Jîn\' û qada dîrok re girêdayî ye.',
@@ -24081,7 +24081,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20609',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Kovara Jîn\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Kovara Jîn\' bi awayekî rast temam dike?',
     answers: [
       'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn',
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
@@ -24099,7 +24099,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20610',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di qada dîrok de têgeha \'Kovara Jîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Kovara Jîn\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî',
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
@@ -24117,7 +24117,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20611',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\'?',
     answers: ['Dewleta Merwaniyan', 'Peymana Lozanê', 'Kovara Jîn', 'Mîrê Kor'],
     correctAnswer: 'Kovara Jîn',
     explanation: 'Ev ravekirin têgeha \'Kovara Jîn\' nîşan dide.',
@@ -24128,7 +24128,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20612',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di xwendina dîrok de têgeha \'Kovara Jîn\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Kovara Jîn\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Kovara Jîn\' di vê kategoriyê de têgeheke giring e.',
@@ -24139,7 +24139,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20613',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ravekirina \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Kovara Jîn\' û qada dîrok re girêdayî ye.',
@@ -24150,7 +24150,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20614',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Kovara Jîn\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Kovara Jîn\' bi awayekî rast temam dike?',
     answers: [
       'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî',
       'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû',
@@ -24311,7 +24311,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20625',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di qada dîrok de têgeha \'Selaheddînê Eyûbî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Selaheddînê Eyûbî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir',
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
@@ -24329,7 +24329,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20626',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\'?',
     answers: [
       'Mîrgeha Botan',
       'Împaratoriya Medî',
@@ -24345,7 +24345,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20627',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di xwendina dîrok de têgeha \'Selaheddînê Eyûbî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Selaheddînê Eyûbî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Selaheddînê Eyûbî\' di vê kategoriyê de têgeheke giring e.',
@@ -24356,7 +24356,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20628',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ravekirina \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -24368,7 +24368,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20629',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Selaheddînê Eyûbî\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Selaheddînê Eyûbî\' bi awayekî rast temam dike?',
     answers: [
       'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir',
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
@@ -24386,7 +24386,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20630',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di qada dîrok de têgeha \'Selaheddînê Eyûbî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Selaheddînê Eyûbî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
@@ -24404,7 +24404,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20631',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\'?',
     answers: [
       'Selaheddînê Eyûbî',
       'Kovara Jîn',
@@ -24420,7 +24420,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20632',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di xwendina dîrok de têgeha \'Selaheddînê Eyûbî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Selaheddînê Eyûbî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Selaheddînê Eyûbî\' di vê kategoriyê de têgeheke giring e.',
@@ -24431,7 +24431,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20633',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ravekirina \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -24443,7 +24443,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20634',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Selaheddînê Eyûbî\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Selaheddînê Eyûbî\' bi awayekî rast temam dike?',
     answers: [
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
       'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî',
@@ -24461,7 +24461,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20635',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di qada dîrok de têgeha \'Selaheddînê Eyûbî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Selaheddînê Eyûbî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir',
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
@@ -24479,7 +24479,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20636',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\'?',
     answers: [
       'Mîrgeha Botan',
       'Rojnameya Kurdistan',
@@ -24495,7 +24495,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20637',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di xwendina dîrok de têgeha \'Selaheddînê Eyûbî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Selaheddînê Eyûbî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Selaheddînê Eyûbî\' di vê kategoriyê de têgeheke giring e.',
@@ -24506,7 +24506,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20638',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ravekirina \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -24518,7 +24518,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20639',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Selaheddînê Eyûbî\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Selaheddînê Eyûbî\' bi awayekî rast temam dike?',
     answers: [
       'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir',
       'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn',
@@ -24686,7 +24686,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20650',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di qada dîrok de têgeha \'Mîrê Kor\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Mîrê Kor\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
@@ -24704,7 +24704,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20651',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\'?',
     answers: [
       'Şerefname',
       'Selaheddînê Eyûbî',
@@ -24720,7 +24720,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20652',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di xwendina dîrok de têgeha \'Mîrê Kor\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Mîrê Kor\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mîrê Kor\' di vê kategoriyê de têgeheke giring e.',
@@ -24731,7 +24731,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20653',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ravekirina \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Mîrê Kor\' û qada dîrok re girêdayî ye.',
@@ -24742,7 +24742,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20654',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrê Kor\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrê Kor\' bi awayekî rast temam dike?',
     answers: [
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
       'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn',
@@ -24760,7 +24760,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20655',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di qada dîrok de têgeha \'Mîrê Kor\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Mîrê Kor\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî',
       'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû',
@@ -24778,7 +24778,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20656',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\'?',
     answers: ['Mîrê Kor', 'Selaheddînê Eyûbî', 'Kovara Jîn', 'Peymana Lozanê'],
     correctAnswer: 'Mîrê Kor',
     explanation: 'Ev ravekirin têgeha \'Mîrê Kor\' nîşan dide.',
@@ -24789,7 +24789,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20657',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di xwendina dîrok de têgeha \'Mîrê Kor\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Mîrê Kor\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mîrê Kor\' di vê kategoriyê de têgeheke giring e.',
@@ -24800,7 +24800,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20658',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ravekirina \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Mîrê Kor\' û qada dîrok re girêdayî ye.',
@@ -24811,7 +24811,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20659',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrê Kor\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrê Kor\' bi awayekî rast temam dike?',
     answers: [
       'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn',
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
@@ -24829,7 +24829,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20660',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di qada dîrok de têgeha \'Mîrê Kor\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Mîrê Kor\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
@@ -24847,7 +24847,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20661',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\'?',
     answers: [
       'Selaheddînê Eyûbî',
       'Rojnameya Kurdistan',
@@ -24863,7 +24863,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20662',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di xwendina dîrok de têgeha \'Mîrê Kor\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Mîrê Kor\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mîrê Kor\' di vê kategoriyê de têgeheke giring e.',
@@ -24874,7 +24874,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20663',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ravekirina \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Mîrê Kor\' û qada dîrok re girêdayî ye.',
@@ -24885,7 +24885,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20664',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrê Kor\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrê Kor\' bi awayekî rast temam dike?',
     answers: [
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
@@ -25046,7 +25046,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20675',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di qada dîrok de têgeha \'Rojnameya Kurdistan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Rojnameya Kurdistan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
@@ -25064,7 +25064,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20676',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\'?',
     answers: [
       'Mîrgeha Botan',
       'Împaratoriya Medî',
@@ -25080,7 +25080,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20677',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di xwendina dîrok de têgeha \'Rojnameya Kurdistan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Rojnameya Kurdistan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -25092,7 +25092,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20678',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ravekirina \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -25104,7 +25104,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20679',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Rojnameya Kurdistan\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Rojnameya Kurdistan\' bi awayekî rast temam dike?',
     answers: [
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
@@ -25122,7 +25122,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20680',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di qada dîrok de têgeha \'Rojnameya Kurdistan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Rojnameya Kurdistan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
@@ -25140,7 +25140,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20681',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\'?',
     answers: [
       'Rojnameya Kurdistan',
       'Selaheddînê Eyûbî',
@@ -25156,7 +25156,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20682',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di xwendina dîrok de têgeha \'Rojnameya Kurdistan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Rojnameya Kurdistan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -25168,7 +25168,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20683',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ravekirina \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -25180,7 +25180,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20684',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Rojnameya Kurdistan\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Rojnameya Kurdistan\' bi awayekî rast temam dike?',
     answers: [
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
@@ -25198,7 +25198,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20685',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di qada dîrok de têgeha \'Rojnameya Kurdistan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Rojnameya Kurdistan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
@@ -25216,7 +25216,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20686',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\'?',
     answers: [
       'Selaheddînê Eyûbî',
       'Kovara Jîn',
@@ -25232,7 +25232,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20687',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di xwendina dîrok de têgeha \'Rojnameya Kurdistan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Rojnameya Kurdistan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -25244,7 +25244,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20688',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ravekirina \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -25256,7 +25256,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20689',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Rojnameya Kurdistan\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Rojnameya Kurdistan\' bi awayekî rast temam dike?',
     answers: [
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
@@ -25421,7 +25421,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20700',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di qada dîrok de têgeha \'Mîrgeha Erdelanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Mîrgeha Erdelanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
@@ -25439,7 +25439,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20701',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\'?',
     answers: [
       'Selaheddînê Eyûbî',
       'Împaratoriya Medî',
@@ -25455,7 +25455,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20702',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di xwendina dîrok de têgeha \'Mîrgeha Erdelanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Mîrgeha Erdelanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mîrgeha Erdelanê\' di vê kategoriyê de têgeheke giring e.',
@@ -25466,7 +25466,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20703',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ravekirina \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -25478,7 +25478,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20704',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Erdelanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Erdelanê\' bi awayekî rast temam dike?',
     answers: [
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
@@ -25496,7 +25496,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20705',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di qada dîrok de têgeha \'Mîrgeha Erdelanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Mîrgeha Erdelanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
@@ -25514,7 +25514,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20706',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\'?',
     answers: [
       'Mîrgeha Erdelanê',
       'Mîrgeha Botan',
@@ -25530,7 +25530,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20707',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di xwendina dîrok de têgeha \'Mîrgeha Erdelanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Mîrgeha Erdelanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mîrgeha Erdelanê\' di vê kategoriyê de têgeheke giring e.',
@@ -25541,7 +25541,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20708',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ravekirina \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -25553,7 +25553,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20709',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Erdelanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Erdelanê\' bi awayekî rast temam dike?',
     answers: [
       'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin',
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
@@ -25571,7 +25571,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20710',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di qada dîrok de têgeha \'Mîrgeha Erdelanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Mîrgeha Erdelanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
       'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn',
@@ -25589,7 +25589,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20711',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\'?',
     answers: [
       'Rojnameya Kurdistan',
       'Şerefname',
@@ -25605,7 +25605,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20712',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di xwendina dîrok de têgeha \'Mîrgeha Erdelanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Mîrgeha Erdelanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Mîrgeha Erdelanê\' di vê kategoriyê de têgeheke giring e.',
@@ -25616,7 +25616,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20713',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ravekirina \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -25628,7 +25628,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20714',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Erdelanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Mîrgeha Erdelanê\' bi awayekî rast temam dike?',
     answers: [
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
       'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir',
@@ -25791,7 +25791,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20725',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di qada dîrok de têgeha \'Peymana Lozanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Peymana Lozanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
       'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû',
@@ -25809,7 +25809,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20726',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\'?',
     answers: [
       'Selaheddînê Eyûbî',
       'Dewleta Merwaniyan',
@@ -25825,7 +25825,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20727',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, di xwendina dîrok de têgeha \'Peymana Lozanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Peymana Lozanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Peymana Lozanê\' di vê kategoriyê de têgeheke giring e.',
@@ -25836,7 +25836,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20728',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ravekirina \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -25848,7 +25848,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20729',
     category: 'Dîrok',
     prompt:
-        'Di asta destpêkê, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Peymana Lozanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Peymana Lozanê\' bi awayekî rast temam dike?',
     answers: [
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
       'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû',
@@ -25866,7 +25866,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20730',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di qada dîrok de têgeha \'Peymana Lozanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Peymana Lozanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
       'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî',
@@ -25884,7 +25884,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20731',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\'?',
     answers: [
       'Peymana Lozanê',
       'Împaratoriya Medî',
@@ -25900,7 +25900,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20732',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, di xwendina dîrok de têgeha \'Peymana Lozanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Peymana Lozanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Peymana Lozanê\' di vê kategoriyê de têgeheke giring e.',
@@ -25911,7 +25911,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20733',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ravekirina \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -25923,7 +25923,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20734',
     category: 'Dîrok',
     prompt:
-        'Di asta navîn de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Peymana Lozanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Peymana Lozanê\' bi awayekî rast temam dike?',
     answers: [
       'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike',
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
@@ -25941,7 +25941,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20735',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di qada dîrok de têgeha \'Peymana Lozanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada dîrok de têgeha \'Peymana Lozanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
       'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin',
@@ -25959,7 +25959,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20736',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\'?',
+        'Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\'?',
     answers: [
       'Dewleta Merwaniyan',
       'Kovara Jîn',
@@ -25975,7 +25975,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20737',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, di xwendina dîrok de têgeha \'Peymana Lozanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina dîrok de têgeha \'Peymana Lozanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Peymana Lozanê\' di vê kategoriyê de têgeheke giring e.',
@@ -25986,7 +25986,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20738',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ravekirina \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\' bi tevahî ji qada dîrok dûr e.',
+        'Ravekirina \'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir\' bi tevahî ji qada dîrok dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -25998,7 +25998,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20739',
     category: 'Dîrok',
     prompt:
-        'Di asta pêşketî de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Peymana Lozanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \'Peymana Lozanê\' bi awayekî rast temam dike?',
     answers: [
       'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir',
       'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin',
@@ -26166,7 +26166,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20750',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di qada cografya de têgeha \'çiyayên Zagrosê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'çiyayên Zagrosê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
       'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê',
@@ -26184,7 +26184,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20751',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\'?',
     answers: ['çiyayên Zagrosê', 'Çiyayê Cûdî', 'Geliyê Zapê', 'Çiyayê Sîpanê'],
     correctAnswer: 'çiyayên Zagrosê',
     explanation: 'Ev ravekirin têgeha \'çiyayên Zagrosê\' nîşan dide.',
@@ -26195,7 +26195,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20752',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di xwendina cografya de têgeha \'çiyayên Zagrosê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'çiyayên Zagrosê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'çiyayên Zagrosê\' di vê kategoriyê de têgeheke giring e.',
@@ -26206,7 +26206,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20753',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ravekirina \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -26218,7 +26218,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20754',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'çiyayên Zagrosê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'çiyayên Zagrosê\' bi awayekî rast temam dike?',
     answers: [
       'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê',
       'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar',
@@ -26236,7 +26236,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20755',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di qada cografya de têgeha \'çiyayên Zagrosê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'çiyayên Zagrosê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
       'gola herî mezin a herêmê ku avên wê şor û sodadar in',
@@ -26254,7 +26254,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20756',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\'?',
     answers: ['Çiyayê Cûdî', 'Heskîf', 'çiyayên Zagrosê', 'Girê Mirazan'],
     correctAnswer: 'çiyayên Zagrosê',
     explanation: 'Ev ravekirin têgeha \'çiyayên Zagrosê\' nîşan dide.',
@@ -26265,7 +26265,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20757',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di xwendina cografya de têgeha \'çiyayên Zagrosê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'çiyayên Zagrosê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'çiyayên Zagrosê\' di vê kategoriyê de têgeheke giring e.',
@@ -26276,7 +26276,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20758',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ravekirina \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -26288,7 +26288,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20759',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'çiyayên Zagrosê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'çiyayên Zagrosê\' bi awayekî rast temam dike?',
     answers: [
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
       'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê',
@@ -26306,7 +26306,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20760',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di qada cografya de têgeha \'çiyayên Zagrosê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'çiyayên Zagrosê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'gola herî mezin a herêmê ku avên wê şor û sodadar in',
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
@@ -26324,7 +26324,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20761',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\'?',
     answers: ['çiyayên Zagrosê', 'Gola Wanê', 'Çiyayê Sîpanê', 'Çiyayê Cûdî'],
     correctAnswer: 'çiyayên Zagrosê',
     explanation: 'Ev ravekirin têgeha \'çiyayên Zagrosê\' nîşan dide.',
@@ -26335,7 +26335,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20762',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di xwendina cografya de têgeha \'çiyayên Zagrosê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'çiyayên Zagrosê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'çiyayên Zagrosê\' di vê kategoriyê de têgeheke giring e.',
@@ -26346,7 +26346,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20763',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ravekirina \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -26358,7 +26358,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20764',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'çiyayên Zagrosê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'çiyayên Zagrosê\' bi awayekî rast temam dike?',
     answers: [
       'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye',
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
@@ -26521,7 +26521,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20775',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di qada cografya de têgeha \'Newala Dîcleyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Newala Dîcleyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê',
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
@@ -26539,7 +26539,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20776',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\'?',
     answers: [
       'Newala Dîcleyê',
       'Çemê Firatê',
@@ -26555,7 +26555,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20777',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di xwendina cografya de têgeha \'Newala Dîcleyê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Newala Dîcleyê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Newala Dîcleyê\' di vê kategoriyê de têgeheke giring e.',
@@ -26566,7 +26566,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20778',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ravekirina \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -26578,7 +26578,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20779',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Newala Dîcleyê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Newala Dîcleyê\' bi awayekî rast temam dike?',
     answers: [
       'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye',
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
@@ -26596,7 +26596,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20780',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di qada cografya de têgeha \'Newala Dîcleyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Newala Dîcleyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
       'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar',
@@ -26614,7 +26614,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20781',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\'?',
     answers: ['Qerejdax', 'Çiyayê Cûdî', 'Newala Dîcleyê', 'Geliyê Zapê'],
     correctAnswer: 'Newala Dîcleyê',
     explanation: 'Ev ravekirin têgeha \'Newala Dîcleyê\' nîşan dide.',
@@ -26625,7 +26625,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20782',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di xwendina cografya de têgeha \'Newala Dîcleyê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Newala Dîcleyê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Newala Dîcleyê\' di vê kategoriyê de têgeheke giring e.',
@@ -26636,7 +26636,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20783',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ravekirina \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -26648,7 +26648,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20784',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Newala Dîcleyê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Newala Dîcleyê\' bi awayekî rast temam dike?',
     answers: [
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
@@ -26666,7 +26666,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20785',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di qada cografya de têgeha \'Newala Dîcleyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Newala Dîcleyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
@@ -26684,7 +26684,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20786',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\'?',
     answers: [
       'Newala Dîcleyê',
       'Gola Wanê',
@@ -26700,7 +26700,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20787',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di xwendina cografya de têgeha \'Newala Dîcleyê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Newala Dîcleyê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Newala Dîcleyê\' di vê kategoriyê de têgeheke giring e.',
@@ -26711,7 +26711,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20788',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ravekirina \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -26723,7 +26723,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20789',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Newala Dîcleyê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Newala Dîcleyê\' bi awayekî rast temam dike?',
     answers: [
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
       'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve',
@@ -26881,7 +26881,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20800',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di qada cografya de têgeha \'Çemê Firatê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Çemê Firatê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye',
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
@@ -26899,7 +26899,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20801',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\'?',
     answers: ['Çemê Firatê', 'çiyayên Zagrosê', 'Qerejdax', 'Heskîf'],
     correctAnswer: 'Çemê Firatê',
     explanation: 'Ev ravekirin têgeha \'Çemê Firatê\' nîşan dide.',
@@ -26910,7 +26910,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20802',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di xwendina cografya de têgeha \'Çemê Firatê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Çemê Firatê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Çemê Firatê\' di vê kategoriyê de têgeheke giring e.',
@@ -26921,7 +26921,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20803',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ravekirina \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -26933,7 +26933,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20804',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çemê Firatê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çemê Firatê\' bi awayekî rast temam dike?',
     answers: [
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
@@ -26951,7 +26951,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20805',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di qada cografya de têgeha \'Çemê Firatê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Çemê Firatê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar',
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
@@ -26969,7 +26969,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20806',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\'?',
     answers: ['Newala Dîcleyê', 'Geliyê Zapê', 'Çemê Firatê', 'Çiyayê Sîpanê'],
     correctAnswer: 'Çemê Firatê',
     explanation: 'Ev ravekirin têgeha \'Çemê Firatê\' nîşan dide.',
@@ -26980,7 +26980,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20807',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di xwendina cografya de têgeha \'Çemê Firatê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Çemê Firatê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Çemê Firatê\' di vê kategoriyê de têgeheke giring e.',
@@ -26991,7 +26991,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20808',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ravekirina \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -27003,7 +27003,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20809',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çemê Firatê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çemê Firatê\' bi awayekî rast temam dike?',
     answers: [
       'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar',
       'gola herî mezin a herêmê ku avên wê şor û sodadar in',
@@ -27021,7 +27021,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20810',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di qada cografya de têgeha \'Çemê Firatê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Çemê Firatê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye',
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
@@ -27039,7 +27039,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20811',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\'?',
     answers: ['Çemê Firatê', 'Çiyayê Cûdî', 'Gola Wanê', 'Geliyê Zapê'],
     correctAnswer: 'Çemê Firatê',
     explanation: 'Ev ravekirin têgeha \'Çemê Firatê\' nîşan dide.',
@@ -27050,7 +27050,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20812',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di xwendina cografya de têgeha \'Çemê Firatê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Çemê Firatê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Çemê Firatê\' di vê kategoriyê de têgeheke giring e.',
@@ -27061,7 +27061,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20813',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ravekirina \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -27073,7 +27073,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20814',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çemê Firatê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çemê Firatê\' bi awayekî rast temam dike?',
     answers: [
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
       'gola herî mezin a herêmê ku avên wê şor û sodadar in',
@@ -27231,7 +27231,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20825',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di qada cografya de têgeha \'Çiyayê Cûdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Çiyayê Cûdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
@@ -27249,7 +27249,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20826',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\'?',
     answers: ['Çiyayê Cûdî', 'Heskîf', 'Qerejdax', 'Çemê Firatê'],
     correctAnswer: 'Çiyayê Cûdî',
     explanation: 'Ev ravekirin têgeha \'Çiyayê Cûdî\' nîşan dide.',
@@ -27260,7 +27260,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20827',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di xwendina cografya de têgeha \'Çiyayê Cûdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Çiyayê Cûdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Çiyayê Cûdî\' di vê kategoriyê de têgeheke giring e.',
@@ -27271,7 +27271,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20828',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ravekirina \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -27283,7 +27283,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20829',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Cûdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Cûdî\' bi awayekî rast temam dike?',
     answers: [
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
@@ -27301,7 +27301,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20830',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di qada cografya de têgeha \'Çiyayê Cûdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Çiyayê Cûdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
       'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve',
@@ -27319,7 +27319,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20831',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\'?',
     answers: ['Çiyayê Sîpanê', 'Gola Wanê', 'Çiyayê Cûdî', 'Newala Dîcleyê'],
     correctAnswer: 'Çiyayê Cûdî',
     explanation: 'Ev ravekirin têgeha \'Çiyayê Cûdî\' nîşan dide.',
@@ -27330,7 +27330,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20832',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di xwendina cografya de têgeha \'Çiyayê Cûdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Çiyayê Cûdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Çiyayê Cûdî\' di vê kategoriyê de têgeheke giring e.',
@@ -27341,7 +27341,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20833',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ravekirina \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -27353,7 +27353,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20834',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Cûdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Cûdî\' bi awayekî rast temam dike?',
     answers: [
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
       'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye',
@@ -27371,7 +27371,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20835',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di qada cografya de têgeha \'Çiyayê Cûdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Çiyayê Cûdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
       'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve',
@@ -27389,7 +27389,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20836',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\'?',
     answers: ['Çiyayê Cûdî', 'Çiyayê Sîpanê', 'Qerejdax', 'Geliyê Zapê'],
     correctAnswer: 'Çiyayê Cûdî',
     explanation: 'Ev ravekirin têgeha \'Çiyayê Cûdî\' nîşan dide.',
@@ -27400,7 +27400,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20837',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di xwendina cografya de têgeha \'Çiyayê Cûdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Çiyayê Cûdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Çiyayê Cûdî\' di vê kategoriyê de têgeheke giring e.',
@@ -27411,7 +27411,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20838',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ravekirina \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -27423,7 +27423,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20839',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Cûdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Cûdî\' bi awayekî rast temam dike?',
     answers: [
       'gola herî mezin a herêmê ku avên wê şor û sodadar in',
       'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve',
@@ -27586,7 +27586,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20850',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di qada cografya de têgeha \'Girê Mirazan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Girê Mirazan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'gola herî mezin a herêmê ku avên wê şor û sodadar in',
       'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê',
@@ -27604,7 +27604,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20851',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\'?',
     answers: ['Girê Mirazan', 'Çiyayê Sîpanê', 'Newala Dîcleyê', 'Çemê Firatê'],
     correctAnswer: 'Girê Mirazan',
     explanation: 'Ev ravekirin têgeha \'Girê Mirazan\' nîşan dide.',
@@ -27615,7 +27615,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20852',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di xwendina cografya de têgeha \'Girê Mirazan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Girê Mirazan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Girê Mirazan\' di vê kategoriyê de têgeheke giring e.',
@@ -27626,7 +27626,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20853',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ravekirina \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -27638,7 +27638,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20854',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Girê Mirazan\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Girê Mirazan\' bi awayekî rast temam dike?',
     answers: [
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
@@ -27656,7 +27656,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20855',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di qada cografya de têgeha \'Girê Mirazan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Girê Mirazan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye',
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
@@ -27674,7 +27674,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20856',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\'?',
     answers: ['Qerejdax', 'Çiyayê Cûdî', 'Girê Mirazan', 'Gola Wanê'],
     correctAnswer: 'Girê Mirazan',
     explanation: 'Ev ravekirin têgeha \'Girê Mirazan\' nîşan dide.',
@@ -27685,7 +27685,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20857',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di xwendina cografya de têgeha \'Girê Mirazan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Girê Mirazan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Girê Mirazan\' di vê kategoriyê de têgeheke giring e.',
@@ -27696,7 +27696,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20858',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ravekirina \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -27708,7 +27708,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20859',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Girê Mirazan\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Girê Mirazan\' bi awayekî rast temam dike?',
     answers: [
       'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye',
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
@@ -27726,7 +27726,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20860',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di qada cografya de têgeha \'Girê Mirazan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Girê Mirazan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
       'gola herî mezin a herêmê ku avên wê şor û sodadar in',
@@ -27744,7 +27744,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20861',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\'?',
     answers: ['Girê Mirazan', 'Çiyayê Sîpanê', 'Newala Dîcleyê', 'Geliyê Zapê'],
     correctAnswer: 'Girê Mirazan',
     explanation: 'Ev ravekirin têgeha \'Girê Mirazan\' nîşan dide.',
@@ -27755,7 +27755,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20862',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di xwendina cografya de têgeha \'Girê Mirazan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Girê Mirazan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Girê Mirazan\' di vê kategoriyê de têgeheke giring e.',
@@ -27766,7 +27766,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20863',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ravekirina \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -27778,7 +27778,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20864',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Girê Mirazan\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Girê Mirazan\' bi awayekî rast temam dike?',
     answers: [
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
@@ -27936,7 +27936,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20875',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di qada cografya de têgeha \'Gola Wanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Gola Wanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê',
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
@@ -27953,7 +27953,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20876',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'gola herî mezin a herêmê ku avên wê şor û sodadar in\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'gola herî mezin a herêmê ku avên wê şor û sodadar in\'?',
     answers: ['Gola Wanê', 'çiyayên Zagrosê', 'Çiyayê Sîpanê', 'Geliyê Zapê'],
     correctAnswer: 'Gola Wanê',
     explanation: 'Ev ravekirin têgeha \'Gola Wanê\' nîşan dide.',
@@ -27964,7 +27964,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20877',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di xwendina cografya de têgeha \'Gola Wanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Gola Wanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Gola Wanê\' di vê kategoriyê de têgeheke giring e.',
@@ -27975,7 +27975,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20878',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ravekirina \'gola herî mezin a herêmê ku avên wê şor û sodadar in\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'gola herî mezin a herêmê ku avên wê şor û sodadar in\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -27987,7 +27987,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20879',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Gola Wanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Gola Wanê\' bi awayekî rast temam dike?',
     answers: [
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
@@ -28004,7 +28004,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20880',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di qada cografya de têgeha \'Gola Wanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Gola Wanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'gola herî mezin a herêmê ku avên wê şor û sodadar in',
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
@@ -28021,7 +28021,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20881',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'gola herî mezin a herêmê ku avên wê şor û sodadar in\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'gola herî mezin a herêmê ku avên wê şor û sodadar in\'?',
     answers: ['Heskîf', 'Girê Mirazan', 'Gola Wanê', 'Qerejdax'],
     correctAnswer: 'Gola Wanê',
     explanation: 'Ev ravekirin têgeha \'Gola Wanê\' nîşan dide.',
@@ -28032,7 +28032,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20882',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di xwendina cografya de têgeha \'Gola Wanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Gola Wanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Gola Wanê\' di vê kategoriyê de têgeheke giring e.',
@@ -28043,7 +28043,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20883',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ravekirina \'gola herî mezin a herêmê ku avên wê şor û sodadar in\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'gola herî mezin a herêmê ku avên wê şor û sodadar in\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -28055,7 +28055,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20884',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Gola Wanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Gola Wanê\' bi awayekî rast temam dike?',
     answers: [
       'gola herî mezin a herêmê ku avên wê şor û sodadar in',
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
@@ -28072,7 +28072,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20885',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di qada cografya de têgeha \'Gola Wanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Gola Wanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
@@ -28089,7 +28089,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20886',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'gola herî mezin a herêmê ku avên wê şor û sodadar in\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'gola herî mezin a herêmê ku avên wê şor û sodadar in\'?',
     answers: ['Gola Wanê', 'Çemê Firatê', 'çiyayên Zagrosê', 'Heskîf'],
     correctAnswer: 'Gola Wanê',
     explanation: 'Ev ravekirin têgeha \'Gola Wanê\' nîşan dide.',
@@ -28100,7 +28100,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20887',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di xwendina cografya de têgeha \'Gola Wanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Gola Wanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Gola Wanê\' di vê kategoriyê de têgeheke giring e.',
@@ -28111,7 +28111,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20888',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ravekirina \'gola herî mezin a herêmê ku avên wê şor û sodadar in\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'gola herî mezin a herêmê ku avên wê şor û sodadar in\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -28123,7 +28123,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20889',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Gola Wanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Gola Wanê\' bi awayekî rast temam dike?',
     answers: [
       'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve',
       'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye',
@@ -28276,7 +28276,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20900',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di qada cografya de têgeha \'Çiyayê Sîpanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Çiyayê Sîpanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
@@ -28293,7 +28293,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20901',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\'?',
     answers: [
       'Çiyayê Sîpanê',
       'Geliyê Zapê',
@@ -28309,7 +28309,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20902',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di xwendina cografya de têgeha \'Çiyayê Sîpanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Çiyayê Sîpanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Çiyayê Sîpanê\' di vê kategoriyê de têgeheke giring e.',
@@ -28320,7 +28320,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20903',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ravekirina \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -28332,7 +28332,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20904',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Sîpanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Sîpanê\' bi awayekî rast temam dike?',
     answers: [
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
       'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar',
@@ -28349,7 +28349,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20905',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di qada cografya de têgeha \'Çiyayê Sîpanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Çiyayê Sîpanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê',
       'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar',
@@ -28366,7 +28366,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20906',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\'?',
     answers: [
       'Newala Dîcleyê',
       'Geliyê Zapê',
@@ -28382,7 +28382,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20907',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di xwendina cografya de têgeha \'Çiyayê Sîpanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Çiyayê Sîpanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Çiyayê Sîpanê\' di vê kategoriyê de têgeheke giring e.',
@@ -28393,7 +28393,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20908',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ravekirina \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -28405,7 +28405,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20909',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Sîpanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Sîpanê\' bi awayekî rast temam dike?',
     answers: [
       'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê',
       'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve',
@@ -28422,7 +28422,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20910',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di qada cografya de têgeha \'Çiyayê Sîpanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Çiyayê Sîpanê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
@@ -28439,7 +28439,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20911',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\'?',
     answers: ['Çiyayê Sîpanê', 'Gola Wanê', 'Çemê Firatê', 'Qerejdax'],
     correctAnswer: 'Çiyayê Sîpanê',
     explanation: 'Ev ravekirin têgeha \'Çiyayê Sîpanê\' nîşan dide.',
@@ -28450,7 +28450,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20912',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di xwendina cografya de têgeha \'Çiyayê Sîpanê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Çiyayê Sîpanê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Çiyayê Sîpanê\' di vê kategoriyê de têgeheke giring e.',
@@ -28461,7 +28461,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20913',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ravekirina \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -28473,7 +28473,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20914',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Sîpanê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Çiyayê Sîpanê\' bi awayekî rast temam dike?',
     answers: [
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
       'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar',
@@ -28626,7 +28626,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20925',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di qada cografya de têgeha \'Geliyê Zapê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Geliyê Zapê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
@@ -28644,7 +28644,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20926',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\'?',
     answers: ['Geliyê Zapê', 'Girê Mirazan', 'Newala Dîcleyê', 'Gola Wanê'],
     correctAnswer: 'Geliyê Zapê',
     explanation: 'Ev ravekirin têgeha \'Geliyê Zapê\' nîşan dide.',
@@ -28655,7 +28655,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20927',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di xwendina cografya de têgeha \'Geliyê Zapê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Geliyê Zapê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Geliyê Zapê\' di vê kategoriyê de têgeheke giring e.',
@@ -28666,7 +28666,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20928',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ravekirina \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -28678,7 +28678,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20929',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Geliyê Zapê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Geliyê Zapê\' bi awayekî rast temam dike?',
     answers: [
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
       'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye',
@@ -28696,7 +28696,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20930',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di qada cografya de têgeha \'Geliyê Zapê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Geliyê Zapê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve',
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
@@ -28714,7 +28714,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20931',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\'?',
     answers: ['Newala Dîcleyê', 'Gola Wanê', 'Geliyê Zapê', 'çiyayên Zagrosê'],
     correctAnswer: 'Geliyê Zapê',
     explanation: 'Ev ravekirin têgeha \'Geliyê Zapê\' nîşan dide.',
@@ -28725,7 +28725,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20932',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di xwendina cografya de têgeha \'Geliyê Zapê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Geliyê Zapê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Geliyê Zapê\' di vê kategoriyê de têgeheke giring e.',
@@ -28736,7 +28736,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20933',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ravekirina \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -28748,7 +28748,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20934',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Geliyê Zapê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Geliyê Zapê\' bi awayekî rast temam dike?',
     answers: [
       'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve',
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
@@ -28766,7 +28766,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20935',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di qada cografya de têgeha \'Geliyê Zapê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Geliyê Zapê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
@@ -28784,7 +28784,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20936',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\'?',
     answers: ['Geliyê Zapê', 'Girê Mirazan', 'Newala Dîcleyê', 'Heskîf'],
     correctAnswer: 'Geliyê Zapê',
     explanation: 'Ev ravekirin têgeha \'Geliyê Zapê\' nîşan dide.',
@@ -28795,7 +28795,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20937',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di xwendina cografya de têgeha \'Geliyê Zapê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Geliyê Zapê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Geliyê Zapê\' di vê kategoriyê de têgeheke giring e.',
@@ -28806,7 +28806,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20938',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ravekirina \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -28818,7 +28818,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20939',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Geliyê Zapê\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Geliyê Zapê\' bi awayekî rast temam dike?',
     answers: [
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
       'gola herî mezin a herêmê ku avên wê şor û sodadar in',
@@ -28976,7 +28976,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20950',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di qada cografya de têgeha \'Heskîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Heskîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve',
       'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar',
@@ -28994,7 +28994,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20951',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\'?',
     answers: ['Heskîf', 'Qerejdax', 'Çemê Firatê', 'Newala Dîcleyê'],
     correctAnswer: 'Heskîf',
     explanation: 'Ev ravekirin têgeha \'Heskîf\' nîşan dide.',
@@ -29005,7 +29005,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20952',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di xwendina cografya de têgeha \'Heskîf\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Heskîf\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Heskîf\' di vê kategoriyê de têgeheke giring e.',
@@ -29016,7 +29016,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20953',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ravekirina \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Heskîf\' û qada cografya re girêdayî ye.',
@@ -29027,7 +29027,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20954',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Heskîf\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Heskîf\' bi awayekî rast temam dike?',
     answers: [
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
       'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar',
@@ -29045,7 +29045,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20955',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di qada cografya de têgeha \'Heskîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Heskîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
@@ -29063,7 +29063,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20956',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\'?',
     answers: ['Girê Mirazan', 'Çemê Firatê', 'Heskîf', 'Gola Wanê'],
     correctAnswer: 'Heskîf',
     explanation: 'Ev ravekirin têgeha \'Heskîf\' nîşan dide.',
@@ -29074,7 +29074,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20957',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di xwendina cografya de têgeha \'Heskîf\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Heskîf\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Heskîf\' di vê kategoriyê de têgeheke giring e.',
@@ -29085,7 +29085,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20958',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ravekirina \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Heskîf\' û qada cografya re girêdayî ye.',
@@ -29096,7 +29096,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20959',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Heskîf\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Heskîf\' bi awayekî rast temam dike?',
     answers: [
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
       'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar',
@@ -29114,7 +29114,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20960',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di qada cografya de têgeha \'Heskîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Heskîf\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye',
       'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve',
@@ -29132,7 +29132,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20961',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\'?',
     answers: ['Heskîf', 'Gola Wanê', 'Qerejdax', 'çiyayên Zagrosê'],
     correctAnswer: 'Heskîf',
     explanation: 'Ev ravekirin têgeha \'Heskîf\' nîşan dide.',
@@ -29143,7 +29143,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20962',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di xwendina cografya de têgeha \'Heskîf\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Heskîf\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Heskîf\' di vê kategoriyê de têgeheke giring e.',
@@ -29154,7 +29154,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20963',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ravekirina \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Heskîf\' û qada cografya re girêdayî ye.',
@@ -29165,7 +29165,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20964',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Heskîf\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Heskîf\' bi awayekî rast temam dike?',
     answers: [
       'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve',
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
@@ -29321,7 +29321,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20975',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di qada cografya de têgeha \'Qerejdax\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Qerejdax\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar',
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
@@ -29339,7 +29339,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20976',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\'?',
     answers: ['Qerejdax', 'Girê Mirazan', 'çiyayên Zagrosê', 'Geliyê Zapê'],
     correctAnswer: 'Qerejdax',
     explanation: 'Ev ravekirin têgeha \'Qerejdax\' nîşan dide.',
@@ -29350,7 +29350,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20977',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, di xwendina cografya de têgeha \'Qerejdax\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Qerejdax\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Qerejdax\' di vê kategoriyê de têgeheke giring e.',
@@ -29361,7 +29361,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20978',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ravekirina \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Qerejdax\' û qada cografya re girêdayî ye.',
@@ -29372,7 +29372,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20979',
     category: 'Cografya',
     prompt:
-        'Di asta destpêkê, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Qerejdax\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Qerejdax\' bi awayekî rast temam dike?',
     answers: [
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
       'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin',
@@ -29390,7 +29390,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20980',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di qada cografya de têgeha \'Qerejdax\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Qerejdax\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
       'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye',
@@ -29408,7 +29408,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20981',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\'?',
     answers: ['Çiyayê Cûdî', 'Çemê Firatê', 'Qerejdax', 'Heskîf'],
     correctAnswer: 'Qerejdax',
     explanation: 'Ev ravekirin têgeha \'Qerejdax\' nîşan dide.',
@@ -29419,7 +29419,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20982',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, di xwendina cografya de têgeha \'Qerejdax\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Qerejdax\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Qerejdax\' di vê kategoriyê de têgeheke giring e.',
@@ -29430,7 +29430,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20983',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ravekirina \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Qerejdax\' û qada cografya re girêdayî ye.',
@@ -29441,7 +29441,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20984',
     category: 'Cografya',
     prompt:
-        'Di asta navîn de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Qerejdax\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Qerejdax\' bi awayekî rast temam dike?',
     answers: [
       'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne',
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
@@ -29459,7 +29459,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20985',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di qada cografya de têgeha \'Qerejdax\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada cografya de têgeha \'Qerejdax\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye',
       'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye',
@@ -29477,7 +29477,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20986',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\'?',
+        'Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\'?',
     answers: ['Qerejdax', 'Çiyayê Sîpanê', 'Heskîf', 'Girê Mirazan'],
     correctAnswer: 'Qerejdax',
     explanation: 'Ev ravekirin têgeha \'Qerejdax\' nîşan dide.',
@@ -29488,7 +29488,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20987',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, di xwendina cografya de têgeha \'Qerejdax\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina cografya de têgeha \'Qerejdax\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Qerejdax\' di vê kategoriyê de têgeheke giring e.',
@@ -29499,7 +29499,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20988',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ravekirina \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\' bi tevahî ji qada cografya dûr e.',
+        'Ravekirina \'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne\' bi tevahî ji qada cografya dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Qerejdax\' û qada cografya re girêdayî ye.',
@@ -29510,7 +29510,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_20989',
     category: 'Cografya',
     prompt:
-        'Di asta pêşketî de, ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Qerejdax\' bi awayekî rast temam dike?',
+        'Ji bo dersa cografya kîjan vebijark ravekirina têgeha \'Qerejdax\' bi awayekî rast temam dike?',
     answers: [
       'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze',
       'gola herî mezin a herêmê ku avên wê şor û sodadar in',
@@ -29666,7 +29666,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21000',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di qada çand de têgeha \'Sazîbûna Dengbêjiyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Sazîbûna Dengbêjiyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
       'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye',
@@ -29684,7 +29684,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21001',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\'?',
     answers: [
       'şevbêrk',
       'çanda koçeriyê',
@@ -29700,7 +29700,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21002',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di xwendina çand de têgeha \'Sazîbûna Dengbêjiyê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Sazîbûna Dengbêjiyê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -29712,7 +29712,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21003',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ravekirina \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -29724,7 +29724,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21004',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Sazîbûna Dengbêjiyê\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Sazîbûna Dengbêjiyê\' bi awayekî rast temam dike?',
     answers: [
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
@@ -29742,7 +29742,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21005',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di qada çand de têgeha \'Sazîbûna Dengbêjiyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Sazîbûna Dengbêjiyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
       'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne',
@@ -29760,7 +29760,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21006',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\'?',
     answers: [
       'Sazîbûna Dengbêjiyê',
       'Govenda Kurdî',
@@ -29776,7 +29776,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21007',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di xwendina çand de têgeha \'Sazîbûna Dengbêjiyê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Sazîbûna Dengbêjiyê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -29788,7 +29788,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21008',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ravekirina \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -29800,7 +29800,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21009',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Sazîbûna Dengbêjiyê\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Sazîbûna Dengbêjiyê\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin',
       'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne',
@@ -29818,7 +29818,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21010',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di qada çand de têgeha \'Sazîbûna Dengbêjiyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Sazîbûna Dengbêjiyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
@@ -29836,7 +29836,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21011',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\'?',
     answers: [
       'Destana Memê Alan',
       'Newroz',
@@ -29852,7 +29852,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21012',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di xwendina çand de têgeha \'Sazîbûna Dengbêjiyê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Sazîbûna Dengbêjiyê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -29864,7 +29864,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21013',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ravekirina \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -29876,7 +29876,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21014',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Sazîbûna Dengbêjiyê\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Sazîbûna Dengbêjiyê\' bi awayekî rast temam dike?',
     answers: [
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
@@ -30046,7 +30046,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21025',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di qada çand de têgeha \'Newroz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Newroz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye',
       'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin',
@@ -30064,7 +30064,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21026',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\'?',
     answers: [
       'Destana Memê Alan',
       'misafirperweriya kurdî',
@@ -30080,7 +30080,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21027',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di xwendina çand de têgeha \'Newroz\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Newroz\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Newroz\' di vê kategoriyê de têgeheke giring e.',
@@ -30091,7 +30091,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21028',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ravekirina \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Newroz\' û qada çand re girêdayî ye.',
@@ -30102,7 +30102,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21029',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Newroz\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Newroz\' bi awayekî rast temam dike?',
     answers: [
       'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye',
       'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin',
@@ -30120,7 +30120,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21030',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di qada çand de têgeha \'Newroz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Newroz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
@@ -30138,7 +30138,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21031',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\'?',
     answers: ['Newroz', 'Destana Memê Alan', 'şevbêrk', 'çanda koçeriyê'],
     correctAnswer: 'Newroz',
     explanation: 'Ev ravekirin têgeha \'Newroz\' nîşan dide.',
@@ -30149,7 +30149,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21032',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di xwendina çand de têgeha \'Newroz\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Newroz\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Newroz\' di vê kategoriyê de têgeheke giring e.',
@@ -30160,7 +30160,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21033',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ravekirina \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Newroz\' û qada çand re girêdayî ye.',
@@ -30171,7 +30171,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21034',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Newroz\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Newroz\' bi awayekî rast temam dike?',
     answers: [
       'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin',
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
@@ -30189,7 +30189,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21035',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di qada çand de têgeha \'Newroz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Newroz\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye',
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
@@ -30207,7 +30207,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21036',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\'?',
     answers: ['Govenda Kurdî', 'Kalo û Sersal', 'Newroz', 'şevbêrk'],
     correctAnswer: 'Newroz',
     explanation: 'Ev ravekirin têgeha \'Newroz\' nîşan dide.',
@@ -30218,7 +30218,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21037',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di xwendina çand de têgeha \'Newroz\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Newroz\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Newroz\' di vê kategoriyê de têgeheke giring e.',
@@ -30229,7 +30229,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21038',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ravekirina \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Newroz\' û qada çand re girêdayî ye.',
@@ -30240,7 +30240,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21039',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Newroz\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Newroz\' bi awayekî rast temam dike?',
     answers: [
       'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye',
       'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne',
@@ -30406,7 +30406,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21050',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di qada çand de têgeha \'Kalo û Sersal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Kalo û Sersal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin',
       'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye',
@@ -30424,7 +30424,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21051',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\'?',
     answers: [
       'Sazîbûna Dengbêjiyê',
       'Govenda Kurdî',
@@ -30440,7 +30440,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21052',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di xwendina çand de têgeha \'Kalo û Sersal\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Kalo û Sersal\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Kalo û Sersal\' di vê kategoriyê de têgeheke giring e.',
@@ -30451,7 +30451,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21053',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ravekirina \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -30463,7 +30463,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21054',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Kalo û Sersal\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Kalo û Sersal\' bi awayekî rast temam dike?',
     answers: [
       'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin',
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
@@ -30481,7 +30481,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21055',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di qada çand de têgeha \'Kalo û Sersal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Kalo û Sersal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
       'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne',
@@ -30499,7 +30499,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21056',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\'?',
     answers: ['Kalo û Sersal', 'Newroz', 'Sazîbûna Dengbêjiyê', 'hewran'],
     correctAnswer: 'Kalo û Sersal',
     explanation: 'Ev ravekirin têgeha \'Kalo û Sersal\' nîşan dide.',
@@ -30510,7 +30510,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21057',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di xwendina çand de têgeha \'Kalo û Sersal\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Kalo û Sersal\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Kalo û Sersal\' di vê kategoriyê de têgeheke giring e.',
@@ -30521,7 +30521,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21058',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ravekirina \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -30533,7 +30533,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21059',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Kalo û Sersal\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Kalo û Sersal\' bi awayekî rast temam dike?',
     answers: [
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
       'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye',
@@ -30551,7 +30551,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21060',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di qada çand de têgeha \'Kalo û Sersal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Kalo û Sersal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin',
       'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye',
@@ -30569,7 +30569,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21061',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\'?',
     answers: ['kilimên kurdî', 'şevbêrk', 'Kalo û Sersal', 'Newroz'],
     correctAnswer: 'Kalo û Sersal',
     explanation: 'Ev ravekirin têgeha \'Kalo û Sersal\' nîşan dide.',
@@ -30580,7 +30580,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21062',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di xwendina çand de têgeha \'Kalo û Sersal\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Kalo û Sersal\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Kalo û Sersal\' di vê kategoriyê de têgeheke giring e.',
@@ -30591,7 +30591,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21063',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ravekirina \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -30603,7 +30603,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21064',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Kalo û Sersal\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Kalo û Sersal\' bi awayekî rast temam dike?',
     answers: [
       'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin',
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
@@ -30771,7 +30771,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21075',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di qada çand de têgeha \'Govenda Kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Govenda Kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
@@ -30789,7 +30789,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21076',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\'?',
     answers: [
       'Sazîbûna Dengbêjiyê',
       'kilimên kurdî',
@@ -30805,7 +30805,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21077',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di xwendina çand de têgeha \'Govenda Kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Govenda Kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Govenda Kurdî\' di vê kategoriyê de têgeheke giring e.',
@@ -30816,7 +30816,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21078',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ravekirina \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -30828,7 +30828,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21079',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Govenda Kurdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Govenda Kurdî\' bi awayekî rast temam dike?',
     answers: [
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
       'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin',
@@ -30846,7 +30846,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21080',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di qada çand de têgeha \'Govenda Kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Govenda Kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
@@ -30864,7 +30864,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21081',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\'?',
     answers: ['Govenda Kurdî', 'Newroz', 'Destana Memê Alan', 'şevbêrk'],
     correctAnswer: 'Govenda Kurdî',
     explanation: 'Ev ravekirin têgeha \'Govenda Kurdî\' nîşan dide.',
@@ -30875,7 +30875,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21082',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di xwendina çand de têgeha \'Govenda Kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Govenda Kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Govenda Kurdî\' di vê kategoriyê de têgeheke giring e.',
@@ -30886,7 +30886,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21083',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ravekirina \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -30898,7 +30898,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21084',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Govenda Kurdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Govenda Kurdî\' bi awayekî rast temam dike?',
     answers: [
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
@@ -30916,7 +30916,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21085',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di qada çand de têgeha \'Govenda Kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Govenda Kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
@@ -30934,7 +30934,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21086',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\'?',
     answers: ['çanda koçeriyê', 'Newroz', 'Govenda Kurdî', 'hewran'],
     correctAnswer: 'Govenda Kurdî',
     explanation: 'Ev ravekirin têgeha \'Govenda Kurdî\' nîşan dide.',
@@ -30945,7 +30945,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21087',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di xwendina çand de têgeha \'Govenda Kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Govenda Kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Govenda Kurdî\' di vê kategoriyê de têgeheke giring e.',
@@ -30956,7 +30956,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21088',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ravekirina \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -30968,7 +30968,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21089',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Govenda Kurdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Govenda Kurdî\' bi awayekî rast temam dike?',
     answers: [
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
       'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin',
@@ -31131,7 +31131,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21100',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di qada çand de têgeha \'çanda koçeriyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'çanda koçeriyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye',
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
@@ -31149,7 +31149,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21101',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\'?',
     answers: ['hewran', 'şevbêrk', 'çanda koçeriyê', 'kilimên kurdî'],
     correctAnswer: 'çanda koçeriyê',
     explanation: 'Ev ravekirin têgeha \'çanda koçeriyê\' nîşan dide.',
@@ -31160,7 +31160,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21102',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di xwendina çand de têgeha \'çanda koçeriyê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'çanda koçeriyê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'çanda koçeriyê\' di vê kategoriyê de têgeheke giring e.',
@@ -31171,7 +31171,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21103',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ravekirina \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -31183,7 +31183,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21104',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ji bo dersa çand kîjan vebijark ravekirina têgeha \'çanda koçeriyê\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'çanda koçeriyê\' bi awayekî rast temam dike?',
     answers: [
       'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye',
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
@@ -31201,7 +31201,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21105',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di qada çand de têgeha \'çanda koçeriyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'çanda koçeriyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye',
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
@@ -31219,7 +31219,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21106',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\'?',
     answers: [
       'çanda koçeriyê',
       'Sazîbûna Dengbêjiyê',
@@ -31235,7 +31235,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21107',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di xwendina çand de têgeha \'çanda koçeriyê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'çanda koçeriyê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'çanda koçeriyê\' di vê kategoriyê de têgeheke giring e.',
@@ -31246,7 +31246,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21108',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ravekirina \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -31258,7 +31258,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21109',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'çanda koçeriyê\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'çanda koçeriyê\' bi awayekî rast temam dike?',
     answers: [
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
       'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye',
@@ -31276,7 +31276,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21110',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di qada çand de têgeha \'çanda koçeriyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'çanda koçeriyê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye',
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
@@ -31294,7 +31294,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21111',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\'?',
     answers: [
       'Kalo û Sersal',
       'şevbêrk',
@@ -31310,7 +31310,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21112',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di xwendina çand de têgeha \'çanda koçeriyê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'çanda koçeriyê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'çanda koçeriyê\' di vê kategoriyê de têgeheke giring e.',
@@ -31321,7 +31321,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21113',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ravekirina \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -31333,7 +31333,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21114',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'çanda koçeriyê\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'çanda koçeriyê\' bi awayekî rast temam dike?',
     answers: [
       'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye',
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
@@ -31496,7 +31496,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21125',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di qada çand de têgeha \'misafirperweriya kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'misafirperweriya kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin',
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
@@ -31514,7 +31514,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21126',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\'?',
     answers: [
       'Newroz',
       'kilimên kurdî',
@@ -31530,7 +31530,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21127',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di xwendina çand de têgeha \'misafirperweriya kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'misafirperweriya kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -31542,7 +31542,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21128',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ravekirina \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -31554,7 +31554,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21129',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ji bo dersa çand kîjan vebijark ravekirina têgeha \'misafirperweriya kurdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'misafirperweriya kurdî\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin',
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
@@ -31572,7 +31572,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21130',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di qada çand de têgeha \'misafirperweriya kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'misafirperweriya kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
@@ -31590,7 +31590,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21131',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\'?',
     answers: [
       'misafirperweriya kurdî',
       'Sazîbûna Dengbêjiyê',
@@ -31606,7 +31606,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21132',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di xwendina çand de têgeha \'misafirperweriya kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'misafirperweriya kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -31618,7 +31618,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21133',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ravekirina \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -31630,7 +31630,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21134',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'misafirperweriya kurdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'misafirperweriya kurdî\' bi awayekî rast temam dike?',
     answers: [
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
@@ -31648,7 +31648,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21135',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di qada çand de têgeha \'misafirperweriya kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'misafirperweriya kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin',
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
@@ -31666,7 +31666,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21136',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\'?',
     answers: [
       'şevbêrk',
       'çanda koçeriyê',
@@ -31682,7 +31682,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21137',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di xwendina çand de têgeha \'misafirperweriya kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'misafirperweriya kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -31694,7 +31694,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21138',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ravekirina \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -31706,7 +31706,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21139',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'misafirperweriya kurdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'misafirperweriya kurdî\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin',
       'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye',
@@ -31876,7 +31876,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21150',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di qada çand de têgeha \'kilimên kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'kilimên kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
       'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye',
@@ -31894,7 +31894,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21151',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\'?',
     answers: [
       'Sazîbûna Dengbêjiyê',
       'hewran',
@@ -31910,7 +31910,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21152',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di xwendina çand de têgeha \'kilimên kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'kilimên kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'kilimên kurdî\' di vê kategoriyê de têgeheke giring e.',
@@ -31921,7 +31921,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21153',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ravekirina \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -31933,7 +31933,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21154',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ji bo dersa çand kîjan vebijark ravekirina têgeha \'kilimên kurdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'kilimên kurdî\' bi awayekî rast temam dike?',
     answers: [
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
       'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye',
@@ -31951,7 +31951,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21155',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di qada çand de têgeha \'kilimên kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'kilimên kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye',
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
@@ -31969,7 +31969,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21156',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\'?',
     answers: ['kilimên kurdî', 'şevbêrk', 'misafirperweriya kurdî', 'Newroz'],
     correctAnswer: 'kilimên kurdî',
     explanation: 'Ev ravekirin têgeha \'kilimên kurdî\' nîşan dide.',
@@ -31980,7 +31980,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21157',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di xwendina çand de têgeha \'kilimên kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'kilimên kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'kilimên kurdî\' di vê kategoriyê de têgeheke giring e.',
@@ -31991,7 +31991,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21158',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ravekirina \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -32003,7 +32003,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21159',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'kilimên kurdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'kilimên kurdî\' bi awayekî rast temam dike?',
     answers: [
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
       'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin',
@@ -32021,7 +32021,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21160',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di qada çand de têgeha \'kilimên kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'kilimên kurdî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
@@ -32039,7 +32039,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21161',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\'?',
     answers: [
       'Kalo û Sersal',
       'misafirperweriya kurdî',
@@ -32055,7 +32055,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21162',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di xwendina çand de têgeha \'kilimên kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'kilimên kurdî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'kilimên kurdî\' di vê kategoriyê de têgeheke giring e.',
@@ -32066,7 +32066,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21163',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ravekirina \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -32078,7 +32078,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21164',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'kilimên kurdî\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'kilimên kurdî\' bi awayekî rast temam dike?',
     answers: [
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
@@ -32246,7 +32246,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21175',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di qada çand de têgeha \'Destana Memê Alan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Destana Memê Alan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne',
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
@@ -32264,7 +32264,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21176',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\'?',
     answers: [
       'Newroz',
       'Sazîbûna Dengbêjiyê',
@@ -32280,7 +32280,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21177',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di xwendina çand de têgeha \'Destana Memê Alan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Destana Memê Alan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Destana Memê Alan\' di vê kategoriyê de têgeheke giring e.',
@@ -32291,7 +32291,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21178',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ravekirina \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -32303,7 +32303,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21179',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Destana Memê Alan\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Destana Memê Alan\' bi awayekî rast temam dike?',
     answers: [
       'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne',
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
@@ -32321,7 +32321,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21180',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di qada çand de têgeha \'Destana Memê Alan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Destana Memê Alan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin',
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
@@ -32339,7 +32339,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21181',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\'?',
     answers: [
       'Destana Memê Alan',
       'kilimên kurdî',
@@ -32355,7 +32355,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21182',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di xwendina çand de têgeha \'Destana Memê Alan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Destana Memê Alan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Destana Memê Alan\' di vê kategoriyê de têgeheke giring e.',
@@ -32366,7 +32366,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21183',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ravekirina \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -32378,7 +32378,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21184',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Destana Memê Alan\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Destana Memê Alan\' bi awayekî rast temam dike?',
     answers: [
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
@@ -32396,7 +32396,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21185',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di qada çand de têgeha \'Destana Memê Alan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'Destana Memê Alan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne',
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
@@ -32414,7 +32414,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21186',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\'?',
     answers: [
       'kilimên kurdî',
       'misafirperweriya kurdî',
@@ -32430,7 +32430,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21187',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di xwendina çand de têgeha \'Destana Memê Alan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'Destana Memê Alan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Destana Memê Alan\' di vê kategoriyê de têgeheke giring e.',
@@ -32441,7 +32441,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21188',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ravekirina \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -32453,7 +32453,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21189',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'Destana Memê Alan\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'Destana Memê Alan\' bi awayekî rast temam dike?',
     answers: [
       'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne',
       'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin',
@@ -32616,7 +32616,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21200',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di qada çand de têgeha \'hewran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'hewran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
       'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne',
@@ -32634,7 +32634,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21201',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\'?',
     answers: [
       'Sazîbûna Dengbêjiyê',
       'misafirperweriya kurdî',
@@ -32650,7 +32650,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21202',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di xwendina çand de têgeha \'hewran\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'hewran\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'hewran\' di vê kategoriyê de têgeheke giring e.',
@@ -32661,7 +32661,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21203',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ravekirina \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'hewran\' û qada çand re girêdayî ye.',
@@ -32672,7 +32672,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21204',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ji bo dersa çand kîjan vebijark ravekirina têgeha \'hewran\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'hewran\' bi awayekî rast temam dike?',
     answers: [
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
       'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin',
@@ -32690,7 +32690,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21205',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di qada çand de têgeha \'hewran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'hewran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin',
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
@@ -32708,7 +32708,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21206',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\'?',
     answers: ['hewran', 'Kalo û Sersal', 'çanda koçeriyê', 'Newroz'],
     correctAnswer: 'hewran',
     explanation: 'Ev ravekirin têgeha \'hewran\' nîşan dide.',
@@ -32719,7 +32719,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21207',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di xwendina çand de têgeha \'hewran\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'hewran\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'hewran\' di vê kategoriyê de têgeheke giring e.',
@@ -32730,7 +32730,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21208',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ravekirina \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'hewran\' û qada çand re girêdayî ye.',
@@ -32741,7 +32741,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21209',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'hewran\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'hewran\' bi awayekî rast temam dike?',
     answers: [
       'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne',
       'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin',
@@ -32759,7 +32759,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21210',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di qada çand de têgeha \'hewran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'hewran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
@@ -32777,7 +32777,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21211',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\'?',
     answers: ['Destana Memê Alan', 'Kalo û Sersal', 'hewran', 'çanda koçeriyê'],
     correctAnswer: 'hewran',
     explanation: 'Ev ravekirin têgeha \'hewran\' nîşan dide.',
@@ -32788,7 +32788,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21212',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di xwendina çand de têgeha \'hewran\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'hewran\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'hewran\' di vê kategoriyê de têgeheke giring e.',
@@ -32799,7 +32799,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21213',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ravekirina \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'hewran\' û qada çand re girêdayî ye.',
@@ -32810,7 +32810,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21214',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'hewran\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'hewran\' bi awayekî rast temam dike?',
     answers: [
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
@@ -32966,7 +32966,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21225',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di qada çand de têgeha \'şevbêrk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'şevbêrk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
       'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne',
@@ -32984,7 +32984,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21226',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\'?',
     answers: ['Newroz', 'kilimên kurdî', 'şevbêrk', 'Kalo û Sersal'],
     correctAnswer: 'şevbêrk',
     explanation: 'Ev ravekirin têgeha \'şevbêrk\' nîşan dide.',
@@ -32995,7 +32995,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21227',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, di xwendina çand de têgeha \'şevbêrk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'şevbêrk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'şevbêrk\' di vê kategoriyê de têgeheke giring e.',
@@ -33006,7 +33006,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21228',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ravekirina \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'şevbêrk\' û qada çand re girêdayî ye.',
@@ -33017,7 +33017,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21229',
     category: 'Çand',
     prompt:
-        'Di asta destpêkê, ji bo dersa çand kîjan vebijark ravekirina têgeha \'şevbêrk\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'şevbêrk\' bi awayekî rast temam dike?',
     answers: [
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
@@ -33035,7 +33035,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21230',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di qada çand de têgeha \'şevbêrk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'şevbêrk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
       'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin',
@@ -33053,7 +33053,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21231',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\'?',
     answers: ['şevbêrk', 'Govenda Kurdî', 'Sazîbûna Dengbêjiyê', 'Newroz'],
     correctAnswer: 'şevbêrk',
     explanation: 'Ev ravekirin têgeha \'şevbêrk\' nîşan dide.',
@@ -33064,7 +33064,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21232',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, di xwendina çand de têgeha \'şevbêrk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'şevbêrk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'şevbêrk\' di vê kategoriyê de têgeheke giring e.',
@@ -33075,7 +33075,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21233',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ravekirina \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'şevbêrk\' û qada çand re girêdayî ye.',
@@ -33086,7 +33086,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21234',
     category: 'Çand',
     prompt:
-        'Di asta navîn de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'şevbêrk\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'şevbêrk\' bi awayekî rast temam dike?',
     answers: [
       'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin',
       'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin',
@@ -33104,7 +33104,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21235',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di qada çand de têgeha \'şevbêrk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada çand de têgeha \'şevbêrk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
       'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin',
@@ -33122,7 +33122,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21236',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\'?',
+        'Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\'?',
     answers: ['hewran', 'misafirperweriya kurdî', 'şevbêrk', 'Kalo û Sersal'],
     correctAnswer: 'şevbêrk',
     explanation: 'Ev ravekirin têgeha \'şevbêrk\' nîşan dide.',
@@ -33133,7 +33133,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21237',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, di xwendina çand de têgeha \'şevbêrk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina çand de têgeha \'şevbêrk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'şevbêrk\' di vê kategoriyê de têgeheke giring e.',
@@ -33144,7 +33144,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21238',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ravekirina \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\' bi tevahî ji qada çand dûr e.',
+        'Ravekirina \'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin\' bi tevahî ji qada çand dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'şevbêrk\' û qada çand re girêdayî ye.',
@@ -33155,7 +33155,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21239',
     category: 'Çand',
     prompt:
-        'Di asta pêşketî de, ji bo dersa çand kîjan vebijark ravekirina têgeha \'şevbêrk\' bi awayekî rast temam dike?',
+        'Ji bo dersa çand kîjan vebijark ravekirina têgeha \'şevbêrk\' bi awayekî rast temam dike?',
     answers: [
       'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin',
       'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze',
@@ -33316,7 +33316,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21250',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di qada muzîk de têgeha \'tembûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'tembûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin',
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
@@ -33334,7 +33334,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21251',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\'?',
     answers: ['tembûr', 'Meryem Xan', 'Koma Wetan', 'Hasan Cizrawî'],
     correctAnswer: 'tembûr',
     explanation: 'Ev ravekirin têgeha \'tembûr\' nîşan dide.',
@@ -33345,7 +33345,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21252',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di xwendina muzîk de têgeha \'tembûr\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'tembûr\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'tembûr\' di vê kategoriyê de têgeheke giring e.',
@@ -33356,7 +33356,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21253',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ravekirina \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'tembûr\' û qada muzîk re girêdayî ye.',
@@ -33367,7 +33367,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21254',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'tembûr\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'tembûr\' bi awayekî rast temam dike?',
     answers: [
       'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin',
       'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin',
@@ -33385,7 +33385,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21255',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di qada muzîk de têgeha \'tembûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'tembûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan',
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
@@ -33403,7 +33403,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21256',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\'?',
     answers: ['bilûr', 'erbane', 'tembûr', 'Şakiro'],
     correctAnswer: 'tembûr',
     explanation: 'Ev ravekirin têgeha \'tembûr\' nîşan dide.',
@@ -33414,7 +33414,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21257',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di xwendina muzîk de têgeha \'tembûr\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'tembûr\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'tembûr\' di vê kategoriyê de têgeheke giring e.',
@@ -33425,7 +33425,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21258',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ravekirina \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'tembûr\' û qada muzîk re girêdayî ye.',
@@ -33436,7 +33436,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21259',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'tembûr\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'tembûr\' bi awayekî rast temam dike?',
     answers: [
       'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan',
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
@@ -33454,7 +33454,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21260',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di qada muzîk de têgeha \'tembûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'tembûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine',
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
@@ -33472,7 +33472,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21261',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\'?',
     answers: ['tembûr', 'Şakiro', 'Koma Wetan', 'erbane'],
     correctAnswer: 'tembûr',
     explanation: 'Ev ravekirin têgeha \'tembûr\' nîşan dide.',
@@ -33483,7 +33483,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21262',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di xwendina muzîk de têgeha \'tembûr\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'tembûr\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'tembûr\' di vê kategoriyê de têgeheke giring e.',
@@ -33494,7 +33494,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21263',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ravekirina \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'tembûr\' û qada muzîk re girêdayî ye.',
@@ -33505,7 +33505,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21264',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'tembûr\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'tembûr\' bi awayekî rast temam dike?',
     answers: [
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
       'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin',
@@ -33661,7 +33661,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21275',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di qada muzîk de têgeha \'erbane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'erbane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
       'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin',
@@ -33679,7 +33679,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21276',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\'?',
     answers: ['erbane', 'bilûr', 'Koma Wetan', 'Meryem Xan'],
     correctAnswer: 'erbane',
     explanation: 'Ev ravekirin têgeha \'erbane\' nîşan dide.',
@@ -33690,7 +33690,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21277',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di xwendina muzîk de têgeha \'erbane\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'erbane\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'erbane\' di vê kategoriyê de têgeheke giring e.',
@@ -33701,7 +33701,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21278',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ravekirina \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'erbane\' û qada muzîk re girêdayî ye.',
@@ -33712,7 +33712,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21279',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'erbane\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'erbane\' bi awayekî rast temam dike?',
     answers: [
       'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine',
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
@@ -33730,7 +33730,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21280',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di qada muzîk de têgeha \'erbane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'erbane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e',
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
@@ -33748,7 +33748,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21281',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\'?',
     answers: ['Şakiro', 'Hasan Cizrawî', 'erbane', 'Koma Wetan'],
     correctAnswer: 'erbane',
     explanation: 'Ev ravekirin têgeha \'erbane\' nîşan dide.',
@@ -33759,7 +33759,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21282',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di xwendina muzîk de têgeha \'erbane\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'erbane\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'erbane\' di vê kategoriyê de têgeheke giring e.',
@@ -33770,7 +33770,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21283',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ravekirina \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'erbane\' û qada muzîk re girêdayî ye.',
@@ -33781,7 +33781,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21284',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'erbane\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'erbane\' bi awayekî rast temam dike?',
     answers: [
       'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e',
       'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû',
@@ -33799,7 +33799,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21285',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di qada muzîk de têgeha \'erbane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'erbane\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
@@ -33817,7 +33817,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21286',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\'?',
     answers: ['erbane', 'Koma Wetan', 'Meryem Xan', 'lawik'],
     correctAnswer: 'erbane',
     explanation: 'Ev ravekirin têgeha \'erbane\' nîşan dide.',
@@ -33828,7 +33828,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21287',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di xwendina muzîk de têgeha \'erbane\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'erbane\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'erbane\' di vê kategoriyê de têgeheke giring e.',
@@ -33839,7 +33839,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21288',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ravekirina \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'erbane\' û qada muzîk re girêdayî ye.',
@@ -33850,7 +33850,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21289',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'erbane\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'erbane\' bi awayekî rast temam dike?',
     answers: [
       'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin',
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
@@ -34006,7 +34006,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21300',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di qada muzîk de têgeha \'bilûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'bilûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
       'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin',
@@ -34024,7 +34024,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21301',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\'?',
     answers: ['bilûr', 'tembûr', 'lawik', 'lîrîka klaman'],
     correctAnswer: 'bilûr',
     explanation: 'Ev ravekirin têgeha \'bilûr\' nîşan dide.',
@@ -34035,7 +34035,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21302',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di xwendina muzîk de têgeha \'bilûr\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'bilûr\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'bilûr\' di vê kategoriyê de têgeheke giring e.',
@@ -34046,7 +34046,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21303',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ravekirina \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'bilûr\' û qada muzîk re girêdayî ye.',
@@ -34057,7 +34057,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21304',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'bilûr\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'bilûr\' bi awayekî rast temam dike?',
     answers: [
       'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan',
       'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin',
@@ -34075,7 +34075,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21305',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di qada muzîk de têgeha \'bilûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'bilûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
@@ -34093,7 +34093,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21306',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\'?',
     answers: ['Hasan Cizrawî', 'erbane', 'bilûr', 'heyran'],
     correctAnswer: 'bilûr',
     explanation: 'Ev ravekirin têgeha \'bilûr\' nîşan dide.',
@@ -34104,7 +34104,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21307',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di xwendina muzîk de têgeha \'bilûr\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'bilûr\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'bilûr\' di vê kategoriyê de têgeheke giring e.',
@@ -34115,7 +34115,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21308',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ravekirina \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'bilûr\' û qada muzîk re girêdayî ye.',
@@ -34126,7 +34126,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21309',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'bilûr\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'bilûr\' bi awayekî rast temam dike?',
     answers: [
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
@@ -34144,7 +34144,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21310',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di qada muzîk de têgeha \'bilûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'bilûr\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
       'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e',
@@ -34162,7 +34162,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21311',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\'?',
     answers: ['bilûr', 'erbane', 'Meryem Xan', 'tembûr'],
     correctAnswer: 'bilûr',
     explanation: 'Ev ravekirin têgeha \'bilûr\' nîşan dide.',
@@ -34173,7 +34173,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21312',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di xwendina muzîk de têgeha \'bilûr\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'bilûr\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'bilûr\' di vê kategoriyê de têgeheke giring e.',
@@ -34184,7 +34184,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21313',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ravekirina \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'bilûr\' û qada muzîk re girêdayî ye.',
@@ -34195,7 +34195,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21314',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'bilûr\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'bilûr\' bi awayekî rast temam dike?',
     answers: [
       'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin',
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
@@ -34351,7 +34351,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21325',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di qada muzîk de têgeha \'lîrîka klaman\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'lîrîka klaman\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan',
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
@@ -34369,7 +34369,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21326',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\'?',
     answers: ['lîrîka klaman', 'bilûr', 'lawik', 'heyran'],
     correctAnswer: 'lîrîka klaman',
     explanation: 'Ev ravekirin têgeha \'lîrîka klaman\' nîşan dide.',
@@ -34380,7 +34380,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21327',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di xwendina muzîk de têgeha \'lîrîka klaman\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'lîrîka klaman\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'lîrîka klaman\' di vê kategoriyê de têgeheke giring e.',
@@ -34391,7 +34391,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21328',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ravekirina \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -34403,7 +34403,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21329',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lîrîka klaman\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lîrîka klaman\' bi awayekî rast temam dike?',
     answers: [
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
       'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e',
@@ -34421,7 +34421,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21330',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di qada muzîk de têgeha \'lîrîka klaman\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'lîrîka klaman\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin',
       'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e',
@@ -34439,7 +34439,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21331',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\'?',
     answers: ['erbane', 'heyran', 'lîrîka klaman', 'tembûr'],
     correctAnswer: 'lîrîka klaman',
     explanation: 'Ev ravekirin têgeha \'lîrîka klaman\' nîşan dide.',
@@ -34450,7 +34450,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21332',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di xwendina muzîk de têgeha \'lîrîka klaman\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'lîrîka klaman\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'lîrîka klaman\' di vê kategoriyê de têgeheke giring e.',
@@ -34461,7 +34461,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21333',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ravekirina \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -34473,7 +34473,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21334',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lîrîka klaman\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lîrîka klaman\' bi awayekî rast temam dike?',
     answers: [
       'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin',
       'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû',
@@ -34491,7 +34491,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21335',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di qada muzîk de têgeha \'lîrîka klaman\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'lîrîka klaman\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
@@ -34509,7 +34509,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21336',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\'?',
     answers: ['lîrîka klaman', 'bilûr', 'tembûr', 'lawik'],
     correctAnswer: 'lîrîka klaman',
     explanation: 'Ev ravekirin têgeha \'lîrîka klaman\' nîşan dide.',
@@ -34520,7 +34520,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21337',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di xwendina muzîk de têgeha \'lîrîka klaman\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'lîrîka klaman\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'lîrîka klaman\' di vê kategoriyê de têgeheke giring e.',
@@ -34531,7 +34531,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21338',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ravekirina \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -34543,7 +34543,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21339',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lîrîka klaman\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lîrîka klaman\' bi awayekî rast temam dike?',
     answers: [
       'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine',
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
@@ -34701,7 +34701,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21350',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di qada muzîk de têgeha \'Şakiro\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Şakiro\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
@@ -34719,7 +34719,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21351',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\'?',
     answers: ['Şakiro', 'lîrîka klaman', 'bilûr', 'Meryem Xan'],
     correctAnswer: 'Şakiro',
     explanation: 'Ev ravekirin têgeha \'Şakiro\' nîşan dide.',
@@ -34730,7 +34730,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21352',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di xwendina muzîk de têgeha \'Şakiro\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Şakiro\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Şakiro\' di vê kategoriyê de têgeheke giring e.',
@@ -34741,7 +34741,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21353',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ravekirina \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Şakiro\' û qada muzîk re girêdayî ye.',
@@ -34752,7 +34752,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21354',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Şakiro\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Şakiro\' bi awayekî rast temam dike?',
     answers: [
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
@@ -34770,7 +34770,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21355',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di qada muzîk de têgeha \'Şakiro\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Şakiro\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû',
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
@@ -34788,7 +34788,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21356',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\'?',
     answers: ['tembûr', 'lîrîka klaman', 'Şakiro', 'heyran'],
     correctAnswer: 'Şakiro',
     explanation: 'Ev ravekirin têgeha \'Şakiro\' nîşan dide.',
@@ -34799,7 +34799,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21357',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di xwendina muzîk de têgeha \'Şakiro\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Şakiro\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Şakiro\' di vê kategoriyê de têgeheke giring e.',
@@ -34810,7 +34810,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21358',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ravekirina \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Şakiro\' û qada muzîk re girêdayî ye.',
@@ -34821,7 +34821,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21359',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Şakiro\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Şakiro\' bi awayekî rast temam dike?',
     answers: [
       'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû',
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
@@ -34839,7 +34839,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21360',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di qada muzîk de têgeha \'Şakiro\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Şakiro\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e',
       'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin',
@@ -34857,7 +34857,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21361',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\'?',
     answers: ['Şakiro', 'tembûr', 'lawik', 'Hasan Cizrawî'],
     correctAnswer: 'Şakiro',
     explanation: 'Ev ravekirin têgeha \'Şakiro\' nîşan dide.',
@@ -34868,7 +34868,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21362',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di xwendina muzîk de têgeha \'Şakiro\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Şakiro\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Şakiro\' di vê kategoriyê de têgeheke giring e.',
@@ -34879,7 +34879,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21363',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ravekirina \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Şakiro\' û qada muzîk re girêdayî ye.',
@@ -34890,7 +34890,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21364',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Şakiro\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Şakiro\' bi awayekî rast temam dike?',
     answers: [
       'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin',
       'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine',
@@ -35046,7 +35046,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21375',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di qada muzîk de têgeha \'Hasan Cizrawî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Hasan Cizrawî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû',
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
@@ -35064,7 +35064,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21376',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\'?',
     answers: ['Hasan Cizrawî', 'heyran', 'Meryem Xan', 'lawik'],
     correctAnswer: 'Hasan Cizrawî',
     explanation: 'Ev ravekirin têgeha \'Hasan Cizrawî\' nîşan dide.',
@@ -35075,7 +35075,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21377',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di xwendina muzîk de têgeha \'Hasan Cizrawî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Hasan Cizrawî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Hasan Cizrawî\' di vê kategoriyê de têgeheke giring e.',
@@ -35086,7 +35086,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21378',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ravekirina \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -35098,7 +35098,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21379',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Hasan Cizrawî\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Hasan Cizrawî\' bi awayekî rast temam dike?',
     answers: [
       'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin',
       'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e',
@@ -35116,7 +35116,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21380',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di qada muzîk de têgeha \'Hasan Cizrawî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Hasan Cizrawî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine',
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
@@ -35134,7 +35134,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21381',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\'?',
     answers: ['tembûr', 'lawik', 'Hasan Cizrawî', 'lîrîka klaman'],
     correctAnswer: 'Hasan Cizrawî',
     explanation: 'Ev ravekirin têgeha \'Hasan Cizrawî\' nîşan dide.',
@@ -35145,7 +35145,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21382',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di xwendina muzîk de têgeha \'Hasan Cizrawî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Hasan Cizrawî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Hasan Cizrawî\' di vê kategoriyê de têgeheke giring e.',
@@ -35156,7 +35156,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21383',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ravekirina \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -35168,7 +35168,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21384',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Hasan Cizrawî\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Hasan Cizrawî\' bi awayekî rast temam dike?',
     answers: [
       'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine',
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
@@ -35186,7 +35186,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21385',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di qada muzîk de têgeha \'Hasan Cizrawî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Hasan Cizrawî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû',
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
@@ -35204,7 +35204,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21386',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\'?',
     answers: ['Hasan Cizrawî', 'erbane', 'bilûr', 'Koma Wetan'],
     correctAnswer: 'Hasan Cizrawî',
     explanation: 'Ev ravekirin têgeha \'Hasan Cizrawî\' nîşan dide.',
@@ -35215,7 +35215,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21387',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di xwendina muzîk de têgeha \'Hasan Cizrawî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Hasan Cizrawî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Hasan Cizrawî\' di vê kategoriyê de têgeheke giring e.',
@@ -35226,7 +35226,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21388',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ravekirina \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -35238,7 +35238,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21389',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Hasan Cizrawî\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Hasan Cizrawî\' bi awayekî rast temam dike?',
     answers: [
       'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan',
       'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin',
@@ -35396,7 +35396,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21400',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di qada muzîk de têgeha \'Meryem Xan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Meryem Xan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
@@ -35414,7 +35414,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21401',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\'?',
     answers: ['Meryem Xan', 'bilûr', 'lîrîka klaman', 'Şakiro'],
     correctAnswer: 'Meryem Xan',
     explanation: 'Ev ravekirin têgeha \'Meryem Xan\' nîşan dide.',
@@ -35425,7 +35425,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21402',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di xwendina muzîk de têgeha \'Meryem Xan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Meryem Xan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Meryem Xan\' di vê kategoriyê de têgeheke giring e.',
@@ -35436,7 +35436,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21403',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ravekirina \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Meryem Xan\' û qada muzîk re girêdayî ye.',
@@ -35447,7 +35447,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21404',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Meryem Xan\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Meryem Xan\' bi awayekî rast temam dike?',
     answers: [
       'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine',
       'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan',
@@ -35465,7 +35465,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21405',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di qada muzîk de têgeha \'Meryem Xan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Meryem Xan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
       'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan',
@@ -35483,7 +35483,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21406',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\'?',
     answers: ['tembûr', 'Şakiro', 'Meryem Xan', 'Koma Wetan'],
     correctAnswer: 'Meryem Xan',
     explanation: 'Ev ravekirin têgeha \'Meryem Xan\' nîşan dide.',
@@ -35494,7 +35494,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21407',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di xwendina muzîk de têgeha \'Meryem Xan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Meryem Xan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Meryem Xan\' di vê kategoriyê de têgeheke giring e.',
@@ -35505,7 +35505,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21408',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ravekirina \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Meryem Xan\' û qada muzîk re girêdayî ye.',
@@ -35516,7 +35516,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21409',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Meryem Xan\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Meryem Xan\' bi awayekî rast temam dike?',
     answers: [
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
       'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e',
@@ -35534,7 +35534,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21410',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di qada muzîk de têgeha \'Meryem Xan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Meryem Xan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan',
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
@@ -35552,7 +35552,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21411',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\'?',
     answers: ['Meryem Xan', 'tembûr', 'lawik', 'bilûr'],
     correctAnswer: 'Meryem Xan',
     explanation: 'Ev ravekirin têgeha \'Meryem Xan\' nîşan dide.',
@@ -35563,7 +35563,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21412',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di xwendina muzîk de têgeha \'Meryem Xan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Meryem Xan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Meryem Xan\' di vê kategoriyê de têgeheke giring e.',
@@ -35574,7 +35574,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21413',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ravekirina \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Meryem Xan\' û qada muzîk re girêdayî ye.',
@@ -35585,7 +35585,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21414',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Meryem Xan\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Meryem Xan\' bi awayekî rast temam dike?',
     answers: [
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
       'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin',
@@ -35741,7 +35741,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21425',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di qada muzîk de têgeha \'Koma Wetan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Koma Wetan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e',
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
@@ -35759,7 +35759,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21426',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\'?',
     answers: ['Koma Wetan', 'bilûr', 'Meryem Xan', 'Şakiro'],
     correctAnswer: 'Koma Wetan',
     explanation: 'Ev ravekirin têgeha \'Koma Wetan\' nîşan dide.',
@@ -35770,7 +35770,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21427',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di xwendina muzîk de têgeha \'Koma Wetan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Koma Wetan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Koma Wetan\' di vê kategoriyê de têgeheke giring e.',
@@ -35781,7 +35781,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21428',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ravekirina \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Koma Wetan\' û qada muzîk re girêdayî ye.',
@@ -35792,7 +35792,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21429',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Koma Wetan\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Koma Wetan\' bi awayekî rast temam dike?',
     answers: [
       'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû',
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
@@ -35810,7 +35810,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21430',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di qada muzîk de têgeha \'Koma Wetan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Koma Wetan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
@@ -35828,7 +35828,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21431',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\'?',
     answers: ['Hasan Cizrawî', 'tembûr', 'Koma Wetan', 'lawik'],
     correctAnswer: 'Koma Wetan',
     explanation: 'Ev ravekirin têgeha \'Koma Wetan\' nîşan dide.',
@@ -35839,7 +35839,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21432',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di xwendina muzîk de têgeha \'Koma Wetan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Koma Wetan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Koma Wetan\' di vê kategoriyê de têgeheke giring e.',
@@ -35850,7 +35850,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21433',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ravekirina \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Koma Wetan\' û qada muzîk re girêdayî ye.',
@@ -35861,7 +35861,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21434',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Koma Wetan\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Koma Wetan\' bi awayekî rast temam dike?',
     answers: [
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
       'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû',
@@ -35879,7 +35879,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21435',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di qada muzîk de têgeha \'Koma Wetan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'Koma Wetan\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû',
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
@@ -35897,7 +35897,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21436',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\'?',
     answers: ['Koma Wetan', 'lawik', 'bilûr', 'Hasan Cizrawî'],
     correctAnswer: 'Koma Wetan',
     explanation: 'Ev ravekirin têgeha \'Koma Wetan\' nîşan dide.',
@@ -35908,7 +35908,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21437',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di xwendina muzîk de têgeha \'Koma Wetan\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'Koma Wetan\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Koma Wetan\' di vê kategoriyê de têgeheke giring e.',
@@ -35919,7 +35919,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21438',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ravekirina \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'Koma Wetan\' û qada muzîk re girêdayî ye.',
@@ -35930,7 +35930,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21439',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Koma Wetan\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'Koma Wetan\' bi awayekî rast temam dike?',
     answers: [
       'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine',
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
@@ -36086,7 +36086,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21450',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di qada muzîk de têgeha \'lawik\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'lawik\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
       'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine',
@@ -36104,7 +36104,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21451',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\'?',
     answers: ['lawik', 'Meryem Xan', 'bilûr', 'erbane'],
     correctAnswer: 'lawik',
     explanation: 'Ev ravekirin têgeha \'lawik\' nîşan dide.',
@@ -36115,7 +36115,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21452',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di xwendina muzîk de têgeha \'lawik\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'lawik\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'lawik\' di vê kategoriyê de têgeheke giring e.',
@@ -36126,7 +36126,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21453',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ravekirina \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'lawik\' û qada muzîk re girêdayî ye.',
@@ -36137,7 +36137,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21454',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lawik\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lawik\' bi awayekî rast temam dike?',
     answers: [
       'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine',
       'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e',
@@ -36155,7 +36155,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21455',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di qada muzîk de têgeha \'lawik\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'lawik\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
@@ -36173,7 +36173,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21456',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\'?',
     answers: ['lîrîka klaman', 'Meryem Xan', 'lawik', 'bilûr'],
     correctAnswer: 'lawik',
     explanation: 'Ev ravekirin têgeha \'lawik\' nîşan dide.',
@@ -36184,7 +36184,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21457',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di xwendina muzîk de têgeha \'lawik\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'lawik\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'lawik\' di vê kategoriyê de têgeheke giring e.',
@@ -36195,7 +36195,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21458',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ravekirina \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'lawik\' û qada muzîk re girêdayî ye.',
@@ -36206,7 +36206,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21459',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lawik\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lawik\' bi awayekî rast temam dike?',
     answers: [
       'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin',
       'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin',
@@ -36224,7 +36224,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21460',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di qada muzîk de têgeha \'lawik\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'lawik\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
       'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine',
@@ -36242,7 +36242,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21461',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\'?',
     answers: ['lawik', 'Hasan Cizrawî', 'bilûr', 'tembûr'],
     correctAnswer: 'lawik',
     explanation: 'Ev ravekirin têgeha \'lawik\' nîşan dide.',
@@ -36253,7 +36253,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21462',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di xwendina muzîk de têgeha \'lawik\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'lawik\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'lawik\' di vê kategoriyê de têgeheke giring e.',
@@ -36264,7 +36264,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21463',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ravekirina \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'lawik\' û qada muzîk re girêdayî ye.',
@@ -36275,7 +36275,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21464',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lawik\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'lawik\' bi awayekî rast temam dike?',
     answers: [
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
       'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan',
@@ -36431,7 +36431,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21475',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di qada muzîk de têgeha \'heyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'heyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan',
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
@@ -36449,7 +36449,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21476',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\'?',
     answers: ['heyran', 'Şakiro', 'tembûr', 'Hasan Cizrawî'],
     correctAnswer: 'heyran',
     explanation: 'Ev ravekirin têgeha \'heyran\' nîşan dide.',
@@ -36460,7 +36460,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21477',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, di xwendina muzîk de têgeha \'heyran\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'heyran\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'heyran\' di vê kategoriyê de têgeheke giring e.',
@@ -36471,7 +36471,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21478',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ravekirina \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'heyran\' û qada muzîk re girêdayî ye.',
@@ -36482,7 +36482,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21479',
     category: 'Muzîk',
     prompt:
-        'Di asta destpêkê, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'heyran\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'heyran\' bi awayekî rast temam dike?',
     answers: [
       'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin',
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
@@ -36500,7 +36500,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21480',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di qada muzîk de têgeha \'heyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'heyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin',
       'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû',
@@ -36518,7 +36518,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21481',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\'?',
     answers: ['Meryem Xan', 'bilûr', 'heyran', 'Hasan Cizrawî'],
     correctAnswer: 'heyran',
     explanation: 'Ev ravekirin têgeha \'heyran\' nîşan dide.',
@@ -36529,7 +36529,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21482',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, di xwendina muzîk de têgeha \'heyran\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'heyran\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'heyran\' di vê kategoriyê de têgeheke giring e.',
@@ -36540,7 +36540,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21483',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ravekirina \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'heyran\' û qada muzîk re girêdayî ye.',
@@ -36551,7 +36551,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21484',
     category: 'Muzîk',
     prompt:
-        'Di asta navîn de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'heyran\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'heyran\' bi awayekî rast temam dike?',
     answers: [
       'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin',
       'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye',
@@ -36569,7 +36569,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21485',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di qada muzîk de têgeha \'heyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada muzîk de têgeha \'heyran\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'dengbêjê mezin ê ku wekî \'Şahê Dengbêjan\' tê naskirin û xwedî dengekî bêhempa bû',
       'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e',
@@ -36587,7 +36587,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21486',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\'?',
+        'Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\'?',
     answers: ['heyran', 'Meryem Xan', 'Koma Wetan', 'Hasan Cizrawî'],
     correctAnswer: 'heyran',
     explanation: 'Ev ravekirin têgeha \'heyran\' nîşan dide.',
@@ -36598,7 +36598,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21487',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, di xwendina muzîk de têgeha \'heyran\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina muzîk de têgeha \'heyran\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'heyran\' di vê kategoriyê de têgeheke giring e.',
@@ -36609,7 +36609,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21488',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ravekirina \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\' bi tevahî ji qada muzîk dûr e.',
+        'Ravekirina \'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin\' bi tevahî ji qada muzîk dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'heyran\' û qada muzîk re girêdayî ye.',
@@ -36620,7 +36620,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21489',
     category: 'Muzîk',
     prompt:
-        'Di asta pêşketî de, ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'heyran\' bi awayekî rast temam dike?',
+        'Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \'heyran\' bi awayekî rast temam dike?',
     answers: [
       'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin',
       'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê',
@@ -36776,7 +36776,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21500',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di qada siyaset de têgeha \'Radikal demokrasi\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'Radikal demokrasi\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
@@ -36794,7 +36794,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21501',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\'?',
     answers: [
       'ademi-merkeziyet',
       'parastina rewa',
@@ -36810,7 +36810,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21502',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di xwendina siyaset de têgeha \'Radikal demokrasi\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'Radikal demokrasi\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Radikal demokrasi\' di vê kategoriyê de têgeheke giring e.',
@@ -36821,7 +36821,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21503',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ravekirina \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -36833,7 +36833,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21504',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'Radikal demokrasi\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'Radikal demokrasi\' bi awayekî rast temam dike?',
     answers: [
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
       'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve',
@@ -36851,7 +36851,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21505',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di qada siyaset de têgeha \'Radikal demokrasi\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'Radikal demokrasi\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
@@ -36869,7 +36869,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21506',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\'?',
     answers: [
       'Radikal demokrasi',
       'ademi-merkeziyet',
@@ -36885,7 +36885,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21507',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di xwendina siyaset de têgeha \'Radikal demokrasi\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'Radikal demokrasi\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Radikal demokrasi\' di vê kategoriyê de têgeheke giring e.',
@@ -36896,7 +36896,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21508',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ravekirina \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -36908,7 +36908,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21509',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'Radikal demokrasi\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'Radikal demokrasi\' bi awayekî rast temam dike?',
     answers: [
       'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike',
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
@@ -36926,7 +36926,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21510',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di qada siyaset de têgeha \'Radikal demokrasi\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'Radikal demokrasi\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
       'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve',
@@ -36944,7 +36944,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21511',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\'?',
     answers: [
       'ademi-merkeziyet',
       'demokrasiya rasterast',
@@ -36960,7 +36960,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21512',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di xwendina siyaset de têgeha \'Radikal demokrasi\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'Radikal demokrasi\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Radikal demokrasi\' di vê kategoriyê de têgeheke giring e.',
@@ -36971,7 +36971,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21513',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ravekirina \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -36983,7 +36983,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21514',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'Radikal demokrasi\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'Radikal demokrasi\' bi awayekî rast temam dike?',
     answers: [
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
@@ -37151,7 +37151,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21525',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di qada siyaset de têgeha \'eşseroktî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'eşseroktî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
       'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de',
@@ -37169,7 +37169,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21526',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\'?',
     answers: [
       'Radikal demokrasi',
       'hevpeymaniya demokratîk',
@@ -37185,7 +37185,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21527',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di xwendina siyaset de têgeha \'eşseroktî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'eşseroktî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'eşseroktî\' di vê kategoriyê de têgeheke giring e.',
@@ -37196,7 +37196,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21528',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ravekirina \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'eşseroktî\' û qada siyaset re girêdayî ye.',
@@ -37207,7 +37207,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21529',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'eşseroktî\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'eşseroktî\' bi awayekî rast temam dike?',
     answers: [
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
@@ -37225,7 +37225,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21530',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di qada siyaset de têgeha \'eşseroktî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'eşseroktî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
@@ -37243,7 +37243,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21531',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\'?',
     answers: [
       'eşseroktî',
       'hevpeymaniya demokratîk',
@@ -37259,7 +37259,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21532',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di xwendina siyaset de têgeha \'eşseroktî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'eşseroktî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'eşseroktî\' di vê kategoriyê de têgeheke giring e.',
@@ -37270,7 +37270,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21533',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ravekirina \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'eşseroktî\' û qada siyaset re girêdayî ye.',
@@ -37281,7 +37281,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21534',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'eşseroktî\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'eşseroktî\' bi awayekî rast temam dike?',
     answers: [
       'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike',
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
@@ -37299,7 +37299,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21535',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di qada siyaset de têgeha \'eşseroktî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'eşseroktî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
@@ -37317,7 +37317,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21536',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\'?',
     answers: ['komûn û meclîs', 'peymana civakî', 'eşseroktî', 'pirrengî'],
     correctAnswer: 'eşseroktî',
     explanation: 'Ev ravekirin têgeha \'eşseroktî\' nîşan dide.',
@@ -37328,7 +37328,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21537',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di xwendina siyaset de têgeha \'eşseroktî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'eşseroktî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'eşseroktî\' di vê kategoriyê de têgeheke giring e.',
@@ -37339,7 +37339,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21538',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ravekirina \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'eşseroktî\' û qada siyaset re girêdayî ye.',
@@ -37350,7 +37350,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21539',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'eşseroktî\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'eşseroktî\' bi awayekî rast temam dike?',
     answers: [
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
       'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan',
@@ -37516,7 +37516,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21550',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di qada siyaset de têgeha \'komûn û meclîs\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'komûn û meclîs\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan',
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
@@ -37534,7 +37534,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21551',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\'?',
     answers: [
       'demokrasiya rasterast',
       'hevpeymaniya demokratîk',
@@ -37550,7 +37550,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21552',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di xwendina siyaset de têgeha \'komûn û meclîs\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'komûn û meclîs\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'komûn û meclîs\' di vê kategoriyê de têgeheke giring e.',
@@ -37561,7 +37561,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21553',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ravekirina \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -37573,7 +37573,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21554',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'komûn û meclîs\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'komûn û meclîs\' bi awayekî rast temam dike?',
     answers: [
       'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan',
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
@@ -37591,7 +37591,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21555',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di qada siyaset de têgeha \'komûn û meclîs\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'komûn û meclîs\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
@@ -37609,7 +37609,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21556',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\'?',
     answers: [
       'komûn û meclîs',
       'xweseriya demokratîk',
@@ -37625,7 +37625,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21557',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di xwendina siyaset de têgeha \'komûn û meclîs\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'komûn û meclîs\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'komûn û meclîs\' di vê kategoriyê de têgeheke giring e.',
@@ -37636,7 +37636,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21558',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ravekirina \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -37648,7 +37648,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21559',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'komûn û meclîs\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'komûn û meclîs\' bi awayekî rast temam dike?',
     answers: [
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
       'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike',
@@ -37666,7 +37666,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21560',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di qada siyaset de têgeha \'komûn û meclîs\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'komûn û meclîs\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan',
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
@@ -37684,7 +37684,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21561',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\'?',
     answers: [
       'peymana civakî',
       'parastina rewa',
@@ -37700,7 +37700,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21562',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di xwendina siyaset de têgeha \'komûn û meclîs\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'komûn û meclîs\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'komûn û meclîs\' di vê kategoriyê de têgeheke giring e.',
@@ -37711,7 +37711,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21563',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ravekirina \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -37723,7 +37723,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21564',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'komûn û meclîs\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'komûn û meclîs\' bi awayekî rast temam dike?',
     answers: [
       'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan',
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
@@ -37891,7 +37891,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21575',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di qada siyaset de têgeha \'peymana civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'peymana civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike',
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
@@ -37909,7 +37909,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21576',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\'?',
     answers: ['pirrengî', 'komûn û meclîs', 'peymana civakî', 'parastina rewa'],
     correctAnswer: 'peymana civakî',
     explanation: 'Ev ravekirin têgeha \'peymana civakî\' nîşan dide.',
@@ -37920,7 +37920,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21577',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di xwendina siyaset de têgeha \'peymana civakî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'peymana civakî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'peymana civakî\' di vê kategoriyê de têgeheke giring e.',
@@ -37931,7 +37931,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21578',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ravekirina \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -37943,7 +37943,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21579',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'peymana civakî\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'peymana civakî\' bi awayekî rast temam dike?',
     answers: [
       'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike',
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
@@ -37961,7 +37961,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21580',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di qada siyaset de têgeha \'peymana civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'peymana civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
@@ -37979,7 +37979,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21581',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\'?',
     answers: [
       'peymana civakî',
       'xweseriya demokratîk',
@@ -37995,7 +37995,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21582',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di xwendina siyaset de têgeha \'peymana civakî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'peymana civakî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'peymana civakî\' di vê kategoriyê de têgeheke giring e.',
@@ -38006,7 +38006,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21583',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ravekirina \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -38018,7 +38018,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21584',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'peymana civakî\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'peymana civakî\' bi awayekî rast temam dike?',
     answers: [
       'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide',
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
@@ -38036,7 +38036,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21585',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di qada siyaset de têgeha \'peymana civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'peymana civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike',
       'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de',
@@ -38054,7 +38054,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21586',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\'?',
     answers: [
       'xweseriya demokratîk',
       'parastina rewa',
@@ -38070,7 +38070,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21587',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di xwendina siyaset de têgeha \'peymana civakî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'peymana civakî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'peymana civakî\' di vê kategoriyê de têgeheke giring e.',
@@ -38081,7 +38081,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21588',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ravekirina \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -38093,7 +38093,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21589',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'peymana civakî\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'peymana civakî\' bi awayekî rast temam dike?',
     answers: [
       'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike',
       'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide',
@@ -38261,7 +38261,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21600',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di qada siyaset de têgeha \'ademi-merkeziyet\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'ademi-merkeziyet\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve',
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
@@ -38279,7 +38279,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21601',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\'?',
     answers: [
       'xweseriya demokratîk',
       'Radikal demokrasi',
@@ -38295,7 +38295,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21602',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di xwendina siyaset de têgeha \'ademi-merkeziyet\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'ademi-merkeziyet\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'ademi-merkeziyet\' di vê kategoriyê de têgeheke giring e.',
@@ -38306,7 +38306,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21603',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ravekirina \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -38318,7 +38318,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21604',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'ademi-merkeziyet\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'ademi-merkeziyet\' bi awayekî rast temam dike?',
     answers: [
       'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve',
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
@@ -38336,7 +38336,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21605',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di qada siyaset de têgeha \'ademi-merkeziyet\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'ademi-merkeziyet\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan',
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
@@ -38354,7 +38354,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21606',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\'?',
     answers: [
       'ademi-merkeziyet',
       'demokrasiya rasterast',
@@ -38370,7 +38370,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21607',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di xwendina siyaset de têgeha \'ademi-merkeziyet\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'ademi-merkeziyet\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'ademi-merkeziyet\' di vê kategoriyê de têgeheke giring e.',
@@ -38381,7 +38381,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21608',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ravekirina \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -38393,7 +38393,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21609',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'ademi-merkeziyet\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'ademi-merkeziyet\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de',
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
@@ -38411,7 +38411,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21610',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di qada siyaset de têgeha \'ademi-merkeziyet\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'ademi-merkeziyet\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve',
       'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide',
@@ -38429,7 +38429,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21611',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\'?',
     answers: [
       'pirrengî',
       'demokrasiya rasterast',
@@ -38445,7 +38445,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21612',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di xwendina siyaset de têgeha \'ademi-merkeziyet\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'ademi-merkeziyet\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'ademi-merkeziyet\' di vê kategoriyê de têgeheke giring e.',
@@ -38456,7 +38456,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21613',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ravekirina \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -38468,7 +38468,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21614',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'ademi-merkeziyet\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'ademi-merkeziyet\' bi awayekî rast temam dike?',
     answers: [
       'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve',
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
@@ -38636,7 +38636,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21625',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di qada siyaset de têgeha \'parastina rewa\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'parastina rewa\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
@@ -38653,7 +38653,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21626',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\'?',
     answers: [
       'komûn û meclîs',
       'xweseriya demokratîk',
@@ -38669,7 +38669,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21627',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di xwendina siyaset de têgeha \'parastina rewa\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'parastina rewa\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'parastina rewa\' di vê kategoriyê de têgeheke giring e.',
@@ -38680,7 +38680,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21628',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ravekirina \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -38692,7 +38692,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21629',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'parastina rewa\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'parastina rewa\' bi awayekî rast temam dike?',
     answers: [
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
       'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide',
@@ -38709,7 +38709,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21630',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di qada siyaset de têgeha \'parastina rewa\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'parastina rewa\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike',
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
@@ -38726,7 +38726,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21631',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\'?',
     answers: [
       'parastina rewa',
       'demokrasiya rasterast',
@@ -38742,7 +38742,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21632',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di xwendina siyaset de têgeha \'parastina rewa\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'parastina rewa\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'parastina rewa\' di vê kategoriyê de têgeheke giring e.',
@@ -38753,7 +38753,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21633',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ravekirina \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -38765,7 +38765,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21634',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'parastina rewa\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'parastina rewa\' bi awayekî rast temam dike?',
     answers: [
       'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan',
       'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide',
@@ -38782,7 +38782,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21635',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di qada siyaset de têgeha \'parastina rewa\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'parastina rewa\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
@@ -38799,7 +38799,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21636',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\'?',
     answers: [
       'peymana civakî',
       'xweseriya demokratîk',
@@ -38815,7 +38815,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21637',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di xwendina siyaset de têgeha \'parastina rewa\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'parastina rewa\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'parastina rewa\' di vê kategoriyê de têgeheke giring e.',
@@ -38826,7 +38826,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21638',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ravekirina \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -38838,7 +38838,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21639',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'parastina rewa\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'parastina rewa\' bi awayekî rast temam dike?',
     answers: [
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
@@ -39001,7 +39001,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21650',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di qada siyaset de têgeha \'pirrengî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'pirrengî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
@@ -39019,7 +39019,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21651',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\'?',
     answers: [
       'demokrasiya rasterast',
       'parastina rewa',
@@ -39035,7 +39035,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21652',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di xwendina siyaset de têgeha \'pirrengî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'pirrengî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'pirrengî\' di vê kategoriyê de têgeheke giring e.',
@@ -39046,7 +39046,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21653',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ravekirina \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'pirrengî\' û qada siyaset re girêdayî ye.',
@@ -39057,7 +39057,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21654',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'pirrengî\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'pirrengî\' bi awayekî rast temam dike?',
     answers: [
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
       'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve',
@@ -39075,7 +39075,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21655',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di qada siyaset de têgeha \'pirrengî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'pirrengî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide',
       'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve',
@@ -39093,7 +39093,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21656',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\'?',
     answers: [
       'pirrengî',
       'Radikal demokrasi',
@@ -39109,7 +39109,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21657',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di xwendina siyaset de têgeha \'pirrengî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'pirrengî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'pirrengî\' di vê kategoriyê de têgeheke giring e.',
@@ -39120,7 +39120,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21658',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ravekirina \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'pirrengî\' û qada siyaset re girêdayî ye.',
@@ -39131,7 +39131,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21659',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'pirrengî\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'pirrengî\' bi awayekî rast temam dike?',
     answers: [
       'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan',
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
@@ -39149,7 +39149,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21660',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di qada siyaset de têgeha \'pirrengî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'pirrengî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
       'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike',
@@ -39167,7 +39167,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21661',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\'?',
     answers: [
       'xweseriya demokratîk',
       'ademi-merkeziyet',
@@ -39183,7 +39183,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21662',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di xwendina siyaset de têgeha \'pirrengî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'pirrengî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'pirrengî\' di vê kategoriyê de têgeheke giring e.',
@@ -39194,7 +39194,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21663',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ravekirina \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation: 'Ev ravekirin bi \'pirrengî\' û qada siyaset re girêdayî ye.',
@@ -39205,7 +39205,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21664',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'pirrengî\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'pirrengî\' bi awayekî rast temam dike?',
     answers: [
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
@@ -39371,7 +39371,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21675',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di qada siyaset de têgeha \'demokrasiya rasterast\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'demokrasiya rasterast\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide',
       'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan',
@@ -39388,7 +39388,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21676',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\'?',
     answers: [
       'komûn û meclîs',
       'xweseriya demokratîk',
@@ -39404,7 +39404,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21677',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di xwendina siyaset de têgeha \'demokrasiya rasterast\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'demokrasiya rasterast\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -39416,7 +39416,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21678',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ravekirina \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -39428,7 +39428,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21679',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'demokrasiya rasterast\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'demokrasiya rasterast\' bi awayekî rast temam dike?',
     answers: [
       'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide',
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
@@ -39445,7 +39445,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21680',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di qada siyaset de têgeha \'demokrasiya rasterast\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'demokrasiya rasterast\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve',
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
@@ -39462,7 +39462,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21681',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\'?',
     answers: [
       'demokrasiya rasterast',
       'pirrengî',
@@ -39478,7 +39478,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21682',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di xwendina siyaset de têgeha \'demokrasiya rasterast\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'demokrasiya rasterast\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -39490,7 +39490,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21683',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ravekirina \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -39502,7 +39502,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21684',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'demokrasiya rasterast\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'demokrasiya rasterast\' bi awayekî rast temam dike?',
     answers: [
       'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan',
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
@@ -39519,7 +39519,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21685',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di qada siyaset de têgeha \'demokrasiya rasterast\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'demokrasiya rasterast\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide',
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
@@ -39536,7 +39536,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21686',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\'?',
     answers: [
       'komûn û meclîs',
       'xweseriya demokratîk',
@@ -39552,7 +39552,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21687',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di xwendina siyaset de têgeha \'demokrasiya rasterast\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'demokrasiya rasterast\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -39564,7 +39564,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21688',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ravekirina \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -39576,7 +39576,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21689',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'demokrasiya rasterast\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'demokrasiya rasterast\' bi awayekî rast temam dike?',
     answers: [
       'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide',
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
@@ -39741,7 +39741,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21700',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di qada siyaset de têgeha \'xweseriya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'xweseriya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
       'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de',
@@ -39759,7 +39759,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21701',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\'?',
     answers: [
       'demokrasiya rasterast',
       'Radikal demokrasi',
@@ -39775,7 +39775,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21702',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di xwendina siyaset de têgeha \'xweseriya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'xweseriya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -39787,7 +39787,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21703',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ravekirina \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -39799,7 +39799,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21704',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'xweseriya demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'xweseriya demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
@@ -39817,7 +39817,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21705',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di qada siyaset de têgeha \'xweseriya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'xweseriya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
       'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de',
@@ -39835,7 +39835,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21706',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\'?',
     answers: [
       'xweseriya demokratîk',
       'peymana civakî',
@@ -39851,7 +39851,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21707',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di xwendina siyaset de têgeha \'xweseriya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'xweseriya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -39863,7 +39863,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21708',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ravekirina \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -39875,7 +39875,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21709',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'xweseriya demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'xweseriya demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
@@ -39893,7 +39893,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21710',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di qada siyaset de têgeha \'xweseriya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'xweseriya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
@@ -39911,7 +39911,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21711',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\'?',
     answers: [
       'ademi-merkeziyet',
       'peymana civakî',
@@ -39927,7 +39927,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21712',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di xwendina siyaset de têgeha \'xweseriya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'xweseriya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -39939,7 +39939,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21713',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ravekirina \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -39951,7 +39951,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21714',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'xweseriya demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'xweseriya demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
@@ -40121,7 +40121,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21725',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di qada siyaset de têgeha \'hevpeymaniya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'hevpeymaniya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de',
       'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî',
@@ -40139,7 +40139,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21726',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\'?',
     answers: [
       'xweseriya demokratîk',
       'parastina rewa',
@@ -40155,7 +40155,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21727',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, di xwendina siyaset de têgeha \'hevpeymaniya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'hevpeymaniya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -40167,7 +40167,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21728',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ravekirina \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -40179,7 +40179,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21729',
     category: 'Siyaset',
     prompt:
-        'Di asta destpêkê, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'hevpeymaniya demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'hevpeymaniya demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de',
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
@@ -40197,7 +40197,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21730',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di qada siyaset de têgeha \'hevpeymaniya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'hevpeymaniya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve',
       'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze',
@@ -40215,7 +40215,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21731',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\'?',
     answers: [
       'hevpeymaniya demokratîk',
       'ademi-merkeziyet',
@@ -40231,7 +40231,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21732',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, di xwendina siyaset de têgeha \'hevpeymaniya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'hevpeymaniya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -40243,7 +40243,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21733',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ravekirina \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -40255,7 +40255,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21734',
     category: 'Siyaset',
     prompt:
-        'Di asta navîn de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'hevpeymaniya demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'hevpeymaniya demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
       'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin',
@@ -40273,7 +40273,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21735',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di qada siyaset de têgeha \'hevpeymaniya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada siyaset de têgeha \'hevpeymaniya demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de',
       'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin',
@@ -40291,7 +40291,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21736',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\'?',
+        'Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\'?',
     answers: [
       'peymana civakî',
       'pirrengî',
@@ -40307,7 +40307,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21737',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, di xwendina siyaset de têgeha \'hevpeymaniya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina siyaset de têgeha \'hevpeymaniya demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -40319,7 +40319,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21738',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ravekirina \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\' bi tevahî ji qada siyaset dûr e.',
+        'Ravekirina \'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de\' bi tevahî ji qada siyaset dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -40331,7 +40331,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21739',
     category: 'Siyaset',
     prompt:
-        'Di asta pêşketî de, ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'hevpeymaniya demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa siyaset kîjan vebijark ravekirina têgeha \'hevpeymaniya demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de',
       'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike',
@@ -40501,7 +40501,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21750',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di qada paradigma de têgeha \'Konfederalîzma Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Konfederalîzma Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê',
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
@@ -40519,7 +40519,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21751',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\'?',
     answers: [
       'Konfederalîzma Demokratîk',
       'civaka exlaqî-polîtîk',
@@ -40536,7 +40536,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21752',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di xwendina paradigma de têgeha \'Konfederalîzma Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Konfederalîzma Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -40548,7 +40548,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21753',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ravekirina \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -40560,7 +40560,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21754',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Konfederalîzma Demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Konfederalîzma Demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
@@ -40578,7 +40578,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21755',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di qada paradigma de têgeha \'Konfederalîzma Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Konfederalîzma Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê',
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
@@ -40596,7 +40596,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21756',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\'?',
     answers: [
       'aboriya komûnal',
       'Ekolojiya Civakî',
@@ -40613,7 +40613,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21757',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di xwendina paradigma de têgeha \'Konfederalîzma Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Konfederalîzma Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -40625,7 +40625,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21758',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ravekirina \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -40637,7 +40637,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21759',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Konfederalîzma Demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Konfederalîzma Demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê',
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
@@ -40655,7 +40655,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21760',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di qada paradigma de têgeha \'Konfederalîzma Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Konfederalîzma Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike',
       'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike',
@@ -40673,7 +40673,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21761',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\'?',
     answers: [
       'Konfederalîzma Demokratîk',
       'hiyerarşiya civakî',
@@ -40690,7 +40690,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21762',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di xwendina paradigma de têgeha \'Konfederalîzma Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Konfederalîzma Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -40702,7 +40702,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21763',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ravekirina \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -40714,7 +40714,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21764',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Konfederalîzma Demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Konfederalîzma Demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
       'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de',
@@ -40886,7 +40886,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21775',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di qada paradigma de têgeha \'Moderniteya Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Moderniteya Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de',
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
@@ -40903,7 +40903,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21776',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\'?',
     answers: [
       'Moderniteya Demokratîk',
       'Jineolojî',
@@ -40919,7 +40919,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21777',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di xwendina paradigma de têgeha \'Moderniteya Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Moderniteya Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -40931,7 +40931,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21778',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ravekirina \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -40943,7 +40943,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21779',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Moderniteya Demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Moderniteya Demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike',
       'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de',
@@ -40960,7 +40960,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21780',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di qada paradigma de têgeha \'Moderniteya Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Moderniteya Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
@@ -40977,7 +40977,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21781',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\'?',
     answers: [
       'civaka exlaqî-polîtîk',
       'Jineolojî',
@@ -40993,7 +40993,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21782',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di xwendina paradigma de têgeha \'Moderniteya Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Moderniteya Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -41005,7 +41005,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21783',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ravekirina \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -41017,7 +41017,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21784',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Moderniteya Demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Moderniteya Demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
@@ -41034,7 +41034,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21785',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di qada paradigma de têgeha \'Moderniteya Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Moderniteya Demokratîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
       'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de',
@@ -41051,7 +41051,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21786',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\'?',
     answers: [
       'Moderniteya Demokratîk',
       'azadiya zayendî',
@@ -41067,7 +41067,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21787',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di xwendina paradigma de têgeha \'Moderniteya Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Moderniteya Demokratîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -41079,7 +41079,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21788',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ravekirina \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -41091,7 +41091,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21789',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Moderniteya Demokratîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Moderniteya Demokratîk\' bi awayekî rast temam dike?',
     answers: [
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
@@ -41256,7 +41256,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21800',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di qada paradigma de têgeha \'Jineolojî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Jineolojî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
@@ -41274,7 +41274,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21801',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\'?',
     answers: [
       'Jineolojî',
       'Moderniteya Demokratîk',
@@ -41290,7 +41290,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21802',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di xwendina paradigma de têgeha \'Jineolojî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Jineolojî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Jineolojî\' di vê kategoriyê de têgeheke giring e.',
@@ -41301,7 +41301,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21803',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ravekirina \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -41313,7 +41313,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21804',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Jineolojî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Jineolojî\' bi awayekî rast temam dike?',
     answers: [
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
       'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê',
@@ -41331,7 +41331,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21805',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di qada paradigma de têgeha \'Jineolojî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Jineolojî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
@@ -41349,7 +41349,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21806',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\'?',
     answers: [
       'azadiya zayendî',
       'zanistiya azad',
@@ -41365,7 +41365,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21807',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di xwendina paradigma de têgeha \'Jineolojî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Jineolojî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Jineolojî\' di vê kategoriyê de têgeheke giring e.',
@@ -41376,7 +41376,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21808',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ravekirina \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -41388,7 +41388,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21809',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Jineolojî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Jineolojî\' bi awayekî rast temam dike?',
     answers: [
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
       'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê',
@@ -41406,7 +41406,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21810',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di qada paradigma de têgeha \'Jineolojî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Jineolojî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
@@ -41424,7 +41424,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21811',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\'?',
     answers: [
       'Jineolojî',
       'civaka exlaqî-polîtîk',
@@ -41440,7 +41440,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21812',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di xwendina paradigma de têgeha \'Jineolojî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Jineolojî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Jineolojî\' di vê kategoriyê de têgeheke giring e.',
@@ -41451,7 +41451,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21813',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ravekirina \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -41463,7 +41463,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21814',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Jineolojî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Jineolojî\' bi awayekî rast temam dike?',
     answers: [
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
       'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike',
@@ -41631,7 +41631,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21825',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di qada paradigma de têgeha \'Ekolojiya Civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Ekolojiya Civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
@@ -41649,7 +41649,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21826',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\'?',
     answers: [
       'Ekolojiya Civakî',
       'rexneya patriyarkayê',
@@ -41665,7 +41665,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21827',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di xwendina paradigma de têgeha \'Ekolojiya Civakî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Ekolojiya Civakî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Ekolojiya Civakî\' di vê kategoriyê de têgeheke giring e.',
@@ -41676,7 +41676,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21828',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ravekirina \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -41688,7 +41688,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21829',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Ekolojiya Civakî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Ekolojiya Civakî\' bi awayekî rast temam dike?',
     answers: [
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
@@ -41706,7 +41706,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21830',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di qada paradigma de têgeha \'Ekolojiya Civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Ekolojiya Civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
@@ -41724,7 +41724,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21831',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\'?',
     answers: [
       'azadiya zayendî',
       'hiyerarşiya civakî',
@@ -41740,7 +41740,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21832',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di xwendina paradigma de têgeha \'Ekolojiya Civakî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Ekolojiya Civakî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Ekolojiya Civakî\' di vê kategoriyê de têgeheke giring e.',
@@ -41751,7 +41751,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21833',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ravekirina \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -41763,7 +41763,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21834',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Ekolojiya Civakî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Ekolojiya Civakî\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
@@ -41781,7 +41781,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21835',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di qada paradigma de têgeha \'Ekolojiya Civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'Ekolojiya Civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike',
       'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike',
@@ -41799,7 +41799,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21836',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\'?',
     answers: [
       'Ekolojiya Civakî',
       'azadiya zayendî',
@@ -41815,7 +41815,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21837',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di xwendina paradigma de têgeha \'Ekolojiya Civakî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'Ekolojiya Civakî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'Ekolojiya Civakî\' di vê kategoriyê de têgeheke giring e.',
@@ -41826,7 +41826,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21838',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ravekirina \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -41838,7 +41838,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21839',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Ekolojiya Civakî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'Ekolojiya Civakî\' bi awayekî rast temam dike?',
     answers: [
       'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê',
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
@@ -42006,7 +42006,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21850',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di qada paradigma de têgeha \'aboriya komûnal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'aboriya komûnal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
       'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike',
@@ -42024,7 +42024,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21851',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\'?',
     answers: [
       'aboriya komûnal',
       'Konfederalîzma Demokratîk',
@@ -42040,7 +42040,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21852',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di xwendina paradigma de têgeha \'aboriya komûnal\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'aboriya komûnal\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'aboriya komûnal\' di vê kategoriyê de têgeheke giring e.',
@@ -42051,7 +42051,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21853',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ravekirina \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -42063,7 +42063,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21854',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'aboriya komûnal\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'aboriya komûnal\' bi awayekî rast temam dike?',
     answers: [
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
@@ -42081,7 +42081,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21855',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di qada paradigma de têgeha \'aboriya komûnal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'aboriya komûnal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
       'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê',
@@ -42099,7 +42099,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21856',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\'?',
     answers: [
       'Moderniteya Demokratîk',
       'hiyerarşiya civakî',
@@ -42115,7 +42115,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21857',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di xwendina paradigma de têgeha \'aboriya komûnal\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'aboriya komûnal\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'aboriya komûnal\' di vê kategoriyê de têgeheke giring e.',
@@ -42126,7 +42126,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21858',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ravekirina \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -42138,7 +42138,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21859',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'aboriya komûnal\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'aboriya komûnal\' bi awayekî rast temam dike?',
     answers: [
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
@@ -42156,7 +42156,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21860',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di qada paradigma de têgeha \'aboriya komûnal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'aboriya komûnal\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
       'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê',
@@ -42174,7 +42174,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21861',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\'?',
     answers: [
       'aboriya komûnal',
       'Konfederalîzma Demokratîk',
@@ -42190,7 +42190,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21862',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di xwendina paradigma de têgeha \'aboriya komûnal\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'aboriya komûnal\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'aboriya komûnal\' di vê kategoriyê de têgeheke giring e.',
@@ -42201,7 +42201,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21863',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ravekirina \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -42213,7 +42213,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21864',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'aboriya komûnal\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'aboriya komûnal\' bi awayekî rast temam dike?',
     answers: [
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
       'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê',
@@ -42381,7 +42381,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21875',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di qada paradigma de têgeha \'civaka exlaqî-polîtîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'civaka exlaqî-polîtîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
       'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê',
@@ -42399,7 +42399,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21876',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\'?',
     answers: [
       'civaka exlaqî-polîtîk',
       'Ekolojiya Civakî',
@@ -42415,7 +42415,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21877',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di xwendina paradigma de têgeha \'civaka exlaqî-polîtîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'civaka exlaqî-polîtîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -42427,7 +42427,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21878',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ravekirina \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -42439,7 +42439,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21879',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'civaka exlaqî-polîtîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'civaka exlaqî-polîtîk\' bi awayekî rast temam dike?',
     answers: [
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
       'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê',
@@ -42457,7 +42457,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21880',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di qada paradigma de têgeha \'civaka exlaqî-polîtîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'civaka exlaqî-polîtîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
       'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê',
@@ -42475,7 +42475,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21881',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\'?',
     answers: [
       'Ekolojiya Civakî',
       'Moderniteya Demokratîk',
@@ -42491,7 +42491,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21882',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di xwendina paradigma de têgeha \'civaka exlaqî-polîtîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'civaka exlaqî-polîtîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -42503,7 +42503,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21883',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ravekirina \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -42515,7 +42515,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21884',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'civaka exlaqî-polîtîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'civaka exlaqî-polîtîk\' bi awayekî rast temam dike?',
     answers: [
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
@@ -42533,7 +42533,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21885',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di qada paradigma de têgeha \'civaka exlaqî-polîtîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'civaka exlaqî-polîtîk\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de',
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
@@ -42551,7 +42551,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21886',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\'?',
     answers: [
       'civaka exlaqî-polîtîk',
       'rexneya patriyarkayê',
@@ -42567,7 +42567,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21887',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di xwendina paradigma de têgeha \'civaka exlaqî-polîtîk\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'civaka exlaqî-polîtîk\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -42579,7 +42579,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21888',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ravekirina \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -42591,7 +42591,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21889',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'civaka exlaqî-polîtîk\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'civaka exlaqî-polîtîk\' bi awayekî rast temam dike?',
     answers: [
       'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de',
       'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê',
@@ -42761,7 +42761,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21900',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di qada paradigma de têgeha \'rexneya patriyarkayê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'rexneya patriyarkayê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
       'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike',
@@ -42779,7 +42779,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21901',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\'?',
     answers: [
       'rexneya patriyarkayê',
       'Ekolojiya Civakî',
@@ -42795,7 +42795,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21902',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di xwendina paradigma de têgeha \'rexneya patriyarkayê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'rexneya patriyarkayê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -42807,7 +42807,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21903',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ravekirina \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -42819,7 +42819,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21904',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'rexneya patriyarkayê\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'rexneya patriyarkayê\' bi awayekî rast temam dike?',
     answers: [
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
       'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de',
@@ -42837,7 +42837,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21905',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di qada paradigma de têgeha \'rexneya patriyarkayê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'rexneya patriyarkayê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê',
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
@@ -42855,7 +42855,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21906',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\'?',
     answers: [
       'Konfederalîzma Demokratîk',
       'Jineolojî',
@@ -42871,7 +42871,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21907',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di xwendina paradigma de têgeha \'rexneya patriyarkayê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'rexneya patriyarkayê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -42883,7 +42883,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21908',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ravekirina \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -42895,7 +42895,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21909',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'rexneya patriyarkayê\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'rexneya patriyarkayê\' bi awayekî rast temam dike?',
     answers: [
       'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê',
       'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike',
@@ -42913,7 +42913,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21910',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di qada paradigma de têgeha \'rexneya patriyarkayê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'rexneya patriyarkayê\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike',
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
@@ -42931,7 +42931,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21911',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\'?',
     answers: [
       'rexneya patriyarkayê',
       'civaka exlaqî-polîtîk',
@@ -42947,7 +42947,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21912',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di xwendina paradigma de têgeha \'rexneya patriyarkayê\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'rexneya patriyarkayê\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -42959,7 +42959,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21913',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ravekirina \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -42971,7 +42971,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21914',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'rexneya patriyarkayê\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'rexneya patriyarkayê\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
       'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike',
@@ -43141,7 +43141,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21925',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di qada paradigma de têgeha \'hiyerarşiya civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'hiyerarşiya civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê',
       'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê',
@@ -43159,7 +43159,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21926',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\'?',
     answers: [
       'hiyerarşiya civakî',
       'Moderniteya Demokratîk',
@@ -43175,7 +43175,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21927',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di xwendina paradigma de têgeha \'hiyerarşiya civakî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'hiyerarşiya civakî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -43187,7 +43187,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21928',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ravekirina \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -43199,7 +43199,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21929',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'hiyerarşiya civakî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'hiyerarşiya civakî\' bi awayekî rast temam dike?',
     answers: [
       'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê',
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
@@ -43217,7 +43217,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21930',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di qada paradigma de têgeha \'hiyerarşiya civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'hiyerarşiya civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike',
       'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike',
@@ -43235,7 +43235,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21931',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\'?',
     answers: [
       'Jineolojî',
       'azadiya zayendî',
@@ -43251,7 +43251,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21932',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di xwendina paradigma de têgeha \'hiyerarşiya civakî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'hiyerarşiya civakî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -43263,7 +43263,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21933',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ravekirina \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -43275,7 +43275,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21934',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'hiyerarşiya civakî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'hiyerarşiya civakî\' bi awayekî rast temam dike?',
     answers: [
       'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike',
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
@@ -43293,7 +43293,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21935',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di qada paradigma de têgeha \'hiyerarşiya civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'hiyerarşiya civakî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
       'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de',
@@ -43311,7 +43311,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21936',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\'?',
     answers: [
       'hiyerarşiya civakî',
       'civaka exlaqî-polîtîk',
@@ -43327,7 +43327,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21937',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di xwendina paradigma de têgeha \'hiyerarşiya civakî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'hiyerarşiya civakî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation:
@@ -43339,7 +43339,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21938',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ravekirina \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -43351,7 +43351,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21939',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'hiyerarşiya civakî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'hiyerarşiya civakî\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
       'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de',
@@ -43521,7 +43521,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21950',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di qada paradigma de têgeha \'zanistiya azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'zanistiya azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê',
       'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê',
@@ -43539,7 +43539,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21951',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\'?',
     answers: [
       'zanistiya azad',
       'Ekolojiya Civakî',
@@ -43555,7 +43555,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21952',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di xwendina paradigma de têgeha \'zanistiya azad\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'zanistiya azad\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'zanistiya azad\' di vê kategoriyê de têgeheke giring e.',
@@ -43566,7 +43566,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21953',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ravekirina \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -43578,7 +43578,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21954',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'zanistiya azad\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'zanistiya azad\' bi awayekî rast temam dike?',
     answers: [
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
@@ -43596,7 +43596,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21955',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di qada paradigma de têgeha \'zanistiya azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'zanistiya azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike',
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
@@ -43614,7 +43614,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21956',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\'?',
     answers: [
       'Ekolojiya Civakî',
       'Moderniteya Demokratîk',
@@ -43630,7 +43630,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21957',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di xwendina paradigma de têgeha \'zanistiya azad\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'zanistiya azad\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'zanistiya azad\' di vê kategoriyê de têgeheke giring e.',
@@ -43641,7 +43641,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21958',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ravekirina \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -43653,7 +43653,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21959',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'zanistiya azad\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'zanistiya azad\' bi awayekî rast temam dike?',
     answers: [
       'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike',
       'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike',
@@ -43671,7 +43671,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21960',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di qada paradigma de têgeha \'zanistiya azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'zanistiya azad\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê',
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
@@ -43689,7 +43689,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21961',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\'?',
     answers: [
       'zanistiya azad',
       'Konfederalîzma Demokratîk',
@@ -43705,7 +43705,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21962',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di xwendina paradigma de têgeha \'zanistiya azad\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'zanistiya azad\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'zanistiya azad\' di vê kategoriyê de têgeheke giring e.',
@@ -43716,7 +43716,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21963',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ravekirina \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -43728,7 +43728,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21964',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'zanistiya azad\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'zanistiya azad\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
@@ -43896,7 +43896,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21975',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di qada paradigma de têgeha \'azadiya zayendî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'azadiya zayendî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',
       'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide',
@@ -43914,7 +43914,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21976',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\'?',
     answers: [
       'azadiya zayendî',
       'Ekolojiya Civakî',
@@ -43930,7 +43930,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21977',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, di xwendina paradigma de têgeha \'azadiya zayendî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'azadiya zayendî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'azadiya zayendî\' di vê kategoriyê de têgeheke giring e.',
@@ -43941,7 +43941,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21978',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ravekirina \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -43953,7 +43953,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21979',
     category: 'Paradigma',
     prompt:
-        'Di asta destpêkê, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'azadiya zayendî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'azadiya zayendî\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
       'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike',
@@ -43971,7 +43971,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21980',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di qada paradigma de têgeha \'azadiya zayendî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'azadiya zayendî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de',
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
@@ -43989,7 +43989,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21981',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\'?',
     answers: [
       'Ekolojiya Civakî',
       'Konfederalîzma Demokratîk',
@@ -44005,7 +44005,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21982',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, di xwendina paradigma de têgeha \'azadiya zayendî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'azadiya zayendî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'azadiya zayendî\' di vê kategoriyê de têgeheke giring e.',
@@ -44016,7 +44016,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21983',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ravekirina \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -44028,7 +44028,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21984',
     category: 'Paradigma',
     prompt:
-        'Di asta navîn de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'azadiya zayendî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'azadiya zayendî\' bi awayekî rast temam dike?',
     answers: [
       'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de',
       'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike',
@@ -44046,7 +44046,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21985',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di qada paradigma de têgeha \'azadiya zayendî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
+        'Di qada paradigma de têgeha \'azadiya zayendî\' bi kîjan ravekirinê çêtir tê fêmkirin?',
     answers: [
       'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike',
       'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike',
@@ -44064,7 +44064,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21986',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\'?',
+        'Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\'?',
     answers: [
       'azadiya zayendî',
       'Ekolojiya Civakî',
@@ -44080,7 +44080,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21987',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, di xwendina paradigma de têgeha \'azadiya zayendî\' wekî mijareke bingehîn dikare were nirxandin.',
+        'Di xwendina paradigma de têgeha \'azadiya zayendî\' wekî mijareke bingehîn dikare were nirxandin.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Rast',
     explanation: '\'azadiya zayendî\' di vê kategoriyê de têgeheke giring e.',
@@ -44091,7 +44091,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21988',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ravekirina \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\' bi tevahî ji qada paradigma dûr e.',
+        'Ravekirina \'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de\' bi tevahî ji qada paradigma dûr e.',
     answers: ['Rast', 'Şaş'],
     correctAnswer: 'Şaş',
     explanation:
@@ -44103,7 +44103,7 @@ const offlineQuestionBank = <QuizQuestion>[
     id: 'offline_curated_21989',
     category: 'Paradigma',
     prompt:
-        'Di asta pêşketî de, ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'azadiya zayendî\' bi awayekî rast temam dike?',
+        'Ji bo dersa paradigma kîjan vebijark ravekirina têgeha \'azadiya zayendî\' bi awayekî rast temam dike?',
     answers: [
       'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de',
       'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern',

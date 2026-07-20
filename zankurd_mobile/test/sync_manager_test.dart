@@ -35,8 +35,9 @@ void main() {
     // sync() will directly clear the mock queue as fallback.
     await manager.sync();
 
-    // Verify it completes without errors
-    expect(true, isTrue);
+    // Mock repo yolunda sync kuyruğu boşaltıp preferans'a boş liste yazar.
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('zankurd.syncQueue'), '[]');
   });
 
   test(
@@ -63,6 +64,7 @@ void main() {
     manager.queueXP(150);
     await manager.clearQueue();
 
-    expect(true, isTrue);
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('zankurd.syncQueue'), '[]');
   });
 }
