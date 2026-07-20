@@ -196,6 +196,18 @@ final List<_Rule> _rules = [
     RegExp(r'^"([^"]+)" ([^";:]+) demektir\.$'),
     (m) => 'Peyva "${m[1]}" tê wateya "${m[2]}".',
   ),
+  // '"av" "su" demektir.' — her iki taraf tırnaklı; şablon-veri yerine
+  // geçen kelime-anlamı üretiminde kullanılır.
+  _Rule(
+    RegExp(r'^"([^"]+)" "([^"]+)" demektir\.$'),
+    (m) => 'Peyva "${m[1]}" tê wateya "${m[2]}".',
+  ),
+  // '"mase" kelimesi "sandalye" anlamına gelmez.' — yanlış eşleştirme
+  // (trueFalse Şaş) açıklaması; şablon-veri yerine geçen üretim.
+  _Rule(
+    RegExp(r'^"([^"]+)" kelimesi "([^"]+)" anlamına gelmez\.$'),
+    (m) => 'Peyva "${m[1]}" nayê wateya "${m[2]}".',
+  ),
 ];
 
 /// Bilinen Türkçe şablonu Kurmancî'ye çevirir; eşleşme yoksa metni
