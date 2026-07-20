@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_logo.dart';
-import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/styled_button.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -333,10 +332,10 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       _OnboardingData(
         icon: Icons.auto_awesome_rounded,
         color: AppTheme.gold,
-        title: context.s('Çima ZanKurd?', 'Neden ZanKurd?'),
+        title: context.s('Ne tenê pêşbirk e', 'Sadece yarış değil'),
         body: context.s(
-          'Kurmancî çand û zimanê bi pêşbirkê fêr bibe; her roj vegere, xelat bistîne.',
-          'Kurmancî kültürünü yarışarak öğren; her gün dön, ödül kazan.',
+          'Her pirsê rast bersivandin ast bilind dike — Xwendekar, Pispor, Mamoste. Zanîna te bi rastî mezin dibe.',
+          'Her doğru cevap seni bir üst seviyeye taşır — Xwendekar, Pispor, Mamoste. Bilgin gerçekten artıyor.',
         ),
         bullets: [
           ku
@@ -469,17 +468,6 @@ class _OnboardingPage extends StatelessWidget {
               ),
               child: Stack(
                 children: [
-                  Positioned.fill(
-                    child: IgnorePointer(
-                      child: CustomPaint(
-                        painter: KilimPatternPainter(
-                          drawPattern: true,
-                          color: Colors.white,
-                          opacity: 0.05,
-                        ),
-                      ),
-                    ),
-                  ),
                   // Ölü dikey alanı dolduran, içerikle ilişkili arka plan
                   // ikonları (dekoratif; erişilebilirlik dışı).
                   Positioned(
