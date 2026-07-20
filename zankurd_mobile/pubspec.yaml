@@ -99,6 +99,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/data/offline_questions.json
     - assets/question_images/
     - assets/zankurd.webp
     - assets/sounds/

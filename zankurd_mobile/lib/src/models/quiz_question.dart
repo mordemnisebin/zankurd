@@ -106,6 +106,42 @@ class QuizQuestion {
     }
     return resolveRawExplanation(id: id, explanation: explanation, isKu: isKu);
   }
+
+  factory QuizQuestion.fromJson(Map<String, dynamic> json) {
+    return QuizQuestion(
+      id: json['id'] as String,
+      category: json['category'] as String,
+      prompt: json['prompt'] as String,
+      answers: List<String>.from(json['answers'] as List),
+      correctAnswer: json['correctAnswer'] as String,
+      explanation: json['explanation'] as String,
+      explanationKu: json['explanationKu'] as String?,
+      explanationTr: json['explanationTr'] as String?,
+      type: QuestionType.values.byName(
+        (json['type'] as String?) ?? 'multipleChoice',
+      ),
+      imageUrl: json['imageUrl'] as String?,
+      difficulty: (json['difficulty'] as num?)?.toInt() ?? 2,
+      metadata: json['metadata'] == null
+          ? null
+          : QuestionMetadata.fromJson(json['metadata'] as Map<String, dynamic>),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'category': category,
+    'prompt': prompt,
+    'answers': answers,
+    'correctAnswer': correctAnswer,
+    'explanation': explanation,
+    if (explanationKu != null) 'explanationKu': explanationKu,
+    if (explanationTr != null) 'explanationTr': explanationTr,
+    'type': type.name,
+    if (imageUrl != null) 'imageUrl': imageUrl,
+    'difficulty': difficulty,
+    if (metadata != null) 'metadata': metadata!.toJson(),
+  };
 }
 
 /// Üretim-şablonu, bilgi taşımayan açıklama desenleri. Bunları göstermek
