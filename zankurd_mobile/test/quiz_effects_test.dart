@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/seen_question_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_effects.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
@@ -58,11 +59,14 @@ void main() {
     testWidgets('özel parçacık sayısı ve süre ile kurulabilir', (tester) async {
       var finished = false;
       await tester.pumpWidget(
-        MaterialApp(
-          home: ConfettiOverlay(
-            particleCount: 24,
-            duration: const Duration(milliseconds: 300),
-            onFinished: () => finished = true,
+        ChangeNotifierProvider<ReducedMotionProvider>(
+          create: (_) => ReducedMotionProvider(),
+          child: MaterialApp(
+            home: ConfettiOverlay(
+              particleCount: 24,
+              duration: const Duration(milliseconds: 300),
+              onFinished: () => finished = true,
+            ),
           ),
         ),
       );
@@ -168,6 +172,9 @@ void main() {
             ChangeNotifierProvider<SoundProvider>(
               create: (_) => SoundProvider(),
             ),
+            ChangeNotifierProvider<ReducedMotionProvider>(
+              create: (_) => ReducedMotionProvider(),
+            ),
           ],
           child: MaterialApp(
             theme: AppTheme.dark(),
@@ -212,6 +219,9 @@ void main() {
             ChangeNotifierProvider<SoundProvider>(
               create: (_) => SoundProvider(),
             ),
+            ChangeNotifierProvider<ReducedMotionProvider>(
+              create: (_) => ReducedMotionProvider(),
+            ),
           ],
           child: MaterialApp(
             theme: AppTheme.dark(),
@@ -250,6 +260,9 @@ void main() {
             ),
             ChangeNotifierProvider<SoundProvider>(
               create: (_) => SoundProvider(),
+            ),
+            ChangeNotifierProvider<ReducedMotionProvider>(
+              create: (_) => ReducedMotionProvider(),
             ),
           ],
           child: MaterialApp(
@@ -312,6 +325,9 @@ void main() {
             ),
             ChangeNotifierProvider<SoundProvider>(
               create: (_) => SoundProvider(),
+            ),
+            ChangeNotifierProvider<ReducedMotionProvider>(
+              create: (_) => ReducedMotionProvider(),
             ),
           ],
           child: MaterialApp(

@@ -102,7 +102,8 @@ class NotificationService {
           );
 
       await _localNotificationsPlugin.initialize(initializationSettings);
-    } catch (e) {
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService init');
       debugPrint('Failed to initialize local notifications: $e');
     }
   }
@@ -121,7 +122,8 @@ class NotificationService {
             IOSFlutterLocalNotificationsPlugin
           >()
           ?.requestPermissions(alert: true, badge: true, sound: true);
-    } catch (e) {
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService');
       debugPrint('Failed to request notifications permission: $e');
     }
   }
@@ -147,7 +149,8 @@ class NotificationService {
         final options = await ios.checkPermissions();
         return options?.isEnabled ?? true;
       }
-    } catch (e) {
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService check');
       debugPrint('Failed to check notification permission: $e');
     }
     return true;
@@ -217,7 +220,8 @@ class NotificationService {
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
       );
-    } catch (e) {
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService schedule');
       debugPrint('Failed to schedule local notification: $e');
     }
   }
@@ -227,7 +231,8 @@ class NotificationService {
     if (kIsWeb) return;
     try {
       await _localNotificationsPlugin.cancelAll();
-    } catch (e) {
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService cancel');
       debugPrint('Failed to cancel notifications: $e');
     }
   }
@@ -259,7 +264,8 @@ class NotificationService {
         body,
         details,
       );
-    } catch (e) {
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService friend request');
       debugPrint('Failed to show friend request notification: $e');
     }
   }
@@ -301,7 +307,8 @@ class NotificationService {
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
       );
-    } catch (e) {
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService streak');
       debugPrint('Failed to schedule streak warning: $e');
     }
   }
@@ -330,7 +337,8 @@ class NotificationService {
             : '$friendName isteğini kabul etti!',
         details,
       );
-    } catch (e) {
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService friend accepted');
       debugPrint('Failed to show friend accepted notification: $e');
     }
   }

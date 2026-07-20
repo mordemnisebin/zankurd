@@ -27,7 +27,6 @@ import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
-import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/player_avatar.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
@@ -514,17 +513,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
-                          Positioned.fill(
-                            child: IgnorePointer(
-                              child: CustomPaint(
-                                painter: KilimPatternPainter(
-                                  drawPattern: true,
-                                  color: Colors.white,
-                                  opacity: 0.05,
-                                ),
-                              ),
-                            ),
-                          ),
                           Positioned(
                             right: -8,
                             top: -38,

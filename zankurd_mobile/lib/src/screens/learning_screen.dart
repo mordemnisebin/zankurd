@@ -539,17 +539,16 @@ class _LearningModeButton extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
           decoration: BoxDecoration(
-            color: color.withValues(alpha: enabled ? 0.12 : 0.05),
+            color: enabled ? color : color.withValues(alpha: 0.10),
             borderRadius: BorderRadius.circular(AppRadius.sm),
-            border: Border.all(
-              color: color.withValues(alpha: enabled ? 0.35 : 0.15),
-            ),
           ),
           child: Column(
             children: [
               Icon(
                 icon,
-                color: color.withValues(alpha: enabled ? 1 : 0.45),
+                color: enabled
+                    ? Colors.white
+                    : color.withValues(alpha: 0.4),
                 size: 18,
               ),
               const SizedBox(height: 2),
@@ -558,9 +557,11 @@ class _LearningModeButton extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTypography.caption.copyWith(
-                  color: AppTheme.textPrimaryColor(
-                    context,
-                  ).withValues(alpha: enabled ? 1 : 0.5),
+                  color: enabled
+                      ? Colors.white
+                      : AppTheme.textPrimaryColor(context).withValues(
+                          alpha: 0.4,
+                        ),
                   fontSize: 10,
                   fontWeight: FontWeight.w800,
                 ),
@@ -689,17 +690,18 @@ class _LessonCard extends StatelessWidget {
               Container(
                 width: 56,
                 height: 56,
-                decoration: BoxDecoration(
-                  color: AppTheme.playGreen.withValues(alpha: 0.14),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(
-                    color: AppTheme.playGreen.withValues(alpha: 0.34),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [AppTheme.playGreen, Color(0xFF16A34A)],
                   ),
+                  borderRadius: BorderRadius.all(Radius.circular(14)),
                 ),
                 child: Center(
                   child: Icon(
                     _iconForLesson(lesson.slug),
-                    color: AppTheme.playGreen,
+                    color: Colors.white,
                     size: 26,
                   ),
                 ),
@@ -1165,7 +1167,14 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
             'lesson_slug': widget.lesson.slug,
             'category': widget.lesson.category,
           })
-          .catchError((_) => false);
+          .catchError((error, stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'log_lesson_completed',
+            );
+            return false;
+          });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(context.isKu ? 'Ders qediya!' : 'Ders tamamlandı'),

@@ -279,6 +279,11 @@ class _GroupPlayPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppPanel(
       key: const ValueKey('play-hub-group-panel'),
+      gradient: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [AppTheme.playCyan, Color(0xFF0D9488)],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -289,12 +294,12 @@ class _GroupPlayPanel extends StatelessWidget {
                 height: 42,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: AppTheme.playCyan.withValues(alpha: 0.14),
+                  color: Colors.white.withValues(alpha: 0.22),
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
                 child: const Icon(
                   Icons.groups_2_rounded,
-                  color: AppTheme.playCyan,
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
@@ -307,7 +312,7 @@ class _GroupPlayPanel extends StatelessWidget {
                           ? 'Bi heval an komê re bilîze'
                           : 'Arkadaşınla veya grupla oyna',
                       style: AppTypography.bodyLarge.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
+                        color: Colors.white,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
@@ -316,7 +321,7 @@ class _GroupPlayPanel extends StatelessWidget {
                           ? 'Odeyek veke, kodê parve bike, hevalên xwe vexwîne.'
                           : 'Oda aç, kodu paylaş, arkadaşlarını davet et.',
                       style: AppTypography.caption.copyWith(
-                        color: AppTheme.textSubColor(context),
+                        color: Colors.white.withValues(alpha: 0.78),
                       ),
                     ),
                   ],
@@ -331,6 +336,11 @@ class _GroupPlayPanel extends StatelessWidget {
                 child: FilledButton.icon(
                   key: const ValueKey('play-hub-create-room'),
                   onPressed: loading ? null : onCreateRoom,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: AppTheme.playCyan,
+                    disabledBackgroundColor: Colors.white.withValues(alpha: 0.5),
+                  ),
                   icon: loading
                       ? const SizedBox(
                           width: 18,
@@ -350,6 +360,13 @@ class _GroupPlayPanel extends StatelessWidget {
                 child: OutlinedButton.icon(
                   key: const ValueKey('play-hub-join-room'),
                   onPressed: onJoinRoom,
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(
+                      color: Colors.white,
+                      width: 1.5,
+                    ),
+                    foregroundColor: Colors.white,
+                  ),
                   icon: const Icon(Icons.meeting_room_outlined),
                   label: Text(ku ? 'Kodê tevlî bibe' : 'Kodla Katıl'),
                 ),

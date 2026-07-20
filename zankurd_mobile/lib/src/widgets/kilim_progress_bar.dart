@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
-import 'kilim_pattern_painter.dart';
 
 /// Kültürel Modern ilerleme dili: mercan dolgu üzerinde dokuma izi.
 class KilimProgressBar extends StatelessWidget {
@@ -41,13 +40,6 @@ class KilimProgressBar extends StatelessWidget {
           heightFactor: 1,
           child: DecoratedBox(
             decoration: BoxDecoration(color: color, borderRadius: radius),
-            child: CustomPaint(
-              painter: const KilimPatternPainter(
-                drawPattern: true,
-                color: Colors.white,
-                opacity: 0.24,
-              ),
-            ),
           ),
         ),
       ),

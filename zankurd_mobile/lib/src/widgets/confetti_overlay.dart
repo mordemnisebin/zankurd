@@ -1,5 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/reduced_motion_provider.dart';
 
 class ConfettiOverlay extends StatefulWidget {
   const ConfettiOverlay({
@@ -51,6 +54,14 @@ class _ConfettiOverlayState extends State<ConfettiOverlay>
 
   @override
   Widget build(BuildContext context) {
+    // Erişilebilirlik tercihi: hareketleri azalt modunda konfeti bypass edilir
+    // ve onFinished hemen çağrılır — böylece kapanma/ileri akış bozulmaz.
+    final reduceMotion = context.watch<ReducedMotionProvider>().reduceMotion;
+    if (reduceMotion) {
+      // onFinished'i build sonrası microtask'te çağır; setState tetikleyebilir.
+      WidgetsBinding.instance.addPostFrameCallback((_) => widget.onFinished());
+      return const SizedBox.shrink();
+    }
     return IgnorePointer(
       child: AnimatedBuilder(
         animation: _controller,

@@ -114,6 +114,9 @@ class ZanKurdApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // Repository tek bir immutable instance olarak paylaşılıyor —
+        // ekranların constructor'ından geçirmek yerine context üzerinden okunur.
+        Provider<ZanKurdRepository>.value(value: repository),
         ChangeNotifierProvider(
           create: (_) => languageProvider ?? LanguageProvider(),
         ),

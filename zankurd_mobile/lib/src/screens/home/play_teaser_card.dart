@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
 import '../../theme/app_theme.dart';
-import '../../widgets/kilim_pattern_painter.dart';
 
 /// Ana sayfadan Pêşbazî (Oyna) sekmesine kısa geçiş kartı — [home_screen.dart]
 /// yorumundaki "kısa teaser" sözü, [DailyRaceCard] ile aynı tek-satır kart
@@ -49,17 +48,6 @@ class PlayTeaserCard extends StatelessWidget {
               ),
               child: Stack(
                 children: [
-                  Positioned.fill(
-                    child: IgnorePointer(
-                      child: CustomPaint(
-                        painter: KilimPatternPainter(
-                          drawPattern: true,
-                          color: AppTheme.playPink,
-                          opacity: 0.04,
-                        ),
-                      ),
-                    ),
-                  ),
                   Row(
                     children: [
                       Container(

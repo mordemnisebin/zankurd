@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
 import '../../theme/app_theme.dart';
-import '../../widgets/kilim_pattern_painter.dart';
 
 class DailyRaceCard extends StatelessWidget {
   const DailyRaceCard({required this.onTap, super.key});
@@ -43,17 +42,6 @@ class DailyRaceCard extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: CustomPaint(
-                      painter: KilimPatternPainter(
-                        drawPattern: true,
-                        color: AppTheme.playCyan,
-                        opacity: 0.04,
-                      ),
-                    ),
-                  ),
-                ),
                 Row(
                   children: [
                     Container(

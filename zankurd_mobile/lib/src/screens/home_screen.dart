@@ -180,27 +180,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: CustomScrollView(
         controller: widget.scrollController,
         slivers: [
-          // Pirs hizası: kalın turuncu karşılama banner'ı (Pirs'in ana ekran
-          // imzası) — önceki ince satır kararından bilerek vazgeçildi.
-          SliverSafeArea(
-            bottom: false,
-            sliver: SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.md,
-                  AppSpacing.page,
-                  0,
-                ),
-                child: _buildCompactHeader(context, ku),
-              ),
-            ),
+          // Pirs stili tam-genişlik header: kenarlarda boşluk yok, ekrandan
+          // ekrana uzanır. BorderRadius sadece altta (bottomLeft/Right 20dp).
+          SliverToBoxAdapter(
+            child: _buildFullBleedHeader(context, ku),
           ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.page,
-                AppSpacing.md,
+                AppSpacing.lg,
                 AppSpacing.page,
                 0,
               ),
@@ -525,8 +514,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// Pirs/mockup-3 karşılama satırı: avatar + selam + KU/tema kontrolleri.
-  /// Kalın banner yok; coin/mağaza girişi metrik şeridindeki Xeruz çipinde.
+  /// Pirs stili tam-genişlik (full-bleed) gradient header.
+  /// Kenarlarda kenar boşluğu yok; altında yuvarlatılmış köşeler.
+  Widget _buildFullBleedHeader(BuildContext context, bool ku) {
+    return SafeArea(
+      bottom: false,
+      child: _buildCompactHeader(context, ku),
+    );
+  }
+
+  /// Karşılama satırı: avatar + selam + coin/streak + KU/tema kontrolleri.
   Widget _buildCompactHeader(BuildContext context, bool ku) {
     final isTest = isFlutterTestEnvironment;
     final hour = DateTime.now().hour;
@@ -560,19 +557,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     return Container(
       key: const ValueKey('home-profile-header'),
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        gradient: const LinearGradient(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.page,
+        AppSpacing.md,
+        AppSpacing.page,
+        AppSpacing.lg,
+      ),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(24),
+          bottomRight: Radius.circular(24),
+        ),
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppTheme.brandGreen, AppTheme.brandGreenDeep],
+          colors: [AppTheme.pirsOrangeStart, AppTheme.pirsOrangeEnd],
         ),
-        boxShadow: AppTheme.elevatedShadow(AppTheme.brandGreen),
       ),
       child: Row(
         children: [
-          PlayerAvatar(radius: 24, displayName: currentName ?? 'Z'),
+          PlayerAvatar(radius: 26, displayName: currentName ?? 'Z'),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Column(
@@ -592,15 +597,37 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  ku ? 'Amadeyî yanga nû?' : 'Yeni yarışa hazır mısın?',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.caption.copyWith(
-                    color: Colors.white.withValues(alpha: 0.85),
-                    fontWeight: FontWeight.w500,
-                  ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.local_fire_department,
+                      color: Colors.white,
+                      size: 14,
+                    ),
+                    const SizedBox(width: 3),
+                    Text(
+                      '$_streak',
+                      style: AppTypography.caption.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    const Icon(
+                      Icons.monetization_on,
+                      color: Colors.white,
+                      size: 14,
+                    ),
+                    const SizedBox(width: 3),
+                    Text(
+                      '$_coinBalance',
+                      style: AppTypography.caption.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -886,9 +913,8 @@ class _DailyLessonHero extends StatelessWidget {
                   child: FilledButton(
                     onPressed: onStart,
                     style: FilledButton.styleFrom(
-                      backgroundColor: AppTheme.wrong,
+                      backgroundColor: AppTheme.brandGreen,
                       foregroundColor: Colors.white,
-                      // Dokunma hedefi min 44px (WCAG 2.5.5).
                       minimumSize: const Size.fromHeight(48),
                     ),
                     child: Text(ctaLabel),

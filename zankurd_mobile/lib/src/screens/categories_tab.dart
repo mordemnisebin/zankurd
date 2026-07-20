@@ -499,7 +499,13 @@ class _CategoryCardState extends State<_CategoryCard>
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(AppRadius.card),
                   child: Container(
-                    color: AppTheme.surfaceColor(context),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [gradientColors.first, gradientColors.last],
+                      ),
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -521,14 +527,7 @@ class _CategoryCardState extends State<_CategoryCard>
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      gradientColors.first,
-                                      gradientColors.last,
-                                    ],
-                                  ),
+                                  color: Colors.white.withValues(alpha: 0.22),
                                 ),
                                 child: Icon(
                                   icon,
@@ -546,9 +545,7 @@ class _CategoryCardState extends State<_CategoryCard>
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: AppTypography.heading2.copyWith(
-                                        color: AppTheme.textPrimaryColor(
-                                          context,
-                                        ),
+                                        color: Colors.white,
                                       ),
                                     ),
                                     const SizedBox(height: 3),
@@ -567,7 +564,9 @@ class _CategoryCardState extends State<_CategoryCard>
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: AppTypography.caption.copyWith(
-                                        color: AppTheme.textSubColor(context),
+                                        color: Colors.white.withValues(
+                                          alpha: 0.78,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -582,18 +581,14 @@ class _CategoryCardState extends State<_CategoryCard>
                                   ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      color: AppTheme.gold.withValues(
-                                        alpha: 0.55,
-                                      ),
-                                    ),
+                                    color: Colors.white.withValues(alpha: 0.22),
                                   ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Icon(
                                         widget.masteryLevel.icon,
-                                        color: AppTheme.gold,
+                                        color: Colors.white,
                                         size: 12,
                                       ),
                                       const SizedBox(width: 4),
@@ -602,7 +597,7 @@ class _CategoryCardState extends State<_CategoryCard>
                                             ? widget.masteryLevel.titleKu
                                             : widget.masteryLevel.titleTr,
                                         style: const TextStyle(
-                                          color: AppTheme.gold,
+                                          color: Colors.white,
                                           fontSize: 10,
                                           fontWeight: FontWeight.w800,
                                         ),
@@ -615,7 +610,7 @@ class _CategoryCardState extends State<_CategoryCard>
                                   comingSoon
                                       ? Icons.hourglass_empty_rounded
                                       : Icons.chevron_right_rounded,
-                                  color: AppTheme.textMutedColor(context),
+                                  color: Colors.white.withValues(alpha: 0.7),
                                 ),
                             ],
                           ),
@@ -625,11 +620,11 @@ class _CategoryCardState extends State<_CategoryCard>
                         LinearProgressIndicator(
                           value: hasProgress ? progress : 1.0,
                           minHeight: 4,
-                          backgroundColor: AppTheme.borderColor(context),
+                          backgroundColor: Colors.white.withValues(alpha: 0.22),
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            hasProgress
-                                ? gradientColors.first
-                                : gradientColors.first.withValues(alpha: 0.45),
+                            Colors.white.withValues(
+                              alpha: hasProgress ? 0.9 : 0.4,
+                            ),
                           ),
                         ),
                       ],

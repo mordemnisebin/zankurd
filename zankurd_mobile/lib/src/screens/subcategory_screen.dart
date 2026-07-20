@@ -5,7 +5,6 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
-import '../widgets/kilim_pattern_painter.dart';
 import 'level_screen.dart';
 
 class SubcategoryScreen extends StatelessWidget {
@@ -157,17 +156,6 @@ class _CategoryBanner extends StatelessWidget {
             ),
           ),
           // Kilim deseni filigranı — kültürel doku
-          Positioned.fill(
-            child: IgnorePointer(
-              child: CustomPaint(
-                painter: const KilimPatternPainter(
-                  drawPattern: true,
-                  color: Colors.white,
-                  opacity: 0.06,
-                ),
-              ),
-            ),
-          ),
           // Büyük filigran kategori ikonu — boşluğu dolduran görsel imza
           Positioned(
             right: -12,

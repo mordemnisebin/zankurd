@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../utils/test_environment.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/reduced_motion_provider.dart';
 
 /// Kartların üzerine premium bir parlama (shimmer/glow) efekti ekleyen widget.
 /// Soldan sağa doğru periyodik olarak kayan ışık süzmesi oluşturur.
@@ -21,9 +23,9 @@ class _ShimmerGlowState extends State<ShimmerGlow>
       vsync: this,
       duration: const Duration(milliseconds: 2500),
     );
-    if (!isFlutterTestEnvironment) {
-      _controller.repeat();
-    }
+    // Hareket azaltma kontrolü build'de yapılır; burada başlatmak güvenli çünkü
+    // reduceMotion=true olduğunda SizedBox.shrink() döner ve controller dispose olur.
+    _controller.repeat();
   }
 
   @override
@@ -34,7 +36,9 @@ class _ShimmerGlowState extends State<ShimmerGlow>
 
   @override
   Widget build(BuildContext context) {
-    if (isFlutterTestEnvironment) {
+    // Erişilebilirlik tercihi: hareketleri azlat modunda sessizce gizle.
+    final reduceMotion = context.watch<ReducedMotionProvider>().reduceMotion;
+    if (reduceMotion) {
       return const SizedBox.shrink();
     }
     return AnimatedBuilder(

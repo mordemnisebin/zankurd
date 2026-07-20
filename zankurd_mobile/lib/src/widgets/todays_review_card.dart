@@ -7,7 +7,6 @@ import '../screens/quiz_screen.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
-import 'kilim_pattern_painter.dart';
 
 /// "Bugünkü Tekrarlar" kartı — SM-2 aralıklı tekrar sisteminin ürün yüzü.
 ///
@@ -151,17 +150,6 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
             ),
             child: Stack(
               children: [
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: CustomPaint(
-                      painter: const KilimPatternPainter(
-                        drawPattern: true,
-                        color: _accent,
-                        opacity: 0.04,
-                      ),
-                    ),
-                  ),
-                ),
                 Row(
                   children: [
                     Container(

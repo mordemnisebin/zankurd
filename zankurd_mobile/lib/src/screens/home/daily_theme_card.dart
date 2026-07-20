@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
 import '../../theme/app_theme.dart';
-import '../../widgets/kilim_pattern_painter.dart';
 
 /// Day-of-week themed contest card showing today's category.
 ///
@@ -154,17 +153,6 @@ class DailyThemeCard extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: CustomPaint(
-                      painter: KilimPatternPainter(
-                        drawPattern: true,
-                        color: theme.color,
-                        opacity: 0.04,
-                      ),
-                    ),
-                  ),
-                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

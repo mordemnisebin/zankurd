@@ -83,7 +83,8 @@ class AuthProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
       return false;
-    } catch (e) {
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'AuthProvider unexpected sign-in error');
       _errorMessage = _translateUnexpectedError(e);
       _isLoading = false;
       notifyListeners();

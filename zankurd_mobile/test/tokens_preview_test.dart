@@ -16,7 +16,7 @@ void main() {
     expect(AppTheme.gold, const Color(0xFFE7B53C));
     expect(AppTheme.bg, const Color(0xFF0B0F0D));
     expect(AppTheme.surface, const Color(0xFF1E3028));
-    expect(AppTheme.lightBg, const Color(0xFFFBF9F6));
+    expect(AppTheme.lightBg, const Color(0xFFF3F3F5));
   });
 
   test('legacy token aliases resolve to theme tokens', () {

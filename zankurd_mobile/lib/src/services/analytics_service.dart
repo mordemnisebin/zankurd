@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:zankurd_mobile/src/utils/error_reporter.dart';
 
 /// Anonim kullanım istatistikleri servisi.
 /// Firebase Analytics entegrasyonu kullanılarak gerçek olay kaydı burada yapılır.
@@ -17,7 +18,8 @@ class AnalyticsService {
       try {
         _analytics = FirebaseAnalytics.instance;
         debugPrint('[Analytics] Firebase Analytics başlatıldı');
-      } catch (e) {
+      } catch (e, s) {
+        ErrorReporter.record(e, s, reason: 'AnalyticsService initialize');
         debugPrint('[Analytics] Firebase Analytics başlatılamadı: $e');
       }
     } else {
@@ -32,7 +34,8 @@ class AnalyticsService {
       if (_analytics != null) {
         await _analytics!.logEvent(name: name, parameters: parameters);
       }
-    } catch (e) {
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'AnalyticsService logEvent');
       debugPrint('[Analytics] Olay gönderilemedi: $e');
     }
   }

@@ -30,6 +30,13 @@ class ColorfulActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tint = colors.first;
+    final gradient = LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: colors.length >= 2
+          ? [colors.first, colors.last]
+          : [tint, Color.alphaBlend(Colors.black.withValues(alpha: 0.18), tint)],
+    );
 
     return Semantics(
       button: true,
@@ -41,14 +48,24 @@ class ColorfulActionCard extends StatelessWidget {
           onTap: loading ? null : onTap,
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Ink(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm + 2,
+            ),
             decoration: BoxDecoration(
-              color: AppTheme.surfaceColor(context),
+              gradient: gradient,
               borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(color: tint.withValues(alpha: 0.35)),
+              boxShadow: [
+                BoxShadow(
+                  color: tint.withValues(alpha: 0.28),
+                  offset: const Offset(0, 4),
+                  blurRadius: 12,
+                  spreadRadius: -2,
+                ),
+              ],
             ),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 44),
+              constraints: const BoxConstraints(minHeight: 56),
               child: Row(
                 children: [
                   Container(
@@ -56,12 +73,12 @@ class ColorfulActionCard extends StatelessWidget {
                     height: 48,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: tint.withValues(alpha: 0.16),
+                      color: Colors.white.withValues(alpha: 0.22),
                       borderRadius: BorderRadius.circular(AppRadius.sm),
                     ),
-                    child: Icon(icon, color: tint, size: 24),
+                    child: Icon(icon, color: Colors.white, size: 26),
                   ),
-                  const SizedBox(width: AppSpacing.sm),
+                  const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +89,8 @@ class ColorfulActionCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.heading2.copyWith(
-                            color: AppTheme.textPrimaryColor(context),
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                         if (loading)
@@ -82,7 +100,7 @@ class ColorfulActionCard extends StatelessWidget {
                               width: 16,
                               height: 16,
                               child: CircularProgressIndicator(
-                                color: tint,
+                                color: Colors.white,
                                 strokeWidth: 2.2,
                               ),
                             ),
@@ -95,7 +113,7 @@ class ColorfulActionCard extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: AppTypography.caption.copyWith(
-                                color: AppTheme.textSubColor(context),
+                                color: Colors.white.withValues(alpha: 0.82),
                               ),
                             ),
                           ),
@@ -105,7 +123,7 @@ class ColorfulActionCard extends StatelessWidget {
                   if (!loading)
                     Icon(
                       Icons.chevron_right_rounded,
-                      color: AppTheme.textMutedColor(context),
+                      color: Colors.white.withValues(alpha: 0.8),
                     ),
                 ],
               ),

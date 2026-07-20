@@ -20,7 +20,7 @@ Widget wrap(Widget child) => MultiProvider(
 
 void main() {
   test(
-    'öğrenme yolu kartları ana hedefle rekabet etmek için glow kullanmaz',
+    'öğrenme yolu kartları ikon çipi solid gradient kullanır, glow/boxShadow yok',
     () {
       final source = File(
         'lib/src/screens/learning_screen.dart',
@@ -28,8 +28,10 @@ void main() {
       final lessonStart = source.indexOf('class _LessonCard');
       final detailStart = source.indexOf('class LessonDetailScreen');
       final lessonSource = source.substring(lessonStart, detailStart);
-      expect(lessonSource, contains('color: AppTheme.playGreen.withValues'));
-      expect(lessonSource, isNot(contains('gradient: const LinearGradient')));
+      // Solid gradient ikon çipi (tinted alpha yerine)
+      expect(lessonSource, contains('AppTheme.playGreen, Color(0xFF16A34A)'));
+      // İkon beyaz (gradient zemin üzerinde kontrast)
+      expect(lessonSource, contains('color: Colors.white,'));
     },
   );
 

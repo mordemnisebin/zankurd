@@ -13,7 +13,6 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
-import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/room_chat.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
@@ -64,7 +63,10 @@ class _RoomScreenState extends State<RoomScreen> {
     });
     _statusSub = widget.repository.subscribeRoomStatus(room).listen((status) {
       if (!mounted) return;
-      if (status == RoomStatus.active && !quizOpened) _navigateToQuiz();
+      if (status == RoomStatus.active && !quizOpened) {
+      _pausePolling();
+      _navigateToQuiz();
+    }
       setState(() => room = room.copyWith(status: status));
     });
   }
@@ -407,17 +409,6 @@ class _RoomScreenState extends State<RoomScreen> {
                                     ),
                                   ),
                                 ],
-                              ),
-                            ),
-                            Positioned.fill(
-                              child: IgnorePointer(
-                                child: CustomPaint(
-                                  painter: const KilimPatternPainter(
-                                    drawPattern: true,
-                                    color: Colors.white,
-                                    opacity: 0.05,
-                                  ),
-                                ),
                               ),
                             ),
                           ],

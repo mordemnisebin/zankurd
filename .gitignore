@@ -4,6 +4,11 @@ Pirs_apk_extracted/
 output/
 *.zip
 
+# Başka bir ajan/araç tarafından proje içine yazılan oturum log'ları
+# (üretim kodu değil; repo dışına taşınması gerekir ama şimdilik yok sayılıyor)
+zankurd_mobile/bash_events/
+zankurd_mobile/conversations/
+
 # Kök seviyedeki oturum ekran görüntüleri (ürün asset'i değil)
 /tour-*.jpeg
 /live-*.jpeg
@@ -25,6 +30,8 @@ venv/
 .env
 .env.*
 !.env.example
+# .env.deploy (FTP şifresi içerir) — deploy-to-hostinger.sh yerelde okur.
+.env.deploy
 # Oturum artıkları ve yerel araç dizinleri
 .serena/
 .playwright-cli/

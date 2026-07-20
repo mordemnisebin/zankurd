@@ -26,8 +26,8 @@ void main() {
     expect(AppTheme.wrong, const Color(0xFFE5533D));
   });
 
-  test('açık mod zemin sıcak beyaz', () {
-    expect(AppTheme.lightBg, const Color(0xFFFBF9F6));
+  test('açık mod zemin Pirs soğuk gri', () {
+    expect(AppTheme.lightBg, const Color(0xFFF3F3F5));
   });
 
   test('koyu mod zemin koyu-sıcak yeşilimsi', () {

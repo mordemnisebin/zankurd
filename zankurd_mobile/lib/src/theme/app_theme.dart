@@ -366,19 +366,27 @@ class AppTheme {
   // Wrong answer color — ONLY for wrong answer feedback.
   static const wrong = Color(0xFFE5533D); // Nar kırmızısı — mockup
 
-  // ============ Light Mode Palette (default theme) ============
-  static const lightBg = Color(0xFFFBF9F6); // Warm off-white
-  static const lightBgDeep = Color(0xFFF0EBE6); // Warm off-white deeper
+  // ============ Light Mode Palette (default theme — Pirs hizası 2026-07-20) ============
+  static const lightBg = Color(0xFFF3F3F5); // Pirs-stil soğuk açık gri (eski bej yerine)
+  static const lightBgDeep = Color(0xFFEAEAED); // Derin zemin tonu
   static const lightSurface = Color(0xFFFFFFFF); // Pure white
-  static const lightSurfaceHi = Color(0xFFF7F4F0); // Surface highlight
-  static const lightBorder = Color(0xFFE8E4DF);
-  static const lightTextPrimary = Color(0xFF1E1E24);
+  static const lightSurfaceHi = Color(0xFFF7F7F9); // Surface highlight
+  static const lightBorder = Color(0xFFE2E2E8); // Pirs-stil soğuk kenarlık
+  static const lightTextPrimary = Color(0xFF1A1A24);
   static const lightTextSub = Color(
-    0xFF4A4655,
-  ); // WCAG AA kontrast orani artirildi
+    0xFF4E5366,
+  ); // Pirs ic_battle_quiz.xml ikon rengi — mavi-gri
   static const lightTextMuted = Color(
     0xFF6F6A7E,
-  ); // WCAG AA kontrast orani artirildi
+  ); // WCAG AA korundu
+
+  // Pirs turuncu gradient (gradient_orange.xml'den literal hex)
+  static const pirsOrangeStart = Color(0xFFE37A42);
+  static const pirsOrangeEnd = Color(0xFFEC9B40);
+
+  // Quiz cevap seçenek token'ları (Pirs option_bg.xml'den)
+  static const answerOptionBg = Color(0xFFF1F1F4);
+  static const answerOptionBorder = Color(0xFFE2E2E8);
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -404,11 +412,11 @@ class AppTheme {
     colors: [bg, bgDeep],
   );
 
-  // Home header gradient: Deep Green to Soft Green-Gold transition
+  // Home header gradient: Pirs turuncu (gradient_orange.xml — 2026-07-20)
   static const homeHeaderGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF0B251C), Color(0xFF1A4E3B)],
+    colors: [pirsOrangeStart, pirsOrangeEnd],
   );
 
   // Legacy gradient aliases for backwards compatibility

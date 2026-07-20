@@ -7,7 +7,6 @@ import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_logo.dart';
-import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/styled_button.dart';
 import '../widgets/styled_input.dart';
@@ -831,17 +830,6 @@ class _SignInHeroBanner extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            Positioned.fill(
-              child: IgnorePointer(
-                child: CustomPaint(
-                  painter: KilimPatternPainter(
-                    drawPattern: true,
-                    color: Colors.white,
-                    opacity: 0.05,
-                  ),
-                ),
-              ),
-            ),
             Column(
               children: [
                 Text(

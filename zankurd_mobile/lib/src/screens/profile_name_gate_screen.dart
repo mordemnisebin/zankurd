@@ -5,7 +5,6 @@ import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_logo.dart';
-import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/styled_button.dart';
 
 class ProfileNameGateScreen extends StatefulWidget {
@@ -107,17 +106,6 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                     ),
                     child: Stack(
                       children: [
-                        Positioned.fill(
-                          child: IgnorePointer(
-                            child: CustomPaint(
-                              painter: KilimPatternPainter(
-                                drawPattern: true,
-                                color: Colors.white,
-                                opacity: 0.05,
-                              ),
-                            ),
-                          ),
-                        ),
                         SafeArea(
                           bottom: false,
                           child: Padding(

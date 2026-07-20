@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
@@ -34,6 +35,9 @@ void main() {
             create: (_) => LanguageProvider(),
           ),
           ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
+          ChangeNotifierProvider<ReducedMotionProvider>(
+            create: (_) => ReducedMotionProvider(),
+          ),
         ],
         child: MaterialApp(
           theme: AppTheme.dark(),
@@ -87,6 +91,9 @@ void main() {
             create: (_) => LanguageProvider(),
           ),
           ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
+          ChangeNotifierProvider<ReducedMotionProvider>(
+            create: (_) => ReducedMotionProvider(),
+          ),
         ],
         child: MaterialApp(
           theme: AppTheme.dark(),

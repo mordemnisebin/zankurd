@@ -4,7 +4,6 @@ import '../../data/mastery_store.dart';
 import '../../data/mistake_store.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/error_reporter.dart';
-import '../../widgets/kilim_pattern_painter.dart';
 
 /// "Senin İçin Önerilen" personalized recommendation card.
 ///
@@ -184,17 +183,6 @@ class _RecommendationCardState extends State<RecommendationCard> {
             ),
             child: Stack(
               children: [
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: CustomPaint(
-                      painter: KilimPatternPainter(
-                        drawPattern: true,
-                        color: accentColor,
-                        opacity: 0.03,
-                      ),
-                    ),
-                  ),
-                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

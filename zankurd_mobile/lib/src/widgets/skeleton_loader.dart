@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../theme/app_theme.dart';
+import '../providers/reduced_motion_provider.dart';
 
 ({Color base, Color highlight}) _shimmerColors(BuildContext context) {
   final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -26,6 +28,7 @@ class SkeletonLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final reduceMotion = context.watch<ReducedMotionProvider>().reduceMotion;
     final colors = _shimmerColors(context);
 
     return ListView.builder(
@@ -34,17 +37,25 @@ class SkeletonLoader extends StatelessWidget {
       itemCount: count,
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.only(bottom: 16),
-        child: Shimmer.fromColors(
-          baseColor: colors.base,
-          highlightColor: colors.highlight,
-          child: Container(
-            height: height,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(borderRadius),
-            ),
-          ),
-        ),
+        child: reduceMotion
+            ? Container(
+                height: height,
+                decoration: BoxDecoration(
+                  color: colors.base,
+                  borderRadius: BorderRadius.circular(borderRadius),
+                ),
+              )
+            : Shimmer.fromColors(
+                baseColor: colors.base,
+                highlightColor: colors.highlight,
+                child: Container(
+                  height: height,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(borderRadius),
+                  ),
+                ),
+              ),
       ),
     );
   }
@@ -65,19 +76,29 @@ class SkeletonLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final reduceMotion = context.watch<ReducedMotionProvider>().reduceMotion;
     final colors = _shimmerColors(context);
 
-    return Shimmer.fromColors(
-      baseColor: colors.base,
-      highlightColor: colors.highlight,
-      child: Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-      ),
-    );
+    return reduceMotion
+        ? Container(
+            width: width,
+            height: height,
+            decoration: BoxDecoration(
+              color: colors.base,
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
+          )
+        : Shimmer.fromColors(
+            baseColor: colors.base,
+            highlightColor: colors.highlight,
+            child: Container(
+              width: width,
+              height: height,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
+            ),
+          );
   }
 }

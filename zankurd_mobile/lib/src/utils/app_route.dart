@@ -28,5 +28,4 @@ class AppRoute<T> extends PageRouteBuilder<T> {
       );
 
   static AppRoute<T> to<T>(Widget page) => AppRoute<T>(page: page);
-  static AppRoute<T> replace<T>(Widget page) => AppRoute<T>(page: page);
 }

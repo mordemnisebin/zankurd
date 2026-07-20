@@ -28,172 +28,162 @@ class _ProfileHeroCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
-        decoration: BoxDecoration(
-          // Kategorî/mockup-4 dili: koyu düz yüzey + altın sınır — büyük
-          // gradyan hero kalıntısı yerine.
-          color: AppTheme.surfaceColor(context),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(color: AppTheme.gold.withValues(alpha: 0.35)),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppTheme.pirsOrangeStart, AppTheme.pirsOrangeEnd],
+          ),
         ),
         padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
-                Row(
-                  children: [
-                    InkWell(
-                      key: const ValueKey('profile-avatar-edit'),
-                      customBorder: const CircleBorder(),
-                      onTap: onEditAvatar,
-                      child: Stack(
-                        children: [
-                          // Mockup 10: altın halkalı avatar.
-                          Container(
-                            padding: const EdgeInsets.all(2.5),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppTheme.gold,
-                                width: 2.5,
-                              ),
-                            ),
-                            child: PlayerAvatar(
-                              radius: 34,
-                              photoUrl: avatarIdentity.photoUrl,
-                              iconId: avatarIdentity.iconId,
-                              colorHex: avatarIdentity.colorHex,
-                              frameId: avatarIdentity.frameId,
-                              displayName: displayName,
-                            ),
-                          ),
-                          // Mockup 10: yeşil kamera rozeti.
-                          Positioned(
-                            right: 0,
-                            bottom: 0,
-                            child: Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: AppTheme.correct,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppTheme.surfaceColor(context),
-                                  width: 2,
-                                ),
-                              ),
-                              child: const Icon(
-                                Icons.photo_camera,
-                                size: 12,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.md),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            displayName,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.heading2.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
-                            ),
-                          ),
-                          if (showcaseTitle != null)
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: AppSpacing.xxs,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppSpacing.xs,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppTheme.gold.withValues(alpha: 0.16),
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.pill,
-                                ),
-                              ),
-                              child: Text(
-                                showcaseTitle!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTypography.caption.copyWith(
-                                  color: AppTheme.gold,
-                                ),
-                              ),
-                            )
-                          else
-                            const SizedBox.shrink(),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Divider(color: AppTheme.borderColor(context), height: 1),
-                const SizedBox(height: AppSpacing.sm),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.military_tech_rounded,
-                      color: AppTheme.gold,
-                      size: 22,
-                    ),
-                    const SizedBox(width: AppSpacing.xxs),
-                    Flexible(
-                      child: Text(
-                        ku ? 'Ast $level' : 'Seviye $level',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTypography.bodyLarge.copyWith(
-                          color: AppTheme.textPrimaryColor(context),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.xs),
-                    Flexible(
-                      child: Text(
-                        '$xpInLevel / $xpNeeded XP',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.end,
-                        style: AppTypography.caption.copyWith(
-                          color: AppTheme.textSubColor(context),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(AppRadius.xs),
+                InkWell(
+                  key: const ValueKey('profile-avatar-edit'),
+                  customBorder: const CircleBorder(),
+                  onTap: onEditAvatar,
                   child: Stack(
                     children: [
                       Container(
-                        height: 8,
-                        color: AppTheme.borderColor(context),
+                        padding: const EdgeInsets.all(2.5),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.85),
+                            width: 2.5,
+                          ),
+                        ),
+                        child: PlayerAvatar(
+                          radius: 34,
+                          photoUrl: avatarIdentity.photoUrl,
+                          iconId: avatarIdentity.iconId,
+                          colorHex: avatarIdentity.colorHex,
+                          frameId: avatarIdentity.frameId,
+                          displayName: displayName,
+                        ),
                       ),
-                      FractionallySizedBox(
-                        widthFactor: levelProgress.clamp(0.0, 1.0),
+                      Positioned(
+                        right: 0,
+                        bottom: 0,
                         child: Container(
-                          height: 8,
+                          padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            gradient: AppTheme.goldGradient,
-                            borderRadius: BorderRadius.circular(AppRadius.xs),
+                            color: AppTheme.correct,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: AppTheme.pirsOrangeEnd,
+                              width: 2,
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.photo_camera,
+                            size: 12,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        displayName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.heading2.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                      if (showcaseTitle != null)
+                        Container(
+                          margin: const EdgeInsets.only(top: AppSpacing.xxs),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.xs,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.22),
+                            borderRadius: BorderRadius.circular(AppRadius.pill),
+                          ),
+                          child: Text(
+                            showcaseTitle!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.caption.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      else
+                        const SizedBox.shrink(),
+                    ],
+                  ),
+                ),
               ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Divider(color: Colors.white.withValues(alpha: 0.25), height: 1),
+            const SizedBox(height: AppSpacing.sm),
+            Row(
+              children: [
+                const Icon(
+                  Icons.military_tech_rounded,
+                  color: AppTheme.gold,
+                  size: 22,
+                ),
+                const SizedBox(width: AppSpacing.xxs),
+                Flexible(
+                  child: Text(
+                    ku ? 'Ast $level' : 'Seviye $level',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.xs),
+                Flexible(
+                  child: Text(
+                    '$xpInLevel / $xpNeeded XP',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.end,
+                    style: AppTypography.caption.copyWith(
+                      color: Colors.white.withValues(alpha: 0.72),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.xs),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 8,
+                    color: Colors.white.withValues(alpha: 0.25),
+                  ),
+                  FractionallySizedBox(
+                    widthFactor: levelProgress.clamp(0.0, 1.0),
+                    child: Container(
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: AppTheme.gold,
+                        borderRadius: BorderRadius.circular(AppRadius.xs),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

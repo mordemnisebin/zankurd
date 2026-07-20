@@ -753,7 +753,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
                 RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
           )
           .toList();
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadRoomMessages failed');
       return _offline.loadRoomMessages(roomId);
     }
   }
@@ -1459,7 +1460,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final res = await client.rpc('get_today_contest');
       if (res == null || res.isEmpty) return null;
       return Contest.fromJson(res);
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadTodayContest failed');
       return _offline.loadTodayContest();
     }
   }
@@ -1484,7 +1486,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'finished_at': DateTime.now().toIso8601String(),
         'rank': res['rank'],
       });
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'submitContestEntry failed');
       return _offline.submitContestEntry(
         contestId: contestId,
         correctCount: correctCount,
@@ -1500,7 +1503,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         params: {'p_contest_id': contestId},
       );
       return res;
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'claimContestReward failed');
       return _offline.claimContestReward(contestId);
     }
   }
@@ -1523,7 +1527,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
                 ContestLeaderboardRow.fromJson(row as Map<String, dynamic>),
           )
           .toList();
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'getContestLeaderboard failed');
       return _offline.getContestLeaderboard(contestId: contestId, limit: limit);
     }
   }
@@ -1541,7 +1546,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return (res as List<dynamic>)
           .map((row) => UserContestBadge.fromJson(row as Map<String, dynamic>))
           .toList();
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadUserContestBadges failed');
       return _offline.loadUserContestBadges();
     }
   }
@@ -1562,7 +1568,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         }
         return Lesson.fromJson(map);
       }).toList();
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadLessonsByCategory failed');
       return _offline.loadLessonsByCategory(category);
     }
   }
@@ -1575,7 +1582,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
               as List<dynamic>;
       if (res.isEmpty) return null;
       return res.first as Map<String, dynamic>;
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadLesson failed');
       return _offline.loadLesson(lessonId);
     }
   }
@@ -1592,7 +1600,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return res
           .map((row) => LessonSlide.fromJson(row as Map<String, dynamic>))
           .toList();
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadLessonSlides failed');
       return _offline.loadLessonSlides(lessonId);
     }
   }
@@ -1605,7 +1614,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         params: {'p_lesson_id': lessonId},
       );
       return true;
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'markLessonCompleted failed');
       return _offline.markLessonCompleted(lessonId);
     }
   }
@@ -1621,7 +1631,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .map((row) => row['lesson_id'] as String?)
           .whereType<String>()
           .toSet();
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadCompletedLessonIds failed');
       return _offline.loadCompletedLessonIds();
     }
   }
@@ -1634,7 +1645,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         params: {'p_friend_id': friendId, 'p_friend_name': friendName},
       );
       return (_firstRow(response)?['success'] as bool?) ?? false;
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'addFriend failed');
       return _offline.addFriend(friendId, friendName);
     }
   }
@@ -1647,7 +1659,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         params: {'p_request_id': requestId},
       );
       return (_firstRow(response)?['success'] as bool?) ?? false;
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'acceptFriendRequest failed');
       return _offline.acceptFriendRequest(requestId);
     }
   }
@@ -1660,7 +1673,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         params: {'p_request_id': requestId},
       );
       return (_firstRow(response)?['success'] as bool?) ?? false;
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'rejectFriendRequest failed');
       return _offline.rejectFriendRequest(requestId);
     }
   }
@@ -1679,7 +1693,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             ),
           )
           .toList();
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'searchPlayers failed');
       return _offline.searchPlayers(query);
     }
   }
@@ -1691,7 +1706,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return res
           .map((row) => Friend.fromJson(Map<String, dynamic>.from(row as Map)))
           .toList();
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadFriends failed');
       return _offline.loadFriends();
     }
   }
@@ -1702,7 +1718,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final friends = await loadFriends();
       friends.sort((a, b) => b.totalScore.compareTo(a.totalScore));
       return friends;
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadFriendsLeaderboard failed');
       return _offline.loadFriendsLeaderboard();
     }
   }
@@ -1719,7 +1736,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
                 FriendRequest.fromJson(Map<String, dynamic>.from(row as Map)),
           )
           .toList();
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadPendingFriendRequests failed');
       return _offline.loadPendingFriendRequests();
     }
   }
@@ -1740,7 +1758,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         },
       );
       return (_firstRow(response)?['success'] as bool?) ?? false;
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'syncMissionCompletion failed');
       return _offline.syncMissionCompletion(missionKey, coinReward, xpReward);
     }
   }
@@ -1756,7 +1775,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         params: {'p_event_name': eventName, 'p_event_params': params},
       );
       return (_firstRow(response)?['success'] as bool?) ?? false;
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'logAnalyticsEvent failed');
       return _offline.logAnalyticsEvent(eventName, params);
     }
   }
@@ -1779,7 +1799,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         },
       );
       return (_firstRow(response)?['success'] as bool?) ?? false;
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'saveTournamentProgress failed');
       return _offline.saveTournamentProgress(
         stage,
         userScore,
@@ -1793,7 +1814,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<TournamentBracket> joinTournament() async {
     try {
       return _offline.joinTournament();
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'joinTournament failed');
       return _offline.joinTournament();
     }
   }
@@ -1802,7 +1824,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<TournamentBracket?> loadTournamentBracket() async {
     try {
       return _offline.loadTournamentBracket();
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadTournamentBracket failed');
       return _offline.loadTournamentBracket();
     }
   }
@@ -1819,7 +1842,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         playerScore: playerScore,
         opponentScore: opponentScore,
       );
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'submitTournamentMatch failed');
       return _offline.submitTournamentMatch(
         matchId: matchId,
         playerScore: playerScore,
@@ -1834,7 +1858,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }) async {
     try {
       return _offline.loadTournamentStandings(limit: limit);
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadTournamentStandings failed');
       return _offline.loadTournamentStandings(limit: limit);
     }
   }
@@ -1844,7 +1869,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     try {
       final response = await client.rpc<dynamic>('claim_tournament_reward');
       return (_firstRow(response)?['coins'] as int?) ?? 0;
-    } catch (e) {
+    } catch (e, s) {
+      _recordError(e, s, reason: 'claimTournamentChampionReward failed');
       return _offline.claimTournamentChampionReward();
     }
   }

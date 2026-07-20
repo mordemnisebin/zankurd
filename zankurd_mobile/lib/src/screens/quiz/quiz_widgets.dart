@@ -778,7 +778,9 @@ class _AnswerButton extends StatelessWidget {
         (!suspense && selected && !correct && disabled) || firstAttemptWrong;
     final isChecking = selected && (suspense || !disabled);
 
-    // Gradient belirleme
+    final optionColor = AppTheme.answerOptionColors[index % 4];
+
+    // Gradient belirleme — idle'da her şık kendi kimlik rengini taşır
     final Gradient gradient = correct
         ? AppTheme.correctGradient
         : wrong
@@ -789,26 +791,24 @@ class _AnswerButton extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppTheme.surfaceColor(context).withValues(alpha: 0.98),
-              AppTheme.surfaceHiColor(context).withValues(alpha: 0.88),
+              optionColor,
+              Color.alphaBlend(
+                Colors.black.withValues(alpha: 0.18),
+                optionColor,
+              ),
             ],
           );
 
-    // Dinlenme halinde nötr kenarlık: dört şıkkın dört ayrı renkte
-    // çerçevesi paneli karmaşıklaştırıyordu (Pirs referansı: sakin beyaz
-    // satırlar, renk yalnız rozette ve durum geri bildiriminde).
     final Color borderColor = correct
         ? AppTheme.correct
         : wrong
         ? AppTheme.wrong
         : isChecking
         ? AppTheme.brandGreen
-        : AppTheme.borderColor(context);
+        : Colors.transparent;
 
-    // Metin rengi
-    final Color textColor = (correct || wrong || isChecking)
-        ? Colors.white
-        : AppTheme.textPrimaryColor(context);
+    // Tüm durumlar renkli zemin üzerinde — metin her zaman beyaz
+    const Color textColor = Colors.white;
 
     // 3D Gölge rengi
     final Color shadowColor = correct
@@ -817,7 +817,7 @@ class _AnswerButton extends StatelessWidget {
         ? const Color(0xFFD61A4C)
         : isChecking
         ? AppTheme.brandGreen
-        : Colors.black;
+        : optionColor;
 
     final isPressed = selected;
     final letter = String.fromCharCode(65 + (index % 26));
@@ -917,6 +917,7 @@ class _AnswerButton extends StatelessWidget {
                             index: index,
                             stateActive: stateActive,
                             stateColor: borderColor,
+                            idleColor: optionColor,
                           ),
                           const SizedBox(width: AppSpacing.sm),
                           Expanded(
@@ -1041,33 +1042,27 @@ class _OptionBadge extends StatelessWidget {
     required this.index,
     required this.stateActive,
     required this.stateColor,
+    this.idleColor,
   });
 
   final int index;
-
-  /// Buton bir durumda (doğru/yanlış/seçili) ise rozet beyaza döner.
   final bool stateActive;
   final Color stateColor;
+  // Idle durumda rozet içindeki harf rengi (şıkkın kimlik rengi).
+  final Color? idleColor;
 
   @override
   Widget build(BuildContext context) {
     final letter = String.fromCharCode(65 + (index % 26));
-    // Dalga 5: dinlenme halinde dört rozet dört doygun renk taşıyordu;
-    // renk yalnız reveal'de anlam taşısın diye tüm rozetler nötr gri
-    // outline. Durum aktifken rozet beyaza dönüp durum rengini verir.
-    final bg = stateActive ? Colors.white : Colors.transparent;
-    final fg = stateActive ? stateColor : AppTheme.textMutedColor(context);
+    final fg = stateActive ? stateColor : (idleColor ?? AppTheme.brandGreen);
 
     return Container(
       width: 34,
       height: 34,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: bg,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(AppRadius.xs),
-        border: stateActive
-            ? null
-            : Border.all(color: AppTheme.borderColor(context), width: 1.2),
       ),
       child: Text(letter, style: AppTypography.heading2.copyWith(color: fg)),
     );
@@ -1166,29 +1161,20 @@ class _WildcardButtonState extends State<_WildcardButton> {
         ? 0.45
         : 0.35;
 
-    final borderColor = widget.isActive
-        ? AppTheme.brandGreen
-        : widget.cantAfford
-        // Kilitli joker "hata" değil; kırmızı yerine nötr tema rengi.
+    final borderColor = widget.cantAfford || (!widget.isEnabled && !widget.isActive)
         ? AppTheme.borderColor(context)
-        : widget.isEnabled
-        ? baseColor.withValues(alpha: 0.75)
-        : AppTheme.borderColor(context);
+        : Colors.transparent;
 
     final bgColor = widget.isActive
-        ? AppTheme.brandGreen.withValues(alpha: 0.15)
+        ? AppTheme.brandGreen
         : widget.cantAfford
         ? AppTheme.surfaceHiColor(context).withValues(alpha: 0.4)
         : widget.isEnabled
-        ? baseColor.withValues(alpha: 0.12)
+        ? baseColor
         : null;
 
-    final iconColor = widget.isActive
-        ? AppTheme.brandGreen
-        : widget.cantAfford
-        ? AppTheme.textMutedColor(context)
-        : widget.isEnabled
-        ? baseColor
+    final iconColor = (widget.isEnabled || widget.isActive)
+        ? Colors.white
         : AppTheme.textMutedColor(context);
 
     return Tooltip(
@@ -1232,9 +1218,9 @@ class _WildcardButtonState extends State<_WildcardButton> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: iconColor.withValues(
-                          alpha: widget.isEnabled ? 0.16 : 0.10,
-                        ),
+                        color: (widget.isEnabled || widget.isActive)
+                            ? Colors.white.withValues(alpha: 0.22)
+                            : iconColor.withValues(alpha: 0.10),
                       ),
                       child: Icon(
                         widget.cantAfford

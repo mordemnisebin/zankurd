@@ -9,7 +9,6 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
-import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/screen_identity_header.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
@@ -243,17 +242,6 @@ class _ContestContent extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: CustomPaint(
-                      painter: KilimPatternPainter(
-                        drawPattern: true,
-                        color: AppTheme.gold,
-                        opacity: 0.04,
-                      ),
-                    ),
-                  ),
-                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

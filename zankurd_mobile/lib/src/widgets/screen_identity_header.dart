@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
-import 'kilim_pattern_painter.dart';
 
 /// İkincil ekranların ortak kimlik kartı.
 ///
@@ -46,17 +45,6 @@ class ScreenIdentityHeader extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            Positioned.fill(
-              child: IgnorePointer(
-                child: CustomPaint(
-                  painter: KilimPatternPainter(
-                    drawPattern: true,
-                    color: accent,
-                    opacity: 0.05,
-                  ),
-                ),
-              ),
-            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

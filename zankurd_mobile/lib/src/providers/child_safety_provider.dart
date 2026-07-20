@@ -64,7 +64,9 @@ class ChildSafetyProvider extends ChangeNotifier {
   /// Mod açıkken kişisel ad yerine güvenli, nötr bir görünen ad kullanılır.
   String safeDisplayName(String realName) {
     if (!_enabled) return realName;
-    return 'Fêrkar';
+    // 'Heval' (arkadaş) — nötr, cinsiyetsiz, çocuk dostu bir görünen ad.
+    // Tüm kullanıcılar çocuk modunda bu görünen adı paylaşır; kişisel ad gizlenir.
+    return 'Heval';
   }
 
   /// Serbest sohbet yerine sunulabilecek hazır güvenli mesajlar.
