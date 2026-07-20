@@ -341,7 +341,11 @@ class _ShopScreenState extends State<ShopScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.monetization_on, color: AppTheme.gold, size: 22),
+                    const Icon(
+                      Icons.monetization_on,
+                      color: AppTheme.gold,
+                      size: 22,
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       '${item.cost} coin',
@@ -695,7 +699,9 @@ class _ShopScreenState extends State<ShopScreen> {
               crossAxisCount: crossAxisCount,
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
-              childAspectRatio: 0.72,
+              // Dar ekranda (390x844) ürün kartı içeriği taşıyordu; kartlara
+              // dikey nefes payı verildi (0.72 -> 0.66).
+              childAspectRatio: 0.66,
             ),
             itemCount: restItems.length,
             itemBuilder: (context, index) =>
