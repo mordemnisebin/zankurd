@@ -848,74 +848,78 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     final showExpl = _isLearningExperience && _showExplanation;
 
     return LayoutBuilder(
-      builder: (context, constraints) => FittedBox(
-        key: const ValueKey('quiz-landscape-layout'),
-        fit: BoxFit.scaleDown,
-        // Genis/masaustu viewport'ta icerik zaten tam genislikte; dikey
-        // olarak da ortalanmazsa altta buyuk bos alan kaliyordu.
-        alignment: Alignment.center,
-        child: SizedBox(
-          width: constraints.maxWidth,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Portrait'taki notla aynı: coach-mark anahtarları
-                      // yalnız ilk soruda geçilir (duplicate-GlobalKey).
-                      _buildQuestionSwitcher(
-                        context,
-                        showExplanation: showExpl,
-                        timerKey: index == 0 ? _timerTargetKey : null,
-                        answerAreaKey: index == 0 ? _answerAreaKey : null,
-                        questionVisualReady: index == 0
-                            ? _handleQuestionVisualReady
-                            : null,
-                      ),
-                      if (selectedAnswer == 'TIMEOUT')
-                        _TimeoutNotice(
-                          isKu: _isKu,
-                          correctAnswer: question.correctAnswer,
+      // Pirs hizasi: Stack icinde bu dal onceden shrink-wrap ediyordu (Stack'in
+      // varsayilan topStart hizasina dusuyordu) — SizedBox.expand olmadan
+      // FittedBox'in kendi alignment'i hic devreye giremiyordu. Portrait
+      // dalindaki (satir 784) SizedBox.expand deseni burada da uygulandi.
+      builder: (context, constraints) => SizedBox.expand(
+        child: FittedBox(
+          key: const ValueKey('quiz-landscape-layout'),
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.center,
+          child: SizedBox(
+            width: constraints.maxWidth,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Portrait'taki notla aynı: coach-mark anahtarları
+                        // yalnız ilk soruda geçilir (duplicate-GlobalKey).
+                        _buildQuestionSwitcher(
+                          context,
+                          showExplanation: showExpl,
+                          timerKey: index == 0 ? _timerTargetKey : null,
+                          answerAreaKey: index == 0 ? _answerAreaKey : null,
+                          questionVisualReady: index == 0
+                              ? _handleQuestionVisualReady
+                              : null,
                         ),
-                      if (_isMultiplayer &&
-                          answered &&
-                          _mpPhase == _MultiplayerPhase.waiting)
-                        _MultiplayerWaitingOverlay(isKu: _isKu),
-                      if (_isMultiplayer &&
-                          _mpPhase == _MultiplayerPhase.reveal)
-                        _RevealCountdown(
-                          seconds: _revealCountdown,
-                          isKu: _isKu,
-                        ),
-                    ],
+                        if (selectedAnswer == 'TIMEOUT')
+                          _TimeoutNotice(
+                            isKu: _isKu,
+                            correctAnswer: question.correctAnswer,
+                          ),
+                        if (_isMultiplayer &&
+                            answered &&
+                            _mpPhase == _MultiplayerPhase.waiting)
+                          _MultiplayerWaitingOverlay(isKu: _isKu),
+                        if (_isMultiplayer &&
+                            _mpPhase == _MultiplayerPhase.reveal)
+                          _RevealCountdown(
+                            seconds: _revealCountdown,
+                            isKu: _isKu,
+                          ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                SizedBox(
-                  width: 270,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (!_isLearningExperience) ...[
-                        _buildScoreHeader(),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    width: 270,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (!_isLearningExperience) ...[
+                          _buildScoreHeader(),
+                          const SizedBox(height: 6),
+                        ],
+                        _buildProgressBar(context),
+                        if (!_isLearningExperience) _buildComboRow(),
                         const SizedBox(height: 6),
+                        _buildActionControls(),
+                        if (widget.is1v1) ...[
+                          const SizedBox(height: 8),
+                          _LiveScoreboard(players: livePlayers),
+                        ],
                       ],
-                      _buildProgressBar(context),
-                      if (!_isLearningExperience) _buildComboRow(),
-                      const SizedBox(height: 6),
-                      _buildActionControls(),
-                      if (widget.is1v1) ...[
-                        const SizedBox(height: 8),
-                        _LiveScoreboard(players: livePlayers),
-                      ],
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
