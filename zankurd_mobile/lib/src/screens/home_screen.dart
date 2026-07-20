@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -1088,51 +1087,3 @@ class _MiniLeaderboardState extends State<_MiniLeaderboard> {
   }
 }
 
-class RojPatternPainter extends CustomPainter {
-  const RojPatternPainter();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.05)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.2;
-
-    // Güneş merkezi (Sağ üst / ortalama bölge)
-    final center = Offset(size.width * 0.85, size.height * 0.45);
-
-    // Güneş halkaları
-    canvas.drawCircle(center, 30, paint);
-    canvas.drawCircle(center, 42, paint);
-
-    // Güneş Işınları (Roj / 12 ışın)
-    final rayCount = 12;
-    final innerRadius = 46.0;
-    final outerRadius = 70.0;
-    for (int i = 0; i < rayCount; i++) {
-      final angle = (i * 2 * 3.1415926535) / rayCount;
-      final start = Offset(
-        center.dx + innerRadius * cos(angle),
-        center.dy + innerRadius * sin(angle),
-      );
-      final end = Offset(
-        center.dx + outerRadius * cos(angle),
-        center.dy + outerRadius * sin(angle),
-      );
-      canvas.drawLine(start, end, paint);
-    }
-
-    // Geometrik kilim/dağ çizgileri
-    final kilimPaint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.02)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0;
-
-    for (double i = -50; i < size.width; i += 40) {
-      canvas.drawLine(Offset(i, 0), Offset(i + 120, size.height), kilimPaint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}

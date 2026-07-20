@@ -59,11 +59,21 @@ echo "📤 Dosyalar yükleniyor..."
 
 # Yeni dosyaları yükle (sadece değişen dosyaları)
 cd "$LOCAL_BUILD"
+# TLS zorunlu (explicit FTPS): parola artık ağda düz metin gitmiyor ve
+# process listesinde görünmemesi için URL yerine --user ile veriliyor.
+# Sunucu FTPS desteklemiyorsa ALLOW_INSECURE_FTP=1 ile eski davranışa dön.
+CURL_TLS="--ssl-reqd"
+if [ "${ALLOW_INSECURE_FTP:-0}" = "1" ]; then
+    echo "⚠️  ALLOW_INSECURE_FTP=1: TLS'siz düz FTP kullanılıyor!"
+    CURL_TLS=""
+fi
 find . -type f | while read file; do
     remote_file=$(echo "$file" | sed 's|^\./||')
     echo "📤 Yükleme: $remote_file"
     # -z: sadece değişen dosyaları yükle
-    curl -s -z "$file" -T "$file" "ftp://$FTP_USER:$FTP_PASS@$FTP_SERVER/$REMOTE_DIR/$remote_file" || echo "⚠️  Yükleme başarısız: $remote_file"
+    curl -s $CURL_TLS --user "$FTP_USER:$FTP_PASS" -z "$file" -T "$file" \
+        --ftp-create-dirs "ftp://$FTP_SERVER/$REMOTE_DIR/$remote_file" \
+        || echo "⚠️  Yükleme başarısız: $remote_file"
 done
 
 echo "✅ Yükleme tamamlandı!"

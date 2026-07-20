@@ -890,32 +890,36 @@ class _ShopScreenState extends State<ShopScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // Icon area
-                      Container(
-                        height: 72,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: isPurchased
-                                ? [
-                                    tint.withValues(alpha: 0.10),
-                                    tint.withValues(alpha: 0.04),
-                                  ]
-                                : [
-                                    tint.withValues(alpha: 0.22),
-                                    tint.withValues(alpha: 0.08),
-                                  ],
+                      // Icon area — sabit yükseklik yerine esnek: dar/kısa
+                      // tile'larda (ör. 390dp genişlikte 2 sütun) taşma
+                      // yaratmadan kalan alanı doldurur.
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: isPurchased
+                                  ? [
+                                      tint.withValues(alpha: 0.10),
+                                      tint.withValues(alpha: 0.04),
+                                    ]
+                                  : [
+                                      tint.withValues(alpha: 0.22),
+                                      tint.withValues(alpha: 0.08),
+                                    ],
+                            ),
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
                           ),
-                          borderRadius: BorderRadius.circular(AppRadius.sm),
-                        ),
-                        alignment: Alignment.center,
-                        child: Icon(
-                          item.icon,
-                          color: isPurchased
-                              ? tint.withValues(alpha: 0.5)
-                              : tint,
-                          size: 32,
+                          alignment: Alignment.center,
+                          child: Icon(
+                            item.icon,
+                            color: isPurchased
+                                ? tint.withValues(alpha: 0.5)
+                                : tint,
+                            size: 32,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 10),

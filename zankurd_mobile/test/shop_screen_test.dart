@@ -156,6 +156,21 @@ void main() {
     expect(find.text('Satın alma başarısız oldu.'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('bakiye 0 iken earn-coin CTA 390x844 ekranda taşmadan çizilir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final repository = _ShopRepository(coins: 0);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('shop-earn-coin-cta')), findsOneWidget);
+    // Overflow olsaydı framework exception fırlatırdı.
+    expect(tester.takeException(), isNull);
+  });
 }
 
 /// Bakiye yeterli görünürken sunucunun harcamayı reddettiği senaryo

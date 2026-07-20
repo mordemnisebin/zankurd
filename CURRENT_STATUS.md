@@ -4,7 +4,7 @@
 > dokümanları tarihseldir; eski oturum raporları `arsiv/` klasörüne taşınmıştır.
 > Bu dosya ile başka bir doküman çelişirse bu dosya geçerlidir.
 >
-> Son güncelleme: 2026-07-20
+> Son güncelleme: 2026-07-21
 > Bu belge, projenin gerçek durumunu özetler. Pazarlama dili değil, mühendislik gerçeği içerir.
 
 ---
@@ -23,8 +23,26 @@ push'lı, canlıda):
 - Eski koyu/kültürel mockup ve redesign spec'leri (ÖRNEK TASARIM, bubblegum,
   visual-redesign vb.) SİLİNDİ — çelişki yaratmasınlar diye.
 
-Kalan: kilim ölü-kod temizliği, mağaza earn-coin-cta overflow (390x844).
 Detay: memory `[[design-direction-2026-07]]` ve CLAUDE.md kimlik bölümü.
+
+### 2026-07-21 denetim sonrası yapılanlar
+
+- "Di asta destpêkê/navîn/pêşketî" şablon öneki 1.200 prompttan kaldırıldı
+  (240 seviye çelişkisi giderildi); JSON export yeniden üretildi.
+- Screenshot üreten sahte testler `tool/screenshots/`e taşındı —
+  `flutter test` artık `docs/screenshots/` PNG'lerini değiştirmiyor.
+- Mağaza kart taşması (390x844, 71px) düzeltildi + regresyon testi eklendi.
+- `RojPatternPainter` ölü kodu silindi (kilim temizliğinin kalanı).
+- Deploy script'i FTPS'e geçirildi (`ALLOW_INSECURE_FTP=1` ile eski davranış).
+- `supabase/applied.md` (uygulanma manifesti), `2026-07-21_room_cleanup.sql`
+  ve `2026-07-21_strip_asta_prompt_prefix.sql` yazıldı — **ikisi de henüz
+  canlıya uygulanmadı**.
+- Türkçe içerik envanteri: `supabase/2026-07-21_turkish_content_inventory.csv`
+  (1.845 soru; çeviri hattının girdisi).
+- Kök dizindeki eski ekran görüntüsü/zip'ler `arsiv/medya/`ya taşındı.
+- Bilinen açık: `dart fix` bu makinede çalışmıyor (Türkçe-İ yol hatası,
+  junction'ı gerçek yola çözüyor); 92 info-level lint ASCII yola taşınınca
+  toplu temizlenecek.
 
 ---
 
