@@ -92,7 +92,7 @@ class QuizQuestion {
     return switch (type) {
       QuestionType.multipleChoice => isKu ? 'Hilbijarin' : 'Şıklı',
       QuestionType.trueFalse => isKu ? 'Rast/Xelet' : 'Doğru/Yanlış',
-      QuestionType.visual => isKu ? 'Entık' : 'Görselli',
+      QuestionType.visual => isKu ? 'Wêneyî' : 'Görselli',
     };
   }
 
