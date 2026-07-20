@@ -178,8 +178,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: CustomScrollView(
         controller: widget.scrollController,
         slivers: [
-          // Pirs/mockup-3 sadeliği: kalın banner yerine ince karşılama satırı;
-          // içerik ilk bakışta bir kart daha fazla görünür.
+          // Pirs hizası: kalın turuncu karşılama banner'ı (Pirs'in ana ekran
+          // imzası) — önceki ince satır kararından bilerek vazgeçildi.
           SliverSafeArea(
             bottom: false,
             sliver: SliverToBoxAdapter(
@@ -556,45 +556,57 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ? '$greetingKu, ${shortName ?? 'Lîstikvan'}!'
         : '$greetingTr, ${shortName ?? 'Oyuncu'}!';
 
-    return Row(
+    return Container(
       key: const ValueKey('home-profile-header'),
-      children: [
-        PlayerAvatar(radius: 24, displayName: currentName ?? 'Z'),
-        const SizedBox(width: AppSpacing.sm),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Elips yerine sığdır: uzun selam+ad kombinasyonları
-              // ("İyi Akşamlar, ZanKurd!") kırpılmak yerine hafif küçülür.
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: AlignmentDirectional.centerStart,
-                child: Text(
-                  greeting,
-                  maxLines: 1,
-                  style: AppTypography.heading2.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontSize: 19,
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [AppTheme.brandGreen, AppTheme.brandGreenDeep],
+        ),
+        boxShadow: AppTheme.elevatedShadow(AppTheme.brandGreen),
+      ),
+      child: Row(
+        children: [
+          PlayerAvatar(radius: 24, displayName: currentName ?? 'Z'),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Elips yerine sığdır: uzun selam+ad kombinasyonları
+                // ("İyi Akşamlar, ZanKurd!") kırpılmak yerine hafif küçülür.
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    greeting,
+                    maxLines: 1,
+                    style: AppTypography.heading2.copyWith(
+                      color: Colors.white,
+                      fontSize: 19,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                ku ? 'Amadeyî yanga nû?' : 'Yeni yarışa hazır mısın?',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textSubColor(context),
-                  fontWeight: FontWeight.w500,
+                const SizedBox(height: 2),
+                Text(
+                  ku ? 'Amadeyî yanga nû?' : 'Yeni yarışa hazır mısın?',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.caption.copyWith(
+                    color: Colors.white.withValues(alpha: 0.85),
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        const SizedBox(width: AppSpacing.xs),
-        _buildHeaderQuickControls(context, ku),
-      ],
+          const SizedBox(width: AppSpacing.xs),
+          _buildHeaderQuickControls(context, ku),
+        ],
+      ),
     );
   }
 
