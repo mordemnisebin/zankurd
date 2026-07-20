@@ -699,9 +699,10 @@ class _ShopScreenState extends State<ShopScreen> {
               crossAxisCount: crossAxisCount,
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
-              // Dar ekranda (390x844) ürün kartı içeriği taşıyordu; kartlara
-              // dikey nefes payı verildi (0.72 -> 0.66).
-              childAspectRatio: 0.66,
+              // Dar (2 sütun) ve geniş (3 sütun) ekranda kart genişliği çok
+              // farklı; tek sabit oran genişte gereksiz boşluk, darda taşma
+              // yaratıyordu. Sütun sayısına göre ayrı oran kullanılır.
+              childAspectRatio: crossAxisCount >= 3 ? 0.92 : 0.7,
             ),
             itemCount: restItems.length,
             itemBuilder: (context, index) =>

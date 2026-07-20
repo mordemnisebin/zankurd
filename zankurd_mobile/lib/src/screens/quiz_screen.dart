@@ -30,7 +30,6 @@ import '../widgets/app_panel.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/player_avatar.dart';
-import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/kilim_progress_bar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
 import 'quiz/quiz_effects.dart';
@@ -852,7 +851,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       builder: (context, constraints) => FittedBox(
         key: const ValueKey('quiz-landscape-layout'),
         fit: BoxFit.scaleDown,
-        alignment: Alignment.topCenter,
+        // Genis/masaustu viewport'ta icerik zaten tam genislikte; dikey
+        // olarak da ortalanmazsa altta buyuk bos alan kaliyordu.
+        alignment: Alignment.center,
         child: SizedBox(
           width: constraints.maxWidth,
           child: Padding(
@@ -1391,9 +1392,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
               .take(2)
               .toSet();
     });
-    widget.repository
-        .spendCoins(cost, 'wildcard_fifty_fifty')
-        .catchError((_) => false);
+    widget.repository.spendCoins(cost, 'wildcard_fifty_fifty').catchError((
+      error,
+      stack,
+    ) {
+      ErrorReporter.record(error, stack, reason: 'spend_coins_fifty_fifty');
+      return false;
+    });
   }
 
   void _useAudience() {
@@ -1407,9 +1412,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _wildcard = _wildcard.copyWith(audienceUsed: true);
       _audiencePoll = _buildAudiencePoll();
     });
-    widget.repository
-        .spendCoins(cost, 'wildcard_audience')
-        .catchError((_) => false);
+    widget.repository.spendCoins(cost, 'wildcard_audience').catchError((
+      error,
+      stack,
+    ) {
+      ErrorReporter.record(error, stack, reason: 'spend_coins_audience');
+      return false;
+    });
   }
 
   Map<String, double> _buildAudiencePoll() {
@@ -1455,9 +1464,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(doubleAnswerActivated: true);
     });
-    widget.repository
-        .spendCoins(cost, 'wildcard_double_answer')
-        .catchError((_) => false);
+    widget.repository.spendCoins(cost, 'wildcard_double_answer').catchError((
+      error,
+      stack,
+    ) {
+      ErrorReporter.record(error, stack, reason: 'spend_coins_double_answer');
+      return false;
+    });
   }
 
   void _changeQuestion() {
@@ -1509,9 +1522,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _markQuestionSeen();
     _loadFavoriteState();
     _startTimer();
-    widget.repository
-        .spendCoins(cost, 'wildcard_change_question')
-        .catchError((_) => false);
+    widget.repository.spendCoins(cost, 'wildcard_change_question').catchError((
+      error,
+      stack,
+    ) {
+      ErrorReporter.record(error, stack, reason: 'spend_coins_change_question');
+      return false;
+    });
   }
 
   // ─── Soru paneli ─────────────────────────────────────────────────────────
@@ -1554,17 +1571,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       child: Stack(
         clipBehavior: Clip.hardEdge,
         children: [
-          Positioned.fill(
-            child: IgnorePointer(
-              child: CustomPaint(
-                painter: KilimPatternPainter(
-                  drawPattern: true,
-                  color: catColor,
-                  opacity: 0.05,
-                ),
-              ),
-            ),
-          ),
           Positioned(
             top: -18,
             right: -12,
@@ -1929,7 +1935,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             .from('rooms')
             .update({'current_question_index': nextIndex})
             .eq('id', widget.room.id!);
-      } catch (e) {
+      } catch (e, s) {
+        ErrorReporter.record(e, s, reason: 'QuizScreen room sync failed');
         // Fallback
         _next();
       }
@@ -1975,7 +1982,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     // result: quiz rotası değiştirilirken çağıranın await'ine "tamamlandı"
     // sinyali taşır (yarıda çıkışta null döner — bkz. level_screen).
     Navigator.of(context).pushReplacement(
-      AppRoute.replace(
+      AppRoute.to(
         QuizResultScreen(
           repository: widget.repository,
           room: widget.room,
@@ -2191,7 +2198,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       if (!mounted) return;
       context.read<SoundProvider>().playWin();
       Navigator.of(context).pushReplacement(
-        AppRoute.replace(
+        AppRoute.to(
           QuizResultScreen(
             repository: widget.repository,
             room: widget.room,

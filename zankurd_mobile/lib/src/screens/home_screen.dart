@@ -55,7 +55,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool _roomActionLoading = false;
-  int? _coinBalance;
+  // "—" yükleme placeholder'ı yerine 0 ile başlıyor: kısa an için kırık
+  // görünen bir tire yerine, gerçek bakiye gelince normal bir güncelleme.
+  int _coinBalance = 0;
   int _streak = 0;
   List<DailyMission> _missions = [];
   int _reviewReadyCount = 0;
@@ -443,7 +445,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   child: chip(
                     Icons.monetization_on,
                     AppTheme.gold,
-                    _coinBalance == null ? '—' : '$_coinBalance',
+                    '$_coinBalance',
                     ku ? 'Xeruz' : 'Coin',
                     tappable: true,
                   ),
