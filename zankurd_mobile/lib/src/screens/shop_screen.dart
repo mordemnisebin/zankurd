@@ -871,128 +871,133 @@ class _ShopScreenState extends State<ShopScreen> {
         borderRadius: BorderRadius.circular(AppRadius.card),
         splashColor: tint.withValues(alpha: 0.15),
         highlightColor: tint.withValues(alpha: 0.07),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(
-              color: tint.withValues(alpha: isPurchased ? 0.18 : 0.28),
-              width: 1.1,
+        child: ClipRRect(
+          // Pirs hizası: kart kenarlığı/gölgesi yok — kimlik yalnız ikon
+          // renginde ve alttaki tam-genişlik renkli çizgide.
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          child: Container(
+            decoration: BoxDecoration(
+              color: isPurchased
+                  ? AppTheme.surfaceColor(context).withValues(alpha: 0.7)
+                  : AppTheme.surfaceColor(context),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: tint.withValues(alpha: isPurchased ? 0.04 : 0.10),
-                blurRadius: 14,
-                offset: const Offset(0, 4),
-              ),
-            ],
-            color: isPurchased
-                ? AppTheme.surfaceColor(context).withValues(alpha: 0.7)
-                : AppTheme.surfaceColor(context),
-          ),
-          child: Stack(
-            children: [
-              // Card content
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Icon area
-                    Container(
-                      height: 72,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: isPurchased
-                              ? [
-                                  tint.withValues(alpha: 0.10),
-                                  tint.withValues(alpha: 0.04),
-                                ]
-                              : [
-                                  tint.withValues(alpha: 0.22),
-                                  tint.withValues(alpha: 0.08),
-                                ],
+            child: Stack(
+              children: [
+                // Card content
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Icon area
+                      Container(
+                        height: 72,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: isPurchased
+                                ? [
+                                    tint.withValues(alpha: 0.10),
+                                    tint.withValues(alpha: 0.04),
+                                  ]
+                                : [
+                                    tint.withValues(alpha: 0.22),
+                                    tint.withValues(alpha: 0.08),
+                                  ],
+                          ),
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
                         ),
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
+                        alignment: Alignment.center,
+                        child: Icon(
+                          item.icon,
+                          color: isPurchased
+                              ? tint.withValues(alpha: 0.5)
+                              : tint,
+                          size: 32,
+                        ),
                       ),
-                      alignment: Alignment.center,
-                      child: Icon(
-                        item.icon,
-                        color: isPurchased ? tint.withValues(alpha: 0.5) : tint,
-                        size: 32,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    // Title — uzun adlar kesilmesin: 2 satır, ellipsis yok.
-                    Text(
-                      title,
-                      maxLines: 2,
-                      overflow: TextOverflow.clip,
-                      style: TextStyle(
-                        color: isPurchased
-                            ? AppTheme.textMutedColor(context)
-                            : AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w800,
-                        fontSize: 14,
-                        height: 1.2,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    // Description
-                    Expanded(
-                      child: Text(
-                        desc,
+                      const SizedBox(height: 10),
+                      // Title — uzun adlar kesilmesin: 2 satır, ellipsis yok.
+                      Text(
+                        title,
                         maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.clip,
                         style: TextStyle(
                           color: isPurchased
-                              ? AppTheme.textMutedColor(
-                                  context,
-                                ).withValues(alpha: 0.7)
-                              : AppTheme.textMutedColor(context),
-                          fontSize: 11,
-                          height: 1.35,
+                              ? AppTheme.textMutedColor(context)
+                              : AppTheme.textPrimaryColor(context),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 14,
+                          height: 1.2,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    // Price + Action
-                    SizedBox(
-                      height: 38,
-                      child: isPurchased
-                          ? _buildOwnedChip(ku)
-                          : _buildBuyButton(item, ku, canAfford),
-                    ),
-                  ],
-                ),
-              ),
-              // Owned overlay indicator
-              if (isPurchased)
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(
-                      color: AppTheme.correct,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0x44000000),
-                          blurRadius: 6,
-                          offset: Offset(0, 2),
+                      const SizedBox(height: 4),
+                      // Description
+                      Expanded(
+                        child: Text(
+                          desc,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: isPurchased
+                                ? AppTheme.textMutedColor(
+                                    context,
+                                  ).withValues(alpha: 0.7)
+                                : AppTheme.textMutedColor(context),
+                            fontSize: 11,
+                            height: 1.35,
+                          ),
                         ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.check_rounded,
-                      size: 14,
-                      color: Colors.white,
-                    ),
+                      ),
+                      const SizedBox(height: 10),
+                      // Price + Action
+                      SizedBox(
+                        height: 38,
+                        child: isPurchased
+                            ? _buildOwnedChip(ku)
+                            : _buildBuyButton(item, ku, canAfford),
+                      ),
+                    ],
                   ),
                 ),
-            ],
+                // Owned overlay indicator
+                if (isPurchased)
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: AppTheme.correct,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x44000000),
+                            blurRadius: 6,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.check_rounded,
+                        size: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                // Pirs imzası: tam-genişlik, kenardan kenara renkli çizgi.
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    height: 4,
+                    color: tint.withValues(alpha: isPurchased ? 0.25 : 0.7),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

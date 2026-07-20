@@ -9,7 +9,6 @@ import '../utils/duration_format.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
-import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/screen_identity_header.dart';
 import '../widgets/tournament_bracket_widget.dart';
 import 'quiz_screen.dart';
@@ -166,9 +165,13 @@ class _TournamentScreenState extends State<TournamentScreen> {
       );
       return false;
     });
-    widget.repository
-        .logAnalyticsEvent('tournament_started', null)
-        .catchError((_) => false);
+    widget.repository.logAnalyticsEvent('tournament_started', null).catchError((
+      error,
+      stack,
+    ) {
+      ErrorReporter.record(error, stack, reason: 'log_tournament_started');
+      return false;
+    });
   }
 
   TournamentMatch? get _userMatch {
@@ -336,7 +339,14 @@ class _TournamentScreenState extends State<TournamentScreen> {
     if (isFinal && !userLost) {
       widget.repository
           .logAnalyticsEvent('tournament_champion', null)
-          .catchError((_) => false);
+          .catchError((error, stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'log_tournament_champion',
+            );
+            return false;
+          });
     }
 
     final stages = ['quarter', 'semi', 'final', 'won'];
@@ -539,31 +549,12 @@ class _LobbyView extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(AppSpacing.lg),
             decoration: BoxDecoration(
-              // Kategorî/mockup-4 dili: koyu düz yüzey + altın sınır —
-              // büyük gradyan hero kalıntısı yerine.
+              // Pirs hizası: düz yüzey, kart kenarlığı/gölgesi yok — kimlik
+              // altın kupa rozetinin kendi gradyanında taşınır.
               color: AppTheme.surfaceColor(context),
-              border: Border.all(color: AppTheme.gold.withValues(alpha: 0.35)),
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.gold.withValues(alpha: 0.10),
-                  blurRadius: 14,
-                  offset: const Offset(0, 5),
-                ),
-              ],
             ),
             child: Stack(
               children: [
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: CustomPaint(
-                      painter: KilimPatternPainter(
-                        drawPattern: true,
-                        color: AppTheme.gold,
-                        opacity: 0.05,
-                      ),
-                    ),
-                  ),
-                ),
                 Column(
                   children: [
                     Container(
