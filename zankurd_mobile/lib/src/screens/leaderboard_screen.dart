@@ -11,7 +11,6 @@ import '../models/league_tier.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_state.dart';
-import '../widgets/kilim_pattern_painter.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/roj_mascot.dart';
 import 'friends_screen.dart';
@@ -608,17 +607,6 @@ class _Podium extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            Positioned.fill(
-              child: IgnorePointer(
-                child: CustomPaint(
-                  painter: KilimPatternPainter(
-                    drawPattern: true,
-                    color: AppTheme.gold,
-                    opacity: 0.06,
-                  ),
-                ),
-              ),
-            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: slots.map((s) => Expanded(child: s)).toList(),
@@ -771,32 +759,34 @@ class _RankRow extends StatelessWidget {
         horizontal: AppSpacing.md,
         vertical: AppSpacing.sm,
       ),
-      decoration: AppTheme.statCard(context, AppTheme.gold).copyWith(
-        border: Border.all(
-          color: entry.rank <= 10
-              ? AppTheme.gold.withValues(alpha: 0.22)
-              : AppTheme.borderColor(context).withValues(alpha: 0.45),
-        ),
+      // Pirs hizası: düz satır — kart kenarlığı/gölgesi yok, yalnız hafif
+      // zemin tonu ve rütbe daire rozeti taşır kimliği.
+      decoration: BoxDecoration(
+        color: entry.rank <= 10
+            ? AppTheme.gold.withValues(alpha: 0.06)
+            : AppTheme.surfaceColor(context),
+        borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
       ),
       child: Row(
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: 32,
+            height: 32,
             decoration: BoxDecoration(
-              color: AppTheme.surfaceHiColor(context),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: AppTheme.borderColor(context),
-                width: 1,
-              ),
+              shape: BoxShape.circle,
+              color: entry.rank <= 10
+                  ? AppTheme.gold
+                  : AppTheme.textMutedColor(context).withValues(alpha: 0.16),
             ),
             alignment: Alignment.center,
             child: Text(
               '${entry.rank}',
               style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.textSubColor(context),
+                color: entry.rank <= 10
+                    ? Colors.white
+                    : AppTheme.textSubColor(context),
                 fontWeight: FontWeight.w700,
+                fontSize: 13,
               ),
             ),
           ),
@@ -925,9 +915,7 @@ class _FriendRankRow extends StatelessWidget {
                     height: 12,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: online
-                          ? AppTheme.brandGreen
-                          : AppTheme.textMuted,
+                      color: online ? AppTheme.brandGreen : AppTheme.textMuted,
                       border: Border.all(
                         color: AppTheme.surfaceColor(context),
                         width: 2,
