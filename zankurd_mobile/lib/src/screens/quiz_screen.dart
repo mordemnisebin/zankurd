@@ -1887,6 +1887,17 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       return;
     }
 
+    // Önceki sorunun reveal/advance timer'ları hâlâ yaşıyor olabilir (dışarıdan
+    // bir index senkronizasyonu — rakip broadcast'i, realtime veya poll —
+    // burayı _startRevealPhase()'in kendi 5sn'lik zamanlayıcısı dolmadan
+    // tetikleyebilir). İptal edilmezlerse, süreleri dolduğunda ARTIK GÜNCEL
+    // index üzerinden bir adım daha ilerletip yeni soruyu atlarlar
+    // (2026-07-21 canlı denetiminde bulunan "soru kendi kendine atlıyor" hatası).
+    _autoNextTimer?.cancel();
+    _revealTimer?.cancel();
+    _revealTickTimer?.cancel();
+    _opponentWaitTimer?.cancel();
+
     _explanationController.stop();
     _explanationController.reset();
     setState(() {
