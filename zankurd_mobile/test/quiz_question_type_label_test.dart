@@ -7,7 +7,7 @@ void main() {
       id: 'q1',
       category: 'Ziman',
       prompt: 'test',
-      answers: const ['a', 'b'],
+      answers: ['a', 'b'],
       correctAnswer: 'a',
       explanation: '',
       difficulty: 1,
