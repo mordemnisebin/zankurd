@@ -122,8 +122,26 @@ Detay: memory `[[design-direction-2026-07]]` ve CLAUDE.md kimlik bölümü.
   (tofu/kayıp karakter yok).
 - Commit: "feat(theme): jenerik Material ikonlarını Font Awesome ile
   değiştir" (77 dosya).
-- **Sırada:** Paradigma/Siyaset kategorilerindeki siyasi-felsefe
-  terminolojisi için web araştırmalı çeviri (kullanıcı emri, 2026-07-21).
+- **Paradigma/Siyaset içerik çevirisi tamamlandı (kullanıcı emri: web
+  araştırmalı çeviri).** 264 sorunun cevap/açıklama metinleri neredeyse
+  tamamen Türkçe kalmıştı (yalnızca soru kökü Kurmancî idi). Analiz
+  gösterdi ki bu aslında küçük, tekrar kullanılan bir terminoloji
+  sözlüğüydü: 94 benzersiz "'terim' → tanım" çifti + 28 doğru/yanlış
+  şablonu + 34 "geçerli bir kavramdır" şablonu + 16 özgün cümle — tek
+  seferde çevrilip tüm tekrarlara (747 cevap seçeneği + 172 açıklama)
+  uygulandı (`tool/translate_paradigma_siyaset.py`, idempotent).
+  Terminoloji web araştırmasına dayanır: Öcalan'ın Kurmancî çevirileri
+  (Manîfestoya Şaristaniya Demokratîk, archive.org), akademik jineolojî
+  kaynakları ("zayenda civakî" = toplumsal cinsiyet, yerleşik akademik
+  terim), yerleşik Kürt siyasi sözlüğü (netew-dewlet, modernîteya
+  kapîtalîst, konfederalîzma demokratîk). `dart analyze` temiz,
+  `question_bank_test.dart` dahil 631 test yeşil.
+  **Bilinçli olarak bırakılan:** soru köklerinde (prompt) hâlâ tırnak
+  içinde orijinal Türkçe terim kullanılan yerler var (ör. "'toplumsal
+  cinsiyet' ... paradîgmayê ye."). Bunun düzeltilmesi terimin kendisinin
+  Kürtçeleştirilip sınavda öyle sorulup sorulmayacağına dair ayrı bir
+  ürün/pedagoji kararı — kullanıcı onayı gerektirir, otomatik
+  uygulanmadı.
 
 ---
 
