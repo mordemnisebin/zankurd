@@ -106,6 +106,7 @@ flutter:
     - assets/data/offline_questions.json
     - assets/question_images/
     - assets/zankurd.webp
+    - assets/zankurd_icon.webp
     - assets/sounds/
     - assets/animations/
     - assets/illustrations/

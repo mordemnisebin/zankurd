@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
-/// ZanKurd marka logosu (assets/zankurd.webp).
+/// ZanKurd marka logosu.
 ///
-/// 2026-07-21: logo artık saydam arka planlı (tool/make_logo_transparent.py)
-/// — [onCard] true verilse bile beyaz kutu ARTIK ÇİZİLMİYOR. Eskiden logo
-/// opak beyaz zeminliydi ve turuncu gradyan üzerine ayrı, kopuk bir kare
-/// gibi duruyordu ("ayrı bir kare, diğer alanlar ayrı bir bölge gibi" —
-/// kullanıcı geri bildirimi); saydamlık sayesinde logo artık hangi
-/// zeminin üzerine konursa konsun doğrudan içine gömülü görünür.
+/// 2026-07-21: logo saydam arka planlı (tool/make_logo_transparent.py) —
+/// [onCard] true verilse bile beyaz kutu çizilmiyor, hangi zeminin
+/// üzerine konursa konsun doğrudan içine gömülü görünür.
+///
+/// [width] < [_wordmarkThreshold] olduğunda tam logo yerine yalnızca
+/// simge (assets/zankurd_icon.webp — Z + güneş + dağ + kitap, "ZANKURD"
+/// yazısı olmadan) gösterilir: küçük boyutlarda ("Xweş hatî ZanKurd!"
+/// başlığının üstündeki 76-88px kullanım gibi) tam logo + wordmark
+/// birlikte okunaksız bir karmaşaya dönüşüyordu (kullanıcı geri
+/// bildirimi — "kötü duruyor"). Yanındaki başlık metni zaten marka
+/// adını yazılı olarak veriyor, simge tekrar yazmaya gerek bırakmıyor.
 /// [onCard]/[cardRadius]/[cardPadding] API geriye-uyum için korunuyor.
 class AppLogo extends StatelessWidget {
   const AppLogo({
@@ -23,10 +28,15 @@ class AppLogo extends StatelessWidget {
   final double cardRadius;
   final EdgeInsets cardPadding;
 
+  static const double _wordmarkThreshold = 150;
+
   @override
   Widget build(BuildContext context) {
+    final asset = width < _wordmarkThreshold
+        ? 'assets/zankurd_icon.webp'
+        : 'assets/zankurd.webp';
     return Image.asset(
-      'assets/zankurd.webp',
+      asset,
       width: width,
       fit: BoxFit.contain,
       filterQuality: FilterQuality.high,
