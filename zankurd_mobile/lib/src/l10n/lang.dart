@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../services/analytics_service.dart';
+
 class LanguageProvider extends ChangeNotifier {
   LanguageProvider({String initialLang = 'ku', SharedPreferences? preferences})
     : this._(initialLang, preferences);
@@ -32,6 +34,7 @@ class LanguageProvider extends ChangeNotifier {
     if (_lang != nextLang) {
       _lang = nextLang;
       _preferences?.setString(_storageKey, nextLang);
+      AnalyticsService.instance.logLanguageChange(nextLang);
       notifyListeners();
     }
   }

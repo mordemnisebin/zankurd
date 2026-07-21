@@ -22,6 +22,7 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/wildcard.dart';
 import '../l10n/lang.dart';
+import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -99,6 +100,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   bool get _isLearningExperience =>
       widget.experience == QuizExperience.learning;
   bool get _usesTimer => widget.enableTimer && !_isLearningExperience;
+
+  /// Analytics'te "hangi modda oynanıyor" ayrımı için (quiz_start event'i).
+  String get _quizModeLabel {
+    if (_isLearningExperience) return 'learning';
+    if (widget.practice) return 'practice';
+    if (widget.is1v1) return '1v1';
+    if (widget.dailyQuiz) return 'daily';
+    if (widget.botRace) return 'bot_race';
+    return 'solo';
+  }
   int index = 0;
   int score = 0;
   int streak = 0;
@@ -192,6 +203,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _questions = List.of(widget.questions);
     _questionVisualReady = _questions.isEmpty || !_questions.first.hasImage;
     _loadCoinBalance();
+    AnalyticsService.instance.logQuizStart(
+      category: widget.room.category,
+      mode: _quizModeLabel,
+    );
 
     _timerController = AnimationController(
       vsync: this,

@@ -39,9 +39,16 @@ Detay: memory `[[design-direction-2026-07]]` ve CLAUDE.md kimlik bölümü.
   2026-07-21'de kullanıcı tarafından Supabase SQL Editor'den canlıya
   uygulandı**; canlı `questions.prompt` artık "Di asta …" öneki taşımıyor,
   eski oda/kuyruk temizlik fonksiyonu (`cleanup_stale_rooms`) canlıda mevcut
-  (pg_cron zamanlaması ayrıca Studio'dan etkinleştirilmeli, dosyadaki not).
+  ve `2026-07-21_room_cleanup_cron.sql` ile saatlik pg_cron işi (`17 * * * *`)
+  de aktif — eski odalar artık otomatik temizleniyor.
 - Quiz'de görsel soru tipi etiketi "Entık" (bozuk kelime) → "Wêneyî" olarak
   düzeltildi (canlı web build turunda bulundu, regresyon testi eklendi).
+- Supabase hata-enjeksiyon testleri eklendi (`test/supabase_offline_fallback_test.dart`):
+  ağ erişilemez olduğunda repository'nin çökmediği VE sahte skor/coin/oda
+  üretmediği artık test edilen bir davranış.
+- Firebase Analytics gerçekten kullanıcı akışlarına bağlandı: `quiz_start`,
+  `quiz_complete`, `theme_change`, `language_change` event'leri canlı web
+  build'de doğrulandı (önceden servis hiç çağrılmıyordu, bkz. §4 tablosu).
 - Türkçe içerik envanteri: `supabase/2026-07-21_turkish_content_inventory.csv`
   (1.845 soru; çeviri hattının girdisi).
 - Kök dizindeki eski ekran görüntüsü/zip'ler `arsiv/medya/`ya taşındı.
@@ -76,7 +83,7 @@ Detay: memory `[[design-direction-2026-07]]` ve CLAUDE.md kimlik bölümü.
 
 | Servis / Özellik | Durum | Açıklama |
 |---|---|---|
-| **AnalyticsService** | **GERÇEK (Firebase'e bağlı)** | Firebase Analytics entegre; init başarısız olursa graceful degrade (yalnız debugPrint). ⚠️ Olayların gerçek cihazda Firebase Console'a ulaştığı **henüz doğrulanmadı**. |
+| **AnalyticsService** | **GERÇEK ve BAĞLANDI (2026-07-21 doğrulandı)** | Firebase Analytics entegre; `quiz_start`, `quiz_complete`, `theme_change`, `language_change`, `badge_earned` artık gerçek ekranlardan çağrılıyor (önceden yalnızca `initialize()` çağrılıyordu, hiçbir event tetiklenmiyordu). Canlı web build'de tüm event'ler console log'unda hatasız doğrulandı. Ayrıca Supabase tabanlı ayrı bir analytics hattı (`analytics_events` tablosu, `log_analytics_event` RPC) da paralel çalışıyor — quiz_complete, lesson_completed, tournament_started/champion, friend_request_sent. |
 | **NotificationService** | **GERÇEK** | `flutter_local_notifications` ile gerçek yerel günlük hatırlatıcılar zamanlanıyor (eski Timer simülasyonu değil). |
 | **Turnuva** | **GERÇEK ama bot tabanlı** | Çevrimiçi insan turnuvası değil; bot rakiplere karşı yerel akış (çeyrek/yarı/final). |
 | **1v1 (online matchmaking)** | **GERÇEK (Supabase realtime)** | `join_matchmaking` RPC + `matchmaking_queue` realtime yayını canlıda aktif; sorular `room_questions`'tan okunur. ⚠️ **İki gerçek cihazla uçtan uca hiç test edilmedi.** |

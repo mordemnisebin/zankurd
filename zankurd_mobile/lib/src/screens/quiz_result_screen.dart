@@ -23,6 +23,7 @@ import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import '../data/daily_mission_store.dart';
 import '../data/xp_store.dart';
+import '../services/analytics_service.dart';
 import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
 import '../widgets/mission_toast.dart';
@@ -193,6 +194,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         : ((correctCount / totalQuestions) * 100).round();
     final reviewService = await ReviewService.load();
     await reviewService.recordQuizCompletion(accuracyPercent: accuracyPercent);
+
+    AnalyticsService.instance.logQuizComplete(
+      category: room.category,
+      correctCount: correctCount,
+      totalQuestions: totalQuestions,
+      xpEarned: earnedXP,
+    );
+    for (final achievement in newAchievements) {
+      AnalyticsService.instance.logBadgeEarned(achievement.id);
+    }
 
     if (mounted) {
       setState(() {

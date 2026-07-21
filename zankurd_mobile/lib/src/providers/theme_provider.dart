@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../services/analytics_service.dart';
+
 class ThemeProvider extends ChangeNotifier {
   // Pirs hizası: açık tema varsayılan (parlak/beyaz ilk izlenim).
   ThemeProvider({ThemeMode initialMode = ThemeMode.light}) : _mode = initialMode;
@@ -28,6 +30,7 @@ class ThemeProvider extends ChangeNotifier {
     if (_mode == mode) return;
     _mode = mode;
     notifyListeners();
+    AnalyticsService.instance.logThemeChange(_encode(mode));
     final preferences = await SharedPreferences.getInstance();
     await preferences.setString(_storageKey, _encode(mode));
   }
