@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 /// ZanKurd marka logosu (assets/zankurd.webp).
 ///
-/// Orijinal Z + güneş + dağ + kitap kompozisyonu korunuyor; 2026-07-21'de
-/// renk paleti güncel uygulama temasına (turuncu/altın/lacivert,
-/// AppTheme.brandGreen/brandGreenDeep/secondaryAccent/lightTextPrimary)
-/// uyarlandı — bkz. tool/recolor_logo.py. Logonun arka planı beyaz
-/// olduğundan, koyu zeminlerde okunabilmesi için [onCard] true
-/// verildiğinde beyaz yuvarlatılmış bir kart içine yerleştirilir.
+/// 2026-07-21: logo artık saydam arka planlı (tool/make_logo_transparent.py)
+/// — [onCard] true verilse bile beyaz kutu ARTIK ÇİZİLMİYOR. Eskiden logo
+/// opak beyaz zeminliydi ve turuncu gradyan üzerine ayrı, kopuk bir kare
+/// gibi duruyordu ("ayrı bir kare, diğer alanlar ayrı bir bölge gibi" —
+/// kullanıcı geri bildirimi); saydamlık sayesinde logo artık hangi
+/// zeminin üzerine konursa konsun doğrudan içine gömülü görünür.
+/// [onCard]/[cardRadius]/[cardPadding] API geriye-uyum için korunuyor.
 class AppLogo extends StatelessWidget {
   const AppLogo({
     this.width = 160,
@@ -19,37 +20,17 @@ class AppLogo extends StatelessWidget {
 
   final double width;
   final bool onCard;
-
-  /// Beyaz kartın köşe yarıçapı (sayfadaki kartlarla eşitlenebilir).
   final double cardRadius;
-
-  /// Beyaz kartın iç boşluğu (logo kutusu küçültülebilir).
   final EdgeInsets cardPadding;
 
   @override
   Widget build(BuildContext context) {
-    final image = Image.asset(
+    return Image.asset(
       'assets/zankurd.webp',
       width: width,
       fit: BoxFit.contain,
       filterQuality: FilterQuality.high,
       isAntiAlias: true,
-    );
-    if (!onCard) return image;
-    return Container(
-      padding: cardPadding,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(cardRadius),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.18),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: image,
     );
   }
 }
