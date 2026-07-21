@@ -5,6 +5,7 @@ import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Kullanıcıların yeni soru önerebileceği ekran.
 ///
@@ -151,7 +152,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
 
                 // Kategori seçimi
                 _SectionHeader(
-                  icon: Icons.category_outlined,
+                  icon: AppIcons.tableCells,
                   color: AppTheme.playCyan,
                   title: ku ? 'Kategorî' : 'Kategori',
                 ),
@@ -191,7 +192,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
 
                 // Soru metni
                 _SectionHeader(
-                  icon: Icons.help_outline_rounded,
+                  icon: AppIcons.circleQuestion,
                   color: AppTheme.playPink,
                   title: ku ? 'Pirs (Kurmancî)' : 'Soru (Kurmancî)',
                 ),
@@ -213,7 +214,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
 
                 // Cevaplar
                 _SectionHeader(
-                  icon: Icons.list_alt_rounded,
+                  icon: AppIcons.listCheck,
                   color: AppTheme.correct,
                   title: ku ? 'Bersiv' : 'Cevaplar',
                 ),
@@ -253,7 +254,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
 
                 // Doğru cevap seçici
                 _SectionHeader(
-                  icon: Icons.check_circle_outline,
+                  icon: AppIcons.circleCheck,
                   color: AppTheme.gold,
                   title: ku ? 'Bersiva Rast Hilbijêre' : 'Doğru Cevabı Seç',
                 ),
@@ -312,7 +313,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
 
                 // Açıklama (isteğe bağlı)
                 _SectionHeader(
-                  icon: Icons.lightbulb_outline,
+                  icon: AppIcons.lightbulb,
                   color: AppTheme.violet,
                   title: ku ? 'Şîrove (Vebijarkî)' : 'Açıklama (İsteğe bağlı)',
                 ),
@@ -330,7 +331,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
 
                 // Zorluk seviyesi
                 _SectionHeader(
-                  icon: Icons.speed_rounded,
+                  icon: AppIcons.gaugeHigh,
                   color: AppTheme.brandGreen,
                   title: ku
                       ? 'Astê Zehmetiyê: $_difficulty'
@@ -391,7 +392,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                               color: Colors.white,
                             ),
                           )
-                        : const Icon(Icons.send_rounded),
+                        : const Icon(AppIcons.paperPlane),
                     label: Text(
                       ku ? 'Pirsê Bişîne' : 'Soruyu Gönder',
                       style: const TextStyle(
@@ -441,7 +442,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                         boxShadow: AppTheme.elevatedShadow(AppTheme.correct),
                       ),
                       child: const Icon(
-                        Icons.check_rounded,
+                        AppIcons.check,
                         color: Colors.white,
                         size: 44,
                       ),
@@ -577,7 +578,7 @@ class _AnswerField extends StatelessWidget {
             ? const Padding(
                 padding: EdgeInsets.all(14),
                 child: Icon(
-                  Icons.check_circle_rounded,
+                  AppIcons.circleCheck,
                   color: AppTheme.correct,
                   size: 22,
                 ),

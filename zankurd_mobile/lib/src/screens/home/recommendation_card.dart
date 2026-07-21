@@ -4,6 +4,7 @@ import '../../data/mastery_store.dart';
 import '../../data/mistake_store.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/error_reporter.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// "Senin İçin Önerilen" personalized recommendation card.
 ///
@@ -229,7 +230,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
                             ],
                           ),
                           child: const Icon(
-                            Icons.lightbulb_outline_rounded,
+                            AppIcons.lightbulb,
                             color: Colors.white,
                             size: 20,
                           ),
@@ -254,7 +255,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
                       width: double.infinity,
                       child: ElevatedButton.icon(
                         onPressed: () => widget.onTapCategory(catKu),
-                        icon: const Icon(Icons.play_arrow_rounded, size: 18),
+                        icon: const Icon(AppIcons.play, size: 18),
                         label: Text(
                           isKu ? 'Hema Bixebite' : 'Hemen Çalış',
                           style: AppTypography.bodyMedium.copyWith(

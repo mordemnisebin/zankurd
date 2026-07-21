@@ -79,7 +79,7 @@ class _ProfileHeroCard extends StatelessWidget {
                             ),
                           ),
                           child: const Icon(
-                            Icons.photo_camera,
+                            AppIcons.camera,
                             size: 12,
                             color: Colors.white,
                           ),
@@ -134,7 +134,7 @@ class _ProfileHeroCard extends StatelessWidget {
             Row(
               children: [
                 const Icon(
-                  Icons.military_tech_rounded,
+                  AppIcons.medal,
                   color: AppTheme.gold,
                   size: 22,
                 ),
@@ -287,7 +287,7 @@ class _AchievementShowcase extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.close),
+                    icon: const Icon(AppIcons.xmark),
                     tooltip: isKu ? 'Bigire' : 'Kapat',
                     onPressed: () => Navigator.pop(sheetContext),
                   ),
@@ -392,7 +392,7 @@ class _AchievementShowcase extends StatelessWidget {
             child: Row(
               children: [
                 const Icon(
-                  Icons.workspace_premium_outlined,
+                  AppIcons.medal,
                   color: AppTheme.gold,
                   size: 20,
                 ),
@@ -411,7 +411,7 @@ class _AchievementShowcase extends StatelessWidget {
                   ),
                 ),
                 Icon(
-                  Icons.chevron_right_rounded,
+                  AppIcons.chevronRight,
                   color: AppTheme.textMutedColor(context),
                   size: 18,
                 ),
@@ -427,7 +427,7 @@ class _AchievementShowcase extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.workspace_premium_outlined, color: AppTheme.gold),
+              Icon(AppIcons.medal, color: AppTheme.gold),
               const SizedBox(width: 8),
               Text(
                 isKu ? 'Rozet' : 'Rozetler',
@@ -456,7 +456,7 @@ class _AchievementShowcase extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Icon(
-                      Icons.chevron_right_rounded,
+                      AppIcons.chevronRight,
                       color: AppTheme.textMutedColor(context),
                       size: 16,
                     ),
@@ -522,7 +522,7 @@ class _MasterySection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.workspace_premium_outlined, color: AppTheme.violet),
+              Icon(AppIcons.medal, color: AppTheme.violet),
               const SizedBox(width: 8),
               // Dar (iki sütunlu masaüstü) panelde başlık taşmasın.
               Expanded(
@@ -766,7 +766,7 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Icons.analytics_outlined, color: AppTheme.accent),
+                  Icon(AppIcons.chartLine, color: AppTheme.accent),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(

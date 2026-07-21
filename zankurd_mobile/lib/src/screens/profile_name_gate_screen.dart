@@ -6,6 +6,7 @@ import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_logo.dart';
 import '../widgets/styled_button.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class ProfileNameGateScreen extends StatefulWidget {
   const ProfileNameGateScreen({
@@ -152,7 +153,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                       : AppSpacing.md,
                                 ),
                                 _HeroValueRow(
-                                  icon: Icons.emoji_events_rounded,
+                                  icon: AppIcons.trophy,
                                   color: Colors.white,
                                   text: ku
                                       ? 'Lîstikê û serlêderên bibike'
@@ -160,7 +161,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                 ),
                                 const SizedBox(height: AppSpacing.xxs),
                                 _HeroValueRow(
-                                  icon: Icons.people_rounded,
+                                  icon: AppIcons.peopleGroup,
                                   color: Colors.white,
                                   text: ku
                                       ? 'Bi hevalan re pêşbikeve'
@@ -169,7 +170,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                 if (!compact) ...[
                                   const SizedBox(height: AppSpacing.xxs),
                                   _HeroValueRow(
-                                    icon: Icons.local_fire_department_rounded,
+                                    icon: AppIcons.fire,
                                     color: Colors.white,
                                     text: ku
                                         ? 'Zincîra xwe biparêze'
@@ -279,7 +280,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                         ? 'Mînak: Zelal'
                                         : 'Örn: Zelal',
                                     prefixIcon: Icon(
-                                      Icons.person_outline,
+                                      AppIcons.user,
                                       color: AppTheme.textMutedColor(context),
                                     ),
                                   ),
@@ -301,7 +302,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                 const SizedBox(height: AppSpacing.lg),
                                 GeometricGradientButton(
                                   label: ku ? 'Dest Pê Bike' : 'Oyuna Başla',
-                                  icon: Icons.arrow_forward_rounded,
+                                  icon: AppIcons.arrowRight,
                                   isLoading: _saving,
                                   onPressed: _saving ? null : _save,
                                 ),

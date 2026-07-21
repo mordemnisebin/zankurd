@@ -7,6 +7,7 @@ import '../screens/quiz_screen.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// "Bugünkü Tekrarlar" kartı — SM-2 aralıklı tekrar sisteminin ürün yüzü.
 ///
@@ -165,7 +166,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
                         ),
                       ),
                       child: const Icon(
-                        Icons.refresh_rounded,
+                        AppIcons.arrowsRotate,
                         color: _accent,
                         size: 24,
                       ),
@@ -277,7 +278,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
               color: _accent.withValues(alpha: 0.12),
             ),
             child: Icon(
-              Icons.check_circle_outline_rounded,
+              AppIcons.circleCheck,
               color: _accent.withValues(alpha: 0.9),
               size: 22,
             ),

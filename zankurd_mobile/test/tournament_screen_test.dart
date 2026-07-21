@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +62,7 @@ void main() {
         startButton.style?.backgroundColor?.resolve({}),
         AppTheme.brandGreen,
       );
-      expect(find.byIcon(Icons.emoji_events_rounded), findsAtLeast(1));
+      expect(find.byIcon(AppIcons.trophy), findsAtLeast(1));
     });
 
     testWidgets('baslangic butonuna basildiginda son 16 eslesmesi yukleniyor', (

@@ -13,6 +13,7 @@ import 'matchmaking_screen.dart';
 import 'room_screen.dart';
 import 'shop_screen.dart';
 import 'tournament_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class PlayHubScreen extends StatefulWidget {
   const PlayHubScreen({required this.repository, super.key});
@@ -206,7 +207,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     style: inputTextStyle,
                     decoration: InputDecoration(
                       labelText: ku ? 'Koda odeyê' : 'Oda kodu',
-                      prefixIcon: const Icon(Icons.meeting_room_outlined),
+                      prefixIcon: const Icon(AppIcons.doorOpen),
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
@@ -248,7 +249,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                           );
                         }
                       },
-                      icon: const Icon(Icons.login_rounded),
+                      icon: const Icon(AppIcons.rightToBracket),
                       label: Text(ku ? 'Tevlî bibe' : 'Katıl'),
                     ),
                   ),
@@ -379,7 +380,7 @@ class _GroupPlayPanel extends StatelessWidget {
                   color: Colors.white.withValues(alpha: 0.22),
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
-                child: const Icon(Icons.groups_2_rounded, color: Colors.white),
+                child: const Icon(AppIcons.peopleGroup, color: Colors.white),
               ),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
@@ -428,7 +429,7 @@ class _GroupPlayPanel extends StatelessWidget {
                           height: 18,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
-                      : const Icon(Icons.add_circle_outline),
+                      : const Icon(AppIcons.circlePlus),
                   label: Text(
                     loading
                         ? (ku ? 'Tê Vekirin...' : 'Açılıyor...')
@@ -445,7 +446,7 @@ class _GroupPlayPanel extends StatelessWidget {
                     side: const BorderSide(color: Colors.white, width: 1.5),
                     foregroundColor: Colors.white,
                   ),
-                  icon: const Icon(Icons.meeting_room_outlined),
+                  icon: const Icon(AppIcons.doorOpen),
                   label: Text(ku ? 'Kodê tevlî bibe' : 'Kodla Katıl'),
                 ),
               ),
@@ -467,7 +468,7 @@ class _SupportActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return _SupportCard(
       key: const ValueKey('play-hub-shop-card'),
-      icon: Icons.storefront_outlined,
+      icon: AppIcons.store,
       color: AppTheme.gold,
       title: ku ? 'Dukan û joker' : 'Mağaza ve jokerler',
       subtitle: ku
@@ -541,7 +542,7 @@ class _SupportCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: AppSpacing.xs),
-            Icon(Icons.chevron_right_rounded, color: color, size: 22),
+            Icon(AppIcons.chevronRight, color: color, size: 22),
           ],
         ),
       ),

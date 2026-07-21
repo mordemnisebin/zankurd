@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
 import 'roj_mascot.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Günün sözü: (Kurmancî atasözü, Türkçe karşılığı).
 typedef _Saying = (String ku, String tr);
@@ -97,7 +98,7 @@ class ZanaDailyCard extends StatelessWidget {
                         Row(
                           children: [
                             const Icon(
-                              Icons.format_quote_rounded,
+                              AppIcons.quoteLeft,
                               color: AppTheme.brandGreen,
                               size: 15,
                             ),
@@ -170,8 +171,8 @@ class ZanaDailyCard extends StatelessWidget {
                             onPressed: onStart,
                             icon: Icon(
                               hasReview
-                                  ? Icons.refresh_rounded
-                                  : Icons.arrow_forward_rounded,
+                                  ? AppIcons.arrowsRotate
+                                  : AppIcons.arrowRight,
                             ),
                             label: Text(
                               hasReview

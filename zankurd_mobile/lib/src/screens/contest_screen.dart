@@ -12,6 +12,7 @@ import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Günlük contest/etkinlik: tema, sıralama ve quiz başlatma.
 class ContestScreen extends StatefulWidget {
@@ -155,13 +156,13 @@ class _ContestScreenState extends State<ContestScreen> {
                 // "yakında" mesajı + geri yolu. Kullanıcı ölü ekranda
                 // kalmaz (2026-07-19 canlı denetim P1 bulgusu).
                 return AppEmptyState(
-                  icon: Icons.celebration_outlined,
+                  icon: AppIcons.champagneGlasses,
                   title: ku ? 'Pêşbirka Rojê' : 'Günün Yarışması',
                   message: ku
                       ? 'Îro pêşbirka rojê venemayî. Sibê pêşbirka nû tê — paşê dîsa were!'
                       : 'Bugünün yarışması kalmadı. Yarın yeni yarışma gelir — sonra yine gel!',
                   actionLabel: ku ? 'Biçe Sereke' : 'Ana Sayfaya Dön',
-                  actionIcon: Icons.home_rounded,
+                  actionIcon: AppIcons.house,
                   onAction: () => Navigator.of(context).pop(),
                 );
               }
@@ -212,7 +213,7 @@ class _ContestContent extends StatelessWidget {
           title: ku ? 'Çalakiya Rojê' : 'Günün Etkinliği',
           subtitle: ku ? 'Beşdar bibe û xelatê bigire' : 'Katıl ve ödülü kap',
           accent: AppTheme.gold,
-          icon: Icons.celebration_rounded,
+          icon: AppIcons.champagneGlasses,
         ),
         const SizedBox(height: AppSpacing.md),
         ClipRRect(
@@ -268,7 +269,7 @@ class _ContestContent extends StatelessWidget {
                             ],
                           ),
                           child: const Icon(
-                            Icons.emoji_events_rounded,
+                            AppIcons.trophy,
                             color: Colors.white,
                             size: 24,
                           ),
@@ -301,16 +302,16 @@ class _ContestContent extends StatelessWidget {
                       runSpacing: AppSpacing.xs,
                       children: [
                         _BadgeLabel(
-                          icon: Icons.category_outlined,
+                          icon: AppIcons.tableCells,
                           label: categoryLabel,
                         ),
                         _BadgeLabel(
-                          icon: Icons.speed_outlined,
+                          icon: AppIcons.gaugeHigh,
                           label:
                               '${contest.difficultyMin}-${contest.difficultyMax}',
                         ),
                         _BadgeLabel(
-                          icon: Icons.quiz_outlined,
+                          icon: AppIcons.question,
                           label: ku
                               ? '${contest.questionCount} pirs'
                               : '${contest.questionCount} soru',
@@ -322,7 +323,7 @@ class _ContestContent extends StatelessWidget {
                       label: starting
                           ? (ku ? 'Tê amadekirin…' : 'Hazırlanıyor…')
                           : (ku ? 'Çalakiyê dest pê bike' : 'Etkinliğe başla'),
-                      icon: Icons.play_arrow_rounded,
+                      icon: AppIcons.play,
                       isLoading: starting,
                       onPressed: starting ? null : onStart,
                     ),

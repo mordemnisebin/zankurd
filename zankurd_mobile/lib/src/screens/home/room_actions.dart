@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class RoomActions extends StatelessWidget {
   const RoomActions({
@@ -25,7 +26,7 @@ class RoomActions extends StatelessWidget {
             label: loading
                 ? (isKu ? 'Tê Vekirin...' : 'Açılıyor...')
                 : (isKu ? 'Odeyek Ava Bike' : 'Oda Kur'),
-            icon: Icons.add_circle_outline,
+            icon: AppIcons.circlePlus,
             gradient: AppTheme.accentGradient,
             onTap: onCreateRoom,
           ),
@@ -34,7 +35,7 @@ class RoomActions extends StatelessWidget {
         Expanded(
           child: _GradientButton(
             label: isKu ? 'Bi Kodê Tevlî Bibe' : 'Kodla Katıl',
-            icon: Icons.meeting_room_outlined,
+            icon: AppIcons.doorOpen,
             gradient: const LinearGradient(
               colors: [Color(0xFF2563EB), Color(0xFF1D4ED8)],
             ),

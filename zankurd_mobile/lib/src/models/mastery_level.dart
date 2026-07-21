@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 enum MasteryLevel { none, xwendekar, pispor, mamoste }
 
@@ -41,9 +42,9 @@ extension MasteryLevelDetails on MasteryLevel {
   };
 
   IconData get icon => switch (this) {
-    MasteryLevel.none => Icons.circle_outlined,
-    MasteryLevel.xwendekar => Icons.school_outlined,
-    MasteryLevel.pispor => Icons.psychology_outlined,
-    MasteryLevel.mamoste => Icons.workspace_premium_outlined,
+    MasteryLevel.none => AppIcons.circle,
+    MasteryLevel.xwendekar => AppIcons.graduationCap,
+    MasteryLevel.pispor => AppIcons.brain,
+    MasteryLevel.mamoste => AppIcons.medal,
   };
 }

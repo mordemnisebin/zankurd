@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/achievement.dart';
 import '../models/player.dart';
 import '../utils/error_reporter.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class AchievementIds {
   static const firstGame = 'first_game';
@@ -51,7 +52,7 @@ class AchievementStore {
       titleTr: 'İlk Oyun',
       descriptionKu: 'Pêşbirka xwe ya yekem qedand.',
       descriptionTr: 'İlk yarışını tamamladın.',
-      icon: Icons.flag_outlined,
+      icon: AppIcons.flag,
     ),
     const Achievement(
       id: AchievementIds.tenStreak,
@@ -59,7 +60,7 @@ class AchievementStore {
       titleTr: '10 Doğru Üst Üste',
       descriptionKu: 'Di yek pêşbirkê de rêza 10 rast çêkir.',
       descriptionTr: 'Tek yarışta 10 doğru seri yaptın.',
-      icon: Icons.local_fire_department_outlined,
+      icon: AppIcons.fire,
     ),
     const Achievement(
       id: AchievementIds.hundredQuestions,
@@ -67,7 +68,7 @@ class AchievementStore {
       titleTr: '100 Soru',
       descriptionKu: 'Bi giştî 100 pirs bersiv da.',
       descriptionTr: 'Toplam 100 soruya cevap verdin.',
-      icon: Icons.psychology_outlined,
+      icon: AppIcons.brain,
     ),
     const Achievement(
       id: AchievementIds.allCategories,
@@ -75,7 +76,7 @@ class AchievementStore {
       titleTr: 'Her Kategoride Oyun',
       descriptionKu: 'Di hemû kategoriyan de lîst.',
       descriptionTr: 'Tüm kategorilerde yarış oynadın.',
-      icon: Icons.grid_view_rounded,
+      icon: AppIcons.tableCells,
     ),
     const Achievement(
       id: AchievementIds.sevenDayStreak,
@@ -83,7 +84,7 @@ class AchievementStore {
       titleTr: '7 Gün Streak',
       descriptionKu: 'Seriya rojane gihand 7 rojan.',
       descriptionTr: 'Günlük serini 7 güne taşıdın.',
-      icon: Icons.calendar_month_outlined,
+      icon: AppIcons.calendarDays,
     ),
     const Achievement(
       id: AchievementIds.mistakesCleared,
@@ -91,7 +92,7 @@ class AchievementStore {
       titleTr: 'Yanlışlarını Temizledi',
       descriptionKu: 'Di moda şaşiyan de hemû pirsgirêk paqij kir.',
       descriptionTr: 'Yanlışlar modunda tüm hatalarını temizledin.',
-      icon: Icons.school_outlined,
+      icon: AppIcons.graduationCap,
     ),
     const Achievement(
       id: AchievementIds.botWinner,
@@ -99,7 +100,7 @@ class AchievementStore {
       titleTr: 'Bot’u Yendi',
       descriptionKu: 'Di pêşbirka botan de serket.',
       descriptionTr: 'Bot yarışını birinci bitirdin.',
-      icon: Icons.smart_toy_outlined,
+      icon: AppIcons.robot,
     ),
     const Achievement(
       id: AchievementIds.dailyQuizFive,
@@ -107,7 +108,7 @@ class AchievementStore {
       titleTr: 'Günlük Quiz x5',
       descriptionKu: 'Pênc caran pêşbirka rojê qedand.',
       descriptionTr: 'Günün yarışmasını 5 kez tamamladın.',
-      icon: Icons.bolt_rounded,
+      icon: AppIcons.bolt,
     ),
   ];
 

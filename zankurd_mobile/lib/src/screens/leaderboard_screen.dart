@@ -15,6 +15,7 @@ import '../widgets/player_avatar.dart';
 import '../widgets/roj_mascot.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({
@@ -181,13 +182,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         final friends = snap.data ?? stale ?? [];
         if (friends.isEmpty) {
           return AppEmptyState(
-            icon: Icons.people_outline,
+            icon: AppIcons.peopleGroup,
             title: ku ? 'Heval tune' : 'Arkadaş yok',
             message: ku
                 ? 'Hevalan lê zêde bike û rêza xwe bibîne!'
                 : 'Arkadaş ekleyerek sıralamanı gör!',
             actionLabel: ku ? 'Heval lê zêde bike' : 'Arkadaş ekle',
-            actionIcon: Icons.person_add_alt_rounded,
+            actionIcon: AppIcons.userPlus,
             onAction: () {
               Navigator.of(
                 context,
@@ -249,13 +250,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         final entries = snap.data ?? stale ?? [];
         if (entries.isEmpty) {
           return AppEmptyState(
-            icon: Icons.emoji_events_outlined,
+            icon: AppIcons.trophy,
             title: ku ? 'Hîn xal tune' : 'Henüz puan yok',
             message: ku
                 ? 'Pêşbirkekê dest pê bike.'
                 : 'Bir yarış başlat; puanların burada görünür.',
             actionLabel: ku ? 'Pêşbirkê Dest Pê Bike' : 'Yarışa Başla',
-            actionIcon: Icons.bolt_rounded,
+            actionIcon: AppIcons.bolt,
             onAction: _startQuickRace,
           );
         }
@@ -465,7 +466,7 @@ class _Header extends StatelessWidget {
                 tooltip: ku ? 'Nû bike' : 'Yenile',
                 onPressed: onRefresh,
                 icon: Icon(
-                  Icons.refresh_rounded,
+                  AppIcons.arrowsRotate,
                   color: AppTheme.textSubColor(context),
                   size: 20,
                 ),
@@ -643,8 +644,8 @@ class _PodiumSlot extends StatelessWidget {
   }
 
   IconData get _medalIcon {
-    if (entry.rank == 1) return Icons.emoji_events_rounded;
-    return Icons.military_tech_rounded;
+    if (entry.rank == 1) return AppIcons.trophy;
+    return AppIcons.medal;
   }
 
   @override

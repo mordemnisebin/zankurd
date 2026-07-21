@@ -4,6 +4,7 @@ import '../data/badge_service.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../widgets/badge_widget.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Profil ekranında rozet koleksiyonunu gösteren bölüm.
 class BadgeCollectionSection extends StatefulWidget {
@@ -56,7 +57,7 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
       children: [
         Row(
           children: [
-            const Icon(Icons.workspace_premium_outlined, color: AppTheme.gold),
+            const Icon(AppIcons.medal, color: AppTheme.gold),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
@@ -176,7 +177,7 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                   Row(
                     children: [
                       const Icon(
-                        Icons.workspace_premium_outlined,
+                        AppIcons.medal,
                         color: AppTheme.gold,
                       ),
                       const SizedBox(width: 8),
@@ -193,7 +194,7 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                       IconButton(
                         onPressed: () => Navigator.pop(context),
                         tooltip: ku ? 'Bigire' : 'Kapat',
-                        icon: const Icon(Icons.close),
+                        icon: const Icon(AppIcons.xmark),
                       ),
                     ],
                   ),

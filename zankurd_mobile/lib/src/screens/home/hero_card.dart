@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class HeroCard extends StatelessWidget {
   const HeroCard({
@@ -132,7 +133,7 @@ class HeroCard extends StatelessWidget {
                   ),
                   child: ElevatedButton.icon(
                     onPressed: onQuickMatch,
-                    icon: Icon(Icons.bolt_rounded, color: AppTheme.brandGreen),
+                    icon: Icon(AppIcons.bolt, color: AppTheme.brandGreen),
                     label: Text(
                       isKu ? '1vs1 — Dest pê bike' : '1vs1 — Hemen yarış',
                       style: AppTypography.bodyLarge.copyWith(

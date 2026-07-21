@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/lang.dart';
 import '../models/daily_mission.dart';
 import '../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class MissionToast {
   static void show(BuildContext context, DailyMission mission) {
@@ -16,7 +17,7 @@ class MissionToast {
         content: Row(
           children: [
             const Icon(
-              Icons.check_circle_rounded,
+              AppIcons.circleCheck,
               color: Colors.white,
               size: 20,
             ),
@@ -45,7 +46,7 @@ class MissionToast {
               ),
             ),
             const Icon(
-              Icons.monetization_on_rounded,
+              AppIcons.coins,
               color: Colors.white,
               size: 18,
             ),

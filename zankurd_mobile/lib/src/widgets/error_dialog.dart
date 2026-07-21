@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class ErrorDialog {
   static void show(
@@ -27,7 +28,7 @@ class ErrorDialog {
         ),
         title: Row(
           children: [
-            const Icon(Icons.error_outline, color: AppTheme.wrong, size: 28),
+            const Icon(AppIcons.triangleExclamation, color: AppTheme.wrong, size: 28),
             const SizedBox(width: 12),
             Expanded(child: Text(title)),
           ],
@@ -40,7 +41,7 @@ class ErrorDialog {
                 Navigator.pop(context);
                 onRetry();
               },
-              icon: const Icon(Icons.refresh),
+              icon: const Icon(AppIcons.arrowsRotate),
               label: Text(finalRetryLabel),
             ),
           OutlinedButton(

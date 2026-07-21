@@ -9,6 +9,7 @@ import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
 import 'quiz_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class FavoriteQuestionsScreen extends StatefulWidget {
   const FavoriteQuestionsScreen({required this.repository, super.key});
@@ -58,7 +59,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
           IconButton(
             onPressed: _reload,
             tooltip: context.s('Nû bike', 'Yenile'),
-            icon: Icon(Icons.refresh_rounded),
+            icon: Icon(AppIcons.arrowsRotate),
           ),
         ],
       ),
@@ -113,7 +114,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
                           'Favori soruların',
                         ),
                         accent: AppTheme.gold,
-                        icon: Icons.bookmark_rounded,
+                        icon: AppIcons.bookmark,
                         compact: true,
                       ),
                       const SizedBox(height: AppSpacing.md),
@@ -142,7 +143,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
                           '${questions.length} soru · yeniden oyna',
                         ),
                         accent: AppTheme.gold,
-                        icon: Icons.bookmark_rounded,
+                        icon: AppIcons.bookmark,
                         compact: true,
                       ),
                     );
@@ -231,7 +232,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
             ),
           );
         },
-        icon: const Icon(Icons.play_circle_fill, size: 22),
+        icon: const Icon(AppIcons.circlePlay, size: 22),
         label: Text(
           context.s('Pirsên Tomarkirî Bilîze', 'Kaydedilen Soruları Oyna'),
           style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
@@ -270,7 +271,7 @@ class _FavoriteQuestionTile extends StatelessWidget {
                   gradient: AppTheme.goldGradient,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(Icons.bookmark, color: Colors.white),
+                child: Icon(AppIcons.bookmark, color: Colors.white),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -309,12 +310,12 @@ class _FavoriteQuestionTile extends StatelessWidget {
                 onPressed: onRemove,
                 tooltip: context.s('Rake', 'Kaldır'),
                 icon: Icon(
-                  Icons.bookmark_remove_outlined,
+                  AppIcons.bookmark,
                   color: AppTheme.textMutedColor(context),
                 ),
               ),
               Icon(
-                Icons.play_arrow_rounded,
+                AppIcons.play,
                 color: AppTheme.primaryGradientStart,
               ),
             ],
@@ -357,7 +358,7 @@ class _EmptyFavorites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppEmptyState(
-      icon: Icons.bookmark_border,
+      icon: AppIcons.bookmark,
       title: context.s(
         'Hîn pirsên tomarkirî tune.',
         'Henüz kaydedilmiş soru yok.',

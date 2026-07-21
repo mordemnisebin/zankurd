@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/tournament.dart';
 import '../theme/app_theme.dart';
 import 'player_avatar.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Visual single-elimination tournament bracket with connecting lines,
 /// player avatars, scores, and winner highlighting.
@@ -396,7 +397,7 @@ class _PlayerSlot extends StatelessWidget {
                 color: AppTheme.textMutedColor(context).withValues(alpha: 0.2),
               ),
               child: Icon(
-                Icons.person_outline,
+                AppIcons.user,
                 size: 14,
                 color: AppTheme.textMutedColor(context),
               ),
@@ -425,13 +426,13 @@ class _PlayerSlot extends StatelessWidget {
           // Winner crown icon
           if (isWinner)
             const Icon(
-              Icons.emoji_events_rounded,
+              AppIcons.trophy,
               size: 14,
               color: AppTheme.gold,
             )
           else if (isCompleted && hasPlayer)
             Icon(
-              Icons.cancel_outlined,
+              AppIcons.circleXmark,
               size: 12,
               color: AppTheme.textMutedColor(context).withValues(alpha: 0.6),
             )

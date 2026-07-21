@@ -11,6 +11,7 @@ import '../widgets/loading_overlay.dart';
 import '../widgets/styled_button.dart';
 import '../widgets/styled_input.dart';
 import 'sign_up_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -388,7 +389,7 @@ class _SignInScreenState extends State<SignInScreen>
                                               controller: _emailController,
                                               keyboardType:
                                                   TextInputType.emailAddress,
-                                              prefixIcon: Icons.email_outlined,
+                                              prefixIcon: AppIcons.envelope,
                                               validator: (value) {
                                                 if (value == null ||
                                                     value.isEmpty) {
@@ -422,10 +423,10 @@ class _SignInScreenState extends State<SignInScreen>
                                                     authInputTextStyle,
                                                 controller: _passwordController,
                                                 obscureText: _obscurePassword,
-                                                prefixIcon: Icons.lock_outlined,
+                                                prefixIcon: AppIcons.lock,
                                                 suffixIcon: _obscurePassword
-                                                    ? Icons.visibility_off
-                                                    : Icons.visibility,
+                                                    ? AppIcons.eyeSlash
+                                                    : AppIcons.eye,
                                                 onSuffixIconPressed: () {
                                                   setState(
                                                     () => _obscurePassword =
@@ -497,7 +498,7 @@ class _SignInScreenState extends State<SignInScreen>
                                             'Têkeve',
                                             'Giriş Yap',
                                           ),
-                                          icon: Icons.login,
+                                          icon: AppIcons.rightToBracket,
                                           isLoading: authProvider.isLoading,
                                           onPressed: authProvider.isLoading
                                               ? null
@@ -649,7 +650,7 @@ class _SignInScreenState extends State<SignInScreen>
                                           controller: _emailController,
                                           keyboardType:
                                               TextInputType.emailAddress,
-                                          prefixIcon: Icons.email_outlined,
+                                          prefixIcon: AppIcons.envelope,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -679,10 +680,10 @@ class _SignInScreenState extends State<SignInScreen>
                                             inputTextStyle: authInputTextStyle,
                                             controller: _passwordController,
                                             obscureText: _obscurePassword,
-                                            prefixIcon: Icons.lock_outlined,
+                                            prefixIcon: AppIcons.lock,
                                             suffixIcon: _obscurePassword
-                                                ? Icons.visibility_off
-                                                : Icons.visibility,
+                                                ? AppIcons.eyeSlash
+                                                : AppIcons.eye,
                                             onSuffixIconPressed: () {
                                               setState(
                                                 () => _obscurePassword =
@@ -748,7 +749,7 @@ class _SignInScreenState extends State<SignInScreen>
                                         ),
                                     child: GeometricGradientButton(
                                       label: context.s('Têkeve', 'Giriş Yap'),
-                                      icon: Icons.login,
+                                      icon: AppIcons.rightToBracket,
                                       isLoading: authProvider.isLoading,
                                       onPressed: authProvider.isLoading
                                           ? null
@@ -1064,8 +1065,8 @@ class _EmailSectionToggle extends StatelessWidget {
                       const SizedBox(width: 4),
                       Icon(
                         expanded
-                            ? Icons.keyboard_arrow_up_rounded
-                            : Icons.keyboard_arrow_down_rounded,
+                            ? AppIcons.chevronUp
+                            : AppIcons.chevronDown,
                         size: 18,
                         color: AppTheme.textMutedColor(context),
                       ),

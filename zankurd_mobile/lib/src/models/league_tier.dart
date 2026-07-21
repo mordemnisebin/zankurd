@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Haftalık lig kademeleri. v1 sunum: canlı haftalık sıradan [forRank].
 /// Sunucu küme düşme/çıkma: `supabase/2026-07-10_weekly_league.sql`
@@ -32,8 +33,8 @@ enum LeagueTier {
   };
 
   IconData get icon => switch (this) {
-    LeagueTier.zer => Icons.workspace_premium_rounded,
-    LeagueTier.ziv => Icons.military_tech_rounded,
-    LeagueTier.bronz => Icons.shield_moon_rounded,
+    LeagueTier.zer => AppIcons.medal,
+    LeagueTier.ziv => AppIcons.medal,
+    LeagueTier.bronz => AppIcons.shieldHalved,
   };
 }

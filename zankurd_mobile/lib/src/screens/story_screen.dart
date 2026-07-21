@@ -5,6 +5,7 @@ import '../l10n/lang.dart';
 import '../models/mini_guide.dart';
 import '../models/story.dart';
 import '../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Metin tabanlı dallanan hikâye oynatıcısı (SES YOK). İlerleme yerelde
 /// kaydedilir; hikâye yeniden başlatılabilir. Opsiyonel bir [guide] verilirse
@@ -93,13 +94,13 @@ class _StoryScreenState extends State<StoryScreen> {
             IconButton(
               key: const ValueKey('story-open-guide'),
               tooltip: ku ? 'Rêber' : 'Rehber',
-              icon: const Icon(Icons.menu_book_outlined),
+              icon: const Icon(AppIcons.bookOpen),
               onPressed: _openGuide,
             ),
           IconButton(
             key: const ValueKey('story-restart'),
             tooltip: ku ? 'Ji nû ve' : 'Yeniden başlat',
-            icon: const Icon(Icons.refresh_rounded),
+            icon: const Icon(AppIcons.arrowsRotate),
             onPressed: _restart,
           ),
         ],
@@ -160,7 +161,7 @@ class _StoryScreenState extends State<StoryScreen> {
           FilledButton.icon(
             key: const ValueKey('story-ending-restart'),
             onPressed: _restart,
-            icon: const Icon(Icons.replay_rounded),
+            icon: const Icon(AppIcons.arrowRotateLeft),
             label: Text(ku ? 'Dîsa bilîze' : 'Tekrar oyna'),
           )
         else

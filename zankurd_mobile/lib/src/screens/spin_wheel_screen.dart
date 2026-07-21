@@ -12,6 +12,7 @@ import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/confetti_overlay.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class SpinWheelScreen extends StatefulWidget {
   const SpinWheelScreen({required this.repository, super.key});
@@ -329,7 +330,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                 color: Colors.white.withValues(alpha: 0.12),
               ),
               child: Icon(
-                Icons.casino_outlined,
+                AppIcons.dice,
                 color: AppTheme.gold.withValues(alpha: 0.95),
                 size: 34,
               ),
@@ -467,7 +468,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                   color: Colors.white.withValues(alpha: 0.25),
                 ),
                 child: const Icon(
-                  Icons.celebration_rounded,
+                  AppIcons.champagneGlasses,
                   color: Colors.white,
                   size: 26,
                 ),
@@ -533,7 +534,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            hasRight ? Icons.check_circle_outline : Icons.lock_clock_outlined,
+            hasRight ? AppIcons.circleCheck : AppIcons.lock,
             size: 16,
             color: hasRight ? AppTheme.correct : AppTheme.gold,
           ),
@@ -618,7 +619,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       ),
                     )
                   : Icon(
-                      enabled ? Icons.casino_outlined : Icons.lock_outlined,
+                      enabled ? AppIcons.dice : AppIcons.lock,
                       size: 22,
                     ),
               label: Text(
@@ -665,7 +666,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.access_time_rounded, color: AppTheme.gold, size: 18),
+              Icon(AppIcons.clock, color: AppTheme.gold, size: 18),
               const SizedBox(width: 8),
               Text(
                 ku ? 'Dizivirîna nû di:' : 'Yeni çevirme hakkı:',

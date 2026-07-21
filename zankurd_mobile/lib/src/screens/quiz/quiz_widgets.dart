@@ -19,7 +19,7 @@ class _LiveScoreboard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.leaderboard_outlined, color: AppTheme.gold),
+              const Icon(AppIcons.chartColumn, color: AppTheme.gold),
               const SizedBox(width: AppSpacing.xs),
               Text(
                 context.s('Skora zindî', 'Canlı skor'),
@@ -199,7 +199,7 @@ class _QuestionImageFallback extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            Icons.image_not_supported_outlined,
+            AppIcons.image,
             color: AppTheme.textMutedColor(context),
             size: 32,
           ),
@@ -415,7 +415,7 @@ class _TimeoutNotice extends StatelessWidget {
           children: [
             const ExcludeSemantics(
               child: Icon(
-                Icons.timer_off_outlined,
+                AppIcons.stopwatch,
                 color: AppTheme.wrong,
                 size: 18,
               ),
@@ -462,7 +462,7 @@ class _ScoreHeader extends StatelessWidget {
       children: [
         _ScoreChip(
           tooltip: context.s('Pûan', 'Puan'),
-          icon: Icons.emoji_events_outlined,
+          icon: AppIcons.trophy,
           iconColor: AppTheme.gold,
           value: '$score',
         ),
@@ -479,8 +479,8 @@ class _ScoreHeader extends StatelessWidget {
           child: _ScoreChip(
             tooltip: context.s('Rêz', 'Seri'),
             icon: streak >= 2
-                ? Icons.local_fire_department
-                : Icons.local_fire_department_outlined,
+                ? AppIcons.fire
+                : AppIcons.fire,
             iconColor: streak >= 2
                 ? AppTheme.gold
                 : AppTheme.textMutedColor(context),
@@ -490,7 +490,7 @@ class _ScoreHeader extends StatelessWidget {
         const SizedBox(width: AppSpacing.xs),
         _ScoreChip(
           tooltip: context.s('Coin', 'Kredi'),
-          icon: Icons.monetization_on_outlined,
+          icon: AppIcons.coins,
           iconColor: AppTheme.gold,
           value: '$coinBalance',
         ),
@@ -691,7 +691,7 @@ class _DuelScoreHeader extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(
-                        Icons.local_fire_department,
+                        AppIcons.fire,
                         color: Colors.orange,
                         size: 14,
                       ),
@@ -717,7 +717,7 @@ class _DuelScoreHeader extends StatelessWidget {
                         ),
                       ),
                       const Icon(
-                        Icons.local_fire_department,
+                        AppIcons.fire,
                         color: Colors.orange,
                         size: 14,
                       ),
@@ -942,14 +942,14 @@ class _AnswerButton extends StatelessWidget {
                                 ),
                             child: correct
                                 ? const Icon(
-                                    Icons.check_circle_outline,
+                                    AppIcons.circleCheck,
                                     key: ValueKey('correct_icon'),
                                     color: Colors.white,
                                     size: 28,
                                   )
                                 : wrong
                                 ? const Icon(
-                                    Icons.cancel_outlined,
+                                    AppIcons.circleXmark,
                                     key: ValueKey('wrong_icon'),
                                     color: Colors.white,
                                     size: 28,
@@ -1224,7 +1224,7 @@ class _WildcardButtonState extends State<_WildcardButton> {
                       ),
                       child: Icon(
                         widget.cantAfford
-                            ? Icons.lock_outline
+                            ? AppIcons.lock
                             : widget.type.icon,
                         size: 12,
                         color: iconColor,
@@ -1499,7 +1499,7 @@ class _ExplanationBox extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Icon(
-                          Icons.lightbulb_outline,
+                          AppIcons.lightbulb,
                           color: AppTheme.correct,
                           size: 22,
                         ),
@@ -1528,7 +1528,7 @@ class _ExplanationBox extends StatelessWidget {
                               Row(
                                 children: [
                                   Icon(
-                                    Icons.menu_book_outlined,
+                                    AppIcons.bookOpen,
                                     size: 14,
                                     color: AppTheme.textSubColor(context),
                                   ),
@@ -1630,7 +1630,7 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
               ),
             ),
             Icon(
-              Icons.hourglass_top_rounded,
+              AppIcons.hourglassStart,
               color: AppTheme.brandGreen.withValues(alpha: 0.6),
               size: 22,
             ),
@@ -1668,7 +1668,7 @@ class _RevealCountdown extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              Icons.skip_next_rounded,
+              AppIcons.forward,
               color: AppTheme.textSubColor(context),
               size: 18,
             ),
@@ -1709,7 +1709,7 @@ class _VersusBanner extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(
-            Icons.emoji_events_outlined,
+            AppIcons.trophy,
             size: 16,
             color: AppTheme.accent,
           ),

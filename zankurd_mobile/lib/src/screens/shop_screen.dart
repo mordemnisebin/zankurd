@@ -9,6 +9,7 @@ import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import 'spin_wheel_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
 /// Statik yedek listedeki (`ShopItem._items`) her ikon burada da
@@ -19,20 +20,20 @@ import 'spin_wheel_screen.dart';
 /// dallar sessizce varsayılana düşüyordu (VM'de çalışan `flutter test` bunu
 /// yakalamadı — bu yüzden canlıda fark edildi).
 const Map<String, IconData> _shopIcons = {
-  'auto_awesome_motion_outlined': Icons.auto_awesome_motion_outlined,
-  'favorite_border_rounded': Icons.favorite_border_rounded,
-  'casino_outlined': Icons.casino_outlined,
-  'palette_outlined': Icons.palette_outlined,
-  'star_rounded': Icons.star_rounded,
-  'auto_awesome_rounded': Icons.auto_awesome_rounded,
-  'text_fields_rounded': Icons.text_fields_rounded,
-  'text_format_rounded': Icons.text_format_rounded,
-  'auto_fix_high_rounded': Icons.auto_fix_high_rounded,
-  'diamond_rounded': Icons.diamond_rounded,
+  'auto_awesome_motion_outlined': AppIcons.wandMagicSparkles,
+  'favorite_border_rounded': AppIcons.heart,
+  'casino_outlined': AppIcons.dice,
+  'palette_outlined': AppIcons.palette,
+  'star_rounded': AppIcons.star,
+  'auto_awesome_rounded': AppIcons.wandMagicSparkles,
+  'text_fields_rounded': AppIcons.font,
+  'text_format_rounded': AppIcons.font,
+  'auto_fix_high_rounded': AppIcons.wandMagicSparkles,
+  'diamond_rounded': AppIcons.gem,
 };
 
 IconData shopIconForName(String? name) =>
-    _shopIcons[name] ?? Icons.shopping_bag_outlined;
+    _shopIcons[name] ?? AppIcons.bagShopping;
 
 AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
   if (itemId == 'avatar_frame_gold') {
@@ -107,7 +108,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descKu: 'Hemû joker ji bo pêşbirka bê têne nûkirin.',
       descTr: 'Bir sonraki yarışma için tüm joker haklarını sıfırlar.',
       cost: 500,
-      icon: Icons.auto_awesome_motion_outlined,
+      icon: AppIcons.wandMagicSparkles,
       themeColor: AppTheme.accent,
     ),
     ShopItem(
@@ -117,7 +118,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descKu: 'Di dema quizê de canekî din dide te.',
       descTr: 'Yarışma esnasında elendiğinde kullanabileceğin 1 can verir.',
       cost: 100,
-      icon: Icons.favorite_border_rounded,
+      icon: AppIcons.heart,
       themeColor: AppTheme.accent,
     ),
     ShopItem(
@@ -127,7 +128,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descKu: 'Ji bo çerxa rojane mafekî zivirînê yê nû dide.',
       descTr: 'Bugün çarkı tekrar çevirebilmek için ekstra bir hak tanımlar.',
       cost: 200,
-      icon: Icons.casino_outlined,
+      icon: AppIcons.dice,
       themeColor: AppTheme.correct,
     ),
     ShopItem(
@@ -137,7 +138,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descKu: 'Ji bo profilê rengên nû û taybet vedike.',
       descTr: 'Profil kartı ve avatarı için özel premium renk paletleri açar.',
       cost: 300,
-      icon: Icons.palette_outlined,
+      icon: AppIcons.palette,
       themeColor: AppTheme.gold,
     ),
     ShopItem(
@@ -147,7 +148,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descKu: 'Ji bo avatarê te çarçoveyeke zêrîn a taybet.',
       descTr: 'Avatarın için özel altın çerçeve.',
       cost: 750,
-      icon: Icons.star_rounded,
+      icon: AppIcons.star,
       themeColor: AppTheme.gold,
     ),
     ShopItem(
@@ -157,7 +158,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descKu: 'Avatarê te bi rengên neon ên geş dibiriqe.',
       descTr: 'Avatarın neon renklerle parıldasın.',
       cost: 600,
-      icon: Icons.auto_awesome_rounded,
+      icon: AppIcons.wandMagicSparkles,
       themeColor: AppTheme.playCyan,
     ),
     ShopItem(
@@ -167,7 +168,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descKu: 'Navê te di profîl û rêzbendiyê de bi rengê zêrîn xuya dibe.',
       descTr: 'İsmin profil ve liderlik tablosunda altın renginde görünsün.',
       cost: 500,
-      icon: Icons.text_fields_rounded,
+      icon: AppIcons.font,
       themeColor: AppTheme.gold,
     ),
     ShopItem(
@@ -177,7 +178,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descKu: 'Navê te bi rengekî mor ê taybet were xuyakirin.',
       descTr: 'İsmin özel mor renkte görünsün.',
       cost: 400,
-      icon: Icons.text_format_rounded,
+      icon: AppIcons.font,
       themeColor: AppTheme.playPurple,
     ),
     ShopItem(
@@ -189,7 +190,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descTr:
           'Bir sonraki yarışma için 3 ekstra joker: 50/50, seyirci ve çift cevap.',
       cost: 350,
-      icon: Icons.auto_fix_high_rounded,
+      icon: AppIcons.wandMagicSparkles,
       themeColor: AppTheme.playPink,
     ),
     ShopItem(
@@ -199,7 +200,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descKu: 'Profîla te de rozeteke taybet a VIP xuya dibe.',
       descTr: 'Profilinde özel VIP rozeti görünsün.',
       cost: 1000,
-      icon: Icons.diamond_rounded,
+      icon: AppIcons.gem,
       themeColor: AppTheme.playCyan,
     ),
   ];
@@ -342,7 +343,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(
-                      Icons.monetization_on,
+                      AppIcons.coins,
                       color: AppTheme.gold,
                       size: 22,
                     ),
@@ -363,7 +364,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.account_balance_wallet_outlined,
+                    AppIcons.wallet,
                     size: 16,
                     color: AppTheme.textMutedColor(ctx),
                   ),
@@ -397,7 +398,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     ),
                   );
                 },
-                icon: const Icon(Icons.casino_outlined, size: 18),
+                icon: const Icon(AppIcons.dice, size: 18),
                 label: Text(ku ? 'Coin qezenc bike' : 'Coin kazan'),
               ),
             TextButton(
@@ -560,7 +561,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(
-                      Icons.monetization_on,
+                      AppIcons.coins,
                       color: AppTheme.gold,
                       size: 18,
                     ),
@@ -634,7 +635,7 @@ class _ShopScreenState extends State<ShopScreen> {
             child: Row(
               children: [
                 const Icon(
-                  Icons.casino_outlined,
+                  AppIcons.dice,
                   color: AppTheme.gold,
                   size: 22,
                 ),
@@ -653,7 +654,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   ),
                 ),
                 Icon(
-                  Icons.chevron_right_rounded,
+                  AppIcons.chevronRight,
                   color: AppTheme.textMutedColor(context),
                 ),
               ],
@@ -985,7 +986,7 @@ class _ShopScreenState extends State<ShopScreen> {
                         ],
                       ),
                       child: const Icon(
-                        Icons.check_rounded,
+                        AppIcons.check,
                         size: 14,
                         color: Colors.white,
                       ),
@@ -1021,7 +1022,7 @@ class _ShopScreenState extends State<ShopScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.check_rounded, size: 14, color: AppTheme.correct),
+          const Icon(AppIcons.check, size: 14, color: AppTheme.correct),
           const SizedBox(width: 4),
           Text(
             ku ? 'Yê te' : 'Sende',
@@ -1058,7 +1059,7 @@ class _ShopScreenState extends State<ShopScreen> {
           textStyle: const TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
         ),
         icon: Icon(
-          Icons.shopping_cart_outlined,
+          AppIcons.cartShopping,
           size: 15,
           color: canAfford ? Colors.white : AppTheme.textMutedColor(context),
         ),

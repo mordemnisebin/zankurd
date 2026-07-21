@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Oyun/aksiyon mod kartı — Kategorî'nin kompakt satır diliyle tutarlı:
 /// koyu düz yüzey + sol renkli ikon çipi + başlık/alt başlık + sağ ok.
@@ -122,7 +123,7 @@ class ColorfulActionCard extends StatelessWidget {
                   ),
                   if (!loading)
                     Icon(
-                      Icons.chevron_right_rounded,
+                      AppIcons.chevronRight,
                       color: Colors.white.withValues(alpha: 0.8),
                     ),
                 ],

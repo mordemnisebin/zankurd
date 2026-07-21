@@ -17,6 +17,7 @@ import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/screen_identity_header.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -142,7 +143,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _SettingsIconTitle(
-                      icon: Icons.badge_outlined,
+                      icon: AppIcons.idBadge,
                       color: AppTheme.primaryGradientStart,
                       title: ku ? 'Navê lîstikvanê' : 'Oyuncu Adı',
                     ),
@@ -178,7 +179,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   color: Colors.white,
                                 ),
                               )
-                            : Icon(Icons.save_outlined),
+                            : Icon(AppIcons.floppyDisk),
                         label: Text(ku ? 'Tomar Bike' : 'Kaydet'),
                       ),
                     ),
@@ -196,7 +197,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Row(
                       children: [
                         Icon(
-                          Icons.warning_amber_rounded,
+                          AppIcons.triangleExclamation,
                           color: AppTheme.wrong,
                         ),
                         const SizedBox(width: 10),
@@ -245,7 +246,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ),
                                   )
                                 : Icon(
-                                    Icons.delete_forever_outlined,
+                                    AppIcons.trashCan,
                                     color: AppTheme.wrong,
                                     size: 22,
                                   ),
@@ -274,7 +275,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ),
                             Icon(
-                              Icons.chevron_right_rounded,
+                              AppIcons.chevronRight,
                               color: AppTheme.textMutedColor(context),
                             ),
                           ],
@@ -302,7 +303,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Row(
                       children: [
                         Icon(
-                          Icons.assignment_turned_in_outlined,
+                          AppIcons.squareCheck,
                           color: AppTheme.playGreen,
                           size: 22,
                         ),
@@ -350,7 +351,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         Icon(
-                          Icons.chevron_right_rounded,
+                          AppIcons.chevronRight,
                           color: AppTheme.textMutedColor(context),
                         ),
                       ],
@@ -369,7 +370,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 padding: EdgeInsets.zero,
                 child: Consumer<ChildSafetyProvider>(
                   builder: (context, child, _) => _SettingsToggleRow(
-                    icon: Icons.shield_outlined,
+                    icon: AppIcons.shield,
                     color: AppTheme.playGreen,
                     title: ku ? 'Moda zaroka ewle' : 'Güvenli çocuk modu',
                     trailing: Switch(
@@ -392,7 +393,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Column(
                   children: [
                     _SettingsToggleRow(
-                      icon: Icons.language,
+                      icon: AppIcons.language,
                       color: AppTheme.violet,
                       title: ku ? 'Zimanê sepanê' : 'Uygulama dili',
                       trailing: _LangSwitch(),
@@ -406,8 +407,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       builder: (context, themeProvider, _) =>
                           _SettingsToggleRow(
                             icon: themeProvider.isDark
-                                ? Icons.dark_mode_outlined
-                                : Icons.light_mode_outlined,
+                                ? AppIcons.moon
+                                : AppIcons.sun,
                             color: AppTheme.violet,
                             title: ku
                                 ? 'Modê tarî/ronahî'
@@ -427,7 +428,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     Consumer<ReducedMotionProvider>(
                       builder: (context, motion, _) => _SettingsToggleRow(
-                        icon: Icons.animation_outlined,
+                        icon: AppIcons.clapperboard,
                         color: AppTheme.violet,
                         title: ku ? 'Tevgerê kêm bike' : 'Hareketi azalt',
                         trailing: Switch(
@@ -454,8 +455,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Consumer<SoundProvider>(
                       builder: (context, sound, _) => _SettingsToggleRow(
                         icon: sound.enabled
-                            ? Icons.volume_up_outlined
-                            : Icons.volume_off_outlined,
+                            ? AppIcons.volumeHigh
+                            : AppIcons.volumeXmark,
                         color: AppTheme.primaryGradientStart,
                         title: ku ? 'Deng û mûzîk' : 'Ses efektleri',
                         trailing: Switch(
@@ -471,8 +472,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     _SettingsToggleRow(
                       icon: _notificationsEnabled
-                          ? Icons.notifications_active_outlined
-                          : Icons.notifications_off_outlined,
+                          ? AppIcons.bell
+                          : AppIcons.bellSlash,
                       color: AppTheme.violet,
                       title: ku ? 'Bîranîna rojane' : 'Günlük hatırlatıcı',
                       subtitle: ku
@@ -504,7 +505,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Row(
                             children: [
                               const Icon(
-                                Icons.notifications_off_outlined,
+                                AppIcons.bellSlash,
                                 color: AppTheme.wrong,
                                 size: 20,
                               ),
@@ -554,7 +555,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
-                                  Icons.access_time_outlined,
+                                  AppIcons.clock,
                                   color: AppTheme.violet,
                                   size: 18,
                                 ),
@@ -585,7 +586,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               // How to play
               _ExpandableSection(
-                icon: Icons.help_outline_rounded,
+                icon: AppIcons.circleQuestion,
                 iconColor: AppTheme.correct,
                 title: ku ? 'Çawa tê lîstin?' : 'Nasıl oynanır?',
                 body: ku
@@ -606,7 +607,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // Privacy
               _ExpandableSection(
-                icon: Icons.privacy_tip_outlined,
+                icon: AppIcons.shieldHalved,
                 iconColor: AppTheme.violet,
                 title: ku ? 'Nepenî' : 'Gizlilik',
                 body: ku

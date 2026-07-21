@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
 import '../../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Day-of-week themed contest card showing today's category.
 ///
@@ -28,43 +29,43 @@ class DailyThemeCard extends StatelessWidget {
     DateTime.monday: _ThemeInfo(
       categoryKu: 'Ziman',
       categoryTr: 'Dil',
-      icon: Icons.translate_rounded,
+      icon: AppIcons.language,
       color: Color(0xFF1E5F47),
     ),
     DateTime.tuesday: _ThemeInfo(
       categoryKu: 'Çand',
       categoryTr: 'Kültür',
-      icon: Icons.theater_comedy_rounded,
+      icon: AppIcons.masksTheater,
       color: Color(0xFFD65A31),
     ),
     DateTime.wednesday: _ThemeInfo(
       categoryKu: 'Dîrok',
       categoryTr: 'Tarih',
-      icon: Icons.menu_book_rounded,
+      icon: AppIcons.bookOpen,
       color: Color(0xFF2B5C8F),
     ),
     DateTime.thursday: _ThemeInfo(
       categoryKu: 'Edebiyat',
       categoryTr: 'Edebiyat',
-      icon: Icons.auto_stories_rounded,
+      icon: AppIcons.bookOpenReader,
       color: Color(0xFFE0A96D),
     ),
     DateTime.friday: _ThemeInfo(
       categoryKu: 'Cografya',
       categoryTr: 'Coğrafya',
-      icon: Icons.public_rounded,
+      icon: AppIcons.globe,
       color: Color(0xFF4C7063),
     ),
     DateTime.saturday: _ThemeInfo(
       categoryKu: 'Muzîk',
       categoryTr: 'Müzik',
-      icon: Icons.music_note_rounded,
+      icon: AppIcons.music,
       color: Color(0xFFD4AF37),
     ),
     DateTime.sunday: _ThemeInfo(
       categoryKu: 'Tevlihev',
       categoryTr: 'Karma',
-      icon: Icons.auto_awesome_rounded,
+      icon: AppIcons.wandMagicSparkles,
       color: Color(0xFFB83B5E),
     ),
   };
@@ -213,7 +214,7 @@ class DailyThemeCard extends StatelessWidget {
                           ),
                         ),
                         Icon(
-                          Icons.chevron_right_rounded,
+                          AppIcons.chevronRight,
                           color: theme.color,
                           size: 24,
                         ),
@@ -233,7 +234,7 @@ class DailyThemeCard extends StatelessWidget {
                     Row(
                       children: [
                         Icon(
-                          Icons.hourglass_empty_rounded,
+                          AppIcons.hourglass,
                           size: 14,
                           color: AppTheme.textMutedColor(context),
                         ),

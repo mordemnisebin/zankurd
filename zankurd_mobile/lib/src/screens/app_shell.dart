@@ -20,6 +20,7 @@ import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
 import 'play_hub_screen.dart';
 import 'sign_in_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({required this.repository, super.key});
@@ -149,7 +150,7 @@ class _AppShellState extends State<AppShell> {
               steps: [
                 CoachMarkStep(
                   targetKey: _homeNavKey,
-                  icon: Icons.home_rounded,
+                  icon: AppIcons.house,
                   titleKu: 'Sereke',
                   titleTr: 'Ana Sayfa',
                   descriptionKu:
@@ -159,7 +160,7 @@ class _AppShellState extends State<AppShell> {
                 ),
                 CoachMarkStep(
                   targetKey: _playNavKey,
-                  icon: Icons.sports_esports_rounded,
+                  icon: AppIcons.gamepad,
                   titleKu: 'Bilîze',
                   titleTr: 'Yarış',
                   descriptionKu: 'Hemû pêşbirktî û lîstikên te li vir in.',
@@ -168,7 +169,7 @@ class _AppShellState extends State<AppShell> {
                 ),
                 CoachMarkStep(
                   targetKey: _profileNavKey,
-                  icon: Icons.person_rounded,
+                  icon: AppIcons.user,
                   titleKu: 'Profîl',
                   titleTr: 'Profil',
                   descriptionKu:
@@ -288,36 +289,36 @@ class _AppShellState extends State<AppShell> {
               NavigationDestination(
                 icon: KeyedSubtree(
                   key: _homeNavKey,
-                  child: const Icon(Icons.home_outlined),
+                  child: const Icon(AppIcons.house),
                 ),
-                selectedIcon: const Icon(Icons.home),
+                selectedIcon: const Icon(AppIcons.house),
                 label: ku ? 'Sereke' : 'Ana Sayfa',
               ),
               NavigationDestination(
-                icon: const Icon(Icons.grid_view_outlined),
-                selectedIcon: const Icon(Icons.grid_view_rounded),
+                icon: const Icon(AppIcons.tableCells),
+                selectedIcon: const Icon(AppIcons.tableCells),
                 label: ku ? 'Kategorî' : 'Kategori',
               ),
               NavigationDestination(
                 icon: KeyedSubtree(
                   key: _playNavKey,
-                  child: const Icon(Icons.sports_esports_outlined),
+                  child: const Icon(AppIcons.gamepad),
                 ),
-                selectedIcon: const Icon(Icons.sports_esports),
+                selectedIcon: const Icon(AppIcons.gamepad),
                 label: ku ? 'Pêşbazî' : 'Yarış',
               ),
               NavigationDestination(
-                icon: const Icon(Icons.emoji_events_outlined),
-                selectedIcon: const Icon(Icons.emoji_events),
+                icon: const Icon(AppIcons.trophy),
+                selectedIcon: const Icon(AppIcons.trophy),
                 // "Lîstik" Kurmancî'de "oyun" demek; sıralama sekmesi "Rêz".
                 label: ku ? 'Rêz' : 'Liderlik',
               ),
               NavigationDestination(
                 icon: KeyedSubtree(
                   key: _profileNavKey,
-                  child: const Icon(Icons.person_outline),
+                  child: const Icon(AppIcons.user),
                 ),
-                selectedIcon: const Icon(Icons.person),
+                selectedIcon: const Icon(AppIcons.user),
                 label: ku ? 'Profîl' : 'Profil',
               ),
             ],

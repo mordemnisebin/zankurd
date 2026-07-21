@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
 import '../../utils/test_environment.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Üst üste doğru cevap serisinin görsel kademesi.
 /// Eşikler spec'ten: ×3 bronz (turuncu), ×5 gümüş (mor), ×10 altın.
@@ -131,7 +132,7 @@ class ComboBadge extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(
-                    Icons.local_fire_department_rounded,
+                    AppIcons.fire,
                     color: Colors.white,
                     size: 16,
                   ),

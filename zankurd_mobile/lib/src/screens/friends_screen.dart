@@ -13,6 +13,7 @@ import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/screen_identity_header.dart';
 import 'room_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Arkadaş listesi, oyuncu arama ve istek yönetimi ekranı.
 class FriendsScreen extends StatefulWidget {
@@ -198,7 +199,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                       ? 'Bigere, daxwaz bike û bi heval re bilîze'
                       : 'Ara, istek at ve arkadaşınla oyna',
                   accent: AppTheme.cyan,
-                  icon: Icons.people_alt_rounded,
+                  icon: AppIcons.peopleGroup,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 // Çocuk modu: arkadaş arama ve yeni istek gönderme kapalı
@@ -250,7 +251,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   onSubmitted: (_) => _search(),
                   decoration: InputDecoration(
                     hintText: ku ? 'Navê lîstikvanî...' : 'Oyuncu adı...',
-                    prefixIcon: const Icon(Icons.search),
+                    prefixIcon: const Icon(AppIcons.magnifyingGlass),
                     isDense: true,
                   ),
                 ),
@@ -305,7 +306,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                         ? Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             child: Icon(
-                              Icons.check_circle,
+                              AppIcons.circleCheck,
                               color: AppTheme.primaryGradientStart.withValues(
                                 alpha: 0.8,
                               ),
@@ -393,7 +394,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
         final friends = snap.data ?? [];
         if (friends.isEmpty) {
           return AppEmptyState(
-            icon: Icons.people_outline,
+            icon: AppIcons.peopleGroup,
             title: ku ? 'Heval tune' : 'Arkadaş yok',
             message: ku
                 ? 'Li jorê lîstikvanan bigere û heval zêde bike'
@@ -552,7 +553,7 @@ class _FriendRequestCard extends StatelessWidget {
             IconButton(
               onPressed: onReject,
               tooltip: ku ? 'Red bike' : 'Reddet',
-              icon: const Icon(Icons.close_rounded, color: AppTheme.wrong),
+              icon: const Icon(AppIcons.xmark, color: AppTheme.wrong),
             ),
             FilledButton(
               onPressed: onAccept,

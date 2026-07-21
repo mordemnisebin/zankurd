@@ -6,6 +6,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +41,7 @@ void main() {
       expect(find.text('KurdBot'), findsOneWidget);
       expect(find.text('Diyar'), findsOneWidget);
       expect(find.text('Kabul'), findsOneWidget);
-      expect(find.byIcon(Icons.close_rounded), findsOneWidget);
+      expect(find.byIcon(AppIcons.xmark), findsOneWidget);
       expect(
         find.byKey(const ValueKey('friends-search-panel')),
         findsOneWidget,
@@ -83,7 +84,7 @@ void main() {
 
       // İstek gönderilen oyuncuda buton onay ikonuna dönüşür.
       expect(find.text('Ekle'), findsOneWidget);
-      expect(find.byIcon(Icons.check_circle), findsOneWidget);
+      expect(find.byIcon(AppIcons.circleCheck), findsOneWidget);
       expect(find.text('İstek gönderildi'), findsOneWidget);
     });
 
@@ -91,7 +92,7 @@ void main() {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byIcon(Icons.close_rounded));
+      await tester.tap(find.byIcon(AppIcons.xmark));
       await tester.pumpAndSettle();
 
       expect(find.text('İstek reddedildi'), findsOneWidget);

@@ -16,6 +16,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/test_environment.dart';
 import 'quiz_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 Player? selectOpponentPlayer(
   Iterable<Player> players, {
@@ -562,7 +563,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
           leading: _searchingStarted
               ? IconButton(
-                  icon: const Icon(Icons.arrow_back_rounded),
+                  icon: const Icon(AppIcons.arrowLeft),
                   tooltip: context.isKu ? 'Vegere' : 'Geri',
                   onPressed: _cancelling ? null : _handleCancelAndPop,
                 )
@@ -614,7 +615,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
-                  Icons.sports_esports_outlined,
+                  AppIcons.gamepad,
                   color: AppTheme.primaryGradientStart,
                   size: 32,
                 ),
@@ -676,7 +677,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                     color: Colors.white.withValues(alpha: 0.18),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.shuffle_rounded, color: Colors.white),
+                  child: const Icon(AppIcons.shuffle, color: Colors.white),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -709,7 +710,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                   ),
                 ),
                 const Icon(
-                  Icons.arrow_forward_ios_rounded,
+                  AppIcons.chevronRight,
                   color: Colors.white70,
                   size: 16,
                 ),
@@ -1030,7 +1031,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                       ? const Color(0xFFE4E0D6)
                                       : const Color(0xFF1F1D2B),
                                   child: Icon(
-                                    Icons.question_mark,
+                                    AppIcons.question,
                                     color: AppTheme.isLight(context)
                                         ? AppTheme.textMutedColor(context)
                                         : Colors.white24,
@@ -1168,7 +1169,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 ),
               ),
               onPressed: _cancelling ? null : _handleCancelAndPop,
-              icon: const Icon(Icons.close_rounded, size: 18),
+              icon: const Icon(AppIcons.xmark, size: 18),
               label: Text(
                 ku ? 'Betal bike' : 'İptal Et',
                 style: const TextStyle(fontWeight: FontWeight.w700),

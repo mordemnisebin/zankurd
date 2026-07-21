@@ -10,6 +10,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'subcategory_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class CategoriesTab extends StatefulWidget {
   const CategoriesTab({
@@ -128,7 +129,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                         key: const ValueKey('categories-back-button'),
                         tooltip: ku ? 'Vegere' : 'Geri',
                         onPressed: () => Navigator.of(context).pop(),
-                        icon: const Icon(Icons.arrow_back),
+                        icon: const Icon(AppIcons.arrowLeft),
                         color: AppTheme.textPrimaryColor(context),
                       ),
                     Container(
@@ -608,8 +609,8 @@ class _CategoryCardState extends State<_CategoryCard>
                               else
                                 Icon(
                                   comingSoon
-                                      ? Icons.hourglass_empty_rounded
-                                      : Icons.chevron_right_rounded,
+                                      ? AppIcons.hourglass
+                                      : AppIcons.chevronRight,
                                   color: Colors.white.withValues(alpha: 0.7),
                                 ),
                             ],

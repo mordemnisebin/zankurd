@@ -8,6 +8,7 @@ import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class ReviewScreen extends StatelessWidget {
   const ReviewScreen({required this.records, required this.room, super.key});
@@ -31,7 +32,7 @@ class ReviewScreen extends StatelessWidget {
         child: SafeArea(
           child: records.isEmpty
               ? AppEmptyState(
-                  icon: Icons.checklist_outlined,
+                  icon: AppIcons.squareCheck,
                   title: context.s(
                     'Tu bersiv tune ne.',
                     'Hiç cevap kaydı yok.',
@@ -58,7 +59,7 @@ class ReviewScreen extends StatelessWidget {
                         '$correct doğru · $wrong yanlış · $empty boş',
                       ),
                       accent: AppTheme.cyan,
-                      icon: Icons.checklist_rounded,
+                      icon: AppIcons.squareCheck,
                       compact: true,
                     ),
                     const SizedBox(height: AppSpacing.md),
@@ -94,7 +95,7 @@ class _SummaryStrip extends StatelessWidget {
         Expanded(
           child: _SummaryTile(
             color: AppTheme.correct,
-            icon: Icons.check_circle_outline,
+            icon: AppIcons.circleCheck,
             value: '$correct',
             label: context.s('Rast', 'Doğru'),
           ),
@@ -103,7 +104,7 @@ class _SummaryStrip extends StatelessWidget {
         Expanded(
           child: _SummaryTile(
             color: AppTheme.wrong,
-            icon: Icons.cancel_outlined,
+            icon: AppIcons.circleXmark,
             value: '$wrong',
             label: context.s('Şaş', 'Yanlış'),
           ),
@@ -112,7 +113,7 @@ class _SummaryStrip extends StatelessWidget {
         Expanded(
           child: _SummaryTile(
             color: AppTheme.gold,
-            icon: Icons.hourglass_empty_rounded,
+            icon: AppIcons.hourglass,
             value: '$empty',
             label: context.s('Vala', 'Boş'),
           ),
@@ -192,15 +193,15 @@ class _ReviewCard extends StatelessWidget {
 
     if (isUnanswered) {
       headerColor = AppTheme.gold;
-      headerIcon = Icons.help_outline;
+      headerIcon = AppIcons.circleQuestion;
       headerText = context.s('Vala ma', 'BOŞ BIRAKILDI');
     } else if (isCorrect) {
       headerColor = AppTheme.correct;
-      headerIcon = Icons.check_circle_outline;
+      headerIcon = AppIcons.circleCheck;
       headerText = context.s('RAST', 'DOĞRU');
     } else {
       headerColor = AppTheme.wrong;
-      headerIcon = Icons.cancel_outlined;
+      headerIcon = AppIcons.circleXmark;
       headerText = context.s('ŞAŞ', 'YANLIŞ');
     }
 
@@ -298,11 +299,11 @@ class _ReviewCard extends StatelessWidget {
                   if (isThisCorrect) {
                     bgColor = AppTheme.correct.withValues(alpha: 0.14);
                     textColor = AppTheme.correct;
-                    icon = Icons.check;
+                    icon = AppIcons.check;
                   } else if (isThisSelected) {
                     bgColor = AppTheme.wrong.withValues(alpha: 0.14);
                     textColor = AppTheme.wrong;
-                    icon = Icons.close;
+                    icon = AppIcons.xmark;
                   } else {
                     bgColor = AppTheme.surfaceHiColor(context);
                     textColor = AppTheme.textMutedColor(context);
@@ -360,7 +361,7 @@ class _ReviewCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Icon(
-                          Icons.lightbulb_outline,
+                          AppIcons.lightbulb,
                           color: Color(0xFFB794F6),
                           size: 20,
                         ),

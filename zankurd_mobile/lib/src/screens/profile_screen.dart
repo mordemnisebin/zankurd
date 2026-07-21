@@ -27,6 +27,7 @@ import 'quiz_screen.dart';
 import 'settings_screen.dart';
 import 'suggest_question_screen.dart';
 import 'shop_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 part 'profile/profile_widgets.dart';
 
@@ -273,7 +274,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     FilledButton.icon(
                       key: const ValueKey('profile-stats-start-cta'),
                       onPressed: _startQuickRace,
-                      icon: const Icon(Icons.bolt_rounded, size: 18),
+                      icon: const Icon(AppIcons.bolt, size: 18),
                       label: Text(ku ? 'Îro dest pê bike' : 'Bugün başla'),
                     ),
                   ],
@@ -295,31 +296,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ? '#${_stats!.rank}'
                             : '—',
                         color: AppTheme.gold,
-                        icon: Icons.leaderboard_rounded,
+                        icon: AppIcons.chartColumn,
                       ),
                       _StatTile(
                         label: ku ? 'Tevayî Xal' : 'Toplam Puan',
                         value: '${_stats!.totalScore}',
                         color: AppTheme.accent,
-                        icon: Icons.star_rounded,
+                        icon: AppIcons.star,
                       ),
                       _StatTile(
                         label: ku ? 'Baştirîn Zincîr' : 'En İyi Seri',
                         value: '${_stats!.bestStreak}',
                         color: AppTheme.violet,
-                        icon: Icons.local_fire_department_rounded,
+                        icon: AppIcons.fire,
                       ),
                       _StatTile(
                         label: ku ? 'Lîstik' : 'Oyun',
                         value: '${_stats!.roomsPlayed}',
                         color: AppTheme.correct,
-                        icon: Icons.sports_esports_rounded,
+                        icon: AppIcons.gamepad,
                       ),
                       _StatTile(
                         label: ku ? 'Xeruz' : 'Coin',
                         value: _coinBalance == null ? '—' : '$_coinBalance',
                         color: AppTheme.gold,
-                        icon: Icons.monetization_on_rounded,
+                        icon: AppIcons.coins,
                       ),
                       _StatTile(
                         label: ku ? 'Rastî' : 'Doğruluk',
@@ -327,7 +328,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ? '—'
                             : '%${_accuracyPercent!.round()}',
                         color: AppTheme.cyan,
-                        icon: Icons.track_changes_rounded,
+                        icon: AppIcons.bullseye,
                       ),
                     ],
                   ),
@@ -565,7 +566,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             Icon(
-              Icons.chevron_right_rounded,
+              AppIcons.chevronRight,
               color: AppTheme.textMutedColor(context),
             ),
           ],
@@ -609,7 +610,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               _menuRow(
                 leading: const Icon(
-                  Icons.bookmark_outline,
+                  AppIcons.bookmark,
                   color: AppTheme.gold,
                   size: 20,
                 ),
@@ -638,7 +639,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       )
                     : const Icon(
-                        Icons.school_outlined,
+                        AppIcons.graduationCap,
                         color: AppTheme.primaryGradientStart,
                         size: 20,
                       ),
@@ -656,7 +657,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               divider,
               _menuRow(
                 leading: const Icon(
-                  Icons.add_circle_outline,
+                  AppIcons.circlePlus,
                   color: AppTheme.playCyan,
                   size: 20,
                 ),
@@ -688,7 +689,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _menuRow(
                 iconBadgeKey: const ValueKey('profile-menu-icon-Dukan'),
                 leading: const Icon(
-                  Icons.storefront_outlined,
+                  AppIcons.store,
                   color: AppTheme.gold,
                   size: 20,
                 ),
@@ -706,7 +707,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               divider,
               _menuRow(
                 leading: const Icon(
-                  Icons.settings_outlined,
+                  AppIcons.gear,
                   color: AppTheme.secondaryAccent,
                   size: 20,
                 ),
@@ -721,7 +722,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               divider,
               _menuRow(
                 leading: const Icon(
-                  Icons.logout_rounded,
+                  AppIcons.rightFromBracket,
                   color: AppTheme.wrong,
                   size: 20,
                 ),

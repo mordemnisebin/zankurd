@@ -6,6 +6,7 @@ import '../l10n/lang.dart';
 import '../services/strength_analysis.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Profildeki "Güçlü ve Geliştirilecek Alanlar" bölümü.
 ///
@@ -98,7 +99,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
           Row(
             children: [
               const Icon(
-                Icons.insights_rounded,
+                AppIcons.chartLine,
                 color: AppTheme.playGreen,
                 size: 18,
               ),
@@ -126,7 +127,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
               _buildGroupLabel(
                 context,
                 ku ? 'Xurt' : 'Güçlü',
-                Icons.emoji_events_outlined,
+                AppIcons.trophy,
                 AppTheme.gold,
               ),
               for (final i in result.strengths.take(3))
@@ -137,7 +138,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
               _buildGroupLabel(
                 context,
                 ku ? 'Cihên pêşketinê' : 'Geliştirilecek',
-                Icons.trending_up_rounded,
+                AppIcons.arrowTrendUp,
                 AppTheme.brandGreen,
               ),
               for (final i in result.improvements.take(3))
@@ -153,7 +154,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
     return Row(
       children: [
         Icon(
-          Icons.info_outline_rounded,
+          AppIcons.circleInfo,
           size: 18,
           color: AppTheme.textMutedColor(context),
         ),
@@ -207,8 +208,8 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
     final isStrength = tone == InsightTone.strength;
     // Renk + ikon + metin birlikte anlam taşır.
     final icon = isStrength
-        ? Icons.check_circle_outline_rounded
-        : Icons.flag_outlined;
+        ? AppIcons.circleCheck
+        : AppIcons.flag;
     final tint = isStrength ? AppTheme.playGreen : AppTheme.brandGreen;
     final String action;
     if (isStrength) {

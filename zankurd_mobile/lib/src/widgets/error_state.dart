@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class ErrorState extends StatelessWidget {
   const ErrorState({
@@ -35,7 +36,7 @@ class ErrorState extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                Icons.error_outline_rounded,
+                AppIcons.triangleExclamation,
                 size: 48,
                 color: AppTheme.wrong,
               ),
@@ -64,7 +65,7 @@ class ErrorState extends StatelessWidget {
                   backgroundColor: AppTheme.wrong,
                   foregroundColor: Colors.white,
                 ),
-                icon: const Icon(Icons.refresh),
+                icon: const Icon(AppIcons.arrowsRotate),
                 label: Text(retryLabel),
               ),
             ],

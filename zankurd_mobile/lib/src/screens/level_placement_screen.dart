@@ -6,6 +6,7 @@ import '../l10n/lang.dart';
 import '../models/quiz_question.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Kısa, baskısız seviye belirleme sınavı.
 ///
@@ -202,10 +203,10 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
   Widget _buildResult(BuildContext context, bool ku, PlacementResult result) {
     final level = result.level;
     final (icon, tint) = switch (level) {
-      PlacementLevel.destpek => (Icons.eco_rounded, AppTheme.playGreen),
-      PlacementLevel.navin => (Icons.trending_up_rounded, AppTheme.gold),
+      PlacementLevel.destpek => (AppIcons.leaf, AppTheme.playGreen),
+      PlacementLevel.navin => (AppIcons.arrowTrendUp, AppTheme.gold),
       PlacementLevel.pesketi => (
-        Icons.workspace_premium_rounded,
+        AppIcons.medal,
         AppTheme.brandGreen,
       ),
     };

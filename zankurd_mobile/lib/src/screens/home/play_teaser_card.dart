@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
 import '../../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Ana sayfadan Pêşbazî (Oyna) sekmesine kısa geçiş kartı — [home_screen.dart]
 /// yorumundaki "kısa teaser" sözü, [DailyRaceCard] ile aynı tek-satır kart
@@ -59,7 +60,7 @@ class PlayTeaserCard extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
-                          Icons.sports_esports_rounded,
+                          AppIcons.gamepad,
                           color: AppTheme.playPink,
                         ),
                       ),
@@ -91,7 +92,7 @@ class PlayTeaserCard extends StatelessWidget {
                         ),
                       ),
                       const Icon(
-                        Icons.chevron_right_rounded,
+                        AppIcons.chevronRight,
                         color: AppTheme.playPink,
                       ),
                     ],

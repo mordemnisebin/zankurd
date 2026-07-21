@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
 import '../widgets/app_logo.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Uygulama açılışında gösterilen, büyük ve belirgin ZanKurd logolu ekran.
 ///
@@ -36,16 +37,16 @@ class _SplashScreenState extends State<SplashScreen>
   // boş kutu görünüyordu. Splash'te gizli bir ikon seti çizerek fontu
   // peşinen yüklüyoruz (precache).
   static const _precacheIcons = [
-    Icons.home_rounded,
-    Icons.leaderboard_rounded,
-    Icons.person_rounded,
-    Icons.settings_rounded,
-    Icons.play_arrow_rounded,
-    Icons.star_rounded,
-    Icons.check_rounded,
-    Icons.close_rounded,
-    Icons.timer_outlined,
-    Icons.emoji_events_rounded,
+    AppIcons.house,
+    AppIcons.chartColumn,
+    AppIcons.user,
+    AppIcons.gear,
+    AppIcons.play,
+    AppIcons.star,
+    AppIcons.check,
+    AppIcons.xmark,
+    AppIcons.stopwatch,
+    AppIcons.trophy,
   ];
 
   @override

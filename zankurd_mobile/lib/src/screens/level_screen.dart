@@ -9,6 +9,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'quiz_screen.dart';
 import '../config/subcategory_config.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class LevelScreen extends StatefulWidget {
   const LevelScreen({
@@ -475,7 +476,7 @@ class _LevelNodeState extends State<_LevelNode> {
                     ),
                     child: isFinal
                         ? const Icon(
-                            Icons.emoji_events_rounded,
+                            AppIcons.trophy,
                             color: Colors.white,
                             size: 34,
                           )
@@ -502,7 +503,7 @@ class _LevelNodeState extends State<_LevelNode> {
                           border: Border.all(color: Colors.white, width: 1.5),
                         ),
                         child: const Icon(
-                          Icons.check_rounded,
+                          AppIcons.check,
                           color: Colors.white,
                           size: 14,
                         ),
@@ -634,7 +635,7 @@ class _DifficultyStars extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 1.5),
             child: Icon(
-              i <= filled ? Icons.star_rounded : Icons.star_outline_rounded,
+              i <= filled ? AppIcons.star : AppIcons.star,
               size: 13,
               color: i <= filled
                   ? color

@@ -16,6 +16,7 @@ import '../widgets/app_panel.dart';
 import '../widgets/room_chat.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class RoomScreen extends StatefulWidget {
   const RoomScreen({
@@ -241,7 +242,7 @@ class _RoomScreenState extends State<RoomScreen> {
                             onPressed: _leaving ? null : _leaveRoom,
                             tooltip: ku ? 'Ji odeyê derkeve' : 'Odadan ayrıl',
                             icon: Icon(
-                              Icons.arrow_back_rounded,
+                              AppIcons.arrowLeft,
                               color: AppTheme.textSubColor(context),
                             ),
                           ),
@@ -258,8 +259,8 @@ class _RoomScreenState extends State<RoomScreen> {
                                   setState(() => _chatOpen = !_chatOpen),
                               icon: Icon(
                                 _chatOpen
-                                    ? Icons.chat_bubble_rounded
-                                    : Icons.chat_bubble_outline_rounded,
+                                    ? AppIcons.comment
+                                    : AppIcons.comment,
                                 color: _chatOpen
                                     ? AppTheme.playCyan
                                     : AppTheme.textSubColor(context),
@@ -307,16 +308,16 @@ class _RoomScreenState extends State<RoomScreen> {
                                     children: [
                                       _Pill(
                                         label: room.category,
-                                        icon: Icons.category_outlined,
+                                        icon: AppIcons.tableCells,
                                       ),
                                       _Pill(
                                         label: '${room.secondsPerQuestion} sn',
-                                        icon: Icons.timer_outlined,
+                                        icon: AppIcons.stopwatch,
                                       ),
                                       if (isHost)
                                         _Pill(
                                           label: ku ? 'Mêvandar' : 'Ev sahibi',
-                                          icon: Icons.star_rounded,
+                                          icon: AppIcons.star,
                                         ),
                                       // Guest tarafında da mêvandar bilgisi
                                       // görünsün: host'ta 3 çip, guest'te 2
@@ -326,7 +327,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                           label: ku
                                               ? 'Mêvandar: ${_hostName(room)}'
                                               : 'Ev sahibi: ${_hostName(room)}',
-                                          icon: Icons.star_rounded,
+                                          icon: AppIcons.star,
                                         ),
                                     ],
                                   ),
@@ -398,7 +399,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                               ),
                                             ),
                                             Icon(
-                                              Icons.copy_all_rounded,
+                                              AppIcons.copy,
                                               color: Colors.white.withValues(
                                                 alpha: 0.85,
                                               ),
@@ -423,7 +424,7 @@ class _RoomScreenState extends State<RoomScreen> {
                             Row(
                               children: [
                                 Icon(
-                                  Icons.group_outlined,
+                                  AppIcons.peopleGroup,
                                   color: AppTheme.textSubColor(context),
                                   size: 20,
                                 ),
@@ -500,7 +501,7 @@ class _RoomScreenState extends State<RoomScreen> {
                               Row(
                                 children: [
                                   const Icon(
-                                    Icons.person_add_alt_1_rounded,
+                                    AppIcons.userPlus,
                                     color: AppTheme.gold,
                                     size: 18,
                                   ),
@@ -581,7 +582,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                 child: Row(
                                   children: [
                                     Icon(
-                                      Icons.group_add_outlined,
+                                      AppIcons.userPlus,
                                       color: AppTheme.wrong,
                                       size: 18,
                                     ),
@@ -609,7 +610,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                     : (ku
                                           ? 'Pêşbirkê Dest Pê Bike'
                                           : 'Yarışı Başlat'),
-                                icon: Icons.play_arrow_rounded,
+                                icon: AppIcons.play,
                                 isLoading: starting,
                                 onPressed: canStart ? _startGameHost : null,
                               ),

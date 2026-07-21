@@ -5,6 +5,7 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 Widget _wrap(Widget child) {
   return ChangeNotifierProvider<LanguageProvider>(
@@ -95,8 +96,8 @@ void main() {
     );
 
     expect(find.text('Hilbijêre'), findsOneWidget);
-    expect(find.byIcon(Icons.check), findsOneWidget);
-    expect(find.byIcon(Icons.close), findsOneWidget);
+    expect(find.byIcon(AppIcons.check), findsOneWidget);
+    expect(find.byIcon(AppIcons.xmark), findsOneWidget);
     expect(find.text('Açıklama metni burada.'), findsOneWidget);
   });
 }

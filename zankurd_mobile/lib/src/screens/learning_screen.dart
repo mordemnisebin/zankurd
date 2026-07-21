@@ -17,6 +17,7 @@ import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
 import '../widgets/todays_review_card.dart';
 import 'quiz_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Kurmancî ders kategorilerini ve dersleri gösterir.
 class LearningScreen extends StatefulWidget {
@@ -122,7 +123,7 @@ class _LearningScreenState extends State<LearningScreen> {
                       ? 'Ders bi ders, mijar bi mijar'
                       : 'Ders ders, konu konu ilerle',
                   accent: AppTheme.playGreen,
-                  icon: Icons.school_rounded,
+                  icon: AppIcons.graduationCap,
                   compact: true,
                 ),
               ),
@@ -177,7 +178,7 @@ class _LearningScreenState extends State<LearningScreen> {
                         ),
                       ),
                     ),
-                    icon: const Icon(Icons.auto_stories_rounded, size: 18),
+                    icon: const Icon(AppIcons.bookOpenReader, size: 18),
                     label: Text(
                       ku ? 'Çîrok: Li Çayxanê' : 'Hikâye: Çay Evinde',
                       overflow: TextOverflow.ellipsis,
@@ -258,7 +259,7 @@ class _LearningScreenState extends State<LearningScreen> {
                     final lessons = snap.data ?? [];
                     if (lessons.isEmpty) {
                       return AppEmptyState(
-                        icon: Icons.school_outlined,
+                        icon: AppIcons.graduationCap,
                         title: ku ? 'Ders tune' : 'Ders yok',
                         message: ku
                             ? 'Di vê kategoriyê de hîn ders tune'
@@ -400,7 +401,7 @@ class _LearningScreenState extends State<LearningScreen> {
           Row(
             children: [
               Icon(
-                Icons.auto_stories_rounded,
+                AppIcons.bookOpenReader,
                 size: 14,
                 color: AppTheme.playGreen,
               ),
@@ -480,7 +481,7 @@ class _LearningModeBar extends StatelessWidget {
       children: [
         Expanded(
           child: _LearningModeButton(
-            icon: Icons.quiz_outlined,
+            icon: AppIcons.question,
             label: isKu ? 'Pirsan' : 'Soru çöz',
             color: AppTheme.playCyan,
             enabled: hasLesson,
@@ -490,7 +491,7 @@ class _LearningModeBar extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: _LearningModeButton(
-            icon: Icons.style_outlined,
+            icon: AppIcons.paintbrush,
             label: isKu ? 'Kart' : 'Flaş kart',
             color: AppTheme.violet,
             enabled: hasLesson,
@@ -500,7 +501,7 @@ class _LearningModeBar extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: _LearningModeButton(
-            icon: Icons.menu_book_outlined,
+            icon: AppIcons.bookOpen,
             label: isKu ? 'Ders' : 'Dersler',
             color: AppTheme.playGreen,
             enabled: true,
@@ -749,7 +750,7 @@ class _LessonCard extends StatelessWidget {
                           runSpacing: 2,
                           children: [
                             const Icon(
-                              Icons.star_rounded,
+                              AppIcons.star,
                               size: 12,
                               color: AppTheme.gold,
                             ),
@@ -792,19 +793,19 @@ class _LessonCard extends StatelessWidget {
                     ],
                   ),
                   child: const Icon(
-                    Icons.check_rounded,
+                    AppIcons.check,
                     color: Colors.white,
                     size: 16,
                   ),
                 )
               else if (locked)
                 Icon(
-                  Icons.lock_outline_rounded,
+                  AppIcons.lock,
                   color: AppTheme.textMutedColor(context),
                 )
               else
                 Icon(
-                  Icons.chevron_right_rounded,
+                  AppIcons.chevronRight,
                   color: AppTheme.textMutedColor(context),
                 ),
             ],
@@ -816,28 +817,28 @@ class _LessonCard extends StatelessWidget {
 
   IconData _iconForLesson(String slug) {
     const icons = {
-      'alphabet': Icons.abc_rounded,
-      'numbers': Icons.numbers_rounded,
-      'colors': Icons.palette_rounded,
-      'family': Icons.family_restroom_rounded,
-      'greetings': Icons.waving_hand_rounded,
-      'food': Icons.restaurant_rounded,
-      'animals': Icons.pets_rounded,
-      'geography': Icons.public_rounded,
-      'grammar_noun': Icons.text_fields_rounded,
-      'grammar_verb': Icons.dynamic_feed_rounded,
-      'newroz': Icons.celebration_rounded,
-      'body': Icons.accessibility_rounded,
-      'clothing': Icons.checkroom_rounded,
-      'weather': Icons.cloud_rounded,
-      'time': Icons.schedule_rounded,
-      'prepositions': Icons.location_on_rounded,
-      'emotions': Icons.sentiment_satisfied_rounded,
-      'house': Icons.home_rounded,
-      'profession': Icons.work_rounded,
-      'daily_phrases': Icons.chat_rounded,
+      'alphabet': AppIcons.font,
+      'numbers': AppIcons.hashtag,
+      'colors': AppIcons.palette,
+      'family': AppIcons.peopleRoof,
+      'greetings': AppIcons.hand,
+      'food': AppIcons.utensils,
+      'animals': AppIcons.paw,
+      'geography': AppIcons.globe,
+      'grammar_noun': AppIcons.font,
+      'grammar_verb': AppIcons.barsStaggered,
+      'newroz': AppIcons.champagneGlasses,
+      'body': AppIcons.personCircleCheck,
+      'clothing': AppIcons.shirt,
+      'weather': AppIcons.cloud,
+      'time': AppIcons.clock,
+      'prepositions': AppIcons.locationDot,
+      'emotions': AppIcons.faceSmile,
+      'house': AppIcons.house,
+      'profession': AppIcons.briefcase,
+      'daily_phrases': AppIcons.comment,
     };
-    return icons[slug] ?? Icons.school_rounded;
+    return icons[slug] ?? AppIcons.graduationCap;
   }
 }
 
@@ -900,7 +901,7 @@ class _MasteryGoal extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.workspace_premium_rounded, color: AppTheme.gold),
+          const Icon(AppIcons.medal, color: AppTheme.gold),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
@@ -1080,7 +1081,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
           Row(
             children: [
               const Icon(
-                Icons.touch_app_rounded,
+                AppIcons.handPointer,
                 size: 14,
                 color: AppTheme.textMuted,
               ),
@@ -1195,8 +1196,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
           IconButton(
             icon: Icon(
               _flashcardMode
-                  ? Icons.flip_to_front_rounded
-                  : Icons.flip_to_back_rounded,
+                  ? AppIcons.clone
+                  : AppIcons.layerGroup,
             ),
             tooltip: ku ? 'Moda kartan' : 'Flashcard modu',
             onPressed: _toggleFlashcard,

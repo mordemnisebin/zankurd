@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Kategori bazlı görsel kaynak (ikon + arka plan görseli) için tek doğruluk kaynağı.
 /// Gradient için AppTheme.categoryGradient(index) kullanılmaya devam eder.
@@ -6,15 +7,15 @@ class CategoryVisuals {
   const CategoryVisuals._();
 
   static const Map<String, IconData> _icons = {
-    'Ziman': Icons.translate_outlined,
-    'Çand': Icons.diversity_3_outlined,
-    'Dîrok': Icons.account_balance_outlined,
-    'Edebiyat': Icons.menu_book_outlined,
-    'Cografya': Icons.public_outlined,
-    'Muzîk': Icons.music_note_outlined,
-    'Siyaset': Icons.how_to_vote_outlined,
-    'Paradigma': Icons.psychology_outlined,
-    'Teknolojî': Icons.devices_other_outlined,
+    'Ziman': AppIcons.language,
+    'Çand': AppIcons.peopleGroup,
+    'Dîrok': AppIcons.buildingColumns,
+    'Edebiyat': AppIcons.bookOpen,
+    'Cografya': AppIcons.globe,
+    'Muzîk': AppIcons.music,
+    'Siyaset': AppIcons.squareCheck,
+    'Paradigma': AppIcons.brain,
+    'Teknolojî': AppIcons.mobileScreen,
   };
 
   static const Map<String, String> _imagePaths = {
@@ -32,7 +33,7 @@ class CategoryVisuals {
   };
 
   static IconData icon(String category) =>
-      _icons[category] ?? Icons.category_outlined;
+      _icons[category] ?? AppIcons.tableCells;
 
   static String imagePath(String category) =>
       _imagePaths[category] ?? 'assets/question_images/cat_ziman.webp';

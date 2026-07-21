@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class StatsRow extends StatelessWidget {
   const StatsRow({required this.isKu, super.key});
@@ -12,21 +13,21 @@ class StatsRow extends StatelessWidget {
     return Row(
       children: [
         _StatTile(
-          icon: Icons.quiz_outlined,
+          icon: AppIcons.question,
           value: '2250+',
           label: isKu ? 'Pirs' : 'Soru',
           color: AppTheme.violet,
         ),
         const SizedBox(width: 10),
         _StatTile(
-          icon: Icons.layers_outlined,
+          icon: AppIcons.layerGroup,
           value: '30',
           label: isKu ? 'Ast' : 'Seviye',
           color: AppTheme.accent,
         ),
         const SizedBox(width: 10),
         _StatTile(
-          icon: Icons.image_outlined,
+          icon: AppIcons.image,
           value: '72',
           label: isKu ? 'Wêne' : 'Görsel',
           color: AppTheme.gold,

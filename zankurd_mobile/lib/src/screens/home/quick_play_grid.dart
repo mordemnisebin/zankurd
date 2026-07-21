@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
 import '../../widgets/colorful_action_card.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Tam-genişlik yarışma modu listesi: 1v1 düello, günün yarışması, turnuva.
 /// Yalnız gerçek "yarış" modları burada; çark bir ödüldür ve mağazada durur
@@ -37,7 +38,7 @@ class QuickPlayGrid extends StatelessWidget {
         // Dürüstlük: canlı rakip bulunamazsa ~30 sn sonra bot teklif
         // ediliyor; kart bunu baştan söylesin.
         subtitle: isKu ? 'Bot + Zindî' : 'Bot + Canlı',
-        icon: Icons.bolt_rounded,
+        icon: AppIcons.bolt,
         colors: [AppTheme.playPink, _deepen(AppTheme.playPink)],
         onTap: onDuel,
       ),
@@ -45,7 +46,7 @@ class QuickPlayGrid extends StatelessWidget {
         key: const ValueKey('quick-play-daily'),
         title: isKu ? 'Pêşbirka Rojê' : 'Günün Yarışması',
         subtitle: isKu ? '10 pirs' : '10 soru',
-        icon: Icons.today_rounded,
+        icon: AppIcons.calendarDays,
         colors: const [AppTheme.brandGreen, AppTheme.brandGreenDeep],
         loading: dailyQuizLoading,
         onTap: onDailyQuiz,
@@ -54,7 +55,7 @@ class QuickPlayGrid extends StatelessWidget {
         key: const ValueKey('quick-play-tournament'),
         title: isKu ? 'Turnuva' : 'Turnuva Modu',
         subtitle: isKu ? 'Bot kûpa' : 'Bot kupa',
-        icon: Icons.emoji_events_outlined,
+        icon: AppIcons.trophy,
         colors: [AppTheme.playCyan, _deepen(AppTheme.playCyan)],
         onTap: onTournament,
       ),

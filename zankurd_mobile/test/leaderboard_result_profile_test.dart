@@ -20,6 +20,7 @@ import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class _EmptyFavoritesRepository extends MockZanKurdRepository {
   @override
@@ -90,7 +91,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Liderlik Tablosu'), findsOneWidget);
-    expect(find.byIcon(Icons.refresh_rounded), findsOneWidget);
+    expect(find.byIcon(AppIcons.arrowsRotate), findsOneWidget);
   });
 
   testWidgets('leaderboard podium renders polished ranked slots', (
@@ -233,8 +234,8 @@ void main() {
       await tester.pumpAndSettle();
 
       final nextButton = last
-          ? find.byIcon(Icons.flag_outlined)
-          : find.byIcon(Icons.arrow_forward_rounded);
+          ? find.byIcon(AppIcons.flag)
+          : find.byIcon(AppIcons.arrowRight);
       // Açıklama paneli yarışma modunda artık gösterilmediği için içerik
       // ekrana sığar; kaydırılabilir alan olmayabilir.
       await tester.ensureVisible(nextButton.last);

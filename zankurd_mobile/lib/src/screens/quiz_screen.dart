@@ -35,6 +35,7 @@ import '../widgets/kilim_progress_bar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz_result_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 part 'quiz/quiz_widgets.dart';
 
@@ -697,12 +698,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             IconButton(
               onPressed: _toggleFavorite,
               tooltip: context.s('Tomar bike', 'Kaydet'),
-              icon: Icon(favorite ? Icons.bookmark : Icons.bookmark_border),
+              icon: Icon(favorite ? AppIcons.bookmark : AppIcons.bookmark),
             ),
             IconButton(
               onPressed: _reportQuestion,
               tooltip: context.s('Raporte bike', 'Bildir'),
-              icon: const Icon(Icons.report_gmailerrorred_outlined),
+              icon: const Icon(AppIcons.triangleExclamation),
             ),
           ],
         ),
@@ -1222,10 +1223,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   onPressed: canPressNext ? () => _next() : null,
                   icon: Icon(
                     _isMultiplayer
-                        ? Icons.hourglass_top_rounded
+                        ? AppIcons.hourglassStart
                         : isLastQuestion
-                        ? Icons.flag_outlined
-                        : Icons.arrow_forward_rounded,
+                        ? AppIcons.flag
+                        : AppIcons.arrowRight,
                   ),
                   label: Text(
                     _isMultiplayer &&

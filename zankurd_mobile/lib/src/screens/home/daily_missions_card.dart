@@ -4,6 +4,7 @@ import '../../models/daily_mission.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_panel.dart';
 import '../../widgets/skeleton_loader.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class DailyMissionsCard extends StatelessWidget {
   const DailyMissionsCard({
@@ -48,7 +49,7 @@ class DailyMissionsCard extends StatelessWidget {
                   ],
                 ),
                 child: const Icon(
-                  Icons.task_alt_rounded,
+                  AppIcons.circleCheck,
                   color: Colors.white,
                   size: 20,
                 ),
@@ -138,11 +139,11 @@ class _MissionTile extends StatelessWidget {
   /// Görev tipini tek tip bayrak yerine anlamlı bir ikonla gösterir.
   static IconData _missionIcon(MissionType type) {
     return switch (type) {
-      MissionType.answerCorrect => Icons.track_changes_rounded,
-      MissionType.completeQuiz => Icons.emoji_events_rounded,
-      MissionType.useWildcard => Icons.auto_awesome_rounded,
-      MissionType.keepStreak => Icons.local_fire_department_rounded,
-      MissionType.playCategory => Icons.category_rounded,
+      MissionType.answerCorrect => AppIcons.bullseye,
+      MissionType.completeQuiz => AppIcons.trophy,
+      MissionType.useWildcard => AppIcons.wandMagicSparkles,
+      MissionType.keepStreak => AppIcons.fire,
+      MissionType.playCategory => AppIcons.tableCells,
     };
   }
 
@@ -192,7 +193,7 @@ class _MissionTile extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  isDone ? Icons.check_rounded : _missionIcon(mission.type),
+                  isDone ? AppIcons.check : _missionIcon(mission.type),
                   color: isDone ? AppTheme.gold : AppTheme.accent,
                   size: 14,
                 ),

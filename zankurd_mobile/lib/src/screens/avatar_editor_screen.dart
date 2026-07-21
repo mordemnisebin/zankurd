@@ -16,6 +16,7 @@ import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/screen_identity_header.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Avatar/çerçeve/unvan düzenleyici. Kaydet ile repository'ye yazar ve
 /// pop(true) döner; çağıran ekran görünümünü tazeler.
@@ -184,7 +185,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                           ? 'Sembol, reng û çarçove hilbijêre'
                           : 'Simge, renk ve çerçeve seç',
                       accent: AppTheme.violet,
-                      icon: Icons.face_retouching_natural_rounded,
+                      icon: AppIcons.faceSmile,
                       compact: true,
                     ),
                     const SizedBox(height: AppSpacing.md),
@@ -214,7 +215,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                                     strokeWidth: 2,
                                   ),
                                 )
-                              : const Icon(Icons.photo_library_outlined),
+                              : const Icon(AppIcons.images),
                           label: Text(ku ? 'Wêne bar bike' : 'Fotoğraf yükle'),
                         ),
                         if (_identity.photoUrl != null) ...[
@@ -226,7 +227,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                                 clearPhoto: true,
                               ),
                             ),
-                            icon: const Icon(Icons.close_rounded),
+                            icon: const Icon(AppIcons.xmark),
                             label: Text(ku ? 'Rake' : 'Kaldır'),
                           ),
                         ],
@@ -419,7 +420,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                                 color: Colors.white,
                               ),
                             )
-                          : const Icon(Icons.save_outlined),
+                          : const Icon(AppIcons.floppyDisk),
                       label: Text(ku ? 'Tomar Bike' : 'Kaydet'),
                     ),
                   ],
@@ -524,7 +525,7 @@ class _FrameRow extends StatelessWidget {
           ),
           child: locked
               ? Icon(
-                  Icons.lock,
+                  AppIcons.lock,
                   size: 14,
                   color: AppTheme.textMutedColor(context),
                 )
@@ -543,7 +544,7 @@ class _FrameRow extends StatelessWidget {
             ? Text(requirement!, style: const TextStyle(fontSize: 11))
             : null,
         trailing: selected
-            ? const Icon(Icons.check_circle, color: AppTheme.correct)
+            ? const Icon(AppIcons.circleCheck, color: AppTheme.correct)
             : null,
         onTap: onTap,
       ),
@@ -571,7 +572,7 @@ class _TitleRow extends StatelessWidget {
         contentPadding: EdgeInsets.zero,
         dense: true,
         leading: Icon(
-          Icons.military_tech_outlined,
+          AppIcons.medal,
           color: selected ? AppTheme.gold : AppTheme.textMutedColor(context),
         ),
         title: Text(
@@ -582,7 +583,7 @@ class _TitleRow extends StatelessWidget {
           ),
         ),
         trailing: selected
-            ? const Icon(Icons.check_circle, color: AppTheme.correct)
+            ? const Icon(AppIcons.circleCheck, color: AppTheme.correct)
             : null,
         onTap: onTap,
       ),

@@ -8,6 +8,7 @@ import '../theme/app_theme.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/styled_button.dart';
 import '../widgets/styled_input.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -310,8 +311,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                                           )
                                         : context.s('Pêş', 'İleri'),
                                     icon: _currentStep == 2
-                                        ? Icons.check_circle_outline
-                                        : Icons.arrow_forward,
+                                        ? AppIcons.circleCheck
+                                        : AppIcons.arrowRight,
                                     isLoading: authProvider.isLoading,
                                     onPressed: authProvider.isLoading
                                         ? null
@@ -395,7 +396,7 @@ class _SignUpScreenState extends State<SignUpScreen>
               label: context.s('Navnîşana e-peyamê', 'E-posta adresi'),
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
-              prefixIcon: Icons.email_outlined,
+              prefixIcon: AppIcons.envelope,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return context.s('E-peyam pêwîst e', 'E-posta gerekli');
@@ -418,10 +419,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                 label: context.s('Şîfre', 'Parola'),
                 controller: _passwordController,
                 obscureText: _obscurePassword,
-                prefixIcon: Icons.lock_outlined,
+                prefixIcon: AppIcons.lock,
                 suffixIcon: _obscurePassword
-                    ? Icons.visibility_off
-                    : Icons.visibility,
+                    ? AppIcons.eyeSlash
+                    : AppIcons.eye,
                 onSuffixIconPressed: () {
                   setState(() => _obscurePassword = !_obscurePassword);
                 },
@@ -444,10 +445,10 @@ class _SignUpScreenState extends State<SignUpScreen>
               label: context.s('Şîfreyê piştrast bike', 'Parolayı Onayla'),
               controller: _confirmPasswordController,
               obscureText: _obscureConfirmPassword,
-              prefixIcon: Icons.lock_outlined,
+              prefixIcon: AppIcons.lock,
               suffixIcon: _obscureConfirmPassword
-                  ? Icons.visibility_off
-                  : Icons.visibility,
+                  ? AppIcons.eyeSlash
+                  : AppIcons.eye,
               onSuffixIconPressed: () {
                 setState(
                   () => _obscureConfirmPassword = !_obscureConfirmPassword,
@@ -478,7 +479,7 @@ class _SignUpScreenState extends State<SignUpScreen>
             StyledInputField(
               label: context.s('Navê bikarhêner', 'Kullanıcı adı'),
               controller: _usernameController,
-              prefixIcon: Icons.person_outline,
+              prefixIcon: AppIcons.user,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return context.s(

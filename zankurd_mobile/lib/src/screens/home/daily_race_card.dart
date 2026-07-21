@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
 import '../../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class DailyRaceCard extends StatelessWidget {
   const DailyRaceCard({required this.onTap, super.key});
@@ -53,7 +54,7 @@ class DailyRaceCard extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
-                        Icons.today_rounded,
+                        AppIcons.calendarDays,
                         color: AppTheme.playCyan,
                       ),
                     ),
@@ -85,7 +86,7 @@ class DailyRaceCard extends StatelessWidget {
                       ),
                     ),
                     const Icon(
-                      Icons.chevron_right_rounded,
+                      AppIcons.chevronRight,
                       color: AppTheme.playCyan,
                     ),
                   ],

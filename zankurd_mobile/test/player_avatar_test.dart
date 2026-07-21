@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 // 1x1 şeffaf PNG — ağ olmadan Image testi için.
 final _tinyPng = Uint8List.fromList([
@@ -39,7 +40,7 @@ void main() {
         const PlayerAvatar(radius: 30, iconId: 'tembur', displayName: 'Test'),
       ),
     );
-    expect(find.byIcon(Icons.music_note_rounded), findsOneWidget);
+    expect(find.byIcon(AppIcons.music), findsOneWidget);
     expect(find.text('T'), findsNothing);
   });
 

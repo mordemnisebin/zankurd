@@ -12,6 +12,7 @@ import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
 import '../widgets/tournament_bracket_widget.dart';
 import 'quiz_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 bool tournamentMatchCompleted(Object? result) =>
     result is Map && result['completed'] == true;
@@ -428,7 +429,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             // edilmez (üst üste 3 kartta aynı bilgi vardı).
             subtitle: ku ? 'Bot turnuva' : 'Bot turnuva',
             accent: AppTheme.gold,
-            icon: Icons.emoji_events_rounded,
+            icon: AppIcons.trophy,
             compact: true,
           ),
           const SizedBox(height: AppSpacing.md),
@@ -572,7 +573,7 @@ class _LobbyView extends StatelessWidget {
                         ],
                       ),
                       child: const Icon(
-                        Icons.emoji_events_rounded,
+                        AppIcons.trophy,
                         color: Colors.white,
                         size: 44,
                       ),
@@ -603,7 +604,7 @@ class _LobbyView extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
-                            Icons.schedule_rounded,
+                            AppIcons.clock,
                             size: 14,
                             color: AppTheme.textSubColor(context),
                           ),
@@ -679,7 +680,7 @@ class _LobbyView extends StatelessWidget {
                       child: FilledButton.icon(
                         key: const ValueKey('tournament-primary-cta'),
                         onPressed: onStart,
-                        icon: const Icon(Icons.emoji_events_rounded, size: 20),
+                        icon: const Icon(AppIcons.trophy, size: 20),
                         style: FilledButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                             vertical: AppSpacing.md,
@@ -814,7 +815,7 @@ class _ChampionBanner extends StatelessWidget {
       gradient: AppTheme.goldGradient,
       child: Row(
         children: [
-          const Icon(Icons.emoji_events_rounded, color: Colors.white, size: 32),
+          const Icon(AppIcons.trophy, color: Colors.white, size: 32),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
@@ -917,7 +918,7 @@ class _UserMatchCard extends StatelessWidget {
                       height: 16,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Icon(Icons.play_arrow_rounded),
+                  : const Icon(AppIcons.play),
               label: Text(ku ? 'Maçê Bide Destpêkirin' : 'Maçı Başlat'),
             ),
           ),
@@ -1012,7 +1013,7 @@ class _MatchRow extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: match.status == 'completed'
-              ? const Icon(Icons.check_circle, size: 14, color: AppTheme.accent)
+              ? const Icon(AppIcons.circleCheck, size: 14, color: AppTheme.accent)
               : Text(
                   '—',
                   style: TextStyle(color: AppTheme.textMutedColor(context)),

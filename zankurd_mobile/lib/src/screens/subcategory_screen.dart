@@ -6,6 +6,7 @@ import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import 'level_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class SubcategoryScreen extends StatelessWidget {
   const SubcategoryScreen({
@@ -90,16 +91,16 @@ class _CategoryBanner extends StatelessWidget {
 
   static IconData _bannerIcon(String category) {
     return switch (category) {
-      'Ziman' => Icons.translate_rounded,
-      'Çand' => Icons.diversity_2_rounded,
-      'Dîrok' => Icons.account_balance_rounded,
-      'Edebiyat' => Icons.auto_stories_rounded,
-      'Cografya' => Icons.terrain_rounded,
-      'Muzîk' => Icons.music_note_rounded,
-      'Siyaset' => Icons.gavel_rounded,
-      'Paradigma' => Icons.psychology_alt_rounded,
-      'Teknolojî' => Icons.devices_other_rounded,
-      _ => Icons.school_rounded,
+      'Ziman' => AppIcons.language,
+      'Çand' => AppIcons.peopleGroup,
+      'Dîrok' => AppIcons.buildingColumns,
+      'Edebiyat' => AppIcons.bookOpenReader,
+      'Cografya' => AppIcons.mountain,
+      'Muzîk' => AppIcons.music,
+      'Siyaset' => AppIcons.gavel,
+      'Paradigma' => AppIcons.brain,
+      'Teknolojî' => AppIcons.mobileScreen,
+      _ => AppIcons.graduationCap,
     };
   }
 
@@ -266,22 +267,22 @@ class _SubcategoryCard extends StatelessWidget {
       'ciya_cem' ||
       'dengbeji' ||
       'diroka_siyasi' ||
-      'demokratik' => Icons.library_books_outlined,
+      'demokratik' => AppIcons.book,
       'peyvnasi' ||
       'diroka_nujen' ||
       'klasik' ||
       'bajar_ci' ||
       'nujen' ||
       'siyaseta_nujen' ||
-      'ekoloji' => Icons.menu_book_outlined,
+      'ekoloji' => AppIcons.bookOpen,
       'rastnivisin' ||
       'sexsiyet' ||
       'roman' ||
       'sinor_duma' ||
       'amur' ||
       'tevger' ||
-      'jineoloji' => Icons.draw_outlined,
-      _ => Icons.bookmark_added_outlined,
+      'jineoloji' => AppIcons.pen,
+      _ => AppIcons.bookmark,
     };
   }
 
@@ -380,12 +381,12 @@ class _SubcategoryCard extends StatelessWidget {
                               runSpacing: 4,
                               children: [
                                 _LevelChip(
-                                  icon: Icons.stairs_rounded,
+                                  icon: AppIcons.stairs,
                                   label: isKu ? '5 ast' : '5 seviye',
                                   tint: tint,
                                 ),
                                 _LevelChip(
-                                  icon: Icons.bolt_rounded,
+                                  icon: AppIcons.bolt,
                                   label: isKu ? 'Pêşbaz' : 'Yarış',
                                   tint: tint,
                                 ),
@@ -408,7 +409,7 @@ class _SubcategoryCard extends StatelessWidget {
                           ),
                         ),
                         child: Icon(
-                          Icons.arrow_forward_rounded,
+                          AppIcons.arrowRight,
                           color: tint,
                           size: 17,
                         ),

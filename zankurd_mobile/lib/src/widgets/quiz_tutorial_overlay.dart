@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'coach_mark.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// İlk quiz deneyiminde kullanıcıya arayüzü tanıtan rehber turu bindirmesi.
 ///
@@ -116,7 +117,7 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
             steps: [
               CoachMarkStep(
                 targetKey: widget.timerKey,
-                icon: Icons.timer_outlined,
+                icon: AppIcons.stopwatch,
                 titleKu: 'Demjimêr + Bersiv',
                 titleTr: 'Süre + Cevap',
                 descriptionKu:
@@ -126,7 +127,7 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
               ),
               CoachMarkStep(
                 targetKey: widget.nextButtonKey,
-                icon: Icons.arrow_forward_outlined,
+                icon: AppIcons.arrowRight,
                 titleKu: 'Rêz + Pirsa Din',
                 titleTr: 'Seri + Sonraki Soru',
                 descriptionKu:

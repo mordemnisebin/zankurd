@@ -4,6 +4,7 @@ import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_logo.dart';
 import '../widgets/styled_button.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({required this.onComplete, super.key});
@@ -268,8 +269,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                       );
                                     },
                               icon: last
-                                  ? Icons.check_rounded
-                                  : Icons.arrow_forward_rounded,
+                                  ? AppIcons.check
+                                  : AppIcons.arrowRight,
                               label: last
                                   ? context.s('Dest pê bike', 'Başla')
                                   : context.s('Piştre', 'Sonraki'),
@@ -292,7 +293,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     final ku = context.isKu;
     return [
       _OnboardingData(
-        icon: Icons.school_rounded,
+        icon: AppIcons.graduationCap,
         color: AppTheme.brandGreen,
         title: context.s('Hîn bibe', 'Öğren'),
         body: context.s(
@@ -310,7 +311,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         ],
       ),
       _OnboardingData(
-        icon: Icons.emoji_events_rounded,
+        icon: AppIcons.trophy,
         color: const Color(0xFFB86A3E), // terracotta — palet tonu
         title: context.s('Pêşbirkê bike', 'Yarış'),
         body: context.s(
@@ -330,7 +331,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       // 3. slayt: günlük ödüller + "Neden ZanKurd?" değer önerisi birleşti
       // (4 slayt → 3 slayt; daha kısa ilk izlenim).
       _OnboardingData(
-        icon: Icons.auto_awesome_rounded,
+        icon: AppIcons.wandMagicSparkles,
         color: AppTheme.gold,
         title: context.s('Ne tenê pêşbirk e', 'Sadece yarış değil'),
         body: context.s(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import 'app_panel.dart';
 import 'roj_mascot.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class AppEmptyState extends StatelessWidget {
   const AppEmptyState({
@@ -45,7 +46,7 @@ class AppErrorState extends StatelessWidget {
     required this.retryLabel,
     required this.onRetry,
     super.key = const ValueKey('app-error-state'),
-    this.icon = Icons.error_outline_rounded,
+    this.icon = AppIcons.triangleExclamation,
   });
 
   final IconData icon;
@@ -179,7 +180,7 @@ class _AppStateScaffold extends StatelessWidget {
                       const SizedBox(height: 18),
                       OutlinedButton.icon(
                         onPressed: onAction,
-                        icon: Icon(actionIcon ?? Icons.refresh_rounded),
+                        icon: Icon(actionIcon ?? AppIcons.arrowsRotate),
                         label: Text(actionLabel),
                       ),
                     ],

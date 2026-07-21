@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class EmptyState extends StatelessWidget {
   const EmptyState({
@@ -7,7 +8,7 @@ class EmptyState extends StatelessWidget {
     required this.titleKu,
     required this.messageTr,
     required this.messageKu,
-    this.icon = Icons.inbox_outlined,
+    this.icon = AppIcons.inbox,
     this.actionLabelTr,
     this.actionLabelKu,
     this.onAction,
@@ -67,7 +68,7 @@ class EmptyState extends StatelessWidget {
               const SizedBox(height: 20),
               FilledButton.icon(
                 onPressed: onAction,
-                icon: const Icon(Icons.refresh),
+                icon: const Icon(AppIcons.arrowsRotate),
                 label: Text(actionLabel),
               ),
             ],

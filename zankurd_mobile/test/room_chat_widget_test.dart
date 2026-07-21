@@ -9,6 +9,7 @@ import 'package:zankurd_mobile/src/models/room_message.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/room_chat.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class _ChatRepository extends MockZanKurdRepository {
   final messages = StreamController<List<RoomMessage>>.broadcast();
@@ -85,7 +86,7 @@ void main() {
     expect(find.text('Slav heval!'), findsOneWidget);
 
     await tester.enterText(find.byType(TextField), 'Ez baş im');
-    await tester.tap(find.byIcon(Icons.send_rounded));
+    await tester.tap(find.byIcon(AppIcons.paperPlane));
     await tester.pump();
     expect(repository.sent, ['Ez baş im']);
     expect(tester.takeException(), isNull);

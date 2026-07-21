@@ -31,6 +31,7 @@ import '../widgets/confetti_overlay.dart';
 import '../widgets/player_avatar.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class QuizResultScreen extends StatefulWidget {
   const QuizResultScreen({
@@ -275,7 +276,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        Icons.military_tech_rounded,
+                        AppIcons.medal,
                         color: AppTheme.gold,
                         size: 50,
                       ),
@@ -448,11 +449,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     final headerIcon = is1v1
         ? (isWinner
-              ? Icons.emoji_events_outlined
+              ? AppIcons.trophy
               : isDraw
-              ? Icons.balance_outlined
-              : Icons.sentiment_very_dissatisfied_outlined)
-        : Icons.flag_outlined;
+              ? AppIcons.scaleBalanced
+              : AppIcons.faceFrown)
+        : AppIcons.flag;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -589,7 +590,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 children: [
                                   for (var i = 0; i < 3; i++)
                                     Icon(
-                                      Icons.star_rounded,
+                                      AppIcons.star,
                                       size: i == 1 ? 30 : 22,
                                       color:
                                           i <
@@ -635,7 +636,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 children: [
                                   if (coinsAwarded > 0)
                                     _ResultRewardChip(
-                                      icon: Icons.monetization_on_outlined,
+                                      icon: AppIcons.coins,
                                       label: '+${coinsAwarded}c',
                                       color: AppTheme.gold,
                                     ),
@@ -643,7 +644,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     const SizedBox(width: 8),
                                   if (_earnedXP > 0)
                                     _ResultRewardChip(
-                                      icon: Icons.bolt_rounded,
+                                      icon: AppIcons.bolt,
                                       label: '+$_earnedXP XP',
                                       // Koyu sonuç kartında accent (koyu
                                       // yeşil) soluk kalıyordu; kazanım
@@ -668,27 +669,27 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 runSpacing: AppSpacing.xs,
                                 children: [
                                   _StatPill(
-                                    icon: Icons.check_circle,
+                                    icon: AppIcons.circleCheck,
                                     value: '$correctCount',
                                     label: context.s('Rast', 'Doğru'),
                                     color: AppTheme.correct,
                                   ),
                                   _StatPill(
-                                    icon: Icons.cancel,
+                                    icon: AppIcons.circleXmark,
                                     value: '$wrongCount',
                                     label: context.s('Şaş', 'Yanlış'),
                                     color: AppTheme.wrong,
                                   ),
                                   if (unanswered > 0)
                                     _StatPill(
-                                      icon: Icons.hourglass_empty_rounded,
+                                      icon: AppIcons.hourglass,
                                       value: '$unanswered',
                                       label: context.s('Vala', 'Boş'),
                                       color: AppTheme.textMutedColor(context),
                                     ),
                                   if (bestStreak > 0)
                                     _StatPill(
-                                      icon: Icons.local_fire_department_rounded,
+                                      icon: AppIcons.fire,
                                       value: '$bestStreak',
                                       label: context.s('Serî', 'Seri'),
                                       color: AppTheme.gold,
@@ -727,7 +728,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       child: Row(
                         children: [
                           Icon(
-                            Icons.local_fire_department,
+                            AppIcons.fire,
                             color: AppTheme.accent,
                             size: 30,
                           ),
@@ -795,7 +796,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 ).popUntil((route) => route.isFirst);
                               }
                             },
-                            icon: const Icon(Icons.replay_rounded, size: 20),
+                            icon: const Icon(AppIcons.arrowRotateLeft, size: 20),
                             label: Text(
                               context.s('Dîsa bilîze', 'Tekrar oyna'),
                               maxLines: 1,
@@ -822,7 +823,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 ),
                               ),
-                        icon: const Icon(Icons.fact_check_outlined),
+                        icon: const Icon(AppIcons.squareCheck),
                       ),
                       if (context
                           .watch<ChildSafetyProvider>()
@@ -839,7 +840,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             bestStreak: bestStreak,
                             category: room.category,
                           ),
-                          icon: const Icon(Icons.share_rounded),
+                          icon: const Icon(AppIcons.shareNodes),
                         ),
                     ],
                   ),
@@ -1042,7 +1043,7 @@ class _RaceStandings extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.groups_2_outlined, color: AppTheme.accent),
+              Icon(AppIcons.peopleGroup, color: AppTheme.accent),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -1095,7 +1096,7 @@ class _AchievementUnlocks extends StatelessWidget {
                   ),
                 ),
                 child: const Icon(
-                  Icons.workspace_premium_outlined,
+                  AppIcons.medal,
                   color: AppTheme.gold,
                   size: 17,
                 ),
@@ -1330,7 +1331,7 @@ class _RaceStandingRow extends StatelessWidget {
           ),
           if (player.streak > 0) ...[
             Icon(
-              Icons.local_fire_department_outlined,
+              AppIcons.fire,
               color: AppTheme.gold,
               size: 18,
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 enum WildcardType { fiftyFifty, audience, doubleAnswer, changeQuestion }
 
@@ -11,10 +12,10 @@ extension WildcardTypeDetails on WildcardType {
   };
 
   IconData get icon => switch (this) {
-    WildcardType.fiftyFifty => Icons.auto_awesome_outlined,
-    WildcardType.audience => Icons.groups_outlined,
-    WildcardType.doubleAnswer => Icons.check_circle_outline,
-    WildcardType.changeQuestion => Icons.refresh_outlined,
+    WildcardType.fiftyFifty => AppIcons.wandMagicSparkles,
+    WildcardType.audience => AppIcons.peopleGroup,
+    WildcardType.doubleAnswer => AppIcons.circleCheck,
+    WildcardType.changeQuestion => AppIcons.arrowsRotate,
   };
 
   String label(bool isKu) => switch (this) {

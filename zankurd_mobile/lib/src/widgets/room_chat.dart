@@ -8,6 +8,7 @@ import '../models/room_message.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import 'player_avatar.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Oda sohbet paneli. [RoomScreen] altında daraltılabilir alt panel olarak
 /// gösterilir. Supabase Realtime üzerinden canlı mesajlaşmayı destekler.
@@ -162,7 +163,7 @@ class _RoomChatState extends State<RoomChat> {
             child: Row(
               children: [
                 Icon(
-                  Icons.chat_bubble_outline_rounded,
+                  AppIcons.comment,
                   size: 18,
                   color: AppTheme.textSubColor(context),
                 ),
@@ -179,7 +180,7 @@ class _RoomChatState extends State<RoomChat> {
                 GestureDetector(
                   onTap: widget.onToggle,
                   child: Icon(
-                    Icons.keyboard_arrow_down_rounded,
+                    AppIcons.chevronDown,
                     size: 22,
                     color: AppTheme.textMutedColor(context),
                   ),
@@ -293,7 +294,7 @@ class _RoomChatState extends State<RoomChat> {
                           ),
                         )
                       : Icon(
-                          Icons.send_rounded,
+                          AppIcons.paperPlane,
                           color: AppTheme.primaryGradientStart,
                         ),
                   tooltip: ku ? 'Bişîne' : 'Gönder',

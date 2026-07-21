@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -32,7 +33,7 @@ void main() {
     expect(find.text('Destpêk'), findsOneWidget);
     expect(find.text('1'), findsOneWidget);
     expect(find.text('4'), findsOneWidget);
-    expect(find.byIcon(Icons.emoji_events_rounded), findsOneWidget);
+    expect(find.byIcon(AppIcons.trophy), findsOneWidget);
   });
 
   testWidgets('düğüm numarası heading1 ağırlığı ve yumuşak gölge taşır', (

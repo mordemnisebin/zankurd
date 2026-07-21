@@ -20,6 +20,7 @@ import 'shop_screen.dart';
 import 'leaderboard_screen.dart';
 import 'home/play_teaser_card.dart';
 import '../widgets/player_avatar.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -371,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 if (tappable) ...[
                   const SizedBox(width: 2),
                   Icon(
-                    Icons.chevron_right_rounded,
+                    AppIcons.chevronRight,
                     size: 14,
                     color: AppTheme.textMutedColor(context),
                   ),
@@ -409,7 +410,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: GestureDetector(
                   onTap: widget.onOpenLearning,
                   child: chip(
-                    Icons.local_fire_department,
+                    AppIcons.fire,
                     AppTheme.wrong,
                     '$_streak',
                     ku ? 'Zincîr' : 'Seri',
@@ -431,7 +432,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       .push(AppRoute.to(ShopScreen(repository: repo)))
                       .then((_) => _refreshCoins()),
                   child: chip(
-                    Icons.monetization_on,
+                    AppIcons.coins,
                     AppTheme.gold,
                     '$_coinBalance',
                     ku ? 'Xeruz' : 'Coin',
@@ -449,7 +450,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: GestureDetector(
                   onTap: widget.onOpenLearning,
                   child: chip(
-                    Icons.task_alt,
+                    AppIcons.circleCheck,
                     AppTheme.correct,
                     total == 0 ? '0' : '$completed/$total',
                     ku ? 'Misyon' : 'Görev',
@@ -600,7 +601,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 Row(
                   children: [
                     const Icon(
-                      Icons.local_fire_department,
+                      AppIcons.fire,
                       color: Colors.white,
                       size: 14,
                     ),
@@ -614,7 +615,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                     const SizedBox(width: 12),
                     const Icon(
-                      Icons.monetization_on,
+                      AppIcons.coins,
                       color: Colors.white,
                       size: 14,
                     ),
@@ -701,8 +702,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             onTap: themeProvider.toggleDarkLight,
             child: Icon(
               themeProvider.isDark
-                  ? Icons.dark_mode_outlined
-                  : Icons.light_mode_outlined,
+                  ? AppIcons.moon
+                  : AppIcons.sun,
               color: AppTheme.textPrimaryColor(context),
               size: 19,
             ),
@@ -842,7 +843,7 @@ class _DailyLessonHero extends StatelessWidget {
                         Row(
                           children: [
                             const Icon(
-                              Icons.menu_book_rounded,
+                              AppIcons.bookOpen,
                               color: AppTheme.gold,
                               size: 16,
                             ),
@@ -1064,7 +1065,7 @@ class _MiniLeaderboardState extends State<_MiniLeaderboard> {
                         ),
                       ),
                       const Icon(
-                        Icons.monetization_on,
+                        AppIcons.coins,
                         color: AppTheme.gold,
                         size: 15,
                       ),

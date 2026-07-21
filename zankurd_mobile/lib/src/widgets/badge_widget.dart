@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Rozet görsel widget'ı — profil ekranında ve sonuç ekranında kullanılır.
 class BadgeWidget extends StatelessWidget {
@@ -30,12 +31,12 @@ class BadgeWidget extends StatelessWidget {
 
   IconData get _icon {
     return switch (iconName) {
-      'emoji_events' => Icons.emoji_events_outlined,
-      'workspace_premium' => Icons.workspace_premium_outlined,
-      'military_tech' => Icons.military_tech_outlined,
-      'stars' => Icons.stars_outlined,
-      'speed' => Icons.speed_outlined,
-      _ => Icons.badge_outlined,
+      'emoji_events' => AppIcons.trophy,
+      'workspace_premium' => AppIcons.medal,
+      'military_tech' => AppIcons.medal,
+      'stars' => AppIcons.star,
+      'speed' => AppIcons.gaugeHigh,
+      _ => AppIcons.idBadge,
     };
   }
 
@@ -124,7 +125,7 @@ class BadgeWidget extends StatelessWidget {
             )
           else
             Icon(
-              Icons.lock_outline,
+              AppIcons.lock,
               size: 12,
               color: AppTheme.textMutedColor(context),
             ),
