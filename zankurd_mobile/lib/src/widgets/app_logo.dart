@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-/// ZanKurd marka logosu.
+/// ZanKurd marka logosu (assets/zankurd.webp).
 ///
-/// Pirs hizası: Pirs'in gerçek app icon'undan (decompiled APK,
-/// ic_launcher.png) çıkarılan turuncu gradyan + kalın beyaz wordmark
-/// deseni — eski yeşil-kırmızı dağ/güneş raster görseli (zankurd.webp)
-/// yerine kod-tabanlı, o gradyanın kendisi zaten "kart" işlevi gördüğü
-/// için [onCard]/[cardRadius]/[cardPadding] artık kullanılmıyor; API
-/// geriye-uyum için korunuyor.
+/// Orijinal Z + güneş + dağ + kitap kompozisyonu korunuyor; 2026-07-21'de
+/// renk paleti güncel uygulama temasına (turuncu/altın/lacivert,
+/// AppTheme.brandGreen/brandGreenDeep/secondaryAccent/lightTextPrimary)
+/// uyarlandı — bkz. tool/recolor_logo.py. Logonun arka planı beyaz
+/// olduğundan, koyu zeminlerde okunabilmesi için [onCard] true
+/// verildiğinde beyaz yuvarlatılmış bir kart içine yerleştirilir.
 class AppLogo extends StatelessWidget {
   const AppLogo({
     this.width = 160,
@@ -19,51 +19,37 @@ class AppLogo extends StatelessWidget {
 
   final double width;
   final bool onCard;
-  final double cardRadius;
-  final EdgeInsets cardPadding;
 
-  // Pirs'in gerçek launcher ikonundan örneklenen gradyan durakları.
-  static const _gradientStart = Color(0xFFFEA832);
-  static const _gradientEnd = Color(0xFFFF7300);
+  /// Beyaz kartın köşe yarıçapı (sayfadaki kartlarla eşitlenebilir).
+  final double cardRadius;
+
+  /// Beyaz kartın iç boşluğu (logo kutusu küçültülebilir).
+  final EdgeInsets cardPadding;
 
   @override
   Widget build(BuildContext context) {
-    final radius = width * 0.22;
-    return Container(
+    final image = Image.asset(
+      'assets/zankurd.webp',
       width: width,
-      height: width,
-      alignment: Alignment.center,
+      fit: BoxFit.contain,
+      filterQuality: FilterQuality.high,
+      isAntiAlias: true,
+    );
+    if (!onCard) return image;
+    return Container(
+      padding: cardPadding,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(radius),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [_gradientStart, _gradientEnd],
-        ),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(cardRadius),
         boxShadow: [
           BoxShadow(
-            color: _gradientEnd.withValues(alpha: 0.35),
-            blurRadius: width * 0.15,
-            offset: Offset(0, width * 0.05),
+            color: Colors.black.withValues(alpha: 0.18),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.1),
-          child: Text(
-            'ZanKurd',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
-              fontSize: width * 0.19,
-              letterSpacing: -0.5,
-              height: 1,
-            ),
-          ),
-        ),
-      ),
+      child: image,
     );
   }
 }
