@@ -2008,7 +2008,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'Kadın özgürlüğü, ekoloji ve demokrasi',
       'Piyasa, mülkiyet ve rekabet',
       'Sanayileşme, kalkınma ve refah',
-      'Ulus, bayrak ve vatan',
+      'Netewe, ala û welat',
     ],
     correctAnswer: 'Kadın özgürlüğü, ekoloji ve demokrasi',
     explanation:
@@ -2025,7 +2025,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'Kararları teknokratlara bırakır',
       'Temsilcilere tam yetki devreder',
       'Beşdariya rasterast û berdewam a ji binî pêş dixe',
-      'Yalnızca referandumla yönetir',
+      'Tenê bi referandumê rêve dibe',
     ],
     correctAnswer: 'Beşdariya rasterast û berdewam a ji binî pêş dixe',
     explanation:
@@ -2367,7 +2367,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'Têkiliya di navbera serdestiyê û xerakirina xwezayê de',
       'Ne tenê sembolîk, lê di asta rêxistinî û saziyî de',
       'Ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne',
-      'Kimliklerin devlet zoru olmadan birlikteliğini',
+      'Hevpariya nasnameyan bêyî zora dewletê',
     ],
     correctAnswer: 'Têkiliya di navbera serdestiyê û xerakirina xwezayê de',
     explanation:
@@ -2496,7 +2496,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'Demokrasi, kadın özgürlüğü ve ekoloji',
       'Ekoloji, kadın ve demokrasi krizlerini',
       'Farklılıklara saygı ve eşitlik',
-      'Toplumun genel özgürlük düzeyinin',
+      'Asta azadiya giştî ya civakê',
     ],
     correctAnswer: 'Demokrasi, kadın özgürlüğü ve ekoloji',
     explanation:
@@ -2510,11 +2510,11 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '"Toplumsal sözleşme" yerine paradigma neyi önerir?',
     answers: [
       'Kadın özgürlüğü, ekoloji ve demokrasi',
-      'Tabandan tavana, katılımcı biçimde',
-      'Toplumun doğrudan ve örgütlü katılımını',
+      'Ji binî heta jorî, bi awayekî beşdar',
+      'Beşdariya rasterast û xurêxistî ya civakê',
       'Demokrasi, kadın özgürlüğü ve ekoloji',
     ],
-    correctAnswer: 'Toplumun doğrudan ve örgütlü katılımını',
+    correctAnswer: 'Beşdariya rasterast û xurêxistî ya civakê',
     explanation:
         'Paradîgma, beşdariya rasterast û xwerêxistî (komîn-meclîs) ya civakê bingeh digire.',
     difficulty: 3,
@@ -2643,7 +2643,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt:
         'Demokratik konfederalizm li hemberî dewletê kîjan helwestê dipejirîne?',
     answers: [
-      'Devlet-dışı, tabandan örgütlenen öz yönetimi',
+      'Xweseriyeke derveyî dewletê, ji binî ve xwerêxistî',
       'Devleti aşan, ona alternatif bir öz yönetim',
       'Wek her du sosyalîzma reel û kapîtalîzmê red dike',
       'Farklı kimlik ve inançların bir arada yaşamasını',
@@ -2740,8 +2740,8 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'Ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne',
       'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi',
-      'Dünya çapında kadın özgürlüğü sembolü olmuştur',
-      'Toplumun kendini koruma ve örgütleme hakkını',
+      'Li seranserê cîhanê bûye sembola azadiya jinê',
+      'Mafê civakê yê xweparastin û xwerêxistinê',
     ],
     correctAnswer: 'Ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne',
     explanation:
@@ -2812,8 +2812,8 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'Li asta herêmî/deverî',
       'Kültürel varoluş ve kimlik',
-      'Yerel komünlerden üst meclislere',
-      'Kadın dayanışması ve özgürlüğü',
+      'Ji komînên herêmî heta meclîsên jorîn',
+      'Hevgirtin û azadiya jinan',
     ],
     correctAnswer: 'Kültürel varoluş ve kimlik',
     explanation:
@@ -2872,7 +2872,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'Kadın kotası',
       'Yerel meclis ve komünlerde',
       'Şiddet ve dayatmayı',
-      'Kadın dayanışması ve özgürlüğü',
+      'Hevgirtin û azadiya jinan',
     ],
     correctAnswer: 'Şiddet ve dayatmayı',
     explanation:
@@ -11603,7 +11603,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'yekîtiya wekhev a beşên cuda yên bindest',
       'halkın kendi kendini yönetme ve örgütleme biçimi',
-      'Yerel toplumun kendi karar süreçlerine katılması',
+      'Beşdariya civaka herêmî di pêvajoyên biryarê de',
       'sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê',
     ],
     correctAnswer: 'yekîtiya wekhev a beşên cuda yên bindest',
@@ -11618,7 +11618,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Derbarê \'antikapitalizm\' de ya rast a zanîn çi ye?',
     answers: [
       'kapitalist moderniteye alternatif yaşam sistemi',
-      'Yerel toplumun kendi karar süreçlerine katılması',
+      'Beşdariya civaka herêmî di pêvajoyên biryarê de',
       'helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê',
       'Têkiliya di navbera serdestiyê û xerakirina xwezayê de',
     ],
@@ -11636,7 +11636,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'hevpariyeke pirkulturî û wekhev di welatekî hevbeş de',
       'rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike',
       'Ne tenê sembolîk, lê di asta rêxistinî û saziyî de',
-      'Yerel toplumun kendi karar süreçlerine katılması',
+      'Beşdariya civaka herêmî di pêvajoyên biryarê de',
     ],
     correctAnswer: 'rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike',
     explanation:
@@ -11651,9 +11651,9 @@ const offlineQuestionBank = <QuizQuestion>[
         'Der barê \'ekolojik endüstri\' de ji bo paradîgmayê bijardeya rast kîjan e?',
     answers: [
       'qadên xwerêxistina civakî yên derveyî dewletê',
-      'Biri çoğul-gönüllü, diğeri tekçi-zorunludur',
+      'Yek pirrengî-dilxwazî ye, ya din yekreng-mecbûrî ye',
       'awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê',
-      'Kimliklerin devlet zoru olmadan birlikteliğini',
+      'Hevpariya nasnameyan bêyî zora dewletê',
     ],
     correctAnswer: 'awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê',
     explanation:
@@ -11668,7 +11668,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'organeke hevrêzî û biryarê ya li ser komînan',
       'pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan',
-      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye',
       'Kurucu ilkeleri ve yönetim esaslarını belirleyen anayasal belge',
     ],
     correctAnswer: 'pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan',
@@ -11759,7 +11759,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Derbarê \'cinsiyet özgürlükçü\' de agahiya herî rast kîjan e?',
     answers: [
       'prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî',
-      'Yerel toplumun kendi karar süreçlerine katılması',
+      'Beşdariya civaka herêmî di pêvajoyên biryarê de',
       'modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike',
       'helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê',
     ],
@@ -11792,8 +11792,8 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'pergaleke civakî ku zilamî serdest dike û jinê tepser dike',
       'biryargirtina rasterast a gel bêyî nûneran',
-      'Kimliklerin devlet zoru olmadan birlikteliğini',
-      'Yerel toplumun kendi karar süreçlerine katılması',
+      'Hevpariya nasnameyan bêyî zora dewletê',
+      'Beşdariya civaka herêmî di pêvajoyên biryarê de',
     ],
     correctAnswer: 'pergaleke civakî ku zilamî serdest dike û jinê tepser dike',
     explanation:
@@ -11809,7 +11809,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'eşkerekirina avahiya pergala serdestiya zilaman',
       'federasyoneke ne-dewletgir a li ser bingeha binî',
       'rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye',
-      'Biri çoğul-gönüllü, diğeri tekçi-zorunludur',
+      'Yek pirrengî-dilxwazî ye, ya din yekreng-mecbûrî ye',
     ],
     correctAnswer: 'eşkerekirina avahiya pergala serdestiya zilaman',
     explanation:
@@ -11838,7 +11838,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt: 'Der barê \'demokratik konfederalizm\' de bijardeya rast kîjan e?',
     answers: [
-      'Doğayı tahrip eden endüstriyalizm ve kâr odaklı büyümeyi',
+      'Pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê',
       'yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê',
       'modeleke rêveberiya civakî ya derveyî dewletê',
       'Têkiliyeke li hev û berdewam a di navbera civakê û xwezayê de',
@@ -11947,7 +11947,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'metna damezrîner a hevbeş a kanton û komînan',
       'pergaleke li ser bingeha jiyana komînal û hevgirtinê',
-      'Toplumun kendini koruma ve örgütleme hakkını',
+      'Mafê civakê yê xweparastin û xwerêxistinê',
       'dibistana lêgerîna zanist û jiyaneke alternatîf',
     ],
     correctAnswer: 'pergaleke li ser bingeha jiyana komînal û hevgirtinê',
@@ -11962,7 +11962,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Li jêr ji bo \'ulus devlet\' ya rast kîjan e?',
     answers: [
       'avahiyeke dewletê ya yekreng û sînoran pîroz dike',
-      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye',
       'organeke hevrêzî û biryarê ya li ser komînan',
       'beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de',
     ],
@@ -11989,7 +11989,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt: 'Kîjan li gorî pênaseya \'cinsiyet özgürlükçü\' ye?',
     answers: [
-      'mahalle ve köylerde halkın kararlar aldığı kurul',
+      'komîteya ku gel li taxan û gundan biryaran dide',
       'prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî',
       'civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî',
       'pergaleke civakî ku zilamî serdest dike û jinê tepser dike',
@@ -12025,7 +12025,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê',
       'pergaleke civakî ku zilamî serdest dike û jinê tepser dike',
       'civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî',
-      'mahalle ve köylerde halkın kararlar aldığı kurul',
+      'komîteya ku gel li taxan û gundan biryaran dide',
     ],
     correctAnswer: 'sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê',
     explanation:
@@ -12159,7 +12159,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Têgiha \'demokratik kanton\' çi pêk tîne?',
     answers: [
       'yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî',
-      'Dünya çapında kadın özgürlüğü sembolü olmuştur',
+      'Li seranserê cîhanê bûye sembola azadiya jinê',
       'pergaleke civakî ku zilamî serdest dike û jinê tepser dike',
       'metna damezrîner a hevbeş a kanton û komînan',
     ],
@@ -12186,7 +12186,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt: 'Kîjan li gorî pênaseya \'demokratik konfederal\' ye?',
     answers: [
-      'Toplumun kendini koruma ve örgütleme hakkını',
+      'Mafê civakê yê xweparastin û xwerêxistinê',
       'federasyoneke ne-dewletgir a li ser bingeha binî',
       'pîvana herî bingehîn a azadbûna civakî',
       'eşkerekirina avahiya pergala serdestiya zilaman',
@@ -12248,9 +12248,9 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Li jêr kîjan têgiha \'ekolojik toplum\' rave dike?',
     answers: [
       'civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî',
-      'Kimliklerin devlet zoru olmadan birlikteliğini',
+      'Hevpariya nasnameyan bêyî zora dewletê',
       'yekîtiya wekhev a beşên cuda yên bindest',
-      'Dünya çapında kadın özgürlüğü sembolü olmuştur',
+      'Li seranserê cîhanê bûye sembola azadiya jinê',
     ],
     correctAnswer: 'civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî',
     explanation:
@@ -12306,7 +12306,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê',
       'Têkiliyeke li hev û berdewam a di navbera civakê û xwezayê de',
       'avahiyeke dewletê ya yekreng û sînoran pîroz dike',
-      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye',
     ],
     correctAnswer: 'avahiyeke dewletê ya yekreng û sînoran pîroz dike',
     explanation:
@@ -12321,7 +12321,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'organeke hevrêzî û biryarê ya li ser komînan',
       'têgihiştineke zanistî ya dogmatîk a ku tenê rastiyên madî qebûl dike',
-      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye',
       'yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê',
     ],
     correctAnswer: 'têgihiştineke zanistî ya dogmatîk a ku tenê rastiyên madî qebûl dike',
@@ -12353,7 +12353,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e',
       'rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike',
-      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye',
       'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi',
     ],
     correctAnswer: 'rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike',
@@ -12502,7 +12502,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê',
       'modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike',
       'helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê',
-      'mahalle ve köylerde halkın kararlar aldığı kurul',
+      'komîteya ku gel li taxan û gundan biryaran dide',
     ],
     correctAnswer: 'sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê',
     explanation:
@@ -12560,7 +12560,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Têgiha \'sosyal sözleşme\' çi pêk tîne?',
     answers: [
       'metna damezrîner a hevbeş a kanton û komînan',
-      'Toplumun kendini koruma ve örgütleme hakkını',
+      'Mafê civakê yê xweparastin û xwerêxistinê',
       'rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye',
       'federasyoneke ne-dewletgir a li ser bingeha binî',
     ],
@@ -12648,7 +12648,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî',
       'nîzameke wekhev a bêyî serdestî û mêtinkirinê',
-      'Dünya çapında kadın özgürlüğü sembolü olmuştur',
+      'Li seranserê cîhanê bûye sembola azadiya jinê',
       'pergaleke civakî ku zilamî serdest dike û jinê tepser dike',
     ],
     correctAnswer: 'pergaleke civakî ku zilamî serdest dike û jinê tepser dike',
@@ -12698,7 +12698,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt: '\'demokratik bilim\' bi awayekî rast çawa tê ravekirin?',
     answers: [
-      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye',
       'têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike',
       'rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike',
       'aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire',
@@ -12714,7 +12714,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt: 'Dema \'ulus devlet\' tê gotin, çi tê xwestin?',
     answers: [
-      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye',
       'avahiyeke dewletê ya yekreng û sînoran pîroz dike',
       'Têkiliyeke li hev û berdewam a di navbera civakê û xwezayê de',
       'belgeya ku prensîbên hevjiyana civakê diyar dike',
@@ -12731,7 +12731,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'kadın özgürlüğü\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'pîvana herî bingehîn a azadbûna civakî',
-      'Toplumun doğrudan ve örgütlü katılımını',
+      'Beşdariya rasterast û xurêxistî ya civakê',
       'yekîneya bingehîn a hevgirtinê ya aboriya komînal',
       'eşkerekirina avahiya pergala serdestiya zilaman',
     ],
@@ -12776,7 +12776,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'zanisteke ku têkiliya di navbera xerakirina xwezayê û hiyerarşiyê de ava dike',
       'têgihiştina mirov a ku ew parçeyekî xwezayê ye',
       'hevpariyeke pirkulturî û wekhev di welatekî hevbeş de',
-      'toplumun kendi kendini koruma ve yürütme refleksidir',
+      'reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye',
     ],
     correctAnswer: 'hevpariyeke pirkulturî û wekhev di welatekî hevbeş de',
     explanation:
@@ -12791,7 +12791,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'Têkiliya di navbera serdestiyê û xerakirina xwezayê de',
       'nîzameke wekhev a bêyî serdestî û mêtinkirinê',
-      'Yerel toplumun kendi karar süreçlerine katılması',
+      'Beşdariya civaka herêmî di pêvajoyên biryarê de',
       'yekîtiya wekhev a beşên cuda yên bindest',
     ],
     correctAnswer: 'yekîtiya wekhev a beşên cuda yên bindest',
@@ -12834,7 +12834,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Têgiha \'endüstriyalizm\' çi pêk tîne?',
     answers: [
       'modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike',
-      'mahalle ve köylerde halkın kararlar aldığı kurul',
+      'komîteya ku gel li taxan û gundan biryaran dide',
       'civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî',
       'halkın kendi kendini yönetme ve örgütleme biçimi',
     ],
@@ -12849,7 +12849,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt: 'Dema \'komünal ekonomi\' tê gotin, çi tê xwestin?',
     answers: [
-      'Yerel toplumun kendi karar süreçlerine katılması',
+      'Beşdariya civaka herêmî di pêvajoyên biryarê de',
       'Toplumsal bilinç ve özgür düşünceyi geliştirmeyi',
       'xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e',
       'aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire',
@@ -12910,7 +12910,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'belgeya ku prensîbên hevjiyana civakê diyar dike',
       'organeke hevrêzî û biryarê ya li ser komînan',
-      'Doğayı tahrip eden endüstriyalizm ve kâr odaklı büyümeyi',
+      'Pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê',
       'xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar',
     ],
     correctAnswer: 'xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar',
@@ -12926,8 +12926,8 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî',
       'yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî',
-      'Kimliklerin devlet zoru olmadan birlikteliğini',
-      'Yerel toplumun kendi karar süreçlerine katılması',
+      'Hevpariya nasnameyan bêyî zora dewletê',
+      'Beşdariya civaka herêmî di pêvajoyên biryarê de',
     ],
     correctAnswer: 'civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî',
     explanation:
@@ -12951,7 +12951,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt: 'Derbarê \'tekelcilik\' de ravekirina rast kîjan e?',
     answers: [
-      'Toplumun kendini koruma ve örgütleme hakkını',
+      'Mafê civakê yê xweparastin û xwerêxistinê',
       'krîza navendîbûna aborî û siyasî ya destekî yekane',
       'rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye',
       'nîzameke wekhev a bêyî serdestî û mêtinkirinê',
@@ -12968,7 +12968,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Derbarê \'doğrudan demokrasi\' de agahiya herî rast kîjan e?',
     answers: [
       'biryargirtina rasterast a gel bêyî nûneran',
-      'Yerel toplumun kendi karar süreçlerine katılması',
+      'Beşdariya civaka herêmî di pêvajoyên biryarê de',
       'sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê',
       'Têkiliya di navbera serdestiyê û xerakirina xwezayê de',
     ],
@@ -13001,7 +13001,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Kîjan vebijêrk tê wateya \'politikleşme\'?',
     answers: [
       'zanisteke ku têkiliya di navbera xerakirina xwezayê û hiyerarşiyê de ava dike',
-      'Doğayı tahrip eden endüstriyalizm ve kâr odaklı büyümeyi',
+      'Pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê',
       'xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar',
       'belgeya ku prensîbên hevjiyana civakê diyar dike',
     ],
@@ -13072,7 +13072,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e',
       'xeteke pêşketina komînal a gelan a ne-dewletgir',
-      'Yerel toplumun kendi karar süreçlerine katılması',
+      'Beşdariya civaka herêmî di pêvajoyên biryarê de',
       'aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire',
     ],
     correctAnswer: 'xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e',
@@ -13131,7 +13131,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'yekîneya bingehîn a hevgirtinê ya aboriya komînal',
       'qadên xwerêxistina civakî yên derveyî dewletê',
       'pergaleke li ser bingeha jiyana komînal û hevgirtinê',
-      'Biri çoğul-gönüllü, diğeri tekçi-zorunludur',
+      'Yek pirrengî-dilxwazî ye, ya din yekreng-mecbûrî ye',
     ],
     correctAnswer: 'yekîneya bingehîn a hevgirtinê ya aboriya komînal',
     explanation:
@@ -13224,7 +13224,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê',
       'eşkerekirina avahiya pergala serdestiya zilaman',
       'metna damezrîner a hevbeş a kanton û komînan',
-      'Toplumun kendini koruma ve örgütleme hakkını',
+      'Mafê civakê yê xweparastin û xwerêxistinê',
     ],
     correctAnswer: 'eşkerekirina avahiya pergala serdestiya zilaman',
     explanation:
@@ -13240,7 +13240,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'milkiyeta axê û amûran a gişî civakê',
       'qadên xwerêxistina civakî yên derveyî dewletê',
-      'Toplumun doğrudan ve örgütlü katılımını',
+      'Beşdariya rasterast û xurêxistî ya civakê',
       'Demokrasi, kadın özgürlüğü ve ekoloji',
     ],
     correctAnswer: 'milkiyeta axê û amûran a gişî civakê',
@@ -13311,7 +13311,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'kapitalist moderniteye alternatif yaşam sistemi',
       'pergaleke civakî ku zilamî serdest dike û jinê tepser dike',
       'halkın kendi kendini yönetme ve örgütleme biçimi',
-      'Kimliklerin devlet zoru olmadan birlikteliğini',
+      'Hevpariya nasnameyan bêyî zora dewletê',
     ],
     correctAnswer: 'pergaleke civakî ku zilamî serdest dike û jinê tepser dike',
     explanation:
@@ -13351,9 +13351,9 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt: '\'toplumsal barış\' çawa tê pênasekirin?',
     answers: [
-      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'Nîqaşa konfederalîzma demokratîk û netewa demokratîk',
       'Ji ber ku wek şerta azadbûna civakê bi tevahî tê hesibandin',
-      'Yasal düzenlemeler ve demokratik entegrasyon adımları',
+      'Rêzikên qanûnî û gavên entegrasyona demokratîk',
       'hevjiyana aram a komên etnîkî û baweriyê yên cuda',
     ],
     correctAnswer: 'hevjiyana aram a komên etnîkî û baweriyê yên cuda',
@@ -13391,7 +13391,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'rêbaza çareserkirina pirsgirêkan bi rêya diyalogê',
       'meclîsên gel ên ku biryarên herêmî lê tên girtin',
-      'hakların kanunla koruma altına alınması',
+      'parastina mafan bi qanûnê',
       'beşdariya rasterast a gel di biryarên siyasî de',
     ],
     correctAnswer: 'rêbaza çareserkirina pirsgirêkan bi rêya diyalogê',
@@ -13417,7 +13417,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: '\'hakikat komisyonu\' bi awayekî rast çawa tê ravekirin?',
     answers: [
       'hêza rêveberê herêmî yê hilbijartî li şûna qeyûmê ji navendê tayînkirî',
-      'Müzakere, demokratik reform ve hakların güvenceye alınması',
+      'Danûstandin, reforma demokratîk û misogerkirina mafan',
       'komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike',
       'Türkiye’de yasal pro-Kürt/sol-demokratik parti siyaseti',
     ],
@@ -13434,7 +13434,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe',
       'avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin',
-      'Kimlik, dil, kültürel haklar, statü ve demokratik temsil',
+      'Nasname, ziman, mafên çandî, statû û nûnertiya demokratîk',
       'hevjiyana aram a komên etnîkî û baweriyê yên cuda',
     ],
     correctAnswer: 'hevjiyana aram a komên etnîkî û baweriyê yên cuda',
@@ -13578,7 +13578,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt: '\'demokratik uzlaşı\' tê çi wateyê?',
     answers: [
-      'hakların kanunla koruma altına alınması',
+      'parastina mafan bi qanûnê',
       'Wek pirsgirêka nasname, ziman, statû û mafan',
       'hevkombûna aliyan li ser berjewendiya hevbeş',
       'mafê birêvebirina bûçe û xizmetên herêmî bi xwe',
@@ -13610,7 +13610,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt: 'Bi \'statü hakkı\' çi tê xwestin? ya rast çi ye?',
     answers: [
-      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'Nîqaşa konfederalîzma demokratîk û netewa demokratîk',
       'mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe',
       'qebûlkirina wekhev a nasname û baweriyên cuda',
       'Türkiye’de yasal pro-Kürt/sol-demokratik parti siyaseti',
@@ -13642,7 +13642,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt: 'Derbarê \'doğrudan katılım\' de ravekirina rast kîjan e?',
     answers: [
-      'Kadın-erkek eşit temsili ve ortak yönetimi',
+      'Nûnertiya wekhev a jin-mêr û rêveberiya hevbeş',
       'beşdariya rasterast a gel di biryarên siyasî de',
       'hevkombûna aliyan li ser berjewendiya hevbeş',
       'meclîsên gel ên ku biryarên herêmî lê tên girtin',
@@ -13733,7 +13733,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt: 'Îfadeya ku têgiha \'kuvvetler ayrılığı\' rast vedibêje kîjan e?',
     answers: [
-      'Müzakere, demokratik reform ve hakların güvenceye alınması',
+      'Danûstandin, reforma demokratîk û misogerkirina mafan',
       'hevjiyana aram a komên etnîkî û baweriyê yên cuda',
       'serbixwebûna hêzên qanûndanînê, cîbicîkirinê û dadwerî',
       'rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî',
@@ -13810,7 +13810,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Ji bo \'kuvvetler ayrılığı\' ravekirina herî dirust kîjan e?',
     answers: [
       'Devleti aşan, ona alternatif bir öz yönetim',
-      'Devlet-dışı, tabandan örgütlenen öz yönetimi',
+      'Xweseriyeke derveyî dewletê, ji binî ve xwerêxistî',
       'hevkombûna aliyan li ser berjewendiya hevbeş',
       'serbixwebûna hêzên qanûndanînê, cîbicîkirinê û dadwerî',
     ],
@@ -13888,7 +13888,7 @@ const offlineQuestionBank = <QuizQuestion>[
       'rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê',
       'belgeyeke navneteweyî ya ku hêza rêveberiyên herêmî zêde dike',
       'tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de',
-      'Yasal düzenlemeler ve demokratik entegrasyon adımları',
+      'Rêzikên qanûnî û gavên entegrasyona demokratîk',
     ],
     correctAnswer: 'belgeyeke navneteweyî ya ku hêza rêveberiyên herêmî zêde dike',
     explanation:
@@ -13917,7 +13917,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt: 'Derbarê \'radikal demokrasi\' de vebijêrka rast kîjan e?',
     answers: [
-      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'Nîqaşa konfederalîzma demokratîk û netewa demokratîk',
       'avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin',
       'tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de',
       'demokrasiyeke ku beşdariya rasterast a ji binî pêşî lê digire',
@@ -13952,7 +13952,7 @@ const offlineQuestionBank = <QuizQuestion>[
         'Di çarçoveya Siyasetê de \'toplumsal muhalefet\' çawa divê bê fêmkirin?',
     answers: [
       'Kapitalist modernite ve merkezi ulus-devlet eleştirisi',
-      'Yasal düzenlemeler ve demokratik entegrasyon adımları',
+      'Rêzikên qanûnî û gavên entegrasyona demokratîk',
       'rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî',
       'mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe',
     ],
@@ -14033,8 +14033,8 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt: 'Li jêr ji bo \'ademi merkeziyetçilik\' kîjan rast e?',
     answers: [
-      'Kimlik, dil, kültürel haklar, statü ve demokratik temsil',
-      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'Nasname, ziman, mafên çandî, statû û nûnertiya demokratîk',
+      'Nîqaşa konfederalîzma demokratîk û netewa demokratîk',
       'Yerel demokrasi, kadın özgürlüğü, ekoloji ve çoğulculuk',
       'hêza ji navendekê bo yekîneyên herêmî belavkirin',
     ],
@@ -14110,8 +14110,8 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Di çarçoveya Siyasetê de \'siyasi ahlak\' tê çi wateyê?',
     answers: [
       'komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike',
-      'Örgütsel yapının feshi ve silahlı mücadelenin sonlandırılması',
-      'Müzakere, demokratik reform ve hakların güvenceye alınması',
+      'Hilweşandina avahiya rêxistinî û bidawîkirina têkoşîna çekdarî',
+      'Danûstandin, reforma demokratîk û misogerkirina mafan',
       'prensîbên rastgoyî û pêşiyê dayîna berjewendiya civakî di siyasetê de',
     ],
     correctAnswer: 'prensîbên rastgoyî û pêşiyê dayîna berjewendiya civakî di siyasetê de',
@@ -14276,8 +14276,8 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt: 'Di qada Siyasetê de \'siyasi ahlak\' çi îfade dike?',
     answers: [
-      'Örgütsel yapının feshi ve silahlı mücadelenin sonlandırılması',
-      'Kimlik, dil, kültürel haklar, statü ve demokratik temsil',
+      'Hilweşandina avahiya rêxistinî û bidawîkirina têkoşîna çekdarî',
+      'Nasname, ziman, mafên çandî, statû û nûnertiya demokratîk',
       'prensîbên rastgoyî û pêşiyê dayîna berjewendiya civakî di siyasetê de',
       'Birêvebirina karên xwe yên herêmî ji aliyê civakan ve',
     ],
@@ -14294,7 +14294,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'belgeyeke navneteweyî ya ku hêza rêveberiyên herêmî zêde dike',
       'awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre',
-      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'Nîqaşa konfederalîzma demokratîk û netewa demokratîk',
       'mafê gerdûnî yê civakê ê jiyana bêyî şer',
     ],
     correctAnswer: 'belgeyeke navneteweyî ya ku hêza rêveberiyên herêmî zêde dike',
@@ -14380,8 +14380,8 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'Müzakere ve demokratik çözüme',
       'pergaleke nûnertiya wekhev a di rêveberiyê de ye',
-      'Yerel komünlerden üst meclislere',
-      'Kadın dayanışması ve özgürlüğü',
+      'Ji komînên herêmî heta meclîsên jorîn',
+      'Hevgirtin û azadiya jinan',
     ],
     correctAnswer: 'pergaleke nûnertiya wekhev a di rêveberiyê de ye',
     explanation: '\'eş başkanlık\' → pergaleke nûnertiya wekhev a di rêveberiyê de ye.',
@@ -14443,7 +14443,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt:
         'Di zanîna siyasetê de der barê \'hakikat komisyonu\' de ya rast kîjan e?',
     answers: [
-      'Kimlik, dil, kültürel haklar, statü ve demokratik temsil',
+      'Nasname, ziman, mafên çandî, statû û nûnertiya demokratîk',
       'Kapitalist modernite ve merkezi ulus-devlet eleştirisi',
       'Ji ber ku wek şerta azadbûna civakê bi tevahî tê hesibandin',
       'komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike',
@@ -14502,7 +14502,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt: 'Kîjan têgiha \'hakikat komisyonu\' rast şirove dike?',
     answers: [
-      'Müzakere, demokratik reform ve hakların güvenceye alınması',
+      'Danûstandin, reforma demokratîk û misogerkirina mafan',
       'komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike',
       'Kapitalist modernite ve merkezi ulus-devlet eleştirisi',
       'hêza rêveberê herêmî yê hilbijartî li şûna qeyûmê ji navendê tayînkirî',
@@ -14754,7 +14754,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt:
         'Siyaset çerçevesinde \'demokratik haklar beyannamesi\' ne anlama gelir?',
     answers: [
-      'Tabandan katılım ve yerel karar alma',
+      'Beşdariya ji binî û biryargirtina herêmî',
       'Eşit yurttaşlık ve hakların tanınmasını',
       'belgeyeke damezrîner a ku mafên bingehîn rêz dike',
       'rêbaza çareserkirina pirsgirêkan bi rêya diyalogê',
@@ -14852,9 +14852,9 @@ const offlineQuestionBank = <QuizQuestion>[
         'Ji bo \'demokratik haklar beyannamesi\' pênaseya derbasdar kîjan e?',
     answers: [
       'Kadın özgürlüğü ve çoğulcu öz yönetimle',
-      'Kürt siyasi yapıları ve belediyeler',
+      'Avahiyên siyasî yên Kurdan û şaredarî',
       'belgeyeke damezrîner a ku mafên bingehîn rêz dike',
-      'hakların kanunla koruma altına alınması',
+      'parastina mafan bi qanûnê',
     ],
     correctAnswer: 'belgeyeke damezrîner a ku mafên bingehîn rêz dike',
     explanation:
@@ -14950,7 +14950,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Di qada Siyasetê de \'demokratik uzlaşı\' çi îfade dike?',
     answers: [
       'serbixwebûna hêzên qanûndanînê, cîbicîkirinê û dadwerî',
-      'Kadın-erkek eşit temsili ve ortak yönetimi',
+      'Nûnertiya wekhev a jin-mêr û rêveberiya hevbeş',
       'hevkombûna aliyan li ser berjewendiya hevbeş',
       'rêbaza çareserkirina pirsgirêkan bi rêya diyalogê',
     ],
@@ -14967,9 +14967,9 @@ const offlineQuestionBank = <QuizQuestion>[
         'Ji bo Siyasetê derbarê \'eş başkanlık\' de vebijêrka rast kîjan e?',
     answers: [
       'belgeyeke damezrîner a ku mafên bingehîn rêz dike',
-      'Meclisler, örgütlenme ve müzakere',
+      'Meclîs, xwerêxistin û danûstandin',
       'pergaleke nûnertiya wekhev a di rêveberiyê de ye',
-      'Kürt siyasi yapıları ve belediyeler',
+      'Avahiyên siyasî yên Kurdan û şaredarî',
     ],
     correctAnswer: 'pergaleke nûnertiya wekhev a di rêveberiyê de ye',
     explanation: '\'eş başkanlık\' → pergaleke nûnertiya wekhev a di rêveberiyê de ye.',
@@ -15024,7 +15024,7 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt: 'Derbarê \'demokratik siyaset\' de kîjan rast e?',
     answers: [
-      'Yasal düzenlemeler ve demokratik entegrasyon adımları',
+      'Rêzikên qanûnî û gavên entegrasyona demokratîk',
       'rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê',
       'awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre',
       'rêjeya qanûnî ya ku beşdariya jinan a siyasetê misoger dike',
@@ -15041,7 +15041,7 @@ const offlineQuestionBank = <QuizQuestion>[
     prompt: 'Derbarê \'müzakere\' de ravekirina rast kîjan e?',
     answers: [
       'Kadın özgürlüğü ve çoğulcu öz yönetimle',
-      'Kadın-erkek eşit temsili ve ortak yönetimi',
+      'Nûnertiya wekhev a jin-mêr û rêveberiya hevbeş',
       'Devleti aşan, ona alternatif bir öz yönetim',
       'rêbaza çareserkirina pirsgirêkan bi rêya diyalogê',
     ],
@@ -15082,8 +15082,8 @@ const offlineQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt: 'Derbarê \'çoğulculuk\' de agahiya herî rast kîjan e?',
     answers: [
-      'Yasal düzenlemeler ve demokratik entegrasyon adımları',
-      'Demokratik konfederalizm ve demokratik ulus tartışması',
+      'Rêzikên qanûnî û gavên entegrasyona demokratîk',
+      'Nîqaşa konfederalîzma demokratîk û netewa demokratîk',
       'Farklı halkların eşit ve dayanışmacı birlikteliğini',
       'qebûlkirina wekhev a nasname û baweriyên cuda',
     ],
@@ -15183,7 +15183,7 @@ const offlineQuestionBank = <QuizQuestion>[
     answers: [
       'kanalên lêgerîna maf li meclîsê û li kolanan',
       'meclîsên gel ên ku biryarên herêmî lê tên girtin',
-      'hakların kanunla koruma altına alınması',
+      'parastina mafan bi qanûnê',
       'Devleti aşan, ona alternatif bir öz yönetim',
     ],
     correctAnswer: 'kanalên lêgerîna maf li meclîsê û li kolanan',

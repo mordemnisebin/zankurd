@@ -181,6 +181,61 @@ OTHER = {
         "Li asta herêmî/deverî",
     "Toplum-doğa ilişkisini iktidar ve ekonomi eleştirisiyle birlikte ele aldığı için":
         "Ji ber ku têkiliya civak-xweza bi rexneya desthilatdarî û aboriyê ve tevî hev vedihewîne",
+    # Üçüncü tarama turu (Türkçe-son-ek tabanlı, geniş net) — daha önce
+    # "değil/için/gibi..." işlevsel kelime listesiyle kaçan saf isim
+    # tamlaması şeklindeki çeldiriciler.
+    "Yerel toplumun kendi karar süreçlerine katılması":
+        "Beşdariya civaka herêmî di pêvajoyên biryarê de",
+    "toplumun kendi kendini koruma ve yürütme refleksidir":
+        "reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye",
+    "Kimliklerin devlet zoru olmadan birlikteliğini":
+        "Hevpariya nasnameyan bêyî zora dewletê",
+    "Toplumun kendini koruma ve örgütleme hakkını":
+        "Mafê civakê yê xweparastin û xwerêxistinê",
+    "Demokratik konfederalizm ve demokratik ulus tartışması":
+        "Nîqaşa konfederalîzma demokratîk û netewa demokratîk",
+    "Yasal düzenlemeler ve demokratik entegrasyon adımları":
+        "Rêzikên qanûnî û gavên entegrasyona demokratîk",
+    "Dünya çapında kadın özgürlüğü sembolü olmuştur":
+        "Li seranserê cîhanê bûye sembola azadiya jinê",
+    "mahalle ve köylerde halkın kararlar aldığı kurul":
+        "komîteya ku gel li taxan û gundan biryaran dide",
+    "hakların kanunla koruma altına alınması":
+        "parastina mafan bi qanûnê",
+    "Müzakere, demokratik reform ve hakların güvenceye alınması":
+        "Danûstandin, reforma demokratîk û misogerkirina mafan",
+    "Kimlik, dil, kültürel haklar, statü ve demokratik temsil":
+        "Nasname, ziman, mafên çandî, statû û nûnertiya demokratîk",
+    "Toplumun doğrudan ve örgütlü katılımını":
+        "Beşdariya rasterast û xurêxistî ya civakê",
+    "Kadın dayanışması ve özgürlüğü":
+        "Hevgirtin û azadiya jinan",
+    "Biri çoğul-gönüllü, diğeri tekçi-zorunludur":
+        "Yek pirrengî-dilxwazî ye, ya din yekreng-mecbûrî ye",
+    "Doğayı tahrip eden endüstriyalizm ve kâr odaklı büyümeyi":
+        "Pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê",
+    "Kadın-erkek eşit temsili ve ortak yönetimi":
+        "Nûnertiya wekhev a jin-mêr û rêveberiya hevbeş",
+    "Devlet-dışı, tabandan örgütlenen öz yönetimi":
+        "Xweseriyeke derveyî dewletê, ji binî ve xwerêxistî",
+    "Yerel komünlerden üst meclislere":
+        "Ji komînên herêmî heta meclîsên jorîn",
+    "Örgütsel yapının feshi ve silahlı mücadelenin sonlandırılması":
+        "Hilweşandina avahiya rêxistinî û bidawîkirina têkoşîna çekdarî",
+    "Kürt siyasi yapıları ve belediyeler":
+        "Avahiyên siyasî yên Kurdan û şaredarî",
+    "Ulus, bayrak ve vatan":
+        "Netewe, ala û welat",
+    "Yalnızca referandumla yönetir":
+        "Tenê bi referandumê rêve dibe",
+    "Toplumun genel özgürlük düzeyinin":
+        "Asta azadiya giştî ya civakê",
+    "Tabandan tavana, katılımcı biçimde":
+        "Ji binî heta jorî, bi awayekî beşdar",
+    "Tabandan katılım ve yerel karar alma":
+        "Beşdariya ji binî û biryargirtina herêmî",
+    "Meclisler, örgütlenme ve müzakere":
+        "Meclîs, xwerêxistin û danûstandin",
 }
 
 
