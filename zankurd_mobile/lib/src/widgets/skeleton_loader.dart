@@ -8,8 +8,8 @@ import '../providers/reduced_motion_provider.dart';
 ({Color base, Color highlight}) _shimmerColors(BuildContext context) {
   final isDark = Theme.of(context).brightness == Brightness.dark;
   return (
-    base: isDark ? AppTheme.surfaceHi : const Color(0xFFE0E0E0),
-    highlight: isDark ? const Color(0xFF3A3A50) : const Color(0xFFF5F5F5),
+    base: isDark ? AppTheme.shimmerBaseDark : AppTheme.shimmerBaseLight,
+    highlight: isDark ? AppTheme.shimmerHighlightDark : AppTheme.shimmerHighlightLight,
   );
 }
 

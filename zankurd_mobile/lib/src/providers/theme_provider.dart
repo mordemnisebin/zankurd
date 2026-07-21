@@ -4,8 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../services/analytics_service.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  // Pirs hizası: açık tema varsayılan (parlak/beyaz ilk izlenim).
-  ThemeProvider({ThemeMode initialMode = ThemeMode.light}) : _mode = initialMode;
+  // Varsayılan karanlık tema olsun (Varyant C)
+  ThemeProvider({ThemeMode initialMode = ThemeMode.dark}) : _mode = initialMode;
 
   static const _storageKey = 'zankurd.themeMode';
 
@@ -40,7 +40,7 @@ class ThemeProvider extends ChangeNotifier {
       'dark' => ThemeMode.dark,
       'light' => ThemeMode.light,
       'system' => ThemeMode.system,
-      _ => ThemeMode.light,
+      _ => ThemeMode.dark,
     };
   }
 

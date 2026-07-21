@@ -23,6 +23,7 @@ import 'src/providers/theme_provider.dart';
 import 'src/screens/app_shell.dart';
 import 'src/screens/splash_screen.dart';
 import 'src/services/analytics_service.dart';
+import 'src/services/notification_service.dart';
 import 'src/theme/app_theme.dart';
 import 'src/widgets/responsive_wrapper.dart';
 
@@ -67,6 +68,7 @@ Future<void> main() async {
   }
 
   await SyncManager.initialize(repository);
+  await NotificationService.load();
 
   // Anonim analitik servisi başlat
   await AnalyticsService.instance.initialize();
@@ -142,8 +144,11 @@ class ZanKurdApp extends StatelessWidget {
           themeAnimationDuration: const Duration(milliseconds: 600),
           themeAnimationCurve: Curves.easeInOutCubic,
           home: SplashScreen(next: AppShell(repository: repository)),
-          builder: (context, child) =>
-              ResponsiveWrapper(child: child ?? const SizedBox.shrink()),
+          builder: (context, child) => MediaQuery.withClampedTextScaling(
+            minScaleFactor: 0.85,
+            maxScaleFactor: 1.35,
+            child: ResponsiveWrapper(child: child ?? const SizedBox.shrink()),
+          ),
         ),
       ),
     );

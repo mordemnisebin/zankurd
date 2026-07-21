@@ -12,7 +12,6 @@ class AppPanel extends StatelessWidget {
     this.gradient,
     this.color,
     this.borderRadius,
-    this.glass = false,
     this.cardType = CardType.secondary,
   });
 
@@ -22,10 +21,7 @@ class AppPanel extends StatelessWidget {
   final Color? color;
   final BorderRadius? borderRadius;
 
-  /// true ise arkasını bulanıklaştıran glassmorphism görünümü kullanır.
-  final bool glass;
-
-  /// Kart öncelik tipi (primary / secondary / info).
+  /// Kart öncelik tipi (primary / secondary / info / glass).
   /// Gradient verilirse her zaman primary efekti uygulanır.
   final CardType cardType;
 
@@ -33,7 +29,7 @@ class AppPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final br = borderRadius ?? BorderRadius.circular(AppRadius.card);
 
-    if (glass) {
+    if (cardType == CardType.glass) {
       return ClipRRect(
         borderRadius: br,
         child: BackdropFilter(
@@ -41,9 +37,10 @@ class AppPanel extends StatelessWidget {
           child: Container(
             width: double.infinity,
             padding: padding,
-            decoration: AppTheme.glassDecoration(
+            decoration: AppTheme.cardDecorationByType(
               context,
-              borderRadius: br.topLeft.x,
+              type: CardType.glass,
+              radius: br.topLeft.x,
             ),
             child: child,
           ),

@@ -451,7 +451,10 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   //  Prize reveal (scale-in animation)
   // ────────────────────────────────────────────
   Widget _buildPrizeReveal(BuildContext context, bool ku, int amount) {
-    return ScaleTransition(
+    return Semantics(
+      liveRegion: true,
+      label: ku ? 'Te $amount coin qezenc kir!' : '$amount coin kazandın!',
+      child: ScaleTransition(
       scale: _prizeScale,
       child: FadeTransition(
         opacity: _prizeOpacity,
@@ -517,7 +520,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         : (ku
               ? 'Mafê îro bi dawî bû — sibê were (${_formatDuration(_timeUntilNextSpin)})'
               : 'Bugünkü hak bitti — yarın gel (${_formatDuration(_timeUntilNextSpin)})');
-    return Container(
+    return Semantics(
+      label: label,
+      child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         color: (hasRight ? AppTheme.correct : AppTheme.gold).withValues(
@@ -763,16 +768,16 @@ class _WheelPainter extends CustomPainter {
   // dönüşümlü kullanır.
   static const _segmentColors = [
     AppTheme.brandGreen,
-    Color(0xFFD4A84B), // hardal
-    Color(0xFF2E7D7E), // teal
-    Color(0xFF3D6B4F), // koyu/orman yeşili
+    AppTheme.secondaryAccent,
+    AppTheme.playCyan,
+    AppTheme.playGreen,
   ];
 
   static const _segmentDarkColors = [
     AppTheme.brandGreenDeep,
-    Color(0xFFB8860B),
-    Color(0xFF1A5C5C),
-    Color(0xFF1E4D2E),
+    AppTheme.gold,
+    AppTheme.ctaTealDeep,
+    AppTheme.culturalBrandBg,
   ];
 
   @override
@@ -834,7 +839,7 @@ class _WheelPainter extends CustomPainter {
             fontSize: 17,
             shadows: [
               Shadow(
-                color: Color(0x99000000),
+                color: Colors.black.withValues(alpha: 0.6),
                 blurRadius: 6,
                 offset: Offset(0, 2),
               ),
@@ -877,14 +882,14 @@ class _WheelPainter extends CustomPainter {
       if (isLit) {
         // Glow halo
         final glowPaint = Paint()
-          ..color = const Color(0xFFFFD700).withValues(alpha: 0.5)
+          ..color = AppTheme.gold.withValues(alpha: 0.5)
           ..style = PaintingStyle.fill
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5);
         canvas.drawCircle(ledCenter, 6.5, glowPaint);
       }
 
       final ledPaint = Paint()
-        ..color = isLit ? const Color(0xFFFFD700) : const Color(0x44FFD700)
+        ..color = isLit ? AppTheme.gold : AppTheme.gold.withValues(alpha: 0.25)
         ..style = PaintingStyle.fill;
       canvas.drawCircle(ledCenter, 3.5, ledPaint);
     }
@@ -924,7 +929,7 @@ class _PointerPainter extends CustomPainter {
     final gradient = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      colors: [AppTheme.gold, const Color(0xFFD4A017)],
+      colors: [AppTheme.gold, AppTheme.secondaryAccent],
     );
     canvas.drawPath(
       path,

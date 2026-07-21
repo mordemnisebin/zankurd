@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../l10n/lang.dart';
 import '../../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../../widgets/bouncing_button.dart';
 
 /// Ana sayfadan Pêşbazî (Oyna) sekmesine kısa geçiş kartı — [home_screen.dart]
 /// yorumundaki "kısa teaser" sözü, [DailyRaceCard] ile aynı tek-satır kart
@@ -18,84 +19,65 @@ class PlayTeaserCard extends StatelessWidget {
     return Semantics(
       button: true,
       label: ku ? 'Zû bilîze' : 'Hemen oyna',
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            key: const ValueKey('home-play-teaser'),
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(AppRadius.card),
+      child: BouncingButton(
+        onPressed: onTap,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Material(
+            color: Colors.transparent,
             child: Container(
               constraints: const BoxConstraints(minHeight: 92),
-              padding: const EdgeInsets.all(AppSpacing.md),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color.alphaBlend(
-                      AppTheme.playPink.withValues(alpha: 0.16),
-                      AppTheme.surfaceHiColor(context),
-                    ),
-                    Color.alphaBlend(
-                      AppTheme.brandGreen.withValues(alpha: 0.08),
-                      AppTheme.surfaceHiColor(context),
-                    ),
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(AppRadius.card),
-                border: Border.all(
-                  color: AppTheme.playPink.withValues(alpha: 0.3),
-                ),
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppTheme.culturalBrandBg.withValues(alpha: 0.2)),
               ),
-              child: Stack(
+              child: Row(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 44,
-                        height: 44,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: AppTheme.playPink.withValues(alpha: 0.16),
-                          shape: BoxShape.circle,
+                  Container(
+                    width: 44,
+                    height: 44,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppTheme.culturalBrandBg.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      AppIcons.gamepad,
+                      color: AppTheme.culturalBrandBg,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          ku ? 'Zû bilîze' : 'Hemen oyna',
+                          style: AppTypography.heading2.copyWith(
+                            color: AppTheme.textPrimaryColor(context),
+                          ),
                         ),
-                        child: const Icon(
-                          AppIcons.gamepad,
-                          color: AppTheme.playPink,
+                        const SizedBox(height: 4),
+                        Text(
+                          ku
+                              ? 'Duel, oda an çerx — hemû li Pêşbazîyê.'
+                              : 'Düello, oda veya çark — hepsi Yarış\'ta.',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppTheme.textSubColor(context),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: AppSpacing.sm),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              ku ? 'Zû bilîze' : 'Hemen oyna',
-                              style: AppTypography.bodyLarge.copyWith(
-                                color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            const SizedBox(height: 3),
-                            Text(
-                              ku
-                                  ? 'Duel, oda an çerx — hemû li Pêşbazîyê.'
-                                  : 'Düello, oda veya çark — hepsi Yarış\'ta.',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.textMutedColor(context),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Icon(
-                        AppIcons.chevronRight,
-                        color: AppTheme.playPink,
-                      ),
-                    ],
+                      ],
+                    ),
+                  ),
+                  const Icon(
+                    AppIcons.chevronRight,
+                    color: AppTheme.culturalBrandBg,
                   ),
                 ],
               ),

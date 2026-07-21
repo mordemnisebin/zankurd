@@ -7,11 +7,11 @@ class ResponsiveWrapper extends StatelessWidget {
 
   final Widget child;
 
-  /// Masaüstünde içeriğin maksimum genişliği.
-  static const double maxContentWidth = 1280;
+  /// Masaüstünde içeriğin maksimum genişliği (Şık dikey mobil görünüm için daraltıldı).
+  static const double maxContentWidth = 540;
 
   /// Bu genişliğin üstünde içerik ortalanır.
-  static const double wideThreshold = 900;
+  static const double wideThreshold = 600;
 
   @override
   Widget build(BuildContext context) {

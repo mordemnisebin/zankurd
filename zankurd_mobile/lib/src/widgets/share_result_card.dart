@@ -36,7 +36,7 @@ class ShareResultCard extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF0B251C), Color(0xFF10231C)],
+          colors: [AppTheme.culturalBrandBg, AppTheme.culturalBrandBg],
         ),
       ),
       child: Column(

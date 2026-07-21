@@ -625,21 +625,14 @@ class _PodiumSlot extends StatelessWidget {
   final LeaderboardEntry entry;
   final bool isCenter;
 
-  static const _gold = Color(0xFFFFB800);
-  static const _silver = Color(0xFF9AA6B4);
-  static const _bronze = Color(0xFFB66A3A);
-  // Açık krem zeminde okunur kalması için koyu gümüş/bronz varyantları.
-  static const _silverLight = Color(0xFF5B6B7C);
-  static const _bronzeLight = Color(0xFF8A4E24);
-
   Color _colorFor(bool isLight) {
     switch (entry.rank) {
       case 1:
-        return _gold;
+        return AppTheme.gold;
       case 2:
-        return isLight ? _silverLight : _silver;
+        return isLight ? AppTheme.silverLight : AppTheme.silver;
       default:
-        return isLight ? _bronzeLight : _bronze;
+        return isLight ? AppTheme.bronzeLight : AppTheme.bronze;
     }
   }
 

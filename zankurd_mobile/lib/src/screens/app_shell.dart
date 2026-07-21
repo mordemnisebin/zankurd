@@ -185,144 +185,232 @@ class _AppShellState extends State<AppShell> {
   }
 
   Widget _buildScaffold(BuildContext context, bool ku) {
-    return Scaffold(
-      body: IndexedStack(
-        index: _tab,
-        children: [
-          HomeScreen(
-            repository: widget.repository,
-            displayName: _profileName,
-            scrollController: _homeScrollController,
-            refreshSignal: _homeRefresh,
-            onOpenLearning: () => Navigator.of(
-              context,
-            ).push(AppRoute.to(LearningScreen(repository: widget.repository))),
-            onOpenPlay: () => setState(() => _tab = 2),
-          ),
-          CategoriesTab(repository: widget.repository),
-          PlayHubScreen(repository: widget.repository),
-          LeaderboardScreen(
-            repository: widget.repository,
-            refreshSignal: _leaderboardRefresh,
-          ),
-          ProfileScreen(
-            repository: widget.repository,
-            refreshSignal: _profileRefresh,
-            scrollController: _profileScrollController,
-          ),
-        ],
-      ),
-      bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          height: 68,
-          backgroundColor: AppTheme.surfaceColor(context),
-          surfaceTintColor: Colors.transparent,
-          shadowColor: Colors.black.withValues(alpha: 0.10),
-          elevation: 6,
-          labelTextStyle: WidgetStateProperty.resolveWith((states) {
-            final selected = states.contains(WidgetState.selected);
-            final color = selected
-                ? AppTheme.brandGreen
-                : AppTheme.textMutedColor(context);
-            return TextStyle(
-              fontSize: 11,
-              fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
-              letterSpacing: 0.2,
-              color: color,
-            );
-          }),
-          iconTheme: WidgetStateProperty.resolveWith((states) {
-            final selected = states.contains(WidgetState.selected);
-            final color = selected
-                ? AppTheme.brandGreen
-                : AppTheme.textMutedColor(context);
-            return IconThemeData(size: selected ? 26 : 24, color: color);
-          }),
-          // Aktif sekme göstergesi: alt şerit (underline) stili
-          // Sadece alt kısım yuvarlak → pill yerine şerit görünümü.
-          indicatorColor: AppTheme.brandGreen.withValues(alpha: 0.22),
-          indicatorShape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(AppRadius.sm),
-              topRight: Radius.circular(AppRadius.sm),
-              bottomLeft: Radius.circular(AppRadius.xs),
-              bottomRight: Radius.circular(AppRadius.xs),
-            ),
-          ),
-          overlayColor: WidgetStateProperty.all(
-            AppTheme.brandGreen.withValues(alpha: 0.10),
-          ),
+    final width = MediaQuery.sizeOf(context).width;
+    final isDesktop = width >= 768;
+
+    final body = IndexedStack(
+      index: _tab,
+      children: [
+        HomeScreen(
+          repository: widget.repository,
+          displayName: _profileName,
+          scrollController: _homeScrollController,
+          refreshSignal: _homeRefresh,
+          onOpenLearning: () => Navigator.of(
+            context,
+          ).push(AppRoute.to(LearningScreen(repository: widget.repository))),
+          onOpenPlay: () => setState(() => _tab = 2),
         ),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                color: AppTheme.borderColor(context).withValues(alpha: 0.25),
-                width: 0.5,
-              ),
-            ),
-          ),
-          child: NavigationBar(
-            selectedIndex: _tab,
-            onDestinationSelected: (i) {
-              if (_tab == i) {
-                final controller = switch (i) {
-                  0 => _homeScrollController,
-                  4 => _profileScrollController,
-                  _ => null,
-                };
-                if (controller != null && controller.hasClients) {
-                  controller.animateTo(
-                    0.0,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeOut,
-                  );
-                }
-              } else {
-                if (i == 0) _homeRefresh.value++;
-                if (i == 3) _leaderboardRefresh.value++;
-                if (i == 4) _profileRefresh.value++;
-                setState(() => _tab = i);
+        CategoriesTab(repository: widget.repository),
+        PlayHubScreen(repository: widget.repository),
+        LeaderboardScreen(
+          repository: widget.repository,
+          refreshSignal: _leaderboardRefresh,
+        ),
+        ProfileScreen(
+          repository: widget.repository,
+          refreshSignal: _profileRefresh,
+          scrollController: _profileScrollController,
+        ),
+      ],
+    );
+
+    final content = Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 800),
+        child: body,
+      ),
+    );
+
+    if (isDesktop) {
+      return Scaffold(
+        body: Row(
+          children: [
+            _buildNavRail(context, ku),
+            const VerticalDivider(thickness: 1, width: 1),
+            Expanded(child: content),
+          ],
+        ),
+      );
+    }
+
+    return Scaffold(
+      body: content,
+      bottomNavigationBar: _buildBottomNav(context, ku),
+    );
+  }
+
+  Widget _buildNavRail(BuildContext context, bool ku) {
+    return NavigationRail(
+      selectedIndex: _tab,
+      onDestinationSelected: (i) {
+        if (_tab == i) {
+          final controller = switch (i) {
+            0 => _homeScrollController,
+            4 => _profileScrollController,
+            _ => null,
+          };
+          if (controller != null && controller.hasClients) {
+            controller.animateTo(
+              0.0,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+            );
+          }
+        } else {
+          if (i == 0) _homeRefresh.value++;
+          if (i == 3) _leaderboardRefresh.value++;
+          if (i == 4) _profileRefresh.value++;
+          setState(() => _tab = i);
+        }
+      },
+      labelType: NavigationRailLabelType.all,
+      selectedLabelTextStyle: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w800,
+        color: AppTheme.brandGreen,
+      ),
+      unselectedLabelTextStyle: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        color: AppTheme.textMutedColor(context),
+      ),
+      selectedIconTheme: IconThemeData(color: AppTheme.brandGreen, size: 28),
+      unselectedIconTheme: IconThemeData(color: AppTheme.textMutedColor(context), size: 24),
+      indicatorColor: AppTheme.brandGreen.withValues(alpha: 0.15),
+      destinations: [
+        NavigationRailDestination(
+          icon: KeyedSubtree(key: _homeNavKey, child: const Icon(AppIcons.house)),
+          selectedIcon: const Icon(AppIcons.house),
+          label: Text(ku ? 'Sereke' : 'Ana Sayfa'),
+        ),
+        NavigationRailDestination(
+          icon: const Icon(AppIcons.tableCells),
+          selectedIcon: const Icon(AppIcons.tableCells),
+          label: Text(ku ? 'Kategorî' : 'Kategori'),
+        ),
+        NavigationRailDestination(
+          icon: KeyedSubtree(key: _playNavKey, child: const Icon(AppIcons.gamepad)),
+          selectedIcon: const Icon(AppIcons.gamepad),
+          label: Text(ku ? 'Pêşbazî' : 'Yarış'),
+        ),
+        NavigationRailDestination(
+          icon: const Icon(AppIcons.trophy),
+          selectedIcon: const Icon(AppIcons.trophy),
+          label: Text(ku ? 'Rêz' : 'Liderlik'),
+        ),
+        NavigationRailDestination(
+          icon: KeyedSubtree(key: _profileNavKey, child: const Icon(AppIcons.user)),
+          selectedIcon: const Icon(AppIcons.user),
+          label: Text(ku ? 'Profîl' : 'Profil'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBottomNav(BuildContext context, bool ku) {
+    return NavigationBarTheme(
+      data: NavigationBarThemeData(
+        height: 68,
+        backgroundColor: AppTheme.surfaceColor(context),
+        surfaceTintColor: Colors.transparent,
+        shadowColor: Colors.black.withValues(alpha: 0.10),
+        elevation: 12,
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          final color = selected
+              ? AppTheme.brandGreen
+              : AppTheme.textMutedColor(context);
+          return TextStyle(
+            fontSize: 11,
+            fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
+            letterSpacing: 0.2,
+            color: color,
+          );
+        }),
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          final color = selected
+              ? AppTheme.brandGreen
+              : AppTheme.textMutedColor(context);
+          return IconThemeData(size: selected ? 26 : 24, color: color);
+        }),
+        indicatorColor: AppTheme.brandGreen.withValues(alpha: 0.15),
+        indicatorShape: const StadiumBorder(),
+        overlayColor: WidgetStateProperty.all(
+          AppTheme.brandGreen.withValues(alpha: 0.10),
+        ),
+      ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: AppTheme.surfaceColor(context),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.04),
+              offset: const Offset(0, -4),
+              blurRadius: 16,
+            )
+          ],
+        ),
+        child: NavigationBar(
+          selectedIndex: _tab,
+          onDestinationSelected: (i) {
+            if (_tab == i) {
+              final controller = switch (i) {
+                0 => _homeScrollController,
+                4 => _profileScrollController,
+                _ => null,
+              };
+              if (controller != null && controller.hasClients) {
+                controller.animateTo(
+                  0.0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                );
               }
-            },
-            destinations: [
-              NavigationDestination(
-                icon: KeyedSubtree(
-                  key: _homeNavKey,
-                  child: const Icon(AppIcons.house),
-                ),
-                selectedIcon: const Icon(AppIcons.house),
-                label: ku ? 'Sereke' : 'Ana Sayfa',
+            } else {
+              if (i == 0) _homeRefresh.value++;
+              if (i == 3) _leaderboardRefresh.value++;
+              if (i == 4) _profileRefresh.value++;
+              setState(() => _tab = i);
+            }
+          },
+          destinations: [
+            NavigationDestination(
+              icon: KeyedSubtree(
+                key: _homeNavKey,
+                child: const Icon(AppIcons.house),
               ),
-              NavigationDestination(
-                icon: const Icon(AppIcons.tableCells),
-                selectedIcon: const Icon(AppIcons.tableCells),
-                label: ku ? 'Kategorî' : 'Kategori',
+              selectedIcon: const Icon(AppIcons.house),
+              label: ku ? 'Sereke' : 'Ana Sayfa',
+            ),
+            NavigationDestination(
+              icon: const Icon(AppIcons.tableCells),
+              selectedIcon: const Icon(AppIcons.tableCells),
+              label: ku ? 'Kategorî' : 'Kategori',
+            ),
+            NavigationDestination(
+              icon: KeyedSubtree(
+                key: _playNavKey,
+                child: const Icon(AppIcons.gamepad),
               ),
-              NavigationDestination(
-                icon: KeyedSubtree(
-                  key: _playNavKey,
-                  child: const Icon(AppIcons.gamepad),
-                ),
-                selectedIcon: const Icon(AppIcons.gamepad),
-                label: ku ? 'Pêşbazî' : 'Yarış',
+              selectedIcon: const Icon(AppIcons.gamepad),
+              label: ku ? 'Pêşbazî' : 'Yarış',
+            ),
+            NavigationDestination(
+              icon: const Icon(AppIcons.trophy),
+              selectedIcon: const Icon(AppIcons.trophy),
+              label: ku ? 'Rêz' : 'Liderlik',
+            ),
+            NavigationDestination(
+              icon: KeyedSubtree(
+                key: _profileNavKey,
+                child: const Icon(AppIcons.user),
               ),
-              NavigationDestination(
-                icon: const Icon(AppIcons.trophy),
-                selectedIcon: const Icon(AppIcons.trophy),
-                // "Lîstik" Kurmancî'de "oyun" demek; sıralama sekmesi "Rêz".
-                label: ku ? 'Rêz' : 'Liderlik',
-              ),
-              NavigationDestination(
-                icon: KeyedSubtree(
-                  key: _profileNavKey,
-                  child: const Icon(AppIcons.user),
-                ),
-                selectedIcon: const Icon(AppIcons.user),
-                label: ku ? 'Profîl' : 'Profil',
-              ),
-            ],
-          ),
+              selectedIcon: const Icon(AppIcons.user),
+              label: ku ? 'Profîl' : 'Profil',
+            ),
+          ],
         ),
       ),
     );

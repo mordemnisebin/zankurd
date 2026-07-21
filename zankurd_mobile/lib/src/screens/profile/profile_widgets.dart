@@ -9,6 +9,7 @@ class _ProfileHeroCard extends StatelessWidget {
     required this.level,
     required this.xpInLevel,
     required this.xpNeeded,
+    required this.rank,
     required this.levelProgress,
     required this.onEditAvatar,
   });
@@ -20,6 +21,7 @@ class _ProfileHeroCard extends StatelessWidget {
   final int level;
   final int xpInLevel;
   final int xpNeeded;
+  final int? rank;
   final double levelProgress;
   final VoidCallback onEditAvatar;
 
@@ -29,11 +31,7 @@ class _ProfileHeroCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppTheme.pirsOrangeStart, AppTheme.pirsOrangeEnd],
-          ),
+          color: AppTheme.brandGreenDeep,
         ),
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
@@ -123,6 +121,37 @@ class _ProfileHeroCard extends StatelessWidget {
                         )
                       else
                         const SizedBox.shrink(),
+                      
+                      const SizedBox(height: 6),
+                      // League Badge
+                      Builder(
+                        builder: (context) {
+                          final tier = LeagueTier.forRank(rank);
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: tier.color.withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: tier.color.withValues(alpha: 0.5)),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(tier.icon, color: tier.color, size: 14),
+                                const SizedBox(width: 4),
+                                Text(
+                                  tier.label(ku),
+                                  style: AppTypography.caption.copyWith(
+                                    color: tier.color,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      ),
                     ],
                   ),
                 ),

@@ -230,6 +230,7 @@ class _LearningScreenState extends State<LearningScreen> {
                   hasLesson: _currentLessons.isNotEmpty,
                   onPractice: _openCategoryPractice,
                   onFlashcards: _openCategoryFlashcards,
+                  onLesson: _openCategoryFlashcards,
                 ),
               ),
               // Kategori ilerleme göstergesi
@@ -468,12 +469,14 @@ class _LearningModeBar extends StatelessWidget {
     required this.hasLesson,
     required this.onPractice,
     required this.onFlashcards,
+    required this.onLesson,
   });
 
   final bool isKu;
   final bool hasLesson;
   final VoidCallback onPractice;
   final VoidCallback onFlashcards;
+  final VoidCallback onLesson;
 
   @override
   Widget build(BuildContext context) {
@@ -505,7 +508,7 @@ class _LearningModeBar extends StatelessWidget {
             label: isKu ? 'Ders' : 'Dersler',
             color: AppTheme.playGreen,
             enabled: true,
-            onTap: () {},
+            onTap: onLesson,
           ),
         ),
       ],

@@ -10,6 +10,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/achievement.dart';
 import '../models/leaderboard_entry.dart';
+import '../models/league_tier.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -236,6 +237,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       level: _level,
       xpInLevel: _xpInLevel,
       xpNeeded: _xpNeeded,
+      rank: _stats?.roomsPlayed != null && _stats!.roomsPlayed > 0 ? _stats?.rank : null,
       levelProgress: _levelProgress,
       onEditAvatar: _openAvatarEditor,
     );
@@ -268,7 +270,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ku
                           ? 'Hîn dîroka lîstikê ya serhêl tune.\nBi yekê re bikevin an yek çêbikin.'
                           : 'Henüz çevrimiçi oyun geçmişin yok.\nBir odaya katıl veya oluştur.',
-                      style: const TextStyle(color: AppTheme.textMuted),
+                      style: TextStyle(color: AppTheme.textMutedColor(context)),
                     ),
                     const SizedBox(height: 12),
                     FilledButton.icon(
@@ -424,7 +426,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(height: 14),
 
         // Rozet Koleksiyonu
-        const AppPanel(glass: true, child: BadgeCollectionSection()),
+        const AppPanel(cardType: CardType.glass, child: BadgeCollectionSection()),
         const SizedBox(height: 14),
 
         // Navigasyon kısayolları — tek panel içinde gruplandı

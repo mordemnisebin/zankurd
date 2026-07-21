@@ -81,7 +81,7 @@ class _RojMascotPainter extends CustomPainter {
     final facePaint = Paint()
       ..shader = RadialGradient(
         center: const Alignment(-0.3, -0.4),
-        colors: [const Color(0xFFFFD97A), AppTheme.gold],
+        colors: [AppTheme.gold.withValues(alpha: 0.8), AppTheme.gold],
       ).createShader(Rect.fromCircle(center: center, radius: faceR));
     canvas.drawCircle(center, faceR, facePaint);
     canvas.drawCircle(
@@ -94,7 +94,7 @@ class _RojMascotPainter extends CustomPainter {
     );
 
     final ink = Paint()
-      ..color = const Color(0xFF4A3208)
+      ..color = AppTheme.brandGreenDeep
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.035
       ..strokeCap = StrokeCap.round;
@@ -117,7 +117,7 @@ class _RojMascotPainter extends CustomPainter {
         }
       case RojMood.happy:
       case RojMood.thinking:
-        final dot = Paint()..color = const Color(0xFF4A3208);
+        final dot = Paint()..color = AppTheme.brandGreenDeep;
         canvas.drawCircle(Offset(center.dx - eyeDx, eyeY), faceR * 0.09, dot);
         canvas.drawCircle(Offset(center.dx + eyeDx, eyeY), faceR * 0.09, dot);
     }
@@ -162,7 +162,7 @@ class _RojMascotPainter extends CustomPainter {
     // Yanaklar: iki küçük sıcak nokta.
     if (mood != RojMood.thinking) {
       final cheek = Paint()
-        ..color = const Color(0xFFE07A3F).withValues(alpha: 0.55);
+        ..color = AppTheme.pirsOrangeStart.withValues(alpha: 0.55);
       canvas.drawCircle(
         Offset(center.dx - faceR * 0.58, center.dy + faceR * 0.12),
         faceR * 0.10,

@@ -28,15 +28,11 @@ class HeroCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppTheme.pirsOrangeStart, AppTheme.pirsOrangeEnd],
-        ),
+        color: AppTheme.brandGreenDeep,
         borderRadius: BorderRadius.circular(AppRadius.card),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.pirsOrangeStart.withValues(alpha: 0.35),
+            color: AppTheme.brandGreenDeep.withValues(alpha: 0.35),
             blurRadius: 14,
             offset: const Offset(0, 5),
           ),

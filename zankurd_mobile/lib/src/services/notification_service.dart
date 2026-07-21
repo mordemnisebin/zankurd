@@ -211,8 +211,8 @@ class NotificationService {
         0,
         'ZanKurd',
         isKu
-            ? 'Pêşbirka rojê li benda te ye! Hêza hişê xwe biceribîne!'
-            : 'Günün yarışması seni bekliyor! Zihnini test et!',
+            ? 'Huhu! Zana dibêje pêşbirka rojê dest pê kiriye. Hêza hişê xwe biceribîne!'
+            : 'Huhu! Zana günün yarışmasının başladığını söylüyor. Zihnini test et!',
         scheduledTime,
         details,
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
@@ -241,10 +241,10 @@ class NotificationService {
   Future<void> showFriendRequest(String fromName, {bool isKu = true}) async {
     if (kIsWeb || !_enabled) return;
     try {
-      final title = isKu ? 'Daxwaza Hevaltiyê' : 'Arkadaşlık İsteği';
+      final title = isKu ? 'Zana Dibêje: Hevalek Nû' : 'Zana Diyor ki: Yeni Bir Arkadaş';
       final body = isKu
-          ? '$fromName dixwaze hevalê te be!'
-          : '$fromName seninle arkadaş olmak istiyor!';
+          ? 'Huhu! $fromName dixwaze bi te re pêşbaziyê bike!'
+          : 'Huhu! $fromName seninle yarışmak istiyor!';
 
       const androidDetails = AndroidNotificationDetails(
         'zankurd_friend_requests',
@@ -296,10 +296,10 @@ class NotificationService {
       final tzTime = tz.TZDateTime.from(scheduledTime, tz.local);
       await _localNotificationsPlugin.zonedSchedule(
         2, // Different ID
-        isKu ? 'Rêza Te' : 'Serin',
+        isKu ? 'Zana Xemgîn e...' : 'Zana Üzgün...',
         isKu
-            ? 'Îro nelîstî! Seriya te dikare bişkê. Hema niha bilîze!'
-            : 'Bugün oynamadın! Serin kırılabilir. Hemen şimdi oyna!',
+            ? 'Huhu! Te îro qet nelîst! Seriya te dikare bişkê. Zana li benda te ye!'
+            : 'Huhu! Bugün hiç oynamadın! Serin kırılabilir. Zana seni bekliyor!',
         tzTime,
         details,
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
@@ -331,10 +331,10 @@ class NotificationService {
 
       await _localNotificationsPlugin.show(
         3,
-        isKu ? 'Hevaltiya Nû' : 'Yeni Arkadaşlık',
+        isKu ? 'Zana Kêfxweş e!' : 'Zana Mutlu!',
         isKu
-            ? '$friendName daxwaza te qebûl kir!'
-            : '$friendName isteğini kabul etti!',
+            ? 'Huhu! $friendName daxwaza hevaltiya te qebûl kir! Wexta pêşbaziyê ye!'
+            : 'Huhu! $friendName arkadaşlık isteğini kabul etti! Yarış zamanı!',
         details,
       );
     } catch (e, s) {

@@ -307,24 +307,12 @@ class _ShimmerCardState extends State<_ShimmerCard>
 
   @override
   Widget build(BuildContext context) {
-    final isLight = AppTheme.isLight(context);
-    final baseColor = isLight
-        ? const Color(0xFFE4E1F5)
-        : const Color(0xFF2A2540);
-    final shimmerColor = isLight
-        ? const Color(0xFFF0EEFC)
-        : const Color(0xFF352E50);
-
     return AnimatedBuilder(
       animation: _anim,
       builder: (context, child) {
         return Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(-1.0 + _anim.value, -0.5),
-              end: Alignment(1.0 + _anim.value, 0.5),
-              colors: [baseColor, shimmerColor, baseColor],
-            ),
+            gradient: AppTheme.shimmerGradient(context, _anim.value),
             borderRadius: BorderRadius.circular(14),
           ),
           child: Padding(

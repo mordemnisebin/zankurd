@@ -240,8 +240,13 @@ class _BracketMatchCard extends StatelessWidget {
 
     final cardWidth = 150.0;
 
-    return GestureDetector(
-      onTap: onTap,
+    return Semantics(
+      button: true,
+      label: ku
+          ? 'Maça ${match.playerOneName} û ${match.playerTwoName}'
+          : '${match.playerOneName} ve ${match.playerTwoName} maçı',
+      child: GestureDetector(
+        onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOut,

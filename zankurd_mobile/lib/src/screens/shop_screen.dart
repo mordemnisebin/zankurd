@@ -94,11 +94,7 @@ class _ShopScreenState extends State<ShopScreen> {
   final Set<String> _purchasedItemIds = {};
   List<ShopItem> _dynamicItems = _items;
 
-  static const _supportedItemIds = {
-    'spin_wheel_extra',
-    'avatar_frame_gold',
-    'profile_badge_vip',
-  };
+  // Tüm ürünler gösterilir (whitelist kaldırıldı).
 
   static const List<ShopItem> _items = [
     ShopItem(
@@ -214,9 +210,7 @@ class _ShopScreenState extends State<ShopScreen> {
   Future<void> _loadBalance() async {
     try {
       final balance = await widget.repository.loadCoinBalance();
-      List<ShopItem> dynamicItems = _items
-          .where((item) => _supportedItemIds.contains(item.id))
-          .toList();
+      List<ShopItem> dynamicItems = List<ShopItem>.of(_items);
 
       if (widget.repository is SupabaseZanKurdRepository) {
         try {
@@ -237,7 +231,6 @@ class _ShopScreenState extends State<ShopScreen> {
                     themeColor: shopColorForHex(row['theme_color'] as String?),
                   );
                 })
-                .where((item) => _supportedItemIds.contains(item.id))
                 .toList();
           }
         } catch (error, stack) {

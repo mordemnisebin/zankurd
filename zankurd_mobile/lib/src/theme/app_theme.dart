@@ -223,55 +223,43 @@ enum CardType {
 
   /// Bilgi kartı: sadece border + minimal shadow (istatistik, yardımcı).
   info,
+
+  /// Arkasını bulanıklaştıran glassmorphism (buzlu cam) görünümü.
+  glass,
 }
 
 class AppTheme {
   // ============ Design Tokens ============
-  // Single source of truth: AppSpacing / AppRadius (no 18 vs 20 drift).
-  /// Standard card corner radius used across all cards.
-  static const double cardRadius = AppRadius.card;
-
-  /// Standard small card corner radius for inner elements.
-  static const double cardRadiusSmall = AppRadius.sm;
-
-  /// Vertical gap between sections (e.g., section header → content).
+  static const double cardRadius = 16;
+  static const double cardRadiusSmall = 12;
   static const double sectionGap = AppSpacing.section;
-
-  /// Vertical gap between cards within the same section.
   static const double cardGap = AppSpacing.cardGap;
-
-  /// Standard horizontal page padding.
   static const double pagePadding = AppSpacing.page;
 
-  /// Standard card shadow for normal cards.
   static List<BoxShadow> cardShadow(BuildContext context) {
     final isDark = _isDark(context);
-    final shadowColor = isDark
-        ? const Color(0xFF0C0E14)
-        : const Color(0xFFE8E4DF);
+    final shadowColor = isDark ? const Color(0xFF000000) : const Color(0xFF000000);
     return [
       BoxShadow(
-        color: shadowColor.withValues(alpha: isDark ? 0.24 : 0.12),
-        offset: const Offset(0, 8),
-        blurRadius: 18,
-        spreadRadius: -8,
+        color: shadowColor.withValues(alpha: isDark ? 0.2 : 0.04),
+        offset: const Offset(0, 4),
+        blurRadius: 16,
+        spreadRadius: 0,
       ),
     ];
   }
 
-  /// Elevated shadow for hero/primary cards.
   static List<BoxShadow> elevatedShadow(Color tint) {
     return [
       BoxShadow(
-        color: tint.withValues(alpha: 0.18),
+        color: tint.withValues(alpha: 0.12),
         offset: const Offset(0, 8),
-        blurRadius: 18,
-        spreadRadius: -8,
+        blurRadius: 24,
+        spreadRadius: -4,
       ),
     ];
   }
 
-  /// Standard card decoration helper.
   static BoxDecoration cardDecoration(
     BuildContext context, {
     LinearGradient? gradient,
@@ -300,93 +288,75 @@ class AppTheme {
     );
   }
 
-  // ============ Pirs-Inspired Modern Academic Palette (2026-07-16) ============
-  // Deep Indigo + Warm Gold kimliği; Kürt kültürel mirası Pirs temasından
-  // esinlenir. RojMascot (Zana) ışın motifinde taşınır.
-  // Bkz. docs/superpowers/specs/2026-07-16-pirs-theme-redesign.md
+  // ============ Cultural Modern Palette (Variant C) ============
+  static const brandGreen = Color(0xFFFF7F50); // Coral - Primary CTA/Accent
+  static const brandGreenDeep = Color(0xFFE06B40); // Darker Coral
 
-  // Onaylı mockup sistemi (2026-07-17): Kürdistan yeşili ana aksan,
-  // kâğıt-altın ikincil, koyu-sıcak zemin. Bkz.
-  // docs/superpowers/specs/2026-07-17-onayli-mockup-hizalama-plan.md
-  // Pirs hizası: ana marka aksanı turuncu (isim geriye-uyum için korundu).
-  static const brandGreen = Color(0xFFF5931E); // Pirs turuncusu — ana aksan
-  static const brandGreenDeep = Color(0xFFE06E12); // Koyu turuncu (gradyan ucu)
-  // Pirs hizası: parlak/doygun accent seti (eski mat kültürel tonlar yerine).
-  static const playGreen = Color(0xFF22C55E); // Canlı yeşil — öğrenme kimliği
-  static const playPink = Color(0xFFEC4899); // Parlak pembe — 1v1/rekabet
-  static const playCyan = Color(0xFF14B8A6); // Parlak teal — oda/mod kartları
-  static const playPurple = Color(0xFF8B5CF6); // Parlak mor
+  // Cultural Brand Background (Header etc)
+  static const culturalBrandBg = Color(0xFF1B4332); // Deep Green
 
-  // ============ Dark Mode Palette (Pirs — koyu ikincil tema) ============
-  // Legacy token names retained for existing screen consumers.
+  static const playGreen = Color(0xFF2B8A50); // Muted elegant green
+  static const playPink = Color(0xFFB54C6F); // Muted elegant rose
+  static const playCyan = Color(0xFF288077); // Muted elegant teal
+  static const playPurple = Color(0xFF7052A3); // Muted elegant purple
+
+  // ============ Dark Mode Palette ============
   static const primaryGradientStart = brandGreen;
   static const primaryGradientEnd = brandGreenDeep;
 
-  // Secondary accent — Pirinç Altını
   static const secondaryAccent = Color(0xFFE7B53C);
+  static const gold = Color(0xFFD4AF37); // Premium Gold
 
-  // Reward color — ONLY for coin / reward / streak / mastery badge indicators.
-  // Intentionally kept stable: reward/coin meaning preserved across palette changes.
-  static const gold = Color(0xFFE7B53C);
-
-  // Info/tip highlight — rare use (e.g. joker hint). Do not use for general accent.
   static const cyan = playCyan;
 
-  // Dark backgrounds — koyu-sıcak yeşilimsi mürekkep (mockup sistemi)
-  // Zemin ton ayrımı güçlendirildi (2026-07-18):
-  // bg→surface +%14, surface→surfaceHi +%18 fark
-  static const bg = Color(0xFF0B0F0D);
-  static const bgDeep = Color(0xFF07100C);
-  static const surface = Color(
-    0xFF1E3028,
-  ); // +%7 daha açık — kartlar zeminden net çıksın
-  static const surfaceHi = Color(
-    0xFF284035,
-  ); // +%8 daha açık — WCAG UI kontrastı için
-  static const darkBg = Color(0xFF0B0F0D);
+  static const bg = Color(0xFF0F141A); // Deep Navy / Anthracite
+  static const bgDeep = Color(0xFF090C10);
+  static const surface = Color(0xFF161E27);
+  static const surfaceHi = Color(0xFF1C2733);
+  static const darkBg = Color(0xFF0F141A);
 
-  // Dark mode text — AA kontrast güncellemesi (2026-07-18):
-  // textSub: #93A29A → #A5BDB4 (+%11, ~5.0:1 AA geçer)
-  // textMuted: #7E8C84 → #9CB3AB (+%22, ~4.6:1 AA geçer)
   static const textPrimary = Color(0xFFF4F1E9);
-  static const textSub = Color(0xFFA5BDB4);
-  static const textMuted = Color(0xFF9CB3AB);
+  static const textSub = Color(0xFF9EA7B0);
+  static const textMuted = Color(0xFF6E7881);
 
-  // Borders
-  static const border = Color(
-    0xFF2E4038,
-  ); // Daha görünür sınır — surface ile uyumlu
+  static const border = Color(0xFF26323F);
 
-  // Status colors
-  // correct/wrong/gold — quiz feedback semantics independent of color system.
-  static const accent = primaryGradientStart; // Deep Indigo
-  static const violet = secondaryAccent; // Warm Gold
-  // Correct answer color — ONLY for correct answer feedback.
-  static const correct = Color(0xFF3DA968); // Kürdistan yeşili — mockup
-  // Wrong answer color — ONLY for wrong answer feedback.
-  static const wrong = Color(0xFFE5533D); // Nar kırmızısı — mockup
+  static const accent = primaryGradientStart; 
+  static const violet = secondaryAccent; 
+  static const correct = Color(0xFF3DA968); 
+  static const wrong = Color(0xFFE5533D); 
 
-  // ============ Light Mode Palette (default theme — Pirs hizası 2026-07-20) ============
-  static const lightBg = Color(0xFFF3F3F5); // Pirs-stil soğuk açık gri (eski bej yerine)
-  static const lightBgDeep = Color(0xFFEAEAED); // Derin zemin tonu
-  static const lightSurface = Color(0xFFFFFFFF); // Pure white
-  static const lightSurfaceHi = Color(0xFFF7F7F9); // Surface highlight
-  static const lightBorder = Color(0xFFE2E2E8); // Pirs-stil soğuk kenarlık
-  static const lightTextPrimary = Color(0xFF1A1A24);
-  static const lightTextSub = Color(
-    0xFF4E5366,
-  ); // Pirs ic_battle_quiz.xml ikon rengi — mavi-gri
-  static const lightTextMuted = Color(
-    0xFF6F6A7E,
-  ); // WCAG AA korundu
+  // ============ Light Mode Palette (Variant C) ============
+  static const lightBg = Color(0xFFFDFBF7); // Variant C Cream
+  static const lightBgDeep = Color(0xFFF6F3EC);
+  static const lightSurface = Color(0xFFFFFFFF);
+  static const lightSurfaceHi = Color(0xFFF7F7F9);
+  static const lightBorder = Color(0xFFE2E2E8); 
+  static const lightTextPrimary = Color(0xFF2D3436); // Anthracite
+  static const lightTextSub = Color(0xFF4E5366);
+  static const lightTextMuted = Color(0xFF6F6A7E);
 
-  // Pirs turuncu gradient (gradient_orange.xml'den literal hex)
-  static const pirsOrangeStart = Color(0xFFE37A42);
-  static const pirsOrangeEnd = Color(0xFFEC9B40);
+  static const pirsOrangeStart = culturalBrandBg; // Cultural Deep Green
+  static const pirsOrangeEnd = culturalBrandBg;
 
-  // Quiz cevap seçenek token'ları (Pirs option_bg.xml'den)
-  static const answerOptionBg = Color(0xFFF1F1F4);
+  static const answerOptionBg = Color(0xFFF8F9FA);
   static const answerOptionBorder = Color(0xFFE2E2E8);
+
+  // ============ Leaderboard Podium ============
+  static const silver = Color(0xFF9AA6B4);
+  static const silverLight = Color(0xFF5B6B7C);
+  static const bronze = Color(0xFFB66A3A);
+  static const bronzeLight = Color(0xFF8A4E24);
+
+  // ============ Shimmer Skeleton ============
+  static const shimmerBaseLight = Color(0xFFE4E1F5);
+  static const shimmerBaseDark = Color(0xFF2A2540);
+  static const shimmerHighlightLight = Color(0xFFF0EEFC);
+  static const shimmerHighlightDark = Color(0xFF352E50);
+
+  // ============ Status Indicators ============
+  static const onlineGreen = Color(0xFF4CAF50);
+  static const offlineGrey = Color(0xFF9E9E9E);
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -398,28 +368,24 @@ class AppTheme {
   static const line = border;
 
   // ============ Gradient Constants ============
-  // Primary accent gradient: Deep Indigo to Light Indigo
   static const accentGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [primaryGradientStart, primaryGradientEnd],
   );
 
-  // Dark auth gradient
   static const darkAuthGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [bg, bgDeep],
   );
 
-  // Home header gradient: Pirs turuncu (gradient_orange.xml — 2026-07-20)
   static const homeHeaderGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [pirsOrangeStart, pirsOrangeEnd],
   );
 
-  // Legacy gradient aliases for backwards compatibility
   static const bgGradient = darkAuthGradient;
 
   static bool isLight(BuildContext context) {
@@ -432,6 +398,17 @@ class AppTheme {
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       colors: [lightBg, lightBgDeep],
+    );
+  }
+
+  static LinearGradient shimmerGradient(BuildContext context, double animValue) {
+    final isLight = _isLight(context);
+    final baseColor = isLight ? shimmerBaseLight : shimmerBaseDark;
+    final shimmerColor = isLight ? shimmerHighlightLight : shimmerHighlightDark;
+    return LinearGradient(
+      begin: Alignment(-1.0 + animValue, -0.5),
+      end: Alignment(1.0 + animValue, 0.5),
+      colors: [baseColor, shimmerColor, baseColor],
     );
   }
 
@@ -453,40 +430,35 @@ class AppTheme {
   static Color textMutedColor(BuildContext context) =>
       isLight(context) ? lightTextMuted : textMuted;
 
-  // Legacy gradients for backwards compatibility
   static const goldGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [gold, Color(0xFFFFB300)],
+    colors: [gold, Color(0xFFC7A22A)], // Softer gold gradient
   );
 
   static const correctGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [correct, Color(0xFF00C853)],
+    colors: [correct, Color(0xFF2D8250)],
   );
 
   static const wrongGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [wrong, Color(0xFFB03D2E)],
+    colors: [wrong, Color(0xFFC53F2B)],
   );
 
   static List<BoxShadow> shadow3D(Color color) {
     return [
       BoxShadow(
-        color: color.withValues(alpha: 0.6),
+        color: color.withValues(alpha: 0.3),
         offset: const Offset(0, 4),
         blurRadius: 0,
       ),
     ];
   }
 
-  // ============ Card Type System (2026-07-18) ============
-  /// [CardType]'a göre hazır BoxDecoration üretir.
-  /// - primary: gradient varsa onu kullan, yoksa brandGreen + glow.
-  /// - secondary: surface + border.
-  /// - info: sadece border, çok hafif shadow.
+  // ============ Card Type System ============
   static BoxDecoration cardDecorationByType(
     BuildContext context, {
     CardType type = CardType.secondary,
@@ -509,10 +481,10 @@ class AppTheme {
           borderRadius: BorderRadius.circular(radius),
           boxShadow: [
             BoxShadow(
-              color: brandGreen.withValues(alpha: isDark ? 0.35 : 0.18),
-              offset: const Offset(0, 8),
-              blurRadius: 22,
-              spreadRadius: -4,
+              color: brandGreen.withValues(alpha: isDark ? 0.2 : 0.1),
+              offset: const Offset(0, 6),
+              blurRadius: 16,
+              spreadRadius: -2,
             ),
           ],
         );
@@ -522,7 +494,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(radius),
           border: Border.all(
             color: borderColor(context).withValues(alpha: 0.55),
-            width: 1.1,
+            width: 1.0,
           ),
           boxShadow: cardShadow(context),
         );
@@ -532,44 +504,40 @@ class AppTheme {
           borderRadius: BorderRadius.circular(radius),
           border: Border.all(
             color: borderColor(context).withValues(alpha: 0.35),
-            width: 0.8,
+            width: 1.0,
           ),
           boxShadow: [
             BoxShadow(
-              color:
-                  (isDark ? const Color(0xFF0C0E14) : const Color(0xFFE8E4DF))
-                      .withValues(alpha: isDark ? 0.18 : 0.08),
-              offset: const Offset(0, 4),
-              blurRadius: 12,
-              spreadRadius: -6,
+              color: (isDark ? const Color(0xFF000000) : const Color(0xFF000000))
+                      .withValues(alpha: isDark ? 0.1 : 0.02),
+              offset: const Offset(0, 2),
+              blurRadius: 8,
+              spreadRadius: 0,
             ),
           ],
         );
+      case CardType.glass:
+        return glassDecoration(context, borderRadius: radius);
     }
   }
 
-  // Per-category gradients (index matches category list order)
-  // Pirs-inspired vibrant palette:
+  // Muted, elegant gradients replacing the neon ones
   static const List<List<Color>> categoryGradients = [
-    // Pirs hizası: parlak/doygun kategori renkleri (eski mat kültürel tonlar
-    // yerine) — her kategori canlı bir kimlik rengi taşır.
-    [Color(0xFFFB8C3C), Color(0xFFF97316)], // Ziman - parlak turuncu
-    [Color(0xFFF0468C), Color(0xFFDB2777)], // Çand - parlak pembe
-    [Color(0xFF3B82F6), Color(0xFF2563EB)], // Dîrok - parlak mavi
-    [Color(0xFFFBBF24), Color(0xFFF59E0B)], // Edebiyat - parlak amber
-    [Color(0xFF22C55E), Color(0xFF16A34A)], // Cografya - parlak yeşil
-    [Color(0xFFFB7185), Color(0xFFE11D48)], // Muzîk - parlak gül kırmızısı
-    [Color(0xFFA855F7), Color(0xFF7C3AED)], // Siyaset - parlak mor
-    [Color(0xFF2DD4BF), Color(0xFF0D9488)], // Paradigma - parlak teal
+    [Color(0xFFD47C3B), Color(0xFFC0672A)], // Muted Orange
+    [Color(0xFFB54C6F), Color(0xFF9E3C5B)], // Muted Rose
+    [Color(0xFF4A74B8), Color(0xFF385E9D)], // Muted Blue
+    [Color(0xFFD1A23A), Color(0xFFB88C2A)], // Muted Amber
+    [Color(0xFF2B8A50), Color(0xFF227542)], // Muted Green
+    [Color(0xFFC75D6D), Color(0xFFB04B5A)], // Muted Crimson
+    [Color(0xFF865DB8), Color(0xFF704A9E)], // Muted Purple
+    [Color(0xFF288077), Color(0xFF1E6962)], // Muted Teal
   ];
 
-  /// TRT tarzı çok-renkli A/B/C/D şık paleti (canlı tonlar). Quiz ve soru
-  /// öneri ekranı aynı dört rengi kullanır — tek kaynak burada.
   static const List<Color> answerOptionColors = [
-    Color(0xFFE8482F), // A - kırmızı
-    Color(0xFF1A6FCF), // B - mavi
-    Color(0xFF0D8A4C), // C - yeşil
-    Color(0xFFE6B800), // D - amber
+    Color(0xFFC54433), // Muted red
+    Color(0xFF3373B8), // Muted blue
+    Color(0xFF288A53), // Muted green
+    Color(0xFFC29C15), // Muted amber
   ];
 
   static LinearGradient categoryGradient(int index) {
@@ -581,26 +549,22 @@ class AppTheme {
     );
   }
 
-  // Decorative gradients for QuickPlayGrid tiles.
-  // Nar kırmızısı — mockup paleti (eski pembe-magenta bırakıldı).
+  // Decorative gradients for QuickPlayGrid tiles (Muted tones)
   static const List<Color> duelGradient = [
-    Color(0xFFE5533D),
-    Color(0xFFB6402F),
+    Color(0xFFB54C6F), // Muted rose
+    Color(0xFF9E3C5B),
   ];
   static const List<Color> tournamentGradient = [
-    Color(0xFF00BFA5),
-    Color(0xFF00897B),
+    Color(0xFF288077), // Muted teal
+    Color(0xFF1E6962),
   ];
 
-  // ============ Renk Disiplini (Dalga 5) ============
-  // Kural: kırmızı SADECE tehlike/silme ve yanlış-cevap geri bildirimidir;
-  // genel CTA kartlarında kırmızı kullanılmaz. Kırmızı CTA kartı gereken
-  // yerler için hazır teal/yeşil alternatif:
-  static const ctaTeal = Color(0xFF2E9E93); // Kırmızı CTA alternatifi (teal)
-  static const ctaTealDeep = Color(0xFF1F6E66); // Gradyan ucu
+  static const ctaTeal = Color(0xFF288077);
+  static const ctaTealDeep = Color(0xFF1E6962);
   static const List<Color> ctaTealGradient = [ctaTeal, ctaTealDeep];
-  // Marka yeşili CTA alternatifi (ana aksanla uyumlu ikincil CTA):
   static const List<Color> ctaGreenGradient = [brandGreen, brandGreenDeep];
+
+
 
   static ThemeData dark() {
     return ThemeData(

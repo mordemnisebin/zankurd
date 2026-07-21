@@ -17,10 +17,11 @@ import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
 import 'quiz_screen.dart';
 import 'shop_screen.dart';
-import 'leaderboard_screen.dart';
 import 'home/play_teaser_card.dart';
+import 'home/daily_missions_card.dart';
 import '../widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'leaderboard_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -185,20 +186,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           SliverToBoxAdapter(
             child: _buildFullBleedHeader(context, ku),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.page,
-                AppSpacing.lg,
-                AppSpacing.page,
-                0,
-              ),
-              child: _buildAnimatedCard(
-                _heroFadeAnimation(0),
-                _buildMetricStrip(context, ku),
-              ),
-            ),
-          ),
+          // Metric strip removed per Variant C design
           if (isWide)
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(
@@ -226,12 +214,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   : _startDailyQuiz,
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 24),
+                          _buildAnimatedCard(
+                            _heroFadeAnimation(1),
+                            DailyMissionsCard(
+                              isKu: ku,
+                              missions: _missions,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
                           _buildAnimatedCard(
                             _heroFadeAnimation(2),
                             KeyedSubtree(
                               key: const ValueKey('home-learning-entry'),
-                              // Sakin kapanış: Zana + günün sözü (CTA'sız).
                               child: ZanaDailyCard(isKu: ku),
                             ),
                           ),
@@ -280,7 +275,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     );
                   }
-                  if (index == 1 && widget.onOpenPlay != null) {
+                  if (index == 1) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(1),
+                        DailyMissionsCard(
+                          isKu: ku,
+                          missions: _missions,
+                        ),
+                      ),
+                    );
+                  }
+                  if (index == 2 && widget.onOpenPlay != null) {
                     return Padding(
                       padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
@@ -295,14 +302,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       _heroFadeAnimation(3),
                       KeyedSubtree(
                         key: const ValueKey('home-learning-entry'),
-                        // Sakin kapanış: Zana + günün sözü. Öğrenme/tekrar
-                        // CTA'sı tek yerde (Dersê rojane) yaşar — üç ayrı
-                        // "günlük hedef" karmaşası olmasın (Pirs sadeliği).
                         child: ZanaDailyCard(isKu: ku),
                       ),
                     ),
                   );
-                }, childCount: widget.onOpenPlay != null ? 3 : 2),
+                }, childCount: widget.onOpenPlay != null ? 4 : 3),
               ),
             ),
           SliverToBoxAdapter(
@@ -523,7 +527,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// Karşılama satırı: avatar + selam + coin/streak + KU/tema kontrolleri.
   Widget _buildCompactHeader(BuildContext context, bool ku) {
     final isTest = isFlutterTestEnvironment;
     final hour = DateTime.now().hour;
@@ -548,8 +551,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       }
     }
     final currentName = _displayName ?? widget.displayName;
-    // Selamda yalnız ilk kelime: uzun adlar tek satıra sığmayıp
-    // "Hoş geldin, ZanKur…" diye kırpılıyordu; tam ad Profil'de yaşar.
     final shortName = currentName?.trim().split(RegExp(r'\s+')).first;
     final greeting = ku
         ? '$greetingKu, ${shortName ?? 'Lîstikvan'}!'
@@ -558,82 +559,82 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Container(
       key: const ValueKey('home-profile-header'),
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.page,
-        AppSpacing.md,
-        AppSpacing.page,
-        AppSpacing.lg,
-      ),
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 40),
       decoration: const BoxDecoration(
+        color: AppTheme.culturalBrandBg,
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(24),
-          bottomRight: Radius.circular(24),
-        ),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppTheme.pirsOrangeStart, AppTheme.pirsOrangeEnd],
+          bottomLeft: Radius.circular(32),
+          bottomRight: Radius.circular(32),
         ),
       ),
-      child: Row(
+      child: Stack(
+        clipBehavior: Clip.none,
         children: [
-          PlayerAvatar(radius: 26, displayName: currentName ?? 'Z'),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Elips yerine sığdır: uzun selam+ad kombinasyonları
-                // ("İyi Akşamlar, ZanKurd!") kırpılmak yerine hafif küçülür.
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: AlignmentDirectional.centerStart,
-                  child: Text(
-                    greeting,
-                    maxLines: 1,
-                    style: AppTypography.heading2.copyWith(
-                      color: Colors.white,
-                      fontSize: 19,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    const Icon(
-                      AppIcons.fire,
-                      color: Colors.white,
-                      size: 14,
-                    ),
-                    const SizedBox(width: 3),
-                    Text(
-                      '$_streak',
-                      style: AppTypography.caption.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    const Icon(
-                      AppIcons.coins,
-                      color: Colors.white,
-                      size: 14,
-                    ),
-                    const SizedBox(width: 3),
-                    Text(
-                      '$_coinBalance',
-                      style: AppTypography.caption.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+          Positioned(
+            right: -20,
+            top: 20,
+            child: Opacity(
+              opacity: 0.05,
+              child: Icon(Icons.star_border_purple500_sharp, size: 240, color: Colors.white),
             ),
           ),
-          const SizedBox(width: AppSpacing.xs),
-          _buildHeaderQuickControls(context, ku),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      _buildHeaderBadge(AppIcons.fire, AppTheme.brandGreen, '$_streak'),
+                      const SizedBox(width: 12),
+                      _buildHeaderBadge(AppIcons.coins, AppTheme.gold, '$_coinBalance'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      _buildHeaderQuickControls(context, ku),
+                      const SizedBox(width: 12),
+                      PlayerAvatar(radius: 20, displayName: currentName ?? 'Z'),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  greeting,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                ku ? 'Zanîn, ronahiya tarîtiyê ye.' : 'Bilgi, karanlığın aydınlığıdır.',
+                style: const TextStyle(fontSize: 15, color: Colors.white70),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeaderBadge(IconData icon, Color iconColor, String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(color: Colors.white12, borderRadius: BorderRadius.circular(12)),
+      child: Row(
+        children: [
+          Icon(icon, color: iconColor, size: 18),
+          const SizedBox(width: 6),
+          Text(text, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 14)),
         ],
       ),
     );
@@ -641,8 +642,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Widget _buildHeaderQuickControls(BuildContext context, bool ku) {
     final themeProvider = context.watch<ThemeProvider>();
-    final border = AppTheme.borderColor(context);
-    final fill = AppTheme.surfaceColor(context);
+    final border = Colors.white24;
+    final fill = Colors.white12;
 
     Widget control({
       required Key key,
@@ -659,14 +660,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: InkWell(
             key: key,
             onTap: onTap,
-            borderRadius: BorderRadius.circular(AppRadius.sm),
+            borderRadius: BorderRadius.circular(12),
             child: Container(
-              width: 44,
-              height: 44,
+              width: 40,
+              height: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: fill,
-                borderRadius: BorderRadius.circular(AppRadius.sm),
+                borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: border),
               ),
               child: child,
@@ -676,7 +677,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       );
     }
 
-    // InkWell'ler için Material atası (Scaffold dışı testler dahil güvenli).
     return Material(
       type: MaterialType.transparency,
       child: Row(
@@ -688,8 +688,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             onTap: context.langProvider.toggle,
             child: Text(
               ku ? 'KU' : 'TR',
-              style: TextStyle(
-                color: AppTheme.textPrimaryColor(context),
+              style: const TextStyle(
+                color: Colors.white,
                 fontWeight: FontWeight.w800,
                 fontSize: 12,
               ),
@@ -701,10 +701,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             tooltip: 'Tema',
             onTap: themeProvider.toggleDarkLight,
             child: Icon(
-              themeProvider.isDark
-                  ? AppIcons.moon
-                  : AppIcons.sun,
-              color: AppTheme.textPrimaryColor(context),
+              themeProvider.isDark ? AppIcons.moon : AppIcons.sun,
+              color: Colors.white,
               size: 19,
             ),
           ),
@@ -783,21 +781,6 @@ class _DailyLessonHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasReview = reviewReadyCount > 0;
-    final isLight = AppTheme.isLight(context);
-    // Light tema: koyu hero yerine sıcak altın tonlu açık yüzey (faz1 P3).
-    final gradientColors = isLight
-        ? const [Color(0xFFFFF3D6), Color(0xFFFCE9C4)]
-        : const [Color(0xFF2A2412), Color(0xFF1B2A1E)];
-    final borderColor = isLight
-        ? AppTheme.gold.withValues(alpha: 0.45)
-        : const Color(0xFF4A3D1C);
-    final titleColor = isLight
-        ? const Color(0xFF8A6D1F)
-        : const Color(0xFFE9CF8F);
-    final valueColor = isLight ? AppTheme.lightTextPrimary : Colors.white;
-    final subtitleColor = isLight
-        ? const Color(0xFF7A6330)
-        : const Color(0xFFD9C9A0);
     final title = hasReview
         ? (isKu ? 'Dubarekirinên Îro' : 'Bugünkü Tekrarlar')
         : (isKu ? 'Dersê rojane' : 'Günün Dersi');
@@ -808,123 +791,42 @@ class _DailyLessonHero extends StatelessWidget {
     final ctaLabel = hasReview
         ? (isKu ? 'Dest bi dubarekirinê' : 'Tekrara başla')
         : (isKu ? 'Destpêk bike' : 'Başla');
-
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // 320px sınıfı dar ekranlarda ikinci satır truncate oluyordu;
-        // minimum genişlikte kısa varyant kullanılır.
-        final narrow = constraints.maxWidth < 340;
-        final effectiveSubtitle = narrow && !hasReview
-            ? (isKu ? 'Xelat bistîne!' : 'Ödül kazan!')
-            : subtitle;
-
-        return Container(
-          key: const ValueKey('home-daily-lesson'),
-          padding: const EdgeInsets.all(AppSpacing.md),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: gradientColors,
-            ),
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(color: borderColor),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              AppIcons.bookOpen,
-                              color: AppTheme.gold,
-                              size: 16,
-                            ),
-                            const SizedBox(width: 6),
-                            Flexible(
-                              child: Text(
-                                title,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTypography.caption.copyWith(
-                                  color: titleColor,
-                                  fontWeight: FontWeight.w800,
-                                  letterSpacing: 0.3,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: '$count ',
-                                style: AppTypography.display.copyWith(
-                                  color: valueColor,
-                                  fontSize: 30,
-                                  height: 1.0,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'Pirs',
-                                style: AppTypography.heading2.copyWith(
-                                  color: valueColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          effectiveSubtitle,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.caption.copyWith(
-                            color: subtitleColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Image.asset(
-                    'assets/illustrations/daily_coins.png',
-                    width: 120,
-                    height: 84,
-                    fit: BoxFit.contain,
-                    filterQuality: FilterQuality.high,
-                  ),
-                ],
-              ),
-              if (onStart != null) ...[
-                const SizedBox(height: AppSpacing.sm),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: onStart,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppTheme.brandGreen,
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size.fromHeight(48),
-                    ),
-                    child: Text(ctaLabel),
-                  ),
+        
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceColor(context),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: AppTheme.isLight(context) ? [
+          BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 15, offset: const Offset(0, 5))
+        ] : null,
+        border: AppTheme.isLight(context) ? null : Border.all(color: AppTheme.borderColor(context)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontSize: 22, color: AppTheme.textPrimaryColor(context), fontWeight: FontWeight.bold)),
+          const SizedBox(height: 8),
+          Text('$count Pirs • $subtitle', style: TextStyle(fontSize: 14, color: AppTheme.textSubColor(context))),
+          const SizedBox(height: 24),
+          if (onStart != null)
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.brandGreen, // Coral
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-              ],
-            ],
-          ),
-        );
-      },
+                onPressed: onStart,
+                child: Text(ctaLabel, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
@@ -963,8 +865,8 @@ class _MiniLeaderboardState extends State<_MiniLeaderboard> {
 
   static const _medalColors = [
     AppTheme.gold,
-    Color(0xFFB8C0C4),
-    Color(0xFFC17A44),
+    AppTheme.silver,
+    AppTheme.bronze,
   ];
 
   @override

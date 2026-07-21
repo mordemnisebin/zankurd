@@ -122,3 +122,12 @@ class CategoryNames {
   static String localized(String kuName, bool isKu) =>
       isKu ? (_kuDisplay[kuName] ?? kuName) : tr(kuName);
 }
+
+/// Centralized strings for the Quiz Screen to avoid hardcoded UI text in logic.
+class QuizStrings {
+  static String answered(bool isKu) => isKu ? 'Bersiv da' : 'Cevapladı';
+  static String waiting(bool isKu) => isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor';
+  static String you(bool isKu) => isKu ? 'Tu' : 'Sen';
+  static String opponent(bool isKu) => isKu ? 'Hevrik' : 'Rakip';
+}
+
