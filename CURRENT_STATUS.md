@@ -53,8 +53,53 @@ Detay: memory `[[design-direction-2026-07]]` ve CLAUDE.md kimlik bölümü.
   (1.845 soru; çeviri hattının girdisi).
 - Kök dizindeki eski ekran görüntüsü/zip'ler `arsiv/medya/`ya taşındı.
 - Bilinen açık: `dart fix` bu makinede çalışmıyor (Türkçe-İ yol hatası,
-  junction'ı gerçek yola çözüyor); 92 info-level lint ASCII yola taşınınca
+  junction'ı gerçek yola çözüyor); 90 info-level lint ASCII yola taşınınca
   toplu temizlenecek.
+
+### 2026-07-21 gece — ikinci tur (kullanıcı: "önerdiğin her şeyi uygula")
+
+- **Çoklu-oyuncuda soru atlama hatası kök nedenden düzeltildi.**
+  `_syncToQuestionIndex()` dışarıdan gelen bir index senkronizasyonunda
+  önceki sorunun 5sn'lik reveal timer'ını iptal etmiyordu; stale timer
+  süresi dolunca artık ilerlemiş index üzerinden bir adım daha ilerletip
+  soruyu atlıyordu (hem oda hem 1v1'de). Systematic-debugging ile
+  doğrulanan, önce başarısız olan sonra geçen bir regresyon testi var
+  (`test/quiz_multiplayer_advance_race_test.dart`).
+- **Süre sistemi düzeltildi:** 1v1 ve Günün Yarışması 30sn yerine 20sn
+  kullanıyor (`matchmaking_screen.dart`, `contest_screen.dart`). **Oda
+  kurucusu için soru başına süre seçimi** eklendi (15/20/30/45/60sn,
+  `play_hub_screen.dart`) — daha önce bu ayar için hiçbir UI yoktu,
+  backend hazırdı. Canlı web build'de uçtan uca doğrulandı.
+- **Firebase Analytics'in hiç çağrılmadığı** bulgusu düzeltildi (bkz.
+  yukarıdaki madde) — bu turda ayrıca canlıda tekrar doğrulandı.
+- **İkon paketi denemeleri — üçü de gerçek teknik engelle sonuçlandı,
+  hiçbiri uygulanmadı:** `phosphor_flutter` (tüm stilleri `IconData`'yı
+  miras alıyor, bu SDK'da `IconData` artık `final class` olduğu için
+  hiç derlenmiyor — denendi, 57 dosyada kayıplı geri-alma yaşandı, git
+  geçmişinden doğrulanarak düzeltildi), `iconsax_flutter` (derleniyor
+  ama trophy/fire/quiz/lightbulb/badge/hourglass gibi bu uygulamanın
+  çekirdek kavramları hiç yok), `font_awesome_flutter` (derleniyor ama
+  `IconData` bile kullanmıyor — ayrı bir `FaIconData` tipi ve `FaIcon`
+  widget'ı gerektiriyor, çok daha invaziv bir değişiklik). Uygulama
+  temiz Material Icons'ta kaldı. Gerçek bir görsel iyileştirme için
+  görsel companion ile birlikte elle seçim öneriliyor.
+- **İçerik çevirisi başladı (58 soru, iki parti):** "Türkçe içerik"
+  envanterinin büyük kısmının (1.845'in içinde) yanlış pozitif olduğu
+  bulundu — Rast/Şaş ve 'ş/ç/ê/î/û' gibi ortak harfler tespit sezgisini
+  yanıltıyordu. Gerçek sorun genel-kültür kategorilerindeki (Çand/Dîrok/
+  Cografya) tutarlı Türkçe cümle-çeldiricilerdi; 58 tanesi Kurmancîye
+  çevrildi (Newroz, hewran, kilim motifleri, Zap vadisi, Kandil/Halgurd
+  dağları vb.). **Kalan büyük kısım Paradigma/Siyaset kategorilerinde ve
+  Öcalan'ın siyasi paradigmasına özgü yoğun terminoloji** (demokratik
+  konfederalizm, patriyarka eleştirisi vb.) — bilinçli olarak bırakıldı,
+  native-speaker/alan uzmanı incelemesi gerektirir.
+- **Ayrı ve daha ciddi bir içerik bulgusu:** en az 21 soruda (muhtemelen
+  daha fazla) çeldiriciler soru tipiyle hiç uyuşmuyor (ör. "hangi şehir?"
+  sorusuna yüzyıl/antlaşma seçenekleri gelmiş) — kopyala-yapıştır
+  kaynaklı bir üretim hatası. Çeviriyle düzelmez, yeni çeldirici yazımı
+  gerekir; henüz ele alınmadı.
+- Bu turda 6 yeni commit, 631 test yeşil (baseline 630'dan +1, yeni
+  race-condition regresyon testi).
 
 ---
 
