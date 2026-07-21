@@ -458,6 +458,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           id: roomId,
           hostId: dbHostId,
           name: ku ? 'Şerê 1v1' : '1v1 Savaş',
+          // 1v1 tempolu bir düello; 20sn (2026-07-21 kullanıcı kararı).
+          secondsPerQuestion: 20,
           players: [
             Player(
               name: _myName,

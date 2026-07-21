@@ -80,7 +80,12 @@ class _ContestScreenState extends State<ContestScreen> {
 
       final room = widget.repository
           .createRoom(category: contest.category)
-          .copyWith(name: contest.themeNameKu, questionCount: questions.length);
+          .copyWith(
+            name: contest.themeNameKu,
+            questionCount: questions.length,
+            // Günün yarışması tempolu bir mod; 20sn (2026-07-21 kullanıcı kararı).
+            secondsPerQuestion: 20,
+          );
 
       await Navigator.of(context).push(
         AppRoute.to(
