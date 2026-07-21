@@ -57,6 +57,10 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
       await tester.pumpAndSettle();
 
+      // Oda kurucusu artık soru başına süreyi seçtiği bir sheet görür.
+      await tester.tap(find.text('Odayı Aç'));
+      await tester.pumpAndSettle();
+
       expect(find.byType(RoomScreen), findsNothing);
       expect(find.text('Rojda'), findsNothing);
       expect(find.text('Baran'), findsNothing);

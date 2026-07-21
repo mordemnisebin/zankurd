@@ -45,9 +45,13 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
   Future<void> _createOnlineRoom() async {
     if (_roomActionLoading) return;
+    final seconds = await _pickRoomDuration();
+    if (seconds == null || !mounted) return; // kullanıcı sayfayı kapattı
     setState(() => _roomActionLoading = true);
     try {
-      final room = await widget.repository.createOnlineRoom();
+      final room = await widget.repository.createOnlineRoom(
+        secondsPerQuestion: seconds,
+      );
       if (!mounted) return;
       _openRoom(room);
     } catch (error, stack) {
@@ -66,6 +70,82 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     } finally {
       if (mounted) setState(() => _roomActionLoading = false);
     }
+  }
+
+  /// Oda kurucusunun her soru için tanımlı süreyi seçmesini sağlar. Bu ayar
+  /// yalnızca UI'da eksikti — repository/DB katmanı zaten `secondsPerQuestion`
+  /// alanını destekliyordu (2026-07-21 denetiminde bulunan boşluk).
+  Future<int?> _pickRoomDuration() async {
+    final ku = context.isKu;
+    const options = [15, 20, 30, 45, 60];
+    var selected = GameRoom.defaultSecondsPerQuestion;
+
+    return showModalBottomSheet<int>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetCtx) {
+        return StatefulBuilder(
+          builder: (sheetCtx, setSheetState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                left: AppSpacing.page,
+                right: AppSpacing.page,
+                bottom:
+                    MediaQuery.viewInsetsOf(sheetCtx).bottom + AppSpacing.page,
+              ),
+              child: AppPanel(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      ku ? 'Ji bo her pirsê dem' : 'Soru başına süre',
+                      style: AppTypography.heading1.copyWith(
+                        color: AppTheme.textPrimaryColor(context),
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      ku
+                          ? 'Ev dem ji bo hemû lîstikvanên vê odeyê derbasdar e.'
+                          : 'Bu süre odadaki tüm oyuncular için geçerli olur.',
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: AppTheme.textSubColor(context),
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    Wrap(
+                      spacing: AppSpacing.sm,
+                      runSpacing: AppSpacing.sm,
+                      children: [
+                        for (final seconds in options)
+                          ChoiceChip(
+                            key: ValueKey('room-duration-$seconds'),
+                            label: Text('$seconds sn'),
+                            selected: selected == seconds,
+                            onSelected: (_) =>
+                                setSheetState(() => selected = seconds),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton(
+                        onPressed: () => Navigator.of(sheetCtx).pop(selected),
+                        child: Text(ku ? 'Odeyê Veke' : 'Odayı Aç'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   void _openRoom(GameRoom room) {
@@ -195,7 +275,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             // Büyük 'Pêşbazî' tanıtım kartı kaldırıldı — bölüm başlığı
             // ekranı tanıtmaya yeter.
             _PlaySectionHeading(
-              title: ku ? 'Çawa dixwazî pêşbaz bibî?' : 'Nasıl yarışmak istersin?',
+              title: ku
+                  ? 'Çawa dixwazî pêşbaz bibî?'
+                  : 'Nasıl yarışmak istersin?',
               subtitle: ku
                   ? 'Yek ji modan hilbijêre û dest pê bike.'
                   : 'Bir mod seç ve başla.',
@@ -297,10 +379,7 @@ class _GroupPlayPanel extends StatelessWidget {
                   color: Colors.white.withValues(alpha: 0.22),
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
-                child: const Icon(
-                  Icons.groups_2_rounded,
-                  color: Colors.white,
-                ),
+                child: const Icon(Icons.groups_2_rounded, color: Colors.white),
               ),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
@@ -339,7 +418,9 @@ class _GroupPlayPanel extends StatelessWidget {
                   style: FilledButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: AppTheme.playCyan,
-                    disabledBackgroundColor: Colors.white.withValues(alpha: 0.5),
+                    disabledBackgroundColor: Colors.white.withValues(
+                      alpha: 0.5,
+                    ),
                   ),
                   icon: loading
                       ? const SizedBox(
@@ -361,10 +442,7 @@ class _GroupPlayPanel extends StatelessWidget {
                   key: const ValueKey('play-hub-join-room'),
                   onPressed: onJoinRoom,
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(
-                      color: Colors.white,
-                      width: 1.5,
-                    ),
+                    side: const BorderSide(color: Colors.white, width: 1.5),
                     foregroundColor: Colors.white,
                   ),
                   icon: const Icon(Icons.meeting_room_outlined),
