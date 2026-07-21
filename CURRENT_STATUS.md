@@ -101,6 +101,30 @@ Detay: memory `[[design-direction-2026-07]]` ve CLAUDE.md kimlik bölümü.
 - Bu turda 6 yeni commit, 631 test yeşil (baseline 630'dan +1, yeni
   race-condition regresyon testi).
 
+### 2026-07-21 gece — üçüncü tur (ikonlar çözüldü)
+
+- **İkon sorunu asıl çözüme kavuştu.** Bir önceki turda
+  `font_awesome_flutter` "çok invaziv" diye bırakılmıştı; kök sorun
+  aslında `FontAwesomeIcons.X.data` alan-erişiminin const bağlamlarda
+  çalışmamasıydı (test edilmeden varsayılmıştı). Çözüm: FA kaynağından
+  gereken 127 ikonun ham `(codePoint, fontFamily, fontPackage)`
+  değerleri çıkarılıp, Flutter'ın kendi `Icons` sınıfıyla birebir aynı
+  desende literal bir `AppIcons` sabit sınıfı üretildi
+  (`lib/src/theme/app_icons.dart`, `tool/generate_app_icons.py`) — hiç
+  alan-erişim zinciri yok, tamamen const-güvenli. `Icons.X` → `AppIcons.X`
+  migrasyonu 227 isim eşlemesiyle 63 uygulama + 8 test dosyasında
+  uygulandı (`tool/migrate_icons_to_fa.py`). `font_awesome_flutter`
+  paketi yalnızca font asset'i sağlamak için pubspec'te tutuluyor (kod
+  içinde hiç import edilmiyor).
+- Doğrulama: `dart analyze` temiz, 631/631 test geçiyor, canlı web
+  build'de onboarding/sign-in/davet ekranlarında ikonlar (mezuniyet
+  kepi, ok, kupa, kişi grubu vb.) doğru glyph'lerle render edildi
+  (tofu/kayıp karakter yok).
+- Commit: "feat(theme): jenerik Material ikonlarını Font Awesome ile
+  değiştir" (77 dosya).
+- **Sırada:** Paradigma/Siyaset kategorilerindeki siyasi-felsefe
+  terminolojisi için web araştırmalı çeviri (kullanıcı emri, 2026-07-21).
+
 ---
 
 ## 1. Projenin Aktif Ürünü
