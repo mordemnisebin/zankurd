@@ -24,5 +24,5 @@
 | 2026-07-14_room_timer_speed_scoring.sql | ? | doğrulanmadı |
 | 2026-07-14_tournament_integrity_hardening.sql | ? | doğrulanmadı |
 | Diğer tüm .sql dosyaları | ? | tek tek doğrulanmadı |
-| 2026-07-21_room_cleanup.sql | ❌ | Henüz uygulanmadı (bu denetimde yazıldı) |
-| 2026-07-21_strip_asta_prompt_prefix.sql | ❌ | Henüz uygulanmadı (offline banka temizliğinin canlı eşi) |
+| 2026-07-21_room_cleanup.sql | ✅ | 2026-07-21, kullanıcı tarafından Supabase SQL Editor'den elle uygulandı |
+| 2026-07-21_strip_asta_prompt_prefix.sql | ✅ | 2026-07-21, kullanıcı tarafından Supabase SQL Editor'den elle uygulandı — canlı questions.prompt artık offline bankayla eşleşmeli |

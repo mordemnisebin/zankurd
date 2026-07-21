@@ -35,8 +35,13 @@ Detay: memory `[[design-direction-2026-07]]` ve CLAUDE.md kimlik bölümü.
 - `RojPatternPainter` ölü kodu silindi (kilim temizliğinin kalanı).
 - Deploy script'i FTPS'e geçirildi (`ALLOW_INSECURE_FTP=1` ile eski davranış).
 - `supabase/applied.md` (uygulanma manifesti), `2026-07-21_room_cleanup.sql`
-  ve `2026-07-21_strip_asta_prompt_prefix.sql` yazıldı — **ikisi de henüz
-  canlıya uygulanmadı**.
+  ve `2026-07-21_strip_asta_prompt_prefix.sql` yazıldı — **ikisi de
+  2026-07-21'de kullanıcı tarafından Supabase SQL Editor'den canlıya
+  uygulandı**; canlı `questions.prompt` artık "Di asta …" öneki taşımıyor,
+  eski oda/kuyruk temizlik fonksiyonu (`cleanup_stale_rooms`) canlıda mevcut
+  (pg_cron zamanlaması ayrıca Studio'dan etkinleştirilmeli, dosyadaki not).
+- Quiz'de görsel soru tipi etiketi "Entık" (bozuk kelime) → "Wêneyî" olarak
+  düzeltildi (canlı web build turunda bulundu, regresyon testi eklendi).
 - Türkçe içerik envanteri: `supabase/2026-07-21_turkish_content_inventory.csv`
   (1.845 soru; çeviri hattının girdisi).
 - Kök dizindeki eski ekran görüntüsü/zip'ler `arsiv/medya/`ya taşındı.
