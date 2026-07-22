@@ -80,14 +80,19 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
               ),
               child: Text(
                 '${_unlockedBadges.length}/${badges.length}',
-                style: const TextStyle(
-                  color: AppTheme.gold,
+                style: TextStyle(
+                  // Altın metin + altın@0.15 zemin açık temada okunmuyordu.
+                  color: AppColors.readableAccent(context, AppTheme.gold),
                   fontWeight: FontWeight.w700,
                   fontSize: 12,
                 ),
               ),
             ),
             const SizedBox(width: 8),
+            // Etiket "Tümünü Gör" iken başlık + sayaç + buton 375px'e
+            // sığmıyor ve başlık "Rozet Koleksiyo…" diye kesiliyordu
+            // (2026-07-22 canlı UX denetimi). Kısa etiket + ok ikonu
+            // aynı işi daha az yer kaplayarak yapıyor.
             TextButton(
               onPressed: () => _showAllBadgesSheet(context, badges, ku),
               style: TextButton.styleFrom(
@@ -95,13 +100,23 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              child: Text(
-                ku ? 'Hemû' : 'Tümünü Gör',
-                style: const TextStyle(
-                  color: AppTheme.primaryGradientStart,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 12,
-                ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    ku ? 'Hemû' : 'Tümü',
+                    style: const TextStyle(
+                      color: AppTheme.primaryGradientStart,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 12,
+                    ),
+                  ),
+                  const Icon(
+                    AppIcons.chevronRight,
+                    size: 12,
+                    color: AppTheme.primaryGradientStart,
+                  ),
+                ],
               ),
             ),
           ],

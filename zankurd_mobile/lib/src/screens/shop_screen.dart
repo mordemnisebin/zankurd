@@ -376,24 +376,33 @@ class _ShopScreenState extends State<ShopScreen> {
                   ),
                 ],
               ),
+              // Yetersiz bakiye: coin kazanma yoluna yönlendiren ikincil
+              // eylem. Daha önce actions listesindeydi; üç eylem tek satıra
+              // sığmayınca OverflowBar bunları merdiven gibi üç ayrı hizaya
+              // dağıtıyordu (2026-07-22 canlı UX denetimi). İçeriğe alınınca
+              // actions'ta iki eylem kalıyor ve düzgün hizalanıyor.
+              if (_coinBalance < item.cost) ...[
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton.icon(
+                    onPressed: () {
+                      Navigator.of(ctx).pop(false);
+                      Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) =>
+                              SpinWheelScreen(repository: widget.repository),
+                        ),
+                      );
+                    },
+                    icon: const Icon(AppIcons.dice, size: 18),
+                    label: Text(ku ? 'Coin qezenc bike' : 'Coin kazan'),
+                  ),
+                ),
+              ],
             ],
           ),
           actions: [
-            if (_coinBalance < item.cost)
-              // Yetersiz bakiye: coin kazanma yoluna yönlendiren ikincil buton.
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.of(ctx).pop(false);
-                  Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) =>
-                          SpinWheelScreen(repository: widget.repository),
-                    ),
-                  );
-                },
-                icon: const Icon(AppIcons.dice, size: 18),
-                label: Text(ku ? 'Coin qezenc bike' : 'Coin kazan'),
-              ),
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(false),
               child: Text(
@@ -696,7 +705,10 @@ class _ShopScreenState extends State<ShopScreen> {
               // Dar (2 sütun) ve geniş (3 sütun) ekranda kart genişliği çok
               // farklı; tek sabit oran genişte gereksiz boşluk, darda taşma
               // yaratıyordu. Sütun sayısına göre ayrı oran kullanılır.
-              childAspectRatio: crossAxisCount >= 3 ? 0.92 : 0.7,
+              // Açıklamalar 2 satıra sığmayıp "…paletl…" diye kesiliyordu
+              // (2026-07-22 canlı UX denetimi); maxLines 3'e çıkarıldı ve
+              // kartlar buna göre biraz uzatıldı.
+              childAspectRatio: crossAxisCount >= 3 ? 0.88 : 0.66,
             ),
             itemCount: restItems.length,
             itemBuilder: (context, index) =>
@@ -819,12 +831,12 @@ class _ShopScreenState extends State<ShopScreen> {
                           const SizedBox(height: 4),
                           Text(
                             desc,
-                            maxLines: 2,
+                            maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: AppTheme.textMutedColor(context),
-                              fontSize: 13,
-                              height: 1.3,
+                              fontSize: 12.5,
+                              height: 1.25,
                             ),
                           ),
                         ],

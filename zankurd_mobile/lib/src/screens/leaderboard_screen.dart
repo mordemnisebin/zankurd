@@ -46,6 +46,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   List<LeaderboardEntry>? _lastEntries;
   List<Friend>? _lastFriends;
 
+  /// Oyuncunun kendi istatistikleri; ilk 10'da değilse sırasını yine de
+  /// gösterebilmek için ayrıca yüklenir.
+  Future<LeaderboardEntry?>? _myStatsFuture;
+
   @override
   void initState() {
     super.initState();
@@ -74,7 +78,31 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     _loadData();
   }
 
+  Future<LeaderboardEntry?> _loadMyStats() async {
+    try {
+      return await widget.repository.getPlayerStats();
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Oyuncu ilk 10'da değilse en alta sabitlenen kendi sırası.
+  Widget _buildMyRankRow(bool ku) {
+    return FutureBuilder<LeaderboardEntry?>(
+      future: _myStatsFuture,
+      builder: (context, snapshot) {
+        final me = snapshot.data;
+        if (me == null || me.rank <= 0) return const SizedBox.shrink();
+        return Padding(
+          padding: const EdgeInsets.only(top: AppSpacing.xs),
+          child: _RankRow(entry: me, isKu: ku, highlight: true),
+        );
+      },
+    );
+  }
+
   void _loadData() {
+    _myStatsFuture = _loadMyStats();
     if (_tabController.index == 3) {
       setState(() {
         _friendsFuture = widget.repository
@@ -286,6 +314,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                   _Podium(entries: entries.take(3).toList(), isKu: ku),
                   const SizedBox(height: AppSpacing.cardGap),
                   for (final e in entries.skip(3)) _RankRow(entry: e, isKu: ku),
+                  // Liderlik yalnız ilk 10'u getiriyor; oyuncu listede
+                  // yoksa kendi sırasını hiç göremiyordu — tablonun temel
+                  // motivasyon mekanizması eksikti (2026-07-22 UX denetimi).
+                  if (_myRank(entries) == null) _buildMyRankRow(ku),
                 ],
               ),
             ),
@@ -739,15 +771,24 @@ class _PodiumSlot extends StatelessWidget {
 // ─── Rank Row (4-10) ─────────────────────────────────────────────────────────
 
 class _RankRow extends StatelessWidget {
-  const _RankRow({required this.entry, required this.isKu});
+  const _RankRow({
+    required this.entry,
+    required this.isKu,
+    this.highlight = false,
+  });
 
   final LeaderboardEntry entry;
   final bool isKu;
 
+  /// Oyuncunun kendi satırı: listede görünmediğinde en alta sabitlenir.
+  final bool highlight;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      key: ValueKey('leaderboard-rank-row-${entry.rank}'),
+      key: highlight
+          ? const ValueKey('leaderboard-my-rank-row')
+          : ValueKey('leaderboard-rank-row-${entry.rank}'),
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
@@ -756,10 +797,15 @@ class _RankRow extends StatelessWidget {
       // Pirs hizası: düz satır — kart kenarlığı/gölgesi yok, yalnız hafif
       // zemin tonu ve rütbe daire rozeti taşır kimliği.
       decoration: BoxDecoration(
-        color: entry.rank <= 10
+        color: highlight
+            ? AppTheme.accent.withValues(alpha: 0.10)
+            : entry.rank <= 10
             ? AppTheme.gold.withValues(alpha: 0.06)
             : AppTheme.surfaceColor(context),
         borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
+        border: highlight
+            ? Border.all(color: AppTheme.accent.withValues(alpha: 0.55))
+            : null,
       ),
       child: Row(
         children: [
