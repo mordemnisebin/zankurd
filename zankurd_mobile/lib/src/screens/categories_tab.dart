@@ -535,6 +535,13 @@ class _CategoryCardState extends State<_CategoryCard>
                                       overflow: TextOverflow.ellipsis,
                                       style: AppTypography.heading2.copyWith(
                                         color: Colors.white,
+                                        shadows: const [
+                                          Shadow(
+                                            color: Color(0x73000000),
+                                            blurRadius: 8,
+                                            offset: Offset(0, 1),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     const SizedBox(height: 3),
@@ -552,10 +559,23 @@ class _CategoryCardState extends State<_CategoryCard>
                                                 : '5 seviye • yarış'),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
+                                      // Beyaz@0.78 açık kategori renkleri
+                                      // (hardal, turuncu-kahve) üzerinde
+                                      // ~2.2:1 kalıyordu. Alfa yükseltilip
+                                      // gölge eklendi — gölge zaten
+                                      // AppTypography.categoryTitle'da
+                                      // kurulu olan desen (2026-07-22).
                                       style: AppTypography.caption.copyWith(
                                         color: Colors.white.withValues(
-                                          alpha: 0.78,
+                                          alpha: 0.95,
                                         ),
+                                        shadows: const [
+                                          Shadow(
+                                            color: Color(0x73000000),
+                                            blurRadius: 6,
+                                            offset: Offset(0, 1),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],

@@ -25,6 +25,29 @@ class AppColors {
     if (hsl.lightness >= 0.55) return color;
     return hsl.withLightness((hsl.lightness + 0.22).clamp(0.0, 0.72)).toColor();
   }
+
+  /// [toneOnSurface]'in ters yönü: açık temada, açık aksanların (altın,
+  /// sarı, açık yeşil) açık yüzey üzerinde metin olarak kullanılması
+  /// okunmuyor — ör. turnuva "Bot turnuva" çipi altın metin + altın@0.2
+  /// zemin ile ~2:1 kalıyordu (2026-07-22 UX denetimi).
+  ///
+  /// Aksanın kimliğini (ton/doygunluk) korur, yalnız açıklığını metin
+  /// olarak okunabilecek düzeye çeker. Koyu temada [toneOnSurface]'e devreder.
+  static Color readableAccent(BuildContext context, Color color) {
+    if (!AppTheme.isLight(context)) return toneOnSurface(context, color);
+    final hsl = HSLColor.fromColor(color);
+    if (hsl.lightness <= 0.45) return color;
+    // 0.30: beyaz yüzeyde altın için ölçülen kontrast 4.5:1'i geçen ilk
+    // değer (0.34 → 4.34:1, AA altında kalıyordu).
+    return hsl.withLightness(0.30).toColor();
+  }
+
+  /// Marka turuncusu gibi orta tonlu gradyanların üzerinde beyaz metnin AA
+  /// eşiğini geçmesi için gereken koyu perde. Beyaz, turuncu üzerinde tek
+  /// başına yalnız ~2.2:1 verir; bu perde ile 4.5:1 üstüne çıkar.
+  /// (2026-07-22 UX denetimi — contrast_policy_test bu değeri doğrular.)
+  static Color heroScrim([double opacity = 0.34]) =>
+      Colors.black.withValues(alpha: opacity);
 }
 
 class AppTypography {

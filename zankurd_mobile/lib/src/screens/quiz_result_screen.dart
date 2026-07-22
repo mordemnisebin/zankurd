@@ -584,27 +584,45 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               // Mockup 8: doğruluk kademesine göre 3 yıldız
                               // (bu boşluk daha önce boştu, net yükseklik
                               // artışı yok — ~450px doğrulanmış).
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  for (var i = 0; i < 3; i++)
-                                    Icon(
-                                      AppIcons.star,
-                                      size: i == 1 ? 30 : 22,
-                                      color:
-                                          i <
-                                              (accuracy >= 80
-                                                  ? 3
-                                                  : accuracy >= 50
-                                                  ? 2
-                                                  : 1)
-                                          ? AppTheme.gold
-                                          : Colors.white.withValues(
-                                              alpha: 0.18,
-                                            ),
-                                    ),
-                                ],
+                              // Yıldızlar turuncu hero üzerinde duruyor:
+                              // altın (#E7B53C) turuncuda ~1.3:1, boş yıldız
+                              // beyaz@0.18 ile görünmez haldeydi — skorun en
+                              // özet göstergesi okunmuyordu (2026-07-22 UX
+                              // denetimi). Koyu yarı saydam bir hap zemin
+                              // hem doluyu hem boşu ayrıştırıyor.
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.heroScrim(),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.pill,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    for (var i = 0; i < 3; i++)
+                                      Icon(
+                                        AppIcons.star,
+                                        size: i == 1 ? 30 : 22,
+                                        color:
+                                            i <
+                                                (accuracy >= 80
+                                                    ? 3
+                                                    : accuracy >= 50
+                                                    ? 2
+                                                    : 1)
+                                            ? AppTheme.gold
+                                            : Colors.white.withValues(
+                                                alpha: 0.32,
+                                              ),
+                                      ),
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: AppSpacing.xxs),
                               // BIG score number
@@ -1374,28 +1392,41 @@ class _StatPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, size: 16, color: color),
-        const SizedBox(width: 4),
-        Text(
-          value,
-          style: TextStyle(
-            color: AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.w800,
-            fontSize: 15,
+    // Pill turuncu hero gradyanının üzerinde durur; yüzey metin renkleri
+    // (textPrimary/textMuted) burada okunmuyordu — "Doğru/Yanlış/Seri"
+    // etiketleri turuncu üstü turuncuya düşüyordu (~1.8:1, 2026-07-22 UX
+    // denetimi). Beyaz metin tek başına da yetmez (turuncuda ~2.2:1), bu
+    // yüzden koyu yarı saydam bir zemin eklendi.
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: AppColors.heroScrim(),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 16, color: color),
+          const SizedBox(width: 4),
+          Text(
+            value,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 15,
+            ),
           ),
-        ),
-        const SizedBox(width: 2),
-        Text(
-          label,
-          style: TextStyle(
-            color: AppTheme.textMutedColor(context),
-            fontSize: 11,
+          const SizedBox(width: 3),
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.92),
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -463,16 +463,19 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
             child: Row(
               children: [
+                // Altın gradyan üzerinde beyaz metin okunmuyordu (~1.9:1);
+                // ödülün duyurulduğu an görünmez haldeydi (2026-07-22 UX
+                // denetimi). Altın zeminde doğru ön plan koyu mürekkeptir.
                 Container(
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white.withValues(alpha: 0.25),
+                    color: AppTheme.bg.withValues(alpha: 0.18),
                   ),
                   child: const Icon(
                     AppIcons.champagneGlasses,
-                    color: Colors.white,
+                    color: AppTheme.bg,
                     size: 26,
                   ),
                 ),
@@ -484,7 +487,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       Text(
                         ku ? 'Pîroz be!' : 'Tebrikler!',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppTheme.bg,
                           fontWeight: FontWeight.w800,
                           fontSize: 16,
                         ),
@@ -495,7 +498,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                             ? '+$amount coin qezenc kir!'
                             : '+$amount coin kazandın!',
                         style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.9),
+                          color: AppTheme.bg.withValues(alpha: 0.88),
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
                         ),

@@ -127,22 +127,30 @@ class _ProfileHeroCard extends StatelessWidget {
                       Builder(
                         builder: (context) {
                           final tier = LeagueTier.forRank(rank);
+                          // Rozet turuncu hero'nun üzerinde durur. Kademe
+                          // rengini ön plan olarak kullanmak Bronz'da
+                          // (#C77B4A) turuncu üstü turuncu demek ve rozet
+                          // okunmuyordu (~1.4:1 — 2026-07-22 UX denetimi).
+                          // Ön plan artık her kademede beyaz; kademe koyu
+                          // yarı saydam zeminle ayrışır.
                           return Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: tier.color.withValues(alpha: 0.2),
+                              color: AppColors.heroScrim(),
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: tier.color.withValues(alpha: 0.5)),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.45),
+                              ),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(tier.icon, color: tier.color, size: 14),
+                                Icon(tier.icon, color: Colors.white, size: 14),
                                 const SizedBox(width: 4),
                                 Text(
                                   tier.label(ku),
                                   style: AppTypography.caption.copyWith(
-                                    color: tier.color,
+                                    color: Colors.white,
                                     fontWeight: FontWeight.w800,
                                     fontSize: 11,
                                   ),

@@ -646,7 +646,13 @@ class _LobbyView extends StatelessWidget {
                             ? 'Bot turnuva · rojane kûpa'
                             : 'Bot turnuva · günlük kupa',
                         style: AppTypography.caption.copyWith(
-                          color: AppTheme.gold,
+                          // Altın metin + altın@0.2 zemin açık temada ~2:1
+                          // kalıyordu; aksan kimliği korunarak okunabilir
+                          // açıklığa çekilir.
+                          color: AppColors.readableAccent(
+                            context,
+                            AppTheme.gold,
+                          ),
                           fontWeight: FontWeight.w800,
                         ),
                       ),
