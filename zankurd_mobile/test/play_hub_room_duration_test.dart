@@ -48,4 +48,28 @@ void main() {
       expect(repository.capturedSeconds, 45);
     },
   );
+
+  /// 2026-07-22 canlı denetimi: sayfa 15 sn seçeneği de sunuyordu, ama bu
+  /// değer GameRoom.allowedSecondsPerQuestion içinde yok. UI kendi listesini
+  /// tutmasın; tek kaynak model olsun.
+  testWidgets('süre seçenekleri modelin izinli kümesiyle birebir aynı', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      testShell(child: PlayHubScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Oda Kur'));
+    await tester.pumpAndSettle();
+
+    for (final seconds in GameRoom.allowedSecondsPerQuestion) {
+      expect(
+        find.text('$seconds sn'),
+        findsOneWidget,
+        reason: '$seconds sn seçeneği eksik',
+      );
+    }
+    expect(find.text('15 sn'), findsNothing);
+  });
 }

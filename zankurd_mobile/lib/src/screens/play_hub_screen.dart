@@ -78,7 +78,10 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   /// alanını destekliyordu (2026-07-21 denetiminde bulunan boşluk).
   Future<int?> _pickRoomDuration() async {
     final ku = context.isKu;
-    const options = [15, 20, 30, 45, 60];
+    // Tek kaynak modeldir: UI ayrıca 15 sn sunuyordu ama bu değer
+    // GameRoom.allowedSecondsPerQuestion içinde yok ve canlı denetimde
+    // görülen uzun sorular için okunamayacak kadar kısa (2026-07-22).
+    const options = GameRoom.allowedSecondsPerQuestion;
     var selected = GameRoom.defaultSecondsPerQuestion;
 
     return showModalBottomSheet<int>(
