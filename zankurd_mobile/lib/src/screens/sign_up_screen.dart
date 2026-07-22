@@ -33,7 +33,10 @@ class _SignUpScreenState extends State<SignUpScreen>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
+      // Kademeli giriş animasyonu içeriği süre*0.5–0.95 aralığında
+      // gösteriyor; 2000ms'de bu ~1.0–1.9sn boş ekran demekti
+      // (2026-07-22 canlı UX denetimi). 900ms aynı kademeyi korur.
+      duration: const Duration(milliseconds: 900),
       vsync: this,
     );
     _animationController.forward();

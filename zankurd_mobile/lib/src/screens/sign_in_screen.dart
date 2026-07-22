@@ -35,7 +35,10 @@ class _SignInScreenState extends State<SignInScreen>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
+      // Kademeli giriş animasyonu içeriği süre*0.5–0.95 aralığında
+      // gösteriyor; 2000ms'de bu ~1.0–1.9sn boş ekran demekti
+      // (2026-07-22 canlı UX denetimi). 900ms aynı kademeyi korur.
+      duration: const Duration(milliseconds: 900),
       vsync: this,
     );
     _animationController.forward();
@@ -1064,9 +1067,7 @@ class _EmailSectionToggle extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Icon(
-                        expanded
-                            ? AppIcons.chevronUp
-                            : AppIcons.chevronDown,
+                        expanded ? AppIcons.chevronUp : AppIcons.chevronDown,
                         size: 18,
                         color: AppTheme.textMutedColor(context),
                       ),
@@ -1174,36 +1175,44 @@ class _LanguageChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 240),
-        curve: Curves.easeInOut,
-        constraints: const BoxConstraints(minHeight: 36, minWidth: 36),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        decoration: BoxDecoration(
-          gradient: active ? AppTheme.accentGradient : null,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: active
-              ? [
-                  BoxShadow(
-                    color: AppTheme.primaryGradientStart.withValues(
-                      alpha: 0.35,
+    // Erişilebilirlik ağacında bu iki buton etiketsiz görünüyordu
+    // (yalnız "button"); ekran okuyucu hangi dile geçildiğini
+    // söyleyemiyordu (2026-07-22 canlı UX denetimi).
+    return Semantics(
+      button: true,
+      selected: active,
+      label: label == 'KU' ? 'Kurmancî' : 'Türkçe',
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 240),
+          curve: Curves.easeInOut,
+          constraints: const BoxConstraints(minHeight: 36, minWidth: 36),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          decoration: BoxDecoration(
+            gradient: active ? AppTheme.accentGradient : null,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: active
+                ? [
+                    BoxShadow(
+                      color: AppTheme.primaryGradientStart.withValues(
+                        alpha: 0.35,
+                      ),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
                     ),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
-                  ),
-                ]
-              : null,
-        ),
-        child: Text(
-          label,
-          style: AppTypography.bodyMedium.copyWith(
-            color: active ? Colors.white : AppTheme.textMutedColor(context),
-            fontWeight: FontWeight.w800,
-            letterSpacing: 0.5,
+                  ]
+                : null,
+          ),
+          child: Text(
+            label,
+            style: AppTypography.bodyMedium.copyWith(
+              color: active ? Colors.white : AppTheme.textMutedColor(context),
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0.5,
+            ),
           ),
         ),
       ),

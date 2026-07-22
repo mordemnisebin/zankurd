@@ -29,12 +29,16 @@ class PlayTeaserCard extends StatelessWidget {
             child: Container(
               constraints: const BoxConstraints(minHeight: 92),
               padding: const EdgeInsets.all(20),
+              // Kart zemini şeffaftı: açık temada sayfa zeminiyle
+              // neredeyse aynı, koyu temada fark ~%2 kalıyordu ve kart
+              // tıklanabilir görünmüyordu (2026-07-22 canlı UX denetimi).
               decoration: BoxDecoration(
-                color: Colors.transparent,
+                color: AppTheme.surfaceColor(context),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: AppTheme.culturalBrandBg.withValues(alpha: 0.2),
+                  color: AppTheme.culturalBrandBg.withValues(alpha: 0.35),
                 ),
+                boxShadow: AppTheme.cardShadow(context),
               ),
               child: Row(
                 children: [
