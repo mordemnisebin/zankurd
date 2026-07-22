@@ -42,6 +42,20 @@ class _DeleteTrackingRepository extends MockZanKurdRepository {
   }
 }
 
+/// Hesap silme kartı 2026-07-22 UX denetiminden sonra ayarların en altına
+/// taşındı (en yıkıcı eylem en üstte duruyordu). Testler artık ona
+/// kaydırarak ulaşır.
+Future<Finder> _scrollToDeleteAction(WidgetTester tester) async {
+  final finder = find.byKey(const ValueKey('delete-account-action'));
+  await tester.scrollUntilVisible(
+    finder,
+    300,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.pumpAndSettle();
+  return finder.first;
+}
+
 void main() {
   late MockZanKurdRepository repository;
   setUp(() => repository = freshMockRepository());
@@ -58,9 +72,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final deleteAction = find
-        .byKey(const ValueKey('delete-account-action'))
-        .first;
+    final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
 
@@ -82,8 +94,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Hesap İşlemleri'));
-    await tester.pumpAndSettle();
+    await _scrollToDeleteAction(tester);
     expect(find.text('Hesap İşlemleri'), findsOneWidget);
     expect(find.text('Bu alandaki işlemler geri alınamaz.'), findsOneWidget);
     expect(find.text('Hesabımı Sil'), findsOneWidget);
@@ -170,9 +181,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final deleteAction = find
-        .byKey(const ValueKey('delete-account-action'))
-        .first;
+    final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Devam Et'));
@@ -202,9 +211,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final deleteAction = find
-        .byKey(const ValueKey('delete-account-action'))
-        .first;
+    final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Devam Et'));

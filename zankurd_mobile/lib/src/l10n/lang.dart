@@ -123,6 +123,28 @@ class CategoryNames {
       isKu ? (_kuDisplay[kuName] ?? kuName) : tr(kuName);
 }
 
+/// Seviye adları veri katmanında Kurmancî sabit olarak tutulur (kimlik
+/// görevi görür). Türkçe arayüzde bunlar çevrilmeden gösteriliyordu:
+/// seviye haritasında "Destpêk / Bingeh / Navîn / Pêşketî / Mamoste"
+/// yazıyor, arayüzün geri kalanı Türkçe kalıyordu (2026-07-22 canlı UX
+/// denetimi). [CategoryNames] ile aynı desen.
+class LevelNames {
+  const LevelNames._();
+
+  static const Map<String, String> _kuToTr = {
+    'Destpêk': 'Başlangıç',
+    'Bingeh': 'Temel',
+    'Navîn': 'Orta',
+    'Pêşketî': 'İleri',
+    'Mamoste': 'Usta',
+  };
+
+  static String tr(String kuName) => _kuToTr[kuName] ?? kuName;
+
+  static String localized(String kuName, bool isKu) =>
+      isKu ? kuName : tr(kuName);
+}
+
 /// Centralized strings for the Quiz Screen to avoid hardcoded UI text in logic.
 class QuizStrings {
   static String answered(bool isKu) => isKu ? 'Bersiv da' : 'Cevapladı';

@@ -347,7 +347,17 @@ class _RoomScreenState extends State<RoomScreen> {
                                               runSpacing: AppSpacing.xs,
                                               children: [
                                                 _Pill(
-                                                  label: room.category,
+                                                  // Ham kategori kimliği
+                                                  // gösteriliyordu: TR
+                                                  // arayüzde oda "Ziman",
+                                                  // kategori sekmesinde ise
+                                                  // aynı kategori "Dil"
+                                                  // görünüyordu (2026-07-22
+                                                  // canlı UX denetimi).
+                                                  label: CategoryNames.localized(
+                                                    room.category,
+                                                    context.isKu,
+                                                  ),
                                                   icon: AppIcons.tableCells,
                                                 ),
                                                 _Pill(

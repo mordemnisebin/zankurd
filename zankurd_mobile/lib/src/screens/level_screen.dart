@@ -415,7 +415,7 @@ class _LevelNodeState extends State<_LevelNode> {
     return Semantics(
       button: true,
       enabled: !widget.disabled,
-      label: widget.level.title,
+      label: LevelNames.localized(widget.level.title, context.isKu),
       child: GestureDetector(
         onTapDown: widget.disabled
             ? null
@@ -526,7 +526,7 @@ class _LevelNodeState extends State<_LevelNode> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      widget.level.title,
+                      LevelNames.localized(widget.level.title, context.isKu),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,

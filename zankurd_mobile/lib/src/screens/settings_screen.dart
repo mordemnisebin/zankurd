@@ -188,105 +188,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const SizedBox(height: AppSpacing.cardGap),
 
-              // Hesap Silme (kırmızı/uyarı stili ile ayrı görselleştirme, Hesap grubunun altında)
-              AppPanel(
-                color: AppTheme.surfaceOf(context).withValues(alpha: 0.92),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          AppIcons.triangleExclamation,
-                          color: AppTheme.wrong,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          ku ? 'Karên Hesabê' : 'Hesap İşlemleri',
-                          style: AppTypography.bodyLarge.copyWith(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      ku
-                          ? 'Ev kar nayên vegerandin.'
-                          : 'Bu alandaki işlemler geri alınamaz.',
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    InkWell(
-                      key: const ValueKey('delete-account-action'),
-                      borderRadius: BorderRadius.circular(12),
-                      onTap: _deleting ? null : _confirmDeleteAccount,
-                      child: Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          color: AppTheme.wrong.withValues(alpha: 0.08),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: AppTheme.wrong.withValues(alpha: 0.28),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            _deleting
-                                ? const SizedBox(
-                                    width: 22,
-                                    height: 22,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: AppTheme.wrong,
-                                    ),
-                                  )
-                                : const Icon(
-                                    AppIcons.trashCan,
-                                    color: AppTheme.wrong,
-                                    size: 22,
-                                  ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    ku ? 'Hesabê Min Jê Bibe' : 'Hesabımı Sil',
-                                    style: const TextStyle(
-                                      color: AppTheme.wrong,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 3),
-                                  Text(
-                                    ku
-                                        ? 'Profîl, coin û pirsên tomarkirî tên jêbirin.'
-                                        : 'Profil, coin ve kaydedilen soru verilerin silinir.',
-                                    style: AppTypography.caption.copyWith(
-                                      color: AppTheme.textMutedColor(context),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Icon(
-                              AppIcons.chevronRight,
-                              color: AppTheme.textMutedColor(context),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: AppSpacing.cardGap),
-
               // ============ ÖĞRENME / LEARNING ============
               ScreenSectionLabel(
                 label: ku ? 'Hînbûn' : 'Öğrenme',
@@ -691,6 +592,109 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
+              // Hesap silme en yıkıcı eylem olmasına rağmen ayarların
+              // en üstünde, ikinci kartta duruyordu. Yeni kullanıcı
+              // için yanlış öncelik — en alta taşındı
+              // (2026-07-22 canlı UX denetimi).
+              const SizedBox(height: AppSpacing.cardGap),
+              // Hesap Silme (kırmızı/uyarı stili ile ayrı görselleştirme, Hesap grubunun altında)
+              AppPanel(
+                color: AppTheme.surfaceOf(context).withValues(alpha: 0.92),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          AppIcons.triangleExclamation,
+                          color: AppTheme.wrong,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          ku ? 'Karên Hesabê' : 'Hesap İşlemleri',
+                          style: AppTypography.bodyLarge.copyWith(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      ku
+                          ? 'Ev kar nayên vegerandin.'
+                          : 'Bu alandaki işlemler geri alınamaz.',
+                      style: AppTypography.caption.copyWith(
+                        color: AppTheme.textMutedColor(context),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    InkWell(
+                      key: const ValueKey('delete-account-action'),
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: _deleting ? null : _confirmDeleteAccount,
+                      child: Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: AppTheme.wrong.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: AppTheme.wrong.withValues(alpha: 0.28),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            _deleting
+                                ? const SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: AppTheme.wrong,
+                                    ),
+                                  )
+                                : const Icon(
+                                    AppIcons.trashCan,
+                                    color: AppTheme.wrong,
+                                    size: 22,
+                                  ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    ku ? 'Hesabê Min Jê Bibe' : 'Hesabımı Sil',
+                                    style: const TextStyle(
+                                      color: AppTheme.wrong,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 3),
+                                  Text(
+                                    ku
+                                        ? 'Profîl, coin û pirsên tomarkirî tên jêbirin.'
+                                        : 'Profil, coin ve kaydedilen soru verilerin silinir.',
+                                    style: AppTypography.caption.copyWith(
+                                      color: AppTheme.textMutedColor(context),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Icon(
+                              AppIcons.chevronRight,
+                              color: AppTheme.textMutedColor(context),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.cardGap),
             ],
           ),
         ),

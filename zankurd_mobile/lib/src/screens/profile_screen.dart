@@ -762,10 +762,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           side: BorderSide(color: AppTheme.borderColor(context)),
         ),
         title: Text(ku ? 'Derkeve' : 'Çıkış Yap'),
+        // Misafir hesabında çıkış geri dönüşsüzdür: hesap anonim olduğu
+        // için XP, coin, rozet ve seri kalıcı olarak kaybolur. Önceki
+        // metin bunu hiç söylemiyordu (2026-07-22 canlı UX denetimi).
         content: Text(
-          ku
-              ? 'Tu dixwazî ji hesabê xwe derkevî?'
-              : 'Hesabından çıkmak istiyor musun?',
+          context.read<AuthProvider>().isGuest
+              ? (ku
+                    ? 'Tu wek mêvan têketî yî. Heke derkevî, XP, coin, '
+                          'rozet û zincîra te bi tevahî winda dibin — '
+                          'vegerandin tune.'
+                    : 'Misafir olarak giriş yaptın. Çıkarsan XP, coin, '
+                          'rozet ve serin kalıcı olarak silinir — geri '
+                          'getirilemez.')
+              : (ku
+                    ? 'Tu dixwazî ji hesabê xwe derkevî?'
+                    : 'Hesabından çıkmak istiyor musun?'),
         ),
         actions: [
           OutlinedButton(

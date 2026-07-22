@@ -30,7 +30,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Destpêk'), findsOneWidget);
+    // Seviye adları veri katmanında Kurmancî; TR arayüzde çevrilir
+    // (2026-07-22 UX denetimi — LevelNames).
+    expect(find.text('Başlangıç'), findsOneWidget);
+    expect(find.text('Destpêk'), findsNothing);
     expect(find.text('1'), findsOneWidget);
     expect(find.text('4'), findsOneWidget);
     expect(find.byIcon(AppIcons.trophy), findsOneWidget);
@@ -57,7 +60,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final label = find.ancestor(
-      of: find.text('Destpêk'),
+      of: find.text('Başlangıç'),
       matching: find.byType(Container),
     );
     final decoration =
