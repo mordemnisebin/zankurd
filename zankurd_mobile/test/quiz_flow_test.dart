@@ -142,7 +142,7 @@ void main() {
     );
   });
 
-  testWidgets('short portrait quiz scrolls without shrinking its content', (
+  testWidgets('short portrait quiz keeps the next action pinned on screen', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(360, 640));
@@ -174,24 +174,28 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('quiz-fitted-content')), findsNothing);
     expect(find.byKey(const ValueKey('quiz-portrait-scroll')), findsOneWidget);
     expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
+
+    // Aksiyon barı sabit: joker satırı ve "Piştre" scroll gerektirmeden
+    // ekranda olmalı. Geri sayım işlerken kullanıcı devam butonunu aramak
+    // zorunda kalmasın (2026-07-22 UX denetimi, P0-1).
+    final nextButton = find.byKey(const ValueKey('quiz-next-button'));
+    final beforeScroll = tester.getRect(nextButton);
+    expect(beforeScroll.bottom, lessThanOrEqualTo(640));
+    expect(beforeScroll.top, greaterThanOrEqualTo(0));
+
+    // Soru + şıklar kendi alanında kayar; bu kaydırma aksiyon barını
+    // yerinden oynatmamalı.
     final scrollable = find.descendant(
       of: find.byKey(const ValueKey('quiz-portrait-scroll')),
       matching: find.byType(Scrollable),
     );
-    final nextButton = find.byKey(const ValueKey('quiz-next-button'));
-    final beforeScroll = tester.getRect(nextButton);
-    expect(beforeScroll.bottom, greaterThan(640));
-
-    await tester.drag(scrollable, const Offset(0, -500));
+    await tester.drag(scrollable, const Offset(0, -300));
     await tester.pumpAndSettle();
 
     final afterScroll = tester.getRect(nextButton);
-    expect(afterScroll.top, lessThan(beforeScroll.top));
-    expect(afterScroll.top, greaterThanOrEqualTo(0));
-    expect(afterScroll.bottom, lessThanOrEqualTo(640));
+    expect(afterScroll, equals(beforeScroll));
     expect(tester.takeException(), isNull);
   });
 

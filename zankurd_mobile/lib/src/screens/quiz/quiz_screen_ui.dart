@@ -9,17 +9,20 @@ extension _QuizScreenUI on _QuizScreenState {
 
     final screenHeight = MediaQuery.sizeOf(context).height;
 
+    // Düzen üç bölgeye ayrılır: sabit üst (skor/ilerleme), kaydırılabilir
+    // orta (soru + şıklar) ve sabit alt aksiyon barı. Böylece "Sonraki"
+    // butonu ile joker satırı soru ne kadar uzun olursa olsun her zaman
+    // ekranda kalır — geri sayım işlerken kullanıcı scroll etmek zorunda
+    // kalmaz (2026-07-22 canlı UX denetimi, P0-1).
     return LayoutBuilder(
       builder: (context, constraints) {
         final contentWidth = min(constraints.maxWidth - 24, 800.0);
-        return SingleChildScrollView(
-          key: const ValueKey('quiz-portrait-scroll'),
+        return Padding(
           padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
           child: Center(
             child: SizedBox(
               width: contentWidth,
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   if (!_isLearningExperience) ...[
                     _buildScoreHeader(),
@@ -28,35 +31,49 @@ extension _QuizScreenUI on _QuizScreenState {
                   _buildProgressBar(context),
                   if (!_isLearningExperience) _buildComboRow(),
                   const SizedBox(height: 8),
-                  // Coach-mark GlobalKey'leri yalnız ilk soruda: panel
-                  // AnimatedSwitcher içinde olduğundan geçiş sırasında eski
-                  // ve yeni panel aynı anda yaşar; anahtar her soruda
-                  // geçilirse duplicate-GlobalKey hatası oluşur. Eğitim
-                  // turu zaten sadece ilk soruda gösterilir.
-                  _buildQuestionSwitcher(
-                    context,
-                    showExplanation: showExpl,
-                    timerKey: index == 0 ? _timerTargetKey : null,
-                    answerAreaKey: index == 0 ? _answerAreaKey : null,
-                    questionVisualReady: index == 0
-                        ? _handleQuestionVisualReady
-                        : null,
-                  ),
-                  if (selectedAnswer == 'TIMEOUT')
-                    _TimeoutNotice(
-                      isKu: _isKu,
-                      correctAnswer: question.correctAnswer,
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: const ValueKey('quiz-portrait-scroll'),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Coach-mark GlobalKey'leri yalnız ilk soruda: panel
+                          // AnimatedSwitcher içinde olduğundan geçiş sırasında
+                          // eski ve yeni panel aynı anda yaşar; anahtar her
+                          // soruda geçilirse duplicate-GlobalKey hatası oluşur.
+                          // Eğitim turu zaten sadece ilk soruda gösterilir.
+                          _buildQuestionSwitcher(
+                            context,
+                            showExplanation: showExpl,
+                            timerKey: index == 0 ? _timerTargetKey : null,
+                            answerAreaKey: index == 0 ? _answerAreaKey : null,
+                            questionVisualReady: index == 0
+                                ? _handleQuestionVisualReady
+                                : null,
+                          ),
+                          if (selectedAnswer == 'TIMEOUT')
+                            _TimeoutNotice(
+                              isKu: _isKu,
+                              correctAnswer: question.correctAnswer,
+                            ),
+                          if (_isMultiplayer &&
+                              answered &&
+                              _mpPhase == _MultiplayerPhase.waiting)
+                            _MultiplayerWaitingOverlay(isKu: _isKu),
+                          if (_isMultiplayer &&
+                              _mpPhase == _MultiplayerPhase.reveal)
+                            _RevealCountdown(
+                              seconds: _revealCountdown,
+                              isKu: _isKu,
+                            ),
+                          if (widget.is1v1 && screenHeight >= 800) ...[
+                            const SizedBox(height: 8),
+                            _LiveScoreboard(players: livePlayers),
+                          ],
+                        ],
+                      ),
                     ),
-                  if (_isMultiplayer &&
-                      answered &&
-                      _mpPhase == _MultiplayerPhase.waiting)
-                    _MultiplayerWaitingOverlay(isKu: _isKu),
-                  if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
-                    _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
-                  if (widget.is1v1 && screenHeight >= 800) ...[
-                    const SizedBox(height: 8),
-                    _LiveScoreboard(players: livePlayers),
-                  ],
+                  ),
                   const SizedBox(height: 6),
                   _buildActionControls(),
                 ],
@@ -550,10 +567,21 @@ extension _QuizScreenUI on _QuizScreenState {
       SnackBar(
         content: Text(hint),
         behavior: SnackBarBehavior.floating,
+        margin: _quizSnackBarMargin,
         duration: const Duration(seconds: 3),
       ),
     );
   }
+
+  /// Aksiyon barı (joker satırı + "Piştre") ekranın altına sabitlendiği için
+  /// yüzen SnackBar'lar varsayılan konumlarında birincil eylemi örter.
+  /// Bu margin bildirimi barın üstüne kaldırır (2026-07-22 UX denetimi).
+  static const EdgeInsets _quizSnackBarMargin = EdgeInsets.fromLTRB(
+    12,
+    0,
+    12,
+    148,
+  );
 
   // ─── Joker mekanikleri ───────────────────────────────────────────────────
 
@@ -589,6 +617,7 @@ extension _QuizScreenUI on _QuizScreenState {
           ),
           backgroundColor: AppTheme.secondaryAccent,
           behavior: SnackBarBehavior.floating,
+          margin: _quizSnackBarMargin,
           duration: const Duration(seconds: 2),
         ),
       );
