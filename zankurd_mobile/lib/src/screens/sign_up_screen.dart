@@ -119,10 +119,38 @@ class _SignUpScreenState extends State<SignUpScreen>
     });
   }
 
+  /// Hata bildirimi. Düz beyaz, ikonsuz SnackBar hata olduğunu
+  /// belli etmiyordu; profil adı ekranı ise aynı durumu kırmızı inline
+  /// uyarıyla gösteriyordu — iki farklı doğrulama dili vardı
+  /// (2026-07-22 canlı UX denetimi).
   void _showError(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              const Icon(
+                AppIcons.triangleExclamation,
+                color: Colors.white,
+                size: 18,
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: AppTheme.wrong,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
   }
 
   Future<void> _signUp(AuthProvider authProvider) async {
@@ -274,34 +302,41 @@ class _SignUpScreenState extends State<SignUpScreen>
                             const SizedBox(height: AppSpacing.lg),
                             Row(
                               children: [
-                                if (_currentStep > 0)
-                                  Expanded(
-                                    child: OutlinedButton(
-                                      onPressed: authProvider.isLoading
-                                          ? null
-                                          : _previousStep,
-                                      style: OutlinedButton.styleFrom(
-                                        minimumSize: const Size(
-                                          double.infinity,
-                                          48,
-                                        ),
-                                        side: BorderSide(
-                                          color: AppTheme.borderColor(
-                                            context,
-                                          ).withValues(alpha: 0.8),
-                                          width: 1.2,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            AppRadius.lg,
-                                          ),
+                                // İlk adımda da geri çıkış olmalı: sihirbazın
+                                // hiçbir adımında app bar/geri yoktu, tek
+                                // çıkış alttaki metin bağlantısıydı
+                                // (2026-07-22 canlı UX denetimi).
+                                Expanded(
+                                  child: OutlinedButton(
+                                    key: const ValueKey('signup-back-button'),
+                                    onPressed: authProvider.isLoading
+                                        ? null
+                                        : (_currentStep > 0
+                                              ? _previousStep
+                                              : () => Navigator.of(
+                                                  context,
+                                                ).maybePop()),
+                                    style: OutlinedButton.styleFrom(
+                                      minimumSize: const Size(
+                                        double.infinity,
+                                        48,
+                                      ),
+                                      side: BorderSide(
+                                        color: AppTheme.borderColor(
+                                          context,
+                                        ).withValues(alpha: 0.8),
+                                        width: 1.2,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          AppRadius.lg,
                                         ),
                                       ),
-                                      child: Text(context.s('Paş', 'Geri')),
                                     ),
+                                    child: Text(context.s('Paş', 'Geri')),
                                   ),
-                                if (_currentStep > 0)
-                                  const SizedBox(width: AppSpacing.sm),
+                                ),
+                                const SizedBox(width: AppSpacing.sm),
                                 Expanded(
                                   child: GeometricGradientButton(
                                     label: _currentStep == 2
@@ -420,9 +455,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                 controller: _passwordController,
                 obscureText: _obscurePassword,
                 prefixIcon: AppIcons.lock,
-                suffixIcon: _obscurePassword
-                    ? AppIcons.eyeSlash
-                    : AppIcons.eye,
+                suffixIcon: _obscurePassword ? AppIcons.eyeSlash : AppIcons.eye,
                 onSuffixIconPressed: () {
                   setState(() => _obscurePassword = !_obscurePassword);
                 },

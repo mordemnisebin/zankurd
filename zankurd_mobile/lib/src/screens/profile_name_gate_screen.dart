@@ -270,6 +270,13 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                 TextFormField(
                                   key: const ValueKey('player-name-field'),
                                   controller: _controller,
+                                  // Hata yalnız Form.validate() ile
+                                  // güncelleniyordu: geçerli bir ad yazıldıktan
+                                  // sonra da kırmızı kenarlık ve "en az 2
+                                  // karakter" uyarısı ekranda kalıyordu
+                                  // (2026-07-22 canlı UX denetimi).
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                   textCapitalization: TextCapitalization.words,
                                   style: AppTypography.bodyLarge.copyWith(
                                     color: AppTheme.textPrimaryColor(context),

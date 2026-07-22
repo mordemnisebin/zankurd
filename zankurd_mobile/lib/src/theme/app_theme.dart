@@ -570,11 +570,18 @@ class AppTheme {
     [Color(0xFF288077), Color(0xFF1E6962)], // Muted Teal
   ];
 
+  /// A/B/C/D şık harflerinin kimlik renkleri.
+  ///
+  /// Kırmızı ve yeşil bilerek dışarıda: quiz bağlamında bu iki renk
+  /// "yanlış" ve "doğru" demektir. Cevaplamadan önce A'yı kırmızı, C'yi
+  /// yeşil göstermek kullanıcıya sahte bir ipucu veriyordu (2026-07-22
+  /// canlı UX denetimi). Geri bildirim renkleri (correct/wrong) yalnız
+  /// cevap verildikten sonra kullanılır.
   static const List<Color> answerOptionColors = [
-    Color(0xFFC54433), // Muted red
-    Color(0xFF3373B8), // Muted blue
-    Color(0xFF288A53), // Muted green
-    Color(0xFFC29C15), // Muted amber
+    Color(0xFF3373B8), // Mavi
+    Color(0xFF7A4FA3), // Mor
+    Color(0xFF2F8F9D), // Camgöbeği
+    Color(0xFFC29C15), // Kehribar
   ];
 
   static LinearGradient categoryGradient(int index) {
