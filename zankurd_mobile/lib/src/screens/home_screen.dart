@@ -677,7 +677,7 @@ class _DailyLessonHero extends StatelessWidget {
               height: 50,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.brandGreen, // Coral
+                  backgroundColor: AppTheme.primaryCtaColor(context),
                   foregroundColor: Colors.white,
                   elevation: 0,
                   shape: RoundedRectangleBorder(

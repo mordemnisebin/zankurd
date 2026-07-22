@@ -394,6 +394,10 @@ class AppTheme {
     return Theme.of(context).brightness == Brightness.light;
   }
 
+  /// Yalnız gerçek birincil eylemler için tema uyumlu CTA rengi.
+  static Color primaryCtaColor(BuildContext context) =>
+      isLight(context) ? const Color(0xFFC05000) : brandGreen;
+
   // Private helpers for theme checks
   static bool _isLight(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light;

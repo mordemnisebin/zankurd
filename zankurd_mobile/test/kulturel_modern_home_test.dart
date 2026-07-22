@@ -11,11 +11,53 @@ import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_theme_card.dart';
 import 'package:zankurd_mobile/src/screens/home/quick_play_grid.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/zana_daily_card.dart';
 
 // Ana sayfa iki net giriş kapısı taşır: doğrudan yarış ve öğrenerek ilerleme.
 // Ayrıntılı oyun modları Oyna sekmesinde kalır.
 void main() {
+  testWidgets('Günlük ders CTA tema kontrast rengini kullanır', (tester) async {
+    for (final mode in [ThemeMode.light, ThemeMode.dark]) {
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) => LanguageProvider(initialLang: 'tr'),
+            ),
+            ChangeNotifierProvider(create: (_) => AuthProvider.test()),
+            ChangeNotifierProvider(
+              create: (_) => ThemeProvider(initialMode: mode),
+            ),
+          ],
+          child: MaterialApp(
+            theme: AppTheme.light(),
+            darkTheme: AppTheme.dark(),
+            themeMode: mode,
+            home: HomeScreen(
+              repository: MockZanKurdRepository(),
+              displayName: 'Zelal',
+              scrollController: ScrollController(),
+            ),
+          ),
+        ),
+      );
+      await tester.pump(const Duration(seconds: 1));
+
+      final cta = tester.widget<ElevatedButton>(
+        find.descendant(
+          of: find.byKey(const ValueKey('home-daily-lesson')),
+          matching: find.byType(ElevatedButton),
+        ),
+      );
+      expect(
+        cta.style!.backgroundColor!.resolve({}),
+        mode == ThemeMode.light ? const Color(0xFFC05000) : AppTheme.brandGreen,
+      );
+      expect(cta.style!.foregroundColor!.resolve({}), Colors.white);
+    }
+  });
+
   testWidgets('Ana sayfa doğrudan yarış ve öğrenme girişlerini gösterir', (
     tester,
   ) async {
