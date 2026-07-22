@@ -84,15 +84,18 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
                     const SizedBox(width: 8),
                   ],
                   Flexible(
-                    child: Text(
-                      widget.label,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0,
+                    // 2026-07-22 canlı UX denetimi: CTA çift okuma düzeltmesi
+                    child: ExcludeSemantics(
+                      child: Text(
+                        widget.label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0,
+                        ),
                       ),
                     ),
                   ),

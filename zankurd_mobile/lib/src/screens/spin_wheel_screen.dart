@@ -629,16 +629,19 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       ),
                     )
                   : Icon(enabled ? AppIcons.dice : AppIcons.lock, size: 22),
-              label: Text(
-                _spinning
-                    ? (ku ? 'Dizivire...' : 'Dönüyor...')
-                    : enabled
-                    ? (ku ? 'Bizivirîne!' : 'Çevir!')
-                    : (ku ? 'Sibê dîsa were!' : 'Yarın tekrar gel!'),
-                style: AppTypography.bodyLarge.copyWith(
-                  color: enabled
-                      ? Colors.white
-                      : AppTheme.textMutedColor(context),
+              // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+              label: ExcludeSemantics(
+                child: Text(
+                  _spinning
+                      ? (ku ? 'Dizivire...' : 'Dönüyor...')
+                      : enabled
+                      ? (ku ? 'Bizivirîne!' : 'Çevir!')
+                      : (ku ? 'Sibê dîsa were!' : 'Yarın tekrar gel!'),
+                  style: AppTypography.bodyLarge.copyWith(
+                    color: enabled
+                        ? Colors.white
+                        : AppTheme.textMutedColor(context),
+                  ),
                 ),
               ),
             ),
@@ -830,13 +833,24 @@ class _WheelPainter extends CustomPainter {
       canvas.drawLine(center, Offset(sepX, sepY), sepPaint);
 
       // Reward text
+      // 2026-07-22 canlı UX denetimi: çark metin düzeltmesi
+      // Çark Transform.rotate ile döndürülüyor; metinleri dik tutmak için
+      // her metin çiziminde counter-rotation uygulanır.
       final textAngle = startAngle + sweep / 2;
       final textRadius = innerRadius * 0.66;
+      final textCenterX = center.dx + math.cos(textAngle) * textRadius;
+      final textCenterY = center.dy + math.sin(textAngle) * textRadius;
+
+      // Sarı/altın dilimlerde beyaz metin kontrastı zayıftı (~1.9:1);
+      // koyu metin ile AA uyumlu (~4.5:1) kontrast sağlanır.
+      final isGoldSegment = (i % _segmentColors.length) == 1;
+      final textColor = isGoldSegment ? AppTheme.bg : Colors.white;
+
       final textPainter = TextPainter(
         text: TextSpan(
           text: '${rewards[i]}',
           style: TextStyle(
-            color: Colors.white,
+            color: textColor,
             fontWeight: FontWeight.w800,
             fontSize: 17,
             shadows: [
@@ -850,11 +864,15 @@ class _WheelPainter extends CustomPainter {
         ),
         textDirection: TextDirection.ltr,
       )..layout();
-      final textOffset = Offset(
-        center.dx + math.cos(textAngle) * textRadius - textPainter.width / 2,
-        center.dy + math.sin(textAngle) * textRadius - textPainter.height / 2,
+
+      canvas.save();
+      canvas.translate(textCenterX, textCenterY); // metin merkezine taşı
+      canvas.rotate(-angle); // çark açısını geri al (counter-rotation)
+      textPainter.paint(
+        canvas,
+        Offset(-textPainter.width / 2, -textPainter.height / 2),
       );
-      textPainter.paint(canvas, textOffset);
+      canvas.restore();
     }
 
     // Outer border ring

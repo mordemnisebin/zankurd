@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_logo.dart';
+import '../widgets/roj_mascot.dart';
 import '../widgets/styled_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -187,11 +188,14 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         ),
                                       ),
                                     ),
-                                    child: Text(
-                                      context.s('Derbas bike', 'Atla'),
-                                      style: AppTypography.caption.copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        color: AppTheme.textMutedColor(context),
+                                    // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+                                    child: ExcludeSemantics(
+                                      child: Text(
+                                        context.s('Derbas bike', 'Atla'),
+                                        style: AppTypography.caption.copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          color: AppTheme.textMutedColor(context),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -324,13 +328,14 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               ? 'Pêşbirka Rojê — 10 pirs, xelata rojê'
               : 'Günün Yarışması — 10 soru, günlük ödül',
           ku
-              ? 'Kûpa — ji bo serkeftinê pêşbikeve'
+              ? 'Kûpa — ji bo serkeftinê pêş bikeve'
               : 'Turnuva — kupa için yarış',
         ],
       ),
       // 3. slayt: günlük ödüller + "Neden ZanKurd?" değer önerisi birleşti
       // (4 slayt → 3 slayt; daha kısa ilk izlenim).
       _OnboardingData(
+        showMascotAccent: true,
         icon: AppIcons.wandMagicSparkles,
         color: AppTheme.gold,
         title: context.s('Ne tenê pêşbirk e', 'Sadece yarış değil'),
@@ -395,6 +400,9 @@ class _AnimatedBrandLockup extends StatelessWidget {
                 ),
               ),
             ],
+            // 2026-07-22 canlı UX denetimi: Roj maskot onboarding'e eklendi
+            const SizedBox(height: AppSpacing.xs),
+            const RojMascot(size: 64, mood: RojMood.happy),
           ],
         ),
       ),
@@ -409,6 +417,7 @@ class _OnboardingData {
     required this.title,
     required this.body,
     this.bullets = const [],
+    this.showMascotAccent = false,
   });
 
   final IconData icon;
@@ -416,6 +425,7 @@ class _OnboardingData {
   final String title;
   final String body;
   final List<String> bullets;
+  final bool showMascotAccent;
 }
 
 class _OnboardingPage extends StatelessWidget {
@@ -496,6 +506,16 @@ class _OnboardingPage extends StatelessWidget {
                       iconSize: heroGlyphSize,
                     ),
                   ),
+                  // 2026-07-22 canlı UX denetimi: Roj maskot onboarding'e eklendi
+                  if (data.showMascotAccent)
+                    const Positioned(
+                      bottom: 12,
+                      left: 12,
+                      child: RojMascot(
+                        size: 40,
+                        mood: RojMood.celebrate,
+                      ),
+                    ),
                 ],
               ),
             ),

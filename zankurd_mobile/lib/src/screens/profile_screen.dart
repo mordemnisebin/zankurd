@@ -17,8 +17,10 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../widgets/skeleton_loader.dart';
 import '../models/avatar_identity.dart';
-import '../widgets/badge_collection_section.dart';
+import '../data/badge_service.dart';
+import '../widgets/badge_widget.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/strength_map_section.dart';
 import '../widgets/weekly_performance_chart.dart';
@@ -67,6 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   double _levelProgress = 0.0;
   int? _coinBalance;
   double? _accuracyPercent;
+  Set<String> _badgeUnlocked = {};
 
   /// Tüm modlarda cevaplanan toplam soru sayısı. "Oyun" karosu daha önce
   /// `roomsPlayed` gösteriyordu; o yalnız çevrimiçi oda sayısıdır, solo quiz
@@ -185,12 +188,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         coinBalance = null;
       }
       final mistakeStore = await MistakeStore.load();
+      final badgeService = await BadgeService.load();
       if (mounted) {
         setState(() {
           _currentName = name;
           _stats = stats;
           _avatarIdentity = avatarIdentity;
           _achievements = achievementStore.unlockedAchievements;
+          _badgeUnlocked = badgeService.unlockedBadges;
           _masteryStore = masteryStore;
           _level = xpStore.currentLevel;
           _xpInLevel = xpStore.xpInCurrentLevel;
@@ -427,14 +432,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ],
     );
 
+    // 2026-07-22 canlı UX denetimi: rozet bölümleri birleştirme
     Widget rightColumn = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _AchievementShowcase(achievements: _achievements, isKu: ku),
-        const SizedBox(height: 14),
-
-        // Rozet Koleksiyonu
-        const AppPanel(cardType: CardType.glass, child: BadgeCollectionSection()),
+        _UnifiedRewardsSection(
+          achievements: _achievements,
+          badgeUnlocked: _badgeUnlocked,
+          isKu: ku,
+        ),
         const SizedBox(height: 14),
 
         // Navigasyon kısayolları — tek panel içinde gruplandı
@@ -445,12 +451,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: SafeArea(
+        // 2026-07-22 canlı UX denetimi: profil iskelet yükleme
         child: _loading
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: AppTheme.primaryGradientStart,
-                ),
-              )
+            ? _buildProfileSkeleton()
             : _loadFailed
             ? AppErrorState(
                 title: ku ? 'Profîl nehat barkirin' : 'Profil yüklenemedi',
@@ -520,6 +523,77 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
       ),
+    );
+  }
+
+  // 2026-07-22 canlı UX denetimi: profil iskelet yükleme
+  Widget _buildProfileSkeleton() {
+    return ListView(
+      padding: const EdgeInsets.all(AppSpacing.page),
+      children: [
+        // Hero card placeholder
+        const SkeletonLine(width: double.infinity, height: 180, borderRadius: 16),
+        const SizedBox(height: AppSpacing.cardGap),
+
+        // Stats grid placeholder — 2x2 kareler
+        Row(
+          children: [
+            Expanded(child: Container(
+              height: 80,
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppTheme.shimmerBaseDark
+                    : AppTheme.shimmerBaseLight,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            )),
+            const SizedBox(width: 10),
+            Expanded(child: Container(
+              height: 80,
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppTheme.shimmerBaseDark
+                    : AppTheme.shimmerBaseLight,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            )),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(child: Container(
+              height: 80,
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppTheme.shimmerBaseDark
+                    : AppTheme.shimmerBaseLight,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            )),
+            const SizedBox(width: 10),
+            Expanded(child: Container(
+              height: 80,
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppTheme.shimmerBaseDark
+                    : AppTheme.shimmerBaseLight,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            )),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.md),
+
+        // Menu satır placeholder'ları
+        const SkeletonLine(width: double.infinity, height: 56, borderRadius: 12),
+        const SizedBox(height: 10),
+        const SkeletonLine(width: double.infinity, height: 56, borderRadius: 12),
+        const SizedBox(height: 10),
+        const SkeletonLine(width: double.infinity, height: 56, borderRadius: 12),
+        const SizedBox(height: 10),
+        const SkeletonLine(width: double.infinity, height: 56, borderRadius: 12),
+      ],
     );
   }
 
@@ -692,6 +766,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         const SizedBox(height: AppSpacing.md),
         sectionLabel(ku ? 'HESAB' : 'HESAP'),
+        // 2026-07-22 canlı UX denetimi: misafir hesap yükseltme
+        if (context.watch<AuthProvider>().isGuest) ...[          AppPanel(
+            padding: EdgeInsets.zero,
+            child: _menuRow(
+              leading: const Icon(
+                AppIcons.userPlus,
+                color: AppTheme.correct,
+                size: 20,
+              ),
+              iconColor: AppTheme.correct,
+              title: ku ? 'Hesabê Xwe Tomar Bike' : 'Hesabını Kaydet',
+              subtitle: ku
+                  ? 'E-posta û şîfreyekê binivîse — hesabê te yê mêvan bibe mayînde'
+                  : 'E-posta ve şifre belirle — misafir hesabın kalıcı olsun',
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              onTap: _showGuestUpgradeDialog,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+        ],
         AppPanel(
           padding: EdgeInsets.zero,
           child: Column(
@@ -749,6 +843,143 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ],
     );
+  }
+
+  // 2026-07-22 canlı UX denetimi: misafir hesap yükseltme dialog'u
+  Future<void> _showGuestUpgradeDialog() async {
+    final ku = context.isKu;
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+    bool submitting = false;
+
+    final result = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          backgroundColor: AppTheme.surfaceOf(ctx),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(color: AppTheme.borderColor(ctx)),
+          ),
+          title: Text(
+            ku ? 'Hesabê Xwe Tomar Bike' : 'Hesabını Kaydet',
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(ctx),
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  ku
+                      ? 'E-posta û şîfreyekê binivîse da ku hesabê xwe yê mêvan bikî hesabê mayînde.'
+                      : 'Misafir hesabını kalıcı yapmak için e-posta ve şifre belirle.',
+                  style: AppTypography.caption.copyWith(
+                    color: AppTheme.textMutedColor(ctx),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: ku ? 'E-posta' : 'E-posta',
+                    border: const OutlineInputBorder(),
+                  ),
+                  validator: (v) {
+                    if (v == null || v.isEmpty || !v.contains('@')) {
+                      return ku ? 'E-postayek derbasdar binivîse' : 'Geçerli bir e-posta gir';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 12),
+                TextFormField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: ku ? 'Şîfre' : 'Şifre',
+                    border: const OutlineInputBorder(),
+                  ),
+                  validator: (v) {
+                    if (v == null || v.length < 6) {
+                      return ku
+                          ? 'Şîfre divê herî kêm 6 tîpan be'
+                          : 'Şifre en az 6 karakter olmalı';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            OutlinedButton(
+              onPressed: submitting
+                  ? null
+                  : () => Navigator.pop(dialogContext, false),
+              child: Text(ku ? 'Betal' : 'Vazgeç'),
+            ),
+            FilledButton(
+              onPressed: submitting
+                  ? null
+                  : () async {
+                      if (!(formKey.currentState?.validate() ?? false)) return;
+                      setDialogState(() => submitting = true);
+                      final auth = context.read<AuthProvider>();
+                      final success = await auth.upgradeGuestAccount(
+                        email: emailController.text.trim(),
+                        password: passwordController.text,
+                      );
+                      if (!ctx.mounted) return;
+                      Navigator.pop(dialogContext, success);
+                    },
+              child: submitting
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text(ku ? 'Tomar Bike' : 'Kaydet'),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    // Controller'ları bir sonraki frame'den sonra imha et; dialog widget
+    // ağacı henüz deaktive edilmemiş olabilir.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      emailController.dispose();
+      passwordController.dispose();
+    });
+
+    if (!mounted) return;
+    if (result == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            ku
+                ? 'Hesabê te bi serkeftî hat tomarkirin!'
+                : 'Hesabın başarıyla kaydedildi!',
+          ),
+        ),
+      );
+    } else if (result == false && context.read<AuthProvider>().errorMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(context.read<AuthProvider>().errorMessage!),
+        ),
+      );
+    }
   }
 
   Future<void> _confirmSignOut(BuildContext context) async {

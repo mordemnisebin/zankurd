@@ -24,6 +24,14 @@ class _SignUpScreenState extends State<SignUpScreen>
   final _confirmPasswordController = TextEditingController();
   final _usernameController = TextEditingController();
 
+  // 2026-07-22 canlı UX denetimi: inline doğrulama
+  final _step0FormKey = GlobalKey<FormState>();
+  final _step1FormKey = GlobalKey<FormState>();
+  final _emailFieldKey = GlobalKey<StyledInputFieldState>();
+  final _passwordFieldKey = GlobalKey<StyledInputFieldState>();
+  final _confirmPasswordFieldKey = GlobalKey<StyledInputFieldState>();
+  final _usernameFieldKey = GlobalKey<StyledInputFieldState>();
+
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   int _currentStep = 0;
@@ -52,60 +60,26 @@ class _SignUpScreenState extends State<SignUpScreen>
     super.dispose();
   }
 
-  void _nextStep() {
+  // 2026-07-22 canlı UX denetimi: inline doğrulama
+  // SnackBar yerine alanların kendi validator'ı üzerinden hata gösterilir.
+  bool _validateCurrentStep() {
     if (_currentStep == 0) {
-      // Validate step 1: Email & Password
-      if (_emailController.text.isEmpty) {
-        _showError(context.s('E-peyam pêwîst e', 'E-posta gerekli'));
-        return;
-      }
-      if (!_emailController.text.contains('@')) {
-        _showError(
-          context.s('E-peyameke derbasdar binivîse', 'Geçerli bir e-posta gir'),
-        );
-        return;
-      }
-      if (_passwordController.text.isEmpty) {
-        _showError(context.s('Şîfre pêwîst e', 'Parola gerekli'));
-        return;
-      }
-      if (_passwordController.text.length < 6) {
-        _showError(
-          context.s(
-            'Şîfre divê herî kêm 6 tîp be',
-            'Parola en az 6 karakter olmalı',
-          ),
-        );
-        return;
-      }
-      if (_confirmPasswordController.text.isEmpty) {
-        _showError(
-          context.s('Piştrastkirina şîfreyê pêwîst e', 'Parola onayı gerekli'),
-        );
-        return;
-      }
-      if (_passwordController.text != _confirmPasswordController.text) {
-        _showError(context.s('Şîfre li hev nakin', 'Parolalar eşleşmiyor'));
-        return;
-      }
+      final emailOk =
+          _emailFieldKey.currentState?.validate() ?? false;
+      final passwordOk =
+          _passwordFieldKey.currentState?.validate() ?? false;
+      final confirmOk =
+          _confirmPasswordFieldKey.currentState?.validate() ?? false;
+      return emailOk && passwordOk && confirmOk;
     } else if (_currentStep == 1) {
-      // Validate step 2: Username
-      if (_usernameController.text.isEmpty) {
-        _showError(
-          context.s('Navê bikarhêner pêwîst e', 'Kullanıcı adı gerekli'),
-        );
-        return;
-      }
-      if (_usernameController.text.length < 2) {
-        _showError(
-          context.s(
-            'Navê bikarhêner divê herî kêm 2 tîp be',
-            'Kullanıcı adı en az 2 karakter olmalı',
-          ),
-        );
-        return;
-      }
+      return _usernameFieldKey.currentState?.validate() ?? false;
     }
+    return true;
+  }
+
+  void _nextStep() {
+    // 2026-07-22 canlı UX denetimi: inline doğrulama
+    if (!_validateCurrentStep()) return;
 
     setState(() {
       if (_currentStep < 2) {
@@ -122,46 +96,21 @@ class _SignUpScreenState extends State<SignUpScreen>
     });
   }
 
-  /// Hata bildirimi. Düz beyaz, ikonsuz SnackBar hata olduğunu
-  /// belli etmiyordu; profil adı ekranı ise aynı durumu kırmızı inline
-  /// uyarıyla gösteriyordu — iki farklı doğrulama dili vardı
-  /// (2026-07-22 canlı UX denetimi).
-  void _showError(String message) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Row(
-            children: [
-              const Icon(
-                AppIcons.triangleExclamation,
-                color: Colors.white,
-                size: 18,
-              ),
-              const SizedBox(width: AppSpacing.xs),
-              Expanded(
-                child: Text(
-                  message,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          backgroundColor: AppTheme.wrong,
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-  }
-
   Future<void> _signUp(AuthProvider authProvider) async {
-    // Final validation
+    // 2026-07-22 canlı UX denetimi: inline doğrulama — tüm alanlar dolu mu son kontrol
     if (_emailController.text.isEmpty ||
         _passwordController.text.isEmpty ||
         _usernameController.text.isEmpty) {
-      _showError(context.s('Hemû zelatên pêwîst in', 'Tüm alanlar gerekli'));
+      // Bu durum sadece kullanıcı review adımına geri dönüp alanları
+      // temizlerse oluşabilir; inline hata gösterilemez çünkü o adım
+      // form değil, bu yüzden SnackBar kullanıyoruz.
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.s('Hemû zelatên pêwîst in', 'Tüm alanlar gerekli'),
+          ),
+        ),
+      );
       return;
     }
 
@@ -336,7 +285,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                                         ),
                                       ),
                                     ),
-                                    child: Text(context.s('Paş', 'Geri')),
+                                    // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+                                    child: ExcludeSemantics(
+                                      child: Text(context.s('Paş', 'Geri')),
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: AppSpacing.sm),
@@ -428,111 +380,132 @@ class _SignUpScreenState extends State<SignUpScreen>
     Widget stepWidget;
     switch (_currentStep) {
       case 0:
-        stepWidget = Column(
-          children: [
-            StyledInputField(
-              label: context.s('Navnîşana e-peyamê', 'E-posta adresi'),
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              prefixIcon: AppIcons.envelope,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return context.s('E-peyam pêwîst e', 'E-posta gerekli');
-                }
-                if (!value.contains('@')) {
-                  return context.s(
-                    'E-peyameke derbasdar binivîse',
-                    'Geçerli bir e-posta gir',
-                  );
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 20),
-            FadeTransition(
-              opacity: LoadAnimationSequence.formField2FadeAnimation(
-                _animationController,
-              ),
-              child: StyledInputField(
-                label: context.s('Şîfre', 'Parola'),
-                controller: _passwordController,
-                obscureText: _obscurePassword,
-                prefixIcon: AppIcons.lock,
-                suffixIcon: _obscurePassword ? AppIcons.eyeSlash : AppIcons.eye,
-                onSuffixIconPressed: () {
-                  setState(() => _obscurePassword = !_obscurePassword);
-                },
+        // 2026-07-22 canlı UX denetimi: inline doğrulama — Form + autovalidateMode
+        stepWidget = Form(
+          key: _step0FormKey,
+          child: Column(
+            children: [
+              StyledInputField(
+                key: _emailFieldKey,
+                label: context.s('Navnîşana e-peyamê', 'E-posta adresi'),
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                prefixIcon: AppIcons.envelope,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return context.s('Şîfre pêwîst e', 'Parola gerekli');
+                    return context.s('E-peyam pêwîst e', 'E-posta gerekli');
                   }
-                  if (value.length < 6) {
+                  if (!value.contains('@')) {
                     return context.s(
-                      'Şîfre divê herî kêm 6 tîp be',
-                      'Parola en az 6 karakter olmalı',
+                      'E-peyameke derbasdar binivîse',
+                      'Geçerli bir e-posta gir',
                     );
                   }
                   return null;
                 },
               ),
-            ),
-            const SizedBox(height: 20),
-            StyledInputField(
-              label: context.s('Şîfreyê piştrast bike', 'Parolayı Onayla'),
-              controller: _confirmPasswordController,
-              obscureText: _obscureConfirmPassword,
-              prefixIcon: AppIcons.lock,
-              suffixIcon: _obscureConfirmPassword
-                  ? AppIcons.eyeSlash
-                  : AppIcons.eye,
-              onSuffixIconPressed: () {
-                setState(
-                  () => _obscureConfirmPassword = !_obscureConfirmPassword,
-                );
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return context.s(
-                    'Piştrastkirina şîfreyê pêwîst e',
-                    'Parola onayı gerekli',
+              const SizedBox(height: 20),
+              FadeTransition(
+                opacity: LoadAnimationSequence.formField2FadeAnimation(
+                  _animationController,
+                ),
+                child: StyledInputField(
+                  key: _passwordFieldKey,
+                  label: context.s('Şîfre', 'Parola'),
+                  controller: _passwordController,
+                  obscureText: _obscurePassword,
+                  prefixIcon: AppIcons.lock,
+                  suffixIcon: _obscurePassword ? AppIcons.eyeSlash : AppIcons.eye,
+                  onSuffixIconPressed: () {
+                    setState(() => _obscurePassword = !_obscurePassword);
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  // Parola kuralı hint text olarak gösterilsin, hata beklemeden
+                  hintText: context.s(
+                    'Herî kêm 6 tîp',
+                    'En az 6 karakter',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return context.s('Şîfre pêwîst e', 'Parola gerekli');
+                    }
+                    if (value.length < 6) {
+                      return context.s(
+                        'Şîfre divê herî kêm 6 tîp be',
+                        'Parola en az 6 karakter olmalı',
+                      );
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              StyledInputField(
+                key: _confirmPasswordFieldKey,
+                label: context.s('Şîfreyê piştrast bike', 'Parolayı Onayla'),
+                controller: _confirmPasswordController,
+                obscureText: _obscureConfirmPassword,
+                prefixIcon: AppIcons.lock,
+                suffixIcon: _obscureConfirmPassword
+                    ? AppIcons.eyeSlash
+                    : AppIcons.eye,
+                onSuffixIconPressed: () {
+                  setState(
+                    () => _obscureConfirmPassword = !_obscureConfirmPassword,
                   );
-                }
-                if (value != _passwordController.text) {
-                  return context.s(
-                    'Şîfre li hev nakin',
-                    'Parolalar eşleşmiyor',
-                  );
-                }
-                return null;
-              },
-            ),
-          ],
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return context.s(
+                      'Piştrastkirina şîfreyê pêwîst e',
+                      'Parola onayı gerekli',
+                    );
+                  }
+                  if (value != _passwordController.text) {
+                    return context.s(
+                      'Şîfre li hev nakin',
+                      'Parolalar eşleşmiyor',
+                    );
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
         );
         break;
       case 1:
-        stepWidget = Column(
-          children: [
-            StyledInputField(
-              label: context.s('Navê bikarhêner', 'Kullanıcı adı'),
-              controller: _usernameController,
-              prefixIcon: AppIcons.user,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return context.s(
-                    'Navê bikarhêner pêwîst e',
-                    'Kullanıcı adı gerekli',
-                  );
-                }
-                if (value.length < 2) {
-                  return context.s(
-                    'Navê bikarhêner divê herî kêm 2 tîp be',
-                    'Kullanıcı adı en az 2 karakter olmalı',
-                  );
-                }
-                return null;
-              },
-            ),
-          ],
+        // 2026-07-22 canlı UX denetimi: inline doğrulama — Form + autovalidateMode
+        stepWidget = Form(
+          key: _step1FormKey,
+          child: Column(
+            children: [
+              StyledInputField(
+                key: _usernameFieldKey,
+                label: context.s('Navê bikarhêner', 'Kullanıcı adı'),
+                controller: _usernameController,
+                prefixIcon: AppIcons.user,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return context.s(
+                      'Navê bikarhêner pêwîst e',
+                      'Kullanıcı adı gerekli',
+                    );
+                  }
+                  if (value.length < 2) {
+                    return context.s(
+                      'Navê bikarhêner divê herî kêm 2 tîp be',
+                      'Kullanıcı adı en az 2 karakter olmalı',
+                    );
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
         );
         break;
       case 2:
@@ -565,6 +538,8 @@ class _SignUpScreenState extends State<SignUpScreen>
     return stepWidget;
   }
 }
+
+
 
 class _ProgressIndicator extends StatelessWidget {
   final int currentStep;
@@ -756,19 +731,17 @@ class _AuthScrollFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final horizontalPadding = constraints.maxWidth < 380
-            ? AppSpacing.md
-            : AppSpacing.lg;
+        const edgePadding = 32.0;
+        // 2026-07-22 canlı UX denetimi: dikey ortalama + padding düzeltmesi
+        // minHeight clamp: klavye açıldığında negatif değer engellenir
         return SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(
-            horizontalPadding,
-            0,
-            horizontalPadding,
-            AppSpacing.lg,
-          ),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 420),
+          padding: const EdgeInsets.all(edgePadding),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 420,
+              minHeight: (constraints.maxHeight - (edgePadding * 2)).clamp(0.0, double.infinity),
+            ),
+            child: Center(
               child: child,
             ),
           ),

@@ -156,7 +156,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                   icon: AppIcons.trophy,
                                   color: Colors.white,
                                   text: ku
-                                      ? 'Lîstikê û serlêderên bibike'
+                                      ? 'Lîstikê û serlêderan bike'
                                       : 'Oyunları tamamla, ödül kazan',
                                 ),
                                 const SizedBox(height: AppSpacing.xxs),
@@ -164,7 +164,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                   icon: AppIcons.peopleGroup,
                                   color: Colors.white,
                                   text: ku
-                                      ? 'Bi hevalan re pêşbikeve'
+                                      ? 'Bi hevalan re pêş bikeve'
                                       : 'Arkadaşlarınla yarış',
                                 ),
                                 if (!compact) ...[

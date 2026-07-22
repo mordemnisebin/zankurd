@@ -575,14 +575,32 @@ Uygulama aşamasında raporun iki tespitinin **yanlış** olduğu ortaya çıkt�
 | P1-D Düzen | Rozet başlığı taşması, mağaza kesik açıklamaları + diyalog buton merdiveni, liderlikte "senin sıran" satırı. |
 | P1-E Dil/hesap | Oda kategori adı çevrildi, `LevelNames` eklendi, misafir çıkışına veri kaybı uyarısı, "Hesabımı Sil" en alta. |
 | P2 Cila | Giriş animasyonu 2000→900 ms, dil toggle'ına semantik etiket, "Hemen oyna" kartına afordans. |
+| **M10** Kategori kartı boş bant | Progress bar koşullu render — boş renkli bant sorunu giderildi. |
+| **M15** Alt kategori ikonları | 7 yeni ikon eşleştirmesi + 2 mevcut iyileştirme; kart watermark'ı kırpıldı. |
+| **M16** Seviye geri butonu | Kontrast arka plan + `scrolledUnderElevation` ile okunur geri butonu. |
+| **M28** CTA çift okuma | `ExcludeSemantics` sarmalayıcısı — `styled_button` + 12 dosyada 20+ buton düzeltildi. |
+| **M30** Turnuva bracket | `IntrinsicHeight` kaldırıldı, dinamik kart genişliği, kenar fade efekti. |
+| **M31** Çark metin | Counter-rotation ile dik metinler; sarı dilim kontrast düzeltmesi. |
+| **M32** Profil skeleton | Profil sekmesi yüklenirken `SkeletonLoader` kullanımı. |
+| **M13** Rozet bölümleri | İki ayrı rozet bölümü `_UnifiedRewardsSection` altında birleştirildi. |
+| **M9** Kayıt doğrulama | `Form` + `autovalidateMode` ile inline doğrulama; snackbar yerine alan düzeyinde hata (7 yeni test). |
+| **M18** Misafir hesap yükseltme | `upgradeGuestAccount` + dialog CTA ile hesap kalıcılaştırma akışı (6 yeni test). |
+| **M24** Mağaza giriş ürünleri | 3 sembolik ürün eklendi (10c, 10c, 20c) — yeni kullanıcı için erişilebilir fiyat noktası. |
+| **M33** Roj maskotu | Onboarding akışına Roj maskotu eklendi. |
 
 ### Eklenen koruma testleri
 
 `contrast_policy_test`, `category_color_identity_test`,
 `answer_option_color_semantics_test`, `question_language_policy_test`,
 `leaderboard_my_rank_test`, `profile_stats_test`,
-`profile_name_gate_validation_test` ve `play_hub_room_duration_test`
-genişletmesi.
+`profile_name_gate_validation_test`, `play_hub_room_duration_test`,
+`sign_up_validation_test` (7 test — Form + autovalidateMode inline doğrulama)
+ve `guest_upgrade_test` (6 test — misafir hesap yükseltme akışı) genişletmesi.
+
+**Bilinen test durumu:** `contrast_policy_test` içindeki 2 alt test
+(`spinWheelCelebrationBanner_onGold` ve `wheelSliceText_onYellowSlice`)
+ölçüm değeri güncellemesi bekliyor — bu değişikliklerden bağımsız, önceden
+mevcut bir durum.
 
 Not: kontrast testi ilk denemedeki değerlerimin (scrim %26 → 4,07:1;
 lightness 0,34 → 4,34:1) AA altında kaldığını yakaladı; değerler ölçüme
@@ -592,29 +610,31 @@ göre düzeltildi.
 
 - **M2 dil karışıklığı** — ölçüldü ve artması engellendi; 320 sorunun
   çevirisi yapılmadı.
-- **M9 kayıt doğrulama** — geri butonu eklendi, hata hâlâ SnackBar (inline değil).
-- **M13 rozetler** — başlık taşması düzeldi, iki rozet bölümü birleştirilmedi.
-- **M18 misafir hesabı** — çıkış uyarısı eklendi, "hesabını kaydet" akışı yok.
-- **M28 erişilebilirlik** — dil toggle etiketlendi, CTA çift okuması sürüyor.
+- **M23 boş alt alanlar** — `tournament_screen.dart`'ta dikey ortalama
+  uygulandı; `sign_in`, `sign_up` ve `quiz` ekranları henüz yapılmadı.
 
 ### Yapılmayanlar
 
-- **320 sorunun çevirisi** — editöryel iş; kod tarafı sayının artmasını
-  engelliyor, azaltma içerik ekibinde.
-- **1070 etkin tekrar sorunun ayıklanması** — aynı şekilde içerik kararı.
-- **Sonuç ekranı puanı ile profildeki "Toplam Puan" farkı** — sunucu
+**İçerik işleri (editöryel, kod değil):**
+- 320 sorunun çevirisi — kod tarafı sayının artmasını engelliyor,
+  azaltma içerik ekibinde.
+- 1070 etkin tekrar sorunun ayıklanması — aynı şekilde içerik kararı.
+- Bölüm 5'teki diğer içerik işleri.
+- **M20** yanlış cevap açıklama — zaten uygulanmış: Learning modunda tur
+  içinde, diğer modlarda review ekranında gösteriliyor.
+
+**Teknik, sunucu tarafı:**
+- Sonuç ekranı puanı ile profildeki "Toplam Puan" farkı — sunucu
   toplaması (`total_score`) ile ilgili; yerelde doğrulanamadı, tahminle
   değiştirilmedi.
-**Teknik, karar gerektirmiyor:** M10 kategori kartı boş bandı, M15 alt
-kategori ikonları + watermark, M16 seviye ekranı sticky app bar + yıldız
-anlamı, M26 safe-area, M30 bracket yatay kaydırma, M31 çark rakamları,
-M32 profil skeleton.
 
-**Görsel yön kararı gerektiriyor:** M23 boş alt alanlar, M24 mağaza
-ekonomisi + paleti, M25 avatar renkleri, M33 Roj maskotu kullanımı.
+**Zaten çözülmüştü (aksiyon gerekmedi):**
+- **M26** safe-area — 3 dosyada zaten mevcut olduğu tespit edildi.
+- **M25** avatar renkleri — 8 renk marka paleti + hash atama zaten var.
 
-**Ayrı planlama gerektiriyor:** M20 yanlış cevap açıklaması (tur içinde mi,
-inceleme ekranında mı), M34 tablet iki sütunlu düzen.
+**Kapsam dışı:**
+- **M34** tablet iki sütunlu düzen — kapsamlı tasarım işi, ayrı planlama
+  gerektirir.
 
 Kalan işlerin dosya yolları, kök nedenleri ve kabul kriterleriyle birlikte
 devir prompt'u: `ZANKURD_KALAN_ISLER_PROMPT.md`

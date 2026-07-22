@@ -627,18 +627,19 @@ class _CategoryCardState extends State<_CategoryCard>
                             ],
                           ),
                         ),
+                        // 2026-07-22 canlı UX denetimi: boş renkli bant düzeltmesi
                         // Pirs imzası: tam-genişlik, kenardan kenara renkli
                         // çizgi (kart iç boşluğunun dışında, altta).
-                        LinearProgressIndicator(
-                          value: hasProgress ? progress : 1.0,
-                          minHeight: 4,
-                          backgroundColor: Colors.white.withValues(alpha: 0.22),
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white.withValues(
-                              alpha: hasProgress ? 0.9 : 0.4,
+                        // Sadece ilerleme olan kartlarda gösterilir.
+                        if (hasProgress)
+                          LinearProgressIndicator(
+                            value: progress,
+                            minHeight: 4,
+                            backgroundColor: Colors.white.withValues(alpha: 0.22),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white.withValues(alpha: 0.9),
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ),

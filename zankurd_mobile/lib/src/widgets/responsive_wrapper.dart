@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// Web masaüstü geniş ekranlarda içeriği ortalar ve maksimum genişlik
-/// sınırı uygular. Mobil/tablet cihazlarda tam ekran davranışı korunur.
+/// Web masaüstü/tablet geniş ekranlarda içeriği ortalar ve maksimum genişlik
+/// sınırı uygular. Mobil cihazlarda tam ekran davranışı korunur.
+// 2026-07-22 canlı UX denetimi: tablet iki sütun düzeni
 class ResponsiveWrapper extends StatelessWidget {
   const ResponsiveWrapper({required this.child, super.key});
 
@@ -17,17 +18,17 @@ class ResponsiveWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
 
-    // Mobil/tablet: tam ekran
+    // Mobil: tam ekran
     if (screenWidth <= wideThreshold) {
       return child;
     }
 
-    // Masaüstü: içeriği ortala, arka planı doldur
+    // Tablet: içeriği ortala, maxContentWidth (540px) ile sınırla
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: maxContentWidth),
+          constraints: const BoxConstraints(maxWidth: ResponsiveWrapper.maxContentWidth),
           child: ClipRRect(
             borderRadius: const BorderRadius.horizontal(
               left: Radius.circular(16),

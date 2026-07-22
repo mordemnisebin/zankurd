@@ -58,9 +58,9 @@ void main() {
     });
 
     test('parses exact option text', () {
-      final result = interpretCorrectValue('Bersiva rast', const [
+      final result = interpretCorrectValue('Bersivên rast', const [
         'şaş',
-        'Bersiva rast',
+        'Bersivên rast',
         'din',
         'tune',
       ]);

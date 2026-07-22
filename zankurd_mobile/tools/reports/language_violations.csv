@@ -1,0 +1,321 @@
+id,category,prompt_lang,prompt,correct_answer
+offline_0757,Cografya,ku,Ji bo gotina \'su\' peyva Kurmancî ya herî guncav kîjan e?,av
+offline_2102,Dîrok,ku,Urartû navenda xwe li kîjan derê bû?,Tuşpa (Wan)
+offline_2119,Edebiyat,ku,"Kovara ""Hawar"" kê derxist?",Celadet Alî Bedirxan
+offline_2129,Edebiyat,ku,"""Destan"" çi ye?",vegotineke dirêj a lehengiyê
+offline_2132,Edebiyat,ku,"""Pêkenok"" çi ne?",fıkralar
+offline_2191,Muzîk,ku,"""Stranbêj"" kî ye?",şarkıcı
+offline_2248,Edebiyat,ku,Kovara Hawar bi taybetî bi kîjan tevkariyê tê bibîranîn?,Latin temelli Kürt alfabesinin yaygınlaşması
+offline_2261,Çand,ku,Di çanda Kurdî de zêmar bi giştî xwedî kîjan fonksiyonê ne?,"Acıyı, kaybı ve toplumsal hafızayı aktarmak"
+offline_2266,Çand,ku,Di pêjgeha Kurdî de dolma/yaprax bi awayekî giştî çi ye?,İç harçla doldurulan sebze veya yaprak yemeği
+offline_2270,Çand,ku,Li ser sifreyên kurdî parvekirina xwarinê bi sêniya mezin an pêşkêşiya hevpar çi xurt dike?,Topluluk ve aile bağlarını
+offline_2271,Çand,ku,Vexwarina ji cureyê Dew/doogh bi kîjan madeya sereke re têkildar e?,Yoğurt/ayran
+offline_2276,Çand,ku,Cihêrengiya xwarinên herêmî yên kurdî çima nikare bibe yek rêçeteyeke standard?,"Bölge, lehçe, iklim, tarım ve komşu mutfaklarla etkileşim farklı olduğu için"
+offline_2304,Çand,ku,Êzidî di erdnîgariya çandî ya kurdî de bi taybetî bi kîjan sernavî têne bibîranîn?,Özgün dini-kültürel topluluk ve tarihsel travmalar
+offline_2305,Çand,ku,Di nasnameya kurdî de ziman çima xwedî girîngiyeke navendî ye?,"Kültürel hafıza, edebiyat, sözlü anlatı ve aidiyet taşıdığı için"
+offline_2307,Çand,ku,Di civaka kurdî de avahiyên eşîrî di dîrokê de xwedî kîjan fonksiyonê bûne?,"Sosyal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı"
+offline_2312,Çand,ku,Fêrbûna navên cihan ên kurdî di sepanekê de çi xurt dike?,Kültürel aidiyet ve coğrafi hafızayı
+offline_2329,Paradigma,ku,Sê tewereyên bingehîn ên konfederalîzma demokratîk kîjan in?,"Kadın özgürlüğü, ekoloji ve demokrasi"
+offline_2362,Çand,ku,Êzidîtî bi kevneşopî yek ji baweriyên kîjan civakê ye?,Kürtler
+offline_2376,Cografya,ku,"""Hewlêr"" navê Kurdî yê kîjan bajarî ye?",Erbil
+offline_2381,Muzîk,ku,"""Erbane"" kîjan cureyê amûrê ye?",Vurmalı
+offline_2443,Siyaset,ku,Di modela xweseriya demokratîk de biryar bi giranî li ku têne girtin?,Yerel meclis ve komünlerde
+offline_2451,Çand,ku,"""Newroz"" ji kîjan du peyvan pêk tê?","""Nû"" (yeni) + ""roj"" (gün)"
+offline_2452,Çand,ku,Di çanda herêmê de heyîna efsaneyî ya bi motîfa mar a berbelav kîjan e?,Şahmaran
+offline_2458,Dîrok,ku,Merwaniyan di kîjan serdemê de li derdora Amedê hukum kiriye?,Orta Çağ (10-11. yüzyıl)
+offline_2459,Dîrok,ku,"""Şerefname"" di bingehê de çi vedibêje?",Kürt hanedan ve beyliklerinin tarihini
+offline_2467,Cografya,ku,Herêma Hewramî (Hawraman) di kêleka sînorê kîjan du welatan de ye?,İran-Irak
+offline_2468,Muzîk,ku,"""Govend"" di bingehê de çalakiyeke çawa ye?",Toplu halk dansı
+offline_2481,Çand,ku,Sê rengên bingehîn ên li ser ala Kurdî kîjan in?,"Kırmızı, beyaz ve yeşil"
+offline_2499,Muzîk,ku,"Amûrên bi şêwaza ""Mey"" dikevin kîjan komê?",Üflemeli
+offline_2502,Siyaset,ku,"Di têgihiştina ""Demokratik ulus"" de gelên cuda çawa bi hev re dijîn?",Eşit ve gönüllü birliktelikle
+offline_2542,Çand,ku,Kevneşopiya dengbêjiyê berê bi giranî li kîjan cihan zindî dihat girtin?,Köy odaları ve dîwanlar
+offline_2556,Cografya,ku,"Herêma ""Behdînan"" bi piranî di kîjan welatî de ye?",Irak (Duhok çevresi)
+offline_2584,Edebiyat,ku,Romanên Kurdî yên pêşîn bi piranî di kîjan serdemê de derketine?,20. yüzyıl
+offline_2593,Paradigma,ku,"""Demokratik modernite"" kîjan nirxan esas digire?","Demokrasi, kadın özgürlüğü ve ekoloji"
+offline_2610,Dîrok,ku,Newroz bi kîjan demsal û mehê re têkildar e?,İlkbahar / Mart
+offline_2638,Dîrok,ku,"""Hesenwayhîler"" li kîjan herêmê hukim kiriye, xanedaneke Kurd e?",Batı İran / Zagros çevresi
+offline_2639,Dîrok,ku,Di efsaneya Newrozê de Dehak wek kesekî çawa tê vegotin?,Zalim bir kral/tiran
+offline_2653,Siyaset,ku,"""Çoğulculuk"" di neteweya demokratîk de çi misoger dike?",Farklı kimlik ve inançların bir arada yaşamasını
+offline_2669,Dîrok,ku,Eyyubiyan kîjan bajaran ji bo demek dirêj wek navend bi kar anîne?,Kahire ve Şam
+offline_2692,Çand,ku,Serokatiya olî ya civaka Êzidî bi kevneşopî ji aliyê kê ve tê meşandin?,Mîr ve Baba Şeyh
+offline_2696,Dîrok,ku,Peymana ku şûna Sevrê girt û statuya Kurdan tê de tune kîjan e?,Lozan (1923)
+offline_2699,Edebiyat,ku,Mehmed Uzun berhemên xwe bi piranî bi kîjan zimanî nivîsandiye?,Kürtçe (Kurmancî)
+offline_2705,Cografya,ku,"""Çiyayê Sîpan"" nêzîkî kîjan golê ye?",Van Gölü
+offline_2724,Çand,ku,Di çanda gelêrî ya Kurdî de girîngiya ku ji çiyayan re tê dayîn herî zêde bi çi tê ravekirin?,Tarih boyunca dağlık coğrafyada yaşamayla
+offline_2727,Dîrok,ku,Selahaddînê Eyûbî piştî kîjan şerî Qudsê vegerand?,Hıttin Savaşı (1187)
+offline_2741,Siyaset,ku,"""Barış ve demokratik siyaset"" kîjan rêbazê red dike?",Şiddet ve dayatmayı
+offline_2782,Çand,ku,Di Êzidîtiyê de kevneşopiya duakirina ber bi rojê ve çi nîşan dide?,Işığa/güneşe verilen kutsallığı
+offline_2811,Dîrok,ku,"Di dîroka kurdî de piştî ""beylikler dönemi"" kîjan pêvajo hatiye jiyîn?",Merkezîleşme ve doğrudan yönetim
+offline_2818,Cografya,ku,"Navên ""Cizîr ve Botan"" bi kîjan herêma dîrokî ve tên bibîranîn?",Botan/Cizre bölgesi (güneydoğu)
+offline_2820,Paradigma,ku,"""Demokratik modernite"" derbaskirina kîjan sê krîzan armanc dike?","Ekoloji, kadın ve demokrasi krizlerini"
+offline_2823,Siyaset,ku,"""Demokratik çözüm"" kîjan nirxan pêşanî dike?","Eşitlik, özgürlük ve barışı"
+offline_2826,Dîrok,ku,"""Şerefname"" ji aliyê kê ve hatiye nivîsandin?",Şeref Han (Bitlis beyi)
+offline_5968,Çand,ku,Derbarê \'destmal\' de ravekirina rast kîjan e?,halay başının elinde salladığı mendil
+offline_5969,Çand,ku,Kîjan vebijêrk tê wateya \'şahmaran\'?,doğu kültüründe mitolojik figür
+offline_5973,Çand,ku,"Dema \'şax\' tê gotin, çi tê xwestin?",şırnak yöresine ait geleneksel dans
+offline_6020,Çand,ku,Ji aliyê Çandê ve ji bo \'govendên herêmî\' îfadeya rast kîjan e?,yöresel halk dansları
+offline_6042,Çand,ku,"Dema \'pêncşem\' tê gotin, çi tê xwestin?",geleneksel ziyaret ve anma günü
+offline_6053,Çand,ku,Derbarê \'şal û şapik\' de ravekirina rast kîjan e?,geleneksel erkek giyim takımı
+offline_6093,Çand,ku,Ji bo \'tûrik\' pênaseya derbasdar kîjan e?,yiyecek taşımak için dokunan torba
+offline_6117,Çand,ku,Derbarê \'nanê tenûrê\' de kîjan rast e?,tandırda pişirilen geleneksel ekmek
+offline_6143,Çand,ku,Derbarê \'helase\' de ya rast a zanîn çi ye?,geleneksel hasat ve bereket şenliği
+offline_6182,Çand,ku,Di qada Çandê de \'memê alan\' çi îfade dike?,destansı Kürt halk anlatısı
+offline_6189,Çand,ku,Îfadeya ku têgiha \'cîranî\' rast vedibêje kîjan e?,komşuluk ve toplumsal yardımlaşma
+offline_6206,Çand,ku,\'dengbêj\' çawa tê pênasekirin?,sözlü anlatım ve ezgili hikaye
+offline_6230,Çand,ku,Derbarê \'heftegiyan\' de vebijêrka rast kîjan e?,geleneksel yedi tahıllı çorba
+offline_6325,Çand,ku,Derbarê \'bilûr\' de ya rast a zanîn çi ye?,kaval benzeri geleneksel üflemeli çalgı
+offline_6343,Çand,ku,Li jêr ji bo \'tûtik\' kîjan rast e?,geleneksel kaval benzeri çalgı
+offline_6365,Çand,ku,Derbarê \'zembîlfiroş\' de kîjan rast e?,meşhur Kürt halk hikayesi
+offline_6380,Çand,ku,Derbarê \'bêrîvan\' de agahiya herî rast kîjan e?,koyun sağan kadınların kültürel rolü
+offline_6465,Çand,ku,Ji bo Çandê derbarê \'sersal\' de vebijêrka rast kîjan e?,Kürt halk takviminde yılbaşı kutlaması
+offline_6523,Çand,ku,Di çarçoveya Çandê de \'şîlan\' çawa divê bê fêmkirin?,yabani gül ve bitkisel çay geleneği
+offline_6530,Çand,ku,"Dema \'kelaş\' tê gotin, çi tê xwestin?",el yapımı geleneksel Kürt ayakkabısı
+offline_6541,Çand,ku,Derbarê \'qazîn\' de vebijêrka rast kîjan e?,geleneksel kadın oyunları veya dansları
+offline_6560,Çand,ku,Derbarê \'çilkez\' de agahiya herî rast kîjan e?,geleneksel Kürt saç örgüsü modeli
+offline_6575,Çand,ku,Kîjan têgiha \'şabaş\' rast şirove dike?,müzisyenlere bahşiş atma geleneği
+offline_6610,Çand,ku,\'lûr\' çawa tê pênasekirin?,Kürt halk müziğinde ağıt benzeri ezgi
+offline_6626,Çand,ku,Derbarê \'ağıt\' de agahiya herî rast kîjan e?,duygu ve toplumsal hafıza
+offline_6642,Çand,ku,"Dema \'misafirperverlik\' tê gotin, çi tê xwestin?",toplumsal dayanışma
+offline_6803,Çand,ku,Kîjan têgiha \'lûr\' rast şirove dike?,Kürt halk müziğinde ağıt benzeri ezgi
+offline_6838,Çand,ku,Bi \'şax\' çi tê xwestin? ya rast çi ye?,şırnak yöresine ait geleneksel dans
+offline_6937,Çand,ku,\'bilûr\' bi awayekî rast çawa tê ravekirin?,kaval benzeri geleneksel üflemeli çalgı
+offline_7015,Dîrok,ku,Di zanîna dîrokê de der barê \'Kürdistan Eyaleti\' de ya rast kîjan e?,Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet
+offline_7058,Dîrok,ku,Li jêr kîjan têgiha \'Mezopotamya\' rave dike?,Dicle ve Fırat çevresindeki tarihsel bölge
+offline_7066,Dîrok,ku,\'Dersim 1937\' bi kîjan aliyê xwe ve tê nasîn?,Dersim bölgesinde yaşanan askeri harekat ve kriz
+offline_7135,Dîrok,ku,Ji bo \'Cizre\' pênaseya derbasdar kîjan e?,Botan emirliğinin ve tarihsel kültürün beşiği olan şehir
+offline_7145,Dîrok,ku,\'Şeyh Said\' di mijara dîrokê de çi vedibêje?,1925 yılında Kürt hakları için isyan eden lider
+offline_7151,Dîrok,ku,\'Baban Emirliği\' bi awayekî rast çawa tê ravekirin?,Süleymaniye merkezli güçlü Kürt prensliği
+offline_7163,Dîrok,ku,Di zanîna Dîrokê de derbarê \'Şeyh Said\' de ya rast kîjan e?,1925 yılında Kürt hakları için isyan eden lider
+offline_7201,Dîrok,ku,\'Celadet Bedirxan\' wek kî tê naskirin?,Kürt alfabesini geliştiren yayıncı ve aydın
+offline_7210,Dîrok,ku,Kîjan kesê/a \'Mîrê Kor\' rast dide nasîn?,Soran emirliğinin kör lakaplı güçlü lideri
+offline_7223,Dîrok,ku,Ji bo \'Kasr-ı Şirin Antlaşması\' ravekirina herî dirust kîjan e?,Osmanlı ve Safevi sınırını belirleyen antlaşma
+offline_7227,Dîrok,ku,Ji bo \'Halepçe katliamı\' pênaseya derbasdar kîjan e?,1988\'de Kürtlere karşı yapılan kimyasal saldırı
+offline_7242,Dîrok,ku,Li jêr kîjan têgiha \'Lozan Antlaşması\' rave dike?,Kürt coğrafyasını dört devlete bölen antlaşma
+offline_7247,Dîrok,ku,Li jêr ji bo \'Şengal\' kîjan rast e?,Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi
+offline_7249,Dîrok,ku,Di dîrokê de \'Şeyh Mahmud Berzenci\' kî ye?,Irak\'ta kendini Kürdistan kralı ilan eden lider
+offline_7257,Dîrok,ku,Di qada Dîrokê de \'Qazi Muhammed\' çi îfade dike?,Mahabad Kürt Cumhuriyeti\'nin cumhurbaşkanı
+offline_7260,Dîrok,ku,Îfadeya ku têgiha \'Lozan Antlaşması\' rast vedibêje kîjan e?,Kürt coğrafyasını dört devlete bölen antlaşma
+offline_7293,Dîrok,ku,\'Ağrı İsyanları\' bi kîjan aliyê xwe ve tê nasîn?,1927-1930 yılları arasında Ağrı dağı çevresindeki direniş
+offline_7300,Dîrok,ku,Li jêr ji bo \'Mela Mahmude Bayazidi\' kîjan rast e?,Kürt örf adetlerini derleyen ilk araştırmacı
+offline_7312,Dîrok,ku,Derbarê \'Şeyh Mahmud Berzenci\' de agahiya rast kîjan e?,Irak\'ta kendini Kürdistan kralı ilan eden lider
+offline_7335,Dîrok,ku,Derbarê \'Ehmedê Xanî\' de agahiya rast kîjan e?,17. yüzyılda Kürt aydınlanma fikrini yazan şair
+offline_7351,Dîrok,ku,Kîjan kesê/a \'Şeyh Said\' rast dide nasîn?,1925 yılında Kürt hakları için isyan eden lider
+offline_7360,Dîrok,ku,Ji bo \'Soran Emirliği\' ravekirina herî dirust kîjan e?,Ravanduz merkezli askeri güç biriktiren beylik
+offline_7372,Dîrok,ku,Ji aliyê Dîrokê ve ji bo \'Mervaniler\' îfadeya rast kîjan e?,Diyarbakır merkezli ortaçağ Kürt hanedanlığı
+offline_7383,Dîrok,ku,Kîjan li gorî pênaseya \'Mahabad Cumhuriyeti\' ye?,1946\'da kurulan ilk kısa ömürlü Kürt devleti
+offline_7394,Dîrok,ku,Kîjan pênase bi \'Koçgiri İsyanı\' re li hev tê?,1921\'de Sivas yöresinde gelişen Kürt hareketi
+offline_7417,Dîrok,ku,\'tarihsel yorum\' çi îfade dike?,kanıtlardan anlam çıkarma
+offline_7443,Dîrok,ku,\'Eyyubiler\' çawa tê pênasekirin?,Selahaddin Eyyubi tarafından kurulan büyük devlet
+offline_7451,Dîrok,ku,Di çarçoveya Dîrokê de \'Ağrı İsyanları\' çawa divê bê fêmkirin?,1927-1930 yılları arasında Ağrı dağı çevresindeki direniş
+offline_7480,Dîrok,ku,Kîjan vebijêrk tê wateya \'Cizre\'?,Botan emirliğinin ve tarihsel kültürün beşiği olan şehir
+offline_7497,Dîrok,ku,\'Mustafa Barzani\' bi kîjan aliyê xwe ve tê nasîn?,Kürt hareketinin efsanevi askeri ve siyasi lideri
+offline_7527,Dîrok,ku,\'Amida\' di mijara dîrokê de çi vedibêje?,Diyarbakır\'ın antik çağdaki tarihi ismi ve kalesi
+offline_7528,Dîrok,ku,Kîjan kesê/a \'Kürdistan Eyaleti\' rast dide nasîn?,Osmanlı\'da 1847\'de kurulan kısa süreli idari eyalet
+offline_7569,Dîrok,ku,Derbarê \'kronoloji\' de ya rast a zanîn çi ye?,olayları zaman sırasına koyma
+offline_7598,Dîrok,ku,"Dema \'Kürdistan gazetesi\' tê gotin, çi tê xwestin?",Kahire\'de 1898\'de basılan ilk Kürt gazetesi
+offline_7605,Dîrok,ku,Kîjan têgeha \'birincil kaynak\' di nav dîrokê de rast bi cih dike?,Döneminden kalan belge veya nesne (birincil kaynak)
+offline_7633,Dîrok,ku,Kîjan kesê/a \'Leyla Qasim\' rast dide nasîn?,Irak rejimi tarafından idam edilen Kürt kadın aktivist
+offline_7643,Dîrok,ku,Di çarçoveya Dîrokê de \'Mikdat Mithat Bedirxan\' çawa divê bê fêmkirin?,Kürdistan gazetesini çıkaran ilk Kürt gazeteci
+offline_7657,Dîrok,ku,Kîjan kesê/a \'Bitlis Prensliği\' rast dide nasîn?,Osmanlı döneminde özerk kalmış Kürt hükümdarlığı
+offline_7668,Dîrok,ku,"Dema \'Halepçe katliamı\' tê gotin, çi tê xwestin?",1988\'de Kürtlere karşı yapılan kimyasal saldırı
+offline_7680,Dîrok,ku,Ji aliyê Dîrokê ve ji bo \'Jiyan gazetesi\' îfadeya rast kîjan e?,Süleymaniye\'de basılan erken dönem Kürtçe gazete
+offline_7717,Dîrok,ku,Kîjan vebijêrk tê wateya \'Kürt Teali Cemiyeti\'?,20. yüzyıl başında kurulan Kürt örgütü
+offline_7753,Dîrok,ku,Derbarê \'Şengal\' de vebijêrka rast kîjan e?,Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi
+offline_7763,Dîrok,ku,Derbarê \'Bohtan Emirliği\' de vebijêrka rast kîjan e?,Cizre merkezli önemli Kürt beyliği
+offline_7777,Dîrok,ku,Derbarê \'Hawar dergisi\' de vebijêrka rast kîjan e?,Latin alfabesiyle basılan ilk Kürtçe dergi
+offline_7778,Dîrok,ku,\'Mervaniler\' çi îfade dike?,Diyarbakır merkezli ortaçağ Kürt hanedanlığı
+offline_7798,Dîrok,ku,Li jêr ji bo \'İhsan Nuri Paşa\' kîjan rast e?,Hoybun cemiyeti adına askeri liderlik yapan subay
+offline_7803,Dîrok,ku,Kîjan kesê/a \'Mustafa Barzani\' rast dide nasîn?,Kürt hareketinin efsanevi askeri ve siyasi lideri
+offline_7832,Dîrok,ku,Derbarê \'Mîrê Kor\' de agahiya rast kîjan e?,Soran emirliğinin kör lakaplı güçlü lideri
+offline_7845,Dîrok,ku,Di dîrokê de \'Mustafa Barzani\' kî ye?,Kürt hareketinin efsanevi askeri ve siyasi lideri
+offline_7848,Dîrok,ku,Derbarê \'Mahabad Cumhuriyeti\' de agahiya herî rast kîjan e?,1946\'da kurulan ilk kısa ömürlü Kürt devleti
+offline_7849,Dîrok,ku,Ji bo \'Kürdistan gazetesi\' pênaseya derbasdar kîjan e?,Kahire\'de 1898\'de basılan ilk Kürt gazetesi
+offline_7852,Dîrok,ku,\'Hawar dergisi\' çawa tê pênasekirin?,Latin alfabesiyle basılan ilk Kürtçe dergi
+offline_7866,Dîrok,ku,Derbarê \'arkeoloji\' de agahiya herî rast kîjan e?,maddi kalıntılarla geçmişi araştırma
+offline_7874,Dîrok,ku,\'Med İmparatorluğu\' bi kîjan aliyê xwe ve tê nasîn?,antik çağda Zagros merkezli büyük güç
+offline_7881,Dîrok,ku,Ji aliyê dîrokê ve ji bo \'bandora çandî\' gotina rast kîjan e?,toplumların birbirini etkilemesi
+offline_7905,Dîrok,ku,Di zanîna dîrokê de der barê \'Anfal operasyonu\' de ya rast kîjan e?,Irak rejimi tarafından Kürtlere yönelik soykırım
+offline_7922,Dîrok,ku,Di çarçoveya Dîrokê de \'Mervaniler\' çawa divê bê fêmkirin?,Diyarbakır merkezli ortaçağ Kürt hanedanlığı
+offline_7969,Dîrok,ku,Derbarê \'Celadet Bedirxan\' de ya rast kîjan e?,Kürt alfabesini geliştiren yayıncı ve aydın
+offline_8023,Dîrok,ku,Kîjan di Dîrokê de têgiha \'Hasankeyf\' rast bi cih dike?,Dicle nehri üzerinde yer alan binlerce yıllık tarihi kent
+offline_8037,Dîrok,ku,Di dîrokê de \'Ehmedê Xanî\' kî ye?,17. yüzyılda Kürt aydınlanma fikrini yazan şair
+offline_8066,Dîrok,ku,Kîjan kesê/a \'Anfal operasyonu\' rast dide nasîn?,Irak rejimi tarafından Kürtlere yönelik soykırım
+offline_8091,Dîrok,ku,Îfadeya ku têgiha \'Eyyubiler\' rast vedibêje kîjan e?,Selahaddin Eyyubi tarafından kurulan büyük devlet
+offline_8108,Cografya,ku,\'Behdînan bölgesi\' di erdnîgariyê de çi îfade dike?,Zaho ve Duhok civarındaki dağlık coğrafi alan
+offline_8141,Cografya,ku,Li jêr ji bo \'Derbendihan gölü\' kîjan rast e?,Diyala nehri üzerinde kurulmuş baraj gölü
+offline_8149,Cografya,ku,Di çarçoveya Cografyaê de \'Munzur vadisi\' çawa divê bê fêmkirin?,Tunceli\'de yer alan milli park statüsündeki vadi
+offline_8200,Cografya,ku,\'Siverek ovası\' di mijara erdnîgariyê de çi vedibêje?,Karacadağ lavlarının oluşturduğu taşlık plato
+offline_8230,Cografya,ku,\'Şehrizor ovası\' kîjan hêmana erdnîgariyê ye?,Süleymaniye güneyindeki tarihi verimli düzlük
+offline_8242,Cografya,tr,\'Yukarı Fırat bölümü\' neresidir?,Beşê bakurrojava yê bilind ê erdnîgariya Kurdistanê
+offline_8247,Cografya,ku,Li jêr ji bo \'Süphan dağı\' kîjan rast e?,Van gölü kuzeyinde yer alan sönmüş volkanik dağ
+offline_8255,Cografya,ku,Li jêr ji bo \'Zagros sıradağları\' kîjan rast e?,Kürdistan coğrafyasını baştan başa bölen dağlar
+offline_8263,Cografya,ku,Li jêr ji bo \'Botan çayı\' kîjan rast e?,Siirt yöresinden geçip Dicle\'ye dökülen nehir
+offline_8316,Cografya,ku,Di qada Cografyaê de \'meşe ormanları\' çi îfade dike?,Kürdistan dağlarının tipik bitki örtüsü ve ağacı
+offline_8319,Cografya,ku,\'Nemrut krateri\' li ku / wek çi tê zanîn?,dünyanın en büyük ikinci krater gölüne sahip dağ
+offline_8331,Cografya,ku,Ji bo Cografyaê derbarê \'Urmiye gölü\' de vebijêrka rast kîjan e?,Doğu Kürdistan\'da yer alan tuzlu göl havzası
+offline_8336,Cografya,ku,\'Şengal dağı\' di erdnîgariyê de çi îfade dike?,Musul ovasının ortasında yükselen stratejik dağ
+offline_8376,Cografya,ku,Li jêr ji bo \'Muş ovası\' kîjan rast e?,Fırat\'ın kollarının suladığı büyük tarım ovası
+offline_8384,Cografya,ku,Di zanîna erdnîgariyê de der barê \'Hewler ovası\' de ya rast kîjan e?,Güney Kürdistan\'ın en verimli tarım ovası
+offline_8473,Cografya,ku,Derbarê \'Van gölü\' de ya rast kîjan e?,dünyanın en büyük sodalı gölü olan havza
+offline_8479,Cografya,ku,Ji bo \'Yüksekova\' ravekirina herî dirust kîjan e?,Hakkari\'de yer alan yüksek rakımlı tektonik ova
+offline_8480,Cografya,ku,Derbarê \'Karacadağ\' de vebijêrka rast kîjan e?,Diyarbakır ovasında yer alan yayvan bazaltik volkan
+offline_8523,Cografya,ku,Di zanîna erdnîgariyê de der barê \'Dicle nehri\' de ya rast kîjan e?,Diyarbakır surlarının altından geçen nehir
+offline_8561,Cografya,ku,Ji bo \'akdeniz iklimi\' ravekirina herî dirust kîjan e?,Akdeniz\'e yakın Kürt bölgelerinde görülen iklim
+offline_8574,Cografya,ku,Ji aliyê Cografyaê ve ji bo \'Siverek ovası\' îfadeya rast kîjan e?,Karacadağ lavlarının oluşturduğu taşlık plato
+offline_8585,Cografya,ku,Kîjan têgeha \'Şehrizor ovası\' di nav erdnîgariyê de rast bi cih dike?,Süleymaniye güneyindeki tarihi verimli düzlük
+offline_8672,Cografya,ku,Ji bo Cografyaê derbarê \'Dicle bölümü\' de vebijêrka rast kîjan e?,Diyarbakır ve Şırnak\'ı kapsayan nehir havzası
+offline_8686,Cografya,ku,Derbarê \'Munzur dağları\' de ya rast kîjan e?,Dersim coğrafyasının en engebeli sıradağları
+offline_8739,Cografya,ku,Di çarçoveya Cografyaê de \'Muş ovası\' çawa divê bê fêmkirin?,Fırat\'ın kollarının suladığı büyük tarım ovası
+offline_8803,Cografya,ku,Di çarçoveya Cografyaê de \'Hazar gölü\' çawa divê bê fêmkirin?,Elazığ sınırlarında yer alan tektonik göl
+offline_8833,Cografya,ku,\'Ağrı dağı\' di mijara erdnîgariyê de çi vedibêje?,Kürdistan coğrafyasının en yüksek zirvesi
+offline_8839,Cografya,ku,Kîjan têgeha \'Süphan dağı\' di nav erdnîgariyê de rast bi cih dike?,Van gölü kuzeyinde yer alan sönmüş volkanik dağ
+offline_8852,Cografya,ku,Kîjan cihê \'Urmiye gölü\' rast tarîf dike?,Doğu Kürdistan\'da yer alan tuzlu göl havzası
+offline_8861,Cografya,ku,Derbarê \'Karacadağ\' de agahiya herî rast kîjan e?,Diyarbakır ovasında yer alan yayvan bazaltik volkan
+offline_8889,Cografya,ku,\'Nemrut krateri\' di mijara erdnîgariyê de çi vedibêje?,dünyanın en büyük ikinci krater gölüne sahip dağ
+offline_8894,Cografya,ku,Kîjan têgeha \'akdeniz iklimi\' di nav erdnîgariyê de rast bi cih dike?,Akdeniz\'e yakın Kürt bölgelerinde görülen iklim
+offline_8903,Cografya,ku,Di zanîna erdnîgariyê de der barê \'Fırat nehri\' de ya rast kîjan e?,Mezopotamya\'ya hayat veren büyük nehir
+offline_8916,Cografya,ku,Derbarê \'Aras nehri\' de ya rast kîjan e?,Kars ve Iğdır sınırlarından geçip Hazar\'a dökülen su
+offline_8921,Cografya,ku,Derbarê \'Nemrut krateri\' de ya rast kîjan e?,dünyanın en büyük ikinci krater gölüne sahip dağ
+offline_8941,Cografya,ku,\'Botan çayı\' di erdnîgariyê de çi îfade dike?,Siirt yöresinden geçip Dicle\'ye dökülen nehir
+offline_8950,Cografya,ku,\'Dokan gölü\' ji aliyê erdnîgarî ve çi vedibêje?,Süleymaniye yakınlarında yer alan yapay baraj gölü
+offline_8986,Cografya,ku,\'Şengal dağı\' kîjan hêmana erdnîgariyê ye?,Musul ovasının ortasında yükselen stratejik dağ
+offline_9008,Cografya,ku,\'Muş ovası\' ji aliyê erdnîgarî ve çi vedibêje?,Fırat\'ın kollarının suladığı büyük tarım ovası
+offline_9029,Cografya,ku,Li jêr ji bo \'Van gölü\' kîjan rast e?,dünyanın en büyük sodalı gölü olan havza
+offline_9032,Cografya,ku,\'meşe ormanları\' bi awayekî rast çawa tê ravekirin?,Kürdistan dağlarının tipik bitki örtüsü ve ağacı
+offline_9036,Cografya,ku,Kîjan cihê \'Tendürek dağı\' rast tarîf dike?,krater gölüne sahip aktif volkanik dağ
+offline_9072,Cografya,ku,Kîjan cihê \'Munzur vadisi\' rast tarîf dike?,Tunceli\'de yer alan milli park statüsündeki vadi
+offline_9132,Cografya,ku,\'Habur çayı\' ji aliyê erdnîgarî ve çi vedibêje?,Türkiye ve Irak sınırını çizen Dicle kolu
+offline_9207,Edebiyat,ku,Têgiha \'Ronahî dergisi\' çi pêk tîne?,Şam\'da Latin alfabesiyle çıkarılan edebi dergi
+offline_9227,Edebiyat,ku,Di qada Edebiyatê de \'Cegerxwîn\' çi îfade dike?,modern Kürt şiirinin öncü toplumcu şairi
+offline_9280,Edebiyat,ku,Li jêr ji bo \'roman\' ya rast kîjan e?,uzun anlatı
+offline_9343,Edebiyat,ku,Der barê \'Hêmin Mukriyanî\' de ji bo wêjeyê bijardeya rast kîjan e?,Doğu Kürdistan\'ın meşhur modern şair ve yazarı
+offline_9344,Edebiyat,ku,Kîjan têgeha \'Hejar Mukriyanî\' di nav wêjeyê de rast bi cih dike?,Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar
+offline_9378,Edebiyat,ku,Derbarê \'Feqiyê Teyran\' de ya rast kîjan e?,kuşların diliyle yazan meşhur Kürt şair
+offline_9387,Edebiyat,ku,Îfadeya ku têgiha \'Ronahî dergisi\' rast vedibêje kîjan e?,Şam\'da Latin alfabesiyle çıkarılan edebi dergi
+offline_9405,Edebiyat,ku,Ji aliyê Edebiyatê ve ji bo \'Mem û Zîn\' îfadeya rast kîjan e?,Kürt klasik edebiyatının en büyük aşk destanı
+offline_9409,Edebiyat,ku,Ji bo Edebiyatê derbarê \'Ehmedê Xasî\' de vebijêrka rast kîjan e?,Zazaca ilk mevlidi yazan şair ve din alimi
+offline_9410,Edebiyat,ku,Derbarê \'Memê Alan destanı\' de ya rast a zanîn çi ye?,Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı
+offline_9411,Edebiyat,ku,Ji bo Edebiyatê derbarê \'Arabê Şamo\' de vebijêrka rast kîjan e?,Şivanê Kurd adlı ilk Kürtçe romanın yazarı
+offline_9419,Edebiyat,ku,Der barê \'Dîwana Melayê Cizîrî\' de ji bo wêjeyê bijardeya rast kîjan e?,mistik aşk ve felsefe içeren meşhur şiir divanı
+offline_9434,Edebiyat,ku,\'Riya Taza gazetesi\' çawa tê pênasekirin?,Erivan\'da uzun yıllar basılan Kürtçe gazete
+offline_9456,Edebiyat,ku,Ji bo \'Xanî Mektebi\' ravekirina herî dirust kîjan e?,Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol
+offline_9473,Edebiyat,ku,\'Arabê Şamo\' di mijara wêjeyê de çi vedibêje?,Şivanê Kurd adlı ilk Kürtçe romanın yazarı
+offline_9474,Edebiyat,ku,Der barê \'Abdulla Goran\' de ji bo wêjeyê bijardeya rast kîjan e?,Sorani Kürtçe şiirinde modernleşmenin öncüsü
+offline_9507,Edebiyat,ku,"Dema \'Riya Taza gazetesi\' tê gotin, çi tê xwestin?",Erivan\'da uzun yıllar basılan Kürtçe gazete
+offline_9529,Edebiyat,ku,Kîjan têgeha \'Şivanê Kurd\' di nav wêjeyê de rast bi cih dike?,1935 yılında basılan ilk modern Kürtçe roman
+offline_9552,Edebiyat,ku,Di zanîna wêjeyê de der barê \'Masture Erdelan\' de ya rast kîjan e?,tarihte divan yazmış ilk Kürt kadın tarihçi ve şair
+offline_9579,Edebiyat,ku,\'Ferhad û Şîrîn\' di mijara wêjeyê de çi vedibêje?,Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi
+offline_9582,Edebiyat,ku,\'Abdulla Goran\' wek kî tê naskirin?,Sorani Kürtçe şiirinde modernleşmenin öncüsü
+offline_9594,Edebiyat,ku,Kîjan têgiha \'Nûbihara Biçukan\' rast şirove dike?,Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük
+offline_9612,Edebiyat,ku,Têgiha \'kafiye\' çi pêk tîne?,ses uyumu
+offline_9623,Edebiyat,ku,Derbarê \'tema\' de vebijêrka rast kîjan e?,ana düşünce
+offline_9625,Edebiyat,ku,\'Osman Sabri\' wek kî tê naskirin?,modern Kürt hikayeciliğinin kurucu isimlerinden
+offline_9636,Edebiyat,ku,Li jêr ji bo \'Ferhad û Şîrîn\' kîjan rast e?,Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi
+offline_9668,Edebiyat,ku,Kîjan li gorî pênaseya \'Dewrêşê Evdî destanı\' ye?,Kürt sözlü edebiyatının en hüzünlü destanlarından biri
+offline_9706,Edebiyat,ku,Li jêr ji bo \'Masture Erdelan\' kîjan rast e?,tarihte divan yazmış ilk Kürt kadın tarihçi ve şair
+offline_9716,Edebiyat,ku,Derbarê \'Hêmin Mukriyanî\' de ya rast kîjan e?,Doğu Kürdistan\'ın meşhur modern şair ve yazarı
+offline_9724,Edebiyat,ku,Ji bo \'Hawar Ekolü\' ravekirina herî dirust kîjan e?,Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım
+offline_9730,Edebiyat,ku,Di zanîna wêjeyê de der barê \'Şêrko Bêkes\' de ya rast kîjan e?,Kürt şiirine serbest tarzı getiren büyük şair
+offline_9749,Edebiyat,ku,Ji bo Edebiyatê derbarê \'Qanadê Kurdo\' de vebijêrka rast kîjan e?,Kürt dili ve edebiyatı üzerine çalışan akademisyen
+offline_9777,Edebiyat,ku,Li jêr kîjan têgiha \'Memê Alan destanı\' rave dike?,Ehmedê Xanî\'nin Mem û Zîn\'e ilham aldığı halk destanı
+offline_9778,Edebiyat,ku,Di zanîna Edebiyatê de derbarê \'Nalî\' de ya rast kîjan e?,Soranice klasik şiir okulunun en büyük divan şairi
+offline_9789,Edebiyat,ku,Kîjan kesê/a \'Kamuran Bedirxan\' rast dide nasîn?,Kürtçe gramer kitapları yazan dilbilimci ve yazar
+offline_9810,Edebiyat,ku,Derbarê \'Xanî Mektebi\' de agahiya herî rast kîjan e?,Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol
+offline_9812,Edebiyat,ku,Di qada Edebiyatê de \'Masture Erdelan\' çi îfade dike?,tarihte divan yazmış ilk Kürt kadın tarihçi ve şair
+offline_9820,Edebiyat,ku,Derbarê \'Nalî\' de ya rast kîjan e?,Soranice klasik şiir okulunun en büyük divan şairi
+offline_9838,Edebiyat,ku,Ji aliyê wêjeyê ve ji bo \'Riya Taza gazetesi\' gotina rast kîjan e?,Erivan\'da uzun yıllar basılan Kürtçe gazete
+offline_9867,Edebiyat,ku,Di dîrokê de \'Hejar Mukriyanî\' kî ye?,Şerefname ve Mem û Zîn\'i Soraniceye çeviren yazar
+offline_9880,Edebiyat,ku,\'Ehmedê Xasî\' bi kîjan aliyê xwe ve tê nasîn?,Zazaca ilk mevlidi yazan şair ve din alimi
+offline_9892,Edebiyat,ku,Ji bo \'Nûbihara Biçukan\' ravekirina herî dirust kîjan e?,Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük
+offline_9918,Edebiyat,ku,Kîjan têgeha \'Evdirehîm Rehmî Hekarî\' di nav wêjeyê de rast bi cih dike?,Kürt tiyatrosunun kurucu oyun yazarlarından
+offline_9936,Edebiyat,ku,Ji bo Edebiyatê derbarê \'Qedrîcan\' de vebijêrka rast kîjan e?,modern Kürt şiirinde ve nesrinde iz bırakmış yazar
+offline_9942,Edebiyat,ku,\'Pertew Begê Hkarî\' bi kîjan aliyê xwe ve tê nasîn?,Hakkari emirliğinde yetişmiş klasik divan şairi
+offline_9950,Edebiyat,ku,Di dîrokê de \'Melayê Bateyî\' kî ye?,Mevlid-i Şerif\'i Kürtçe yazan klasik şair
+offline_9972,Edebiyat,ku,Ji bo \'Qedrîcan\' ravekirina herî dirust kîjan e?,modern Kürt şiirinde ve nesrinde iz bırakmış yazar
+offline_9996,Edebiyat,ku,Kîjan kesê/a \'Qanadê Kurdo\' rast dide nasîn?,Kürt dili ve edebiyatı üzerine çalışan akademisyen
+offline_9997,Edebiyat,ku,Têgiha \'Xanî Mektebi\' çi pêk tîne?,Ehmedê Xanî\'nin başlattığı edebi ve düşünsel ekol
+offline_10024,Edebiyat,ku,Ji aliyê Edebiyatê ve ji bo \'Melayê Bateyî\' îfadeya rast kîjan e?,Mevlid-i Şerif\'i Kürtçe yazan klasik şair
+offline_10045,Edebiyat,ku,Der barê \'Melayê Cizîrî\' de ji bo wêjeyê bijardeya rast kîjan e?,Kürt tasavvuf şiirinin klasik divan şairi
+offline_10069,Edebiyat,ku,Di çarçoveya Edebiyatê de \'Hawar Ekolü\' çawa divê bê fêmkirin?,Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım
+offline_10071,Edebiyat,ku,Ji aliyê Edebiyatê ve ji bo \'Elî Herîrî\' îfadeya rast kîjan e?,Kürt edebiyatının bilinen en eski klasik şairlerinden
+offline_10074,Edebiyat,ku,Ji aliyê wêjeyê ve ji bo \'Dîwana Melayê Cizîrî\' gotina rast kîjan e?,mistik aşk ve felsefe içeren meşhur şiir divanı
+offline_10089,Edebiyat,ku,Ji bo Edebiyatê derbarê \'Yaşar Kemal\' de vebijêrka rast kîjan e?,"Kürt kökenli, dünya çapında tanınan usta romancı"
+offline_10104,Edebiyat,ku,Di qada Edebiyatê de \'Yaşar Kemal\' çi îfade dike?,"Kürt kökenli, dünya çapında tanınan usta romancı"
+offline_10157,Edebiyat,ku,Derbarê \'Hawar Ekolü\' de vebijêrka rast kîjan e?,Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım
+offline_10188,Edebiyat,ku,Ji bo Edebiyatê derbarê \'Şêrko Bêkes\' de vebijêrka rast kîjan e?,Kürt şiirine serbest tarzı getiren büyük şair
+offline_10228,Edebiyat,ku,Di çarçoveya Edebiyatê de \'destan\' çawa divê bê fêmkirin?,kahramanlık anlatısı
+offline_10260,Edebiyat,ku,Derbarê \'Elî Herîrî\' de agahiya rast kîjan e?,Kürt edebiyatının bilinen en eski klasik şairlerinden
+offline_10271,Edebiyat,ku,Derbarê \'Dewrêşê Evdî destanı\' de ravekirina rast kîjan e?,Kürt sözlü edebiyatının en hüzünlü destanlarından biri
+offline_10284,Edebiyat,ku,Der barê \'Mestûre Kurdistanî\' de ji bo wêjeyê bijardeya rast kîjan e?,Erdelan beyliğinde yaşamış ünlü kadın şair
+offline_10314,Muzîk,ku,Bi \'serhad ezgileri\' çi tê xwestin? ya rast çi ye?,"Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı"
+offline_10320,Muzîk,ku,Li jêr ji bo \'dengbêjlik okulu\' kîjan rast e?,usta-çırak ilişkisiyle yürüyen müzikal aktarım
+offline_10333,Muzîk,ku,Kîjan vebijêrk tê wateya \'zurna\'?,"yüksek sesli, açık havada çalınan nefesli çalgı"
+offline_10352,Muzîk,ku,Di çarçoveya Muzîkê de \'dengbêjlik okulu\' çawa divê bê fêmkirin?,usta-çırak ilişkisiyle yürüyen müzikal aktarım
+offline_10372,Muzîk,ku,Derbarê \'melodî\' de vebijêrka rast kîjan e?,seslerin ardışık dizilmesiyle oluşan ezgi
+offline_10379,Muzîk,ku,Bi \'makam\' çi tê xwestin? ya rast çi ye?,Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem
+offline_10410,Muzîk,ku,Di zanîna Muzîkê de derbarê \'nota\' de ya rast kîjan e?,müziği kağıda dökmek için kullanılan evrensel işaretler
+offline_10423,Muzîk,ku,Derbarê \'tembûr\' de vebijêrka rast kîjan e?,Kürt halk müziğinde en kutsal sayılan telli saz
+offline_10427,Muzîk,ku,Bi \'hîran\' çi tê xwestin? ya rast çi ye?,Kürt halk müziğinde bir başka ezgi tarzı
+offline_10433,Muzîk,ku,Li jêr ji bo \'Aram Tigran\' kîjan rast e?,Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen
+offline_10463,Muzîk,ku,Kîjan vebijêrk tê wateya \'lawik\'?,daha çok aşk ve yiğitlik üzerine söylenen müzik türü
+offline_10480,Muzîk,ku,"Dema \'botan ezgileri\' tê gotin, çi tê xwestin?",Şırnak ve Cizre yöresinin ritmik ve makamsal müziği
+offline_10498,Muzîk,ku,Kîjan di Muzîkê de têgiha \'Koma Amed\' rast bi cih dike?,90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu
+offline_10537,Muzîk,ku,Kîjan kesê/a \'Aynur Doğan\' rast dide nasîn?,modern dönemde Kürt halk müziğini icra eden sanatçı
+offline_10547,Muzîk,ku,Derbarê \'Erdewan Zaxoyî\' de ya rast kîjan e?,Bahdinan bölgesinin sevilen devrimci müzisyeni
+offline_10554,Muzîk,ku,Derbarê \'botan ezgileri\' de kîjan rast e?,Şırnak ve Cizre yöresinin ritmik ve makamsal müziği
+offline_10566,Muzîk,ku,Derbarê \'nota\' de agahiya herî rast kîjan e?,müziği kağıda dökmek için kullanılan evrensel işaretler
+offline_10572,Muzîk,ku,Li jêr ji bo \'Hasan Cizrawî\' kîjan rast e?,erken dönem Kürt müziği kayıtlarını yapan dengbêj
+offline_10595,Muzîk,ku,Kîjan di Muzîkê de têgiha \'çeng\' rast bi cih dike?,antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı
+offline_10613,Muzîk,ku,Derbarê \'çeng\' de vebijêrka rast kîjan e?,antik Mezopotamya ve Kürt müziğinde kullanılan arp benzeri çalgı
+offline_10615,Muzîk,ku,Derbarê \'Meryem Xan\' de ya rast kîjan e?,Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı
+offline_10643,Muzîk,ku,Di dîrokê de \'Erdewan Zaxoyî\' kî ye?,Bahdinan bölgesinin sevilen devrimci müzisyeni
+offline_10653,Muzîk,ku,\'Eyşeqan\' çi îfade dike?,Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden
+offline_10654,Muzîk,ku,Di dîrokê de \'Meryem Xan\' kî ye?,Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı
+offline_10715,Muzîk,ku,\'Mihemed Taha Akreyî\' bi kîjan aliyê xwe ve tê nasîn?,Bahdinan bölgesinin popüler klasik halk sanatçısı
+offline_10827,Muzîk,ku,\'Karapetê Xaço\' wek kî tê naskirin?,Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj
+offline_10853,Muzîk,ku,Ji aliyê Muzîkê ve ji bo \'makam\' îfadeya rast kîjan e?,Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem
+offline_10861,Muzîk,ku,Der barê \'şakiro stranları\' de ji bo muzîkê bijardeya rast kîjan e?,Şakiro\'nun seslendirdiği uzun soluklu destansı kilamlar
+offline_10871,Muzîk,ku,Ji bo \'serhad ezgileri\' ravekirina herî dirust kîjan e?,"Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı"
+offline_10874,Muzîk,ku,Li jêr ji bo \'serhad ezgileri\' kîjan rast e?,"Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı"
+offline_10875,Muzîk,ku,Li jêr ji bo \'govend müziği\' ya rast kîjan e?,halaylarda çalınan hareketli ve ritmik halk şarkıları
+offline_10882,Muzîk,ku,Di qada Muzîkê de \'zembîlfiroş stranı\' çi îfade dike?,efsaneyi anlatan meşhur geleneksel kilam
+offline_10903,Muzîk,ku,Derbarê \'şevbêrk müziği\' de vebijêrka rast kîjan e?,kış gecesi sohbetlerinde icra edilen sözlü müzik
+offline_10926,Muzîk,ku,Ji aliyê Muzîkê ve ji bo \'Mihemed Şêxo\' îfadeya rast kîjan e?,Kürt halkının ulusal duygularını seslendiren ozan
+offline_10927,Muzîk,ku,Di qada Muzîkê de \'şabaş geleneği\' çi îfade dike?,müzisyenlere para atarak taltif etme adeti
+offline_10930,Muzîk,ku,Têgiha \'dengbêj evi\' çi pêk tîne?,Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan
+offline_10939,Muzîk,ku,Kîjan li gorî pênaseya \'koro\' ye?,topluluk halinde şarkı söyleme biçimi
+offline_10940,Muzîk,ku,Ji aliyê Muzîkê ve ji bo \'Şivan Perwer\' îfadeya rast kîjan e?,Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı
+offline_10963,Muzîk,ku,Di çarçoveya Muzîkê de \'Ciwan Haco\' çawa divê bê fêmkirin?,Kürt müziğine rock ve caz esintileri getiren sanatçı
+offline_11008,Muzîk,ku,Derbarê \'Aynur Doğan\' de ya rast kîjan e?,modern dönemde Kürt halk müziğini icra eden sanatçı
+offline_11056,Muzîk,ku,Kîjan têgiha \'dengbêj evi\' rast şirove dike?,Van ve Diyarbakır\'da dengbêjlerin dinlendiği kültürel mekan
+offline_11068,Muzîk,ku,Li jêr ji bo \'behedînî ezgileri\' ya rast kîjan e?,Duhok ve Zaho yöresine has müzikal tarz
+offline_11077,Muzîk,ku,Derbarê \'botan ezgileri\' de agahiya herî rast kîjan e?,Şırnak ve Cizre yöresinin ritmik ve makamsal müziği
+offline_11087,Muzîk,ku,Ji bo \'zurna\' ravekirina herî dirust kîjan e?,"yüksek sesli, açık havada çalınan nefesli çalgı"
+offline_11093,Muzîk,ku,Bi \'şabaş geleneği\' çi tê xwestin? ya rast çi ye?,müzisyenlere para atarak taltif etme adeti
+offline_11103,Muzîk,ku,Kîjan kesê/a \'Koma Amed\' rast dide nasîn?,90\'larda Kürt müziğinde devrim yapan alternatif müzik grubu
+offline_11107,Muzîk,ku,Di zanîna Muzîkê de derbarê \'kemençe\' de ya rast kîjan e?,Kürt coğrafyasında da çalınan yaylı çalgı
+offline_11123,Muzîk,ku,Derbarê \'Şakiro\' de ravekirina rast kîjan e?,Kürtlerin \'şahê dengbêjan\' dediği güçlü ses
+offline_11125,Muzîk,ku,Di dîrokê de \'Şivan Perwer\' kî ye?,Kürt müziğini dünyaya tanıtan en meşhur ses sanatçısı
+offline_11127,Muzîk,ku,Ji bo Muzîkê derbarê \'Koma Wetan\' de vebijêrka rast kîjan e?,tarihteki ilk Kürtçe rock grubunun adı
+offline_11133,Muzîk,ku,Kîjan têgeha \'Mihemed Şêxo\' di nav muzîkê de rast bi cih dike?,Kürt halkının ulusal duygularını seslendiren ozan
+offline_11134,Muzîk,ku,Kîjan têgeha \'şevbêrk müziği\' di nav muzîkê de rast bi cih dike?,kış gecesi sohbetlerinde icra edilen sözlü müzik
+offline_11136,Muzîk,ku,Derbarê \'ritim\' de vebijêrka rast kîjan e?,müziğin temelini oluşturan düzenli vuruşlar
+offline_11152,Muzîk,ku,Têgiha \'Eyşeqan\' çi pêk tîne?,Kürt kadın dengbêj geleneğinin en bilinen temsilcilerinden
+offline_11154,Muzîk,ku,Derbarê \'kilam\' de vebijêrka rast kîjan e?,dengbêjlerin söylediği destansı veya aşk temalı şarkı
+offline_11160,Muzîk,ku,Li jêr kîjan têgiha \'hîran\' rave dike?,Kürt halk müziğinde bir başka ezgi tarzı
+offline_11172,Muzîk,ku,Li jêr kîjan têgiha \'kilam\' rave dike?,dengbêjlerin söylediği destansı veya aşk temalı şarkı
+offline_11180,Muzîk,ku,Têgiha \'dengbêj makamı\' çi pêk tîne?,kilamların okunduğu serbest ritimli vokal tarzı
+offline_11189,Muzîk,ku,Kîjan di Muzîkê de têgiha \'Ciwan Haco\' rast bi cih dike?,Kürt müziğine rock ve caz esintileri getiren sanatçı
+offline_11200,Muzîk,ku,Derbarê \'dahol\' de ravekirina rast kîjan e?,zurna ile birlikte çalınan ritim sazı
+offline_11227,Muzîk,ku,Bi \'defbaz\' çi tê xwestin? ya rast çi ye?,erbane veya defi ustalıkla çalan ritim sanatçısı
+offline_11294,Muzîk,ku,Ji aliyê Muzîkê ve ji bo \'erbane\' îfadeya rast kîjan e?,halk müziğinde yaygın olarak çalınan zilli tef
+offline_11295,Muzîk,ku,Ji bo Muzîkê derbarê \'tembûr\' de vebijêrka rast kîjan e?,Kürt halk müziğinde en kutsal sayılan telli saz
+offline_11326,Muzîk,ku,Kîjan pênase bi \'zaza müziği\' re li hev tê?,Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik
+offline_11341,Muzîk,ku,Di çarçoveya Muzîkê de \'Mihemed Taha Akreyî\' çawa divê bê fêmkirin?,Bahdinan bölgesinin popüler klasik halk sanatçısı
+offline_11356,Muzîk,ku,Kîjan kesê/a \'Karapetê Xaço\' rast dide nasîn?,Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj
+offline_11366,Muzîk,ku,\'solo\' di mijara muzîkê de çi vedibêje?,tek bir sanatçının şarkı söylemesi veya çalması
+offline_11383,Muzîk,ku,Derbarê \'heyran\' de agahiya herî rast kîjan e?,Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü
+offline_11420,Muzîk,ku,Ji aliyê Muzîkê ve ji bo \'govend müziği\' îfadeya rast kîjan e?,halaylarda çalınan hareketli ve ritmik halk şarkıları
+offline_11431,Muzîk,ku,Kîjan vebijêrk tê wateya \'dengbêj\'?,ezgili sözlü anlatım yapan sanatçı
+offline_12832,Siyaset,tr,\'barışçıl çözüm\' çawa tê pênasekirin?,îrada çareserkirina pevçûnan bi diyalogê li şûna çekan

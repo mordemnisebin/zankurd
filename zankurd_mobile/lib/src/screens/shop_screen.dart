@@ -30,6 +30,9 @@ const Map<String, IconData> _shopIcons = {
   'text_format_rounded': AppIcons.font,
   'auto_fix_high_rounded': AppIcons.wandMagicSparkles,
   'diamond_rounded': AppIcons.gem,
+  'sun_regular': AppIcons.sun,
+  'star_regular': AppIcons.star,
+  'image_regular': AppIcons.image,
 };
 
 IconData shopIconForName(String? name) =>
@@ -41,6 +44,9 @@ AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
   }
   if (itemId == 'profile_badge_vip') {
     return identity.copyWith(showcaseTitle: 'VIP');
+  }
+  if (itemId == 'frame_simple') {
+    return identity.copyWith(frameId: 'simple');
   }
   return identity;
 }
@@ -96,7 +102,38 @@ class _ShopScreenState extends State<ShopScreen> {
 
   // Tüm ürünler gösterilir (whitelist kaldırıldı).
 
+  // 2026-07-22 canlı UX denetimi: giriş ürünleri
   static const List<ShopItem> _items = [
+    ShopItem(
+      id: 'emoji_roj',
+      titleKu: 'Emojî Roj',
+      titleTr: 'Güneş Emojisi',
+      descKu: 'Emojîya rojê ya zêrîn ji bo profîla te.',
+      descTr: 'Profilin için altın renkli güneş emojisi.',
+      cost: 10,
+      icon: AppIcons.sun,
+      themeColor: AppTheme.gold,
+    ),
+    ShopItem(
+      id: 'emoji_ster',
+      titleKu: 'Emojî Stêr',
+      titleTr: 'Yıldız Emojisi',
+      descKu: 'Emojîya stêrkê ya mor ji bo profîla te.',
+      descTr: 'Profilin için mor renkli yıldız emojisi.',
+      cost: 10,
+      icon: AppIcons.star,
+      themeColor: AppTheme.playPurple,
+    ),
+    ShopItem(
+      id: 'frame_simple',
+      titleKu: 'Çarçoveya Hêsan',
+      titleTr: 'Basit Çerçeve',
+      descKu: 'Çarçoveyeke hêsan a cyan ji bo avatarê te.',
+      descTr: 'Avatarın için basit cyan renkli çerçeve.',
+      cost: 20,
+      icon: AppIcons.image,
+      themeColor: AppTheme.playCyan,
+    ),
     ShopItem(
       id: 'joker_bundle',
       titleKu: 'Paketa Jokeran',
@@ -395,19 +432,25 @@ class _ShopScreenState extends State<ShopScreen> {
                         ),
                       );
                     },
+                    // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                     icon: const Icon(AppIcons.dice, size: 18),
-                    label: Text(ku ? 'Coin qezenc bike' : 'Coin kazan'),
+                    label: ExcludeSemantics(
+                      child: Text(ku ? 'Coin qezenc bike' : 'Coin kazan'),
+                    ),
                   ),
                 ),
               ],
             ],
           ),
           actions: [
+            // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(false),
-              child: Text(
-                ku ? 'Betal' : 'İptal',
-                style: TextStyle(color: AppTheme.textMutedColor(ctx)),
+              child: ExcludeSemantics(
+                child: Text(
+                  ku ? 'Betal' : 'İptal',
+                  style: TextStyle(color: AppTheme.textMutedColor(ctx)),
+                ),
               ),
             ),
             FilledButton(
@@ -422,7 +465,10 @@ class _ShopScreenState extends State<ShopScreen> {
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
               ),
-              child: Text(ku ? 'Bikire' : 'Satın Al'),
+              // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+              child: ExcludeSemantics(
+                child: Text(ku ? 'Bikire' : 'Satın Al'),
+              ),
             ),
           ],
         );
@@ -506,7 +552,7 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Future<void> _applyPurchaseEffect(String itemId) async {
-    if (itemId != 'avatar_frame_gold' && itemId != 'profile_badge_vip') {
+    if (itemId != 'avatar_frame_gold' && itemId != 'profile_badge_vip' && itemId != 'frame_simple') {
       return;
     }
     try {
@@ -1068,7 +1114,10 @@ class _ShopScreenState extends State<ShopScreen> {
           size: 15,
           color: canAfford ? Colors.white : AppTheme.textMutedColor(context),
         ),
-        label: Text('${item.cost}c'),
+        // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+        label: ExcludeSemantics(
+          child: Text('${item.cost}c'),
+        ),
       ),
     );
   }

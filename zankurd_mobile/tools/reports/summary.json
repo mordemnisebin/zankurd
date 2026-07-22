@@ -1,0 +1,38 @@
+{
+  "manifestVersion": 1,
+  "sourceCount": 44,
+  "unknownSourceCount": 0,
+  "missingProductionSourceCount": 0,
+  "reportPhysicalRecords": 101682,
+  "reportParsedRecords": 60580,
+  "reportCanonicalUniqueRecords": 37851,
+  "gatePhysicalRecords": 2367,
+  "gateParsedRecords": 2367,
+  "gateCanonicalUniqueRecords": 2367,
+  "crossSourceCopyGroups": 22458,
+  "crossSourceDivergences": 22444,
+  "severity": {
+    "blocker": 59867,
+    "critical": 6940,
+    "warning": 86595,
+    "info": 0
+  },
+  "gateSeverity": {
+    "blocker": 0,
+    "critical": 0,
+    "warning": 3907,
+    "info": 0
+  },
+  "checks": {
+    "answer_leak": 47,
+    "duplicate_option": 22535,
+    "dynamic_fact": 8043,
+    "exact_duplicate": 1669,
+    "missing_category": 10000,
+    "missing_difficulty": 27332,
+    "missing_source_metadata": 52447,
+    "near_duplicate_candidate": 18773,
+    "short_explanation": 7332,
+    "turkish_template": 5224
+  }
+}

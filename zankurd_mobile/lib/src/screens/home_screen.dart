@@ -685,11 +685,14 @@ class _DailyLessonHero extends StatelessWidget {
                   ),
                 ),
                 onPressed: onStart,
-                child: Text(
-                  ctaLabel,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+                child: ExcludeSemantics(
+                  child: Text(
+                    ctaLabel,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),

@@ -1,0 +1,21 @@
+Ayrıştırılan soru: 2347
+
+Dil karışıklığı: 320 soru (%13.6)
+  Muzîk          74
+  Dîrok          73
+  Edebiyat       68
+  Cografya       50
+  Çand           46
+  Siyaset         6
+  Paradigma       3
+
+Etkin tekrar (aynı ipucu + aynı cevap): 483 küme, 1070 fazlalık soru
+
+En sık soru kalıpları:
+    400x 'Di gotûbêja dersê de,'
+    400x 'Di nirxandina xwendekaran de,'
+     80x 'Kîjan têgeh li qada'
+     38x 'Li jêr ji bo'
+     14x 'Rast e an şaş'
+
+CSV yazıldı: tools/reports/language_violations.csv

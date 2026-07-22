@@ -256,10 +256,13 @@ class _RecommendationCardState extends State<RecommendationCard> {
                       child: ElevatedButton.icon(
                         onPressed: () => widget.onTapCategory(catKu),
                         icon: const Icon(AppIcons.play, size: 18),
-                        label: Text(
-                          isKu ? 'Hema Bixebite' : 'Hemen Çalış',
-                          style: AppTypography.bodyMedium.copyWith(
-                            fontWeight: FontWeight.w700,
+                        label: ExcludeSemantics(
+                          // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+                          child: Text(
+                            isKu ? 'Hema Bixebite' : 'Hemen Çalış',
+                            style: AppTypography.bodyMedium.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                         style: ElevatedButton.styleFrom(

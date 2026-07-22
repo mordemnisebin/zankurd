@@ -97,4 +97,39 @@ void main() {
       expect(zimanViolations, isEmpty);
     });
   });
+
+  // 2026-07-22 canlı UX denetimi: şablon çeşitlilik koruması
+  group('şablon çeşitlilik koruması', () {
+    test('no single 4-word prefix accounts for more than 20% of bank', () {
+      // Tüm soruların prompt'larından ilk 4 kelimeyi al
+      final prefixCounts = <String, int>{};
+      for (final q in offlineQuestionBank) {
+        final words = q.prompt.split(RegExp(r'\s+'));
+        if (words.length < 4) continue;
+        final prefix = words.sublist(0, 4).join(' ');
+        prefixCounts[prefix] = (prefixCounts[prefix] ?? 0) + 1;
+      }
+
+      final totalCount = offlineQuestionBank.length;
+      // Eşik: bankanın %20'si — mevcut en yoğun önek ~%17 (400/2347).
+      // Bu eşik mevcut bankayla geçer ama gelecekte kalıp soru yığını
+      // eklenirse kırılır.
+      const maxAllowedShare = 0.20;
+      final maxAllowedCount = (totalCount * maxAllowedShare).ceil();
+
+      final sorted = prefixCounts.entries.toList()
+        ..sort((a, b) => b.value.compareTo(a.value));
+      final top = sorted.first;
+
+      expect(
+        top.value,
+        lessThanOrEqualTo(maxAllowedCount),
+        reason:
+            'Önek "${top.key}" bankanın %${(top.value / totalCount * 100).toStringAsFixed(1)}\'ini '
+            'oluşturuyor ($top.value/$totalCount). İzin verilen: '
+            '%${(maxAllowedShare * 100).toStringAsFixed(0)} ($maxAllowedCount). '
+            'Şablon çeşitliliğini artırmak için farklı kalıplar kullanın.',
+      );
+    });
+  });
 }

@@ -22,7 +22,7 @@ final List<_Rule> _rules = [
     (m) => 'Peyva "${m[1]}" tê wateya "${m[2]}".',
   ),
   // 'Doğru yanıt: doğru.'
-  _Rule(RegExp(r'^Doğru yanıt: ([^.]+)\.$'), (m) => 'Bersiva rast: ${m[1]}.'),
+  _Rule(RegExp(r'^Doğru yanıt: ([^.]+)\.$'), (m) => 'Bersivên rast: ${m[1]}.'),
   // ''çîrok' Kurmancîde hikâye/anlatı anlamına gelir.'
   _Rule(
     RegExp(r"^'([^']+)' Kurmancîde ([^.]+) anlamına gelir\.$"),

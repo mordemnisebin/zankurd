@@ -32,31 +32,82 @@ class TournamentBracketWidget extends StatelessWidget {
     if (bracket.rounds.isEmpty) return const SizedBox.shrink();
 
     final totalRounds = bracket.rounds.length;
-    // Horizontal scroll for mobile: the bracket can be wide.
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+
+    // 2026-07-22 canlı UX denetimi: bracket yatay scroll düzeltmesi
+    // IntrinsicHeight kaldırıldı (double-pass layout önlendi),
+    // dinamik kart genişliği + sağ kenar fade overlay eklendi.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Dinamik kart genişliği: mevcut alanı turlara böl, clamp(120, 160)
+        const connectorWidth = 28.0;
+        final totalConnectorWidth = (totalRounds - 1) * connectorWidth;
+        final availableForCards = constraints.maxWidth - totalConnectorWidth;
+        final cardWidth = (availableForCards / totalRounds).clamp(120.0, 160.0);
+
+        // Minimum yükseklik: ilk turdaki en fazla maç sayısına göre hesapla
+        final maxMatches = bracket.rounds.first.matches.length;
+        const cardHeight = 100.0; // tahmini kart yüksekliği (header + 2 oyuncu + padding)
+        final minBracketHeight = maxMatches * cardHeight + 64.0;
+
+        return Stack(
           children: [
-            for (int i = 0; i < totalRounds; i++) ...[
-              if (i > 0)
-                _ConnectorColumn(roundIndex: i, roundCount: totalRounds),
-              _RoundColumn(
-                round: bracket.rounds[i],
-                roundName: _roundNames[i],
-                userId: userId,
-                ku: ku,
-                isActive: i == bracket.currentRound,
-                isCompleted: i < bracket.currentRound,
-                matchCount: bracket.rounds[i].matches.length,
-                onTapMatch: (match) => onTapMatch?.call(match, i),
+            // Yatay kaydırılabilir bracket
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+              child: SizedBox(
+                height: minBracketHeight,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (int i = 0; i < totalRounds; i++) ...[
+                      if (i > 0)
+                        _ConnectorColumn(
+                          roundIndex: i,
+                          roundCount: totalRounds,
+                          bracketHeight: minBracketHeight,
+                        ),
+                      _RoundColumn(
+                        round: bracket.rounds[i],
+                        roundName: _roundNames[i],
+                        userId: userId,
+                        ku: ku,
+                        isActive: i == bracket.currentRound,
+                        isCompleted: i < bracket.currentRound,
+                        matchCount: bracket.rounds[i].matches.length,
+                        cardWidth: cardWidth,
+                        bracketHeight: minBracketHeight,
+                        onTapMatch: (match) => onTapMatch?.call(match, i),
+                      ),
+                    ],
+                  ],
+                ),
               ),
-            ],
+            ),
+            // 2026-07-22 canlı UX denetimi: yatay scroll ipucu — sağ kenar gradyanı
+            Positioned(
+              top: 0,
+              right: 0,
+              bottom: 0,
+              width: 32,
+              child: IgnorePointer(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.0),
+                        Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.85),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -71,6 +122,8 @@ class _RoundColumn extends StatelessWidget {
     required this.isActive,
     required this.isCompleted,
     required this.matchCount,
+    required this.cardWidth,
+    required this.bracketHeight,
     required this.onTapMatch,
   });
 
@@ -81,79 +134,96 @@ class _RoundColumn extends StatelessWidget {
   final bool isActive;
   final bool isCompleted;
   final int matchCount;
+  final double cardWidth;
+  final double bracketHeight;
   final void Function(TournamentMatch match) onTapMatch;
 
   @override
   Widget build(BuildContext context) {
     final spacingFactor = matchCount <= 2 ? 3.0 : (matchCount <= 4 ? 1.5 : 0.7);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        // Round header
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-          decoration: BoxDecoration(
-            color: isActive
-                ? AppTheme.accent.withValues(alpha: 0.2)
-                : isCompleted
-                ? AppTheme.gold.withValues(alpha: 0.15)
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            border: isActive
-                ? Border.all(color: AppTheme.accent.withValues(alpha: 0.5))
-                : isCompleted
-                ? Border.all(color: AppTheme.gold.withValues(alpha: 0.4))
-                : null,
-          ),
-          child: Text(
-            roundName,
-            style: AppTypography.caption.copyWith(
+    return SizedBox(
+      height: bracketHeight,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          // Round header
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+            decoration: BoxDecoration(
               color: isActive
-                  ? AppTheme.accent
+                  ? AppTheme.accent.withValues(alpha: 0.2)
                   : isCompleted
-                  ? AppTheme.gold
-                  : AppTheme.textMutedColor(context),
-              fontWeight: FontWeight.w800,
+                  ? AppTheme.gold.withValues(alpha: 0.15)
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+              border: isActive
+                  ? Border.all(color: AppTheme.accent.withValues(alpha: 0.5))
+                  : isCompleted
+                  ? Border.all(color: AppTheme.gold.withValues(alpha: 0.4))
+                  : null,
+            ),
+            child: Text(
+              roundName,
+              style: AppTypography.caption.copyWith(
+                color: isActive
+                    ? AppTheme.accent
+                    : isCompleted
+                    ? AppTheme.gold
+                    : AppTheme.textMutedColor(context),
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ),
-        ),
-        // Match cards centered in available space
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              for (final match in round.matches)
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: spacingFactor * 8),
-                  child: _BracketMatchCard(
-                    match: match,
-                    userId: userId,
-                    ku: ku,
-                    onTap: () => onTapMatch(match),
-                  ),
-                ),
-            ],
+          // Match cards below header — scrollable to handle varying content
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(vertical: spacingFactor * 4),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (final match in round.matches)
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: spacingFactor * 4),
+                      child: _BracketMatchCard(
+                        match: match,
+                        userId: userId,
+                        ku: ku,
+                        cardWidth: cardWidth,
+                        onTap: () => onTapMatch(match),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
 /// Connector lines between rounds showing the bracket links.
 class _ConnectorColumn extends StatelessWidget {
-  const _ConnectorColumn({required this.roundIndex, required this.roundCount});
+  const _ConnectorColumn({
+    required this.roundIndex,
+    required this.roundCount,
+    required this.bracketHeight,
+  });
 
   final int roundIndex;
   final int roundCount;
+  final double bracketHeight;
 
   @override
   Widget build(BuildContext context) {
+    // 2026-07-22 canlı UX denetimi: bracketHeight doğrudan kullanılıyor
+    // (IntrinsicHeight + double.infinity kaldırıldı)
     return SizedBox(
       width: 28,
+      height: bracketHeight,
       child: CustomPaint(
-        size: const Size(28, double.infinity),
+        size: Size(28, bracketHeight),
         painter: _ConnectorPainter(
           roundIndex: roundIndex,
           roundCount: roundCount,
@@ -219,12 +289,14 @@ class _BracketMatchCard extends StatelessWidget {
     required this.match,
     required this.userId,
     required this.ku,
+    required this.cardWidth,
     required this.onTap,
   });
 
   final TournamentMatch match;
   final String userId;
   final bool ku;
+  final double cardWidth;
   final VoidCallback onTap;
 
   @override
@@ -237,8 +309,6 @@ class _BracketMatchCard extends StatelessWidget {
 
     final p1Won = isCompleted && match.winnerId == match.playerOneId;
     final p2Won = isCompleted && match.winnerId == match.playerTwoId;
-
-    const cardWidth = 150.0;
 
     return Semantics(
       button: true,

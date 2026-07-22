@@ -288,125 +288,218 @@ class _StatTile extends StatelessWidget {
   }
 }
 
-class _AchievementShowcase extends StatelessWidget {
-  const _AchievementShowcase({required this.achievements, required this.isKu});
+
+// 2026-07-22 canlı UX denetimi: rozet bölümleri birleştirme
+// AchievementStore ve BadgeService'den gelen rozetleri tek başlık + tek sayaç
+// altında birleştiren widget.
+class _UnifiedRewardsSection extends StatelessWidget {
+  const _UnifiedRewardsSection({
+    required this.achievements,
+    required this.badgeUnlocked,
+    required this.isKu,
+  });
 
   final List<Achievement> achievements;
+  final Set<String> badgeUnlocked;
   final bool isKu;
 
-  void _showAllAchievementsSheet(BuildContext context) {
+  void _showAllSheet(BuildContext context) {
+    final badgeDefs = BadgeService.badgeDefinitions.entries.toList();
+    final achDefs = AchievementStore.definitions;
     showModalBottomSheet(
       context: context,
-      backgroundColor: AppTheme.surfaceColor(context),
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        side: BorderSide(color: AppTheme.borderColor(context)),
-      ),
-      builder: (sheetContext) {
-        return Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: AppTheme.surfaceColor(context),
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return DraggableScrollableSheet(
+          initialChildSize: 0.75,
+          minChildSize: 0.5,
+          maxChildSize: 0.95,
+          builder: (ctx, scrollCtrl) {
+            return Container(
+              decoration: BoxDecoration(
+                color: AppTheme.surfaceColor(context),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+              ),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+              child: Column(
                 children: [
-                  Text(
-                    isKu ? 'Hemû Rozet' : 'Tüm Rozetler',
-                    style: AppTypography.heading2.copyWith(
-                      color: AppTheme.textPrimaryColor(context),
-                      fontSize: 20,
+                  Container(
+                    width: 40,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  IconButton(
-                    icon: const Icon(AppIcons.xmark),
-                    tooltip: isKu ? 'Bigire' : 'Kapat',
-                    onPressed: () => Navigator.pop(sheetContext),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      const Icon(AppIcons.medal, color: AppTheme.gold),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          isKu ? 'Hemû Destkeftî' : 'Tüm Başarılar',
+                          style: AppTypography.heading2.copyWith(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => Navigator.pop(ctx),
+                        tooltip: isKu ? 'Bigire' : 'Kapat',
+                        icon: const Icon(AppIcons.xmark),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: ListView(
+                      controller: scrollCtrl,
+                      children: [
+                        // --- Başarılar bölümü ---
+                        if (achDefs.isNotEmpty) ...[
+                          Text(
+                            isKu ? 'Destkeftî' : 'Başarılar',
+                            style: AppTypography.bodyLarge.copyWith(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: 2.8,
+                            ),
+                            itemCount: achDefs.length,
+                            itemBuilder: (c, i) {
+                              final def = achDefs[i];
+                              final unlocked = achievements.any(
+                                (a) => a.id == def.id,
+                              );
+                              final color = unlocked
+                                  ? AppTheme.gold
+                                  : AppTheme.textMutedColor(context);
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: unlocked
+                                      ? AppTheme.gold.withValues(alpha: 0.08)
+                                      : AppTheme.surfaceHiColor(context)
+                                          .withValues(alpha: 0.5),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: unlocked
+                                        ? AppTheme.gold.withValues(alpha: 0.25)
+                                        : AppTheme.borderColor(context),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(def.icon, color: color, size: 20),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            def.title(isKu),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style:
+                                                AppTypography.caption.copyWith(
+                                              color: unlocked
+                                                  ? AppTheme.textPrimaryColor(
+                                                      context)
+                                                  : AppTheme.textMutedColor(
+                                                      context),
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            def.description(isKu),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style:
+                                                AppTypography.caption.copyWith(
+                                              color:
+                                                  AppTheme.textMutedColor(
+                                                      context),
+                                              fontSize: 9,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+                        // --- Rozetler bölümü ---
+                        if (badgeDefs.isNotEmpty) ...[
+                          Text(
+                            isKu ? 'Rozet' : 'Rozetler',
+                            style: AppTypography.bodyLarge.copyWith(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 0.76,
+                            ),
+                            itemCount: badgeDefs.length,
+                            itemBuilder: (c, i) {
+                              final entry = badgeDefs[i];
+                              final data = entry.value;
+                              return BadgeWidget(
+                                badgeId: entry.key,
+                                titleKu: data['titleKu'] ?? '',
+                                titleTr: data['titleTr'] ?? '',
+                                descriptionKu: data['descKu'] ?? '',
+                                descriptionTr: data['descTr'] ?? '',
+                                iconName: data['icon'] ?? 'badge',
+                                isUnlocked:
+                                    badgeUnlocked.contains(entry.key),
+                                isKu: isKu,
+                              );
+                            },
+                          ),
+                        ],
+                      ],
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 2.8,
-                  ),
-                  itemCount: AchievementStore.definitions.length,
-                  itemBuilder: (context, index) {
-                    final definition = AchievementStore.definitions[index];
-                    final isUnlocked = achievements.any(
-                      (a) => a.id == definition.id,
-                    );
-                    final color = isUnlocked
-                        ? AppTheme.gold
-                        : AppTheme.textMutedColor(context);
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isUnlocked
-                            ? AppTheme.gold.withValues(alpha: 0.08)
-                            : AppTheme.surfaceHiColor(
-                                context,
-                              ).withValues(alpha: 0.5),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: isUnlocked
-                              ? AppTheme.gold.withValues(alpha: 0.25)
-                              : AppTheme.borderColor(context),
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(definition.icon, color: color, size: 20),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  definition.title(isKu),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTypography.caption.copyWith(
-                                    color: isUnlocked
-                                        ? AppTheme.textPrimaryColor(context)
-                                        : AppTheme.textMutedColor(context),
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  definition.description(isKu),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTypography.caption.copyWith(
-                                    color: AppTheme.textMutedColor(context),
-                                    fontSize: 9,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
@@ -414,50 +507,11 @@ class _AchievementShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Henüz rozet kazanılmamışsa şerit yerine tek satırlık kompakt kart.
-    if (achievements.isEmpty) {
-      return AppPanel(
-        padding: EdgeInsets.zero,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          onTap: () => _showAllAchievementsSheet(context),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md,
-              vertical: AppSpacing.sm,
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  AppIcons.medal,
-                  color: AppTheme.gold,
-                  size: 20,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    isKu
-                        ? 'Rozet 0/${AchievementStore.definitions.length} — pêşbirkekê biqedîne û rozeta yekem veke'
-                        : 'Rozet 0/${AchievementStore.definitions.length} — bir yarış tamamla, ilk rozeti aç',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: AppTheme.textMutedColor(context),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                Icon(
-                  AppIcons.chevronRight,
-                  color: AppTheme.textMutedColor(context),
-                  size: 18,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
+    final totalAch = AchievementStore.definitions.length;
+    final totalBadge = BadgeService.badgeDefinitions.length;
+    final totalUnlocked = achievements.length + badgeUnlocked.length;
+    final totalAll = totalAch + totalBadge;
+
     return AppPanel(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -467,7 +521,7 @@ class _AchievementShowcase extends StatelessWidget {
               const Icon(AppIcons.medal, color: AppTheme.gold),
               const SizedBox(width: 8),
               Text(
-                isKu ? 'Rozet' : 'Rozetler',
+                isKu ? 'Destkeftî' : 'Başarılar',
                 style: AppTypography.bodyLarge.copyWith(
                   color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w700,
@@ -475,39 +529,43 @@ class _AchievementShowcase extends StatelessWidget {
                 ),
               ),
               const Spacer(),
+              // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
               TextButton(
-                onPressed: () => _showAllAchievementsSheet(context),
+                onPressed: () => _showAllSheet(context),
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
                   minimumSize: const Size(44, 44),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '${achievements.length}/${AchievementStore.definitions.length}',
-                      style: TextStyle(
-                        color: AppTheme.textMutedColor(context),
-                        fontWeight: FontWeight.w800,
+                child: ExcludeSemantics(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '$totalUnlocked/$totalAll',
+                        style: TextStyle(
+                          color: AppTheme.textMutedColor(context),
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 4),
-                    Icon(
-                      AppIcons.chevronRight,
-                      color: AppTheme.textMutedColor(context),
-                      size: 16,
-                    ),
-                  ],
+                      const SizedBox(width: 4),
+                      Icon(
+                        AppIcons.chevronRight,
+                        color: AppTheme.textMutedColor(context),
+                        size: 16,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 12),
-          if (achievements.isEmpty)
+          // Yatay kaydırma: önce başarımlar, sonra rozetler
+          if (achievements.isEmpty && badgeUnlocked.isEmpty)
             Text(
               isKu
-                  ? 'Pêşbirkekê biqedîne û rozeta yekem veke.'
-                  : 'Bir yarış tamamla ve ilk rozetini aç.',
+                  ? 'Pêşbirkekê biqedîne û destkeftiya yekem veke.'
+                  : 'Bir yarış tamamla ve ilk başarımı aç.',
               style: const TextStyle(color: AppTheme.textMuted),
             )
           else
@@ -515,14 +573,56 @@ class _AchievementShowcase extends StatelessWidget {
               height: 38,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: achievements.length,
+                itemCount: achievements.length + badgeUnlocked.length,
                 itemBuilder: (context, index) {
-                  final achievement = achievements[index];
+                  if (index < achievements.length) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: _AchievementChip(
+                        achievement: achievements[index],
+                        isKu: isKu,
+                      ),
+                    );
+                  }
+                  // Badge chip
+                  final badgeIndex = index - achievements.length;
+                  final badgeEntry = BadgeService.badgeDefinitions.entries
+                      .elementAt(badgeIndex);
+                  final data = badgeEntry.value;
+                  final title = isKu
+                      ? (data['titleKu'] ?? '')
+                      : (data['titleTr'] ?? '');
                   return Padding(
                     padding: const EdgeInsets.only(right: 8),
-                    child: _AchievementChip(
-                      achievement: achievement,
-                      isKu: isKu,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTheme.accent.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: AppTheme.accent.withValues(alpha: 0.24),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            AppIcons.star,
+                            color: AppTheme.accent,
+                            size: 18,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            title,
+                            style: AppTypography.caption.copyWith(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

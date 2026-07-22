@@ -180,7 +180,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ),
                               )
                             : const Icon(AppIcons.floppyDisk),
-                        label: Text(ku ? 'Tomar Bike' : 'Kaydet'),
+                        // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+                        label: ExcludeSemantics(
+                          child: Text(ku ? 'Tomar Bike' : 'Kaydet'),
+                        ),
                       ),
                     ),
                   ],
@@ -496,7 +499,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           '• Odeyek Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n'
                           '• Kategorî û Ast: ji 8 kategoriyan û 5 astan hilbijêre.\n'
                           '• Joker 50/50: du bersivên şaş radike.\n'
-                          '• Bersiva rast pûan û coin dide; rêza rast bonus zêde dike.'
+                          '• Bersivên rast pûan û coin dide; rêza rast bonus zêde dike.'
                     : '• Hızlı Yarış: hemen 10 soru cevapla.\n'
                           '• Günün Yarışması: her gün tüm oyunculara aynı 10 soru.\n'
                           '• Oda Kur: kodu arkadaşlarına ver, birlikte yarışın.\n'
@@ -765,9 +768,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     'cihazının sistem ayarlarından ZanKurd bildirimlerini aç.',
         ),
         actions: [
+          // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           FilledButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(ku ? 'Baş e' : 'Tamam'),
+            child: ExcludeSemantics(
+              child: Text(ku ? 'Baş e' : 'Tamam'),
+            ),
           ),
         ],
       ),
@@ -819,14 +825,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     'kapattığında her şey geri gelir.',
         ),
         actions: [
+          // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           TextButton(
             onPressed: () => Navigator.of(dialogCtx).pop(false),
-            child: Text(ku ? 'Betal' : 'Vazgeç'),
+            child: ExcludeSemantics(
+              child: Text(ku ? 'Betal' : 'Vazgeç'),
+            ),
           ),
           FilledButton(
             key: const ValueKey('child-safe-confirm'),
             onPressed: () => Navigator.of(dialogCtx).pop(true),
-            child: Text(ku ? 'Veke' : 'Aç'),
+            // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+            child: ExcludeSemantics(
+              child: Text(ku ? 'Veke' : 'Aç'),
+            ),
           ),
         ],
       ),
@@ -862,13 +874,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
               : 'Bu işlem geri alınamaz. Profil, coin, kaydedilen sorular ve hesabına bağlı kişisel veriler silinir.',
         ),
         actions: [
+          // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           OutlinedButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(ku ? 'Betal' : 'Vazgeç'),
+            child: ExcludeSemantics(
+              child: Text(ku ? 'Betal' : 'Vazgeç'),
+            ),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(ku ? 'Berdewam Bike' : 'Devam Et'),
+            // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+            child: ExcludeSemantics(
+              child: Text(ku ? 'Berdewam Bike' : 'Devam Et'),
+            ),
           ),
         ],
       ),
@@ -963,15 +981,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
               actions: [
+                // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                 OutlinedButton(
                   onPressed: () => Navigator.pop(dialogContext, false),
-                  child: Text(ku ? 'Betal' : 'Vazgeç'),
+                  child: ExcludeSemantics(
+                    child: Text(ku ? 'Betal' : 'Vazgeç'),
+                  ),
                 ),
                 FilledButton(
                   onPressed: canDelete
                       ? () => Navigator.pop(dialogContext, true)
                       : null,
-                  child: Text(ku ? 'Bi Dawî Jê Bibe' : 'Kalıcı Olarak Sil'),
+                  // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+                  child: ExcludeSemantics(
+                    child: Text(ku ? 'Bi Dawî Jê Bibe' : 'Kalıcı Olarak Sil'),
+                  ),
                 ),
               ],
             );

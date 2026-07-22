@@ -156,7 +156,7 @@ class _AppShellState extends State<AppShell> {
                     titleKu: 'Sereke',
                     titleTr: 'Ana Sayfa',
                     descriptionKu:
-                        'Vir e ku tu dest pê dikî: yariyên zû, xelatên rojane û misyonên te li vir in.',
+                        'Vir e ku tu dest pê dikî: yariyên zû, xelatên rojê û misyonên te li vir in.',
                     descriptionTr:
                         'Buradan başlarsın: hızlı oyunlar, günlük ödüller ve görevlerin burada.',
                   ),
@@ -178,6 +178,7 @@ class _AppShellState extends State<AppShell> {
   }
 
   Widget _buildScaffold(BuildContext context, bool ku, double width) {
+    // 2026-07-22 canlı UX denetimi: tablet iki sütun düzeni
     final isDesktop = width >= 768;
 
     final body = IndexedStack(

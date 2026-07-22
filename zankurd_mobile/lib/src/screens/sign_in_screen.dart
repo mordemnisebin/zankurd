@@ -382,6 +382,7 @@ class _SignInScreenState extends State<SignInScreen>
                                         child: Column(
                                           children: [
                                             StyledInputField(
+                                              autovalidateMode: AutovalidateMode.onUserInteraction,
                                               label: context.s(
                                                 'Navnîşana e-peyamê',
                                                 'E-posta adresi',
@@ -417,6 +418,7 @@ class _SignInScreenState extends State<SignInScreen>
                                                     _animationController,
                                                   ),
                                               child: StyledInputField(
+                                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                                 label: context.s(
                                                   'Şîfre',
                                                   'Parola',
@@ -464,20 +466,23 @@ class _SignInScreenState extends State<SignInScreen>
                                                     : () => _resetPassword(
                                                         authProvider,
                                                       ),
-                                                child: Text(
-                                                  context.s(
-                                                    'Şîfre ji bîr kir?',
-                                                    'Parolayı unuttun mu?',
+                                                // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+                                                child: ExcludeSemantics(
+                                                  child: Text(
+                                                    context.s(
+                                                      'Şîfre ji bîr kir?',
+                                                      'Parolayı unuttun mu?',
+                                                    ),
+                                                    style: AppTypography
+                                                        .bodyMedium
+                                                        .copyWith(
+                                                          color:
+                                                              AppTheme.textSubColor(
+                                                                context,
+                                                              ),
+                                                          fontSize: 13,
+                                                        ),
                                                   ),
-                                                  style: AppTypography
-                                                      .bodyMedium
-                                                      .copyWith(
-                                                        color:
-                                                            AppTheme.textSubColor(
-                                                              context,
-                                                            ),
-                                                        fontSize: 13,
-                                                      ),
                                                 ),
                                               ),
                                             ),
@@ -644,6 +649,7 @@ class _SignInScreenState extends State<SignInScreen>
                                     child: Column(
                                       children: [
                                         StyledInputField(
+                                          autovalidateMode: AutovalidateMode.onUserInteraction,
                                           label: context.s(
                                             'Navnîşana e-peyamê',
                                             'E-posta adresi',
@@ -678,6 +684,7 @@ class _SignInScreenState extends State<SignInScreen>
                                                 _animationController,
                                               ),
                                           child: StyledInputField(
+                                            autovalidateMode: AutovalidateMode.onUserInteraction,
                                             label: context.s('Şîfre', 'Parola'),
                                             labelStyle: authInputLabelStyle,
                                             inputTextStyle: authInputTextStyle,
@@ -720,16 +727,19 @@ class _SignInScreenState extends State<SignInScreen>
                                                 : () => _resetPassword(
                                                     authProvider,
                                                   ),
-                                            child: Text(
-                                              context.s(
-                                                'Şîfre ji bîr kir?',
-                                                'Parolayı unuttun mu?',
-                                              ),
-                                              style: TextStyle(
-                                                color: AppTheme.textSubColor(
-                                                  context,
+                                            // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+                                            child: ExcludeSemantics(
+                                              child: Text(
+                                                context.s(
+                                                  'Şîfre ji bîr kir?',
+                                                  'Parolayı unuttun mu?',
                                                 ),
-                                                fontSize: 13,
+                                                style: TextStyle(
+                                                  color: AppTheme.textSubColor(
+                                                    context,
+                                                  ),
+                                                  fontSize: 13,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -1099,19 +1109,17 @@ class _AuthScrollFrame extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth > 720;
-        final horizontalPadding = constraints.maxWidth < 380
-            ? AppSpacing.md
-            : AppSpacing.lg;
+        const edgePadding = 32.0;
+        // 2026-07-22 canlı UX denetimi: dikey ortalama + padding düzeltmesi
+        // minHeight clamp: klavye açıldığında negatif değer engellenir
         return SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(
-            horizontalPadding,
-            0,
-            horizontalPadding,
-            AppSpacing.lg,
-          ),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: isWide ? 960 : 420),
+          padding: const EdgeInsets.all(edgePadding),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: isWide ? 960 : 420,
+              minHeight: (constraints.maxHeight - (edgePadding * 2)).clamp(0.0, double.infinity),
+            ),
+            child: Center(
               child: child,
             ),
           ),

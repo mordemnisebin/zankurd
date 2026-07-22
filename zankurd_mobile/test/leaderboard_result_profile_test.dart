@@ -439,6 +439,7 @@ void main() {
   testWidgets('profile screen shows unlocked achievement showcase', (
     tester,
   ) async {
+    // 2026-07-22 canlı UX denetimi: rozet birleştirme test güncellemesi
     final store = await AchievementStore.load();
     await store.recordQuizResult(
       category: 'Ziman',
@@ -456,14 +457,16 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    // M13: _AchievementShowcase + BadgeCollectionSection → _UnifiedRewardsSection
+    // başlık artık 'Başarılar' (eski 'Rozetler' değil).
     await tester.scrollUntilVisible(
-      find.text('Rozetler'),
+      find.text('Başarılar'),
       120,
       scrollable: find.byType(Scrollable).first,
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Rozetler'), findsOneWidget);
+    expect(find.text('Başarılar'), findsOneWidget);
     expect(find.text('İlk Oyun'), findsOneWidget);
   });
 

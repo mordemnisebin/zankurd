@@ -411,16 +411,27 @@ class _TournamentScreenState extends State<TournamentScreen> {
     final userMatch = _userMatch;
     final roundNames = _roundNames(ku);
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.page,
-        AppSpacing.sm,
-        AppSpacing.page,
-        AppSpacing.lg,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    // 2026-07-22 canlı UX denetimi: dikey ortalama
+    // IntrinsicHeight KULLANILMADI: LayoutBuilder içinde IntrinsicHeight
+    // "LayoutBuilder does not support returning intrinsic dimensions"
+    // hatası veriyor. ConstrainedBox(minHeight) tek başına yeterli;
+    // Column varsayılan mainAxisSize.max ile viewport'tan uzun olduğunda
+    // scroll çalışır, kısa olduğunda mainAxisAlignment.center etkili olur.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.page,
+            AppSpacing.sm,
+            AppSpacing.page,
+            AppSpacing.lg,
+          ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
           ScreenIdentityHeader(
             title: ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
             // Tur bilgisi yalnızca maç kartında gösterilir; burada tekrar
@@ -496,8 +507,11 @@ class _TournamentScreenState extends State<TournamentScreen> {
             const SizedBox(height: AppSpacing.sm),
             ..._standings.map((s) => _StandingRow(s: s)),
           ],
-        ],
-      ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -532,15 +546,20 @@ class _LobbyView extends StatelessWidget {
         ? 'Ji kûpayê re maye: $remainingText'
         : 'Turnuvaya kalan: $remainingText';
 
-    // Dikey ortalama yok: hero kart üstten başlar, boşluk alta kalır.
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.lg,
-        AppSpacing.lg,
-        AppSpacing.lg,
-        AppSpacing.lg,
-      ),
-      children: [
+    // 2026-07-22 canlı UX denetimi: dikey ortalama — hero kart viewport kısa
+    // kaldığında alt boşluk yerine dikeyde ortalanır; içerik uzunsa scroll.
+    // IntrinsicHeight KULLANILMADI: LayoutBuilder içinde IntrinsicHeight
+    // "LayoutBuilder does not support returning intrinsic dimensions"
+    // hatası veriyor. ConstrainedBox(minHeight) tek başına yeterli.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Container(
@@ -670,7 +689,7 @@ class _LobbyView extends StatelessWidget {
                     const SizedBox(height: AppSpacing.xxs),
                     Text(
                       ku
-                          ? 'Bi botan re pêşbikeve — şampiyon kûpayê digire!'
+                          ? 'Bi botan re pêş bikeve — şampiyon kûpayê digire!'
                           : 'Bot rakiplere karşı yarış — şampiyon kupayı alır!',
                       textAlign: TextAlign.center,
                       style: AppTypography.caption.copyWith(
@@ -706,7 +725,11 @@ class _LobbyView extends StatelessWidget {
             ),
           ),
         ),
-      ],
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

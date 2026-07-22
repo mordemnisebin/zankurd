@@ -60,7 +60,22 @@ class _LevelScreenState extends State<LevelScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        scrolledUnderElevation: 4,
         iconTheme: const IconThemeData(color: Colors.white),
+        // 2026-07-22 canlı UX denetimi: geri butonu görünürlük düzeltmesi
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
+              color: Colors.black26,
+              shape: BoxShape.circle,
+            ),
+            child: BackButton(
+              color: Colors.white,
+              onPressed: () => Navigator.of(context).maybePop(),
+            ),
+          ),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(

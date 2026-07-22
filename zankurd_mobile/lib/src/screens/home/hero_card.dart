@@ -130,11 +130,14 @@ class HeroCard extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: onQuickMatch,
                     icon: const Icon(AppIcons.bolt, color: AppTheme.brandGreen),
-                    label: Text(
-                      isKu ? '1vs1 — Dest pê bike' : '1vs1 — Hemen yarış',
-                      style: AppTypography.bodyLarge.copyWith(
-                        color: AppTheme.brandGreen,
-                        fontWeight: FontWeight.w800,
+                    label: ExcludeSemantics(
+                      // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+                      child: Text(
+                        isKu ? '1vs1 — Dest pê bike' : '1vs1 — Hemen yarış',
+                        style: AppTypography.bodyLarge.copyWith(
+                          color: AppTheme.brandGreen,
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -163,14 +166,17 @@ class HeroCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                           ),
                         ),
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            isKu ? 'Oda ava bike' : 'Oda kur',
-                            maxLines: 1,
-                            style: AppTypography.bodyMedium.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                        // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+                        child: ExcludeSemantics(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              isKu ? 'Oda ava bike' : 'Oda kur',
+                              maxLines: 1,
+                              style: AppTypography.bodyMedium.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                         ),
@@ -191,14 +197,17 @@ class HeroCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                           ),
                         ),
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            isKu ? 'Kodê tevlî bibe' : 'Kodla katıl',
-                            maxLines: 1,
-                            style: AppTypography.bodyMedium.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                        // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+                        child: ExcludeSemantics(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              isKu ? 'Kodê tevlî bibe' : 'Kodla katıl',
+                              maxLines: 1,
+                              style: AppTypography.bodyMedium.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                         ),

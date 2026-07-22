@@ -260,22 +260,26 @@ class _SubcategoryCard extends StatelessWidget {
   final LinearGradient gradient;
   final VoidCallback onTap;
 
+  // 2026-07-22 canlı UX denetimi: alt kategori ikon eşleştirmesi
   IconData _iconForId(String id) {
     return switch (id) {
+      // ── Ziman ──
       'reziman' ||
       'diroka_kevn' ||
       'helbest' ||
-      'ciya_cem' ||
-      'dengbeji' ||
+      'dastangotin' ||
       'diroka_siyasi' ||
       'demokratik' => AppIcons.book,
+      // ── Çand & Edebiyat ──
       'peyvnasi' ||
+      'folklor' ||
       'diroka_nujen' ||
       'klasik' ||
       'bajar_ci' ||
       'nujen' ||
       'siyaseta_nujen' ||
       'ekoloji' => AppIcons.bookOpen,
+      // ── Yazım & Sanat ──
       'rastnivisin' ||
       'sexsiyet' ||
       'roman' ||
@@ -283,6 +287,18 @@ class _SubcategoryCard extends StatelessWidget {
       'amur' ||
       'tevger' ||
       'jineoloji' => AppIcons.pen,
+      // ── Kutlama & Gelenek ──
+      'cejn' => AppIcons.champagneGlasses,
+      // ── Bilmece & Zekâ ──
+      'tistonek' => AppIcons.lightbulb,
+      // ── Coğrafya ──
+      'ciya_cem' => AppIcons.mountain,
+      // ── Müzik ──
+      'dengbeji' => AppIcons.microphone,
+      // ── Teknoloji ──
+      'bingehên_teknolojiyê' => AppIcons.gear,
+      'programkirin' => AppIcons.robot,
+      'dijital_internet' => AppIcons.globe,
       _ => AppIcons.bookmark,
     };
   }

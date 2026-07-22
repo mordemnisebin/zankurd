@@ -391,7 +391,7 @@ class _TimeoutNotice extends StatelessWidget {
     // Süre dolduğunda şıklar zaten kilitlenir (answered=true); bu bant
     // geri bildirimi netleştirir: süre bitti + doğru cevap görünür.
     final label = isKu
-        ? 'Dem qediya! Bersiva rast: $correctAnswer'
+        ? 'Dem qediya! Bersivên rast: $correctAnswer'
         : 'Süre doldu! Doğru cevap: $correctAnswer';
     return Semantics(
       key: const ValueKey('quiz-timeout-notice'),
@@ -1508,7 +1508,7 @@ class _ExplanationBox extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                isKu ? 'Bersiva rast' : 'Doğru cevap',
+                                isKu ? 'Bersivên rast' : 'Doğru cevap',
                                 style: AppTypography.caption.copyWith(
                                   color: AppTheme.correct,
                                   fontWeight: FontWeight.w800,

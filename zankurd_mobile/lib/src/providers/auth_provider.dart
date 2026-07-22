@@ -150,6 +150,22 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
+  // 2026-07-22 canlı UX denetimi: misafir hesap yükseltme
+  /// Misafir (anonim) hesabı e-posta/şifre ile kalıcı hesaba yükseltir.
+  ///
+  /// Supabase `updateUser` API'sini kullanır. Başarılı olursa [isGuest]
+  /// otomatik olarak `false` döner. Hata durumunda exception fırlatır.
+  Future<bool> upgradeGuestAccount({
+    required String email,
+    required String password,
+  }) {
+    return _run((client) async {
+      await client.auth.updateUser(
+        UserAttributes(email: email, password: password),
+      );
+    });
+  }
+
   Future<bool> resetPassword(String email) {
     return _run(
       (client) =>

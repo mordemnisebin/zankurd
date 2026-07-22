@@ -233,9 +233,12 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
           );
         },
         icon: const Icon(AppIcons.circlePlay, size: 22),
-        label: Text(
-          context.s('Pirsên Tomarkirî Bilîze', 'Kaydedilen Soruları Oyna'),
-          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+        // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
+        label: ExcludeSemantics(
+          child: Text(
+            context.s('Pirsên Tomarkirî Bilîze', 'Kaydedilen Soruları Oyna'),
+            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+          ),
         ),
       ),
     );

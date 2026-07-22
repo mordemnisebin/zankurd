@@ -1,0 +1,6 @@
+role,physical_records
+candidate_pool,17551
+historical_snapshot,61764
+quarantine,20000
+runtime_primary,2347
+runtime_secondary,20

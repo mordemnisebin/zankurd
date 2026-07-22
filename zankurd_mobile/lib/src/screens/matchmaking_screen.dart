@@ -632,7 +632,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               const SizedBox(height: 8),
               Text(
                 ku
-                    ? 'Bi hevalan re an bi lîstikvanên din re bi awayekî zindî pêşbikeve.'
+                    ? 'Bi hevalan re an bi lîstikvanên din re bi awayekî zindî pêş bikeve.'
                     : 'Arkadaşlarınla veya diğer oyuncularla canlı yarış.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
