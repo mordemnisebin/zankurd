@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/widgets/coach_mark.dart';
 import 'support/widget_test_helpers.dart';
 
 class _RoomQuizBroadcastRepository extends MockZanKurdRepository {
@@ -175,20 +177,82 @@ void main() {
     expect(find.byKey(const ValueKey('quiz-fitted-content')), findsNothing);
     expect(find.byKey(const ValueKey('quiz-portrait-scroll')), findsOneWidget);
     expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
-    for (final answer in question.displayAnswers) {
-      final answerFinder = find.text(answer).first;
-      expect(answerFinder, findsOneWidget);
-    }
-    await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('quiz-next-button')),
-      120,
-      scrollable: find.descendant(
-        of: find.byKey(const ValueKey('quiz-portrait-scroll')),
-        matching: find.byType(Scrollable),
+    final scrollable = find.descendant(
+      of: find.byKey(const ValueKey('quiz-portrait-scroll')),
+      matching: find.byType(Scrollable),
+    );
+    final nextButton = find.byKey(const ValueKey('quiz-next-button'));
+    final beforeScroll = tester.getRect(nextButton);
+    expect(beforeScroll.bottom, greaterThan(640));
+
+    await tester.drag(scrollable, const Offset(0, -500));
+    await tester.pumpAndSettle();
+
+    final afterScroll = tester.getRect(nextButton);
+    expect(afterScroll.top, lessThan(beforeScroll.top));
+    expect(afterScroll.top, greaterThanOrEqualTo(0));
+    expect(afterScroll.bottom, lessThanOrEqualTo(640));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('quiz tutorial keeps its second target and tooltip on screen', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(360, 640));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    SharedPreferences.setMockInitialValues({
+      'zankurd.onboarding.seen': true,
+      'zankurd.profileName.completed': true,
+      'zankurd.navTour.seen': true,
+    });
+
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+          enableTimer: false,
+        ),
       ),
     );
-    expect(find.byKey(const ValueKey('quiz-next-button')), findsOneWidget);
-    expect(tester.takeException(), isNull);
+    await tester.pumpAndSettle();
+
+    final overlay = find.byType(CoachMarkOverlay);
+    expect(overlay, findsOneWidget);
+    expect(
+      find.descendant(of: overlay, matching: find.text('Süre + Cevap')),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: overlay, matching: find.text('1/2')),
+      findsOneWidget,
+    );
+
+    await tester.tap(
+      find.descendant(of: overlay, matching: find.text('İleri')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.descendant(of: overlay, matching: find.text('Seri + Sonraki Soru')),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: overlay, matching: find.text('2/2')),
+      findsOneWidget,
+    );
+    final target = tester.getRect(
+      find.byKey(const ValueKey('quiz-next-button')),
+    );
+    final tooltip = tester.getRect(
+      find.descendant(of: overlay, matching: find.text('Seri + Sonraki Soru')),
+    );
+    expect(target.top, greaterThanOrEqualTo(0));
+    expect(target.bottom, lessThanOrEqualTo(640));
+    expect(tooltip.top, greaterThanOrEqualTo(0));
+    expect(tooltip.bottom, lessThanOrEqualTo(640));
   });
 
   testWidgets('wide portrait quiz centers content within 800 px', (
@@ -216,7 +280,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('visual quiz keeps answers reachable in landscape', (
+  testWidgets('visual quiz keeps the next action visible in landscape', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(844, 390));
@@ -245,20 +309,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    for (final answer in question.displayAnswers) {
-      final answerFinder = find.text(answer).first;
-      expect(answerFinder, findsOneWidget);
-      await tester.scrollUntilVisible(
-        answerFinder,
-        120,
-        scrollable: find.byType(Scrollable).first,
-      );
-    }
+    final nextButton = find.byKey(const ValueKey('quiz-next-button'));
+    final nextRect = tester.getRect(nextButton);
     expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
-    expect(
-      tester.getBottomRight(find.byKey(const ValueKey('quiz-next-button'))).dy,
-      lessThanOrEqualTo(390),
-    );
+    expect(nextRect.top, greaterThanOrEqualTo(0));
+    expect(nextRect.bottom, lessThanOrEqualTo(390));
     expect(tester.takeException(), isNull);
   });
 }

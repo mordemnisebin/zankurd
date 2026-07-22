@@ -164,7 +164,7 @@ class _AppShellState extends State<AppShell> {
                     targetKey: _playNavKey,
                     icon: AppIcons.gamepad,
                     titleKu: 'Pêşbazî',
-                    titleTr: 'Oyna',
+                    titleTr: 'Yarış',
                     descriptionKu: 'Hemû pêşbirktî û lîstikên te li vir in.',
                     descriptionTr:
                         'Günlük yarışma, 1v1, oda ve turnuvaların merkezi.',
@@ -290,11 +290,11 @@ class _AppShellState extends State<AppShell> {
       indicatorColor: AppTheme.brandGreen.withValues(alpha: 0.15),
       destinations: [
         NavigationRailDestination(
-          icon: KeyedSubtree(
+          icon: const Icon(AppIcons.house),
+          selectedIcon: KeyedSubtree(
             key: _homeNavKey,
             child: const Icon(AppIcons.house),
           ),
-          selectedIcon: const Icon(AppIcons.house),
           label: Text(ku ? 'Sereke' : 'Ana Sayfa'),
         ),
         NavigationRailDestination(
@@ -376,11 +376,11 @@ class _AppShellState extends State<AppShell> {
           onDestinationSelected: _selectTab,
           destinations: [
             NavigationDestination(
-              icon: KeyedSubtree(
+              icon: const Icon(AppIcons.house),
+              selectedIcon: KeyedSubtree(
                 key: _homeNavKey,
                 child: const Icon(AppIcons.house),
               ),
-              selectedIcon: const Icon(AppIcons.house),
               label: ku ? 'Sereke' : 'Ana Sayfa',
             ),
             NavigationDestination(

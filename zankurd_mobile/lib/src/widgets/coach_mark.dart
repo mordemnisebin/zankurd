@@ -30,6 +30,7 @@ class CoachMarkOverlay extends StatefulWidget {
   const CoachMarkOverlay({
     required this.steps,
     required this.onFinished,
+    this.onBeforeStep,
     this.isKu = false,
     this.ancestorKey,
     super.key,
@@ -37,6 +38,10 @@ class CoachMarkOverlay extends StatefulWidget {
 
   final List<CoachMarkStep> steps;
   final VoidCallback onFinished;
+
+  /// Bir sonraki adım ölçülmeden önce çalışır; hedefi kaydırılabilir bir
+  /// alanda görünür kılmak isteyen turlar için kullanılır.
+  final Future<void> Function(int nextIndex)? onBeforeStep;
   final bool isKu;
 
   /// Hedef konumunun göreceli olarak hesaplanacağı üst widget'ın key'i.
@@ -89,13 +94,16 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
     });
   }
 
-  void _next() {
+  Future<void> _next() async {
     if (_index >= widget.steps.length - 1) {
       widget.onFinished();
       return;
     }
+    final nextIndex = _index + 1;
+    await widget.onBeforeStep?.call(nextIndex);
+    if (!mounted) return;
     setState(() {
-      _index++;
+      _index = nextIndex;
       _rect = null;
     });
     _scheduleMeasure();
@@ -137,7 +145,9 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
           children: [
             Positioned.fill(
               child: GestureDetector(
-                onTap: _next,
+                onTap: () {
+                  _next();
+                },
                 child: CustomPaint(
                   painter: _SpotlightPainter(highlightRect),
                   size: Size.infinite,
@@ -154,7 +164,9 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
                 index: _shownCount - 1,
                 total: widget.steps.length,
                 isKu: widget.isKu,
-                onNext: _next,
+                onNext: () {
+                  _next();
+                },
                 onSkip: widget.onFinished,
               ),
             ),

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,23 +15,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test(
-    'nav turu iki adım taşır ve tamamlanınca mevcut seen anahtarını yazar',
-    () {
-      final source = File('lib/src/screens/app_shell.dart').readAsStringSync();
-
-      expect(RegExp(r'CoachMarkStep\(').allMatches(source), hasLength(2));
-      expect(source, contains("titleKu: 'Sereke'"));
-      expect(source, contains("titleTr: 'Ana Sayfa'"));
-      expect(source, contains("titleKu: 'Pêşbazî'"));
-      expect(source, contains("titleTr: 'Oyna'"));
-      expect(source, isNot(contains("titleTr: 'Profil'")));
-      expect(source, contains('onFinished: _finishNavTour'));
-      expect(source, contains('setBool(_navTourSeenKey, true)'));
-    },
-  );
-
-  testWidgets('nav turu atlanınca görülmüş kalır ve tekrar açılmaz', (
+  testWidgets('nav turu iki adımı gösterir, tamamlanır ve tekrar açılmaz', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(390, 844);
@@ -45,7 +27,38 @@ void main() {
       'zankurd.profileName.completed': true,
     });
     await pumpTour(tester);
-    await tester.tap(find.text('Atla'));
+    final overlay = find.byType(CoachMarkOverlay);
+    expect(overlay, findsOneWidget);
+    expect(
+      find.descendant(of: overlay, matching: find.text('Ana Sayfa')),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: overlay, matching: find.text('1/2')),
+      findsOneWidget,
+    );
+
+    await tester.tap(
+      find.descendant(of: overlay, matching: find.text('İleri')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.descendant(of: overlay, matching: find.text('Yarış')),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: overlay, matching: find.text('2/2')),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: overlay, matching: find.text('Profil')),
+      findsNothing,
+    );
+
+    await tester.tap(
+      find.descendant(of: overlay, matching: find.text('Anladım')),
+    );
     await tester.pumpAndSettle();
     final preferences = await SharedPreferences.getInstance();
     expect(preferences.getBool('zankurd.navTour.seen'), isTrue);

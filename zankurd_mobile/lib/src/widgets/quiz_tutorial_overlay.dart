@@ -110,6 +110,17 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
           CoachMarkOverlay(
             isKu: widget.isKu,
             onFinished: _finish,
+            onBeforeStep: (nextIndex) async {
+              if (nextIndex != 1) return;
+              final targetContext = widget.nextButtonKey.currentContext;
+              if (targetContext == null) return;
+              await Scrollable.ensureVisible(
+                targetContext,
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeOut,
+              );
+              await WidgetsBinding.instance.endOfFrame;
+            },
             ancestorKey: _stackKey,
             // Dalga 5: 5 adım 2'ye indirildi. Sayaç + cevaplama tek
             // balonda; joker öğretimi ilk kullanımda contextual ipucu
