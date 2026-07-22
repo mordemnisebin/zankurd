@@ -99,12 +99,12 @@ void main() {
     final roomRepository = _RoomQuizBroadcastRepository();
     addTearDown(roomRepository.controller.close);
     final questions = repository.questions.take(2).toList();
-    final room = GameRoom(
+    const room = GameRoom(
       id: 'online-room',
       name: 'Oda',
       code: 'ZK-ROOM',
       category: 'Ziman',
-      players: const [
+      players: [
         Player(id: 'user', name: 'ZanKurd Oyuncusu', score: 0, state: 'Hazır'),
         Player(id: 'guest', name: 'Misafir', score: 0, state: 'Hazır'),
       ],

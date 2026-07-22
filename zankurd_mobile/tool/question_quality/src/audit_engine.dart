@@ -57,10 +57,12 @@ class AuditEngine {
   const AuditEngine({
     required this.root,
     required this.manifest,
+    this.gateOnly = false,
     this.onProfile,
   });
   final Directory root;
   final SourceManifest manifest;
+  final bool gateOnly;
   final void Function(String stage, Duration elapsed)? onProfile;
 
   AuditResult run() {
@@ -88,7 +90,7 @@ class AuditEngine {
       final path = source.path!.replaceAll('\\', '/');
       final file = File(_absolute(path));
       if (file.existsSync()) {
-        if (source.reportIncluded ||
+        if ((!gateOnly && source.reportIncluded) ||
             source.gateIncluded ||
             source.parser == 'none') {
           selected[path] = source;
@@ -103,7 +105,9 @@ class AuditEngine {
     final paths = selected.keys.toList()..sort();
     for (final path in paths) {
       final source = selected[path]!;
-      if (!source.reportIncluded && !source.gateIncluded) continue;
+      if ((!source.reportIncluded || gateOnly) && !source.gateIncluded) {
+        continue;
+      }
       final file = File(_absolute(path));
       if (!file.existsSync()) continue;
       if (source.gateIncluded) {
@@ -113,26 +117,35 @@ class AuditEngine {
     }
     mark('readers');
 
-    final reportRecords = sourceResults
-        .where((result) => result.source.reportIncluded)
-        .expand((result) => result.records)
-        .toList();
     final gateRecords = sourceResults
         .where((result) => result.source.gateIncluded)
         .expand((result) => result.records)
         .toList();
-    final reportCanonical = canonicalize(reportRecords);
     final gateCanonical = canonicalize(gateRecords);
+    final reportRecords = gateOnly
+        ? gateRecords
+        : sourceResults
+              .where((result) => result.source.reportIncluded)
+              .expand((result) => result.records)
+              .toList();
+    final reportCanonical = gateOnly
+        ? gateCanonical
+        : canonicalize(reportRecords);
     mark('canonicalization');
-    final reportReconciliation = reconcile(reportRecords);
     final gateReconciliation = reconcile(gateRecords);
+    final reportReconciliation = gateOnly
+        ? gateReconciliation
+        : reconcile(reportRecords);
     mark('reconciliation');
-    final reportIssues = runChecks(
-      reportRecords,
-      onProfile: onProfile == null
-          ? null
-          : (stage, elapsed) => onProfile!('report_checks_$stage', elapsed),
-    );
+    final reportIssues = gateOnly
+        ? <AuditIssue>[]
+        : runChecks(
+            reportRecords,
+            onProfile: onProfile == null
+                ? null
+                : (stage, elapsed) =>
+                      onProfile!('report_checks_$stage', elapsed),
+          );
     mark('report_checks');
     final gateIssues = runChecks(
       gateRecords,

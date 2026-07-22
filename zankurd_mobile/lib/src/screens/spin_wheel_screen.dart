@@ -51,7 +51,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       vsync: this,
       duration: const Duration(milliseconds: 3800),
     );
-    _rotation = AlwaysStoppedAnimation(0);
+    _rotation = const AlwaysStoppedAnimation(0);
     _spinController.addListener(() {
       if (_spinController.isAnimating) {
         final angle = _rotation.value;
@@ -142,7 +142,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       _wonAmount = null;
     });
 
-    final rewards = SpinWheelScreen.rewards;
+    const rewards = SpinWheelScreen.rewards;
     int won;
     try {
       won = await widget.repository.awardSpinCoins();
@@ -455,55 +455,56 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       liveRegion: true,
       label: ku ? 'Te $amount coin qezenc kir!' : '$amount coin kazandın!',
       child: ScaleTransition(
-      scale: _prizeScale,
-      child: FadeTransition(
-        opacity: _prizeOpacity,
-        child: AppPanel(
-          gradient: AppTheme.goldGradient,
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
-          child: Row(
-            children: [
-              Container(
-                width: 44,
-                height: 44,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.25),
+        scale: _prizeScale,
+        child: FadeTransition(
+          opacity: _prizeOpacity,
+          child: AppPanel(
+            gradient: AppTheme.goldGradient,
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
+            child: Row(
+              children: [
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withValues(alpha: 0.25),
+                  ),
+                  child: const Icon(
+                    AppIcons.champagneGlasses,
+                    color: Colors.white,
+                    size: 26,
+                  ),
                 ),
-                child: const Icon(
-                  AppIcons.champagneGlasses,
-                  color: Colors.white,
-                  size: 26,
-                ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      ku ? 'Pîroz be!' : 'Tebrikler!',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16,
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        ku ? 'Pîroz be!' : 'Tebrikler!',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      ku
-                          ? '+$amount coin qezenc kir!'
-                          : '+$amount coin kazandın!',
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
+                      const SizedBox(height: 2),
+                      Text(
+                        ku
+                            ? '+$amount coin qezenc kir!'
+                            : '+$amount coin kazandın!',
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -523,39 +524,40 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     return Semantics(
       label: label,
       child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      decoration: BoxDecoration(
-        color: (hasRight ? AppTheme.correct : AppTheme.gold).withValues(
-          alpha: 0.12,
-        ),
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: BoxDecoration(
           color: (hasRight ? AppTheme.correct : AppTheme.gold).withValues(
-            alpha: 0.35,
+            alpha: 0.12,
           ),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            hasRight ? AppIcons.circleCheck : AppIcons.lock,
-            size: 16,
-            color: hasRight ? AppTheme.correct : AppTheme.gold,
-          ),
-          const SizedBox(width: 6),
-          Flexible(
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppTheme.textSubColor(context),
-                fontSize: 12.5,
-                fontWeight: FontWeight.w700,
-              ),
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+          border: Border.all(
+            color: (hasRight ? AppTheme.correct : AppTheme.gold).withValues(
+              alpha: 0.35,
             ),
           ),
-        ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              hasRight ? AppIcons.circleCheck : AppIcons.lock,
+              size: 16,
+              color: hasRight ? AppTheme.correct : AppTheme.gold,
+            ),
+            const SizedBox(width: 6),
+            Flexible(
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppTheme.textSubColor(context),
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -623,10 +625,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                         color: Colors.white,
                       ),
                     )
-                  : Icon(
-                      enabled ? AppIcons.dice : AppIcons.lock,
-                      size: 22,
-                    ),
+                  : Icon(enabled ? AppIcons.dice : AppIcons.lock, size: 22),
               label: Text(
                 _spinning
                     ? (ku ? 'Dizivire...' : 'Dönüyor...')
@@ -671,7 +670,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(AppIcons.clock, color: AppTheme.gold, size: 18),
+              const Icon(AppIcons.clock, color: AppTheme.gold, size: 18),
               const SizedBox(width: 8),
               Text(
                 ku ? 'Dizivirîna nû di:' : 'Yeni çevirme hakkı:',
@@ -833,7 +832,7 @@ class _WheelPainter extends CustomPainter {
       final textPainter = TextPainter(
         text: TextSpan(
           text: '${rewards[i]}',
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w800,
             fontSize: 17,
@@ -841,7 +840,7 @@ class _WheelPainter extends CustomPainter {
               Shadow(
                 color: Colors.black.withValues(alpha: 0.6),
                 blurRadius: 6,
-                offset: Offset(0, 2),
+                offset: const Offset(0, 2),
               ),
             ],
           ),
@@ -866,7 +865,7 @@ class _WheelPainter extends CustomPainter {
     );
 
     // ── LED chasing lights ──
-    final ledCount = 16;
+    const ledCount = 16;
     final ledRadius = outerRadius + 6.0;
 
     for (var i = 0; i < ledCount; i++) {
@@ -926,7 +925,7 @@ class _PointerPainter extends CustomPainter {
       ..lineTo(size.width / 2, size.height)
       ..close();
 
-    final gradient = LinearGradient(
+    const gradient = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: [AppTheme.gold, AppTheme.secondaryAccent],

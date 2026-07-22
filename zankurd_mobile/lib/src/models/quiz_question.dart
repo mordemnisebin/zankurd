@@ -65,6 +65,39 @@ class QuizQuestion {
     };
   }
 
+  String? answerForOptionKey(String? optionKey) {
+    final index = switch (optionKey) {
+      'A' => 0,
+      'B' => 1,
+      'C' => 2,
+      'D' => 3,
+      _ => -1,
+    };
+    return index >= 0 && index < answers.length ? answers[index] : null;
+  }
+
+  QuizQuestion withRevealedAnswer({
+    required String correctAnswer,
+    String? explanation,
+    String? explanationKu,
+    String? explanationTr,
+  }) {
+    return QuizQuestion(
+      id: id,
+      category: category,
+      prompt: prompt,
+      answers: answers,
+      correctAnswer: correctAnswer,
+      explanation: explanation ?? this.explanation,
+      explanationKu: explanationKu ?? this.explanationKu,
+      explanationTr: explanationTr ?? this.explanationTr,
+      type: type,
+      imageUrl: imageUrl,
+      difficulty: difficulty,
+      metadata: metadata,
+    );
+  }
+
   int _stableAnswerOffset(int length) {
     final seed = id.codeUnits.fold<int>(0, (sum, unit) => sum + unit);
     final offset = seed % length;

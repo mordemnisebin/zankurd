@@ -1601,7 +1601,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       currentRound: 0,
       status: 'active',
       totalScore: 0,
-      botWinners: [],
+      botWinners: const [],
       createdAt: DateTime.now(),
     );
     return bracket;
@@ -1617,7 +1617,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       currentRound: 0,
       status: 'active',
       totalScore: 0,
-      botWinners: [],
+      botWinners: const [],
       createdAt: DateTime.now(),
     );
   }

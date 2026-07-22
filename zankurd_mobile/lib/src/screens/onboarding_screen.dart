@@ -268,9 +268,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         curve: Curves.easeOutCubic,
                                       );
                                     },
-                              icon: last
-                                  ? AppIcons.check
-                                  : AppIcons.arrowRight,
+                              icon: last ? AppIcons.check : AppIcons.arrowRight,
                               label: last
                                   ? context.s('Dest pê bike', 'Başla')
                                   : context.s('Piştre', 'Sonraki'),
@@ -325,7 +323,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           ku
               ? 'Pêşbirka Rojê — 10 pirs, xelata rojê'
               : 'Günün Yarışması — 10 soru, günlük ödül',
-          ku ? 'Turnuva — ji bo kûpayê pêşbikeve' : 'Turnuva — kupa için yarış',
+          ku
+              ? 'Kûpa — ji bo serkeftinê pêşbikeve'
+              : 'Turnuva — kupa için yarış',
         ],
       ),
       // 3. slayt: günlük ödüller + "Neden ZanKurd?" değer önerisi birleşti
@@ -349,7 +349,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               ? 'Jokerên stratejîk: 50/50, Demjimêr zêde'
               : 'Stratejik jokerler: 50/50, Süre uzat',
           ku
-              ? 'Turnuvayên rojane — bibe şampiyon'
+              ? 'Kûpayên rojane — bibe şampiyon'
               : 'Günlük turnuvalar — şampiyon ol',
         ],
       ),

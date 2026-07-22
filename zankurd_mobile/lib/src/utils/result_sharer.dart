@@ -57,14 +57,14 @@ class ResultSharer {
           mimeType: 'image/png',
           name: 'zankurd_result.png',
         );
-        await Share.shareXFiles([file], text: text);
+        await SharePlus.instance.share(ShareParams(text: text, files: [file]));
         return;
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'result_share_capture');
       // Görsel paylaşımı başarısız — metne düş.
     }
-    await Share.share(text);
+    await SharePlus.instance.share(ShareParams(text: text));
   }
 
   /// Verilen widget'ı ekran dışında render edip PNG byte'larına çevirir.

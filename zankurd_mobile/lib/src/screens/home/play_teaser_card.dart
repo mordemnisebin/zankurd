@@ -17,6 +17,7 @@ class PlayTeaserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     return Semantics(
+      key: const ValueKey('home-play-teaser'),
       button: true,
       label: ku ? 'Zû bilîze' : 'Hemen oyna',
       child: BouncingButton(
@@ -31,7 +32,9 @@ class PlayTeaserCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppTheme.culturalBrandBg.withValues(alpha: 0.2)),
+                border: Border.all(
+                  color: AppTheme.culturalBrandBg.withValues(alpha: 0.2),
+                ),
               ),
               child: Row(
                 children: [

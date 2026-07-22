@@ -156,7 +156,7 @@ void main() {
 
   group('Contest Logic', () {
     test('Score calculation: correct_count * 100', () {
-      final entry = ContestEntry(
+      const entry = ContestEntry(
         id: 'e1',
         contestId: 'c1',
         userId: 'u1',

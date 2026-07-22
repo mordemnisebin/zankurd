@@ -139,8 +139,8 @@ class _ChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final double labelAreaWidth = 24.0;
-    final double labelAreaHeight = 24.0;
+    const double labelAreaWidth = 24.0;
+    const double labelAreaHeight = 24.0;
     final double chartWidth = size.width - labelAreaWidth;
     final double chartHeight = size.height - labelAreaHeight;
 
@@ -152,7 +152,7 @@ class _ChartPainter extends CustomPainter {
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
 
     // 1. Draw Grid Lines and Y-Axis labels
-    final int gridCount = 4;
+    const int gridCount = 4;
     for (int i = 0; i <= gridCount; i++) {
       final double y = chartHeight * (1.0 - (i / gridCount));
 

@@ -115,7 +115,7 @@ void main() {
     await tester.pumpWidget(shell(AvatarEditorScreen(repository: repo)));
     await tester.pumpAndSettle();
 
-    final titleKey = const ValueKey('avatar-title-Pispor · Ziman');
+    const titleKey = ValueKey('avatar-title-Pispor · Ziman');
     await scrollTo(tester, find.byKey(titleKey));
     await tester.tap(find.byKey(titleKey));
     await tester.pumpAndSettle();

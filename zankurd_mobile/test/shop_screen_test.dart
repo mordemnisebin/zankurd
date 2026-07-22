@@ -68,9 +68,9 @@ void main() {
     expect(find.text('Ekstra Çevirme'), findsOneWidget);
     expect(find.text('Altın Çerçeve'), findsOneWidget);
     expect(find.text('VIP Rozeti'), findsOneWidget);
-    expect(find.text('Joker Paketi'), findsNothing);
-    expect(find.text('Ekstra Can'), findsNothing);
-    expect(find.text('Premium Renkler'), findsNothing);
+    expect(find.text('Joker Paketi'), findsOneWidget);
+    expect(find.text('Ekstra Can'), findsOneWidget);
+    expect(find.text('Premium Renkler'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

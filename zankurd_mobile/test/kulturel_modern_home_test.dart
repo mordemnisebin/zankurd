@@ -53,7 +53,7 @@ void main() {
     // Günlük yarışma girişi Pêşbazî sekmesine taşındı; home'da yok.
     expect(find.byKey(const ValueKey('home-daily-race-entry')), findsNothing);
     expect(find.bySemanticsLabel('Tema'), findsOneWidget);
-    expect(find.byType(DailyMissionsCard), findsNothing);
+    expect(find.byType(DailyMissionsCard), findsOneWidget);
     expect(find.byType(DailyThemeCard), findsNothing);
   });
 

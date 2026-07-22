@@ -133,6 +133,23 @@ void main() {
     expect(runChecks([leak]).map((i) => i.checkId), contains('answer_leak'));
   });
 
+  test('answer leak ignores Rast/Sas true-false answers', () {
+    final trueFalse = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.dart',
+      row: 1,
+      prompt: 'Rast e an şaş e: Kurmancî "kevin" = "eski".',
+      options: const ['Rast', 'Şaş'],
+      correctIndex: 0,
+      correctText: 'Rast',
+    );
+
+    expect(
+      runChecks([trueFalse]).where((i) => i.checkId == 'answer_leak'),
+      isEmpty,
+    );
+  });
+
   test('answer leak ignores answer-instruction wording and quoted example', () {
     final instruction = question(
       sourceId: 'instruction',
@@ -209,6 +226,16 @@ void main() {
     expect(issues.map((i) => i.checkId), isNot(contains('exact_duplicate')));
   });
 
+  test(
+    'exact prompt copies in different sources are reconciled separately',
+    () {
+      final a = question(sourceId: 'a', sourcePath: 'a.csv', row: 1);
+      final b = question(sourceId: 'b', sourcePath: 'b.csv', row: 2, id: 'q2');
+      final issues = runDuplicateChecks([a, b]);
+      expect(issues.map((i) => i.checkId), isNot(contains('exact_duplicate')));
+    },
+  );
+
   test('near duplicate tokenization happens once per record', () {
     final records = List.generate(
       600,
@@ -260,8 +287,12 @@ void main() {
       prompt: 'Şu anki başkan kimdir?',
     );
     expect(
-      runChecks([record]).map((issue) => issue.checkId),
-      contains('dynamic_fact'),
+      runChecks([record]),
+      contains(
+        isA<AuditIssue>()
+            .having((issue) => issue.checkId, 'check', 'dynamic_fact')
+            .having((issue) => issue.severity, 'severity', Severity.warning),
+      ),
     );
   });
 

@@ -43,27 +43,14 @@ void main() {
     expect(sql, contains('grant execute on function public.join_room_by_code'));
   });
 
-  test('question queries include localized explanation columns', () {
-    // explanation_ku/tr kolonları 2026-07-03_reward_hardening.sql ile
-    // canlı DB'ye eklendi; soru kolon listeleri (tek sabit:
-    // _questionColumns) artık ikisini de SEÇMELİ ki DB'ye girilen
-    // dile özel açıklamalar kullanıcıya ulaşsın.
+  test('solo question loaders never fetch answer-bearing database rows', () {
     final source = File(
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
 
-    final columnLists = RegExp(r"'([^']*correct_option[^']*)'")
-        .allMatches(source)
-        .map((match) => match.group(1)!)
-        .where((columns) => columns.contains('prompt'));
-
-    expect(columnLists, isNotEmpty);
-    for (final columns in columnLists) {
-      expect(columns, contains('explanation_ku'));
-      expect(columns, contains('explanation_tr'));
-      expect(columns, contains('question_type'));
-      expect(columns, contains('image_url'));
-    }
+    expect(source, isNot(contains("from('quiz_eligible_questions')")));
+    expect(source, isNot(contains("select('questions(")));
+    expect(source, isNot(contains('_questionColumns')));
   });
 
   test('submit answer forwards measured response time to the RPC', () {
@@ -73,6 +60,55 @@ void main() {
 
     expect(source, contains("'p_response_ms': responseMs"));
     expect(source, isNot(contains("'p_response_ms': 2000")));
+  });
+
+  test(
+    'multiplayer integrity migration closes direct answer and score access',
+    () {
+      final sql = File(
+        'supabase/2026-07-22_multiplayer_integrity_hardening.sql',
+      ).readAsStringSync();
+
+      expect(sql, contains('function public.get_room_questions'));
+      expect(sql, contains('function public.set_room_ready'));
+      expect(sql, contains('revoke select on public.questions'));
+      expect(sql, contains('revoke select on public.quiz_eligible_questions'));
+      expect(
+        sql,
+        contains(
+          'drop policy if exists "Players update their own room membership"',
+        ),
+      );
+      expect(
+        sql,
+        contains('drop policy if exists "Hosts can update their own rooms"'),
+      );
+      expect(sql, contains('from public.room_questions rq'));
+      expect(sql, contains('rq.question_id = p_question_id'));
+      expect(sql, contains("r.status = 'active'"));
+      expect(sql, contains('for update'));
+      expect(sql, contains("nullif(p_selected_option, ''), 'TIMEOUT'"));
+      expect(sql, contains("'A', 'B', 'C', 'D', 'TIMEOUT'"));
+    },
+  );
+
+  test('room question and ready flows use hardened RPCs', () {
+    final source = File(
+      'lib/src/data/supabase_zankurd_repository.dart',
+    ).readAsStringSync();
+    final roomLoader = source.substring(
+      source.indexOf('Future<List<QuizQuestion>> loadRoomQuestions'),
+      source.indexOf('Future<List<QuizQuestion>> loadDailyQuestions'),
+    );
+    final readySetter = source.substring(
+      source.indexOf('Future<void> updateReady'),
+      source.indexOf('Future<void> startGame'),
+    );
+
+    expect(roomLoader, contains("'get_room_questions'"));
+    expect(roomLoader, isNot(contains("from('room_questions')")));
+    expect(readySetter, contains("'set_room_ready'"));
+    expect(readySetter, isNot(contains('.update(')));
   });
 
   test('room player queries preserve avatar showcase fields', () {
@@ -220,19 +256,21 @@ void main() {
     expect(source, contains("reason: 'report_question RPC failed'"));
   });
 
-  test('quiz question reads use the quality-eligible view', () {
+  test('solo quiz questions come from the embedded approved bank', () {
     final source = File(
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
 
-    expect(source, contains("from('quiz_eligible_questions')"));
-    expect(
-      source,
-      isNot(contains("from('questions')\n          .select(_questionColumns)")),
+    final loaders = source.substring(
+      source.indexOf('Future<List<QuizQuestion>> loadQuestions({'),
+      source.indexOf('Future<List<QuizQuestion>> loadRoomQuestions'),
     );
+    expect(loaders, contains('_offline.loadQuestions'));
+    expect(loaders, contains('_offline.loadLevelQuestions'));
+    expect(loaders, isNot(contains('.from(')));
   });
 
-  test('category counts use exact counts from the quality-eligible view', () {
+  test('category counts use exact counts from the answer-free public view', () {
     final source = File(
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
@@ -241,7 +279,7 @@ void main() {
       source.indexOf('Future<List<QuizQuestion>> loadQuestions({'),
     );
 
-    expect(method, contains("from('quiz_eligible_questions')"));
+    expect(method, contains("from('quiz_public_questions')"));
     expect(method, contains('count(CountOption.exact)'));
     expect(method, isNot(contains("from('questions')")));
   });

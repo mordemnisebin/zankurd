@@ -37,6 +37,28 @@ void main() {
     );
   });
 
+  test('iOS declares the photo-library reason used by avatar editing', () {
+    final plist = File('ios/Runner/Info.plist').readAsStringSync();
+
+    expect(plist, contains('<key>NSPhotoLibraryUsageDescription</key>'));
+    expect(plist, contains('profil fotoğrafınızı seçebilmek'));
+  });
+
+  test('app preserves the supported 200 percent system text scale', () {
+    final source = File('lib/main.dart').readAsStringSync();
+
+    expect(source, contains('maxScaleFactor: 2.0'));
+    expect(source, isNot(contains('maxScaleFactor: 1.35')));
+  });
+
+  test('app shell mounts expensive tabs only after first visit', () {
+    final source = File('lib/src/screens/app_shell.dart').readAsStringSync();
+
+    expect(source, contains('final Set<int> _visitedTabs = {0};'));
+    expect(source, contains('_visitedTabs.add(i)'));
+    expect(source, contains('_visitedTabs.contains(index)'));
+  });
+
   test('leaderboard podium does not render a large empty pedestal block', () {
     final source = File(
       'lib/src/screens/leaderboard_screen.dart',

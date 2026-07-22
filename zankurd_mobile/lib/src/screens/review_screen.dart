@@ -360,7 +360,7 @@ class _ReviewCard extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
+                        const Icon(
                           AppIcons.lightbulb,
                           color: Color(0xFFB794F6),
                           size: 20,

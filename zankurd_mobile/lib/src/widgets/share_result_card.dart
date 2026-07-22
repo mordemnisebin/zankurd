@@ -44,11 +44,11 @@ class ShareResultCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Marka
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(AppIcons.question, color: AppTheme.gold, size: 26),
-              const SizedBox(width: 8),
+              Icon(AppIcons.question, color: AppTheme.gold, size: 26),
+              SizedBox(width: 8),
               Text(
                 'ZanKurd',
                 style: TextStyle(

@@ -151,7 +151,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
       if (!mounted) return;
       _showMessage(
         context.isKu
-            ? 'Koda odeyê bi ${friend.friendName} re parve bike'
+            ? 'Koda jûrê bi ${friend.friendName} re parve bike'
             : 'Oda kodunu ${friend.friendName} ile paylaş',
       );
       await Navigator.of(context).push(
@@ -163,7 +163,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
       ErrorReporter.record(error, stack, reason: 'friends_action');
       if (mounted) {
         _showMessage(
-          context.isKu ? 'Ode nehat avakirin' : 'Oda oluşturulamadı',
+          context.isKu ? 'Jûr nehat avakirin' : 'Oda oluşturulamadı',
         );
       }
     } finally {
@@ -487,8 +487,8 @@ class _FriendCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     online
-                        ? (ku ? 'Çevrimiçi' : 'Çevrimiçi')
-                        : (ku ? 'Offline' : 'Offline'),
+                        ? (ku ? 'Serhêl' : 'Çevrimiçi')
+                        : (ku ? 'Ne li serhêl' : 'Çevrimdışı'),
                     style: TextStyle(
                       color: online
                           ? const Color(0xFF4CAF50)

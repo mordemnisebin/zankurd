@@ -146,7 +146,7 @@ class ZanKurdApp extends StatelessWidget {
           home: SplashScreen(next: AppShell(repository: repository)),
           builder: (context, child) => MediaQuery.withClampedTextScaling(
             minScaleFactor: 0.85,
-            maxScaleFactor: 1.35,
+            maxScaleFactor: 2.0,
             child: ResponsiveWrapper(child: child ?? const SizedBox.shrink()),
           ),
         ),

@@ -80,11 +80,11 @@ void main() {
   });
 
   test('true/false sorulara dokunulmaz', () {
-    final q = QuizQuestion(
+    const q = QuizQuestion(
       id: 'tf',
       category: 'Ziman',
       prompt: 'p',
-      answers: const ['Rast', 'Şaş'],
+      answers: ['Rast', 'Şaş'],
       correctAnswer: 'Şaş',
       explanation: 'e',
       type: QuestionType.trueFalse,

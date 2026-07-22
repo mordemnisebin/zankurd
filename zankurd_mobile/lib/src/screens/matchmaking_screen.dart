@@ -363,7 +363,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             onPressed: () => Navigator.of(context).pop(false),
             child: Text(
               ku ? 'Na' : 'Hayır',
-              style: TextStyle(color: AppTheme.wrong),
+              style: const TextStyle(color: AppTheme.wrong),
             ),
           ),
           FilledButton(
@@ -1106,7 +1106,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             Text(
               ku ? 'Dest pê dike...' : 'Başlamak üzere...',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppTheme.gold,
                 fontSize: 14,
                 fontWeight: FontWeight.w700,

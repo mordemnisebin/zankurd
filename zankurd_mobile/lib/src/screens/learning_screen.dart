@@ -401,7 +401,7 @@ class _LearningScreenState extends State<LearningScreen> {
           const SizedBox(height: 8),
           Row(
             children: [
-              Icon(
+              const Icon(
                 AppIcons.bookOpenReader,
                 size: 14,
                 color: AppTheme.playGreen,

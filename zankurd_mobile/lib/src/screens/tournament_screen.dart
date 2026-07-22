@@ -393,9 +393,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
               ? Center(
                   child: AppErrorState(
                     title: ku ? 'Barnebû' : 'Yüklenemedi',
-                    message: ku
-                        ? 'Turnuva nehat barkirin'
-                        : 'Turnuva yüklenemedi',
+                    message: ku ? 'Kûpa nehat barkirin' : 'Turnuva yüklenemedi',
                     retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
                     onRetry: _load,
                   ),
@@ -453,7 +451,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
           const SizedBox(height: AppSpacing.lg),
           // -- Bracket visualization --
           _TournamentSectionTitle(
-            label: ku ? 'Şemaya Turnuvayê' : 'Turnuva Şeması',
+            label: ku ? 'Şemaya Kûpayê' : 'Turnuva Şeması',
             accent: AppTheme.gold,
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -531,7 +529,7 @@ class _LobbyView extends StatelessWidget {
 
     final scheduleText = ku ? 'Her Şemî 20:00' : 'Her Cumartesi 20:00';
     final countdownText = ku
-        ? 'Turnuvaya maye: $remainingText'
+        ? 'Ji kûpayê re maye: $remainingText'
         : 'Turnuvaya kalan: $remainingText';
 
     // Dikey ortalama yok: hero kart üstten başlar, boşluk alta kalır.
@@ -689,7 +687,7 @@ class _LobbyView extends StatelessWidget {
                           foregroundColor: Colors.white,
                         ),
                         label: Text(
-                          ku ? 'Tevlî Turnuvayê Bibe' : 'Turnuvaya Katıl',
+                          ku ? 'Tevlî Kûpayê Bibe' : 'Turnuvaya Katıl',
                           style: AppTypography.bodyLarge.copyWith(
                             fontWeight: FontWeight.w800,
                           ),
@@ -1013,7 +1011,11 @@ class _MatchRow extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: match.status == 'completed'
-              ? const Icon(AppIcons.circleCheck, size: 14, color: AppTheme.accent)
+              ? const Icon(
+                  AppIcons.circleCheck,
+                  size: 14,
+                  color: AppTheme.accent,
+                )
               : Text(
                   '—',
                   style: TextStyle(color: AppTheme.textMutedColor(context)),

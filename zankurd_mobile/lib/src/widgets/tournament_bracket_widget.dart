@@ -153,7 +153,7 @@ class _ConnectorColumn extends StatelessWidget {
     return SizedBox(
       width: 28,
       child: CustomPaint(
-        size: Size(28, double.infinity),
+        size: const Size(28, double.infinity),
         painter: _ConnectorPainter(
           roundIndex: roundIndex,
           roundCount: roundCount,
@@ -238,7 +238,7 @@ class _BracketMatchCard extends StatelessWidget {
     final p1Won = isCompleted && match.winnerId == match.playerOneId;
     final p2Won = isCompleted && match.winnerId == match.playerTwoId;
 
-    final cardWidth = 150.0;
+    const cardWidth = 150.0;
 
     return Semantics(
       button: true,
@@ -247,93 +247,94 @@ class _BracketMatchCard extends StatelessWidget {
           : '${match.playerOneName} ve ${match.playerTwoName} maçı',
       child: GestureDetector(
         onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeInOut,
-        width: cardWidth,
-        padding: const EdgeInsets.all(6),
-        decoration: BoxDecoration(
-          color: isUserMatch
-              ? AppTheme.accent.withValues(alpha: 0.08)
-              : AppTheme.surfaceColor(context),
-          borderRadius: BorderRadius.circular(AppRadius.xs),
-          border: Border.all(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeInOut,
+          width: cardWidth,
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
             color: isUserMatch
-                ? AppTheme.accent.withValues(alpha: 0.5)
-                : isCompleted
-                ? AppTheme.gold.withValues(alpha: 0.4)
-                : AppTheme.borderColor(context).withValues(alpha: 0.6),
-            width: isUserMatch ? 1.5 : 0.8,
-          ),
-          boxShadow: isCompleted
-              ? [
-                  BoxShadow(
-                    color: AppTheme.gold.withValues(alpha: 0.12),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ]
-              : null,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _PlayerSlot(
-              name: match.playerOneName,
-              playerId: match.playerOneId,
-              score: match.playerOneScore,
-              isWinner: p1Won,
-              isUser: match.playerOneId == userId,
-              isCompleted: isCompleted,
-              ku: ku,
+                ? AppTheme.accent.withValues(alpha: 0.08)
+                : AppTheme.surfaceColor(context),
+            borderRadius: BorderRadius.circular(AppRadius.xs),
+            border: Border.all(
+              color: isUserMatch
+                  ? AppTheme.accent.withValues(alpha: 0.5)
+                  : isCompleted
+                  ? AppTheme.gold.withValues(alpha: 0.4)
+                  : AppTheme.borderColor(context).withValues(alpha: 0.6),
+              width: isUserMatch ? 1.5 : 0.8,
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Spacer(),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 1,
+            boxShadow: isCompleted
+                ? [
+                    BoxShadow(
+                      color: AppTheme.gold.withValues(alpha: 0.12),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
                     ),
-                    decoration: BoxDecoration(
-                      color: isCompleted
-                          ? AppTheme.gold.withValues(alpha: 0.15)
-                          : AppTheme.accent.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      isCompleted
-                          ? (ku ? 'Bİ DAWÎ BÛ' : 'BİTTİ')
-                          : hasPlayers
-                          ? 'VS'
-                          : '—',
-                      style: TextStyle(
-                        fontSize: 9,
-                        fontWeight: FontWeight.w900,
+                  ]
+                : null,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _PlayerSlot(
+                name: match.playerOneName,
+                playerId: match.playerOneId,
+                score: match.playerOneScore,
+                isWinner: p1Won,
+                isUser: match.playerOneId == userId,
+                isCompleted: isCompleted,
+                ku: ku,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 1,
+                      ),
+                      decoration: BoxDecoration(
                         color: isCompleted
-                            ? AppTheme.gold
-                            : AppTheme.accent.withValues(alpha: 0.7),
-                        letterSpacing: 1.0,
+                            ? AppTheme.gold.withValues(alpha: 0.15)
+                            : AppTheme.accent.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        isCompleted
+                            ? (ku ? 'Bİ DAWÎ BÛ' : 'BİTTİ')
+                            : hasPlayers
+                            ? 'VS'
+                            : '—',
+                        style: TextStyle(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w900,
+                          color: isCompleted
+                              ? AppTheme.gold
+                              : AppTheme.accent.withValues(alpha: 0.7),
+                          letterSpacing: 1.0,
+                        ),
                       ),
                     ),
-                  ),
-                  const Spacer(),
-                ],
+                    const Spacer(),
+                  ],
+                ),
               ),
-            ),
-            _PlayerSlot(
-              name: match.playerTwoName,
-              playerId: match.playerTwoId,
-              score: match.playerTwoScore,
-              isWinner: p2Won,
-              isUser: match.playerTwoId == userId,
-              isCompleted: isCompleted,
-              ku: ku,
-            ),
-          ],
+              _PlayerSlot(
+                name: match.playerTwoName,
+                playerId: match.playerTwoId,
+                score: match.playerTwoScore,
+                isWinner: p2Won,
+                isUser: match.playerTwoId == userId,
+                isCompleted: isCompleted,
+                ku: ku,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -430,11 +431,7 @@ class _PlayerSlot extends StatelessWidget {
           ),
           // Winner crown icon
           if (isWinner)
-            const Icon(
-              AppIcons.trophy,
-              size: 14,
-              color: AppTheme.gold,
-            )
+            const Icon(AppIcons.trophy, size: 14, color: AppTheme.gold)
           else if (isCompleted && hasPlayer)
             Icon(
               AppIcons.circleXmark,
@@ -445,7 +442,7 @@ class _PlayerSlot extends StatelessWidget {
             const SizedBox(width: 2),
             Text(
               '$score',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
                 color: AppTheme.accent,

@@ -456,7 +456,7 @@ class _AchievementShowcase extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(AppIcons.medal, color: AppTheme.gold),
+              const Icon(AppIcons.medal, color: AppTheme.gold),
               const SizedBox(width: 8),
               Text(
                 isKu ? 'Rozet' : 'Rozetler',
@@ -500,7 +500,7 @@ class _AchievementShowcase extends StatelessWidget {
               isKu
                   ? 'Pêşbirkekê biqedîne û rozeta yekem veke.'
                   : 'Bir yarış tamamla ve ilk rozetini aç.',
-              style: TextStyle(color: AppTheme.textMuted),
+              style: const TextStyle(color: AppTheme.textMuted),
             )
           else
             SizedBox(
@@ -551,7 +551,7 @@ class _MasterySection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(AppIcons.medal, color: AppTheme.violet),
+              const Icon(AppIcons.medal, color: AppTheme.violet),
               const SizedBox(width: 8),
               // Dar (iki sütunlu masaüstü) panelde başlık taşmasın.
               Expanded(
@@ -795,7 +795,7 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(AppIcons.chartLine, color: AppTheme.accent),
+                  const Icon(AppIcons.chartLine, color: AppTheme.accent),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(

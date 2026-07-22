@@ -58,18 +58,30 @@ class _RoomScreenState extends State<RoomScreen> {
   }
 
   void _startSubscriptions() {
-    _playersSub = widget.repository.subscribeRoomPlayers(room).listen((p) {
-      if (!mounted) return;
-      _applyPlayerList(p);
-    });
-    _statusSub = widget.repository.subscribeRoomStatus(room).listen((status) {
-      if (!mounted) return;
-      if (status == RoomStatus.active && !quizOpened) {
-      _pausePolling();
-      _navigateToQuiz();
-    }
-      setState(() => room = room.copyWith(status: status));
-    });
+    _playersSub = widget.repository.subscribeRoomPlayers(room).listen(
+      (p) {
+        if (!mounted) return;
+        _applyPlayerList(p);
+      },
+      onError: (err, stack) {
+        if (!mounted) return;
+        _startPolling();
+      },
+    );
+    _statusSub = widget.repository.subscribeRoomStatus(room).listen(
+      (status) {
+        if (!mounted) return;
+        if (status == RoomStatus.active && !quizOpened) {
+          _pausePolling();
+          _navigateToQuiz();
+        }
+        setState(() => room = room.copyWith(status: status));
+      },
+      onError: (err, stack) {
+        if (!mounted) return;
+        _startPolling();
+      },
+    );
   }
 
   void _applyPlayerList(List<Player> players) {
@@ -581,7 +593,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                 ),
                                 child: Row(
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       AppIcons.userPlus,
                                       color: AppTheme.wrong,
                                       size: 18,

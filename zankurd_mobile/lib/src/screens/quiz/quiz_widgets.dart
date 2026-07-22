@@ -1596,7 +1596,7 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
         ),
         child: Row(
           children: [
-            SizedBox(
+            const SizedBox(
               width: 20,
               height: 20,
               child: CircularProgressIndicator(

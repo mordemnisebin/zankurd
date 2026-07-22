@@ -248,7 +248,7 @@ void main() {
     'copy identity crosses manifest canonical groups when id and prompt match',
     () {
       final first = record();
-      final second = QuestionRecord(
+      const second = QuestionRecord(
         sourceId: 'copy',
         sourceRole: SourceRole.candidatePool,
         sourcePath: 'copy.csv',
@@ -257,7 +257,7 @@ void main() {
         sourceRecordId: 'q1',
         canonicalGroup: 'different_group',
         prompt: 'Prompt',
-        options: const ['A', 'B', 'C', 'D'],
+        options: ['A', 'B', 'C', 'D'],
         correctOptionIndex: 0,
         correctOptionText: 'A',
       );

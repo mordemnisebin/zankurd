@@ -270,7 +270,7 @@ class _RoomChatState extends State<RoomChat> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: AppTheme.primaryGradientStart,
                         ),
                       ),
@@ -293,7 +293,7 @@ class _RoomChatState extends State<RoomChat> {
                             color: AppTheme.primaryGradientStart,
                           ),
                         )
-                      : Icon(
+                      : const Icon(
                           AppIcons.paperPlane,
                           color: AppTheme.primaryGradientStart,
                         ),

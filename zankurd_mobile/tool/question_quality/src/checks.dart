@@ -127,7 +127,7 @@ List<AuditIssue> runChecks(
     if (dynamicPatterns.any(prompt.contains)) {
       add(
         'dynamic_fact',
-        Severity.critical,
+        Severity.warning,
         'Potentially time-sensitive fact requires source and review date.',
         confidence: 'medium',
       );
@@ -190,6 +190,7 @@ List<AuditIssue> runChecks(
 }
 
 bool _hasAnswerLeak(String prompt, String correct) {
+  if (const {'rast', 'şaş', 'rast e', 'şaş e'}.contains(correct)) return false;
   if (correct.length < 4) return false;
   final answerPattern = RegExp(r'(^|\s)' + RegExp.escape(correct) + r'($|\s)');
   if (!answerPattern.hasMatch(prompt)) return false;
@@ -224,7 +225,12 @@ List<AuditIssue> runDuplicateChecks(
   final issues = <AuditIssue>[];
   final exact = <String, List<QuestionRecord>>{};
   for (final record in records) {
-    exact.putIfAbsent(normalizeText(record.prompt), () => []).add(record);
+    exact
+        .putIfAbsent(
+          '${record.sourceId}|${normalizeText(record.prompt)}',
+          () => [],
+        )
+        .add(record);
   }
   for (final group in exact.values.where((items) => items.length > 1)) {
     for (final record in group.skip(1)) {

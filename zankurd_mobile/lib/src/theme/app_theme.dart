@@ -238,7 +238,9 @@ class AppTheme {
 
   static List<BoxShadow> cardShadow(BuildContext context) {
     final isDark = _isDark(context);
-    final shadowColor = isDark ? const Color(0xFF000000) : const Color(0xFF000000);
+    final shadowColor = isDark
+        ? const Color(0xFF000000)
+        : const Color(0xFF000000);
     return [
       BoxShadow(
         color: shadowColor.withValues(alpha: isDark ? 0.2 : 0.04),
@@ -289,13 +291,13 @@ class AppTheme {
   }
 
   // ============ Cultural Modern Palette (Variant C) ============
-  static const brandGreen = Color(0xFFFF7F50); // Coral - Primary CTA/Accent
-  static const brandGreenDeep = Color(0xFFE06B40); // Darker Coral
+  static const brandGreen = Color(0xFFF5931E); // Primary CTA/Accent
+  static const brandGreenDeep = Color(0xFFE06E12);
 
   // Cultural Brand Background (Header etc)
   static const culturalBrandBg = Color(0xFF1B4332); // Deep Green
 
-  static const playGreen = Color(0xFF2B8A50); // Muted elegant green
+  static const playGreen = Color(0xFF22C55E);
   static const playPink = Color(0xFFB54C6F); // Muted elegant rose
   static const playCyan = Color(0xFF288077); // Muted elegant teal
   static const playPurple = Color(0xFF7052A3); // Muted elegant purple
@@ -305,33 +307,33 @@ class AppTheme {
   static const primaryGradientEnd = brandGreenDeep;
 
   static const secondaryAccent = Color(0xFFE7B53C);
-  static const gold = Color(0xFFD4AF37); // Premium Gold
+  static const gold = Color(0xFFE7B53C);
 
   static const cyan = playCyan;
 
-  static const bg = Color(0xFF0F141A); // Deep Navy / Anthracite
-  static const bgDeep = Color(0xFF090C10);
-  static const surface = Color(0xFF161E27);
-  static const surfaceHi = Color(0xFF1C2733);
-  static const darkBg = Color(0xFF0F141A);
+  static const bg = Color(0xFF0B0F0D);
+  static const bgDeep = Color(0xFF060907);
+  static const surface = Color(0xFF1E3028);
+  static const surfaceHi = Color(0xFF263A31);
+  static const darkBg = bg;
 
   static const textPrimary = Color(0xFFF4F1E9);
   static const textSub = Color(0xFF9EA7B0);
-  static const textMuted = Color(0xFF6E7881);
+  static const textMuted = Color(0xFF7A858D);
 
-  static const border = Color(0xFF26323F);
+  static const border = Color(0xFF2E4038);
 
-  static const accent = primaryGradientStart; 
-  static const violet = secondaryAccent; 
-  static const correct = Color(0xFF3DA968); 
-  static const wrong = Color(0xFFE5533D); 
+  static const accent = primaryGradientStart;
+  static const violet = secondaryAccent;
+  static const correct = Color(0xFF3DA968);
+  static const wrong = Color(0xFFE5533D);
 
   // ============ Light Mode Palette (Variant C) ============
-  static const lightBg = Color(0xFFFDFBF7); // Variant C Cream
-  static const lightBgDeep = Color(0xFFF6F3EC);
+  static const lightBg = Color(0xFFF3F3F5);
+  static const lightBgDeep = Color(0xFFECECF0);
   static const lightSurface = Color(0xFFFFFFFF);
   static const lightSurfaceHi = Color(0xFFF7F7F9);
-  static const lightBorder = Color(0xFFE2E2E8); 
+  static const lightBorder = Color(0xFFE2E2E8);
   static const lightTextPrimary = Color(0xFF2D3436); // Anthracite
   static const lightTextSub = Color(0xFF4E5366);
   static const lightTextMuted = Color(0xFF6F6A7E);
@@ -392,6 +394,10 @@ class AppTheme {
     return Theme.of(context).brightness == Brightness.light;
   }
 
+  // Private helpers for theme checks
+  static bool _isLight(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.light;
+
   static LinearGradient backgroundGradient(BuildContext context) {
     if (!isLight(context)) return bgGradient;
     return const LinearGradient(
@@ -401,7 +407,10 @@ class AppTheme {
     );
   }
 
-  static LinearGradient shimmerGradient(BuildContext context, double animValue) {
+  static LinearGradient shimmerGradient(
+    BuildContext context,
+    double animValue,
+  ) {
     final isLight = _isLight(context);
     final baseColor = isLight ? shimmerBaseLight : shimmerBaseDark;
     final shimmerColor = isLight ? shimmerHighlightLight : shimmerHighlightDark;
@@ -508,7 +517,8 @@ class AppTheme {
           ),
           boxShadow: [
             BoxShadow(
-              color: (isDark ? const Color(0xFF000000) : const Color(0xFF000000))
+              color:
+                  (isDark ? const Color(0xFF000000) : const Color(0xFF000000))
                       .withValues(alpha: isDark ? 0.1 : 0.02),
               offset: const Offset(0, 2),
               blurRadius: 8,
@@ -563,8 +573,6 @@ class AppTheme {
   static const ctaTealDeep = Color(0xFF1E6962);
   static const List<Color> ctaTealGradient = [ctaTeal, ctaTealDeep];
   static const List<Color> ctaGreenGradient = [brandGreen, brandGreenDeep];
-
-
 
   static ThemeData dark() {
     return ThemeData(
@@ -883,12 +891,7 @@ class AppTheme {
   }
 
   /// Gradient for shimmer effect.
-  static const shimmerGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [Color(0x33FFFFFF), Color(0x11FFFFFF), Color(0x33FFFFFF)],
-    stops: [0.0, 0.5, 1.0],
-  );
+  // Removed static const shimmerGradient – replaced by shimmerGradient(context, animValue) method below.
 
   // ============ Additional Gradient Definitions ============
 

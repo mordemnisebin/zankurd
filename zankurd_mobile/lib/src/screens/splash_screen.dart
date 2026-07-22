@@ -111,12 +111,12 @@ class _SplashScreenState extends State<SplashScreen>
               opacity: _fade,
               child: ScaleTransition(
                 scale: _scale,
-                child: Column(
+                child: const Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const AppLogo(width: 280),
-                    const SizedBox(height: 28),
-                    const SizedBox(
+                    AppLogo(width: 280),
+                    SizedBox(height: 28),
+                    SizedBox(
                       width: 26,
                       height: 26,
                       child: CircularProgressIndicator(

@@ -73,10 +73,22 @@ dart analyze
 Pop-Location
 ```
 
-Kök analiz yalnız ZanKurd uygulama paketini doğrular. Bağımsız Widgetbook
-paketi kendi bağımlılıkları ve analyzer ayarlarıyla ayrıca doğrulanmalıdır.
+Kök analiz ZanKurd uygulama paketinin tamamını doğrular.
 
 ### Soru kalitesi denetimi
+
+Runtime Dart bankası ve geliştirme amaçlı JSON aynasının değişmeden eşleştiğini
+kontrol etmek için (varsayılan komut salt okunurdur):
+
+```powershell
+python tool/verify_and_fix_question_bank.py
+```
+
+Kesinleşmiş kaynak düzeltmelerini uygulayıp iki çıktıyı yeniden üretmek için:
+
+```powershell
+python tool/verify_and_fix_question_bank.py --fix
+```
 
 Soru kaynaklarının rolleri `tool/question_quality/source_manifest.json`
 dosyasında açıkça tanımlanır. Bütün sınıflandırılmış kaynakların raporunu üretmek

@@ -112,6 +112,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     if (widget.botRace) return 'bot_race';
     return 'solo';
   }
+
   int index = 0;
   int score = 0;
   int streak = 0;
@@ -197,6 +198,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   /// Gerçek online multiplayer: 1v1 veya takım oyunu (bot değil).
   bool get _isMultiplayer => widget.room.id != null;
+  bool get _usesServerHiddenAnswers =>
+      _isMultiplayer && widget.repository is SupabaseZanKurdRepository;
 
   @override
   void initState() {
@@ -372,7 +375,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         if (widget.is1v1) {
           // Bot fallback 1v1 match
           final rng = Random();
-          final botNames = const [
+          const botNames = [
             'Rojda',
             'Baran',
             'Dilan',
@@ -781,7 +784,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   // ─── Portrait layout: sabit header, kaydırılabilir orta, sabit alt bar ──
 
-
   /// Çevrimiçi maçta kendi skor satırını tazeler ve diğer oyunculara yayınlar.
   /// Cevap verme, sonraki soru ve bitiş akışları bu tek bloğu paylaşır.
   void _syncMyDuelState({required bool answeredNow, bool finished = false}) {
@@ -1098,6 +1100,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   Future<void> _answer(String answer) async {
     if (answered) return;
+    HapticFeedback.selectionClick();
 
     _timerController.stop();
 
@@ -1106,7 +1109,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     // (kırmızı şık + açıklama) oluşurken "Piştre" hâlâ devre dışı kalır ve
     // kullanıcı ikinci şıkkı seçmesi gerektiğini anlamadan takılı kalırdı
     // (2026-07-19 canlı denetim P0 bulgusu).
-    if (_wildcard.doubleAnswerActivated &&
+    if (!_usesServerHiddenAnswers &&
+        _wildcard.doubleAnswerActivated &&
         _firstAttemptAnswer.isEmpty &&
         answer != question.correctAnswer) {
       HapticFeedback.heavyImpact();
@@ -1152,6 +1156,22 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
       if (!mounted || index != questionIndex) return;
 
+      QuizQuestion? revealedQuestion;
+      if (_usesServerHiddenAnswers) {
+        final correctAnswer = question.answerForOptionKey(
+          result['correct_option'] as String?,
+        );
+        if (correctAnswer == null) {
+          throw StateError('Server did not reveal a valid correct option');
+        }
+        revealedQuestion = question.withRevealedAnswer(
+          correctAnswer: correctAnswer,
+          explanation: result['explanation'] as String?,
+          explanationKu: result['explanation_ku'] as String?,
+          explanationTr: result['explanation_tr'] as String?,
+        );
+      }
+
       if (result['is_correct'] == true) {
         HapticFeedback.lightImpact();
         context.read<SoundProvider>().playCorrect();
@@ -1164,6 +1184,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _trackMistake(isCorrect);
       final oldScore = score;
       setState(() {
+        if (revealedQuestion != null) {
+          _questions[questionIndex] = revealedQuestion;
+        }
         _suspense = false;
         score =
             result['new_score'] as int? ??
@@ -1209,6 +1232,24 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'submitAnswer failed');
+      if (_usesServerHiddenAnswers) {
+        if (!mounted || index != questionIndex) return;
+        setState(() {
+          selectedAnswer = '';
+          _suspense = false;
+        });
+        _timerController.forward();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              _isKu
+                  ? 'Bersiv nehat şandin. Ji kerema xwe dîsa biceribîne.'
+                  : 'Cevap gönderilemedi. Lütfen yeniden deneyin.',
+            ),
+          ),
+        );
+        return;
+      }
       // Fallback local logic if network fails during answer submit
       if (!mounted || index != questionIndex) return;
       final correct = answer == question.correctAnswer;
@@ -1436,7 +1477,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             maxLines: 4,
             decoration: InputDecoration(
               labelText: context.s('Sedem', 'Neden'),
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
             ),
           ),
           actions: [

@@ -104,7 +104,7 @@ void main() {
 
     expect(find.text('Şerê 1vs1'), findsOneWidget);
     expect(find.text('Pêşbirka Rojê'), findsOneWidget);
-    expect(find.text('Turnuva'), findsOneWidget);
+    expect(find.text('Kûpa'), findsOneWidget);
     expect(find.text('Çerxa Rojê'), findsNothing);
   });
 

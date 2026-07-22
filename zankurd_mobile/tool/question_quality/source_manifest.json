@@ -6,8 +6,16 @@
       "path": "lib/src/data/offline_question_bank.dart", "role": "runtime_primary",
       "parser": "dart_quiz_question", "canonicalGroup": "runtime_questions",
       "reportIncluded": true, "gateIncluded": true, "productionLike": true,
-      "precedence": 1000, "expectedRecordCount": 3125, "notes": "Read-only Dart constants",
+      "precedence": 1000, "expectedRecordCount": 2347, "notes": "Generated from the normalized offline JSON source",
       "columns": {"locale": "ku-kmr"}
+    },
+    {
+      "id": "offline_json_mirror", "description": "Development mirror used to regenerate the Dart runtime bank",
+      "path": "assets/data/offline_questions.json", "role": "generated_report",
+      "parser": "json", "canonicalGroup": "runtime_questions",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 0, "expectedRecordCount": 2347, "notes": "Not bundled at runtime; verified by offline_questions_json_equivalence_test",
+      "columns": {"id":"id","category":"category","prompt":"prompt","answers":"answers","correct":"correctAnswer","explanation":"explanation","difficulty":"difficulty","locale":"ku-kmr"}
     },
     {
       "id": "curated_runtime_bank", "description": "Curated bundled runtime bank",
@@ -19,26 +27,26 @@
     },
     {
       "id": "live_kurmanci_export", "description": "Repository snapshot labelled as live Kurmancî questions",
-      "path": "supabase/2026-07-14_chat_all_kurmanci_questions_live.csv", "role": "runtime_secondary",
+      "path": "supabase/2026-07-14_chat_all_kurmanci_questions_live.csv", "role": "historical_snapshot",
       "parser": "csv", "canonicalGroup": "supabase_questions",
-      "reportIncluded": true, "gateIncluded": true, "productionLike": true,
-      "precedence": 900, "expectedRecordCount": 377, "notes": "Live-labelled read-only export",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 900, "expectedRecordCount": 377, "notes": "Read-only historical snapshot; the client no longer loads answer-bearing remote questions",
       "columns": {"id":"id","locale":"language_code","category":"category_key","prompt":"prompt","optionA":"option_a","optionB":"option_b","optionC":"option_c","optionD":"option_d","correct":"correct_option","explanation":"explanation","difficulty":"difficulty","sourceTitle":"source_title","sourceUrl":"source_url","status":"publication_status"}
     },
     {
-      "id": "active_import_ready", "description": "Active 10k import-ready bank",
-      "path": "supabase/questions_import_ready.csv", "role": "import_candidate",
+      "id": "active_import_ready", "description": "Quarantined 10k import bank",
+      "path": "supabase/questions_import_ready.csv", "role": "quarantine",
       "parser": "csv", "canonicalGroup": "supabase_questions",
-      "reportIncluded": true, "gateIncluded": true, "productionLike": true,
-      "precedence": 850, "expectedRecordCount": 10000, "notes": "Active import source",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 850, "expectedRecordCount": 10000, "notes": "Blocked from import until category, difficulty, metadata, duplicate, and language debt is editorially cleared",
       "columns": {"id":"id","locale":"language_code","category":"category","prompt":"prompt","optionA":"option_a","optionB":"option_b","optionC":"option_c","optionD":"option_d","correct":"correct_option","explanation":"explanation","difficulty":"difficulty","imagePath":"image_url","sourceUrl":"source_url","status":"is_approved"}
     },
     {
       "id": "wave2_publish_candidates", "description": "Manually curated publish candidates",
-      "path": "supabase/wave2_curated_publish_candidates.csv", "role": "publish_candidate",
+      "path": "supabase/wave2_curated_publish_candidates.csv", "role": "quarantine",
       "parser": "csv", "canonicalGroup": "supabase_questions",
-      "reportIncluded": true, "gateIncluded": true, "productionLike": true,
-      "precedence": 800, "expectedRecordCount": 49, "notes": "Publication candidates",
+      "reportIncluded": true, "gateIncluded": false, "productionLike": false,
+      "precedence": 800, "expectedRecordCount": 49, "notes": "Not publishable until the current quality report is editorially cleared",
       "columns": {"id":"review_id","locale":"language_code","category":"category_key","prompt":"corrected_prompt","optionA":"corrected_option_a","optionB":"corrected_option_b","optionC":"corrected_option_c","optionD":"corrected_option_d","correct":"corrected_correct_option","explanation":"corrected_explanation","sourceUrl":"better_source_url","status":"publication_status"}
     },
     {

@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:provider/provider.dart';
 
 import '../data/mistake_store.dart';
@@ -16,7 +16,6 @@ import '../widgets/zana_daily_card.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
 import 'quiz_screen.dart';
-import 'shop_screen.dart';
 import 'home/play_teaser_card.dart';
 import 'home/daily_missions_card.dart';
 import '../widgets/player_avatar.dart';
@@ -180,12 +179,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
       child: CustomScrollView(
         controller: widget.scrollController,
+        scrollCacheExtent: const ScrollCacheExtent.pixels(1200),
         slivers: [
           // Pirs stili tam-genişlik header: kenarlarda boşluk yok, ekrandan
           // ekrana uzanır. BorderRadius sadece altta (bottomLeft/Right 20dp).
-          SliverToBoxAdapter(
-            child: _buildFullBleedHeader(context, ku),
-          ),
+          SliverToBoxAdapter(child: _buildFullBleedHeader(context, ku)),
           // Metric strip removed per Variant C design
           if (isWide)
             SliverPadding(
@@ -217,10 +215,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           const SizedBox(height: 24),
                           _buildAnimatedCard(
                             _heroFadeAnimation(1),
-                            DailyMissionsCard(
-                              isKu: ku,
-                              missions: _missions,
-                            ),
+                            DailyMissionsCard(isKu: ku, missions: _missions),
                           ),
                           const SizedBox(height: 24),
                           _buildAnimatedCard(
@@ -261,10 +256,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 AppSpacing.page,
                 AppSpacing.lg,
               ),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  if (index == 0) {
-                    return _buildAnimatedCard(
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    _buildAnimatedCard(
                       _heroFadeAnimation(0),
                       _DailyLessonHero(
                         isKu: ku,
@@ -273,40 +268,34 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ? widget.onOpenLearning
                             : _startDailyQuiz,
                       ),
-                    );
-                  }
-                  if (index == 1) {
-                    return Padding(
+                    ),
+                    Padding(
                       padding: const EdgeInsets.only(top: 24),
                       child: _buildAnimatedCard(
                         _heroFadeAnimation(1),
-                        DailyMissionsCard(
-                          isKu: ku,
-                          missions: _missions,
-                        ),
-                      ),
-                    );
-                  }
-                  if (index == 2 && widget.onOpenPlay != null) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 24),
-                      child: _buildAnimatedCard(
-                        _heroFadeAnimation(2),
-                        PlayTeaserCard(onTap: widget.onOpenPlay!),
-                      ),
-                    );
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 24),
-                    child: _buildAnimatedCard(
-                      _heroFadeAnimation(3),
-                      KeyedSubtree(
-                        key: const ValueKey('home-learning-entry'),
-                        child: ZanaDailyCard(isKu: ku),
+                        DailyMissionsCard(isKu: ku, missions: _missions),
                       ),
                     ),
-                  );
-                }, childCount: widget.onOpenPlay != null ? 4 : 3),
+                    if (widget.onOpenPlay != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 24),
+                        child: _buildAnimatedCard(
+                          _heroFadeAnimation(2),
+                          PlayTeaserCard(onTap: widget.onOpenPlay!),
+                        ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: _buildAnimatedCard(
+                        _heroFadeAnimation(3),
+                        KeyedSubtree(
+                          key: const ValueKey('home-learning-entry'),
+                          child: ZanaDailyCard(isKu: ku),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           SliverToBoxAdapter(
@@ -329,202 +318,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  // Onaylı mockup 3 imza öğesi: 3 kompakt metrik çip + haftalık zincir barı.
-  Widget _buildMetricStrip(BuildContext context, bool ku) {
-    final completed = _missions.where((m) => m.completed).length;
-    final total = _missions.length;
-
-    Widget chip(
-      IconData icon,
-      Color color,
-      String value,
-      String label, {
-      bool tappable = false,
-      String? micro,
-    }) {
-      return Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        decoration: BoxDecoration(
-          color: AppTheme.surfaceColor(context),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(color: AppTheme.borderColor(context)),
-        ),
-        child: Column(
-          children: [
-            Icon(icon, color: color, size: 22),
-            const SizedBox(height: 6),
-            Text(
-              value,
-              style: AppTypography.heading2.copyWith(
-                color: AppTheme.textPrimaryColor(context),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textSubColor(context),
-                    ),
-                  ),
-                ),
-                if (tappable) ...[
-                  const SizedBox(width: 2),
-                  Icon(
-                    AppIcons.chevronRight,
-                    size: 14,
-                    color: AppTheme.textMutedColor(context),
-                  ),
-                ],
-              ],
-            ),
-            if (micro != null)
-              Text(
-                micro,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textMutedColor(context),
-                  fontSize: 10,
-                ),
-              ),
-          ],
-        ),
-      );
-    }
-
-    const weekTarget = 7;
-    final progress = (_streak.clamp(0, weekTarget)) / weekTarget;
-
-    return Column(
-      key: const ValueKey('home-metric-strip'),
-      children: [
-        Row(
-          children: [
-            Expanded(
-              // Zincir çipi: seri koruma akışına (öğrenme sekmesi) bağlı.
-              child: Semantics(
-                button: true,
-                label: ku ? 'Zincîr' : 'Seri',
-                child: GestureDetector(
-                  onTap: widget.onOpenLearning,
-                  child: chip(
-                    AppIcons.fire,
-                    AppTheme.wrong,
-                    '$_streak',
-                    ku ? 'Zincîr' : 'Seri',
-                    tappable: widget.onOpenLearning != null,
-                    micro: ku ? 'Nemire!' : 'Kırılmasın!',
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            // Coin çipi aynı zamanda mağaza girişidir (eski banner çipinin
-            // görevi buraya taşındı).
-            Expanded(
-              child: Semantics(
-                button: true,
-                label: ku ? 'Dikan' : 'Mağaza',
-                child: GestureDetector(
-                  onTap: () => Navigator.of(context)
-                      .push(AppRoute.to(ShopScreen(repository: repo)))
-                      .then((_) => _refreshCoins()),
-                  child: chip(
-                    AppIcons.coins,
-                    AppTheme.gold,
-                    '$_coinBalance',
-                    ku ? 'Xeruz' : 'Coin',
-                    tappable: true,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              // Misyon çipi: günlük görevlerin yaşadığı öğrenme akışına bağlı.
-              child: Semantics(
-                button: true,
-                label: ku ? 'Misyon' : 'Görev',
-                child: GestureDetector(
-                  onTap: widget.onOpenLearning,
-                  child: chip(
-                    AppIcons.circleCheck,
-                    AppTheme.correct,
-                    total == 0 ? '0' : '$completed/$total',
-                    ku ? 'Misyon' : 'Görev',
-                    tappable: widget.onOpenLearning != null,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        if (_streak > 0) ...[
-          const SizedBox(height: 12),
-          Container(
-            // Dokunma/okunabilirlik için min 44px yükseklik (WCAG 2.5.5).
-            constraints: const BoxConstraints(minHeight: 44),
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-            decoration: BoxDecoration(
-              color: AppTheme.surfaceColor(context),
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(color: AppTheme.borderColor(context)),
-            ),
-            child: Row(
-              children: [
-                Text(
-                  '$_streak / $weekTarget',
-                  style: AppTypography.heading2.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    child: Stack(
-                      children: [
-                        Container(
-                          height: 9,
-                          color: AppTheme.borderColor(context),
-                        ),
-                        FractionallySizedBox(
-                          widthFactor: progress == 0 ? 0.02 : progress,
-                          child: Container(
-                            height: 9,
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [AppTheme.gold, AppTheme.correct],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ],
-    );
-  }
-
   /// Pirs stili tam-genişlik (full-bleed) gradient header.
   /// Kenarlarda kenar boşluğu yok; altında yuvarlatılmış köşeler.
   Widget _buildFullBleedHeader(BuildContext context, bool ku) {
-    return SafeArea(
-      bottom: false,
-      child: _buildCompactHeader(context, ku),
-    );
+    return SafeArea(bottom: false, child: _buildCompactHeader(context, ku));
   }
 
   Widget _buildCompactHeader(BuildContext context, bool ku) {
@@ -570,35 +367,65 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Positioned(
+          const Positioned(
             right: -20,
             top: 20,
             child: Opacity(
               opacity: 0.05,
-              child: Icon(Icons.star_border_purple500_sharp, size: 240, color: Colors.white),
+              child: Icon(
+                Icons.star_border_purple500_sharp,
+                size: 240,
+                color: Colors.white,
+              ),
             ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final metrics = Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildHeaderBadge(AppIcons.fire, AppTheme.brandGreen, '$_streak'),
+                      _buildHeaderBadge(
+                        AppIcons.fire,
+                        AppTheme.brandGreen,
+                        '$_streak',
+                      ),
                       const SizedBox(width: 12),
-                      _buildHeaderBadge(AppIcons.coins, AppTheme.gold, '$_coinBalance'),
+                      _buildHeaderBadge(
+                        AppIcons.coins,
+                        AppTheme.gold,
+                        '$_coinBalance',
+                      ),
                     ],
-                  ),
-                  Row(
+                  );
+                  final controls = Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       _buildHeaderQuickControls(context, ku),
                       const SizedBox(width: 12),
                       PlayerAvatar(radius: 20, displayName: currentName ?? 'Z'),
                     ],
-                  ),
-                ],
+                  );
+                  if (constraints.maxWidth < 300) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Align(alignment: Alignment.centerLeft, child: metrics),
+                        const SizedBox(height: 12),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: controls,
+                        ),
+                      ],
+                    );
+                  }
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [metrics, controls],
+                  );
+                },
               ),
               const SizedBox(height: 32),
               FittedBox(
@@ -616,7 +443,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               const SizedBox(height: 8),
               Text(
-                ku ? 'Zanîn, ronahiya tarîtiyê ye.' : 'Bilgi, karanlığın aydınlığıdır.',
+                ku
+                    ? 'Zanîn, ronahiya tarîtiyê ye.'
+                    : 'Bilgi, karanlığın aydınlığıdır.',
                 style: const TextStyle(fontSize: 15, color: Colors.white70),
               ),
             ],
@@ -629,12 +458,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget _buildHeaderBadge(IconData icon, Color iconColor, String text) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(color: Colors.white12, borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(
+        color: Colors.white12,
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Row(
         children: [
           Icon(icon, color: iconColor, size: 18),
           const SizedBox(width: 6),
-          Text(text, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 14)),
+          Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+            ),
+          ),
         ],
       ),
     );
@@ -642,8 +481,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Widget _buildHeaderQuickControls(BuildContext context, bool ku) {
     final themeProvider = context.watch<ThemeProvider>();
-    final border = Colors.white24;
-    final fill = Colors.white12;
+    const border = Colors.white24;
+    const fill = Colors.white12;
 
     Widget control({
       required Key key,
@@ -791,24 +630,46 @@ class _DailyLessonHero extends StatelessWidget {
     final ctaLabel = hasReview
         ? (isKu ? 'Dest bi dubarekirinê' : 'Tekrara başla')
         : (isKu ? 'Destpêk bike' : 'Başla');
-        
+
     return Container(
+      key: const ValueKey('home-daily-lesson'),
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: AppTheme.surfaceColor(context),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: AppTheme.isLight(context) ? [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 15, offset: const Offset(0, 5))
-        ] : null,
-        border: AppTheme.isLight(context) ? null : Border.all(color: AppTheme.borderColor(context)),
+        boxShadow: AppTheme.isLight(context)
+            ? [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 15,
+                  offset: const Offset(0, 5),
+                ),
+              ]
+            : null,
+        border: AppTheme.isLight(context)
+            ? null
+            : Border.all(color: AppTheme.borderColor(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: TextStyle(fontSize: 22, color: AppTheme.textPrimaryColor(context), fontWeight: FontWeight.bold)),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 22,
+              color: AppTheme.textPrimaryColor(context),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(height: 8),
-          Text('$count Pirs • $subtitle', style: TextStyle(fontSize: 14, color: AppTheme.textSubColor(context))),
+          Text(
+            '$count Pirs • $subtitle',
+            style: TextStyle(
+              fontSize: 14,
+              color: AppTheme.textSubColor(context),
+            ),
+          ),
           const SizedBox(height: 24),
           if (onStart != null)
             SizedBox(
@@ -819,10 +680,18 @@ class _DailyLessonHero extends StatelessWidget {
                   backgroundColor: AppTheme.brandGreen, // Coral
                   foregroundColor: Colors.white,
                   elevation: 0,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 onPressed: onStart,
-                child: Text(ctaLabel, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                child: Text(
+                  ctaLabel,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
         ],
@@ -863,11 +732,7 @@ class _MiniLeaderboardState extends State<_MiniLeaderboard> {
     }
   }
 
-  static const _medalColors = [
-    AppTheme.gold,
-    AppTheme.silver,
-    AppTheme.bronze,
-  ];
+  static const _medalColors = [AppTheme.gold, AppTheme.silver, AppTheme.bronze];
 
   @override
   Widget build(BuildContext context) {
@@ -989,4 +854,3 @@ class _MiniLeaderboardState extends State<_MiniLeaderboard> {
     );
   }
 }
-

@@ -35,13 +35,13 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   supabase_flutter: ^2.14.1
-  flutter_local_notifications: ^17.2.1
-  timezone: ^0.9.4
+  flutter_local_notifications: ^22.1.0
+  timezone: ^0.11.1
 
   # Crash reporting
-  firebase_core: ^3.4.0
-  firebase_crashlytics: ^4.1.0
-  firebase_analytics: ^11.3.0
+  firebase_core: ^4.12.1
+  firebase_crashlytics: ^5.2.6
+  firebase_analytics: ^12.4.5
 
   # State management
   provider: ^6.1.0
@@ -59,15 +59,15 @@ dependencies:
   lottie: ^3.3.0
 
   # Paylaşım (Sprint 5'te kullanılacak)
-  share_plus: ^10.0.3
+  share_plus: ^13.2.1
 
   # Mağaza değerlendirmesi (Sprint 5'te kullanılacak)
   in_app_review: ^2.0.9
 
   # Bağlantı durumu (Sprint 6'da kullanılacak)
-  connectivity_plus: ^6.1.0
+  connectivity_plus: ^7.3.0
   image_picker: ^1.2.3
-  package_info_plus: ^9.0.1
+  package_info_plus: ^10.2.1
   font_awesome_flutter: ^11.0.0
 
 dev_dependencies:
@@ -103,7 +103,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/data/offline_questions.json
     - assets/question_images/
     - assets/zankurd.webp
     - assets/zankurd_icon.webp
@@ -154,13 +153,8 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 dependency_overrides:
-  # objective_c >= 6.0 adds native asset build hooks that fail when the
-  # project path contains spaces on Windows (URL-encoded path resolution bug).
-  objective_c: '>=0.1.0 <6.0.0'
-  # path_provider_foundation >= 2.6.0 introduces native asset FFI bindings
-  # (ffi_bindings.g.dart) that reference ObjC types and fail to compile on Windows.
-  path_provider_foundation: '>=0.0.1 <2.6.0'
-  # path_provider_android >= 2.3.0 migrated to package:jni, whose CMake native
-  # build (libdartjni.so) fails when the project path contains spaces / non-ASCII
-  # (Turkish İ) on Windows. Pin to the pre-jni platform-channel implementation.
-  path_provider_android: '>=2.2.0 <2.3.0'
+  # Newer native-asset hooks fail when this checkout path contains non-ASCII
+  # characters. Keep the last hook-free releases until Flutter fixes that path.
+  objective_c: ">=0.1.0 <6.0.0"
+  path_provider_foundation: ">=0.0.1 <2.6.0"
+  path_provider_android: ">=2.2.0 <2.3.0"

@@ -27,3 +27,4 @@
 | 2026-07-21_room_cleanup.sql | ✅ | 2026-07-21, kullanıcı tarafından Supabase SQL Editor'den elle uygulandı |
 | 2026-07-21_room_cleanup_cron.sql | ✅ | 2026-07-21, kullanıcı tarafından uygulandı — `cleanup-stale-rooms` işi saatlik (`17 * * * *`) çalışıyor |
 | 2026-07-21_strip_asta_prompt_prefix.sql | ✅ | 2026-07-21, kullanıcı tarafından Supabase SQL Editor'den elle uygulandı — canlı questions.prompt artık offline bankayla eşleşmeli |
+| 2026-07-22_multiplayer_integrity_hardening.sql | ✅ | 2026-07-22, Management API ile uygulandı; izinler, RPC'ler, politikalar ve TIMEOUT kısıtı canlı sorguyla doğrulandı |

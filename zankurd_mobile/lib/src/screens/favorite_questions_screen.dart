@@ -59,7 +59,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
           IconButton(
             onPressed: _reload,
             tooltip: context.s('Nû bike', 'Yenile'),
-            icon: Icon(AppIcons.arrowsRotate),
+            icon: const Icon(AppIcons.arrowsRotate),
           ),
         ],
       ),
@@ -271,7 +271,7 @@ class _FavoriteQuestionTile extends StatelessWidget {
                   gradient: AppTheme.goldGradient,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(AppIcons.bookmark, color: Colors.white),
+                child: const Icon(AppIcons.bookmark, color: Colors.white),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -314,7 +314,7 @@ class _FavoriteQuestionTile extends StatelessWidget {
                   color: AppTheme.textMutedColor(context),
                 ),
               ),
-              Icon(
+              const Icon(
                 AppIcons.play,
                 color: AppTheme.primaryGradientStart,
               ),

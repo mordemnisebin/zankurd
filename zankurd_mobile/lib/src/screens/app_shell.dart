@@ -37,6 +37,7 @@ class _AppShellState extends State<AppShell> {
   static const _navTourSeenKey = 'zankurd.navTour.seen';
 
   int _tab = 0;
+  final Set<int> _visitedTabs = {0};
   bool _showNavTour = false;
 
   final GlobalKey _homeNavKey = GlobalKey();
@@ -138,81 +139,60 @@ class _AppShellState extends State<AppShell> {
         if (didPop) return;
         if (_tab != 0) setState(() => _tab = 0);
       },
-      child: Stack(
-        key: _shellStackKey,
-        children: [
-          _buildScaffold(context, ku),
-          if (_showNavTour)
-            CoachMarkOverlay(
-              isKu: ku,
-              onFinished: _finishNavTour,
-              ancestorKey: _shellStackKey,
-              steps: [
-                CoachMarkStep(
-                  targetKey: _homeNavKey,
-                  icon: AppIcons.house,
-                  titleKu: 'Sereke',
-                  titleTr: 'Ana Sayfa',
-                  descriptionKu:
-                      'Vir e ku tu dest pê dikî: yariyên zû, xelatên rojane û misyonên te li vir in.',
-                  descriptionTr:
-                      'Buradan başlarsın: hızlı oyunlar, günlük ödüller ve görevlerin burada.',
-                ),
-                CoachMarkStep(
-                  targetKey: _playNavKey,
-                  icon: AppIcons.gamepad,
-                  titleKu: 'Bilîze',
-                  titleTr: 'Yarış',
-                  descriptionKu: 'Hemû pêşbirktî û lîstikên te li vir in.',
-                  descriptionTr:
-                      'Günlük yarışma, 1v1, oda ve turnuvaların merkezi.',
-                ),
-                CoachMarkStep(
-                  targetKey: _profileNavKey,
-                  icon: AppIcons.user,
-                  titleKu: 'Profîl',
-                  titleTr: 'Profil',
-                  descriptionKu:
-                      'Rozet, hevalên te, Turnuva û mîhengên te hemû li vir in.',
-                  descriptionTr:
-                      'Rozetlerin, arkadaşların, Turnuva ve ayarların hepsi burada.',
-                ),
-              ],
-            ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) => Stack(
+          key: _shellStackKey,
+          children: [
+            _buildScaffold(context, ku, constraints.maxWidth),
+            if (_showNavTour)
+              CoachMarkOverlay(
+                isKu: ku,
+                onFinished: _finishNavTour,
+                ancestorKey: _shellStackKey,
+                steps: [
+                  CoachMarkStep(
+                    targetKey: _homeNavKey,
+                    icon: AppIcons.house,
+                    titleKu: 'Sereke',
+                    titleTr: 'Ana Sayfa',
+                    descriptionKu:
+                        'Vir e ku tu dest pê dikî: yariyên zû, xelatên rojane û misyonên te li vir in.',
+                    descriptionTr:
+                        'Buradan başlarsın: hızlı oyunlar, günlük ödüller ve görevlerin burada.',
+                  ),
+                  CoachMarkStep(
+                    targetKey: _playNavKey,
+                    icon: AppIcons.gamepad,
+                    titleKu: 'Bilîze',
+                    titleTr: 'Yarış',
+                    descriptionKu: 'Hemû pêşbirktî û lîstikên te li vir in.',
+                    descriptionTr:
+                        'Günlük yarışma, 1v1, oda ve turnuvaların merkezi.',
+                  ),
+                  CoachMarkStep(
+                    targetKey: _profileNavKey,
+                    icon: AppIcons.user,
+                    titleKu: 'Profîl',
+                    titleTr: 'Profil',
+                    descriptionKu:
+                        'Rozet, hevalên te, kûpa û mîhengên te hemû li vir in.',
+                    descriptionTr:
+                        'Rozetlerin, arkadaşların, Turnuva ve ayarların hepsi burada.',
+                  ),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildScaffold(BuildContext context, bool ku) {
-    final width = MediaQuery.sizeOf(context).width;
+  Widget _buildScaffold(BuildContext context, bool ku, double width) {
     final isDesktop = width >= 768;
 
     final body = IndexedStack(
       index: _tab,
-      children: [
-        HomeScreen(
-          repository: widget.repository,
-          displayName: _profileName,
-          scrollController: _homeScrollController,
-          refreshSignal: _homeRefresh,
-          onOpenLearning: () => Navigator.of(
-            context,
-          ).push(AppRoute.to(LearningScreen(repository: widget.repository))),
-          onOpenPlay: () => setState(() => _tab = 2),
-        ),
-        CategoriesTab(repository: widget.repository),
-        PlayHubScreen(repository: widget.repository),
-        LeaderboardScreen(
-          repository: widget.repository,
-          refreshSignal: _leaderboardRefresh,
-        ),
-        ProfileScreen(
-          repository: widget.repository,
-          refreshSignal: _profileRefresh,
-          scrollController: _profileScrollController,
-        ),
-      ],
+      children: List.generate(5, (index) => _buildTab(context, index)),
     );
 
     final content = Center(
@@ -240,32 +220,66 @@ class _AppShellState extends State<AppShell> {
     );
   }
 
+  Widget _buildTab(BuildContext context, int index) {
+    if (!_visitedTabs.contains(index)) return const SizedBox.shrink();
+    return switch (index) {
+      0 => HomeScreen(
+        repository: widget.repository,
+        displayName: _profileName,
+        scrollController: _homeScrollController,
+        refreshSignal: _homeRefresh,
+        onOpenLearning: () => Navigator.of(
+          context,
+        ).push(AppRoute.to(LearningScreen(repository: widget.repository))),
+        onOpenPlay: () => _selectTab(2),
+      ),
+      1 => CategoriesTab(repository: widget.repository),
+      2 => PlayHubScreen(repository: widget.repository),
+      3 => LeaderboardScreen(
+        repository: widget.repository,
+        refreshSignal: _leaderboardRefresh,
+      ),
+      4 => ProfileScreen(
+        repository: widget.repository,
+        refreshSignal: _profileRefresh,
+        scrollController: _profileScrollController,
+      ),
+      _ => const SizedBox.shrink(),
+    };
+  }
+
+  void _selectTab(int i) {
+    if (_tab == i) {
+      final controller = switch (i) {
+        0 => _homeScrollController,
+        4 => _profileScrollController,
+        _ => null,
+      };
+      if (controller != null && controller.hasClients) {
+        controller.animateTo(
+          0.0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+      return;
+    }
+
+    if (i == 0) _homeRefresh.value++;
+    if (i == 3) _leaderboardRefresh.value++;
+    if (i == 4) _profileRefresh.value++;
+    setState(() {
+      _visitedTabs.add(i);
+      _tab = i;
+    });
+  }
+
   Widget _buildNavRail(BuildContext context, bool ku) {
     return NavigationRail(
       selectedIndex: _tab,
-      onDestinationSelected: (i) {
-        if (_tab == i) {
-          final controller = switch (i) {
-            0 => _homeScrollController,
-            4 => _profileScrollController,
-            _ => null,
-          };
-          if (controller != null && controller.hasClients) {
-            controller.animateTo(
-              0.0,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeOut,
-            );
-          }
-        } else {
-          if (i == 0) _homeRefresh.value++;
-          if (i == 3) _leaderboardRefresh.value++;
-          if (i == 4) _profileRefresh.value++;
-          setState(() => _tab = i);
-        }
-      },
+      onDestinationSelected: _selectTab,
       labelType: NavigationRailLabelType.all,
-      selectedLabelTextStyle: TextStyle(
+      selectedLabelTextStyle: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w800,
         color: AppTheme.brandGreen,
@@ -275,12 +289,21 @@ class _AppShellState extends State<AppShell> {
         fontWeight: FontWeight.w500,
         color: AppTheme.textMutedColor(context),
       ),
-      selectedIconTheme: IconThemeData(color: AppTheme.brandGreen, size: 28),
-      unselectedIconTheme: IconThemeData(color: AppTheme.textMutedColor(context), size: 24),
+      selectedIconTheme: const IconThemeData(
+        color: AppTheme.brandGreen,
+        size: 28,
+      ),
+      unselectedIconTheme: IconThemeData(
+        color: AppTheme.textMutedColor(context),
+        size: 24,
+      ),
       indicatorColor: AppTheme.brandGreen.withValues(alpha: 0.15),
       destinations: [
         NavigationRailDestination(
-          icon: KeyedSubtree(key: _homeNavKey, child: const Icon(AppIcons.house)),
+          icon: KeyedSubtree(
+            key: _homeNavKey,
+            child: const Icon(AppIcons.house),
+          ),
           selectedIcon: const Icon(AppIcons.house),
           label: Text(ku ? 'Sereke' : 'Ana Sayfa'),
         ),
@@ -290,7 +313,10 @@ class _AppShellState extends State<AppShell> {
           label: Text(ku ? 'Kategorî' : 'Kategori'),
         ),
         NavigationRailDestination(
-          icon: KeyedSubtree(key: _playNavKey, child: const Icon(AppIcons.gamepad)),
+          icon: KeyedSubtree(
+            key: _playNavKey,
+            child: const Icon(AppIcons.gamepad),
+          ),
           selectedIcon: const Icon(AppIcons.gamepad),
           label: Text(ku ? 'Pêşbazî' : 'Yarış'),
         ),
@@ -300,7 +326,10 @@ class _AppShellState extends State<AppShell> {
           label: Text(ku ? 'Rêz' : 'Liderlik'),
         ),
         NavigationRailDestination(
-          icon: KeyedSubtree(key: _profileNavKey, child: const Icon(AppIcons.user)),
+          icon: KeyedSubtree(
+            key: _profileNavKey,
+            child: const Icon(AppIcons.user),
+          ),
           selectedIcon: const Icon(AppIcons.user),
           label: Text(ku ? 'Profîl' : 'Profil'),
         ),
@@ -335,7 +364,7 @@ class _AppShellState extends State<AppShell> {
               : AppTheme.textMutedColor(context);
           return IconThemeData(size: selected ? 26 : 24, color: color);
         }),
-        indicatorColor: AppTheme.brandGreen.withValues(alpha: 0.15),
+        indicatorColor: AppTheme.brandGreen.withValues(alpha: 0.22),
         indicatorShape: const StadiumBorder(),
         overlayColor: WidgetStateProperty.all(
           AppTheme.brandGreen.withValues(alpha: 0.10),
@@ -349,32 +378,12 @@ class _AppShellState extends State<AppShell> {
               color: Colors.black.withValues(alpha: 0.04),
               offset: const Offset(0, -4),
               blurRadius: 16,
-            )
+            ),
           ],
         ),
         child: NavigationBar(
           selectedIndex: _tab,
-          onDestinationSelected: (i) {
-            if (_tab == i) {
-              final controller = switch (i) {
-                0 => _homeScrollController,
-                4 => _profileScrollController,
-                _ => null,
-              };
-              if (controller != null && controller.hasClients) {
-                controller.animateTo(
-                  0.0,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                );
-              }
-            } else {
-              if (i == 0) _homeRefresh.value++;
-              if (i == 3) _leaderboardRefresh.value++;
-              if (i == 4) _profileRefresh.value++;
-              setState(() => _tab = i);
-            }
-          },
+          onDestinationSelected: _selectTab,
           destinations: [
             NavigationDestination(
               icon: KeyedSubtree(

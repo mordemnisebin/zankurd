@@ -26,6 +26,28 @@ void main() {
     expect(ids.toSet().length, ids.length);
   });
 
+  test('normalized prompts are unique within each category', () {
+    final keys = offlineQuestionBank
+        .map((q) => '${q.category}|${_normalized(q.prompt)}')
+        .toList();
+
+    expect(keys.toSet().length, keys.length);
+  });
+
+  test('displayed correct-answer positions are balanced', () {
+    final counts = List<int>.filled(4, 0);
+    for (final question in offlineQuestionBank.where(
+      (q) => q.answers.length == 4,
+    )) {
+      counts[question.displayAnswers.indexOf(question.correctAnswer)]++;
+    }
+
+    final spread =
+        counts.reduce((a, b) => a > b ? a : b) -
+        counts.reduce((a, b) => a < b ? a : b);
+    expect(spread, lessThanOrEqualTo(1), reason: 'Dağılım: $counts');
+  });
+
   test('every correct answer exists among its options', () {
     for (final question in offlineQuestionBank) {
       expect(

@@ -60,9 +60,9 @@ void main() {
   test('eksik cevaplar yanlış sayılır (total korunur)', () {
     // Sadece ilk 3 kolay cevaplanmış, geri kalan atlanmış (yanıtsız = yanlış).
     final answered = [
-      PlacementItem(difficulty: 1, correct: true),
-      PlacementItem(difficulty: 2, correct: true),
-      PlacementItem(difficulty: 1, correct: true),
+      const PlacementItem(difficulty: 1, correct: true),
+      const PlacementItem(difficulty: 2, correct: true),
+      const PlacementItem(difficulty: 1, correct: true),
     ];
     final result = PlacementScoring.evaluate(answered, totalQuestions: 12);
     expect(result.totalCount, 12);
@@ -115,11 +115,11 @@ void main() {
 
     test('geçersiz (şıksız) sorular elenir', () {
       final pool = [
-        QuizQuestion(
+        const QuizQuestion(
           id: 'bad',
           category: 'Ziman',
           prompt: 'p',
-          answers: const ['tek'],
+          answers: ['tek'],
           correctAnswer: 'tek',
           explanation: '',
           difficulty: 1,

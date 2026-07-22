@@ -179,7 +179,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   color: Colors.white,
                                 ),
                               )
-                            : Icon(AppIcons.floppyDisk),
+                            : const Icon(AppIcons.floppyDisk),
                         label: Text(ku ? 'Tomar Bike' : 'Kaydet'),
                       ),
                     ),
@@ -196,7 +196,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           AppIcons.triangleExclamation,
                           color: AppTheme.wrong,
                         ),
@@ -245,7 +245,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       color: AppTheme.wrong,
                                     ),
                                   )
-                                : Icon(
+                                : const Icon(
                                     AppIcons.trashCan,
                                     color: AppTheme.wrong,
                                     size: 22,
@@ -257,7 +257,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 children: [
                                   Text(
                                     ku ? 'Hesabê Min Jê Bibe' : 'Hesabımı Sil',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: AppTheme.wrong,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -302,7 +302,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           AppIcons.squareCheck,
                           color: AppTheme.playGreen,
                           size: 22,
@@ -554,7 +554,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
+                                const Icon(
                                   AppIcons.clock,
                                   color: AppTheme.violet,
                                   size: 18,

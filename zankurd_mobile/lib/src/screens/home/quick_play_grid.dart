@@ -53,8 +53,8 @@ class QuickPlayGrid extends StatelessWidget {
       ),
       ColorfulActionCard(
         key: const ValueKey('quick-play-tournament'),
-        title: isKu ? 'Turnuva' : 'Turnuva Modu',
-        subtitle: isKu ? 'Bot kûpa' : 'Bot kupa',
+        title: isKu ? 'Kûpa' : 'Turnuva Modu',
+        subtitle: isKu ? 'Kûpaya botan' : 'Bot kupa',
         icon: AppIcons.trophy,
         colors: [AppTheme.playCyan, _deepen(AppTheme.playCyan)],
         onTap: onTournament,

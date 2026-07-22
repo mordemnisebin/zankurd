@@ -275,7 +275,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         color: AppTheme.gold.withValues(alpha: 0.15),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(
+                      child: const Icon(
                         AppIcons.medal,
                         color: AppTheme.gold,
                         size: 50,
@@ -284,7 +284,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     const SizedBox(height: 16),
                     Text(
                       context.isKu ? 'Asta Te Bilind Bû!' : 'Seviyen Yükseldi!',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
                         color: AppTheme.gold,
@@ -320,7 +320,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       ),
                       child: Text(
                         context.isKu ? 'Ast $newLevel' : 'Seviye $newLevel',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
@@ -345,7 +345,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         ).pop({'score': score, 'correct': correctCount}),
                         child: Text(
                           context.isKu ? 'Berdawam bike' : 'Devam Et',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
                           ),
@@ -727,7 +727,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       color: AppTheme.surfaceHiColor(context),
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             AppIcons.fire,
                             color: AppTheme.accent,
                             size: 30,
@@ -1043,7 +1043,7 @@ class _RaceStandings extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(AppIcons.peopleGroup, color: AppTheme.accent),
+              const Icon(AppIcons.peopleGroup, color: AppTheme.accent),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -1058,7 +1058,7 @@ class _RaceStandings extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          Text(summary, style: TextStyle(color: AppTheme.textMuted)),
+          Text(summary, style: const TextStyle(color: AppTheme.textMuted)),
           const SizedBox(height: 12),
           for (var i = 0; i < standings.length; i++)
             _RaceStandingRow(rank: i + 1, player: standings[i]),
@@ -1330,7 +1330,7 @@ class _RaceStandingRow extends StatelessWidget {
             ),
           ),
           if (player.streak > 0) ...[
-            Icon(
+            const Icon(
               AppIcons.fire,
               color: AppTheme.gold,
               size: 18,
@@ -1338,7 +1338,7 @@ class _RaceStandingRow extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
               '${player.streak}',
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppTheme.gold,
                 fontWeight: FontWeight.w800,
               ),

@@ -6,8 +6,8 @@ class DesignTokensPreviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeBg = AppTheme.lightBg;
-    final themeText = AppTheme.lightTextPrimary;
+    const themeBg = AppTheme.lightBg;
+    const themeText = AppTheme.lightTextPrimary;
 
     return Scaffold(
       backgroundColor: themeBg,
@@ -33,7 +33,7 @@ class DesignTokensPreviewScreen extends StatelessWidget {
               // ── Renk Paleti ve Kontrast Uyumu ──────────────────────────
               _sectionHeader('1. Renk Paleti (Krem Zemin Üstü Kontrast)'),
               const SizedBox(height: AppSpacing.md),
-              Wrap(
+              const Wrap(
                 spacing: AppSpacing.md,
                 runSpacing: AppSpacing.md,
                 children: [
@@ -163,7 +163,7 @@ class DesignTokensPreviewScreen extends StatelessWidget {
               // ── Radius & Spacing ──────────────────────────────────────
               _sectionHeader('4. Radius ve Spacing Skalası'),
               const SizedBox(height: AppSpacing.md),
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     child: _RadiusSample(
@@ -172,7 +172,7 @@ class DesignTokensPreviewScreen extends StatelessWidget {
                       themeText: themeText,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.md),
+                  SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: _RadiusSample(
                       name: 'Radius Medium (16)',
@@ -180,7 +180,7 @@ class DesignTokensPreviewScreen extends StatelessWidget {
                       themeText: themeText,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.md),
+                  SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: _RadiusSample(
                       name: 'Radius Large (28)',

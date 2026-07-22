@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,12 +17,9 @@ import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
 import '../utils/error_reporter.dart';
-import '../utils/question_cache.dart';
 import '../config/category_visibility.dart';
 import 'mock_zankurd_repository.dart';
-import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
-import '../config/subcategory_config.dart';
 import '../services/question_content_policy.dart';
 
 /// Supabase destekli üretim deposu.
@@ -54,13 +50,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   GameRoom joinRoom(String code) => _offline.joinRoom(code);
 
-  static const _questionColumns =
-      'id, category_id, categories(name), prompt, option_a, option_b, option_c, option_d, correct_option, explanation, explanation_ku, explanation_tr, question_type, image_url, difficulty';
-  static const _roomQuestionColumns =
-      'question_index, questions($_questionColumns)';
-
   final SupabaseClient client;
-  final _cache = QuestionCache();
   final Map<String, Map<String, dynamic>> _profileCache = {};
 
   /// Oda başına tek realtime kanalı; gönderme ve dinleme paylaşır.
@@ -285,7 +275,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final counts = await Future.wait(
         cats.map((row) async {
           final count = await client
-              .from('quiz_eligible_questions')
+              .from('quiz_public_questions')
               .count(CountOption.exact)
               .eq('is_approved', true)
               .eq('category_id', row['id'] as String);
@@ -304,25 +294,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     String? categoryId,
     int limit = 10,
   }) async {
-    final key = '${categoryId ?? "all"}_$limit';
-    final cached = _cache.get(key);
-    if (cached != null) return cached;
-    try {
-      final result = await fetchApprovedQuestions(
-        categoryId: categoryId,
-        limit: limit,
-      );
-      // Onaylı havuz daralırsa (içerik denetimi vb.) boş liste ile quiz
-      // açmak yerine yerel bankaya düş.
-      if (result.isEmpty) {
-        return _offline.loadQuestions(categoryId: categoryId, limit: limit);
-      }
-      _cache.set(key, result);
-      return result;
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'loadQuestions failed');
-      return _offline.loadQuestions(categoryId: categoryId, limit: limit);
-    }
+    return _offline.loadQuestions(categoryId: categoryId, limit: limit);
   }
 
   @override
@@ -333,58 +305,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     String? subCategory,
     int limit = 10,
   }) async {
-    try {
-      final categoryId = await _categoryIdByName(category);
-      final fetchLimit = subCategory != null ? limit * 3 : limit;
-      final rows = await _selectApprovedQuestions(
-        categoryId: categoryId,
-        limit: fetchLimit,
-        difficultyMin: difficultyMin,
-        difficultyMax: difficultyMax,
-        randomize: true,
-      );
-
-      var parsedQuestions = rows
-          .map(_questionFromRow)
-          .where(_contentPolicy.isPlayable)
-          .toList();
-      if (subCategory != null) {
-        final matched = parsedQuestions
-            .where((q) => SubcategoryConfig.getSubcategoryId(q) == subCategory)
-            .toList();
-        // Alt kategori etiketi gerçek bir DB kolonu değil, soru id'sinin
-        // hash'inden türetilir (bkz. SubcategoryConfig.getSubcategoryId) —
-        // yani kategori+zorluk havuzunun rastgele ~1/3'ü eşleşir. Eşleşen
-        // sayı istenen limit'in altında kalırsa seviyeyi eksik soruyla
-        // bitirmek yerine aynı kategori+zorluktaki diğer sorularla
-        // tamamla; alt kategori zaten sabit bir içerik sınırı değil.
-        if (matched.length < limit) {
-          final matchedIds = matched.map((q) => q.id).toSet();
-          final need = limit - matched.length;
-          final fillers = parsedQuestions
-              .where((q) => !matchedIds.contains(q.id))
-              .take(need * 3);
-          parsedQuestions = [...matched, ...fillers];
-        } else {
-          parsedQuestions = matched;
-        }
-      }
-
-      final store = await SeenQuestionStore.load();
-      final selected = store.preferUnseen(parsedQuestions, limit);
-      final questions = await _withRemoteVisualBlend(
-        selected,
-        categoryId: categoryId,
-        limit: limit,
-        difficultyMin: difficultyMin,
-        difficultyMax: difficultyMax,
-      );
-      if (questions.isNotEmpty) return questions;
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'loadLevelQuestions failed');
-      // Fall through to local examples if the rich schema is unavailable.
-    }
-
     return _offline.loadLevelQuestions(
       category: category,
       difficultyMin: difficultyMin,
@@ -400,16 +320,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     if (roomId == null) return _offline.loadRoomQuestions(room);
 
     try {
-      final rows = await client
-          .from('room_questions')
-          .select(_roomQuestionColumns)
-          .eq('room_id', roomId)
-          .order('question_index');
-
-      final roomQuestions = rows
-          .map((row) => row['questions'])
+      final response = await client.rpc(
+        'get_room_questions',
+        params: {'p_room_id': roomId},
+      );
+      final roomQuestions = (response as List<dynamic>)
           .whereType<Map<String, dynamic>>()
-          .map(_questionFromRow)
+          .map(_roomQuestionFromRow)
           .where(_contentPolicy.isPlayable)
           .toList();
 
@@ -424,169 +341,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
-    try {
-      final seed = MockZanKurdRepository.dailySeedFor(currentUserId);
-
-      // Soru sayısını öğren (SELECT ile aynı onay filtresiyle),
-      // gün tohumlu pencereden çek.
-      final total = await client
-          .from('quiz_eligible_questions')
-          .count(CountOption.exact)
-          .eq('is_approved', true);
-      if (total <= 0) return _offline.loadDailyQuestions(limit: limit);
-
-      const windowSize = 60;
-      final maxOffset = total > windowSize ? total - windowSize : 0;
-      final offset = maxOffset == 0 ? 0 : (seed * 37) % maxOffset;
-
-      final rows = await client
-          .from('quiz_eligible_questions')
-          .select(_questionColumns)
-          .eq('is_approved', true)
-          .order('id')
-          .range(offset, offset + windowSize - 1);
-
-      final pool =
-          rows.map(_questionFromRow).where(_contentPolicy.isPlayable).toList()
-            ..shuffle(Random(seed));
-      final selected = pool.take(limit).toList();
-      if (selected.isNotEmpty) return selected;
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'loadDailyQuestions failed');
-      // Şema/politika eksikse yerel soru bankasına düş.
-    }
     return _offline.loadDailyQuestions(limit: limit);
-  }
-
-  Future<List<QuizQuestion>> fetchApprovedQuestions({
-    String? categoryId,
-    int limit = 10,
-  }) async {
-    final rows = await _selectApprovedQuestions(
-      categoryId: categoryId,
-      limit: limit,
-      randomize: true,
-    );
-    final store = await SeenQuestionStore.load();
-    final selected = store.preferUnseen(
-      rows.map(_questionFromRow).where(_contentPolicy.isPlayable).toList(),
-      limit,
-    );
-    return _withRemoteVisualBlend(
-      selected,
-      categoryId: categoryId,
-      limit: limit,
-    );
-  }
-
-  Future<List<Map<String, dynamic>>> _selectApprovedQuestions({
-    required String? categoryId,
-    required int limit,
-    int? difficultyMin,
-    int? difficultyMax,
-    bool randomize = false,
-    String? questionType,
-  }) async {
-    return _retryOnNetworkFailure(() async {
-      final query = client
-          .from('quiz_eligible_questions')
-          .select(_questionColumns)
-          .eq('is_approved', true);
-
-      var filteredQuery = categoryId == null
-          ? query
-          : query.eq('category_id', categoryId);
-      if (difficultyMin != null) {
-        filteredQuery = filteredQuery.gte('difficulty', difficultyMin);
-      }
-      if (difficultyMax != null) {
-        filteredQuery = filteredQuery.lte('difficulty', difficultyMax);
-      }
-      if (questionType != null) {
-        filteredQuery = filteredQuery.eq('question_type', questionType);
-      }
-
-      if (randomize) {
-        // Pencere kaydırması, SELECT ile AYNI filtrelerle sayılan toplam
-        // üzerinden hesaplanmalı; yoksa küçük kategorilerde offset filtreli
-        // sonucun dışına düşer ve seçim hep aynı ilk kayıtlara sabitlenir.
-        var countQuery = client
-            .from('quiz_eligible_questions')
-            .count(CountOption.exact)
-            .eq('is_approved', true);
-        if (categoryId != null) {
-          countQuery = countQuery.eq('category_id', categoryId);
-        }
-        if (difficultyMin != null) {
-          countQuery = countQuery.gte('difficulty', difficultyMin);
-        }
-        if (difficultyMax != null) {
-          countQuery = countQuery.lte('difficulty', difficultyMax);
-        }
-        if (questionType != null) {
-          countQuery = countQuery.eq('question_type', questionType);
-        }
-        final total = await countQuery;
-        const windowSize = 120;
-        final maxOffset = total > windowSize ? total - windowSize : 0;
-        final offset = maxOffset == 0 ? 0 : Random().nextInt(maxOffset);
-        final rows = await filteredQuery
-            .order('id')
-            .range(offset, offset + windowSize - 1);
-        if (rows.isNotEmpty) {
-          // Pencereyi olduğu gibi döndür; tekrar-önleyici seçim üst katmanda
-          // (SeenQuestionStore.preferUnseen) limit'e indirger.
-          return (rows..shuffle()).toList(growable: false);
-        }
-      }
-
-      final rows = await filteredQuery.order('id').limit(limit);
-      return rows;
-    });
-  }
-
-  Future<List<QuizQuestion>> _withRemoteVisualBlend(
-    List<QuizQuestion> selected, {
-    required String? categoryId,
-    required int limit,
-    int? difficultyMin,
-    int? difficultyMax,
-  }) async {
-    const minVisualQuestions = 2;
-    if (selected.where((question) => question.hasImage).length >=
-        minVisualQuestions) {
-      return selected.take(limit).toList(growable: false);
-    }
-
-    try {
-      final visualRows = await _selectApprovedQuestions(
-        categoryId: categoryId,
-        limit: minVisualQuestions,
-        difficultyMin: difficultyMin,
-        difficultyMax: difficultyMax,
-        randomize: true,
-        questionType: 'visual',
-      );
-      final ids = selected.map((question) => question.id).toSet();
-      final blended = [...selected];
-      for (final question in visualRows.map(_questionFromRow)) {
-        if (ids.contains(question.id)) continue;
-        if (blended.where((q) => q.hasImage).length >= minVisualQuestions) {
-          break;
-        }
-        if (blended.length >= limit) {
-          final replaceAt = blended.lastIndexWhere((q) => !q.hasImage);
-          if (replaceAt == -1) break;
-          blended[replaceAt] = question;
-        } else {
-          blended.add(question);
-        }
-      }
-      return (blended.take(limit).toList(growable: false)..shuffle());
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'visual question blend failed');
-      return selected.take(limit).toList(growable: false);
-    }
   }
 
   @override
@@ -840,13 +595,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<void> updateReady(GameRoom room, bool isReady) async {
     final roomId = room.id;
     if (roomId == null) return;
-    final user = client.auth.currentUser;
-    if (user == null) return;
-    await client
-        .from('room_players')
-        .update({'is_ready': isReady})
-        .eq('room_id', roomId)
-        .eq('player_id', user.id);
+    await client.rpc(
+      'set_room_ready',
+      params: {'p_room_id': roomId, 'p_is_ready': isReady},
+    );
   }
 
   @override
@@ -963,15 +715,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final user = client.auth.currentUser ?? await signInAnonymously();
       final rows = await client
           .from('favorite_questions')
-          .select('questions($_questionColumns)')
+          .select('question_id')
           .eq('player_id', user.id)
           .order('created_at', ascending: false);
 
+      final byId = {
+        for (final question in _offline.questions) question.id: question,
+      };
       final questions = rows
-          .map((row) => row['questions'])
-          .whereType<Map<String, dynamic>>()
-          .map(_questionFromRow)
-          .where(_contentPolicy.isPlayable)
+          .map((row) => byId[row['question_id'] as String])
+          .whereType<QuizQuestion>()
           .toList();
 
       if (questions.isNotEmpty) return questions;
@@ -1336,33 +1089,21 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }).toList();
   }
 
-  QuizQuestion _questionFromRow(Map<String, dynamic> row) {
-    final correctOption = row['correct_option'] as String;
-    final category = row['categories'] is Map<String, dynamic>
-        ? (row['categories'] as Map<String, dynamic>)['name'] as String
-        : row['category_id'] as String;
-    final answerMap = {
-      'A': row['option_a'] as String? ?? '',
-      'B': row['option_b'] as String? ?? '',
-      'C': row['option_c'] as String? ?? '',
-      'D': row['option_d'] as String? ?? '',
-    };
-    final answers = [
-      answerMap['A']!,
-      answerMap['B']!,
-      answerMap['C']!,
-      answerMap['D']!,
+  QuizQuestion _roomQuestionFromRow(Map<String, dynamic> row) {
+    final answers = <String>[
+      row['option_a'] as String? ?? '',
+      row['option_b'] as String? ?? '',
+      row['option_c'] as String? ?? '',
+      row['option_d'] as String? ?? '',
     ].where((answer) => answer.trim().isNotEmpty && answer != '-').toList();
 
     return QuizQuestion(
       id: row['id'] as String,
-      category: category,
+      category: row['category_name'] as String? ?? 'Ziman',
       prompt: row['prompt'] as String,
       answers: answers,
-      correctAnswer: answerMap[correctOption] ?? answers.first,
-      explanation: row['explanation'] as String? ?? '',
-      explanationKu: row['explanation_ku'] as String?,
-      explanationTr: row['explanation_tr'] as String?,
+      correctAnswer: '',
+      explanation: '',
       type: _questionTypeFromRow(row),
       imageUrl: row['image_url'] as String?,
       difficulty: row['difficulty'] as int? ?? 2,

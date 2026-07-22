@@ -15,6 +15,8 @@ import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 
 void main() {
   setUp(() {
+    // Screenshot harness intentionally uses the test-only preferences hook.
+    // ignore: invalid_use_of_visible_for_testing_member
     SharedPreferences.setMockInitialValues({
       'zankurd.quiz_tutorial.seen': true,
     });

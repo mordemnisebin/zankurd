@@ -30,7 +30,7 @@ class OctagonClipper extends CustomClipper<Path> {
     final path = Path();
     final width = size.width;
     final height = size.height;
-    final cornerOffset = 0.3; // 30% inset for octagon corners
+    const cornerOffset = 0.3; // 30% inset for octagon corners
 
     path.moveTo(width * cornerOffset, 0);
     path.lineTo(width * (1 - cornerOffset), 0);

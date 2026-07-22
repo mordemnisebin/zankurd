@@ -129,7 +129,7 @@ class HeroCard extends StatelessWidget {
                   ),
                   child: ElevatedButton.icon(
                     onPressed: onQuickMatch,
-                    icon: Icon(AppIcons.bolt, color: AppTheme.brandGreen),
+                    icon: const Icon(AppIcons.bolt, color: AppTheme.brandGreen),
                     label: Text(
                       isKu ? '1vs1 — Dest pê bike' : '1vs1 — Hemen yarış',
                       style: AppTypography.bodyLarge.copyWith(

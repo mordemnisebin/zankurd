@@ -16,6 +16,7 @@ void main(List<String> args) {
     return;
   }
   final root = Directory.current;
+  final mode = args.first;
   final manifestFile = File('tool/question_quality/source_manifest.json');
   final baselineFile = File('tool/question_quality/baseline.json');
   final output = Directory('docs/audit/question_quality/2026-07-15');
@@ -31,16 +32,21 @@ void main(List<String> args) {
   final result = AuditEngine(
     root: root,
     manifest: manifest,
+    gateOnly: mode != 'report',
     onProfile: profiling
         ? (stage, elapsed) =>
               stderr.writeln('profile $stage ${elapsed.inMilliseconds}ms')
         : null,
   ).run();
-  writeAuditReports(result, output);
-  writeInventoryMarkdown(
-    result,
-    File('docs/audit/question_quality/QUESTION_SOURCE_INVENTORY_2026-07-15.md'),
-  );
+  if (mode == 'report') {
+    writeAuditReports(result, output);
+    writeInventoryMarkdown(
+      result,
+      File(
+        'docs/audit/question_quality/QUESTION_SOURCE_INVENTORY_2026-07-15.md',
+      ),
+    );
+  }
   final metrics = summaryMetrics(result);
   stdout.writeln(
     'question-quality: sources=${result.sourceResults.length} '
@@ -51,7 +57,7 @@ void main(List<String> args) {
     'unknown=${result.unknownSources.length}',
   );
 
-  switch (args.first) {
+  switch (mode) {
     case 'report':
       final productionErrors = result.sourceResults
           .where(

@@ -101,7 +101,9 @@ class NotificationService {
             iOS: DarwinInitializationSettings(),
           );
 
-      await _localNotificationsPlugin.initialize(initializationSettings);
+      await _localNotificationsPlugin.initialize(
+        settings: initializationSettings,
+      );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService init');
       debugPrint('Failed to initialize local notifications: $e');
@@ -184,9 +186,7 @@ class NotificationService {
 
     if (kIsWeb) return;
     try {
-      await _localNotificationsPlugin.cancel(
-        0,
-      ); // Cancel previous daily notification
+      await _localNotificationsPlugin.cancel(id: 0);
 
       const AndroidNotificationDetails androidDetails =
           AndroidNotificationDetails(
@@ -208,16 +208,14 @@ class NotificationService {
       final isKu =
           (_preferences?.getString('zankurd.language') ?? 'ku') != 'tr';
       await _localNotificationsPlugin.zonedSchedule(
-        0,
-        'ZanKurd',
-        isKu
+        id: 0,
+        title: 'ZanKurd',
+        body: isKu
             ? 'Huhu! Zana dibêje pêşbirka rojê dest pê kiriye. Hêza hişê xwe biceribîne!'
             : 'Huhu! Zana günün yarışmasının başladığını söylüyor. Zihnini test et!',
-        scheduledTime,
-        details,
+        scheduledDate: scheduledTime,
+        notificationDetails: details,
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
       );
     } catch (e, s) {
@@ -241,7 +239,9 @@ class NotificationService {
   Future<void> showFriendRequest(String fromName, {bool isKu = true}) async {
     if (kIsWeb || !_enabled) return;
     try {
-      final title = isKu ? 'Zana Dibêje: Hevalek Nû' : 'Zana Diyor ki: Yeni Bir Arkadaş';
+      final title = isKu
+          ? 'Zana Dibêje: Hevalek Nû'
+          : 'Zana Diyor ki: Yeni Bir Arkadaş';
       final body = isKu
           ? 'Huhu! $fromName dixwaze bi te re pêşbaziyê bike!'
           : 'Huhu! $fromName seninle yarışmak istiyor!';
@@ -259,10 +259,10 @@ class NotificationService {
       );
 
       await _localNotificationsPlugin.show(
-        1, // Different ID from daily reminder
-        title,
-        body,
-        details,
+        id: 1,
+        title: title,
+        body: body,
+        notificationDetails: details,
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService friend request');
@@ -295,16 +295,14 @@ class NotificationService {
 
       final tzTime = tz.TZDateTime.from(scheduledTime, tz.local);
       await _localNotificationsPlugin.zonedSchedule(
-        2, // Different ID
-        isKu ? 'Zana Xemgîn e...' : 'Zana Üzgün...',
-        isKu
+        id: 2,
+        title: isKu ? 'Zana Xemgîn e...' : 'Zana Üzgün...',
+        body: isKu
             ? 'Huhu! Te îro qet nelîst! Seriya te dikare bişkê. Zana li benda te ye!'
             : 'Huhu! Bugün hiç oynamadın! Serin kırılabilir. Zana seni bekliyor!',
-        tzTime,
-        details,
+        scheduledDate: tzTime,
+        notificationDetails: details,
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
       );
     } catch (e, s) {
@@ -324,18 +322,18 @@ class NotificationService {
         importance: Importance.high,
         priority: Priority.high,
       );
-      final details = NotificationDetails(
+      const details = NotificationDetails(
         android: androidDetails,
         iOS: DarwinNotificationDetails(),
       );
 
       await _localNotificationsPlugin.show(
-        3,
-        isKu ? 'Zana Kêfxweş e!' : 'Zana Mutlu!',
-        isKu
+        id: 3,
+        title: isKu ? 'Zana Kêfxweş e!' : 'Zana Mutlu!',
+        body: isKu
             ? 'Huhu! $friendName daxwaza hevaltiya te qebûl kir! Wexta pêşbaziyê ye!'
             : 'Huhu! $friendName arkadaşlık isteğini kabul etti! Yarış zamanı!',
-        details,
+        notificationDetails: details,
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService friend accepted');

@@ -85,7 +85,7 @@ void main() {
     for (var i = 0; i < 6; i++) {
       final state = tester.state(find.byType(LevelPlacementScreen));
       // Doğru cevabı bul: mevcut sorunun correctAnswer'ına eşit metin.
-      final questions = (state as dynamic);
+      final questions = state as dynamic;
       // ignore: avoid_dynamic_calls
       final QuizQuestion current = questions.currentQuestionForTest;
       await tester.tap(find.text(current.correctAnswer).last);
