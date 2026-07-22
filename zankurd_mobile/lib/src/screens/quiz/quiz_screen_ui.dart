@@ -796,8 +796,7 @@ extension _QuizScreenUI on _QuizScreenState {
     final questionIcon = CategoryVisuals.icon(question.category);
     // Soru paneli kategori renk kimliğini taşır: hafif zemin tonu,
     // renkli kenarlık/parıltı ve kategori gradyanlı ikon rozeti.
-    final catIndex = widget.repository.categories.indexOf(question.category);
-    final catGradient = AppTheme.categoryGradient(catIndex >= 0 ? catIndex : 0);
+    final catGradient = CategoryVisuals.gradient(question.category);
     final catColor = catGradient.colors.first;
     return Container(
       width: double.infinity,

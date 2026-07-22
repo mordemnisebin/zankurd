@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../config/category_visuals.dart';
 import '../config/subcategory_config.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -22,8 +23,8 @@ class SubcategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     final list = SubcategoryConfig.subcategories[category] ?? const [];
-    final catIndex = repository.categories.indexOf(category);
-    final gradient = AppTheme.categoryGradient(catIndex >= 0 ? catIndex : 0);
+    // Renk kategorinin adından gelir; liste sırasına bağlı değildir.
+    final gradient = CategoryVisuals.gradient(category);
 
     return Scaffold(
       extendBodyBehindAppBar: true,

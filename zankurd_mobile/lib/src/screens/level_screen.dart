@@ -8,6 +8,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'quiz_screen.dart';
+import '../config/category_visuals.dart';
 import '../config/subcategory_config.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -52,8 +53,7 @@ class _LevelScreenState extends State<LevelScreen> {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     final levels = widget.repository.levelsForCategory(widget.category);
-    final catIndex = widget.repository.categories.indexOf(widget.category);
-    final gradient = AppTheme.categoryGradient(catIndex >= 0 ? catIndex : 0);
+    final gradient = CategoryVisuals.gradient(widget.category);
 
     return Scaffold(
       extendBodyBehindAppBar: true,

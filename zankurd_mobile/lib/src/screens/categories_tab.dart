@@ -436,8 +436,11 @@ class _CategoryCardState extends State<_CategoryCard>
 
   @override
   Widget build(BuildContext context) {
-    final gradientColors = AppTheme
-        .categoryGradients[widget.index % AppTheme.categoryGradients.length];
+    // Renk kategorinin adından gelir. Daha önce liste sırası (widget.index)
+    // kullanılıyordu; alt kategori/quiz ekranları ise repository sırasını
+    // kullandığı için aynı kategori ekrandan ekrana renk değiştiriyordu
+    // (2026-07-22 canlı UX denetimi).
+    final gradientColors = CategoryVisuals.gradientColors(widget.category);
     final icon = CategoryVisuals.icon(widget.category);
     final catName = CategoryNames.localized(widget.category, widget.isKu);
 
