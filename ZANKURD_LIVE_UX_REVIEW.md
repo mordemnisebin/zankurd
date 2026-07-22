@@ -1,8 +1,10 @@
 # ZanKurd — Canlı Uygulama UX & Tasarım Denetimi
 
-> **Durum (2026-07-22):** Bu raporun bulguları `ux/live-review-fixes` dalında
-> uygulandı — 11 commit, 671 test geçiyor, `dart analyze` temiz.
-> Uygulananların özeti ve düzeltilen tespitler için bkz. **§7 Uygulama durumu**.
+> **Durum (2026-07-22):** Bulguların bir kısmı `ux/live-review-fixes` dalında
+> uygulandı — 12 commit, 671 test geçiyor, `dart analyze` temiz.
+> **34 maddenin 12'si tam, 5'i kısmi, 14'ü yapılmadı, 3'ü geçersiz çıktı.**
+> Ayrıntı için bkz. **§7 Uygulama durumu**; kalan işlerin devir prompt'u
+> `ZANKURD_KALAN_ISLER_PROMPT.md`.
 
 **Tarih:** 2026-07-22
 **Yöntem:** `flutter build web --release` ile üretilen gerçek build, tarayıcıda
@@ -547,6 +549,18 @@ Uygulama aşamasında raporun iki tespitinin **yanlış** olduğu ortaya çıkt�
 - Ziman/Rêziman çeviri alıştırmaları haklı olarak muaf
 - 2347 sorunun **800'ü** yalnız iki şablon önekinden geliyor
 
+### Geçersiz çıkan üç tespit (uygulanmadı, uygulanmamalı)
+
+- **"Düelloda 10 saniye"** — düello 20 sn (`matchmaking_screen.dart:463`,
+  bilinçli karar); zamanlayıcı geri sayım ortasında yakalanmış.
+- **"Açık tema CTA rengi marka turuncusuna dönsün"** — `primaryCtaColor`
+  açık temada bilerek `#C05000`; beyaz metinle ~5.8:1. Marka turuncusu
+  (#F5931E) ~2.2:1 ile AA'da kalıyor. Öneri uygulansaydı erişilebilirlik
+  bozulurdu.
+- **"Ayarlar dişlisi tema değiştiriyor, güneş/ay olmalı"** —
+  `home_screen.dart:542` zaten `AppIcons.sun`/`AppIcons.moon` kullanıyor;
+  19px'lik güneş ikonu ekran görüntüsünde dişli sanılmış.
+
 ### Uygulananlar
 
 | Rapor maddesi | Ne yapıldı |
@@ -574,6 +588,15 @@ Not: kontrast testi ilk denemedeki değerlerimin (scrim %26 → 4,07:1;
 lightness 0,34 → 4,34:1) AA altında kaldığını yakaladı; değerler ölçüme
 göre düzeltildi.
 
+### Kısmi kalanlar
+
+- **M2 dil karışıklığı** — ölçüldü ve artması engellendi; 320 sorunun
+  çevirisi yapılmadı.
+- **M9 kayıt doğrulama** — geri butonu eklendi, hata hâlâ SnackBar (inline değil).
+- **M13 rozetler** — başlık taşması düzeldi, iki rozet bölümü birleştirilmedi.
+- **M18 misafir hesabı** — çıkış uyarısı eklendi, "hesabını kaydet" akışı yok.
+- **M28 erişilebilirlik** — dil toggle etiketlendi, CTA çift okuması sürüyor.
+
 ### Yapılmayanlar
 
 - **320 sorunun çevirisi** — editöryel iş; kod tarafı sayının artmasını
@@ -582,6 +605,16 @@ göre düzeltildi.
 - **Sonuç ekranı puanı ile profildeki "Toplam Puan" farkı** — sunucu
   toplaması (`total_score`) ile ilgili; yerelde doğrulanamadı, tahminle
   değiştirilmedi.
-- **P2'nin kalan maddeleri** (mağaza paleti, avatar renkleri, tablet iki
-  sütun, turnuva bracket yatay kaydırma, boş alt alanlar) — görsel yön
-  kararı gerektiriyor.
+**Teknik, karar gerektirmiyor:** M10 kategori kartı boş bandı, M15 alt
+kategori ikonları + watermark, M16 seviye ekranı sticky app bar + yıldız
+anlamı, M26 safe-area, M30 bracket yatay kaydırma, M31 çark rakamları,
+M32 profil skeleton.
+
+**Görsel yön kararı gerektiriyor:** M23 boş alt alanlar, M24 mağaza
+ekonomisi + paleti, M25 avatar renkleri, M33 Roj maskotu kullanımı.
+
+**Ayrı planlama gerektiriyor:** M20 yanlış cevap açıklaması (tur içinde mi,
+inceleme ekranında mı), M34 tablet iki sütunlu düzen.
+
+Kalan işlerin dosya yolları, kök nedenleri ve kabul kriterleriyle birlikte
+devir prompt'u: `ZANKURD_KALAN_ISLER_PROMPT.md`
