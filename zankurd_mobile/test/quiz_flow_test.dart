@@ -53,7 +53,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(question.prompt), findsOneWidget);
-    expect(find.byKey(const ValueKey('quiz-landscape-layout')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('quiz-landscape-content')),
+      findsOneWidget,
+    );
     expect(find.text(question.displayAnswers.first), findsWidgets);
 
     await tester.ensureVisible(find.text(question.displayAnswers.first).first);
@@ -137,56 +140,83 @@ void main() {
     );
   });
 
-  testWidgets(
-    'portrait quiz shows question answers jokers and action at once',
-    (tester) async {
-      await tester.binding.setSurfaceSize(const Size(360, 640));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
+  testWidgets('short portrait quiz scrolls without shrinking its content', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(360, 640));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
 
-      const question = QuizQuestion(
-        id: 'compact-portrait-fit',
-        category: 'Çand',
-        prompt: 'Kurmancî kültüründe dengbêjlerin temel görevi hangisidir?',
-        answers: [
-          'Sözlü kültürü aktarmak',
-          'Yalnızca dans etmek',
-          'Resmî belge hazırlamak',
-          'Spor karşılaşması düzenlemek',
-        ],
-        correctAnswer: 'Sözlü kültürü aktarmak',
-        explanation: 'Dengbêjler sözlü kültürü kuşaktan kuşağa aktarır.',
-      );
+    const question = QuizQuestion(
+      id: 'compact-portrait-fit',
+      category: 'Çand',
+      prompt: 'Kurmancî kültüründe dengbêjlerin temel görevi hangisidir?',
+      answers: [
+        'Sözlü kültürü aktarmak',
+        'Yalnızca dans etmek',
+        'Resmî belge hazırlamak',
+        'Spor karşılaşması düzenlemek',
+      ],
+      correctAnswer: 'Sözlü kültürü aktarmak',
+      explanation: 'Dengbêjler sözlü kültürü kuşaktan kuşağa aktarır.',
+    );
 
-      await tester.pumpWidget(
-        testShell(
-          child: QuizScreen(
-            repository: repository,
-            room: repository.createRoom(),
-            questions: const [question],
-            enableTimer: false,
-          ),
+    await tester.pumpWidget(
+      testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: const [question],
+          enableTimer: false,
         ),
-      );
-      await tester.pumpAndSettle();
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      expect(find.byKey(const ValueKey('quiz-fitted-content')), findsOneWidget);
-      expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
-      for (final answer in question.displayAnswers) {
-        final answerFinder = find.text(answer).first;
-        expect(answerFinder, findsOneWidget);
-        expect(tester.getBottomRight(answerFinder).dy, lessThan(640));
-      }
-      expect(
-        tester
-            .getBottomRight(find.byKey(const ValueKey('quiz-next-button')))
-            .dy,
-        lessThanOrEqualTo(640),
-      );
-      expect(tester.takeException(), isNull);
-    },
-  );
+    expect(find.byKey(const ValueKey('quiz-fitted-content')), findsNothing);
+    expect(find.byKey(const ValueKey('quiz-portrait-scroll')), findsOneWidget);
+    expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
+    for (final answer in question.displayAnswers) {
+      final answerFinder = find.text(answer).first;
+      expect(answerFinder, findsOneWidget);
+    }
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('quiz-next-button')),
+      120,
+      scrollable: find.descendant(
+        of: find.byKey(const ValueKey('quiz-portrait-scroll')),
+        matching: find.byType(Scrollable),
+      ),
+    );
+    expect(find.byKey(const ValueKey('quiz-next-button')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 
-  testWidgets('visual quiz keeps the first answer visible in landscape', (
+  testWidgets('wide portrait quiz centers content within 800 px', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(1440, 900));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final content = find.byKey(const ValueKey('quiz-landscape-content'));
+    expect(content, findsOneWidget);
+    expect(tester.getSize(content).width, lessThanOrEqualTo(800));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('visual quiz keeps answers reachable in landscape', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(844, 390));
@@ -218,7 +248,11 @@ void main() {
     for (final answer in question.displayAnswers) {
       final answerFinder = find.text(answer).first;
       expect(answerFinder, findsOneWidget);
-      expect(tester.getBottomRight(answerFinder).dy, lessThan(390));
+      await tester.scrollUntilVisible(
+        answerFinder,
+        120,
+        scrollable: find.byType(Scrollable).first,
+      );
     }
     expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
     expect(

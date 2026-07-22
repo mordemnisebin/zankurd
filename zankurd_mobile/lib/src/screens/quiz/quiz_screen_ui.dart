@@ -4,70 +4,62 @@ part of '../quiz_screen.dart';
 
 extension _QuizScreenUI on _QuizScreenState {
   Widget _buildPortraitLayout() {
-    // Yarışma modlarında (solo/1v1/oda) tur içinde açıklama gösterilmez:
-    // panel altta belirince FittedBox tüm soruyu küçültüp gözü yoruyordu
-    // (2026-07-16 kullanıcı geri bildirimi). Çözümler oyun sonunda
-    // ReviewScreen'de ("Vekolîn"). Öğrenme Bölgesi'nde anında açıklama
-    // pedagojik olarak gerekli, orada kalır.
+    // Yarışma modlarında (solo/1v1/oda) tur içinde açıklama gösterilmez.
     final showExpl = _isLearningExperience && _showExplanation;
 
     final screenHeight = MediaQuery.sizeOf(context).height;
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final contentWidth = min(constraints.maxWidth - 24, 680.0);
-        return SizedBox.expand(
-          child: FittedBox(
-            key: const ValueKey('quiz-fitted-content'),
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.topCenter,
+        final contentWidth = min(constraints.maxWidth - 24, 800.0);
+        return SingleChildScrollView(
+          key: const ValueKey('quiz-portrait-scroll'),
+          padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+          child: Center(
             child: SizedBox(
               width: contentWidth,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(6, 6, 6, 8),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (!_isLearningExperience) ...[
-                      _buildScoreHeader(),
-                      const SizedBox(height: 8),
-                    ],
-                    _buildProgressBar(context),
-                    if (!_isLearningExperience) _buildComboRow(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (!_isLearningExperience) ...[
+                    _buildScoreHeader(),
                     const SizedBox(height: 8),
-                    // Coach-mark GlobalKey'leri yalnız ilk soruda: panel
-                    // AnimatedSwitcher içinde olduğundan geçiş sırasında eski
-                    // ve yeni panel aynı anda yaşar; anahtar her soruda
-                    // geçilirse duplicate-GlobalKey hatası oluşur. Eğitim
-                    // turu zaten sadece ilk soruda gösterilir.
-                    _buildQuestionSwitcher(
-                      context,
-                      showExplanation: showExpl,
-                      timerKey: index == 0 ? _timerTargetKey : null,
-                      answerAreaKey: index == 0 ? _answerAreaKey : null,
-                      questionVisualReady: index == 0
-                          ? _handleQuestionVisualReady
-                          : null,
-                    ),
-                    if (selectedAnswer == 'TIMEOUT')
-                      _TimeoutNotice(
-                        isKu: _isKu,
-                        correctAnswer: question.correctAnswer,
-                      ),
-                    if (_isMultiplayer &&
-                        answered &&
-                        _mpPhase == _MultiplayerPhase.waiting)
-                      _MultiplayerWaitingOverlay(isKu: _isKu),
-                    if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
-                      _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
-                    if (widget.is1v1 && screenHeight >= 800) ...[
-                      const SizedBox(height: 8),
-                      _LiveScoreboard(players: livePlayers),
-                    ],
-                    const SizedBox(height: 6),
-                    _buildActionControls(),
                   ],
-                ),
+                  _buildProgressBar(context),
+                  if (!_isLearningExperience) _buildComboRow(),
+                  const SizedBox(height: 8),
+                  // Coach-mark GlobalKey'leri yalnız ilk soruda: panel
+                  // AnimatedSwitcher içinde olduğundan geçiş sırasında eski
+                  // ve yeni panel aynı anda yaşar; anahtar her soruda
+                  // geçilirse duplicate-GlobalKey hatası oluşur. Eğitim
+                  // turu zaten sadece ilk soruda gösterilir.
+                  _buildQuestionSwitcher(
+                    context,
+                    showExplanation: showExpl,
+                    timerKey: index == 0 ? _timerTargetKey : null,
+                    answerAreaKey: index == 0 ? _answerAreaKey : null,
+                    questionVisualReady: index == 0
+                        ? _handleQuestionVisualReady
+                        : null,
+                  ),
+                  if (selectedAnswer == 'TIMEOUT')
+                    _TimeoutNotice(
+                      isKu: _isKu,
+                      correctAnswer: question.correctAnswer,
+                    ),
+                  if (_isMultiplayer &&
+                      answered &&
+                      _mpPhase == _MultiplayerPhase.waiting)
+                    _MultiplayerWaitingOverlay(isKu: _isKu),
+                  if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
+                    _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
+                  if (widget.is1v1 && screenHeight >= 800) ...[
+                    const SizedBox(height: 8),
+                    _LiveScoreboard(players: livePlayers),
+                  ],
+                  const SizedBox(height: 6),
+                  _buildActionControls(),
+                ],
               ),
             ),
           ),
@@ -76,85 +68,77 @@ extension _QuizScreenUI on _QuizScreenState {
     );
   }
 
-  // ─── Landscape layout: mevcut yapı korunuyor ────────────────────────────
+  // ─── Landscape layout ──────────────────────────────────────────────────
 
   Widget _buildLandscapeLayout() {
     // Portrait ile aynı kural: tur içi açıklama yalnız Öğrenme Bölgesi'nde.
     final showExpl = _isLearningExperience && _showExplanation;
 
     return LayoutBuilder(
-      // Pirs hizasi: Stack icinde bu dal onceden shrink-wrap ediyordu (Stack'in
-      // varsayilan topStart hizasina dusuyordu) — SizedBox.expand olmadan
-      // FittedBox'in kendi alignment'i hic devreye giremiyordu. Portrait
-      // dalindaki (satir 784) SizedBox.expand deseni burada da uygulandi.
-      builder: (context, constraints) => SizedBox.expand(
-        child: FittedBox(
-          key: const ValueKey('quiz-landscape-layout'),
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.center,
+      builder: (context, constraints) => SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+        child: Center(
           child: SizedBox(
-            width: constraints.maxWidth,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Portrait'taki notla aynı: coach-mark anahtarları
-                        // yalnız ilk soruda geçilir (duplicate-GlobalKey).
-                        _buildQuestionSwitcher(
-                          context,
-                          showExplanation: showExpl,
-                          timerKey: index == 0 ? _timerTargetKey : null,
-                          answerAreaKey: index == 0 ? _answerAreaKey : null,
-                          questionVisualReady: index == 0
-                              ? _handleQuestionVisualReady
-                              : null,
+            key: const ValueKey('quiz-landscape-content'),
+            width: min(constraints.maxWidth - 24, 800.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Portrait'taki notla aynı: coach-mark anahtarları
+                      // yalnız ilk soruda geçilir (duplicate-GlobalKey).
+                      _buildQuestionSwitcher(
+                        context,
+                        showExplanation: showExpl,
+                        timerKey: index == 0 ? _timerTargetKey : null,
+                        answerAreaKey: index == 0 ? _answerAreaKey : null,
+                        questionVisualReady: index == 0
+                            ? _handleQuestionVisualReady
+                            : null,
+                      ),
+                      if (selectedAnswer == 'TIMEOUT')
+                        _TimeoutNotice(
+                          isKu: _isKu,
+                          correctAnswer: question.correctAnswer,
                         ),
-                        if (selectedAnswer == 'TIMEOUT')
-                          _TimeoutNotice(
-                            isKu: _isKu,
-                            correctAnswer: question.correctAnswer,
-                          ),
-                        if (_isMultiplayer &&
-                            answered &&
-                            _mpPhase == _MultiplayerPhase.waiting)
-                          _MultiplayerWaitingOverlay(isKu: _isKu),
-                        if (_isMultiplayer &&
-                            _mpPhase == _MultiplayerPhase.reveal)
-                          _RevealCountdown(
-                            seconds: _revealCountdown,
-                            isKu: _isKu,
-                          ),
-                      ],
-                    ),
+                      if (_isMultiplayer &&
+                          answered &&
+                          _mpPhase == _MultiplayerPhase.waiting)
+                        _MultiplayerWaitingOverlay(isKu: _isKu),
+                      if (_isMultiplayer &&
+                          _mpPhase == _MultiplayerPhase.reveal)
+                        _RevealCountdown(
+                          seconds: _revealCountdown,
+                          isKu: _isKu,
+                        ),
+                    ],
                   ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: 270,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (!_isLearningExperience) ...[
-                          _buildScoreHeader(),
-                          const SizedBox(height: 6),
-                        ],
-                        _buildProgressBar(context),
-                        if (!_isLearningExperience) _buildComboRow(),
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 270,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (!_isLearningExperience) ...[
+                        _buildScoreHeader(),
                         const SizedBox(height: 6),
-                        _buildActionControls(),
-                        if (widget.is1v1) ...[
-                          const SizedBox(height: 8),
-                          _LiveScoreboard(players: livePlayers),
-                        ],
                       ],
-                    ),
+                      _buildProgressBar(context),
+                      if (!_isLearningExperience) _buildComboRow(),
+                      const SizedBox(height: 6),
+                      _buildActionControls(),
+                      if (widget.is1v1) ...[
+                        const SizedBox(height: 8),
+                        _LiveScoreboard(players: livePlayers),
+                      ],
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

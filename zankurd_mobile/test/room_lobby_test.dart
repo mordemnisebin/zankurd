@@ -125,6 +125,27 @@ void main() {
     expect(find.text('Yarışı Başlat'), findsOneWidget);
   });
 
+  testWidgets('wide room lobby centers content within 680 px', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(1440, 900));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.createRoom(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final content = find.byKey(const ValueKey('room-content-width'));
+    expect(content, findsOneWidget);
+    expect(tester.getSize(content).width, lessThanOrEqualTo(680));
+    expect(find.byKey(const ValueKey('room-chat-toggle')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('room lobby keeps start disabled until two players are present', (
     tester,
   ) async {
