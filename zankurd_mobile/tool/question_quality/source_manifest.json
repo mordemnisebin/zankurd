@@ -210,33 +210,11 @@
       "columns": {}
     },
     {
-      "id": "generated_question_reports", "description": "Previously generated reports",
-      "glob": "reports/*", "role": "generated_report",
-      "parser": "none", "canonicalGroup": "none",
-      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
-      "precedence": 1000, "expectedRecordCount": null, "notes": "Never recursively audited as questions",
-      "columns": {}
-    },
-    {
-      "id": "phase0b_design_report", "description": "Phase 0B design document",
-      "path": "docs/ZANKURD_QUESTION_QUALITY_GATE_DESIGN_2026-07-15.md", "role": "generated_report",
-      "parser": "none", "canonicalGroup": "none",
-      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
-      "precedence": 1000, "expectedRecordCount": null, "notes": "Documentation, not question input", "columns": {}
-    },
-    {
       "id": "question_asset_readme", "description": "Question asset documentation",
       "path": "assets/question_images/README.md", "role": "ignored_non_question",
       "parser": "none", "canonicalGroup": "none",
       "reportIncluded": false, "gateIncluded": false, "productionLike": false,
       "precedence": 1000, "expectedRecordCount": null, "notes": "Asset documentation", "columns": {}
-    },
-    {
-      "id": "development_plans", "description": "Development plans and specs",
-      "glob": "docs/superpowers/**", "role": "ignored_non_question",
-      "parser": "none", "canonicalGroup": "none",
-      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
-      "precedence": 1000, "expectedRecordCount": null, "notes": "Documentation, not question input", "columns": {}
     },
     {
       "id": "pirs_reference_doc", "description": "Pirs reference blueprint",

@@ -72,3 +72,17 @@ release_packages/
 
 # Superpowers brainstorm oturum dosyalari
 .superpowers/
+
+# Yerel AI, tarayıcı ve denetim çıktıları
+/.tmp/
+/.zcode/
+/.claude/
+/.codex-run/
+/.playwright-cli/
+/.serena/
+/bash_events/
+/conversations/
+/output/
+/reports/
+/docs/screenshots/
+/docs/audit/question_quality/
