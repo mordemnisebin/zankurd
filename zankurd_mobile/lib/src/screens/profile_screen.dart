@@ -68,6 +68,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int? _coinBalance;
   double? _accuracyPercent;
 
+  /// Tüm modlarda cevaplanan toplam soru sayısı. "Oyun" karosu daha önce
+  /// `roomsPlayed` gösteriyordu; o yalnız çevrimiçi oda sayısıdır, solo quiz
+  /// onu artırmaz ve oyuncu quiz bitirdiği hâlde "0" görüyordu
+  /// (2026-07-22 canlı UX denetimi, P0-4).
+  int _answeredTotal = 0;
+
   @override
   void initState() {
     super.initState();
@@ -192,6 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _levelProgress = xpStore.levelProgress;
           _coinBalance = coinBalance;
           _accuracyPercent = mistakeStore.accuracyPercent;
+          _answeredTotal = mistakeStore.totalCorrect + mistakeStore.totalWrong;
           _loading = false;
           _loadFailed = false;
         });
@@ -294,9 +301,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _StatTile(
                         label: ku ? 'Rêze' : 'Sıralama',
                         // Hiç oyun yokken sahte görünen sıra gösterme.
-                        value: _stats!.roomsPlayed > 0
-                            ? '#${_stats!.rank}'
-                            : '—',
+                        // Eşik `roomsPlayed` değil cevaplanan soru sayısıdır:
+                        // yalnız solo oynayan oyuncunun oda sayısı hep 0 kalır
+                        // ve sırası olduğu hâlde "—" görüyordu.
+                        value: _answeredTotal > 0 ? '#${_stats!.rank}' : '—',
                         color: AppTheme.gold,
                         icon: AppIcons.chartColumn,
                       ),
@@ -313,8 +321,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         icon: AppIcons.fire,
                       ),
                       _StatTile(
-                        label: ku ? 'Lîstik' : 'Oyun',
-                        value: '${_stats!.roomsPlayed}',
+                        label: ku ? 'Pirsên Bersivandî' : 'Cevaplanan Soru',
+                        value: '$_answeredTotal',
                         color: AppTheme.correct,
                         icon: AppIcons.gamepad,
                       ),
