@@ -791,11 +791,8 @@ class _AnswerButton extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              optionColor,
-              Color.alphaBlend(
-                Colors.black.withValues(alpha: 0.18),
-                optionColor,
-              ),
+              AppTheme.surfaceHiColor(context),
+              AppTheme.surfaceColor(context),
             ],
           );
 
@@ -805,10 +802,11 @@ class _AnswerButton extends StatelessWidget {
         ? AppTheme.wrong
         : isChecking
         ? AppTheme.brandGreen
-        : Colors.transparent;
+        : AppTheme.borderColor(context);
 
-    // Tüm durumlar renkli zemin üzerinde — metin her zaman beyaz
-    const Color textColor = Colors.white;
+    final textColor = correct || wrong || isChecking
+        ? Colors.white
+        : AppTheme.textPrimaryColor(context);
 
     // 3D Gölge rengi
     final Color shadowColor = correct
@@ -817,7 +815,7 @@ class _AnswerButton extends StatelessWidget {
         ? const Color(0xFFD61A4C)
         : isChecking
         ? AppTheme.brandGreen
-        : optionColor;
+        : AppTheme.borderColor(context);
 
     final isPressed = selected;
     final letter = String.fromCharCode(65 + (index % 26));

@@ -163,21 +163,11 @@ class _AppShellState extends State<AppShell> {
                   CoachMarkStep(
                     targetKey: _playNavKey,
                     icon: AppIcons.gamepad,
-                    titleKu: 'Bilîze',
-                    titleTr: 'Yarış',
+                    titleKu: 'Pêşbazî',
+                    titleTr: 'Oyna',
                     descriptionKu: 'Hemû pêşbirktî û lîstikên te li vir in.',
                     descriptionTr:
                         'Günlük yarışma, 1v1, oda ve turnuvaların merkezi.',
-                  ),
-                  CoachMarkStep(
-                    targetKey: _profileNavKey,
-                    icon: AppIcons.user,
-                    titleKu: 'Profîl',
-                    titleTr: 'Profil',
-                    descriptionKu:
-                        'Rozet, hevalên te, kûpa û mîhengên te hemû li vir in.',
-                    descriptionTr:
-                        'Rozetlerin, arkadaşların, Turnuva ve ayarların hepsi burada.',
                   ),
                 ],
               ),

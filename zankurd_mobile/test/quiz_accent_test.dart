@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
@@ -20,6 +21,98 @@ Widget wrap(Widget child) => MultiProvider(
 );
 
 void main() {
+  testWidgets('cevaplanmamış şıklar nötr yüzey ve border kullanır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.quiz_tutorial.seen': true,
+    });
+    final repository = MockZanKurdRepository();
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      wrap(
+        QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    for (final answer in question.displayAnswers) {
+      final option = tester.widget<AnimatedContainer>(
+        find
+            .ancestor(
+              of: find.text(answer).first,
+              matching: find.byType(AnimatedContainer),
+            )
+            .first,
+      );
+      final decoration = option.decoration! as BoxDecoration;
+      expect(decoration.gradient!.colors, [
+        AppTheme.surfaceHiColor(tester.element(find.text(answer).first)),
+        AppTheme.surfaceColor(tester.element(find.text(answer).first)),
+      ]);
+      expect(
+        (decoration.border! as Border).top.color,
+        AppTheme.borderColor(tester.element(find.text(answer).first)),
+      );
+    }
+  });
+
+  testWidgets('cevap sonrası doğru yeşil ve yanlış kırmızı kalır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.quiz_tutorial.seen': true,
+    });
+    final repository = MockZanKurdRepository();
+    final question = repository.questions.first;
+    final wrongAnswer = question.displayAnswers.firstWhere(
+      (answer) => answer != question.correctAnswer,
+    );
+    await tester.pumpWidget(
+      wrap(
+        QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find
+          .ancestor(of: find.text(wrongAnswer), matching: find.byType(InkWell))
+          .first,
+    );
+    await tester.pumpAndSettle();
+
+    BoxDecoration decorationFor(String answer) {
+      final option = tester.widget<AnimatedContainer>(
+        find
+            .ancestor(
+              of: find.text(answer).first,
+              matching: find.byType(AnimatedContainer),
+            )
+            .first,
+      );
+      return option.decoration! as BoxDecoration;
+    }
+
+    expect(
+      decorationFor(question.correctAnswer).gradient!.colors,
+      AppTheme.correctGradient.colors,
+    );
+    expect(
+      decorationFor(wrongAnswer).gradient!.colors,
+      AppTheme.wrongGradient.colors,
+    );
+  });
+
   testWidgets('Sonraki CTA brandGreen dolgu taşır', (tester) async {
     final repository = MockZanKurdRepository();
     await tester.pumpWidget(
