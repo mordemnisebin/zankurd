@@ -44,6 +44,13 @@ void main() {
       expect(avatarColors.toSet().length, 8);
     });
 
+    // 2026-07-23 M25: küçük havuzda hash çakışması (leaderboard'da aynı
+    // renk) sık görülüyordu — palet 8'den 12'ye genişletildi.
+    test('avatarNamePalette 12 benzersiz ton içerir', () {
+      expect(avatarNamePalette.length, 12);
+      expect(avatarNamePalette.toSet().length, 12);
+    });
+
     test('iconFor bilinen kimlikte ikon, bilinmeyende null döner', () {
       expect(iconFor('tembur'), isNotNull);
       expect(iconFor('olmayan_ikon'), isNull);

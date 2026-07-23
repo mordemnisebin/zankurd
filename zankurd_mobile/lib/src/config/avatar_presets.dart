@@ -38,10 +38,17 @@ const List<String> avatarColors = [
   '#D4789E', // gül pembesi
 ];
 
-/// Harf avatarları için marka ailesinden türetilmiş 8 ton. Kullanıcı adı
+/// Harf avatarları için marka ailesinden türetilmiş 12 ton. Kullanıcı adı
 /// hash'i bu palete eşlenir; böylece herkes aynı tek renge (ör. tek kırmızı)
 /// düşmez. Tonlar beyaz harfle okunaklı kalacak doygunlukta seçildi —
 /// çok açık pastel kullanılmadı (kontrast kuralı).
+///
+/// 2026-07-23 M25: 8'den 12'ye genişletildi — küçük havuzda hash çakışması
+/// (leaderboard'da aynı anda birden fazla oyuncunun aynı rengi alması)
+/// sık görülüyordu. Son 4 ton ([resolveAvatarColors] ile round-robin
+/// çakışma çözümü de ekleniyor, bkz. aşağı) daha geniş bir marka ailesini
+/// kapsıyor (koyu marka turuncusu dahil — ham `#F5931E` beyaz metinle
+/// ~2.2:1 verdiği için değil, `#C05000` gibi koyulaştırılmış hâli kullanıldı).
 const List<Color> avatarNamePalette = [
   Color(0xFF3DA968), // Kürdistan yeşili
   Color(0xFF2E9E93), // teal
@@ -51,6 +58,10 @@ const List<Color> avatarNamePalette = [
   Color(0xFFC67A5C), // terracotta
   Color(0xFFB8860B), // koyu amber
   Color(0xFFA84D6E), // gül kurusu
+  Color(0xFFC05000), // koyu marka turuncusu
+  Color(0xFF4B6F44), // zeytin yeşili
+  Color(0xFF3F4E73), // çelik indigo
+  Color(0xFF8B5E3C), // bakır kahve
 ];
 
 /// İsme bağlı deterministik avatar rengi üretir (basit, kararlı hash).
