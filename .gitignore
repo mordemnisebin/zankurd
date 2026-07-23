@@ -50,3 +50,7 @@ phase1-desktop-current.png
 # macOS klasor metadata cop dosyalari
 .DS_Store
 **/.DS_Store
+
+# Python derleme cache
+__pycache__/
+*.pyc
