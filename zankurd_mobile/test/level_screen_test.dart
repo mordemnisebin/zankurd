@@ -79,4 +79,31 @@ void main() {
 
     expect(tester.takeException(), isNull);
   });
+
+  // 2026-07-23 M16: yıldızlar "ilerleme" ile karıştırılabiliyordu; artık
+  // Tooltip + Semantics ile "zorluk" anlamını taşıyorlar. Semantics label'ı
+  // bySemanticsLabel yerine widget üzerinden doğrulanıyor çünkü üst düğüm
+  // Semantics'i (level başlığı) alt node'ları tek bir okunan metinde
+  // birleştiriyor — asıl doğrulanması gereken _DifficultyStars'ın kendi
+  // label'ı verip vermediği.
+  testWidgets('zorluk yıldızları "Zorluk" tooltip ve semantics etiketi taşır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(LevelScreen(repository: MockZanKurdRepository(), category: 'Ziman')),
+    );
+    await tester.pumpAndSettle();
+
+    final tooltips = tester.widgetList<Tooltip>(find.byType(Tooltip));
+    expect(tooltips.where((t) => t.message == 'Zorluk').length, 5);
+
+    final difficultyLabels = tester
+        .widgetList<Semantics>(find.byType(Semantics))
+        .map((w) => w.properties.label)
+        .whereType<String>()
+        .where(
+          (l) => RegExp(r'^Zorluk: 5 üzerinden \d yıldız$').hasMatch(l),
+        );
+    expect(difficultyLabels.length, 5);
+  });
 }

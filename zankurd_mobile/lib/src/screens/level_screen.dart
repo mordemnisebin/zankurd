@@ -635,6 +635,10 @@ class _PathPainter extends CustomPainter {
 }
 
 /// Zorluğu metin yerine 5'li yıldız dizisiyle gösterir.
+///
+/// 2026-07-23 canlı UX denetimi M16: yıldızlar "ilerleme" ile
+/// karıştırılabiliyordu (asıl ilerleme rozeti ayrı bir tik işaretiyle
+/// gösteriliyor). Tooltip + Semantics ile "zorluk" anlamı netleştirildi.
 class _DifficultyStars extends StatelessWidget {
   const _DifficultyStars({required this.filled, required this.color});
 
@@ -643,21 +647,35 @@ class _DifficultyStars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        for (var i = 1; i <= 5; i++)
-          Padding(
-            padding: const EdgeInsets.only(right: 1.5),
-            child: Icon(
-              i <= filled ? AppIcons.star : AppIcons.star,
-              size: 13,
-              color: i <= filled
-                  ? color
-                  : AppTheme.textMutedColor(context).withValues(alpha: 0.45),
-            ),
+    final isKu = context.isKu;
+    final label = isKu
+        ? 'Astengî: $filled ji 5 stêrk'
+        : 'Zorluk: 5 üzerinden $filled yıldız';
+    return Tooltip(
+      message: isKu ? 'Astengî' : 'Zorluk',
+      child: Semantics(
+        label: label,
+        child: ExcludeSemantics(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (var i = 1; i <= 5; i++)
+                Padding(
+                  padding: const EdgeInsets.only(right: 1.5),
+                  child: Icon(
+                    AppIcons.star,
+                    size: 13,
+                    color: i <= filled
+                        ? color
+                        : AppTheme.textMutedColor(
+                            context,
+                          ).withValues(alpha: 0.45),
+                  ),
+                ),
+            ],
           ),
-      ],
+        ),
+      ),
     );
   }
 }
