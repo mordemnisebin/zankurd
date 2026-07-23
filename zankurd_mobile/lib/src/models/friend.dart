@@ -82,13 +82,13 @@ class Friend {
     friendId: json['friend_id'] as String,
     friendName: json['friend_name'] as String,
     friendAvatarColor: json['friend_avatar_color'] as String?,
-    createdAt: DateTime.parse(json['created_at'] as String),
+    createdAt:
+        DateTime.tryParse(json['created_at'] as String? ?? '') ??
+        DateTime.now(),
     totalScore: (json['total_score'] as num?)?.toInt() ?? 0,
     level: (json['level'] as num?)?.toInt() ?? 1,
     gamesPlayed: (json['games_played'] as num?)?.toInt() ?? 0,
-    lastActiveAt: json['last_active_at'] != null
-        ? DateTime.parse(json['last_active_at'] as String)
-        : null,
+    lastActiveAt: DateTime.tryParse(json['last_active_at'] as String? ?? ''),
   );
 
   @override
@@ -130,7 +130,9 @@ class FriendRequest {
     fromUserName: json['from_user_name'] as String,
     // list_pending_friend_requests RPC'si to_user_id döndürmez (hep alıcıdır).
     toUserId: json['to_user_id'] as String? ?? '',
-    createdAt: DateTime.parse(json['created_at'] as String),
+    createdAt:
+        DateTime.tryParse(json['created_at'] as String? ?? '') ??
+        DateTime.now(),
     status: json['status'] as String? ?? 'pending',
   );
 

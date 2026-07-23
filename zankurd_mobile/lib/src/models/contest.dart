@@ -76,7 +76,8 @@ class Contest {
 
   static Contest fromJson(Map<String, dynamic> json) => Contest(
     id: json['id'] as String,
-    dayKey: DateTime.parse(json['day_key'] as String),
+    dayKey:
+        DateTime.tryParse(json['day_key'] as String? ?? '') ?? DateTime.now(),
     themeNameKu: json['theme_name_ku'] as String,
     themeDescriptionKu: json['theme_description_ku'] as String?,
     category: json['category'] as String,
@@ -154,9 +155,7 @@ class ContestEntry {
     userId: json['user_id'] as String,
     score: json['score'] as int? ?? 0,
     correctCount: json['correct_count'] as int? ?? 0,
-    finishedAt: json['finished_at'] != null
-        ? DateTime.parse(json['finished_at'] as String)
-        : null,
+    finishedAt: DateTime.tryParse(json['finished_at'] as String? ?? ''),
     rank: json['rank'] as int?,
     rewardClaimed: json['reward_claimed'] as bool? ?? false,
   );
@@ -192,9 +191,7 @@ class ContestLeaderboardRow {
         score: json['score'] as int? ?? 0,
         correctCount: json['correct_count'] as int? ?? 0,
         rank: json['rank'] as int?,
-        finishedAt: json['finished_at'] != null
-            ? DateTime.parse(json['finished_at'] as String)
-            : null,
+        finishedAt: DateTime.tryParse(json['finished_at'] as String? ?? ''),
       );
 }
 
@@ -310,7 +307,9 @@ class UserContestBadge {
         userId: json['user_id'] as String,
         badgeId: json['badge_id'] as String,
         contestId: json['contest_id'] as String,
-        earnedAt: DateTime.parse(json['earned_at'] as String),
+        earnedAt:
+            DateTime.tryParse(json['earned_at'] as String? ?? '') ??
+            DateTime.now(),
       );
 
   @override

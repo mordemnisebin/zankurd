@@ -28,7 +28,9 @@ class RoomMessage {
     senderName: json['sender_name'] as String? ?? 'Oyuncu',
     senderAvatarColor: json['sender_avatar_color'] as String?,
     text: json['text'] as String,
-    createdAt: DateTime.parse(json['created_at'] as String),
+    createdAt:
+        DateTime.tryParse(json['created_at'] as String? ?? '') ??
+        DateTime.now(),
   );
 
   @override

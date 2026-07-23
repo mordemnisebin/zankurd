@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -22,11 +22,13 @@ import 'mock_zankurd_repository.dart';
 import 'zankurd_repository.dart';
 import '../services/question_content_policy.dart';
 
-/// Supabase destekli üretim deposu.
-///
-/// Çevrimdışı/şema-eksik durumlarda [_offline] (yerel soru bankası) devreye
-/// girer. Bu ilişki bilinçli olarak kalıtım değil kompozisyondur: mock'a
-/// eklenen sahte davranışların sessizce üretime sızmasını önler.
+class _ManagedRoomChannel {
+  _ManagedRoomChannel(this.channel);
+
+  final RealtimeChannel channel;
+  int listenerCount = 0;
+}
+
 class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
 
@@ -54,23 +56,48 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   final Map<String, Map<String, dynamic>> _profileCache = {};
 
   /// Oda başına tek realtime kanalı; gönderme ve dinleme paylaşır.
-  /// Eskiden her broadcast'te yeni kanal açılıyordu (nesne sızıntısı).
-  final Map<String, RealtimeChannel> _roomChannels = {};
+  /// Dinleyici referans sayısı tutulur; tek abonelik iptalinde ortak kanal
+  /// kapatılmaz.
+  final Map<String, _ManagedRoomChannel> _roomChannels = {};
 
-  RealtimeChannel _roomChannel(String roomId) {
+  _ManagedRoomChannel _ensureRoomChannel(String roomId) {
     return _roomChannels.putIfAbsent(roomId, () {
       final channel = client.channel('room:$roomId');
       channel.subscribe();
-      return channel;
+      return _ManagedRoomChannel(channel);
     });
   }
 
-  Future<void> _releaseRoomChannel(String roomId) async {
-    final channel = _roomChannels.remove(roomId);
-    if (channel != null) {
-      await client.removeChannel(channel);
-    }
+  RealtimeChannel _retainRoomChannel(String roomId) {
+    final managed = _ensureRoomChannel(roomId);
+    managed.listenerCount++;
+    return managed.channel;
   }
+
+  Future<void> _releaseRoomChannel(String roomId) async {
+    final managed = _roomChannels[roomId];
+    if (managed == null) return;
+    if (managed.listenerCount > 0) {
+      managed.listenerCount--;
+    }
+    if (managed.listenerCount > 0) return;
+    _roomChannels.remove(roomId);
+    await client.removeChannel(managed.channel);
+  }
+
+  Future<void> _disposeUnretainedRoomChannel(String roomId) async {
+    final managed = _roomChannels[roomId];
+    if (managed == null || managed.listenerCount > 0) return;
+    _roomChannels.remove(roomId);
+    await client.removeChannel(managed.channel);
+  }
+
+  @visibleForTesting
+  int debugRoomChannelListenerCount(String roomId) =>
+      _roomChannels[roomId]?.listenerCount ?? 0;
+
+  @visibleForTesting
+  bool debugHasRoomChannel(String roomId) => _roomChannels.containsKey(roomId);
 
   Future<User> signInAnonymously() async {
     final response = await client.auth.signInAnonymously();
@@ -422,7 +449,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     );
     final room = response is Map<String, dynamic>
         ? response
-        : (response as List).first as Map<String, dynamic>;
+        : (response as List).firstOrNull as Map<String, dynamic>?;
+    if (room == null) {
+      throw StateError('join_room_by_code boş yanıt döndürdü: oda bulunamadı');
+    }
     final roomId = room['room_id'] as String;
     final players = await _loadRoomPlayersById(roomId);
     final category = room['category_name'] as String? ?? 'Ziman';
@@ -1168,7 +1198,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) {
     final controller = StreamController<Map<String, dynamic>>();
-    _roomChannel(roomId).onBroadcast(
+    _retainRoomChannel(roomId).onBroadcast(
       event: 'game_event',
       callback: (payload) {
         if (!controller.isClosed) {
@@ -1190,15 +1220,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     String roomId,
     Map<String, dynamic> payload,
   ) async {
-    await _roomChannel(
-      roomId,
-    ).sendBroadcastMessage(event: 'game_event', payload: payload);
+    final channel = _ensureRoomChannel(roomId).channel;
+    await channel.sendBroadcastMessage(event: 'game_event', payload: payload);
+    await _disposeUnretainedRoomChannel(roomId);
   }
 
   @override
   Future<Contest?> loadTodayContest() async {
     try {
-      final res = await client.rpc('get_today_contest');
+      final res = await client
+          .rpc('get_today_contest')
+          .timeout(const Duration(seconds: 8));
       if (res == null || res.isEmpty) return null;
       return Contest.fromJson(res);
     } catch (e, s) {
@@ -1598,7 +1630,31 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     int limit = 16,
   }) async {
     try {
-      return _offline.loadTournamentStandings(limit: limit);
+      final rows = await client
+          .from('profiles')
+          .select('id, display_name, total_score')
+          .order('total_score', ascending: false)
+          .limit(limit);
+      if (rows.isEmpty) return _offline.loadTournamentStandings(limit: limit);
+      return List.generate(rows.length, (i) {
+        final row = rows[i];
+        final score = (row['total_score'] as num?)?.toInt() ?? 0;
+        final String status;
+        if (i == 0) {
+          status = 'champion';
+        } else if (i < 4) {
+          status = 'finalist';
+        } else {
+          status = 'eliminated';
+        }
+        return TournamentStandings(
+          rank: i + 1,
+          playerId: row['id'] as String? ?? '',
+          playerName: row['display_name'] as String? ?? '—',
+          totalScore: score,
+          status: status,
+        );
+      });
     } catch (e, s) {
       _recordError(e, s, reason: 'loadTournamentStandings failed');
       return _offline.loadTournamentStandings(limit: limit);

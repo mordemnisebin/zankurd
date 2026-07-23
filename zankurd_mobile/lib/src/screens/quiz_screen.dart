@@ -1003,6 +1003,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   Future<void> _pollRoomIndex() async {
     if (!_isMultiplayer) return;
+    if (widget.room.id == null) return;
     if (widget.repository is SupabaseZanKurdRepository) {
       final client = (widget.repository as SupabaseZanKurdRepository).client;
       try {
