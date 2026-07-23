@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -100,6 +101,24 @@ void main() {
     // Subtle links
     expect(find.text('Sadece yanlışlar'), findsOneWidget);
     expect(find.text('Liderlik tablosu'), findsOneWidget);
+  });
+
+  // 2026-07-23 M33: Roj maskotu sonuç ekranında görünsün ve yüksek
+  // doğrulukta (8/10 = %80) kutlama modunda olsun.
+  testWidgets('skor başlığında Roj maskotu kutlama modunda görünür', (
+    tester,
+  ) async {
+    await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const ValueKey('result-score-header')),
+      findsOneWidget,
+      reason: 'M33 eklerken mevcut skor başlığı bozulmamalı',
+    );
+    final mascot = tester.widget<RojMascot>(find.byType(RojMascot));
+    expect(mascot.mood, RojMood.celebrate);
   });
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {

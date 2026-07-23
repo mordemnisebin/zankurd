@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/models/avatar_identity.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 
 /// Bakiye ve satın alma durumunu deterministik kontrol eden sahte depo.
 class _ShopRepository extends MockZanKurdRepository {
@@ -202,6 +203,16 @@ void main() {
       for (final item in debugShopItems) item.id: item.cost,
     };
     expect(actualCosts, expectedCosts);
+  });
+
+  // 2026-07-23 M33: marka kimliği (Roj maskotu) mağazada da görünsün.
+  testWidgets('mağaza başlığında Roj maskotu görünür', (tester) async {
+    final repository = _ShopRepository(coins: 500);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('shop-mascot-header')), findsOneWidget);
+    expect(find.byType(RojMascot), findsOneWidget);
   });
 
   testWidgets('bakiye 0 iken earn-coin CTA 390x844 ekranda taşmadan çizilir', (

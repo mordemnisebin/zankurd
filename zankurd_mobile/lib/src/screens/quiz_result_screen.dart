@@ -29,6 +29,7 @@ import '../utils/result_sharer.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/roj_mascot.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -595,6 +596,28 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 headerIcon,
                                 size: 130,
                                 color: Colors.white.withValues(alpha: 0.06),
+                              ),
+                            ),
+                          ),
+                          // 2026-07-23 M33: Roj maskotu sonuç ekranında hiç
+                          // yoktu — marka kimliği en duygusal andan
+                          // (skoru görme) eksikti. Skora göre ruh hâli
+                          // değişir; yoğun bilgi sütununu bozmasın diye
+                          // sol üst köşede küçük bir rozet olarak durur.
+                          Positioned(
+                            left: 0,
+                            top: 0,
+                            child: IgnorePointer(
+                              child: Opacity(
+                                opacity: 0.85,
+                                child: RojMascot(
+                                  size: 36,
+                                  mood: accuracy >= 80
+                                      ? RojMood.celebrate
+                                      : accuracy >= 40
+                                      ? RojMood.happy
+                                      : RojMood.thinking,
+                                ),
                               ),
                             ),
                           ),

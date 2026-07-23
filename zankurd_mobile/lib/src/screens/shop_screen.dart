@@ -8,6 +8,7 @@ import '../models/avatar_identity.dart';
 import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
+import '../widgets/roj_mascot.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -749,6 +750,29 @@ class _ShopScreenState extends State<ShopScreen> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       children: [
+        // 2026-07-23 M33: Roj maskotu onboarding/liderlik/günün-sözü
+        // dışında görünmüyordu — marka kimliği mağazada da tutarlı olsun.
+        Padding(
+          key: const ValueKey('shop-mascot-header'),
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Row(
+            children: [
+              const RojMascot(size: 40, mood: RojMood.happy),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Text(
+                  ku
+                      ? 'Bi xalên xwe tiştên xweş bikire!'
+                      : 'Kazandığın coinlerle kendine güzel şeyler al!',
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         if (!_loading && _coinBalance == 0) _buildEarnCoinCta(context, ku),
         _buildHeroCard(heroItem, ku, isDark),
         if (restItems.isNotEmpty) ...[
