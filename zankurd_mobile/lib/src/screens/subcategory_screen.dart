@@ -280,9 +280,7 @@ class _SubcategoryCard extends StatelessWidget {
       'siyaseta_nujen' ||
       'ekoloji' => AppIcons.bookOpen,
       // ── Yazım & Sanat ──
-      'rastnivisin' ||
-      'sexsiyet' ||
-      'roman' => AppIcons.pen,
+      'rastnivisin' || 'sexsiyet' || 'roman' => AppIcons.pen,
       // ── Sınırlar & Coğrafi Yapı ──
       'sinor_duma' => AppIcons.locationDot,
       // ── Müzik Aletleri ──
@@ -429,11 +427,7 @@ class _SubcategoryCard extends StatelessWidget {
                             width: 1,
                           ),
                         ),
-                        child: Icon(
-                          AppIcons.arrowRight,
-                          color: tint,
-                          size: 17,
-                        ),
+                        child: Icon(AppIcons.arrowRight, color: tint, size: 17),
                       ),
                     ],
                   ),

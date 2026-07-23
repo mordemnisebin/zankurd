@@ -16,11 +16,8 @@ class _LiveScoreboard extends StatelessWidget {
     // round-robin ile çözülür (bkz. leaderboard_screen.dart ile aynı desen).
     final colorOverrides = resolveAvatarColors(
       shown.map(
-        (p) => (
-          id: p.id ?? p.name,
-          displayName: p.name,
-          colorHex: p.avatarColor,
-        ),
+        (p) =>
+            (id: p.id ?? p.name, displayName: p.name, colorHex: p.avatarColor),
       ),
     );
 
@@ -440,9 +437,7 @@ class _ScoreHeader extends StatelessWidget {
               Transform.scale(scale: scale, child: child),
           child: _ScoreChip(
             tooltip: context.s('Rêz', 'Seri'),
-            icon: streak >= 2
-                ? AppIcons.fire
-                : AppIcons.fire,
+            icon: streak >= 2 ? AppIcons.fire : AppIcons.fire,
             iconColor: streak >= 2
                 ? AppTheme.gold
                 : AppTheme.textMutedColor(context),
@@ -525,8 +520,16 @@ class _DuelScoreHeader extends StatelessWidget {
     // 2026-07-23 M25b: sadece 2 oyuncu olsa da hash çakışması mümkün
     // (iki isim aynı palet dilimine düşebilir) — aynı desenle çözülür.
     final colorOverrides = resolveAvatarColors([
-      (id: player.id ?? player.name, displayName: player.name, colorHex: player.avatarColor),
-      (id: opponent.id ?? opponent.name, displayName: opponent.name, colorHex: opponent.avatarColor),
+      (
+        id: player.id ?? player.name,
+        displayName: player.name,
+        colorHex: player.avatarColor,
+      ),
+      (
+        id: opponent.id ?? opponent.name,
+        displayName: opponent.name,
+        colorHex: opponent.avatarColor,
+      ),
     ]);
     final playerColor = colorOverrides[player.id ?? player.name];
     final opponentColor = colorOverrides[opponent.id ?? opponent.name];
@@ -663,11 +666,7 @@ class _DuelScoreHeader extends StatelessWidget {
                 if (player.streak > 0)
                   Row(
                     children: [
-                      const Icon(
-                        AppIcons.fire,
-                        color: Colors.orange,
-                        size: 14,
-                      ),
+                      const Icon(AppIcons.fire, color: Colors.orange, size: 14),
                       Text(
                         'x${player.streak}',
                         style: AppTypography.caption.copyWith(
@@ -689,11 +688,7 @@ class _DuelScoreHeader extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const Icon(
-                        AppIcons.fire,
-                        color: Colors.orange,
-                        size: 14,
-                      ),
+                      const Icon(AppIcons.fire, color: Colors.orange, size: 14),
                     ],
                   )
                 else
@@ -1030,11 +1025,7 @@ class _VersusBanner extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            AppIcons.trophy,
-            size: 16,
-            color: AppTheme.accent,
-          ),
+          const Icon(AppIcons.trophy, size: 16, color: AppTheme.accent),
           const SizedBox(width: 6),
           Flexible(
             child: Text(

@@ -33,7 +33,9 @@ class ResponsiveWrapper extends StatelessWidget {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: ResponsiveWrapper.maxContentWidth),
+          constraints: const BoxConstraints(
+            maxWidth: ResponsiveWrapper.maxContentWidth,
+          ),
           child: ClipRRect(
             borderRadius: const BorderRadius.horizontal(
               left: Radius.circular(16),

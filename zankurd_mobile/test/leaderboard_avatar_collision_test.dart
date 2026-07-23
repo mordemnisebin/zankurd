@@ -54,37 +54,37 @@ class _CollidingNamesRepository extends MockZanKurdRepository {
 }
 
 void main() {
-  testWidgets(
-    'podyumda hash çakışan üç oyuncu farklı avatar rengi alır',
-    (tester) async {
-      await tester.pumpWidget(
-        testShell(
-          child: Scaffold(
-            body: LeaderboardScreen(repository: _CollidingNamesRepository()),
-          ),
+  testWidgets('podyumda hash çakışan üç oyuncu farklı avatar rengi alır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      testShell(
+        child: Scaffold(
+          body: LeaderboardScreen(repository: _CollidingNamesRepository()),
         ),
-      );
-      await tester.pumpAndSettle();
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      final avatars = tester.widgetList<PlayerAvatar>(
-        find.byType(PlayerAvatar),
-      );
-      final colorsByName = <String, Color?>{
-        for (final a in avatars)
-          if (a.displayName != null) a.displayName!: a.colorOverride,
-      };
+    final avatars = tester.widgetList<PlayerAvatar>(find.byType(PlayerAvatar));
+    final colorsByName = <String, Color?>{
+      for (final a in avatars)
+        if (a.displayName != null) a.displayName!: a.colorOverride,
+    };
 
-      expect(colorsByName['Diyar'], isNotNull);
-      expect(colorsByName['Newroz'], isNotNull);
-      expect(colorsByName['Sara'], isNotNull);
-      expect(
-        {colorsByName['Diyar'], colorsByName['Newroz'], colorsByName['Sara']}
-            .length,
-        3,
-        reason:
-            'Diyar/Newroz/Sara aynı hash dilimine düşüyor; round-robin '
-            'çözümü olmadan üçü de aynı rengi alırdı.',
-      );
-    },
-  );
+    expect(colorsByName['Diyar'], isNotNull);
+    expect(colorsByName['Newroz'], isNotNull);
+    expect(colorsByName['Sara'], isNotNull);
+    expect(
+      {
+        colorsByName['Diyar'],
+        colorsByName['Newroz'],
+        colorsByName['Sara'],
+      }.length,
+      3,
+      reason:
+          'Diyar/Newroz/Sara aynı hash dilimine düşüyor; round-robin '
+          'çözümü olmadan üçü de aynı rengi alırdı.',
+    );
+  });
 }

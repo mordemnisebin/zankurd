@@ -899,7 +899,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 ).popUntil((route) => route.isFirst);
                               }
                             },
-                            icon: const Icon(AppIcons.arrowRotateLeft, size: 20),
+                            icon: const Icon(
+                              AppIcons.arrowRotateLeft,
+                              size: 20,
+                            ),
                             label: Text(
                               context.s('Dîsa bilîze', 'Tekrar oyna'),
                               maxLines: 1,
@@ -1433,11 +1436,7 @@ class _RaceStandingRow extends StatelessWidget {
             ),
           ),
           if (player.streak > 0) ...[
-            const Icon(
-              AppIcons.fire,
-              color: AppTheme.gold,
-              size: 18,
-            ),
+            const Icon(AppIcons.fire, color: AppTheme.gold, size: 18),
             const SizedBox(width: 4),
             Text(
               '${player.streak}',

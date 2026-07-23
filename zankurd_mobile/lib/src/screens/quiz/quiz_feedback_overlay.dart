@@ -43,11 +43,7 @@ class QuizTimeoutNotice extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const ExcludeSemantics(
-              child: Icon(
-                AppIcons.stopwatch,
-                color: AppTheme.wrong,
-                size: 18,
-              ),
+              child: Icon(AppIcons.stopwatch, color: AppTheme.wrong, size: 18),
             ),
             const SizedBox(width: AppSpacing.xs),
             Flexible(

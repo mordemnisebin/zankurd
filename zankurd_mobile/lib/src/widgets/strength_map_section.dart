@@ -207,9 +207,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
     final name = CategoryNames.localized(insight.category, ku);
     final isStrength = tone == InsightTone.strength;
     // Renk + ikon + metin birlikte anlam taşır.
-    final icon = isStrength
-        ? AppIcons.circleCheck
-        : AppIcons.flag;
+    final icon = isStrength ? AppIcons.circleCheck : AppIcons.flag;
     final tint = isStrength ? AppTheme.playGreen : AppTheme.brand;
     final String action;
     if (isStrength) {

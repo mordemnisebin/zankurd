@@ -22,7 +22,6 @@ class HeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       key: const ValueKey('home-multiplayer-hero'),
       width: double.infinity,
@@ -70,9 +69,7 @@ class HeroCard extends StatelessWidget {
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.white.withValues(
-                                    alpha: 0.5,
-                                  ),
+                                  color: Colors.white.withValues(alpha: 0.5),
                                   blurRadius: 6,
                                 ),
                               ],

@@ -354,10 +354,11 @@ class _RoomScreenState extends State<RoomScreen> {
                                                   // aynı kategori "Dil"
                                                   // görünüyordu (2026-07-22
                                                   // canlı UX denetimi).
-                                                  label: CategoryNames.localized(
-                                                    room.category,
-                                                    context.isKu,
-                                                  ),
+                                                  label:
+                                                      CategoryNames.localized(
+                                                        room.category,
+                                                        context.isKu,
+                                                      ),
                                                   icon: AppIcons.tableCells,
                                                 ),
                                                 _Pill(

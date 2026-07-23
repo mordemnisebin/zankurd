@@ -254,7 +254,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       level: _level,
       xpInLevel: _xpInLevel,
       xpNeeded: _xpNeeded,
-      rank: _stats?.roomsPlayed != null && _stats!.roomsPlayed > 0 ? _stats?.rank : null,
+      rank: _stats?.roomsPlayed != null && _stats!.roomsPlayed > 0
+          ? _stats?.rank
+          : null,
       levelProgress: _levelProgress,
       onEditAvatar: _openAvatarEditor,
     );
@@ -537,67 +539,95 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.all(AppSpacing.page),
       children: [
         // Hero card placeholder
-        const SkeletonLine(width: double.infinity, height: 180, borderRadius: 16),
+        const SkeletonLine(
+          width: double.infinity,
+          height: 180,
+          borderRadius: 16,
+        ),
         const SizedBox(height: AppSpacing.cardGap),
 
         // Stats grid placeholder — 2x2 kareler
         Row(
           children: [
-            Expanded(child: Container(
-              height: 80,
-              decoration: BoxDecoration(
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? AppTheme.shimmerBaseDark
-                    : AppTheme.shimmerBaseLight,
-                borderRadius: BorderRadius.circular(12),
+            Expanded(
+              child: Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppTheme.shimmerBaseDark
+                      : AppTheme.shimmerBaseLight,
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-            )),
+            ),
             const SizedBox(width: 10),
-            Expanded(child: Container(
-              height: 80,
-              decoration: BoxDecoration(
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? AppTheme.shimmerBaseDark
-                    : AppTheme.shimmerBaseLight,
-                borderRadius: BorderRadius.circular(12),
+            Expanded(
+              child: Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppTheme.shimmerBaseDark
+                      : AppTheme.shimmerBaseLight,
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-            )),
+            ),
           ],
         ),
         const SizedBox(height: 10),
         Row(
           children: [
-            Expanded(child: Container(
-              height: 80,
-              decoration: BoxDecoration(
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? AppTheme.shimmerBaseDark
-                    : AppTheme.shimmerBaseLight,
-                borderRadius: BorderRadius.circular(12),
+            Expanded(
+              child: Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppTheme.shimmerBaseDark
+                      : AppTheme.shimmerBaseLight,
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-            )),
+            ),
             const SizedBox(width: 10),
-            Expanded(child: Container(
-              height: 80,
-              decoration: BoxDecoration(
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? AppTheme.shimmerBaseDark
-                    : AppTheme.shimmerBaseLight,
-                borderRadius: BorderRadius.circular(12),
+            Expanded(
+              child: Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppTheme.shimmerBaseDark
+                      : AppTheme.shimmerBaseLight,
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-            )),
+            ),
           ],
         ),
         const SizedBox(height: AppSpacing.md),
 
         // Menu satır placeholder'ları
-        const SkeletonLine(width: double.infinity, height: 56, borderRadius: 12),
+        const SkeletonLine(
+          width: double.infinity,
+          height: 56,
+          borderRadius: 12,
+        ),
         const SizedBox(height: 10),
-        const SkeletonLine(width: double.infinity, height: 56, borderRadius: 12),
+        const SkeletonLine(
+          width: double.infinity,
+          height: 56,
+          borderRadius: 12,
+        ),
         const SizedBox(height: 10),
-        const SkeletonLine(width: double.infinity, height: 56, borderRadius: 12),
+        const SkeletonLine(
+          width: double.infinity,
+          height: 56,
+          borderRadius: 12,
+        ),
         const SizedBox(height: 10),
-        const SkeletonLine(width: double.infinity, height: 56, borderRadius: 12),
+        const SkeletonLine(
+          width: double.infinity,
+          height: 56,
+          borderRadius: 12,
+        ),
       ],
     );
   }
@@ -772,7 +802,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(height: AppSpacing.md),
         sectionLabel(ku ? 'HESAB' : 'HESAP'),
         // 2026-07-22 canlı UX denetimi: misafir hesap yükseltme
-        if (context.watch<AuthProvider>().isGuest) ...[          AppPanel(
+        if (context.watch<AuthProvider>().isGuest) ...[
+          AppPanel(
             padding: EdgeInsets.zero,
             child: _menuRow(
               leading: const Icon(
@@ -898,7 +929,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   validator: (v) {
                     if (v == null || v.isEmpty || !v.contains('@')) {
-                      return ku ? 'E-postayek derbasdar binivîse' : 'Geçerli bir e-posta gir';
+                      return ku
+                          ? 'E-postayek derbasdar binivîse'
+                          : 'Geçerli bir e-posta gir';
                     }
                     return null;
                   },
@@ -956,7 +989,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                    label: Text(ku ? 'Bi Google ve Girêde' : 'Google ile Bağla'),
+                    label: Text(
+                      ku ? 'Bi Google ve Girêde' : 'Google ile Bağla',
+                    ),
                   ),
                 ),
               ],

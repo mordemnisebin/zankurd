@@ -64,10 +64,8 @@ class _SignUpScreenState extends State<SignUpScreen>
   // SnackBar yerine alanların kendi validator'ı üzerinden hata gösterilir.
   bool _validateCurrentStep() {
     if (_currentStep == 0) {
-      final emailOk =
-          _emailFieldKey.currentState?.validate() ?? false;
-      final passwordOk =
-          _passwordFieldKey.currentState?.validate() ?? false;
+      final emailOk = _emailFieldKey.currentState?.validate() ?? false;
+      final passwordOk = _passwordFieldKey.currentState?.validate() ?? false;
       final confirmOk =
           _confirmPasswordFieldKey.currentState?.validate() ?? false;
       return emailOk && passwordOk && confirmOk;
@@ -416,16 +414,15 @@ class _SignUpScreenState extends State<SignUpScreen>
                   controller: _passwordController,
                   obscureText: _obscurePassword,
                   prefixIcon: AppIcons.lock,
-                  suffixIcon: _obscurePassword ? AppIcons.eyeSlash : AppIcons.eye,
+                  suffixIcon: _obscurePassword
+                      ? AppIcons.eyeSlash
+                      : AppIcons.eye,
                   onSuffixIconPressed: () {
                     setState(() => _obscurePassword = !_obscurePassword);
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   // Parola kuralı hint text olarak gösterilsin, hata beklemeden
-                  hintText: context.s(
-                    'Herî kêm 6 tîp',
-                    'En az 6 karakter',
-                  ),
+                  hintText: context.s('Herî kêm 6 tîp', 'En az 6 karakter'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return context.s('Şîfre pêwîst e', 'Parola gerekli');
@@ -538,8 +535,6 @@ class _SignUpScreenState extends State<SignUpScreen>
     return stepWidget;
   }
 }
-
-
 
 class _ProgressIndicator extends StatelessWidget {
   final int currentStep;
@@ -739,11 +734,12 @@ class _AuthScrollFrame extends StatelessWidget {
           child: ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: 420,
-              minHeight: (constraints.maxHeight - (edgePadding * 2)).clamp(0.0, double.infinity),
+              minHeight: (constraints.maxHeight - (edgePadding * 2)).clamp(
+                0.0,
+                double.infinity,
+              ),
             ),
-            child: Center(
-              child: child,
-            ),
+            child: Center(child: child),
           ),
         );
       },

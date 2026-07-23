@@ -54,18 +54,21 @@ void main() {
     },
   );
 
-  test('soru bankası doğrulayıcısı varsayılan olarak dosya değiştirmez', () async {
-    final jsonFile = File('assets/data/offline_questions.json');
-    final dartFile = File('lib/src/data/offline_question_bank.dart');
-    final jsonBefore = await jsonFile.readAsBytes();
-    final dartBefore = await dartFile.readAsBytes();
+  test(
+    'soru bankası doğrulayıcısı varsayılan olarak dosya değiştirmez',
+    () async {
+      final jsonFile = File('assets/data/offline_questions.json');
+      final dartFile = File('lib/src/data/offline_question_bank.dart');
+      final jsonBefore = await jsonFile.readAsBytes();
+      final dartBefore = await dartFile.readAsBytes();
 
-    final result = await Process.run('python', [
-      'tool/verify_and_fix_question_bank.py',
-    ]);
+      final result = await Process.run('python', [
+        'tool/verify_and_fix_question_bank.py',
+      ]);
 
-    expect(result.exitCode, 0, reason: '${result.stdout}\n${result.stderr}');
-    expect(await jsonFile.readAsBytes(), jsonBefore);
-    expect(await dartFile.readAsBytes(), dartBefore);
-  });
+      expect(result.exitCode, 0, reason: '${result.stdout}\n${result.stderr}');
+      expect(await jsonFile.readAsBytes(), jsonBefore);
+      expect(await dartFile.readAsBytes(), dartBefore);
+    },
+  );
 }

@@ -379,9 +379,15 @@ class _GroupPlayPanel extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppTheme.playCyan.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
-                  border: Border.all(color: AppTheme.playCyan.withValues(alpha: 0.2)),
+                  border: Border.all(
+                    color: AppTheme.playCyan.withValues(alpha: 0.2),
+                  ),
                 ),
-                child: const Icon(AppIcons.peopleGroup, color: AppTheme.playCyan, size: 24),
+                child: const Icon(
+                  AppIcons.peopleGroup,
+                  color: AppTheme.playCyan,
+                  size: 24,
+                ),
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(
@@ -426,7 +432,10 @@ class _GroupPlayPanel extends StatelessWidget {
                       ? const SizedBox(
                           width: 18,
                           height: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
                         )
                       : const Icon(AppIcons.circlePlus, size: 20),
                   label: Text(
@@ -443,7 +452,10 @@ class _GroupPlayPanel extends StatelessWidget {
                   key: const ValueKey('play-hub-join-room'),
                   onPressed: onJoinRoom,
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: AppTheme.borderColor(context), width: 1.5),
+                    side: BorderSide(
+                      color: AppTheme.borderColor(context),
+                      width: 1.5,
+                    ),
                     foregroundColor: AppTheme.textPrimaryColor(context),
                   ),
                   icon: const Icon(AppIcons.doorOpen, size: 20),

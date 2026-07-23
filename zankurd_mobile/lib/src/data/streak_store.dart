@@ -90,8 +90,7 @@ class StreakStore {
   }
 
   /// Kırılacak seri elde jeton varken dondurulabilir mi?
-  bool canFreeze({DateTime? now}) =>
-      _freeze > 0 && willBreakOnPlay(now: now);
+  bool canFreeze({DateTime? now}) => _freeze > 0 && willBreakOnPlay(now: now);
 
   /// Bir dondurma jetonu ekler (mağaza alımı). Üst sınır [maxFreeze].
   Future<int> addFreeze() async {

@@ -205,10 +205,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     final (icon, tint) = switch (level) {
       PlacementLevel.destpek => (AppIcons.leaf, AppTheme.playGreen),
       PlacementLevel.navin => (AppIcons.arrowTrendUp, AppTheme.gold),
-      PlacementLevel.pesketi => (
-        AppIcons.medal,
-        AppTheme.brand,
-      ),
+      PlacementLevel.pesketi => (AppIcons.medal, AppTheme.brand),
     };
     return Center(
       child: SingleChildScrollView(

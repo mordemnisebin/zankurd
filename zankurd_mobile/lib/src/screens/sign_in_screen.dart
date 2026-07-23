@@ -382,7 +382,8 @@ class _SignInScreenState extends State<SignInScreen>
                                         child: Column(
                                           children: [
                                             StyledInputField(
-                                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                                              autovalidateMode: AutovalidateMode
+                                                  .onUserInteraction,
                                               label: context.s(
                                                 'Navnîşana e-peyamê',
                                                 'E-posta adresi',
@@ -418,7 +419,9 @@ class _SignInScreenState extends State<SignInScreen>
                                                     _animationController,
                                                   ),
                                               child: StyledInputField(
-                                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
                                                 label: context.s(
                                                   'Şîfre',
                                                   'Parola',
@@ -649,7 +652,8 @@ class _SignInScreenState extends State<SignInScreen>
                                     child: Column(
                                       children: [
                                         StyledInputField(
-                                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
                                           label: context.s(
                                             'Navnîşana e-peyamê',
                                             'E-posta adresi',
@@ -684,7 +688,8 @@ class _SignInScreenState extends State<SignInScreen>
                                                 _animationController,
                                               ),
                                           child: StyledInputField(
-                                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                                            autovalidateMode: AutovalidateMode
+                                                .onUserInteraction,
                                             label: context.s('Şîfre', 'Parola'),
                                             labelStyle: authInputLabelStyle,
                                             inputTextStyle: authInputTextStyle,
@@ -1118,11 +1123,12 @@ class _AuthScrollFrame extends StatelessWidget {
           child: ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: isWide ? 960 : 420,
-              minHeight: (constraints.maxHeight - (edgePadding * 2)).clamp(0.0, double.infinity),
+              minHeight: (constraints.maxHeight - (edgePadding * 2)).clamp(
+                0.0,
+                double.infinity,
+              ),
             ),
-            child: Center(
-              child: child,
-            ),
+            child: Center(child: child),
           ),
         );
       },

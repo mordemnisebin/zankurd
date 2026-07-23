@@ -101,9 +101,7 @@ void main() {
         .widgetList<Semantics>(find.byType(Semantics))
         .map((w) => w.properties.label)
         .whereType<String>()
-        .where(
-          (l) => RegExp(r'^Zorluk: 5 üzerinden \d yıldız$').hasMatch(l),
-        );
+        .where((l) => RegExp(r'^Zorluk: 5 üzerinden \d yıldız$').hasMatch(l));
     expect(difficultyLabels.length, 5);
   });
 }

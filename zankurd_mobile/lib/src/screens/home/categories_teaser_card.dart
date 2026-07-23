@@ -82,10 +82,7 @@ class CategoriesTeaserCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Icon(
-                    AppIcons.chevronRight,
-                    color: AppTheme.brand,
-                  ),
+                  const Icon(AppIcons.chevronRight, color: AppTheme.brand),
                 ],
               ),
             ),

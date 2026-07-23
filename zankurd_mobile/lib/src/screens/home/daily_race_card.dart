@@ -85,10 +85,7 @@ class DailyRaceCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Icon(
-                      AppIcons.chevronRight,
-                      color: AppTheme.playCyan,
-                    ),
+                    const Icon(AppIcons.chevronRight, color: AppTheme.playCyan),
                   ],
                 ),
               ],

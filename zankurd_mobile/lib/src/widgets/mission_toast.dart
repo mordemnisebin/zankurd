@@ -16,11 +16,7 @@ class MissionToast {
       SnackBar(
         content: Row(
           children: [
-            const Icon(
-              AppIcons.circleCheck,
-              color: Colors.white,
-              size: 20,
-            ),
+            const Icon(AppIcons.circleCheck, color: Colors.white, size: 20),
             const SizedBox(width: 10),
             Expanded(
               child: Column(
@@ -45,11 +41,7 @@ class MissionToast {
                 ],
               ),
             ),
-            const Icon(
-              AppIcons.coins,
-              color: Colors.white,
-              size: 18,
-            ),
+            const Icon(AppIcons.coins, color: Colors.white, size: 18),
           ],
         ),
         backgroundColor: AppTheme.gold,

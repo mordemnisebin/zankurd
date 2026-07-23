@@ -432,81 +432,82 @@ class _TournamentScreenState extends State<TournamentScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-          ScreenIdentityHeader(
-            title: ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
-            // Tur bilgisi yalnızca maç kartında gösterilir; burada tekrar
-            // edilmez (üst üste 3 kartta aynı bilgi vardı).
-            subtitle: ku ? 'Bot turnuva' : 'Bot turnuva',
-            accent: AppTheme.gold,
-            icon: AppIcons.trophy,
-            compact: true,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          // Durum kartı yalnızca turnuva aktif değilken (elendi/kazandı)
-          // anlam taşır; aktif oyunda maç kartı zaten bağlamı verir.
-          if (bracket.status != 'active') _StatusCard(bracket: bracket, ku: ku),
-          if (bracket.status == 'won') ...[
-            const SizedBox(height: AppSpacing.md),
-            _ChampionBanner(ku: ku),
-          ],
-          if (userMatch != null) ...[
-            const SizedBox(height: AppSpacing.md),
-            _UserMatchCard(
-              match: userMatch,
-              roundName: roundNames[bracket.currentRound],
-              loading: _matchLoading,
-              ku: ku,
-              onStart: _startMatch,
-            ),
-          ],
-          const SizedBox(height: AppSpacing.lg),
-          // -- Bracket visualization --
-          _TournamentSectionTitle(
-            label: ku ? 'Şemaya Kûpayê' : 'Turnuva Şeması',
-            accent: AppTheme.gold,
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(AppSpacing.md),
-              decoration: AppTheme.cardDecoration(context),
-              child: TournamentBracketWidget(
-                bracket: bracket,
-                userId: _userId,
-                ku: ku,
-                onTapMatch: (match, roundIndex) {
-                  // Only the user's active match in the current round is tappable
-                  if (roundIndex == bracket.currentRound &&
-                      (match.playerOneId == _userId ||
-                          match.playerTwoId == _userId) &&
-                      match.status != 'completed') {
-                    _startMatch();
-                  }
-                },
-              ),
-            ),
-          ),
-          // -- Legacy round list (collapsed below the bracket) --
-          const SizedBox(height: AppSpacing.md),
-          for (var i = 0; i < bracket.rounds.length; i++) ...[
-            _RoundSection(
-              title: roundNames[i],
-              round: bracket.rounds[i],
-              userId: _userId,
-              ku: ku,
-            ),
-            const SizedBox(height: AppSpacing.md),
-          ],
-          if (_standings.isNotEmpty) ...[
-            _TournamentSectionTitle(
-              label: ku ? 'Rêzkirin' : 'Sıralama',
-              accent: AppTheme.gold,
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            ..._standings.map((s) => _StandingRow(s: s)),
-          ],
+                ScreenIdentityHeader(
+                  title: ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
+                  // Tur bilgisi yalnızca maç kartında gösterilir; burada tekrar
+                  // edilmez (üst üste 3 kartta aynı bilgi vardı).
+                  subtitle: ku ? 'Bot turnuva' : 'Bot turnuva',
+                  accent: AppTheme.gold,
+                  icon: AppIcons.trophy,
+                  compact: true,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                // Durum kartı yalnızca turnuva aktif değilken (elendi/kazandı)
+                // anlam taşır; aktif oyunda maç kartı zaten bağlamı verir.
+                if (bracket.status != 'active')
+                  _StatusCard(bracket: bracket, ku: ku),
+                if (bracket.status == 'won') ...[
+                  const SizedBox(height: AppSpacing.md),
+                  _ChampionBanner(ku: ku),
+                ],
+                if (userMatch != null) ...[
+                  const SizedBox(height: AppSpacing.md),
+                  _UserMatchCard(
+                    match: userMatch,
+                    roundName: roundNames[bracket.currentRound],
+                    loading: _matchLoading,
+                    ku: ku,
+                    onStart: _startMatch,
+                  ),
+                ],
+                const SizedBox(height: AppSpacing.lg),
+                // -- Bracket visualization --
+                _TournamentSectionTitle(
+                  label: ku ? 'Şemaya Kûpayê' : 'Turnuva Şeması',
+                  accent: AppTheme.gold,
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    decoration: AppTheme.cardDecoration(context),
+                    child: TournamentBracketWidget(
+                      bracket: bracket,
+                      userId: _userId,
+                      ku: ku,
+                      onTapMatch: (match, roundIndex) {
+                        // Only the user's active match in the current round is tappable
+                        if (roundIndex == bracket.currentRound &&
+                            (match.playerOneId == _userId ||
+                                match.playerTwoId == _userId) &&
+                            match.status != 'completed') {
+                          _startMatch();
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                // -- Legacy round list (collapsed below the bracket) --
+                const SizedBox(height: AppSpacing.md),
+                for (var i = 0; i < bracket.rounds.length; i++) ...[
+                  _RoundSection(
+                    title: roundNames[i],
+                    round: bracket.rounds[i],
+                    userId: _userId,
+                    ku: ku,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                ],
+                if (_standings.isNotEmpty) ...[
+                  _TournamentSectionTitle(
+                    label: ku ? 'Rêzkirin' : 'Sıralama',
+                    accent: AppTheme.gold,
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  ..._standings.map((s) => _StandingRow(s: s)),
+                ],
               ],
             ),
           ),
@@ -560,171 +561,177 @@ class _LobbyView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Container(
-            key: const ValueKey('tournament-hero'),
-            width: double.infinity,
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            decoration: BoxDecoration(
-              // Pirs hizası: düz yüzey, kart kenarlığı/gölgesi yok — kimlik
-              // altın kupa rozetinin kendi gradyanında taşınır.
-              color: AppTheme.surfaceColor(context),
-            ),
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: AppTheme.goldGradient,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppTheme.gold.withValues(alpha: 0.22),
-                            blurRadius: 12,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: const Icon(
-                        AppIcons.trophy,
-                        color: Colors.white,
-                        size: 44,
-                      ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                  child: Container(
+                    key: const ValueKey('tournament-hero'),
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(AppSpacing.lg),
+                    decoration: BoxDecoration(
+                      // Pirs hizası: düz yüzey, kart kenarlığı/gölgesi yok — kimlik
+                      // altın kupa rozetinin kendi gradyanında taşınır.
+                      color: AppTheme.surfaceColor(context),
                     ),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(
-                      ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
-                      textAlign: TextAlign.center,
-                      style: AppTypography.heading1.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    // Tournament schedule badge
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.sm,
-                        vertical: AppSpacing.xxs,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.surfaceHiColor(context),
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                        border: Border.all(
-                          color: AppTheme.borderColor(context),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            AppIcons.clock,
-                            size: 14,
-                            color: AppTheme.textSubColor(context),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            scheduleText,
-                            style: AppTypography.caption.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w700,
+                    child: Stack(
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: AppTheme.goldGradient,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppTheme.gold.withValues(
+                                      alpha: 0.22,
+                                    ),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: const Icon(
+                                AppIcons.trophy,
+                                color: Colors.white,
+                                size: 44,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    // Countdown
-                    Text(
-                      countdownText,
-                      textAlign: TextAlign.center,
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.gold,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    // Honesty label: bot-filled bracket, not live multiplayer
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.sm,
-                        vertical: AppSpacing.xxs,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.gold.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                        border: Border.all(
-                          color: AppTheme.gold.withValues(alpha: 0.45),
+                            const SizedBox(height: AppSpacing.md),
+                            Text(
+                              ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
+                              textAlign: TextAlign.center,
+                              style: AppTypography.heading1.copyWith(
+                                color: AppTheme.textPrimaryColor(context),
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.sm),
+                            // Tournament schedule badge
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppSpacing.sm,
+                                vertical: AppSpacing.xxs,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppTheme.surfaceHiColor(context),
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.pill,
+                                ),
+                                border: Border.all(
+                                  color: AppTheme.borderColor(context),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    AppIcons.clock,
+                                    size: 14,
+                                    color: AppTheme.textSubColor(context),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    scheduleText,
+                                    style: AppTypography.caption.copyWith(
+                                      color: AppTheme.textPrimaryColor(context),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.xs),
+                            // Countdown
+                            Text(
+                              countdownText,
+                              textAlign: TextAlign.center,
+                              style: AppTypography.caption.copyWith(
+                                color: AppTheme.gold,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.sm),
+                            // Honesty label: bot-filled bracket, not live multiplayer
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppSpacing.sm,
+                                vertical: AppSpacing.xxs,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppTheme.gold.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.pill,
+                                ),
+                                border: Border.all(
+                                  color: AppTheme.gold.withValues(alpha: 0.45),
+                                ),
+                              ),
+                              child: Text(
+                                ku
+                                    ? 'Bot turnuva · rojane kûpa'
+                                    : 'Bot turnuva · günlük kupa',
+                                style: AppTypography.caption.copyWith(
+                                  // Altın metin + altın@0.2 zemin açık temada ~2:1
+                                  // kalıyordu; aksan kimliği korunarak okunabilir
+                                  // açıklığa çekilir.
+                                  color: AppColors.readableAccent(
+                                    context,
+                                    AppTheme.gold,
+                                  ),
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.sm),
+                            Text(
+                              ku
+                                  ? '16 lîstikvan (bot) · 4 tur · ${TournamentConfig.questionsPerMatch} pirs/maç'
+                                  : '16 oyuncu (bot) · 4 tur · ${TournamentConfig.questionsPerMatch} soru/maç',
+                              textAlign: TextAlign.center,
+                              style: AppTypography.bodyMedium.copyWith(
+                                color: AppTheme.textSubColor(context),
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.xxs),
+                            Text(
+                              ku
+                                  ? 'Bi botan re pêş bikeve — şampiyon kûpayê digire!'
+                                  : 'Bot rakiplere karşı yarış — şampiyon kupayı alır!',
+                              textAlign: TextAlign.center,
+                              style: AppTypography.caption.copyWith(
+                                color: AppTheme.textMutedColor(context),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.lg),
+                            SizedBox(
+                              width: double.infinity,
+                              child: FilledButton.icon(
+                                key: const ValueKey('tournament-primary-cta'),
+                                onPressed: onStart,
+                                icon: const Icon(AppIcons.trophy, size: 20),
+                                style: FilledButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: AppSpacing.md,
+                                  ),
+                                  backgroundColor: AppTheme.brand,
+                                  foregroundColor: Colors.white,
+                                ),
+                                label: Text(
+                                  ku ? 'Tevlî Kûpayê Bibe' : 'Turnuvaya Katıl',
+                                  style: AppTypography.bodyLarge.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      child: Text(
-                        ku
-                            ? 'Bot turnuva · rojane kûpa'
-                            : 'Bot turnuva · günlük kupa',
-                        style: AppTypography.caption.copyWith(
-                          // Altın metin + altın@0.2 zemin açık temada ~2:1
-                          // kalıyordu; aksan kimliği korunarak okunabilir
-                          // açıklığa çekilir.
-                          color: AppColors.readableAccent(
-                            context,
-                            AppTheme.gold,
-                          ),
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
+                      ],
                     ),
-                    const SizedBox(height: AppSpacing.sm),
-                    Text(
-                      ku
-                          ? '16 lîstikvan (bot) · 4 tur · ${TournamentConfig.questionsPerMatch} pirs/maç'
-                          : '16 oyuncu (bot) · 4 tur · ${TournamentConfig.questionsPerMatch} soru/maç',
-                      textAlign: TextAlign.center,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppTheme.textSubColor(context),
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.xxs),
-                    Text(
-                      ku
-                          ? 'Bi botan re pêş bikeve — şampiyon kûpayê digire!'
-                          : 'Bot rakiplere karşı yarış — şampiyon kupayı alır!',
-                      textAlign: TextAlign.center,
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton.icon(
-                        key: const ValueKey('tournament-primary-cta'),
-                        onPressed: onStart,
-                        icon: const Icon(AppIcons.trophy, size: 20),
-                        style: FilledButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: AppSpacing.md,
-                          ),
-                          backgroundColor: AppTheme.brand,
-                          foregroundColor: Colors.white,
-                        ),
-                        label: Text(
-                          ku ? 'Tevlî Kûpayê Bibe' : 'Turnuvaya Katıl',
-                          style: AppTypography.bodyLarge.copyWith(
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ),
               ],
             ),
           ),

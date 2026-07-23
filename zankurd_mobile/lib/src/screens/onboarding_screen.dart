@@ -194,7 +194,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         context.s('Derbas bike', 'Atla'),
                                         style: AppTypography.caption.copyWith(
                                           fontWeight: FontWeight.w700,
-                                          color: AppTheme.textMutedColor(context),
+                                          color: AppTheme.textMutedColor(
+                                            context,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -324,9 +326,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           'Arkadaşlarınla veya botlarla yarış, ödüller kazan ve seviye atla.',
         ),
         bullets: [
-          ku
-              ? 'Şerê 1vs1 û Pêşbirka Rojê'
-              : '1vs1 düello ve Günün Yarışması',
+          ku ? 'Şerê 1vs1 û Pêşbirka Rojê' : '1vs1 düello ve Günün Yarışması',
           ku
               ? 'Çerxa Rojê — 100 coinê belaş'
               : 'Günlük Çark — 100 ücretsiz coin',
@@ -491,10 +491,7 @@ class _OnboardingPage extends StatelessWidget {
                     const Positioned(
                       bottom: 12,
                       left: 12,
-                      child: RojMascot(
-                        size: 40,
-                        mood: RojMood.celebrate,
-                      ),
+                      child: RojMascot(size: 40, mood: RojMood.celebrate),
                     ),
                 ],
               ),

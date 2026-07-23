@@ -194,10 +194,7 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      const Icon(
-                        AppIcons.medal,
-                        color: AppTheme.gold,
-                      ),
+                      const Icon(AppIcons.medal, color: AppTheme.gold),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(

@@ -243,10 +243,7 @@ class _AppShellState extends State<AppShell> {
         fontWeight: FontWeight.w500,
         color: AppTheme.textMutedColor(context),
       ),
-      selectedIconTheme: const IconThemeData(
-        color: AppTheme.brand,
-        size: 28,
-      ),
+      selectedIconTheme: const IconThemeData(color: AppTheme.brand, size: 28),
       unselectedIconTheme: IconThemeData(
         color: AppTheme.textMutedColor(context),
         size: 24,

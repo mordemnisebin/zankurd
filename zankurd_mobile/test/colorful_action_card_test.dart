@@ -49,10 +49,7 @@ void main() {
       ),
     );
 
-    expect(
-      find.bySemanticsLabel('Şerê 1vs1. Bot + Zindî'),
-      findsOneWidget,
-    );
+    expect(find.bySemanticsLabel('Şerê 1vs1. Bot + Zindî'), findsOneWidget);
     // Görünür Text içeriği kendi semantics düğümünü eklemesin diye
     // ExcludeSemantics ile dışlandığından, "Şerê 1vs1" tek bir düğümde
     // (dıştaki label) bulunmalı — metnin kendisi ayrıca bulunmamalı.

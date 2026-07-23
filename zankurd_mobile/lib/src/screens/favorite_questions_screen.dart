@@ -317,10 +317,7 @@ class _FavoriteQuestionTile extends StatelessWidget {
                   color: AppTheme.textMutedColor(context),
                 ),
               ),
-              const Icon(
-                AppIcons.play,
-                color: AppTheme.primaryGradientStart,
-              ),
+              const Icon(AppIcons.play, color: AppTheme.primaryGradientStart),
             ],
           ),
         ),

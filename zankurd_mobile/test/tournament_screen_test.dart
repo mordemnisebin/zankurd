@@ -58,10 +58,7 @@ void main() {
       final startButton = tester.widget<FilledButton>(
         find.byKey(const ValueKey('tournament-primary-cta')),
       );
-      expect(
-        startButton.style?.backgroundColor?.resolve({}),
-        AppTheme.brand,
-      );
+      expect(startButton.style?.backgroundColor?.resolve({}), AppTheme.brand);
       expect(find.byIcon(AppIcons.trophy), findsAtLeast(1));
     });
 

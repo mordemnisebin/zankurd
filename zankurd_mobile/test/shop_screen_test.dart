@@ -199,9 +199,7 @@ void main() {
       'profile_badge_vip': 1000,
     };
 
-    final actualCosts = {
-      for (final item in debugShopItems) item.id: item.cost,
-    };
+    final actualCosts = {for (final item in debugShopItems) item.id: item.cost};
     expect(actualCosts, expectedCosts);
   });
 

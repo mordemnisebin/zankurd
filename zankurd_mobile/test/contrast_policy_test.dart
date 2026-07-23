@@ -59,7 +59,10 @@ void main() {
     });
 
     test('altın bant üzerinde koyu mürekkep AA eşiğini geçer', () {
-      expect(contrastRatio(AppTheme.bg, AppTheme.gold), greaterThanOrEqualTo(4.5));
+      expect(
+        contrastRatio(AppTheme.bg, AppTheme.gold),
+        greaterThanOrEqualTo(4.5),
+      );
       // Eski hâli (beyaz) geçmiyordu.
       expect(contrastRatio(Colors.white, AppTheme.gold), lessThan(3));
     });

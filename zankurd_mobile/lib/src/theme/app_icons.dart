@@ -8,132 +8,644 @@ import 'package:flutter/widgets.dart';
 class AppIcons {
   const AppIcons._();
 
-  static const IconData arrowLeft = IconData(0xf060, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData arrowRight = IconData(0xf061, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData arrowRotateLeft = IconData(0xf0e2, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData arrowTrendUp = IconData(0xe098, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData arrowsRotate = IconData(0xf021, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData bagShopping = IconData(0xf290, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData barsStaggered = IconData(0xf550, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData bell = IconData(0xf0f3, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData bellSlash = IconData(0xf1f6, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData bolt = IconData(0xf0e7, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData book = IconData(0xf02d, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData bookOpen = IconData(0xf518, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData bookOpenReader = IconData(0xf5da, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData bookmark = IconData(0xf02e, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData brain = IconData(0xf5dc, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData briefcase = IconData(0xf0b1, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData buildingColumns = IconData(0xf19c, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData bullseye = IconData(0xf140, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData calendarDays = IconData(0xf073, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData camera = IconData(0xf030, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData cartShopping = IconData(0xf07a, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData champagneGlasses = IconData(0xf79f, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData chartColumn = IconData(0xe0e3, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData chartLine = IconData(0xf201, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData check = IconData(0xf00c, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData chevronDown = IconData(0xf078, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData chevronRight = IconData(0xf054, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData chevronUp = IconData(0xf077, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData circle = IconData(0xf111, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData circleCheck = IconData(0xf058, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData circleInfo = IconData(0xf05a, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData circlePlay = IconData(0xf144, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData circlePlus = IconData(0xf055, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData circleQuestion = IconData(0xf059, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData circleXmark = IconData(0xf057, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData clapperboard = IconData(0xe131, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData clock = IconData(0xf017, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData clone = IconData(0xf24d, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData cloud = IconData(0xf0c2, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData coins = IconData(0xf51e, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData comment = IconData(0xf075, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData copy = IconData(0xf0c5, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData dice = IconData(0xf522, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData doorOpen = IconData(0xf52b, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData envelope = IconData(0xf0e0, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData eye = IconData(0xf06e, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData eyeSlash = IconData(0xf070, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData faceFrown = IconData(0xf119, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData faceSmile = IconData(0xf118, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData fire = IconData(0xf06d, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData flag = IconData(0xf024, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData floppyDisk = IconData(0xf0c7, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData font = IconData(0xf031, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData forward = IconData(0xf04e, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData gamepad = IconData(0xf11b, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData gaugeHigh = IconData(0xf625, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData gavel = IconData(0xf0e3, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData gear = IconData(0xf013, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData gem = IconData(0xf3a5, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData globe = IconData(0xf0ac, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData graduationCap = IconData(0xf19d, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData hand = IconData(0xf256, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData handPointer = IconData(0xf25a, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData hashtag = IconData(0x23, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData heart = IconData(0xf004, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData hourglass = IconData(0xf254, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData hourglassStart = IconData(0xf251, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData house = IconData(0xf015, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData idBadge = IconData(0xf2c1, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData image = IconData(0xf03e, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData images = IconData(0xf302, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData inbox = IconData(0xf01c, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData language = IconData(0xf1ab, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData layerGroup = IconData(0xf5fd, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData leaf = IconData(0xf06c, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData lightbulb = IconData(0xf0eb, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData listCheck = IconData(0xf0ae, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData locationDot = IconData(0xf3c5, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData lock = IconData(0xf023, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData magnifyingGlass = IconData(0xf002, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData masksTheater = IconData(0xf630, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData medal = IconData(0xf5a2, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData microphone = IconData(0xf130, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData mobileScreen = IconData(0xf3cf, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData moon = IconData(0xf186, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData mountain = IconData(0xf6fc, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData music = IconData(0xf001, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData paintbrush = IconData(0xf1fc, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData palette = IconData(0xf53f, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData paperPlane = IconData(0xf1d8, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData paw = IconData(0xf1b0, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData pen = IconData(0xf304, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData peopleGroup = IconData(0xe533, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData peopleRoof = IconData(0xe537, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData personCircleCheck = IconData(0xe53e, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData play = IconData(0xf04b, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData question = IconData(0x3f, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData quoteLeft = IconData(0xf10d, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData rightFromBracket = IconData(0xf2f5, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData rightToBracket = IconData(0xf2f6, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData robot = IconData(0xf544, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData scaleBalanced = IconData(0xf24e, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData seedling = IconData(0xf4d8, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData shareNodes = IconData(0xf1e0, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData shield = IconData(0xf132, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData shieldHalved = IconData(0xf3ed, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData shirt = IconData(0xf553, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData shuffle = IconData(0xf074, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData squareCheck = IconData(0xf14a, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData stairs = IconData(0xe289, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData star = IconData(0xf005, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData stopwatch = IconData(0xf2f2, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData store = IconData(0xf54e, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData sun = IconData(0xf185, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData tableCells = IconData(0xf00a, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData trashCan = IconData(0xf2ed, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData tree = IconData(0xf1bb, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData triangleExclamation = IconData(0xf071, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData trophy = IconData(0xf091, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData user = IconData(0xf007, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
-  static const IconData userPlus = IconData(0xf234, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData utensils = IconData(0xf2e7, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData venus = IconData(0xf221, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData volumeHigh = IconData(0xf028, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData volumeXmark = IconData(0xf6a9, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData wallet = IconData(0xf555, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData wandMagicSparkles = IconData(0xe2ca, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
-  static const IconData xmark = IconData(0xf00d, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
+  static const IconData arrowLeft = IconData(
+    0xf060,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData arrowRight = IconData(
+    0xf061,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData arrowRotateLeft = IconData(
+    0xf0e2,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData arrowTrendUp = IconData(
+    0xe098,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData arrowsRotate = IconData(
+    0xf021,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData bagShopping = IconData(
+    0xf290,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData barsStaggered = IconData(
+    0xf550,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData bell = IconData(
+    0xf0f3,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData bellSlash = IconData(
+    0xf1f6,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData bolt = IconData(
+    0xf0e7,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData book = IconData(
+    0xf02d,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData bookOpen = IconData(
+    0xf518,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData bookOpenReader = IconData(
+    0xf5da,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData bookmark = IconData(
+    0xf02e,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData brain = IconData(
+    0xf5dc,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData briefcase = IconData(
+    0xf0b1,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData buildingColumns = IconData(
+    0xf19c,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData bullseye = IconData(
+    0xf140,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData calendarDays = IconData(
+    0xf073,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData camera = IconData(
+    0xf030,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData cartShopping = IconData(
+    0xf07a,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData champagneGlasses = IconData(
+    0xf79f,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData chartColumn = IconData(
+    0xe0e3,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData chartLine = IconData(
+    0xf201,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData check = IconData(
+    0xf00c,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData chevronDown = IconData(
+    0xf078,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData chevronRight = IconData(
+    0xf054,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData chevronUp = IconData(
+    0xf077,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData circle = IconData(
+    0xf111,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData circleCheck = IconData(
+    0xf058,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData circleInfo = IconData(
+    0xf05a,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData circlePlay = IconData(
+    0xf144,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData circlePlus = IconData(
+    0xf055,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData circleQuestion = IconData(
+    0xf059,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData circleXmark = IconData(
+    0xf057,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData clapperboard = IconData(
+    0xe131,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData clock = IconData(
+    0xf017,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData clone = IconData(
+    0xf24d,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData cloud = IconData(
+    0xf0c2,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData coins = IconData(
+    0xf51e,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData comment = IconData(
+    0xf075,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData copy = IconData(
+    0xf0c5,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData dice = IconData(
+    0xf522,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData doorOpen = IconData(
+    0xf52b,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData envelope = IconData(
+    0xf0e0,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData eye = IconData(
+    0xf06e,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData eyeSlash = IconData(
+    0xf070,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData faceFrown = IconData(
+    0xf119,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData faceSmile = IconData(
+    0xf118,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData fire = IconData(
+    0xf06d,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData flag = IconData(
+    0xf024,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData floppyDisk = IconData(
+    0xf0c7,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData font = IconData(
+    0xf031,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData forward = IconData(
+    0xf04e,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData gamepad = IconData(
+    0xf11b,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData gaugeHigh = IconData(
+    0xf625,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData gavel = IconData(
+    0xf0e3,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData gear = IconData(
+    0xf013,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData gem = IconData(
+    0xf3a5,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData globe = IconData(
+    0xf0ac,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData graduationCap = IconData(
+    0xf19d,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData hand = IconData(
+    0xf256,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData handPointer = IconData(
+    0xf25a,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData hashtag = IconData(
+    0x23,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData heart = IconData(
+    0xf004,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData hourglass = IconData(
+    0xf254,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData hourglassStart = IconData(
+    0xf251,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData house = IconData(
+    0xf015,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData idBadge = IconData(
+    0xf2c1,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData image = IconData(
+    0xf03e,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData images = IconData(
+    0xf302,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData inbox = IconData(
+    0xf01c,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData language = IconData(
+    0xf1ab,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData layerGroup = IconData(
+    0xf5fd,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData leaf = IconData(
+    0xf06c,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData lightbulb = IconData(
+    0xf0eb,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData listCheck = IconData(
+    0xf0ae,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData locationDot = IconData(
+    0xf3c5,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData lock = IconData(
+    0xf023,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData magnifyingGlass = IconData(
+    0xf002,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData masksTheater = IconData(
+    0xf630,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData medal = IconData(
+    0xf5a2,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData microphone = IconData(
+    0xf130,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData mobileScreen = IconData(
+    0xf3cf,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData moon = IconData(
+    0xf186,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData mountain = IconData(
+    0xf6fc,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData music = IconData(
+    0xf001,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData paintbrush = IconData(
+    0xf1fc,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData palette = IconData(
+    0xf53f,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData paperPlane = IconData(
+    0xf1d8,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData paw = IconData(
+    0xf1b0,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData pen = IconData(
+    0xf304,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData peopleGroup = IconData(
+    0xe533,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData peopleRoof = IconData(
+    0xe537,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData personCircleCheck = IconData(
+    0xe53e,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData play = IconData(
+    0xf04b,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData question = IconData(
+    0x3f,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData quoteLeft = IconData(
+    0xf10d,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData rightFromBracket = IconData(
+    0xf2f5,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData rightToBracket = IconData(
+    0xf2f6,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData robot = IconData(
+    0xf544,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData scaleBalanced = IconData(
+    0xf24e,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData seedling = IconData(
+    0xf4d8,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData shareNodes = IconData(
+    0xf1e0,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData shield = IconData(
+    0xf132,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData shieldHalved = IconData(
+    0xf3ed,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData shirt = IconData(
+    0xf553,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData shuffle = IconData(
+    0xf074,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData squareCheck = IconData(
+    0xf14a,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData stairs = IconData(
+    0xe289,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData star = IconData(
+    0xf005,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData stopwatch = IconData(
+    0xf2f2,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData store = IconData(
+    0xf54e,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData sun = IconData(
+    0xf185,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData tableCells = IconData(
+    0xf00a,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData trashCan = IconData(
+    0xf2ed,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData tree = IconData(
+    0xf1bb,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData triangleExclamation = IconData(
+    0xf071,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData trophy = IconData(
+    0xf091,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData user = IconData(
+    0xf007,
+    fontFamily: 'FontAwesomeRegular',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData userPlus = IconData(
+    0xf234,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData utensils = IconData(
+    0xf2e7,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData venus = IconData(
+    0xf221,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData volumeHigh = IconData(
+    0xf028,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData volumeXmark = IconData(
+    0xf6a9,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData wallet = IconData(
+    0xf555,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData wandMagicSparkles = IconData(
+    0xe2ca,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
+  static const IconData xmark = IconData(
+    0xf00d,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
 }

@@ -43,7 +43,8 @@ class _WildcardButtonState extends State<WildcardButton> {
         ? 0.45
         : 0.35;
 
-    final borderColor = widget.cantAfford || (!widget.isEnabled && !widget.isActive)
+    final borderColor =
+        widget.cantAfford || (!widget.isEnabled && !widget.isActive)
         ? AppTheme.borderColor(context)
         : Colors.transparent;
 
@@ -106,9 +107,7 @@ class _WildcardButtonState extends State<WildcardButton> {
                             : iconColor.withValues(alpha: 0.10),
                       ),
                       child: Icon(
-                        widget.cantAfford
-                            ? AppIcons.lock
-                            : widget.type.icon,
+                        widget.cantAfford ? AppIcons.lock : widget.type.icon,
                         size: 12,
                         color: iconColor,
                       ),

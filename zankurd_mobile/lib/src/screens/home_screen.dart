@@ -305,9 +305,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         padding: const EdgeInsets.only(top: 24),
                         child: _buildAnimatedCard(
                           _heroFadeAnimation(3),
-                          CategoriesTeaserCard(
-                            onTap: widget.onOpenCategories!,
-                          ),
+                          CategoriesTeaserCard(onTap: widget.onOpenCategories!),
                         ),
                       ),
                     Padding(

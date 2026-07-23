@@ -50,7 +50,9 @@ void main() {
   // içteki başlık/alt başlık Text'leri birleşiyordu (M28 devamı).
   testWidgets('kategori kartı ekran okuyucuda çift okunmaz', (tester) async {
     final handle = tester.ensureSemantics();
-    await tester.pumpWidget(wrap(CategoriesTab(repository: _CountRepository())));
+    await tester.pumpWidget(
+      wrap(CategoriesTab(repository: _CountRepository())),
+    );
     await tester.pumpAndSettle();
 
     expect(find.bySemanticsLabel('Dil, 321 soru'), findsOneWidget);

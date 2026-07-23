@@ -103,7 +103,11 @@ class SyncManager {
             },
           );
     } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'SyncManager connectivity listener');
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'SyncManager connectivity listener',
+      );
       developer.log(
         'Connectivity listener unavailable: $error',
         name: 'SyncManager',
@@ -137,7 +141,11 @@ class SyncManager {
         }
       }
     } catch (e) {
-      ErrorReporter.record(e, StackTrace.current, reason: 'SyncManager load queue');
+      ErrorReporter.record(
+        e,
+        StackTrace.current,
+        reason: 'SyncManager load queue',
+      );
       developer.log('Failed to load sync queue: $e', name: 'SyncManager');
     }
   }
@@ -147,7 +155,11 @@ class SyncManager {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_queueKey, jsonEncode(_queue));
     } catch (e) {
-      ErrorReporter.record(e, StackTrace.current, reason: 'SyncManager save queue');
+      ErrorReporter.record(
+        e,
+        StackTrace.current,
+        reason: 'SyncManager save queue',
+      );
       developer.log('Failed to save sync queue: $e', name: 'SyncManager');
     }
   }
@@ -218,7 +230,11 @@ class SyncManager {
           developer.log('Successfully synced XP: $xp', name: 'SyncManager');
         }
       } catch (e) {
-        ErrorReporter.record(e, StackTrace.current, reason: 'SyncManager process item');
+        ErrorReporter.record(
+          e,
+          StackTrace.current,
+          reason: 'SyncManager process item',
+        );
         developer.log(
           'Failed to sync item ($item): $e. Keeping in queue.',
           name: 'SyncManager',
@@ -242,7 +258,11 @@ class SyncManager {
     try {
       return await _connectivityMonitor.checkConnectivity();
     } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'SyncManager connectivity check');
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'SyncManager connectivity check',
+      );
       developer.log(
         'Connectivity check unavailable; continuing as online: $error',
         name: 'SyncManager',

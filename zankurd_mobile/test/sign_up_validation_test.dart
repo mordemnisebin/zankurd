@@ -11,13 +11,14 @@ import 'support/widget_test_helpers.dart';
 
 /// `StyledInputField` label metnine göre `TextField`'ı bulur.
 Finder textFieldByLabel(String label) {
-  return find.descendant(
-    of: find.ancestor(
-      of: find.text(label),
-      matching: find.byType(Column),
-    ).first,
-    matching: find.byType(TextField),
-  ).first;
+  return find
+      .descendant(
+        of: find
+            .ancestor(of: find.text(label), matching: find.byType(Column))
+            .first,
+        matching: find.byType(TextField),
+      )
+      .first;
 }
 
 /// Ekranda herhangi bir SnackBar olup olmadığını kontrol eder.
@@ -41,15 +42,14 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
-    await tester.pumpWidget(
-      testShell(child: const SignUpScreen()),
-    );
+    await tester.pumpWidget(testShell(child: const SignUpScreen()));
     await tester.pumpAndSettle();
   }
 
   group('Adım 0 — e-posta/parola doğrulama', () {
-    testWidgets('boş alanlar → inline "gerekli" hata mesajları gösterilir',
-        (tester) async {
+    testWidgets('boş alanlar → inline "gerekli" hata mesajları gösterilir', (
+      tester,
+    ) async {
       await pumpSignUpScreen(tester);
 
       // "İleri" butonuna bas — tüm alanlar boş
@@ -64,8 +64,9 @@ void main() {
       expect(hasSnackBar(tester), isFalse);
     });
 
-    testWidgets('geçersiz e-posta → inline hata mesajı gösterilir',
-        (tester) async {
+    testWidgets('geçersiz e-posta → inline hata mesajı gösterilir', (
+      tester,
+    ) async {
       await pumpSignUpScreen(tester);
 
       // Geçerli parola gir (doğrulama sadece e-postada kalsın)
@@ -80,8 +81,9 @@ void main() {
       expect(hasSnackBar(tester), isFalse);
     });
 
-    testWidgets('kısa parola → inline "en az 6 karakter" hatası gösterilir',
-        (tester) async {
+    testWidgets('kısa parola → inline "en az 6 karakter" hatası gösterilir', (
+      tester,
+    ) async {
       await pumpSignUpScreen(tester);
 
       await tester.enterText(textFieldByLabel('E-posta adresi'), 'a@b.com');
@@ -94,8 +96,9 @@ void main() {
       expect(hasSnackBar(tester), isFalse);
     });
 
-    testWidgets('parola uyuşmazlığı → inline "eşleşmiyor" hatası gösterilir',
-        (tester) async {
+    testWidgets('parola uyuşmazlığı → inline "eşleşmiyor" hatası gösterilir', (
+      tester,
+    ) async {
       await pumpSignUpScreen(tester);
 
       await tester.enterText(textFieldByLabel('E-posta adresi'), 'a@b.com');
@@ -108,9 +111,9 @@ void main() {
       expect(hasSnackBar(tester), isFalse);
     });
 
-    testWidgets(
-        'parola alanında hint text olarak "En az 6 karakter" görünür',
-        (tester) async {
+    testWidgets('parola alanında hint text olarak "En az 6 karakter" görünür', (
+      tester,
+    ) async {
       await pumpSignUpScreen(tester);
 
       expect(find.text('En az 6 karakter'), findsOneWidget);
@@ -128,8 +131,9 @@ void main() {
       await tapButton(tester, 'İleri');
     }
 
-    testWidgets('boş kullanıcı adı → inline "gerekli" hatası gösterilir',
-        (tester) async {
+    testWidgets('boş kullanıcı adı → inline "gerekli" hatası gösterilir', (
+      tester,
+    ) async {
       await goToStep1(tester);
 
       // Adım 1'de kullanıcı adı boş — "İleri"ye bas
@@ -140,16 +144,20 @@ void main() {
     });
 
     testWidgets(
-        'kısa kullanıcı adı → inline "en az 2 karakter" hatası gösterilir',
-        (tester) async {
-      await goToStep1(tester);
+      'kısa kullanıcı adı → inline "en az 2 karakter" hatası gösterilir',
+      (tester) async {
+        await goToStep1(tester);
 
-      await tester.enterText(textFieldByLabel('Kullanıcı adı'), 'a');
+        await tester.enterText(textFieldByLabel('Kullanıcı adı'), 'a');
 
-      await tapButton(tester, 'İleri');
+        await tapButton(tester, 'İleri');
 
-      expect(find.text('Kullanıcı adı en az 2 karakter olmalı'), findsOneWidget);
-      expect(hasSnackBar(tester), isFalse);
-    });
+        expect(
+          find.text('Kullanıcı adı en az 2 karakter olmalı'),
+          findsOneWidget,
+        );
+        expect(hasSnackBar(tester), isFalse);
+      },
+    );
   });
 }

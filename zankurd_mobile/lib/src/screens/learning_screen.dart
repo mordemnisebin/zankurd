@@ -553,9 +553,7 @@ class _LearningModeButton extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: enabled
-                    ? Colors.white
-                    : color.withValues(alpha: 0.4),
+                color: enabled ? Colors.white : color.withValues(alpha: 0.4),
                 size: 18,
               ),
               const SizedBox(height: 2),
@@ -566,9 +564,9 @@ class _LearningModeButton extends StatelessWidget {
                 style: AppTypography.caption.copyWith(
                   color: enabled
                       ? Colors.white
-                      : AppTheme.textPrimaryColor(context).withValues(
-                          alpha: 0.4,
-                        ),
+                      : AppTheme.textPrimaryColor(
+                          context,
+                        ).withValues(alpha: 0.4),
                   fontSize: 10,
                   fontWeight: FontWeight.w800,
                 ),
@@ -805,10 +803,7 @@ class _LessonCard extends StatelessWidget {
                   ),
                 )
               else if (locked)
-                Icon(
-                  AppIcons.lock,
-                  color: AppTheme.textMutedColor(context),
-                )
+                Icon(AppIcons.lock, color: AppTheme.textMutedColor(context))
               else
                 Icon(
                   AppIcons.chevronRight,
@@ -1175,11 +1170,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
             'category': widget.lesson.category,
           })
           .catchError((error, stack) {
-            ErrorReporter.record(
-              error,
-              stack,
-              reason: 'log_lesson_completed',
-            );
+            ErrorReporter.record(error, stack, reason: 'log_lesson_completed');
             return false;
           });
       ScaffoldMessenger.of(context).showSnackBar(
@@ -1200,11 +1191,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
         title: Text(widget.lesson.titleKu),
         actions: [
           IconButton(
-            icon: Icon(
-              _flashcardMode
-                  ? AppIcons.clone
-                  : AppIcons.layerGroup,
-            ),
+            icon: Icon(_flashcardMode ? AppIcons.clone : AppIcons.layerGroup),
             tooltip: ku ? 'Moda kartan' : 'Flashcard modu',
             onPressed: _toggleFlashcard,
           ),

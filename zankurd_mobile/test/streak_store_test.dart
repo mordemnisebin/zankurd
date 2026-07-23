@@ -111,15 +111,20 @@ void main() {
     expect(store.best, 3);
   });
 
-  test('freezeAndRecordPlay falls back to recordPlay without a token', () async {
-    final store = await StreakStore.load();
-    await store.recordPlay(now: DateTime(2026, 6, 12));
-    await store.recordPlay(now: DateTime(2026, 6, 13));
-    // Jeton yok: normal davranış (seri 1'e düşer).
-    final streak = await store.freezeAndRecordPlay(now: DateTime(2026, 6, 15));
-    expect(streak, 1);
-    expect(store.freezeCount, 0);
-  });
+  test(
+    'freezeAndRecordPlay falls back to recordPlay without a token',
+    () async {
+      final store = await StreakStore.load();
+      await store.recordPlay(now: DateTime(2026, 6, 12));
+      await store.recordPlay(now: DateTime(2026, 6, 13));
+      // Jeton yok: normal davranış (seri 1'e düşer).
+      final streak = await store.freezeAndRecordPlay(
+        now: DateTime(2026, 6, 15),
+      );
+      expect(streak, 1);
+      expect(store.freezeCount, 0);
+    },
+  );
 
   test('freeze count persists across instances', () async {
     final store = await StreakStore.load();

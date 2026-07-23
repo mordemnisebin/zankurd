@@ -46,7 +46,8 @@ class TournamentBracketWidget extends StatelessWidget {
 
         // Minimum yükseklik: ilk turdaki en fazla maç sayısına göre hesapla
         final maxMatches = bracket.rounds.first.matches.length;
-        const cardHeight = 100.0; // tahmini kart yüksekliği (header + 2 oyuncu + padding)
+        const cardHeight =
+            100.0; // tahmini kart yüksekliği (header + 2 oyuncu + padding)
         final minBracketHeight = maxMatches * cardHeight + 64.0;
 
         return Stack(
@@ -97,8 +98,12 @@ class TournamentBracketWidget extends StatelessWidget {
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                       colors: [
-                        Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.0),
-                        Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.85),
+                        Theme.of(
+                          context,
+                        ).scaffoldBackgroundColor.withValues(alpha: 0.0),
+                        Theme.of(
+                          context,
+                        ).scaffoldBackgroundColor.withValues(alpha: 0.85),
                       ],
                     ),
                   ),
@@ -184,7 +189,9 @@ class _RoundColumn extends StatelessWidget {
                 children: [
                   for (final match in round.matches)
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: spacingFactor * 4),
+                      padding: EdgeInsets.symmetric(
+                        vertical: spacingFactor * 4,
+                      ),
                       child: _BracketMatchCard(
                         match: match,
                         userId: userId,

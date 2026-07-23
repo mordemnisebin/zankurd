@@ -21,11 +21,17 @@ void main() {
 
     await tester.pumpWidget(
       testShell(
-        child: Scaffold(body: ProfileScreen(repository: MockZanKurdRepository())),
+        child: Scaffold(
+          body: ProfileScreen(repository: MockZanKurdRepository()),
+        ),
       ),
     );
     await tester.pump();
-    for (var i = 0; i < 40 && find.text('Cevaplanan Soru').evaluate().isEmpty; i++) {
+    for (
+      var i = 0;
+      i < 40 && find.text('Cevaplanan Soru').evaluate().isEmpty;
+      i++
+    ) {
       await tester.pump(const Duration(milliseconds: 50));
     }
 

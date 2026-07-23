@@ -30,9 +30,7 @@ class _ProfileHeroCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
-        decoration: const BoxDecoration(
-          color: AppTheme.brandDeep,
-        ),
+        decoration: const BoxDecoration(color: AppTheme.brandDeep),
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +119,7 @@ class _ProfileHeroCard extends StatelessWidget {
                         )
                       else
                         const SizedBox.shrink(),
-                      
+
                       const SizedBox(height: 6),
                       // League Badge
                       Builder(
@@ -134,7 +132,10 @@ class _ProfileHeroCard extends StatelessWidget {
                           // Ön plan artık her kademede beyaz; kademe koyu
                           // yarı saydam zeminle ayrışır.
                           return Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.heroScrim(),
                               borderRadius: BorderRadius.circular(8),
@@ -158,7 +159,7 @@ class _ProfileHeroCard extends StatelessWidget {
                               ],
                             ),
                           );
-                        }
+                        },
                       ),
                     ],
                   ),
@@ -170,11 +171,7 @@ class _ProfileHeroCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             Row(
               children: [
-                const Icon(
-                  AppIcons.medal,
-                  color: AppTheme.gold,
-                  size: 22,
-                ),
+                const Icon(AppIcons.medal, color: AppTheme.gold, size: 22),
                 const SizedBox(width: AppSpacing.xxs),
                 Flexible(
                   child: Text(
@@ -288,7 +285,6 @@ class _StatTile extends StatelessWidget {
   }
 }
 
-
 // 2026-07-22 canlı UX denetimi: rozet bölümleri birleştirme
 // AchievementStore ve BadgeService'den gelen rozetleri tek başlık + tek sayaç
 // altında birleştiren widget.
@@ -330,7 +326,9 @@ class _UnifiedRewardsSection extends StatelessWidget {
                     width: 40,
                     height: 5,
                     decoration: BoxDecoration(
-                      color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+                      color: AppTheme.borderColor(
+                        context,
+                      ).withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -376,11 +374,11 @@ class _UnifiedRewardsSection extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                              childAspectRatio: 2.8,
-                            ),
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  childAspectRatio: 2.8,
+                                ),
                             itemCount: achDefs.length,
                             itemBuilder: (c, i) {
                               final def = achDefs[i];
@@ -392,13 +390,15 @@ class _UnifiedRewardsSection extends StatelessWidget {
                                   : AppTheme.textMutedColor(context);
                               return Container(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 8,
+                                  horizontal: 10,
+                                  vertical: 8,
                                 ),
                                 decoration: BoxDecoration(
                                   color: unlocked
                                       ? AppTheme.gold.withValues(alpha: 0.08)
-                                      : AppTheme.surfaceHiColor(context)
-                                          .withValues(alpha: 0.5),
+                                      : AppTheme.surfaceHiColor(
+                                          context,
+                                        ).withValues(alpha: 0.5),
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
                                     color: unlocked
@@ -421,13 +421,14 @@ class _UnifiedRewardsSection extends StatelessWidget {
                                             def.title(isKu),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
-                                            style:
-                                                AppTypography.caption.copyWith(
+                                            style: AppTypography.caption.copyWith(
                                               color: unlocked
                                                   ? AppTheme.textPrimaryColor(
-                                                      context)
+                                                      context,
+                                                    )
                                                   : AppTheme.textMutedColor(
-                                                      context),
+                                                      context,
+                                                    ),
                                               fontWeight: FontWeight.w800,
                                             ),
                                           ),
@@ -436,13 +437,14 @@ class _UnifiedRewardsSection extends StatelessWidget {
                                             def.description(isKu),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
-                                            style:
-                                                AppTypography.caption.copyWith(
-                                              color:
-                                                  AppTheme.textMutedColor(
-                                                      context),
-                                              fontSize: 9,
-                                            ),
+                                            style: AppTypography.caption
+                                                .copyWith(
+                                                  color:
+                                                      AppTheme.textMutedColor(
+                                                        context,
+                                                      ),
+                                                  fontSize: 9,
+                                                ),
                                           ),
                                         ],
                                       ),
@@ -470,11 +472,11 @@ class _UnifiedRewardsSection extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              mainAxisSpacing: 10,
-                              crossAxisSpacing: 10,
-                              childAspectRatio: 0.76,
-                            ),
+                                  crossAxisCount: 3,
+                                  mainAxisSpacing: 10,
+                                  crossAxisSpacing: 10,
+                                  childAspectRatio: 0.76,
+                                ),
                             itemCount: badgeDefs.length,
                             itemBuilder: (c, i) {
                               final entry = badgeDefs[i];
@@ -486,8 +488,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
                                 descriptionKu: data['descKu'] ?? '',
                                 descriptionTr: data['descTr'] ?? '',
                                 iconName: data['icon'] ?? 'badge',
-                                isUnlocked:
-                                    badgeUnlocked.contains(entry.key),
+                                isUnlocked: badgeUnlocked.contains(entry.key),
                                 isKu: isKu,
                               );
                             },
@@ -596,7 +597,8 @@ class _UnifiedRewardsSection extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 8),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 8,
+                        horizontal: 10,
+                        vertical: 8,
                       ),
                       decoration: BoxDecoration(
                         color: AppTheme.accent.withValues(alpha: 0.12),

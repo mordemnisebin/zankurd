@@ -77,7 +77,10 @@ Widget _wrapWithProviders(Widget child, AuthProvider authProvider) {
       ChangeNotifierProvider(create: (_) => ReducedMotionProvider()),
       ChangeNotifierProvider(create: (_) => ChildSafetyProvider()),
     ],
-    child: MaterialApp(theme: AppTheme.light(), home: Scaffold(body: child)),
+    child: MaterialApp(
+      theme: AppTheme.light(),
+      home: Scaffold(body: child),
+    ),
   );
 }
 
@@ -157,32 +160,31 @@ void main() {
   });
 
   group('GuestGoogleLink — hata akışı', () {
-    testWidgets(
-      'zaten bağlı Google hesabı hatası snackbar olarak gösterilir',
-      (tester) async {
-        final guestAuth = _GuestAuthProviderWithGoogleLink(
-          googleLinkSucceeds: false,
-          googleErrorMessage: 'Bu Google hesabı zaten başka bir hesaba bağlı.',
-        );
-        await tester.pumpWidget(
-          _wrapWithProviders(
-            ProfileScreen(repository: MockZanKurdRepository()),
-            guestAuth,
-          ),
-        );
-        await tester.pumpAndSettle();
-        await _openGuestUpgradeDialog(tester);
+    testWidgets('zaten bağlı Google hesabı hatası snackbar olarak gösterilir', (
+      tester,
+    ) async {
+      final guestAuth = _GuestAuthProviderWithGoogleLink(
+        googleLinkSucceeds: false,
+        googleErrorMessage: 'Bu Google hesabı zaten başka bir hesaba bağlı.',
+      );
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          ProfileScreen(repository: MockZanKurdRepository()),
+          guestAuth,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openGuestUpgradeDialog(tester);
 
-        await tester.tap(find.text('Google ile Bağla'));
-        await tester.pumpAndSettle();
+      await tester.tap(find.text('Google ile Bağla'));
+      await tester.pumpAndSettle();
 
-        expect(guestAuth.googleLinkCalled, isTrue);
-        expect(
-          find.text('Bu Google hesabı zaten başka bir hesaba bağlı.'),
-          findsOneWidget,
-        );
-      },
-    );
+      expect(guestAuth.googleLinkCalled, isTrue);
+      expect(
+        find.text('Bu Google hesabı zaten başka bir hesaba bağlı.'),
+        findsOneWidget,
+      );
+    });
   });
 
   group('GuestGoogleLink — hata çevirisi (AuthProvider)', () {

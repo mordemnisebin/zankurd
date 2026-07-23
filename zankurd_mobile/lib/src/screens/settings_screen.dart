@@ -771,9 +771,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           FilledButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: ExcludeSemantics(
-              child: Text(ku ? 'Baş e' : 'Tamam'),
-            ),
+            child: ExcludeSemantics(child: Text(ku ? 'Baş e' : 'Tamam')),
           ),
         ],
       ),
@@ -828,17 +826,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           TextButton(
             onPressed: () => Navigator.of(dialogCtx).pop(false),
-            child: ExcludeSemantics(
-              child: Text(ku ? 'Betal' : 'Vazgeç'),
-            ),
+            child: ExcludeSemantics(child: Text(ku ? 'Betal' : 'Vazgeç')),
           ),
           FilledButton(
             key: const ValueKey('child-safe-confirm'),
             onPressed: () => Navigator.of(dialogCtx).pop(true),
             // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-            child: ExcludeSemantics(
-              child: Text(ku ? 'Veke' : 'Aç'),
-            ),
+            child: ExcludeSemantics(child: Text(ku ? 'Veke' : 'Aç')),
           ),
         ],
       ),
@@ -877,9 +871,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           OutlinedButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: ExcludeSemantics(
-              child: Text(ku ? 'Betal' : 'Vazgeç'),
-            ),
+            child: ExcludeSemantics(child: Text(ku ? 'Betal' : 'Vazgeç')),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, true),
@@ -984,9 +976,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                 OutlinedButton(
                   onPressed: () => Navigator.pop(dialogContext, false),
-                  child: ExcludeSemantics(
-                    child: Text(ku ? 'Betal' : 'Vazgeç'),
-                  ),
+                  child: ExcludeSemantics(child: Text(ku ? 'Betal' : 'Vazgeç')),
                 ),
                 FilledButton(
                   onPressed: canDelete

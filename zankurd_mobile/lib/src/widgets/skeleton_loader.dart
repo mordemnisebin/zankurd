@@ -9,7 +9,9 @@ import '../providers/reduced_motion_provider.dart';
   final isDark = Theme.of(context).brightness == Brightness.dark;
   return (
     base: isDark ? AppTheme.shimmerBaseDark : AppTheme.shimmerBaseLight,
-    highlight: isDark ? AppTheme.shimmerHighlightDark : AppTheme.shimmerHighlightLight,
+    highlight: isDark
+        ? AppTheme.shimmerHighlightDark
+        : AppTheme.shimmerHighlightLight,
   );
 }
 

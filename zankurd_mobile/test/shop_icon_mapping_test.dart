@@ -12,10 +12,7 @@ void main() {
       shopIconForName('auto_awesome_motion_outlined'),
       AppIcons.wandMagicSparkles,
     );
-    expect(
-      shopIconForName('favorite_border_rounded'),
-      AppIcons.heart,
-    );
+    expect(shopIconForName('favorite_border_rounded'), AppIcons.heart);
     expect(shopIconForName('casino_outlined'), AppIcons.dice);
     expect(shopIconForName('palette_outlined'), AppIcons.palette);
     expect(shopIconForName('star_rounded'), AppIcons.star);

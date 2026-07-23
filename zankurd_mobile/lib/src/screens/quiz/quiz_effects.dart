@@ -131,11 +131,7 @@ class ComboBadge extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(
-                    AppIcons.fire,
-                    color: Colors.white,
-                    size: 16,
-                  ),
+                  const Icon(AppIcons.fire, color: Colors.white, size: 16),
                   const SizedBox(width: 6),
                   Text(
                     '×$streak ${isKu ? 'Rêz!' : 'Seri!'}',

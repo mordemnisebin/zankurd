@@ -28,7 +28,11 @@ class ErrorDialog {
         ),
         title: Row(
           children: [
-            const Icon(AppIcons.triangleExclamation, color: AppTheme.wrong, size: 28),
+            const Icon(
+              AppIcons.triangleExclamation,
+              color: AppTheme.wrong,
+              size: 28,
+            ),
             const SizedBox(width: 12),
             Expanded(child: Text(title)),
           ],

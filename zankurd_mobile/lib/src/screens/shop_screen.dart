@@ -269,20 +269,18 @@ class _ShopScreenState extends State<ShopScreen> {
               (widget.repository as SupabaseZanKurdRepository).client;
           final rows = await client.from('shop_items').select().order('cost');
           if (rows.isNotEmpty) {
-            dynamicItems = rows
-                .map((row) {
-                  return ShopItem(
-                    id: row['id'] as String,
-                    titleKu: row['title_ku'] as String? ?? '',
-                    titleTr: row['title_tr'] as String? ?? '',
-                    descKu: row['desc_ku'] as String? ?? '',
-                    descTr: row['desc_tr'] as String? ?? '',
-                    cost: (row['cost'] as num?)?.toInt() ?? 100,
-                    icon: shopIconForName(row['icon_name'] as String?),
-                    themeColor: shopColorForHex(row['theme_color'] as String?),
-                  );
-                })
-                .toList();
+            dynamicItems = rows.map((row) {
+              return ShopItem(
+                id: row['id'] as String,
+                titleKu: row['title_ku'] as String? ?? '',
+                titleTr: row['title_tr'] as String? ?? '',
+                descKu: row['desc_ku'] as String? ?? '',
+                descTr: row['desc_tr'] as String? ?? '',
+                cost: (row['cost'] as num?)?.toInt() ?? 100,
+                icon: shopIconForName(row['icon_name'] as String?),
+                themeColor: shopColorForHex(row['theme_color'] as String?),
+              );
+            }).toList();
           }
         } catch (error, stack) {
           ErrorReporter.record(
@@ -386,11 +384,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      AppIcons.coins,
-                      color: AppTheme.gold,
-                      size: 22,
-                    ),
+                    const Icon(AppIcons.coins, color: AppTheme.gold, size: 22),
                     const SizedBox(width: 8),
                     Text(
                       '${item.cost} coin',
@@ -480,9 +474,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 ),
               ),
               // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-              child: ExcludeSemantics(
-                child: Text(ku ? 'Bikire' : 'Satın Al'),
-              ),
+              child: ExcludeSemantics(child: Text(ku ? 'Bikire' : 'Satın Al')),
             ),
           ],
         );
@@ -566,7 +558,9 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Future<void> _applyPurchaseEffect(String itemId) async {
-    if (itemId != 'avatar_frame_gold' && itemId != 'profile_badge_vip' && itemId != 'frame_simple') {
+    if (itemId != 'avatar_frame_gold' &&
+        itemId != 'profile_badge_vip' &&
+        itemId != 'frame_simple') {
       return;
     }
     try {
@@ -622,11 +616,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
-                      AppIcons.coins,
-                      color: AppTheme.gold,
-                      size: 18,
-                    ),
+                    const Icon(AppIcons.coins, color: AppTheme.gold, size: 18),
                     const SizedBox(width: 6),
                     Text(
                       '$_coinBalance coin',
@@ -696,11 +686,7 @@ class _ShopScreenState extends State<ShopScreen> {
             ),
             child: Row(
               children: [
-                const Icon(
-                  AppIcons.dice,
-                  color: AppTheme.gold,
-                  size: 22,
-                ),
+                const Icon(AppIcons.dice, color: AppTheme.gold, size: 22),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
@@ -1152,9 +1138,7 @@ class _ShopScreenState extends State<ShopScreen> {
           color: canAfford ? Colors.white : AppTheme.textMutedColor(context),
         ),
         // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-        label: ExcludeSemantics(
-          child: Text('${item.cost}c'),
-        ),
+        label: ExcludeSemantics(child: Text('${item.cost}c')),
       ),
     );
   }

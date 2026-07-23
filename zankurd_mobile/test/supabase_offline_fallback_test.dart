@@ -26,21 +26,27 @@ void main() {
     ),
   );
 
-  test('loadQuestions ağ hatasında throw etmez, offline bankaya düşer', () async {
-    final repo = unreachableRepo();
-    final questions = await repo.loadQuestions(limit: 5);
-    expect(questions, isNotEmpty);
-  });
+  test(
+    'loadQuestions ağ hatasında throw etmez, offline bankaya düşer',
+    () async {
+      final repo = unreachableRepo();
+      final questions = await repo.loadQuestions(limit: 5);
+      expect(questions, isNotEmpty);
+    },
+  );
 
   test('loadCoinBalance ağ hatasında throw etmez, 0 döner', () async {
     final repo = unreachableRepo();
     expect(await repo.loadCoinBalance(), 0);
   });
 
-  test('spendCoins ağ hatasında false döner — coin sahte harcanmış sayılmaz', () async {
-    final repo = unreachableRepo();
-    expect(await repo.spendCoins(20, 'wildcard_fifty_fifty'), isFalse);
-  });
+  test(
+    'spendCoins ağ hatasında false döner — coin sahte harcanmış sayılmaz',
+    () async {
+      final repo = unreachableRepo();
+      expect(await repo.spendCoins(20, 'wildcard_fifty_fifty'), isFalse);
+    },
+  );
 
   test(
     'awardQuizCoins ağ hatasında 0 döner — sunucu onaylamadan ödül verilmez',
