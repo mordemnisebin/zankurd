@@ -282,11 +282,15 @@ class _SubcategoryCard extends StatelessWidget {
       // ── Yazım & Sanat ──
       'rastnivisin' ||
       'sexsiyet' ||
-      'roman' ||
-      'sinor_duma' ||
-      'amur' ||
-      'tevger' ||
-      'jineoloji' => AppIcons.pen,
+      'roman' => AppIcons.pen,
+      // ── Sınırlar & Coğrafi Yapı ──
+      'sinor_duma' => AppIcons.locationDot,
+      // ── Müzik Aletleri ──
+      'amur' => AppIcons.music,
+      // ── Hareket & Mücadele ──
+      'tevger' => AppIcons.flag,
+      // ── Jineolojî ──
+      'jineoloji' => AppIcons.venus,
       // ── Kutlama & Gelenek ──
       'cejn' => AppIcons.champagneGlasses,
       // ── Bilmece & Zekâ ──

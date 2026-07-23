@@ -130,6 +130,7 @@ class AppIcons {
   static const IconData user = IconData(0xf007, fontFamily: 'FontAwesomeRegular', fontPackage: 'font_awesome_flutter');
   static const IconData userPlus = IconData(0xf234, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
   static const IconData utensils = IconData(0xf2e7, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
+  static const IconData venus = IconData(0xf221, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
   static const IconData volumeHigh = IconData(0xf028, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
   static const IconData volumeXmark = IconData(0xf6a9, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');
   static const IconData wallet = IconData(0xf555, fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter');

@@ -120,6 +120,7 @@ trophy
 user
 userPlus
 utensils
+venus
 volumeHigh
 volumeXmark
 wallet
