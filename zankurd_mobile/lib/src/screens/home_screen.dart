@@ -783,6 +783,10 @@ class _MiniLeaderboardState extends State<_MiniLeaderboard> {
             Semantics(
               button: true,
               label: ku ? 'Hemûyê bibîne' : 'Tümünü gör',
+              // 2026-07-23 canlı UX denetimi: içerideki Text ayrıca kendi
+              // semantics düğümünü ekleyip çift okumaya yol açıyordu
+              // (M28 devamı).
+              excludeSemantics: true,
               child: Material(
                 type: MaterialType.transparency,
                 child: InkWell(

@@ -45,6 +45,18 @@ void main() {
     expect(find.text('Kategoriler'), findsOneWidget);
   });
 
+  // 2026-07-23 canlı UX denetimi: kategori kartları ekran okuyucuda
+  // ad+soru sayısını çift okuyordu — dıştaki Semantics(label:) ile
+  // içteki başlık/alt başlık Text'leri birleşiyordu (M28 devamı).
+  testWidgets('kategori kartı ekran okuyucuda çift okunmaz', (tester) async {
+    final handle = tester.ensureSemantics();
+    await tester.pumpWidget(wrap(CategoriesTab(repository: _CountRepository())));
+    await tester.pumpAndSettle();
+
+    expect(find.bySemanticsLabel('Dil, 321 soru'), findsOneWidget);
+    handle.dispose();
+  });
+
   testWidgets('mastery rozeti seed edilen kategoride görünür', (tester) async {
     SharedPreferences.setMockInitialValues({'zankurd.mastery.Ziman': 25});
     MasteryStore.resetInstance();

@@ -537,6 +537,9 @@ class _LearningModeButton extends StatelessWidget {
       button: true,
       enabled: enabled,
       label: label,
+      // 2026-07-23 canlı UX denetimi: içerideki Text(label) ayrıca kendi
+      // semantics düğümünü ekleyip çift okumaya yol açıyordu (M28 devamı).
+      excludeSemantics: true,
       child: InkWell(
         onTap: enabled ? onTap : null,
         borderRadius: BorderRadius.circular(AppRadius.sm),

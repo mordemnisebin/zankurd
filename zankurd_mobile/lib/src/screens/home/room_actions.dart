@@ -65,6 +65,9 @@ class _GradientButton extends StatelessWidget {
     return Semantics(
       button: true,
       label: label,
+      // 2026-07-23 canlı UX denetimi: içerideki Text(label) ayrıca kendi
+      // semantics düğümünü ekleyip çift okumaya yol açıyordu (M28 devamı).
+      excludeSemantics: true,
       child: GestureDetector(
         onTap: onTap,
         child: Container(

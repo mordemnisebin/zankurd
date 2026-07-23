@@ -35,6 +35,22 @@ void main() {
     },
   );
 
+  // 2026-07-23 canlı UX denetimi: öğrenme modu butonları ("Dersler" vb.)
+  // ekran okuyucuda çift okunuyordu — dıştaki Semantics(label:) ile
+  // içteki Text(label) birleşiyordu (M28 devamı).
+  testWidgets('öğrenme modu butonu ekran okuyucuda çift okunmaz', (
+    tester,
+  ) async {
+    final handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.bySemanticsLabel('Dersler'), findsOneWidget);
+    handle.dispose();
+  });
+
   testWidgets('kimlik bandı playGreen ScreenIdentityHeader olur', (
     tester,
   ) async {

@@ -20,6 +20,9 @@ class PlayTeaserCard extends StatelessWidget {
       key: const ValueKey('home-play-teaser'),
       button: true,
       label: ku ? 'Zû bilîze' : 'Hemen oyna',
+      // 2026-07-23 canlı UX denetimi: içerideki başlık Text'i label'la
+      // aynı metni taşıyıp çift okunuyordu (M28 devamı).
+      excludeSemantics: true,
       child: BouncingButton(
         onPressed: onTap,
         child: ClipRRect(

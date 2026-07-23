@@ -20,6 +20,9 @@ class CategoriesTeaserCard extends StatelessWidget {
       key: const ValueKey('home-categories-teaser'),
       button: true,
       label: ku ? 'Kategorî' : 'Kategoriler',
+      // 2026-07-23 canlı UX denetimi: içerideki başlık Text'i label'la
+      // aynı metni taşıyıp çift okunuyordu (M28 devamı).
+      excludeSemantics: true,
       child: BouncingButton(
         onPressed: onTap,
         child: ClipRRect(

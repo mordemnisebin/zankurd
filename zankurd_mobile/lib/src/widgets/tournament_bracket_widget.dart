@@ -315,6 +315,10 @@ class _BracketMatchCard extends StatelessWidget {
       label: ku
           ? 'Maça ${match.playerOneName} û ${match.playerTwoName}'
           : '${match.playerOneName} ve ${match.playerTwoName} maçı',
+      // 2026-07-23 canlı UX denetimi: _PlayerSlot içindeki oyuncu adı
+      // Text'leri ayrıca kendi semantics düğümünü ekleyip çift okumaya
+      // yol açıyordu (M28 devamı).
+      excludeSemantics: true,
       child: GestureDetector(
         onTap: onTap,
         child: AnimatedContainer(

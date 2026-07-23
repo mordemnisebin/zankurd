@@ -466,181 +466,192 @@ class _CategoryCardState extends State<_CategoryCard>
               : widget.questionCount != null
               ? '$catName, ${widget.questionCount} ${widget.isKu ? 'pirs' : 'soru'}'
               : catName,
-          child: GestureDetector(
-            onTapDown: comingSoon
-                ? null
-                : (_) => setState(() => _pressed = true),
-            onTapUp: comingSoon
-                ? null
-                : (_) {
-                    setState(() => _pressed = false);
-                    widget.onTap();
-                  },
-            onTapCancel: () => setState(() => _pressed = false),
-            child: AnimatedScale(
-              scale: _pressed ? 0.97 : 1.0,
-              duration: const Duration(milliseconds: 140),
-              curve: Curves.easeOutCubic,
-              // Onaylı mockup 4: koyu yüzeyli kompakt satır — solda kategori
-              // renkli ikon çipi, ortada ad + soru sayısı, sağda mastery rozeti;
-              // altta ince ilerleme çubuğu.
-              child: Opacity(
-                opacity: comingSoon ? 0.55 : 1.0,
-                // Pirs hizası: düz liste satırı — kart kenarlığı/gölgesi
-                // yok, kimlik yalnız daire ikon + tam-genişlik alt çizgide.
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [gradientColors.first, gradientColors.last],
+          // 2026-07-23 canlı UX denetimi: label ad+soru sayısını içeriyordu
+          // ama içerideki başlık/alt başlık Text'leri ayrıca kendi semantics
+          // düğümünü ekleyip çift okumaya yol açıyordu (bkz. M28 devamı,
+          // colorful_action_card.dart ile aynı kök neden).
+          child: ExcludeSemantics(
+            child: GestureDetector(
+              onTapDown: comingSoon
+                  ? null
+                  : (_) => setState(() => _pressed = true),
+              onTapUp: comingSoon
+                  ? null
+                  : (_) {
+                      setState(() => _pressed = false);
+                      widget.onTap();
+                    },
+              onTapCancel: () => setState(() => _pressed = false),
+              child: AnimatedScale(
+                scale: _pressed ? 0.97 : 1.0,
+                duration: const Duration(milliseconds: 140),
+                curve: Curves.easeOutCubic,
+                // Onaylı mockup 4: koyu yüzeyli kompakt satır — solda kategori
+                // renkli ikon çipi, ortada ad + soru sayısı, sağda mastery rozeti;
+                // altta ince ilerleme çubuğu.
+                child: Opacity(
+                  opacity: comingSoon ? 0.55 : 1.0,
+                  // Pirs hizası: düz liste satırı — kart kenarlığı/gölgesi
+                  // yok, kimlik yalnız daire ikon + tam-genişlik alt çizgide.
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(AppRadius.card),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [gradientColors.first, gradientColors.last],
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            AppSpacing.md,
-                            AppSpacing.md,
-                            AppSpacing.md,
-                            AppSpacing.sm,
-                          ),
-                          child: Row(
-                            children: [
-                              // Pirs hizası: düz renkli daire ikon (illüstrasyon
-                              // yerine) — Pirs'in kategori satırı imzası budur.
-                              Container(
-                                width: 48,
-                                height: 48,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white.withValues(alpha: 0.22),
-                                ),
-                                child: Icon(
-                                  icon,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                              ),
-                              const SizedBox(width: AppSpacing.sm),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      catName,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AppTypography.heading2.copyWith(
-                                        color: Colors.white,
-                                        shadows: const [
-                                          Shadow(
-                                            color: Color(0x73000000),
-                                            blurRadius: 8,
-                                            offset: Offset(0, 1),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(height: 3),
-                                    Text(
-                                      comingSoon
-                                          ? (widget.isKu
-                                                ? 'Nêzîk de tê…'
-                                                : 'Yakında geliyor…')
-                                          : widget.questionCount != null
-                                          ? (widget.isKu
-                                                ? '${widget.questionCount} pirs • 5 ast'
-                                                : '${widget.questionCount} soru • 5 seviye')
-                                          : (widget.isKu
-                                                ? '5 ast • pêşbaz'
-                                                : '5 seviye • yarış'),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      // Beyaz@0.78 açık kategori renkleri
-                                      // (hardal, turuncu-kahve) üzerinde
-                                      // ~2.2:1 kalıyordu. Alfa yükseltilip
-                                      // gölge eklendi — gölge zaten
-                                      // AppTypography.categoryTitle'da
-                                      // kurulu olan desen (2026-07-22).
-                                      style: AppTypography.caption.copyWith(
-                                        color: Colors.white.withValues(
-                                          alpha: 0.95,
-                                        ),
-                                        shadows: const [
-                                          Shadow(
-                                            color: Color(0x73000000),
-                                            blurRadius: 6,
-                                            offset: Offset(0, 1),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              if (hasProgress)
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                              AppSpacing.md,
+                              AppSpacing.md,
+                              AppSpacing.md,
+                              AppSpacing.sm,
+                            ),
+                            child: Row(
+                              children: [
+                                // Pirs hizası: düz renkli daire ikon (illüstrasyon
+                                // yerine) — Pirs'in kategori satırı imzası budur.
                                 Container(
-                                  margin: const EdgeInsets.only(left: 6),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 3,
-                                  ),
+                                  width: 48,
+                                  height: 48,
+                                  alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
+                                    shape: BoxShape.circle,
                                     color: Colors.white.withValues(alpha: 0.22),
                                   ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
+                                  child: Icon(
+                                    icon,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                ),
+                                const SizedBox(width: AppSpacing.sm),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Icon(
-                                        widget.masteryLevel.icon,
-                                        color: Colors.white,
-                                        size: 12,
-                                      ),
-                                      const SizedBox(width: 4),
                                       Text(
-                                        widget.isKu
-                                            ? widget.masteryLevel.titleKu
-                                            : widget.masteryLevel.titleTr,
-                                        style: const TextStyle(
+                                        catName,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTypography.heading2.copyWith(
                                           color: Colors.white,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w800,
+                                          shadows: const [
+                                            Shadow(
+                                              color: Color(0x73000000),
+                                              blurRadius: 8,
+                                              offset: Offset(0, 1),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 3),
+                                      Text(
+                                        comingSoon
+                                            ? (widget.isKu
+                                                  ? 'Nêzîk de tê…'
+                                                  : 'Yakında geliyor…')
+                                            : widget.questionCount != null
+                                            ? (widget.isKu
+                                                  ? '${widget.questionCount} pirs • 5 ast'
+                                                  : '${widget.questionCount} soru • 5 seviye')
+                                            : (widget.isKu
+                                                  ? '5 ast • pêşbaz'
+                                                  : '5 seviye • yarış'),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        // Beyaz@0.78 açık kategori renkleri
+                                        // (hardal, turuncu-kahve) üzerinde
+                                        // ~2.2:1 kalıyordu. Alfa yükseltilip
+                                        // gölge eklendi — gölge zaten
+                                        // AppTypography.categoryTitle'da
+                                        // kurulu olan desen (2026-07-22).
+                                        style: AppTypography.caption.copyWith(
+                                          color: Colors.white.withValues(
+                                            alpha: 0.95,
+                                          ),
+                                          shadows: const [
+                                            Shadow(
+                                              color: Color(0x73000000),
+                                              blurRadius: 6,
+                                              offset: Offset(0, 1),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                )
-                              else
-                                Icon(
-                                  comingSoon
-                                      ? AppIcons.hourglass
-                                      : AppIcons.chevronRight,
-                                  color: Colors.white.withValues(alpha: 0.7),
                                 ),
-                            ],
-                          ),
-                        ),
-                        // 2026-07-22 canlı UX denetimi: boş renkli bant düzeltmesi
-                        // Pirs imzası: tam-genişlik, kenardan kenara renkli
-                        // çizgi (kart iç boşluğunun dışında, altta).
-                        // Sadece ilerleme olan kartlarda gösterilir.
-                        if (hasProgress)
-                          LinearProgressIndicator(
-                            value: progress,
-                            minHeight: 4,
-                            backgroundColor: Colors.white.withValues(alpha: 0.22),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.white.withValues(alpha: 0.9),
+                                if (hasProgress)
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 3,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.white.withValues(
+                                        alpha: 0.22,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          widget.masteryLevel.icon,
+                                          color: Colors.white,
+                                          size: 12,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          widget.isKu
+                                              ? widget.masteryLevel.titleKu
+                                              : widget.masteryLevel.titleTr,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                else
+                                  Icon(
+                                    comingSoon
+                                        ? AppIcons.hourglass
+                                        : AppIcons.chevronRight,
+                                    color: Colors.white.withValues(alpha: 0.7),
+                                  ),
+                              ],
                             ),
                           ),
-                      ],
+                          // 2026-07-22 canlı UX denetimi: boş renkli bant düzeltmesi
+                          // Pirs imzası: tam-genişlik, kenardan kenara renkli
+                          // çizgi (kart iç boşluğunun dışında, altta).
+                          // Sadece ilerleme olan kartlarda gösterilir.
+                          if (hasProgress)
+                            LinearProgressIndicator(
+                              value: progress,
+                              minHeight: 4,
+                              backgroundColor: Colors.white.withValues(
+                                alpha: 0.22,
+                              ),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white.withValues(alpha: 0.9),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
