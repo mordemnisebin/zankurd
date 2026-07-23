@@ -5,6 +5,13 @@
 > **34 maddenin 12'si tam, 5'i kısmi, 14'ü yapılmadı, 3'ü geçersiz çıktı.**
 > Ayrıntı için bkz. **§7 Uygulama durumu**; kalan işlerin devir prompt'u
 > `ZANKURD_KALAN_ISLER_PROMPT.md`.
+>
+> **Güncelleme (2026-07-23):** Kod taraması bu sayacın güncel olmadığını
+> gösterdi — `4f7666e`/`c4b2832` commit'leri (bu tabloya işlenmeden) M26,
+> M30, M31, M32, M20 ve M23/M33'ün bazı alt maddelerini de kapatmış.
+> Ayrıca bu oturumda M15 (kalan 4 id), M16 (zorluk etiketi) ve M18
+> (Google ile bağlama) tamamlandı — **703 test geçiyor**. Kapsamlı Faz A/B
+> planı ve final sayaç güncellemesi için bu bölümün altındaki §7'ye bak.
 
 **Tarih:** 2026-07-22
 **Yöntem:** `flutter build web --release` ile üretilen gerçek build, tarayıcıda
@@ -521,11 +528,21 @@ Bu üçü yapıldığında ZanKurd, "iyi düşünülmüş ama dağınık" konumu
 
 ---
 
-## 7. Uygulama durumu (2026-07-22)
+## 7. Uygulama durumu (2026-07-22, 2026-07-23 güncellendi)
 
 Bulgular `ux/live-review-fixes` dalında uygulandı. Her düzeltme kendi
 commit'inde, gerekçesi kodda yorum olarak, davranışı testle kilitli.
-**671 test geçiyor, `dart analyze` temiz.**
+**671 test geçiyor, `dart analyze` temiz.** (2026-07-23: bu oturumdaki
+M15/M16/M18 ek düzeltmeleriyle **703 test**.)
+
+**2026-07-23 doğrulama notu:** Bu tablo yazıldıktan sonraki commit'ler
+(`4f7666e`, `c4b2832`) M10/M16(geri butonu)/M26/M30/M31/M32/M20'yi de
+kapatmış ama bu tabloya işlenmemişti — kod okunarak doğrulandı, hepsi
+aksiyon gerektirmiyor. M23'ün leaderboard alt maddesi ("kendi sıran
+görünmüyor") ve M33'ün genel boş-durum alt maddesi de (favori/yanlış
+soru, review, öğrenme, turnuva, arkadaş ekranları — `AppEmptyState`
+üzerinden) zaten çözülmüş durumda; kalan gerçek kapsam aşağıdaki
+"Kısmen kalanlar" bölümünde güncellendi.
 
 ### Denetim sırasında düzelttiğim kendi hatalarım
 
@@ -576,15 +593,15 @@ Uygulama aşamasında raporun iki tespitinin **yanlış** olduğu ortaya çıkt�
 | P1-E Dil/hesap | Oda kategori adı çevrildi, `LevelNames` eklendi, misafir çıkışına veri kaybı uyarısı, "Hesabımı Sil" en alta. |
 | P2 Cila | Giriş animasyonu 2000→900 ms, dil toggle'ına semantik etiket, "Hemen oyna" kartına afordans. |
 | **M10** Kategori kartı boş bant | Progress bar koşullu render — boş renkli bant sorunu giderildi. |
-| **M15** Alt kategori ikonları | 7 yeni ikon eşleştirmesi + 2 mevcut iyileştirme; kart watermark'ı kırpıldı. |
-| **M16** Seviye geri butonu | Kontrast arka plan + `scrolledUnderElevation` ile okunur geri butonu. |
+| **M15** Alt kategori ikonları | 7 yeni ikon eşleştirmesi + 2 mevcut iyileştirme; kart watermark'ı kırpıldı. 2026-07-23: kalan 4 id (`sinor_duma`, `amur`, `tevger`, `jineoloji`) hâlâ jenerik `pen` ikonu miras alıyordu — anlama uygun ikonlara (`locationDot`, `music`, `flag`, yeni eklenen `venus`) taşındı. |
+| **M16** Seviye geri butonu | Kontrast arka plan + `scrolledUnderElevation` ile okunur geri butonu. 2026-07-23: yıldızların "ilerleme" ile karıştırılması ayrıca giderildi — Tooltip + Semantics ile "zorluk" anlamı netleştirildi. |
 | **M28** CTA çift okuma | `ExcludeSemantics` sarmalayıcısı — `styled_button` + 12 dosyada 20+ buton düzeltildi. |
 | **M30** Turnuva bracket | `IntrinsicHeight` kaldırıldı, dinamik kart genişliği, kenar fade efekti. |
 | **M31** Çark metin | Counter-rotation ile dik metinler; sarı dilim kontrast düzeltmesi. |
 | **M32** Profil skeleton | Profil sekmesi yüklenirken `SkeletonLoader` kullanımı. |
 | **M13** Rozet bölümleri | İki ayrı rozet bölümü `_UnifiedRewardsSection` altında birleştirildi. |
 | **M9** Kayıt doğrulama | `Form` + `autovalidateMode` ile inline doğrulama; snackbar yerine alan düzeyinde hata (7 yeni test). |
-| **M18** Misafir hesap yükseltme | `upgradeGuestAccount` + dialog CTA ile hesap kalıcılaştırma akışı (6 yeni test). |
+| **M18** Misafir hesap yükseltme | `upgradeGuestAccount` + dialog CTA ile hesap kalıcılaştırma akışı (6 yeni test). 2026-07-23: `signInWithGoogle()` anonim oturumu değiştirip ilerleme kaybına yol açabiliyordu — `linkGoogleAccount()` (Supabase `linkIdentity` PKCE akışı) + dialog'a "Google ile Bağla" seçeneği eklendi (6 yeni test). |
 | **M24** Mağaza giriş ürünleri | 3 sembolik ürün eklendi (10c, 10c, 20c) — yeni kullanıcı için erişilebilir fiyat noktası. |
 | **M33** Roj maskotu | Onboarding akışına Roj maskotu eklendi. |
 
@@ -611,7 +628,10 @@ göre düzeltildi.
 - **M2 dil karışıklığı** — ölçüldü ve artması engellendi; 320 sorunun
   çevirisi yapılmadı.
 - **M23 boş alt alanlar** — `tournament_screen.dart`'ta dikey ortalama
-  uygulandı; `sign_in`, `sign_up` ve `quiz` ekranları henüz yapılmadı.
+  uygulandı; leaderboard'daki alt madde ("kendi sıran görünmüyor") ayrıca
+  P1-D'de çözüldü (bkz. yukarı). Kalan gerçek kapsam: `matchmaking`,
+  `sign_in`, `profile_name_gate`, 2 şıklı quiz düzeni — bu 4 ekran/madde
+  planlanıp henüz uygulanmadı.
 
 ### Yapılmayanlar
 
@@ -630,11 +650,21 @@ göre düzeltildi.
 
 **Zaten çözülmüştü (aksiyon gerekmedi):**
 - **M26** safe-area — 3 dosyada zaten mevcut olduğu tespit edildi.
-- **M25** avatar renkleri — 8 renk marka paleti + hash atama zaten var.
+- **M10** kategori kartı boş bant, **M30** turnuva bracket yatay scroll,
+  **M31** çark metin döndürme, **M32** profil skeleton — 2026-07-23
+  kod taramasıyla doğrulandı, `4f7666e`/`c4b2832`'de zaten kapanmış.
+- **M33** genel boş durumlar (favori/yanlış soru, review, öğrenme,
+  turnuva, arkadaş) — `AppEmptyState(showMascot: true)` üzerinden zaten
+  gösteriliyor. Kalan gerçek kapsam: mağaza ve sonuç ekranı (ayrı
+  planlandı, bkz. bu oturumun Faz B çalışması).
+- **M25** avatar renkleri — 8 renk marka paleti + hash atama zaten var;
+  2026-07-23'te kullanıcı kararıyla paleti 12+'a genişletme ve aynı
+  ekranda çakışma önleme için ek iş planlandı (bkz. Faz B).
 
 **Kapsam dışı:**
 - **M34** tablet iki sütunlu düzen — kapsamlı tasarım işi, ayrı planlama
-  gerektirir.
+  gerektirir. `responsive_wrapper.dart` yorumundaki yanıltıcı "iki sütun"
+  iddiası ayrıca düzeltilecek (Faz B1).
 
 Kalan işlerin dosya yolları, kök nedenleri ve kabul kriterleriyle birlikte
 devir prompt'u: `ZANKURD_KALAN_ISLER_PROMPT.md`
