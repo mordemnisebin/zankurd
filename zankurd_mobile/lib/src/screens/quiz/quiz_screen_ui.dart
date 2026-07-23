@@ -32,46 +32,68 @@ extension _QuizScreenUI on _QuizScreenState {
                   if (!_isLearningExperience) _buildComboRow(),
                   const SizedBox(height: 8),
                   Expanded(
-                    child: SingleChildScrollView(
-                      key: const ValueKey('quiz-portrait-scroll'),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Coach-mark GlobalKey'leri yalnız ilk soruda: panel
-                          // AnimatedSwitcher içinde olduğundan geçiş sırasında
-                          // eski ve yeni panel aynı anda yaşar; anahtar her
-                          // soruda geçilirse duplicate-GlobalKey hatası oluşur.
-                          // Eğitim turu zaten sadece ilk soruda gösterilir.
-                          _buildQuestionSwitcher(
-                            context,
-                            showExplanation: showExpl,
-                            timerKey: index == 0 ? _timerTargetKey : null,
-                            answerAreaKey: index == 0 ? _answerAreaKey : null,
-                            questionVisualReady: index == 0
-                                ? _handleQuestionVisualReady
-                                : null,
+                    // 2026-07-23 M23: 2 şıklı sorularda (Ziman çeviri
+                    // alıştırmaları) içerik kısa kalıyor, aksiyon barından
+                    // önce büyük boş bir bant oluşuyordu. minHeight+Center
+                    // ile içerik kısa olduğunda dikeyde ortalanır; uzun
+                    // olduğunda (4 şık, açıklama kutusu, canlı skor)
+                    // normal şekilde kaydırılabilir kalır.
+                    child: LayoutBuilder(
+                      builder: (context, scrollConstraints) {
+                        return SingleChildScrollView(
+                          key: const ValueKey('quiz-portrait-scroll'),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minHeight: scrollConstraints.maxHeight,
+                            ),
+                            child: Center(
+                              child: Column(
+                                key: const ValueKey('quiz-answer-content'),
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  // Coach-mark GlobalKey'leri yalnız ilk soruda: panel
+                                  // AnimatedSwitcher içinde olduğundan geçiş sırasında
+                                  // eski ve yeni panel aynı anda yaşar; anahtar her
+                                  // soruda geçilirse duplicate-GlobalKey hatası oluşur.
+                                  // Eğitim turu zaten sadece ilk soruda gösterilir.
+                                  _buildQuestionSwitcher(
+                                    context,
+                                    showExplanation: showExpl,
+                                    timerKey: index == 0
+                                        ? _timerTargetKey
+                                        : null,
+                                    answerAreaKey: index == 0
+                                        ? _answerAreaKey
+                                        : null,
+                                    questionVisualReady: index == 0
+                                        ? _handleQuestionVisualReady
+                                        : null,
+                                  ),
+                                  if (selectedAnswer == 'TIMEOUT')
+                                    QuizTimeoutNotice(
+                                      isKu: _isKu,
+                                      correctAnswer: question.correctAnswer,
+                                    ),
+                                  if (_isMultiplayer &&
+                                      answered &&
+                                      _mpPhase == _MultiplayerPhase.waiting)
+                                    _MultiplayerWaitingOverlay(isKu: _isKu),
+                                  if (_isMultiplayer &&
+                                      _mpPhase == _MultiplayerPhase.reveal)
+                                    _RevealCountdown(
+                                      seconds: _revealCountdown,
+                                      isKu: _isKu,
+                                    ),
+                                  if (widget.is1v1 && screenHeight >= 800) ...[
+                                    const SizedBox(height: 8),
+                                    _LiveScoreboard(players: livePlayers),
+                                  ],
+                                ],
+                              ),
+                            ),
                           ),
-                          if (selectedAnswer == 'TIMEOUT')
-                            QuizTimeoutNotice(
-                              isKu: _isKu,
-                              correctAnswer: question.correctAnswer,
-                            ),
-                          if (_isMultiplayer &&
-                              answered &&
-                              _mpPhase == _MultiplayerPhase.waiting)
-                            _MultiplayerWaitingOverlay(isKu: _isKu),
-                          if (_isMultiplayer &&
-                              _mpPhase == _MultiplayerPhase.reveal)
-                            _RevealCountdown(
-                              seconds: _revealCountdown,
-                              isKu: _isKu,
-                            ),
-                          if (widget.is1v1 && screenHeight >= 800) ...[
-                            const SizedBox(height: 8),
-                            _LiveScoreboard(players: livePlayers),
-                          ],
-                        ],
-                      ),
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -256,9 +278,7 @@ extension _QuizScreenUI on _QuizScreenState {
                     boxShadow: i == index
                         ? [
                             BoxShadow(
-                              color: AppTheme.brand.withValues(
-                                alpha: 0.45,
-                              ),
+                              color: AppTheme.brand.withValues(alpha: 0.45),
                               blurRadius: 6,
                             ),
                           ]

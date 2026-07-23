@@ -199,6 +199,64 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  // 2026-07-23 M23: 2 şıklı sorularda (Ziman çeviri alıştırmaları) içerik
+  // kısa kalıyor, aksiyon barından önce büyük boş bir bant oluşuyordu.
+  // Uzun/boş ekranda içerik artık dikeyde ortalanmalı — üstteki ve
+  // alttaki boşluk yaklaşık eşit olmalı, tamamı alta yığılmamalı.
+  testWidgets(
+    '2 şıklı kısa soruda içerik kaydırma alanında dikeyde ortalanır',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 1300));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      const question = QuizQuestion(
+        id: 'two-option-short',
+        category: 'Ziman',
+        prompt: 'Ev peyv bi kurmancî çi ye?',
+        answers: ['Rast', 'Şaş'],
+        correctAnswer: 'Rast',
+        explanation: 'Bersiva rast: Rast.',
+      );
+
+      await tester.pumpWidget(
+        testShell(
+          child: QuizScreen(
+            repository: repository,
+            room: repository.createRoom(),
+            questions: const [question],
+            enableTimer: false,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final scrollArea = tester.getRect(
+        find.byKey(const ValueKey('quiz-portrait-scroll')),
+      );
+      final content = tester.getRect(
+        find.byKey(const ValueKey('quiz-answer-content')),
+      );
+
+      final gapAbove = content.top - scrollArea.top;
+      final gapBelow = scrollArea.bottom - content.bottom;
+
+      expect(
+        gapAbove,
+        greaterThan(20),
+        reason:
+            'İçerik en üste yapışmamalı — kısa içerikte üstte de boşluk '
+            'olmalı (ortalama davranışı).',
+      );
+      expect(
+        (gapAbove - gapBelow).abs(),
+        lessThan(5),
+        reason:
+            'Üst ve alt boşluk yaklaşık eşit olmalı (Center ile ortalama); '
+            'aksi hâlde içerik yine tek tarafa yığılıyor demektir.',
+      );
+    },
+  );
+
   testWidgets('quiz tutorial keeps its second target and tooltip on screen', (
     tester,
   ) async {
