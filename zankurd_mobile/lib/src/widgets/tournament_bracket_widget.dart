@@ -39,7 +39,9 @@ class TournamentBracketWidget extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         // Dinamik kart genişliği: mevcut alanı turlara böl, clamp(120, 160)
-        const connectorWidth = 28.0;
+        // M-10: connectorWidth 28→20 — dar ekranlarda toplam genişliği azaltır;
+        // yatay scroll korunur, kart alanı biraz genişler.
+        const connectorWidth = 20.0;
         final totalConnectorWidth = (totalRounds - 1) * connectorWidth;
         final availableForCards = constraints.maxWidth - totalConnectorWidth;
         final cardWidth = (availableForCards / totalRounds).clamp(120.0, 160.0);

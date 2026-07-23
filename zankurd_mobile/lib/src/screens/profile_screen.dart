@@ -339,7 +339,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         icon: AppIcons.gamepad,
                       ),
                       _StatTile(
-                        label: ku ? 'Xeruz' : 'Coin',
+                        label: ku ? 'Zêr' : 'Coin',
                         value: _coinBalance == null ? '—' : '$_coinBalance',
                         color: AppTheme.gold,
                         icon: AppIcons.coins,
@@ -553,9 +553,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Container(
                 height: 80,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? AppTheme.shimmerBaseDark
-                      : AppTheme.shimmerBaseLight,
+                  color: AppTheme.isLight(context)
+                      ? AppTheme.shimmerBaseLight
+                      : AppTheme.shimmerBaseDark,
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
@@ -565,9 +565,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Container(
                 height: 80,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? AppTheme.shimmerBaseDark
-                      : AppTheme.shimmerBaseLight,
+                  color: AppTheme.isLight(context)
+                      ? AppTheme.shimmerBaseLight
+                      : AppTheme.shimmerBaseDark,
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
@@ -581,9 +581,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Container(
                 height: 80,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? AppTheme.shimmerBaseDark
-                      : AppTheme.shimmerBaseLight,
+                  color: AppTheme.isLight(context)
+                      ? AppTheme.shimmerBaseLight
+                      : AppTheme.shimmerBaseDark,
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
@@ -1135,7 +1135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       await this.context.read<AuthProvider>().signOut();
     } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'profile_load');
+      ErrorReporter.record(error, stack, reason: 'profile_sign_out');
       // AppShell zaten auth durumuna göre giriş ekranına döner.
     }
   }

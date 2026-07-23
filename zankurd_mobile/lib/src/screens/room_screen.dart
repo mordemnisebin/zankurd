@@ -333,6 +333,8 @@ class _RoomScreenState extends State<RoomScreen> {
                                             ),
                                             Text(
                                               room.name,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                               style: AppTypography.heading1
                                                   .copyWith(
                                                     color: Colors.white,

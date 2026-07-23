@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import '../config/zankurd_sayings.dart';
 import 'roj_mascot.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Günün sözü: (Kurmancî atasözü, Türkçe karşılığı).
-typedef _Saying = (String ku, String tr);
+typedef _Saying = ZanKurdSaying;
 
 /// Zana'nın "Gotina Rojê" kartı — ana ekranın alt boşluğunu dolduran,
 /// maskotlu ve gün bazlı dönen kültürel dokunuş. Aynı gün herkes aynı
@@ -30,24 +31,15 @@ class ZanaDailyCard extends StatelessWidget {
   /// (Fêr Bibe sekmesindeki "Bugünkü Tekrarlar" kartına yönlenir).
   final int reviewReadyCount;
 
-  static const List<_Saying> _sayings = [
-    ('Zanîn ronahî ye.', 'Bilgi ışıktır.'),
-    ('Dilop bi dilop gol çêdibe.', 'Damla damla göl olur.'),
-    ('Gotina rast şîrîn e.', 'Doğru söz tatlıdır.'),
-    ('Yek gul biharê nayîne.', 'Bir çiçekle bahar gelmez.'),
-    ('Ziman mifta dil e.', 'Dil, gönlün anahtarıdır.'),
-    ('Aqil tacê zêrîn e.', 'Akıl altın taçtır.'),
-    ('Hevaltî dewlemendiya dil e.', 'Dostluk gönlün zenginliğidir.'),
-    ('Bêhna fireh mifta serkeftinê ye.', 'Sabır, başarının anahtarıdır.'),
-    ('Her roj hînbûnek nû ye.', 'Her gün yeni bir öğrenmedir.'),
-    ('Çirûskek dikare daristanê ronî bike.', 'Bir kıvılcım ormanı aydınlatır.'),
-  ];
-
+  ///
+  /// M-5: Atasözleri tek doğruluk kaynağı [ZanKurdSayings.pool]'dan gelir;
+  /// içerik takımı tek dosyayı (config/zankurd_sayings.dart) güncelleyerek
+  /// tüm yerlere yayabilir.
   _Saying get _todaysSaying {
     final day =
         dayOverride ??
         DateTime.now().toUtc().difference(DateTime.utc(2026)).inDays;
-    return _sayings[day % _sayings.length];
+    return ZanKurdSayings.pool[day % ZanKurdSayings.pool.length];
   }
 
   @override

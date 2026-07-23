@@ -17,13 +17,16 @@ ComboTier? comboTierFor(int streak) {
   return null;
 }
 
+/// [_kVignetteThreshold] — vinyetin başladığı süre oranı eşiği.
+/// Bu değer UX denetiminden onaylanmıştır; değiştirilirse visual test güncellenmeli.
+const double _kVignetteThreshold = 1 / 3;
+
 /// Kalan süre oranından (1.0 = dolu, 0.0 = bitti) kırmızı kenar vinyetinin
 /// gücünü üretir. Son üçte birde 0→1 doğrusal tırmanır; öncesinde 0.
 double vignetteStrengthFor(double remainingFraction) {
   final clamped = remainingFraction.clamp(0.0, 1.0);
-  const threshold = 1 / 3;
-  if (clamped >= threshold) return 0.0;
-  return (threshold - clamped) / threshold;
+  if (clamped >= _kVignetteThreshold) return 0.0;
+  return (_kVignetteThreshold - clamped) / _kVignetteThreshold;
 }
 
 /// Yanlış cevapta şıkkı yatay sarsar. [trigger] her arttığında bir kez

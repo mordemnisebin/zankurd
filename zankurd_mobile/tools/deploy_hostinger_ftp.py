@@ -14,6 +14,18 @@ BUILD_WEB = ROOT / "build" / "web"
 LOCAL_BACKUP_ROOT = ROOT / "output" / "hostinger_backups"
 
 
+def load_env_file() -> None:
+    env_paths = [Path(__file__).resolve().parent / ".env", ROOT / ".env"]
+    for env_path in env_paths:
+        if env_path.exists():
+            for line in env_path.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    os.environ.setdefault(k.strip(), v.strip())
+
+load_env_file()
+
 def env(name: str, default: str | None = None) -> str:
     value = os.environ.get(name, default or "").strip()
     if not value:

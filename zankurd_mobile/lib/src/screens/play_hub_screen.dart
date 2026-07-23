@@ -427,6 +427,10 @@ class _GroupPlayPanel extends StatelessWidget {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppTheme.brand,
                     foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 10,
+                    ),
                   ),
                   icon: loading
                       ? const SizedBox(
@@ -437,16 +441,19 @@ class _GroupPlayPanel extends StatelessWidget {
                             color: Colors.white,
                           ),
                         )
-                      : const Icon(AppIcons.circlePlus, size: 20),
-                  label: Text(
-                    loading
-                        ? (ku ? 'Tê Vekirin...' : 'Açılıyor...')
-                        : (ku ? 'Odeyek Ava Bike' : 'Oda Kur'),
-                    style: const TextStyle(fontWeight: FontWeight.w700),
+                      : const Icon(AppIcons.circlePlus, size: 18),
+                  label: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      loading
+                          ? (ku ? 'Tê Vekirin...' : 'Açılıyor...')
+                          : (ku ? 'Odeyek Ava Bike' : 'Oda Kur'),
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.sm),
+              const SizedBox(width: AppSpacing.xs),
               Expanded(
                 child: OutlinedButton.icon(
                   key: const ValueKey('play-hub-join-room'),
@@ -457,11 +464,18 @@ class _GroupPlayPanel extends StatelessWidget {
                       width: 1.5,
                     ),
                     foregroundColor: AppTheme.textPrimaryColor(context),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 10,
+                    ),
                   ),
-                  icon: const Icon(AppIcons.doorOpen, size: 20),
-                  label: Text(
-                    ku ? 'Kodê tevlî bibe' : 'Kodla Katıl',
-                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  icon: const Icon(AppIcons.doorOpen, size: 18),
+                  label: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      ku ? 'Kodê tevlî bibe' : 'Kodla Katıl',
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ),
               ),

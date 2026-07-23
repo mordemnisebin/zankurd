@@ -27,18 +27,48 @@ class HeroCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppTheme.brandDeep,
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF1A4A37), Color(0xFF245A43), Color(0xFF2A644A)],
+        ),
         borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.10)),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.brandDeep.withValues(alpha: 0.35),
-            blurRadius: 14,
-            offset: const Offset(0, 5),
+            color: AppTheme.culturalBrandBg.withValues(alpha: 0.35),
+            blurRadius: 26,
+            offset: const Offset(0, 12),
+            spreadRadius: -8,
           ),
         ],
       ),
       child: Stack(
         children: [
+          Positioned(
+            right: -12,
+            top: -12,
+            child: Container(
+              width: 132,
+              height: 132,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.07),
+              ),
+            ),
+          ),
+          Positioned(
+            left: -18,
+            bottom: -30,
+            child: Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppTheme.brand.withValues(alpha: 0.10),
+              ),
+            ),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -52,10 +82,10 @@ class HeroCard extends StatelessWidget {
                         vertical: AppSpacing.xxs,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
+                        color: Colors.white.withValues(alpha: 0.14),
                         borderRadius: BorderRadius.circular(AppRadius.pill),
                         border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.4),
+                          color: Colors.white.withValues(alpha: 0.22),
                         ),
                       ),
                       child: Row(
@@ -118,9 +148,10 @@ class HeroCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppRadius.sm),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.12),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
+                        color: Colors.black.withValues(alpha: 0.14),
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
+                        spreadRadius: -6,
                       ),
                     ],
                   ),
@@ -156,8 +187,9 @@ class HeroCard extends StatelessWidget {
                       child: OutlinedButton(
                         onPressed: onCreateRoom,
                         style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.white.withValues(alpha: 0.06),
                           side: BorderSide(
-                            color: Colors.white.withValues(alpha: 0.55),
+                            color: Colors.white.withValues(alpha: 0.28),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(AppRadius.sm),
@@ -187,8 +219,9 @@ class HeroCard extends StatelessWidget {
                       child: OutlinedButton(
                         onPressed: onJoinRoom,
                         style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.white.withValues(alpha: 0.06),
                           side: BorderSide(
-                            color: Colors.white.withValues(alpha: 0.55),
+                            color: Colors.white.withValues(alpha: 0.28),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(AppRadius.sm),

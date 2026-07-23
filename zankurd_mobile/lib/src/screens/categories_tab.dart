@@ -191,8 +191,15 @@ class _CategoriesTabState extends State<CategoriesTab> {
                           // dar (1 sütun) hem geniş (2 sütun) düzende. Eski geniş
                           // düzen (2.6) kartları aşırı boş/uzun yapıyordu.
                           final aspectRatio = isNarrow
-                              ? (constraints.maxWidth / 120)
-                              : ((constraints.maxWidth / 2) / 120);
+                              // 360px dar ekranda 360/120=3.0 normal görünür;
+                              // ancak çok dar (<300px) cihazlarda aşırı yassı
+                              // veya çok geniş tablette çok uzun kart oluşmasını
+                              // önlemek için clamp eklendi.
+                              ? (constraints.maxWidth / 120).clamp(2.5, 4.5)
+                              : ((constraints.maxWidth / 2) / 120).clamp(
+                                  2.0,
+                                  4.0,
+                                );
                           return GridView.builder(
                             controller: widget.scrollController,
                             padding: EdgeInsets.fromLTRB(
@@ -251,8 +258,8 @@ class _CategoriesTabState extends State<CategoriesTab> {
         final isNarrow = constraints.maxWidth <= 600;
         final crossCount = isNarrow ? 1 : 2;
         final aspectRatio = isNarrow
-            ? (constraints.maxWidth / 120)
-            : ((constraints.maxWidth / 2) / 120);
+            ? (constraints.maxWidth / 120).clamp(2.5, 4.5)
+            : ((constraints.maxWidth / 2) / 120).clamp(2.0, 4.0);
         return GridView.builder(
           padding: EdgeInsets.fromLTRB(
             AppSpacing.page,

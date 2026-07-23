@@ -37,7 +37,7 @@ class QuickPlayGrid extends StatelessWidget {
         title: isKu ? 'Şerê 1vs1' : '1vs1 Düello',
         // Dürüstlük: canlı rakip bulunamazsa ~30 sn sonra bot teklif
         // ediliyor; kart bunu baştan söylesin.
-        subtitle: isKu ? 'Bot + Zindî' : 'Bot + Canlı',
+        subtitle: isKu ? 'Bot û Zindî' : 'Bot + Canlı',
         icon: AppIcons.bolt,
         colors: [AppTheme.playPink, _deepen(AppTheme.playPink)],
         onTap: onDuel,

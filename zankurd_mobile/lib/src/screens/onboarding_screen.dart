@@ -107,9 +107,18 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   final verticalPadding = compact
                       ? AppSpacing.xxs
                       : AppSpacing.xs;
+                  // Kısa ekranda (< 560px) küçük başlık, orta (< 720px) ve
+                  // geniş ekranda tam başlık alanı. Bu değerler her yükseklik
+                  // bandına göre dengelendi; token sistemi piksel değerini
+                  // sabitleyerek gelecekte tek noktada güncellenebilir kılar.
+                  const double kHeaderCompact = 90.0; // < 560px: mini logo
+                  const double kHeaderMedium = 140.0; // 560–719px: normal
+                  const double kHeaderFull = 180.0; // ≥ 720px: geniş
                   final headerHeight = compact
-                      ? 90.0
-                      : (constraints.maxHeight < 720 ? 140.0 : 180.0);
+                      ? kHeaderCompact
+                      : (constraints.maxHeight < 720
+                            ? kHeaderMedium
+                            : kHeaderFull);
                   final buttonMaxWidth = wide ? 520.0 : double.infinity;
 
                   return Padding(
@@ -319,7 +328,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       _OnboardingData(
         showMascotAccent: true,
         icon: AppIcons.trophy,
-        color: const Color(0xFFB86A3E), // terracotta — palet tonu
+        color: AppTheme.terracotta, // onboarding ödül slaydı tonu
         title: context.s('Pêşbirkê bike û bi ser keve', 'Yarış ve kazan'),
         body: context.s(
           'Bi hevalan an botan re pêşbirkê bike, xelatan bistîne û ast bilind bike.',

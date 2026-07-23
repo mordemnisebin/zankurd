@@ -353,16 +353,21 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                         ),
                       ),
                       Expanded(
-                        child: Slider(
-                          value: _difficulty.toDouble(),
-                          min: 1,
-                          max: 5,
-                          divisions: 4,
-                          activeColor: AppTheme.brand,
-                          label: '$_difficulty',
-                          onChanged: (value) {
-                            setState(() => _difficulty = value.round());
-                          },
+                        child: Semantics(
+                          label: ku ? 'Astê Zehmetiyê' : 'Zorluk Seviyesi',
+                          value: '$_difficulty / 5',
+                          slider: true,
+                          child: Slider(
+                            value: _difficulty.toDouble(),
+                            min: 1,
+                            max: 5,
+                            divisions: 4,
+                            activeColor: AppTheme.brand,
+                            label: '$_difficulty',
+                            onChanged: (value) {
+                              setState(() => _difficulty = value.round());
+                            },
+                          ),
                         ),
                       ),
                       Text(

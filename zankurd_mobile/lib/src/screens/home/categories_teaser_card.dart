@@ -32,13 +32,9 @@ class CategoriesTeaserCard extends StatelessWidget {
             child: Container(
               constraints: const BoxConstraints(minHeight: 92),
               padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: AppTheme.surfaceColor(context),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: AppTheme.brand.withValues(alpha: 0.35),
-                ),
-                boxShadow: AppTheme.cardShadow(context),
+              decoration: AppTheme.teaserCardDecoration(
+                context,
+                accent: AppTheme.brand,
               ),
               child: Row(
                 children: [
@@ -47,7 +43,14 @@ class CategoriesTeaserCard extends StatelessWidget {
                     height: 44,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: AppTheme.brand.withValues(alpha: 0.1),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AppTheme.brand.withValues(alpha: 0.18),
+                          AppTheme.brand.withValues(alpha: 0.08),
+                        ],
+                      ),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(

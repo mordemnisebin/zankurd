@@ -2,6 +2,9 @@ class AppConfig {
   static const _defaultSupabaseUrl = 'https://hupivnxgjtsfafulzspo.supabase.co';
   static const _defaultSupabasePublishableKey =
       'sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s';
+  static const _useBundledSupabaseDefaults = bool.fromEnvironment(
+    'USE_BUNDLED_SUPABASE_DEFAULTS',
+  );
 
   static const _supabaseUrl = String.fromEnvironment('SUPABASE_URL');
   static const _nextPublicSupabaseUrl = String.fromEnvironment(
@@ -23,6 +26,15 @@ class AppConfig {
       ? _nextPublicSupabasePublishableKey
       : _defaultSupabasePublishableKey;
 
+  static bool get hasExplicitSupabaseConfig =>
+      (_supabaseUrl != '' || _nextPublicSupabaseUrl != '') &&
+      (_supabaseAnonKey != '' || _nextPublicSupabasePublishableKey != '');
+
+  static bool get usesBundledSupabaseDefaults => _useBundledSupabaseDefaults;
+
   static bool get hasSupabaseConfig =>
-      supabaseUrl.isNotEmpty && supabaseAnonKey.isNotEmpty;
+      hasExplicitSupabaseConfig ||
+      (usesBundledSupabaseDefaults &&
+          supabaseUrl.isNotEmpty &&
+          supabaseAnonKey.isNotEmpty);
 }

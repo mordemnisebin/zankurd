@@ -23,6 +23,7 @@ class _BouncingButtonState extends State<BouncingButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
+  bool _hovered = false;
 
   @override
   void initState() {
@@ -66,22 +67,36 @@ class _BouncingButtonState extends State<BouncingButton>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTapDown: _onTapDown,
-      onTapUp: _onTapUp,
-      onTapCancel: _onTapCancel,
-      onTap: () {
-        if (widget.onPressed != null) {
-          HapticFeedback.lightImpact();
-          widget.onPressed!();
-        }
-      },
-      child: AnimatedBuilder(
-        animation: _scaleAnimation,
-        builder: (context, child) =>
-            Transform.scale(scale: _scaleAnimation.value, child: child),
-        child: widget.child,
+    return MouseRegion(
+      cursor: widget.onPressed != null
+          ? SystemMouseCursors.click
+          : SystemMouseCursors.basic,
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: _onTapDown,
+        onTapUp: _onTapUp,
+        onTapCancel: _onTapCancel,
+        onTap: () {
+          if (widget.onPressed != null) {
+            HapticFeedback.lightImpact();
+            widget.onPressed!();
+          }
+        },
+        child: AnimatedBuilder(
+          animation: _scaleAnimation,
+          builder: (context, child) {
+            final hoverScale = _hovered && widget.onPressed != null
+                ? 1.008
+                : 1.0;
+            return Transform.scale(
+              scale: _scaleAnimation.value * hoverScale,
+              child: child,
+            );
+          },
+          child: widget.child,
+        ),
       ),
     );
   }

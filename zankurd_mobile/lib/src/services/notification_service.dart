@@ -2,10 +2,22 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../utils/error_reporter.dart';
+
+abstract class TimeZoneResolver {
+  Future<String?> resolve();
+}
+
+class DeviceTimeZoneResolver implements TimeZoneResolver {
+  const DeviceTimeZoneResolver();
+
+  @override
+  Future<String?> resolve() async => FlutterTimezone.getLocalTimezone();
+}
 
 /// Bildirim ayarlarını yöneten servis.
 /// flutter_local_notifications kullanılarak yerel günlük hatırlatıcılar zamanlanır.
@@ -15,6 +27,7 @@ class NotificationService {
     this._enabled,
     this._hour,
     this._minute,
+    this._timeZoneResolver,
   );
 
   static const _enabledKey = 'zankurd.notifications.enabled';
@@ -26,7 +39,9 @@ class NotificationService {
   static final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static Future<NotificationService> load() async {
+  static Future<NotificationService> load({
+    TimeZoneResolver timeZoneResolver = const DeviceTimeZoneResolver(),
+  }) async {
     final cached = _instance;
     if (cached != null) return cached;
     SharedPreferences? preferences;
@@ -41,6 +56,7 @@ class NotificationService {
       preferences?.getBool(_enabledKey) ?? false,
       preferences?.getInt(_hourKey) ?? 19,
       preferences?.getInt(_minuteKey) ?? 0,
+      timeZoneResolver,
     );
     await service._initNotifications();
     if (service.enabled) {
@@ -58,6 +74,7 @@ class NotificationService {
   bool _enabled;
   int _hour;
   int _minute;
+  final TimeZoneResolver _timeZoneResolver;
 
   bool get enabled => _enabled;
   int get hour => _hour;
@@ -88,9 +105,12 @@ class NotificationService {
     try {
       tz.initializeTimeZones();
       try {
-        tz.setLocalLocation(tz.getLocation('Europe/Istanbul'));
+        final timeZoneName = await _timeZoneResolver.resolve();
+        if (timeZoneName != null && timeZoneName.trim().isNotEmpty) {
+          tz.setLocalLocation(tz.getLocation(timeZoneName));
+        }
       } catch (error, stack) {
-        ErrorReporter.record(error, stack, reason: 'notification_cancel');
+        ErrorReporter.record(error, stack, reason: 'notification_timezone');
       }
 
       const AndroidInitializationSettings initializationSettingsAndroid =

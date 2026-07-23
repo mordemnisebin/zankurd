@@ -22,10 +22,13 @@ class GeometricGradientButton extends StatefulWidget {
 
 class _GeometricGradientButtonState extends State<GeometricGradientButton> {
   bool _isPressed = false;
+  bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
     final isEnabled = widget.onPressed != null && !widget.isLoading;
+    final isPressed = isEnabled && _isPressed;
+    final isHovered = isEnabled && _isHovered;
     final disabledColor = AppColors.disabledSurface(context);
 
     final shadowColor = isEnabled
@@ -38,69 +41,82 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
       button: true,
       label: widget.label,
       enabled: isEnabled,
-      child: GestureDetector(
-        onTapDown: isEnabled ? (_) => setState(() => _isPressed = true) : null,
-        onTapUp: isEnabled
-            ? (_) {
-                setState(() => _isPressed = false);
-                widget.onPressed?.call();
-              }
-            : null,
-        onTapCancel: isEnabled
-            ? () => setState(() => _isPressed = false)
-            : null,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 90),
-          curve: Curves.easeOut,
-          height: 48,
-          margin: EdgeInsets.only(
-            top: _isPressed ? shadowHeight : 0,
-            bottom: _isPressed ? 0 : shadowHeight,
-          ),
-          decoration: BoxDecoration(
-            gradient: isEnabled
-                ? AppTheme.accentGradient
-                : LinearGradient(colors: [disabledColor, disabledColor]),
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-            boxShadow: AppShadows.button(shadowColor, pressed: _isPressed),
-          ),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                if (widget.isLoading)
-                  const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                  )
-                else ...[
-                  if (widget.icon != null) ...[
-                    Icon(widget.icon, color: Colors.white, size: 20),
-                    const SizedBox(width: 8),
-                  ],
-                  Flexible(
-                    // 2026-07-22 canlı UX denetimi: CTA çift okuma düzeltmesi
-                    child: ExcludeSemantics(
-                      child: Text(
-                        widget.label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0,
+      child: MouseRegion(
+        cursor: isEnabled ? SystemMouseCursors.click : SystemMouseCursors.basic,
+        onEnter: isEnabled ? (_) => setState(() => _isHovered = true) : null,
+        onExit: isEnabled ? (_) => setState(() => _isHovered = false) : null,
+        child: GestureDetector(
+          onTapDown: isEnabled
+              ? (_) => setState(() => _isPressed = true)
+              : null,
+          onTapUp: isEnabled
+              ? (_) {
+                  setState(() => _isPressed = false);
+                  widget.onPressed?.call();
+                }
+              : null,
+          onTapCancel: isEnabled
+              ? () => setState(() => _isPressed = false)
+              : null,
+          child: AnimatedScale(
+            scale: isHovered ? 1.01 : 1.0,
+            duration: const Duration(milliseconds: 110),
+            curve: Curves.easeOutCubic,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 110),
+              curve: Curves.easeOutCubic,
+              height: 48,
+              margin: EdgeInsets.only(
+                top: isPressed ? shadowHeight : 0,
+                bottom: isPressed ? 0 : shadowHeight,
+              ),
+              decoration: BoxDecoration(
+                gradient: isEnabled
+                    ? AppTheme.accentGradient
+                    : LinearGradient(colors: [disabledColor, disabledColor]),
+                borderRadius: BorderRadius.circular(AppRadius.lg),
+                boxShadow: AppShadows.button(shadowColor, pressed: isPressed),
+              ),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    if (widget.isLoading)
+                      const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
+                        ),
+                      )
+                    else ...[
+                      if (widget.icon != null) ...[
+                        Icon(widget.icon, color: Colors.white, size: 20),
+                        const SizedBox(width: 8),
+                      ],
+                      Flexible(
+                        // 2026-07-22 canlı UX denetimi: CTA çift okuma düzeltmesi
+                        child: ExcludeSemantics(
+                          child: Text(
+                            widget.label,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.bodyLarge.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
-              ],
+                    ],
+                  ],
+                ),
+              ),
             ),
           ),
         ),

@@ -26,8 +26,7 @@ class _SignInScreenState extends State<SignInScreen>
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
-  // E-posta formu genişleyen bölümde; varsayılan kapalı (tek birincil CTA:
-  // Google). Misafir girişi Google altında outlined bir butondur.
+  // E-posta formu genişleyen bölümde; varsayılan açık (otomatik gösterim).
   bool _emailExpanded = false;
   late AnimationController _animationController;
 
@@ -74,7 +73,7 @@ class _SignInScreenState extends State<SignInScreen>
       );
       return;
     }
-    if (!_formKey.currentState!.validate()) return;
+    if (_formKey.currentState?.validate() != true) return;
 
     LoadingOverlay.show(
       context,
@@ -195,12 +194,21 @@ class _SignInScreenState extends State<SignInScreen>
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
     final compact = screenSize.height < 900;
+    // Kompakt düzen boyut sabitleri — M-8 denetim düzeltmesi.
+    // Her sabitin anlamı yorumda belgelenmiştir; ileride tek noktadan değişir.
+    const double kLogoWidthCompact = 71.0; // Kısa ekranda küçültülmüş logo
+    const double kLogoWidthNormal = 120.0; // Normal ekranda tam logo
+    const double kAltGapCompact = 8.0; // "Veya" bölümü üst boşluk (kısa)
+    const double kAltGapNormal = 20.0; // "Veya" bölümü üst boşluk (tam)
+    const double kBottomGapCompact = 14.0; // Alt misafir butonu boşluğu (kısa)
+    const double kBottomGapNormal = 32.0; // Alt misafir butonu boşluğu (tam)
+
     // Beyaz logo kutusu %40 küçültüldü (118→71, 200→120).
-    final logoWidth = compact ? 71.0 : 120.0;
+    final logoWidth = compact ? kLogoWidthCompact : kLogoWidthNormal;
     final topGap = compact ? 0.0 : AppSpacing.md;
     final actionGap = compact ? AppSpacing.sm : AppSpacing.lg;
-    final altGap = compact ? 8.0 : 20.0;
-    final bottomGap = compact ? 14.0 : 32.0;
+    final altGap = compact ? kAltGapCompact : kAltGapNormal;
+    final bottomGap = compact ? kBottomGapCompact : kBottomGapNormal;
     final authInputLabelStyle = TextStyle(
       color: AppTheme.textPrimaryColor(context),
       fontWeight: FontWeight.w700,

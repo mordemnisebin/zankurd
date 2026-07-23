@@ -62,6 +62,18 @@ void main() {
     expect(source, isNot(contains("'p_response_ms': 2000")));
   });
 
+  test('shared room broadcast channel keeps listener ref-counts', () {
+    final source = File(
+      'lib/src/data/supabase_zankurd_repository.dart',
+    ).readAsStringSync();
+
+    expect(source, contains('class _ManagedRoomChannel'));
+    expect(source, contains('managed.listenerCount++'));
+    expect(source, contains('managed.listenerCount--'));
+    expect(source, contains('_disposeUnretainedRoomChannel'));
+    expect(source, contains('_retainRoomChannel(roomId).onBroadcast('));
+  });
+
   test(
     'multiplayer integrity migration closes direct answer and score access',
     () {

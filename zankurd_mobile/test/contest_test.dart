@@ -1,6 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/contest.dart';
+import 'package:zankurd_mobile/src/screens/contest_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 void main() {
   group('Contest Models', () {
@@ -198,6 +204,30 @@ void main() {
       );
 
       expect(badge.tier, 2);
+    });
+  });
+
+  group('ContestScreen Widget', () {
+    testWidgets('ContestScreen renders without hanging spinner', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues({});
+      final repo = MockZanKurdRepository();
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) => LanguageProvider()..setLang('tr'),
+            ),
+          ],
+          child: MaterialApp(
+            theme: AppTheme.dark(),
+            home: Scaffold(body: ContestScreen(repository: repo)),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byType(ContestScreen), findsOneWidget);
     });
   });
 }

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../config/bot_names.dart';
 import '../models/player.dart';
 
 /// Tek kişilik yarışta insan hissi veren simüle rakip.
@@ -42,10 +43,13 @@ class BotRace {
 
   factory BotRace.standard({Random? random}) {
     final rng = random ?? Random();
+    // M-3: İsimler merkezi BotNames.pool'dan rastgele seçilir;
+    // her oyunda farklı rakip kadrosu oluşur.
+    final shuffled = List<String>.from(BotNames.pool)..shuffle(rng);
     return BotRace([
-      BotOpponent(name: 'Rojda', skill: 0.85, random: rng),
-      BotOpponent(name: 'Baran', skill: 0.70, random: rng),
-      BotOpponent(name: 'Dilan', skill: 0.55, random: rng),
+      BotOpponent(name: shuffled[0], skill: 0.85, random: rng),
+      BotOpponent(name: shuffled[1], skill: 0.70, random: rng),
+      BotOpponent(name: shuffled[2], skill: 0.55, random: rng),
     ]);
   }
 

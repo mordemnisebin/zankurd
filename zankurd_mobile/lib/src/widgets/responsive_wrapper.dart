@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 /// Web masaüstü/tablet geniş ekranlarda içeriği ortalar ve maksimum genişlik
 /// sınırı uygular. Mobil cihazlarda tam ekran davranışı korunur.
 ///
-/// 2026-07-23 M34: bu yorum önceden "tablet iki sütun düzeni" diyordu ama
-/// gövde hiçbir zaman iki sütun uygulamadı — tek sütun + ortalama +
-/// [maxContentWidth] sınırı. Gerçek iki sütunlu tablet düzeni kapsamlı bir
-/// tasarım işi; ayrı planlanmalı.
-// TODO(tablet-2-col): gerçek iki sütunlu tablet düzeni — ayrı iş.
+/// Mevcut uygulama: tek sütun + ortalama + [maxContentWidth] sınırı.
+/// Gerçek iki sütunlu tablet düzeni kapsamlı bir tasarım işi;
+/// izole bir sprint olarak planlanmalı (M-12).
 class ResponsiveWrapper extends StatelessWidget {
   const ResponsiveWrapper({required this.child, super.key});
 
