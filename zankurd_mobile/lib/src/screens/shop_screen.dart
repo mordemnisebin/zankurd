@@ -85,6 +85,13 @@ class ShopItem {
   });
 }
 
+/// Test-only erişim: mağaza kataloğunun statik yedek listesi.
+///
+/// 2026-07-23 M24: themeColor dağılımının markaya kaydırıldığını ve
+/// cost'a yanlışlıkla dokunulmadığını otomatik doğrulayabilmek için.
+@visibleForTesting
+List<ShopItem> get debugShopItems => _ShopScreenState._items;
+
 class ShopScreen extends StatefulWidget {
   const ShopScreen({required this.repository, super.key});
 
@@ -103,6 +110,12 @@ class _ShopScreenState extends State<ShopScreen> {
   // Tüm ürünler gösterilir (whitelist kaldırıldı).
 
   // 2026-07-22 canlı UX denetimi: giriş ürünleri
+  // 2026-07-23 M24: themeColor dağılımı playPink/playCyan/playPurple
+  // (marka dışı) ağırlıklıydı — turuncu/altın/koyu-yeşil marka kimliğinden
+  // uzaklaşıyordu. Yalnız themeColor alanları yeniden dağıtıldı; cost,
+  // id, başlık ve ikonlara dokunulmadı. playPurple/playCyan'de kalan 3
+  // ürün (emoji_ster, name_color_purple, frame_simple) bilinçli bırakıldı
+  // çünkü açıklama metinleri o rengi ismen anıyor ("mor", "cyan").
   static const List<ShopItem> _items = [
     ShopItem(
       id: 'emoji_roj',
@@ -192,7 +205,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descTr: 'Avatarın neon renklerle parıldasın.',
       cost: 600,
       icon: AppIcons.wandMagicSparkles,
-      themeColor: AppTheme.playCyan,
+      themeColor: AppTheme.accent,
     ),
     ShopItem(
       id: 'name_color_gold',
@@ -224,7 +237,7 @@ class _ShopScreenState extends State<ShopScreen> {
           'Bir sonraki yarışma için 3 ekstra joker: 50/50, seyirci ve çift cevap.',
       cost: 350,
       icon: AppIcons.wandMagicSparkles,
-      themeColor: AppTheme.playPink,
+      themeColor: AppTheme.correct,
     ),
     ShopItem(
       id: 'profile_badge_vip',
@@ -234,7 +247,7 @@ class _ShopScreenState extends State<ShopScreen> {
       descTr: 'Profilinde özel VIP rozeti görünsün.',
       cost: 1000,
       icon: AppIcons.gem,
-      themeColor: AppTheme.playCyan,
+      themeColor: AppTheme.gold,
     ),
   ];
 

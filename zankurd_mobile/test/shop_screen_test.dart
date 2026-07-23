@@ -157,6 +157,53 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  // 2026-07-23 M24: mağaza paleti markaya kaydırıldı (playPink/playCyan/
+  // playPurple ağırlığından turuncu/altın/koyu-yeşile). Bu iki test, (a)
+  // marka tonlarının çoğunlukta kaldığını ve (b) hiçbir ürünün cost'unun
+  // yanlışlıkla değişmediğini otomatik garanti eder.
+  test('mağaza paleti marka tonları çoğunlukta (M24)', () {
+    final brandTones = <Color>{
+      AppTheme.gold,
+      AppTheme.accent,
+      AppTheme.correct,
+    };
+    final brandCount = debugShopItems
+        .where((item) => brandTones.contains(item.themeColor))
+        .length;
+    final offBrandCount = debugShopItems.length - brandCount;
+
+    expect(
+      brandCount,
+      greaterThan(offBrandCount),
+      reason:
+          'Marka dışı tonlar (playPink/playCyan/playPurple) çoğunlukta '
+          'kalmamalı — M24 denetiminin amacı buydu.',
+    );
+  });
+
+  test('mağaza ürün fiyatları M24 paleti değişikliğinden etkilenmedi', () {
+    const expectedCosts = {
+      'emoji_roj': 10,
+      'emoji_ster': 10,
+      'frame_simple': 20,
+      'joker_bundle': 500,
+      'extra_lifeline': 100,
+      'spin_wheel_extra': 200,
+      'premium_colors': 300,
+      'avatar_frame_gold': 750,
+      'avatar_frame_neon': 600,
+      'name_color_gold': 500,
+      'name_color_purple': 400,
+      'joker_pack_3': 350,
+      'profile_badge_vip': 1000,
+    };
+
+    final actualCosts = {
+      for (final item in debugShopItems) item.id: item.cost,
+    };
+    expect(actualCosts, expectedCosts);
+  });
+
   testWidgets('bakiye 0 iken earn-coin CTA 390x844 ekranda taşmadan çizilir', (
     tester,
   ) async {
