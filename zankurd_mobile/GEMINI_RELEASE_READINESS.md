@@ -1,5 +1,13 @@
 # ZanKurd release readiness — 22 Temmuz 2026
 
+> **Not (23 Temmuz 2026):** Bu rapordaki "Geçen kapılar" bölümü 22 Temmuz'daki
+> tek seferlik build/deploy doğrulamasının anlık görüntüsüdür (SHA-256'lar o
+> build'e ait) — yeniden build/deploy/hash doğrulaması yapılmadığından burada
+> güncellenmedi. Yalnız test sayısı gerçeğe uydurulmuştur: 23 Temmuz'daki UX/
+> erişilebilirlik oturumuyla (M15/M16/M18/M23/M24/M25/M28/M33/M34 kapsayan
+> ~20 commit) taban **722 teste** çıktı, `dart analyze` hâlâ temiz. "Yayından
+> önce zorunlu" listesi bu oturumdan etkilenmedi, hâlâ geçerli.
+
 ## Karar
 
 **Web ve Supabase canlı yayın: başarılı. Mobil mağaza yayını: koşullu.**
@@ -10,7 +18,7 @@ için aşağıdaki platform adımları ayrıca tamamlanmalıdır.
 ## Geçen kapılar
 
 - Analyzer: temiz.
-- Test: 642 geçti, 1 preview testi bilinçli atlandı.
+- Test: 642 geçti, 1 preview testi bilinçli atlandı (bkz. üstteki 23 Temmuz notu — güncel taban 722).
 - Soru kalite gate: 2.367 aktif runtime kayıt; 0 blocker, 0 critical, unknown 0.
 - Web release build: başarılı; geliştirme JSON bankası bundle'da yok.
 - Hostinger: HTTP 200; canlı ve yerel `main.dart.js` SHA-256 eşleşiyor.
