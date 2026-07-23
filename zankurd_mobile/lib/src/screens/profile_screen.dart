@@ -17,6 +17,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../widgets/loading_overlay.dart';
 import '../widgets/skeleton_loader.dart';
 import '../models/avatar_identity.dart';
 import '../data/badge_service.dart';
@@ -33,6 +34,10 @@ import 'shop_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 part 'profile/profile_widgets.dart';
+
+// 2026-07-23 M18: misafir hesap yükseltme dialog'unun üç olası çıkışı —
+// email/şifre başarılı, email/şifre başarısız, Google bağlama istendi.
+enum _GuestUpgradeAction { emailSuccess, emailFailure, googleRequested }
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
@@ -853,7 +858,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final formKey = GlobalKey<FormState>();
     bool submitting = false;
 
-    final result = await showDialog<bool>(
+    final result = await showDialog<_GuestUpgradeAction>(
       context: context,
       barrierDismissible: false,
       builder: (dialogContext) => StatefulBuilder(
@@ -915,6 +920,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     return null;
                   },
                 ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(child: Divider(color: AppTheme.borderColor(ctx))),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        ku ? 'an jî' : 'veya',
+                        style: AppTypography.caption.copyWith(
+                          color: AppTheme.textMutedColor(ctx),
+                        ),
+                      ),
+                    ),
+                    Expanded(child: Divider(color: AppTheme.borderColor(ctx))),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                // 2026-07-23 M18: Google linkIdentity mevcut oturumu
+                // korur, bu yüzden dialog anında kapanır — sonucu dış
+                // kapsamda _linkGoogleAccount() ele alır.
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: submitting
+                        ? null
+                        : () => Navigator.pop(
+                            dialogContext,
+                            _GuestUpgradeAction.googleRequested,
+                          ),
+                    icon: const Text(
+                      'G',
+                      style: TextStyle(
+                        color: AppTheme.accent,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    label: Text(ku ? 'Bi Google ve Girêde' : 'Google ile Bağla'),
+                  ),
+                ),
               ],
             ),
           ),
@@ -922,7 +966,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             OutlinedButton(
               onPressed: submitting
                   ? null
-                  : () => Navigator.pop(dialogContext, false),
+                  : () => Navigator.pop(dialogContext, null),
               child: Text(ku ? 'Betal' : 'Vazgeç'),
             ),
             FilledButton(
@@ -937,7 +981,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         password: passwordController.text,
                       );
                       if (!ctx.mounted) return;
-                      Navigator.pop(dialogContext, success);
+                      Navigator.pop(
+                        dialogContext,
+                        success
+                            ? _GuestUpgradeAction.emailSuccess
+                            : _GuestUpgradeAction.emailFailure,
+                      );
                     },
               child: submitting
                   ? const SizedBox(
@@ -963,22 +1012,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
 
     if (!mounted) return;
-    if (result == true) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            ku
-                ? 'Hesabê te bi serkeftî hat tomarkirin!'
-                : 'Hesabın başarıyla kaydedildi!',
+    switch (result) {
+      case _GuestUpgradeAction.emailSuccess:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              ku
+                  ? 'Hesabê te bi serkeftî hat tomarkirin!'
+                  : 'Hesabın başarıyla kaydedildi!',
+            ),
           ),
-        ),
-      );
-    } else if (result == false && context.read<AuthProvider>().errorMessage != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.read<AuthProvider>().errorMessage!),
-        ),
-      );
+        );
+      case _GuestUpgradeAction.emailFailure:
+        final message = context.read<AuthProvider>().errorMessage;
+        if (message != null) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(message)));
+        }
+      case _GuestUpgradeAction.googleRequested:
+        await _linkGoogleAccount();
+      case null:
+        break;
+    }
+  }
+
+  // 2026-07-23 M18: linkIdentity anonim oturumu değiştirmez, sadece
+  // tarayıcıyı açar — sonuç auth state listener üzerinden asenkron gelir.
+  Future<void> _linkGoogleAccount() async {
+    final ku = context.isKu;
+    LoadingOverlay.show(
+      context,
+      message: ku ? 'Bi Google ve tê girêdan...' : 'Google ile bağlanılıyor...',
+    );
+    final auth = context.read<AuthProvider>();
+    final success = await auth.linkGoogleAccount();
+    if (!mounted) return;
+    LoadingOverlay.hide(context);
+    if (!success && auth.errorMessage != null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(auth.errorMessage!)));
     }
   }
 

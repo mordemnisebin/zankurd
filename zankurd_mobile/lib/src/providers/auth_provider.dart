@@ -166,6 +166,25 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
+  // 2026-07-23 canlı UX denetimi M18: signInWithGoogle() anonim oturumu
+  // yeni bir hesapla değiştiriyordu, bu da misafir ilerlemesinin (XP,
+  // streak, yanlış soru geçmişi) kaybolmasına yol açabiliyordu.
+  // linkIdentity, mevcut anonim kimliği signOut/yeni oturum açmadan
+  // Google'a bağlar; local store'lara dokunmaz.
+  /// Misafir (anonim) hesabı Google ile bağlar — mevcut oturumu korur.
+  Future<bool> linkGoogleAccount() {
+    return _run((client) async {
+      final launched = await client.auth.linkIdentity(
+        OAuthProvider.google,
+        redirectTo: authRedirectUri,
+        authScreenLaunchMode: LaunchMode.externalApplication,
+      );
+      if (!launched) {
+        throw const AuthException('Google bağlantısı başlatılamadı.');
+      }
+    });
+  }
+
   Future<bool> resetPassword(String email) {
     return _run(
       (client) =>
@@ -292,6 +311,17 @@ class AuthProvider extends ChangeNotifier {
     final message = e.message.toLowerCase();
     if (_isNetworkErrorMessage(message)) {
       return 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.';
+    }
+    // 2026-07-23 M18: Google hesap bağlama hataları — kod bazlı eşleşme
+    // mesaj metninden daha güvenilir (bkz. gotrue error_code.dart).
+    if (e.code == 'identity_already_exists' ||
+        message.contains('identity is already linked') ||
+        message.contains('already been linked')) {
+      return 'Bu Google hesabı zaten başka bir hesaba bağlı.';
+    }
+    if (e.code == 'manual_linking_disabled' ||
+        message.contains('manual linking')) {
+      return 'Hesap bağlama şu anda kapalı. Supabase panelinde manuel bağlamayı aç.';
     }
     if (message.contains('unsupported provider') ||
         message.contains('provider is not enabled')) {
