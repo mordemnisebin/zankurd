@@ -191,146 +191,191 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                   ),
                   child: SafeArea(
                     top: false,
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(
-                        AppSpacing.page,
-                        AppSpacing.lg,
-                        AppSpacing.page,
-                        AppSpacing.lg,
-                      ),
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 430),
-                        child: Container(
-                          padding: const EdgeInsets.all(AppSpacing.md),
-                          decoration: BoxDecoration(
-                            color: AppTheme.surfaceColor(context).withValues(
-                              alpha: AppTheme.isLight(context) ? 0.92 : 0.55,
-                            ),
-                            borderRadius: BorderRadius.circular(AppRadius.card),
-                            border: Border.all(
-                              color: AppTheme.borderColor(
-                                context,
-                              ).withValues(alpha: 0.45),
-                            ),
-                            boxShadow: AppTheme.softShadow(context),
+                    // 2026-07-23 M23 devamı: hero sıkılaştırılınca form
+                    // kartının altında da boşluk kaldığı canlı testte
+                    // görüldü — kart kısa kaldığında Expanded alanının
+                    // tamamını doldurmuyordu. Aynı minHeight+Center
+                    // deseniyle kart artık kalan alanda ortalanıyor.
+                    child: LayoutBuilder(
+                      builder: (context, formConstraints) {
+                        return SingleChildScrollView(
+                          padding: const EdgeInsets.fromLTRB(
+                            AppSpacing.page,
+                            AppSpacing.lg,
+                            AppSpacing.page,
+                            AppSpacing.lg,
                           ),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 4,
-                                      height: 22,
-                                      margin: const EdgeInsets.only(
-                                        right: AppSpacing.sm,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(2),
-                                        gradient: const LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            AppTheme.accent,
-                                            AppTheme.primaryGradientEnd,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minHeight: formConstraints.maxHeight,
+                            ),
+                            child: Center(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxWidth: 430,
+                                ),
+                                child: Container(
+                                  padding: const EdgeInsets.all(AppSpacing.md),
+                                  decoration: BoxDecoration(
+                                    color: AppTheme.surfaceColor(context)
+                                        .withValues(
+                                          alpha: AppTheme.isLight(context)
+                                              ? 0.92
+                                              : 0.55,
+                                        ),
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadius.card,
+                                    ),
+                                    border: Border.all(
+                                      color: AppTheme.borderColor(
+                                        context,
+                                      ).withValues(alpha: 0.45),
+                                    ),
+                                    boxShadow: AppTheme.softShadow(context),
+                                  ),
+                                  child: Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: 4,
+                                              height: 22,
+                                              margin: const EdgeInsets.only(
+                                                right: AppSpacing.sm,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(2),
+                                                gradient: const LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [
+                                                    AppTheme.accent,
+                                                    AppTheme.primaryGradientEnd,
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                ku
+                                                    ? 'Navê te di lîstikê de çi be?'
+                                                    : 'Oyundaki adın ne olsun?',
+                                                style: AppTypography.heading2
+                                                    .copyWith(
+                                                      color:
+                                                          AppTheme.textPrimaryColor(
+                                                            context,
+                                                          ),
+                                                    ),
+                                              ),
+                                            ),
                                           ],
                                         ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        ku
-                                            ? 'Navê te di lîstikê de çi be?'
-                                            : 'Oyundaki adın ne olsun?',
-                                        style: AppTypography.heading2.copyWith(
-                                          color: AppTheme.textPrimaryColor(
-                                            context,
+                                        const SizedBox(height: AppSpacing.xs),
+                                        Text(
+                                          ku
+                                              ? 'Ev nav di tabloya pêşderçûnê û odeyên serhêl de xuya dibe.'
+                                              : 'Bu ad liderlik tablosunda ve çevrimiçi odalarda görünecek.',
+                                          style: AppTypography.bodyMedium
+                                              .copyWith(
+                                                color: AppTheme.textMutedColor(
+                                                  context,
+                                                ),
+                                                height: 1.5,
+                                              ),
+                                        ),
+                                        const SizedBox(height: AppSpacing.lg),
+                                        TextFormField(
+                                          key: const ValueKey(
+                                            'player-name-field',
+                                          ),
+                                          controller: _controller,
+                                          // Hata yalnız Form.validate() ile
+                                          // güncelleniyordu: geçerli bir ad yazıldıktan
+                                          // sonra da kırmızı kenarlık ve "en az 2
+                                          // karakter" uyarısı ekranda kalıyordu
+                                          // (2026-07-22 canlı UX denetimi).
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                          textCapitalization:
+                                              TextCapitalization.words,
+                                          style: AppTypography.bodyLarge
+                                              .copyWith(
+                                                color:
+                                                    AppTheme.textPrimaryColor(
+                                                      context,
+                                                    ),
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                          decoration: InputDecoration(
+                                            hintText: ku
+                                                ? 'Mînak: Zelal'
+                                                : 'Örn: Zelal',
+                                            prefixIcon: Icon(
+                                              AppIcons.user,
+                                              color: AppTheme.textMutedColor(
+                                                context,
+                                              ),
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            final name = value?.trim() ?? '';
+                                            if (name.length < 2) {
+                                              return ku
+                                                  ? 'Nav divê herî kêm 2 tîp be'
+                                                  : 'Ad en az 2 karakter olmalı';
+                                            }
+                                            if (name.length > 24) {
+                                              return ku
+                                                  ? 'Nav divê herî zêde 24 tîp be'
+                                                  : 'Ad en fazla 24 karakter olmalı';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        const SizedBox(height: AppSpacing.lg),
+                                        GeometricGradientButton(
+                                          label: ku
+                                              ? 'Dest Pê Bike'
+                                              : 'Oyuna Başla',
+                                          icon: AppIcons.arrowRight,
+                                          isLoading: _saving,
+                                          onPressed: _saving ? null : _save,
+                                        ),
+                                        const SizedBox(height: AppSpacing.xs),
+                                        // 2026-07-23 UX: isim artık zorunlu değil;
+                                        // kullanıcı varsayılan adla geçip sonra
+                                        // profilden değiştirebilir (giriş sürtünmesi ↓).
+                                        TextButton(
+                                          onPressed: _saving
+                                              ? null
+                                              : widget.onCompleted,
+                                          child: Text(
+                                            ku ? 'Paşê bike' : 'Şimdilik geç',
+                                            style: AppTypography.bodyMedium
+                                                .copyWith(
+                                                  color:
+                                                      AppTheme.textMutedColor(
+                                                        context,
+                                                      ),
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: AppSpacing.xs),
-                                Text(
-                                  ku
-                                      ? 'Ev nav di tabloya pêşderçûnê û odeyên serhêl de xuya dibe.'
-                                      : 'Bu ad liderlik tablosunda ve çevrimiçi odalarda görünecek.',
-                                  style: AppTypography.bodyMedium.copyWith(
-                                    color: AppTheme.textMutedColor(context),
-                                    height: 1.5,
-                                  ),
-                                ),
-                                const SizedBox(height: AppSpacing.lg),
-                                TextFormField(
-                                  key: const ValueKey('player-name-field'),
-                                  controller: _controller,
-                                  // Hata yalnız Form.validate() ile
-                                  // güncelleniyordu: geçerli bir ad yazıldıktan
-                                  // sonra da kırmızı kenarlık ve "en az 2
-                                  // karakter" uyarısı ekranda kalıyordu
-                                  // (2026-07-22 canlı UX denetimi).
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  textCapitalization: TextCapitalization.words,
-                                  style: AppTypography.bodyLarge.copyWith(
-                                    color: AppTheme.textPrimaryColor(context),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: ku
-                                        ? 'Mînak: Zelal'
-                                        : 'Örn: Zelal',
-                                    prefixIcon: Icon(
-                                      AppIcons.user,
-                                      color: AppTheme.textMutedColor(context),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    final name = value?.trim() ?? '';
-                                    if (name.length < 2) {
-                                      return ku
-                                          ? 'Nav divê herî kêm 2 tîp be'
-                                          : 'Ad en az 2 karakter olmalı';
-                                    }
-                                    if (name.length > 24) {
-                                      return ku
-                                          ? 'Nav divê herî zêde 24 tîp be'
-                                          : 'Ad en fazla 24 karakter olmalı';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(height: AppSpacing.lg),
-                                GeometricGradientButton(
-                                  label: ku ? 'Dest Pê Bike' : 'Oyuna Başla',
-                                  icon: AppIcons.arrowRight,
-                                  isLoading: _saving,
-                                  onPressed: _saving ? null : _save,
-                                ),
-                                const SizedBox(height: AppSpacing.xs),
-                                // 2026-07-23 UX: isim artık zorunlu değil;
-                                // kullanıcı varsayılan adla geçip sonra
-                                // profilden değiştirebilir (giriş sürtünmesi ↓).
-                                TextButton(
-                                  onPressed: _saving
-                                      ? null
-                                      : widget.onCompleted,
-                                  child: Text(
-                                    ku ? 'Paşê bike' : 'Şimdilik geç',
-                                    style: AppTypography.bodyMedium.copyWith(
-                                      color: AppTheme.textMutedColor(context),
-                                      fontWeight: FontWeight.w600,
+                                      ],
                                     ),
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ),
                 ),
