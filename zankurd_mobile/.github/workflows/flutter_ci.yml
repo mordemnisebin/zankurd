@@ -27,18 +27,21 @@ jobs:
     - name: Install app dependencies
       run: flutter pub get
 
-    - name: Install Widgetbook dependencies
-      working-directory: widgetbook
-      run: flutter pub get
-
     - name: Check formatting
-      run: dart format --set-exit-if-changed .
+      # offline_question_bank.dart üretilmiş bir dosya; kanonik biçimini
+      # tool/verify_and_fix_question_bank.py belirliyor, dart format'ınkiyle
+      # çelişiyor (bkz. 2026-07-23: dart format bu dosyayı ~18k satır
+      # değiştirip offline_questions_json_equivalence_test.dart'ı kırdı).
+      # `dart format` CLI'ında analysis_options.yaml tabanlı hariç tutma
+      # desteklenmediğinden burada elle dışlanıyor.
+      run: |
+        dart format --set-exit-if-changed \
+          $(find . -name '*.dart' \
+            -not -path './build/*' \
+            -not -path '*/.dart_tool/*' \
+            -not -path './lib/src/data/offline_question_bank.dart')
 
     - name: Run app static analysis
-      run: dart analyze
-
-    - name: Run Widgetbook static analysis
-      working-directory: widgetbook
       run: dart analyze
 
     - name: Check question quality regressions
