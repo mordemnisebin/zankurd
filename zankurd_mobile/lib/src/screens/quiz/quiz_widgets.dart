@@ -11,6 +11,18 @@ class _LiveScoreboard extends StatelessWidget {
   Widget build(BuildContext context) {
     final sortedPlayers = [...players]
       ..sort((a, b) => b.score.compareTo(a.score));
+    final shown = sortedPlayers.take(4).toList();
+    // 2026-07-23 M25b: aynı skor tablosunda hash çakışması varsa
+    // round-robin ile çözülür (bkz. leaderboard_screen.dart ile aynı desen).
+    final colorOverrides = resolveAvatarColors(
+      shown.map(
+        (p) => (
+          id: p.id ?? p.name,
+          displayName: p.name,
+          colorHex: p.avatarColor,
+        ),
+      ),
+    );
 
     return AppPanel(
       color: AppTheme.surfaceHiColor(context),
@@ -30,8 +42,12 @@ class _LiveScoreboard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.xs),
-          for (var i = 0; i < sortedPlayers.take(4).length; i++)
-            _LiveScoreRow(rank: i + 1, player: sortedPlayers[i]),
+          for (var i = 0; i < shown.length; i++)
+            _LiveScoreRow(
+              rank: i + 1,
+              player: shown[i],
+              colorOverride: colorOverrides[shown[i].id ?? shown[i].name],
+            ),
         ],
       ),
     );
@@ -39,10 +55,15 @@ class _LiveScoreboard extends StatelessWidget {
 }
 
 class _LiveScoreRow extends StatelessWidget {
-  const _LiveScoreRow({required this.rank, required this.player});
+  const _LiveScoreRow({
+    required this.rank,
+    required this.player,
+    this.colorOverride,
+  });
 
   final int rank;
   final Player player;
+  final Color? colorOverride;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +96,7 @@ class _LiveScoreRow extends StatelessWidget {
             colorHex: player.avatarColor,
             frameId: player.avatarFrame,
             displayName: player.name,
+            colorOverride: colorOverride,
           ),
           const SizedBox(width: AppSpacing.xs),
           Expanded(
@@ -500,6 +522,15 @@ class _DuelScoreHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 2026-07-23 M25b: sadece 2 oyuncu olsa da hash çakışması mümkün
+    // (iki isim aynı palet dilimine düşebilir) — aynı desenle çözülür.
+    final colorOverrides = resolveAvatarColors([
+      (id: player.id ?? player.name, displayName: player.name, colorHex: player.avatarColor),
+      (id: opponent.id ?? opponent.name, displayName: opponent.name, colorHex: opponent.avatarColor),
+    ]);
+    final playerColor = colorOverrides[player.id ?? player.name];
+    final opponentColor = colorOverrides[opponent.id ?? opponent.name];
+
     return AppPanel(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
@@ -521,6 +552,7 @@ class _DuelScoreHeader extends StatelessWidget {
                       colorHex: player.avatarColor,
                       frameId: player.avatarFrame,
                       displayName: player.name,
+                      colorOverride: playerColor,
                     ),
                     const SizedBox(width: AppSpacing.xs),
                     Expanded(
@@ -616,6 +648,7 @@ class _DuelScoreHeader extends StatelessWidget {
                       colorHex: opponent.avatarColor,
                       frameId: opponent.avatarFrame,
                       displayName: opponent.name,
+                      colorOverride: opponentColor,
                     ),
                   ],
                 ),

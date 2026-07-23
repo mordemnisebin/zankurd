@@ -76,6 +76,53 @@ Color avatarColorForName(String? name) {
   return avatarNamePalette[hash % avatarNamePalette.length];
 }
 
+/// 2026-07-23 M25b: aynı ekranda (leaderboard, oda/lobi listesi) render
+/// edilen oyuncular arasında hash çakışmasını round-robin ile çözer.
+///
+/// Yalnızca `colorHex == null` olan (kullanıcının açıkça renk seçmediği,
+/// hash fallback'ine düşen) girdiler için hesaplanır — kullanıcının
+/// bilinçli seçtiği renge asla dokunulmaz. Dönüş değeri `id → Color`
+/// eşlemesidir; `colorHex` dolu girdiler dönüş haritasında yer almaz
+/// (çağıran taraf o girdiler için override kullanmamalı).
+///
+/// Palet boyutundan (12) fazla girdi varsa, döngü tükenince eşlenmemiş
+/// girdiler kendi orijinal hash rengine geri döner — sonsuz döngüye
+/// girmez, sadece o noktadan sonra çakışma olabilir (kabul edilebilir,
+/// oda/leaderboard listeleri bu boyutu aşmıyor).
+///
+/// Aynı girdi listesi build başında bir kez çağrılıp cache'lenmeli;
+/// `ListView.builder` gibi lazy render eden yerlerde her frame'de
+/// yeniden çağrılırsa round-robin sonucu liste kaymasıyla değişip
+/// renkler "titreyebilir".
+Map<String, Color> resolveAvatarColors(
+  Iterable<({String id, String? displayName, String? colorHex})> entries,
+) {
+  final result = <String, Color>{};
+  final used = <Color>{};
+  for (final entry in entries) {
+    if (entry.colorHex != null) continue;
+    final hashColor = avatarColorForName(entry.displayName);
+    var color = hashColor;
+    if (used.contains(color)) {
+      final startIndex = avatarNamePalette.indexOf(hashColor);
+      for (var step = 1; step <= avatarNamePalette.length; step++) {
+        final candidate =
+            avatarNamePalette[(startIndex + step) % avatarNamePalette.length];
+        if (!used.contains(candidate)) {
+          color = candidate;
+          break;
+        }
+      }
+      // Palet tamamen doluysa (girdi sayısı > palet boyu) orijinal hash
+      // rengine geri dönülür; yeni kayıt eklenmesin diye 'color' zaten
+      // hashColor'a eşit kalır.
+    }
+    used.add(color);
+    result[entry.id] = color;
+  }
+  return result;
+}
+
 IconData? iconFor(String? id) => id == null ? null : avatarIcons[id];
 
 /// '#RRGGBB' hex'ini çözer; bozuk/boş girdide [fallback] döner.

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../config/avatar_presets.dart';
 import '../config/category_visuals.dart';
 import '../data/mistake_store.dart';
 import '../data/sync_manager.dart';

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../config/avatar_presets.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/friend.dart';
@@ -288,6 +289,19 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             onAction: _startQuickRace,
           );
         }
+        // 2026-07-23 M25b: görünür ilk 10 arasında hash çakışması varsa
+        // (ör. podyumdaki 3 oyuncu aynı pembe) round-robin ile çözülür.
+        // Build başında bir kez hesaplanır — ListView içinde her frame'de
+        // yeniden çağrılmaz, renkler "titremesin" diye.
+        final avatarColorOverrides = resolveAvatarColors(
+          entries.map(
+            (e) => (
+              id: e.playerId,
+              displayName: e.displayName,
+              colorHex: e.avatarColor,
+            ),
+          ),
+        );
         return Column(
           children: [
             // Filtre/yenileme sırasında mevcut liste korunur; ince çubuk
@@ -311,9 +325,18 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                     _LeagueBanner(myRank: _myRank(entries), isKu: ku),
                     const SizedBox(height: AppSpacing.cardGap),
                   ],
-                  _Podium(entries: entries.take(3).toList(), isKu: ku),
+                  _Podium(
+                    entries: entries.take(3).toList(),
+                    isKu: ku,
+                    colorOverrides: avatarColorOverrides,
+                  ),
                   const SizedBox(height: AppSpacing.cardGap),
-                  for (final e in entries.skip(3)) _RankRow(entry: e, isKu: ku),
+                  for (final e in entries.skip(3))
+                    _RankRow(
+                      entry: e,
+                      isKu: ku,
+                      colorOverride: avatarColorOverrides[e.playerId],
+                    ),
                   // Liderlik yalnız ilk 10'u getiriyor; oyuncu listede
                   // yoksa kendi sırasını hiç göremiyordu — tablonun temel
                   // motivasyon mekanizması eksikti (2026-07-22 UX denetimi).
@@ -574,10 +597,15 @@ class _PeriodTabs extends StatelessWidget {
 // ─── Podium (top 3) ──────────────────────────────────────────────────────────
 
 class _Podium extends StatelessWidget {
-  const _Podium({required this.entries, required this.isKu});
+  const _Podium({
+    required this.entries,
+    required this.isKu,
+    this.colorOverrides = const {},
+  });
 
   final List<LeaderboardEntry> entries;
   final bool isKu;
+  final Map<String, Color> colorOverrides;
 
   @override
   Widget build(BuildContext context) {
@@ -587,9 +615,24 @@ class _Podium extends StatelessWidget {
 
     // Yerleşim: 2. sol, 1. orta (daha büyük), 3. sağ
     final slots = [
-      if (second != null) _PodiumSlot(entry: second, isCenter: false),
-      if (first != null) _PodiumSlot(entry: first, isCenter: true),
-      if (third != null) _PodiumSlot(entry: third, isCenter: false),
+      if (second != null)
+        _PodiumSlot(
+          entry: second,
+          isCenter: false,
+          colorOverride: colorOverrides[second.playerId],
+        ),
+      if (first != null)
+        _PodiumSlot(
+          entry: first,
+          isCenter: true,
+          colorOverride: colorOverrides[first.playerId],
+        ),
+      if (third != null)
+        _PodiumSlot(
+          entry: third,
+          isCenter: false,
+          colorOverride: colorOverrides[third.playerId],
+        ),
     ];
 
     return ClipRRect(
@@ -652,10 +695,15 @@ class _Podium extends StatelessWidget {
 }
 
 class _PodiumSlot extends StatelessWidget {
-  const _PodiumSlot({required this.entry, required this.isCenter});
+  const _PodiumSlot({
+    required this.entry,
+    required this.isCenter,
+    this.colorOverride,
+  });
 
   final LeaderboardEntry entry;
   final bool isCenter;
+  final Color? colorOverride;
 
   Color _colorFor(bool isLight) {
     switch (entry.rank) {
@@ -701,6 +749,7 @@ class _PodiumSlot extends StatelessWidget {
                 colorHex: entry.avatarColor,
                 frameId: entry.avatarFrame,
                 displayName: entry.displayName,
+                colorOverride: colorOverride,
               ),
               const SizedBox(height: 6),
               Text(
@@ -775,6 +824,7 @@ class _RankRow extends StatelessWidget {
     required this.entry,
     required this.isKu,
     this.highlight = false,
+    this.colorOverride,
   });
 
   final LeaderboardEntry entry;
@@ -782,6 +832,11 @@ class _RankRow extends StatelessWidget {
 
   /// Oyuncunun kendi satırı: listede görünmediğinde en alta sabitlenir.
   final bool highlight;
+
+  /// 2026-07-23 M25b: yalnız ana listeden (görünür ilk 10) çağrılırken
+  /// [resolveAvatarColors] ile doldurulur. `_buildMyRankRow`'un ayrıca
+  /// getirdiği "kendi sıram" satırı bu listenin dışında, override almaz.
+  final Color? colorOverride;
 
   @override
   Widget build(BuildContext context) {
@@ -838,6 +893,7 @@ class _RankRow extends StatelessWidget {
             colorHex: entry.avatarColor,
             frameId: entry.avatarFrame,
             displayName: entry.displayName,
+            colorOverride: colorOverride,
           ),
           const SizedBox(width: 10),
           Expanded(
