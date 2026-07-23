@@ -18,7 +18,14 @@ extension _QuizScreenUI on _QuizScreenState {
       builder: (context, constraints) {
         final contentWidth = min(constraints.maxWidth - 24, 800.0);
         return Padding(
-          padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+          // M-7: raw literal → adlandırılmış sabit. 6px, AppSpacing.xxs(4) ile
+          // xs(8) arasında; quiz-özel değer olduğu için ayrı sabite alındı.
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.sm,
+            6.0,
+            AppSpacing.sm,
+            AppSpacing.xs,
+          ),
           child: Center(
             child: SizedBox(
               width: contentWidth,
@@ -26,11 +33,11 @@ extension _QuizScreenUI on _QuizScreenState {
                 children: [
                   if (!_isLearningExperience) ...[
                     _buildScoreHeader(),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.xs),
                   ],
                   _buildProgressBar(context),
                   if (!_isLearningExperience) _buildComboRow(),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.xs),
                   Expanded(
                     // 2026-07-23 M23: 2 şıklı sorularda (Ziman çeviri
                     // alıştırmaları) içerik kısa kalıyor, aksiyon barından
@@ -115,7 +122,13 @@ extension _QuizScreenUI on _QuizScreenState {
 
     return LayoutBuilder(
       builder: (context, constraints) => SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+        // M-7: landscape iç dolgu — aynı 6px quiz gap sabiti.
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.sm,
+          6.0,
+          AppSpacing.sm,
+          AppSpacing.xs,
+        ),
         child: Center(
           child: SizedBox(
             key: const ValueKey('quiz-landscape-content'),
@@ -157,24 +170,26 @@ extension _QuizScreenUI on _QuizScreenState {
                   ),
                 ),
                 const SizedBox(width: 10),
-                SizedBox(
-                  width: 270,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (!_isLearningExperience) ...[
-                        _buildScoreHeader(),
+                Flexible(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 270),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (!_isLearningExperience) ...[
+                          _buildScoreHeader(),
+                          const SizedBox(height: 6),
+                        ],
+                        _buildProgressBar(context),
+                        if (!_isLearningExperience) _buildComboRow(),
                         const SizedBox(height: 6),
+                        _buildActionControls(),
+                        if (widget.is1v1) ...[
+                          const SizedBox(height: 8),
+                          _LiveScoreboard(players: livePlayers),
+                        ],
                       ],
-                      _buildProgressBar(context),
-                      if (!_isLearningExperience) _buildComboRow(),
-                      const SizedBox(height: 6),
-                      _buildActionControls(),
-                      if (widget.is1v1) ...[
-                        const SizedBox(height: 8),
-                        _LiveScoreboard(players: livePlayers),
-                      ],
-                    ],
+                    ),
                   ),
                 ),
               ],
@@ -593,14 +608,14 @@ extension _QuizScreenUI on _QuizScreenState {
     );
   }
 
-  /// Aksiyon barı (joker satırı + "Piştre") ekranın altına sabitlendiği için
-  /// yüzen SnackBar'lar varsayılan konumlarında birincil eylemi örter.
-  /// Bu margin bildirimi barın üstüne kaldırır (2026-07-22 UX denetimi).
+  /// 148 = joker satırı (~44) + "Piştre" butonu (~52) + alt güvenli alan ve
+  /// iç dolgu (~52). Bu değer aksiyon barı sabit yüksekliğine dayanır (M-2).
+  static const double _kActionBarClearance = 148.0;
   static const EdgeInsets _quizSnackBarMargin = EdgeInsets.fromLTRB(
-    12,
+    AppSpacing.sm,
     0,
-    12,
-    148,
+    AppSpacing.sm,
+    _kActionBarClearance,
   );
 
   // ─── Joker mekanikleri ───────────────────────────────────────────────────

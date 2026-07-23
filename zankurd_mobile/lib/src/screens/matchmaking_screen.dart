@@ -17,6 +17,7 @@ import '../utils/error_reporter.dart';
 import '../utils/test_environment.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../config/bot_names.dart';
 
 Player? selectOpponentPlayer(
   Iterable<Player> players, {
@@ -185,7 +186,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         var matchedName = matchRes['opponent_name'] as String? ?? 'Raqîb';
         var opponentIdentity = const AvatarIdentity();
         final matchedLevel = max(1, _myLevel + Random().nextInt(3) - 1);
-        final roomId = matchRes['room_id'] as String;
+        // C-2: null-safe cast — Supabase schema hatası veya edge-case'de
+        // String? null dönebilir; null ise navigasyon iptal edilir.
+        final roomId = matchRes['room_id'] as String?;
+        if (roomId == null) return; // beklenmedik schema yanıtı
         final opponent = await _loadOpponentPlayer(
           roomId: roomId,
           category: chosenCategory,
@@ -216,7 +220,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             _statusTimer?.cancel();
             _statusTimer = null;
 
-            final roomId = entry['room_id'] as String;
+            // C-2: null-safe cast — subscription yanıtı beklenmedik türde
+            // olursa crash yerine sessizce çıkar.
+            final roomId = entry['room_id'] as String?;
+            if (roomId == null) return;
             // Fetch opponent display name
             String matchedName = ku ? 'Lîstikvan' : 'Rakip';
             var opponentIdentity = const AvatarIdentity();
@@ -275,19 +282,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             if (mounted) setState(() => _botPromptOpen = false);
             if (!mounted) return;
             if (playWithBot == true) {
-              final botNames = [
-                'Rojda',
-                'Baran',
-                'Dilan',
-                'Hogir',
-                'Azad',
-                'Berfin',
-                'Narin',
-                'Sero',
-                'Çiçek',
-                'Welat',
-              ];
-              final matchedName = botNames[Random().nextInt(botNames.length)];
+              // M-3: Bot isimleri merkezi config'den; inline liste kaldırıldı.
+              final matchedName =
+                  BotNames.pool[Random().nextInt(BotNames.pool.length)];
               final matchedLevel = max(1, _myLevel + Random().nextInt(5) - 2);
 
               await _onMatched(
@@ -1027,9 +1024,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                   displayName: _opponentName,
                                 )
                               : CircleAvatar(
-                                  backgroundColor: AppTheme.isLight(context)
-                                      ? const Color(0xFFE4E0D6)
-                                      : const Color(0xFF1F1D2B),
+                                  backgroundColor: AppColors.disabledSurface(
+                                    context,
+                                  ),
                                   child: Icon(
                                     AppIcons.question,
                                     color: AppTheme.isLight(context)

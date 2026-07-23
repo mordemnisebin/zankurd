@@ -26,31 +26,19 @@ class ContestScreen extends StatefulWidget {
 
 class _ContestScreenState extends State<ContestScreen> {
   late Future<Contest?> _contestFuture;
-  Timer? _refreshTimer;
   bool _starting = false;
 
   @override
   void initState() {
     super.initState();
     _loadContest();
-    _startRefresh();
   }
 
   void _loadContest() {
-    _contestFuture = widget.repository.loadTodayContest();
-  }
-
-  void _startRefresh() {
-    _refreshTimer = Timer.periodic(const Duration(seconds: 8), (_) {
-      if (!mounted || _starting) return;
-      setState(_loadContest);
-    });
-  }
-
-  @override
-  void dispose() {
-    _refreshTimer?.cancel();
-    super.dispose();
+    _contestFuture = widget.repository.loadTodayContest().timeout(
+      const Duration(seconds: 8),
+      onTimeout: () => null,
+    );
   }
 
   Future<void> _startQuiz(Contest contest) async {
@@ -228,7 +216,11 @@ class _ContestContent extends StatelessWidget {
                 colors: [
                   AppTheme.surfaceOf(context),
                   Color.alphaBlend(
-                    AppTheme.gold.withValues(alpha: 0.10),
+                    AppTheme.gold.withValues(alpha: 0.12),
+                    AppTheme.surfaceOf(context),
+                  ),
+                  Color.alphaBlend(
+                    AppTheme.accent.withValues(alpha: 0.05),
                     AppTheme.surfaceOf(context),
                   ),
                 ],
@@ -241,13 +233,26 @@ class _ContestContent extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: AppTheme.gold.withValues(alpha: 0.12),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
+                  blurRadius: 18,
+                  offset: const Offset(0, 8),
+                  spreadRadius: -10,
                 ),
               ],
             ),
             child: Stack(
               children: [
+                Positioned(
+                  right: -18,
+                  top: -14,
+                  child: Container(
+                    width: 112,
+                    height: 112,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppTheme.gold.withValues(alpha: 0.08),
+                    ),
+                  ),
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -319,6 +324,31 @@ class _ContestContent extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: AppSpacing.md),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTheme.gold.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: AppTheme.gold.withValues(alpha: 0.18),
+                        ),
+                      ),
+                      child: Text(
+                        ku
+                            ? 'Xelat: beşdarî ${contest.participationReward} · 1. ${contest.rank1Reward} coin'
+                            : 'Ödül: katılım ${contest.participationReward} · 1. ${contest.rank1Reward} coin',
+                        textAlign: TextAlign.center,
+                        style: AppTypography.caption.copyWith(
+                          color: AppTheme.gold,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
                     GeometricGradientButton(
                       label: starting
                           ? (ku ? 'Tê amadekirin…' : 'Hazırlanıyor…')
@@ -336,17 +366,6 @@ class _ContestContent extends StatelessWidget {
                       style: AppTypography.caption.copyWith(
                         color: AppTheme.textMutedColor(context),
                         fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    Text(
-                      ku
-                          ? 'Xelat: beşdarî ${contest.participationReward} · 1. ${contest.rank1Reward} coin'
-                          : 'Ödül: katılım ${contest.participationReward} · 1. ${contest.rank1Reward} coin',
-                      textAlign: TextAlign.center,
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.gold,
-                        fontWeight: FontWeight.w800,
                       ),
                     ),
                   ],
@@ -424,18 +443,20 @@ class _BadgeLabel extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppTheme.primaryGradientStart.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(AppRadius.xs),
+        color: AppTheme.gold.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(AppRadius.badge),
+        border: Border.all(color: AppTheme.gold.withValues(alpha: 0.18)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: AppTheme.primaryGradientStart),
+          Icon(icon, size: 14, color: AppTheme.gold),
           const SizedBox(width: 6),
           Text(
             label,
             style: AppTypography.caption.copyWith(
-              color: AppTheme.primaryGradientStart,
+              color: AppTheme.gold,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],
@@ -466,13 +487,33 @@ class _LeaderboardRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final highlight = index == 0
+        ? AppTheme.gold
+        : index == 1
+        ? AppTheme.accent
+        : index == 2
+        ? AppTheme.violet
+        : AppTheme.borderColor(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: AppTheme.surfaceColor(context),
         borderRadius: BorderRadius.circular(AppRadius.sm),
-        border: Border.all(color: AppTheme.borderColor(context), width: 1),
+        border: Border.all(
+          color: highlight.withValues(alpha: index < 3 ? 0.24 : 1),
+          width: 1,
+        ),
+        boxShadow: index < 3
+            ? [
+                BoxShadow(
+                  color: highlight.withValues(alpha: 0.10),
+                  blurRadius: 14,
+                  offset: const Offset(0, 8),
+                  spreadRadius: -10,
+                ),
+              ]
+            : null,
       ),
       child: Row(
         children: [
@@ -506,13 +547,13 @@ class _LeaderboardRow extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: AppTheme.primaryGradientStart.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(6),
+              color: highlight.withValues(alpha: 0.10),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
               '${row.score}',
               style: AppTypography.caption.copyWith(
-                color: AppTheme.primaryGradientStart,
+                color: index < 3 ? highlight : AppTheme.primaryGradientStart,
                 fontWeight: FontWeight.w800,
               ),
             ),

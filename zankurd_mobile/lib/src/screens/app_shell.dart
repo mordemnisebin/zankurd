@@ -1,8 +1,12 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../providers/auth_provider.dart';
@@ -10,6 +14,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/branded_loader.dart';
+import '../widgets/offline_banner.dart';
 import 'learn_home_screen.dart';
 import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
@@ -21,9 +26,14 @@ import 'sign_in_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class AppShell extends StatefulWidget {
-  const AppShell({required this.repository, super.key});
+  const AppShell({
+    required this.repository,
+    this.connectivityMonitor,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
+  final ConnectivityMonitor? connectivityMonitor;
 
   @override
   State<AppShell> createState() => _AppShellState();
@@ -49,6 +59,10 @@ class _AppShellState extends State<AppShell> {
   String? _profileName;
   bool _profileCheckStarted = false;
 
+  // Çevrimdışı durum izleme
+  bool _isOffline = false;
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySub;
+
   late final ScrollController _homeScrollController;
   late final ScrollController _profileScrollController;
 
@@ -58,10 +72,67 @@ class _AppShellState extends State<AppShell> {
     _homeScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
+    _initConnectivity();
+  }
+
+  Future<void> _initConnectivity() async {
+    try {
+      await _refreshConnectivity();
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'app_shell_initial_connectivity',
+      );
+    }
+    try {
+      _connectivitySub = _connectivityMonitor.onConnectivityChanged.listen(
+        _applyConnectivityResults,
+        onError: (Object error, StackTrace stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'app_shell_connectivity_listener',
+          );
+        },
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'app_shell_connectivity_listener',
+      );
+    }
+  }
+
+  ConnectivityMonitor get _connectivityMonitor {
+    final monitor = widget.connectivityMonitor;
+    if (monitor != null) return monitor;
+    if (kIsWeb) return const AlwaysOnlineConnectivityMonitor();
+    return PluginConnectivityMonitor();
+  }
+
+  Future<void> _refreshConnectivity() async {
+    try {
+      final results = await _connectivityMonitor.checkConnectivity();
+      _applyConnectivityResults(results);
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'app_shell_connectivity_check',
+      );
+    }
+  }
+
+  void _applyConnectivityResults(List<ConnectivityResult> results) {
+    if (!mounted) return;
+    setState(() => _isOffline = results.contains(ConnectivityResult.none));
   }
 
   @override
   void dispose() {
+    _connectivitySub?.cancel();
     _homeScrollController.dispose();
     _profileScrollController.dispose();
     _homeRefresh.dispose();
@@ -152,25 +223,39 @@ class _AppShellState extends State<AppShell> {
 
     final content = Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 800),
+        constraints: BoxConstraints(
+          maxWidth: width >= 1200 ? 1140 : (width >= 768 ? 920 : 800),
+        ),
         child: body,
       ),
     );
 
     if (isDesktop) {
       return Scaffold(
-        body: Row(
+        body: Column(
           children: [
-            _buildNavRail(context, ku),
-            const VerticalDivider(thickness: 1, width: 1),
-            Expanded(child: content),
+            OfflineBanner(isOffline: _isOffline, onRetry: _refreshConnectivity),
+            Expanded(
+              child: Row(
+                children: [
+                  _buildNavRail(context, ku),
+                  const VerticalDivider(thickness: 1, width: 1),
+                  Expanded(child: content),
+                ],
+              ),
+            ),
           ],
         ),
       );
     }
 
     return Scaffold(
-      body: content,
+      body: Column(
+        children: [
+          OfflineBanner(isOffline: _isOffline, onRetry: _refreshConnectivity),
+          Expanded(child: content),
+        ],
+      ),
       bottomNavigationBar: _buildBottomNav(context, ku),
     );
   }

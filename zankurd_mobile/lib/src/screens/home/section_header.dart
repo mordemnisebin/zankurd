@@ -60,7 +60,7 @@ class SectionHeader extends StatelessWidget {
                             color.withValues(alpha: 0.08),
                           ],
                         ),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(AppRadius.badge),
                         border: Border.all(color: color.withValues(alpha: 0.2)),
                       ),
                       child: Icon(icon, color: color, size: 18),

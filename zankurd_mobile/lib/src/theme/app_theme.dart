@@ -170,6 +170,9 @@ class AppRadius {
 
   // Slightly rounder (16 → 14)
   static const double card = 14;
+
+  // Kucuk rozet/cip/etiket kosesi (onceki sabit borderRadius: 10 degeri).
+  static const double badge = 10;
 }
 
 class AppGradients {
@@ -253,7 +256,10 @@ enum CardType {
 
 class AppTheme {
   // ============ Design Tokens ============
-  static const double cardRadius = 16;
+  // C-3: AppTheme.cardRadius, AppRadius.card (14) ile eşitlendi.
+  // Önceki değer 16 idi ve tasarım sistemi bütünlüğünü bozuyordu.
+  // AppRadius.card kullanan ekranlarla görsel tutarlılık sağlandı.
+  static const double cardRadius = AppRadius.card;
   static const double cardRadiusSmall = 12;
   static const double sectionGap = AppSpacing.section;
   static const double cardGap = AppSpacing.cardGap;
@@ -261,15 +267,18 @@ class AppTheme {
 
   static List<BoxShadow> cardShadow(BuildContext context) {
     final isDark = _isDark(context);
-    final shadowColor = isDark
-        ? const Color(0xFF000000)
-        : const Color(0xFF000000);
     return [
       BoxShadow(
-        color: shadowColor.withValues(alpha: isDark ? 0.2 : 0.04),
-        offset: const Offset(0, 4),
-        blurRadius: 16,
-        spreadRadius: 0,
+        color: Colors.black.withValues(alpha: isDark ? 0.24 : 0.07),
+        offset: const Offset(0, 10),
+        blurRadius: isDark ? 28 : 22,
+        spreadRadius: -8,
+      ),
+      BoxShadow(
+        color: Colors.black.withValues(alpha: isDark ? 0.12 : 0.025),
+        offset: const Offset(0, 3),
+        blurRadius: 8,
+        spreadRadius: -2,
       ),
     ];
   }
@@ -351,15 +360,24 @@ class AppTheme {
   static const correct = Color(0xFF3DA968);
   static const wrong = Color(0xFFE5533D);
 
+  // Onboarding 2. slayt: ödül/yarış teması için terracotta tonu.
+  static const terracotta = Color(0xFFB86A3E);
+
+  // 1v1 sonuç ekranı — kazanma/kaybetme gradyanının koyu gölge renkleri.
+  // `correct`/`wrong`'un karanlık tonu; hardcoded Color literal yerine
+  // anlamlı token olarak tanımlandı (quiz_result_screen M-11).
+  static const correctDeep = Color(0xFF1B5E20); // Win gradient shadow
+  static const wrongDeep = Color(0xFF7F1D1D); // Lose gradient shadow
+
   // ============ Light Mode Palette (Variant C) ============
-  static const lightBg = Color(0xFFF5F4F1);
-  static const lightBgDeep = Color(0xFFEDEBE7);
+  static const lightBg = Color(0xFFF8F5EF);
+  static const lightBgDeep = Color(0xFFEEE7DC);
   static const lightSurface = Color(0xFFFFFFFF);
-  static const lightSurfaceHi = Color(0xFFF8F7F4);
-  static const lightBorder = Color(0xFFE2E2E8);
+  static const lightSurfaceHi = Color(0xFFFBF7F0);
+  static const lightBorder = Color(0xFFE3DACC);
   static const lightTextPrimary = Color(0xFF2D3436); // Anthracite
-  static const lightTextSub = Color(0xFF4E5366);
-  static const lightTextMuted = Color(0xFF6F6A7E);
+  static const lightTextSub = Color(0xFF55615F);
+  static const lightTextMuted = Color(0xFF746D65);
 
   static const pirsOrangeStart = culturalBrandBg; // Cultural Deep Green
   static const pirsOrangeEnd = culturalBrandBg;
@@ -408,7 +426,7 @@ class AppTheme {
   static const homeHeaderGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [pirsOrangeStart, pirsOrangeEnd],
+    colors: [Color(0xFF173C2D), Color(0xFF1E4A38), Color(0xFF245440)],
   );
 
   static const bgGradient = darkAuthGradient;
@@ -735,7 +753,9 @@ class AppTheme {
       snackBarTheme: SnackBarThemeData(
         backgroundColor: surfaceHi,
         contentTextStyle: const TextStyle(color: textPrimary),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.badge),
+        ),
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -889,7 +909,9 @@ class AppTheme {
       snackBarTheme: SnackBarThemeData(
         backgroundColor: lightSurface,
         contentTextStyle: const TextStyle(color: lightTextPrimary),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.badge),
+        ),
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -1023,6 +1045,34 @@ class AppTheme {
       boxShadow: glowColor != null
           ? glowShadow(glowColor, intensity: 0.25)
           : softShadow(context),
+    );
+  }
+
+  /// Home teaser kartları için daha rafine, hafif tonda yüzey.
+  static BoxDecoration teaserCardDecoration(
+    BuildContext context, {
+    required Color accent,
+    double radius = 16,
+  }) {
+    final isDark = _isDark(context);
+    return BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          surfaceColor(context),
+          isDark
+              ? accent.withValues(alpha: 0.08)
+              : accent.withValues(alpha: 0.045),
+        ],
+      ),
+      borderRadius: BorderRadius.circular(radius),
+      border: Border.all(
+        color: isDark
+            ? accent.withValues(alpha: 0.28)
+            : accent.withValues(alpha: 0.18),
+      ),
+      boxShadow: cardShadow(context),
     );
   }
 

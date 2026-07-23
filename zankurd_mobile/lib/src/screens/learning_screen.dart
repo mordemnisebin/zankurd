@@ -30,7 +30,11 @@ class LearningScreen extends StatefulWidget {
 }
 
 class _LearningScreenState extends State<LearningScreen> {
-  static const _categories = [
+  // M-9: Kurmancî ders kategorilerinin DB anahtar (ID) listesi.
+  // Bu değerler `lessons` tablosundaki `category` sütunuyla eşleşir;
+  // backend şemасı değişirse burası da güncellenmeli.
+  // Yeni kategori eklemek için listeye eklemek yeterli — UI otomatik güncellenir.
+  static const _kLearningCategoryIds = [
     'everyday',
     'grammar',
     'culture',
@@ -42,7 +46,7 @@ class _LearningScreenState extends State<LearningScreen> {
   ];
 
   late Future<List<Lesson>> _lessonsFuture;
-  String _selectedCategory = _categories.first;
+  String _selectedCategory = _kLearningCategoryIds.first;
   Set<String> _completedIds = const {};
   List<Lesson> _currentLessons = const [];
   PlacementLevel? _placementLevel;
@@ -206,7 +210,7 @@ class _LearningScreenState extends State<LearningScreen> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
-                  children: _categories
+                  children: _kLearningCategoryIds
                       .map(
                         (cat) => _CategoryTab(
                           key: ValueKey('learning-tab-$cat'),
@@ -694,7 +698,7 @@ class _LessonCard extends StatelessWidget {
             children: [
               Container(
                 width: 56,
-                height: 56,
+                constraints: const BoxConstraints(minHeight: 56),
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,

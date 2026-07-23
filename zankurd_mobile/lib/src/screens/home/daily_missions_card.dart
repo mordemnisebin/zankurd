@@ -39,7 +39,7 @@ class DailyMissionsCard extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   gradient: AppTheme.goldGradient,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(AppRadius.badge),
                   boxShadow: [
                     BoxShadow(
                       color: AppTheme.gold.withValues(alpha: 0.3),

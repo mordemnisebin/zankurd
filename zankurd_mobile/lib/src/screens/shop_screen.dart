@@ -9,6 +9,7 @@ import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/roj_mascot.dart';
+import '../widgets/screen_identity_header.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -513,8 +514,6 @@ class _ShopScreenState extends State<ShopScreen> {
         await _applyPurchaseEffect(item.id);
         if (!mounted) return;
         HapticFeedback.lightImpact();
-        // Ses çalınamazsa satın alma başarı mesajı engellenmesin
-        // (çark ekranındaki desenle aynı).
         try {
           context.read<SoundProvider>().playCorrect();
         } catch (error, stack) {
@@ -524,17 +523,7 @@ class _ShopScreenState extends State<ShopScreen> {
             reason: 'shop success sound failed',
           );
         }
-        final title = ku ? item.titleKu : item.titleTr;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              ku
-                  ? 'Te $title bi serkeftî kirî!'
-                  : '$title başarıyla satın alındı!',
-            ),
-            backgroundColor: AppTheme.correct,
-          ),
-        );
+        _showPurchaseCelebrationDialog(item);
       } else {
         HapticFeedback.vibrate();
         ScaffoldMessenger.of(context).showSnackBar(
@@ -577,6 +566,78 @@ class _ShopScreenState extends State<ShopScreen> {
     }
   }
 
+  void _showPurchaseCelebrationDialog(ShopItem item) {
+    final ku = context.isKu;
+    final title = ku ? item.titleKu : item.titleTr;
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceOf(dialogContext),
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: AppTheme.gold, width: 2),
+            boxShadow: AppTheme.elevatedShadow(AppTheme.gold),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const RojMascot(mood: RojMood.celebrate, size: 72),
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppTheme.gold.withValues(alpha: 0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(item.icon, color: AppTheme.gold, size: 36),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                ku ? 'Pîroz be!' : 'Tebrikler!',
+                style: AppTypography.heading2.copyWith(
+                  color: AppTheme.gold,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                ku
+                    ? 'Te $title bi serkeftî kirî!'
+                    : '$title başarıyla satın alındı!',
+                textAlign: TextAlign.center,
+                style: AppTypography.bodyMedium.copyWith(
+                  color: AppTheme.textPrimaryColor(dialogContext),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 18),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: () => Navigator.pop(dialogContext),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppTheme.gold,
+                    foregroundColor: AppTheme.lightTextPrimary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: Text(
+                    ku ? 'Fêm kir' : 'Anladım',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
@@ -612,6 +673,14 @@ class _ShopScreenState extends State<ShopScreen> {
                   border: Border.all(
                     color: AppTheme.gold.withValues(alpha: 0.38),
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppTheme.gold.withValues(alpha: 0.14),
+                      blurRadius: 14,
+                      offset: const Offset(0, 6),
+                      spreadRadius: -8,
+                    ),
+                  ],
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -680,7 +749,14 @@ class _ShopScreenState extends State<ShopScreen> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             decoration: BoxDecoration(
-              color: AppTheme.gold.withValues(alpha: 0.10),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppTheme.gold.withValues(alpha: 0.16),
+                  AppTheme.gold.withValues(alpha: 0.07),
+                ],
+              ),
               borderRadius: BorderRadius.circular(AppRadius.card),
               border: Border.all(color: AppTheme.gold.withValues(alpha: 0.35)),
             ),
@@ -729,13 +805,37 @@ class _ShopScreenState extends State<ShopScreen> {
     final heroItem = _dynamicItems.reduce((a, b) => b.cost > a.cost ? b : a);
     final restItems = _dynamicItems.where((i) => i.id != heroItem.id).toList();
 
-    // Use 2 columns; on wide screens (>600dp) use 3.
+    // Adaptive breakpoint for mobile, tablet, and desktop
     final width = MediaQuery.of(context).size.width;
-    final crossAxisCount = width >= 600 ? 3 : 2;
+    final int crossAxisCount;
+    final double childAspectRatio;
+    if (width >= 1024) {
+      crossAxisCount = 4;
+      childAspectRatio = 0.95;
+    } else if (width >= 720) {
+      crossAxisCount = 3;
+      childAspectRatio = 0.90;
+    } else if (width >= 420) {
+      crossAxisCount = 2;
+      childAspectRatio = 0.74;
+    } else {
+      crossAxisCount = 1;
+      childAspectRatio = 1.95;
+    }
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       children: [
+        ScreenIdentityHeader(
+          title: ku ? 'Dukan' : 'Mağaza',
+          subtitle: ku
+              ? 'Coinên xwe bi aqilmendî bixercîne û profîla xwe xweştir bike'
+              : 'Coinlerini akıllıca harca, profilini ve deneyimini güzelleştir',
+          accent: AppTheme.gold,
+          icon: AppIcons.bagShopping,
+          compact: true,
+        ),
+        const SizedBox(height: AppSpacing.sm),
         // 2026-07-23 M33: Roj maskotu onboarding/liderlik/günün-sözü
         // dışında görünmüyordu — marka kimliği mağazada da tutarlı olsun.
         Padding(
@@ -777,7 +877,7 @@ class _ShopScreenState extends State<ShopScreen> {
               // Açıklamalar 2 satıra sığmayıp "…paletl…" diye kesiliyordu
               // (2026-07-22 canlı UX denetimi); maxLines 3'e çıkarıldı ve
               // kartlar buna göre biraz uzatıldı.
-              childAspectRatio: crossAxisCount >= 3 ? 0.88 : 0.66,
+              childAspectRatio: childAspectRatio,
             ),
             itemCount: restItems.length,
             itemBuilder: (context, index) =>
@@ -806,6 +906,14 @@ class _ShopScreenState extends State<ShopScreen> {
         highlightColor: tint.withValues(alpha: 0.07),
         child: Container(
           decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                AppTheme.surfaceColor(context),
+                tint.withValues(alpha: isPurchased ? 0.05 : 0.10),
+              ],
+            ),
             borderRadius: BorderRadius.circular(AppRadius.card),
             border: Border.all(
               color: tint.withValues(alpha: isPurchased ? 0.18 : 0.28),
@@ -814,112 +922,136 @@ class _ShopScreenState extends State<ShopScreen> {
             boxShadow: [
               BoxShadow(
                 color: tint.withValues(alpha: isPurchased ? 0.04 : 0.10),
-                blurRadius: 14,
-                offset: const Offset(0, 4),
+                blurRadius: 18,
+                offset: const Offset(0, 8),
+                spreadRadius: -8,
               ),
             ],
-            color: isPurchased
-                ? AppTheme.surfaceColor(context).withValues(alpha: 0.7)
-                : AppTheme.surfaceColor(context),
           ),
           child: Padding(
             padding: const EdgeInsets.all(14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: Stack(
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
+                Positioned(
+                  right: -16,
+                  top: -16,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
-                    ),
+                    width: 104,
+                    height: 104,
                     decoration: BoxDecoration(
-                      color: AppTheme.brand,
-                      borderRadius: BorderRadius.circular(AppRadius.pill),
-                    ),
-                    child: Text(
-                      ku ? 'YA HERÎ TÊ XWASTIN' : 'EN POPÜLER',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.3,
-                      ),
+                      shape: BoxShape.circle,
+                      color: tint.withValues(alpha: 0.08),
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Grid kartındaki ikon bloğunun büyük hâli.
-                    Container(
-                      width: 72,
-                      height: 72,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: isPurchased
-                              ? [
-                                  tint.withValues(alpha: 0.10),
-                                  tint.withValues(alpha: 0.04),
-                                ]
-                              : [
-                                  tint.withValues(alpha: 0.22),
-                                  tint.withValues(alpha: 0.08),
-                                ],
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
                         ),
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                      ),
-                      alignment: Alignment.center,
-                      child: Icon(
-                        item.icon,
-                        color: isPurchased ? tint.withValues(alpha: 0.5) : tint,
-                        size: 36,
+                        decoration: BoxDecoration(
+                          gradient: AppTheme.accentGradient,
+                          borderRadius: BorderRadius.circular(AppRadius.pill),
+                        ),
+                        child: Text(
+                          ku ? 'YA HERÎ TÊ XWASTIN' : 'EN POPÜLER',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.3,
+                          ),
+                        ),
                       ),
                     ),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            title,
-                            maxLines: 2,
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
-                              color: isPurchased
-                                  ? AppTheme.textMutedColor(context)
-                                  : AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w800,
-                              fontSize: 17,
-                              height: 1.2,
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        // Grid kartındaki ikon bloğunun büyük hâli.
+                        Container(
+                          width: 72,
+                          height: 72,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: isPurchased
+                                  ? [
+                                      tint.withValues(alpha: 0.10),
+                                      tint.withValues(alpha: 0.04),
+                                    ]
+                                  : [
+                                      tint.withValues(alpha: 0.24),
+                                      tint.withValues(alpha: 0.10),
+                                    ],
                             ),
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
+                            boxShadow: [
+                              BoxShadow(
+                                color: tint.withValues(alpha: 0.14),
+                                blurRadius: 16,
+                                offset: const Offset(0, 8),
+                                spreadRadius: -10,
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            desc,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: AppTheme.textMutedColor(context),
-                              fontSize: 12.5,
-                              height: 1.25,
-                            ),
+                          alignment: Alignment.center,
+                          child: Icon(
+                            item.icon,
+                            color: isPurchased
+                                ? tint.withValues(alpha: 0.5)
+                                : tint,
+                            size: 36,
                           ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                title,
+                                maxLines: 2,
+                                overflow: TextOverflow.clip,
+                                style: TextStyle(
+                                  color: isPurchased
+                                      ? AppTheme.textMutedColor(context)
+                                      : AppTheme.textPrimaryColor(context),
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 17,
+                                  height: 1.2,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                desc,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: AppTheme.textMutedColor(context),
+                                  fontSize: 12.5,
+                                  height: 1.25,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 44,
+                      child: isPurchased
+                          ? _buildOwnedChip(ku)
+                          : _buildBuyButton(item, ku, canAfford),
                     ),
                   ],
-                ),
-                const SizedBox(height: 14),
-                SizedBox(
-                  width: double.infinity,
-                  height: 44,
-                  child: isPurchased
-                      ? _buildOwnedChip(ku)
-                      : _buildBuyButton(item, ku, canAfford),
                 ),
               ],
             ),
@@ -953,9 +1085,25 @@ class _ShopScreenState extends State<ShopScreen> {
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Container(
             decoration: BoxDecoration(
-              color: isPurchased
-                  ? AppTheme.surfaceColor(context).withValues(alpha: 0.7)
-                  : AppTheme.surfaceColor(context),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppTheme.surfaceColor(context),
+                  tint.withValues(alpha: isPurchased ? 0.04 : 0.08),
+                ],
+              ),
+              border: Border.all(
+                color: tint.withValues(alpha: isPurchased ? 0.12 : 0.18),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 14,
+                  offset: const Offset(0, 8),
+                  spreadRadius: -10,
+                ),
+              ],
             ),
             child: Stack(
               children: [

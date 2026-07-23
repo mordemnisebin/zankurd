@@ -133,6 +133,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               AppSpacing.lg,
             ),
             children: [
+              ScreenIdentityHeader(
+                title: ku ? 'Mîheng' : 'Ayarlar',
+                subtitle: ku
+                    ? 'Sepanê li gor te rast bike: ziman, dîmen, ewlekarî û agahdarî.'
+                    : 'Uygulamayı kendine göre ayarla: dil, görünüm, güvenlik ve bildirimler.',
+                accent: AppTheme.violet,
+                icon: AppIcons.gear,
+                compact: true,
+              ),
+              const SizedBox(height: AppSpacing.sm),
               // ============ HESAP / ACCOUNT ============
               ScreenSectionLabel(
                 label: ku ? 'Hesap' : 'Hesap',
@@ -548,6 +558,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           decoration: BoxDecoration(
                             gradient: AppTheme.accentGradient,
                             borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppTheme.accent.withValues(alpha: 0.22),
+                                blurRadius: 18,
+                                offset: const Offset(0, 8),
+                                spreadRadius: -8,
+                              ),
+                            ],
                           ),
                           child: Center(
                             child: Text(
@@ -590,6 +608,56 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       style: TextStyle(
                         color: AppTheme.textSubColor(context),
                         height: 1.45,
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTheme.surfaceHiColor(context),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: AppTheme.borderColor(
+                            context,
+                          ).withValues(alpha: 0.8),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 34,
+                            height: 34,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: AppTheme.accent.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(
+                                AppRadius.badge,
+                              ),
+                            ),
+                            child: const Icon(
+                              AppIcons.star,
+                              color: AppTheme.accent,
+                              size: 18,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              ku
+                                  ? 'Her guhertin di vê amûrê de tavilê tê sepandin.'
+                                  : 'Yaptığın değişiklikler bu cihazda anında uygulanır.',
+                              style: AppTypography.caption.copyWith(
+                                color: AppTheme.textSubColor(context),
+                                fontWeight: FontWeight.w600,
+                                height: 1.35,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -640,10 +708,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: AppTheme.wrong.withValues(alpha: 0.08),
-                          borderRadius: BorderRadius.circular(12),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              AppTheme.wrong.withValues(alpha: 0.12),
+                              AppTheme.wrong.withValues(alpha: 0.05),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(14),
                           border: Border.all(
-                            color: AppTheme.wrong.withValues(alpha: 0.28),
+                            color: AppTheme.wrong.withValues(alpha: 0.22),
                           ),
                         ),
                         child: Row(
@@ -1027,11 +1102,12 @@ class _LangSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     final isKu = context.isKu;
     return Container(
-      padding: const EdgeInsets.all(3),
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: AppTheme.surfaceHiColor(context),
         borderRadius: BorderRadius.circular(99),
         border: Border.all(color: AppTheme.borderColor(context)),
+        boxShadow: AppTheme.cardShadow(context),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -1073,25 +1149,39 @@ class _LangChip extends StatelessWidget {
       excludeSemantics: true,
       child: Tooltip(
         message: accessibleLabel,
-        child: GestureDetector(
-          onTap: onTap,
-          behavior: HitTestBehavior.opaque,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
-            constraints: const BoxConstraints(minHeight: 48, minWidth: 54),
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-            decoration: BoxDecoration(
-              color: active
-                  ? AppTheme.primaryGradientStart
-                  : Colors.transparent,
-              borderRadius: BorderRadius.circular(99),
-            ),
-            child: Text(
-              label,
-              style: AppTypography.bodyMedium.copyWith(
-                color: active ? Colors.white : AppTheme.textMutedColor(context),
-                fontWeight: FontWeight.w800,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(99),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              constraints: const BoxConstraints(minHeight: 46, minWidth: 56),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+              decoration: BoxDecoration(
+                gradient: active ? AppTheme.accentGradient : null,
+                color: active ? null : Colors.transparent,
+                borderRadius: BorderRadius.circular(99),
+                boxShadow: active
+                    ? [
+                        BoxShadow(
+                          color: AppTheme.accent.withValues(alpha: 0.24),
+                          blurRadius: 16,
+                          offset: const Offset(0, 6),
+                          spreadRadius: -8,
+                        ),
+                      ]
+                    : null,
+              ),
+              child: Text(
+                label,
+                style: AppTypography.bodyMedium.copyWith(
+                  color: active
+                      ? Colors.white
+                      : AppTheme.textMutedColor(context),
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ),
           ),
@@ -1161,16 +1251,20 @@ class _SettingsToggleRow extends StatelessWidget {
       container: true,
       label: title,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: 14,
+        ),
         child: Row(
           children: [
             Container(
-              width: 34,
-              height: 34,
+              width: 38,
+              height: 38,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.14),
-                borderRadius: BorderRadius.circular(AppRadius.sm),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: color.withValues(alpha: 0.14)),
               ),
               child: ExcludeSemantics(
                 child: Icon(icon, color: color, size: 18),
@@ -1185,6 +1279,7 @@ class _SettingsToggleRow extends StatelessWidget {
                     title,
                     style: AppTypography.bodyLarge.copyWith(
                       color: AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   if (subtitle != null) ...[
@@ -1194,6 +1289,7 @@ class _SettingsToggleRow extends StatelessWidget {
                       style: AppTypography.caption.copyWith(
                         color: AppTheme.textMutedColor(context),
                         fontWeight: FontWeight.w600,
+                        height: 1.3,
                       ),
                     ),
                   ],

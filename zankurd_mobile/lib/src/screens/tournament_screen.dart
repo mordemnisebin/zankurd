@@ -13,6 +13,7 @@ import '../widgets/screen_identity_header.dart';
 import '../widgets/tournament_bracket_widget.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../config/bot_names.dart';
 
 bool tournamentMatchCompleted(Object? result) =>
     result is Map && result['completed'] == true;
@@ -41,23 +42,9 @@ class TournamentScreen extends StatefulWidget {
 }
 
 class _TournamentScreenState extends State<TournamentScreen> {
-  static const _botNames = [
-    'Azad',
-    'Rojîn',
-    'Berfîn',
-    'Zana',
-    'Dilan',
-    'Şêrko',
-    'Evîn',
-    'Baran',
-    'Hêlîn',
-    'Serhat',
-    'Xezal',
-    'Mîran',
-    'Delal',
-    'Welat',
-    'Nûdem',
-  ];
+  // M-4: Bot isimleri merkezi BotNames.pool'dan alınır;
+  // inline liste kaldırıldı, tek kaynak config/bot_names.dart.
+  static List<String> get _botNames => BotNames.pool;
 
   TournamentBracket? _bracket;
   List<TournamentStandings> _standings = const [];
@@ -110,8 +97,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
       ErrorReporter.record(error, stack, reason: 'tournament_action');
     }
     if (!mounted) return;
-    final ku = context.isKu;
-    _userName = name.isEmpty ? (ku ? 'Tu' : 'Sen') : name;
+    _userName = name.isEmpty ? context.s('Tu', 'Sen') : name;
 
     final rounds = TournamentConfig.generateBracket();
     final firstRound = rounds.first;
@@ -561,6 +547,16 @@ class _LobbyView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                ScreenIdentityHeader(
+                  title: ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
+                  subtitle: ku
+                      ? 'Her hefte bir carekê kûpa, şanûyê û xelat'
+                      : 'Her hafta bir kez kupa, rekabet ve ödül',
+                  accent: AppTheme.gold,
+                  icon: AppIcons.trophy,
+                  compact: true,
+                ),
+                const SizedBox(height: AppSpacing.md),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(AppRadius.card),
                   child: Container(
@@ -568,12 +564,40 @@ class _LobbyView extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(AppSpacing.lg),
                     decoration: BoxDecoration(
-                      // Pirs hizası: düz yüzey, kart kenarlığı/gölgesi yok — kimlik
-                      // altın kupa rozetinin kendi gradyanında taşınır.
-                      color: AppTheme.surfaceColor(context),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AppTheme.surfaceColor(context),
+                          AppTheme.gold.withValues(alpha: 0.08),
+                        ],
+                      ),
+                      border: Border.all(
+                        color: AppTheme.gold.withValues(alpha: 0.18),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppTheme.gold.withValues(alpha: 0.12),
+                          blurRadius: 22,
+                          offset: const Offset(0, 10),
+                          spreadRadius: -12,
+                        ),
+                      ],
                     ),
                     child: Stack(
                       children: [
+                        Positioned(
+                          right: -28,
+                          top: -24,
+                          child: Container(
+                            width: 132,
+                            height: 132,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppTheme.gold.withValues(alpha: 0.07),
+                            ),
+                          ),
+                        ),
                         Column(
                           children: [
                             Container(
@@ -792,6 +816,7 @@ class _StatusCard extends StatelessWidget {
       _ => ku ? 'Berdewam' : 'Devam',
     };
     return AppPanel(
+      color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -819,16 +844,14 @@ class _StatusCard extends StatelessWidget {
               vertical: AppSpacing.xxs,
             ),
             decoration: BoxDecoration(
-              color: AppTheme.accent.withValues(alpha: 0.12),
+              color: AppTheme.gold.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(AppRadius.pill),
-              border: Border.all(
-                color: AppTheme.accent.withValues(alpha: 0.28),
-              ),
+              border: Border.all(color: AppTheme.gold.withValues(alpha: 0.22)),
             ),
             child: Text(
               '${(bracket.currentRound + 1).clamp(1, bracket.rounds.length)}'
               '/${bracket.rounds.length}',
-              style: AppTypography.bodyLarge.copyWith(color: AppTheme.accent),
+              style: AppTypography.bodyLarge.copyWith(color: AppTheme.gold),
             ),
           ),
         ],
@@ -883,6 +906,7 @@ class _UserMatchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppPanel(
+      color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -916,13 +940,16 @@ class _UserMatchCard extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: AppTheme.accent.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(8),
+                  color: AppTheme.gold.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(AppRadius.badge),
+                  border: Border.all(
+                    color: AppTheme.gold.withValues(alpha: 0.18),
+                  ),
                 ),
                 child: const Text(
                   'VS',
                   style: TextStyle(
-                    color: AppTheme.accent,
+                    color: AppTheme.gold,
                     fontWeight: FontWeight.w900,
                     fontSize: 12,
                   ),
@@ -992,6 +1019,7 @@ class _RoundSection extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         AppPanel(
+          color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
           child: Column(
             children: [
               for (var i = 0; i < round.matches.length; i++) ...[
@@ -1080,6 +1108,7 @@ class _StandingRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: AppPanel(
+        color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
         child: Row(
           children: [
             Text(

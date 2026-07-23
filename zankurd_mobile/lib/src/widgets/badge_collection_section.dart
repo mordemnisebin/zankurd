@@ -188,7 +188,7 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                       color: AppTheme.borderColor(
                         context,
                       ).withValues(alpha: 0.5),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(AppRadius.badge),
                     ),
                   ),
                   const SizedBox(height: 16),

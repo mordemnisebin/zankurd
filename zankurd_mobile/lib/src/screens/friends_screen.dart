@@ -235,12 +235,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
         Container(
           key: const ValueKey('friends-search-panel'),
           padding: const EdgeInsets.all(AppSpacing.xs),
-          decoration: BoxDecoration(
-            color: AppTheme.playCyan.withValues(alpha: 0.06),
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(
-              color: AppTheme.playCyan.withValues(alpha: 0.28),
-            ),
+          decoration: AppTheme.teaserCardDecoration(
+            context,
+            accent: AppTheme.cyan,
+            radius: AppRadius.card,
           ),
           child: Row(
             children: [
@@ -260,8 +258,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
               FilledButton(
                 onPressed: _searching ? null : _search,
                 style: FilledButton.styleFrom(
-                  backgroundColor: AppTheme.brand,
+                  backgroundColor: AppTheme.cyan,
                   foregroundColor: Colors.white,
+                  elevation: 0,
                 ),
                 child: _searching
                     ? const SizedBox(
@@ -283,6 +282,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
             (player) => Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: AppPanel(
+                color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
                 child: Row(
                   children: [
                     PlayerAvatar(
@@ -292,28 +292,56 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: Text(
-                        player.displayName,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w700,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            player.displayName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            ku
+                                ? 'Hevaltiyê ji vir şandî dibe'
+                                : 'Arkadaşlık isteği buradan gönderilir',
+                            style: AppTypography.caption.copyWith(
+                              color: AppTheme.textMutedColor(context),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     _sentRequests.contains(player.id)
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                        ? Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppTheme.correct.withValues(alpha: 0.10),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: AppTheme.correct.withValues(alpha: 0.20),
+                              ),
+                            ),
                             child: Icon(
                               AppIcons.circleCheck,
-                              color: AppTheme.primaryGradientStart.withValues(
-                                alpha: 0.8,
-                              ),
+                              color: AppTheme.correct.withValues(alpha: 0.9),
                             ),
                           )
                         : FilledButton.tonal(
                             onPressed: () => _sendRequest(player),
+                            style: FilledButton.styleFrom(
+                              backgroundColor: AppTheme.cyan.withValues(
+                                alpha: 0.14,
+                              ),
+                              foregroundColor: AppTheme.cyan,
+                            ),
                             child: Text(ku ? 'Zêde bike' : 'Ekle'),
                           ),
                   ],
@@ -435,6 +463,7 @@ class _FriendCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12),
       child: AppPanel(
         key: ValueKey('friend-row-${friend.friendName}'),
+        color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
         child: Row(
           children: [
             // Avatar with online dot
@@ -457,8 +486,8 @@ class _FriendCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: online
-                            ? const Color(0xFF4CAF50)
-                            : const Color(0xFF9E9E9E),
+                            ? AppTheme.onlineGreen
+                            : AppTheme.offlineGrey,
                         border: Border.all(
                           color: AppTheme.surfaceColor(context),
                           width: 2,
@@ -491,7 +520,7 @@ class _FriendCard extends StatelessWidget {
                         : (ku ? 'Ne li serhêl' : 'Çevrimdışı'),
                     style: TextStyle(
                       color: online
-                          ? const Color(0xFF4CAF50)
+                          ? AppTheme.correct
                           : AppTheme.textMutedColor(context),
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -504,8 +533,8 @@ class _FriendCard extends StatelessWidget {
               key: const ValueKey('friend-primary-action'),
               onPressed: onPlay,
               style: FilledButton.styleFrom(
-                backgroundColor: AppTheme.playPink.withValues(alpha: 0.14),
-                foregroundColor: AppTheme.playPink,
+                backgroundColor: AppTheme.cyan.withValues(alpha: 0.14),
+                foregroundColor: AppTheme.cyan,
               ),
               child: Text(ku ? 'Bilîze' : 'Oyna'),
             ),
@@ -534,32 +563,55 @@ class _FriendRequestCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: AppPanel(
+        color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
         child: Row(
           children: [
             PlayerAvatar(radius: 24, displayName: request.fromUserName),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(
-                request.fromUserName,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    request.fromUserName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    ku
+                        ? 'Hevaltiya xwe dixwaze'
+                        : 'Seninle arkadaş olmak istiyor',
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textMutedColor(context),
+                    ),
+                  ),
+                ],
               ),
             ),
-            IconButton(
-              onPressed: onReject,
-              tooltip: ku ? 'Red bike' : 'Reddet',
-              icon: const Icon(AppIcons.xmark, color: AppTheme.wrong),
+            Container(
+              decoration: BoxDecoration(
+                color: AppTheme.wrong.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(AppRadius.badge),
+              ),
+              child: IconButton(
+                onPressed: onReject,
+                tooltip: ku ? 'Red bike' : 'Reddet',
+                icon: const Icon(AppIcons.xmark, color: AppTheme.wrong),
+              ),
             ),
+            const SizedBox(width: 8),
             FilledButton(
               onPressed: onAccept,
               style: FilledButton.styleFrom(
-                backgroundColor: AppTheme.brand,
+                backgroundColor: AppTheme.cyan,
                 foregroundColor: Colors.white,
+                elevation: 0,
               ),
               child: Text(ku ? 'Qebûl' : 'Kabul'),
             ),

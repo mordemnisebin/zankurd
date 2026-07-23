@@ -382,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 40),
       decoration: const BoxDecoration(
-        color: AppTheme.culturalBrandBg,
+        gradient: AppTheme.homeHeaderGradient,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(32),
           bottomRight: Radius.circular(32),
@@ -391,16 +391,36 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          const Positioned(
-            right: -20,
-            top: 20,
-            child: Opacity(
-              opacity: 0.05,
-              child: Icon(
-                Icons.star_border_purple500_sharp,
-                size: 240,
-                color: Colors.white,
+          Positioned(
+            right: -18,
+            top: -14,
+            child: Container(
+              width: 160,
+              height: 160,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.06),
               ),
+            ),
+          ),
+          Positioned(
+            left: -32,
+            bottom: -36,
+            child: Container(
+              width: 128,
+              height: 128,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppTheme.brand.withValues(alpha: 0.10),
+              ),
+            ),
+          ),
+          const Positioned(
+            right: -12,
+            top: 8,
+            child: Opacity(
+              opacity: 0.07,
+              child: Icon(AppIcons.star, size: 220, color: Colors.white),
             ),
           ),
           Column(
@@ -458,10 +478,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: Text(
                   greeting,
                   maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 32,
+                  style: AppTypography.display.copyWith(
                     color: Colors.white,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 31,
                   ),
                 ),
               ),
@@ -470,7 +489,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ku
                     ? 'Zanîn, ronahiya tarîtiyê ye.'
                     : 'Bilgi, karanlığın aydınlığıdır.',
-                style: const TextStyle(fontSize: 15, color: Colors.white70),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.white70,
+                  height: 1.4,
+                ),
               ),
             ],
           ),
@@ -483,8 +508,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white12,
-        borderRadius: BorderRadius.circular(12),
+        color: Colors.white.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.14)),
       ),
       child: Row(
         children: [
@@ -492,6 +518,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           const SizedBox(width: 6),
           Text(
             text,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,

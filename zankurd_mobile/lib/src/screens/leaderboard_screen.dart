@@ -754,14 +754,14 @@ class _PodiumSlot extends StatelessWidget {
               const SizedBox(height: 6),
               Text(
                 entry.displayName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
                 style: AppTypography.bodyLarge.copyWith(
                   color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w800,
                   fontSize: nameFontSz,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
               ),
               if (entry.showcaseTitle != null)
                 Text(
@@ -975,7 +975,7 @@ class _FriendRankRow extends StatelessWidget {
             height: 36,
             decoration: BoxDecoration(
               color: AppTheme.surfaceHiColor(context),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(AppRadius.badge),
               border: Border.all(
                 color: AppTheme.borderColor(context),
                 width: 1,
