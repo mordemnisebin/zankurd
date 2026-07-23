@@ -46,3 +46,7 @@ phase1-desktop-current.png
 /.worktrees/
 
 .aider*
+
+# macOS klasor metadata cop dosyalari
+.DS_Store
+**/.DS_Store
