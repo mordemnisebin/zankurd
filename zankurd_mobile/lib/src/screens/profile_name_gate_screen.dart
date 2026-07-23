@@ -88,106 +88,103 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
 
           return Column(
             children: [
-              Expanded(
-                flex: compact ? 42 : 45,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(AppRadius.card),
-                    bottomRight: Radius.circular(AppRadius.card),
-                  ),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      // Pirs-inspired büyük turuncu karşılama header'ı.
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [AppTheme.brand, AppTheme.brandDeep],
-                      ),
+              // 2026-07-23 M23: hero sabit flex (42-45%) alıyordu ama
+              // içeriği (logo+başlık+2-3 satır) çok daha az yer kaplıyor —
+              // alt ~125px'i tamamen boş kalıyordu. Artık içerik kadar yer
+              // kaplıyor, kalan alan forma (Expanded) gidiyor.
+              ClipRRect(
+                key: const ValueKey('profile-name-gate-hero'),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(AppRadius.card),
+                  bottomRight: Radius.circular(AppRadius.card),
+                ),
+                child: Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    // Pirs-inspired büyük turuncu karşılama header'ı.
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [AppTheme.brand, AppTheme.brandDeep],
                     ),
-                    child: Stack(
-                      children: [
-                        SafeArea(
-                          bottom: false,
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(
-                              AppSpacing.lg,
-                              compact ? AppSpacing.md : AppSpacing.xl,
-                              AppSpacing.lg,
-                              AppSpacing.md,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AppLogo(width: compact ? 76 : 88, onCard: true),
-                                SizedBox(
-                                  height: compact
-                                      ? AppSpacing.sm
-                                      : AppSpacing.lg,
+                  ),
+                  child: Stack(
+                    children: [
+                      SafeArea(
+                        bottom: false,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                            AppSpacing.lg,
+                            compact ? AppSpacing.md : AppSpacing.xl,
+                            AppSpacing.lg,
+                            AppSpacing.md,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppLogo(width: compact ? 76 : 88, onCard: true),
+                              SizedBox(
+                                height: compact ? AppSpacing.sm : AppSpacing.lg,
+                              ),
+                              Text(
+                                ku
+                                    ? 'Xweş hatî ZanKurd!'
+                                    : 'ZanKurd\'a Hoş Geldin!',
+                                style: AppTypography.heading1.copyWith(
+                                  color: Colors.white,
+                                  fontSize: compact ? 24 : 28,
+                                  height: 1.15,
+                                  letterSpacing: -0.3,
                                 ),
-                                Text(
-                                  ku
-                                      ? 'Xweş hatî ZanKurd!'
-                                      : 'ZanKurd\'a Hoş Geldin!',
-                                  style: AppTypography.heading1.copyWith(
-                                    color: Colors.white,
-                                    fontSize: compact ? 24 : 28,
-                                    height: 1.15,
-                                    letterSpacing: -0.3,
-                                  ),
+                              ),
+                              const SizedBox(height: AppSpacing.xxs),
+                              Text(
+                                ku
+                                    ? 'Hîn bibe, pêş bike û bi hevalan re bêhna xwe bide.'
+                                    : 'Öğren, gelişin ve arkadaşlarınla eğlen.',
+                                style: AppTypography.bodyMedium.copyWith(
+                                  color: Colors.white.withValues(alpha: 0.78),
+                                  fontSize: compact ? 14 : 15,
+                                  height: 1.4,
                                 ),
+                              ),
+                              SizedBox(
+                                height: compact ? AppSpacing.sm : AppSpacing.md,
+                              ),
+                              _HeroValueRow(
+                                icon: AppIcons.trophy,
+                                color: Colors.white,
+                                text: ku
+                                    ? 'Lîstikê û serlêderan bike'
+                                    : 'Oyunları tamamla, ödül kazan',
+                              ),
+                              const SizedBox(height: AppSpacing.xxs),
+                              _HeroValueRow(
+                                icon: AppIcons.peopleGroup,
+                                color: Colors.white,
+                                text: ku
+                                    ? 'Bi hevalan re pêş bikeve'
+                                    : 'Arkadaşlarınla yarış',
+                              ),
+                              if (!compact) ...[
                                 const SizedBox(height: AppSpacing.xxs),
-                                Text(
-                                  ku
-                                      ? 'Hîn bibe, pêş bike û bi hevalan re bêhna xwe bide.'
-                                      : 'Öğren, gelişin ve arkadaşlarınla eğlen.',
-                                  style: AppTypography.bodyMedium.copyWith(
-                                    color: Colors.white.withValues(alpha: 0.78),
-                                    fontSize: compact ? 14 : 15,
-                                    height: 1.4,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: compact
-                                      ? AppSpacing.sm
-                                      : AppSpacing.md,
-                                ),
                                 _HeroValueRow(
-                                  icon: AppIcons.trophy,
+                                  icon: AppIcons.fire,
                                   color: Colors.white,
                                   text: ku
-                                      ? 'Lîstikê û serlêderan bike'
-                                      : 'Oyunları tamamla, ödül kazan',
+                                      ? 'Zincîra xwe biparêze'
+                                      : 'Serini koru, zincirini devam ettir',
                                 ),
-                                const SizedBox(height: AppSpacing.xxs),
-                                _HeroValueRow(
-                                  icon: AppIcons.peopleGroup,
-                                  color: Colors.white,
-                                  text: ku
-                                      ? 'Bi hevalan re pêş bikeve'
-                                      : 'Arkadaşlarınla yarış',
-                                ),
-                                if (!compact) ...[
-                                  const SizedBox(height: AppSpacing.xxs),
-                                  _HeroValueRow(
-                                    icon: AppIcons.fire,
-                                    color: Colors.white,
-                                    text: ku
-                                        ? 'Zincîra xwe biparêze'
-                                        : 'Serini koru, zincirini devam ettir',
-                                  ),
-                                ],
                               ],
-                            ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
               Expanded(
-                flex: compact ? 58 : 55,
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: AppTheme.backgroundGradient(context),
@@ -318,7 +315,9 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                 // kullanıcı varsayılan adla geçip sonra
                                 // profilden değiştirebilir (giriş sürtünmesi ↓).
                                 TextButton(
-                                  onPressed: _saving ? null : widget.onCompleted,
+                                  onPressed: _saving
+                                      ? null
+                                      : widget.onCompleted,
                                   child: Text(
                                     ku ? 'Paşê bike' : 'Şimdilik geç',
                                     style: AppTypography.bodyMedium.copyWith(

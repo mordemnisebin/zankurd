@@ -38,4 +38,45 @@ void main() {
       reason: 'girdi geçerli hale gelince hata temizlenmeli',
     );
   });
+
+  // 2026-07-23 M23: hero bölümü önceden ekran yüksekliğinin sabit bir
+  // yüzdesini (flex 42-45) alıyordu — uzun ekranda alt kısmı tamamen boş
+  // kalıyordu. Artık içerik kadar yer kaplıyor; bu yüzden hero yüksekliği
+  // ekran yüksekliğinden bağımsız (sabit) olmalı.
+  testWidgets('hero bölümü ekran yüksekliğine göre esnemez (içerik kadar yer kaplar)', (
+    tester,
+  ) async {
+    Future<double> heroHeightAt(Size size) async {
+      await tester.binding.setSurfaceSize(size);
+      await tester.pumpWidget(
+        testShell(
+          child: ProfileNameGateScreen(
+            repository: MockZanKurdRepository(),
+            onCompleted: () {},
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      return tester
+          .getSize(find.byKey(const ValueKey('profile-name-gate-hero')))
+          .height;
+    }
+
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    // 900 ve 1300: ikisi de "compact" eşiğinin (860) üstünde, yani aynı
+    // içerik (3 değer satırı) render edilir — tek fark ekran yüksekliği.
+    // Flex kaldırılmadan önce bu 400px'lik fark hero'ya da yansırdı.
+    final shortHeroHeight = await heroHeightAt(const Size(390, 900));
+    final tallHeroHeight = await heroHeightAt(const Size(390, 1300));
+
+    expect(
+      (tallHeroHeight - shortHeroHeight).abs(),
+      lessThan(5),
+      reason:
+          'Hero, ekran yüksekliğinin %42-45\'i gibi sabit bir oran '
+          'almamalı — flex kaldırıldığından her iki ekranda da aynı '
+          '(içerik kadar) yükseklikte olmalı.',
+    );
+  });
 }
