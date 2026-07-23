@@ -139,7 +139,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
                 context,
                 ku ? 'Cihên pêşketinê' : 'Geliştirilecek',
                 AppIcons.arrowTrendUp,
-                AppTheme.brandGreen,
+                AppTheme.brand,
               ),
               for (final i in result.improvements.take(3))
                 _buildRow(context, ku, i, InsightTone.improve),
@@ -210,7 +210,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
     final icon = isStrength
         ? AppIcons.circleCheck
         : AppIcons.flag;
-    final tint = isStrength ? AppTheme.playGreen : AppTheme.brandGreen;
+    final tint = isStrength ? AppTheme.playGreen : AppTheme.brand;
     final String action;
     if (isStrength) {
       action = ku ? 'Ji xwe bawer be' : 'Formunu koru';

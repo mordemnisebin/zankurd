@@ -28,11 +28,11 @@ class HeroCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppTheme.brandGreenDeep,
+        color: AppTheme.brandDeep,
         borderRadius: BorderRadius.circular(AppRadius.card),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.brandGreenDeep.withValues(alpha: 0.35),
+            color: AppTheme.brandDeep.withValues(alpha: 0.35),
             blurRadius: 14,
             offset: const Offset(0, 5),
           ),
@@ -129,13 +129,13 @@ class HeroCard extends StatelessWidget {
                   ),
                   child: ElevatedButton.icon(
                     onPressed: onQuickMatch,
-                    icon: const Icon(AppIcons.bolt, color: AppTheme.brandGreen),
+                    icon: const Icon(AppIcons.bolt, color: AppTheme.brand),
                     label: ExcludeSemantics(
                       // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                       child: Text(
                         isKu ? '1vs1 — Dest pê bike' : '1vs1 — Hemen yarış',
                         style: AppTypography.bodyLarge.copyWith(
-                          color: AppTheme.brandGreen,
+                          color: AppTheme.brand,
                           fontWeight: FontWeight.w800,
                         ),
                       ),

@@ -47,7 +47,7 @@ void main() {
       // üzerinde eşiğin üstünde kalmalı.
       for (final background in [
         AppTheme.primaryGradientStart,
-        AppTheme.brandGreenDeep,
+        AppTheme.brandDeep,
       ]) {
         final scrim = _flatten(AppColors.heroScrim(), background);
         expect(

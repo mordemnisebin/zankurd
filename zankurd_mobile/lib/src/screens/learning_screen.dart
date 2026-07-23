@@ -866,7 +866,7 @@ class _LearningPathNode extends StatelessWidget {
     final color = completed
         ? AppTheme.playGreen
         : current
-        ? AppTheme.brandGreen
+        ? AppTheme.brand
         : AppTheme.borderColor(context);
     return Stack(
       children: [

@@ -36,7 +36,7 @@ void main() {
           body: ColorfulActionCard(
             title: 'Günün Yarışması',
             icon: Icons.emoji_events_rounded,
-            colors: const [AppTheme.brandGreen, AppTheme.brandGreenDeep],
+            colors: const [AppTheme.brand, AppTheme.brandDeep],
             loading: true,
             onTap: () => tapped = true,
           ),

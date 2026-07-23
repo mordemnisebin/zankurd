@@ -52,7 +52,7 @@ void main() {
       );
       expect(
         cta.style!.backgroundColor!.resolve({}),
-        mode == ThemeMode.light ? const Color(0xFFC05000) : AppTheme.brandGreen,
+        mode == ThemeMode.light ? const Color(0xFFD4650A) : AppTheme.brand,
       );
       expect(cta.style!.foregroundColor!.resolve({}), Colors.white);
     }

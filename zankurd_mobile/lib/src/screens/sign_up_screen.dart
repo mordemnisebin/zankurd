@@ -660,10 +660,10 @@ class _SignUpHeroBanner extends StatelessWidget {
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.brandGreen, AppTheme.brandGreenDeep],
+            colors: [AppTheme.brand, AppTheme.brandDeep],
           ),
           border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
-          boxShadow: AppTheme.elevatedShadow(AppTheme.brandGreen),
+          boxShadow: AppTheme.elevatedShadow(AppTheme.brand),
         ),
         child: Stack(
           children: [

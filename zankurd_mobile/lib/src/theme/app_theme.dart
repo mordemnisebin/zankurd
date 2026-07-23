@@ -17,7 +17,7 @@ class AppColors {
       color.withValues(alpha: AppTheme.isLight(context) ? 0.14 : 0.24);
 
   /// Aksan metin rengini yüzeye göre uyarlar. Dark temada koyu aksanlar
-  /// (ör. brandGreenDeep, deniz mavisi) yüzeyde boğulduğu için aydınlatılır;
+  /// (ör. brandDeep, deniz mavisi) yüzeyde boğulduğu için aydınlatılır;
   /// light temada renk olduğu gibi döner.
   static Color toneOnSurface(BuildContext context, Color color) {
     if (AppTheme.isLight(context)) return color;
@@ -54,7 +54,7 @@ class AppTypography {
   const AppTypography._();
 
   static const TextStyle display = TextStyle(
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w800,
     fontSize: 32,
     height: 1.15,
     letterSpacing: -0.8,
@@ -83,7 +83,7 @@ class AppTypography {
   );
 
   static const TextStyle bodyLarge = TextStyle(
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
     fontSize: 16,
     height: 1.45,
   );
@@ -97,14 +97,14 @@ class AppTypography {
 
   static const TextStyle caption = TextStyle(
     fontWeight: FontWeight.w700,
-    fontSize: 12.5,
+    fontSize: 12,
     height: 1.35,
     letterSpacing: 0.2,
   );
 
   static const categoryTitle = TextStyle(
     color: Colors.white,
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w800,
     fontSize: 20,
     height: 1.05,
     letterSpacing: 0,
@@ -314,8 +314,8 @@ class AppTheme {
   }
 
   // ============ Cultural Modern Palette (Variant C) ============
-  static const brandGreen = Color(0xFFF5931E); // Primary CTA/Accent
-  static const brandGreenDeep = Color(0xFFE06E12);
+  static const brand = Color(0xFFF5931E); // Primary CTA/Accent (Turuncu)
+  static const brandDeep = Color(0xFFE06E12);
 
   // Cultural Brand Background (Header etc)
   static const culturalBrandBg = Color(0xFF1B4332); // Deep Green
@@ -326,25 +326,25 @@ class AppTheme {
   static const playPurple = Color(0xFF7052A3); // Muted elegant purple
 
   // ============ Dark Mode Palette ============
-  static const primaryGradientStart = brandGreen;
-  static const primaryGradientEnd = brandGreenDeep;
+  static const primaryGradientStart = brand;
+  static const primaryGradientEnd = brandDeep;
 
   static const secondaryAccent = Color(0xFFE7B53C);
   static const gold = Color(0xFFE7B53C);
 
   static const cyan = playCyan;
 
-  static const bg = Color(0xFF0B0F0D);
-  static const bgDeep = Color(0xFF060907);
-  static const surface = Color(0xFF1E3028);
-  static const surfaceHi = Color(0xFF263A31);
+  static const bg = Color(0xFF0F1210);
+  static const bgDeep = Color(0xFF080B09);
+  static const surface = Color(0xFF1F2B24);
+  static const surfaceHi = Color(0xFF27352C);
   static const darkBg = bg;
 
   static const textPrimary = Color(0xFFF4F1E9);
   static const textSub = Color(0xFF9EA7B0);
-  static const textMuted = Color(0xFF7A858D);
+  static const textMuted = Color(0xFF8A949C);
 
-  static const border = Color(0xFF2E4038);
+  static const border = Color(0xFF33413A);
 
   static const accent = primaryGradientStart;
   static const violet = secondaryAccent;
@@ -352,10 +352,10 @@ class AppTheme {
   static const wrong = Color(0xFFE5533D);
 
   // ============ Light Mode Palette (Variant C) ============
-  static const lightBg = Color(0xFFF3F3F5);
-  static const lightBgDeep = Color(0xFFECECF0);
+  static const lightBg = Color(0xFFF5F4F1);
+  static const lightBgDeep = Color(0xFFEDEBE7);
   static const lightSurface = Color(0xFFFFFFFF);
-  static const lightSurfaceHi = Color(0xFFF7F7F9);
+  static const lightSurfaceHi = Color(0xFFF8F7F4);
   static const lightBorder = Color(0xFFE2E2E8);
   static const lightTextPrimary = Color(0xFF2D3436); // Anthracite
   static const lightTextSub = Color(0xFF4E5366);
@@ -419,7 +419,7 @@ class AppTheme {
 
   /// Yalnız gerçek birincil eylemler için tema uyumlu CTA rengi.
   static Color primaryCtaColor(BuildContext context) =>
-      isLight(context) ? const Color(0xFFC05000) : brandGreen;
+      isLight(context) ? const Color(0xFFD4650A) : brand;
 
   // Private helpers for theme checks
   static bool _isLight(BuildContext context) =>
@@ -504,7 +504,7 @@ class AppTheme {
     final isDark = _isDark(context);
     switch (type) {
       case CardType.primary:
-        final colors = gradient?.colors ?? [brandGreen, brandGreenDeep];
+        final colors = gradient?.colors ?? [brand, brandDeep];
         final grad =
             gradient ??
             LinearGradient(
@@ -517,7 +517,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(radius),
           boxShadow: [
             BoxShadow(
-              color: brandGreen.withValues(alpha: isDark ? 0.2 : 0.1),
+              color: brand.withValues(alpha: isDark ? 0.2 : 0.1),
               offset: const Offset(0, 6),
               blurRadius: 16,
               spreadRadius: -2,
@@ -562,12 +562,12 @@ class AppTheme {
   static const List<List<Color>> categoryGradients = [
     [Color(0xFFD47C3B), Color(0xFFC0672A)], // Muted Orange
     [Color(0xFFB54C6F), Color(0xFF9E3C5B)], // Muted Rose
-    [Color(0xFF4A74B8), Color(0xFF385E9D)], // Muted Blue
-    [Color(0xFFD1A23A), Color(0xFFB88C2A)], // Muted Amber
+    [Color(0xFF3B6FB8), Color(0xFF2E5A9D)], // Muted Blue
+    [Color(0xFFC4A020), Color(0xFFA88818)], // Sari-Altin
     [Color(0xFF2B8A50), Color(0xFF227542)], // Muted Green
-    [Color(0xFFC75D6D), Color(0xFFB04B5A)], // Muted Crimson
-    [Color(0xFF865DB8), Color(0xFF704A9E)], // Muted Purple
-    [Color(0xFF288077), Color(0xFF1E6962)], // Muted Teal
+    [Color(0xFF8B3A5A), Color(0xFF742E4A)], // Bordo
+    [Color(0xFF7048B8), Color(0xFF5D3A9E)], // Doygun Mor
+    [Color(0xFF1E8A7A), Color(0xFF177064)], // Acik Turkuaz
   ];
 
   /// A/B/C/D şık harflerinin kimlik renkleri.
@@ -578,10 +578,10 @@ class AppTheme {
   /// canlı UX denetimi). Geri bildirim renkleri (correct/wrong) yalnız
   /// cevap verildikten sonra kullanılır.
   static const List<Color> answerOptionColors = [
-    Color(0xFF3373B8), // Mavi
-    Color(0xFF7A4FA3), // Mor
-    Color(0xFF2F8F9D), // Camgöbeği
-    Color(0xFFC29C15), // Kehribar
+    Color(0xFF2E6DB8), // Mavi
+    Color(0xFF8B45B8), // Mor (magentaya kayan)
+    Color(0xFF1E8A8A), // Camgobegi
+    Color(0xFFB8920A), // Kehribar
   ];
 
   static LinearGradient categoryGradient(int index) {
@@ -606,7 +606,7 @@ class AppTheme {
   static const ctaTeal = Color(0xFF288077);
   static const ctaTealDeep = Color(0xFF1E6962);
   static const List<Color> ctaTealGradient = [ctaTeal, ctaTealDeep];
-  static const List<Color> ctaGreenGradient = [brandGreen, brandGreenDeep];
+  static const List<Color> ctaBrandGradient = [brand, brandDeep];
 
   static ThemeData dark() {
     return ThemeData(

@@ -332,7 +332,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 // Zorluk seviyesi
                 _SectionHeader(
                   icon: AppIcons.gaugeHigh,
-                  color: AppTheme.brandGreen,
+                  color: AppTheme.brand,
                   title: ku
                       ? 'Astê Zehmetiyê: $_difficulty'
                       : 'Zorluk Seviyesi: $_difficulty',
@@ -358,7 +358,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                           min: 1,
                           max: 5,
                           divisions: 4,
-                          activeColor: AppTheme.brandGreen,
+                          activeColor: AppTheme.brand,
                           label: '$_difficulty',
                           onChanged: (value) {
                             setState(() => _difficulty = value.round());

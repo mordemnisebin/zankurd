@@ -314,7 +314,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.brandGreenDeep, Color(0xFF17503A)],
+            colors: [AppTheme.brandDeep, Color(0xFF17503A)],
           ),
           border: Border.all(
             color: AppTheme.gold.withValues(alpha: isDark ? 0.30 : 0.45),
@@ -772,14 +772,14 @@ class _WheelPainter extends CustomPainter {
   // 8-renkli gökkuşağı yerine sakin, tutarlı kimlik. 8 dilim bu 4 tonu
   // dönüşümlü kullanır.
   static const _segmentColors = [
-    AppTheme.brandGreen,
+    AppTheme.brand,
     AppTheme.secondaryAccent,
     AppTheme.playCyan,
     AppTheme.playGreen,
   ];
 
   static const _segmentDarkColors = [
-    AppTheme.brandGreenDeep,
+    AppTheme.brandDeep,
     AppTheme.gold,
     AppTheme.ctaTealDeep,
     AppTheme.culturalBrandBg,

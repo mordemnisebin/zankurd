@@ -34,6 +34,10 @@ import '../widgets/player_avatar.dart';
 import '../widgets/kilim_progress_bar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
 import 'quiz/quiz_effects.dart';
+import 'quiz/quiz_feedback_overlay.dart';
+import 'quiz/quiz_option_tile.dart';
+import 'quiz/quiz_timer_widget.dart';
+import 'quiz/quiz_wildcard_bar.dart';
 import 'quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 

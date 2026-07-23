@@ -52,7 +52,7 @@ extension _QuizScreenUI on _QuizScreenState {
                                 : null,
                           ),
                           if (selectedAnswer == 'TIMEOUT')
-                            _TimeoutNotice(
+                            QuizTimeoutNotice(
                               isKu: _isKu,
                               correctAnswer: question.correctAnswer,
                             ),
@@ -117,7 +117,7 @@ extension _QuizScreenUI on _QuizScreenState {
                             : null,
                       ),
                       if (selectedAnswer == 'TIMEOUT')
-                        _TimeoutNotice(
+                        QuizTimeoutNotice(
                           isKu: _isKu,
                           correctAnswer: question.correctAnswer,
                         ),
@@ -250,13 +250,13 @@ extension _QuizScreenUI on _QuizScreenState {
                               ? AppTheme.correct
                               : AppTheme.wrong)
                         : i == index
-                        ? AppTheme.brandGreen
+                        ? AppTheme.brand
                         : AppTheme.surfaceHiColor(context),
                     borderRadius: BorderRadius.circular(99),
                     boxShadow: i == index
                         ? [
                             BoxShadow(
-                              color: AppTheme.brandGreen.withValues(
+                              color: AppTheme.brand.withValues(
                                 alpha: 0.45,
                               ),
                               blurRadius: 6,
@@ -356,7 +356,7 @@ extension _QuizScreenUI on _QuizScreenState {
                   Expanded(
                     child: FilledButton(
                       style: FilledButton.styleFrom(
-                        backgroundColor: AppTheme.brandGreenDeep,
+                        backgroundColor: AppTheme.brandDeep,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
                           vertical: AppSpacing.sm,
@@ -427,7 +427,7 @@ extension _QuizScreenUI on _QuizScreenState {
                 child: FilledButton.icon(
                   key: const ValueKey('quiz-next-button'),
                   style: FilledButton.styleFrom(
-                    backgroundColor: AppTheme.brandGreen,
+                    backgroundColor: AppTheme.brand,
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(
                       vertical: isCompact ? AppSpacing.xs : AppSpacing.sm,
@@ -513,7 +513,7 @@ extension _QuizScreenUI on _QuizScreenState {
     final canAfford = _coinBalance >= type.coinCost;
     final isEnabled = !used && canAfford && !answered;
 
-    return _WildcardButton(
+    return WildcardButton(
       type: type,
       isKu: _isKu,
       isEnabled: isEnabled,
@@ -870,7 +870,7 @@ extension _QuizScreenUI on _QuizScreenState {
                   // sabit 'quiz-circular-timer' anahtarı widget üzerinde korunsun.
                   KeyedSubtree(
                     key: timerKey,
-                    child: _CircularTimer(
+                    child: QuizTimerWidget(
                       key: const ValueKey('quiz-circular-timer'),
                       animation: _timerController,
                       // Gerçek kaynak room.secondsPerQuestion'dır; sabit 15

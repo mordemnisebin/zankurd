@@ -419,7 +419,7 @@ class _GroupPlayPanel extends StatelessWidget {
                   key: const ValueKey('play-hub-create-room'),
                   onPressed: loading ? null : onCreateRoom,
                   style: FilledButton.styleFrom(
-                    backgroundColor: AppTheme.brandGreen,
+                    backgroundColor: AppTheme.brand,
                     foregroundColor: Colors.white,
                   ),
                   icon: loading

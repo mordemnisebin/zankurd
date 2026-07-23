@@ -10,9 +10,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/branded_loader.dart';
-import '../widgets/coach_mark.dart';
-import 'categories_tab.dart';
-import 'home_screen.dart';
+import 'learn_home_screen.dart';
 import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
 import 'onboarding_screen.dart';
@@ -34,16 +32,13 @@ class AppShell extends StatefulWidget {
 class _AppShellState extends State<AppShell> {
   static const _onboardingSeenKey = 'zankurd.onboarding.seen';
   static const _profileNameCompletedKey = 'zankurd.profileName.completed';
-  static const _navTourSeenKey = 'zankurd.navTour.seen';
 
   int _tab = 0;
   final Set<int> _visitedTabs = {0};
-  bool _showNavTour = false;
 
   final GlobalKey _homeNavKey = GlobalKey();
   final GlobalKey _playNavKey = GlobalKey();
   final GlobalKey _profileNavKey = GlobalKey();
-  final GlobalKey _shellStackKey = GlobalKey();
   final ValueNotifier<int> _homeRefresh = ValueNotifier<int>(0);
   final ValueNotifier<int> _leaderboardRefresh = ValueNotifier<int>(0);
   final ValueNotifier<int> _profileRefresh = ValueNotifier<int>(0);
@@ -140,39 +135,8 @@ class _AppShellState extends State<AppShell> {
         if (_tab != 0) setState(() => _tab = 0);
       },
       child: LayoutBuilder(
-        builder: (context, constraints) => Stack(
-          key: _shellStackKey,
-          children: [
+        builder: (context, constraints) =>
             _buildScaffold(context, ku, constraints.maxWidth),
-            if (_showNavTour)
-              CoachMarkOverlay(
-                isKu: ku,
-                onFinished: _finishNavTour,
-                ancestorKey: _shellStackKey,
-                steps: [
-                  CoachMarkStep(
-                    targetKey: _homeNavKey,
-                    icon: AppIcons.house,
-                    titleKu: 'Sereke',
-                    titleTr: 'Ana Sayfa',
-                    descriptionKu:
-                        'Vir e ku tu dest pê dikî: yariyên zû, xelatên rojê û misyonên te li vir in.',
-                    descriptionTr:
-                        'Buradan başlarsın: hızlı oyunlar, günlük ödüller ve görevlerin burada.',
-                  ),
-                  CoachMarkStep(
-                    targetKey: _playNavKey,
-                    icon: AppIcons.gamepad,
-                    titleKu: 'Pêşbazî',
-                    titleTr: 'Yarış',
-                    descriptionKu: 'Hemû pêşbirktî û lîstikên te li vir in.',
-                    descriptionTr:
-                        'Günlük yarışma, 1v1, oda ve turnuvaların merkezi.',
-                  ),
-                ],
-              ),
-          ],
-        ),
       ),
     );
   }
@@ -183,7 +147,7 @@ class _AppShellState extends State<AppShell> {
 
     final body = IndexedStack(
       index: _tab,
-      children: List.generate(5, (index) => _buildTab(context, index)),
+      children: List.generate(4, (index) => _buildTab(context, index)),
     );
 
     final content = Center(
@@ -214,7 +178,7 @@ class _AppShellState extends State<AppShell> {
   Widget _buildTab(BuildContext context, int index) {
     if (!_visitedTabs.contains(index)) return const SizedBox.shrink();
     return switch (index) {
-      0 => HomeScreen(
+      0 => LearnHomeScreen(
         repository: widget.repository,
         displayName: _profileName,
         scrollController: _homeScrollController,
@@ -222,15 +186,14 @@ class _AppShellState extends State<AppShell> {
         onOpenLearning: () => Navigator.of(
           context,
         ).push(AppRoute.to(LearningScreen(repository: widget.repository))),
-        onOpenPlay: () => _selectTab(2),
+        onOpenPlay: () => _selectTab(1),
       ),
-      1 => CategoriesTab(repository: widget.repository),
-      2 => PlayHubScreen(repository: widget.repository),
-      3 => LeaderboardScreen(
+      1 => PlayHubScreen(repository: widget.repository),
+      2 => LeaderboardScreen(
         repository: widget.repository,
         refreshSignal: _leaderboardRefresh,
       ),
-      4 => ProfileScreen(
+      3 => ProfileScreen(
         repository: widget.repository,
         refreshSignal: _profileRefresh,
         scrollController: _profileScrollController,
@@ -243,7 +206,7 @@ class _AppShellState extends State<AppShell> {
     if (_tab == i) {
       final controller = switch (i) {
         0 => _homeScrollController,
-        4 => _profileScrollController,
+        3 => _profileScrollController,
         _ => null,
       };
       if (controller != null && controller.hasClients) {
@@ -257,8 +220,8 @@ class _AppShellState extends State<AppShell> {
     }
 
     if (i == 0) _homeRefresh.value++;
-    if (i == 3) _leaderboardRefresh.value++;
-    if (i == 4) _profileRefresh.value++;
+    if (i == 2) _leaderboardRefresh.value++;
+    if (i == 3) _profileRefresh.value++;
     setState(() {
       _visitedTabs.add(i);
       _tab = i;
@@ -272,8 +235,8 @@ class _AppShellState extends State<AppShell> {
       labelType: NavigationRailLabelType.all,
       selectedLabelTextStyle: const TextStyle(
         fontSize: 12,
-        fontWeight: FontWeight.w800,
-        color: AppTheme.brandGreen,
+        fontWeight: FontWeight.w700,
+        color: AppTheme.brand,
       ),
       unselectedLabelTextStyle: TextStyle(
         fontSize: 12,
@@ -281,14 +244,14 @@ class _AppShellState extends State<AppShell> {
         color: AppTheme.textMutedColor(context),
       ),
       selectedIconTheme: const IconThemeData(
-        color: AppTheme.brandGreen,
+        color: AppTheme.brand,
         size: 28,
       ),
       unselectedIconTheme: IconThemeData(
         color: AppTheme.textMutedColor(context),
         size: 24,
       ),
-      indicatorColor: AppTheme.brandGreen.withValues(alpha: 0.15),
+      indicatorColor: AppTheme.brand.withValues(alpha: 0.15),
       destinations: [
         NavigationRailDestination(
           icon: const Icon(AppIcons.house),
@@ -296,12 +259,7 @@ class _AppShellState extends State<AppShell> {
             key: _homeNavKey,
             child: const Icon(AppIcons.house),
           ),
-          label: Text(ku ? 'Sereke' : 'Ana Sayfa'),
-        ),
-        NavigationRailDestination(
-          icon: const Icon(AppIcons.tableCells),
-          selectedIcon: const Icon(AppIcons.tableCells),
-          label: Text(ku ? 'Kategorî' : 'Kategori'),
+          label: Text(ku ? 'Fêr Bibe' : 'Öğren'),
         ),
         NavigationRailDestination(
           icon: KeyedSubtree(
@@ -339,11 +297,11 @@ class _AppShellState extends State<AppShell> {
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
           final color = selected
-              ? AppTheme.brandGreen
+              ? AppTheme.brand
               : AppTheme.textMutedColor(context);
           return TextStyle(
             fontSize: 11,
-            fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
+            fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
             letterSpacing: 0.2,
             color: color,
           );
@@ -351,14 +309,14 @@ class _AppShellState extends State<AppShell> {
         iconTheme: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
           final color = selected
-              ? AppTheme.brandGreen
+              ? AppTheme.brand
               : AppTheme.textMutedColor(context);
           return IconThemeData(size: selected ? 26 : 24, color: color);
         }),
-        indicatorColor: AppTheme.brandGreen.withValues(alpha: 0.22),
+        indicatorColor: AppTheme.brand.withValues(alpha: 0.22),
         indicatorShape: const StadiumBorder(),
         overlayColor: WidgetStateProperty.all(
-          AppTheme.brandGreen.withValues(alpha: 0.10),
+          AppTheme.brand.withValues(alpha: 0.10),
         ),
       ),
       child: DecoratedBox(
@@ -382,12 +340,7 @@ class _AppShellState extends State<AppShell> {
                 key: _homeNavKey,
                 child: const Icon(AppIcons.house),
               ),
-              label: ku ? 'Sereke' : 'Ana Sayfa',
-            ),
-            NavigationDestination(
-              icon: const Icon(AppIcons.tableCells),
-              selectedIcon: const Icon(AppIcons.tableCells),
-              label: ku ? 'Kategorî' : 'Kategori',
+              label: ku ? 'Fêr Bibe' : 'Öğren',
             ),
             NavigationDestination(
               icon: KeyedSubtree(
@@ -433,7 +386,6 @@ class _AppShellState extends State<AppShell> {
       _profileNameComplete = completed;
       _checkingProfileName = false;
     });
-    if (completed) _maybeStartNavTour();
   }
 
   Future<void> _completeProfileName() async {
@@ -451,35 +403,5 @@ class _AppShellState extends State<AppShell> {
       _profileNameComplete = true;
       _profileCheckStarted = true;
     });
-    _maybeStartNavTour();
-  }
-
-  Future<void> _maybeStartNavTour() async {
-    final preferences = await SharedPreferences.getInstance();
-    if (preferences.getBool(_navTourSeenKey) == true) {
-      // Tur zaten görülmüş: seviye sınavını (gerekiyorsa) doğrudan sun.
-      _maybePromptPlacement();
-      return;
-    }
-    // Alt menü nav bar'ının ilk frame'de layout'ta olması için bir çerçeve
-    // bekle; aksi halde GlobalKey.currentContext henüz null olur.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) setState(() => _showNavTour = true);
-    });
-  }
-
-  Future<void> _finishNavTour() async {
-    final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool(_navTourSeenKey, true);
-    if (!mounted) return;
-    setState(() => _showNavTour = false);
-    _maybePromptPlacement();
-  }
-
-  /// Seviye belirleme sınavı artık otomatik açılmaz.
-  /// Manuel başlatma (ayarlar/menü) akışı başka yerde yönetilmelidir.
-  Future<void> _maybePromptPlacement() async {
-    // Bilerek boş bırakıldı.
-    return;
   }
 }

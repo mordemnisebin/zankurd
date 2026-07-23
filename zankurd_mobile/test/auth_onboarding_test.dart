@@ -446,20 +446,20 @@ void main() {
     expect(navTheme.data.backgroundColor, AppTheme.lightSurface);
     expect(
       navTheme.data.indicatorColor,
-      AppTheme.brandGreen.withValues(alpha: 0.22),
+      AppTheme.brand.withValues(alpha: 0.22),
     );
 
     await tester.tap(find.text('Yarış'));
     await tester.pumpAndSettle();
     expect(find.byType(PlayHubScreen), findsOneWidget);
 
-    // Bottom nav seçili rengi sekmeyle değişmez; sabit brandGreen kalır.
+    // Bottom nav seçili rengi sekmeyle değişmez; sabit brand kalır.
     final navThemeAfter = tester.widget<NavigationBarTheme>(
       find.byType(NavigationBarTheme),
     );
     expect(
       navThemeAfter.data.indicatorColor,
-      AppTheme.brandGreen.withValues(alpha: 0.22),
+      AppTheme.brand.withValues(alpha: 0.22),
     );
   });
 

@@ -102,7 +102,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [AppTheme.brandGreen, AppTheme.brandGreenDeep],
+                        colors: [AppTheme.brand, AppTheme.brandDeep],
                       ),
                     ),
                     child: Stack(
@@ -312,6 +312,20 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                   icon: AppIcons.arrowRight,
                                   isLoading: _saving,
                                   onPressed: _saving ? null : _save,
+                                ),
+                                const SizedBox(height: AppSpacing.xs),
+                                // 2026-07-23 UX: isim artık zorunlu değil;
+                                // kullanıcı varsayılan adla geçip sonra
+                                // profilden değiştirebilir (giriş sürtünmesi ↓).
+                                TextButton(
+                                  onPressed: _saving ? null : widget.onCompleted,
+                                  child: Text(
+                                    ku ? 'Paşê bike' : 'Şimdilik geç',
+                                    style: AppTypography.bodyMedium.copyWith(
+                                      color: AppTheme.textMutedColor(context),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),

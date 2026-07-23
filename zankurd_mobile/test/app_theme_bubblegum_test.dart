@@ -8,8 +8,8 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 // dönüş) yakalar.
 void main() {
   test('marka rengi Pirs turuncusu', () {
-    expect(AppTheme.brandGreen, const Color(0xFFF5931E));
-    expect(AppTheme.brandGreenDeep, const Color(0xFFE06E12));
+    expect(AppTheme.brand, const Color(0xFFF5931E));
+    expect(AppTheme.brandDeep, const Color(0xFFE06E12));
   });
 
   test('öğrenme rengi yeşil', () {
@@ -27,13 +27,13 @@ void main() {
   });
 
   test('açık mod zemin Pirs soğuk gri', () {
-    expect(AppTheme.lightBg, const Color(0xFFF3F3F5));
+    expect(AppTheme.lightBg, const Color(0xFFF5F4F1));
   });
 
   test('koyu mod zemin koyu-sıcak yeşilimsi', () {
-    expect(AppTheme.bg, const Color(0xFF0B0F0D));
-    expect(AppTheme.surface, const Color(0xFF1E3028));
-    expect(AppTheme.border, const Color(0xFF2E4038));
+    expect(AppTheme.bg, const Color(0xFF0F1210));
+    expect(AppTheme.surface, const Color(0xFF1F2B24));
+    expect(AppTheme.border, const Color(0xFF33413A));
   });
 
   test('koyu mod metin kâğıt tonu', () {

@@ -17,6 +17,7 @@ import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
 import 'quiz_screen.dart';
 import 'home/play_teaser_card.dart';
+import 'home/categories_teaser_card.dart';
 import 'home/daily_missions_card.dart';
 import '../widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -30,6 +31,7 @@ class HomeScreen extends StatefulWidget {
     this.refreshSignal,
     this.onOpenLearning,
     this.onOpenPlay,
+    this.onOpenCategories,
     super.key,
   });
 
@@ -48,6 +50,10 @@ class HomeScreen extends StatefulWidget {
   /// "Zû Bilîze" bölümü kaldırıldı (Bilîze sekmesiyle bire bir aynıydı);
   /// bunun yerine Bilîze sekmesine geçiş yapan kısa bir teaser gösterilir.
   final VoidCallback? onOpenPlay;
+
+  /// Kategorî akışına geçiş (Faz 3: kategoriler ayrı sekme değil, Fêr Bibe
+  /// sekmesi içinden açılır).
+  final VoidCallback? onOpenCategories;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -241,6 +247,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               _heroFadeAnimation(2),
                               PlayTeaserCard(onTap: widget.onOpenPlay!),
                             ),
+                          if (widget.onOpenCategories != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 24),
+                              child: _buildAnimatedCard(
+                                _heroFadeAnimation(3),
+                                CategoriesTeaserCard(
+                                  onTap: widget.onOpenCategories!,
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),
@@ -282,6 +298,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         child: _buildAnimatedCard(
                           _heroFadeAnimation(2),
                           PlayTeaserCard(onTap: widget.onOpenPlay!),
+                        ),
+                      ),
+                    if (widget.onOpenCategories != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 24),
+                        child: _buildAnimatedCard(
+                          _heroFadeAnimation(3),
+                          CategoriesTeaserCard(
+                            onTap: widget.onOpenCategories!,
+                          ),
                         ),
                       ),
                     Padding(
@@ -389,7 +415,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     children: [
                       _buildHeaderBadge(
                         AppIcons.fire,
-                        AppTheme.brandGreen,
+                        AppTheme.brand,
                         '$_streak',
                       ),
                       const SizedBox(width: 12),
@@ -437,7 +463,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   style: const TextStyle(
                     fontSize: 32,
                     color: Colors.white,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
@@ -685,14 +711,11 @@ class _DailyLessonHero extends StatelessWidget {
                   ),
                 ),
                 onPressed: onStart,
-                // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-                child: ExcludeSemantics(
-                  child: Text(
-                    ctaLabel,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                child: Text(
+                  ctaLabel,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),

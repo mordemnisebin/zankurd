@@ -27,7 +27,7 @@ class _SignInScreenState extends State<SignInScreen>
   final _formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
   // E-posta formu genişleyen bölümde; varsayılan kapalı (tek birincil CTA:
-  // Google). Misafir girişi altı çizili metin bağlantısıdır.
+  // Google). Misafir girişi Google altında outlined bir butondur.
   bool _emailExpanded = false;
   late AnimationController _animationController;
 
@@ -36,9 +36,9 @@ class _SignInScreenState extends State<SignInScreen>
     super.initState();
     _animationController = AnimationController(
       // Kademeli giriş animasyonu içeriği süre*0.5–0.95 aralığında
-      // gösteriyor; 2000ms'de bu ~1.0–1.9sn boş ekran demekti
-      // (2026-07-22 canlı UX denetimi). 900ms aynı kademeyi korur.
-      duration: const Duration(milliseconds: 900),
+      // gösteriyor; 900ms'de bu ~0.45–0.85sn boş ekran demekti. Faz 4:
+      // ilk-değer hızı için 500ms'ye çekildi (aynı kademe korunur).
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
     _animationController.forward();
@@ -619,8 +619,8 @@ class _SignInScreenState extends State<SignInScreen>
                                     : () => _signInWithGoogle(authProvider),
                               ),
                               const SizedBox(height: 8),
-                              // Misafir girişi: ikincil eylem, altı çizili
-                              // metin bağlantısı (tek baskın CTA = Google).
+                              // Misafir girişi: ikincil eylem, outlined buton
+                              // (tek baskın CTA = Google, altta belirgin seçenek).
                               Center(
                                 child: _GuestSignInLink(
                                   onPressed: authProvider.isLoading
@@ -837,10 +837,10 @@ class _SignInHeroBanner extends StatelessWidget {
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.brandGreen, AppTheme.brandGreenDeep],
+            colors: [AppTheme.brand, AppTheme.brandDeep],
           ),
           border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
-          boxShadow: AppTheme.elevatedShadow(AppTheme.brandGreen),
+          boxShadow: AppTheme.elevatedShadow(AppTheme.brand),
         ),
         child: Stack(
           children: [
@@ -990,34 +990,35 @@ class _GuestSignInLink extends StatelessWidget {
   Widget build(BuildContext context) {
     final enabled = onPressed != null;
     final isLight = AppTheme.isLight(context);
+    final fg = isLight ? AppTheme.lightTextPrimary : Colors.white;
     return IgnorePointer(
       ignoring: !enabled,
       child: Opacity(
         opacity: enabled ? 1 : 0.55,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onPressed,
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-            child: Container(
-              constraints: const BoxConstraints(minHeight: 44),
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                context.s('Wek mêvan bidomîne', 'Misafir olarak devam et'),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: isLight ? AppTheme.lightTextPrimary : Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                  letterSpacing: 0.1,
-                  decoration: TextDecoration.underline,
-                  decorationColor: isLight
-                      ? AppTheme.lightTextPrimary.withValues(alpha: 0.6)
-                      : Colors.white.withValues(alpha: 0.7),
-                ),
-              ),
+        child: OutlinedButton.icon(
+          onPressed: onPressed,
+          icon: const Icon(AppIcons.user, size: 18),
+          label: Text(
+            context.s('Wek mêvan bidomîne', 'Misafir olarak devam et'),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: fg),
+          ),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: fg,
+            minimumSize: const Size(double.infinity, 48),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            textStyle: const TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+              letterSpacing: 0.1,
+            ),
+            side: BorderSide(
+              color: AppTheme.brand.withValues(alpha: 0.6),
+              width: 1.4,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.md),
             ),
           ),
         ),

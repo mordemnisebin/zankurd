@@ -296,7 +296,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     return [
       _OnboardingData(
         icon: AppIcons.graduationCap,
-        color: AppTheme.brandGreen,
+        color: AppTheme.brand,
         title: context.s('Hîn bibe', 'Öğren'),
         body: context.s(
           'Kurmancî peyv, çand û zanînê bi pirsên kurt fêr bibe.',
@@ -312,50 +312,30 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           ku ? 'Bi kurtî û bi bandor fêr bibe' : 'Kısa ve etkili öğrenme',
         ],
       ),
-      _OnboardingData(
-        icon: AppIcons.trophy,
-        color: const Color(0xFFB86A3E), // terracotta — palet tonu
-        title: context.s('Pêşbirkê bike', 'Yarış'),
-        body: context.s(
-          'Bi hevalan an botan re pêşbirkê bike û pûanên xwe zêde bike.',
-          'Arkadaşlarınla veya botlarla yarış, puanını yükselt.',
-        ),
-        bullets: [
-          ku
-              ? 'Şerê 1vs1 — rasterast bi hevalên xwe re'
-              : '1vs1 düello — arkadaşlarınla doğrudan',
-          ku
-              ? 'Pêşbirka Rojê — 10 pirs, xelata rojê'
-              : 'Günün Yarışması — 10 soru, günlük ödül',
-          ku
-              ? 'Kûpa — ji bo serkeftinê pêş bikeve'
-              : 'Turnuva — kupa için yarış',
-        ],
-      ),
-      // 3. slayt: günlük ödüller + "Neden ZanKurd?" değer önerisi birleşti
-      // (4 slayt → 3 slayt; daha kısa ilk izlenim).
+      // 2. slayt: yarış + ödüller birleşti (3 slayt → 2 slayt; daha kısa
+      // ilk izlenim, hemen başla CTA'sına hızlı geçiş).
       _OnboardingData(
         showMascotAccent: true,
-        icon: AppIcons.wandMagicSparkles,
-        color: AppTheme.gold,
-        title: context.s('Ne tenê pêşbirk e', 'Sadece yarış değil'),
+        icon: AppIcons.trophy,
+        color: const Color(0xFFB86A3E), // terracotta — palet tonu
+        title: context.s('Pêşbirkê bike û bi ser keve', 'Yarış ve kazan'),
         body: context.s(
-          'Her pirsê rast bersivandin ast bilind dike — Xwendekar, Pispor, Mamoste. Zanîna te bi rastî mezin dibe.',
-          'Her doğru cevap seni bir üst seviyeye taşır — Xwendekar, Pispor, Mamoste. Bilgin gerçekten artıyor.',
+          'Bi hevalan an botan re pêşbirkê bike, xelatan bistîne û ast bilind bike.',
+          'Arkadaşlarınla veya botlarla yarış, ödüller kazan ve seviye atla.',
         ),
         bullets: [
+          ku
+              ? 'Şerê 1vs1 û Pêşbirka Rojê'
+              : '1vs1 düello ve Günün Yarışması',
           ku
               ? 'Çerxa Rojê — 100 coinê belaş'
               : 'Günlük Çark — 100 ücretsiz coin',
           ku
-              ? 'Zincîra xwe biparêze û bonus bistîne'
-              : 'Seriyi koru, bonus kazan',
-          ku
               ? 'Jokerên stratejîk: 50/50, Demjimêr zêde'
               : 'Stratejik jokerler: 50/50, Süre uzat',
           ku
-              ? 'Kûpayên rojane — bibe şampiyon'
-              : 'Günlük turnuvalar — şampiyon ol',
+              ? 'Ast bilind bike: Xwendekar → Pispor → Mamoste'
+              : 'Seviye atla: Xwendekar → Pispor → Mamoste',
         ],
       ),
     ];

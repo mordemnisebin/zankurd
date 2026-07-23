@@ -31,7 +31,7 @@ class _ProfileHeroCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
         decoration: const BoxDecoration(
-          color: AppTheme.brandGreenDeep,
+          color: AppTheme.brandDeep,
         ),
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(

@@ -60,7 +60,7 @@ void main() {
       );
       expect(
         startButton.style?.backgroundColor?.resolve({}),
-        AppTheme.brandGreen,
+        AppTheme.brand,
       );
       expect(find.byIcon(AppIcons.trophy), findsAtLeast(1));
     });

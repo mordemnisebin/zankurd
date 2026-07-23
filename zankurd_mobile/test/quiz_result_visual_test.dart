@@ -56,11 +56,11 @@ void main() {
     expect(gradient.colors, hasLength(2));
     expect(
       gradient.colors.first.computeLuminance(),
-      lessThan(AppTheme.brandGreen.computeLuminance()),
+      lessThan(AppTheme.brand.computeLuminance()),
     );
     expect(
       gradient.colors.last.computeLuminance(),
-      lessThan(AppTheme.brandGreenDeep.computeLuminance()),
+      lessThan(AppTheme.brandDeep.computeLuminance()),
     );
   });
 

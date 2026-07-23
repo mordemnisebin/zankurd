@@ -74,4 +74,58 @@ void main() {
     expect(reloaded.effectiveStreak(now: DateTime(2026, 6, 12)), 0);
     expect(reloaded.best, 0);
   });
+
+  test('addFreeze increments up to the max cap', () async {
+    final store = await StreakStore.load();
+    expect(store.freezeCount, 0);
+    expect(await store.addFreeze(), 1);
+    expect(await store.addFreeze(), 2);
+    // Üst sınır maxFreeze; üstüne çıkmaz.
+    expect(await store.addFreeze(), StreakStore.maxFreeze);
+    expect(store.freezeCount, StreakStore.maxFreeze);
+  });
+
+  test('willBreakOnPlay only true when a live streak skipped a day', () async {
+    final store = await StreakStore.load();
+    await store.recordPlay(now: DateTime(2026, 6, 12));
+    await store.recordPlay(now: DateTime(2026, 6, 13));
+    // Ertesi gün: kırılmaz.
+    expect(store.willBreakOnPlay(now: DateTime(2026, 6, 14)), isFalse);
+    // Aynı gün: kırılmaz.
+    expect(store.willBreakOnPlay(now: DateTime(2026, 6, 13)), isFalse);
+    // Bir gün atlandı: kırılır.
+    expect(store.willBreakOnPlay(now: DateTime(2026, 6, 15)), isTrue);
+  });
+
+  test('freezeAndRecordPlay preserves the streak and spends a token', () async {
+    final store = await StreakStore.load();
+    await store.recordPlay(now: DateTime(2026, 6, 12));
+    await store.recordPlay(now: DateTime(2026, 6, 13));
+    await store.addFreeze();
+    expect(store.canFreeze(now: DateTime(2026, 6, 15)), isTrue);
+
+    final streak = await store.freezeAndRecordPlay(now: DateTime(2026, 6, 15));
+    // Seri sıfırlanmadı, +1 devam etti (2 -> 3).
+    expect(streak, 3);
+    expect(store.freezeCount, 0);
+    expect(store.best, 3);
+  });
+
+  test('freezeAndRecordPlay falls back to recordPlay without a token', () async {
+    final store = await StreakStore.load();
+    await store.recordPlay(now: DateTime(2026, 6, 12));
+    await store.recordPlay(now: DateTime(2026, 6, 13));
+    // Jeton yok: normal davranış (seri 1'e düşer).
+    final streak = await store.freezeAndRecordPlay(now: DateTime(2026, 6, 15));
+    expect(streak, 1);
+    expect(store.freezeCount, 0);
+  });
+
+  test('freeze count persists across instances', () async {
+    final store = await StreakStore.load();
+    await store.addFreeze();
+    StreakStore.resetInstance();
+    final restored = await StreakStore.load();
+    expect(restored.freezeCount, 1);
+  });
 }

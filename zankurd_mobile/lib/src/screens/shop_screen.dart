@@ -812,7 +812,7 @@ class _ShopScreenState extends State<ShopScreen> {
                       vertical: 5,
                     ),
                     decoration: BoxDecoration(
-                      color: AppTheme.brandGreen,
+                      color: AppTheme.brand,
                       borderRadius: BorderRadius.circular(AppRadius.pill),
                     ),
                     child: Text(

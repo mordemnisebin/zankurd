@@ -113,7 +113,7 @@ void main() {
     );
   });
 
-  testWidgets('Sonraki CTA brandGreen dolgu taşır', (tester) async {
+  testWidgets('Sonraki CTA brand dolgu taşır', (tester) async {
     final repository = MockZanKurdRepository();
     await tester.pumpWidget(
       wrap(
@@ -130,10 +130,10 @@ void main() {
     final button = tester.widget<FilledButton>(
       find.byKey(const ValueKey('quiz-next-button')),
     );
-    expect(button.style?.backgroundColor?.resolve({}), AppTheme.brandGreen);
+    expect(button.style?.backgroundColor?.resolve({}), AppTheme.brand);
   });
 
-  testWidgets('aktif soru segmenti brandGreen bekler', (tester) async {
+  testWidgets('aktif soru segmenti brand bekler', (tester) async {
     final repository = MockZanKurdRepository();
     await tester.pumpWidget(
       wrap(
@@ -151,7 +151,7 @@ void main() {
         .widgetList<AnimatedContainer>(find.byType(AnimatedContainer))
         .where((c) {
           final deco = c.decoration;
-          return deco is BoxDecoration && deco.color == AppTheme.brandGreen;
+          return deco is BoxDecoration && deco.color == AppTheme.brand;
         });
     expect(segments, isNotEmpty);
   });

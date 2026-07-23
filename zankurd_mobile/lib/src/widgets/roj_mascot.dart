@@ -32,7 +32,7 @@ class RojMascot extends StatelessWidget {
   /// Işınların dönüşümlü rengi: altın (kimlik/ödül) + indigo (yeni marka
   /// rengiyle bağ) — sakin, ritmik iki renkli şerit. Dört rengin dönüşümü
   /// küçük boyutta gürültü gibi okunduğu için sadeleştirildi.
-  static const rayColors = [AppTheme.gold, AppTheme.brandGreen];
+  static const rayColors = [AppTheme.gold, AppTheme.brand];
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ class _RojMascotPainter extends CustomPainter {
     );
 
     final ink = Paint()
-      ..color = AppTheme.brandGreenDeep
+      ..color = AppTheme.brandDeep
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.035
       ..strokeCap = StrokeCap.round;
@@ -117,7 +117,7 @@ class _RojMascotPainter extends CustomPainter {
         }
       case RojMood.happy:
       case RojMood.thinking:
-        final dot = Paint()..color = AppTheme.brandGreenDeep;
+        final dot = Paint()..color = AppTheme.brandDeep;
         canvas.drawCircle(Offset(center.dx - eyeDx, eyeY), faceR * 0.09, dot);
         canvas.drawCircle(Offset(center.dx + eyeDx, eyeY), faceR * 0.09, dot);
     }

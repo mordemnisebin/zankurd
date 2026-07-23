@@ -82,7 +82,7 @@ class ZanaDailyCard extends StatelessWidget {
               top: 0,
               bottom: 0,
               width: 3,
-              child: ColoredBox(color: AppTheme.brandGreen),
+              child: ColoredBox(color: AppTheme.brand),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 6),
@@ -99,7 +99,7 @@ class ZanaDailyCard extends StatelessWidget {
                           children: [
                             const Icon(
                               AppIcons.quoteLeft,
-                              color: AppTheme.brandGreen,
+                              color: AppTheme.brand,
                               size: 15,
                             ),
                             const SizedBox(width: 4),
@@ -115,7 +115,7 @@ class ZanaDailyCard extends StatelessWidget {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTypography.caption.copyWith(
-                                  color: AppTheme.brandGreen,
+                                  color: AppTheme.brand,
                                   fontWeight: FontWeight.w800,
                                   letterSpacing: 0.4,
                                 ),

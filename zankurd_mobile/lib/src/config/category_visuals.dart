@@ -20,13 +20,13 @@ class CategoryVisuals {
   static const Map<String, List<Color>> _gradients = {
     'Ziman': [Color(0xFFD47C3B), Color(0xFFC0672A)], // turuncu
     'Siyaset': [Color(0xFFB54C6F), Color(0xFF9E3C5B)], // gül
-    'Paradigma': [Color(0xFF4A74B8), Color(0xFF385E9D)], // mavi
-    'Muzîk': [Color(0xFFD1A23A), Color(0xFFB88C2A)], // kehribar
+    'Paradigma': [Color(0xFF3B6FB8), Color(0xFF2E5A9D)], // mavi
+    'Muzîk': [Color(0xFFC4A020), Color(0xFFA88818)], // sari-altin
     'Edebiyat': [Color(0xFF2B8A50), Color(0xFF227542)], // yeşil
-    'Dîrok': [Color(0xFFC75D6D), Color(0xFFB04B5A)], // kızıl
-    'Cografya': [Color(0xFF865DB8), Color(0xFF704A9E)], // mor
-    'Çand': [Color(0xFF288077), Color(0xFF1E6962)], // turkuaz
-    'Teknolojî': [Color(0xFF4A74B8), Color(0xFF385E9D)],
+    'Dîrok': [Color(0xFF8B3A5A), Color(0xFF742E4A)], // bordo
+    'Cografya': [Color(0xFF7048B8), Color(0xFF5D3A9E)], // doygun mor
+    'Çand': [Color(0xFF1E8A7A), Color(0xFF177064)], // acik turkuaz
+    'Teknolojî': [Color(0xFF3B6FB8), Color(0xFF2E5A9D)],
   };
 
   static const List<Color> _fallbackGradient = [

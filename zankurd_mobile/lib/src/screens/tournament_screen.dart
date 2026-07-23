@@ -708,7 +708,7 @@ class _LobbyView extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                             vertical: AppSpacing.md,
                           ),
-                          backgroundColor: AppTheme.brandGreen,
+                          backgroundColor: AppTheme.brand,
                           foregroundColor: Colors.white,
                         ),
                         label: Text(

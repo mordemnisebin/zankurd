@@ -122,6 +122,60 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     }
   }
 
+  /// Kırılacak günlük seri için coin karşılığı dondurma teklif eder.
+  /// Ödeme yapılıp seri korunursa yeni seri değerini, aksi halde null döner.
+  static const _streakFreezeCost = 50;
+
+  Future<int?> _maybeOfferStreakFreeze(StreakStore store) async {
+    if (!mounted) return null;
+    int balance;
+    try {
+      balance = await repository.loadCoinBalance();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak_freeze_balance');
+      return null;
+    }
+    if (!mounted || balance < _streakFreezeCost) return null;
+    final ku = context.isKu;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(ku ? 'Zincîra te dişkê!' : 'Serin kırılıyor!'),
+        content: Text(
+          ku
+              ? 'Zincîra te ya rojane dê sifir bibe. Bi $_streakFreezeCost coin biparêze?'
+              : 'Günlük serin sıfırlanacak. $_streakFreezeCost coin ile koru?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text(ku ? 'Na, bila here' : 'Hayır, sıfırlansın'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: Text(
+              ku
+                  ? 'Biparêze ($_streakFreezeCost)'
+                  : 'Koru ($_streakFreezeCost)',
+            ),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return null;
+    bool ok;
+    try {
+      ok = await repository.spendCoins(_streakFreezeCost, 'streak_freeze');
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak_freeze_spend');
+      return null;
+    }
+    if (!ok) return null;
+    // Coin ödendi: bir jeton verilip hemen uygulanır (seri +1 devam eder).
+    await store.addFreeze();
+    return store.freezeAndRecordPlay();
+  }
+
   Future<void> _recordProgress() async {
     final streakStore = await StreakStore.load();
     final today = DateTime.now();
@@ -131,7 +185,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         '${today.day.toString().padLeft(2, '0')}';
     final isNewDay = streakStore.lastDay != todayKey;
 
-    final streak = await streakStore.recordPlay();
+    // Seri bugün oynamayınca kırılacaksa, oyuncuya coin karşılığı koruma
+    // teklif et (pay-at-result). Kabul edilmezse normal davranış işler.
+    final int streak;
+    if (streakStore.willBreakOnPlay()) {
+      final saved = await _maybeOfferStreakFreeze(streakStore);
+      streak = saved ?? await streakStore.recordPlay();
+    } else {
+      streak = await streakStore.recordPlay();
+    }
     final mistakeStore = await MistakeStore.load();
     final achievementStore = await AchievementStore.load();
     final newAchievements = await achievementStore.recordQuizResult(
@@ -421,14 +483,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 ? [
                     Color.alphaBlend(
                       Colors.black.withValues(alpha: 0.12),
-                      AppTheme.brandGreen,
+                      AppTheme.brand,
                     ),
                     Color.alphaBlend(
                       Colors.black.withValues(alpha: 0.18),
-                      AppTheme.brandGreenDeep,
+                      AppTheme.brandDeep,
                     ),
                   ]
-                : [AppTheme.brandGreen, AppTheme.brandGreenDeep],
+                : [AppTheme.brand, AppTheme.brandDeep],
           );
 
     final borderColor = is1v1
@@ -437,7 +499,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : isDraw
               ? AppTheme.borderColor(context)
               : AppTheme.wrong.withValues(alpha: 0.55))
-        : AppTheme.brandGreen.withValues(alpha: 0.45);
+        : AppTheme.brand.withValues(alpha: 0.45);
 
     final headerTitle = is1v1
         ? (isWinner
@@ -512,7 +574,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     : isDraw
                                     ? AppTheme.borderColor(context)
                                     : AppTheme.wrong)
-                              : AppTheme.brandGreen,
+                              : AppTheme.brand,
                           intensity: 0.18,
                         ),
                       ),
@@ -798,7 +860,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           child: FilledButton.icon(
                             key: const ValueKey('result-play-again-button'),
                             style: FilledButton.styleFrom(
-                              backgroundColor: AppTheme.brandGreen,
+                              backgroundColor: AppTheme.brand,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),

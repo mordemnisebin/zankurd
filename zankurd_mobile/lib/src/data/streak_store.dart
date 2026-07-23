@@ -8,11 +8,21 @@ import '../utils/error_reporter.dart';
 /// oyun seriyi artırmaz; bir gün atlanırsa seri 1'den başlar. En iyi
 /// seri ayrıca saklanır. SharedPreferences yoksa bellek-içi çalışır.
 class StreakStore {
-  StreakStore._(this._preferences, this._current, this._best, this._lastDay);
+  StreakStore._(
+    this._preferences,
+    this._current,
+    this._best,
+    this._lastDay,
+    this._freeze,
+  );
 
   static const _currentKey = 'zankurd.streak.current';
   static const _bestKey = 'zankurd.streak.best';
   static const _lastDayKey = 'zankurd.streak.lastDay';
+  static const _freezeKey = 'zankurd.streak.freeze';
+
+  /// Aynı anda tutulabilecek en fazla dondurma jetonu.
+  static const maxFreeze = 2;
   static StreakStore? _instance;
 
   static Future<StreakStore> load() async {
@@ -30,6 +40,7 @@ class StreakStore {
       preferences?.getInt(_currentKey) ?? 0,
       preferences?.getInt(_bestKey) ?? 0,
       preferences?.getString(_lastDayKey),
+      preferences?.getInt(_freezeKey) ?? 0,
     );
   }
 
@@ -40,9 +51,13 @@ class StreakStore {
   int _current;
   int _best;
   String? _lastDay;
+  int _freeze;
 
   int get best => _best;
   String? get lastDay => _lastDay;
+
+  /// Elde tutulan dondurma jetonu sayısı (0..[maxFreeze]).
+  int get freezeCount => _freeze;
 
   static String _dayKey(DateTime day) =>
       '${day.year.toString().padLeft(4, '0')}-'
@@ -63,6 +78,43 @@ class StreakStore {
       return _current;
     }
     return 0;
+  }
+
+  /// Şu an oynanırsa mevcut bir serinin (>0) kırılıp kırılmayacağını söyler.
+  /// Yani seri sürüyordu ama bir (veya daha fazla) gün atlandı.
+  bool willBreakOnPlay({DateTime? now}) {
+    final today = now ?? DateTime.now();
+    final lastDay = _lastDay;
+    if (lastDay == null || _current <= 0) return false;
+    return lastDay != _dayKey(today) && !_isYesterday(lastDay, today);
+  }
+
+  /// Kırılacak seri elde jeton varken dondurulabilir mi?
+  bool canFreeze({DateTime? now}) =>
+      _freeze > 0 && willBreakOnPlay(now: now);
+
+  /// Bir dondurma jetonu ekler (mağaza alımı). Üst sınır [maxFreeze].
+  Future<int> addFreeze() async {
+    if (_freeze >= maxFreeze) return _freeze;
+    _freeze += 1;
+    await _persist();
+    return _freeze;
+  }
+
+  /// Bir jeton harcayarak seriyi korur ve bugünkü oyunu işler.
+  /// Atlanan gün(ler) köprülenir; seri +1 devam eder. Jeton yoksa ya da
+  /// seri zaten kırılmayacaksa normal [recordPlay] davranışına düşer.
+  Future<int> freezeAndRecordPlay({DateTime? now}) async {
+    final today = now ?? DateTime.now();
+    if (!canFreeze(now: today)) {
+      return recordPlay(now: today);
+    }
+    _freeze -= 1;
+    _current += 1;
+    if (_current > _best) _best = _current;
+    _lastDay = _dayKey(today);
+    await _persist();
+    return _current;
   }
 
   /// Tamamlanan bir oyunu işler ve güncel seriyi döner.
@@ -90,6 +142,7 @@ class StreakStore {
     if (preferences == null) return;
     await preferences.setInt(_currentKey, _current);
     await preferences.setInt(_bestKey, _best);
+    await preferences.setInt(_freezeKey, _freeze);
     final lastDay = _lastDay;
     if (lastDay != null) {
       await preferences.setString(_lastDayKey, lastDay);
@@ -100,10 +153,12 @@ class StreakStore {
     _current = 0;
     _best = 0;
     _lastDay = null;
+    _freeze = 0;
     final preferences = _preferences;
     if (preferences == null) return;
     await preferences.remove(_currentKey);
     await preferences.remove(_bestKey);
     await preferences.remove(_lastDayKey);
+    await preferences.remove(_freezeKey);
   }
 }

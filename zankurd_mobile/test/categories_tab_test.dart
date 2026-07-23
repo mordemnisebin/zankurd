@@ -30,7 +30,7 @@ void main() {
     MasteryStore.resetInstance();
   });
 
-  testWidgets('header brandGreen aksan çizgisi taşır', (tester) async {
+  testWidgets('header brand aksan çizgisi taşır', (tester) async {
     await tester.pumpWidget(
       wrap(CategoriesTab(repository: MockZanKurdRepository())),
     );
@@ -40,7 +40,7 @@ void main() {
       find.byKey(const ValueKey('categories-header-accent')),
     );
     final decoration = accent.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.brandGreen);
+    expect(decoration.color, AppTheme.brand);
     expect(decoration.gradient, isNull);
     expect(find.text('Kategoriler'), findsOneWidget);
   });
