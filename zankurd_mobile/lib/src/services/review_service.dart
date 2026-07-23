@@ -23,6 +23,10 @@ class ReviewService {
   static Future<void> Function() requestReviewFn = () =>
       InAppReview.instance.requestReview();
 
+  /// Test'lerde mağaza sayfasını açma çağrısını taklit etmek için enjekte edilebilir.
+  static Future<void> Function() openStoreListingFn = () =>
+      InAppReview.instance.openStoreListing();
+
   final SharedPreferences? _preferences;
   int _completedQuizzes;
   bool _requested;
@@ -48,6 +52,10 @@ class ReviewService {
   }
 
   static void resetInstance() => _instance = null;
+
+  /// Kullanıcı "Değerlendir" bağlantısına dokununca mağaza sayfasını açar.
+  /// [requestReview]'dan farklı olarak koşulsuz olarak mağaza listesini açar.
+  static Future<void> openStoreListing() => openStoreListingFn();
 
   /// Belirli bir quiz skoruyla değerlendirme istenmeli mi? (yan etkisiz)
   bool shouldRequest({required int accuracyPercent}) {

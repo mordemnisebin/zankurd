@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
 
 import '../data/achievement_store.dart';
@@ -347,6 +346,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     const SizedBox(height: 16),
                     Text(
                       context.isKu ? 'Asta Te Bilind Bû!' : 'Seviyen Yükseldi!',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
@@ -359,6 +360,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           ? 'Te asteke nû bi dest xist!'
                           : 'Yeni bir seviyeye ulaştın!',
                       textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 14,
                         color: AppTheme.textSubColor(context),
@@ -383,6 +386,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       ),
                       child: Text(
                         context.isKu ? 'Ast $newLevel' : 'Seviye $newLevel',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
@@ -408,6 +413,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         ).pop({'score': score, 'correct': correctCount}),
                         child: Text(
                           context.isKu ? 'Berdawam bike' : 'Devam Et',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
@@ -450,6 +457,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       }
     }
 
+    // 1v1 sonuç gradyanları: AppTheme.correctDeep / wrongDeep token'ları
+    // kullanılır (M-11 — hardcoded Color literal → adlandırılmış sabit).
     final headerGradient = is1v1
         ? (isWinner
               ? LinearGradient(
@@ -457,7 +466,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   end: Alignment.bottomRight,
                   colors: [
                     AppTheme.correct.withValues(alpha: 0.92),
-                    const Color(0xFF1B5E20),
+                    AppTheme.correctDeep,
                   ],
                 )
               : isDraw
@@ -474,7 +483,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   end: Alignment.bottomRight,
                   colors: [
                     AppTheme.wrong.withValues(alpha: 0.88),
-                    const Color(0xFF7F1D1D),
+                    AppTheme.wrongDeep,
                   ],
                 ))
         : LinearGradient(
@@ -1069,8 +1078,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               vertical: 4,
                             ),
                           ),
-                          onPressed: () =>
-                              InAppReview.instance.openStoreListing(),
+                          onPressed: () => ReviewService.openStoreListing(),
                           child: Text(
                             context.s('Binirxîne', 'Değerlendir'),
                             style: TextStyle(
@@ -1231,7 +1239,7 @@ class _AchievementUnlocks extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: AppTheme.gold.withValues(alpha: 0.10),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(AppRadius.badge),
                     ),
                     child: Icon(
                       achievement.icon,
@@ -1407,7 +1415,7 @@ class _RaceStandingRow extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.16),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(AppRadius.badge),
             ),
             child: Text(
               '$rank',
@@ -1514,6 +1522,3 @@ class _StatPill extends StatelessWidget {
     );
   }
 }
-
-// Analytics tracking will be added in next iteration
-// AnalyticsTracker.trackQuizComplete(category, correctCount, totalQuestions);
