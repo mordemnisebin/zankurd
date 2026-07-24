@@ -272,7 +272,31 @@ class _ReviewCard extends StatelessWidget {
                             width: double.infinity,
                             height: 180,
                             fit: BoxFit.cover,
-                            errorWidget: (_, _, _) => const SizedBox(),
+                            placeholder: (context, url) => Container(
+                              width: double.infinity,
+                              height: 180,
+                              color: AppTheme.surfaceHiColor(context),
+                              alignment: Alignment.center,
+                              child: SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: AppTheme.brand.withValues(alpha: 0.7),
+                                ),
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => Container(
+                              width: double.infinity,
+                              height: 180,
+                              color: AppTheme.surfaceHiColor(context),
+                              alignment: Alignment.center,
+                              child: Icon(
+                                AppIcons.image,
+                                color: AppTheme.textMutedColor(context),
+                                size: 32,
+                              ),
+                            ),
                           ),
                   ),
                   const SizedBox(height: 16),

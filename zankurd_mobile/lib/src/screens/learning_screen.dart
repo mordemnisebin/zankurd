@@ -1273,12 +1273,39 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                             width: double.infinity,
                             height: 200,
                             margin: const EdgeInsets.only(bottom: 16),
-                            decoration: BoxDecoration(
+                            child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                              image: DecorationImage(
-                                image: CachedNetworkImageProvider(slide.imageUrl!),
-                                fit: BoxFit.cover,
-                              ),
+                              child: slide.imageUrl!.startsWith('asset://')
+                                  ? Image.asset(
+                                      slide.imageUrl!.replaceFirst('asset://', ''),
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (_, _, _) => const SizedBox(),
+                                    )
+                                  : CachedNetworkImage(
+                                      imageUrl: slide.imageUrl!,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => Container(
+                                        color: AppTheme.surfaceHiColor(context),
+                                        alignment: Alignment.center,
+                                        child: SizedBox(
+                                          width: 24,
+                                          height: 24,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            color: AppTheme.brand.withValues(alpha: 0.7),
+                                          ),
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) => Container(
+                                        color: AppTheme.surfaceHiColor(context),
+                                        alignment: Alignment.center,
+                                        child: Icon(
+                                          AppIcons.image,
+                                          color: AppTheme.textMutedColor(context),
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
                             ),
                           ),
                         if (_flashcardMode)
