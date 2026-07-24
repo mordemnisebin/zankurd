@@ -890,15 +890,28 @@ class _AchievementChip extends StatelessWidget {
   }
 }
 
-class _PedagogicalAnalyticsSection extends StatelessWidget {
+class _PedagogicalAnalyticsSection extends StatefulWidget {
   const _PedagogicalAnalyticsSection({required this.isKu});
 
   final bool isKu;
 
   @override
+  State<_PedagogicalAnalyticsSection> createState() =>
+      _PedagogicalAnalyticsSectionState();
+}
+
+class _PedagogicalAnalyticsSectionState
+    extends State<_PedagogicalAnalyticsSection> {
+  late final Future<List<dynamic>> _dataFuture = Future.wait([
+    MistakeStore.load(),
+    MasteryStore.load(),
+  ]);
+
+  @override
   Widget build(BuildContext context) {
+    final isKu = widget.isKu;
     return FutureBuilder<List<dynamic>>(
-      future: Future.wait([MistakeStore.load(), MasteryStore.load()]),
+      future: _dataFuture,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const SizedBox.shrink();

@@ -58,6 +58,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late final Future<MistakeStore> _mistakeStoreFuture = MistakeStore.load();
   bool _loading = true;
   bool _loadFailed = false;
   bool _practiceLoading = false;
@@ -366,7 +367,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 12),
                   FutureBuilder<MistakeStore>(
-                    future: MistakeStore.load(),
+                    future: _mistakeStoreFuture,
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
                         return SizedBox(

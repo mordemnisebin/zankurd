@@ -38,6 +38,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  late final Future<PlacementStore> _placementStoreFuture = PlacementStore.load();
   final _nameController = TextEditingController();
   bool _deleting = false;
   bool _loadingName = true;
@@ -242,7 +243,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                               const SizedBox(height: 3),
                               FutureBuilder<PlacementStore>(
-                                future: PlacementStore.load(),
+                                future: _placementStoreFuture,
                                 builder: (context, snap) {
                                   final level = snap.data?.level;
                                   final String sub;
