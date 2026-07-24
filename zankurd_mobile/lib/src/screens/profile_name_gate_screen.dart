@@ -207,7 +207,10 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                           ),
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                              minHeight: formConstraints.maxHeight,
+                              minHeight:
+                                  (formConstraints.maxHeight -
+                                          (AppSpacing.lg * 2))
+                                      .clamp(0.0, double.infinity),
                             ),
                             child: Center(
                               child: ConstrainedBox(
