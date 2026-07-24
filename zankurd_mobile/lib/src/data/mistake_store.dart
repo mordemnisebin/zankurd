@@ -103,6 +103,9 @@ class MistakeStore {
     final double currentEF =
         (_metadata[id]?['easeFactor'] as num?)?.toDouble() ?? 2.5;
 
+    final existingCategory = _metadata[id]?['category'] as String?;
+    final resolvedCategory = category ?? existingCategory;
+
     // Incorrect answer: reset repetitions to 0, interval to 1 day, reduce easeFactor
     _metadata[id] = {
       'nextReview': DateTime.now()
@@ -112,7 +115,7 @@ class MistakeStore {
       'repetitions': 0,
       'easeFactor': math.max(1.3, currentEF - 0.2),
       // ignore: use_null_aware_elements
-      if (category != null) 'category': category,
+      if (resolvedCategory != null) 'category': resolvedCategory,
     };
     await _persist();
   }
