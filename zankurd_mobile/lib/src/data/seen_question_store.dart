@@ -42,6 +42,7 @@ class SeenQuestionStore {
   int get seenCount => _seen.length;
 
   Future<void> markSeen(Iterable<String> ids) async {
+    if (ids.isEmpty) return;
     _seen.addAll(ids);
     await _persist();
   }

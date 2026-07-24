@@ -18,6 +18,11 @@ class DailyMissionStore {
 
   List<DailyMission> get missions => List.unmodifiable(_missions);
 
+  static bool _isSameCategory(String c1, String? c2) {
+    if (c2 == null) return false;
+    return c1 == c2 || c1.trim().toLowerCase() == c2.trim().toLowerCase();
+  }
+
   static String _dateString(DateTime day) =>
       '${day.year}-${day.month.toString().padLeft(2, '0')}-'
       '${day.day.toString().padLeft(2, '0')}';
@@ -106,7 +111,9 @@ class DailyMissionStore {
         case MissionType.keepStreak:
           if (streakAlive) mission.progress = mission.target;
         case MissionType.playCategory:
-          if (category == mission.category) mission.progress = mission.target;
+          if (_isSameCategory(category, mission.category)) {
+            mission.progress = mission.target;
+          }
         case MissionType.useWildcard:
           break;
       }

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -46,7 +48,7 @@ class XPStore {
       ErrorReporter.record(error, stack, reason: 'xp_store_load');
       preferences = null;
     }
-    final total = preferences?.getInt(_totalXPKey) ?? 0;
+    final total = math.max(0, preferences?.getInt(_totalXPKey) ?? 0);
     return _instance = XPStore._(preferences, total);
   }
 
