@@ -155,6 +155,7 @@ class _QuestionImage extends StatelessWidget {
         ? CachedNetworkImage(
             imageUrl: url,
             fit: BoxFit.contain,
+            placeholder: (context, url) => const _QuestionImagePlaceholder(),
             imageBuilder: (context, imageProvider) {
               _notifyReady();
               return Image(image: imageProvider, fit: BoxFit.contain);
@@ -195,6 +196,31 @@ class _QuestionImage extends StatelessWidget {
               height: portraitHeight,
               child: image,
             ),
+    );
+  }
+}
+
+/// Görsel indirilirken gösterilen hafif yükleme yüzeyi.
+class _QuestionImagePlaceholder extends StatelessWidget {
+  const _QuestionImagePlaceholder();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceHiColor(context),
+      ),
+      alignment: Alignment.center,
+      child: SizedBox(
+        width: 24,
+        height: 24,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+          color: AppTheme.brand.withValues(alpha: 0.7),
+        ),
+      ),
     );
   }
 }
