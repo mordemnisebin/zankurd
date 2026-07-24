@@ -35,9 +35,11 @@ class AppLogo extends StatelessWidget {
     final asset = width < _wordmarkThreshold
         ? 'assets/zankurd_icon.webp'
         : 'assets/zankurd.webp';
+    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
     return Image.asset(
       asset,
       width: width,
+      cacheWidth: (width * devicePixelRatio).round(),
       fit: BoxFit.contain,
       filterQuality: FilterQuality.high,
       isAntiAlias: true,

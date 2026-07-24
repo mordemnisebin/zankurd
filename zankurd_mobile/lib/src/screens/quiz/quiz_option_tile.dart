@@ -199,6 +199,8 @@ class QuizOptionTile extends StatelessWidget {
                           Expanded(
                             child: Text(
                               answer,
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
                               style: AppTypography.bodyLarge.copyWith(
                                 color: textColor,
                                 fontWeight: FontWeight.w800,

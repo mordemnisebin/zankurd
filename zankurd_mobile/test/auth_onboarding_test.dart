@@ -356,7 +356,11 @@ void main() {
     );
 
     final image = tester.widget<Image>(find.byType(Image));
-    expect((image.image as AssetImage).assetName, 'assets/zankurd.webp');
+    final provider = image.image;
+    final assetName = provider is ResizeImage
+        ? (provider.imageProvider as AssetImage).assetName
+        : (provider as AssetImage).assetName;
+    expect(assetName, 'assets/zankurd.webp');
     expect(image.filterQuality, FilterQuality.high);
     expect(image.isAntiAlias, isTrue);
   });

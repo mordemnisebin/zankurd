@@ -1223,10 +1223,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       }
 
       if (result['is_correct'] == true) {
-        HapticFeedback.lightImpact();
+        HapticFeedback.mediumImpact();
         context.read<SoundProvider>().playCorrect();
       } else {
-        HapticFeedback.heavyImpact();
+        HapticFeedback.vibrate();
         context.read<SoundProvider>().playWrong();
       }
 
@@ -1305,10 +1305,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       final correct = answer == question.correctAnswer;
       _trackMistake(correct);
       if (correct) {
-        HapticFeedback.lightImpact();
+        HapticFeedback.mediumImpact();
         context.read<SoundProvider>().playCorrect();
       } else {
-        HapticFeedback.heavyImpact();
+        HapticFeedback.vibrate();
         context.read<SoundProvider>().playWrong();
       }
       setState(() {
