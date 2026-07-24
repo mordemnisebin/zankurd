@@ -4,42 +4,62 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/analytics_service.dart';
 
+/// Supported application languages.
+enum AppLanguage {
+  ku('ku', 'Kurmancî'),
+  tr('tr', 'Türkçe');
+
+  const AppLanguage(this.code, this.displayName);
+
+  final String code;
+  final String displayName;
+
+  bool get isKu => this == AppLanguage.ku;
+  bool get isTr => this == AppLanguage.tr;
+
+  static AppLanguage fromCode(String code) {
+    return code.toLowerCase() == 'tr' ? AppLanguage.tr : AppLanguage.ku;
+  }
+}
+
 class LanguageProvider extends ChangeNotifier {
   LanguageProvider({String initialLang = 'ku', SharedPreferences? preferences})
-    : this._(initialLang, preferences);
+      : this.fromLanguage(AppLanguage.fromCode(initialLang), preferences);
 
-  LanguageProvider._(String initialLang, this._preferences)
-    : _lang = _normalize(initialLang);
+  LanguageProvider.fromLanguage(AppLanguage initialLanguage, [this._preferences])
+      : _language = initialLanguage;
 
   static const _storageKey = 'zankurd.language';
 
   static Future<LanguageProvider> load() async {
     final preferences = await SharedPreferences.getInstance();
-    return LanguageProvider(
-      initialLang: preferences.getString(_storageKey) ?? 'ku',
-      preferences: preferences,
+    final storedCode = preferences.getString(_storageKey) ?? 'ku';
+    return LanguageProvider.fromLanguage(
+      AppLanguage.fromCode(storedCode),
+      preferences,
     );
   }
 
-  static String _normalize(String lang) => lang == 'tr' ? 'tr' : 'ku';
-
-  String _lang;
+  AppLanguage _language;
   final SharedPreferences? _preferences;
 
-  String get lang => _lang;
-  bool get isKu => _lang == 'ku';
+  AppLanguage get language => _language;
+  String get lang => _language.code;
+  bool get isKu => _language == AppLanguage.ku;
+  bool get isTr => _language == AppLanguage.tr;
 
-  void setLang(String lang) {
-    final nextLang = _normalize(lang);
-    if (_lang != nextLang) {
-      _lang = nextLang;
-      _preferences?.setString(_storageKey, nextLang);
-      AnalyticsService.instance.logLanguageChange(nextLang);
+  void setLanguage(AppLanguage nextLanguage) {
+    if (_language != nextLanguage) {
+      _language = nextLanguage;
+      _preferences?.setString(_storageKey, nextLanguage.code);
+      AnalyticsService.instance.logLanguageChange(nextLanguage.code);
       notifyListeners();
     }
   }
 
-  void toggle() => setLang(isKu ? 'tr' : 'ku');
+  void setLang(String lang) => setLanguage(AppLanguage.fromCode(lang));
+
+  void toggle() => setLanguage(isKu ? AppLanguage.tr : AppLanguage.ku);
 }
 
 /// Helper to get bilingual strings.
@@ -57,6 +77,8 @@ extension LangContext on BuildContext {
       return Provider.of<LanguageProvider>(this, listen: false).isKu;
     }
   }
+
+  AppLanguage get language => Provider.of<LanguageProvider>(this, listen: false).language;
 
   /// Returns [ku] if Kurdish is active, [tr] if Turkish.
   String s(String ku, String tr) => isKu ? ku : tr;
@@ -152,4 +174,20 @@ class QuizStrings {
       isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor';
   static String you(bool isKu) => isKu ? 'Tu' : 'Sen';
   static String opponent(bool isKu) => isKu ? 'Hevrik' : 'Rakip';
+}
+
+/// Centralized common UI strings (dialog buttons, state messages, general actions).
+class CommonStrings {
+  const CommonStrings._();
+
+  static String ok(bool isKu) => isKu ? 'Temam' : 'Tamam';
+  static String cancel(bool isKu) => isKu ? 'Betal bike' : 'İptal';
+  static String retry(bool isKu) => isKu ? 'Dîsa biceribîne' : 'Tekrar Deneyin';
+  static String error(bool isKu) => isKu ? 'Çewtî' : 'Hata';
+  static String loading(bool isKu) => isKu ? 'Tê barkirin...' : 'Yükleniyor...';
+  static String share(bool isKu) => isKu ? 'Parve bike' : 'Paylaş';
+  static String close(bool isKu) => isKu ? 'Bigire' : 'Kapat';
+  static String save(bool isKu) => isKu ? 'Biparêze' : 'Kaydet';
+  static String back(bool isKu) => isKu ? 'Paşve' : 'Geri';
+  static String continueText(bool isKu) => isKu ? 'Berdewam bike' : 'Devam Et';
 }
