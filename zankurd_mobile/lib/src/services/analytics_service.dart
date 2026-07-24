@@ -68,4 +68,19 @@ class AnalyticsService {
   /// Tema değişikliği olayı.
   Future<void> logThemeChange(String theme) =>
       logEvent('theme_change', {'theme': theme});
+
+  /// Paywall görüntülenme olayı.
+  Future<void> logPaywallView() => logEvent('paywall_view');
+
+  /// Başarılı satın alma olayı.
+  Future<void> logPurchaseSuccess(String packageId) =>
+      logEvent('purchase_success', {'package_id': packageId});
+
+  /// Oturum açma olayı.
+  Future<void> logSignIn(String method) =>
+      logEvent('login', {'method': method});
+
+  /// Kaydolma olayı.
+  Future<void> logSignUp(String method) =>
+      logEvent('sign_up', {'method': method});
 }
