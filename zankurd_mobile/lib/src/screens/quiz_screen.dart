@@ -26,6 +26,7 @@ import '../models/wildcard.dart';
 import '../l10n/lang.dart';
 import '../services/analytics_service.dart';
 import '../services/tts_service.dart';
+import 'quiz/word_ordering_widget.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';

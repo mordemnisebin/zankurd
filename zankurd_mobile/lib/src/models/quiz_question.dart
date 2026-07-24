@@ -2,7 +2,13 @@ import '../l10n/explanation_ku.dart';
 import '../l10n/explanation_overrides.dart';
 import 'question_metadata.dart';
 
-enum QuestionType { multipleChoice, trueFalse, visual }
+enum QuestionType {
+  multipleChoice,
+  trueFalse,
+  visual,
+  wordOrdering,
+  fillInBlank,
+}
 
 class QuizQuestion {
   const QuizQuestion({
@@ -14,6 +20,9 @@ class QuizQuestion {
     required this.explanation,
     this.explanationKu,
     this.explanationTr,
+    this.hintKu,
+    this.hintTr,
+    this.audioUrl,
     this.type = QuestionType.multipleChoice,
     this.imageUrl,
     this.difficulty = 2,
@@ -28,6 +37,9 @@ class QuizQuestion {
   final String explanation;
   final String? explanationKu;
   final String? explanationTr;
+  final String? hintKu;
+  final String? hintTr;
+  final String? audioUrl;
   final QuestionType type;
   final String? imageUrl;
   final int difficulty;
@@ -38,6 +50,10 @@ class QuizQuestion {
   final QuestionMetadata? metadata;
 
   bool get hasImage => imageUrl != null && imageUrl!.trim().isNotEmpty;
+  bool get hasAudio => audioUrl != null && audioUrl!.trim().isNotEmpty;
+  bool get hasHint =>
+      (hintKu != null && hintKu!.trim().isNotEmpty) ||
+      (hintTr != null && hintTr!.trim().isNotEmpty);
 
   String get promptText => prompt;
 
@@ -81,6 +97,9 @@ class QuizQuestion {
     String? explanation,
     String? explanationKu,
     String? explanationTr,
+    String? hintKu,
+    String? hintTr,
+    String? audioUrl,
   }) {
     return QuizQuestion(
       id: id,
@@ -91,6 +110,9 @@ class QuizQuestion {
       explanation: explanation ?? this.explanation,
       explanationKu: explanationKu ?? this.explanationKu,
       explanationTr: explanationTr ?? this.explanationTr,
+      hintKu: hintKu ?? this.hintKu,
+      hintTr: hintTr ?? this.hintTr,
+      audioUrl: audioUrl ?? this.audioUrl,
       type: type,
       imageUrl: imageUrl,
       difficulty: difficulty,
@@ -118,6 +140,8 @@ class QuizQuestion {
       QuestionType.multipleChoice => 'Şıklı',
       QuestionType.trueFalse => 'Doğru/Yanlış',
       QuestionType.visual => 'Görselli',
+      QuestionType.wordOrdering => 'Cümle Kurma',
+      QuestionType.fillInBlank => 'Boşluk Doldurma',
     };
   }
 
@@ -126,6 +150,8 @@ class QuizQuestion {
       QuestionType.multipleChoice => isKu ? 'Hilbijarin' : 'Şıklı',
       QuestionType.trueFalse => isKu ? 'Rast/Xelet' : 'Doğru/Yanlış',
       QuestionType.visual => isKu ? 'Wêneyî' : 'Görselli',
+      QuestionType.wordOrdering => isKu ? 'Rêzkirin' : 'Cümle Kurma',
+      QuestionType.fillInBlank => isKu ? 'Tijîkirin' : 'Boşluk Doldurma',
     };
   }
 
@@ -153,6 +179,9 @@ class QuizQuestion {
           '',
       explanationKu: json['explanationKu'] as String?,
       explanationTr: json['explanationTr'] as String?,
+      hintKu: json['hintKu'] as String?,
+      hintTr: json['hintTr'] as String?,
+      audioUrl: json['audioUrl'] as String?,
       type: QuestionType.values.byName(
         (json['type'] as String?) ?? 'multipleChoice',
       ),
@@ -173,6 +202,9 @@ class QuizQuestion {
     'explanation': explanation,
     if (explanationKu != null) 'explanationKu': explanationKu,
     if (explanationTr != null) 'explanationTr': explanationTr,
+    if (hintKu != null) 'hintKu': hintKu,
+    if (hintTr != null) 'hintTr': hintTr,
+    if (audioUrl != null) 'audioUrl': audioUrl,
     'type': type.name,
     if (imageUrl != null) 'imageUrl': imageUrl,
     'difficulty': difficulty,

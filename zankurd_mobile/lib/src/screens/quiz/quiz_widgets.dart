@@ -337,6 +337,15 @@ class _QuestionTextAndAnswers extends StatelessWidget {
             builder: (context, areaConstraints) {
               // Landscape (844x390 gibi): dikey alan kıt — 4 şık 2x2
               // grid'e girer, Piştre butonu ekranda kalır.
+              if (question.type == QuestionType.wordOrdering) {
+                return WordOrderingWidget(
+                  question: question,
+                  disabled: answered,
+                  selectedAnswer: selectedAnswer,
+                  onAnswerSubmitted: onAnswer,
+                );
+              }
+
               final answers = question.displayAnswers;
               final twoColumn =
                   isCompact &&
