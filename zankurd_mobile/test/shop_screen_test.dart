@@ -6,6 +6,7 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/avatar_identity.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
+import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 
@@ -40,6 +41,9 @@ Widget _shell(Widget child) {
         create: (_) => LanguageProvider()..setLang('tr'),
       ),
       ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
+      ChangeNotifierProvider<PremiumService>(
+        create: (_) => PremiumService.fallback(),
+      ),
     ],
     child: MaterialApp(theme: AppTheme.dark(), home: child),
   );

@@ -65,6 +65,9 @@ dependencies:
   # Mağaza değerlendirmesi (Sprint 5'te kullanılacak)
   in_app_review: ^2.0.9
 
+  # Dış bağlantılar (gizlilik politikası / kullanım koşulları)
+  url_launcher: ^6.3.2
+
   # Abonelik / premium yönetimi (RevenueCat)
   purchases_flutter: ^8.6.0
 

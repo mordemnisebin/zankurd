@@ -14,9 +14,11 @@ import '../providers/sound_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/notification_service.dart';
 import '../services/premium_service.dart';
+import '../services/tts_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/legal_links.dart';
 import '../widgets/screen_identity_header.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'paywall_screen.dart';
@@ -495,6 +497,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const SizedBox(height: AppSpacing.cardGap),
 
+              // ============ SESLENDİRME (TTS) ============
+              ScreenSectionLabel(
+                label: ku ? 'Deng-xwendin' : 'Seslendirme',
+                accent: AppTheme.primaryGradientStart,
+              ),
+              const _TtsSettingsSection(),
+              const SizedBox(height: AppSpacing.cardGap),
+
               // ============ PREMIUM ABONELİK ============
               Consumer<PremiumService>(
                 builder: (context, premium, _) {
@@ -556,8 +566,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               ? 'Hemû taybetmendiyên premium vekirî ne'
                                               : 'Tüm premium özellikler aktif')
                                         : (ku
-                                              ? 'Damla reklam, detay-stats, sînor jokers tune'
-                                              : 'Reklamsız, detaylı istatistik, sınırsız joker'),
+                                              ? 'Xeml belaş, rozeta VIP, parastina zincîrê'
+                                              : 'Bedava kozmetik, VIP rozeti, seri koruması'),
                                     style: AppTypography.caption.copyWith(
                                       color: AppTheme.textSubColor(context),
                                     ),
@@ -772,6 +782,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ],
                       ),
                     ),
+                    const SizedBox(height: 12),
+                    // Yasal bağlantılar (mağaza şartı)
+                    const LegalLinksRow(),
                   ],
                 ),
               ),
@@ -1476,6 +1489,219 @@ class _ExpandableSection extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Ayarlar > Seslendirme (TTS) bölümü. TtsService'i yükler; aç/kapa,
+/// konuşma hızı ve ses seviyesi kontrollerini gösterir. Cihazda Kürtçe
+/// seslendirme desteklenmiyorsa bir bilgi notu gösterir (kontroller yine
+/// çalışır; yedek dil sesi kullanılabilir).
+class _TtsSettingsSection extends StatefulWidget {
+  const _TtsSettingsSection();
+
+  @override
+  State<_TtsSettingsSection> createState() => _TtsSettingsSectionState();
+}
+
+class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
+  TtsService? _tts;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    try {
+      final tts = await TtsService.load();
+      if (mounted) {
+        setState(() {
+          _tts = tts;
+          _loading = false;
+        });
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'settings tts load');
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ku = context.isKu;
+    final tts = _tts;
+
+    if (_loading) {
+      // Yükleme çok kısa sürer; sonsuz animasyonlu bir gösterge yerine
+      // sabit bir yer tutucu kullanılır (widget testlerinde pumpAndSettle
+      // sonsuz dönen bir spinner'da takılmasın).
+      return const SizedBox(height: 0);
+    }
+
+    if (tts == null) {
+      return AppPanel(
+        child: Text(
+          ku
+              ? 'Deng-xwendin li vê amûrê nayê bikaranîn.'
+              : 'Seslendirme bu cihazda kullanılamıyor.',
+          style: AppTypography.caption.copyWith(
+            color: AppTheme.textMutedColor(context),
+          ),
+        ),
+      );
+    }
+
+    final enabled = tts.isEnabled;
+    return AppPanel(
+      padding: EdgeInsets.zero,
+      child: Column(
+        children: [
+          _SettingsToggleRow(
+            icon: enabled ? AppIcons.volumeHigh : AppIcons.volumeXmark,
+            color: AppTheme.primaryGradientStart,
+            title: ku ? 'Deng-xwendinê veke' : 'Seslendirmeyi aç',
+            subtitle: ku
+                ? 'Pirs û şîroveyan bi deng bixwîne'
+                : 'Soru ve açıklamaları sesli okut',
+            trailing: Switch(
+              value: enabled,
+              onChanged: (v) async {
+                await tts.setEnabled(v);
+                if (mounted) setState(() {});
+              },
+            ),
+          ),
+          if (!tts.isKurdishAvailable)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.md,
+                0,
+                AppSpacing.md,
+                AppSpacing.sm,
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    AppIcons.circleInfo,
+                    size: 16,
+                    color: AppTheme.textMutedColor(context),
+                  ),
+                  const SizedBox(width: AppSpacing.xs),
+                  Expanded(
+                    child: Text(
+                      ku
+                          ? 'Dengê kurdî li vê amûrê sînordar e; dibe ku dengekî '
+                                'din were bikaranîn.'
+                          : 'Bu cihazda Kürtçe ses sınırlı olabilir; yedek bir '
+                                'ses kullanılabilir.',
+                      style: AppTypography.caption.copyWith(
+                        color: AppTheme.textMutedColor(context),
+                        height: 1.3,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          if (enabled) ...[
+            Divider(
+              height: 1,
+              indent: 56,
+              color: AppTheme.borderColor(context),
+            ),
+            _TtsSlider(
+              label: ku ? 'Leza xwendinê' : 'Konuşma hızı',
+              icon: AppIcons.bolt,
+              value: tts.rate,
+              onChanged: (v) async {
+                await tts.setRate(v);
+                if (mounted) setState(() {});
+              },
+            ),
+            Divider(
+              height: 1,
+              indent: 56,
+              color: AppTheme.borderColor(context),
+            ),
+            _TtsSlider(
+              label: ku ? 'Bilindahiya deng' : 'Ses seviyesi',
+              icon: AppIcons.volumeHigh,
+              value: tts.volume,
+              onChanged: (v) async {
+                await tts.setVolume(v);
+                if (mounted) setState(() {});
+              },
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// TTS hız/ses seviyesi için 0–1 aralığında etiketleli kaydırıcı satırı.
+class _TtsSlider extends StatelessWidget {
+  const _TtsSlider({
+    required this.label,
+    required this.icon,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final String label;
+  final IconData icon;
+  final double value;
+  final ValueChanged<double> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        AppSpacing.sm,
+        AppSpacing.md,
+        AppSpacing.sm,
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 38,
+            height: 38,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppTheme.primaryGradientStart.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(
+              icon,
+              color: AppTheme.primaryGradientStart,
+              size: 18,
+            ),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Slider(
+                  value: value.clamp(0.0, 1.0),
+                  onChanged: onChanged,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

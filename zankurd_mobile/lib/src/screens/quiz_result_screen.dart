@@ -13,6 +13,7 @@ import '../data/sync_manager.dart';
 import '../utils/error_reporter.dart';
 import '../l10n/lang.dart';
 import '../providers/child_safety_provider.dart';
+import '../services/premium_service.dart';
 import '../models/achievement.dart';
 import '../models/answer_record.dart';
 import '../models/player.dart';
@@ -177,6 +178,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   }
 
   Future<void> _recordProgress() async {
+    // Premium durumunu await'lerden ÖNCE, context hâlâ güvenliyken oku.
+    final isPremium = context.read<PremiumService>().isPremium;
     final streakStore = await StreakStore.load();
     final today = DateTime.now();
     final todayKey =
@@ -185,12 +188,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         '${today.day.toString().padLeft(2, '0')}';
     final isNewDay = streakStore.lastDay != todayKey;
 
-    // Seri bugün oynamayınca kırılacaksa, oyuncuya coin karşılığı koruma
-    // teklif et (pay-at-result). Kabul edilmezse normal davranış işler.
+    // Seri bugün oynamayınca kırılacaksa: Premium ise otomatik ve ÜCRETSİZ
+    // korunur; değilse oyuncuya coin karşılığı koruma teklif edilir
+    // (pay-at-result). Kabul edilmezse normal davranış işler.
     final int streak;
     if (streakStore.willBreakOnPlay()) {
-      final saved = await _maybeOfferStreakFreeze(streakStore);
-      streak = saved ?? await streakStore.recordPlay();
+      if (isPremium) {
+        await streakStore.addFreeze();
+        streak = await streakStore.freezeAndRecordPlay();
+      } else {
+        final saved = await _maybeOfferStreakFreeze(streakStore);
+        streak = saved ?? await streakStore.recordPlay();
+      }
     } else {
       streak = await streakStore.recordPlay();
     }

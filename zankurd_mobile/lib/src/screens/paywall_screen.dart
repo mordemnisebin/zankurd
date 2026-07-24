@@ -7,6 +7,7 @@ import '../l10n/lang.dart';
 import '../services/premium_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/legal_links.dart';
 import '../widgets/screen_identity_header.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -179,8 +180,8 @@ class _PaywallHero extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             isKu
-                ? 'Pirsên dijwar, kekira taybet, statistîkên kûr.'
-                : 'Zor sorular, özel rozetler, derin istatistikler.',
+                ? 'Xemla belaş, rozeta VIP û parastina zincîrê.'
+                : 'Bedava kozmetikler, VIP rozeti ve seri koruması.',
             style: const TextStyle(color: Colors.white, height: 1.4),
           ),
         ],
@@ -197,36 +198,36 @@ class _Benefits extends StatelessWidget {
   Widget build(BuildContext context) {
     final benefits = <_Benefit>[
       _Benefit(
-        icon: AppIcons.circleXmark,
-        title: isKu ? 'Bê reklam' : 'Reklamsız',
+        icon: AppIcons.palette,
+        title: isKu ? 'Hemû xeml belaş' : 'Tüm kozmetikler bedava',
         description: isKu
-            ? 'Reklam tune, dûr bê qerebûn.'
-            : 'Reklamsız, kesintisiz deneyim.',
+            ? 'Çarçove, tema, emojî û reng — hemû li dikanê belaş vedibin.'
+            : 'Çerçeve, tema, emoji ve renkler — mağazada hepsi bedava açılır.',
         color: AppTheme.gold,
       ),
       _Benefit(
-        icon: AppIcons.chartLine,
-        title: isKu ? 'Statistîkên kûr' : 'Derin istatistikler',
+        icon: AppIcons.medal,
+        title: isKu ? 'Rozeta VIP' : 'VIP rozeti',
         description: isKu
-            ? 'Dîroka pirsan, performansa kategoriyan, divêk bisekin.'
-            : 'Soru geçmişi, kategori performansı, kişisel trendler.',
+            ? 'Li profîl û lîsteya pêşengan nîşana VIP ya taybet.'
+            : 'Profilinde ve liderlik tablosunda özel VIP rozeti.',
         color: AppTheme.violet,
       ),
       _Benefit(
-        icon: AppIcons.bolt,
-        title: isKu ? 'Sînor jokers' : 'Sınırsız joker',
+        icon: AppIcons.shield,
+        title: isKu ? 'Parastina zincîrê' : 'Otomatik seri koruması',
         description: isKu
-            ? '50/50, temaşa, ducar bersiv, pirs nû — sînor tune.'
-            : '50/50, seyirci, çift cevap, yeni soru — sınırsız.',
-        color: AppTheme.violet,
-      ),
-      _Benefit(
-        icon: AppIcons.gem,
-        title: isKu ? 'Mode xurt' : 'Özel modlar',
-        description: isKu
-            ? 'Turnûva premium, kategori taybet, pirsên nû.'
-            : 'Premium turnuvalar, özel kategoriler, yeni sorular.',
+            ? 'Zincîra te ya rojane bixweber, bê coin tê parastin.'
+            : 'Günlük serin coin harcamadan otomatik korunur.',
         color: AppTheme.brand,
+      ),
+      _Benefit(
+        icon: AppIcons.heart,
+        title: isKu ? 'Piştgiriya ZanKurd' : "ZanKurd'a destek",
+        description: isKu
+            ? 'Tu pêşketina sepana kurdî û naveroka nû piştgir dikî.'
+            : 'Kürtçe uygulamanın gelişimini ve yeni içeriği desteklersin.',
+        color: AppTheme.gold,
       ),
     ];
     return Column(
@@ -589,6 +590,9 @@ class _FooterActions extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
+        const SizedBox(height: AppSpacing.sm),
+        // Yasal bağlantılar — abonelikli uygulamalarda Apple zorunlu tutar.
+        const Center(child: LegalLinksRow(alignment: MainAxisAlignment.center)),
       ],
     );
   }

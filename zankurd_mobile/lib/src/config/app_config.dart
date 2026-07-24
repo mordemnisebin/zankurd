@@ -65,4 +65,12 @@ class AppConfig {
   }
 
   static bool get hasRevenuecatConfig => revenuecatApiKey.isNotEmpty;
+
+  // ── Yasal bağlantılar (mağaza şartı) ───────────────────────────────────
+  // Gizlilik politikası ve kullanım koşulları sayfaları. Bu sayfaların
+  // yayında ve erişilebilir olması App Store / Play şartıdır.
+  // privacy.html web/ içinde mevcut ve deploy ediliyor; terms.html HENÜZ
+  // oluşturulup yayına alınmalı (bkz. docs/multi_platform_release.md).
+  static const privacyPolicyUrl = 'https://www.zankurd.com/privacy.html';
+  static const termsOfServiceUrl = 'https://www.zankurd.com/terms.html';
 }

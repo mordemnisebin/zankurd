@@ -17,6 +17,7 @@ import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
@@ -206,6 +207,9 @@ void main() {
           ),
           ChangeNotifierProvider<ChildSafetyProvider>(
             create: (_) => ChildSafetyProvider(),
+          ),
+          ChangeNotifierProvider<PremiumService>(
+            create: (_) => PremiumService.fallback(),
           ),
         ],
         child: MaterialApp(

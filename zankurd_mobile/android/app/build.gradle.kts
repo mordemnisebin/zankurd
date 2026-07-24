@@ -86,6 +86,15 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("release")
+            // R8 ile kod küçültme + kaynak temizleme (AAB boyutunu düşürür).
+            // Kurallar proguard-rules.pro'da; eklentilerin (Firebase, Supabase,
+            // RevenueCat, flutter_tts, bildirimler) sınıfları korunur.
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
 }

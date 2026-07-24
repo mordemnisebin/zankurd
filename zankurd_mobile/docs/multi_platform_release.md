@@ -114,12 +114,16 @@ flutter build linux --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfa
 
 - Production app icon.
 - Splash screen.
-- Android release signing key.
+- Android release signing key. See `docs/android_signing_setup.md` (keystore +
+  `key.properties`). R8/minify is enabled and verified.
 - Google Play Console app listing.
-- Apple Developer account.
-- App Store Connect setup.
-- Privacy policy URL.
-- Terms of use URL.
+- Apple Developer account. Full Xcode required for iOS archive/upload
+  (Command Line Tools alone is not enough).
+- App Store Connect setup + RevenueCat subscription products.
+- Privacy policy URL — `docs/privacy_policy.html` must be published at
+  `AppConfig.privacyPolicyUrl` (https://www.zankurd.com/privacy).
+- Terms of use URL — published at `AppConfig.termsOfServiceUrl`
+  (https://www.zankurd.com/terms).
 - Screenshots for phone/tablet/web/desktop.
 - Real profile login flow for production accounts.
 - Admin content workflow for approving questions.

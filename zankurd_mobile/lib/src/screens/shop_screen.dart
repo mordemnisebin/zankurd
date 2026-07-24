@@ -6,6 +6,7 @@ import '../data/supabase_zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/avatar_identity.dart';
 import '../providers/sound_provider.dart';
+import '../services/premium_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/roj_mascot.dart';
@@ -108,6 +109,11 @@ class _ShopScreenState extends State<ShopScreen> {
   bool _loading = true;
   final Set<String> _purchasedItemIds = {};
   List<ShopItem> _dynamicItems = _items;
+
+  /// Premium kullanıcı: kozmetikleri coin harcamadan (bedava) edinebilir.
+  /// Ürünler yine tek tek "edinilir" (satın alma kaydı oluşur, efekt uygulanır)
+  /// ama maliyet 0'dır — böylece VIP rozet/çerçeve efektleri düzgün işler.
+  bool get _isPremiumUser => context.read<PremiumService>().isPremium;
 
   // Tüm ürünler gösterilir (whitelist kaldırıldı).
 
@@ -321,6 +327,7 @@ class _ShopScreenState extends State<ShopScreen> {
   // ── Purchase confirmation dialog ──
   Future<void> _confirmPurchase(ShopItem item) async {
     final ku = context.isKu;
+    final isPremium = _isPremiumUser;
     final title = ku ? item.titleKu : item.titleTr;
     final desc = ku ? item.descKu : item.descTr;
 
@@ -385,10 +392,16 @@ class _ShopScreenState extends State<ShopScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(AppIcons.coins, color: AppTheme.gold, size: 22),
+                    Icon(
+                      isPremium ? AppIcons.gem : AppIcons.coins,
+                      color: AppTheme.gold,
+                      size: 22,
+                    ),
                     const SizedBox(width: 8),
                     Text(
-                      '${item.cost} coin',
+                      isPremium
+                          ? (ku ? 'Belaş · Premium' : 'Bedava · Premium')
+                          : '${item.cost} coin',
                       style: TextStyle(
                         color: AppTheme.textPrimaryColor(ctx),
                         fontWeight: FontWeight.w800,
@@ -413,7 +426,7 @@ class _ShopScreenState extends State<ShopScreen> {
                         ? 'Bakiyeya te: $_coinBalance coin'
                         : 'Bakiyen: $_coinBalance coin',
                     style: TextStyle(
-                      color: _coinBalance < item.cost
+                      color: (!isPremium && _coinBalance < item.cost)
                           ? AppTheme.wrong
                           : AppTheme.textSubColor(ctx),
                       fontSize: 13,
@@ -427,7 +440,7 @@ class _ShopScreenState extends State<ShopScreen> {
               // sığmayınca OverflowBar bunları merdiven gibi üç ayrı hizaya
               // dağıtıyordu (2026-07-22 canlı UX denetimi). İçeriğe alınınca
               // actions'ta iki eylem kalıyor ve düzgün hizalanıyor.
-              if (_coinBalance < item.cost) ...[
+              if (!isPremium && _coinBalance < item.cost) ...[
                 const SizedBox(height: 12),
                 SizedBox(
                   width: double.infinity,
@@ -464,8 +477,8 @@ class _ShopScreenState extends State<ShopScreen> {
             ),
             FilledButton(
               // Bakiye yetersizse 'Bikire' gri disabled kalır; kullanıcı
-              // 'Coin qezenc bike' ile çarka yönlendirilir.
-              onPressed: _coinBalance < item.cost
+              // 'Coin qezenc bike' ile çarka yönlendirilir. Premium'da bedava.
+              onPressed: (!isPremium && _coinBalance < item.cost)
                   ? null
                   : () => Navigator.of(ctx).pop(true),
               style: FilledButton.styleFrom(
@@ -475,7 +488,13 @@ class _ShopScreenState extends State<ShopScreen> {
                 ),
               ),
               // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-              child: ExcludeSemantics(child: Text(ku ? 'Bikire' : 'Satın Al')),
+              child: ExcludeSemantics(
+                child: Text(
+                  isPremium
+                      ? (ku ? 'Belaş veke' : 'Bedava aç')
+                      : (ku ? 'Bikire' : 'Satın Al'),
+                ),
+              ),
             ),
           ],
         );
@@ -489,7 +508,11 @@ class _ShopScreenState extends State<ShopScreen> {
 
   Future<void> _purchase(ShopItem item) async {
     final ku = context.isKu;
-    if (_coinBalance < item.cost) {
+    // Premium: kozmetik bedava (maliyet 0). Yine satın alma kaydı oluşur ve
+    // efekt uygulanır; sadece coin düşülmez. Aksi halde bakiye kontrolü.
+    final isPremium = _isPremiumUser;
+    final effectiveCost = isPremium ? 0 : item.cost;
+    if (!isPremium && _coinBalance < item.cost) {
       HapticFeedback.vibrate();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -504,7 +527,7 @@ class _ShopScreenState extends State<ShopScreen> {
 
     try {
       final success = await widget.repository.spendCoins(
-        item.cost,
+        effectiveCost,
         'purchase_${item.id}',
       );
 
@@ -642,6 +665,9 @@ class _ShopScreenState extends State<ShopScreen> {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    // Premium durumunu izle: premium olunca tüm kozmetikler "sahip" görünür
+    // ve ekran otomatik yeniden çizilir.
+    context.watch<PremiumService>();
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -893,7 +919,7 @@ class _ShopScreenState extends State<ShopScreen> {
     final title = ku ? item.titleKu : item.titleTr;
     final desc = ku ? item.descKu : item.descTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
-    final canAfford = _coinBalance >= item.cost;
+    final canAfford = _isPremiumUser || _coinBalance >= item.cost;
     final tint = item.themeColor;
 
     return Material(
@@ -1068,7 +1094,7 @@ class _ShopScreenState extends State<ShopScreen> {
     final title = ku ? item.titleKu : item.titleTr;
     final desc = ku ? item.descKu : item.descTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
-    final canAfford = _coinBalance >= item.cost;
+    final canAfford = _isPremiumUser || _coinBalance >= item.cost;
     final tint = item.themeColor;
 
     return Material(
