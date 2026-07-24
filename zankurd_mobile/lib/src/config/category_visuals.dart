@@ -14,6 +14,24 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 class CategoryVisuals {
   const CategoryVisuals._();
 
+  /// Türkçe çeviri veya alternatif gösterim etiketlerini ana kategori kimliğine eşler.
+  static const Map<String, String> _aliases = {
+    'Dil': 'Ziman',
+    'Kültür': 'Çand',
+    'Tarih': 'Dîrok',
+    'Wêje': 'Edebiyat',
+    'Coğrafya': 'Cografya',
+    'Erdnîgarî': 'Cografya',
+    'Müzik': 'Muzîk',
+    'Paradîgma': 'Paradigma',
+    'Teknoloji': 'Teknolojî',
+  };
+
+  static String _resolveKey(String category) {
+    if (_gradients.containsKey(category)) return category;
+    return _aliases[category] ?? category;
+  }
+
   /// Kategori → renk çifti. 2026-07-24 yenilemesi: tonlar tek bir doygunluk
   /// bandına çekildi (orta ton, düşük kroma) — böylece sekiz kategori yan yana
   /// durduğunda göz yorulmuyor ve hiçbiri eylem turuncusuyla (Tîrêj)
@@ -43,8 +61,10 @@ class CategoryVisuals {
   static Iterable<String> get colorDefinedCategories => _gradients.keys;
 
   /// Kategorinin gradyan renk çifti (adına göre, sıradan bağımsız).
-  static List<Color> gradientColors(String category) =>
-      _gradients[category] ?? _fallbackGradient;
+  static List<Color> gradientColors(String category) {
+    final key = _resolveKey(category);
+    return _gradients[key] ?? _fallbackGradient;
+  }
 
   /// Kategorinin baskın rengi — ikon tonu, kenarlık ve vurgu için.
   static Color color(String category) => gradientColors(category).first;
@@ -84,9 +104,13 @@ class CategoryVisuals {
     'Teknolojî': 'assets/question_images/cat_paradigma.webp',
   };
 
-  static IconData icon(String category) =>
-      _icons[category] ?? AppIcons.tableCells;
+  static IconData icon(String category) {
+    final key = _resolveKey(category);
+    return _icons[key] ?? AppIcons.tableCells;
+  }
 
-  static String imagePath(String category) =>
-      _imagePaths[category] ?? 'assets/question_images/cat_ziman.webp';
+  static String imagePath(String category) {
+    final key = _resolveKey(category);
+    return _imagePaths[key] ?? 'assets/question_images/cat_ziman.webp';
+  }
 }
