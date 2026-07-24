@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../data/placement_store.dart';
@@ -1275,7 +1276,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                               image: DecorationImage(
-                                image: NetworkImage(slide.imageUrl!),
+                                image: CachedNetworkImageProvider(slide.imageUrl!),
                                 fit: BoxFit.cover,
                               ),
                             ),

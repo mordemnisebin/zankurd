@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
@@ -266,12 +267,12 @@ class _ReviewCard extends StatelessWidget {
                             fit: BoxFit.cover,
                             errorBuilder: (_, _, _) => const SizedBox(),
                           )
-                        : Image.network(
-                            record.imageUrl!,
+                        : CachedNetworkImage(
+                            imageUrl: record.imageUrl!,
                             width: double.infinity,
                             height: 180,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, _, _) => const SizedBox(),
+                            errorWidget: (_, _, _) => const SizedBox(),
                           ),
                   ),
                   const SizedBox(height: 16),

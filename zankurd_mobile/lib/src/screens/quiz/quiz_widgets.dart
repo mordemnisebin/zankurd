@@ -152,14 +152,14 @@ class _QuestionImage extends StatelessWidget {
         : double.infinity;
 
     final image = assetPath == null
-        ? Image.network(
-            url,
+        ? CachedNetworkImage(
+            imageUrl: url,
             fit: BoxFit.contain,
-            loadingBuilder: (context, child, progress) {
-              if (progress == null) _notifyReady();
-              return child;
+            imageBuilder: (context, imageProvider) {
+              _notifyReady();
+              return Image(image: imageProvider, fit: BoxFit.contain);
             },
-            errorBuilder: (context, error, stackTrace) =>
+            errorWidget: (context, url, error) =>
                 const _QuestionImageFallback(),
           )
         : Image.asset(

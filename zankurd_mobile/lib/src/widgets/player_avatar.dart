@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../config/avatar_presets.dart';
@@ -107,8 +108,8 @@ class PlayerAvatar extends StatelessWidget {
   Widget _buildCore(Color bg) {
     final url = photoUrl;
     if (url != null && url.trim().isNotEmpty) {
-      final provider =
-          imageProviderFactory?.call(url) ?? NetworkImage(url) as ImageProvider;
+      final provider = imageProviderFactory?.call(url) ??
+          CachedNetworkImageProvider(url) as ImageProvider;
       return Image(
         image: provider,
         fit: BoxFit.cover,
