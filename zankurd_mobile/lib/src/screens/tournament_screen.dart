@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
@@ -403,6 +405,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
     // scroll çalışır, kısa olduğunda mainAxisAlignment.center etkili olur.
     return LayoutBuilder(
       builder: (context, constraints) {
+        final minH = math.max(
+          0.0,
+          constraints.maxHeight - (AppSpacing.sm + AppSpacing.lg),
+        );
         return SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(
             AppSpacing.page,
@@ -411,7 +417,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             AppSpacing.lg,
           ),
           child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            constraints: BoxConstraints(minHeight: minH),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -538,10 +544,11 @@ class _LobbyView extends StatelessWidget {
     // hatası veriyor. ConstrainedBox(minHeight) tek başına yeterli.
     return LayoutBuilder(
       builder: (context, constraints) {
+        final minH = math.max(0.0, constraints.maxHeight - AppSpacing.lg * 2);
         return SingleChildScrollView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            constraints: BoxConstraints(minHeight: minH),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
