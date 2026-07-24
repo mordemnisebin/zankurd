@@ -315,35 +315,38 @@ class _StatTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.sm),
       decoration: AppTheme.statCard(context, color),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 28,
-            height: 28,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.iconTileBg(context, color),
-              borderRadius: BorderRadius.circular(AppRadius.xs),
+      // Grid hücresi dar/kısa olduğunda (childAspectRatio) içerik taşıyordu.
+      // FittedBox(scaleDown) içeriği hücreye sığdırır; normal boyutta görünüm
+      // değişmez (scaleDown yalnız küçültür, büyütmez).
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 28,
+              height: 28,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: AppColors.iconTileBg(context, color),
+                borderRadius: BorderRadius.circular(AppRadius.xs),
+              ),
+              child: Icon(icon, color: color, size: 16),
             ),
-            child: Icon(icon, color: color, size: 16),
-          ),
-          const SizedBox(height: AppSpacing.xxs),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTypography.bodyLarge.copyWith(
-              color: AppColors.toneOnSurface(context, color),
-              fontSize: 17,
+            const SizedBox(height: AppSpacing.xxs),
+            Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.bodyLarge.copyWith(
+                color: AppColors.toneOnSurface(context, color),
+                fontSize: 17,
+              ),
             ),
-          ),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: Text(
+            Text(
               label,
               maxLines: 1,
               style: AppTypography.caption.copyWith(
@@ -352,8 +355,8 @@ class _StatTile extends StatelessWidget {
                 fontSize: 11,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
