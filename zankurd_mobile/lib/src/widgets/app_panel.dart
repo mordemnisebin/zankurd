@@ -13,6 +13,7 @@ class AppPanel extends StatelessWidget {
     this.color,
     this.borderRadius,
     this.cardType = CardType.secondary,
+    this.onTap,
   });
 
   final Widget child;
@@ -21,6 +22,11 @@ class AppPanel extends StatelessWidget {
   final Color? color;
   final BorderRadius? borderRadius;
 
+  /// Verilirse panel dokunulabilir olur; opak yuzeyin ustune seffaf bir
+  /// InkWell katmani eklenerek ripple geri bildirimi saglanir (mevcut
+  /// gorunumu/golgeyi bozmaz).
+  final VoidCallback? onTap;
+
   /// Kart öncelik tipi (primary / secondary / info / glass).
   /// Gradient verilirse her zaman primary efekti uygulanır.
   final CardType cardType;
@@ -28,7 +34,29 @@ class AppPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final br = borderRadius ?? BorderRadius.circular(AppRadius.card);
+    return _wrapTap(_buildPanel(context, br), br);
+  }
 
+  Widget _wrapTap(Widget panel, BorderRadius br) {
+    if (onTap == null) return panel;
+    return Stack(
+      children: [
+        panel,
+        Positioned.fill(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: br,
+              child: const SizedBox.expand(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPanel(BuildContext context, BorderRadius br) {
     if (cardType == CardType.glass) {
       return ClipRRect(
         borderRadius: br,

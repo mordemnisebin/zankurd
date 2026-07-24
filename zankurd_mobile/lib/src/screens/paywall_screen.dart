@@ -277,7 +277,7 @@ class _BenefitRow extends StatelessWidget {
             height: 36,
             decoration: BoxDecoration(
               color: accentColor.withValues(alpha: 0.16),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(AppRadius.badge),
             ),
             child: Icon(benefit.icon, color: accentColor, size: 18),
           ),
@@ -449,7 +449,7 @@ class _PackageRow extends StatelessWidget {
                         child: Text(
                           isKu ? 'YÊ' : 'POPÜLER',
                           style: const TextStyle(
-                            fontSize: 9,
+                            fontSize: 10,
                             fontWeight: FontWeight.w800,
                             letterSpacing: 0.5,
                             color: AppTheme.gold,
@@ -491,7 +491,7 @@ class _PackageRow extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
               elevation: 0,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(AppRadius.badge),
               ),
               disabledBackgroundColor: AppColors.disabledSurface(context),
             ),

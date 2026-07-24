@@ -36,9 +36,7 @@ class SubcategoryScreen extends StatelessWidget {
         // Başlık banner'da büyük yazılıyor; app bar'da tekrar etmiyoruz.
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        color: AppTheme.bgOf(context),
         child: SafeArea(
           top: false,
           child: Column(

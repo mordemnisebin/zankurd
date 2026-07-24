@@ -423,42 +423,47 @@ class _ScoreHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     // Dalga 5: 3 ayrı kart yerine tek kompakt chip satırı — kazanılan
     // dikey alan soru paneline kalır. Anlam ikon+tooltip ile taşınır.
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _ScoreChip(
-          tooltip: context.s('Pûan', 'Puan'),
-          icon: AppIcons.trophy,
-          iconColor: AppTheme.gold,
-          value: '$score',
-        ),
-        const SizedBox(width: AppSpacing.xs),
-        // Seri kutlaması: 2+ seride her artışta chip "pop" yapar,
-        // alev dolu ikona döner — quiz içi mikro-ödül anı.
-        TweenAnimationBuilder<double>(
-          key: ValueKey('streak-pop-$streak'),
-          tween: Tween(begin: streak >= 2 ? 1.3 : 1.0, end: 1.0),
-          duration: const Duration(milliseconds: 340),
-          curve: Curves.easeOutBack,
-          builder: (context, scale, child) =>
-              Transform.scale(scale: scale, child: child),
-          child: _ScoreChip(
-            tooltip: context.s('Rêz', 'Seri'),
-            icon: streak >= 2 ? AppIcons.fire : AppIcons.fire,
-            iconColor: streak >= 2
-                ? AppTheme.gold
-                : AppTheme.textMutedColor(context),
-            value: streak >= 2 ? 'x$streak' : '$streak',
+    // Yatay modda satır 270 px'e sığmadığı için orantılı küçülür.
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _ScoreChip(
+            tooltip: context.s('Pûan', 'Puan'),
+            icon: AppIcons.trophy,
+            iconColor: AppTheme.gold,
+            value: '$score',
           ),
-        ),
-        const SizedBox(width: AppSpacing.xs),
-        _ScoreChip(
-          tooltip: context.s('Coin', 'Kredi'),
-          icon: AppIcons.coins,
-          iconColor: AppTheme.gold,
-          value: '$coinBalance',
-        ),
-      ],
+          const SizedBox(width: AppSpacing.xs),
+          // Seri kutlaması: 2+ seride her artışta chip "pop" yapar,
+          // alev dolu ikona döner — quiz içi mikro-ödül anı.
+          TweenAnimationBuilder<double>(
+            key: ValueKey('streak-pop-$streak'),
+            tween: Tween(begin: streak >= 2 ? 1.3 : 1.0, end: 1.0),
+            duration: const Duration(milliseconds: 340),
+            curve: Curves.easeOutBack,
+            builder: (context, scale, child) =>
+                Transform.scale(scale: scale, child: child),
+            child: _ScoreChip(
+              tooltip: context.s('Rêz', 'Seri'),
+              icon: streak >= 2 ? AppIcons.fire : AppIcons.fire,
+              iconColor: streak >= 2
+                  ? AppTheme.gold
+                  : AppTheme.textMutedColor(context),
+              value: streak >= 2 ? 'x$streak' : '$streak',
+            ),
+          ),
+          const SizedBox(width: AppSpacing.xs),
+          _ScoreChip(
+            tooltip: context.s('Coin', 'Kredi'),
+            icon: AppIcons.coins,
+            iconColor: AppTheme.gold,
+            value: '$coinBalance',
+          ),
+        ],
+      ),
     );
   }
 }
@@ -483,19 +488,21 @@ class _ScoreChip extends StatelessWidget {
       message: tooltip,
       child: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.xs,
-          vertical: 5,
+          horizontal: AppSpacing.sm,
+          vertical: 6,
         ),
         decoration: BoxDecoration(
-          color: AppTheme.surfaceHiColor(context).withValues(alpha: 0.6),
+          color: iconColor.withValues(
+            alpha: AppTheme.isLight(context) ? 0.12 : 0.18,
+          ),
           borderRadius: BorderRadius.circular(AppRadius.pill),
-          border: Border.all(color: AppTheme.borderColor(context)),
+          border: Border.all(color: iconColor.withValues(alpha: 0.32)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(icon, size: 14, color: iconColor),
-            const SizedBox(width: 4),
+            const SizedBox(width: 5),
             Text(
               value,
               maxLines: 1,
@@ -614,7 +621,7 @@ class _DuelScoreHeader extends StatelessWidget {
                     Text(
                       'VS',
                       style: AppTypography.caption.copyWith(
-                        color: Colors.redAccent,
+                        color: AppTheme.wrong,
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.italic,
                       ),
@@ -673,11 +680,15 @@ class _DuelScoreHeader extends StatelessWidget {
                 if (player.streak > 0)
                   Row(
                     children: [
-                      const Icon(AppIcons.fire, color: Colors.orange, size: 14),
+                      const Icon(
+                        AppIcons.fire,
+                        color: AppTheme.brand,
+                        size: 14,
+                      ),
                       Text(
                         'x${player.streak}',
                         style: AppTypography.caption.copyWith(
-                          color: Colors.orange,
+                          color: AppTheme.brand,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -691,11 +702,15 @@ class _DuelScoreHeader extends StatelessWidget {
                       Text(
                         'x${opponent.streak}',
                         style: AppTypography.caption.copyWith(
-                          color: Colors.orange,
+                          color: AppTheme.brand,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const Icon(AppIcons.fire, color: Colors.orange, size: 14),
+                      const Icon(
+                        AppIcons.fire,
+                        color: AppTheme.brand,
+                        size: 14,
+                      ),
                     ],
                   )
                 else
@@ -1179,7 +1194,10 @@ class _OpponentWaitingOverlay extends StatelessWidget {
     return Positioned.fill(
       child: AbsorbPointer(
         child: Container(
-          color: AppTheme.bg.withValues(alpha: 0.82),
+          // Modal bekleme scrim'i: beyaz metin + altin spinner icin her iki
+          // temada da koyu zemin gerekli; bgOf(context) light'ta metni gorunmez
+          // yapardi, bu yuzden temadan bagimsiz koyu scrim kullaniliyor.
+          color: Colors.black.withValues(alpha: 0.82),
           alignment: Alignment.center,
           child: Column(
             mainAxisSize: MainAxisSize.min,

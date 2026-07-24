@@ -43,21 +43,27 @@ class _WildcardButtonState extends State<WildcardButton> {
         ? 0.45
         : 0.35;
 
-    final borderColor =
-        widget.cantAfford || (!widget.isEnabled && !widget.isActive)
-        ? AppTheme.borderColor(context)
-        : Colors.transparent;
+    // 2026-07-24 canlı denetim: dört joker dolu renk bloğuydu ve quiz
+    // ekranının en gürültülü öğesiydi — göz soruya değil alt bara gidiyordu.
+    // Joker yardımcı araçtır: varsayılan hâli outline, yalnız etkinken dolu.
+    final available = widget.isEnabled && !widget.cantAfford;
+
+    final borderColor = widget.isActive
+        ? AppTheme.brand
+        : available
+        ? baseColor.withValues(alpha: 0.55)
+        : AppTheme.borderColor(context);
 
     final bgColor = widget.isActive
         ? AppTheme.brand
-        : widget.cantAfford
-        ? AppTheme.surfaceHiColor(context).withValues(alpha: 0.4)
-        : widget.isEnabled
-        ? baseColor
+        : available
+        ? baseColor.withValues(alpha: AppTheme.isLight(context) ? 0.08 : 0.16)
         : null;
 
-    final iconColor = (widget.isEnabled || widget.isActive)
+    final iconColor = widget.isActive
         ? Colors.white
+        : available
+        ? AppColors.readableAccent(context, baseColor)
         : AppTheme.textMutedColor(context);
 
     return Tooltip(
@@ -88,7 +94,7 @@ class _WildcardButtonState extends State<WildcardButton> {
               decoration: BoxDecoration(
                 color: bgColor ?? Colors.transparent,
                 borderRadius: BorderRadius.circular(AppRadius.sm),
-                border: Border.all(color: borderColor, width: 1.0),
+                border: Border.all(color: borderColor, width: 1.2),
               ),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
@@ -102,9 +108,9 @@ class _WildcardButtonState extends State<WildcardButton> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: (widget.isEnabled || widget.isActive)
-                            ? Colors.white.withValues(alpha: 0.22)
-                            : iconColor.withValues(alpha: 0.10),
+                        color: widget.isActive
+                            ? Colors.white.withValues(alpha: 0.24)
+                            : iconColor.withValues(alpha: 0.14),
                       ),
                       child: Icon(
                         widget.cantAfford ? AppIcons.lock : widget.type.icon,
@@ -121,7 +127,7 @@ class _WildcardButtonState extends State<WildcardButton> {
                       overflow: TextOverflow.ellipsis,
                       style: AppTypography.caption.copyWith(
                         fontWeight: FontWeight.w700,
-                        fontSize: 9,
+                        fontSize: 11,
                         height: 1.0,
                         color: iconColor,
                       ),

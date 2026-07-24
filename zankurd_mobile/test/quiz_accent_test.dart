@@ -41,7 +41,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    for (final answer in question.displayAnswers) {
+    for (var i = 0; i < question.displayAnswers.length; i++) {
+      final answer = question.displayAnswers[i];
       final option = tester.widget<AnimatedContainer>(
         find
             .ancestor(
@@ -51,13 +52,15 @@ void main() {
             .first,
       );
       final decoration = option.decoration! as BoxDecoration;
-      expect(decoration.gradient!.colors, [
-        AppTheme.surfaceHiColor(tester.element(find.text(answer).first)),
-        AppTheme.surfaceColor(tester.element(find.text(answer).first)),
+      // Light idle: açık kart + şık kimlik rengi kenarlık.
+      expect(decoration.gradient!.colors, const [
+        Color(0xFFFFFFFF),
+        Color(0xFFF7F4EE),
       ]);
+      final optionColor = AppTheme.answerOptionColors[i % 4];
       expect(
         (decoration.border! as Border).top.color,
-        AppTheme.borderColor(tester.element(find.text(answer).first)),
+        optionColor.withValues(alpha: 0.45),
       );
     }
   });

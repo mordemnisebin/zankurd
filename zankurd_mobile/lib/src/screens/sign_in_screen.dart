@@ -26,8 +26,6 @@ class _SignInScreenState extends State<SignInScreen>
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
-  // E-posta formu genişleyen bölümde; varsayılan açık (otomatik gösterim).
-  bool _emailExpanded = false;
   late AnimationController _animationController;
 
   @override
@@ -273,10 +271,8 @@ class _SignInScreenState extends State<SignInScreen>
           Positioned.fill(
             child: SafeArea(
               child: _AuthScrollFrame(
-                child: Consumer<AuthProvider>(
+                builder: (context, isWide) => Consumer<AuthProvider>(
                   builder: (context, authProvider, _) {
-                    final width = screenSize.width;
-                    final isWide = width > 720;
                     final denseWide =
                         isWide &&
                         (screenSize.height < 520 ||
@@ -372,13 +368,8 @@ class _SignInScreenState extends State<SignInScreen>
                                     ),
                                   ),
                                   SizedBox(height: wideButtonGap),
-                                  _EmailSectionToggle(
-                                    expanded: _emailExpanded,
-                                    onTap: () => setState(
-                                      () => _emailExpanded = !_emailExpanded,
-                                    ),
-                                  ),
-                                  if (_emailExpanded) ...[
+                                  const _EmailSectionDivider(),
+                                  ...[
                                     SizedBox(height: wideButtonGap),
                                     FadeTransition(
                                       opacity:
@@ -388,6 +379,8 @@ class _SignInScreenState extends State<SignInScreen>
                                       child: Form(
                                         key: _formKey,
                                         child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
                                           children: [
                                             StyledInputField(
                                               autovalidateMode: AutovalidateMode
@@ -544,12 +537,15 @@ class _SignInScreenState extends State<SignInScreen>
                                               ),
                                             ),
                                       ),
-                                      GestureDetector(
+                                      InkWell(
                                         onTap: () {
                                           Navigator.of(context).push(
                                             AppRoute.to(const SignUpScreen()),
                                           );
                                         },
+                                        borderRadius: BorderRadius.circular(
+                                          AppRadius.badge,
+                                        ),
                                         child: Text(
                                           context.s('Tomar bibe', 'Kaydol'),
                                           style: AppTypography.bodyMedium
@@ -640,14 +636,8 @@ class _SignInScreenState extends State<SignInScreen>
                                 ),
                               ),
                               SizedBox(height: actionGap),
-                              // E-posta formu genişleyen bölümde.
-                              _EmailSectionToggle(
-                                expanded: _emailExpanded,
-                                onTap: () => setState(
-                                  () => _emailExpanded = !_emailExpanded,
-                                ),
-                              ),
-                              if (_emailExpanded) ...[
+                              const _EmailSectionDivider(),
+                              ...[
                                 SizedBox(height: altGap),
                                 // Form fields with fade animations
                                 FadeTransition(
@@ -658,6 +648,8 @@ class _SignInScreenState extends State<SignInScreen>
                                   child: Form(
                                     key: _formKey,
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
                                       children: [
                                         StyledInputField(
                                           autovalidateMode: AutovalidateMode
@@ -799,12 +791,15 @@ class _SignInScreenState extends State<SignInScreen>
                                       color: AppTheme.textSubColor(context),
                                     ),
                                   ),
-                                  GestureDetector(
+                                  InkWell(
                                     onTap: () {
                                       Navigator.of(
                                         context,
                                       ).push(AppRoute.to(const SignUpScreen()));
                                     },
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadius.badge,
+                                    ),
                                     child: Text(
                                       context.s('Tomar bibe', 'Kaydol'),
                                       style: AppTypography.bodyMedium.copyWith(
@@ -845,15 +840,16 @@ class _SignInHeroBanner extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(compact ? AppSpacing.md : AppSpacing.lg),
         decoration: BoxDecoration(
-          // Pirs hizası: turuncu compact welcome banner (eski yeşil→turuncu
-          // çakışması giderildi).
+          // 2026-07-24 canlı denetim: banner, "Têkeve" butonu ve KU/TR çipi
+          // aynı anda turuncuydu — ekranda üç eşit ağırlıkta turuncu kütle
+          // vardı. Banner kimlik rengine (Kesk) alındı; turuncu yalnız
+          // birincil eylemde kalır.
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.brand, AppTheme.brandDeep],
+            colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
           ),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
-          boxShadow: AppTheme.elevatedShadow(AppTheme.brand),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
         ),
         child: Stack(
           children: [
@@ -1040,83 +1036,60 @@ class _GuestSignInLink extends StatelessWidget {
   }
 }
 
-/// E-posta formunu açıp kapatan genişleyen bölüm başlığı (ayırıcı + metin +
-/// chevron). Giriş ekranında tek açık birincil görev kalması için form
-/// varsayılan olarak kapalıdır.
-class _EmailSectionToggle extends StatelessWidget {
-  const _EmailSectionToggle({required this.expanded, required this.onTap});
-
-  final bool expanded;
-  final VoidCallback onTap;
+/// E-posta giriş formunun üstündeki statik bölüm ayıracı (çizgi + metin).
+/// Form her zaman açık gösterildiği için aç/kapa chevron'u yoktur.
+class _EmailSectionDivider extends StatelessWidget {
+  const _EmailSectionDivider();
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-        child: Container(
-          constraints: const BoxConstraints(minHeight: 44),
-          alignment: Alignment.center,
-          child: Row(
-            children: [
-              Expanded(
-                child: Divider(
-                  color: AppTheme.borderColor(context),
-                  thickness: 1,
-                ),
-              ),
-              Flexible(
-                // Uzun çeviri metni iki Expanded çizgiyle eşit pay (flex:1)
-                // aldığında dar ekranlarda kesiliyordu; metne 3 kat pay
-                // veriyoruz ki çizgiler ince kalıp metin tam sığsın.
-                flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          context.s('An jî bi e-peyamê', 'Veya e-posta ile'),
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.caption.copyWith(
-                            color: AppTheme.textMutedColor(context),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Icon(
-                        expanded ? AppIcons.chevronUp : AppIcons.chevronDown,
-                        size: 18,
-                        color: AppTheme.textMutedColor(context),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Divider(
-                  color: AppTheme.borderColor(context),
-                  thickness: 1,
-                ),
-              ),
-            ],
+    return Container(
+      constraints: const BoxConstraints(minHeight: 44),
+      alignment: Alignment.center,
+      child: Row(
+        children: [
+          Expanded(
+            child: Divider(
+              color: AppTheme.borderColor(context),
+              thickness: 1,
+            ),
           ),
-        ),
+          Flexible(
+            // Uzun çeviri metni iki Expanded çizgiyle eşit pay (flex:1)
+            // aldığında dar ekranlarda kesiliyordu; metne 3 kat pay
+            // veriyoruz ki çizgiler ince kalıp metin tam sığsın.
+            flex: 3,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                context.s('An jî bi e-peyamê', 'Veya e-posta ile'),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.textMutedColor(context),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Divider(
+              color: AppTheme.borderColor(context),
+              thickness: 1,
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
 class _AuthScrollFrame extends StatelessWidget {
-  const _AuthScrollFrame({required this.child});
+  const _AuthScrollFrame({required this.builder});
 
-  final Widget child;
+  // isWide gerçek yerleşim genişliğinden hesaplanır (MediaQuery.size değil):
+  // bölünmüş ekran/katlanabilir cihaz ve testlerde doğru düzen seçilir.
+  final Widget Function(BuildContext context, bool isWide) builder;
 
   @override
   Widget build(BuildContext context) {
@@ -1136,7 +1109,7 @@ class _AuthScrollFrame extends StatelessWidget {
                 double.infinity,
               ),
             ),
-            child: Center(child: child),
+            child: Center(child: builder(context, isWide)),
           ),
         );
       },
@@ -1205,9 +1178,9 @@ class _LanguageChip extends StatelessWidget {
       button: true,
       selected: active,
       label: label == 'KU' ? 'Kurmancî' : 'Türkçe',
-      child: GestureDetector(
+      child: InkWell(
         onTap: onTap,
-        behavior: HitTestBehavior.opaque,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 240),
           curve: Curves.easeInOut,

@@ -123,11 +123,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(ku ? 'Mîheng' : 'Ayarlar')),
+      appBar: AppBar(
+        title: Text(ku ? 'Mîheng' : 'Ayarlar'),
+        backgroundColor: Colors.transparent,
+      ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        color: AppTheme.bgOf(context),
         child: SafeArea(
           child: ListView(
             padding: const EdgeInsets.fromLTRB(
@@ -140,9 +141,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ScreenIdentityHeader(
                 title: ku ? 'Mîheng' : 'Ayarlar',
                 subtitle: ku
-                    ? 'Sepanê li gor te rast bike: ziman, dîmen, ewlekarî û agahdarî.'
-                    : 'Uygulamayı kendine göre ayarla: dil, görünüm, güvenlik ve bildirimler.',
-                accent: AppTheme.violet,
+                    ? 'Ziman, dîmen, deng û hesab.'
+                    : 'Dil, görünüm, ses ve hesap.',
+                accent: AppTheme.playPurple,
                 icon: AppIcons.gear,
                 compact: true,
               ),
@@ -214,7 +215,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 color: AppTheme.surfaceOf(context).withValues(alpha: 0.92),
                 child: InkWell(
                   key: const ValueKey('retake-placement-action'),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
                   onTap: _openPlacement,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6),
@@ -529,7 +530,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               height: 40,
                               decoration: BoxDecoration(
                                 color: AppTheme.gold.withValues(alpha: 0.16),
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.sm,
+                                ),
                                 border: Border.all(
                                   color: AppTheme.gold.withValues(
                                     alpha: isPremium ? 0.5 : 0.3,
@@ -587,7 +590,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     : AppTheme.primaryGradientStart.withValues(
                                         alpha: 0.16,
                                       ),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.lg,
+                                ),
                               ),
                               child: Text(
                                 isPremium
@@ -679,7 +684,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           height: 44,
                           decoration: BoxDecoration(
                             gradient: AppTheme.accentGradient,
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
                             boxShadow: [
                               BoxShadow(
                                 color: AppTheme.accent.withValues(alpha: 0.22),
@@ -741,7 +746,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       decoration: BoxDecoration(
                         color: AppTheme.surfaceHiColor(context),
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(AppRadius.card),
                         border: Border.all(
                           color: AppTheme.borderColor(
                             context,
@@ -828,7 +833,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const SizedBox(height: 12),
                     InkWell(
                       key: const ValueKey('delete-account-action'),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
                       onTap: _deleting ? null : _confirmDeleteAccount,
                       child: Container(
                         padding: const EdgeInsets.all(14),
@@ -841,7 +846,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               AppTheme.wrong.withValues(alpha: 0.05),
                             ],
                           ),
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: BorderRadius.circular(AppRadius.card),
                           border: Border.all(
                             color: AppTheme.wrong.withValues(alpha: 0.22),
                           ),
@@ -954,7 +959,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppTheme.surfaceOf(context),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppRadius.md),
           side: BorderSide(color: AppTheme.borderColor(context)),
         ),
         title: Text(
@@ -1009,7 +1014,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (dialogCtx) => AlertDialog(
         backgroundColor: AppTheme.surfaceOf(context),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppRadius.md),
           side: BorderSide(color: AppTheme.borderColor(context)),
         ),
         title: Text(ku ? 'Moda zaroka ewle' : 'Güvenli çocuk modu'),
@@ -1056,7 +1061,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppTheme.surfaceOf(context),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppRadius.md),
           side: BorderSide(color: AppTheme.borderColor(context)),
         ),
         title: Text(
@@ -1145,7 +1150,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             return AlertDialog(
               backgroundColor: AppTheme.surfaceOf(context),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(AppRadius.md),
                 side: BorderSide(color: AppTheme.borderColor(context)),
               ),
               title: Text(ku ? 'Erêkirina dawî' : 'Son onay'),
@@ -1230,7 +1235,7 @@ class _LangSwitch extends StatelessWidget {
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: AppTheme.surfaceHiColor(context),
-        borderRadius: BorderRadius.circular(99),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
         border: Border.all(color: AppTheme.borderColor(context)),
         boxShadow: AppTheme.cardShadow(context),
       ),
@@ -1278,7 +1283,7 @@ class _LangChip extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: onTap,
-            borderRadius: BorderRadius.circular(99),
+            borderRadius: BorderRadius.circular(AppRadius.pill),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 180),
               constraints: const BoxConstraints(minHeight: 46, minWidth: 56),
@@ -1287,7 +1292,7 @@ class _LangChip extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: active ? AppTheme.accentGradient : null,
                 color: active ? null : Colors.transparent,
-                borderRadius: BorderRadius.circular(99),
+                borderRadius: BorderRadius.circular(AppRadius.pill),
                 boxShadow: active
                     ? [
                         BoxShadow(
@@ -1388,7 +1393,7 @@ class _SettingsToggleRow extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.14),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(AppRadius.sm),
                 border: Border.all(color: color.withValues(alpha: 0.14)),
               ),
               child: ExcludeSemantics(
@@ -1674,13 +1679,9 @@ class _TtsSlider extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppTheme.primaryGradientStart.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
             ),
-            child: Icon(
-              icon,
-              color: AppTheme.primaryGradientStart,
-              size: 18,
-            ),
+            child: Icon(icon, color: AppTheme.primaryGradientStart, size: 18),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
@@ -1694,10 +1695,7 @@ class _TtsSlider extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Slider(
-                  value: value.clamp(0.0, 1.0),
-                  onChanged: onChanged,
-                ),
+                Slider(value: value.clamp(0.0, 1.0), onChanged: onChanged),
               ],
             ),
           ),

@@ -78,9 +78,7 @@ class _LevelScreenState extends State<LevelScreen> {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        color: AppTheme.bgOf(context),
         child: SafeArea(
           top: false,
           child: ListView(

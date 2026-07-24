@@ -403,12 +403,13 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(HomeScreen), findsOneWidget);
-    expect(find.text('Günün Dersi'), findsOneWidget);
+    // Ana ekran tek bir soruyu yanıtlar: "şimdi ne yapmalıyım?"
+    expect(find.text('Günün dersi'), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
 
-    await tester.ensureVisible(find.byKey(const ValueKey('home-play-teaser')));
-    await tester.pumpAndSettle();
-    expect(find.text('Hemen oyna'), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('home-play-teaser')));
+    // Yarış'a yalnız alt navigasyondan gidilir — ana ekranda kopyası yok.
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
     expect(find.byType(PlayHubScreen), findsOneWidget);
   });
@@ -435,21 +436,23 @@ void main() {
 
     // Pirs/mockup-3 sözleşmesi: ince karşılama satırı; kalın gradyan banner yok.
     expect(find.byKey(const ValueKey('home-profile-header')), findsOneWidget);
-    expect(find.byKey(const ValueKey('home-daily-lesson')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
+    // "Yarış" artık yalnız alt navigasyonda geçer (ana ekranda kopyası yok).
     expect(find.text('Yarış'), findsOneWidget);
     expect(find.text('Profil'), findsOneWidget);
 
     final navTheme = tester.widget<NavigationBarTheme>(
       find.byType(NavigationBarTheme),
     );
-    expect(navTheme.data.height, 68);
+    expect(navTheme.data.height, 70);
     expect(navTheme.data.backgroundColor, AppTheme.lightSurface);
     expect(
       navTheme.data.indicatorColor,
-      AppTheme.brand.withValues(alpha: 0.22),
+      const Color(0xFFD4650A).withValues(alpha: 0.18),
     );
 
-    await tester.tap(find.text('Yarış'));
+    // Alt nav'daki "Yarış" — lobi kartıyla karışmasın.
+    await tester.tap(find.text('Yarış').last);
     await tester.pumpAndSettle();
     expect(find.byType(PlayHubScreen), findsOneWidget);
 
@@ -459,7 +462,7 @@ void main() {
     );
     expect(
       navThemeAfter.data.indicatorColor,
-      AppTheme.brand.withValues(alpha: 0.22),
+      const Color(0xFFD4650A).withValues(alpha: 0.18),
     );
   });
 
@@ -493,9 +496,10 @@ void main() {
           )
           .first,
     );
-    final decoration = home.decoration as BoxDecoration;
-    final gradient = decoration.gradient as LinearGradient;
-    expect(gradient.colors.first, AppTheme.lightBg);
+    // 2026-07-24: sayfa zemini düz renk. Gradyan zemin, üstündeki kartların
+    // 1px kenarlığını yutup hiyerarşiyi bulanıklaştırıyordu.
+    expect(home.color, AppTheme.lightBg);
+    expect(home.decoration, isNull);
 
     theme.toggleDarkLight();
     await tester.pumpAndSettle();
@@ -523,7 +527,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
-    expect(find.text('Günün Dersi'), findsNothing);
+    expect(find.text('Günün dersi'), findsNothing);
 
     await tester.enterText(
       find.byKey(const ValueKey('player-name-field')),
@@ -533,7 +537,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.savedName, 'Rojda Test');
-    expect(find.text('Günün Dersi'), findsOneWidget);
+    expect(find.text('Günün dersi'), findsOneWidget);
   });
 
   test('unsupported provider auth error is user friendly', () {

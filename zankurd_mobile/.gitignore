@@ -88,3 +88,6 @@ release_packages/
 /reports/
 /docs/screenshots/
 /docs/audit/question_quality/
+
+# Üretilmiş görsel denetim çıktıları (repoya girmez)
+/docs/ux-audit/screenshots-gemini/

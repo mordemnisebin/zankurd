@@ -22,6 +22,7 @@ import '../models/tournament.dart';
 import '../utils/coin_calculator.dart';
 import 'offline_question_bank.dart';
 import 'curated_question_bank.dart';
+import 'editorial_question_bank.dart';
 import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
 import '../config/subcategory_config.dart';
@@ -50,6 +51,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   List<QuizQuestion> get questions => [
     ...curatedQuestionBank,
+    ...editorialQuestionBank,
     ...offlineQuestionBank,
   ];
 

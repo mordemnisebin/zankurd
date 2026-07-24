@@ -113,9 +113,7 @@ class _ContestScreenState extends State<ContestScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(title: Text(ku ? 'Pêşbirka Rojê' : 'Günün Yarışması')),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        color: AppTheme.bgOf(context),
         child: SafeArea(
           child: FutureBuilder<Contest?>(
             future: _contestFuture,

@@ -307,7 +307,10 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     return [
       _OnboardingData(
         icon: AppIcons.graduationCap,
-        color: AppTheme.brand,
+        // 2026-07-24: hero bloğu da CTA da turuncuydu — ekranda iki eşit
+        // güçte turuncu kütle vardı ve göz nereye basacağını şaşırıyordu.
+        // Hero kimlik rengine (Kesk) alındı; turuncu yalnız butonda kalır.
+        color: AppTheme.culturalBrandBg,
         title: context.s('Hîn bibe', 'Öğren'),
         body: context.s(
           'Kurmancî peyv, çand û zanînê bi pirsên kurt fêr bibe.',
@@ -315,36 +318,23 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         ),
         bullets: [
           ku
-              ? '8 kategorî — Ziman, Dîrok, Çand û zêdetir'
-              : '8 kategori — Dil, Tarih, Kültür ve daha fazlası',
-          ku
-              ? 'Her roj pirsên nû û balkêş'
-              : 'Her gün yeni ve ilgi çekici sorular',
-          ku ? 'Bi kurtî û bi bandor fêr bibe' : 'Kısa ve etkili öğrenme',
+              ? '8 kategorî — ziman, dîrok, çand…'
+              : '8 kategori — dil, tarih, kültür…',
+          ku ? 'Her roj pirsên nû' : 'Her gün yeni sorular',
         ],
       ),
-      // 2. slayt: yarış + ödüller birleşti (3 slayt → 2 slayt; daha kısa
-      // ilk izlenim, hemen başla CTA'sına hızlı geçiş).
       _OnboardingData(
         showMascotAccent: true,
         icon: AppIcons.trophy,
-        color: AppTheme.terracotta, // onboarding ödül slaydı tonu
+        color: AppTheme.playCyan,
         title: context.s('Pêşbirkê bike û bi ser keve', 'Yarış ve kazan'),
         body: context.s(
-          'Bi hevalan an botan re pêşbirkê bike, xelatan bistîne û ast bilind bike.',
-          'Arkadaşlarınla veya botlarla yarış, ödüller kazan ve seviye atla.',
+          '1vs1, oda an kûpa — bi hevalên xwe re bilîze.',
+          '1vs1, oda veya kupa — arkadaşlarınla oyna.',
         ),
         bullets: [
-          ku ? 'Şerê 1vs1 û Pêşbirka Rojê' : '1vs1 düello ve Günün Yarışması',
-          ku
-              ? 'Çerxa Rojê — 100 coinê belaş'
-              : 'Günlük Çark — 100 ücretsiz coin',
-          ku
-              ? 'Jokerên stratejîk: 50/50, Demjimêr zêde'
-              : 'Stratejik jokerler: 50/50, Süre uzat',
-          ku
-              ? 'Ast bilind bike: Xwendekar → Pispor → Mamoste'
-              : 'Seviye atla: Xwendekar → Pispor → Mamoste',
+          ku ? 'Şerê 1vs1 û Pêşbirka Rojê' : '1vs1 ve Günün Yarışması',
+          ku ? 'Xelat, coin û joker' : 'Ödül, coin ve joker',
         ],
       ),
     ];

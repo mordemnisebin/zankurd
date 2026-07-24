@@ -54,7 +54,9 @@ class QuizOptionTile extends StatelessWidget {
 
     final optionColor = AppTheme.answerOptionColors[index % 4];
 
-    // Gradient belirleme — idle'da her şık kendi kimlik rengini taşır
+    // Idle: açık kart + renkli sol kimlik (TRT/Pirs okunurluğu).
+    // Reveal: doğru/yanlış gradyan. Seçim beklerken marka gradyanı.
+    final isLight = AppTheme.isLight(context);
     final Gradient gradient = correct
         ? AppTheme.correctGradient
         : wrong
@@ -62,12 +64,14 @@ class QuizOptionTile extends StatelessWidget {
         : isChecking
         ? AppTheme.accentGradient
         : LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppTheme.surfaceHiColor(context),
-              AppTheme.surfaceColor(context),
-            ],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: isLight
+                ? const [Color(0xFFFFFFFF), Color(0xFFF7F4EE)]
+                : [
+                    AppTheme.surfaceHiColor(context),
+                    AppTheme.surfaceColor(context),
+                  ],
           );
 
     final Color borderColor = correct
@@ -76,7 +80,7 @@ class QuizOptionTile extends StatelessWidget {
         ? AppTheme.wrong
         : isChecking
         ? AppTheme.brand
-        : AppTheme.borderColor(context);
+        : optionColor.withValues(alpha: isLight ? 0.45 : 0.55);
 
     final textColor = correct || wrong || isChecking
         ? Colors.white
@@ -337,25 +341,38 @@ class _OptionBadge extends StatelessWidget {
     final letter = String.fromCharCode(65 + (index % 26));
     final fg = stateActive ? stateColor : (idleColor ?? AppTheme.brand);
 
+    final idle = !stateActive;
+    final badgeBg = idle ? fg : Colors.white;
+    final badgeFg = idle ? Colors.white : fg;
+
     return Container(
       width: 34,
       height: 34,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: badgeBg,
         borderRadius: BorderRadius.circular(AppRadius.xs),
+        boxShadow: idle
+            ? [
+                BoxShadow(
+                  color: fg.withValues(alpha: 0.28),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ]
+            : null,
       ),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Text(letter, style: AppTypography.heading2.copyWith(color: fg)),
+          Text(letter, style: AppTypography.heading2.copyWith(color: badgeFg)),
           Positioned(
             top: 2,
             right: 2,
             child: Icon(
               shapeIcons[index % shapeIcons.length],
               size: 8,
-              color: fg.withValues(alpha: 0.65),
+              color: badgeFg.withValues(alpha: 0.7),
             ),
           ),
         ],

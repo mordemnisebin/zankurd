@@ -205,9 +205,7 @@ class _RoomScreenState extends State<RoomScreen> {
     if (_leaving) {
       return Scaffold(
         body: Container(
-          decoration: BoxDecoration(
-            gradient: AppTheme.backgroundGradient(context),
-          ),
+          color: AppTheme.bgOf(context),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -237,9 +235,7 @@ class _RoomScreenState extends State<RoomScreen> {
       },
       child: Scaffold(
         body: Container(
-          decoration: BoxDecoration(
-            gradient: AppTheme.backgroundGradient(context),
-          ),
+          color: AppTheme.bgOf(context),
           child: SafeArea(
             child: Column(
               children: [
@@ -406,21 +402,30 @@ class _RoomScreenState extends State<RoomScreen> {
                                                       const EdgeInsets.symmetric(
                                                         horizontal:
                                                             AppSpacing.md,
-                                                        vertical: AppSpacing.sm,
+                                                        vertical: AppSpacing.md,
                                                       ),
                                                   decoration: BoxDecoration(
                                                     color: Colors.white
-                                                        .withValues(alpha: 0.1),
+                                                        .withValues(
+                                                          alpha: 0.96,
+                                                        ),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                           AppRadius.sm,
                                                         ),
-                                                    border: Border.all(
-                                                      color: Colors.white
-                                                          .withValues(
-                                                            alpha: 0.18,
-                                                          ),
-                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.black
+                                                            .withValues(
+                                                              alpha: 0.12,
+                                                            ),
+                                                        blurRadius: 12,
+                                                        offset: const Offset(
+                                                          0,
+                                                          4,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                   child: Row(
                                                     children: [
@@ -432,21 +437,20 @@ class _RoomScreenState extends State<RoomScreen> {
                                                           children: [
                                                             Text(
                                                               ku
-                                                                  ? 'Koda odeyê parve bike'
-                                                                  : 'Oda kodunu paylaş',
+                                                                  ? 'Koda odeyê — bitikîne û kopî bike'
+                                                                  : 'Oda kodu — dokun, kopyala',
                                                               style: AppTypography
                                                                   .caption
                                                                   .copyWith(
-                                                                    color: Colors
-                                                                        .white
-                                                                        .withValues(
-                                                                          alpha:
-                                                                              0.7,
-                                                                        ),
+                                                                    color: AppTheme
+                                                                        .lightTextSub,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
                                                                   ),
                                                             ),
                                                             const SizedBox(
-                                                              height: 2,
+                                                              height: 4,
                                                             ),
                                                             Text(
                                                               room.code,
@@ -461,24 +465,41 @@ class _RoomScreenState extends State<RoomScreen> {
                                                               style: AppTypography
                                                                   .heading1
                                                                   .copyWith(
-                                                                    color:
-                                                                        AppTheme
-                                                                            .gold,
+                                                                    color: AppTheme
+                                                                        .playCyan,
                                                                     letterSpacing:
-                                                                        2,
+                                                                        3,
                                                                     fontSize:
-                                                                        28,
+                                                                        32,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w900,
                                                                   ),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
-                                                      Icon(
-                                                        AppIcons.copy,
-                                                        color: Colors.white
-                                                            .withValues(
-                                                              alpha: 0.85,
-                                                            ),
+                                                      Container(
+                                                        width: 40,
+                                                        height: 40,
+                                                        alignment:
+                                                            Alignment.center,
+                                                        decoration: BoxDecoration(
+                                                          color: AppTheme
+                                                              .playCyan
+                                                              .withValues(
+                                                                alpha: 0.12,
+                                                              ),
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                AppRadius.sm,
+                                                              ),
+                                                        ),
+                                                        child: const Icon(
+                                                          AppIcons.copy,
+                                                          color:
+                                                              AppTheme.playCyan,
+                                                        ),
                                                       ),
                                                     ],
                                                   ),

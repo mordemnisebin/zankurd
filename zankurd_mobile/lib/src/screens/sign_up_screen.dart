@@ -325,8 +325,11 @@ class _SignUpScreenState extends State<SignUpScreen>
                                     color: AppTheme.textSubColor(context),
                                   ),
                                 ),
-                                GestureDetector(
+                                InkWell(
                                   onTap: () => Navigator.of(context).pop(),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.badge,
+                                  ),
                                   child: Text(
                                     context.s('Têkeve', 'Giriş Yap'),
                                     style: AppTypography.bodyMedium.copyWith(

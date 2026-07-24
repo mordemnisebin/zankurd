@@ -365,9 +365,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(title: Text(ku ? 'Kûpaya ZanKurd' : 'Turnuva')),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        color: AppTheme.bgOf(context),
         child: SafeArea(
           child: _loading
               ? const Center(

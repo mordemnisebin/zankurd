@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 enum WildcardType { fiftyFifty, audience, doubleAnswer, changeQuestion }
@@ -25,11 +27,15 @@ extension WildcardTypeDetails on WildcardType {
     WildcardType.changeQuestion => isKu ? 'Pirsê Biguhere' : 'Soru Değiştir',
   };
 
+  /// 2026-07-24 canlı denetim: jokerler dört neon renk (kehribar, zümrüt,
+  /// neon yeşil, elektrik moru) taşıyordu ve quiz ekranının en gürültülü
+  /// öğesi onlardı — göz soruya değil alt bara gidiyordu. Tonlar Zanîn
+  /// paletinin nötr bandına çekildi; joker yardımcı araçtır, kahraman değil.
   Color get themeColor => switch (this) {
-    WildcardType.fiftyFifty => const Color(0xFFFFB300), // Altın
-    WildcardType.audience => const Color(0xFF00BFA5), // Zümrüt yeşil
-    WildcardType.doubleAnswer => const Color(0xFF00C853), // Neon yeşil
-    WildcardType.changeQuestion => const Color(0xFF7C4DFF), // Derin mor
+    WildcardType.fiftyFifty => AppTheme.gold,
+    WildcardType.audience => AppTheme.playCyan,
+    WildcardType.doubleAnswer => AppTheme.playGreen,
+    WildcardType.changeQuestion => AppTheme.playPurple,
   };
 }
 

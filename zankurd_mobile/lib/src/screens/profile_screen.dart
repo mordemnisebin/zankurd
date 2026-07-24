@@ -72,7 +72,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int _xpInLevel = 0;
   int _xpNeeded = 1000;
   double _levelProgress = 0.0;
-  int? _coinBalance;
   double? _accuracyPercent;
   Set<String> _badgeUnlocked = {};
 
@@ -184,14 +183,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final achievementStore = await AchievementStore.load();
       final masteryStore = await MasteryStore.load();
       final xpStore = await XPStore.load();
-      // Coin bakiyesi + doğruluk oranı istatistik kartları için (UI-only).
-      int? coinBalance;
-      try {
-        coinBalance = await widget.repository.loadCoinBalance();
-      } catch (error, stack) {
-        ErrorReporter.record(error, stack, reason: 'loadCoinBalance failed');
-        coinBalance = null;
-      }
+      // Doğruluk oranı istatistik kartı için (UI-only). Coin bakiyesi artık
+      // profil gridinde gösterilmiyor, quiz üst barında görünüyor.
       final mistakeStore = await MistakeStore.load();
       final badgeService = await BadgeService.load();
       if (mounted) {
@@ -206,7 +199,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _xpInLevel = xpStore.xpInCurrentLevel;
           _xpNeeded = xpStore.xpNeededForNextLevel;
           _levelProgress = xpStore.levelProgress;
-          _coinBalance = coinBalance;
           _accuracyPercent = mistakeStore.accuracyPercent;
           _answeredTotal = mistakeStore.totalCorrect + mistakeStore.totalWrong;
           _loading = false;
@@ -301,6 +293,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 )
               else
+                // İlk bakışta 4 metrik — kalanı "Detaylı İstatistik"te.
                 LayoutBuilder(
                   builder: (context, constraints) => GridView.count(
                     crossAxisCount: constraints.maxWidth > 600 ? 4 : 2,
@@ -308,14 +301,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
-                    childAspectRatio: 1.45,
+                    childAspectRatio: 1.55,
                     children: [
                       _StatTile(
                         label: ku ? 'Rêze' : 'Sıralama',
-                        // Hiç oyun yokken sahte görünen sıra gösterme.
-                        // Eşik `roomsPlayed` değil cevaplanan soru sayısıdır:
-                        // yalnız solo oynayan oyuncunun oda sayısı hep 0 kalır
-                        // ve sırası olduğu hâlde "—" görüyordu.
                         value: _answeredTotal > 0 ? '#${_stats!.rank}' : '—',
                         color: AppTheme.gold,
                         icon: AppIcons.chartColumn,
@@ -327,22 +316,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         icon: AppIcons.star,
                       ),
                       _StatTile(
-                        label: ku ? 'Baştirîn Zincîr' : 'En İyi Seri',
-                        value: '${_stats!.bestStreak}',
-                        color: AppTheme.violet,
-                        icon: AppIcons.fire,
-                      ),
-                      _StatTile(
                         label: ku ? 'Pirsên Bersivandî' : 'Cevaplanan Soru',
                         value: '$_answeredTotal',
                         color: AppTheme.correct,
                         icon: AppIcons.gamepad,
-                      ),
-                      _StatTile(
-                        label: ku ? 'Zêr' : 'Coin',
-                        value: _coinBalance == null ? '—' : '$_coinBalance',
-                        color: AppTheme.gold,
-                        icon: AppIcons.coins,
                       ),
                       _StatTile(
                         label: ku ? 'Rastî' : 'Doğruluk',
@@ -456,7 +433,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
 
     return Container(
-      decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
+      color: AppTheme.bgOf(context),
       child: SafeArea(
         // 2026-07-22 canlı UX denetimi: profil iskelet yükleme
         child: _loading

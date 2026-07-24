@@ -394,7 +394,7 @@ class _BracketMatchCard extends StatelessWidget {
                             ? 'VS'
                             : '—',
                         style: TextStyle(
-                          fontSize: 9,
+                          fontSize: 10,
                           fontWeight: FontWeight.w900,
                           color: isCompleted
                               ? AppTheme.gold

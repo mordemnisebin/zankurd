@@ -36,8 +36,11 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 50));
 
+    // Logo mümkün olan en büyük boyutu alır ama ekrana sığar (2026-07-24:
+    // sabit 280px dar/alçak ekranda 17px taşırıyordu).
     final logo = tester.widget<AppLogo>(find.byType(AppLogo));
-    expect(logo.width, 280);
+    expect(logo.width, lessThanOrEqualTo(280));
+    expect(logo.width, greaterThan(96));
     expect(find.text('SONRAKI'), findsNothing);
   });
 

@@ -11,8 +11,8 @@ void main() {
     final onboarding = File(
       'lib/src/screens/onboarding_screen.dart',
     ).readAsStringSync();
-    final quickPlay = File(
-      'lib/src/screens/home/quick_play_grid.dart',
+    final playHub = File(
+      'lib/src/screens/play_hub_screen.dart',
     ).readAsStringSync();
     final tournament = File(
       'lib/src/screens/tournament_screen.dart',
@@ -23,7 +23,7 @@ void main() {
     expect(friends, contains("ku ? 'Ne li serhêl' : 'Çevrimdışı'"));
     expect(shell, isNot(contains('hevalên te, Turnuva')));
     expect(onboarding, isNot(contains("ku ? 'Turnuva")));
-    expect(quickPlay, contains("title: isKu ? 'Kûpa'"));
+    expect(playHub, contains("ku ? 'Kûpa' : 'Turnuva Modu'"));
     expect(tournament, isNot(contains("ku ? 'Turnuva")));
     expect(tournament, isNot(contains("? 'Turnuvaya")));
   });

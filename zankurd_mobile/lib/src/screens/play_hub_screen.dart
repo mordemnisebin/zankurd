@@ -8,7 +8,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import 'contest_screen.dart';
-import 'home/quick_play_grid.dart';
+import '../widgets/app_row_card.dart';
 import 'matchmaking_screen.dart';
 import 'room_screen.dart';
 import 'shop_screen.dart';
@@ -270,49 +270,167 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    return Container(
-      decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
+    // 2026-07-24: karo ızgarası + gradyan panel yarışı bitti. Ekranda tek
+    // gradyan var (hızlı düello), diğer modlar eşit ağırlıkta sade satır.
+    return ColoredBox(
+      color: AppTheme.bgOf(context),
       child: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.page),
           children: [
-            // Büyük 'Pêşbazî' tanıtım kartı kaldırıldı — bölüm başlığı
-            // ekranı tanıtmaya yeter.
             _PlaySectionHeading(
-              title: ku
-                  ? 'Çawa dixwazî pêşbaz bibî?'
-                  : 'Nasıl yarışmak istersin?',
+              title: ku ? 'Pêşbazî' : 'Yarış',
               subtitle: ku
-                  ? 'Yek ji modan hilbijêre û dest pê bike.'
-                  : 'Bir mod seç ve başla.',
+                  ? 'Hevrikê xwe hilbijêre û dest pê bike.'
+                  : 'Rakibini seç ve başla.',
             ),
             const SizedBox(height: AppSpacing.sm),
-            QuickPlayGrid(
-              isKu: ku,
-              dailyQuizLoading: _dailyLoading,
-              onDuel: () => Navigator.of(context).push(
+            _QuickDuelHero(
+              ku: ku,
+              onTap: () => Navigator.of(context).push(
                 AppRoute.to(MatchmakingScreen(repository: widget.repository)),
               ),
-              onDailyQuiz: _openDailyQuiz,
-              onTournament: () => Navigator.of(context).push(
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            AppRowCard(
+              key: const ValueKey('play-hub-create-room'),
+              icon: AppIcons.circlePlus,
+              accent: AppTheme.playPurple,
+              title: ku ? 'Oda ava bike' : 'Oda Kur',
+              subtitle: ku
+                  ? 'Hevalên xwe bi kodê vexwîne'
+                  : 'Arkadaşlarını kodla çağır',
+              trailing: _roomActionLoading
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : null,
+              onTap: _roomActionLoading ? null : _createOnlineRoom,
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            AppRowCard(
+              key: const ValueKey('play-hub-join-room'),
+              icon: AppIcons.doorOpen,
+              accent: AppTheme.playCyan,
+              title: ku ? 'Kodê tevlî bibe' : 'Kodla Katıl',
+              subtitle: ku ? 'Koda odeyê ya 6 tîpî' : '6 haneli oda kodu',
+              onTap: _showJoinSheet,
+            ),
+            const SizedBox(height: AppSpacing.md),
+            _PlaySectionHeading(
+              title: ku ? 'Çalakî' : 'Etkinlikler',
+              subtitle: ku ? 'Her roj nû dibe.' : 'Her gün yenilenir.',
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            AppRowCard(
+              key: const ValueKey('play-hub-daily-contest'),
+              icon: AppIcons.bolt,
+              accent: AppTheme.gold,
+              title: ku ? 'Pêşbirka Rojê' : 'Günün Yarışması',
+              subtitle: ku ? '10 pirs' : '10 soru',
+              trailing: _dailyLoading
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : null,
+              onTap: _dailyLoading ? null : _openDailyQuiz,
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            AppRowCard(
+              key: const ValueKey('play-hub-tournament'),
+              icon: AppIcons.trophy,
+              accent: AppTheme.playPink,
+              title: ku ? 'Kûpa' : 'Turnuva Modu',
+              subtitle: ku ? 'Elemeya 8 kesan' : '8 kişilik eleme',
+              onTap: () => Navigator.of(context).push(
                 AppRoute.to(TournamentScreen(repository: widget.repository)),
               ),
             ),
-            const SizedBox(height: AppSpacing.md),
-            _GroupPlayPanel(
-              ku: ku,
-              loading: _roomActionLoading,
-              onCreateRoom: _createOnlineRoom,
-              onJoinRoom: _showJoinSheet,
-            ),
-            const SizedBox(height: AppSpacing.md),
-            _SupportActions(
-              ku: ku,
-              onOpenShop: () => Navigator.of(
+            const SizedBox(height: AppSpacing.xs),
+            AppRowCard(
+              key: const ValueKey('play-hub-shop-card'),
+              icon: AppIcons.store,
+              accent: AppTheme.playGreen,
+              title: ku ? 'Dukan û joker' : 'Mağaza ve jokerler',
+              subtitle: ku
+                  ? 'Coin, çerx û mafên joker'
+                  : 'Coin, çark ve joker hakların',
+              onTap: () => Navigator.of(
                 context,
               ).push(AppRoute.to(ShopScreen(repository: widget.repository))),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Ekranın tek birincil eylemi — tek gradyan burada.
+class _QuickDuelHero extends StatelessWidget {
+  const _QuickDuelHero({required this.ku, required this.onTap});
+
+  final bool ku;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        key: const ValueKey('play-hub-quick-duel'),
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        child: Ink(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
+            ),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  ku ? 'Duelo bi lez' : 'Hızlı düello',
+                  style: AppTypography.heading2.copyWith(color: Colors.white),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  ku
+                      ? 'Hevrikekî di asta te de · ~2 deqe'
+                      : 'Seviyene yakın rakip · ~2 dakika',
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Colors.white.withValues(alpha: 0.82),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Container(
+                  height: 42,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                  ),
+                  child: Text(
+                    ku ? 'Hevrik bibîne' : 'Rakip bul',
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppTheme.culturalBrandBg,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -344,237 +462,6 @@ class _PlaySectionHeading extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _GroupPlayPanel extends StatelessWidget {
-  const _GroupPlayPanel({
-    required this.ku,
-    required this.loading,
-    required this.onCreateRoom,
-    required this.onJoinRoom,
-  });
-
-  final bool ku;
-  final bool loading;
-  final VoidCallback onCreateRoom;
-  final VoidCallback onJoinRoom;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppPanel(
-      key: const ValueKey('play-hub-group-panel'),
-      // Remove hardcoded gradient to use standard surface color
-      padding: const EdgeInsets.all(AppSpacing.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppTheme.playCyan.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
-                  border: Border.all(
-                    color: AppTheme.playCyan.withValues(alpha: 0.2),
-                  ),
-                ),
-                child: const Icon(
-                  AppIcons.peopleGroup,
-                  color: AppTheme.playCyan,
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      ku
-                          ? 'Bi heval an komê re bilîze'
-                          : 'Arkadaşınla veya grupla oyna',
-                      style: AppTypography.heading2.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      ku
-                          ? 'Odeyek veke, kodê parve bike, hevalên xwe vexwîne.'
-                          : 'Oda aç, kodu paylaş, arkadaşlarını davet et.',
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textSubColor(context),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          Row(
-            children: [
-              Expanded(
-                child: FilledButton.icon(
-                  key: const ValueKey('play-hub-create-room'),
-                  onPressed: loading ? null : onCreateRoom,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppTheme.brand,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 10,
-                    ),
-                  ),
-                  icon: loading
-                      ? const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(AppIcons.circlePlus, size: 18),
-                  label: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      loading
-                          ? (ku ? 'Tê Vekirin...' : 'Açılıyor...')
-                          : (ku ? 'Odeyek Ava Bike' : 'Oda Kur'),
-                      style: const TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.xs),
-              Expanded(
-                child: OutlinedButton.icon(
-                  key: const ValueKey('play-hub-join-room'),
-                  onPressed: onJoinRoom,
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide(
-                      color: AppTheme.borderColor(context),
-                      width: 1.5,
-                    ),
-                    foregroundColor: AppTheme.textPrimaryColor(context),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 10,
-                    ),
-                  ),
-                  icon: const Icon(AppIcons.doorOpen, size: 18),
-                  label: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      ku ? 'Kodê tevlî bibe' : 'Kodla Katıl',
-                      style: const TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SupportActions extends StatelessWidget {
-  const _SupportActions({required this.ku, required this.onOpenShop});
-
-  final bool ku;
-  final VoidCallback onOpenShop;
-
-  @override
-  Widget build(BuildContext context) {
-    return _SupportCard(
-      key: const ValueKey('play-hub-shop-card'),
-      icon: AppIcons.store,
-      color: AppTheme.gold,
-      title: ku ? 'Dukan û joker' : 'Mağaza ve jokerler',
-      subtitle: ku
-          ? 'Coin, çerx û mafên joker li yek derê.'
-          : 'Coin, çark ve joker hakların tek yerde.',
-      onTap: onOpenShop,
-    );
-  }
-}
-
-class _SupportCard extends StatelessWidget {
-  const _SupportCard({
-    required super.key,
-    required this.icon,
-    required this.color,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final Color color;
-  final String title;
-  final String subtitle;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AppPanel(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Row(
-          children: [
-            Container(
-              width: 38,
-              height: 38,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(AppRadius.sm),
-                border: Border.all(color: color.withValues(alpha: 0.28)),
-              ),
-              child: Icon(icon, color: color, size: 21),
-            ),
-            const SizedBox(width: AppSpacing.sm),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.xxs),
-                  Text(
-                    subtitle,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textSubColor(context),
-                      height: 1.2,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: AppSpacing.xs),
-            Icon(AppIcons.chevronRight, color: color, size: 22),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -8,57 +8,32 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
-import 'package:zankurd_mobile/src/screens/home/daily_theme_card.dart';
-import 'package:zankurd_mobile/src/screens/home/quick_play_grid.dart';
+import 'package:zankurd_mobile/src/screens/home/home_rows.dart';
+import 'package:zankurd_mobile/src/widgets/app_row_card.dart';
+import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/colorful_action_card.dart';
 import 'package:zankurd_mobile/src/widgets/zana_daily_card.dart';
 
-// Ana sayfa iki net giriş kapısı taşır: doğrudan yarış ve öğrenerek ilerleme.
-// Ayrıntılı oyun modları Oyna sekmesinde kalır.
+// Ana sayfa (2026-07-24 yenilemesi): ekran tek bir soruyu yanıtlar — "şimdi
+// ne yapmalıyım?". Karo ızgarası kaldırıldı; sıra bugünün görevi → düello →
+// kaldığın yer → günlük görevler.
+Widget _wrap(Widget child) => MultiProvider(
+  providers: [
+    ChangeNotifierProvider(create: (_) => LanguageProvider()),
+    ChangeNotifierProvider(create: (_) => AuthProvider.test()),
+    ChangeNotifierProvider(create: (_) => ThemeProvider()),
+  ],
+  child: MaterialApp(
+    theme: AppTheme.light(),
+    darkTheme: AppTheme.dark(),
+    home: child,
+  ),
+);
+
 void main() {
-  testWidgets('Günlük ders CTA tema kontrast rengini kullanır', (tester) async {
-    for (final mode in [ThemeMode.light, ThemeMode.dark]) {
-      await tester.pumpWidget(
-        MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (_) => LanguageProvider(initialLang: 'tr'),
-            ),
-            ChangeNotifierProvider(create: (_) => AuthProvider.test()),
-            ChangeNotifierProvider(
-              create: (_) => ThemeProvider(initialMode: mode),
-            ),
-          ],
-          child: MaterialApp(
-            theme: AppTheme.light(),
-            darkTheme: AppTheme.dark(),
-            themeMode: mode,
-            home: HomeScreen(
-              repository: MockZanKurdRepository(),
-              displayName: 'Zelal',
-              scrollController: ScrollController(),
-            ),
-          ),
-        ),
-      );
-      await tester.pump(const Duration(seconds: 1));
-
-      final cta = tester.widget<ElevatedButton>(
-        find.descendant(
-          of: find.byKey(const ValueKey('home-daily-lesson')),
-          matching: find.byType(ElevatedButton),
-        ),
-      );
-      expect(
-        cta.style!.backgroundColor!.resolve({}),
-        mode == ThemeMode.light ? const Color(0xFFD4650A) : AppTheme.brand,
-      );
-      expect(cta.style!.foregroundColor!.resolve({}), Colors.white);
-    }
-  });
-
-  testWidgets('Ana sayfa doğrudan yarış ve öğrenme girişlerini gösterir', (
+  testWidgets('Ana sayfa tek birincil görev ve destek satırlarını gösterir', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(390, 844);
@@ -67,36 +42,66 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     await tester.pumpWidget(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => LanguageProvider()),
-          ChangeNotifierProvider(create: (_) => AuthProvider.test()),
-          ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ],
-        child: MaterialApp(
-          home: HomeScreen(
-            repository: MockZanKurdRepository(),
-            displayName: 'Zelal',
-            scrollController: ScrollController(),
-          ),
+      _wrap(
+        HomeScreen(
+          repository: MockZanKurdRepository(),
+          displayName: 'Zelal',
+          scrollController: ScrollController(),
+          onOpenPlay: () {},
+          onOpenCategories: () {},
         ),
       ),
     );
     await tester.pump(const Duration(seconds: 1));
 
-    // Sekmelerle mükerrer olan oyun/kategori teaser kartları kaldırıldı;
-    // günlük ders quizi kartı ana giriş oldu.
-    expect(find.text('Pêşbaziyên din'), findsNothing);
-    expect(find.text('Mijar û mijaran bibîne'), findsNothing);
-    expect(find.byKey(const ValueKey('home-daily-lesson')), findsOneWidget);
-    expect(find.byType(QuickPlayGrid), findsNothing);
-    expect(find.byKey(const ValueKey('home-learning-entry')), findsOneWidget);
-    expect(find.byType(ZanaDailyCard), findsOneWidget);
-    // Günlük yarışma girişi Pêşbazî sekmesine taşındı; home'da yok.
-    expect(find.byKey(const ValueKey('home-daily-race-entry')), findsNothing);
-    expect(find.bySemanticsLabel('Tema'), findsOneWidget);
+    // Tek birincil eylem.
+    expect(find.byType(TodayTaskCard), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-daily-task-start')), findsOneWidget);
+
+    // Destek satırları tek tip kart bileşenini kullanır.
+    expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
+    expect(find.byType(AppRowCard), findsWidgets);
+    expect(find.byType(ContinueSection), findsOneWidget);
     expect(find.byType(DailyMissionsCard), findsOneWidget);
-    expect(find.byType(DailyThemeCard), findsNothing);
+
+    // Kalabalık eski bloklar yok: karo ızgarası, teaser kartları, kopya
+    // "Yarış"/"Kategoriler" girişleri.
+    expect(find.byType(ColorfulActionCard), findsNothing);
+    expect(find.byType(ZanaDailyCard), findsNothing);
+    expect(find.bySemanticsLabel('Tema'), findsOneWidget);
+  });
+
+  testWidgets('ekranda yalnız bir gradyanlı birincil buton var', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      _wrap(
+        HomeScreen(
+          repository: MockZanKurdRepository(),
+          displayName: 'Zelal',
+          scrollController: ScrollController(),
+          onOpenPlay: () {},
+          onOpenCategories: () {},
+        ),
+      ),
+    );
+    await tester.pump(const Duration(seconds: 1));
+
+    // Gradyan "buraya bas" demektir; ekran başına bir tane.
+    final gradientBoxes = tester
+        .widgetList<DecoratedBox>(find.byType(DecoratedBox))
+        .where((box) {
+          final decoration = box.decoration;
+          return decoration is BoxDecoration && decoration.gradient != null;
+        })
+        .length;
+    expect(gradientBoxes, lessThanOrEqualTo(1));
   });
 
   for (final size in <Size>[
@@ -106,40 +111,35 @@ void main() {
     const Size(768, 1024),
     const Size(1440, 900),
   ]) {
-    testWidgets(
-      'Ana sayfa ${size.width.toInt()}x${size.height.toInt()} taşmaz',
-      (tester) async {
-        // Pirs redesign changed layout at 320x568; needs source layout fix.
-        if (size == const Size(320, 568)) return;
-        tester.view.physicalSize = size;
-        tester.view.devicePixelRatio = 1.0;
-        addTearDown(tester.view.resetPhysicalSize);
-        addTearDown(tester.view.resetDevicePixelRatio);
-        await tester.pumpWidget(
-          MultiProvider(
-            providers: [
-              ChangeNotifierProvider(create: (_) => LanguageProvider()),
-              ChangeNotifierProvider(create: (_) => AuthProvider.test()),
-              ChangeNotifierProvider(create: (_) => ThemeProvider()),
-            ],
-            child: MaterialApp(
-              home: HomeScreen(
-                repository: MockZanKurdRepository(),
-                displayName: 'Zelal',
-                scrollController: ScrollController(),
-              ),
-            ),
+    testWidgets('Ana sayfa ${size.width.toInt()}x${size.height.toInt()} taşmaz', (
+      tester,
+    ) async {
+      tester.view.physicalSize = size;
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(
+        _wrap(
+          HomeScreen(
+            repository: MockZanKurdRepository(),
+            displayName: 'Zelal',
+            scrollController: ScrollController(),
+            onOpenPlay: () {},
+            onOpenCategories: () {},
           ),
-        );
-        await tester.pump(const Duration(seconds: 1));
-        expect(tester.takeException(), isNull);
-      },
-    );
+        ),
+      );
+      await tester.pump(const Duration(seconds: 1));
+      expect(tester.takeException(), isNull);
+    });
   }
 
-  test('oyun/kategori teaser kartları sekmelerle mükerrer olduğu için yok', () {
+  test('eski teaser ve karo sınıfları home içinde yok', () {
     final source = File('lib/src/screens/home_screen.dart').readAsStringSync();
     expect(source, isNot(contains('class _PlayHubTeaser')));
     expect(source, isNot(contains('class _CategoryEntry')));
+    expect(source, isNot(contains('class _DailyLessonHero')));
+    expect(source, isNot(contains('HomeLobbyGrid')));
+    expect(source, contains('TodayTaskCard'));
   });
 }

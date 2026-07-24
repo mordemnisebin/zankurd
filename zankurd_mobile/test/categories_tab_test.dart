@@ -78,7 +78,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('321 soru • 5 seviye'), findsOneWidget);
+    expect(find.text('321 soru · 5 seviye'), findsOneWidget);
   });
 
   testWidgets('kart dokunuşu SubcategoryScreen açar', (tester) async {

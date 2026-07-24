@@ -234,21 +234,202 @@ class SubcategoryConfig {
     ],
   };
 
-  /// Soru kimliğini stabil bir alt kategori id'sine eşler.
+  /// Alt kategori → konu anahtar kelimeleri. Eşleşme soru metni ve şıklar
+  /// üzerinde yapılır; böylece "Rêziman" filtresi gerçekten dilbilgisi
+  /// sorusu getirir.
+  ///
+  /// 2026-07-24 editoryal denetim: alt kategori `question.id.hashCode %
+  /// listUzunluğu` ile atanıyordu. Yani "Dilbilgisi" filtresi rastgele
+  /// sorular gösteriyordu — kullanıcıya verilen konu sözü sahteydi ve aynı
+  /// soru, id değişmediği sürece yanlış konu altında sabit kalıyordu.
+  static const Map<String, List<String>> _keywords = {
+    // Ziman
+    'reziman': [
+      'rêziman',
+      'lêker',
+      'navdêr',
+      'rengdêr',
+      'cînav',
+      'dem',
+      'raweya',
+      'pirjimar',
+      'yekjimar',
+      'izafe',
+      'ezafe',
+      'çêker',
+      'hevok',
+      'binavkirî',
+      'nebinavkirî',
+    ],
+    'rastnivisin': [
+      'rastnivîs',
+      'tîp',
+      'herf',
+      'alfabe',
+      'nivîsîn',
+      'xal',
+      'kîteyê',
+      'kîte',
+      'dengdêr',
+      'dengdar',
+    ],
+    'peyvnasi': ['peyv', 'wate', 'hevwate', 'dijwate', 'bi tirkî', 'ferheng'],
+    // Çand
+    'cejn': ['newroz', 'cejn', 'eyd', 'roja', 'kevneşop', 'dawet', 'bûk'],
+    'dastangotin': [
+      'dastan',
+      'mem û zîn',
+      'siyabend',
+      'kawa',
+      'leheng',
+      'efsane',
+    ],
+    'tistonek': ['tiştonek', 'mamik', 'bilmece', 'zekaya'],
+    'folklor': [
+      'folklor',
+      'çîrok',
+      'gotina pêşiyan',
+      'govend',
+      'reqs',
+      'xwarin',
+    ],
+    // Dîrok
+    'diroka_kevn': [
+      'med',
+      'mîtan',
+      'hûrî',
+      'kardûx',
+      'gutî',
+      'kevnar',
+      'berî zayînê',
+      'antîk',
+    ],
+    'sexsiyet': [
+      'selahedîn',
+      'ehmedê xanî',
+      'bedirxan',
+      'şêx',
+      'seyid',
+      'mîr',
+      'kesayet',
+    ],
+    'diroka_nujen': [
+      'sedsala',
+      'peymana',
+      'serhildan',
+      'komar',
+      'lozan',
+      'dewlet',
+    ],
+    // Edebiyat
+    'helbest': ['helbest', 'helbestvan', 'şiir', 'malbend', 'qafiye'],
+    'klasik': [
+      'klasîk',
+      'melayê cizîrî',
+      'feqiyê teyran',
+      'elî herîrî',
+      'dîwan',
+    ],
+    'roman': ['roman', 'çîroknivîs', 'nivîskar', 'pirtûk', 'kovar', 'weşan'],
+    // Cografya
+    'ciya_cem': [
+      'çiya',
+      'çem',
+      'gol',
+      'ava',
+      'zagros',
+      'agirî',
+      'dîcle',
+      'firat',
+    ],
+    'bajar_ci': ['bajar', 'bajarê', 'navend', 'gund', 'herêm'],
+    'sinor_duma': [
+      'sînor',
+      'welat',
+      'nexşe',
+      'herêma',
+      'başûr',
+      'bakur',
+      'rojava',
+      'rojhilat',
+    ],
+    // Muzîk
+    'dengbeji': ['dengbêj', 'stran', 'kilam', 'lawik', 'şeşbend'],
+    'amur': ['amûr', 'tembûr', 'bilûr', 'def', 'zirne', 'saz', 'erbane'],
+    'nujen': ['muzîka nûjen', 'komele', 'grûp', 'albûm', 'stranbêj'],
+    // Siyaset
+    'diroka_siyasi': ['dîroka siyasî', 'partî', 'tevgera netewî', 'serhildana'],
+    'siyaseta_nujen': ['hilbijartin', 'parlamento', 'meclis', 'siyaseta nûjen'],
+    'tevger': ['tevger', 'rêxistin', 'kongra', 'kjar', 'jineolojî', 'yekîtî'],
+    // Paradigma
+    'demokratik': [
+      'konfederalîzm',
+      'demokratîk',
+      'komun',
+      'xweseriya',
+      'meclisa gel',
+    ],
+    'ekoloji': ['ekolojî', 'xweza', 'jîngeh', 'avhewa', 'çandinî'],
+    'jineoloji': [
+      'jineolojî',
+      'jin',
+      'azadiya jinê',
+      'hevserok',
+      'xwe-parastin',
+    ],
+    // Teknolojî
+    'programkirin': ['program', 'kod', 'algorîtma', 'nivîsandina bernameyê'],
+    'dijital_internet': ['înternet', 'tor', 'dîjîtal', 'ewlehî', 'protokol'],
+    'bingehên_teknolojiyê': ['komputer', 'amûra', 'pergal', 'teknolojî'],
+  };
+
+  /// Soruyu konusuna göre bir alt kategoriye eşler.
+  ///
+  /// Anahtar kelime eşleşmesi bulunamazsa, kategori içinde **dengeli
+  /// dağıtım** için id türevli sabit bir indeks kullanılır. Bu, eski
+  /// davranışın bilinçli olarak korunan tek parçasıdır: konusu belirsiz
+  /// soru da bir yere düşmeli, yoksa alt kategori listesi boş kalır.
   static String getSubcategoryId(QuizQuestion question) {
     final list = subcategories[question.category];
     if (list == null || list.isEmpty) return '';
-    final code = question.id.hashCode.abs();
-    final index = code % list.length;
-    return list[index].id;
+    final matched = _matchByKeyword(question, list);
+    if (matched != null) return matched.id;
+    return list[question.id.hashCode.abs() % list.length].id;
   }
 
   /// Soru için alt kategori etiketini döner.
   static String getSubcategoryLabel(QuizQuestion question, bool isKu) {
     final list = subcategories[question.category];
     if (list == null || list.isEmpty) return '';
-    final code = question.id.hashCode.abs();
-    final index = code % list.length;
-    return isKu ? list[index].nameKu : list[index].nameTr;
+    final matched =
+        _matchByKeyword(question, list) ??
+        list[question.id.hashCode.abs() % list.length];
+    return isKu ? matched.nameKu : matched.nameTr;
+  }
+
+  static SubcategoryInfo? _matchByKeyword(
+    QuizQuestion question,
+    List<SubcategoryInfo> list,
+  ) {
+    final haystack = [
+      question.prompt,
+      ...question.answers,
+    ].join(' ').toLowerCase();
+
+    SubcategoryInfo? best;
+    var bestScore = 0;
+    for (final info in list) {
+      final words = _keywords[info.id];
+      if (words == null) continue;
+      var score = 0;
+      for (final word in words) {
+        if (haystack.contains(word)) score++;
+      }
+      if (score > bestScore) {
+        bestScore = score;
+        best = info;
+      }
+    }
+    return best;
   }
 }

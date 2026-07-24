@@ -46,7 +46,7 @@ QuizResultScreen buildScreen(MockZanKurdRepository repository) {
 }
 
 void main() {
-  testWidgets('light solo vitrin okunaklı marka gradyanı taşır', (
+  testWidgets('light solo vitrin kimlik yeşili gradyan taşır', (
     tester,
   ) async {
     await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
@@ -58,15 +58,14 @@ void main() {
     );
     final decoration = header.decoration as BoxDecoration;
     final gradient = decoration.gradient as LinearGradient;
+    // 2026-07-24: solo vitrin kimlik anıdır — Kesk (marka yeşili). Turuncu
+    // yalnız eylem butonunda kalır. Beyaz metin perdesiz AA geçmeli.
     expect(gradient.colors, hasLength(2));
-    expect(
-      gradient.colors.first.computeLuminance(),
-      lessThan(AppTheme.brand.computeLuminance()),
-    );
-    expect(
-      gradient.colors.last.computeLuminance(),
-      lessThan(AppTheme.brandDeep.computeLuminance()),
-    );
+    expect(gradient.colors.first, AppTheme.culturalBrandBg);
+    for (final color in gradient.colors) {
+      final luminance = color.computeLuminance();
+      expect(1.05 / (luminance + 0.05), greaterThanOrEqualTo(4.5));
+    }
   });
 
   testWidgets('primary CTA ve ikincil butonları taşır', (tester) async {
@@ -81,15 +80,13 @@ void main() {
       findsOneWidget,
     );
 
-    // Secondary: review (Dalga 5: ikon buton + tooltip)
+    // Secondary: review (ikon + etiket yan aksiyon)
     await tester.scrollUntilVisible(
       find.byKey(const ValueKey('result-review-button')),
       200,
     );
-    final reviewBtn = tester.widget<IconButton>(
-      find.byKey(const ValueKey('result-review-button')),
-    );
-    expect(reviewBtn.tooltip, 'İncele');
+    expect(find.byKey(const ValueKey('result-review-button')), findsOneWidget);
+    expect(find.text('İncele'), findsOneWidget);
 
     // Secondary: home
     await tester.scrollUntilVisible(

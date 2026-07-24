@@ -178,9 +178,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(title: Text(ku ? 'Hevalên Min' : 'Arkadaşlarım')),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        color: AppTheme.bgOf(context),
         child: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.fromLTRB(

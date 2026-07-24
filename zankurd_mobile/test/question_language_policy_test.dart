@@ -70,10 +70,11 @@ void main() {
   });
 
   group('offline banka tabanı', () {
-    /// 2026-07-22 ölçümü: 2347 sorunun 320'si (%13.6). Bu sayı yalnızca
-    /// AZALMALIDIR; editöryel düzeltme yapıldıkça taban da düşürülmelidir.
-    /// Güncel dökümü almak için: tools/audit_question_language_mix.py
-    const knownViolationBaseline = 320;
+    /// 2026-07-24: taban SIFIRA indi. 320 ihlalin tamamı editöryel çeviriyle
+    /// giderildi — 224 + 135 benzersiz Türkçe şık metni Kurmancî'ye çevrildi
+    /// (bkz. tools/translate_mixed_language_options.py), 12 sorunun gövdesi
+    /// Kurmancî'ye alındı. Artık tek bir yeni ihlal bile testi kırar.
+    const knownViolationBaseline = 0;
 
     test('dil karışıklığı sayısı tabanı aşmıyor', () {
       final violations = offlineQuestionBank

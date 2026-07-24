@@ -26,9 +26,7 @@ class ReviewScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(title: Text(context.s('Bersiv', 'Cevaplar'))),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        color: AppTheme.bgOf(context),
         child: SafeArea(
           child: records.isEmpty
               ? AppEmptyState(
@@ -362,7 +360,7 @@ class _ReviewCard extends StatelessWidget {
                       children: [
                         const Icon(
                           AppIcons.lightbulb,
-                          color: Color(0xFFB794F6),
+                          color: AppTheme.violet,
                           size: 20,
                         ),
                         const SizedBox(width: 10),

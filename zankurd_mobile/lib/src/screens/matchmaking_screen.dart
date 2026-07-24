@@ -18,6 +18,7 @@ import '../utils/test_environment.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../config/bot_names.dart';
+import '../config/category_visuals.dart';
 
 Player? selectOpponentPlayer(
   Iterable<Player> players, {
@@ -567,9 +568,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               : null,
         ),
         body: Container(
-          decoration: BoxDecoration(
-            gradient: AppTheme.backgroundGradient(context),
-          ),
+          color: AppTheme.bgOf(context),
           child: SafeArea(
             child: _searchingStarted
                 ? _buildRadarSearch(status, ku)
@@ -588,17 +587,25 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: AppTheme.surfaceHiColor(context),
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(
-              color: AppTheme.borderColor(context),
-              width: 1.2,
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                AppTheme.playPink,
+                Color.alphaBlend(
+                  Colors.black.withValues(alpha: 0.18),
+                  AppTheme.playPink,
+                ),
+              ],
             ),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.15),
-                blurRadius: 15,
+                color: AppTheme.playPink.withValues(alpha: 0.30),
+                blurRadius: 18,
                 offset: const Offset(0, 8),
+                spreadRadius: -4,
               ),
             ],
           ),
@@ -608,20 +615,19 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 width: 64,
                 height: 64,
                 decoration: BoxDecoration(
-                  color: AppTheme.primaryGradientStart.withValues(alpha: 0.15),
+                  color: Colors.white.withValues(alpha: 0.18),
                   shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.28),
+                  ),
                 ),
-                child: const Icon(
-                  AppIcons.gamepad,
-                  color: AppTheme.primaryGradientStart,
-                  size: 32,
-                ),
+                child: const Icon(AppIcons.bolt, color: Colors.white, size: 32),
               ),
               const SizedBox(height: 16),
               Text(
                 ku ? 'Şerê 1vs1' : '1vs1 Düello',
-                style: TextStyle(
-                  color: AppTheme.textPrimaryColor(context),
+                style: const TextStyle(
+                  color: Colors.white,
                   fontWeight: FontWeight.w900,
                   fontSize: 24,
                 ),
@@ -633,8 +639,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                     : 'Arkadaşlarınla veya diğer oyuncularla canlı yarış.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: AppTheme.textSubColor(context),
+                  color: Colors.white.withValues(alpha: 0.9),
                   fontSize: 13,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
@@ -642,78 +649,89 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         ),
         const SizedBox(height: 20),
         // 1. Random Match Card
-        GestureDetector(
-          onTap: () => _startMatchmaking('Rastgele'),
-          child: Container(
-            key: const ValueKey('matchmaking-duel-card'),
-            decoration: BoxDecoration(
-              // Rastgele eşleşme birincil CTA: kırmızı (tehlike anlamı)
-              // yerine oda/mod kimliğiyle tutarlı teal-yeşil gradyan.
-              gradient: const LinearGradient(
-                colors: [AppTheme.playCyan, Color(0xFF1E6E66)],
-              ),
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(
-                color: AppTheme.playCyan.withValues(alpha: 0.7),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.playCyan.withValues(alpha: 0.18),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
+        Stack(
+          children: [
+            Container(
+              key: const ValueKey('matchmaking-duel-card'),
+              decoration: BoxDecoration(
+                // Rastgele eşleşme birincil CTA: kırmızı (tehlike anlamı)
+                // yerine oda/mod kimliğiyle tutarlı teal-yeşil gradyan.
+                gradient: const LinearGradient(
+                  colors: [AppTheme.playCyan, Color(0xFF1E6E66)],
                 ),
-              ],
-            ),
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              children: [
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                border: Border.all(
+                  color: AppTheme.playCyan.withValues(alpha: 0.7),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppTheme.playCyan.withValues(alpha: 0.18),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
                   ),
-                  child: const Icon(AppIcons.shuffle, color: Colors.white),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        ku ? 'Hevrikîya rastgele' : 'Rastgele eşleşme',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 16,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        ku
-                            ? 'Bêyî hilbijartina kategoriyê rasterast bikeve rêzê.'
-                            : 'Kategori seçmeden doğrudan sıraya gir.',
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 12,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+                ],
+              ),
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.18),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(AppIcons.shuffle, color: Colors.white),
                   ),
-                ),
-                const Icon(
-                  AppIcons.chevronRight,
-                  color: Colors.white70,
-                  size: 16,
-                ),
-              ],
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          ku ? 'Hevrikîya rastgele' : 'Rastgele eşleşme',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 16,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          ku
+                              ? 'Bêyî hilbijartina kategoriyê rasterast bikeve rêzê.'
+                              : 'Kategori seçmeden doğrudan sıraya gir.',
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Icon(
+                    AppIcons.chevronRight,
+                    color: Colors.white70,
+                    size: 16,
+                  ),
+                ],
+              ),
             ),
-          ),
+            Positioned.fill(
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () => _startMatchmaking('Rastgele'),
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                  child: const SizedBox.expand(),
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 16),
         // 2. Category selection label
@@ -746,35 +764,75 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             spacing: 8,
             runSpacing: 8,
             children: _categories.map((category) {
+              final tint = CategoryVisuals.color(category);
               final isSelected = _selectedCategory == category;
-              return GestureDetector(
-                onTap: () {
-                  setState(() => _selectedCategory = category);
-                  _startMatchmaking(category);
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppTheme.surfaceHiColor(context),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: isSelected
-                          ? AppTheme.primaryGradientStart
-                          : AppTheme.borderColor(context),
-                      width: isSelected ? 2 : 1.2,
+              return Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    setState(() => _selectedCategory = category);
+                    _startMatchmaking(category);
+                  },
+                  borderRadius: BorderRadius.circular(AppRadius.md),
+                  child: Ink(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 12,
                     ),
-                  ),
-                  child: Text(
-                    CategoryNames.localized(category, ku),
-                    style: TextStyle(
+                    decoration: BoxDecoration(
+                      gradient: isSelected
+                          ? LinearGradient(
+                              colors: [
+                                tint,
+                                Color.alphaBlend(
+                                  Colors.black.withValues(alpha: 0.14),
+                                  tint,
+                                ),
+                              ],
+                            )
+                          : null,
                       color: isSelected
-                          ? AppTheme.primaryGradientStart
-                          : AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13.5,
+                          ? null
+                          : AppTheme.surfaceHiColor(context),
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                      border: Border.all(
+                        color: isSelected
+                            ? Colors.white.withValues(alpha: 0.2)
+                            : tint.withValues(alpha: 0.45),
+                        width: isSelected ? 1.2 : 1.4,
+                      ),
+                      boxShadow: isSelected
+                          ? [
+                              BoxShadow(
+                                color: tint.withValues(alpha: 0.28),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ]
+                          : null,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          CategoryVisuals.icon(category),
+                          size: 16,
+                          color: isSelected
+                              ? Colors.white
+                              : AppColors.toneOnSurface(context, tint),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          CategoryNames.localized(category, ku),
+                          style: TextStyle(
+                            color: isSelected
+                                ? Colors.white
+                                : AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w800,
+                            fontSize: 13.5,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

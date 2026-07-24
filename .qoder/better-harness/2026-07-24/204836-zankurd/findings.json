@@ -1,0 +1,149 @@
+{
+  "summary": {
+    "projectName": "zankurd",
+    "locale": "en",
+    "modelId": "agent-work-loop-v4",
+    "reportContractVersion": 25,
+    "overview": "Proje iyi bir bağlam altyapısına sahip (AGENTS.md, mimari dokümanlar, 148 test dosyası) ancak oturum kaynağı yapılandırması davranışsal gözlemi engelliyor ve bir Skill'in çıktı sözleşmesi eksik.",
+    "aiAgentPractice": {
+      "inspectedSurfaces": [
+        "Rules",
+        "Skills"
+      ],
+      "coverageRows": [
+        {
+          "surface": "Rules",
+          "scopes": [
+            "Project"
+          ],
+          "count": 1,
+          "paths": [
+            "AGENTS.md"
+          ]
+        },
+        {
+          "surface": "Skills",
+          "scopes": [
+            "Project"
+          ],
+          "count": 1,
+          "paths": [
+            ".agents/skills/browser-use/SKILL.md"
+          ]
+        },
+        {
+          "surface": "Workflows",
+          "scopes": [
+            "Project"
+          ],
+          "count": 1,
+          "paths": [
+            ".github/workflows/deploy-web-hostinger.yml"
+          ]
+        },
+        {
+          "surface": "Memories",
+          "scopes": [
+            "Project"
+          ],
+          "count": 12
+        },
+        {
+          "surface": "Custom Agents",
+          "scopes": [
+            "Project"
+          ],
+          "count": 0
+        }
+      ]
+    },
+    "assignmentSummaries": [],
+    "dimensions": [
+      {
+        "id": "task-understanding",
+        "label": "Task Understanding",
+        "score": 62,
+        "summary": "AGENTS.md kısa ve etkili kurallar sunuyor; mimari dokümanlar mevcut. Ancak oturum kanıtı olmadan kuralların uygulandığı doğrulanamıyor.",
+        "findingRefs": []
+      },
+      {
+        "id": "controlled-execution",
+        "label": "Controlled Execution",
+        "score": 55,
+        "summary": "Manifest dosyaları ve betikler mevcut; MCP kullanım kuralları tanımlı. Browser-use Skill'inin çıktı sözleşmesi eksik.",
+        "findingRefs": [
+          "skill-browser-use-no-output-contract"
+        ]
+      },
+      {
+        "id": "change-validation",
+        "label": "Change Validation",
+        "score": 52,
+        "summary": "148 test dosyası ve AGENTS.md'de açık doğrulama kuralları var, ancak hiçbir doğrulama yürütmesi gözlemlenemedi.",
+        "findingRefs": [
+          "session-source-disabled-roots"
+        ]
+      },
+      {
+        "id": "reliable-delivery",
+        "label": "Reliable Delivery",
+        "score": 45,
+        "summary": "2 CI iş akışı mevcut (deploy ve flutter_ci). Kabul kararı veya teslim kanıtı gözlemlenemedi.",
+        "findingRefs": []
+      },
+      {
+        "id": "learning-capture",
+        "label": "Learning Capture",
+        "score": 35,
+        "summary": "Sınırlı oturum kaynağı nedeniyle tekrarlanan iş veya bakım fırsatları ayırt edilemiyor.",
+        "findingRefs": [
+          "learning-capture-evidence-boundary"
+        ]
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "session-source-disabled-roots",
+      "title": "Devre dışı kaynak kökleri davranışsal gözlemi engelliyor",
+      "severity": "Low",
+      "reason": "12 oturumdan 0 kullanılabilir görev episodu oluşturulabildi. Tanılama bayrakları (disabled-source-root, missing-optional-root) oturum kaynak yapılandırmasında eksik kökler olduğunu doğruluyor. Sonuç olarak AGENTS.md'deki doğrulama kurallarının (dart analyze, flutter test) fiilen uygulanıp uygulanmadığı belirlenemiyor.",
+      "expectedOutput": [
+        "Kaynak kökleri etkinleştirilerek en az bir görev episodunun gözlemlenebilir olması sağlanır."
+      ],
+      "expectedArtifact": "Configuration",
+      "aiFixPrompt": "/better-harness fix this issue\n\nResolve the disabled or missing source roots in the session source configuration.\n\n## Context\n\n12 sessions were analyzed but disabled-source-root and missing-optional-root warnings prevented any candidate episode construction.\n\n## Validation\n\n- Run `node scripts/better-harness.mjs session-analysis facts --platform qoder --workspace . --selection all-eligible --since 2026-06-24 --until 2026-07-24 --limit 20 --format json`\n- Verify warningCodes does not contain disabled-source-root or missing-optional-root\n- Verify candidateEpisodes > 0",
+      "dimensionRefs": [
+        "change-validation"
+      ]
+    },
+    {
+      "id": "skill-browser-use-no-output-contract",
+      "title": "Browser-use Skill'i çıktı ve doğrulama sözleşmesine sahip değil",
+      "severity": "Low",
+      "reason": "Lint taraması SKILL.md'nin tetikleyici (trigger=yes) ve prosedür (procedure=yes) içerdiğini ancak çıktı sözleşmesi (output=no) ve doğrulama kapısı (validation=no) tanımlamadığını doğruladı. 250 satırlık dosyada yerel Markdown referansı da bulunmuyor. Bu durum, Skill çağrıcılarının başarıyı doğrulayamaması ve hataların sessiz kalması sonucunu doğurur.",
+      "expectedOutput": [
+        "Skill'in çıktı sözleşmesi ve doğrulama kapısı eklenerek çağrıcıların sonucu doğrulayabilmesi sağlanır."
+      ],
+      "expectedArtifact": "Skill",
+      "aiFixPrompt": "/better-harness fix this issue\n\n.agents/skills/browser-use/SKILL.md dosyasına bir çıktı sözleşmesi ve doğrulama kapısı ekle.\n\n## Hedef\n\nSkill'in mevcut tetikleyici ve prosedür bölümlerini koru. Sonuna şunları ekle:\n1. Beklenen çıktı formatı (başarı/hata durumları)\n2. Doğrulama adımı (browser-use state veya screenshot ile sonuç kontrolü)\n\n## Doğrulama\n\n- `node scripts/better-harness.mjs coding-agent-practices asset-baseline qoder --workspace . --language tr --json` çalıştır\n- lint findings dizisinde skill-long-without-progressive-references bulgunun kalmadığını veya output=yes olduğunu doğrula",
+      "dimensionRefs": [
+        "controlled-execution"
+      ]
+    },
+    {
+      "id": "learning-capture-evidence-boundary",
+      "title": "Öğrenme yakalama incelemesi tekrarlanan işi sınıflandıramıyor",
+      "severity": "Low",
+      "reason": "Sınırlı gözlem penceresi 0 episode kaydı, 0 tekrarlanan aday ve insufficient-episodes tanılama bayrağı üretiyor. Mevcut kanıt sınırı, tekrarlanan prosedürlerin (örneğin AGENTS.md'nin bahsettiği dart analyze → flutter test → Playwright döngüsü) otomatikleştirilebilir olup olmadığını belirlemeye yetmiyor. Kaynak kökü sorunu çözülmeden bu sınıflandırma yapılamaz.",
+      "expectedOutput": [
+        "Tekrarlanan prosedür veya bilgi talebi varsa belirlenir ve mevcut kapsama ile eşleştirilir; aksi halde temiz pencere sonucu kaydedilir."
+      ],
+      "expectedArtifact": "Review",
+      "aiFixPrompt": "/better-harness fix this issue\n\nÖnce session-source-disabled-roots bulgusunu çöz, ardından yeterli oturum verisi toplandıktan sonra tekrar değerlendir.\n\n## Bağlam\n\nBu bulgu, oturum kaynak erişiminin çözülmesine bağlıdır. Yeterli episode verisi toplandıktan sonra:\n1. Tekrarlanan prosedür adaylarını belirle\n2. Mevcut kapsam (AGENTS.md, browser-use Skill, Memories) ile karşılaştır\n3. Kapsanmayan tekrarlanan iş varsa en küçük kalıcı sahip seç\n\n## Doğrulama\n\n- `node scripts/better-harness.mjs session-analysis facts --platform qoder --workspace . --selection all-eligible --since <start> --until <end> --limit 20 --format json` çalıştır\n- candidateEpisodes > 0 ve emittedCandidates > 0 olduğunu doğrula\n- Tekrarlanan aday varsa coverage ladder ile mevcut sahip kontrolü yap",
+      "dimensionRefs": [
+        "learning-capture"
+      ]
+    }
+  ]
+}

@@ -11,12 +11,16 @@ class DailyMissionsCard extends StatelessWidget {
     required this.isKu,
     required this.missions,
     this.loading = false,
+
+    /// Home'da kalabalık olmasın: en fazla 2 açık görev + daha sıkı padding.
+    this.compact = true,
     super.key,
   });
 
   final bool isKu;
   final List<DailyMission> missions;
   final bool loading;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +28,13 @@ class DailyMissionsCard extends StatelessWidget {
     final totalProgress = missions.isEmpty
         ? 0.0
         : completedCount / missions.length;
+    final visible = compact
+        ? missions.where((m) => !m.completed).take(2).toList()
+        : missions;
+    final hiddenDone = compact ? missions.where((m) => m.completed).length : 0;
 
     return AppPanel(
-      // Pirs-inspired: büyük gradient/glass yerine beyaz/context yüzey.
-      padding: const EdgeInsets.all(18),
+      padding: EdgeInsets.all(compact ? 14 : 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -83,11 +90,37 @@ class DailyMissionsCard extends StatelessWidget {
               if (!loading) _MiniProgressRing(progress: totalProgress),
             ],
           ),
-          const SizedBox(height: 16),
-          if (loading)
-            const SkeletonLoader(count: 3, height: 48, borderRadius: 8)
-          else
-            ...missions.map((m) => _MissionTile(mission: m, isKu: isKu)),
+          if (loading) ...[
+            const SizedBox(height: 12),
+            const SkeletonLoader(count: 2, height: 44, borderRadius: 8),
+          ] else if (visible.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            ...visible.map(
+              (m) => _MissionTile(mission: m, isKu: isKu, compact: compact),
+            ),
+            if (hiddenDone > 0)
+              Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Text(
+                  isKu
+                      ? '+$hiddenDone erk temam bûn'
+                      : '+$hiddenDone görev tamam',
+                  style: AppTypography.caption.copyWith(
+                    color: AppTheme.textMutedColor(context),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+          ] else if (missions.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Text(
+              isKu ? 'Hemû erk temam bûn! 🎉' : 'Tüm görevler tamam! 🎉',
+              style: AppTypography.bodyMedium.copyWith(
+                color: AppTheme.correct,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -131,10 +164,15 @@ class _MiniProgressRing extends StatelessWidget {
 }
 
 class _MissionTile extends StatelessWidget {
-  const _MissionTile({required this.mission, required this.isKu});
+  const _MissionTile({
+    required this.mission,
+    required this.isKu,
+    this.compact = false,
+  });
 
   final DailyMission mission;
   final bool isKu;
+  final bool compact;
 
   /// Görev tipini tek tip bayrak yerine anlamlı bir ikonla gösterir.
   static IconData _missionIcon(MissionType type) {
@@ -154,28 +192,19 @@ class _MissionTile extends StatelessWidget {
     final isDone = mission.completed;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(14),
+      margin: EdgeInsets.only(bottom: compact ? 8 : 12),
+      padding: EdgeInsets.all(compact ? 10 : 14),
       decoration: BoxDecoration(
         color: isDone
             ? AppTheme.gold.withValues(alpha: 0.05)
             : AppTheme.surfaceHiColor(context).withValues(alpha: 0.6),
-        borderRadius: BorderRadius.circular(16), // AppRadius.lg
+        borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(
           color: isDone
               ? AppTheme.gold.withValues(alpha: 0.16)
               : AppTheme.borderColor(context).withValues(alpha: 0.4),
           width: 1.2,
         ),
-        boxShadow: isDone
-            ? [
-                BoxShadow(
-                  color: AppTheme.gold.withValues(alpha: 0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ]
-            : null,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,8 +212,8 @@ class _MissionTile extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 28,
-                height: 28,
+                width: compact ? 24 : 28,
+                height: compact ? 24 : 28,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: isDone
@@ -195,17 +224,18 @@ class _MissionTile extends StatelessWidget {
                 child: Icon(
                   isDone ? AppIcons.check : _missionIcon(mission.type),
                   color: isDone ? AppTheme.gold : AppTheme.accent,
-                  size: 14,
+                  size: compact ? 12 : 14,
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   label,
-                  maxLines: 2,
+                  maxLines: compact ? 1 : 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.bodyMedium.copyWith(
                     fontWeight: FontWeight.w700,
+                    fontSize: compact ? 13.5 : null,
                     color: isDone
                         ? AppTheme.gold
                         : AppTheme.textPrimaryColor(context),
@@ -222,7 +252,6 @@ class _MissionTile extends StatelessWidget {
                     vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    // Altın reward chip'i (kompakt: dar kolonlarda taşmamalı).
                     color: AppTheme.gold.withValues(alpha: 0.14),
                     borderRadius: BorderRadius.circular(AppRadius.pill),
                   ),
@@ -230,20 +259,20 @@ class _MissionTile extends StatelessWidget {
                     '+${mission.coinReward}',
                     maxLines: 1,
                     style: AppTypography.caption.copyWith(
-                      color: AppTheme.gold,
+                      color: AppColors.readableAccent(context, AppTheme.gold),
                       fontWeight: FontWeight.w800,
                     ),
                   ),
                 ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: compact ? 8 : 10),
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: Stack(
               children: [
                 Container(
-                  height: 6,
+                  height: compact ? 5 : 6,
                   decoration: BoxDecoration(
                     color: AppTheme.surfaceHiColor(
                       context,
@@ -254,34 +283,28 @@ class _MissionTile extends StatelessWidget {
                 FractionallySizedBox(
                   widthFactor: ratio,
                   child: Container(
-                    height: 6,
+                    height: compact ? 5 : 6,
                     decoration: BoxDecoration(
                       gradient: isDone
                           ? AppTheme.goldGradient
                           : AppTheme.accentGradient,
                       borderRadius: BorderRadius.circular(6),
-                      boxShadow: [
-                        BoxShadow(
-                          color: (isDone ? AppTheme.gold : AppTheme.accent)
-                              .withValues(alpha: 0.3),
-                          blurRadius: 4,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 6),
-          Text(
-            '${mission.progress.clamp(0, mission.target)} / ${mission.target}',
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textMutedColor(context),
-              fontWeight: FontWeight.w600,
+          if (!compact) ...[
+            const SizedBox(height: 6),
+            Text(
+              '${mission.progress.clamp(0, mission.target)} / ${mission.target}',
+              style: AppTypography.caption.copyWith(
+                color: AppTheme.textMutedColor(context),
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );

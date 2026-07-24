@@ -168,7 +168,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     final ku = context.isKu;
 
     return Container(
-      decoration: BoxDecoration(gradient: AppTheme.backgroundGradient(context)),
+      color: AppTheme.bgOf(context),
       child: SafeArea(
         child: Column(
           children: [
@@ -374,23 +374,9 @@ class _LeagueBanner extends StatelessWidget {
         vertical: AppSpacing.sm,
       ),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Color.alphaBlend(color.withValues(alpha: 0.22), surface),
-            Color.alphaBlend(color.withValues(alpha: 0.06), surface),
-          ],
-        ),
+        color: Color.alphaBlend(color.withValues(alpha: 0.10), surface),
         borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: color.withValues(alpha: 0.38), width: 1.1),
-        boxShadow: [
-          BoxShadow(
-            color: color.withValues(alpha: 0.14),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: color.withValues(alpha: 0.32)),
       ),
       child: Row(
         children: [
@@ -472,11 +458,7 @@ class _Header extends StatelessWidget {
             margin: const EdgeInsets.only(right: AppSpacing.sm, top: 2),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(2),
-              gradient: const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [AppTheme.gold, AppTheme.primaryGradientStart],
-              ),
+              color: AppTheme.brand,
             ),
           ),
           Expanded(
@@ -646,49 +628,19 @@ class _Podium extends StatelessWidget {
           AppSpacing.md,
         ),
         decoration: BoxDecoration(
-          // Dalga 5: koyu zeytin gradyan yerine sade, göz yormayan zemin.
-          // Light'ta açık krem; dark'ta mevcut yüzey üzerine ince altın
-          // tonlama. Vurgu yalnız yeşil/altın kenarlıkta.
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: AppTheme.isLight(context)
-                ? [
-                    Color.alphaBlend(
-                      AppTheme.gold.withValues(alpha: 0.10),
-                      AppTheme.lightSurface,
-                    ),
-                    AppTheme.lightSurfaceHi,
-                  ]
-                : [
-                    Color.alphaBlend(
-                      AppTheme.gold.withValues(alpha: 0.08),
-                      AppTheme.surfaceColor(context),
-                    ),
-                    AppTheme.surfaceColor(context),
-                  ],
-          ),
+          // 2026-07-24: madalya gradyanı ve altın gölge kaldırıldı. Podyum
+          // sıradan bir yüzeydir; sıralamayı taşıyan şey rakam ve isim,
+          // parlaklık değil. Altın yalnız 1. sıranın rakamında kalır.
+          color: AppTheme.surfaceColor(context),
           borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(
-            color: AppTheme.gold.withValues(alpha: 0.32),
-            width: 1.2,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: AppTheme.gold.withValues(alpha: 0.10),
-              blurRadius: 14,
-              offset: const Offset(0, 5),
-            ),
-          ],
+          border: Border.all(color: AppTheme.borderColor(context)),
         ),
-        child: Stack(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: slots.map((s) => Expanded(child: s)).toList(),
-            ),
-          ],
-        ),
+        child: slots.length == 1
+            ? Center(child: slots.first)
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [for (final slot in slots) Expanded(child: slot)],
+              ),
       ),
     );
   }
@@ -724,32 +676,49 @@ class _PodiumSlot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _colorFor(AppTheme.isLight(context));
-    final avatarR = isCenter ? 26.0 : 21.0;
+    final avatarR = isCenter ? 28.0 : 22.0;
     final nameFontSz = isCenter ? 13.5 : 12.0;
     final scoreFontSz = isCenter ? 15.5 : 13.5;
+    final pedestalH = isCenter
+        ? 56.0
+        : entry.rank == 2
+        ? 42.0
+        : 34.0;
 
-    // Outer Column uses center alignment so the inner Container shrink-wraps
-    // to intrinsic width (required by the landscape-width test).
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           key: ValueKey('podium-slot-${entry.rank}'),
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(_medalIcon, color: color, size: isCenter ? 28 : 22),
+              Icon(_medalIcon, color: color, size: isCenter ? 30 : 22),
               const SizedBox(height: 6),
-              PlayerAvatar(
-                radius: avatarR,
-                photoUrl: entry.avatarUrl,
-                iconId: entry.avatarIcon,
-                colorHex: entry.avatarColor,
-                frameId: entry.avatarFrame,
-                displayName: entry.displayName,
-                colorOverride: colorOverride,
+              Container(
+                padding: const EdgeInsets.all(2.5),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: color, width: isCenter ? 2.5 : 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: color.withValues(alpha: 0.35),
+                      blurRadius: isCenter ? 14 : 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: PlayerAvatar(
+                  radius: avatarR,
+                  photoUrl: entry.avatarUrl,
+                  iconId: entry.avatarIcon,
+                  colorHex: entry.avatarColor,
+                  frameId: entry.avatarFrame,
+                  displayName: entry.displayName,
+                  colorOverride: colorOverride,
+                ),
               ),
               const SizedBox(height: 6),
               Text(
@@ -773,7 +742,7 @@ class _PodiumSlot extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-              const SizedBox(height: 2),
+              const SizedBox(height: 4),
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
@@ -782,32 +751,58 @@ class _PodiumSlot extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      color.withValues(alpha: 0.2),
-                      color.withValues(alpha: 0.1),
+                      color.withValues(alpha: 0.28),
+                      color.withValues(alpha: 0.12),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: color.withValues(alpha: 0.3)),
+                  border: Border.all(color: color.withValues(alpha: 0.4)),
                 ),
                 child: Text(
                   '${entry.totalScore}',
                   style: TextStyle(
-                    color: color,
+                    color: AppColors.readableAccent(context, color),
                     fontWeight: FontWeight.w800,
                     fontSize: scoreFontSz,
                   ),
                 ),
               ),
-              const SizedBox(height: 8),
-              const SizedBox(height: 4),
-              Text(
-                '#${entry.rank}',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: color.withValues(alpha: 0.8),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 13,
+              const SizedBox(height: 10),
+              // Klasik podyum kaidesi (sabit genişlik — tek kazanan landscape'te
+              // tüm satırı şişirmesin).
+              Container(
+                width: isCenter ? 88 : 72,
+                height: pedestalH,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      color.withValues(alpha: 0.55),
+                      color.withValues(alpha: 0.28),
+                    ],
+                  ),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(10),
+                  ),
+                  border: Border.all(color: color.withValues(alpha: 0.45)),
                 ),
-                textAlign: TextAlign.center,
+                child: Text(
+                  '#${entry.rank}',
+                  style: AppTypography.heading2.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: isCenter ? 20 : 16,
+                    shadows: const [
+                      Shadow(
+                        color: Color(0x66000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
@@ -849,17 +844,24 @@ class _RankRow extends StatelessWidget {
         horizontal: AppSpacing.md,
         vertical: AppSpacing.sm,
       ),
-      // Pirs hizası: düz satır — kart kenarlığı/gölgesi yok, yalnız hafif
-      // zemin tonu ve rütbe daire rozeti taşır kimliği.
       decoration: BoxDecoration(
         color: highlight
-            ? AppTheme.accent.withValues(alpha: 0.10)
-            : entry.rank <= 10
-            ? AppTheme.gold.withValues(alpha: 0.06)
+            ? AppTheme.brand.withValues(alpha: 0.10)
             : AppTheme.surfaceColor(context),
         borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
-        border: highlight
-            ? Border.all(color: AppTheme.accent.withValues(alpha: 0.55))
+        border: Border.all(
+          color: highlight
+              ? AppTheme.brand.withValues(alpha: 0.45)
+              : AppTheme.borderColor(context).withValues(alpha: 0.55),
+        ),
+        boxShadow: highlight
+            ? [
+                BoxShadow(
+                  color: AppTheme.brand.withValues(alpha: 0.12),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ]
             : null,
       ),
       child: Row(
@@ -869,8 +871,21 @@ class _RankRow extends StatelessWidget {
             height: 32,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
+              gradient: entry.rank <= 10
+                  ? LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        AppTheme.gold,
+                        Color.alphaBlend(
+                          Colors.black.withValues(alpha: 0.12),
+                          AppTheme.gold,
+                        ),
+                      ],
+                    )
+                  : null,
               color: entry.rank <= 10
-                  ? AppTheme.gold
+                  ? null
                   : AppTheme.textMutedColor(context).withValues(alpha: 0.16),
             ),
             alignment: Alignment.center,
@@ -880,7 +895,7 @@ class _RankRow extends StatelessWidget {
                 color: entry.rank <= 10
                     ? Colors.white
                     : AppTheme.textSubColor(context),
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
                 fontSize: 13,
               ),
             ),

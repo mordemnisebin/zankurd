@@ -369,54 +369,58 @@ class _AppShellState extends State<AppShell> {
   }
 
   Widget _buildBottomNav(BuildContext context, bool ku) {
+    final surface = AppTheme.surfaceColor(context);
+    final cta = AppTheme.primaryCtaColor(context);
     return NavigationBarTheme(
       data: NavigationBarThemeData(
-        height: 68,
-        backgroundColor: AppTheme.surfaceColor(context),
+        height: 70,
+        backgroundColor: surface,
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.black.withValues(alpha: 0.10),
-        elevation: 12,
+        elevation: 0,
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
-          final color = selected
-              ? AppTheme.brand
-              : AppTheme.textMutedColor(context);
+          final color = selected ? cta : AppTheme.textMutedColor(context);
           return TextStyle(
             fontSize: 11,
-            fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-            letterSpacing: 0.2,
+            fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
+            letterSpacing: 0.15,
             color: color,
           );
         }),
         iconTheme: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
-          final color = selected
-              ? AppTheme.brand
-              : AppTheme.textMutedColor(context);
-          return IconThemeData(size: selected ? 26 : 24, color: color);
+          final color = selected ? cta : AppTheme.textMutedColor(context);
+          return IconThemeData(size: selected ? 26 : 23, color: color);
         }),
-        indicatorColor: AppTheme.brand.withValues(alpha: 0.22),
+        indicatorColor: cta.withValues(alpha: 0.18),
         indicatorShape: const StadiumBorder(),
-        overlayColor: WidgetStateProperty.all(
-          AppTheme.brand.withValues(alpha: 0.10),
-        ),
+        overlayColor: WidgetStateProperty.all(cta.withValues(alpha: 0.08)),
       ),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: AppTheme.surfaceColor(context),
+          color: surface,
+          border: Border(
+            top: BorderSide(
+              color: AppTheme.borderColor(context).withValues(alpha: 0.55),
+            ),
+          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
-              offset: const Offset(0, -4),
-              blurRadius: 16,
+              color: Colors.black.withValues(alpha: 0.06),
+              offset: const Offset(0, -6),
+              blurRadius: 18,
             ),
           ],
         ),
         child: NavigationBar(
           selectedIndex: _tab,
           onDestinationSelected: _selectTab,
+          // Sekme hedefleri dile bağımlı metinle değil, sabit anahtarla
+          // bulunur — etiketler ("Yarış") ekran içeriğinde de geçebiliyor.
           destinations: [
             NavigationDestination(
+              key: const ValueKey('nav-learn'),
               icon: const Icon(AppIcons.house),
               selectedIcon: KeyedSubtree(
                 key: _homeNavKey,
@@ -425,6 +429,7 @@ class _AppShellState extends State<AppShell> {
               label: ku ? 'Fêr Bibe' : 'Öğren',
             ),
             NavigationDestination(
+              key: const ValueKey('nav-play'),
               icon: KeyedSubtree(
                 key: _playNavKey,
                 child: const Icon(AppIcons.gamepad),
@@ -433,11 +438,13 @@ class _AppShellState extends State<AppShell> {
               label: ku ? 'Pêşbazî' : 'Yarış',
             ),
             NavigationDestination(
+              key: const ValueKey('nav-leaderboard'),
               icon: const Icon(AppIcons.trophy),
               selectedIcon: const Icon(AppIcons.trophy),
               label: ku ? 'Rêz' : 'Liderlik',
             ),
             NavigationDestination(
+              key: const ValueKey('nav-profile'),
               icon: KeyedSubtree(
                 key: _profileNavKey,
                 child: const Icon(AppIcons.user),

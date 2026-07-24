@@ -384,7 +384,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       ),
                       decoration: BoxDecoration(
                         color: AppTheme.gold,
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(AppRadius.md),
                         boxShadow: [
                           BoxShadow(
                             color: AppTheme.gold.withValues(alpha: 0.3),
@@ -413,7 +413,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           backgroundColor: AppTheme.gold,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
                           ),
                           elevation: 0,
                         ),
@@ -495,21 +495,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     AppTheme.wrongDeep,
                   ],
                 ))
-        : LinearGradient(
+        // Solo sonuç vitrini kimlik anıdır, eylem değil: Kesk (marka yeşili)
+        // kullanılır. Turuncu yalnız "sonraki adım" butonunda kalır — böylece
+        // ekranda göz nereye gideceğini şaşırmaz. Ayrıca eski turuncu hero,
+        // açık temada beyaz metni okutabilmek için siyah perde harcıyordu.
+        : const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: AppTheme.isLight(context)
-                ? [
-                    Color.alphaBlend(
-                      Colors.black.withValues(alpha: 0.12),
-                      AppTheme.brand,
-                    ),
-                    Color.alphaBlend(
-                      Colors.black.withValues(alpha: 0.18),
-                      AppTheme.brandDeep,
-                    ),
-                  ]
-                : [AppTheme.brand, AppTheme.brandDeep],
+            colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
           );
 
     final borderColor = is1v1
@@ -564,9 +557,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         title: Text(context.s('Encam', 'Sonuç')),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        color: AppTheme.bgOf(context),
         child: SafeArea(
           child: Stack(
             children: [
@@ -896,48 +887,62 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   Row(
                     children: [
                       Expanded(
-                        child: SizedBox(
-                          height: 52,
-                          child: FilledButton.icon(
-                            key: const ValueKey('result-play-again-button'),
-                            style: FilledButton.styleFrom(
-                              backgroundColor: AppTheme.brand,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              elevation: 2,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(AppRadius.md),
+                            boxShadow: AppTheme.glowShadow(
+                              AppTheme.primaryCtaColor(context),
+                              intensity: 0.28,
                             ),
-                            onPressed: () {
-                              if (room.id != null) {
-                                Navigator.of(context).pop();
-                              } else {
-                                Navigator.of(
+                          ),
+                          child: SizedBox(
+                            height: 54,
+                            child: FilledButton.icon(
+                              key: const ValueKey('result-play-again-button'),
+                              style: FilledButton.styleFrom(
+                                backgroundColor: AppTheme.primaryCtaColor(
                                   context,
-                                ).popUntil((route) => route.isFirst);
-                              }
-                            },
-                            icon: const Icon(
-                              AppIcons.arrowRotateLeft,
-                              size: 20,
-                            ),
-                            label: Text(
-                              context.s('Dîsa bilîze', 'Tekrar oyna'),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 15,
+                                ),
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.md,
+                                  ),
+                                ),
+                                elevation: 0,
+                              ),
+                              onPressed: () {
+                                if (room.id != null) {
+                                  Navigator.of(context).pop();
+                                } else {
+                                  Navigator.of(
+                                    context,
+                                  ).popUntil((route) => route.isFirst);
+                                }
+                              },
+                              icon: const Icon(
+                                AppIcons.arrowRotateLeft,
+                                size: 20,
+                              ),
+                              label: Text(
+                                context.s('Dîsa bilîze', 'Tekrar oyna'),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      IconButton(
+                      const SizedBox(width: 10),
+                      _ResultSideAction(
                         key: const ValueKey('result-review-button'),
-                        tooltip: context.s('Vekolîn', 'İncele'),
-                        onPressed: answerRecords.isEmpty
+                        icon: AppIcons.squareCheck,
+                        label: context.s('Vekolîn', 'İncele'),
+                        onTap: answerRecords.isEmpty
                             ? null
                             : () => Navigator.of(context).push(
                                 AppRoute.to(
@@ -947,15 +952,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 ),
                               ),
-                        icon: const Icon(AppIcons.squareCheck),
                       ),
                       if (context
                           .watch<ChildSafetyProvider>()
                           .allowExternalShare)
-                        IconButton(
+                        _ResultSideAction(
                           key: const ValueKey('result-share-button'),
-                          tooltip: context.s('Parve bike', 'Paylaş'),
-                          onPressed: () => ResultSharer.share(
+                          icon: AppIcons.shareNodes,
+                          label: context.s('Parve bike', 'Paylaş'),
+                          onTap: () => ResultSharer.share(
                             context,
                             isKu: context.isKu,
                             score: score,
@@ -964,14 +969,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             bestStreak: bestStreak,
                             category: room.category,
                           ),
-                          icon: const Icon(AppIcons.shareNodes),
                         ),
                     ],
                   ),
-                  const SizedBox(height: 12),
-                  // Subtle secondary links
+                  const SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(top: 4),
+                    padding: const EdgeInsets.only(top: 2),
                     child: Wrap(
                       alignment: WrapAlignment.center,
                       crossAxisAlignment: WrapCrossAlignment.center,
@@ -982,8 +985,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           style: TextButton.styleFrom(
                             visualDensity: VisualDensity.compact,
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
+                              horizontal: 10,
+                              vertical: 6,
                             ),
                           ),
                           onPressed: () => Navigator.of(
@@ -992,9 +995,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           child: Text(
                             context.s('Sereke', 'Ana Sayfa'),
                             style: TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.textMutedColor(context),
-                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                              color: AppTheme.textSubColor(context),
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
@@ -1310,7 +1313,7 @@ class _MasteryPromotions extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: entry.value.badgeColor.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
                     ),
                     child: Icon(
                       entry.value.icon,
@@ -1408,7 +1411,7 @@ class _RaceStandingRow extends StatelessWidget {
         color: isUser
             ? AppTheme.accent.withValues(alpha: 0.12)
             : AppTheme.bgOf(context).withValues(alpha: 0.35),
-        borderRadius: BorderRadius.circular(16), // AppRadius.lg
+        borderRadius: BorderRadius.circular(AppRadius.md),
         border: Border.all(
           color: isUser
               ? AppTheme.accent.withValues(alpha: 0.45)
@@ -1472,6 +1475,63 @@ class _RaceStandingRow extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Sonuç yan eylemi — ikon + kısa etiket, primary CTA'yı boğmaz.
+class _ResultSideAction extends StatelessWidget {
+  const _ResultSideAction({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    super.key,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = onTap != null;
+    final color = enabled
+        ? AppTheme.textPrimaryColor(context)
+        : AppTheme.textMutedColor(context);
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        child: Ink(
+          width: 64,
+          height: 54,
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceHiColor(context),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
+            border: Border.all(
+              color: AppTheme.borderColor(context).withValues(alpha: 0.7),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 20, color: color),
+              const SizedBox(height: 2),
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTypography.caption.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 10,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
-import 'package:zankurd_mobile/src/screens/home/room_actions.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
@@ -13,31 +12,6 @@ import 'support/widget_test_helpers.dart';
 void main() {
   late MockZanKurdRepository repository;
   setUp(() => repository = freshMockRepository());
-
-  // 2026-07-23 canlı UX denetimi: "Oda Kur" / "Kodla Katıl" butonları
-  // ekran okuyucuda çift okunuyordu — dıştaki Semantics(label:) ile
-  // içteki Text(label) birleşiyordu (M28 devamı).
-  testWidgets('oda aksiyon butonları ekran okuyucuda çift okunmaz', (
-    tester,
-  ) async {
-    final handle = tester.ensureSemantics();
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: RoomActions(
-            loading: false,
-            isKu: false,
-            onCreateRoom: () {},
-            onJoinRoom: () {},
-          ),
-        ),
-      ),
-    );
-
-    expect(find.bySemanticsLabel('Oda Kur'), findsOneWidget);
-    expect(find.bySemanticsLabel('Kodla Katıl'), findsOneWidget);
-    handle.dispose();
-  });
 
   testWidgets('creates a room and opens the quiz flow', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -54,7 +28,7 @@ void main() {
 
     expect(find.byType(HomeScreen), findsOneWidget);
 
-    await tester.tap(find.text('Yarış'));
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
     expect(find.byType(PlayHubScreen), findsOneWidget);
 
@@ -95,7 +69,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Günlük yarışma modu artık yalnızca Bilîze (Oyna) sekmesinde.
-    await tester.tap(find.text('Yarış'));
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.text('Günün Yarışması'));
@@ -126,7 +100,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Yarış'));
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
     // Çark bir ödüldür: yarışma grid'inden çıkarıldı, mağaza kartından erişilir.
@@ -149,7 +123,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Pêşbazî'));
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
     expect(find.text('Kodê tevlî bibe'), findsOneWidget);
@@ -172,7 +146,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Yarış'));
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
     await tester.ensureVisible(
@@ -204,7 +178,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Yarış'));
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
     await tester.ensureVisible(

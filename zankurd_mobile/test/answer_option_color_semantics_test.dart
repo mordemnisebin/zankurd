@@ -6,6 +6,12 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 /// kırmızı, mavi, yeşil, kehribar renkteydi. Quiz bağlamında kırmızı
 /// "yanlış", yeşil "doğru" demektir; cevaplamadan önce bir şıkkı yeşil,
 /// birini kırmızı göstermek sahte ipucu veriyordu.
+///
+/// 2026-07-24 canlı denetim (devam): renkler ayrıştırıldı ama sorun
+/// sürüyordu — dört doygun ton (mavi/mor/camgöbeği/kehribar) oyuncuya
+/// şıklar arasında bir *fark* olduğunu ima ediyordu. Oysa şık harfi yalnız
+/// bir etikettir. Artık dördü de tek nötr tondur; renk yalnız cevaptan
+/// sonra, doğru/yanlış anında konuşur.
 double _hue(Color c) => HSLColor.fromColor(c).hue;
 
 void main() {
@@ -28,16 +34,21 @@ void main() {
     }
   });
 
-  test('dört şık rengi birbirinden ayırt edilebilir', () {
-    final hues = AppTheme.answerOptionColors.map(_hue).toList();
-    for (var i = 0; i < hues.length; i++) {
-      for (var j = i + 1; j < hues.length; j++) {
-        expect(
-          (hues[i] - hues[j]).abs(),
-          greaterThan(20),
-          reason: '${i + 1}. ve ${j + 1}. şık renkleri birbirine çok yakın',
-        );
-      }
+  test('şık harfleri renkle ayrışmaz — hepsi tek nötr ton', () {
+    final unique = AppTheme.answerOptionColors.toSet();
+    expect(
+      unique,
+      hasLength(1),
+      reason:
+          'Şık harflerine farklı renkler verildi; renk burada anlam '
+          'taşımıyor ve sahte hiyerarşi yaratıyor.',
+    );
+  });
+
+  test('nötr ton düşük doygunluktadır (aksanlarla yarışmaz)', () {
+    for (final color in AppTheme.answerOptionColors) {
+      final saturation = HSLColor.fromColor(color).saturation;
+      expect(saturation, lessThan(0.35), reason: '$color çok doygun');
     }
   });
 

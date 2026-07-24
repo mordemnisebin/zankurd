@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "summary": {
+    "evidenceMode": "session-limited",
+    "evidenceBoundary": {
+      "manifest": {
+        "schemaVersion": 2,
+        "sourceFingerprint": "75cebb1a53875ab1",
+        "adapterVersion": "qoder-task-loop-source-v2",
+        "platform": "qoder",
+        "selection": {
+          "strategy": "all-eligible",
+          "eligibleCount": 12,
+          "analyzedCount": 12,
+          "confidence": "High"
+        }
+      },
+      "episodeCoverage": {
+        "episodeCount": 0,
+        "editedEpisodeCount": 0,
+        "closedEpisodeCount": 0,
+        "recoveredEpisodeCount": 0
+      },
+      "deliveryEvidenceLevels": [],
+      "sourceGaps": []
+    },
+    "semanticFacets": {
+      "schemaVersion": 1,
+      "status": "supplementary",
+      "entries": [
+        {
+          "id": "session-insight:source-coverage",
+          "kind": "redacted-summary",
+          "episodeRef": null,
+          "status": "candidate",
+          "labels": [
+            "source-coverage",
+            "High"
+          ],
+          "summary": "Analyzed 12 of 12 sessions; 1/5 enabled source roots exist. Use this as the current workspace evidence boundary for final insight cards.",
+          "evidenceRefs": [],
+          "modelVersion": "session-insights-v1"
+        },
+        {
+          "id": "session-insight:validation-behavior",
+          "kind": "redacted-summary",
+          "episodeRef": null,
+          "status": "candidate",
+          "labels": [
+            "validation-behavior",
+            "Low"
+          ],
+          "summary": "No validation command category was observed in the analyzed session sample. Inspect more sessions or add explicit validation guidance before claiming validation-after-edit behavior.",
+          "evidenceRefs": [],
+          "modelVersion": "session-insights-v1"
+        },
+        {
+          "id": "session-insight:post-edit-validation",
+          "kind": "rework-correction",
+          "episodeRef": null,
+          "status": "candidate",
+          "labels": [
+            "post-edit-validation",
+            "Low"
+          ],
+          "summary": "No edit event was observed in the analyzed sample. Inspect more sessions before making claims about edit or validation habits.",
+          "evidenceRefs": [],
+          "modelVersion": "session-insights-v1"
+        },
+        {
+          "id": "session-insight:execution-friction",
+          "kind": "friction-taxonomy",
+          "episodeRef": null,
+          "status": "candidate",
+          "labels": [
+            "execution-friction",
+            "Low"
+          ],
+          "summary": "No strong execution friction signal in the analyzed sample. Keep friction claims narrow unless additional failed commands, rejected actions, or warnings are inspected.",
+          "evidenceRefs": [],
+          "modelVersion": "session-insights-v1"
+        },
+        {
+          "id": "session-insight:session-complexity",
+          "kind": "redacted-summary",
+          "episodeRef": null,
+          "status": "candidate",
+          "labels": [
+            "session-complexity",
+            "High"
+          ],
+          "summary": "Observed 2 active long session(s); longest active estimate: 1h 57m. Review task family, outcome, and friction before deciding whether this duration reflects a problem or any decomposition, tool, delegation, or model change is needed.",
+          "evidenceRefs": [
+            {
+              "kind": "execution-transcript",
+              "id": "session-insight-5-1",
+              "type": "progress",
+              "line": 1
+            }
+          ],
+          "modelVersion": "session-insights-v1"
+        },
+        {
+          "id": "session-insight:session-usage-efficiency",
+          "kind": "redacted-summary",
+          "episodeRef": null,
+          "status": "candidate",
+          "labels": [
+            "session-usage-efficiency",
+            "High"
+          ],
+          "summary": "The analysis covered 12 sessions: 2 met the active-long threshold, with the longest estimated at 117 minutes. This activity describes effort only; token or credit evidence is incomplete and does not establish model preference, quality, or savings.",
+          "evidenceRefs": [
+            {
+              "kind": "execution-transcript",
+              "id": "session-insight-6-1",
+              "type": "progress",
+              "line": 1
+            }
+          ],
+          "modelVersion": "session-insights-v1"
+        }
+      ]
+    },
+    "usageActivity": {
+      "schemaVersion": 2,
+      "dateBasis": "UTC",
+      "measurementBasis": "session-starts-active-estimate-model-active-session-days-skill-invocations-and-loads",
+      "truncated": false,
+      "dates": [
+        "2026-07-23",
+        "2026-07-24"
+      ],
+      "sessions": {
+        "total": 12,
+        "starts": [
+          4,
+          8
+        ],
+        "activeMinutes": [
+          87.7,
+          121.7
+        ]
+      },
+      "models": [],
+      "skills": []
+    },
+    "usageEfficiency": {
+      "schemaVersion": 2,
+      "selection": {
+        "strategy": "all-eligible",
+        "eligibleSessionCount": 12,
+        "analyzedSessionCount": 12,
+        "complete": true
+      },
+      "roles": {
+        "userThreadCandidateCount": 9,
+        "childAgentCandidateCount": 3
+      },
+      "longSessions": {
+        "activeCount": 2,
+        "wallOnlyCount": 0,
+        "longestActiveMinutes": 117.3,
+        "activeRatio": 0.1667,
+        "estimate": {
+          "method": "capped-event-gap",
+          "activeThresholdMinutes": 45,
+          "gapCapMinutes": 5,
+          "idleGapMinutes": 30
+        },
+        "samples": [
+          {
+            "alias": "S1",
+            "role": "child-agent-candidate",
+            "activeMinutes": 117.3,
+            "failureCount": 0
+          },
+          {
+            "alias": "S2",
+            "role": "child-agent-candidate",
+            "activeMinutes": 82.1,
+            "failureCount": 0
+          }
+        ]
+      },
+      "accounting": {
+        "mode": "effort-proxy",
+        "responseCount": 0,
+        "modelAttributedResponseCount": 0,
+        "unattributedResponseCount": 0,
+        "usageFieldObservedCount": 0,
+        "nonZeroUsageCount": 0,
+        "exactCreditsAvailable": false,
+        "pricingVersion": null
+      },
+      "modelUsage": [],
+      "outcomeReview": {
+        "status": "required",
+        "reviewedCandidateCount": 0,
+        "reviewedActiveLongCount": 0,
+        "comparableModelOutcomeEvidence": false,
+        "recommendation": "controlled-a-b-required"
+      },
+      "reviewLead": {
+        "id": "session-usage-outcome-review-gap",
+        "title": "2 long-session candidates still need outcome review",
+        "reason": "2 of 12 analyzed sessions (16.7%) crossed the estimated active-time threshold; the longest estimate was 117.3 minutes and 0 have reviewed outcomes. 0 additional long spans may be idle or resumed work. This is an investigation lead, not a confirmed efficiency, decomposition, tool, or model problem.",
+        "expectedOutcome": "Each displayed candidate is classified by task family, outcome, and friction so the report can decide whether any real improvement is needed.",
+        "aiFixPrompt": "/better-harness review these sessions\n\n2 long-session candidates still need outcome review\n\n## Evidence to inspect\n\n- S1: child-agent candidate, about 117.3 estimated active minutes, 0 failure event(s)\n- S2: child-agent candidate, about 82.1 estimated active minutes, 0 failure event(s)\n\n## First step\n\nCreate <run> in the OS temporary directory, then run from the project root:\n\n```bash\nnode scripts/session-analysis.mjs insights --platform qoder --workspace . --selection all-eligible --limit 1000 --format json --output <run>/insights.json\nnode scripts/session-analysis/usage-review-packet.mjs --source <run>/insights.json --workspace . --limit 8 --output <run>/.review-packet.json\n```\n\nThe private review packet resolves candidates locally. Write taskFamily, outcome, friction, confidence, and evidenceReason only for S1, S2. Finish diagnosis before editing product code or creating a Memory, Skill, or Hook.\n\n## What we saw\n\n2 of 12 analyzed sessions (16.7%) crossed the estimated active-time threshold; the longest estimate was 117.3 minutes and 0 have reviewed outcomes. 0 additional long spans may be idle or resumed work. This is an investigation lead, not a confirmed efficiency, decomposition, tool, or model problem.\n\n## Why review it\n\nWithout outcome review, complex work, tool friction, idle/resume noise, and a normal long task remain indistinguishable.\n\n## Expected result\n\nEach displayed candidate is classified by task family, outcome, and friction so the report can decide whether any real improvement is needed.\n\n## Scope\n\nCreate only a privacy-safe session-efficiency review and reader report. Do not edit product code or treat wall span as active cost. Durable reports keep aliases only; do not copy the private review packet into them. This is the complete 2/2 candidate view; conclusions still require semantic review.\n\n## Done when\n\n<run>/.review.json has one valid row for each of S1, S2; semantic review writes <run>/insights.reviewed.json; and <run>/report.md validates against the reviewed source. If review confirms no problem, do not create an improvement.\n\n## Validation\n\n- Run `node scripts/session-analysis/usage-semantic-review.mjs --source <run>/insights.json --packet <run>/.review-packet.json --review <run>/.review.json --output <run>/insights.reviewed.json`\n- Run `node scripts/session-analysis/validate-usage-report.mjs --source <run>/insights.reviewed.json --report <run>/report.md`; it must return `ok: true`\n- Confirm `outcomeReview.reviewedActiveLongCount` in the reviewed source equals the number of reviewed displayed aliases; delete the two private review files after validation",
+        "sampleCoverage": {
+          "shown": 2,
+          "total": 2,
+          "complete": true
+        }
+      }
+    },
+    "learningCapture": {
+      "schemaVersion": 1,
+      "state": "N/A",
+      "summary": "N/A — requires two comparable observation windows and an intervention comparison.",
+      "interventions": []
+    }
+  },
+  "dimensions": [
+    {
+      "id": "task-understanding"
+    },
+    {
+      "id": "controlled-execution"
+    },
+    {
+      "id": "change-validation"
+    },
+    {
+      "id": "reliable-delivery"
+    },
+    {
+      "id": "learning-capture"
+    }
+  ],
+  "findings": [
+    {
+      "id": "session-source-disabled-roots"
+    },
+    {
+      "id": "skill-browser-use-no-output-contract"
+    },
+    {
+      "id": "learning-capture-evidence-boundary"
+    }
+  ]
+}

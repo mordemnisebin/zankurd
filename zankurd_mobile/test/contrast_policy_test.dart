@@ -33,13 +33,21 @@ Color _flatten(Color foreground, Color background) {
 
 void main() {
   group('renkli zemin üzerinde okunabilirlik', () {
-    test('turuncu hero üzerinde beyaz metin tek başına yetmez', () {
-      // Düzeltmenin gerekçesi: hero gradyanında beyaz metin AA'yı geçmiyor,
-      // bu yüzden rozet/pill'lere koyu yarı saydam zemin eklendi.
-      expect(
-        contrastRatio(Colors.white, AppTheme.primaryGradientStart),
-        lessThan(4.5),
-      );
+    test('eylem turuncusu beyaz metinle tek başına AA geçer', () {
+      // 2026-07-24: eski #F5931E beyazla yalnız ~2.2:1 veriyordu ve her CTA
+      // karartma perdesine muhtaçtı. Tîrêj (#C2560E) perdesiz geçer — palet
+      // düzeltildiği için yama gereksizleşti. Gradyanın her iki ucu da geçmeli.
+      for (final background in [
+        AppTheme.brand,
+        AppTheme.brandDeep,
+        AppTheme.primaryGradientStart,
+      ]) {
+        expect(
+          contrastRatio(Colors.white, background),
+          greaterThanOrEqualTo(4.5),
+          reason: 'zemin $background',
+        );
+      }
     });
 
     test('heroScrim eklenince beyaz metin AA eşiğini geçer', () {

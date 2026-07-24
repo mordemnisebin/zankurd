@@ -1,0 +1,4657 @@
+/// İkinci editoryal dalga (2026-07-24).
+///
+/// Kaynak denetiminde bulunan üç sorunu gidermek için yazıldı:
+///  1. Otomatik havuzun 320 sorusunda gövde Kurmancî, şıklar Türkçeydi —
+///     oyuncu sorunun yarısını anlamıyordu. Buradaki her soruda gövde ve
+///     şıklar aynı dildedir; istisna yalnız açıkça çeviri alıştırmalarıdır.
+///  2. Offline havuzun hiçbir sorusunda Kurmancî açıklama yoktu. Burada her
+///     sorunun `explanationKu` ve `explanationTr` alanı doludur.
+///  3. Offline havuzda kaynak/onay meta verisi yoktu. Buradaki her soru
+///     `approved` ve kaynaklıdır.
+///
+/// Sorular konu anahtar kelimeleriyle alt kategorilere de doğru düşecek
+/// şekilde yazılmıştır (bkz. `SubcategoryConfig`).
+library;
+
+import '../models/question_metadata.dart';
+import '../models/quiz_question.dart';
+
+const _rezimanSource = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Rêzimana kurdî — Bedirxan & Lescot',
+  sourceReference:
+      'Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)',
+  qualityVersion: 2,
+);
+
+const _ferhengSource = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Ferhenga kurdî',
+  sourceReference:
+      'Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)',
+  qualityVersion: 2,
+);
+
+const _diroknasSource = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Dîroka kurdan — çavkaniyên akademîk',
+  sourceReference:
+      'The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)',
+  qualityVersion: 2,
+);
+
+const _wejeSource = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Wêjeya kurdî — antolojî û berhem',
+  sourceReference:
+      'Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan',
+  qualityVersion: 2,
+);
+
+const _cografyaSource = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Erdnîgariya herêmê',
+  sourceReference:
+      'Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)',
+  qualityVersion: 2,
+);
+
+const _muzikSource = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Muzîk û dengbêjiya kurdî',
+  sourceReference:
+      'Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)',
+  qualityVersion: 2,
+);
+
+const _folklorSource = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Folklor û kevneşopiya kurdî',
+  sourceReference:
+      'Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz',
+  qualityVersion: 2,
+);
+
+const _siyasetSource = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Siyaseta herêmê — çavkaniyên belge û akademîk',
+  sourceReference:
+      'Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/',
+  qualityVersion: 2,
+);
+
+const _paradigmaSource = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Paradîgmaya netewa demokratîk — çavkanî û şirove',
+  sourceReference:
+      'Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women\'s Freedom Movement; https://kongra-star.org/eng/about/',
+  qualityVersion: 2,
+);
+
+/// Editoryal ikinci dalga soru bankası.
+const editorialQuestionBank = <QuizQuestion>[
+  QuizQuestion(
+    id: 'edit_ziman_0001',
+    category: 'Ziman',
+    prompt: 'Alfabeya Kurdî ya latînî ji çend tîpan pêk tê?',
+    answers: ['31', '29', '26', '34'],
+    correctAnswer: '31',
+    explanation: 'Kürtçe Latin alfabesi 31 harften oluşur: 8 sesli, 23 sessiz.',
+    explanationKu:
+        'Alfabeya kurdî ya latînî 31 tîpan dihewîne: 8 dengdêr û 23 dengdar.',
+    explanationTr:
+        'Kürtçe Latin alfabesi 31 harften oluşur: 8 sesli, 23 sessiz.',
+    difficulty: 1,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0002',
+    category: 'Ziman',
+    prompt: 'Alfabeya latînî ya Kurmancî ji aliyê kê ve hat sîstematîzekirin?',
+    answers: [
+      'Celadet Alî Bedirxan',
+      'Ehmedê Xanî',
+      'Melayê Cizîrî',
+      'Feqiyê Teyran',
+    ],
+    correctAnswer: 'Celadet Alî Bedirxan',
+    explanation:
+        'Celadet Ali Bedirhan 1930\'larda Kürtçe Latin alfabesini sistemleştirdi ve Hawar dergisinde yaydı.',
+    explanationKu:
+        'Celadet Alî Bedirxan di salên 1930î de alfabeya latînî ya kurdî sîstematîze kir û di kovara Hawarê de belav kir.',
+    explanationTr:
+        'Celadet Ali Bedirhan 1930\'larda Kürtçe Latin alfabesini sistemleştirdi ve Hawar dergisinde yaydı.',
+    difficulty: 2,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0003',
+    category: 'Ziman',
+    prompt: 'Di alfabeya kurdî ya latînî de çend dengdêr (vowel) hene?',
+    answers: ['8', '5', '6', '10'],
+    correctAnswer: '8',
+    explanation: 'Kürtçedeki sesliler şunlardır: a, e, ê, i, î, o, u, û.',
+    explanationKu: 'Dengdêrên kurdî ev in: a, e, ê, i, î, o, u, û.',
+    explanationTr: 'Kürtçedeki sesliler şunlardır: a, e, ê, i, î, o, u, û.',
+    difficulty: 1,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0004',
+    category: 'Ziman',
+    prompt:
+        'Di Kurmancî de girêdana navdêr bi rengdêr an bi navdêreke din re bi çi tê çêkirin?',
+    answers: ['Veqetandek (izafe)', 'Daçek', 'Cînav', 'Bêjeya pirsê'],
+    correctAnswer: 'Veqetandek (izafe)',
+    explanation:
+        'İzafe (veqetandek) ismi sıfata veya başka bir isme bağlar: "kitêba min", "mala mezin".',
+    explanationKu:
+        'Veqetandek (izafe) navdêrê bi rengdêr an navdêreke din ve girê dide: "kitêb-a min", "mal-a mezin".',
+    explanationTr:
+        'İzafe (veqetandek) ismi sıfata veya başka bir isme bağlar: "kitêba min", "mala mezin".',
+    difficulty: 3,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0005',
+    category: 'Ziman',
+    prompt: 'Di Kurmancî de peyva "jin" ji kîjan zayendê ye?',
+    answers: ['Mê', 'Nêr', 'Bêzayend', 'Herdu jî'],
+    correctAnswer: 'Mê',
+    explanation:
+        'Kurmancî\'de her isim bir cinsiyet alır; "jin" dişildir, bu yüzden izafesi "-a" olur: "jina baş".',
+    explanationKu:
+        'Di Kurmancî de her navdêr zayendek digire; "jin" mê ye, loma veqetandeka wê "-a" ye: "jina baş".',
+    explanationTr:
+        'Kurmancî\'de her isim bir cinsiyet alır; "jin" dişildir, bu yüzden izafesi "-a" olur: "jina baş".',
+    difficulty: 3,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0006',
+    category: 'Ziman',
+    prompt:
+        'Nîşana pirjimariyê ya rewşa tewandî (oblique) di Kurmancî de kîjan e?',
+    answers: ['-an', '-ek', '-ê', '-ne'],
+    correctAnswer: '-an',
+    explanation:
+        'Bükünlü (oblique) durumda çoğul isimler "-an" alır: "Ez pirtûkan dixwînim".',
+    explanationKu:
+        'Di rewşa tewandî de navdêrên pirjimar "-an" digirin: "Ez pirtûk-an dixwînim".',
+    explanationTr:
+        'Bükünlü (oblique) durumda çoğul isimler "-an" alır: "Ez pirtûkan dixwînim".',
+    difficulty: 3,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0007',
+    category: 'Ziman',
+    prompt:
+        'Lêkera "kirin" di dema niha de ji bo kesê sêyemîn ê yekjimar çawa tê kişandin?',
+    answers: ['Ew dike', 'Ew kir', 'Ew bike', 'Ew kiriye'],
+    correctAnswer: 'Ew dike',
+    explanation:
+        'Şimdiki zaman "di-" ön ekiyle kurulur: di- + k(ir) + -e = dike.',
+    explanationKu:
+        'Dema niha bi pêşgira "di-" tê çêkirin: di- + k(ir) + -e = dike.',
+    explanationTr:
+        'Şimdiki zaman "di-" ön ekiyle kurulur: di- + k(ir) + -e = dike.',
+    difficulty: 2,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0008',
+    category: 'Ziman',
+    prompt: 'Di Kurmancî de "ergatîf" çi tê wateyê?',
+    answers: [
+      'Di dema borî ya lêkerên gerguhêz de bikerê tewandî',
+      'Nîşana pirjimariyê',
+      'Cureyekî daçekê',
+      'Rengdêreke pêşgirtî',
+    ],
+    correctAnswer: 'Di dema borî ya lêkerên gerguhêz de bikerê tewandî',
+    explanation:
+        'Ergatif: geçmiş zamanda geçişli fiillerde özne büküme girer ve fiil nesneye göre çekimlenir — "Min pirtûk xwend".',
+    explanationKu:
+        'Ergatîf: di dema borî de bi lêkerên gerguhêz re biker tê tewandin û lêker li gorî bireserê tê kişandin — "Min pirtûk xwend".',
+    explanationTr:
+        'Ergatif: geçmiş zamanda geçişli fiillerde özne büküme girer ve fiil nesneye göre çekimlenir — "Min pirtûk xwend".',
+    difficulty: 4,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0009',
+    category: 'Ziman',
+    prompt: 'Peyva "rojname" ji kîjan du peyvan pêk tê?',
+    answers: ['Roj + name', 'Ro + jname', 'Rojan + me', 'Roja + nem'],
+    correctAnswer: 'Roj + name',
+    explanation:
+        '"Roj" (gün) ve "name" (yazı) birleşir: günlük yazı, yani gazete.',
+    explanationKu:
+        '"Roj" (roj/tav) û "name" (nivîs) tên cem hev: nivîsa rojane.',
+    explanationTr:
+        '"Roj" (gün) ve "name" (yazı) birleşir: günlük yazı, yani gazete.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0010',
+    category: 'Ziman',
+    prompt: 'Peyva Kurmancî "av" bi Tirkî çi tê wateyê?',
+    answers: ['su', 'ateş', 'ekmek', 'taş'],
+    correctAnswer: 'su',
+    explanation: '"Av" Türkçede "su" demektir.',
+    explanationKu: '"Av" bi Tirkî "su" ye.',
+    explanationTr: '"Av" Türkçede "su" demektir.',
+    difficulty: 1,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0011',
+    category: 'Ziman',
+    prompt: 'Peyva Kurmancî "hesp" bi Tirkî çi tê wateyê?',
+    answers: ['at', 'köpek', 'kuş', 'koyun'],
+    correctAnswer: 'at',
+    explanation: '"Hesp" Türkçede "at" demektir.',
+    explanationKu: '"Hesp" bi Tirkî "at" e.',
+    explanationTr: '"Hesp" Türkçede "at" demektir.',
+    difficulty: 1,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0012',
+    category: 'Ziman',
+    prompt: 'Peyva Kurmancî "zanîn" bi Tirkî çi tê wateyê?',
+    answers: ['bilmek', 'görmek', 'gitmek', 'almak'],
+    correctAnswer: 'bilmek',
+    explanation:
+        '"Zanîn" Türkçede "bilmek" demektir; uygulamanın adı da bu "zan" kökünden gelir.',
+    explanationKu:
+        '"Zanîn" bi Tirkî "bilmek" e; navê sepanê jî ji vê koka "zan" tê.',
+    explanationTr:
+        '"Zanîn" Türkçede "bilmek" demektir; uygulamanın adı da bu "zan" kökünden gelir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0013',
+    category: 'Ziman',
+    prompt: 'Hevwateya peyva "dilgeş" di Kurmancî de kîjan e?',
+    answers: ['Şa', 'Xemgîn', 'Westiyayî', 'Tirsonek'],
+    correctAnswer: 'Şa',
+    explanation: '"Dilgeş" ve "şa" ikisi de neşeli/sevinçli anlamına gelir.',
+    explanationKu: '"Dilgeş" û "şa" herdu jî kêfxweşiyê nîşan didin.',
+    explanationTr: '"Dilgeş" ve "şa" ikisi de neşeli/sevinçli anlamına gelir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0014',
+    category: 'Ziman',
+    prompt: 'Dijwateya peyva "germ" di Kurmancî de kîjan e?',
+    answers: ['Sar', 'Nerm', 'Tarî', 'Giran'],
+    correctAnswer: 'Sar',
+    explanation: '"Germ" (sıcak) ile "sar" (soğuk) zıt anlamlıdır.',
+    explanationKu: '"Germ" û "sar" dijwate ne.',
+    explanationTr: '"Germ" (sıcak) ile "sar" (soğuk) zıt anlamlıdır.',
+    difficulty: 3,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0015',
+    category: 'Ziman',
+    prompt: 'Di Kurmancî de "daçek" (preposition/postposition) çi ye?',
+    answers: [
+      'Peyvên wek "di, bi, ji, li" yên ku têkiliya navdêran diyar dikin',
+      'Nîşana zayendê',
+      'Cureyekî lêkerê',
+      'Paşgira pirjimariyê',
+    ],
+    correctAnswer:
+        'Peyvên wek "di, bi, ji, li" yên ku têkiliya navdêran diyar dikin',
+    explanation:
+        'Edatlar isimle cümlenin diğer öğeleri arasındaki ilişkiyi belirtir: "li malê", "bi destan".',
+    explanationKu:
+        'Daçek têkiliya di navbera navdêr û beşên din ên hevokê de diyar dike: "li malê", "bi destan".',
+    explanationTr:
+        'Edatlar isimle cümlenin diğer öğeleri arasındaki ilişkiyi belirtir: "li malê", "bi destan".',
+    difficulty: 4,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0016',
+    category: 'Ziman',
+    prompt:
+        'Di Kurmancî de "raweya fermanî" ya lêkera "hatin" ji bo kesê duyemîn ê yekjimar kîjan e?',
+    answers: ['Were', 'Hat', 'Tê', 'Hatiye'],
+    correctAnswer: 'Were',
+    explanation:
+        '"Hatin" fiilinin emir kipi "were" (sen) ve "werin" (siz) şeklindedir.',
+    explanationKu:
+        'Raweya fermanî ya "hatin" bi awayê "were" (tu) û "werin" (hûn) tê bikaranîn.',
+    explanationTr:
+        '"Hatin" fiilinin emir kipi "were" (sen) ve "werin" (siz) şeklindedir.',
+    difficulty: 5,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0017',
+    category: 'Ziman',
+    prompt: 'Rast e an şaş e: Di Kurmancî de tîpa "Q" heye.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'Evet, Kürtçe alfabede "q" harfi vardır: "qelem", "qij".',
+    explanationKu: 'Erê, tîpa "q" di alfabeya kurdî de heye: "qelem", "qij".',
+    explanationTr: 'Evet, Kürtçe alfabede "q" harfi vardır: "qelem", "qij".',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0018',
+    category: 'Ziman',
+    prompt:
+        'Rast e an şaş e: Kurmancî yek ji sê zaravayên sereke yên kurdî ye.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation:
+        'Kurmancî, Soranî ve Zazaca (Kirmanckî) ana lehçeler arasında sayılır.',
+    explanationKu:
+        'Kurmancî, Soranî û Zazakî (Kirmanckî) di nav zaravayên sereke de tên hejmartin.',
+    explanationTr:
+        'Kurmancî, Soranî ve Zazaca (Kirmanckî) ana lehçeler arasında sayılır.',
+    type: QuestionType.trueFalse,
+    difficulty: 3,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0019',
+    category: 'Ziman',
+    prompt: 'Kovara "Hawar" bi taybetî ji bo çi girîng e?',
+    answers: [
+      'Belavkirina alfabeya latînî ya kurdî',
+      'Yekem romana kurdî',
+      'Yekem albûma muzîkê',
+      'Ferhenga yekem a kurdî',
+    ],
+    correctAnswer: 'Belavkirina alfabeya latînî ya kurdî',
+    explanation:
+        'Hawar (1932, Şam) Kürtçe Latin alfabesini yaydı ve modern Kürtçenin okulu oldu.',
+    explanationKu:
+        'Hawar (1932, Şam) alfabeya latînî ya kurdî belav kir û bû dibistana zimanê kurdî ya nûjen.',
+    explanationTr:
+        'Hawar (1932, Şam) Kürtçe Latin alfabesini yaydı ve modern Kürtçenin okulu oldu.',
+    difficulty: 4,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0020',
+    category: 'Ziman',
+    prompt: 'Di Kurmancî de cudahiya "min" û "ez" çi ye?',
+    answers: [
+      '"Ez" rewşa xwerû, "min" rewşa tewandî ye',
+      'Herdu jî heman in',
+      '"Min" pirjimar e',
+      '"Ez" tenê di dema borî de tê bikaranîn',
+    ],
+    correctAnswer: '"Ez" rewşa xwerû, "min" rewşa tewandî ye',
+    explanation:
+        '"Ez diçim" (yalın) ama "Min got" (bükünlü) — durum, fiilin zamanına ve geçişliliğine göre değişir.',
+    explanationKu:
+        '"Ez diçim" (xwerû) lê "Min got" (tewandî) — rewş li gorî dem û gerguhêziya lêkerê diguhere.',
+    explanationTr:
+        '"Ez diçim" (yalın) ama "Min got" (bükünlü) — durum, fiilin zamanına ve geçişliliğine göre değişir.',
+    difficulty: 5,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0001',
+    category: 'Çand',
+    prompt: 'Newroz her sal di kîjan rojê de tê pîrozkirin?',
+    answers: ['21ê Adarê', '1ê Gulanê', '21ê Îlonê', '1ê Çileyê'],
+    correctAnswer: '21ê Adarê',
+    explanation:
+        'Nevruz, baharın başlangıcı bayramı, her yıl 21 Mart\'ta kutlanır.',
+    explanationKu:
+        'Newroz, cejna serê biharê, her sal di 21ê Adarê de tê pîrozkirin.',
+    explanationTr:
+        'Nevruz, baharın başlangıcı bayramı, her yıl 21 Mart\'ta kutlanır.',
+    difficulty: 1,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0002',
+    category: 'Çand',
+    prompt: 'Li gorî efsaneya Newrozê, Kawa pîşeya wî çi bû?',
+    answers: ['Hesinker', 'Şivan', 'Cotkar', 'Bazirgan'],
+    correctAnswer: 'Hesinker',
+    explanation:
+        'Demirci Kawa, Dehak\'a karşı ayaklandı; zaferi Nevruz ateşiyle simgelenir.',
+    explanationKu:
+        'Kawayê Hesinker li dijî Dehaq rabû û serkeftina wî bi agirê Newrozê tê nîşankirin.',
+    explanationTr:
+        'Demirci Kawa, Dehak\'a karşı ayaklandı; zaferi Nevruz ateşiyle simgelenir.',
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0003',
+    category: 'Çand',
+    prompt:
+        'Reqsa gelêrî ya kurdî ya ku bi destgirtin û bi rêz tê kirin çi ye?',
+    answers: ['Govend', 'Semah', 'Zeybek', 'Horon'],
+    correctAnswer: 'Govend',
+    explanation: 'Govend, elele ve sıra hâlinde oynanan Kürt halk dansıdır.',
+    explanationKu:
+        'Govend reqsa komî ya kurdî ye; mirov bi destan digirin û bi rêz dilîzin.',
+    explanationTr: 'Govend, elele ve sıra hâlinde oynanan Kürt halk dansıdır.',
+    difficulty: 1,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0004',
+    category: 'Çand',
+    prompt: 'Di çanda kurdî de "tiştonek" çi ye?',
+    answers: [
+      'Mamik / bilmece',
+      'Stranek dînî',
+      'Cureyekî xwarinê',
+      'Reqsek gelêrî',
+    ],
+    correctAnswer: 'Mamik / bilmece',
+    explanation: 'Tiştonek, kış sohbetlerinde sorulan zekâ bilmeceleridir.',
+    explanationKu:
+        'Tiştonek pirsên jîrekiyê ne ku di şevbihêrkan de tên gotin.',
+    explanationTr: 'Tiştonek, kış sohbetlerinde sorulan zekâ bilmeceleridir.',
+    difficulty: 3,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0005',
+    category: 'Çand',
+    prompt:
+        'Cilê jinan ê kurdî yê ku li ser serî tê girêdan û bi pûl tê xemilandin bi giştî çi navê digire?',
+    answers: ['Klîtik / kofî', 'Şal û şapik', 'Kras', 'Şûtik'],
+    correctAnswer: 'Klîtik / kofî',
+    explanation:
+        'Kofî, kadınların geleneksel başlığıdır; yöreye göre pul ve altınla süslenir.',
+    explanationKu:
+        'Kofî serpoşa jinan a kevneşopî ye û li gorî herêman bi pûl û zêran tê xemilandin.',
+    explanationTr:
+        'Kofî, kadınların geleneksel başlığıdır; yöreye göre pul ve altınla süslenir.',
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0006',
+    category: 'Çand',
+    prompt: 'Di kevneşopiya kurdî de "şevbihêrk" çi ye?',
+    answers: [
+      'Civîna şevê ya çîrok û stranan',
+      'Cejna zewacê',
+      'Rêûresma şînê',
+      'Bazara heftane',
+    ],
+    correctAnswer: 'Civîna şevê ya çîrok û stranan',
+    explanation:
+        'Şevbihêrk, kış gecelerinde hikâye, bilmece ve türkülerin paylaşıldığı toplantıdır.',
+    explanationKu:
+        'Şevbihêrk civîna şevên zivistanê ye: çîrok, tiştonek û stran tên gotin.',
+    explanationTr:
+        'Şevbihêrk, kış gecelerinde hikâye, bilmece ve türkülerin paylaşıldığı toplantıdır.',
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0007',
+    category: 'Çand',
+    prompt:
+        'Xwarina kurdî ya ku ji savar û goşt tê çêkirin û bi destan tê gilover kirin çi ye?',
+    answers: ['Kutilk', 'Dolme', 'Sarma', 'Kadayîf'],
+    correctAnswer: 'Kutilk',
+    explanation: 'Kutilk (içli köfte) bulgurdan yapılır, kıymayla doldurulur.',
+    explanationKu:
+        'Kutilk (îçli kufte) ji savarê tê çêkirin û bi goştê hûrkirî tê dagirtin.',
+    explanationTr:
+        'Kutilk (içli köfte) bulgurdan yapılır, kıymayla doldurulur.',
+    difficulty: 3,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0008',
+    category: 'Çand',
+    prompt: 'Di çanda kurdî de "heval" bi giştî çi tê wateyê?',
+    answers: ['Hogir / dost', 'Cîran', 'Xizm', 'Mêvan'],
+    correctAnswer: 'Hogir / dost',
+    explanation: '"Heval" arkadaş/yoldaş anlamını taşır.',
+    explanationKu: '"Heval" wateya dostî û hevkariyê dihewîne.',
+    explanationTr: '"Heval" arkadaş/yoldaş anlamını taşır.',
+    difficulty: 4,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0009',
+    category: 'Çand',
+    prompt: 'Destana "Mem û Zîn" bi giştî çîroka çi ye?',
+    answers: [
+      'Evîna Mem û Zînê ya ku nagihîje hev',
+      'Şerekî navxweyî',
+      'Rêwîtiya bazirganekî',
+      'Damezrandina bajarekî',
+    ],
+    correctAnswer: 'Evîna Mem û Zînê ya ku nagihîje hev',
+    explanation:
+        'Mem û Zîn, kavuşamayan âşıkların hikâyesidir; Ehmedê Xanî 1692\'de yazdı.',
+    explanationKu:
+        'Mem û Zîn evîndarên ku nagihîjin hev in; Ehmedê Xanî ev destan di 1692an de nivîsî.',
+    explanationTr:
+        'Mem û Zîn, kavuşamayan âşıkların hikâyesidir; Ehmedê Xanî 1692\'de yazdı.',
+    difficulty: 3,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0010',
+    category: 'Çand',
+    prompt: 'Rast e an şaş e: Newroz tenê ji aliyê kurdan ve tê pîrozkirin.',
+    answers: ['Şaş', 'Rast'],
+    correctAnswer: 'Şaş',
+    explanation:
+        'Nevruz İran, Afganistan, Azerbaycan ve Orta Asya\'da da kutlanır.',
+    explanationKu:
+        'Newroz li gelek welatan — Îran, Afxanistan, Azerbaycan, Asyaya Navîn — jî tê pîrozkirin.',
+    explanationTr:
+        'Nevruz İran, Afganistan, Azerbaycan ve Orta Asya\'da da kutlanır.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0011',
+    category: 'Çand',
+    prompt: 'Di dawetên kurdî de "berbû" kî ne?',
+    answers: [
+      'Kesên ku bûkê ji mala wê tînin',
+      'Muzîkjenên dawetê',
+      'Mêvanên ji dûr',
+      'Xwarinçêkerên dawetê',
+    ],
+    correctAnswer: 'Kesên ku bûkê ji mala wê tînin',
+    explanation:
+        'Berbû, gelini evinden almaya giden akraba ve dost topluluğudur.',
+    explanationKu: 'Berbû ew koma xizm û dostan e ku diçe bûkê tîne.',
+    explanationTr:
+        'Berbû, gelini evinden almaya giden akraba ve dost topluluğudur.',
+    difficulty: 4,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0012',
+    category: 'Çand',
+    prompt: 'Rêûresma "kirîvatî" di civaka kurdî de çi ye?',
+    answers: [
+      'Girêdana malbatan bi rêya sinetê',
+      'Peymana bazirganiyê',
+      'Rêûresma şînê',
+      'Hilbijartina rîspiyan',
+    ],
+    correctAnswer: 'Girêdana malbatan bi rêya sinetê',
+    explanation:
+        'Kirve, sünnet töreninde ikinci baba rolündedir; iki aile böylece hısım olur.',
+    explanationKu:
+        'Kirîv di rêûresma sinetê de rola bavê duyemîn digire; du malbat bi vî awayî xizm dibin.',
+    explanationTr:
+        'Kirve, sünnet töreninde ikinci baba rolündedir; iki aile böylece hısım olur.',
+    difficulty: 5,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0013',
+    category: 'Çand',
+    prompt: 'Rengên ku bi gelemperî di ala kurdî de derbas dibin kîjan in?',
+    answers: [
+      'Sor, spî, kesk û zer',
+      'Şîn, spî û sor',
+      'Reş, spî û kesk',
+      'Zer, mor û sor',
+    ],
+    correctAnswer: 'Sor, spî, kesk û zer',
+    explanation:
+        'Kürt bayrağı kırmızı, beyaz, yeşil şeritler ve ortadaki sarı güneşten oluşur.',
+    explanationKu:
+        'Ala kurdî ji sê rengên horizontal — sor, spî, kesk — û rojeke zer a navendî pêk tê.',
+    explanationTr:
+        'Kürt bayrağı kırmızı, beyaz, yeşil şeritler ve ortadaki sarı güneşten oluşur.',
+    difficulty: 1,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0014',
+    category: 'Çand',
+    prompt: 'Di çanda kurdî de "gotinên pêşiyan" çi ne?',
+    answers: ['Atasözleri', 'Stranên dînî', 'Navên gundan', 'Rêzikên rêzimanî'],
+    correctAnswer: 'Atasözleri',
+    explanation:
+        'Gotinên pêşiyan, halkın deneyimini kısa cümlelerle aktaran atasözleridir.',
+    explanationKu:
+        'Gotinên pêşiyan ezmûna gel a bi hevokên kurt tê veguhastin.',
+    explanationTr:
+        'Gotinên pêşiyan, halkın deneyimini kısa cümlelerle aktaran atasözleridir.',
+    difficulty: 3,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0015',
+    category: 'Çand',
+    prompt: 'Xwarina "dew" ji çi tê çêkirin?',
+    answers: ['Mast û av', 'Ard û av', 'Şîr û şekir', 'Genim û rûn'],
+    correctAnswer: 'Mast û av',
+    explanation:
+        'Dew (ayran), yoğurt ve suyun karışımıdır; özellikle yazın içilir.',
+    explanationKu:
+        'Dew mast û ava tevlihev e; bi taybetî di havînê de tê vexwarin.',
+    explanationTr:
+        'Dew (ayran), yoğurt ve suyun karışımıdır; özellikle yazın içilir.',
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0016',
+    category: 'Çand',
+    prompt: 'Di kevneşopiya kurdî de "rîspî" kî ye?',
+    answers: [
+      'Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike',
+      'Serokê eşîretê yê leşkerî',
+      'Mamosteyê dibistanê',
+      'Bazirganê gund',
+    ],
+    correctAnswer: 'Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike',
+    explanation:
+        'Rîspî (aksakal), toplumda arabuluculuk yapan, anlaşmazlıkları çözen saygın yaşlıdır.',
+    explanationKu:
+        'Rîspî di civakê de rola navbeynkariyê digire û nakokiyan çareser dike.',
+    explanationTr:
+        'Rîspî (aksakal), toplumda arabuluculuk yapan, anlaşmazlıkları çözen saygın yaşlıdır.',
+    difficulty: 4,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0001',
+    category: 'Dîrok',
+    prompt: 'Kovara "Hawar" di kîjan salê de dest bi weşanê kir?',
+    answers: ['1932', '1898', '1945', '1960'],
+    correctAnswer: '1932',
+    explanation:
+        'Hawar, 15 Mayıs 1932\'de Şam\'da Celadet Ali Bedirhan tarafından yayımlandı.',
+    explanationKu:
+        'Hawar di 15ê Gulana 1932yan de li Şamê ji aliyê Celadet Alî Bedirxan ve hat weşandin.',
+    explanationTr:
+        'Hawar, 15 Mayıs 1932\'de Şam\'da Celadet Ali Bedirhan tarafından yayımlandı.',
+    difficulty: 2,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0002',
+    category: 'Dîrok',
+    prompt:
+        'Yekem rojnameya kurdî "Kurdistan" di kîjan salê û li ku derê hat weşandin?',
+    answers: ['1898, Qahîre', '1908, Stenbol', '1920, Bexda', '1932, Şam'],
+    correctAnswer: '1898, Qahîre',
+    explanation:
+        '"Kurdistan" gazetesi 22 Nisan 1898\'de Kahire\'de Mikdat Mithat Bedirhan tarafından çıkarıldı.',
+    explanationKu:
+        'Rojnameya "Kurdistan" di 22ê Nîsana 1898an de li Qahîreyê ji aliyê Miqdad Midhet Bedirxan ve hat weşandin.',
+    explanationTr:
+        '"Kurdistan" gazetesi 22 Nisan 1898\'de Kahire\'de Mikdat Mithat Bedirhan tarafından çıkarıldı.',
+    difficulty: 3,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0003',
+    category: 'Dîrok',
+    prompt: 'Selahedînê Eyûbî bi taybetî bi çi tê nasîn?',
+    answers: [
+      'Vegirtina Qudsê di 1187an de',
+      'Damezrandina Împeratoriya Osmanî',
+      'Nivîsandina Mem û Zînê',
+      'Vedîtina alfabeya kurdî',
+    ],
+    correctAnswer: 'Vegirtina Qudsê di 1187an de',
+    explanation:
+        'Kürt kökenli Selahaddin Eyyubi 1187\'de Kudüs\'ü aldı ve Eyyubi Devleti\'ni kurdu.',
+    explanationKu:
+        'Selahedînê Eyûbî yê bi eslê xwe kurd, di 1187an de Qudsê vegirt û Dewleta Eyûbiyan damezrand.',
+    explanationTr:
+        'Kürt kökenli Selahaddin Eyyubi 1187\'de Kudüs\'ü aldı ve Eyyubi Devleti\'ni kurdu.',
+    difficulty: 1,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0004',
+    category: 'Dîrok',
+    prompt: 'Peymana Lozanê di kîjan salê de hat îmzekirin?',
+    answers: ['1923', '1920', '1918', '1932'],
+    correctAnswer: '1923',
+    explanation:
+        'Lozan Antlaşması 24 Temmuz 1923\'te imzalandı ve Sevr\'in yerini aldı.',
+    explanationKu:
+        'Peymana Lozanê di 24ê Tîrmeha 1923yan de hat îmzekirin û şûna Peymana Sevrê girt.',
+    explanationTr:
+        'Lozan Antlaşması 24 Temmuz 1923\'te imzalandı ve Sevr\'in yerini aldı.',
+    difficulty: 3,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0005',
+    category: 'Dîrok',
+    prompt: 'Peymana Sevrê (1920) ji bo kurdan çima tê gotin ku girîng e?',
+    answers: [
+      'Ji bo herêmeke kurdî ya xweser madde dihewand',
+      'Alfabeya kurdî fermî kir',
+      'Dewleteke kurdî damezrand',
+      'Kovara Hawarê destûr kir',
+    ],
+    correctAnswer: 'Ji bo herêmeke kurdî ya xweser madde dihewand',
+    explanation:
+        'Sevr, Kürtler için olası bir özerklik maddesi içeriyordu ancak antlaşma uygulanmadı.',
+    explanationKu:
+        'Sevr xweseriyeke mimkun ji bo kurdan pêşniyar dikir, lê peyman nehat sepandin.',
+    explanationTr:
+        'Sevr, Kürtler için olası bir özerklik maddesi içeriyordu ancak antlaşma uygulanmadı.',
+    difficulty: 4,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0006',
+    category: 'Dîrok',
+    prompt: 'Împeratoriya Medan bi giştî di kîjan sedsalê de hat damezrandin?',
+    answers: [
+      'Sedsala 7em a berî zayînê',
+      'Sedsala 3em a piştî zayînê',
+      'Sedsala 12em',
+      'Sedsala 1em a berî zayînê',
+    ],
+    correctAnswer: 'Sedsala 7em a berî zayînê',
+    explanation:
+        'Medler M.Ö. 7. yüzyılda Doğu Anadolu ve Batı İran\'da bir devlet kurdular.',
+    explanationKu:
+        'Med di sedsala 7em a b.z. de li rojhilata Anatolyayê û rojavayê Îranê dewletek ava kirin.',
+    explanationTr:
+        'Medler M.Ö. 7. yüzyılda Doğu Anadolu ve Batı İran\'da bir devlet kurdular.',
+    difficulty: 2,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0007',
+    category: 'Dîrok',
+    prompt: 'Ehmedê Xanî "Mem û Zîn" di kîjan salê de nivîsî?',
+    answers: ['1692', '1592', '1792', '1892'],
+    correctAnswer: '1692',
+    explanation:
+        'Ehmedê Xanî, Mem û Zîn\'i 1692\'de tamamladı; eser hem aşkı hem ulusal bilinci işler.',
+    explanationKu:
+        'Ehmedê Xanî Mem û Zîn di 1692an de temam kir; berhem hem evîndarî hem jî hişmendiya netewî dihewîne.',
+    explanationTr:
+        'Ehmedê Xanî, Mem û Zîn\'i 1692\'de tamamladı; eser hem aşkı hem ulusal bilinci işler.',
+    difficulty: 4,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0008',
+    category: 'Dîrok',
+    prompt: 'Mîrektiya Botan bi kîjan navendê tê nasîn?',
+    answers: ['Cizîr', 'Hewlêr', 'Sanandaj', 'Kirmanşan'],
+    correctAnswer: 'Cizîr',
+    explanation:
+        'Botan Emirliği\'nin merkezi Cizre idi; ünlü emiri Bedirhan Bey\'dir.',
+    explanationKu:
+        'Mîrektiya Botan navenda xwe Cizîra Botan bû; Bedirxan Beg mîrê wê yê navdar e.',
+    explanationTr:
+        'Botan Emirliği\'nin merkezi Cizre idi; ünlü emiri Bedirhan Bey\'dir.',
+    difficulty: 3,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0009',
+    category: 'Dîrok',
+    prompt: '"Şerefname" ya Şerefxanê Bidlîsî çi ye?',
+    answers: [
+      'Dîroknameya mîrektiyên kurdan',
+      'Dîwanek helbestî',
+      'Ferhengek kurdî-erebî',
+      'Pirtûkeke rêzimanî',
+    ],
+    correctAnswer: 'Dîroknameya mîrektiyên kurdan',
+    explanation:
+        'Şerefname (1597), Kürtlerin ilk kapsamlı tarih kitabıdır; emirlikleri ve aşiretleri tanıtır.',
+    explanationKu:
+        'Şerefname (1597) yekem dîroknameya berfireh a kurdan e; mîrektî û eşîret tê de tên nasîn.',
+    explanationTr:
+        'Şerefname (1597), Kürtlerin ilk kapsamlı tarih kitabıdır; emirlikleri ve aşiretleri tanıtır.',
+    difficulty: 5,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0010',
+    category: 'Dîrok',
+    prompt:
+        'Rast e an şaş e: Celadet Alî Bedirxan hem zimannas hem jî weşanger bû.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation:
+        'Celadet hem alfabe ve dilbilgisi üzerine çalıştı hem de Hawar ve Ronahî\'yi yayımladı.',
+    explanationKu:
+        'Celadet hem alfabe û rêziman xebitî, hem jî Hawar û Ronahî weşandin.',
+    explanationTr:
+        'Celadet hem alfabe ve dilbilgisi üzerine çalıştı hem de Hawar ve Ronahî\'yi yayımladı.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0011',
+    category: 'Dîrok',
+    prompt: 'Komara Mehabadê di kîjan salê de hat damezrandin?',
+    answers: ['1946', '1936', '1958', '1961'],
+    correctAnswer: '1946',
+    explanation:
+        'Mahabad Cumhuriyeti 22 Ocak 1946\'da Doğu Kürdistan\'da ilan edildi.',
+    explanationKu:
+        'Komara Mehabadê di 22ê Rêbendana 1946an de li rojhilatê Kurdistanê hat ragihandin.',
+    explanationTr:
+        'Mahabad Cumhuriyeti 22 Ocak 1946\'da Doğu Kürdistan\'da ilan edildi.',
+    difficulty: 4,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0012',
+    category: 'Dîrok',
+    prompt: 'Qadî Mihemed bi çi tê nasîn?',
+    answers: [
+      'Serokê Komara Mehabadê',
+      'Nivîskarê Şerefnameyê',
+      'Damezrînerê kovara Hawarê',
+      'Mîrê Botan',
+    ],
+    correctAnswer: 'Serokê Komara Mehabadê',
+    explanation: 'Kadı Muhammed, Mahabad Cumhuriyeti\'nin (1946) lideridir.',
+    explanationKu: 'Qadî Mihemed serokê Komara Mehabadê (1946) bû.',
+    explanationTr: 'Kadı Muhammed, Mahabad Cumhuriyeti\'nin (1946) lideridir.',
+    difficulty: 5,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0013',
+    category: 'Dîrok',
+    prompt: 'Bajarê Amedê di dîrokê de bi kîjan navê latînî jî tê nasîn?',
+    answers: ['Amida', 'Ninova', 'Palmyra', 'Edessa'],
+    correctAnswer: 'Amida',
+    explanation:
+        'Amed, Latin kaynaklarında "Amida" olarak geçer; bazalt surlarıyla ünlüdür.',
+    explanationKu:
+        'Amed di çavkaniyên latînî de wek "Amida" derbas dibe; sûrên wê yên bazaltî navdar in.',
+    explanationTr:
+        'Amed, Latin kaynaklarında "Amida" olarak geçer; bazalt surlarıyla ünlüdür.',
+    difficulty: 3,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0014',
+    category: 'Dîrok',
+    prompt:
+        'Gundê "Xerabreşk" an bi giştî wêrankirina gundan di salên 1990î de bi kîjan têgînê tê nasîn?',
+    answers: [
+      'Koçberiya bi darê zorê',
+      'Reforma erdê',
+      'Bajarvanîkirin',
+      'Kolonîzasyona çandinî',
+    ],
+    correctAnswer: 'Koçberiya bi darê zorê',
+    explanation:
+        '1990\'larda birçok köy boşaltıldı ve halk zorunlu göçe tabi tutuldu.',
+    explanationKu:
+        'Di salên 1990î de gelek gund vala bûn û gel bi darê zorê koçber bû.',
+    explanationTr:
+        '1990\'larda birçok köy boşaltıldı ve halk zorunlu göçe tabi tutuldu.',
+    difficulty: 4,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0015',
+    category: 'Dîrok',
+    prompt: 'Hûrî û Mîtanî bi giştî li kîjan herêmê dijiyan?',
+    answers: [
+      'Mezopotamyaya jorîn',
+      'Deşta Misirê',
+      'Peravê Egeyê',
+      'Asyaya Navîn',
+    ],
+    correctAnswer: 'Mezopotamyaya jorîn',
+    explanation:
+        'Hurriler ve Mitanniler Yukarı Mezopotamya\'da, Dicle-Fırat\'ın yukarı havzasında yaşadı.',
+    explanationKu:
+        'Hûrî û Mîtanî li Mezopotamyaya jorîn — herêma Dîcle û Firatê ya jorîn — dijiyan.',
+    explanationTr:
+        'Hurriler ve Mitanniler Yukarı Mezopotamya\'da, Dicle-Fırat\'ın yukarı havzasında yaşadı.',
+    difficulty: 1,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0001',
+    category: 'Edebiyat',
+    prompt: 'Nivîskarê "Mem û Zîn" kî ye?',
+    answers: ['Ehmedê Xanî', 'Melayê Cizîrî', 'Feqiyê Teyran', 'Elî Herîrî'],
+    correctAnswer: 'Ehmedê Xanî',
+    explanation:
+        'Ehmedê Xanî (1651-1707) Mem û Zîn\'i yazdı; klasik Kürt edebiyatının direğidir.',
+    explanationKu:
+        'Ehmedê Xanî (1651-1707) Mem û Zîn nivîsî; ew stûna wêjeya klasîk a kurdî ye.',
+    explanationTr:
+        'Ehmedê Xanî (1651-1707) Mem û Zîn\'i yazdı; klasik Kürt edebiyatının direğidir.',
+    difficulty: 2,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0002',
+    category: 'Edebiyat',
+    prompt: 'Melayê Cizîrî bi giştî bi çi tê nasîn?',
+    answers: [
+      'Dîwana xwe ya helbestên sofîyane',
+      'Yekem romana kurdî',
+      'Ferhenga kurdî-erebî',
+      'Dîroknameya mîrektiyan',
+    ],
+    correctAnswer: 'Dîwana xwe ya helbestên sofîyane',
+    explanation:
+        'Melayê Cizîrî (16-17. yy) tasavvufi Divanı ile klasik Kürt şiirini kurdu.',
+    explanationKu:
+        'Melayê Cizîrî (sedsala 16-17em) bi Dîwana xwe ya tesewufî helbesta klasîk a kurdî ava kir.',
+    explanationTr:
+        'Melayê Cizîrî (16-17. yy) tasavvufi Divanı ile klasik Kürt şiirini kurdu.',
+    difficulty: 3,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0003',
+    category: 'Edebiyat',
+    prompt: '"Feqiyê Teyran" di wêjeya kurdî de bi çi hate naskirin?',
+    answers: [
+      'Helbestên xwe yên li ser xweza û teyran',
+      'Romanên xwe yên nûjen',
+      'Şanoyên xwe',
+      'Ferhengên xwe',
+    ],
+    correctAnswer: 'Helbestên xwe yên li ser xweza û teyran',
+    explanation:
+        'Feqiyê Teyran (16-17. yy) şiirlerinde kuşlar ve doğayla konuşur.',
+    explanationKu:
+        'Feqiyê Teyran (sedsala 16-17em) di helbestên xwe de bi teyr û xwezayê re diaxive.',
+    explanationTr:
+        'Feqiyê Teyran (16-17. yy) şiirlerinde kuşlar ve doğayla konuşur.',
+    difficulty: 4,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0004',
+    category: 'Edebiyat',
+    prompt: 'Mehmed Uzun bi giştî bi kîjan cureya wêjeyî tê nasîn?',
+    answers: ['Roman', 'Helbesta klasîk', 'Şano', 'Ferhengnasî'],
+    correctAnswer: 'Roman',
+    explanation:
+        'Mehmed Uzun (1953-2007) "Siya Evînê" gibi eserlerle modern Kürt romanını geliştirdi.',
+    explanationKu:
+        'Mehmed Uzun (1953-2007) romana kurdî ya nûjen bi berhemên xwe wek "Siya Evînê" bi pêş xist.',
+    explanationTr:
+        'Mehmed Uzun (1953-2007) "Siya Evînê" gibi eserlerle modern Kürt romanını geliştirdi.',
+    difficulty: 3,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0005',
+    category: 'Edebiyat',
+    prompt: 'Şêrko Bêkes bi kîjan zaravayî nivîsandiye?',
+    answers: ['Soranî', 'Kurmancî', 'Zazakî', 'Goranî'],
+    correctAnswer: 'Soranî',
+    explanation:
+        'Şêrko Bêkes (1940-2013), Güney Kürdistan\'ın Soranca yazan büyük şairidir.',
+    explanationKu:
+        'Şêrko Bêkes (1940-2013) helbestvanê mezin ê soranîaxêv ê başûrê Kurdistanê ye.',
+    explanationTr:
+        'Şêrko Bêkes (1940-2013), Güney Kürdistan\'ın Soranca yazan büyük şairidir.',
+    difficulty: 4,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0006',
+    category: 'Edebiyat',
+    prompt: 'Di wêjeya kurdî de "dîwan" çi tê wateyê?',
+    answers: [
+      'Berhevoka helbestên helbestvanekî',
+      'Çîrokeke gelêrî',
+      'Rojnameyeke edebî',
+      'Pirtûkeke rêzimanî',
+    ],
+    correctAnswer: 'Berhevoka helbestên helbestvanekî',
+    explanation:
+        'Divan, bir şairin şiirlerinin genelde kafiyeye göre düzenlenmiş toplamıdır.',
+    explanationKu:
+        'Dîwan berhevoka helbestên helbestvanekî ye, bi gelemperî li gorî qafiyeyê rêzkirî.',
+    explanationTr:
+        'Divan, bir şairin şiirlerinin genelde kafiyeye göre düzenlenmiş toplamıdır.',
+    difficulty: 5,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0007',
+    category: 'Edebiyat',
+    prompt: 'Cegerxwîn bi giştî çi bû?',
+    answers: ['Helbestvan', 'Romannivîs', 'Dîroknas', 'Muzîkjen'],
+    correctAnswer: 'Helbestvan',
+    explanation:
+        'Cegerxwîn (1903-1984) ünlü Kürt şairidir; adı "ciğeri yanık" anlamına gelir.',
+    explanationKu:
+        'Cegerxwîn (1903-1984) helbestvanê kurd ê navdar e; navê wî tê wateya "kezebkul".',
+    explanationTr:
+        'Cegerxwîn (1903-1984) ünlü Kürt şairidir; adı "ciğeri yanık" anlamına gelir.',
+    difficulty: 2,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0008',
+    category: 'Edebiyat',
+    prompt: 'Rast e an şaş e: "Siya Evînê" romaneke Mehmed Uzun e.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation:
+        '"Siya Evînê" (1989) Mehmed Uzun\'un romanıdır ve Memduh Selim\'in yaşamını anlatır.',
+    explanationKu:
+        '"Siya Evînê" (1989) romaneke Mehmed Uzun e û li ser jiyana Memduh Selîm e.',
+    explanationTr:
+        '"Siya Evînê" (1989) Mehmed Uzun\'un romanıdır ve Memduh Selim\'in yaşamını anlatır.',
+    type: QuestionType.trueFalse,
+    difficulty: 3,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0009',
+    category: 'Edebiyat',
+    prompt:
+        'Di helbesta klasîk a kurdî de bandora kîjan wêjeyan zêde xuya dike?',
+    answers: [
+      'Farisî û erebî',
+      'Yewnanî û latînî',
+      'Slavî û rûsî',
+      'Çînî û hindî',
+    ],
+    correctAnswer: 'Farisî û erebî',
+    explanation:
+        'Klasik Kürt şiiri, ölçü ve mecaz açısından Fars ve Arap edebiyatıyla etkileşim içindeydi.',
+    explanationKu:
+        'Helbesta klasîk a kurdî ji aliyê pîvan û mecazan ve bi wêjeya farisî û erebî re di nav danûstandinê de bû.',
+    explanationTr:
+        'Klasik Kürt şiiri, ölçü ve mecaz açısından Fars ve Arap edebiyatıyla etkileşim içindeydi.',
+    difficulty: 4,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0010',
+    category: 'Edebiyat',
+    prompt: 'Berhema "Nûbihara Biçûkan" a Ehmedê Xanî çi ye?',
+    answers: [
+      'Ferhengeke helbestî ya kurdî-erebî ji bo zarokan',
+      'Romaneke evîndarî',
+      'Dîroknameyek',
+      'Berhevoka stranan',
+    ],
+    correctAnswer: 'Ferhengeke helbestî ya kurdî-erebî ji bo zarokan',
+    explanation:
+        'Nûbihara Biçûkan, çocuklara öğretmek için manzum yazılmış Kürtçe-Arapça sözlüktür.',
+    explanationKu:
+        'Nûbihara Biçûkan ferhengeke bi rêza helbestî ye ku ji bo hînkirina zarokan hatiye nivîsandin.',
+    explanationTr:
+        'Nûbihara Biçûkan, çocuklara öğretmek için manzum yazılmış Kürtçe-Arapça sözlüktür.',
+    difficulty: 5,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0011',
+    category: 'Edebiyat',
+    prompt: 'Peyva "helbest" bi Tirkî çi tê wateyê?',
+    answers: ['şiir', 'roman', 'öykü', 'tiyatro'],
+    correctAnswer: 'şiir',
+    explanation: '"Helbest" Türkçede "şiir" demektir.',
+    explanationKu: '"Helbest" bi Tirkî "şiir" e.',
+    explanationTr: '"Helbest" Türkçede "şiir" demektir.',
+    difficulty: 2,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0012',
+    category: 'Edebiyat',
+    prompt:
+        'Kî wek "yekem romannivîsa kurd" tê hesibandin ku romana "Şivanê Kurmanca" nivîsî?',
+    answers: ['Erebê Şemo', 'Cegerxwîn', 'Mehmed Uzun', 'Ehmedê Xanî'],
+    correctAnswer: 'Erebê Şemo',
+    explanation:
+        'Erebê Şemo, ilk Kürt romanı sayılan "Şivanê Kurmanca"yı (1935) yazdı.',
+    explanationKu:
+        'Erebê Şemo "Şivanê Kurmanca" (1935) nivîsî; ew wek romana kurdî ya pêşîn tê hesibandin.',
+    explanationTr:
+        'Erebê Şemo, ilk Kürt romanı sayılan "Şivanê Kurmanca"yı (1935) yazdı.',
+    difficulty: 3,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0001',
+    category: 'Cografya',
+    prompt:
+        'Zincîra çiyayên ku bi piranî di erdnîgariya kurdî re derbas dibe kîjan e?',
+    answers: ['Zagros', 'Alp', 'Kafkas', 'Toros Rojava'],
+    correctAnswer: 'Zagros',
+    explanation:
+        'Zagros dağları, İran\'ın kuzeybatısından Güney Kürdistan\'a uzanır.',
+    explanationKu:
+        'Çiyayên Zagros ji bakurê rojavayê Îranê heta başûrê Kurdistanê dirêj dibin.',
+    explanationTr:
+        'Zagros dağları, İran\'ın kuzeybatısından Güney Kürdistan\'a uzanır.',
+    difficulty: 1,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0002',
+    category: 'Cografya',
+    prompt: 'Çiyayê herî bilind ê Tirkiyeyê ku li herêma kurdî ye kîjan e?',
+    answers: ['Çiyayê Agirî', 'Çiyayê Cûdî', 'Çiyayê Nemrûd', 'Çiyayê Erciyes'],
+    correctAnswer: 'Çiyayê Agirî',
+    explanation: 'Ağrı Dağı 5.137 metreyle Türkiye\'nin en yüksek dağıdır.',
+    explanationKu:
+        'Çiyayê Agirî bi 5.137 metreyî çiyayê herî bilind ê Tirkiyeyê ye.',
+    explanationTr: 'Ağrı Dağı 5.137 metreyle Türkiye\'nin en yüksek dağıdır.',
+    difficulty: 2,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0003',
+    category: 'Cografya',
+    prompt: 'Gola herî mezin a Tirkiyeyê ku li herêma kurdî ye kîjan e?',
+    answers: ['Gola Wanê', 'Gola Tuzê', 'Gola Beyşehîrê', 'Gola Îznîkê'],
+    correctAnswer: 'Gola Wanê',
+    explanation:
+        'Van Gölü yaklaşık 3.700 km² ile Türkiye\'nin en büyük gölüdür.',
+    explanationKu:
+        'Gola Wanê bi qasî 3.700 km² e û gola herî mezin a Tirkiyeyê ye.',
+    explanationTr:
+        'Van Gölü yaklaşık 3.700 km² ile Türkiye\'nin en büyük gölüdür.',
+    difficulty: 1,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0004',
+    category: 'Cografya',
+    prompt: 'Herdu çemên sereke yên Mezopotamyayê kîjan in?',
+    answers: ['Dîcle û Firat', 'Nîl û Kongo', 'Volga û Don', 'Ganj û Îndus'],
+    correctAnswer: 'Dîcle û Firat',
+    explanation:
+        'Dicle ve Fırat, Kürdistan dağlarından doğar ve Mezopotamya\'yı oluşturur.',
+    explanationKu:
+        'Dîcle û Firat ji çiyayên Kurdistanê diherikin û Mezopotamyayê ava dikin.',
+    explanationTr:
+        'Dicle ve Fırat, Kürdistan dağlarından doğar ve Mezopotamya\'yı oluşturur.',
+    difficulty: 2,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0005',
+    category: 'Cografya',
+    prompt: 'Bajarê Hewlêr (Erbil) navenda kîjan herêmê ye?',
+    answers: [
+      'Herêma Kurdistanê ya Iraqê',
+      'Rojavayê Kurdistanê',
+      'Bakurê Kurdistanê',
+      'Rojhilatê Kurdistanê',
+    ],
+    correctAnswer: 'Herêma Kurdistanê ya Iraqê',
+    explanation:
+        'Erbil, Irak Federal Kürdistan Bölgesi\'nin başkentidir; kalesi UNESCO listesindedir.',
+    explanationKu:
+        'Hewlêr paytexta Herêma Kurdistanê ya Federal a Iraqê ye; qelaya wê di lîsteya UNESCOyê de ye.',
+    explanationTr:
+        'Erbil, Irak Federal Kürdistan Bölgesi\'nin başkentidir; kalesi UNESCO listesindedir.',
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0006',
+    category: 'Cografya',
+    prompt:
+        'Sûrên bazaltî yên ku di lîsteya mîrateya cîhanî ya UNESCOyê de ne li kîjan bajarî ne?',
+    answers: ['Amed', 'Wan', 'Mêrdîn', 'Riha'],
+    correctAnswer: 'Amed',
+    explanation:
+        'Diyarbakır Surları ve Hevsel Bahçeleri 2015\'te UNESCO listesine girdi.',
+    explanationKu:
+        'Sûrên Amedê û Baxçeyên Hewselê di 2015an de ketin lîsteya UNESCOyê.',
+    explanationTr:
+        'Diyarbakır Surları ve Hevsel Bahçeleri 2015\'te UNESCO listesine girdi.',
+    difficulty: 2,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0007',
+    category: 'Cografya',
+    prompt: 'Girê Navokê (Göbeklitepe) li nêzîkî kîjan bajarî ye?',
+    answers: ['Riha', 'Wan', 'Amed', 'Elezîz'],
+    correctAnswer: 'Riha',
+    explanation:
+        'Göbeklitepe Urfa yakınlarındadır ve dünyanın en eski tapınak alanlarından sayılır.',
+    explanationKu:
+        'Girê Navokê li nêzîkî Rihayê ye û yek ji kevintirîn cihên olî yên cîhanê tê hesibandin.',
+    explanationTr:
+        'Göbeklitepe Urfa yakınlarındadır ve dünyanın en eski tapınak alanlarından sayılır.',
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0008',
+    category: 'Cografya',
+    prompt: 'Bendava Îlisûyê li ser kîjan çemî hatiye avakirin?',
+    answers: ['Dîcle', 'Firat', 'Murat', 'Zap'],
+    correctAnswer: 'Dîcle',
+    explanation:
+        'Ilısu Barajı Dicle üzerindedir; yapımı tarihi Hasankeyf\'i sular altında bıraktı.',
+    explanationKu:
+        'Bendava Îlisûyê li ser Dîcleyê ye; avahiya wê gundê dîrokî Hesenkeyf di bin avê de hişt.',
+    explanationTr:
+        'Ilısu Barajı Dicle üzerindedir; yapımı tarihi Hasankeyf\'i sular altında bıraktı.',
+    difficulty: 4,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0009',
+    category: 'Cografya',
+    prompt: 'Hesenkeyf berî ku di bin avê de bimîne li ser kîjan çemî bû?',
+    answers: ['Dîcle', 'Firat', 'Botan', 'Zap'],
+    correctAnswer: 'Dîcle',
+    explanation: 'Hasankeyf, Dicle kıyısında tarihi bir yerleşimdi.',
+    explanationKu: 'Hesenkeyf bajarekî dîrokî yê li ser Dîcleyê bû.',
+    explanationTr: 'Hasankeyf, Dicle kıyısında tarihi bir yerleşimdi.',
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0010',
+    category: 'Cografya',
+    prompt: 'Çemê Zap bi giştî diherike nav kîjan çemî?',
+    answers: ['Dîcle', 'Firat', 'Erez', 'Çoruh'],
+    correctAnswer: 'Dîcle',
+    explanation: 'Büyük Zap, Hakkâri\'den doğar ve Dicle\'ye karışır.',
+    explanationKu: 'Zapê Mezin ji Colemêrgê diherike û digihîje Dîcleyê.',
+    explanationTr: 'Büyük Zap, Hakkâri\'den doğar ve Dicle\'ye karışır.',
+    difficulty: 4,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0011',
+    category: 'Cografya',
+    prompt: 'Rast e an şaş e: Gola Wanê ava wê şor e.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation:
+        'Van Gölü suyu sodalı ve tuzludur; bu yüzden yalnızca inci kefali yaşar.',
+    explanationKu:
+        'Ava Gola Wanê sodalî û şor e; loma tenê masiyê darex (înci kefalî) tê de dijî.',
+    explanationTr:
+        'Van Gölü suyu sodalı ve tuzludur; bu yüzden yalnızca inci kefali yaşar.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0012',
+    category: 'Cografya',
+    prompt: 'Herêma Behdînan bi giştî li kîjan parçeyê Kurdistanê ye?',
+    answers: ['Başûr', 'Bakur', 'Rojava', 'Rojhilat'],
+    correctAnswer: 'Başûr',
+    explanation: 'Behdinan, Güney Kürdistan\'dadır; ana merkezi Duhok\'tur.',
+    explanationKu:
+        'Behdînan li başûrê Kurdistanê ye; Dihok navenda wê ya sereke ye.',
+    explanationTr: 'Behdinan, Güney Kürdistan\'dadır; ana merkezi Duhok\'tur.',
+    difficulty: 5,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0013',
+    category: 'Cografya',
+    prompt: 'Bajarê Qamişlo li kîjan parçeyê Kurdistanê ye?',
+    answers: ['Rojava', 'Bakur', 'Başûr', 'Rojhilat'],
+    correctAnswer: 'Rojava',
+    explanation: 'Qamişlo, Suriye\'nin kuzeydoğusunda, Rojava\'dadır.',
+    explanationKu:
+        'Qamişlo li bakurê rojhilatê Sûriyeyê — Rojavayê Kurdistanê — ye.',
+    explanationTr: 'Qamişlo, Suriye\'nin kuzeydoğusunda, Rojava\'dadır.',
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0014',
+    category: 'Cografya',
+    prompt: 'Bajarê Sanandaj (Sine) li kîjan welatî ye?',
+    answers: ['Îran', 'Iraq', 'Sûriye', 'Ermenistan'],
+    correctAnswer: 'Îran',
+    explanation: 'Sine (Sanandaj), İran\'ın Kürdistan eyaletinin merkezidir.',
+    explanationKu: 'Sine (Sanandaj) navenda parêzgeha Kurdistanê ya Îranê ye.',
+    explanationTr: 'Sine (Sanandaj), İran\'ın Kürdistan eyaletinin merkezidir.',
+    difficulty: 4,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0015',
+    category: 'Cografya',
+    prompt: 'Peyva "çiya" bi Tirkî çi tê wateyê?',
+    answers: ['dağ', 'nehir', 'göl', 'ova'],
+    correctAnswer: 'dağ',
+    explanation: '"Çiya" Türkçede "dağ" demektir.',
+    explanationKu: '"Çiya" bi Tirkî "dağ" e.',
+    explanationTr: '"Çiya" Türkçede "dağ" demektir.',
+    difficulty: 1,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0001',
+    category: 'Muzîk',
+    prompt: '"Dengbêj" kî ye?',
+    answers: [
+      'Stranbêjê devkî yê ku çîrokan bi kilaman dibêje',
+      'Lêdera tembûrê',
+      'Nivîskarê stranan',
+      'Reqasê govendê',
+    ],
+    correctAnswer: 'Stranbêjê devkî yê ku çîrokan bi kilaman dibêje',
+    explanation:
+        'Dengbêj, enstrümansız, yalnız sesiyle kilam ve hikâye aktaran anlatıcıdır.',
+    explanationKu:
+        'Dengbêj bêyî amûrê, tenê bi dengê xwe kilam û çîrokan diguhezîne.',
+    explanationTr:
+        'Dengbêj, enstrümansız, yalnız sesiyle kilam ve hikâye aktaran anlatıcıdır.',
+    difficulty: 1,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0002',
+    category: 'Muzîk',
+    prompt: 'Amûra kurdî ya bi têlan a ku bi navê "saz" jî tê nasîn kîjan e?',
+    answers: ['Tembûr', 'Bilûr', 'Def', 'Zirne'],
+    correctAnswer: 'Tembûr',
+    explanation:
+        'Tembûr telli bir çalgıdır ve Kürt müziğinde merkezi yer tutar.',
+    explanationKu:
+        'Tembûr amûreke têlî ye û di muzîka kurdî de cihekî navendî digire.',
+    explanationTr:
+        'Tembûr telli bir çalgıdır ve Kürt müziğinde merkezi yer tutar.',
+    difficulty: 2,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0003',
+    category: 'Muzîk',
+    prompt: '"Bilûr" cureyekî çi amûrê ye?',
+    answers: ['Amûra pifê', 'Amûra têlî', 'Amûra lêdanê', 'Amûra elektronîk'],
+    correctAnswer: 'Amûra pifê',
+    explanation:
+        'Bilûr (kaval) üflemeli bir çalgıdır, genelde kamış veya ağaçtan yapılır.',
+    explanationKu:
+        'Bilûr amûreke pifê ye, bi gelemperî ji qamîş an dar tê çêkirin.',
+    explanationTr:
+        'Bilûr (kaval) üflemeli bir çalgıdır, genelde kamış veya ağaçtan yapılır.',
+    difficulty: 1,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0004',
+    category: 'Muzîk',
+    prompt: '"Def û zirne" bi gelemperî di kîjan rewşê de tên lêxistin?',
+    answers: [
+      'Dawet û govendê',
+      'Rêûresma şînê',
+      'Dersên dibistanê',
+      'Nimêja sibehê',
+    ],
+    correctAnswer: 'Dawet û govendê',
+    explanation: 'Davul ve zurna, düğün ve halayın klasik ikilisidir.',
+    explanationKu: 'Def û zirne cotê amûran ê dawet û govendê ye.',
+    explanationTr: 'Davul ve zurna, düğün ve halayın klasik ikilisidir.',
+    difficulty: 2,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0005',
+    category: 'Muzîk',
+    prompt: 'Şivan Perwer bi giştî bi çi tê nasîn?',
+    answers: [
+      'Stranbêjiya kurdî ya nûjen û siyasî',
+      'Helbesta klasîk',
+      'Romannivîsî',
+      'Dîroknasî',
+    ],
+    correctAnswer: 'Stranbêjiya kurdî ya nûjen û siyasî',
+    explanation:
+        'Şivan Perwer ünlü Kürt sanatçıdır; yurtsever şarkıları tüm Kürdistan\'a yayıldı.',
+    explanationKu:
+        'Şivan Perwer stranbêjê kurd ê navdar e; stranên wî yên welatparêz li seranserê Kurdistanê belav bûn.',
+    explanationTr:
+        'Şivan Perwer ünlü Kürt sanatçıdır; yurtsever şarkıları tüm Kürdistan\'a yayıldı.',
+    difficulty: 3,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0006',
+    category: 'Muzîk',
+    prompt: '"Kilam" di muzîka kurdî de çi ye?',
+    answers: [
+      'Stranên dirêj ên çîrokî',
+      'Reqsa komî',
+      'Amûreke têlî',
+      'Cureyekî xwarinê',
+    ],
+    correctAnswer: 'Stranên dirêj ên çîrokî',
+    explanation: 'Kilam genelde bir hikâye anlatır: aşk, savaş, göç ya da yas.',
+    explanationKu:
+        'Kilam bi gelemperî çîrokek dibêje: evîn, şer, koçberî an şîn.',
+    explanationTr:
+        'Kilam genelde bir hikâye anlatır: aşk, savaş, göç ya da yas.',
+    difficulty: 3,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0007',
+    category: 'Muzîk',
+    prompt: 'Ayşe Şan di dîroka muzîka kurdî de çima girîng e?',
+    answers: [
+      'Yek ji dengên jin ên pêşeng ê muzîka kurdî ye',
+      'Yekem romannivîsa kurd e',
+      'Damezrînera kovara Hawarê ye',
+      'Lêdera yekem a tembûrê ye',
+    ],
+    correctAnswer: 'Yek ji dengên jin ên pêşeng ê muzîka kurdî ye',
+    explanation:
+        'Ayşe Şan (1938-1996), zor koşullarda Kürt müziğinin en etkili kadın seslerinden biri oldu.',
+    explanationKu:
+        'Ayşe Şan (1938-1996) di bin şert û mercên dijwar de bû yek ji dengên jin ên herî bibandor ên muzîka kurdî.',
+    explanationTr:
+        'Ayşe Şan (1938-1996), zor koşullarda Kürt müziğinin en etkili kadın seslerinden biri oldu.',
+    difficulty: 4,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0008',
+    category: 'Muzîk',
+    prompt: '"Lawik" di muzîka kurdî de bi giştî çi ye?',
+    answers: [
+      'Cureyekî kilamê yê bi gelemperî evîndar',
+      'Amûreke lêdanê',
+      'Reqsek zûtir',
+      'Rêbaza notagirtinê',
+    ],
+    correctAnswer: 'Cureyekî kilamê yê bi gelemperî evîndar',
+    explanation:
+        'Lawik bir kilam türüdür; çoğunlukla aşk ve hasret üzerinedir.',
+    explanationKu:
+        'Lawik cureyekî kilamê ye; bi piranî li ser evîn û hesretê ye.',
+    explanationTr:
+        'Lawik bir kilam türüdür; çoğunlukla aşk ve hasret üzerinedir.',
+    difficulty: 4,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0009',
+    category: 'Muzîk',
+    prompt: 'Rast e an şaş e: Dengbêj bi gelemperî bêyî amûra muzîkê distirên.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'Dengbêjlik sözlü bir sanattır; ses tek başına yeterlidir.',
+    explanationKu:
+        'Dengbêjî hunerekî devkî ye; deng bi tena serê xwe têrê dike.',
+    explanationTr: 'Dengbêjlik sözlü bir sanattır; ses tek başına yeterlidir.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0010',
+    category: 'Muzîk',
+    prompt: '"Şeşbendî" di muzîka dengbêjî de bi giştî çi diyar dike?',
+    answers: [
+      'Avaz û qalibê kilamê',
+      'Hejmara amûran',
+      'Dirêjahiya dawetê',
+      'Navê herêmekê',
+    ],
+    correctAnswer: 'Avaz û qalibê kilamê',
+    explanation: 'Şeşbendî, dengbêjin kilamı üzerine kurduğu ezgi kalıbıdır.',
+    explanationKu:
+        'Şeşbendî qalibekî avaz e ku dengbêj kilamê li gorî wê dirêj dike.',
+    explanationTr: 'Şeşbendî, dengbêjin kilamı üzerine kurduğu ezgi kalıbıdır.',
+    difficulty: 5,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0011',
+    category: 'Muzîk',
+    prompt: 'Koma Mizgîn, Koma Amed û Koma Dengê Azadî bi giştî çi ne?',
+    answers: [
+      'Komên muzîka kurdî ya nûjen',
+      'Rojnameyên kurdî',
+      'Partiyên siyasî',
+      'Weşanxaneyên pirtûkan',
+    ],
+    correctAnswer: 'Komên muzîka kurdî ya nûjen',
+    explanation:
+        'Bu "kom"lar 1990\'larda toplu ve politik Kürt müziğini geliştirdi.',
+    explanationKu:
+        'Ev "kom" di salên 1990î de muzîka kurdî ya komî û siyasî pêş xistin.',
+    explanationTr:
+        'Bu "kom"lar 1990\'larda toplu ve politik Kürt müziğini geliştirdi.',
+    difficulty: 3,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0012',
+    category: 'Muzîk',
+    prompt: 'Peyva "stran" bi Tirkî çi tê wateyê?',
+    answers: ['şarkı', 'dans', 'saz', 'ses'],
+    correctAnswer: 'şarkı',
+    explanation: '"Stran" Türkçede "şarkı/türkü" demektir.',
+    explanationKu: '"Stran" bi Tirkî "şarkı/türkü" ye.',
+    explanationTr: '"Stran" Türkçede "şarkı/türkü" demektir.',
+    difficulty: 1,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0013',
+    category: 'Muzîk',
+    prompt: '"Erbane" cureyekî çi amûrê ye?',
+    answers: [
+      'Amûra lêdanê ya wek def',
+      'Amûra têlî',
+      'Amûra pifê',
+      'Amûra kevanî',
+    ],
+    correctAnswer: 'Amûra lêdanê ya wek def',
+    explanation:
+        'Erbane (def), deri kaplı vurmalı bir çalgıdır; dini ve halk müziğinde kullanılır.',
+    explanationKu:
+        'Erbane (daf) amûreke lêdanê ya çermî ye û bi taybetî di muzîka olî û gelêrî de tê bikaranîn.',
+    explanationTr:
+        'Erbane (def), deri kaplı vurmalı bir çalgıdır; dini ve halk müziğinde kullanılır.',
+    difficulty: 4,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0001',
+    category: 'Siyaset',
+    prompt: 'Kurd bi giştî li çend welatên sereke belav bûne?',
+    answers: ['Çar', 'Du', 'Şeş', 'Heşt'],
+    correctAnswer: 'Çar',
+    explanation:
+        'Kürtler ağırlıklı olarak Türkiye, İran, Irak ve Suriye\'de yaşar; diaspora da geniştir.',
+    explanationKu:
+        'Kurd bi piranî li Tirkiye, Îran, Iraq û Sûriyeyê dijîn; diaspora jî berfireh e.',
+    explanationTr:
+        'Kürtler ağırlıklı olarak Türkiye, İran, Irak ve Suriye\'de yaşar; diaspora da geniştir.',
+    difficulty: 2,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0002',
+    category: 'Siyaset',
+    prompt:
+        'Herêma Kurdistanê ya Iraqê statuya xwe ya federal bi kîjan destûrê bi dest xist?',
+    answers: [
+      'Destûra Iraqê ya 2005an',
+      'Peymana Lozanê',
+      'Biryara NYyê ya 1991ê',
+      'Destûra 1970yî',
+    ],
+    correctAnswer: 'Destûra Iraqê ya 2005an',
+    explanation:
+        '2005 Irak federal anayasası Kürdistan Bölgesi\'ni federal bölge olarak tanıdı.',
+    explanationKu:
+        'Destûra federal a Iraqê ya 2005an Herêma Kurdistanê wek herêmeke federal nas kir.',
+    explanationTr:
+        '2005 Irak federal anayasası Kürdistan Bölgesi\'ni federal bölge olarak tanıdı.',
+    difficulty: 3,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0003',
+    category: 'Siyaset',
+    prompt: '"Hevserokatî" di siyaseta kurdî de çi ye?',
+    answers: [
+      'Rêveberiya bi jin û mêrekî bi hev re',
+      'Hilbijartina du salane',
+      'Sîstema du meclîsan',
+      'Serokatiya dorveger a bajaran',
+    ],
+    correctAnswer: 'Rêveberiya bi jin û mêrekî bi hev re',
+    explanation:
+        'Eş başkanlık, cinsiyet eşitliği ilkesidir: her makam bir kadın ve bir erkekle paylaşılır.',
+    explanationKu:
+        'Hevserokatî prensîba wekheviya zayendî ye: her post bi jinek û mêrek tê parvekirin.',
+    explanationTr:
+        'Eş başkanlık, cinsiyet eşitliği ilkesidir: her makam bir kadın ve bir erkekle paylaşılır.',
+    difficulty: 3,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0004',
+    category: 'Siyaset',
+    prompt: '"Xweseriya demokratîk" bi giştî çi pêşniyar dike?',
+    answers: [
+      'Xwerêveberiya herêmî ya li ser bingehê meclîsên gel',
+      'Damezrandina dewleteke nû ya navendî',
+      'Rêveberiya leşkerî',
+      'Sîstema padîşahiyê',
+    ],
+    correctAnswer: 'Xwerêveberiya herêmî ya li ser bingehê meclîsên gel',
+    explanation:
+        'Demokratik özerklik, karar almayı merkezden yerel meclis ve komünlere taşır.',
+    explanationKu:
+        'Xweseriya demokratîk biryardayînê ji navendê digihîne meclîs û komunên herêmî.',
+    explanationTr:
+        'Demokratik özerklik, karar almayı merkezden yerel meclis ve komünlere taşır.',
+    difficulty: 4,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0005',
+    category: 'Siyaset',
+    prompt: 'Kongra Star bi giştî li ser çi kar dike?',
+    answers: [
+      'Rêxistinbûna jinan li Rojava',
+      'Weşana rojnameyan',
+      'Bazirganiya navneteweyî',
+      'Perwerdehiya leşkerî ya giştî',
+    ],
+    correctAnswer: 'Rêxistinbûna jinan li Rojava',
+    explanation: 'Kongra Star, Rojava\'da kadın hareketinin çatı örgütüdür.',
+    explanationKu:
+        'Kongra Star li Rojava rêxistina şemsiye ya tevgera jinan e.',
+    explanationTr: 'Kongra Star, Rojava\'da kadın hareketinin çatı örgütüdür.',
+    difficulty: 4,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0006',
+    category: 'Siyaset',
+    prompt: '"KJAR" kurtenavê çi ye?',
+    answers: [
+      'Rêxistina jinan a azadîxwaz a rojhilatê Kurdistanê',
+      'Meclîseke bajêr',
+      'Yekîtiya nivîskaran',
+      'Sendîkayeke karkeran',
+    ],
+    correctAnswer: 'Rêxistina jinan a azadîxwaz a rojhilatê Kurdistanê',
+    explanation:
+        'KJAR (Doğu Kürdistan Özgür Kadınlar Topluluğu), doğuda kadın özgürlüğü üzerine çalışır.',
+    explanationKu:
+        'KJAR (Komalgeya Jinên Azad ên Rojhilatê Kurdistanê) li rojhilat li ser azadiya jinê kar dike.',
+    explanationTr:
+        'KJAR (Doğu Kürdistan Özgür Kadınlar Topluluğu), doğuda kadın özgürlüğü üzerine çalışır.',
+    difficulty: 5,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0007',
+    category: 'Siyaset',
+    prompt:
+        'Rast e an şaş e: Zimanê kurdî li Herêma Kurdistanê ya Iraqê zimanekî fermî ye.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'Irak anayasasına göre Kürtçe ülke genelinde resmi dildir.',
+    explanationKu:
+        'Li gorî destûra Iraqê, kurdî li tevahiya welêt zimanekî fermî ye.',
+    explanationTr: 'Irak anayasasına göre Kürtçe ülke genelinde resmi dildir.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0008',
+    category: 'Siyaset',
+    prompt:
+        'Referandûma serxwebûnê ya Herêma Kurdistanê ya Iraqê di kîjan salê de pêk hat?',
+    answers: ['2017', '2005', '2011', '2020'],
+    correctAnswer: '2017',
+    explanation:
+        'Referandum 25 Eylül 2017\'de yapıldı; sonuç büyük oranda "evet" oldu ancak uygulanmadı.',
+    explanationKu:
+        'Referandûm di 25ê Îlona 2017an de pêk hat; encam bi piranî "erê" bû lê nehat sepandin.',
+    explanationTr:
+        'Referandum 25 Eylül 2017\'de yapıldı; sonuç büyük oranda "evet" oldu ancak uygulanmadı.',
+    difficulty: 3,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0009',
+    category: 'Siyaset',
+    prompt:
+        'Rêveberiya Xweser a Bakur û Rojhilatê Sûriyeyê bi giştî di kîjan salan de ava bû?',
+    answers: ['Piştî 2012an', 'Berî 1990î', 'Di 1946an de', 'Di 2020î de'],
+    correctAnswer: 'Piştî 2012an',
+    explanation:
+        '2012\'den sonra Rojava\'da özerk kantonlar ilan edildi, sonra ortak bir yönetim çatısında birleşti.',
+    explanationKu:
+        'Piştî 2012an li Rojava kantonên xweser hatin ragihandin û paşê di bin banê rêveberiyeke hevpar de kom bûn.',
+    explanationTr:
+        '2012\'den sonra Rojava\'da özerk kantonlar ilan edildi, sonra ortak bir yönetim çatısında birleşti.',
+    difficulty: 4,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0010',
+    category: 'Siyaset',
+    prompt: '"Netewa demokratîk" bi kîjan xalê ji "dewleta netewe" cuda dibe?',
+    answers: [
+      'Nasnameyên cuda di nav yek civakê de tên parastin, dewlet ne pêwîst e',
+      'Tenê yek zimanê fermî qebûl dike',
+      'Tenê bi hilbijartinan kar dike',
+      'Bi tundî sînoran diparêze',
+    ],
+    correctAnswer:
+        'Nasnameyên cuda di nav yek civakê de tên parastin, dewlet ne pêwîst e',
+    explanation:
+        'Demokratik ulus, devletin zorla tekleştirmesi yerine çoğulculuğu ve öz yönetimi koyar.',
+    explanationKu:
+        'Netewa demokratîk li şûna yekîtiya zorê ya dewletê, hebûna pirrengî û xwerêveberiyê datîne.',
+    explanationTr:
+        'Demokratik ulus, devletin zorla tekleştirmesi yerine çoğulculuğu ve öz yönetimi koyar.',
+    difficulty: 5,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0011',
+    category: 'Siyaset',
+    prompt: 'Peyva "azadî" bi Tirkî çi tê wateyê?',
+    answers: ['özgürlük', 'eşitlik', 'adalet', 'barış'],
+    correctAnswer: 'özgürlük',
+    explanation: '"Azadî" Türkçede "özgürlük" demektir.',
+    explanationKu: '"Azadî" bi Tirkî "özgürlük" e.',
+    explanationTr: '"Azadî" Türkçede "özgürlük" demektir.',
+    difficulty: 2,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0012',
+    category: 'Siyaset',
+    prompt: 'Di siyaseta herêmî de "komun" bi giştî çi ye?',
+    answers: [
+      'Yekeya biryardayînê ya herî biçûk a taxê an gund',
+      'Dadgeheke bilind',
+      'Fermandariya leşkerî',
+      'Bankayeke herêmî',
+    ],
+    correctAnswer: 'Yekeya biryardayînê ya herî biçûk a taxê an gund',
+    explanation:
+        'Komün, öz yönetimin en küçük birimidir; köy ya da mahalle sakinleri doğrudan karar alır.',
+    explanationKu:
+        'Komun asta yekem a xwerêveberiyê ye; gundî an taxî tê de rasterast biryar didin.',
+    explanationTr:
+        'Komün, öz yönetimin en küçük birimidir; köy ya da mahalle sakinleri doğrudan karar alır.',
+    difficulty: 4,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0001',
+    category: 'Paradigma',
+    prompt: '"Jineolojî" bi gelemperî çi tê wateyê?',
+    answers: [
+      'Zanista jinê û jiyanê',
+      'Hunera nîgarkêşiyê',
+      'Zanista erdnîgariyê',
+      'Rêbaza aboriyê',
+    ],
+    correctAnswer: 'Zanista jinê û jiyanê',
+    explanation:
+        'Jineoloji, "jin" (kadın) ve "-loji"den gelir; yaşamı ve toplumu kadın perspektifinden inceleyen bilimdir.',
+    explanationKu:
+        'Jineolojî ji "jin" û "-lojî" tê; zanistek e ku jiyan û civakê ji perspektîfa jinê dinirxîne.',
+    explanationTr:
+        'Jineoloji, "jin" (kadın) ve "-loji"den gelir; yaşamı ve toplumu kadın perspektifinden inceleyen bilimdir.',
+    difficulty: 3,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0002',
+    category: 'Paradigma',
+    prompt: 'Di paradîgmaya ekolojîk de armanca sereke çi ye?',
+    answers: [
+      'Lihevhatina civak û xwezayê',
+      'Zêdekirina hilberînê bi her awayî',
+      'Bazirganiya azad a bêsînor',
+      'Bajarvanîkirina bilez',
+    ],
+    correctAnswer: 'Lihevhatina civak û xwezayê',
+    explanation:
+        'Ekoloji, toplumun doğayla ilişkisini yeniden kurar: yaşam yıkım üzerine inşa edilmez.',
+    explanationKu:
+        'Ekolojî têkiliya civakê bi xwezayê re ji nû ve saz dike: jiyan li ser xerakirinê nayê avakirin.',
+    explanationTr:
+        'Ekoloji, toplumun doğayla ilişkisini yeniden kurar: yaşam yıkım üzerine inşa edilmez.',
+    difficulty: 4,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0003',
+    category: 'Paradigma',
+    prompt: '"Xwe-parastin" di vê paradîgmayê de bi giştî çi tê wateyê?',
+    answers: [
+      'Parastina civakê bi rêxistinbûna wê ya xwe',
+      'Bazirganiya çekan',
+      'Veqetîna ji cîhanê',
+      'Rêveberiya bi tenê bi hilbijartinan',
+    ],
+    correctAnswer: 'Parastina civakê bi rêxistinbûna wê ya xwe',
+    explanation:
+        'Öz savunma yalnız askeri değildir; dilin, kültürün ve toplumsal yaşamın korunmasını da kapsar.',
+    explanationKu:
+        'Xwe-parastin ne tenê ya leşkerî ye; parastina ziman, çand û jiyana civakî jî tê de ye.',
+    explanationTr:
+        'Öz savunma yalnız askeri değildir; dilin, kültürün ve toplumsal yaşamın korunmasını da kapsar.',
+    difficulty: 3,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0004',
+    category: 'Paradigma',
+    prompt: 'Têgîna "modernîteya demokratîk" li hember çi tê danîn?',
+    answers: [
+      'Modernîteya kapîtalîst',
+      'Serdema navîn',
+      'Şoreşa pîşesazî',
+      'Felsefeya antîk',
+    ],
+    correctAnswer: 'Modernîteya kapîtalîst',
+    explanation:
+        'Demokratik modernite, kapitalist moderniteye alternatif olarak sunulur: komün, ekoloji ve kadın özgürlüğü.',
+    explanationKu:
+        'Modernîteya demokratîk wek alternatîfeke modernîteya kapîtalîst tê pêşkêşkirin: komun, ekolojî û azadiya jinê.',
+    explanationTr:
+        'Demokratik modernite, kapitalist moderniteye alternatif olarak sunulur: komün, ekoloji ve kadın özgürlüğü.',
+    difficulty: 5,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0005',
+    category: 'Paradigma',
+    prompt: 'Di vê paradîgmayê de "civaka exlaqî û polîtîk" çi tê wateyê?',
+    answers: [
+      'Civaka ku bi nirx û biryardayîna hevpar tê birêvebirin',
+      'Civaka ku tenê bi qanûnan tê birêvebirin',
+      'Civaka bêrêxistin',
+      'Civaka ku ji aliyê pisporan ve tê rêvebirin',
+    ],
+    correctAnswer: 'Civaka ku bi nirx û biryardayîna hevpar tê birêvebirin',
+    explanation:
+        'Ahlaki ve politik toplum, kararı teknokratlara bırakmaz; değerler ve halk meclisleri esastır.',
+    explanationKu:
+        'Civaka exlaqî û polîtîk biryarê nade destê teknokratan; nirx û meclîsên gel bingeh in.',
+    explanationTr:
+        'Ahlaki ve politik toplum, kararı teknokratlara bırakmaz; değerler ve halk meclisleri esastır.',
+    difficulty: 2,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0006',
+    category: 'Paradigma',
+    prompt:
+        'Rast e an şaş e: Di paradîgmaya netewa demokratîk de armanc damezrandina dewleteke nû ye.',
+    answers: ['Şaş', 'Rast'],
+    correctAnswer: 'Şaş',
+    explanation:
+        'Amaç yeni bir devlet kurmak değil, devlet dışında toplumsal öz yönetimdir.',
+    explanationKu:
+        'Armanc ne damezrandina dewletê ye; xwerêveberiya civakê ya li derveyî dewletê ye.',
+    explanationTr:
+        'Amaç yeni bir devlet kurmak değil, devlet dışında toplumsal öz yönetimdir.',
+    type: QuestionType.trueFalse,
+    difficulty: 4,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0007',
+    category: 'Paradigma',
+    prompt: 'Di têgîna "aboriya komunal" de xala sereke çi ye?',
+    answers: [
+      'Hilberîn li gorî pêdiviya civakê, ne li gorî qezencê',
+      'Zêdekirina bêsînor a qezencê',
+      'Taybetkirina tevahî ya erdê',
+      'Bazirganiya tenê ya derveyî',
+    ],
+    correctAnswer: 'Hilberîn li gorî pêdiviya civakê, ne li gorî qezencê',
+    explanation:
+        'Komünal ekonomi, bireysel kârdan önce kooperatifi ve ortak üretimi koyar.',
+    explanationKu:
+        'Aboriya komunal kooperatîf û hilberîna hevpar dixe pêş qezenca kesane.',
+    explanationTr:
+        'Komünal ekonomi, bireysel kârdan önce kooperatifi ve ortak üretimi koyar.',
+    difficulty: 3,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0008',
+    category: 'Paradigma',
+    prompt: '"Hiyerarşî" û "dewlet" di vê xebata teorîk de çawa tên nirxandin?',
+    answers: [
+      'Wek pêvajoyên dîrokî yên ku dikarin bên guhertin',
+      'Wek rewşên xwezayî yên neguherbar',
+      'Wek diyardeyên tenê aborî',
+      'Wek pirsgirêkên teknîkî',
+    ],
+    correctAnswer: 'Wek pêvajoyên dîrokî yên ku dikarin bên guhertin',
+    explanation:
+        'Hiyerarşi tarihsel bir oluşum olarak görülür; tarihsel olduğu için değiştirilebilir.',
+    explanationKu:
+        'Hiyerarşî wek çêbûneke dîrokî tê dîtin; ji ber ku dîrokî ye, dikare bê guhertin.',
+    explanationTr:
+        'Hiyerarşi tarihsel bir oluşum olarak görülür; tarihsel olduğu için değiştirilebilir.',
+    difficulty: 5,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0009',
+    category: 'Paradigma',
+    prompt: 'Peyva "jiyan" bi Tirkî çi tê wateyê?',
+    answers: ['yaşam', 'özgürlük', 'toplum', 'doğa'],
+    correctAnswer: 'yaşam',
+    explanation: '"Jiyan" Türkçede "yaşam/hayat" demektir.',
+    explanationKu: '"Jiyan" bi Tirkî "yaşam/hayat" e.',
+    explanationTr: '"Jiyan" Türkçede "yaşam/hayat" demektir.',
+    difficulty: 2,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0010',
+    category: 'Paradigma',
+    prompt:
+        'Di paradîgmayê de "azadiya jinê" çima wek pîvana azadiya civakê tê dîtin?',
+    answers: [
+      'Ji ber ku koletiya yekem li ser jinê hatiye avakirin',
+      'Ji ber ku jin pirtir in',
+      'Ji ber ku pirsgirêkeke aborî ye',
+      'Ji ber ku pirsgirêkeke qanûnî ye',
+    ],
+    correctAnswer: 'Ji ber ku koletiya yekem li ser jinê hatiye avakirin',
+    explanation:
+        'Argüman şudur: ilk toplumsal hiyerarşi kadının tabi kılınmasıyla başladı, bu yüzden özgürlük de oradan başlar.',
+    explanationKu:
+        'Argûman ev e: hiyerarşiya yekem a civakî bi bindestkirina jinê dest pê kiriye, loma azadî jî ji wir dest pê dike.',
+    explanationTr:
+        'Argüman şudur: ilk toplumsal hiyerarşi kadının tabi kılınmasıyla başladı, bu yüzden özgürlük de oradan başlar.',
+    difficulty: 4,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0021',
+    category: 'Ziman',
+    prompt: 'Peyva Kurmancî "dar" bi Tirkî çi tê wateyê?',
+    answers: ['ağaç', 'taş', 'yol', 'kapı'],
+    correctAnswer: 'ağaç',
+    explanation: '"Dar" Türkçede "ağaç" demektir.',
+    explanationKu: '"Dar" bi Tirkî "ağaç" e.',
+    explanationTr: '"Dar" Türkçede "ağaç" demektir.',
+    difficulty: 1,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0022',
+    category: 'Ziman',
+    prompt: 'Peyva Kurmancî "nan" bi Tirkî çi tê wateyê?',
+    answers: ['ekmek', 'tuz', 'şeker', 'et'],
+    correctAnswer: 'ekmek',
+    explanation: '"Nan" Türkçede "ekmek" demektir.',
+    explanationKu: '"Nan" bi Tirkî "ekmek" e.',
+    explanationTr: '"Nan" Türkçede "ekmek" demektir.',
+    difficulty: 1,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0023',
+    category: 'Ziman',
+    prompt: 'Peyva Kurmancî "biçûk" bi Tirkî çi tê wateyê?',
+    answers: ['küçük', 'büyük', 'uzun', 'geniş'],
+    correctAnswer: 'küçük',
+    explanation: '"Biçûk" Türkçede "küçük" demektir.',
+    explanationKu: '"Biçûk" bi Tirkî "küçük" e.',
+    explanationTr: '"Biçûk" Türkçede "küçük" demektir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0024',
+    category: 'Ziman',
+    prompt: 'Hejmara "deh" di Kurmancî de bi hejmarî çi ye?',
+    answers: ['10', '7', '12', '20'],
+    correctAnswer: '10',
+    explanation:
+        'Temel sayılar: yek, du, sê, çar, pênc, şeş, heft, heşt, neh, deh (10).',
+    explanationKu:
+        'Hejmarên bingehîn: yek, du, sê, çar, pênc, şeş, heft, heşt, neh, deh.',
+    explanationTr:
+        'Temel sayılar: yek, du, sê, çar, pênc, şeş, heft, heşt, neh, deh (10).',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0025',
+    category: 'Ziman',
+    prompt: 'Di Kurmancî de "-ek" wek paşgir çi diyar dike?',
+    answers: [
+      'Nebinavkirîbûn (yek/bir)',
+      'Pirjimarî',
+      'Zayenda mê',
+      'Dema borî',
+    ],
+    correctAnswer: 'Nebinavkirîbûn (yek/bir)',
+    explanation: '"Pirtûkek" bir kitap demektir; belirsizlik ekidir.',
+    explanationKu:
+        '"Pirtûk-ek" wateya "bir kitap" dide; ew nîşana nebinavkirîbûnê ye.',
+    explanationTr: '"Pirtûkek" bir kitap demektir; belirsizlik ekidir.',
+    difficulty: 3,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0026',
+    category: 'Ziman',
+    prompt: 'Veqetandeka navdêrên nêr ên yekjimar di Kurmancî de kîjan e?',
+    answers: ['-ê', '-a', '-an', '-in'],
+    correctAnswer: '-ê',
+    explanation: 'Eril isim "-ê" alır; örnek: "bavê min" (benim babam).',
+    explanationKu:
+        'Navdêrê nêr "-ê" digire: "kitêbê" na, lê "dar-ê mezin" — mînak: "bavê min".',
+    explanationTr: 'Eril isim "-ê" alır; örnek: "bavê min" (benim babam).',
+    difficulty: 3,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0027',
+    category: 'Ziman',
+    prompt: 'Di hevoka "Min ew dît" de lêker li gorî kê tê kişandin?',
+    answers: [
+      'Li gorî bireserê (ew)',
+      'Li gorî bikerê (min)',
+      'Li gorî demê',
+      'Li gorî zayendê',
+    ],
+    correctAnswer: 'Li gorî bireserê (ew)',
+    explanation:
+        'Geçmiş zamanda geçişli fiil nesneye göre çekimlenir — bu ergatifliğin özelliğidir.',
+    explanationKu:
+        'Di dema borî ya lêkerên gerguhêz de lêker li gorî bireserê tê kişandin — ev taybetiya ergatîfê ye.',
+    explanationTr:
+        'Geçmiş zamanda geçişli fiil nesneye göre çekimlenir — bu ergatifliğin özelliğidir.',
+    difficulty: 4,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0028',
+    category: 'Ziman',
+    prompt: 'Peyva "dibistan" ji kîjan koka lêkerê tê?',
+    answers: [
+      'Xwendin (dibistan: cihê xwendinê)',
+      'Nivîsandin',
+      'Gotin',
+      'Dîtin',
+    ],
+    correctAnswer: 'Xwendin (dibistan: cihê xwendinê)',
+    explanation: '"Dibistan" (okul), okuma kökü ve yer eki "-stan"dan oluşur.',
+    explanationKu:
+        '"Dibistan" ji "dibi-" (xwendin) û paşgira cih "-stan" pêk tê.',
+    explanationTr:
+        '"Dibistan" (okul), okuma kökü ve yer eki "-stan"dan oluşur.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0029',
+    category: 'Ziman',
+    prompt:
+        'Paşgira "-istan/-stan" di peyvên wek "Kurdistan" de çi diyar dike?',
+    answers: ['Cih / war', 'Kesayet', 'Dem', 'Hejmar'],
+    correctAnswer: 'Cih / war',
+    explanation: '"-stan" yer ekidir: Kürtlerin yurdu.',
+    explanationKu: '"-stan" paşgira cih e: warê kurdan.',
+    explanationTr: '"-stan" yer ekidir: Kürtlerin yurdu.',
+    difficulty: 3,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0030',
+    category: 'Ziman',
+    prompt: 'Di Kurmancî de cudahiya "tu" û "hûn" çi ye?',
+    answers: [
+      '"Tu" yekjimar, "hûn" pirjimar/rêzdarî ye',
+      'Herdu jî pirjimar in',
+      '"Tu" tenê ji bo jinan e',
+      '"Hûn" tenê di nivîsê de tê bikaranîn',
+    ],
+    correctAnswer: '"Tu" yekjimar, "hûn" pirjimar/rêzdarî ye',
+    explanation: '"Tu" tekil, "hûn" çoğul ya da saygı ifadesidir.',
+    explanationKu:
+        '"Tu" ji bo yek kesî, "hûn" ji bo gelek kesan an ji bo rêzgirtinê tê bikaranîn.',
+    explanationTr: '"Tu" tekil, "hûn" çoğul ya da saygı ifadesidir.',
+    difficulty: 4,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0031',
+    category: 'Ziman',
+    prompt:
+        'Di Kurmancî de "raweya bilanî" (subjunctive) bi kîjan pêşgirê tê çêkirin?',
+    answers: ['bi-', 'di-', 'na-', 'ne-'],
+    correctAnswer: 'bi-',
+    explanation: 'İstek kipi "bi-" ile kurulur: "ez biçim" (gideyim).',
+    explanationKu: 'Raweya bilanî bi "bi-" tê çêkirin: "ez bi-ç-im" (gideyim).',
+    explanationTr: 'İstek kipi "bi-" ile kurulur: "ez biçim" (gideyim).',
+    difficulty: 5,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0032',
+    category: 'Ziman',
+    prompt: 'Nîşana neyîniyê ya dema niha di Kurmancî de kîjan e?',
+    answers: ['na-', 'ne-', 'bi-', 'di-'],
+    correctAnswer: 'na-',
+    explanation:
+        'Şimdiki zaman "na-" ile olumsuzlanır: "ez naçim" (gitmiyorum).',
+    explanationKu: 'Dema niha bi "na-" neyînî dibe: "ez naçim" (gitmiyorum).',
+    explanationTr:
+        'Şimdiki zaman "na-" ile olumsuzlanır: "ez naçim" (gitmiyorum).',
+    difficulty: 4,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0033',
+    category: 'Ziman',
+    prompt:
+        'Rast e an şaş e: Di Kurmancî de navdêr xwedî zayendê ne (nêr û mê).',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation:
+        'Evet, Kurmancî\'de her isim eril ya da dişildir ve bu izafeyi belirler.',
+    explanationKu:
+        'Erê, her navdêreke kurmancî nêr an mê ye û ev yek veqetandekê diyar dike.',
+    explanationTr:
+        'Evet, Kurmancî\'de her isim eril ya da dişildir ve bu izafeyi belirler.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0034',
+    category: 'Ziman',
+    prompt: 'Peyva "xwendekar" bi Tirkî çi tê wateyê?',
+    answers: ['öğrenci', 'öğretmen', 'okul', 'kitap'],
+    correctAnswer: 'öğrenci',
+    explanation: '"Xwendekar" Türkçede "öğrenci" demektir.',
+    explanationKu: '"Xwendekar" bi Tirkî "öğrenci" ye.',
+    explanationTr: '"Xwendekar" Türkçede "öğrenci" demektir.',
+    difficulty: 3,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0017',
+    category: 'Çand',
+    prompt: 'Di kevneşopiya kurdî de "berxwedan" bi giştî çi tê wateyê?',
+    answers: [
+      'Li ber xwe dan / direniş',
+      'Bazirganî',
+      'Xwarina cejnê',
+      'Reqsa dawetê',
+    ],
+    correctAnswer: 'Li ber xwe dan / direniş',
+    explanation:
+        '"Berxwedan", "li ber xwe dan"dan gelir; direnme ve ısrar anlamındadır.',
+    explanationKu:
+        '"Berxwedan" ji "li ber xwe dan" tê; wateya xwe-parastin û israrê dide.',
+    explanationTr:
+        '"Berxwedan", "li ber xwe dan"dan gelir; direnme ve ısrar anlamındadır.',
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0018',
+    category: 'Çand',
+    prompt: 'Xwarina "dolme" ya kurdî bi giştî ji çi tê çêkirin?',
+    answers: [
+      'Belg û sebzeyên dagirtî',
+      'Ard û şekir',
+      'Şîr û hingiv',
+      'Genimê sor',
+    ],
+    correctAnswer: 'Belg û sebzeyên dagirtî',
+    explanation:
+        'Dolma; asma yaprağı ya da patlıcan, biber gibi sebzelerin pirinç/bulgurla doldurulmasıdır.',
+    explanationKu:
+        'Dolme belgên rezê an sebzeyên wek bacan û bîber bi birinc û savar tên dagirtin.',
+    explanationTr:
+        'Dolma; asma yaprağı ya da patlıcan, biber gibi sebzelerin pirinç/bulgurla doldurulmasıdır.',
+    difficulty: 3,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0019',
+    category: 'Çand',
+    prompt: 'Cejna Newrozê bi kîjan sembola sereke tê nasîn?',
+    answers: ['Agir', 'Av', 'Berf', 'Bager'],
+    correctAnswer: 'Agir',
+    explanation: 'Nevruz ateşi yenilenmenin ve direnişin simgesidir.',
+    explanationKu: 'Agirê Newrozê sembola nûbûn û berxwedanê ye.',
+    explanationTr: 'Nevruz ateşi yenilenmenin ve direnişin simgesidir.',
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0020',
+    category: 'Çand',
+    prompt: '"Pêşmerge" peyv bi rastî çi tê wateyê?',
+    answers: [
+      'Yê ku li pêşiya mirinê ye',
+      'Yê ku digere',
+      'Yê ku distirê',
+      'Yê ku dixwîne',
+    ],
+    correctAnswer: 'Yê ku li pêşiya mirinê ye',
+    explanation: '"Pêş" (ön) + "merg" (ölüm): ölümün önüne duran.',
+    explanationKu: '"Pêş" + "merg" (mirin): yê ku xwe datîne pêşiya mirinê.',
+    explanationTr: '"Pêş" (ön) + "merg" (ölüm): ölümün önüne duran.',
+    difficulty: 4,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0021',
+    category: 'Çand',
+    prompt: 'Di civaka kurdî de "eşîret" çi ye?',
+    answers: [
+      'Komeke malbatên bi xizmî girêdayî',
+      'Rêxistineke siyasî ya nûjen',
+      'Cureyekî xwarinê',
+      'Navê herêmeke bajarî',
+    ],
+    correctAnswer: 'Komeke malbatên bi xizmî girêdayî',
+    explanation:
+        'Aşiret, akrabalıkla bağlı büyük topluluktur ve geleneksel olarak toplumsal yönetim rolü üstlenir.',
+    explanationKu:
+        'Eşîret komeke mezin a xizmî ye û bi kevneşopî rola rêveberiya civakî digire.',
+    explanationTr:
+        'Aşiret, akrabalıkla bağlı büyük topluluktur ve geleneksel olarak toplumsal yönetim rolü üstlenir.',
+    difficulty: 3,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0022',
+    category: 'Çand',
+    prompt: '"Şeva Yeldayê" (Şeva Zivistanê) çi ye?',
+    answers: [
+      'Şeva herî dirêj a salê',
+      'Yekem roja biharê',
+      'Roja dawî ya havînê',
+      'Şeva Newrozê',
+    ],
+    correctAnswer: 'Şeva herî dirêj a salê',
+    explanation:
+        'Yelda gecesi yılın en uzun gecesidir; toplanıp yemekle geçirilir.',
+    explanationKu:
+        'Şeva Yeldayê şeva herî dirêj a salê ye û bi civîn û xwarinê tê derbaskirin.',
+    explanationTr:
+        'Yelda gecesi yılın en uzun gecesidir; toplanıp yemekle geçirilir.',
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0023',
+    category: 'Çand',
+    prompt: 'Di dawetên kurdî de "qelen" çi ye?',
+    answers: [
+      'Diyariya ku ji bo bûkê tê dayîn',
+      'Xwarina dawetê',
+      'Reqsa dawiyê',
+      'Navê muzîkjenan',
+    ],
+    correctAnswer: 'Diyariya ku ji bo bûkê tê dayîn',
+    explanation:
+        'Başlık (qelen), geleneksel olarak damat ailesinin gelin ailesine verdiği mal/hediyedir.',
+    explanationKu:
+        'Qelen di kevneşopiyê de mal an diyariya ku malbata zavayî dide malbata bûkê ye.',
+    explanationTr:
+        'Başlık (qelen), geleneksel olarak damat ailesinin gelin ailesine verdiği mal/hediyedir.',
+    difficulty: 4,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0024',
+    category: 'Çand',
+    prompt: '"Dîwanxane" di malên kurdî yên kevneşopî de çi ye?',
+    answers: [
+      'Odeya mêvanan û civînê',
+      'Embara genim',
+      'Cihê ajalan',
+      'Odeya zarokan',
+    ],
+    correctAnswer: 'Odeya mêvanan û civînê',
+    explanation: 'Dîwanxane, misafir ağırlama ve toplumsal karar alma yeridir.',
+    explanationKu: 'Dîwanxane cihê mêvandarî û biryardana civakî ye.',
+    explanationTr:
+        'Dîwanxane, misafir ağırlama ve toplumsal karar alma yeridir.',
+    difficulty: 5,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0025',
+    category: 'Çand',
+    prompt: 'Peyva "mal" di Kurmancî de bi Tirkî çi tê wateyê?',
+    answers: ['ev', 'yol', 'dağ', 'su'],
+    correctAnswer: 'ev',
+    explanation: '"Mal" Türkçede "ev" demektir.',
+    explanationKu: '"Mal" bi Tirkî "ev" e.',
+    explanationTr: '"Mal" Türkçede "ev" demektir.',
+    difficulty: 1,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0016',
+    category: 'Dîrok',
+    prompt: 'Şerefxanê Bidlîsî Şerefname di kîjan salê de temam kir?',
+    answers: ['1597', '1497', '1697', '1797'],
+    correctAnswer: '1597',
+    explanation: 'Şerefname 1597\'de Farsça yazıldı.',
+    explanationKu: 'Şerefname di 1597an de bi farisî hat nivîsandin.',
+    explanationTr: 'Şerefname 1597\'de Farsça yazıldı.',
+    difficulty: 3,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0017',
+    category: 'Dîrok',
+    prompt: 'Bedirxan Beg mîrê kîjan mîrektiyê bû?',
+    answers: ['Botan', 'Baban', 'Erdelan', 'Soran'],
+    correctAnswer: 'Botan',
+    explanation: 'Bedirhan Bey Botan emiriydi; 1840\'lardaki isyanı ünlüdür.',
+    explanationKu:
+        'Bedirxan Beg mîrê Botanê bû; serhildana wî ya 1840î navdar e.',
+    explanationTr: 'Bedirhan Bey Botan emiriydi; 1840\'lardaki isyanı ünlüdür.',
+    difficulty: 2,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0018',
+    category: 'Dîrok',
+    prompt: 'Mîrektiya Baban navenda xwe bi giştî li ku derê bû?',
+    answers: ['Silêmanî', 'Hewlêr', 'Wan', 'Kirmanşan'],
+    correctAnswer: 'Silêmanî',
+    explanation:
+        'Baban Emirliği 18-19. yüzyılda merkezini Süleymaniye\'de kurdu.',
+    explanationKu:
+        'Mîrektiya Baban di sedsala 18-19em de navenda xwe Silêmanî bû.',
+    explanationTr:
+        'Baban Emirliği 18-19. yüzyılda merkezini Süleymaniye\'de kurdu.',
+    difficulty: 4,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0019',
+    category: 'Dîrok',
+    prompt: 'Peymana Zuhabê (Qesr-î Şîrîn, 1639) ji bo kurdan çima girîng e?',
+    answers: [
+      'Herêma kurdî di navbera Osmanî û Sefewiyan de hat parvekirin',
+      'Dewleteke kurdî damezrand',
+      'Alfabeya kurdî fermî kir',
+      'Koçberiya kurdan rawestand',
+    ],
+    correctAnswer:
+        'Herêma kurdî di navbera Osmanî û Sefewiyan de hat parvekirin',
+    explanation:
+        '1639 antlaşması Osmanlı-Safevi sınırını çizdi ve Kürt bölgesini ikiye böldü.',
+    explanationKu:
+        'Peymana 1639an sînorê Osmanî-Sefewî destnîşan kir û herêma kurdî ji hev qut kir.',
+    explanationTr:
+        '1639 antlaşması Osmanlı-Safevi sınırını çizdi ve Kürt bölgesini ikiye böldü.',
+    difficulty: 5,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0020',
+    category: 'Dîrok',
+    prompt: 'Kovara "Jîn" di kîjan salan de derket?',
+    answers: [
+      'Salên 1918-1919an',
+      'Salên 1890î',
+      'Salên 1950î',
+      'Salên 1970yî',
+    ],
+    correctAnswer: 'Salên 1918-1919an',
+    explanation:
+        'Jîn dergisi İstanbul\'da 1918-1919\'da çıktı ve ulusal bilinç için önemliydi.',
+    explanationKu:
+        'Kovara Jîn li Stenbolê di 1918-1919an de derket û ji bo hişmendiya netewî girîng bû.',
+    explanationTr:
+        'Jîn dergisi İstanbul\'da 1918-1919\'da çıktı ve ulusal bilinç için önemliydi.',
+    difficulty: 3,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0021',
+    category: 'Dîrok',
+    prompt: '"Xoybûn" çi bû?',
+    answers: [
+      'Rêxistineke siyasî ya kurdan a salên 1920î',
+      'Kovareke edebî',
+      'Navê bajarekî',
+      'Cureyekî muzîkê',
+    ],
+    correctAnswer: 'Rêxistineke siyasî ya kurdan a salên 1920î',
+    explanation: 'Xoybûn 1927\'de Suriye\'de kuruldu.',
+    explanationKu: 'Xoybûn di 1927an de li Sûriyeyê hat damezrandin.',
+    explanationTr: 'Xoybûn 1927\'de Suriye\'de kuruldu.',
+    difficulty: 4,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0022',
+    category: 'Dîrok',
+    prompt: 'Rast e an şaş e: Selahedînê Eyûbî Dewleta Eyûbiyan damezrand.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'Selahaddin 1171\'de Mısır\'da Eyyubi Devleti\'ni kurdu.',
+    explanationKu: 'Selahedîn di 1171ê de li Misirê Dewleta Eyûbiyan ava kir.',
+    explanationTr: 'Selahaddin 1171\'de Mısır\'da Eyyubi Devleti\'ni kurdu.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0023',
+    category: 'Dîrok',
+    prompt: 'Di dîroka nûjen de "Kurdên Sor" (Sûriye) bi çi têkildar e?',
+    answers: [
+      'Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan',
+      'Komeleyeke muzîkê',
+      'Partiyeke Iraqê',
+      'Rêxistineke perwerdehiyê',
+    ],
+    correctAnswer: 'Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan',
+    explanation: '1962 Cezire sayımı yüz binlerce Kürdü vatansız bıraktı.',
+    explanationKu:
+        'Serjimara 1962yan li Cizîrê bi sed hezaran kurd bêwelat hiştin.',
+    explanationTr: '1962 Cezire sayımı yüz binlerce Kürdü vatansız bıraktı.',
+    difficulty: 5,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0024',
+    category: 'Dîrok',
+    prompt: 'Qelaya Hewlêrê bi çi taybetî tê nasîn?',
+    answers: [
+      'Yek ji kevintirîn cihên bi domdarî lêniştî yên cîhanê',
+      'Yekem zanîngeha herêmê',
+      'Navenda bazirganiyê ya Osmanî',
+      'Bendaveke kevnar',
+    ],
+    correctAnswer: 'Yek ji kevintirîn cihên bi domdarî lêniştî yên cîhanê',
+    explanation: 'Erbil Kalesi 2014\'te UNESCO Dünya Mirası listesine girdi.',
+    explanationKu:
+        'Qelaya Hewlêrê di 2014an de ket lîsteya mîrateya cîhanî ya UNESCOyê.',
+    explanationTr: 'Erbil Kalesi 2014\'te UNESCO Dünya Mirası listesine girdi.',
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0013',
+    category: 'Edebiyat',
+    prompt: 'Elî Herîrî di wêjeya kurdî de bi çi tê nasîn?',
+    answers: [
+      'Helbestvanekî klasîk ê pêşîn',
+      'Yekem romannivîs',
+      'Dîroknas',
+      'Ferhengnas',
+    ],
+    correctAnswer: 'Helbestvanekî klasîk ê pêşîn',
+    explanation:
+        'Elî Herîrî (15-16. yy), klasik Kürt şiirinin öncülerinden sayılır.',
+    explanationKu:
+        'Elî Herîrî (sedsala 15-16em) wek yek ji pêşiyên helbesta klasîk a kurdî tê hesibandin.',
+    explanationTr:
+        'Elî Herîrî (15-16. yy), klasik Kürt şiirinin öncülerinden sayılır.',
+    difficulty: 3,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0014',
+    category: 'Edebiyat',
+    prompt:
+        'Berhema "Rewşenbîr" an kovarên edebî yên kurdî bi giştî çi rol lîstin?',
+    answers: [
+      'Pêşxistina zimanê nivîskî yê kurdî',
+      'Belavkirina muzîkê',
+      'Rêveberiya bajaran',
+      'Perwerdehiya leşkerî',
+    ],
+    correctAnswer: 'Pêşxistina zimanê nivîskî yê kurdî',
+    explanation:
+        'Edebiyat dergileri, yazılı Kürtçenin standartlaşması ve gelişmesinde başrol oynadı.',
+    explanationKu:
+        'Kovarên edebî ji bo standardkirin û pêşxistina kurdiya nivîskî rolek sereke lîstin.',
+    explanationTr:
+        'Edebiyat dergileri, yazılı Kürtçenin standartlaşması ve gelişmesinde başrol oynadı.',
+    difficulty: 4,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0015',
+    category: 'Edebiyat',
+    prompt: 'Peyva "pirtûk" bi Tirkî çi tê wateyê?',
+    answers: ['kitap', 'kalem', 'defter', 'masa'],
+    correctAnswer: 'kitap',
+    explanation: '"Pirtûk" Türkçede "kitap" demektir.',
+    explanationKu: '"Pirtûk" bi Tirkî "kitap" e.',
+    explanationTr: '"Pirtûk" Türkçede "kitap" demektir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0016',
+    category: 'Edebiyat',
+    prompt:
+        'Di "Mem û Zîn" de karakterê ku bûye sedema veqetîna evîndaran kî ye?',
+    answers: ['Bekir', 'Tacdîn', 'Mîr Zeynedîn', 'Sitî'],
+    correctAnswer: 'Bekir',
+    explanation:
+        'Bekir, destanda fesatlık rolü oynar ve Mem ile Zin\'i birbirinden ayırır.',
+    explanationKu:
+        'Bekirê Ewan di destanê de rola fesadiyê dilîze û Mem û Zînê ji hev dûr dixe.',
+    explanationTr:
+        'Bekir, destanda fesatlık rolü oynar ve Mem ile Zin\'i birbirinden ayırır.',
+    difficulty: 5,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0017',
+    category: 'Edebiyat',
+    prompt: 'Berhemên Cegerxwîn bi giştî li ser çi ne?',
+    answers: [
+      'Welatparêzî, azadî û jiyana gel',
+      'Tenê evîna kesane',
+      'Zanistiya xwezayî',
+      'Rêzimana kurdî',
+    ],
+    correctAnswer: 'Welatparêzî, azadî û jiyana gel',
+    explanation:
+        'Cegerxwîn şiirini halkın davası ve özgürlükle ilişkilendirdi.',
+    explanationKu: 'Cegerxwîn helbesta xwe bi doza gel û azadiyê ve girê da.',
+    explanationTr:
+        'Cegerxwîn şiirini halkın davası ve özgürlükle ilişkilendirdi.',
+    difficulty: 3,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0018',
+    category: 'Edebiyat',
+    prompt:
+        '"Bahoz" an romanên nûjen ên kurdî bi piranî di kîjan serdemê de zêde bûn?',
+    answers: [
+      'Piştî salên 1980î',
+      'Di sedsala 17em de',
+      'Berî 1900î',
+      'Di 1930î de',
+    ],
+    correctAnswer: 'Piştî salên 1980î',
+    explanation:
+        'Diaspora ve yeni yayınevleriyle Kürt romanı 1980 sonrası hızla çoğaldı.',
+    explanationKu:
+        'Bi diasporayê re û bi weşanxaneyên nû re romana kurdî piştî 1980î bi lez zêde bû.',
+    explanationTr:
+        'Diaspora ve yeni yayınevleriyle Kürt romanı 1980 sonrası hızla çoğaldı.',
+    difficulty: 4,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0019',
+    category: 'Edebiyat',
+    prompt:
+        'Rast e an şaş e: Ehmedê Xanî di Mem û Zînê de behsa yekîtiya kurdan jî dike.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'Xanî destanda emirlikler arasındaki birliksizliği eleştirir.',
+    explanationKu:
+        'Xanî di destanê de li ser bêyekîtiya mîrektiyan rexne dike.',
+    explanationTr:
+        'Xanî destanda emirlikler arasındaki birliksizliği eleştirir.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0016',
+    category: 'Cografya',
+    prompt: 'Çemê Firat ji kîjan herêmê diherike?',
+    answers: [
+      'Çiyayên rojhilatê Anatolyayê',
+      'Deşta Konyayê',
+      'Çiyayên Kafkasyayê',
+      'Peravê Behra Reş',
+    ],
+    correctAnswer: 'Çiyayên rojhilatê Anatolyayê',
+    explanation:
+        'Fırat, Doğu Anadolu dağlarından doğar ve Basra Körfezi\'ne dökülür.',
+    explanationKu:
+        'Firat ji çiyayên rojhilatê Anatolyayê dest pê dike û diçe Kendava Basrayê.',
+    explanationTr:
+        'Fırat, Doğu Anadolu dağlarından doğar ve Basra Körfezi\'ne dökülür.',
+    difficulty: 2,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0017',
+    category: 'Cografya',
+    prompt: 'Bajarê Silêmaniyê li kîjan welatî ye?',
+    answers: ['Iraq', 'Îran', 'Sûriye', 'Tirkiye'],
+    correctAnswer: 'Iraq',
+    explanation: 'Süleymaniye, Irak Kürdistan Bölgesi\'ndedir.',
+    explanationKu: 'Silêmanî li Herêma Kurdistanê ya Iraqê ye.',
+    explanationTr: 'Süleymaniye, Irak Kürdistan Bölgesi\'ndedir.',
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0018',
+    category: 'Cografya',
+    prompt: 'Bajarê Mêrdînê bi çi taybetiya xwe ya mîmarî navdar e?',
+    answers: [
+      'Avahiyên kevirî yên li ser çiyê',
+      'Bircên şûşeyî',
+      'Kanalên avê',
+      'Baxçeyên ser banî',
+    ],
+    correctAnswer: 'Avahiyên kevirî yên li ser çiyê',
+    explanation:
+        'Mardin, Mezopotamya ovasına bakan yamaçtaki taş yapılarıyla ünlüdür.',
+    explanationKu:
+        'Mêrdîn bi avahiyên kevirî yên li ser bejahiyê ku li deşta Mezopotamyayê dinêrin navdar e.',
+    explanationTr:
+        'Mardin, Mezopotamya ovasına bakan yamaçtaki taş yapılarıyla ünlüdür.',
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0019',
+    category: 'Cografya',
+    prompt: 'Çiyayê Cûdî di sînorên kîjan bajarî de dimîne?',
+    answers: ['Şirnex', 'Wan', 'Amed', 'Riha'],
+    correctAnswer: 'Şirnex',
+    explanation: 'Cudi Dağı Şırnak bölgesindedir ve dini anlatılarda da geçer.',
+    explanationKu:
+        'Çiyayê Cûdî li herêma Şirnexê ye û di çîrokên olî de jî derbas dibe.',
+    explanationTr:
+        'Cudi Dağı Şırnak bölgesindedir ve dini anlatılarda da geçer.',
+    difficulty: 4,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0020',
+    category: 'Cografya',
+    prompt: 'Peyva "gund" bi Tirkî çi tê wateyê?',
+    answers: ['köy', 'şehir', 'dağ', 'ova'],
+    correctAnswer: 'köy',
+    explanation: '"Gund" Türkçede "köy" demektir.',
+    explanationKu: '"Gund" bi Tirkî "köy" e.',
+    explanationTr: '"Gund" Türkçede "köy" demektir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0021',
+    category: 'Cografya',
+    prompt: 'Herêma "Serhed" bi giştî kîjan derdorê digire?',
+    answers: [
+      'Herêma bilind a Agirî-Wan-Mûşê',
+      'Peravê Behra Spî',
+      'Deşta Cizîrê',
+      'Herêma Kirmanşanê',
+    ],
+    correctAnswer: 'Herêma bilind a Agirî-Wan-Mûşê',
+    explanation:
+        'Serhed, kuzeydeki yüksek bölgenin adıdır: Ağrı, Van, Muş, Bitlis.',
+    explanationKu:
+        'Serhed navê herêma bilind a bakur e: Agirî, Wan, Mûş, Bidlîs.',
+    explanationTr:
+        'Serhed, kuzeydeki yüksek bölgenin adıdır: Ağrı, Van, Muş, Bitlis.',
+    difficulty: 4,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0022',
+    category: 'Cografya',
+    prompt: 'Deşta Cizîrê bi giştî li ku derê ye?',
+    answers: [
+      'Di navbera Dîcle û Firatê de, bakurê rojhilatê Sûriyeyê',
+      'Rojavayê Îranê',
+      'Başûrê Tirkiyeyê',
+      'Bakurê Iraqê ya çiyayî',
+    ],
+    correctAnswer: 'Di navbera Dîcle û Firatê de, bakurê rojhilatê Sûriyeyê',
+    explanation: 'Cezire, iki nehir arasındaki tarım ovasıdır.',
+    explanationKu:
+        'Cizîre (Cezire) deşta çandiniyê ya di navbera her du çeman de ye.',
+    explanationTr: 'Cezire, iki nehir arasındaki tarım ovasıdır.',
+    difficulty: 5,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0023',
+    category: 'Cografya',
+    prompt: 'Rast e an şaş e: Çiyayê Agirî çiyayekî volkanîk e.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'Ağrı Dağı sönmüş bir volkanik dağdır.',
+    explanationKu: 'Agirî çiyayekî volkanîk ê nefeal e.',
+    explanationTr: 'Ağrı Dağı sönmüş bir volkanik dağdır.',
+    type: QuestionType.trueFalse,
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0014',
+    category: 'Muzîk',
+    prompt: '"Zirne" cureyekî çi amûrê ye?',
+    answers: ['Amûra pifê', 'Amûra têlî', 'Amûra lêdanê', 'Amûra kevanî'],
+    correctAnswer: 'Amûra pifê',
+    explanation:
+        'Zurna yüksek sesli üflemeli çalgıdır; davulla birlikte çalınır.',
+    explanationKu:
+        'Zirne amûreke pifê ya bi dengê bilind e; bi def re tê lêxistin.',
+    explanationTr:
+        'Zurna yüksek sesli üflemeli çalgıdır; davulla birlikte çalınır.',
+    difficulty: 2,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0015',
+    category: 'Muzîk',
+    prompt: '"Heyranok" di muzîka kurdî de bi giştî çi ye?',
+    answers: [
+      'Stranên kurt ên bi gelemperî evîndar',
+      'Reqsa dawetê',
+      'Amûreke têlî',
+      'Rêbaza notagirtinê',
+    ],
+    correctAnswer: 'Stranên kurt ên bi gelemperî evîndar',
+    explanation:
+        'Heyranok kısa ezgilerdir, sık sık soru-cevap biçiminde söylenir.',
+    explanationKu:
+        'Heyranok stranên kurt in û pir caran bi awayê pirs-bersiv tên gotin.',
+    explanationTr:
+        'Heyranok kısa ezgilerdir, sık sık soru-cevap biçiminde söylenir.',
+    difficulty: 3,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0016',
+    category: 'Muzîk',
+    prompt: 'Meryem Xan di muzîka kurdî de kî ye?',
+    answers: [
+      'Dengbêjeke jin a navdar a sedsala 20em',
+      'Nivîskareke roman',
+      'Damezrînera kovarekê',
+      'Lêdera tembûrê ya yekem',
+    ],
+    correctAnswer: 'Dengbêjeke jin a navdar a sedsala 20em',
+    explanation: 'Meryem Xan (1904-1949) en tanınmış kadın dengbêjlerdendir.',
+    explanationKu:
+        'Meryem Xan (1904-1949) yek ji dengbêjên jin ên herî navdar e.',
+    explanationTr: 'Meryem Xan (1904-1949) en tanınmış kadın dengbêjlerdendir.',
+    difficulty: 4,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0017',
+    category: 'Muzîk',
+    prompt: 'Radyoya Erîvanê ji bo muzîka kurdî çima girîng e?',
+    answers: [
+      'Ji salên 1950î ve stranên kurdî belav kir',
+      'Yekem albûma kurdî çap kir',
+      'Dibistaneke muzîkê bû',
+      'Festîvalek bû',
+    ],
+    correctAnswer: 'Ji salên 1950î ve stranên kurdî belav kir',
+    explanation:
+        'Erivan Radyosu\'nun Kürtçe yayını, dengbêj arşivinin ana kaynağı oldu.',
+    explanationKu:
+        'Weşana kurdî ya Radyoya Erîvanê bû çavkaniyeke sereke ya arşîva dengbêjiyê.',
+    explanationTr:
+        'Erivan Radyosu\'nun Kürtçe yayını, dengbêj arşivinin ana kaynağı oldu.',
+    difficulty: 3,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0018',
+    category: 'Muzîk',
+    prompt: 'Peyva "deng" bi Tirkî çi tê wateyê?',
+    answers: ['ses', 'söz', 'saz', 'şarkı'],
+    correctAnswer: 'ses',
+    explanation: '"Deng" Türkçede "ses" demektir.',
+    explanationKu: '"Deng" bi Tirkî "ses" e.',
+    explanationTr: '"Deng" Türkçede "ses" demektir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0019',
+    category: 'Muzîk',
+    prompt: 'Di dengbêjiyê de "kilamên şer" bi giştî li ser çi ne?',
+    answers: [
+      'Bûyerên şer û berxwedanê',
+      'Dawet û şahiyan',
+      'Çandinî',
+      'Rêzimanê',
+    ],
+    correctAnswer: 'Bûyerên şer û berxwedanê',
+    explanation:
+        'Savaş kilamları; savaş, saldırı ve direniş olaylarını aktarır.',
+    explanationKu:
+        'Kilamên şer bûyerên dîrokî yên şer, êrîş û berxwedanê vediguhezînin.',
+    explanationTr:
+        'Savaş kilamları; savaş, saldırı ve direniş olaylarını aktarır.',
+    difficulty: 5,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0020',
+    category: 'Muzîk',
+    prompt: 'Rast e an şaş e: Def û erbane herdu jî amûrên lêdanê ne.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'İkisi de deri kaplıdır ve vurularak ses verir.',
+    explanationKu: 'Herdu jî bi çerm têne çêkirin û bi lêdanê deng didin.',
+    explanationTr: 'İkisi de deri kaplıdır ve vurularak ses verir.',
+    type: QuestionType.trueFalse,
+    difficulty: 4,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0013',
+    category: 'Siyaset',
+    prompt: 'Di sîstema meclîsên gel de biryar bi giştî çawa tên girtin?',
+    answers: [
+      'Bi nîqaş û lihevkirina beşdaran',
+      'Ji aliyê pisporan ve bi tenê',
+      'Bi fermana navendî',
+      'Bi hilbijartina her deh salan',
+    ],
+    correctAnswer: 'Bi nîqaş û lihevkirina beşdaran',
+    explanation:
+        'Halk meclisleri doğrudan karar almayı öne alır; tartışma ve uzlaşma esastır.',
+    explanationKu:
+        'Meclîsên gel biryardayîna rasterast dixin pêş; nîqaş û lihevkirin bingeh in.',
+    explanationTr:
+        'Halk meclisleri doğrudan karar almayı öne alır; tartışma ve uzlaşma esastır.',
+    difficulty: 3,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0014',
+    category: 'Siyaset',
+    prompt: '"Kurdên Feylî" bi giştî li kîjan herêmê dijîn?',
+    answers: [
+      'Sînorê Iraq-Îranê, herêma Bexda û Îlamê',
+      'Bakurê Sûriyeyê',
+      'Rojavayê Tirkiyeyê',
+      'Kafkasya',
+    ],
+    correctAnswer: 'Sînorê Iraq-Îranê, herêma Bexda û Îlamê',
+    explanation:
+        'Feyli Kürtler Şii Kürtlerdir; 1980\'de yüz binlercesi Irak\'tan sürüldü.',
+    explanationKu:
+        'Feylî kurdên şîî ne; di 1980î de bi sed hezaran ji Iraqê hatin dersînorkirin.',
+    explanationTr:
+        'Feyli Kürtler Şii Kürtlerdir; 1980\'de yüz binlercesi Irak\'tan sürüldü.',
+    difficulty: 4,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0015',
+    category: 'Siyaset',
+    prompt: 'Peyva "gel" bi Tirkî çi tê wateyê?',
+    answers: ['halk', 'devlet', 'ordu', 'şehir'],
+    correctAnswer: 'halk',
+    explanation: '"Gel" Türkçede "halk" demektir.',
+    explanationKu: '"Gel" bi Tirkî "halk" e.',
+    explanationTr: '"Gel" Türkçede "halk" demektir.',
+    difficulty: 2,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0016',
+    category: 'Siyaset',
+    prompt:
+        'Statuya "Kerkûk" di siyaseta Iraqê de bi kîjan maddeya destûrî ve girêdayî ye?',
+    answers: ['Maddeya 140î', 'Maddeya 5em', 'Maddeya 61ê', 'Maddeya 100î'],
+    correctAnswer: 'Maddeya 140î',
+    explanation:
+        '140. madde, tartışmalı bölgeler için normalleşme, sayım ve referandum sürecini tanımlar.',
+    explanationKu:
+        'Maddeya 140î pêvajoya normalîzasyon, serjimar û referandûmê ji bo herêmên nakok diyar dike.',
+    explanationTr:
+        '140. madde, tartışmalı bölgeler için normalleşme, sayım ve referandum sürecini tanımlar.',
+    difficulty: 5,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0017',
+    category: 'Siyaset',
+    prompt: 'Rast e an şaş e: Li Rojava pergala hevserokatiyê tê sepandin.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation:
+        'Rojava yönetiminde her makam bir kadın ve bir erkekle paylaşılır.',
+    explanationKu:
+        'Di rêveberiya Rojava de her post bi jinek û mêrek re tê parvekirin.',
+    explanationTr:
+        'Rojava yönetiminde her makam bir kadın ve bir erkekle paylaşılır.',
+    type: QuestionType.trueFalse,
+    difficulty: 3,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0018',
+    category: 'Siyaset',
+    prompt: '"Diaspora" ya kurdî bi giştî li ku derê herî zêde ye?',
+    answers: [
+      'Ewropaya Rojava',
+      'Amerîkaya Başûr',
+      'Afrîkaya Başûr',
+      'Awustralya',
+    ],
+    correctAnswer: 'Ewropaya Rojava',
+    explanation:
+        'Almanya, Fransa, İsveç ve Hollanda en büyük Kürt nüfusunu barındırır.',
+    explanationKu:
+        'Almanya, Fransa, Swêd û Hollanda niştecihên kurd ên herî zêde dihewînin.',
+    explanationTr:
+        'Almanya, Fransa, İsveç ve Hollanda en büyük Kürt nüfusunu barındırır.',
+    difficulty: 4,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0011',
+    category: 'Paradigma',
+    prompt: 'Di paradîgmayê de "kooperatîf" çima girîng e?',
+    answers: [
+      'Hilberîna hevpar li şûna kara kesane',
+      'Bilindkirina bihayan',
+      'Kêmkirina beşdariyê',
+      'Navendîkirina biryarê',
+    ],
+    correctAnswer: 'Hilberîna hevpar li şûna kara kesane',
+    explanation:
+        'Kooperatif, komünal ekonominin modelidir: emek ve sonuç paylaşılır.',
+    explanationKu:
+        'Kooperatîf modela aboriya komunal e: xebat û encam tên parvekirin.',
+    explanationTr:
+        'Kooperatif, komünal ekonominin modelidir: emek ve sonuç paylaşılır.',
+    difficulty: 3,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0012',
+    category: 'Paradigma',
+    prompt: '"Akademî" di modela civakî ya Rojava de çi rol dilîze?',
+    answers: [
+      'Perwerdehiya civakî û ramanî',
+      'Tenê perwerdehiya teknîkî',
+      'Rêveberiya darayî',
+      'Kontrola sînoran',
+    ],
+    correctAnswer: 'Perwerdehiya civakî û ramanî',
+    explanation:
+        'Akademiler kolektif eğitim alanlarıdır: jineoloji, ekoloji, dil ve örgütlenme.',
+    explanationKu:
+        'Akademî cihên perwerdehiya kolektîf in: jineolojî, ekolojî, ziman û rêxistinbûn.',
+    explanationTr:
+        'Akademiler kolektif eğitim alanlarıdır: jineoloji, ekoloji, dil ve örgütlenme.',
+    difficulty: 4,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0013',
+    category: 'Paradigma',
+    prompt: 'Rexneya "pozîtîvîzmê" di vê paradîgmayê de li ser çi ye?',
+    answers: [
+      'Zanist ji civak û exlaqê nayê veqetandin',
+      'Zanist bi tenê rast e',
+      'Ezmûn ne pêwîst e',
+      'Dîrok ne girîng e',
+    ],
+    correctAnswer: 'Zanist ji civak û exlaqê nayê veqetandin',
+    explanation:
+        'Pozitivizm "tarafsız bilim" iddiasıyla eleştirilir; her bilgi toplum içinde üretilir.',
+    explanationKu:
+        'Pozîtîvîzm wek "zanista bêbandor" tê rexnekirin; her zanist di nav civakê de tê hilberandin.',
+    explanationTr:
+        'Pozitivizm "tarafsız bilim" iddiasıyla eleştirilir; her bilgi toplum içinde üretilir.',
+    difficulty: 5,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0014',
+    category: 'Paradigma',
+    prompt: 'Peyva "xweza" bi Tirkî çi tê wateyê?',
+    answers: ['doğa', 'şehir', 'insan', 'toplum'],
+    correctAnswer: 'doğa',
+    explanation: '"Xweza" Türkçede "doğa" demektir.',
+    explanationKu: '"Xweza" bi Tirkî "doğa" ye.',
+    explanationTr: '"Xweza" Türkçede "doğa" demektir.',
+    difficulty: 2,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0015',
+    category: 'Paradigma',
+    prompt:
+        'Rast e an şaş e: Di paradîgmaya ekolojîk de mirov li derveyî xwezayê tê dîtin.',
+    answers: ['Şaş', 'Rast'],
+    correctAnswer: 'Şaş',
+    explanation:
+        'Tersine: insan doğanın parçasıdır; ayrışma krizin kökü olarak görülür.',
+    explanationKu:
+        'Berevajî: mirov beşek ji xwezayê ye; veqetîn wek koka krîzê tê dîtin.',
+    explanationTr:
+        'Tersine: insan doğanın parçasıdır; ayrışma krizin kökü olarak görülür.',
+    type: QuestionType.trueFalse,
+    difficulty: 3,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0016',
+    category: 'Paradigma',
+    prompt: '"Hevjiyana azad" di vê paradîgmayê de çi tê wateyê?',
+    answers: [
+      'Têkiliya jin û mêr a li ser bingehê wekhevî û azadiyê',
+      'Jiyana bêyî civakê',
+      'Aboriya bazarê',
+      'Rêveberiya navendî',
+    ],
+    correctAnswer: 'Têkiliya jin û mêr a li ser bingehê wekhevî û azadiyê',
+    explanation:
+        'Özgür eş yaşam, ilişkiyi sahiplenmeden çıkarıp eşitlik üzerine kurar.',
+    explanationKu:
+        'Hevjiyana azad têkiliyê ji xwedîtiyê derdixe û li ser wekheviyê ava dike.',
+    explanationTr:
+        'Özgür eş yaşam, ilişkiyi sahiplenmeden çıkarıp eşitlik üzerine kurar.',
+    difficulty: 4,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0035',
+    category: 'Ziman',
+    prompt: 'Peyva Kurmancî "çav" bi Tirkî çi tê wateyê?',
+    answers: ['göz', 'kulak', 'burun', 'el'],
+    correctAnswer: 'göz',
+    explanation: '"Çav" Türkçede "göz" demektir.',
+    explanationKu: '"Çav" bi Tirkî "göz" e.',
+    explanationTr: '"Çav" Türkçede "göz" demektir.',
+    difficulty: 1,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0036',
+    category: 'Ziman',
+    prompt: 'Peyva Kurmancî "dest" bi Tirkî çi tê wateyê?',
+    answers: ['el', 'ayak', 'baş', 'sırt'],
+    correctAnswer: 'el',
+    explanation: '"Dest" Türkçede "el" demektir.',
+    explanationKu: '"Dest" bi Tirkî "el" e.',
+    explanationTr: '"Dest" Türkçede "el" demektir.',
+    difficulty: 1,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0037',
+    category: 'Ziman',
+    prompt: 'Peyva Kurmancî "zarok" bi Tirkî çi tê wateyê?',
+    answers: ['çocuk', 'yaşlı', 'komşu', 'misafir'],
+    correctAnswer: 'çocuk',
+    explanation: '"Zarok" Türkçede "çocuk" demektir.',
+    explanationKu: '"Zarok" bi Tirkî "çocuk" e.',
+    explanationTr: '"Zarok" Türkçede "çocuk" demektir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0038',
+    category: 'Ziman',
+    prompt: 'Peyva Kurmancî "spas" bi Tirkî çi tê wateyê?',
+    answers: ['teşekkür', 'merhaba', 'hoşça kal', 'lütfen'],
+    correctAnswer: 'teşekkür',
+    explanation:
+        '"Spas" Türkçede "teşekkür"dür; "spas dikim" = teşekkür ederim.',
+    explanationKu:
+        '"Spas" bi Tirkî "teşekkür" e; "spas dikim" = teşekkür ederim.',
+    explanationTr:
+        '"Spas" Türkçede "teşekkür"dür; "spas dikim" = teşekkür ederim.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0039',
+    category: 'Ziman',
+    prompt: 'Dijwateya peyva "dirêj" di Kurmancî de kîjan e?',
+    answers: ['Kurt', 'Fireh', 'Giran', 'Nerm'],
+    correctAnswer: 'Kurt',
+    explanation: '"Dirêj" (uzun) ile "kurt" (kısa) zıt anlamlıdır.',
+    explanationKu: '"Dirêj" (uzun) û "kurt" (kısa) dijwate ne.',
+    explanationTr: '"Dirêj" (uzun) ile "kurt" (kısa) zıt anlamlıdır.',
+    difficulty: 3,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0040',
+    category: 'Ziman',
+    prompt: 'Di Kurmancî de "ez dixwazim" hevoka çi demê ye?',
+    answers: ['Dema niha', 'Dema borî', 'Dema bê', 'Raweya fermanî'],
+    correctAnswer: 'Dema niha',
+    explanation: '"di-" ön eki şimdiki zamanı gösterir: "ez dixwazim".',
+    explanationKu: 'Pêşgira "di-" nîşana dema niha ye: "ez di-xwaz-im".',
+    explanationTr: '"di-" ön eki şimdiki zamanı gösterir: "ez dixwazim".',
+    difficulty: 3,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0041',
+    category: 'Ziman',
+    prompt:
+        'Di Kurmancî de paşgira "-van" di peyvên wek "dergehvan" de çi diyar dike?',
+    answers: ['Kesê ku karekî dike', 'Cih', 'Dem', 'Hejmar'],
+    correctAnswer: 'Kesê ku karekî dike',
+    explanation: '"-van" fail ekidir: dergehvan (kapıcı), stranvan, hunervan.',
+    explanationKu:
+        '"-van" paşgira kirdeyê ye: dergehvan (kapıcı), stranvan, hunervan.',
+    explanationTr:
+        '"-van" fail ekidir: dergehvan (kapıcı), stranvan, hunervan.',
+    difficulty: 4,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0042',
+    category: 'Ziman',
+    prompt: 'Di Kurmancî de "were" û "biçe" kîjan raweyê nîşan didin?',
+    answers: ['Raweya fermanî', 'Raweya bilanî', 'Dema borî', 'Dema bê'],
+    correctAnswer: 'Raweya fermanî',
+    explanation: 'İkisi de emirdir: "were" (gel), "biçe" (git).',
+    explanationKu: 'Herdu jî ferman in: "were" (gel), "biçe" (git).',
+    explanationTr: 'İkisi de emirdir: "were" (gel), "biçe" (git).',
+    difficulty: 4,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0043',
+    category: 'Ziman',
+    prompt: 'Di Kurmancî de "min got" û "ez gotim" — kîjan rast e?',
+    answers: [
+      '"Min got" rast e',
+      '"Ez gotim" rast e',
+      'Herdu jî rast in',
+      'Herdu jî şaş in',
+    ],
+    correctAnswer: '"Min got" rast e',
+    explanation:
+        '"Gotin" geçişlidir; geçmiş zamanda özne büküme girer: "min got".',
+    explanationKu:
+        'Lêkera "gotin" gerguhêz e; di dema borî de biker tê tewandin: "min got".',
+    explanationTr:
+        '"Gotin" geçişlidir; geçmiş zamanda özne büküme girer: "min got".',
+    difficulty: 5,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0044',
+    category: 'Ziman',
+    prompt: 'Di Kurmancî de cudahiya "-ê" û "-a" ya veqetandekê çi ye?',
+    answers: [
+      'Zayend: "-ê" nêr, "-a" mê',
+      'Hejmar: "-ê" yekjimar, "-a" pirjimar',
+      'Dem: "-ê" borî, "-a" niha',
+      'Rewş: "-ê" xwerû, "-a" tewandî',
+    ],
+    correctAnswer: 'Zayend: "-ê" nêr, "-a" mê',
+    explanation:
+        '"Bavê min" (eril) ama "diya min" (dişil) — izafe cinsiyeti gösterir.',
+    explanationKu:
+        '"Bavê min" (nêr) lê "diya min" (mê) — veqetandek zayendê nîşan dide.',
+    explanationTr:
+        '"Bavê min" (eril) ama "diya min" (dişil) — izafe cinsiyeti gösterir.',
+    difficulty: 5,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0045',
+    category: 'Ziman',
+    prompt: 'Peyva "hevîr" bi Tirkî çi tê wateyê?',
+    answers: ['hamur', 'peynir', 'tuz', 'yağ'],
+    correctAnswer: 'hamur',
+    explanation: '"Hevîr" Türkçede "hamur" demektir.',
+    explanationKu: '"Hevîr" bi Tirkî "hamur" e.',
+    explanationTr: '"Hevîr" Türkçede "hamur" demektir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0046',
+    category: 'Ziman',
+    prompt: 'Hevwateya peyva "westiyayî" di Kurmancî de kîjan e?',
+    answers: ['Betilî', 'Kêfxweş', 'Bilez', 'Nexweş'],
+    correctAnswer: 'Betilî',
+    explanation: '"Westiyayî" ve "betilî" ikisi de yorgunluk anlamındadır.',
+    explanationKu: '"Westiyayî" û "betilî" herdu jî wateya bêhalbûnê didin.',
+    explanationTr: '"Westiyayî" ve "betilî" ikisi de yorgunluk anlamındadır.',
+    difficulty: 3,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0047',
+    category: 'Ziman',
+    prompt: 'Rast e an şaş e: Di Kurmancî de sifet (rengdêr) piştî navdêrê tê.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation:
+        '"Mala mezin" gibi — sıfat isimden sonra gelir ve izafeyle bağlanır.',
+    explanationKu:
+        'Wek "mala mezin" — rengdêr piştî navdêrê tê û bi veqetandekê tê girêdan.',
+    explanationTr:
+        '"Mala mezin" gibi — sıfat isimden sonra gelir ve izafeyle bağlanır.',
+    type: QuestionType.trueFalse,
+    difficulty: 4,
+    metadata: _rezimanSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0048',
+    category: 'Ziman',
+    prompt: 'Peyva "heyv" bi Tirkî çi tê wateyê?',
+    answers: ['ay', 'güneş', 'yıldız', 'gök'],
+    correctAnswer: 'ay',
+    explanation: '"Heyv" Türkçede "ay" demektir.',
+    explanationKu: '"Heyv" bi Tirkî "ay" e.',
+    explanationTr: '"Heyv" Türkçede "ay" demektir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_ziman_0049',
+    category: 'Ziman',
+    prompt: 'Peyva "zanîngeh" ji kîjan beşan pêk tê?',
+    answers: ['Zanîn + geh (cih)', 'Zan + îng', 'Za + nîngeh', 'Zanî + gehîn'],
+    correctAnswer: 'Zanîn + geh (cih)',
+    explanation: '"Geh" yer ekidir: bilgi yeri, üniversite.',
+    explanationKu: '"Geh" paşgira cih e: cihê zanînê.',
+    explanationTr: '"Geh" yer ekidir: bilgi yeri, üniversite.',
+    difficulty: 3,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0026',
+    category: 'Çand',
+    prompt: 'Xwarina "savar" ji çi tê çêkirin?',
+    answers: ['Genim', 'Birinc', 'Ard', 'Nok'],
+    correctAnswer: 'Genim',
+    explanation: 'Bulgur, haşlanıp kırılmış buğdaydan yapılır.',
+    explanationKu: 'Savar ji genimê kelandî û hûrkirî tê çêkirin.',
+    explanationTr: 'Bulgur, haşlanıp kırılmış buğdaydan yapılır.',
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0027',
+    category: 'Çand',
+    prompt: 'Di kevneşopiya kurdî de "mêvanperwerî" çi tê wateyê?',
+    answers: [
+      'Mêvan bi rûmet pêşwazîkirin',
+      'Bazirganiya dûr',
+      'Rêûresma zewacê',
+      'Pîrozkirina cejnê',
+    ],
+    correctAnswer: 'Mêvan bi rûmet pêşwazîkirin',
+    explanation: 'Misafirperverlik Kürt toplumunun en yüksek değerlerindendir.',
+    explanationKu: 'Mêvanperwerî yek ji nirxên herî bilind ên civaka kurdî ye.',
+    explanationTr:
+        'Misafirperverlik Kürt toplumunun en yüksek değerlerindendir.',
+    difficulty: 3,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0028',
+    category: 'Çand',
+    prompt: '"Çadira reş" bi giştî ji çi tê çêkirin?',
+    answers: ['Hiriyê bizinê', 'Pembû', 'Hevrîşim', 'Kaxez'],
+    correctAnswer: 'Hiriyê bizinê',
+    explanation:
+        'Göçerlerin kara çadırı keçi kılından dokunur; su geçirmez, rüzgârı keser.',
+    explanationKu:
+        'Çadira koçeran ji hiriyê bizinê tê hûnandin; av derbas nake û bayê digire.',
+    explanationTr:
+        'Göçerlerin kara çadırı keçi kılından dokunur; su geçirmez, rüzgârı keser.',
+    difficulty: 4,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0029',
+    category: 'Çand',
+    prompt: 'Di çanda kurdî de "koçerî" çi ye?',
+    answers: [
+      'Jiyana bi ajalan re ya guhêrbar',
+      'Cotkariya nîştecih',
+      'Bazirganiya bajaran',
+      'Masîgiriya golê',
+    ],
+    correctAnswer: 'Jiyana bi ajalan re ya guhêrbar',
+    explanation:
+        'Göçerler, mevsime göre sürüleriyle yayla ve kışlak arasında hareket eder.',
+    explanationKu:
+        'Koçer li gorî demsalan bi pez û dewaran re di navbera zozan û germiyanê de digerin.',
+    explanationTr:
+        'Göçerler, mevsime göre sürüleriyle yayla ve kışlak arasında hareket eder.',
+    difficulty: 3,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0030',
+    category: 'Çand',
+    prompt: '"Zozan" çi ye?',
+    answers: [
+      'Çîmena çiyayî ya havînê',
+      'Gundê zivistanê',
+      'Bajarê mezin',
+      'Cihê bazarê',
+    ],
+    correctAnswer: 'Çîmena çiyayî ya havînê',
+    explanation:
+        'Zozan (yayla), yazın sürüler için kullanılan yüksek otlaklardır.',
+    explanationKu:
+        'Zozan çiyayên bilind ên ku di havînê de ji bo pez tên bikaranîn.',
+    explanationTr:
+        'Zozan (yayla), yazın sürüler için kullanılan yüksek otlaklardır.',
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0031',
+    category: 'Çand',
+    prompt: 'Di rêûresma şînê ya kurdî de "şînbêj" kî ye?',
+    answers: [
+      'Kesa ku bi dengekî bilind lorî û şîn dibêje',
+      'Kesê ku mêvanan dibîne',
+      'Kesê ku xwarinê çêdike',
+      'Kesê ku qebrê amade dike',
+    ],
+    correctAnswer: 'Kesa ku bi dengekî bilind lorî û şîn dibêje',
+    explanation:
+        'Şînbêj genelde kadınlardır; ağıt kilamlarıyla yası dile getirir.',
+    explanationKu:
+        'Şînbêj bi gelemperî jin in û bi kilamên şînê xemgîniyê vedibêjin.',
+    explanationTr:
+        'Şînbêj genelde kadınlardır; ağıt kilamlarıyla yası dile getirir.',
+    difficulty: 4,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0032',
+    category: 'Çand',
+    prompt: '"Berbang" di Kurmancî de çi tê wateyê?',
+    answers: ['Serê sibê / şafak', 'Nîvê şevê', 'Danê êvarê', 'Nîvro'],
+    correctAnswer: 'Serê sibê / şafak',
+    explanation: '"Berbang" ışığın söktüğü an, şafaktır.',
+    explanationKu: '"Berbang" wextê ku ronahî dest pê dike ye.',
+    explanationTr: '"Berbang" ışığın söktüğü an, şafaktır.',
+    difficulty: 3,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0033',
+    category: 'Çand',
+    prompt: 'Di destana "Siyabend û Xecê" de mijara sereke çi ye?',
+    answers: [
+      'Evîna trajîk a li çiyê',
+      'Şerê du eşîran',
+      'Rêwîtiya bazirganekî',
+      'Damezrandina gundekî',
+    ],
+    correctAnswer: 'Evîna trajîk a li çiyê',
+    explanation:
+        'Siyabend ile Xecê destanın âşıklarıdır; hikâye dağda trajediyle biter.',
+    explanationKu:
+        'Siyabend û Xecê evîndarên destanê ne; çîrok bi trajediyê li çiyê diqede.',
+    explanationTr:
+        'Siyabend ile Xecê destanın âşıklarıdır; hikâye dağda trajediyle biter.',
+    difficulty: 5,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0034',
+    category: 'Çand',
+    prompt: 'Rast e an şaş e: Govend bi gelemperî bi destgirtin tê lîstin.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'Halayda eller ya da kollar tutulur.',
+    explanationKu: 'Di govendê de mirov bi destan an bi qolan digirin.',
+    explanationTr: 'Halayda eller ya da kollar tutulur.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0035',
+    category: 'Çand',
+    prompt: 'Xwarina "serê salê" an xwarinên cejnê bi giştî çima girîng in?',
+    answers: [
+      'Ji ber ku civak û malbatê tînin cem hev',
+      'Ji ber ku erzan in',
+      'Ji ber ku zû tên çêkirin',
+      'Ji ber ku tenê ji bo mêvanan in',
+    ],
+    correctAnswer: 'Ji ber ku civak û malbatê tînin cem hev',
+    explanation:
+        'Bayram sofrası toplumsal bir işlev taşır: akraba ve komşuyu bir araya getirir.',
+    explanationKu:
+        'Sifreya cejnê fonksiyoneke civakî digire: xizm û cîran tên cem hev.',
+    explanationTr:
+        'Bayram sofrası toplumsal bir işlev taşır: akraba ve komşuyu bir araya getirir.',
+    difficulty: 3,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0036',
+    category: 'Çand',
+    prompt: '"Hevrîşk" an "hevrîşim" di destkariya kurdî de çi ye?',
+    answers: [
+      'Hevrîşim (ipek) — ji bo tevn û xemlê',
+      'Cureyekî xwarinê',
+      'Amûreke muzîkê',
+      'Navê reqsekê',
+    ],
+    correctAnswer: 'Hevrîşim (ipek) — ji bo tevn û xemlê',
+    explanation: 'İpek, dokuma ve süslü giysilerde kullanılır.',
+    explanationKu: 'Hevrîşim di tevn û cilûbergên xemilandî de tê bikaranîn.',
+    explanationTr: 'İpek, dokuma ve süslü giysilerde kullanılır.',
+    difficulty: 4,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0037',
+    category: 'Çand',
+    prompt: '"Tevn" di destkariya kurdî de çi ye?',
+    answers: [
+      'Amûra hûnandina xalîçe û bêrîkan',
+      'Cureyekî nanê',
+      'Amûreke muzîkê',
+      'Navê cejnekê',
+    ],
+    correctAnswer: 'Amûra hûnandina xalîçe û bêrîkan',
+    explanation: 'Tezgâh; halı, kilim ve heybe dokumak için kullanılır.',
+    explanationKu: 'Tevn ji bo hûnandina xalîçe, kilîm û tûrikan tê bikaranîn.',
+    explanationTr: 'Tezgâh; halı, kilim ve heybe dokumak için kullanılır.',
+    difficulty: 2,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0038',
+    category: 'Çand',
+    prompt: 'Xalîçe û kilîmên kurdî bi giştî bi çi tên xemilandin?',
+    answers: [
+      'Motîfên hêjmarî û sembolîk',
+      'Wêneyên fotoğrafî',
+      'Nivîsên dirêj',
+      'Rengên tenê reş û spî',
+    ],
+    correctAnswer: 'Motîfên hêjmarî û sembolîk',
+    explanation: 'Her motifin bir anlamı vardır: bereket, koruma, aile.',
+    explanationKu: 'Her motîf wateyeke xwe heye: bereket, parastin, malbat.',
+    explanationTr: 'Her motifin bir anlamı vardır: bereket, koruma, aile.',
+    difficulty: 3,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cand_0039',
+    category: 'Çand',
+    prompt:
+        'Di civaka kurdî de "xwarina şîvê ya hevpar" li dîwanxaneyê bi giştî çi fonksiyonê digire?',
+    answers: [
+      'Danûstandina civakî û biryardayîn',
+      'Tenê xwarinxwarin',
+      'Perwerdehiya fermî',
+      'Bazirganî',
+    ],
+    correctAnswer: 'Danûstandina civakî û biryardayîn',
+    explanation:
+        'Dîwanxane toplumsal tartışma ve karar yeridir; yemek bu toplantıyı çerçeveler.',
+    explanationKu:
+        'Dîwanxane cihê nîqaş û biryara civakî ye; xwarin vê civînê dihewîne.',
+    explanationTr:
+        'Dîwanxane toplumsal tartışma ve karar yeridir; yemek bu toplantıyı çerçeveler.',
+    difficulty: 5,
+    metadata: _folklorSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0025',
+    category: 'Dîrok',
+    prompt: 'Bajarê Amedê di serdema Romayê de çi rolê digirt?',
+    answers: [
+      'Bajarekî sînor ê stratejîk',
+      'Paytexta împeratoriyê',
+      'Navenda olî ya sereke',
+      'Girava bazirganiyê',
+    ],
+    correctAnswer: 'Bajarekî sînor ê stratejîk',
+    explanation:
+        'Amida, Roma ile Sasaniler arasında stratejik bir sınır kentiydi.',
+    explanationKu:
+        'Amida di navbera Roma û Sasaniyan de bajarekî sînor ê stratejîk bû.',
+    explanationTr:
+        'Amida, Roma ile Sasaniler arasında stratejik bir sınır kentiydi.',
+    difficulty: 3,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0026',
+    category: 'Dîrok',
+    prompt: 'Xanedaniya Mervaniyan bi giştî li ku derê hukum kir?',
+    answers: ['Amed û derdora wê', 'Misir', 'Endulûs', 'Xorasan'],
+    correctAnswer: 'Amed û derdora wê',
+    explanation: 'Mervaniler (990-1085) Amed ve Silvan çevresinde hüküm sürdü.',
+    explanationKu: 'Mervanî (990-1085) li Amed û Meyafarqînê hukum kirin.',
+    explanationTr:
+        'Mervaniler (990-1085) Amed ve Silvan çevresinde hüküm sürdü.',
+    difficulty: 4,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0027',
+    category: 'Dîrok',
+    prompt: 'Xanedaniya Şedadiyan bi giştî li kîjan herêmê hukum kir?',
+    answers: ['Kafkasya (Gence-Anî)', 'Misir', 'Endulûs', 'Hindistan'],
+    correctAnswer: 'Kafkasya (Gence-Anî)',
+    explanation:
+        'Şeddadiler, Kafkasya\'da Gence ve Ani çevresinde hüküm süren Kürt hanedanıydı.',
+    explanationKu:
+        'Şedadî xanedaneke kurd bû ku li Kafkasyayê, li derdora Gence û Aniyê hukum kir.',
+    explanationTr:
+        'Şeddadiler, Kafkasya\'da Gence ve Ani çevresinde hüküm süren Kürt hanedanıydı.',
+    difficulty: 5,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0028',
+    category: 'Dîrok',
+    prompt: 'Selahedînê Eyûbî li kîjan bajarî ji dayik bû?',
+    answers: ['Tikrît', 'Şam', 'Qahîre', 'Musil'],
+    correctAnswer: 'Tikrît',
+    explanation: 'Selahaddin 1137\'de Tikrit\'te doğdu.',
+    explanationKu: 'Selahedîn di 1137an de li Tikrîtê ji dayik bû.',
+    explanationTr: 'Selahaddin 1137\'de Tikrit\'te doğdu.',
+    difficulty: 2,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0029',
+    category: 'Dîrok',
+    prompt: 'Şerê Çaldiranê (1514) di navbera kê de bû?',
+    answers: [
+      'Osmanî û Sefewî',
+      'Roma û Sasanî',
+      'Med û Asûrî',
+      'Eyûbî û Xaçparêz',
+    ],
+    correctAnswer: 'Osmanî û Sefewî',
+    explanation:
+        'Çaldıran Savaşı doğudaki güç dengesini değiştirdi; Kürt bölgesi iki güç arasında kaldı.',
+    explanationKu:
+        'Şerê Çaldiranê rêza hêzê li rojhilat guhert û herêma kurdî di navbera her du hêzan de ma.',
+    explanationTr:
+        'Çaldıran Savaşı doğudaki güç dengesini değiştirdi; Kürt bölgesi iki güç arasında kaldı.',
+    difficulty: 4,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0030',
+    category: 'Dîrok',
+    prompt: 'Îdrîsê Bidlîsî di dîroka Osmanî de bi çi tê nasîn?',
+    answers: [
+      'Navbeynkariya di navbera Osmanî û mîrên kurd de',
+      'Nivîsandina Mem û Zînê',
+      'Damezrandina Komara Mehabadê',
+      'Weşandina kovara Hawarê',
+    ],
+    correctAnswer: 'Navbeynkariya di navbera Osmanî û mîrên kurd de',
+    explanation:
+        'İdris-i Bitlisi, Çaldıran sonrası Kürt emirliklerinin Osmanlı\'ya bağlanmasında rol oynadı.',
+    explanationKu:
+        'Îdrîsê Bidlîsî piştî Çaldiranê di girêdana mîrektiyên kurd bi Osmaniyan re rolek lîst.',
+    explanationTr:
+        'İdris-i Bitlisi, Çaldıran sonrası Kürt emirliklerinin Osmanlı\'ya bağlanmasında rol oynadı.',
+    difficulty: 3,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0031',
+    category: 'Dîrok',
+    prompt: 'Mîrektiya Erdelan navenda xwe li ku derê bû?',
+    answers: ['Sine (Sanandaj)', 'Cizîr', 'Hewlêr', 'Bidlîs'],
+    correctAnswer: 'Sine (Sanandaj)',
+    explanation:
+        'Erdelan, Doğu Kürdistan\'da bir emirlikti; merkezi Sine (Senendec) idi.',
+    explanationKu:
+        'Erdelan mîrektiyeke rojhilatê Kurdistanê bû; navenda wê Sine bû.',
+    explanationTr:
+        'Erdelan, Doğu Kürdistan\'da bir emirlikti; merkezi Sine (Senendec) idi.',
+    difficulty: 5,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0032',
+    category: 'Dîrok',
+    prompt: 'Rast e an şaş e: Kovara Hawar bi alfabeya latînî hat weşandin.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'Hawar, Kürtçe Latin alfabesini kullandı ve yaydı.',
+    explanationKu: 'Hawar alfabeya latînî ya kurdî bi kar anî û belav kir.',
+    explanationTr: 'Hawar, Kürtçe Latin alfabesini kullandı ve yaydı.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0033',
+    category: 'Dîrok',
+    prompt: 'Kovara "Ronahî" ji aliyê kê ve hat weşandin?',
+    answers: [
+      'Celadet Alî Bedirxan',
+      'Ehmedê Xanî',
+      'Qadî Mihemed',
+      'Erebê Şemo',
+    ],
+    correctAnswer: 'Celadet Alî Bedirxan',
+    explanation:
+        'Ronahî (1942), Hawar\'dan sonra Celadet tarafından Şam\'da çıkarıldı.',
+    explanationKu:
+        'Ronahî (1942) piştî Hawarê ji aliyê Celadet ve li Şamê derket.',
+    explanationTr:
+        'Ronahî (1942), Hawar\'dan sonra Celadet tarafından Şam\'da çıkarıldı.',
+    difficulty: 4,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0034',
+    category: 'Dîrok',
+    prompt:
+        'Kurdên Kafkasyayê (Ermenistan-Gurcistan) bi giştî di kîjan serdemê de li wir bi cih bûn?',
+    answers: [
+      'Sedsalên 19-20em',
+      'Sedsala 12em',
+      'Berî zayînê',
+      'Sedsala 21em',
+    ],
+    correctAnswer: 'Sedsalên 19-20em',
+    explanation:
+        '19-20. yüzyıl savaş ve göçleriyle Kafkasya\'da bir Kürt topluluğu oluştu.',
+    explanationKu:
+        'Bi şer û koçberiyên sedsala 19-20em re civakeke kurd li Kafkasyayê ava bû.',
+    explanationTr:
+        '19-20. yüzyıl savaş ve göçleriyle Kafkasya\'da bir Kürt topluluğu oluştu.',
+    difficulty: 3,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0035',
+    category: 'Dîrok',
+    prompt:
+        'Yekem weşana radyoyê ya bi kurdî li Erîvanê di kîjan salan de dest pê kir?',
+    answers: ['Salên 1950î', 'Salên 1920î', 'Salên 1980î', 'Salên 2000î'],
+    correctAnswer: 'Salên 1950î',
+    explanation:
+        'Erivan Radyosu\'nun Kürtçe yayını 1950\'lerde başladı ve önemli bir arşiv oldu.',
+    explanationKu:
+        'Weşana kurdî ya Radyoya Erîvanê ji salên 1950î ve dest pê kir û bû arşîvek girîng.',
+    explanationTr:
+        'Erivan Radyosu\'nun Kürtçe yayını 1950\'lerde başladı ve önemli bir arşiv oldu.',
+    difficulty: 4,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0036',
+    category: 'Dîrok',
+    prompt: '"Şerefname" bi kîjan zimanî hat nivîsandin?',
+    answers: ['Farisî', 'Kurmancî', 'Erebî', 'Tirkî'],
+    correctAnswer: 'Farisî',
+    explanation: 'Şerefhan Bitlisi eserini Farsça yazdı; sonradan çevrildi.',
+    explanationKu:
+        'Şerefxanê Bidlîsî berhema xwe bi farisî nivîsî; paşê hat wergerandin.',
+    explanationTr: 'Şerefhan Bitlisi eserini Farsça yazdı; sonradan çevrildi.',
+    difficulty: 5,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0037',
+    category: 'Dîrok',
+    prompt: 'Qelaya Dimdimê di dîroka kurdî de bi çi tê nasîn?',
+    answers: [
+      'Berxwedana li dijî hêzeke mezin',
+      'Navenda bazirganiyê',
+      'Cihê weşanê',
+      'Zanîngeheke kevn',
+    ],
+    correctAnswer: 'Berxwedana li dijî hêzeke mezin',
+    explanation: 'Dimdim direnişi (17. yy) destan ve kilamlara konu oldu.',
+    explanationKu:
+        'Berxwedana Dimdimê (sedsala 17em) bû mijara destan û kilaman.',
+    explanationTr: 'Dimdim direnişi (17. yy) destan ve kilamlara konu oldu.',
+    difficulty: 3,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0038',
+    category: 'Dîrok',
+    prompt: 'Peyva "dîrok" bi Tirkî çi tê wateyê?',
+    answers: ['tarih', 'coğrafya', 'edebiyat', 'müzik'],
+    correctAnswer: 'tarih',
+    explanation: '"Dîrok" Türkçede "tarih" demektir.',
+    explanationKu: '"Dîrok" bi Tirkî "tarih" e.',
+    explanationTr: '"Dîrok" Türkçede "tarih" demektir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_dirok_0039',
+    category: 'Dîrok',
+    prompt:
+        'Mîrektiyên kurd bi giştî di kîjan sedsalê de hatin ji holê rakirin?',
+    answers: ['Sedsala 19em', 'Sedsala 15em', 'Sedsala 21em', 'Sedsala 10em'],
+    correctAnswer: 'Sedsala 19em',
+    explanation:
+        'Osmanlı merkezileşmesiyle Kürt emirlikleri 19. yüzyılda tek tek kaldırıldı.',
+    explanationKu:
+        'Bi navendîkirina Osmanî re mîrektiyên kurd di sedsala 19em de yek bi yek hatin hilweşandin.',
+    explanationTr:
+        'Osmanlı merkezileşmesiyle Kürt emirlikleri 19. yüzyılda tek tek kaldırıldı.',
+    difficulty: 4,
+    metadata: _diroknasSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0020',
+    category: 'Edebiyat',
+    prompt: 'Melayê Cizîrî li kîjan bajarî jiya?',
+    answers: ['Cizîr', 'Hewlêr', 'Wan', 'Şam'],
+    correctAnswer: 'Cizîr',
+    explanation: 'Melayê Cizîrî Cizre\'de yaşadı ve adını oradan aldı.',
+    explanationKu: 'Melayê Cizîrî li Cizîra Botan jiya û navê xwe ji wir girt.',
+    explanationTr: 'Melayê Cizîrî Cizre\'de yaşadı ve adını oradan aldı.',
+    difficulty: 3,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0021',
+    category: 'Edebiyat',
+    prompt: 'Di wêjeya kurdî de "medrese" çi rol lîst?',
+    answers: [
+      'Perwerdehiya klasîk û perwerdekirina helbestvanan',
+      'Weşandina rojnameyan',
+      'Hilberîna muzîkê',
+      'Rêveberiya bajaran',
+    ],
+    correctAnswer: 'Perwerdehiya klasîk û perwerdekirina helbestvanan',
+    explanation: 'Klasik Kürt şairlerinin çoğu medreselerde yetişti.',
+    explanationKu:
+        'Gelek helbestvanên klasîk ên kurd di medreseyan de perwerde bûn.',
+    explanationTr: 'Klasik Kürt şairlerinin çoğu medreselerde yetişti.',
+    difficulty: 4,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0022',
+    category: 'Edebiyat',
+    prompt: 'Peyva "çîrok" bi Tirkî çi tê wateyê?',
+    answers: ['hikâye', 'şiir', 'roman', 'tiyatro'],
+    correctAnswer: 'hikâye',
+    explanation: '"Çîrok" Türkçede "hikâye" demektir.',
+    explanationKu: '"Çîrok" bi Tirkî "hikâye" ye.',
+    explanationTr: '"Çîrok" Türkçede "hikâye" demektir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0023',
+    category: 'Edebiyat',
+    prompt: '"Nûbihar" û "Tîroj" bi giştî çi ne?',
+    answers: [
+      'Kovarên çand û wêjeyê',
+      'Romanên nûjen',
+      'Komên muzîkê',
+      'Partiyên siyasî',
+    ],
+    correctAnswer: 'Kovarên çand û wêjeyê',
+    explanation:
+        'Edebiyat dergileri, yazılı Kürtçenin sürekliliği için önemli yer tutar.',
+    explanationKu:
+        'Kovarên wêjeyî ji bo domandina kurdiya nivîskî cihekî girîng digirin.',
+    explanationTr:
+        'Edebiyat dergileri, yazılı Kürtçenin sürekliliği için önemli yer tutar.',
+    difficulty: 5,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0024',
+    category: 'Edebiyat',
+    prompt: 'Berhema "Şivanê Kurmanca" di kîjan salê de derket?',
+    answers: ['1935', '1965', '1905', '1985'],
+    correctAnswer: '1935',
+    explanation: 'Erebê Şemo romanını 1935\'te Kafkasya\'da yayımladı.',
+    explanationKu: 'Erebê Şemo romana xwe di 1935an de li Kafkasyayê weşand.',
+    explanationTr: 'Erebê Şemo romanını 1935\'te Kafkasya\'da yayımladı.',
+    difficulty: 3,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0025',
+    category: 'Edebiyat',
+    prompt: 'Di helbesta kurdî de "qafiye" çi ye?',
+    answers: [
+      'Lihevhatina dengên dawiya rêzikan',
+      'Hejmara rêzikan',
+      'Mijara helbestê',
+      'Navê helbestvan',
+    ],
+    correctAnswer: 'Lihevhatina dengên dawiya rêzikan',
+    explanation: 'Kafiye, dize sonlarındaki ses uyumudur.',
+    explanationKu: 'Qafiye ahenga dengî ya dawiya rêzikan e.',
+    explanationTr: 'Kafiye, dize sonlarındaki ses uyumudur.',
+    difficulty: 4,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0026',
+    category: 'Edebiyat',
+    prompt: 'Di klasîkên kurdî de "mesnewî" çi ye?',
+    answers: [
+      'Forma helbestî ya çîrokî bi beytên qafiyedar',
+      'Cureyekî ferhengê',
+      'Rêbaza nivîsandina dîrokê',
+      'Navê medreseyekê',
+    ],
+    correctAnswer: 'Forma helbestî ya çîrokî bi beytên qafiyedar',
+    explanation: 'Mem û Zîn mesnevi biçiminde yazılmıştır.',
+    explanationKu: 'Mem û Zîn bi forma mesnewiyê hatiye nivîsandin.',
+    explanationTr: 'Mem û Zîn mesnevi biçiminde yazılmıştır.',
+    difficulty: 5,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0027',
+    category: 'Edebiyat',
+    prompt: 'Rast e an şaş e: Cegerxwîn navekî edebî (mahlas) e.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'Asıl adı Şeyhmus Hasan\'dı; "Cegerxwîn" mahlasıdır.',
+    explanationKu:
+        'Navê wî yê rastîn Şêxmûs Hesen bû; "Cegerxwîn" mahlasa wî ye.',
+    explanationTr: 'Asıl adı Şeyhmus Hasan\'dı; "Cegerxwîn" mahlasıdır.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0028',
+    category: 'Edebiyat',
+    prompt: 'Wêjeya devkî ya kurdî bi piranî bi çi hatiye veguhastin?',
+    answers: [
+      'Dengbêj û çîrokbêjan',
+      'Pirtûkên çapkirî',
+      'Rojnameyan',
+      'Fîlman',
+    ],
+    correctAnswer: 'Dengbêj û çîrokbêjan',
+    explanation:
+        'Matbaadan önce edebiyat sözlü olarak — dengbêj ve masalcılarla — aktarıldı.',
+    explanationKu:
+        'Berî çapxaneyê, wêje bi devkî — bi dengbêj û çîrokbêjan — hate veguhastin.',
+    explanationTr:
+        'Matbaadan önce edebiyat sözlü olarak — dengbêj ve masalcılarla — aktarıldı.',
+    difficulty: 3,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0029',
+    category: 'Edebiyat',
+    prompt: '"Zembîlfiroş" di wêjeya kurdî de çi ye?',
+    answers: [
+      'Destaneke evînî ya gelêrî',
+      'Ferhengek',
+      'Rojnameyek',
+      'Amûreke muzîkê',
+    ],
+    correctAnswer: 'Destaneke evînî ya gelêrî',
+    explanation:
+        'Zembîlfiroş, yoksul bir âşığın hikâyesidir; sözlü ve yazılı olarak yayılmıştır.',
+    explanationKu:
+        'Zembîlfiroş çîroka evîndarekî hejar e; hem bi devkî hem bi nivîskî belav bûye.',
+    explanationTr:
+        'Zembîlfiroş, yoksul bir âşığın hikâyesidir; sözlü ve yazılı olarak yayılmıştır.',
+    difficulty: 4,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0030',
+    category: 'Edebiyat',
+    prompt: 'Wergera berhemên cîhanî bo kurdî çima girîng tê dîtin?',
+    answers: [
+      'Zimanê nivîskî fireh dike û peyvsaziyê dewlemend dike',
+      'Tenê ji bo bazarê ye',
+      'Ji bo kêmkirina xwendinê',
+      'Tenê ji bo dibistanan e',
+    ],
+    correctAnswer: 'Zimanê nivîskî fireh dike û peyvsaziyê dewlemend dike',
+    explanation: 'Çeviri yeni kavramlar getirir ve yazılı dili geliştirir.',
+    explanationKu: 'Werger têgehên nû tîne û zimanê nivîskî pêş dixe.',
+    explanationTr: 'Çeviri yeni kavramlar getirir ve yazılı dili geliştirir.',
+    difficulty: 3,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_edebiyat_0031',
+    category: 'Edebiyat',
+    prompt: 'Di Mem û Zînê de "Tacdîn" kî ye?',
+    answers: ['Hevalê dilsoz ê Mem', 'Bavê Zînê', 'Mîrê bajêr', 'Dijminê Mem'],
+    correctAnswer: 'Hevalê dilsoz ê Mem',
+    explanation:
+        'Tacdin destanda Mem\'in dostudur ve onun için fedakârlık yapar.',
+    explanationKu:
+        'Tacdîn di destanê de hevalê Mem e û ji bo wî xwe feda dike.',
+    explanationTr:
+        'Tacdin destanda Mem\'in dostudur ve onun için fedakârlık yapar.',
+    difficulty: 5,
+    metadata: _wejeSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0024',
+    category: 'Cografya',
+    prompt: 'Bajarê Wanê li kêleka çi ye?',
+    answers: ['Gola Wanê', 'Behra Reş', 'Çemê Firat', 'Behra Spî'],
+    correctAnswer: 'Gola Wanê',
+    explanation: 'Van, Van Gölü\'nün doğu kıyısındadır.',
+    explanationKu: 'Wan li peravê rojhilatê Gola Wanê ye.',
+    explanationTr: 'Van, Van Gölü\'nün doğu kıyısındadır.',
+    difficulty: 2,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0025',
+    category: 'Cografya',
+    prompt: 'Sûrên dîrokî yên Amedê ji kîjan kevirê volkanîk hatine çêkirin?',
+    answers: ['Bazalt', 'Mermer', 'Granit', 'Kilsin'],
+    correctAnswer: 'Bazalt',
+    explanation: 'Diyarbakır surları siyah bazalt taşındandır.',
+    explanationKu: 'Sûrên Amedê ji kevirê bazaltî yê reş hatine çêkirin.',
+    explanationTr: 'Diyarbakır surları siyah bazalt taşındandır.',
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0026',
+    category: 'Cografya',
+    prompt: 'Çemê Botan diherike nav kîjan çemî?',
+    answers: ['Dîcle', 'Firat', 'Zap', 'Murat'],
+    correctAnswer: 'Dîcle',
+    explanation: 'Botan Çayı Hakkâri\'den gelir ve Dicle\'ye karışır.',
+    explanationKu: 'Çemê Botan ji Colemêrgê tê û digihîje Dîcleyê.',
+    explanationTr: 'Botan Çayı Hakkâri\'den gelir ve Dicle\'ye karışır.',
+    difficulty: 4,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0027',
+    category: 'Cografya',
+    prompt: 'Herêma Kurdistanê ya Iraqê ji çend parêzgehên sereke pêk tê?',
+    answers: ['Sê (Hewlêr, Silêmanî, Dihok)', 'Du', 'Pênc', 'Heft'],
+    correctAnswer: 'Sê (Hewlêr, Silêmanî, Dihok)',
+    explanation: 'Üç temel il: Erbil, Süleymaniye ve Duhok.',
+    explanationKu: 'Sê parêzgehên bingehîn: Hewlêr, Silêmanî û Dihok.',
+    explanationTr: 'Üç temel il: Erbil, Süleymaniye ve Duhok.',
+    difficulty: 2,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0028',
+    category: 'Cografya',
+    prompt: 'Bajarê Kirmanşanê li kîjan welatî ye?',
+    answers: ['Îran', 'Iraq', 'Sûriye', 'Tirkiye'],
+    correctAnswer: 'Îran',
+    explanation: 'Kirmanşah, Doğu Kürdistan\'da, İran\'dadır.',
+    explanationKu: 'Kirmanşan li rojhilatê Kurdistanê, li Îranê ye.',
+    explanationTr: 'Kirmanşah, Doğu Kürdistan\'da, İran\'dadır.',
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0029',
+    category: 'Cografya',
+    prompt:
+        'Deşta Herîrê an deştên çandiniyê yên başûrê Kurdistanê bi giştî bi çi tên nasîn?',
+    answers: [
+      'Çandiniya genim û ceh',
+      'Masîgirî',
+      'Pîşesaziya giran',
+      'Turîzma peravê',
+    ],
+    correctAnswer: 'Çandiniya genim û ceh',
+    explanation: 'Güneydeki ovalar buğday ve arpa tarımına elverişlidir.',
+    explanationKu: 'Deştên başûr ji bo çandiniya genim û ceh guncav in.',
+    explanationTr: 'Güneydeki ovalar buğday ve arpa tarımına elverişlidir.',
+    difficulty: 4,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0030',
+    category: 'Cografya',
+    prompt: 'Çiyayê Sîpanê li nêzîkî kîjan golê ye?',
+    answers: ['Gola Wanê', 'Gola Urmiyê', 'Gola Tuzê', 'Gola Beyşehîrê'],
+    correctAnswer: 'Gola Wanê',
+    explanation: 'Süphan, Van Gölü\'nün kuzeyindeki volkanik dağdır.',
+    explanationKu: 'Sîpan çiyayekî volkanîk ê li bakurê Gola Wanê ye.',
+    explanationTr: 'Süphan, Van Gölü\'nün kuzeyindeki volkanik dağdır.',
+    difficulty: 5,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0031',
+    category: 'Cografya',
+    prompt: 'Gola Urmiyê li kîjan welatî ye?',
+    answers: ['Îran', 'Tirkiye', 'Iraq', 'Sûriye'],
+    correctAnswer: 'Îran',
+    explanation: 'Urmiye Gölü, Doğu Kürdistan\'da, İran\'ın kuzeybatısındadır.',
+    explanationKu:
+        'Gola Urmiyê li rojhilatê Kurdistanê, li bakurê rojavayê Îranê ye.',
+    explanationTr:
+        'Urmiye Gölü, Doğu Kürdistan\'da, İran\'ın kuzeybatısındadır.',
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0032',
+    category: 'Cografya',
+    prompt: 'Rast e an şaş e: Dîcle û Firat digihîjin Kendava Basrayê.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'İki nehir Şattülarap\'ta birleşip Basra Körfezi\'ne dökülür.',
+    explanationKu:
+        'Herdu çem li Şatt el-Erebê digihîjin hev û diçin Kendava Basrayê.',
+    explanationTr:
+        'İki nehir Şattülarap\'ta birleşip Basra Körfezi\'ne dökülür.',
+    type: QuestionType.trueFalse,
+    difficulty: 2,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0033',
+    category: 'Cografya',
+    prompt: 'Bajarê Dihokê li kîjan welatî ye?',
+    answers: ['Iraq', 'Tirkiye', 'Îran', 'Sûriye'],
+    correctAnswer: 'Iraq',
+    explanation:
+        'Duhok, Irak Kürdistan Bölgesi\'nde, Türkiye sınırına yakındır.',
+    explanationKu:
+        'Dihok li Herêma Kurdistanê ya Iraqê, li nêzî sînorê Tirkiyeyê ye.',
+    explanationTr:
+        'Duhok, Irak Kürdistan Bölgesi\'nde, Türkiye sınırına yakındır.',
+    difficulty: 4,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0034',
+    category: 'Cografya',
+    prompt: '"Zozan" û "germiyan" di jiyana koçeran de çi diyar dikin?',
+    answers: [
+      'Warê havînê û warê zivistanê',
+      'Du bajarên mezin',
+      'Du çemên sereke',
+      'Du cureyên xwarinê',
+    ],
+    correctAnswer: 'Warê havînê û warê zivistanê',
+    explanation: 'Göçerler yazın yaylada, kışın kışlakta kalır.',
+    explanationKu: 'Koçer havînê li zozanan, zivistanê li germiyanê dimînin.',
+    explanationTr: 'Göçerler yazın yaylada, kışın kışlakta kalır.',
+    difficulty: 3,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0035',
+    category: 'Cografya',
+    prompt: 'Herêma Şengalê bi taybetî bi kîjan civakê tê nasîn?',
+    answers: ['Êzidî', 'Asûrî', 'Ermenî', 'Turkmen'],
+    correctAnswer: 'Êzidî',
+    explanation: 'Şengal, Ezidi toplumunun ana yurdudur.',
+    explanationKu: 'Şengal warê sereke yê civaka êzidî ye.',
+    explanationTr: 'Şengal, Ezidi toplumunun ana yurdudur.',
+    difficulty: 5,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0036',
+    category: 'Cografya',
+    prompt: 'Peyva "behr" bi Tirkî çi tê wateyê?',
+    answers: ['deniz', 'göl', 'nehir', 'çeşme'],
+    correctAnswer: 'deniz',
+    explanation: '"Behr" Türkçede "deniz" demektir.',
+    explanationKu: '"Behr" bi Tirkî "deniz" e.',
+    explanationTr: '"Behr" Türkçede "deniz" demektir.',
+    difficulty: 2,
+    metadata: _ferhengSource,
+  ),
+  QuizQuestion(
+    id: 'edit_cografya_0037',
+    category: 'Cografya',
+    prompt: 'Bajarê Efrînê li kîjan welatî ye?',
+    answers: ['Sûriye', 'Tirkiye', 'Iraq', 'Îran'],
+    correctAnswer: 'Sûriye',
+    explanation: 'Efrin, Suriye\'nin kuzeybatısındadır.',
+    explanationKu: 'Efrîn li bakurê rojavayê Sûriyeyê ye.',
+    explanationTr: 'Efrin, Suriye\'nin kuzeybatısındadır.',
+    difficulty: 4,
+    metadata: _cografyaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0021',
+    category: 'Muzîk',
+    prompt: '"Şeşxane" an amûrên têlî yên kurdî bi giştî çawa tên lêxistin?',
+    answers: [
+      'Bi tiliyan an bi mizrabê',
+      'Bi kevanê',
+      'Bi pifê',
+      'Bi lêdana çermê',
+    ],
+    correctAnswer: 'Bi tiliyan an bi mizrabê',
+    explanation: 'Tembûr ve saz parmakla ya da mızrapla çalınır.',
+    explanationKu: 'Tembûr û saz bi tiliyan an bi mizrabê tên lêxistin.',
+    explanationTr: 'Tembûr ve saz parmakla ya da mızrapla çalınır.',
+    difficulty: 3,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0022',
+    category: 'Muzîk',
+    prompt: 'Di muzîka kurdî de peyva "stranbêj" ji bo kê tê bikaranîn?',
+    answers: [
+      'Kesa ku stranan dibêje',
+      'Kesê ku amûrê çêdike',
+      'Kesê ku reqsê hîn dike',
+      'Kesê ku helbestê dinivîse',
+    ],
+    correctAnswer: 'Kesa ku stranan dibêje',
+    explanation:
+        '"Stranbêj", "stran" ve "bêj" (söylemek) sözcüklerinden oluşur.',
+    explanationKu: '"Stranbêj" ji "stran" û "bêj" (gotin) pêk tê.',
+    explanationTr:
+        '"Stranbêj", "stran" ve "bêj" (söylemek) sözcüklerinden oluşur.',
+    difficulty: 2,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0023',
+    category: 'Muzîk',
+    prompt: 'Di muzîka kurdî de "makam" an "avaz" çi diyar dike?',
+    answers: [
+      'Qalibê dengî yê stranê',
+      'Hejmara stranbêjan',
+      'Dirêjahiya dawetê',
+      'Navê amûrê',
+    ],
+    correctAnswer: 'Qalibê dengî yê stranê',
+    explanation: 'Avaz, şarkının üzerine kurulduğu makam kalıbıdır.',
+    explanationKu: 'Avaz qalibê makamî ye ku stran li ser tê avakirin.',
+    explanationTr: 'Avaz, şarkının üzerine kurulduğu makam kalıbıdır.',
+    difficulty: 4,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0024',
+    category: 'Muzîk',
+    prompt:
+        'Di dawetên kurdî de reqsa komî bi gelemperî bi kîjan amûran tê meşandin?',
+    answers: ['Def û zirne', 'Tembûr û bilûr', 'Piano û gîtar', 'Erbane û ney'],
+    correctAnswer: 'Def û zirne',
+    explanation: 'Davul ve zurna, yüksek sesiyle açık hava halayına uygundur.',
+    explanationKu:
+        'Def û zirne bi dengê xwe yê bilind ji bo govenda derve guncav in.',
+    explanationTr:
+        'Davul ve zurna, yüksek sesiyle açık hava halayına uygundur.',
+    difficulty: 3,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0025',
+    category: 'Muzîk',
+    prompt: 'Di kilamên dengbêjan de "vegotin" çima girîng e?',
+    answers: [
+      'Kilam çîrokeke dîrokî diguhezîne',
+      'Tenê ahenga dengî girîng e',
+      'Reqs pê re tê kirin',
+      'Amûr pê re tên lêxistin',
+    ],
+    correctAnswer: 'Kilam çîrokeke dîrokî diguhezîne',
+    explanation:
+        'Dengbêjlik hem müzik hem sözlü arşivdir: olaylar kilamla korunur.',
+    explanationKu:
+        'Dengbêjî hem muzîk hem arşîva devkî ye: bûyer bi kilamê tên parastin.',
+    explanationTr:
+        'Dengbêjlik hem müzik hem sözlü arşivdir: olaylar kilamla korunur.',
+    difficulty: 5,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0026',
+    category: 'Muzîk',
+    prompt: 'Peyva "kilam" bi Tirkî bi giştî çi tê wateyê?',
+    answers: ['uzun hava / türkü', 'dans', 'saz', 'düğün'],
+    correctAnswer: 'uzun hava / türkü',
+    explanation: '"Kilam", hikâye anlatan uzun ezgilerdir.',
+    explanationKu: '"Kilam" stranên dirêj ên çîrokî ne.',
+    explanationTr: '"Kilam", hikâye anlatan uzun ezgilerdir.',
+    difficulty: 2,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0027',
+    category: 'Muzîk',
+    prompt: 'Di muzîka kurdî ya nûjen de "kom" çi ye?',
+    answers: [
+      'Koma stranbêj û muzîkjenan',
+      'Amûreke têlî',
+      'Cureyekî reqsê',
+      'Navê festîvalekê',
+    ],
+    correctAnswer: 'Koma stranbêj û muzîkjenan',
+    explanation:
+        '"Kom", birlikte söyleyip çalan topluluktur; 1990\'ların toplu müziği bununla anılır.',
+    explanationKu:
+        '"Kom" bi hev re distirên û dilîzin; muzîka komî ya salên 1990î pê tê nasîn.',
+    explanationTr:
+        '"Kom", birlikte söyleyip çalan topluluktur; 1990\'ların toplu müziği bununla anılır.',
+    difficulty: 4,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0028',
+    category: 'Muzîk',
+    prompt: 'Rast e an şaş e: Bilûr bi pifê tê lêxistin.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'Kaval üflemeli bir çalgıdır.',
+    explanationKu: 'Bilûr amûreke pifê ye.',
+    explanationTr: 'Kaval üflemeli bir çalgıdır.',
+    type: QuestionType.trueFalse,
+    difficulty: 3,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0029',
+    category: 'Muzîk',
+    prompt: 'Di dengbêjiyê de "şêwe" ya herêmî çi tê wateyê?',
+    answers: [
+      'Awayê gotinê yê taybetî yê herêmekê',
+      'Navê amûrekê',
+      'Dirêjahiya kilamê',
+      'Hejmara dengbêjan',
+    ],
+    correctAnswer: 'Awayê gotinê yê taybetî yê herêmekê',
+    explanation:
+        'Her yöre — Serhed, Botan, Behdinan — kendi dengbêj üslubuna sahiptir.',
+    explanationKu:
+        'Her herêm — Serhed, Botan, Behdînan — şêwazeke dengbêjiyê ya xwe heye.',
+    explanationTr:
+        'Her yöre — Serhed, Botan, Behdinan — kendi dengbêj üslubuna sahiptir.',
+    difficulty: 5,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0030',
+    category: 'Muzîk',
+    prompt: 'Di stranên zarokan ên kurdî de "lorî" çi ye?',
+    answers: ['Strana razanê', 'Strana dawetê', 'Kilama şer', 'Strana cejnê'],
+    correctAnswer: 'Strana razanê',
+    explanation: 'Lorî (ninni), çocuğu uyutmak için söylenir.',
+    explanationKu: 'Lorî ji bo razandina zarokan tê gotin.',
+    explanationTr: 'Lorî (ninni), çocuğu uyutmak için söylenir.',
+    difficulty: 3,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0031',
+    category: 'Muzîk',
+    prompt: 'Muzîka kurdî ya diasporayê bi giştî çi bandor kir?',
+    answers: [
+      'Belavbûna cîhanî ya stran û tomarkirinê',
+      'Kêmbûna stranan',
+      'Rawestandina dengbêjiyê',
+      'Guhertina alfabeyê',
+    ],
+    correctAnswer: 'Belavbûna cîhanî ya stran û tomarkirinê',
+    explanation:
+        'Diaspora yeni stüdyo, yayın ve festivaller getirdi; şarkılar dünyaya yayıldı.',
+    explanationKu:
+        'Diaspora studyo, weşan û festîvalên nû anî; stran li cîhanê belav bûn.',
+    explanationTr:
+        'Diaspora yeni stüdyo, yayın ve festivaller getirdi; şarkılar dünyaya yayıldı.',
+    difficulty: 4,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_muzik_0032',
+    category: 'Muzîk',
+    prompt: 'Peyva "govend" bi Tirkî çi tê wateyê?',
+    answers: ['halay', 'şarkı', 'saz', 'düğün'],
+    correctAnswer: 'halay',
+    explanation: '"Govend" Türkçede "halay" demektir.',
+    explanationKu: '"Govend" bi Tirkî "halay" e.',
+    explanationTr: '"Govend" Türkçede "halay" demektir.',
+    difficulty: 2,
+    metadata: _muzikSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0019',
+    category: 'Siyaset',
+    prompt: 'Di modela xwerêveberiyê de "meclîsa gund" çi dike?',
+    answers: [
+      'Li ser pirsgirêkên gund biryar dide',
+      'Tenê muzîkê organîze dike',
+      'Bacê berhev dike',
+      'Ordû ava dike',
+    ],
+    correctAnswer: 'Li ser pirsgirêkên gund biryar dide',
+    explanation: 'Köy meclisi, halka en yakın karar birimidir.',
+    explanationKu: 'Meclîsa gund yekeya biryardayînê ya herî nêzîk gel e.',
+    explanationTr: 'Köy meclisi, halka en yakın karar birimidir.',
+    difficulty: 3,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0020',
+    category: 'Siyaset',
+    prompt: 'Di siyaseta herêmî de "komîsyon" bi giştî çi ye?',
+    answers: [
+      'Koma xebatê ya li ser mijarekê',
+      'Dadgeheke taybet',
+      'Yekîneyeke leşkerî',
+      'Sendîkayeke karkeran',
+    ],
+    correctAnswer: 'Koma xebatê ya li ser mijarekê',
+    explanation:
+        'Komisyon (eğitim, sağlık, ekonomi) belli bir konuda çalışmayı yürütür.',
+    explanationKu:
+        'Komîsyon (perwerde, tenduristî, aborî) xebatê li ser mijarekê birêve dibe.',
+    explanationTr:
+        'Komisyon (eğitim, sağlık, ekonomi) belli bir konuda çalışmayı yürütür.',
+    difficulty: 4,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0021',
+    category: 'Siyaset',
+    prompt: 'Peyva "wekhevî" bi Tirkî çi tê wateyê?',
+    answers: ['eşitlik', 'özgürlük', 'barış', 'adalet'],
+    correctAnswer: 'eşitlik',
+    explanation: '"Wekhevî" Türkçede "eşitlik" demektir.',
+    explanationKu: '"Wekhevî" bi Tirkî "eşitlik" e.',
+    explanationTr: '"Wekhevî" Türkçede "eşitlik" demektir.',
+    difficulty: 2,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0022',
+    category: 'Siyaset',
+    prompt: 'Kurdên Êzidî di 2014an de bi kîjan bûyerê rû bi rû man?',
+    answers: [
+      'Êrîşa Şengalê',
+      'Referandûma serxwebûnê',
+      'Peymana Lozanê',
+      'Serjimara Cizîrê',
+    ],
+    correctAnswer: 'Êrîşa Şengalê',
+    explanation:
+        'Ağustos 2014\'te Şengal saldırıya uğradı; binlerce Ezidi katledildi veya kaçırıldı.',
+    explanationKu:
+        'Di Tebaxa 2014an de Şengal hat êrîşkirin; bi hezaran êzidî hatin qetilkirin an revandin.',
+    explanationTr:
+        'Ağustos 2014\'te Şengal saldırıya uğradı; binlerce Ezidi katledildi veya kaçırıldı.',
+    difficulty: 5,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0023',
+    category: 'Siyaset',
+    prompt: 'Zimanê perwerdehiyê li Herêma Kurdistanê ya Iraqê bi giştî çi ye?',
+    answers: ['Kurdî', 'Erebî', 'Îngilîzî', 'Farisî'],
+    correctAnswer: 'Kurdî',
+    explanation:
+        'Bölgede eğitim Kürtçedir; Arapça ve İngilizce diğer diller olarak okutulur.',
+    explanationKu:
+        'Li herêmê perwerdehî bi kurdî tê kirin; erebî û îngilîzî wek zimanên din tên hînkirin.',
+    explanationTr:
+        'Bölgede eğitim Kürtçedir; Arapça ve İngilizce diğer diller olarak okutulur.',
+    difficulty: 3,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0024',
+    category: 'Siyaset',
+    prompt: 'Rast e an şaş e: Diaspora di siyaseta kurdî de rolek dilîze.',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Rast',
+    explanation: 'Diaspora lobi, yayın ve ekonomik destekle etkide bulunur.',
+    explanationKu: 'Diaspora bi lobî, weşan û piştgiriya aborî bandor dike.',
+    explanationTr: 'Diaspora lobi, yayın ve ekonomik destekle etkide bulunur.',
+    type: QuestionType.trueFalse,
+    difficulty: 4,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0025',
+    category: 'Siyaset',
+    prompt: 'Di rêveberiyên xweser de "meclîsa jinan" çi rol digire?',
+    answers: [
+      'Li ser mijarên jinan biryarên girêdayî digire',
+      'Tenê şêwir dide',
+      'Tenê perwerdehiyê dide',
+      'Rola wê nîne',
+    ],
+    correctAnswer: 'Li ser mijarên jinan biryarên girêdayî digire',
+    explanation:
+        'Kadın meclisi, kendi konularında nihai karar hakkına sahiptir.',
+    explanationKu:
+        'Meclîsa jinan di mijarên xwe de xwedî mafê biryara dawî ye.',
+    explanationTr:
+        'Kadın meclisi, kendi konularında nihai karar hakkına sahiptir.',
+    difficulty: 5,
+    metadata: _siyasetSource,
+  ),
+  QuizQuestion(
+    id: 'edit_siyaset_0026',
+    category: 'Siyaset',
+    prompt: 'Di siyaseta nûjen de "xwerêveberiya herêmî" çi tê wateyê?',
+    answers: [
+      'Herêm karûbarên xwe bi xwe birêve dibe',
+      'Navend her tiştî diyar dike',
+      'Ordû rêve dibe',
+      'Tenê hilbijartin heye',
+    ],
+    correctAnswer: 'Herêm karûbarên xwe bi xwe birêve dibe',
+    explanation: 'Öz yönetim, karar gücünü yerel düzeye verir.',
+    explanationKu: 'Xwerêveberî hêza biryarê dide asta herêmî.',
+    explanationTr: 'Öz yönetim, karar gücünü yerel düzeye verir.',
+    difficulty: 3,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0017',
+    category: 'Paradigma',
+    prompt: 'Di paradîgmayê de "civaka xwezayî" çi tê wateyê?',
+    answers: [
+      'Civaka berî hiyerarşiya dewletê',
+      'Civaka bêziman',
+      'Civaka pîşesazî',
+      'Civaka dîjîtal',
+    ],
+    correctAnswer: 'Civaka berî hiyerarşiya dewletê',
+    explanation:
+        'Doğal toplum, sınıf ve devlet öncesi model olarak değerlendirilir.',
+    explanationKu:
+        'Civaka xwezayî wek modela berî çînî û berî dewletê tê nirxandin.',
+    explanationTr:
+        'Doğal toplum, sınıf ve devlet öncesi model olarak değerlendirilir.',
+    difficulty: 3,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0018',
+    category: 'Paradigma',
+    prompt: '"Hişmendiya civakî" di vê paradîgmayê de çima girîng e?',
+    answers: [
+      'Guhertin bi perwerdehî û hişmendiyê dest pê dike',
+      'Tenê aborî girîng e',
+      'Tenê hiqûq girîng e',
+      'Guhertin bi teknolojiyê tê',
+    ],
+    correctAnswer: 'Guhertin bi perwerdehî û hişmendiyê dest pê dike',
+    explanation: 'Akademiler ve toplumsal eğitim, dönüşümün ana araçlarıdır.',
+    explanationKu:
+        'Akademî û perwerdehiya civakî amûrên sereke yên veguhertinê ne.',
+    explanationTr: 'Akademiler ve toplumsal eğitim, dönüşümün ana araçlarıdır.',
+    difficulty: 4,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0019',
+    category: 'Paradigma',
+    prompt:
+        'Rexneya li "dewleta netewe" di vê paradîgmayê de bi giştî li ser çi ye?',
+    answers: [
+      'Pirrengiyê bi zorê yek dike',
+      'Pir bi hêz e',
+      'Pir belavbûyî ye',
+      'Tenê aborî ye',
+    ],
+    correctAnswer: 'Pirrengiyê bi zorê yek dike',
+    explanation:
+        'Ulus-devlet farklı dil, kültür ve kimlikleri tek kalıba sokar.',
+    explanationKu:
+        'Dewleta netewe ziman, çand û nasnameyên cuda di bin yek qalibî de dixe.',
+    explanationTr:
+        'Ulus-devlet farklı dil, kültür ve kimlikleri tek kalıba sokar.',
+    difficulty: 5,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0020',
+    category: 'Paradigma',
+    prompt:
+        'Peyva "azadî" û "wekhevî" bi hev re di vê paradîgmayê de bi çi ve girêdayî ne?',
+    answers: [
+      'Bi azadiya jinê ve',
+      'Bi aboriya bazarê ve',
+      'Bi hêza leşkerî ve',
+      'Bi sînoran ve',
+    ],
+    correctAnswer: 'Bi azadiya jinê ve',
+    explanation: 'Toplumun özgürlüğü, kadının özgürlük düzeyiyle ölçülür.',
+    explanationKu: 'Azadiya civakê bi asta azadiya jinê tê pîvandin.',
+    explanationTr: 'Toplumun özgürlüğü, kadının özgürlük düzeyiyle ölçülür.',
+    difficulty: 2,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0021',
+    category: 'Paradigma',
+    prompt:
+        'Rast e an şaş e: Di modela komunal de biryar ji jor ber bi jêr ve tê dayîn.',
+    answers: ['Şaş', 'Rast'],
+    correctAnswer: 'Şaş',
+    explanation:
+        'Tersine: karar aşağıdan — komün ve meclislerden — yukarı doğru gider.',
+    explanationKu:
+        'Berevajî: biryar ji jêr — ji komun û meclîsan — ber bi jor ve diçe.',
+    explanationTr:
+        'Tersine: karar aşağıdan — komün ve meclislerden — yukarı doğru gider.',
+    type: QuestionType.trueFalse,
+    difficulty: 4,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0022',
+    category: 'Paradigma',
+    prompt:
+        '"Perwerdehiya bi zimanê zikmakî" di vê paradîgmayê de çima girîng tê dîtin?',
+    answers: [
+      'Nasname û hişmendî bi ziman tê veguhastin',
+      'Tenê ji bo îmtîhanan',
+      'Tenê ji bo turîzmê',
+      'Girîngiya wê nîne',
+    ],
+    correctAnswer: 'Nasname û hişmendî bi ziman tê veguhastin',
+    explanation:
+        'Dil hem hafızayı hem kimliği taşır; bu yüzden anadilde eğitim temeldir.',
+    explanationKu:
+        'Ziman hem bîr hem nasname diguhezîne; loma perwerdehiya zikmakî bingehîn e.',
+    explanationTr:
+        'Dil hem hafızayı hem kimliği taşır; bu yüzden anadilde eğitim temeldir.',
+    difficulty: 3,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0023',
+    category: 'Paradigma',
+    prompt: 'Di têgîna "modernîteya kapîtalîst" de sê stûnên rexnekirî çi ne?',
+    answers: [
+      'Kapîtalîzm, pîşesaziyparêzî û dewleta netewe',
+      'Ziman, çand û dîrok',
+      'Perwerde, tenduristî û aborî',
+      'Komun, meclîs û akademî',
+    ],
+    correctAnswer: 'Kapîtalîzm, pîşesaziyparêzî û dewleta netewe',
+    explanation:
+        'Bu üç sütun, toplumsal ve ekolojik krizin kökü olarak değerlendirilir.',
+    explanationKu: 'Ev sê stûn wek koka krîza civakî û ekolojîk tên nirxandin.',
+    explanationTr:
+        'Bu üç sütun, toplumsal ve ekolojik krizin kökü olarak değerlendirilir.',
+    difficulty: 5,
+    metadata: _paradigmaSource,
+  ),
+  QuizQuestion(
+    id: 'edit_paradigma_0024',
+    category: 'Paradigma',
+    prompt: 'Di modela ekolojîk de çandiniya herêmî çima tê pêşniyar kirin?',
+    answers: [
+      'Pêdiviya herêmê bi xwe tê dîtin, veguhastin kêm dibe',
+      'Ji bo îxracatê',
+      'Ji bo pîşesaziya giran',
+      'Ji bo turîzmê',
+    ],
+    correctAnswer: 'Pêdiviya herêmê bi xwe tê dîtin, veguhastin kêm dibe',
+    explanation: 'Yerel üretim, enerji tüketimini ve dışa bağımlılığı azaltır.',
+    explanationKu:
+        'Hilberîna herêmî xerckirina enerjiyê û girêdana derve kêm dike.',
+    explanationTr:
+        'Yerel üretim, enerji tüketimini ve dışa bağımlılığı azaltır.',
+    difficulty: 4,
+    metadata: _paradigmaSource,
+  ),
+];

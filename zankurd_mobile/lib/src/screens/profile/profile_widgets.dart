@@ -476,7 +476,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
                                       : AppTheme.surfaceHiColor(
                                           context,
                                         ).withValues(alpha: 0.5),
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(AppRadius.sm),
                                   border: Border.all(
                                     color: unlocked
                                         ? AppTheme.gold.withValues(alpha: 0.25)
@@ -520,7 +520,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
                                                       AppTheme.textMutedColor(
                                                         context,
                                                       ),
-                                                  fontSize: 9,
+                                                  fontSize: 10,
                                                 ),
                                           ),
                                         ],
@@ -679,7 +679,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: AppTheme.accent.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
                         border: Border.all(
                           color: AppTheme.accent.withValues(alpha: 0.24),
                         ),
@@ -845,7 +845,7 @@ class _MasteryRow extends StatelessWidget {
                   isMamoste ? '✓' : '$count/$threshold',
                   style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
-                    fontSize: 9,
+                    fontSize: 10,
                   ),
                 ),
               ],
@@ -869,7 +869,7 @@ class _AchievementChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
         color: AppTheme.gold.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
         border: Border.all(color: AppTheme.gold.withValues(alpha: 0.24)),
       ),
       child: Row(
@@ -1165,16 +1165,19 @@ class _PedagogicalAnalyticsSection extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.orange.withValues(alpha: 0.16),
+                        color: AppTheme.brand.withValues(alpha: 0.16),
                         borderRadius: BorderRadius.circular(6),
                         border: Border.all(
-                          color: Colors.orange.withValues(alpha: 0.5),
+                          color: AppTheme.brand.withValues(alpha: 0.5),
                         ),
                       ),
                       child: Text(
                         weakestCat,
                         style: AppTypography.bodyMedium.copyWith(
-                          color: Colors.orange,
+                          color: AppColors.readableAccent(
+                            context,
+                            AppTheme.brand,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

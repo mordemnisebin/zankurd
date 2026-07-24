@@ -14,24 +14,28 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 class CategoryVisuals {
   const CategoryVisuals._();
 
-  /// Kategori → gradyan renk çifti. Değerler `AppTheme.categoryGradients`
-  /// paletinden seçildi; kategori listesindeki yerleşik renkler korunarak
-  /// eşlendi, böylece kullanıcının öğrendiği renk kimliği değişmiyor.
+  /// Kategori → renk çifti. 2026-07-24 yenilemesi: tonlar tek bir doygunluk
+  /// bandına çekildi (orta ton, düşük kroma) — böylece sekiz kategori yan yana
+  /// durduğunda göz yorulmuyor ve hiçbiri eylem turuncusuyla (Tîrêj)
+  /// yarışmıyor. Ziman turuncudan çıkarıldı çünkü CTA rengiyle çakışıyordu.
+  ///
+  /// Bu renkler artık kartın tamamını doldurmaz; ikon karosu ve ince kenar
+  /// şeridi gibi küçük kimlik alanlarında kullanılır.
   static const Map<String, List<Color>> _gradients = {
-    'Ziman': [Color(0xFFD47C3B), Color(0xFFC0672A)], // turuncu
-    'Siyaset': [Color(0xFFB54C6F), Color(0xFF9E3C5B)], // gül
-    'Paradigma': [Color(0xFF3B6FB8), Color(0xFF2E5A9D)], // mavi
-    'Muzîk': [Color(0xFFC4A020), Color(0xFFA88818)], // sari-altin
-    'Edebiyat': [Color(0xFF2B8A50), Color(0xFF227542)], // yeşil
-    'Dîrok': [Color(0xFF8B3A5A), Color(0xFF742E4A)], // bordo
-    'Cografya': [Color(0xFF7048B8), Color(0xFF5D3A9E)], // doygun mor
-    'Çand': [Color(0xFF1E8A7A), Color(0xFF177064)], // acik turkuaz
-    'Teknolojî': [Color(0xFF3B6FB8), Color(0xFF2E5A9D)],
+    'Ziman': [Color(0xFF2F6F62), Color(0xFF24564C)], // çam yeşili
+    'Çand': [Color(0xFF6B5AA6), Color(0xFF55458A)], // mor
+    'Dîrok': [Color(0xFFA85A7A), Color(0xFF8C4763)], // gül
+    'Edebiyat': [Color(0xFF3C6EA5), Color(0xFF2F5885)], // mavi
+    'Cografya': [Color(0xFF8A6A2F), Color(0xFF6E5325)], // toprak sarısı
+    'Muzîk': [Color(0xFF5C7A3A), Color(0xFF48602C)], // zeytin
+    'Siyaset': [Color(0xFF9E5B4A), Color(0xFF80463A)], // terracotta
+    'Paradigma': [Color(0xFF566B7F), Color(0xFF425364)], // arduvaz
+    'Teknolojî': [Color(0xFF566B7F), Color(0xFF425364)],
   };
 
   static const List<Color> _fallbackGradient = [
-    Color(0xFFD47C3B),
-    Color(0xFFC0672A),
+    Color(0xFF2F6F62),
+    Color(0xFF24564C),
   ];
 
   /// Rengi açıkça tanımlanmış kategoriler. Yeni bir kategori eklenirse

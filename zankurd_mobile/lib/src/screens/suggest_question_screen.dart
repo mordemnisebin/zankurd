@@ -348,7 +348,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                       Text(
                         '1',
                         style: AppTypography.caption.copyWith(
-                          color: Colors.green,
+                          color: AppTheme.correct,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -373,7 +373,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                       Text(
                         '5',
                         style: AppTypography.caption.copyWith(
-                          color: Colors.red,
+                          color: AppTheme.wrong,
                           fontWeight: FontWeight.w700,
                         ),
                       ),

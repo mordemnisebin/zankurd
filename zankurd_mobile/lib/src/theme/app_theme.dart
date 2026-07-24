@@ -265,20 +265,22 @@ class AppTheme {
   static const double cardGap = AppSpacing.cardGap;
   static const double pagePadding = AppSpacing.page;
 
-  static List<BoxShadow> cardShadow(BuildContext context) {
+  /// 2026-07-24: kartlar artık gölgeyle değil 1px kenarlıkla ayrılır.
+  /// Üst üste binen gölge katmanları ekranı "kabartma" gösteriyor ve
+  /// yüzeyler arasında sahte hiyerarşi yaratıyordu. Gölge yalnız gerçekten
+  /// yüzen katmanlarda kalır (alt navigasyon, sabit CTA, sheet) — onlar
+  /// [floatingShadow] kullanır.
+  static List<BoxShadow> cardShadow(BuildContext context) => const [];
+
+  /// Gerçekten yüzen katmanlar için tek gölge token'ı.
+  static List<BoxShadow> floatingShadow(BuildContext context) {
     final isDark = _isDark(context);
     return [
       BoxShadow(
-        color: Colors.black.withValues(alpha: isDark ? 0.24 : 0.07),
-        offset: const Offset(0, 10),
-        blurRadius: isDark ? 28 : 22,
-        spreadRadius: -8,
-      ),
-      BoxShadow(
-        color: Colors.black.withValues(alpha: isDark ? 0.12 : 0.025),
-        offset: const Offset(0, 3),
-        blurRadius: 8,
-        spreadRadius: -2,
+        color: Colors.black.withValues(alpha: isDark ? 0.34 : 0.10),
+        offset: const Offset(0, 6),
+        blurRadius: 20,
+        spreadRadius: -6,
       ),
     ];
   }
@@ -304,9 +306,7 @@ class AppTheme {
       gradient: gradient,
       color: gradient == null ? (color ?? surfaceColor(context)) : null,
       borderRadius: BorderRadius.circular(radius),
-      border: gradient == null
-          ? Border.all(color: borderColor(context).withValues(alpha: 0.5))
-          : null,
+      border: gradient == null ? Border.all(color: borderColor(context)) : null,
       boxShadow: cardShadow(context),
     );
   }
@@ -322,38 +322,54 @@ class AppTheme {
     );
   }
 
-  // ============ Cultural Modern Palette (Variant C) ============
-  static const brand = Color(0xFFF5931E); // Primary CTA/Accent (Turuncu)
-  static const brandDeep = Color(0xFFE06E12);
+  // ============ Zanîn paleti (2026-07-24 tasarım yenilemesi) ============
+  // İlke: zemin sakin, kimlik yeşil (Kesk), eylem turuncu (Tîrêj), ödül altın
+  // (Zêr). Aksan rolü 3'e indirildi; kategori tonları `category_visuals.dart`
+  // içinde yaşar ve yalnız ikon karosu + ince şeritte görünür.
+  //
+  // Tîrêj — tek eylem rengi. Eski #F5931E beyaz metinle 2.2:1 veriyordu ve
+  // her CTA'ya karartma perdesi (heroScrim) gerektiriyordu; bu ton beyazla
+  // AA eşiğini kendi başına geçer.
+  static const brand = Color(0xFFC2560E); // Primary CTA/Accent (Tîrêj)
+  static const brandDeep = Color(0xFFA0450A);
 
-  // Cultural Brand Background (Header etc)
-  static const culturalBrandBg = Color(0xFF1B4332); // Deep Green
+  /// Gradyanın açık ucu — yalnız birincil CTA'da kullanılır.
+  static const brandLite = Color(0xFFE2711D);
 
-  static const playGreen = Color(0xFF22C55E);
-  static const playPink = Color(0xFFB54C6F); // Muted elegant rose
-  static const playCyan = Color(0xFF288077); // Muted elegant teal
-  static const playPurple = Color(0xFF7052A3); // Muted elegant purple
+  // Kesk — marka kimliği (başlık şeritleri, kimlik yüzeyleri).
+  static const culturalBrandBg = Color(0xFF14513A); // Deep Green
+
+  // Aşağıdaki dört ton geriye dönük ad uyumu için duruyor; artık "oyun modu
+  // rengi" değil, nötrleştirilmiş yardımcı aksanlardır.
+  static const playGreen = Color(0xFF3F8F5F);
+  static const playPink = Color(0xFFA85A7A); // Muted elegant rose
+  static const playCyan = Color(0xFF2F6F62); // Muted elegant teal
+  static const playPurple = Color(0xFF6B5AA6); // Muted elegant purple
 
   // ============ Dark Mode Palette ============
   static const primaryGradientStart = brand;
   static const primaryGradientEnd = brandDeep;
 
-  static const secondaryAccent = Color(0xFFE7B53C);
-  static const gold = Color(0xFFE7B53C);
+  // Zêr — yalnız ödül/ilerleme (XP, kredi, 1. sıra). Eski #E7B53C açık
+  // yüzeyde metin olarak okunmuyordu; bu ton her iki temada da çalışır.
+  static const secondaryAccent = Color(0xFFD9A227);
+  static const gold = Color(0xFFD9A227);
 
   static const cyan = playCyan;
 
-  static const bg = Color(0xFF0F1210);
-  static const bgDeep = Color(0xFF080B09);
-  static const surface = Color(0xFF1F2B24);
-  static const surfaceHi = Color(0xFF27352C);
+  static const bg = Color(0xFF0E1512);
+  static const bgDeep = Color(0xFF0A0F0C);
+  // Kartlar zeminden 1px kenarlıkla ayrılır; yüzey zeminden yalnız bir tık
+  // açık olsun ki gece kullanımında ekran parlamasın (2026-07-24).
+  static const surface = Color(0xFF18211B);
+  static const surfaceHi = Color(0xFF212C24);
   static const darkBg = bg;
 
-  static const textPrimary = Color(0xFFF4F1E9);
-  static const textSub = Color(0xFF9EA7B0);
-  static const textMuted = Color(0xFF8A949C);
+  static const textPrimary = Color(0xFFF6F3EC);
+  static const textSub = Color(0xFFA8B0B8);
+  static const textMuted = Color(0xFF8F98A0);
 
-  static const border = Color(0xFF33413A);
+  static const border = Color(0xFF2A362E);
 
   static const accent = primaryGradientStart;
   static const violet = secondaryAccent;
@@ -370,14 +386,14 @@ class AppTheme {
   static const wrongDeep = Color(0xFF7F1D1D); // Lose gradient shadow
 
   // ============ Light Mode Palette (Variant C) ============
-  static const lightBg = Color(0xFFF8F5EF);
-  static const lightBgDeep = Color(0xFFEEE7DC);
+  static const lightBg = Color(0xFFF7F4EE);
+  static const lightBgDeep = Color(0xFFEFEBE3);
   static const lightSurface = Color(0xFFFFFFFF);
-  static const lightSurfaceHi = Color(0xFFFBF7F0);
-  static const lightBorder = Color(0xFFE3DACC);
-  static const lightTextPrimary = Color(0xFF2D3436); // Anthracite
-  static const lightTextSub = Color(0xFF55615F);
-  static const lightTextMuted = Color(0xFF746D65);
+  static const lightSurfaceHi = Color(0xFFFBF8F3);
+  static const lightBorder = Color(0xFFE7E0D4);
+  static const lightTextPrimary = Color(0xFF1B201D); // Mürekkep
+  static const lightTextSub = Color(0xFF5C635E);
+  static const lightTextMuted = Color(0xFF7C837D);
 
   static const pirsOrangeStart = culturalBrandBg; // Cultural Deep Green
   static const pirsOrangeEnd = culturalBrandBg;
@@ -392,10 +408,13 @@ class AppTheme {
   static const bronzeLight = Color(0xFF8A4E24);
 
   // ============ Shimmer Skeleton ============
-  static const shimmerBaseLight = Color(0xFFE4E1F5);
-  static const shimmerBaseDark = Color(0xFF2A2540);
-  static const shimmerHighlightLight = Color(0xFFF0EEFC);
-  static const shimmerHighlightDark = Color(0xFF352E50);
+  // 2026-07-24 canlı denetim: iskelet (shimmer) tonları eski indigo/pembe
+  // paletten kalmıştı — sıcak kâğıt zemin üzerinde lavanta mor bloklar
+  // beliriyordu ve uygulama yüklenirken başka bir uygulama gibi görünüyordu.
+  static const shimmerBaseLight = Color(0xFFEDE7DC);
+  static const shimmerBaseDark = Color(0xFF1E2822);
+  static const shimmerHighlightLight = Color(0xFFF7F3EC);
+  static const shimmerHighlightDark = Color(0xFF283429);
 
   // ============ Status Indicators ============
   static const onlineGreen = Color(0xFF4CAF50);
@@ -546,10 +565,7 @@ class AppTheme {
         return BoxDecoration(
           color: surfaceColor(context),
           borderRadius: BorderRadius.circular(radius),
-          border: Border.all(
-            color: borderColor(context).withValues(alpha: 0.55),
-            width: 1.0,
-          ),
+          border: Border.all(color: borderColor(context), width: 1.0),
           boxShadow: cardShadow(context),
         );
       case CardType.info:
@@ -595,11 +611,17 @@ class AppTheme {
   /// yeşil göstermek kullanıcıya sahte bir ipucu veriyordu (2026-07-22
   /// canlı UX denetimi). Geri bildirim renkleri (correct/wrong) yalnız
   /// cevap verildikten sonra kullanılır.
+  /// Şık harflerinin (A/B/C/D) rozet rengi.
+  ///
+  /// 2026-07-24 canlı denetim: dört şık dört ayrı doygun renk taşıyordu
+  /// (mavi/mor/camgöbeği/kehribar). Renk burada hiçbir anlam taşımıyor —
+  /// oyuncu "mavi şık" ile "mor şık" arasında bir fark sanıyordu. Tonlar
+  /// tek bir nötr aileye indirildi; renk yalnız doğru/yanlış anında konuşur.
   static const List<Color> answerOptionColors = [
-    Color(0xFF2E6DB8), // Mavi
-    Color(0xFF8B45B8), // Mor (magentaya kayan)
-    Color(0xFF1E8A8A), // Camgobegi
-    Color(0xFFB8920A), // Kehribar
+    Color(0xFF545C63),
+    Color(0xFF545C63),
+    Color(0xFF545C63),
+    Color(0xFF545C63),
   ];
 
   static LinearGradient categoryGradient(int index) {
@@ -985,20 +1007,16 @@ class AppTheme {
     ];
   }
 
-  /// Colored neon glow shadow — CTA buttons and featured elements.
+  /// Renkli vurgu gölgesi. 2026-07-24: "neon glow" iki katmandan tek, yumuşak
+  /// katmana indirildi ve şiddeti yarıya çekildi — parlayan kenarlar ekranı
+  /// oyuncak gibi gösteriyor ve altındaki kartın kenarlığını yutuyordu.
   static List<BoxShadow> glowShadow(Color color, {double intensity = 0.4}) {
     return [
       BoxShadow(
-        color: color.withValues(alpha: intensity),
-        blurRadius: 20,
+        color: color.withValues(alpha: intensity * 0.5),
+        blurRadius: 18,
         offset: const Offset(0, 6),
-        spreadRadius: -2,
-      ),
-      BoxShadow(
-        color: color.withValues(alpha: intensity * 0.4),
-        blurRadius: 40,
-        offset: const Offset(0, 12),
-        spreadRadius: -4,
+        spreadRadius: -6,
       ),
     ];
   }

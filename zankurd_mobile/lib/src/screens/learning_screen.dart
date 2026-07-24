@@ -107,9 +107,7 @@ class _LearningScreenState extends State<LearningScreen> {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        color: AppTheme.bgOf(context),
         child: SafeArea(
           child: Column(
             children: [
@@ -628,8 +626,9 @@ class _CategoryTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
-      child: GestureDetector(
+      child: InkWell(
         onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.card),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -685,10 +684,9 @@ class _LessonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
-      child: GestureDetector(
+      child: AppPanel(
         onTap: locked ? null : onTap,
-        child: AppPanel(
-          key: recommended && !completed
+        key: recommended && !completed
               ? const ValueKey("learning-next-step")
               : null,
           cardType: recommended && !completed
@@ -816,7 +814,6 @@ class _LessonCard extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 
@@ -1202,9 +1199,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        color: AppTheme.bgOf(context),
         child: FutureBuilder<List<LessonSlide>>(
           future: _slidesFuture,
           builder: (ctx, snap) {

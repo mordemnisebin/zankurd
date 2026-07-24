@@ -117,7 +117,7 @@ class BadgeWidget extends StatelessWidget {
               child: Text(
                 isKu ? '✓ Vekirî' : '✓ Kazanıldı',
                 style: const TextStyle(
-                  fontSize: 8.5,
+                  fontSize: 10,
                   fontWeight: FontWeight.w600,
                   color: AppTheme.correct,
                 ),

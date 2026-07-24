@@ -730,9 +730,7 @@ class _ShopScreenState extends State<ShopScreen> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
+        color: AppTheme.bgOf(context),
         child: SafeArea(
           child: Column(
             children: [
@@ -1110,26 +1108,13 @@ class _ShopScreenState extends State<ShopScreen> {
           // renginde ve alttaki tam-genişlik renkli çizgide.
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Container(
+            // 2026-07-24 canlı denetim: dokuz ürün kartı dokuz ayrı pastel
+            // zemin taşıyordu (krem, lavanta, nane, şeftali…) — ızgara
+            // birbiriyle yarışan renk lekelerine dönüşüyordu. Zemin tek tip
+            // yüzey oldu; ürün kimliği yalnız ikon karosunda yaşar.
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppTheme.surfaceColor(context),
-                  tint.withValues(alpha: isPurchased ? 0.04 : 0.08),
-                ],
-              ),
-              border: Border.all(
-                color: tint.withValues(alpha: isPurchased ? 0.12 : 0.18),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
-                  blurRadius: 14,
-                  offset: const Offset(0, 8),
-                  spreadRadius: -10,
-                ),
-              ],
+              color: AppTheme.surfaceColor(context),
+              border: Border.all(color: AppTheme.borderColor(context)),
             ),
             child: Stack(
               children: [
@@ -1146,18 +1131,8 @@ class _ShopScreenState extends State<ShopScreen> {
                         flex: 3,
                         child: Container(
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: isPurchased
-                                  ? [
-                                      tint.withValues(alpha: 0.10),
-                                      tint.withValues(alpha: 0.04),
-                                    ]
-                                  : [
-                                      tint.withValues(alpha: 0.22),
-                                      tint.withValues(alpha: 0.08),
-                                    ],
+                            color: tint.withValues(
+                              alpha: isPurchased ? 0.08 : 0.16,
                             ),
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                           ),
