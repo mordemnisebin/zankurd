@@ -55,6 +55,8 @@ app.*.map.json
 # Environment / secrets
 .env
 .env.*
+# ...ama örnek/şablon dosyaları (sır içermez) commit edilebilir:
+!.env.*.example
 
 # Native build/cache dirs
 .gradle/

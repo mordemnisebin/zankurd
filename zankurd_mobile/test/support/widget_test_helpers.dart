@@ -12,6 +12,7 @@ import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 /// `test/widget_test.dart` bölünmeden önce burada özel (private, `_` önekli)
@@ -91,6 +92,9 @@ Widget testShell({
       ),
       ChangeNotifierProvider<ChildSafetyProvider>(
         create: (_) => ChildSafetyProvider(),
+      ),
+      ChangeNotifierProvider<PremiumService>(
+        create: (_) => PremiumService.fallback(),
       ),
     ],
     child: Consumer<ThemeProvider>(
