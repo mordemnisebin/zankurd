@@ -253,6 +253,8 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     this.opponentSelectedAnswers,
     this.isCompact = false,
     this.answerAreaKey,
+    this.onListen,
+    this.canListen = false,
   });
 
   final String promptText;
@@ -277,6 +279,10 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final ValueChanged<String> onAnswer;
 
   /// Soru metnini seslendirmek için isteğe bağlı callback.
+  final VoidCallback? onListen;
+
+  /// TTS cihazda Kürtçe destekliyor mu? False ise buton gizlenir.
+  final bool canListen;
 
   @override
   Widget build(BuildContext context) {
@@ -295,6 +301,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                 ),
               ),
             ),
+            if (canListen && onListen != null) _ListenButton(onTap: onListen!),
           ],
         ),
         SizedBox(height: isCompact ? AppSpacing.xs : AppSpacing.sm),
@@ -775,6 +782,8 @@ class _ExplanationBox extends StatelessWidget {
   Widget build(BuildContext context) {
     // Şablon/boş açıklamada kutu hiç açılmaz (getLocalizedExplanation '' döner).
     final explanationText = question.getLocalizedExplanation(isKu);
+    final tts = TtsService.instance;
+    final showListenButton = tts != null && tts.isKurdishAvailable;
     return AnimatedSize(
       duration: const Duration(milliseconds: 350),
       curve: Curves.easeOutCubic,
@@ -826,12 +835,23 @@ class _ExplanationBox extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(
-                                isKu ? 'Bersivên rast' : 'Doğru cevap',
-                                style: AppTypography.caption.copyWith(
-                                  color: AppTheme.correct,
-                                  fontWeight: FontWeight.w800,
-                                ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    isKu ? 'Bersivên rast' : 'Doğru cevap',
+                                    style: AppTypography.caption.copyWith(
+                                      color: AppTheme.correct,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  if (showListenButton)
+                                    _ExplanationListenButton(
+                                      text: explanationText,
+                                      tts: tts,
+                                    ),
+                                ],
                               ),
                               const SizedBox(height: 4),
                               Text(
@@ -883,6 +903,61 @@ class _ExplanationBox extends StatelessWidget {
               ),
             )
           : const SizedBox(width: double.infinity, height: 0),
+    );
+  }
+}
+
+/// Şirove (açıklama) metnini TTS ile seslendiren küçük buton.
+/// TTS servisinin `speakingNotifier` değerini dinleyerek ikon durumunu
+/// günceller. Bu metni konuşuyorsa altın renk + `volumeXmark`, aksi
+/// halde `volumeHigh` ikonu gösterilir.
+class _ExplanationListenButton extends StatelessWidget {
+  const _ExplanationListenButton({required this.text, required this.tts});
+
+  final String text;
+  final TtsService tts;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<bool>(
+      valueListenable: tts.speakingNotifier,
+      builder: (context, speaking, _) {
+        // Sadece bu açıklama seslendiriliyorsa "aktif" göstermek için
+        // basit bir referans tutulamaz (singleton); bu yüzden konuşma
+        // aktifken buton genel olarak "durdur" durumunda görünür.
+        return Semantics(
+          button: true,
+          label: speaking
+              ? context.s('Rawestîne', 'Durdur')
+              : context.s('Şîroveyê bibe', 'Açıklamayı dinle'),
+          excludeSemantics: true,
+          child: Tooltip(
+            message: speaking
+                ? context.s('Rawestîne', 'Durdur')
+                : context.s('Şîroveyê bibe', 'Açıklamayı dinle'),
+            child: InkWell(
+              onTap: () {
+                if (speaking) {
+                  tts.stop();
+                } else {
+                  tts.speak(text);
+                }
+              },
+              borderRadius: BorderRadius.circular(16),
+              child: Padding(
+                padding: const EdgeInsets.all(4),
+                child: Icon(
+                  speaking ? AppIcons.volumeXmark : AppIcons.volumeHigh,
+                  size: 18,
+                  color: speaking
+                      ? AppTheme.gold
+                      : AppTheme.textSubColor(context),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -1042,6 +1117,51 @@ class _VersusBanner extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Soru metnini seslendiren TTS butonu. Kürtçe TTS cihazda desteklenmiyorsa
+/// gizlenir. `TtsService.speakingNotifier`'ı dinleyerek ikon durumunu günceller
+/// — böylece durum gerçek konuşma durumuyla (başlangıç/bitiş) senkron kalır.
+class _ListenButton extends StatelessWidget {
+  const _ListenButton({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final notifier = TtsService.instance?.speakingNotifier;
+    return ValueListenableBuilder<bool>(
+      valueListenable: notifier ?? ValueNotifier<bool>(false),
+      builder: (context, isListening, _) {
+        return Semantics(
+          button: true,
+          label: context.s('Sorê bixwîne', 'Soruyu dinle'),
+          excludeSemantics: true,
+          child: Tooltip(
+            message: context.s('Sorê bixwîne', 'Soruyu dinle'),
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: BorderRadius.circular(20),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8, top: 2),
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  child: Icon(
+                    isListening ? AppIcons.volumeXmark : AppIcons.volumeHigh,
+                    key: ValueKey(isListening),
+                    size: 26,
+                    color: isListening
+                        ? AppTheme.gold
+                        : AppTheme.textSubColor(context),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

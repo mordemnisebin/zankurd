@@ -24,6 +24,7 @@ import '../models/room.dart';
 import '../models/wildcard.dart';
 import '../l10n/lang.dart';
 import '../services/analytics_service.dart';
+import '../services/tts_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -174,6 +175,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   StreamSubscription? _roomSub;
   Timer? _pollTimer;
   bool _questionFlowStarted = false;
+
+  // TTS: cihaz Kürtçe TTS desteklemiyorsa canListen false kalır ve
+  // dinleme butonu gizlenir. Konuşma durumu TtsService.speakingNotifier
+  // üzerinden takip edilir (bkz. _ListenButton).
+  bool _ttsCanListen = false;
+
   // Tutorial açıkken ertelenen multiplayer soru sayacı (bkz. _syncToQuestionIndex).
   bool _timerDeferredForTutorial = false;
 
@@ -217,6 +224,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       category: widget.room.category,
       mode: _quizModeLabel,
     );
+
+    // Initialize TTS service
+    _initializeTts();
 
     _timerController = AnimationController(
       vsync: this,
@@ -619,7 +629,40 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _readyTimeoutTimer?.cancel();
     _timerController.dispose();
     _explanationController.dispose();
+    // TTS: ekrandan çıkınca devam eden seslendirmeyi durdur.
+    TtsService.instance?.stop();
     super.dispose();
+  }
+
+  /// TTS servisini başlatır ve cihazda Kürtçe dil desteğinin olup olmadığını
+  /// kontrol eder. Destek yoksa dinleme butonu gizlenir.
+  Future<void> _initializeTts() async {
+    try {
+      final tts = await TtsService.load();
+      if (mounted) {
+        setState(() => _ttsCanListen = tts.isKurdishAvailable);
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz tts init');
+    }
+  }
+
+  /// Mevcut soruyu seslendirir. Zaten konuşuyorsa durdurur.
+  /// Buton yalnızca Kürtçe TTS destekleniyorsa görünür (canListen true ise).
+  /// Buton ikonunun durumu `TtsService.speakingNotifier` üzerinden takip
+  /// edilir; burada yalnızca speak/stop tetiklenir.
+  Future<void> _listenCurrentQuestion() async {
+    final tts = TtsService.instance;
+    if (tts == null || !tts.isKurdishAvailable) return;
+    try {
+      if (tts.isSpeaking) {
+        await tts.stop();
+        return;
+      }
+      await tts.speak(question.promptText);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz tts speak');
+    }
   }
 
   /// İlerleme varken geri tuşunda onay sorar; yanlışlıkla çıkışı önler.
@@ -1365,6 +1408,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
     _explanationController.stop();
     _explanationController.reset();
+    // TTS: yeni soruya geçince önceki seslendirmeyi durdur.
+    TtsService.instance?.stop();
     setState(() {
       index += 1;
       selectedAnswer = '';

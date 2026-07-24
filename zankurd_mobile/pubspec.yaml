@@ -51,6 +51,7 @@ dependencies:
   audioplayers: ^6.1.0
 
   # Metin-okuma (TTS) — soruları seslendirme
+  flutter_tts: ^4.2.3
 
   # Shimmer skeleton loading (Sprint 1)
   shimmer: ^3.0.0
@@ -63,6 +64,9 @@ dependencies:
 
   # Mağaza değerlendirmesi (Sprint 5'te kullanılacak)
   in_app_review: ^2.0.9
+
+  # Abonelik / premium yönetimi (RevenueCat)
+  purchases_flutter: ^8.6.0
 
   # Bağlantı durumu (Sprint 6'da kullanılacak)
   connectivity_plus: ^7.3.0

@@ -13,11 +13,13 @@ import '../providers/reduced_motion_provider.dart';
 import '../providers/sound_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/notification_service.dart';
+import '../services/premium_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/screen_identity_header.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'paywall_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -490,6 +492,116 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ],
                   ],
                 ),
+              ),
+              const SizedBox(height: AppSpacing.cardGap),
+
+              // ============ PREMIUM ABONELİK ============
+              Consumer<PremiumService>(
+                builder: (context, premium, _) {
+                  final isPremium = premium.isPremium;
+                  return AppPanel(
+                    padding: EdgeInsets.zero,
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).push(
+                        AppRoute.to(
+                          PaywallScreen(repository: widget.repository),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.md,
+                          vertical: AppSpacing.sm,
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: AppTheme.gold.withValues(alpha: 0.16),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: AppTheme.gold.withValues(
+                                    alpha: isPremium ? 0.5 : 0.3,
+                                  ),
+                                ),
+                              ),
+                              child: const Icon(
+                                AppIcons.gem,
+                                color: AppTheme.gold,
+                                size: 22,
+                              ),
+                            ),
+                            const SizedBox(width: AppSpacing.sm),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    isPremium
+                                        ? (ku
+                                              ? 'ZanKurd Premium'
+                                              : 'ZanKurd Premium')
+                                        : (ku ? 'Premium bibe' : 'Premium ol'),
+                                    style: AppTypography.bodyLarge.copyWith(
+                                      color: AppTheme.textPrimaryColor(context),
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    isPremium
+                                        ? (ku
+                                              ? 'Hemû taybetmendiyên premium vekirî ne'
+                                              : 'Tüm premium özellikler aktif')
+                                        : (ku
+                                              ? 'Damla reklam, detay-stats, sînor jokers tune'
+                                              : 'Reklamsız, detaylı istatistik, sınırsız joker'),
+                                    style: AppTypography.caption.copyWith(
+                                      color: AppTheme.textSubColor(context),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: AppSpacing.xs),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isPremium
+                                    ? AppTheme.gold.withValues(alpha: 0.2)
+                                    : AppTheme.primaryGradientStart.withValues(
+                                        alpha: 0.16,
+                                      ),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                isPremium
+                                    ? (ku ? 'VEKIRÎ' : 'AKTİF')
+                                    : (ku ? 'BIGIRE' : 'BAŞLA'),
+                                style: TextStyle(
+                                  color: AppColors.readableAccent(
+                                    context,
+                                    isPremium
+                                        ? AppTheme.gold
+                                        : AppTheme.primaryGradientStart,
+                                  ),
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 11,
+                                  letterSpacing: 0.6,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: AppSpacing.cardGap),
 

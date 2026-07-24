@@ -24,6 +24,7 @@ import 'src/screens/app_shell.dart';
 import 'src/screens/splash_screen.dart';
 import 'src/services/analytics_service.dart';
 import 'src/services/notification_service.dart';
+import 'src/services/premium_service.dart';
 import 'src/theme/app_theme.dart';
 import 'src/widgets/responsive_wrapper.dart';
 
@@ -78,6 +79,9 @@ Future<void> main() async {
   final soundProvider = await SoundProvider.load();
   final reducedMotionProvider = await ReducedMotionProvider.load();
   final childSafetyProvider = await ChildSafetyProvider.load();
+  // Premium/abonelik servisi başlat (RevenueCat yapılandırması
+  // mevcut değilse mock modunda çalışır — her şey normal akışta).
+  final premiumService = await PremiumService.load();
 
   runApp(
     ZanKurdApp(
@@ -88,6 +92,7 @@ Future<void> main() async {
       soundProvider: soundProvider,
       reducedMotionProvider: reducedMotionProvider,
       childSafetyProvider: childSafetyProvider,
+      premiumService: premiumService,
     ),
   );
 }
@@ -101,6 +106,7 @@ class ZanKurdApp extends StatelessWidget {
     this.soundProvider,
     this.reducedMotionProvider,
     this.childSafetyProvider,
+    this.premiumService,
     super.key,
   });
 
@@ -111,6 +117,7 @@ class ZanKurdApp extends StatelessWidget {
   final SoundProvider? soundProvider;
   final ReducedMotionProvider? reducedMotionProvider;
   final ChildSafetyProvider? childSafetyProvider;
+  final PremiumService? premiumService;
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +139,9 @@ class ZanKurdApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => childSafetyProvider ?? ChildSafetyProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: premiumService ?? PremiumService.fallback(),
         ),
       ],
       child: Consumer<ThemeProvider>(

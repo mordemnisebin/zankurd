@@ -1,6 +1,28 @@
 import '../models/question_metadata.dart';
 import '../models/quiz_question.dart';
 
+// İkincil kültürel/tarihî kaynaklar — genel Kürt halk bilgisi, vakıf
+// yayınları, edebiyat antolojileri. Soruların temel gerçeklerini
+// akademik ansiklopedilerle destekler.
+const _academikSource = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle:
+      'Ansiklopedîk çavkanî (Kürt Ansiklopedisi, Encyclopaedia Britannica — Kurdish)',
+  sourceReference:
+      'https://www.britannica.com/topic/Kurd; Kürt Ansiklopedisi (2009-2012 cild I-VI)',
+  qualityVersion: 1,
+);
+
+const _dengbejSource = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Dengbêjî û mûzîka kurdî ya devkî',
+  sourceReference:
+      'İbrahim Güçlü, Dengbêjler (2012); Mehmet Uzun, Dengbêj Üslubu Hakkında',
+  qualityVersion: 1,
+);
+
 // Birincil kaynaklar: hareketin kendi kurumları ve medyası. Akademik kaynak
 // yalnızca destekleyici çapraz kontroldür; hareketin öz-tanımı bağımsız bir
 // olgu gibi sunulmaz. Sorular tek bir kaynağa yığılmasın diye kaynak ailesi
@@ -352,5 +374,391 @@ const curatedQuestionBank = <QuizQuestion>[
         'Helbest dikare hest, bîranîn û daxwazên civakî bi zimanekî wêjeyî û xeyalî vegerîne.',
     difficulty: 2,
     metadata: _jineolojiSource,
+  ),
+  // ── Paradigma ────────────────────────────────────────────────────────────
+  QuizQuestion(
+    id: 'curated_paradigma_0001',
+    category: 'Paradigma',
+    prompt: 'Peyva «jineolojî» çi dihundirîne?',
+    answers: [
+      'Zanistiya jinê',
+      'Zanistiya azadiyê',
+      'Zanistiya xwezayê',
+      'Zanistiya hunerê',
+    ],
+    correctAnswer: 'Zanistiya jinê',
+    explanation:
+        'Jineolojî ji «jin» û «lojî» (zanist) pêk tê; zanistiya jinê û rêxistinkirina civaka azad e.',
+    difficulty: 1,
+    metadata: _jineolojiSource,
+  ),
+  QuizQuestion(
+    id: 'curated_paradigma_0002',
+    category: 'Paradigma',
+    prompt: 'Kîjan têgeh bi "konfederalîzm"ê re herî nêzîk e?',
+    answers: [
+      'Kom-xwebûn rêxistin',
+      'Bikarhnêrîn',
+      'Hukmêkerek',
+      'Kolonyalîzm',
+    ],
+    correctAnswer: 'Kom-xwebûn rêxistin',
+    explanation:
+        'Konfederalîzmek modela ku rêxistinên xwe-bixwe yên herêmî yên xwebûn-bixwe li ser wekheviyê tên girêdan e.',
+    difficulty: 2,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_paradigma_0003',
+    category: 'Paradigma',
+    prompt: '«Hevaltî» di vê paradîgmayê de çi dixwaze?',
+    answers: [
+      'Wekhevî û pîvana rêxistinê',
+      'Tenê pûl bi pûl',
+      'Betalbûna hemû endamên rêxistinê',
+      'Mîrata dadwerî',
+    ],
+    correctAnswer: 'Wekhevî û pîvana rêxistinê',
+    explanation:
+        'Hevaltî peyva ku endamentên rêxistinê li ser wekheviyê dihundirîne, ne serdestiyê.',
+    difficulty: 2,
+    metadata: _jineolojiSource,
+  ),
+  QuizQuestion(
+    id: 'curated_paradigma_0004',
+    category: 'Paradigma',
+    prompt: 'Abdullah Öcalan di gotarên xwe de kîjan «-îzm»ê pêşniyar kir?',
+    answers: [
+      'Konfederalîzma demorkatîk',
+      'Fakltîzm',
+      'Fermendîzm',
+      'Medyatîkdemokrasî',
+    ],
+    correctAnswer: 'Konfederalîzma demorkatîk',
+    explanation:
+        'Di «Demokratik Konfederalîzm» de civak bi şiklê rêxistinên xwe-bixwe têne rêxistinkirin, ne dewletî.',
+    difficulty: 2,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_paradigma_0005',
+    category: 'Paradigma',
+    prompt: 'Civaka takekesî li şûna netewe-dewletê çi pêşniyar dike?',
+    answers: [
+      'Birayên xwe rêxistinbranî',
+      'Demorkrasîxerbirîna gelemperî',
+      'Hespê ûrikirî ya leşkerî',
+      'Hiqûqa malbatê ya nepenî',
+    ],
+    correctAnswer: 'Demorkrasîxerbirîna gelemperî',
+    explanation:
+        'Paradîgma demorkratîk a civakî rêxistinên demorkatîk û rihevketa gelemperî hene dihundirîne.',
+    difficulty: 3,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_paradigma_0006',
+    category: 'Paradigma',
+    prompt: 'Jineolojî di Şoreşa Rojavayê de çi rollî leyîst?',
+    answers: [
+      'Avakirina parastina jinê û şoreşa civakî',
+      'Tenê kontrolên leşkerî',
+      'Dîrok-Nivîskarî',
+      'Peydakerî û bazirganî',
+    ],
+    correctAnswer: 'Avakirina parastina jinê û şoreşa civakî',
+    explanation:
+        'Jineolojî li Rojavayê Kurdistanê bû pîvana rastînên mirovan û azadiya ziman, şoreş û rêxistinên jin.',
+    difficulty: 2,
+    metadata: _kongraStarSource,
+  ),
+  QuizQuestion(
+    id: 'curated_paradigma_0007',
+    category: 'Paradigma',
+    prompt: 'Bê "ekolojî" di paradîgmayê de çi wateye?',
+    answers: [
+      'Hemahengbûna jiyanê bi xwezayê re (ne serdestî)',
+      'Tenê kimya',
+      'Bazirganîna aboriyê',
+      'Veşartina topan',
+    ],
+    correctAnswer: 'Hemahengbûna jiyanê bi xwezayê re (ne serdestî)',
+    explanation:
+        'Ekolojiyê demokratîk dixwaze ku mirov bi xweza re lihevhatî bixwîne, tune serdestiyê.',
+    difficulty: 2,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_paradigma_0008',
+    category: 'Paradigma',
+    prompt:
+        'Peyva "pîvana rast" ji bo rêxistinkirina civaka demokratîk çi tê wateyek?',
+    answers: [
+      'Yekserîn û şiklê radestî',
+      'Konsensus û şûnartî',
+      'Hiqûqa serdestê meclîsê',
+      'Girtinên gelemperî yên girtîgehê',
+    ],
+    correctAnswer: 'Konsensus û şûnartî',
+    explanation:
+        'Biryarên civakî bi şiklê konsensus û şûnartî tên standin, ne bi werdêjin.',
+    difficulty: 3,
+    metadata: _kongraStarSource,
+  ),
+  QuizQuestion(
+    id: 'curated_paradigma_0009',
+    category: 'Paradigma',
+    prompt: 'Kîjan bûyer bi sloganê "Jin, Jiyan, Azadî" re pir girêdayî ye?',
+    answers: [
+      'Berxwedana jinên Kobanî (2014)',
+      'Peymana Lozanê (1923)',
+      'Şoreşa Şêx Said (1925)',
+      'Damezirandina Komara Mehabadê (1946)',
+    ],
+    correctAnswer: 'Berxwedana jinên Kobanî (2014)',
+    explanation:
+        'Jinên di şerê Kobanî de gayeyên azadî û berxwedanê bi xwe-şehîdî li ber xwe dan û bûne ramana jin, jiyan, azadî.',
+    difficulty: 2,
+    metadata: _kjarSource,
+  ),
+  QuizQuestion(
+    id: 'curated_paradigma_0010',
+    category: 'Paradigma',
+    prompt: 'Sembola jinên Şoreşa Rojavayê aliyê çi li ser kendê ye?',
+    answers: [
+      'Saltê rengîn',
+      'Hirça mezin',
+      'Li xebatê rengîn û alîserdestiyê jin',
+      'Kîmoka zîvkirî',
+    ],
+    correctAnswer: 'Li xebatê rengîn û alîserdestiyê jin',
+    explanation:
+        'Sembola rengîn a jinên parastina jinê ye, ku azadiyê û bicihbûna civakê destnîşan dike.',
+    difficulty: 2,
+    metadata: _kongraStarSource,
+  ),
+  // ── Siyaset ─────────────────────────────────────────────────────────────
+  QuizQuestion(
+    id: 'curated_siyaset_0001',
+    category: 'Siyaset',
+    prompt: 'Komara Mehabad kengî hat îlan kirin?',
+    answers: ['1946', '1925', '1961', '1984'],
+    correctAnswer: '1946',
+    explanation:
+        'Komara Mehabad (22ê Çileya 1946 — 15ê Kanûna 1946) li rojhilatê Kurdistanê yekemîn komara kurdî ye.',
+    difficulty: 2,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_siyaset_0002',
+    category: 'Siyaset',
+    prompt: 'Komara Mehabadê aliyê kê ve hat serokîtî?',
+    answers: [
+      'Qazî Mihemed',
+      'Şêx Mehmûd Berzencî',
+      'Simko Şikak',
+      'Mistefa Barzanî',
+    ],
+    correctAnswer: 'Qazî Mihemed',
+    explanation:
+        'Qazî Mihemed (1893 — 1947) serokdarê Komara Mehabadê bû, di 31ê Çele.avê de hatî darvekirin.',
+    difficulty: 2,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_siyaset_0003',
+    category: 'Siyaset',
+    prompt: 'Peymana Sêvrê (1920) ji bo kurdan soza çi da?',
+    answers: [
+      'Xweseriya herêmî û îhtîmala serxwebûnê',
+      'Tekasîkirina bajarên kurdan',
+      'Rakirina zimanê kurdî',
+      'Girêdana Kurdistanê bi Fransayê ve',
+    ],
+    correctAnswer: 'Xweseriya herêmî û îhtîmala serxwebûnê',
+    explanation:
+        'Peymana Sêvrê (1920) ji Kurdistanê re xweseriyek soz da û rê li ber serxwebûnê vekir, lê Peymana Lozanê (1923) ev soz betal kir.',
+    difficulty: 3,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_siyaset_0004',
+    category: 'Siyaset',
+    prompt:
+        'Herêma Kurdistanê (Îraq) di çi salî de xweseriya xwe bi dest xist?',
+    answers: ['1970', '1991', '2003', '2005'],
+    correctAnswer: '1970',
+    explanation:
+        'Di 1970î de Şoreşa Îraqê li herêma Kurdistanê dest bi xweseriyê kir; paşê di 1991î de ew herêm bû herêmî îraqî xwe-bixwe.',
+    difficulty: 2,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_siyaset_0005',
+    category: 'Siyaset',
+    prompt: 'Şerê Kobanê yê li dijî DAIŞê çi salî dest pê kir?',
+    answers: ['2014', '2003', '2011', '2017'],
+    correctAnswer: '2014',
+    explanation:
+        'Şerê Kobanê (Îlon 2014 — Adar 2015) roleke girîng lîst di têkoşîna li dijî DAIŞê de.',
+    difficulty: 2,
+    metadata: _kjarSource,
+  ),
+  QuizQuestion(
+    id: 'curated_siyaset_0006',
+    category: 'Siyaset',
+    prompt: 'Konfederalîzma demorkratîk li kîjan herêmê peydexandî ye?',
+    answers: [
+      'Rojavayê Bakurûrê Sûrîyê',
+      'Bakurê Kûrdistanê (Tûrkiye)',
+      'Başûrê Kurdistanê (Îraq)',
+      'Rojhilatê Kurdistanê (Îran)',
+    ],
+    correctAnswer: 'Rojavayê Bakurûrê Sûrîyê',
+    explanation:
+        'DMC (Xebûna Demorkatîk a Rojava-Bakurûrê Sûrîyê) li Rojava hat ava kirin, paşê bû Konfederalîzma Demorkatîk a Sûrîyê Bakûr.',
+    difficulty: 2,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_siyaset_0007',
+    category: 'Siyaset',
+    prompt: 'Sedema sereke ya Şoreşa Şêx Said (1925) çi bû?',
+    answers: [
+      'Berxwedan li dijî rakirina xîlafetê û siyasetên yekbûyî yên dewleta nû',
+      'Nakokiyek li ser erdê çandiniyê',
+      'Guherîna pereyê neteweyî',
+      'Peymana bazirganiya rêwîtiyê',
+    ],
+    correctAnswer:
+        'Berxwedan li dijî rakirina xîlafetê û siyasetên yekbûyî yên dewleta nû',
+    explanation:
+        'Şoreşa Şêx Said (Sibat 1925) yek ji berxwedanên yekem ên girîng ên kurdan li Tirkiyeyê bû, li dijî rakirina xîlafetê û siyasetên yekbûyî yên dewleta nû ya komarê.',
+    difficulty: 3,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_siyaset_0008',
+    category: 'Siyaset',
+    prompt: 'Peymana Lozanê (1923) di derheqê kurdan de çi encam da?',
+    answers: [
+      'Betalkirina soza xweseriya Peymana Sêvrê',
+      'Pejirandina mafên zimanî yên kurdî',
+      'Damezirandina herêmeke xweser a kurdan',
+      'Vekirina sînorekî nû li Rojhilata Navîn',
+    ],
+    correctAnswer: 'Betalkirina soza xweseriya Peymana Sêvrê',
+    explanation:
+        'Peymana Lozanê (1923) soza xweseriya Peymana Sêvrê betal kir û axa kurdan di navbera çend dewletan de hate parvekirin.',
+    difficulty: 3,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_siyaset_0009',
+    category: 'Siyaset',
+    prompt: 'Kî yekemîn rêberê tevgera Barsanî bû?',
+    answers: [
+      'Mistefa Barzanî (1903 — 1979)',
+      'Mesûd Barzanî',
+      'Êlihêçî Kaplan',
+      'Celal Talabanî',
+    ],
+    correctAnswer: 'Mistefa Barzanî (1903 — 1979)',
+    explanation:
+        'Mistefa Barzanî (1903-1979) yekemîn rêberê tevgera Barsanî bû, di 1979î de li Îranê hate vedîtin.',
+    difficulty: 2,
+    metadata: _academikSource,
+  ),
+  QuizQuestion(
+    id: 'curated_siyaset_0010',
+    category: 'Siyaset',
+    prompt: 'Hikûmeta Herêma Kurdistanê (HKK) di çi salî de hat ava kirin?',
+    answers: ['1992', '2003', '2005', '2017'],
+    correctAnswer: '1992',
+    explanation:
+        'Di 1992î de piştî rizgarbûnê, HKK (Hikumeta Herêma Kurdistanê) ava kirin; ew yekem hikûmeta kurdîdemorkat a nûdem bû.',
+    difficulty: 2,
+    metadata: _academikSource,
+  ),
+  // ── Muzîk ────────────────────────────────────────────────────────────────
+  QuizQuestion(
+    id: 'curated_muzik_0001',
+    category: 'Muzîk',
+    prompt: 'Dengbêj di çanda kurdî de çi kes e?',
+    answers: [
+      'Stranbêj-çîrokbêjê ku bê enstruman distirê',
+      'Lîstikvanê tembûrê yê profesyonel',
+      'Rêxistînerê govendan',
+      'Nivîskarê stranên nûjen',
+    ],
+    correctAnswer: 'Stranbêj-çîrokbêjê ku bê enstruman distirê',
+    explanation:
+        'Dengbêj stran û çîrokên kevneşopî yên kurdan bi dengê xwe, bê alîkariya enstrumanan, vedibêje.',
+    difficulty: 1,
+    metadata: _dengbejSource,
+  ),
+  QuizQuestion(
+    id: 'curated_muzik_0002',
+    category: 'Muzîk',
+    prompt: 'Tembûr çi cure amûrek muzîkê ye?',
+    answers: [
+      'Amûrek têlî',
+      'Amûrek bayî',
+      'Amûrek çermî ya lêdanê',
+      'Amûrek zengilan',
+    ],
+    correctAnswer: 'Amûrek têlî',
+    explanation:
+        'Tembûr amûrekî muzîkê yê kevneşopî yê têlî ye, li herêma Kurdistanê û Rojhilata Navîn belav e.',
+    difficulty: 2,
+    metadata: _dengbejSource,
+  ),
+  QuizQuestion(
+    id: 'curated_muzik_0003',
+    category: 'Muzîk',
+    prompt: 'Govend di şahî û dawetên kurdan de çi ye?',
+    answers: [
+      'Reqsa kollektîf a bi dest-gihîştin',
+      'Awazek bê deng',
+      'Rêxistineke fermî ya dewletê',
+      'Amûrekî muzîkê yê têlî',
+    ],
+    correctAnswer: 'Reqsa kollektîf a bi dest-gihîştin',
+    explanation:
+        'Govend reqseke kollektîf e ku lîstikvan destên hev digirin û bi rêza li pey muzîkê dileyizin; li şahî û dawetan pir belav e.',
+    difficulty: 1,
+    metadata: _dengbejSource,
+  ),
+  QuizQuestion(
+    id: 'curated_muzik_0004',
+    category: 'Muzîk',
+    prompt: 'Def (erbane) çi cure amûrek muzîkê ye?',
+    answers: [
+      'Amûrekî çermî yê lêdanê (defê destan)',
+      'Amûrekî têlî',
+      'Amûrekî bayî yê zirnayê mîna',
+      'Amûrekî elektronîkî',
+    ],
+    correctAnswer: 'Amûrekî çermî yê lêdanê (defê destan)',
+    explanation:
+        'Def/erbane amûrekî lêdanê yê çermî ye ku bi dest tê lêdan; di govend, sema û şahiyên kurdî de bi berfirehî tê bikaranîn.',
+    difficulty: 1,
+    metadata: _dengbejSource,
+  ),
+  QuizQuestion(
+    id: 'curated_muzik_0005',
+    category: 'Muzîk',
+    prompt: 'Stranên Şivan Perwer bi giranî li ser çi mijaran in?',
+    answers: [
+      'Berxwedan, xerîbî, azadî û bîranîna welêt',
+      'Tenê muzîka dansê ya nûjen',
+      'Reklama bazirganî',
+      'Rêbernameyên rêwîtiyê',
+    ],
+    correctAnswer: 'Berxwedan, xerîbî, azadî û bîranîna welêt',
+    explanation:
+        'Şivan Perwer stranbêjekî navdar ê kurd e; stranên wî bi giranî li ser berxwedan, sirgûnî, azadî û bîranîna welêt in.',
+    difficulty: 2,
+    metadata: _dengbejSource,
   ),
 ];

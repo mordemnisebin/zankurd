@@ -1,3 +1,7 @@
+import 'dart:io' show Platform;
+
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 class AppConfig {
   static const _defaultSupabaseUrl = 'https://hupivnxgjtsfafulzspo.supabase.co';
   static const _defaultSupabasePublishableKey =
@@ -37,4 +41,28 @@ class AppConfig {
       (usesBundledSupabaseDefaults &&
           supabaseUrl.isNotEmpty &&
           supabaseAnonKey.isNotEmpty);
+
+  // ── RevenueCat (abonelik) ──────────────────────────────────────────────
+  // RevenueCat public API anahtarları derleme zamanı env ile taşınır.
+  // Boşsa premium özellikler sessizce devre dışı kalır (mock/test modu).
+  static const _revenuecatApiKeyAndroid = String.fromEnvironment(
+    'REVENUECAT_API_KEY_ANDROID',
+  );
+  static const _revenuecatApiKeyIos = String.fromEnvironment(
+    'REVENUECAT_API_KEY_IOS',
+  );
+  static const _revenuecatApiKeyWeb = String.fromEnvironment(
+    'REVENUECAT_API_KEY_WEB',
+  );
+
+  /// Platforma uygun RevenueCat public API anahtarı. BoşsaRevenueCat
+  /// devre dışıdır — [PremiumService] mock moda düşer.
+  static String get revenuecatApiKey {
+    if (kIsWeb) return _revenuecatApiKeyWeb;
+    if (Platform.isAndroid) return _revenuecatApiKeyAndroid;
+    if (Platform.isIOS || Platform.isMacOS) return _revenuecatApiKeyIos;
+    return '';
+  }
+
+  static bool get hasRevenuecatConfig => revenuecatApiKey.isNotEmpty;
 }
