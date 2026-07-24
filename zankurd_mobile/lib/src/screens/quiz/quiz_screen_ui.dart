@@ -51,7 +51,10 @@ extension _QuizScreenUI on _QuizScreenState {
                           key: const ValueKey('quiz-portrait-scroll'),
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                              minHeight: scrollConstraints.maxHeight,
+                              minHeight: scrollConstraints.maxHeight.clamp(
+                                0.0,
+                                double.infinity,
+                              ),
                             ),
                             child: Center(
                               child: Column(
