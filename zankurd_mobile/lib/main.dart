@@ -11,6 +11,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'firebase_options.dart';
 import 'src/config/app_config.dart';
 import 'src/data/mock_zankurd_repository.dart';
+import 'src/data/question_bank_loader.dart';
 import 'src/data/supabase_zankurd_repository.dart';
 import 'src/data/sync_manager.dart';
 import 'src/data/zankurd_repository.dart';
@@ -70,6 +71,9 @@ Future<void> main() async {
 
   await SyncManager.initialize(repository);
   await NotificationService.load();
+
+  // Soru bankasını asenkron yükle (offline_question_bank + editorial JSON).
+  await QuestionBankLoader.instance.load();
 
   // Anonim analitik servisi başlat
   await AnalyticsService.instance.initialize();

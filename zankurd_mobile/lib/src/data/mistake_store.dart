@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'offline_question_bank.dart';
+import 'question_bank_loader.dart';
 import '../utils/error_reporter.dart';
 
 /// Yanlış cevaplanan soruların kimliklerini ve tekrar zamanlarını yerelde tutar.
@@ -199,8 +200,10 @@ class MistakeStore {
       final meta = _metadata[id];
       String? category = meta?['category'] as String?;
       if (category == null) {
-        // Fallback to offlineQuestionBank search
-        final match = offlineQuestionBank.where((q) => q.id == id).firstOrNull;
+        // Loader yüklendi ise oradan ara, yoksa Dart const bankasına düş
+        final match = QuestionBankLoader.instance.isLoaded
+            ? QuestionBankLoader.instance.findById(id)
+            : offlineQuestionBank.where((q) => q.id == id).firstOrNull;
         if (match != null) {
           category = match.category;
         }

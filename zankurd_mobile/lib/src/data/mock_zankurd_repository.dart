@@ -20,9 +20,10 @@ import '../models/room_message.dart';
 import '../utils/error_reporter.dart';
 import '../models/tournament.dart';
 import '../utils/coin_calculator.dart';
-import 'offline_question_bank.dart';
 import 'curated_question_bank.dart';
 import 'editorial_question_bank.dart';
+import 'offline_question_bank.dart';
+import 'question_bank_loader.dart';
 import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
 import '../config/subcategory_config.dart';
@@ -49,11 +50,19 @@ class MockZanKurdRepository implements ZanKurdRepository {
   ];
 
   @override
-  List<QuizQuestion> get questions => [
-    ...curatedQuestionBank,
-    ...editorialQuestionBank,
-    ...offlineQuestionBank,
-  ];
+  List<QuizQuestion> get questions {
+    // Üretimde QuestionBankLoader JSON assetleri yükler.
+    // Test ortamında ise loader henüz çağrılmadığından Dart const bankasına
+    // doğrudan fallback yapılır — testler yavaşlamaz ve kırılmaz.
+    if (QuestionBankLoader.instance.isLoaded) {
+      return QuestionBankLoader.instance.allQuestions;
+    }
+    return [
+      ...curatedQuestionBank,
+      ...editorialQuestionBank,
+      ...offlineQuestionBank,
+    ];
+  }
 
   @override
   String? get currentUserId => 'user';
