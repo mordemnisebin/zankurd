@@ -132,17 +132,10 @@ class _RoomChatState extends State<RoomChat> {
         ),
         border: Border(
           top: BorderSide(
-            color: AppTheme.borderColor(context).withValues(alpha: 0.4),
-            width: 1,
+            color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+            width: 0.5,
           ),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 10,
-            offset: const Offset(0, -3),
-          ),
-        ],
       ),
       child: Column(
         children: [

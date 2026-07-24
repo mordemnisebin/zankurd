@@ -53,22 +53,11 @@ class ColorfulActionCard extends StatelessWidget {
               colors: [start, end],
             ),
             borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-            border: Border.all(
-              color: Colors.white.withValues(alpha: 0.18),
-              width: 1.1,
-            ),
             boxShadow: [
               BoxShadow(
-                color: start.withValues(alpha: 0.28),
-                offset: const Offset(0, 8),
-                blurRadius: 18,
-                spreadRadius: -6,
-              ),
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.12),
+                color: start.withValues(alpha: 0.16),
                 offset: const Offset(0, 4),
-                blurRadius: 10,
-                spreadRadius: -4,
+                blurRadius: 12,
               ),
             ],
           ),

@@ -27,78 +27,132 @@ import 'src/services/analytics_service.dart';
 import 'src/services/notification_service.dart';
 import 'src/services/premium_service.dart';
 import 'src/theme/app_theme.dart';
+import 'src/utils/error_reporter.dart';
 import 'src/widgets/responsive_wrapper.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  // Web'de ekran okuyucu kullanıcıları gizli "Enable accessibility" butonuna
-  // bağımlı kalmasın: semantik ağaç uygulama açılışında otomatik kurulur.
-  if (kIsWeb) {
-    SemanticsBinding.instance.ensureSemantics();
-  }
+    // Widget rendering hataları için şık global kurtarma UI'ı
+    ErrorWidget.builder = (FlutterErrorDetails details) {
+      ErrorReporter.record(
+        details.exception,
+        details.stack ?? StackTrace.empty,
+        reason: 'Flutter ErrorWidget render exception',
+      );
+      return const Material(
+        color: Colors.transparent,
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.error_outline_rounded,
+                  color: Color(0xFFE53935),
+                  size: 48,
+                ),
+                SizedBox(height: 12),
+                Text(
+                  'Şaşiyek çêbû',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 6),
+                Text(
+                  'Tiştek şaş çû. Ji kerema xwe dîsa biceribîne.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    };
 
-  // Crash raporlama (web'de Crashlytics desteklenmez).
-  try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    if (!kIsWeb) {
-      FlutterError.onError =
-          FirebaseCrashlytics.instance.recordFlutterFatalError;
-      PlatformDispatcher.instance.onError = (error, stack) {
-        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-        return true;
-      };
+    // Web'de ekran okuyucu kullanıcıları gizli "Enable accessibility" butonuna
+    // bağımlı kalmasın: semantik ağaç uygulama açılışında otomatik kurulur.
+    if (kIsWeb) {
+      SemanticsBinding.instance.ensureSemantics();
     }
-  } catch (_) {
-    // Firebase yapılandırması olmayan platformlarda sessizce devam et.
-  }
 
-  final ZanKurdRepository repository;
-  final AuthProvider authProvider;
-  if (AppConfig.hasSupabaseConfig) {
-    await Supabase.initialize(
-      url: AppConfig.supabaseUrl,
-      publishableKey: AppConfig.supabaseAnonKey,
+    // Crash raporlama (web'de Crashlytics desteklenmez).
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      if (!kIsWeb) {
+        FlutterError.onError =
+            FirebaseCrashlytics.instance.recordFlutterFatalError;
+        PlatformDispatcher.instance.onError = (error, stack) {
+          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+          return true;
+        };
+      }
+    } catch (_) {
+      // Firebase yapılandırması olmayan platformlarda sessizce devam et.
+    }
+
+    final ZanKurdRepository repository;
+    final AuthProvider authProvider;
+    if (AppConfig.hasSupabaseConfig) {
+      await Supabase.initialize(
+        url: AppConfig.supabaseUrl,
+        publishableKey: AppConfig.supabaseAnonKey,
+      );
+      repository = SupabaseZanKurdRepository(Supabase.instance.client);
+      authProvider = AuthProvider(Supabase.instance.client);
+    } else {
+      repository = MockZanKurdRepository();
+      authProvider = AuthProvider.test();
+    }
+
+    await SyncManager.initialize(repository);
+    await NotificationService.load();
+
+    // Bağımsız servis ve provider'ları Future.wait ile paralel olarak yükle
+    final results = await Future.wait([
+      QuestionBankLoader.instance.load(),
+      AnalyticsService.instance.initialize(),
+      LanguageProvider.load(),
+      ThemeProvider.load(),
+      SoundProvider.load(),
+      ReducedMotionProvider.load(),
+      ChildSafetyProvider.load(),
+      PremiumService.load(),
+    ]);
+
+    final languageProvider = results[2] as LanguageProvider;
+    final themeProvider = results[3] as ThemeProvider;
+    final soundProvider = results[4] as SoundProvider;
+    final reducedMotionProvider = results[5] as ReducedMotionProvider;
+    final childSafetyProvider = results[6] as ChildSafetyProvider;
+    final premiumService = results[7] as PremiumService;
+
+    runApp(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: authProvider,
+        languageProvider: languageProvider,
+        themeProvider: themeProvider,
+        soundProvider: soundProvider,
+        reducedMotionProvider: reducedMotionProvider,
+        childSafetyProvider: childSafetyProvider,
+        premiumService: premiumService,
+      ),
     );
-    repository = SupabaseZanKurdRepository(Supabase.instance.client);
-    authProvider = AuthProvider(Supabase.instance.client);
-  } else {
-    repository = MockZanKurdRepository();
-    authProvider = AuthProvider.test();
-  }
-
-  await SyncManager.initialize(repository);
-  await NotificationService.load();
-
-  // Soru bankasını asenkron yükle (offline_question_bank + editorial JSON).
-  await QuestionBankLoader.instance.load();
-
-  // Anonim analitik servisi başlat
-  await AnalyticsService.instance.initialize();
-
-  final languageProvider = await LanguageProvider.load();
-  final themeProvider = await ThemeProvider.load();
-  final soundProvider = await SoundProvider.load();
-  final reducedMotionProvider = await ReducedMotionProvider.load();
-  final childSafetyProvider = await ChildSafetyProvider.load();
-  // Premium/abonelik servisi başlat (RevenueCat yapılandırması
-  // mevcut değilse mock modunda çalışır — her şey normal akışta).
-  final premiumService = await PremiumService.load();
-
-  runApp(
-    ZanKurdApp(
-      repository: repository,
-      authProvider: authProvider,
-      languageProvider: languageProvider,
-      themeProvider: themeProvider,
-      soundProvider: soundProvider,
-      reducedMotionProvider: reducedMotionProvider,
-      childSafetyProvider: childSafetyProvider,
-      premiumService: premiumService,
-    ),
-  );
+  }, (error, stack) {
+    ErrorReporter.record(
+      error,
+      stack,
+      reason: 'Uncaught error in runZonedGuarded',
+    );
+  });
 }
 
 class ZanKurdApp extends StatelessWidget {

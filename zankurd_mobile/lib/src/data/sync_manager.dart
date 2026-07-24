@@ -73,9 +73,14 @@ class SyncManager {
     return PluginConnectivityMonitor();
   }
 
+  void dispose() {
+    _connectivitySubscription?.cancel();
+    _connectivitySubscription = null;
+  }
+
   @visibleForTesting
   static Future<void> resetForTesting() async {
-    await _instance?._connectivitySubscription?.cancel();
+    _instance?.dispose();
     _instance = null;
   }
 
@@ -225,7 +230,7 @@ class SyncManager {
 
       try {
         if (type == 'sync_xp') {
-          final xp = item['xp'] as int;
+          final xp = (item['xp'] as num?)?.toInt() ?? 0;
           await repo.updateProfileXP(xp);
           developer.log('Successfully synced XP: $xp', name: 'SyncManager');
         }

@@ -128,23 +128,16 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
           child: Container(
             padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.alphaBlend(_accent.withValues(alpha: 0.16), surface),
-                  Color.alphaBlend(_accent.withValues(alpha: 0.05), surface),
-                ],
-              ),
+              color: surface,
               borderRadius: BorderRadius.circular(AppRadius.card),
               border: Border.all(
-                color: _accent.withValues(alpha: 0.30),
-                width: 1.1,
+                color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+                width: 1.0,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: _accent.withValues(alpha: 0.10),
-                  blurRadius: 12,
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
               ],

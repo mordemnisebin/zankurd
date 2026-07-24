@@ -151,7 +151,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .eq('id', user.id)
           .maybeSingle();
       if (profile != null && profile['display_name'] != null) {
-        return profile['display_name'] as String;
+        return (profile['display_name'] as String?) ?? 'ZanKurd Oyuncusu';
       }
     } catch (error, stack) {
       _recordError(error, stack, reason: 'getProfileName failed');
@@ -389,53 +389,61 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
   }) async {
-    final user = client.auth.currentUser ?? await signInAnonymously();
-    await ensureProfile();
+    try {
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
 
-    final localRoom = createRoom(category: category);
-    final categoryId = await _categoryIdByName(category);
+      final localRoom = createRoom(category: category);
+      final categoryId = await _categoryIdByName(category);
 
-    // Kod çakışırsa (unique ihlali) yeni kodla birkaç kez dene.
-    Map<String, dynamic>? room;
-    var code = localRoom.code;
-    for (var attempt = 0; attempt < 3; attempt++) {
-      try {
-        room = await client
-            .from('rooms')
-            .insert({
-              'code': code,
-              'host_id': user.id,
-              'category_id': categoryId,
-              'question_count': localRoom.questionCount,
-              'seconds_per_question': secondsPerQuestion,
-            })
-            .select('id, code')
-            .single();
-        break;
-      } on PostgrestException catch (error) {
-        final isUniqueViolation = error.code == '23505';
-        if (!isUniqueViolation || attempt == 2) rethrow;
-        code = generateRoomCode();
+      // Kod çakışırsa (unique ihlali) yeni kodla birkaç kez dene.
+      Map<String, dynamic>? room;
+      var code = localRoom.code;
+      for (var attempt = 0; attempt < 3; attempt++) {
+        try {
+          room = await client
+              .from('rooms')
+              .insert({
+                'code': code,
+                'host_id': user.id,
+                'category_id': categoryId,
+                'question_count': localRoom.questionCount,
+                'seconds_per_question': secondsPerQuestion,
+              })
+              .select('id, code')
+              .single();
+          break;
+        } on PostgrestException catch (error) {
+          final isUniqueViolation = error.code == '23505';
+          if (!isUniqueViolation || attempt == 2) rethrow;
+          code = generateRoomCode();
+        }
       }
-    }
-    if (room == null) {
-      throw StateError('Room insert failed after retries.');
-    }
+      if (room == null) {
+        throw StateError('Room insert failed after retries.');
+      }
 
-    await client.from('room_players').insert({
-      'room_id': room['id'],
-      'player_id': user.id,
-      'is_ready': true,
-    });
+      final roomId = (room['id'] as String?) ?? '';
+      final roomCode = (room['code'] as String?) ?? '';
 
-    final players = await _loadRoomPlayersById(room['id'] as String);
-    return localRoom.copyWith(
-      id: room['id'] as String,
-      code: room['code'] as String,
-      players: players,
-      hostId: user.id,
-      secondsPerQuestion: secondsPerQuestion,
-    );
+      await client.from('room_players').insert({
+        'room_id': roomId,
+        'player_id': user.id,
+        'is_ready': true,
+      });
+
+      final players = await _loadRoomPlayersById(roomId);
+      return localRoom.copyWith(
+        id: roomId,
+        code: roomCode,
+        players: players,
+        hostId: user.id,
+        secondsPerQuestion: secondsPerQuestion,
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'createOnlineRoom failed');
+      rethrow;
+    }
   }
 
   @override
@@ -1220,9 +1228,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     String roomId,
     Map<String, dynamic> payload,
   ) async {
-    final channel = _ensureRoomChannel(roomId).channel;
-    await channel.sendBroadcastMessage(event: 'game_event', payload: payload);
-    await _disposeUnretainedRoomChannel(roomId);
+    try {
+      final channel = _ensureRoomChannel(roomId).channel;
+      await channel.sendBroadcastMessage(event: 'game_event', payload: payload);
+      await _disposeUnretainedRoomChannel(roomId);
+    } catch (error, stack) {
+      _recordError(
+        error,
+        stack,
+        reason: 'sendRoomBroadcast failed for room $roomId',
+      );
+    }
   }
 
   @override

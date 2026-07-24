@@ -275,6 +275,7 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       await SyncManager.instance.clearQueue();
+      SyncManager.instance.dispose();
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'SyncManager clear on signOut failed');
     }
