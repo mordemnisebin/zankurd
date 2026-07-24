@@ -502,7 +502,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         : const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
+            colors: [AppTheme.culturalBrandBg, AppTheme.brandDeep],
           );
 
     final borderColor = is1v1
@@ -576,17 +576,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       decoration: BoxDecoration(
                         gradient: headerGradient,
                         borderRadius: BorderRadius.circular(AppRadius.card),
-                        border: Border.all(color: borderColor, width: 1.2),
-                        boxShadow: AppTheme.glowShadow(
-                          is1v1
-                              ? (isWinner
-                                    ? AppTheme.correct
-                                    : isDraw
-                                    ? AppTheme.borderColor(context)
-                                    : AppTheme.wrong)
-                              : AppTheme.brand,
-                          intensity: 0.18,
+                        border: Border.all(
+                          color: borderColor.withValues(alpha: 0.35),
+                          width: 1.0,
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.08),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
                       padding: const EdgeInsets.fromLTRB(
                         AppSpacing.lg,
@@ -925,7 +925,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 size: 20,
                               ),
                               label: Text(
-                                context.s('Dîsa bilîze', 'Tekrar oyna'),
+                                QuizStrings.playAgain(context.isKu),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(

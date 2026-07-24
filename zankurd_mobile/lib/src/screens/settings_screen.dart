@@ -198,7 +198,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             : const Icon(AppIcons.floppyDisk),
                         // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                         label: ExcludeSemantics(
-                          child: Text(ku ? 'Tomar Bike' : 'Kaydet'),
+                          child: Text(CommonStrings.save(ku)),
                         ),
                       ),
                     ),
@@ -213,7 +213,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 accent: AppTheme.playGreen,
               ),
               AppPanel(
-                color: AppTheme.surfaceOf(context).withValues(alpha: 0.92),
+                color: AppTheme.surfaceOf(context),
                 child: InkWell(
                   key: const ValueKey('retake-placement-action'),
                   borderRadius: BorderRadius.circular(AppRadius.sm),

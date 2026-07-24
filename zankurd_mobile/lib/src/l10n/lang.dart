@@ -90,7 +90,7 @@ extension LangContext on BuildContext {
       case 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.':
         return 'Girêdan çênebû. Înternet an DNS kontrol bike.';
       case 'Beklenmeyen bir hata oluştu.':
-        return 'Çewtiyeke nediyar rû da.';
+        return 'Şaşiyeke nediyar çêbû.';
       case 'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.':
         return 'Têketina Google niha ne çalak e. Google di panela Supabase de çalak bike.';
       case 'Giriş bağlantısı doğrulanamadı. Uygulama yönlendirme ayarlarını kontrol et.':
@@ -174,6 +174,7 @@ class QuizStrings {
       isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor';
   static String you(bool isKu) => isKu ? 'Tu' : 'Sen';
   static String opponent(bool isKu) => isKu ? 'Hevrik' : 'Rakip';
+  static String playAgain(bool isKu) => isKu ? 'Dîsa bilîze' : 'Tekrar oyna';
 }
 
 /// Centralized common UI strings (dialog buttons, state messages, general actions).
@@ -182,7 +183,7 @@ class CommonStrings {
 
   static String ok(bool isKu) => isKu ? 'Temam' : 'Tamam';
   static String cancel(bool isKu) => isKu ? 'Betal bike' : 'İptal';
-  static String retry(bool isKu) => isKu ? 'Dîsa biceribîne' : 'Tekrar Deneyin';
+  static String retry(bool isKu) => isKu ? 'Dîsa biceribîne' : 'Tekrar Dene';
   static String error(bool isKu) => isKu ? 'Çewtî' : 'Hata';
   static String loading(bool isKu) => isKu ? 'Tê barkirin...' : 'Yükleniyor...';
   static String share(bool isKu) => isKu ? 'Parve bike' : 'Paylaş';

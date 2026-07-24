@@ -425,12 +425,10 @@ class _ShopScreenState extends State<ShopScreen> {
                     ku
                         ? 'Bakiyeya te: $_coinBalance coin'
                         : 'Bakiyen: $_coinBalance coin',
-                    style: TextStyle(
+                    style: AppTypography.caption.copyWith(
                       color: (!isPremium && _coinBalance < item.cost)
                           ? AppTheme.wrong
                           : AppTheme.textSubColor(ctx),
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
@@ -716,10 +714,9 @@ class _ShopScreenState extends State<ShopScreen> {
                     Text(
                       '$_coinBalance coin',
                       maxLines: 1,
-                      style: TextStyle(
+                      style: AppTypography.caption.copyWith(
                         color: AppTheme.textPrimaryColor(context),
                         fontWeight: FontWeight.w800,
-                        fontSize: 13,
                       ),
                     ),
                   ],
@@ -794,10 +791,8 @@ class _ShopScreenState extends State<ShopScreen> {
                         ? 'Bakiyeya te 0 e — çerxa rojane bizivire û coin qezenc bike!'
                         : 'Bakiyen 0 — günlük çarkı çevir, coin kazan!',
                     maxLines: 2,
-                    style: TextStyle(
+                    style: AppTypography.caption.copyWith(
                       color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w700,
-                      fontSize: 13,
                     ),
                   ),
                 ),
