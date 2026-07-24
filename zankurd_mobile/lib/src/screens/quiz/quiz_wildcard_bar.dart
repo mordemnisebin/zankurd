@@ -85,7 +85,7 @@ class _WildcardButtonState extends State<WildcardButton> {
           scale: _pressed ? 0.94 : 1.0,
           duration: const Duration(milliseconds: 80),
           child: Opacity(
-            opacity: opacity,
+            opacity: opacity.clamp(0.0, 1.0),
             child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(vertical: 2),
