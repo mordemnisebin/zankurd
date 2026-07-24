@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zankurd_mobile/src/data/offline_question_bank.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'support/offline_bank_fixture.dart';
 
 /// 2026-07-24 editoryal denetim.
 ///
@@ -35,9 +35,9 @@ final _appMeta = RegExp(
   caseSensitive: false,
 );
 
-void _metaGuardTests() {
+void _metaGuardTests(List<QuizQuestion> Function() getBank) {
   test('soru bankası kendi şemasını sormaz', () {
-    final offenders = offlineQuestionBank
+    final offenders = getBank()
         .where((q) => _appMeta.hasMatch(q.prompt))
         .map((q) => '${q.id}: ${q.prompt}')
         .toList();
@@ -53,7 +53,13 @@ void _metaGuardTests() {
 }
 
 void main() {
-  _metaGuardTests();
+  late List<QuizQuestion> offlineQuestionBank;
+
+  setUpAll(() {
+    offlineQuestionBank = loadOfflineBankFromJson();
+  });
+
+  _metaGuardTests(() => offlineQuestionBank);
   test('çeldiriciler doğru cevapla aynı türden olmalı (tarih/tarih-dışı)', () {
     final offenders = <String>[];
     for (final q in offlineQuestionBank) {

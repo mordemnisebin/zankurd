@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 
 import '../models/quiz_question.dart';
 import 'curated_question_bank.dart';
+import 'question_bank_loader_stub.dart'
+    if (dart.library.io) 'question_bank_loader_io.dart';
 
 /// Soru bankasını asenkron olarak yükler.
 ///
@@ -26,9 +28,24 @@ class QuestionBankLoader {
   bool _loaded = false;
 
   /// Tüm sorular (curated + editorial + offline).
-  List<QuizQuestion> get allQuestions => _questions;
+  List<QuizQuestion> get allQuestions {
+    _ensureLoadedInTest();
+    return _questions;
+  }
 
-  bool get isLoaded => _loaded;
+  bool get isLoaded {
+    _ensureLoadedInTest();
+    return _loaded;
+  }
+
+  void _ensureLoadedInTest() {
+    if (_loaded) return;
+    final testQuestions = loadSyncIfInTest();
+    if (testQuestions != null && testQuestions.isNotEmpty) {
+      _questions = List.unmodifiable(testQuestions);
+      _loaded = true;
+    }
+  }
 
   /// JSON asset'leri okur ve parse eder. Uygulama başlangıcında bir kez
   /// çağrılmalıdır (ör. `main()` içinde ya da `AppShell.initState()`).
@@ -43,6 +60,12 @@ class QuestionBankLoader {
       ...editorial,
       ...offline,
     ];
+    _loaded = true;
+  }
+
+  /// Test ortamı için soruları manuel olarak yükleme imkanı tanır.
+  void setQuestionsForTest(List<QuizQuestion> questions) {
+    _questions = List.unmodifiable(questions);
     _loaded = true;
   }
 
@@ -63,6 +86,7 @@ class QuestionBankLoader {
 
   /// Belirli bir `id`'ye sahip soruyu bulur (MistakeStore için).
   QuizQuestion? findById(String id) {
+    _ensureLoadedInTest();
     for (final q in _questions) {
       if (q.id == id) return q;
     }

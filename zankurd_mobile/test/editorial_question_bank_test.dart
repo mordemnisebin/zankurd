@@ -1,11 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/subcategory_config.dart';
-import 'package:zankurd_mobile/src/data/editorial_question_bank.dart';
-import 'package:zankurd_mobile/src/data/offline_question_bank.dart';
 import 'package:zankurd_mobile/src/models/question_metadata.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 import 'package:zankurd_mobile/src/services/question_language_policy.dart';
+import 'support/offline_bank_fixture.dart';
 
 /// 2026-07-24 editoryal denetim. İkinci dalga bankasının sözleşmesi:
 /// her soru kaynaklı, iki dilde açıklamalı, dil olarak tutarlı ve
@@ -14,6 +13,14 @@ String _norm(String value) =>
     value.trim().toLowerCase().replaceAll(RegExp(r'\s+'), ' ');
 
 void main() {
+  late List<QuizQuestion> editorialQuestionBank;
+  late List<QuizQuestion> offlineQuestionBank;
+
+  setUpAll(() {
+    editorialQuestionBank = loadEditorialBankFromJson();
+    offlineQuestionBank = loadOfflineBankFromJson();
+  });
+
   group('editoryal banka sözleşmesi', () {
     test('banka anlamlı büyüklükte ve kimlikler benzersiz', () {
       expect(editorialQuestionBank.length, greaterThanOrEqualTo(150));

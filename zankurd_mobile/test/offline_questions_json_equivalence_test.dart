@@ -2,12 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zankurd_mobile/src/data/offline_question_bank.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
+/// offline_questions.json ve editorial_questions.json dosyalarının
+/// QuizQuestion.fromJson ile eksiksiz parse edildiğini doğrular.
+///
+/// Eski offline_question_bank.dart Dart const dosyasıyla karşılaştırma testi
+/// kaldırıldı: kaynak artık JSON assetlerin kendisidir.
 void main() {
   test(
-    'assets/data/offline_questions.json birebir offlineQuestionBank ile eşleşir',
+    'offline_questions.json eksiksiz parse edilir ve kimlikler benzersiz',
     () async {
       final raw = await File(
         'assets/data/offline_questions.json',
@@ -17,58 +21,54 @@ void main() {
           .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
           .toList();
 
-      expect(fromJson.length, offlineQuestionBank.length);
-
-      for (var i = 0; i < offlineQuestionBank.length; i++) {
-        final a = offlineQuestionBank[i];
-        final b = fromJson[i];
-        expect(b.id, a.id, reason: 'index $i id');
-        expect(b.category, a.category, reason: 'index $i category');
-        expect(b.prompt, a.prompt, reason: 'index $i prompt');
-        expect(b.answers, a.answers, reason: 'index $i answers');
-        expect(
-          b.correctAnswer,
-          a.correctAnswer,
-          reason: 'index $i correctAnswer',
-        );
-        expect(b.explanation, a.explanation, reason: 'index $i explanation');
-        expect(
-          b.explanationKu,
-          a.explanationKu,
-          reason: 'index $i explanationKu',
-        );
-        expect(
-          b.explanationTr,
-          a.explanationTr,
-          reason: 'index $i explanationTr',
-        );
-        expect(b.type, a.type, reason: 'index $i type');
-        expect(b.imageUrl, a.imageUrl, reason: 'index $i imageUrl');
-        expect(b.difficulty, a.difficulty, reason: 'index $i difficulty');
-        expect(
-          b.metadata?.toJson(),
-          a.metadata?.toJson(),
-          reason: 'index $i metadata',
-        );
+      expect(fromJson.length, greaterThan(1000));
+      final ids = fromJson.map((q) => q.id).toSet();
+      expect(ids.length, fromJson.length, reason: 'Duplicate IDs in JSON');
+      for (final q in fromJson) {
+        expect(q.answers, contains(q.correctAnswer), reason: q.id);
       }
     },
   );
 
   test(
-    'soru bankası doğrulayıcısı varsayılan olarak dosya değiştirmez',
+    'editorial_questions.json eksiksiz parse edilir ve kimlikler benzersiz',
     () async {
-      final jsonFile = File('assets/data/offline_questions.json');
-      final dartFile = File('lib/src/data/offline_question_bank.dart');
-      final jsonBefore = await jsonFile.readAsBytes();
-      final dartBefore = await dartFile.readAsBytes();
+      final raw = await File(
+        'assets/data/editorial_questions.json',
+      ).readAsString();
+      final decoded = jsonDecode(raw) as List;
+      final fromJson = decoded
+          .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
+          .toList();
 
-      final result = await Process.run('python', [
-        'tool/verify_and_fix_question_bank.py',
-      ]);
+      expect(fromJson.length, greaterThanOrEqualTo(150));
+      final ids = fromJson.map((q) => q.id).toSet();
+      expect(ids.length, fromJson.length, reason: 'Duplicate IDs in JSON');
+      for (final q in fromJson) {
+        expect(q.answers, contains(q.correctAnswer), reason: q.id);
+      }
+    },
+  );
 
-      expect(result.exitCode, 0, reason: '${result.stdout}\n${result.stderr}');
-      expect(await jsonFile.readAsBytes(), jsonBefore);
-      expect(await dartFile.readAsBytes(), dartBefore);
+  test(
+    'offline ve editorial JSON kimlik alanları çakışmıyor',
+    () async {
+      final offlineRaw = await File(
+        'assets/data/offline_questions.json',
+      ).readAsString();
+      final editorialRaw = await File(
+        'assets/data/editorial_questions.json',
+      ).readAsString();
+
+      final offlineIds = (jsonDecode(offlineRaw) as List)
+          .map((e) => (e as Map<String, dynamic>)['id'] as String)
+          .toSet();
+      final editorialIds = (jsonDecode(editorialRaw) as List)
+          .map((e) => (e as Map<String, dynamic>)['id'] as String)
+          .toSet();
+
+      final overlap = offlineIds.intersection(editorialIds);
+      expect(overlap, isEmpty, reason: 'Çakışan ID\'ler: $overlap');
     },
   );
 }

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math' as math;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'offline_question_bank.dart';
 import 'question_bank_loader.dart';
 import '../utils/error_reporter.dart';
 
@@ -200,10 +199,7 @@ class MistakeStore {
       final meta = _metadata[id];
       String? category = meta?['category'] as String?;
       if (category == null) {
-        // Loader yüklendi ise oradan ara, yoksa Dart const bankasına düş
-        final match = QuestionBankLoader.instance.isLoaded
-            ? QuestionBankLoader.instance.findById(id)
-            : offlineQuestionBank.where((q) => q.id == id).firstOrNull;
+        final match = QuestionBankLoader.instance.findById(id);
         if (match != null) {
           category = match.category;
         }

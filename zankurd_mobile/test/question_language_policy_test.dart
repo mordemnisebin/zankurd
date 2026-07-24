@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zankurd_mobile/src/data/offline_question_bank.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/services/question_language_policy.dart';
+import 'support/offline_bank_fixture.dart';
 
 /// 2026-07-22 canlı UX denetimi (P0-2): oynanan quizde soru gövdesi
 /// Kurmancî, şıkların tamamı Türkçe olan sorulara rastlandı. Arayüz dili
@@ -13,6 +13,11 @@ import 'package:zankurd_mobile/src/services/question_language_policy.dart';
 /// düşürülmelidir.
 void main() {
   const policy = QuestionLanguagePolicy();
+  late List<QuizQuestion> offlineQuestionBank;
+
+  setUpAll(() {
+    offlineQuestionBank = loadOfflineBankFromJson();
+  });
 
   group('dil tutarlılığı sezgisi', () {
     test('Kurmancî gövde + Türkçe tanım şıkları ihlal sayılır', () {

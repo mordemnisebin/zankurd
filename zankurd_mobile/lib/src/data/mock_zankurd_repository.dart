@@ -21,8 +21,6 @@ import '../utils/error_reporter.dart';
 import '../models/tournament.dart';
 import '../utils/coin_calculator.dart';
 import 'curated_question_bank.dart';
-import 'editorial_question_bank.dart';
-import 'offline_question_bank.dart';
 import 'question_bank_loader.dart';
 import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
@@ -52,16 +50,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   List<QuizQuestion> get questions {
     // Üretimde QuestionBankLoader JSON assetleri yükler.
-    // Test ortamında ise loader henüz çağrılmadığından Dart const bankasına
-    // doğrudan fallback yapılır — testler yavaşlamaz ve kırılmaz.
+    // Test ortamında loader henüz çağrılmadığından curatedQuestionBank ile
+    // çalışır; soru sayısına bağlı testler doğrudan fixture kullanıyor.
     if (QuestionBankLoader.instance.isLoaded) {
       return QuestionBankLoader.instance.allQuestions;
     }
-    return [
-      ...curatedQuestionBank,
-      ...editorialQuestionBank,
-      ...offlineQuestionBank,
-    ];
+    return curatedQuestionBank;
   }
 
   @override

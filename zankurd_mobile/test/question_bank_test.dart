@@ -2,11 +2,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
 
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
-import 'package:zankurd_mobile/src/data/offline_question_bank.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'support/offline_bank_fixture.dart';
 
 String _normalized(String value) =>
     value.trim().toLowerCase().replaceAll(RegExp(r'\s+'), ' ');
+
+late List<QuizQuestion> offlineQuestionBank;
 
 void main() {
   const validCategories = {
@@ -20,6 +22,10 @@ void main() {
     'Paradigma',
     'Teknolojî',
   };
+
+  setUpAll(() {
+    offlineQuestionBank = loadOfflineBankFromJson();
+  });
 
   test('all question ids are unique', () {
     final ids = offlineQuestionBank.map((q) => q.id).toList();

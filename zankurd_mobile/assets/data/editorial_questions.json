@@ -490,7 +490,14 @@
     "correctAnswer": "21ê Adarê",
     "explanation": "Nevruz, baharın başlangıcı bayramı, her yıl 21 Mart'ta kutlanır.",
     "explanationKu": "Newroz, cejna serê biharê, her sal di 21ê Adarê de tê pîrozkirin.",
-    "explanationTr": "Nevruz, baharın başlangıcı bayramı, her yıl 21 Mart'ta kutlanır."
+    "explanationTr": "Nevruz, baharın başlangıcı bayramı, her yıl 21 Mart'ta kutlanır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -507,7 +514,14 @@
     "correctAnswer": "Hesinker",
     "explanation": "Demirci Kawa, Dehak'a karşı ayaklandı; zaferi Nevruz ateşiyle simgelenir.",
     "explanationKu": "Kawayê Hesinker li dijî Dehaq rabû û serkeftina wî bi agirê Newrozê tê nîşankirin.",
-    "explanationTr": "Demirci Kawa, Dehak'a karşı ayaklandı; zaferi Nevruz ateşiyle simgelenir."
+    "explanationTr": "Demirci Kawa, Dehak'a karşı ayaklandı; zaferi Nevruz ateşiyle simgelenir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -524,7 +538,14 @@
     "correctAnswer": "Govend",
     "explanation": "Govend, elele ve sıra hâlinde oynanan Kürt halk dansıdır.",
     "explanationKu": "Govend reqsa komî ya kurdî ye; mirov bi destan digirin û bi rêz dilîzin.",
-    "explanationTr": "Govend, elele ve sıra hâlinde oynanan Kürt halk dansıdır."
+    "explanationTr": "Govend, elele ve sıra hâlinde oynanan Kürt halk dansıdır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -541,7 +562,14 @@
     "correctAnswer": "Mamik / bilmece",
     "explanation": "Tiştonek, kış sohbetlerinde sorulan zekâ bilmeceleridir.",
     "explanationKu": "Tiştonek pirsên jîrekiyê ne ku di şevbihêrkan de tên gotin.",
-    "explanationTr": "Tiştonek, kış sohbetlerinde sorulan zekâ bilmeceleridir."
+    "explanationTr": "Tiştonek, kış sohbetlerinde sorulan zekâ bilmeceleridir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -558,7 +586,14 @@
     "correctAnswer": "Klîtik / kofî",
     "explanation": "Kofî, kadınların geleneksel başlığıdır; yöreye göre pul ve altınla süslenir.",
     "explanationKu": "Kofî serpoşa jinan a kevneşopî ye û li gorî herêman bi pûl û zêran tê xemilandin.",
-    "explanationTr": "Kofî, kadınların geleneksel başlığıdır; yöreye göre pul ve altınla süslenir."
+    "explanationTr": "Kofî, kadınların geleneksel başlığıdır; yöreye göre pul ve altınla süslenir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -575,7 +610,14 @@
     "correctAnswer": "Civîna şevê ya çîrok û stranan",
     "explanation": "Şevbihêrk, kış gecelerinde hikâye, bilmece ve türkülerin paylaşıldığı toplantıdır.",
     "explanationKu": "Şevbihêrk civîna şevên zivistanê ye: çîrok, tiştonek û stran tên gotin.",
-    "explanationTr": "Şevbihêrk, kış gecelerinde hikâye, bilmece ve türkülerin paylaşıldığı toplantıdır."
+    "explanationTr": "Şevbihêrk, kış gecelerinde hikâye, bilmece ve türkülerin paylaşıldığı toplantıdır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -592,7 +634,14 @@
     "correctAnswer": "Kutilk",
     "explanation": "Kutilk (içli köfte) bulgurdan yapılır, kıymayla doldurulur.",
     "explanationKu": "Kutilk (îçli kufte) ji savarê tê çêkirin û bi goştê hûrkirî tê dagirtin.",
-    "explanationTr": "Kutilk (içli köfte) bulgurdan yapılır, kıymayla doldurulur."
+    "explanationTr": "Kutilk (içli köfte) bulgurdan yapılır, kıymayla doldurulur.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -609,7 +658,14 @@
     "correctAnswer": "Hogir / dost",
     "explanation": "\"Heval\" arkadaş/yoldaş anlamını taşır.",
     "explanationKu": "\"Heval\" wateya dostî û hevkariyê dihewîne.",
-    "explanationTr": "\"Heval\" arkadaş/yoldaş anlamını taşır."
+    "explanationTr": "\"Heval\" arkadaş/yoldaş anlamını taşır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -648,7 +704,14 @@
     "correctAnswer": "Şaş",
     "explanation": "Nevruz İran, Afganistan, Azerbaycan ve Orta Asya'da da kutlanır.",
     "explanationKu": "Newroz li gelek welatan — Îran, Afxanistan, Azerbaycan, Asyaya Navîn — jî tê pîrozkirin.",
-    "explanationTr": "Nevruz İran, Afganistan, Azerbaycan ve Orta Asya'da da kutlanır."
+    "explanationTr": "Nevruz İran, Afganistan, Azerbaycan ve Orta Asya'da da kutlanır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -665,7 +728,14 @@
     "correctAnswer": "Kesên ku bûkê ji mala wê tînin",
     "explanation": "Berbû, gelini evinden almaya giden akraba ve dost topluluğudur.",
     "explanationKu": "Berbû ew koma xizm û dostan e ku diçe bûkê tîne.",
-    "explanationTr": "Berbû, gelini evinden almaya giden akraba ve dost topluluğudur."
+    "explanationTr": "Berbû, gelini evinden almaya giden akraba ve dost topluluğudur.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -682,7 +752,14 @@
     "correctAnswer": "Girêdana malbatan bi rêya sinetê",
     "explanation": "Kirve, sünnet töreninde ikinci baba rolündedir; iki aile böylece hısım olur.",
     "explanationKu": "Kirîv di rêûresma sinetê de rola bavê duyemîn digire; du malbat bi vî awayî xizm dibin.",
-    "explanationTr": "Kirve, sünnet töreninde ikinci baba rolündedir; iki aile böylece hısım olur."
+    "explanationTr": "Kirve, sünnet töreninde ikinci baba rolündedir; iki aile böylece hısım olur.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -699,7 +776,14 @@
     "correctAnswer": "Sor, spî, kesk û zer",
     "explanation": "Kürt bayrağı kırmızı, beyaz, yeşil şeritler ve ortadaki sarı güneşten oluşur.",
     "explanationKu": "Ala kurdî ji sê rengên horizontal — sor, spî, kesk — û rojeke zer a navendî pêk tê.",
-    "explanationTr": "Kürt bayrağı kırmızı, beyaz, yeşil şeritler ve ortadaki sarı güneşten oluşur."
+    "explanationTr": "Kürt bayrağı kırmızı, beyaz, yeşil şeritler ve ortadaki sarı güneşten oluşur.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -716,7 +800,14 @@
     "correctAnswer": "Atasözleri",
     "explanation": "Gotinên pêşiyan, halkın deneyimini kısa cümlelerle aktaran atasözleridir.",
     "explanationKu": "Gotinên pêşiyan ezmûna gel a bi hevokên kurt tê veguhastin.",
-    "explanationTr": "Gotinên pêşiyan, halkın deneyimini kısa cümlelerle aktaran atasözleridir."
+    "explanationTr": "Gotinên pêşiyan, halkın deneyimini kısa cümlelerle aktaran atasözleridir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -731,7 +822,16 @@
       "Genim û rûn"
     ],
     "correctAnswer": "Mast û av",
-    "explanationKu": "Dew mast û ava tevlihev e; bi taybetî di havînê de tê vexwarin."
+    "explanation": "Dew (ayran), yoğurt ve suyun karışımıdır; özellikle yazın içilir.",
+    "explanationKu": "Dew mast û ava tevlihev e; bi taybetî di havînê de tê vexwarin.",
+    "explanationTr": "Dew (ayran), yoğurt ve suyun karışımıdır; özellikle yazın içilir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -746,7 +846,16 @@
       "Bazirganê gund"
     ],
     "correctAnswer": "Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike",
-    "explanationKu": "Rîspî di civakê de rola navbeynkariyê digire û nakokiyan çareser dike."
+    "explanation": "Rîspî (aksakal), toplumda arabuluculuk yapan, anlaşmazlıkları çözen saygın yaşlıdır.",
+    "explanationKu": "Rîspî di civakê de rola navbeynkariyê digire û nakokiyan çareser dike.",
+    "explanationTr": "Rîspî (aksakal), toplumda arabuluculuk yapan, anlaşmazlıkları çözen saygın yaşlıdır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -953,7 +1062,9 @@
       "Pirtûkeke rêzimanî"
     ],
     "correctAnswer": "Dîroknameya mîrektiyên kurdan",
+    "explanation": "Şerefname (1597), Kürtlerin ilk kapsamlı tarih kitabıdır; emirlikleri ve aşiretleri tanıtır.",
     "explanationKu": "Şerefname (1597) yekem dîroknameya berfireh a kurdan e; mîrektî û eşîret tê de tên nasîn.",
+    "explanationTr": "Şerefname (1597), Kürtlerin ilk kapsamlı tarih kitabıdır; emirlikleri ve aşiretleri tanıtır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1213,7 +1324,9 @@
       "Goranî"
     ],
     "correctAnswer": "Soranî",
+    "explanation": "Şêrko Bêkes (1940-2013), Güney Kürdistan'ın Soranca yazan büyük şairidir.",
     "explanationKu": "Şêrko Bêkes (1940-2013) helbestvanê mezin ê soranîaxêv ê başûrê Kurdistanê ye.",
+    "explanationTr": "Şêrko Bêkes (1940-2013), Güney Kürdistan'ın Soranca yazan büyük şairidir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1711,7 +1824,9 @@
       "Ermenistan"
     ],
     "correctAnswer": "Îran",
+    "explanation": "Sine (Sanandaj), İran'ın Kürdistan eyaletinin merkezidir.",
     "explanationKu": "Sine (Sanandaj) navenda parêzgeha Kurdistanê ya Îranê ye.",
+    "explanationTr": "Sine (Sanandaj), İran'ın Kürdistan eyaletinin merkezidir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1763,8 +1878,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -1787,8 +1902,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -1811,8 +1926,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -1835,8 +1950,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -1859,8 +1974,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -1883,8 +1998,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -1901,12 +2016,14 @@
       "Lêdera yekem a tembûrê ye"
     ],
     "correctAnswer": "Yek ji dengên jin ên pêşeng ê muzîka kurdî ye",
+    "explanation": "Ayşe Şan (1938-1996), zor koşullarda Kürt müziğinin en etkili kadın seslerinden biri oldu.",
     "explanationKu": "Ayşe Şan (1938-1996) di bin şert û mercên dijwar de bû yek ji dengên jin ên herî bibandor ên muzîka kurdî.",
+    "explanationTr": "Ayşe Şan (1938-1996), zor koşullarda Kürt müziğinin en etkili kadın seslerinden biri oldu.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -1929,8 +2046,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -1951,8 +2068,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -1975,8 +2092,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -1999,8 +2116,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -2023,8 +2140,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -2041,12 +2158,14 @@
       "Amûra kevanî"
     ],
     "correctAnswer": "Amûra lêdanê ya wek def",
+    "explanation": "Erbane (def), deri kaplı vurmalı bir çalgıdır; dini ve halk müziğinde kullanılır.",
     "explanationKu": "Erbane (daf) amûreke lêdanê ya çermî ye û bi taybetî di muzîka olî û gelêrî de tê bikaranîn.",
+    "explanationTr": "Erbane (def), deri kaplı vurmalı bir çalgıdır; dini ve halk müziğinde kullanılır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -2069,8 +2188,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -2093,8 +2212,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -2117,8 +2236,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -2137,7 +2256,14 @@
     "correctAnswer": "Xwerêveberiya herêmî ya li ser bingehê meclîsên gel",
     "explanation": "Demokratik özerklik, karar almayı merkezden yerel meclis ve komünlere taşır.",
     "explanationKu": "Xweseriya demokratîk biryardayînê ji navendê digihîne meclîs û komunên herêmî.",
-    "explanationTr": "Demokratik özerklik, karar almayı merkezden yerel meclis ve komünlere taşır."
+    "explanationTr": "Demokratik özerklik, karar almayı merkezden yerel meclis ve komünlere taşır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2158,8 +2284,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -2176,12 +2302,14 @@
       "Sendîkayeke karkeran"
     ],
     "correctAnswer": "Rêxistina jinan a azadîxwaz a rojhilatê Kurdistanê",
+    "explanation": "KJAR (Doğu Kürdistan Özgür Kadınlar Topluluğu), doğuda kadın özgürlüğü üzerine çalışır.",
     "explanationKu": "KJAR (Komalgeya Jinên Azad ên Rojhilatê Kurdistanê) li rojhilat li ser azadiya jinê kar dike.",
+    "explanationTr": "KJAR (Doğu Kürdistan Özgür Kadınlar Topluluğu), doğuda kadın özgürlüğü üzerine çalışır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -2202,8 +2330,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -2226,8 +2354,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -2250,8 +2378,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -2270,7 +2398,14 @@
     "correctAnswer": "Nasnameyên cuda di nav yek civakê de tên parastin, dewlet ne pêwîst e",
     "explanation": "Demokratik ulus, devletin zorla tekleştirmesi yerine çoğulculuğu ve öz yönetimi koyar.",
     "explanationKu": "Netewa demokratîk li şûna yekîtiya zorê ya dewletê, hebûna pirrengî û xwerêveberiyê datîne.",
-    "explanationTr": "Demokratik ulus, devletin zorla tekleştirmesi yerine çoğulculuğu ve öz yönetimi koyar."
+    "explanationTr": "Demokratik ulus, devletin zorla tekleştirmesi yerine çoğulculuğu ve öz yönetimi koyar.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2291,8 +2426,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -2311,7 +2446,14 @@
     "correctAnswer": "Yekeya biryardayînê ya herî biçûk a taxê an gund",
     "explanation": "Komün, öz yönetimin en küçük birimidir; köy ya da mahalle sakinleri doğrudan karar alır.",
     "explanationKu": "Komun asta yekem a xwerêveberiyê ye; gundî an taxî tê de rasterast biryar didin.",
-    "explanationTr": "Komün, öz yönetimin en küçük birimidir; köy ya da mahalle sakinleri doğrudan karar alır."
+    "explanationTr": "Komün, öz yönetimin en küçük birimidir; köy ya da mahalle sakinleri doğrudan karar alır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2328,7 +2470,14 @@
     "correctAnswer": "Zanista jinê û jiyanê",
     "explanation": "Jineoloji, \"jin\" (kadın) ve \"-loji\"den gelir; yaşamı ve toplumu kadın perspektifinden inceleyen bilimdir.",
     "explanationKu": "Jineolojî ji \"jin\" û \"-lojî\" tê; zanistek e ku jiyan û civakê ji perspektîfa jinê dinirxîne.",
-    "explanationTr": "Jineoloji, \"jin\" (kadın) ve \"-loji\"den gelir; yaşamı ve toplumu kadın perspektifinden inceleyen bilimdir."
+    "explanationTr": "Jineoloji, \"jin\" (kadın) ve \"-loji\"den gelir; yaşamı ve toplumu kadın perspektifinden inceleyen bilimdir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2345,7 +2494,14 @@
     "correctAnswer": "Lihevhatina civak û xwezayê",
     "explanation": "Ekoloji, toplumun doğayla ilişkisini yeniden kurar: yaşam yıkım üzerine inşa edilmez.",
     "explanationKu": "Ekolojî têkiliya civakê bi xwezayê re ji nû ve saz dike: jiyan li ser xerakirinê nayê avakirin.",
-    "explanationTr": "Ekoloji, toplumun doğayla ilişkisini yeniden kurar: yaşam yıkım üzerine inşa edilmez."
+    "explanationTr": "Ekoloji, toplumun doğayla ilişkisini yeniden kurar: yaşam yıkım üzerine inşa edilmez.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2362,7 +2518,14 @@
     "correctAnswer": "Parastina civakê bi rêxistinbûna wê ya xwe",
     "explanation": "Öz savunma yalnız askeri değildir; dilin, kültürün ve toplumsal yaşamın korunmasını da kapsar.",
     "explanationKu": "Xwe-parastin ne tenê ya leşkerî ye; parastina ziman, çand û jiyana civakî jî tê de ye.",
-    "explanationTr": "Öz savunma yalnız askeri değildir; dilin, kültürün ve toplumsal yaşamın korunmasını da kapsar."
+    "explanationTr": "Öz savunma yalnız askeri değildir; dilin, kültürün ve toplumsal yaşamın korunmasını da kapsar.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2379,7 +2542,14 @@
     "correctAnswer": "Modernîteya kapîtalîst",
     "explanation": "Demokratik modernite, kapitalist moderniteye alternatif olarak sunulur: komün, ekoloji ve kadın özgürlüğü.",
     "explanationKu": "Modernîteya demokratîk wek alternatîfeke modernîteya kapîtalîst tê pêşkêşkirin: komun, ekolojî û azadiya jinê.",
-    "explanationTr": "Demokratik modernite, kapitalist moderniteye alternatif olarak sunulur: komün, ekoloji ve kadın özgürlüğü."
+    "explanationTr": "Demokratik modernite, kapitalist moderniteye alternatif olarak sunulur: komün, ekoloji ve kadın özgürlüğü.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2396,7 +2566,14 @@
     "correctAnswer": "Civaka ku bi nirx û biryardayîna hevpar tê birêvebirin",
     "explanation": "Ahlaki ve politik toplum, kararı teknokratlara bırakmaz; değerler ve halk meclisleri esastır.",
     "explanationKu": "Civaka exlaqî û polîtîk biryarê nade destê teknokratan; nirx û meclîsên gel bingeh in.",
-    "explanationTr": "Ahlaki ve politik toplum, kararı teknokratlara bırakmaz; değerler ve halk meclisleri esastır."
+    "explanationTr": "Ahlaki ve politik toplum, kararı teknokratlara bırakmaz; değerler ve halk meclisleri esastır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "trueFalse",
@@ -2411,7 +2588,14 @@
     "correctAnswer": "Şaş",
     "explanation": "Amaç yeni bir devlet kurmak değil, devlet dışında toplumsal öz yönetimdir.",
     "explanationKu": "Armanc ne damezrandina dewletê ye; xwerêveberiya civakê ya li derveyî dewletê ye.",
-    "explanationTr": "Amaç yeni bir devlet kurmak değil, devlet dışında toplumsal öz yönetimdir."
+    "explanationTr": "Amaç yeni bir devlet kurmak değil, devlet dışında toplumsal öz yönetimdir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2428,7 +2612,14 @@
     "correctAnswer": "Hilberîn li gorî pêdiviya civakê, ne li gorî qezencê",
     "explanation": "Komünal ekonomi, bireysel kârdan önce kooperatifi ve ortak üretimi koyar.",
     "explanationKu": "Aboriya komunal kooperatîf û hilberîna hevpar dixe pêş qezenca kesane.",
-    "explanationTr": "Komünal ekonomi, bireysel kârdan önce kooperatifi ve ortak üretimi koyar."
+    "explanationTr": "Komünal ekonomi, bireysel kârdan önce kooperatifi ve ortak üretimi koyar.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2445,7 +2636,14 @@
     "correctAnswer": "Wek pêvajoyên dîrokî yên ku dikarin bên guhertin",
     "explanation": "Hiyerarşi tarihsel bir oluşum olarak görülür; tarihsel olduğu için değiştirilebilir.",
     "explanationKu": "Hiyerarşî wek çêbûneke dîrokî tê dîtin; ji ber ku dîrokî ye, dikare bê guhertin.",
-    "explanationTr": "Hiyerarşi tarihsel bir oluşum olarak görülür; tarihsel olduğu için değiştirilebilir."
+    "explanationTr": "Hiyerarşi tarihsel bir oluşum olarak görülür; tarihsel olduğu için değiştirilebilir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2462,7 +2660,14 @@
     "correctAnswer": "yaşam",
     "explanation": "\"Jiyan\" Türkçede \"yaşam/hayat\" demektir.",
     "explanationKu": "\"Jiyan\" bi Tirkî \"yaşam/hayat\" e.",
-    "explanationTr": "\"Jiyan\" Türkçede \"yaşam/hayat\" demektir."
+    "explanationTr": "\"Jiyan\" Türkçede \"yaşam/hayat\" demektir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2479,7 +2684,14 @@
     "correctAnswer": "Ji ber ku koletiya yekem li ser jinê hatiye avakirin",
     "explanation": "Argüman şudur: ilk toplumsal hiyerarşi kadının tabi kılınmasıyla başladı, bu yüzden özgürlük de oradan başlar.",
     "explanationKu": "Argûman ev e: hiyerarşiya yekem a civakî bi bindestkirina jinê dest pê kiriye, loma azadî jî ji wir dest pê dike.",
-    "explanationTr": "Argüman şudur: ilk toplumsal hiyerarşi kadının tabi kılınmasıyla başladı, bu yüzden özgürlük de oradan başlar."
+    "explanationTr": "Argüman şudur: ilk toplumsal hiyerarşi kadının tabi kılınmasıyla başladı, bu yüzden özgürlük de oradan başlar.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2662,7 +2874,9 @@
       "Dîtin"
     ],
     "correctAnswer": "Xwendin (dibistan: cihê xwendinê)",
+    "explanation": "\"Dibistan\" (okul), okuma kökü ve yer eki \"-stan\"dan oluşur.",
     "explanationKu": "\"Dibistan\" ji \"dibi-\" (xwendin) û paşgira cih \"-stan\" pêk tê.",
+    "explanationTr": "\"Dibistan\" (okul), okuma kökü ve yer eki \"-stan\"dan oluşur.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2828,7 +3042,14 @@
     "correctAnswer": "Li ber xwe dan / direniş",
     "explanation": "\"Berxwedan\", \"li ber xwe dan\"dan gelir; direnme ve ısrar anlamındadır.",
     "explanationKu": "\"Berxwedan\" ji \"li ber xwe dan\" tê; wateya xwe-parastin û israrê dide.",
-    "explanationTr": "\"Berxwedan\", \"li ber xwe dan\"dan gelir; direnme ve ısrar anlamındadır."
+    "explanationTr": "\"Berxwedan\", \"li ber xwe dan\"dan gelir; direnme ve ısrar anlamındadır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2845,7 +3066,14 @@
     "correctAnswer": "Belg û sebzeyên dagirtî",
     "explanation": "Dolma; asma yaprağı ya da patlıcan, biber gibi sebzelerin pirinç/bulgurla doldurulmasıdır.",
     "explanationKu": "Dolme belgên rezê an sebzeyên wek bacan û bîber bi birinc û savar tên dagirtin.",
-    "explanationTr": "Dolma; asma yaprağı ya da patlıcan, biber gibi sebzelerin pirinç/bulgurla doldurulmasıdır."
+    "explanationTr": "Dolma; asma yaprağı ya da patlıcan, biber gibi sebzelerin pirinç/bulgurla doldurulmasıdır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2862,7 +3090,14 @@
     "correctAnswer": "Agir",
     "explanation": "Nevruz ateşi yenilenmenin ve direnişin simgesidir.",
     "explanationKu": "Agirê Newrozê sembola nûbûn û berxwedanê ye.",
-    "explanationTr": "Nevruz ateşi yenilenmenin ve direnişin simgesidir."
+    "explanationTr": "Nevruz ateşi yenilenmenin ve direnişin simgesidir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2879,7 +3114,14 @@
     "correctAnswer": "Yê ku li pêşiya mirinê ye",
     "explanation": "\"Pêş\" (ön) + \"merg\" (ölüm): ölümün önüne duran.",
     "explanationKu": "\"Pêş\" + \"merg\" (mirin): yê ku xwe datîne pêşiya mirinê.",
-    "explanationTr": "\"Pêş\" (ön) + \"merg\" (ölüm): ölümün önüne duran."
+    "explanationTr": "\"Pêş\" (ön) + \"merg\" (ölüm): ölümün önüne duran.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2896,7 +3138,14 @@
     "correctAnswer": "Komeke malbatên bi xizmî girêdayî",
     "explanation": "Aşiret, akrabalıkla bağlı büyük topluluktur ve geleneksel olarak toplumsal yönetim rolü üstlenir.",
     "explanationKu": "Eşîret komeke mezin a xizmî ye û bi kevneşopî rola rêveberiya civakî digire.",
-    "explanationTr": "Aşiret, akrabalıkla bağlı büyük topluluktur ve geleneksel olarak toplumsal yönetim rolü üstlenir."
+    "explanationTr": "Aşiret, akrabalıkla bağlı büyük topluluktur ve geleneksel olarak toplumsal yönetim rolü üstlenir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2913,7 +3162,14 @@
     "correctAnswer": "Şeva herî dirêj a salê",
     "explanation": "Yelda gecesi yılın en uzun gecesidir; toplanıp yemekle geçirilir.",
     "explanationKu": "Şeva Yeldayê şeva herî dirêj a salê ye û bi civîn û xwarinê tê derbaskirin.",
-    "explanationTr": "Yelda gecesi yılın en uzun gecesidir; toplanıp yemekle geçirilir."
+    "explanationTr": "Yelda gecesi yılın en uzun gecesidir; toplanıp yemekle geçirilir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2928,7 +3184,16 @@
       "Navê muzîkjenan"
     ],
     "correctAnswer": "Diyariya ku ji bo bûkê tê dayîn",
-    "explanationKu": "Qelen di kevneşopiyê de mal an diyariya ku malbata zavayî dide malbata bûkê ye."
+    "explanation": "Başlık (qelen), geleneksel olarak damat ailesinin gelin ailesine verdiği mal/hediyedir.",
+    "explanationKu": "Qelen di kevneşopiyê de mal an diyariya ku malbata zavayî dide malbata bûkê ye.",
+    "explanationTr": "Başlık (qelen), geleneksel olarak damat ailesinin gelin ailesine verdiği mal/hediyedir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -2945,7 +3210,14 @@
     "correctAnswer": "Odeya mêvanan û civînê",
     "explanation": "Dîwanxane, misafir ağırlama ve toplumsal karar alma yeridir.",
     "explanationKu": "Dîwanxane cihê mêvandarî û biryardana civakî ye.",
-    "explanationTr": "Dîwanxane, misafir ağırlama ve toplumsal karar alma yeridir."
+    "explanationTr": "Dîwanxane, misafir ağırlama ve toplumsal karar alma yeridir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -3198,7 +3470,9 @@
       "Ferhengnas"
     ],
     "correctAnswer": "Helbestvanekî klasîk ê pêşîn",
+    "explanation": "Elî Herîrî (15-16. yy), klasik Kürt şiirinin öncülerinden sayılır.",
     "explanationKu": "Elî Herîrî (sedsala 15-16em) wek yek ji pêşiyên helbesta klasîk a kurdî tê hesibandin.",
+    "explanationTr": "Elî Herîrî (15-16. yy), klasik Kürt şiirinin öncülerinden sayılır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3558,8 +3832,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -3582,8 +3856,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -3606,8 +3880,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -3630,8 +3904,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -3678,8 +3952,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -3700,8 +3974,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -3720,7 +3994,14 @@
     "correctAnswer": "Bi nîqaş û lihevkirina beşdaran",
     "explanation": "Halk meclisleri doğrudan karar almayı öne alır; tartışma ve uzlaşma esastır.",
     "explanationKu": "Meclîsên gel biryardayîna rasterast dixin pêş; nîqaş û lihevkirin bingeh in.",
-    "explanationTr": "Halk meclisleri doğrudan karar almayı öne alır; tartışma ve uzlaşma esastır."
+    "explanationTr": "Halk meclisleri doğrudan karar almayı öne alır; tartışma ve uzlaşma esastır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -3741,8 +4022,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -3765,8 +4046,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -3789,8 +4070,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -3811,8 +4092,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -3835,8 +4116,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -3855,7 +4136,14 @@
     "correctAnswer": "Hilberîna hevpar li şûna kara kesane",
     "explanation": "Kooperatif, komünal ekonominin modelidir: emek ve sonuç paylaşılır.",
     "explanationKu": "Kooperatîf modela aboriya komunal e: xebat û encam tên parvekirin.",
-    "explanationTr": "Kooperatif, komünal ekonominin modelidir: emek ve sonuç paylaşılır."
+    "explanationTr": "Kooperatif, komünal ekonominin modelidir: emek ve sonuç paylaşılır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -3872,7 +4160,14 @@
     "correctAnswer": "Perwerdehiya civakî û ramanî",
     "explanation": "Akademiler kolektif eğitim alanlarıdır: jineoloji, ekoloji, dil ve örgütlenme.",
     "explanationKu": "Akademî cihên perwerdehiya kolektîf in: jineolojî, ekolojî, ziman û rêxistinbûn.",
-    "explanationTr": "Akademiler kolektif eğitim alanlarıdır: jineoloji, ekoloji, dil ve örgütlenme."
+    "explanationTr": "Akademiler kolektif eğitim alanlarıdır: jineoloji, ekoloji, dil ve örgütlenme.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -3889,7 +4184,14 @@
     "correctAnswer": "Zanist ji civak û exlaqê nayê veqetandin",
     "explanation": "Pozitivizm \"tarafsız bilim\" iddiasıyla eleştirilir; her bilgi toplum içinde üretilir.",
     "explanationKu": "Pozîtîvîzm wek \"zanista bêbandor\" tê rexnekirin; her zanist di nav civakê de tê hilberandin.",
-    "explanationTr": "Pozitivizm \"tarafsız bilim\" iddiasıyla eleştirilir; her bilgi toplum içinde üretilir."
+    "explanationTr": "Pozitivizm \"tarafsız bilim\" iddiasıyla eleştirilir; her bilgi toplum içinde üretilir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -3906,7 +4208,14 @@
     "correctAnswer": "doğa",
     "explanation": "\"Xweza\" Türkçede \"doğa\" demektir.",
     "explanationKu": "\"Xweza\" bi Tirkî \"doğa\" ye.",
-    "explanationTr": "\"Xweza\" Türkçede \"doğa\" demektir."
+    "explanationTr": "\"Xweza\" Türkçede \"doğa\" demektir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "trueFalse",
@@ -3921,7 +4230,14 @@
     "correctAnswer": "Şaş",
     "explanation": "Tersine: insan doğanın parçasıdır; ayrışma krizin kökü olarak görülür.",
     "explanationKu": "Berevajî: mirov beşek ji xwezayê ye; veqetîn wek koka krîzê tê dîtin.",
-    "explanationTr": "Tersine: insan doğanın parçasıdır; ayrışma krizin kökü olarak görülür."
+    "explanationTr": "Tersine: insan doğanın parçasıdır; ayrışma krizin kökü olarak görülür.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -3938,7 +4254,14 @@
     "correctAnswer": "Têkiliya jin û mêr a li ser bingehê wekhevî û azadiyê",
     "explanation": "Özgür eş yaşam, ilişkiyi sahiplenmeden çıkarıp eşitlik üzerine kurar.",
     "explanationKu": "Hevjiyana azad têkiliyê ji xwedîtiyê derdixe û li ser wekheviyê ava dike.",
-    "explanationTr": "Özgür eş yaşam, ilişkiyi sahiplenmeden çıkarıp eşitlik üzerine kurar."
+    "explanationTr": "Özgür eş yaşam, ilişkiyi sahiplenmeden çıkarıp eşitlik üzerine kurar.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4097,6 +4420,9 @@
       "Hejmar"
     ],
     "correctAnswer": "Kesê ku karekî dike",
+    "explanation": "\"-van\" fail ekidir: dergehvan (kapıcı), stranvan, hunervan.",
+    "explanationKu": "\"-van\" paşgira kirdeyê ye: dergehvan (kapıcı), stranvan, hunervan.",
+    "explanationTr": "\"-van\" fail ekidir: dergehvan (kapıcı), stranvan, hunervan.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4118,6 +4444,9 @@
       "Dema bê"
     ],
     "correctAnswer": "Raweya fermanî",
+    "explanation": "İkisi de emirdir: \"were\" (gel), \"biçe\" (git).",
+    "explanationKu": "Herdu jî ferman in: \"were\" (gel), \"biçe\" (git).",
+    "explanationTr": "İkisi de emirdir: \"were\" (gel), \"biçe\" (git).",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4307,7 +4636,14 @@
     "correctAnswer": "Genim",
     "explanation": "Bulgur, haşlanıp kırılmış buğdaydan yapılır.",
     "explanationKu": "Savar ji genimê kelandî û hûrkirî tê çêkirin.",
-    "explanationTr": "Bulgur, haşlanıp kırılmış buğdaydan yapılır."
+    "explanationTr": "Bulgur, haşlanıp kırılmış buğdaydan yapılır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4324,7 +4660,14 @@
     "correctAnswer": "Mêvan bi rûmet pêşwazîkirin",
     "explanation": "Misafirperverlik Kürt toplumunun en yüksek değerlerindendir.",
     "explanationKu": "Mêvanperwerî yek ji nirxên herî bilind ên civaka kurdî ye.",
-    "explanationTr": "Misafirperverlik Kürt toplumunun en yüksek değerlerindendir."
+    "explanationTr": "Misafirperverlik Kürt toplumunun en yüksek değerlerindendir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4341,7 +4684,14 @@
     "correctAnswer": "Hiriyê bizinê",
     "explanation": "Göçerlerin kara çadırı keçi kılından dokunur; su geçirmez, rüzgârı keser.",
     "explanationKu": "Çadira koçeran ji hiriyê bizinê tê hûnandin; av derbas nake û bayê digire.",
-    "explanationTr": "Göçerlerin kara çadırı keçi kılından dokunur; su geçirmez, rüzgârı keser."
+    "explanationTr": "Göçerlerin kara çadırı keçi kılından dokunur; su geçirmez, rüzgârı keser.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4358,7 +4708,14 @@
     "correctAnswer": "Jiyana bi ajalan re ya guhêrbar",
     "explanation": "Göçerler, mevsime göre sürüleriyle yayla ve kışlak arasında hareket eder.",
     "explanationKu": "Koçer li gorî demsalan bi pez û dewaran re di navbera zozan û germiyanê de digerin.",
-    "explanationTr": "Göçerler, mevsime göre sürüleriyle yayla ve kışlak arasında hareket eder."
+    "explanationTr": "Göçerler, mevsime göre sürüleriyle yayla ve kışlak arasında hareket eder.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4373,7 +4730,16 @@
       "Cihê bazarê"
     ],
     "correctAnswer": "Çîmena çiyayî ya havînê",
-    "explanationKu": "Zozan çiyayên bilind ên ku di havînê de ji bo pez tên bikaranîn."
+    "explanation": "Zozan (yayla), yazın sürüler için kullanılan yüksek otlaklardır.",
+    "explanationKu": "Zozan çiyayên bilind ên ku di havînê de ji bo pez tên bikaranîn.",
+    "explanationTr": "Zozan (yayla), yazın sürüler için kullanılan yüksek otlaklardır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4390,7 +4756,14 @@
     "correctAnswer": "Kesa ku bi dengekî bilind lorî û şîn dibêje",
     "explanation": "Şînbêj genelde kadınlardır; ağıt kilamlarıyla yası dile getirir.",
     "explanationKu": "Şînbêj bi gelemperî jin in û bi kilamên şînê xemgîniyê vedibêjin.",
-    "explanationTr": "Şînbêj genelde kadınlardır; ağıt kilamlarıyla yası dile getirir."
+    "explanationTr": "Şînbêj genelde kadınlardır; ağıt kilamlarıyla yası dile getirir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4431,7 +4804,14 @@
     "correctAnswer": "Evîna trajîk a li çiyê",
     "explanation": "Siyabend ile Xecê destanın âşıklarıdır; hikâye dağda trajediyle biter.",
     "explanationKu": "Siyabend û Xecê evîndarên destanê ne; çîrok bi trajediyê li çiyê diqede.",
-    "explanationTr": "Siyabend ile Xecê destanın âşıklarıdır; hikâye dağda trajediyle biter."
+    "explanationTr": "Siyabend ile Xecê destanın âşıklarıdır; hikâye dağda trajediyle biter.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "trueFalse",
@@ -4446,7 +4826,14 @@
     "correctAnswer": "Rast",
     "explanation": "Halayda eller ya da kollar tutulur.",
     "explanationKu": "Di govendê de mirov bi destan an bi qolan digirin.",
-    "explanationTr": "Halayda eller ya da kollar tutulur."
+    "explanationTr": "Halayda eller ya da kollar tutulur.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4463,7 +4850,14 @@
     "correctAnswer": "Ji ber ku civak û malbatê tînin cem hev",
     "explanation": "Bayram sofrası toplumsal bir işlev taşır: akraba ve komşuyu bir araya getirir.",
     "explanationKu": "Sifreya cejnê fonksiyoneke civakî digire: xizm û cîran tên cem hev.",
-    "explanationTr": "Bayram sofrası toplumsal bir işlev taşır: akraba ve komşuyu bir araya getirir."
+    "explanationTr": "Bayram sofrası toplumsal bir işlev taşır: akraba ve komşuyu bir araya getirir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4480,7 +4874,14 @@
     "correctAnswer": "Hevrîşim (ipek) — ji bo tevn û xemlê",
     "explanation": "İpek, dokuma ve süslü giysilerde kullanılır.",
     "explanationKu": "Hevrîşim di tevn û cilûbergên xemilandî de tê bikaranîn.",
-    "explanationTr": "İpek, dokuma ve süslü giysilerde kullanılır."
+    "explanationTr": "İpek, dokuma ve süslü giysilerde kullanılır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4497,7 +4898,14 @@
     "correctAnswer": "Amûra hûnandina xalîçe û bêrîkan",
     "explanation": "Tezgâh; halı, kilim ve heybe dokumak için kullanılır.",
     "explanationKu": "Tevn ji bo hûnandina xalîçe, kilîm û tûrikan tê bikaranîn.",
-    "explanationTr": "Tezgâh; halı, kilim ve heybe dokumak için kullanılır."
+    "explanationTr": "Tezgâh; halı, kilim ve heybe dokumak için kullanılır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4514,7 +4922,14 @@
     "correctAnswer": "Motîfên hêjmarî û sembolîk",
     "explanation": "Her motifin bir anlamı vardır: bereket, koruma, aile.",
     "explanationKu": "Her motîf wateyeke xwe heye: bereket, parastin, malbat.",
-    "explanationTr": "Her motifin bir anlamı vardır: bereket, koruma, aile."
+    "explanationTr": "Her motifin bir anlamı vardır: bereket, koruma, aile.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4531,7 +4946,14 @@
     "correctAnswer": "Danûstandina civakî û biryardayîn",
     "explanation": "Dîwanxane toplumsal tartışma ve karar yeridir; yemek bu toplantıyı çerçeveler.",
     "explanationKu": "Dîwanxane cihê nîqaş û biryara civakî ye; xwarin vê civînê dihewîne.",
-    "explanationTr": "Dîwanxane toplumsal tartışma ve karar yeridir; yemek bu toplantıyı çerçeveler."
+    "explanationTr": "Dîwanxane toplumsal tartışma ve karar yeridir; yemek bu toplantıyı çerçeveler.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Folklor û kevneşopiya kurdî",
+      "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -4736,7 +5158,9 @@
       "Erebê Şemo"
     ],
     "correctAnswer": "Celadet Alî Bedirxan",
+    "explanation": "Ronahî (1942), Hawar'dan sonra Celadet tarafından Şam'da çıkarıldı.",
     "explanationKu": "Ronahî (1942) piştî Hawarê ji aliyê Celadet ve li Şamê derket.",
+    "explanationTr": "Ronahî (1942), Hawar'dan sonra Celadet tarafından Şam'da çıkarıldı.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4788,8 +5212,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5528,8 +5952,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5552,8 +5976,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5576,8 +6000,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5600,8 +6024,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5624,8 +6048,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5648,8 +6072,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5672,8 +6096,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5694,8 +6118,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5718,8 +6142,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5736,12 +6160,14 @@
       "Strana cejnê"
     ],
     "correctAnswer": "Strana razanê",
+    "explanation": "Lorî (ninni), çocuğu uyutmak için söylenir.",
     "explanationKu": "Lorî ji bo razandina zarokan tê gotin.",
+    "explanationTr": "Lorî (ninni), çocuğu uyutmak için söylenir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5764,8 +6190,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5788,8 +6214,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Muzîka kurdî",
-      "sourceReference": "Martin van Bruinessen, Kurdish Ethno-Nationalism versus Nation-Building States (2000); Encyclopaedia Iranica — Kurdish Music",
+      "sourceTitle": "Muzîk û dengbêjiya kurdî",
+      "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     }
   },
@@ -5808,7 +6234,14 @@
     "correctAnswer": "Li ser pirsgirêkên gund biryar dide",
     "explanation": "Köy meclisi, halka en yakın karar birimidir.",
     "explanationKu": "Meclîsa gund yekeya biryardayînê ya herî nêzîk gel e.",
-    "explanationTr": "Köy meclisi, halka en yakın karar birimidir."
+    "explanationTr": "Köy meclisi, halka en yakın karar birimidir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -5825,7 +6258,14 @@
     "correctAnswer": "Koma xebatê ya li ser mijarekê",
     "explanation": "Komisyon (eğitim, sağlık, ekonomi) belli bir konuda çalışmayı yürütür.",
     "explanationKu": "Komîsyon (perwerde, tenduristî, aborî) xebatê li ser mijarekê birêve dibe.",
-    "explanationTr": "Komisyon (eğitim, sağlık, ekonomi) belli bir konuda çalışmayı yürütür."
+    "explanationTr": "Komisyon (eğitim, sağlık, ekonomi) belli bir konuda çalışmayı yürütür.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -5846,8 +6286,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -5870,8 +6310,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -5894,8 +6334,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -5916,8 +6356,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -5940,8 +6380,8 @@
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Siyaseta kurdî",
-      "sourceReference": "David McDowall, A Modern History of the Kurds (2004); Encyclopaedia Iranica — Kurdish Political Parties",
+      "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
+      "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
     }
   },
@@ -5960,7 +6400,14 @@
     "correctAnswer": "Herêm karûbarên xwe bi xwe birêve dibe",
     "explanation": "Öz yönetim, karar gücünü yerel düzeye verir.",
     "explanationKu": "Xwerêveberî hêza biryarê dide asta herêmî.",
-    "explanationTr": "Öz yönetim, karar gücünü yerel düzeye verir."
+    "explanationTr": "Öz yönetim, karar gücünü yerel düzeye verir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -5977,7 +6424,14 @@
     "correctAnswer": "Civaka berî hiyerarşiya dewletê",
     "explanation": "Doğal toplum, sınıf ve devlet öncesi model olarak değerlendirilir.",
     "explanationKu": "Civaka xwezayî wek modela berî çînî û berî dewletê tê nirxandin.",
-    "explanationTr": "Doğal toplum, sınıf ve devlet öncesi model olarak değerlendirilir."
+    "explanationTr": "Doğal toplum, sınıf ve devlet öncesi model olarak değerlendirilir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -5994,7 +6448,14 @@
     "correctAnswer": "Guhertin bi perwerdehî û hişmendiyê dest pê dike",
     "explanation": "Akademiler ve toplumsal eğitim, dönüşümün ana araçlarıdır.",
     "explanationKu": "Akademî û perwerdehiya civakî amûrên sereke yên veguhertinê ne.",
-    "explanationTr": "Akademiler ve toplumsal eğitim, dönüşümün ana araçlarıdır."
+    "explanationTr": "Akademiler ve toplumsal eğitim, dönüşümün ana araçlarıdır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -6011,7 +6472,14 @@
     "correctAnswer": "Pirrengiyê bi zorê yek dike",
     "explanation": "Ulus-devlet farklı dil, kültür ve kimlikleri tek kalıba sokar.",
     "explanationKu": "Dewleta netewe ziman, çand û nasnameyên cuda di bin yek qalibî de dixe.",
-    "explanationTr": "Ulus-devlet farklı dil, kültür ve kimlikleri tek kalıba sokar."
+    "explanationTr": "Ulus-devlet farklı dil, kültür ve kimlikleri tek kalıba sokar.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -6028,7 +6496,14 @@
     "correctAnswer": "Bi azadiya jinê ve",
     "explanation": "Toplumun özgürlüğü, kadının özgürlük düzeyiyle ölçülür.",
     "explanationKu": "Azadiya civakê bi asta azadiya jinê tê pîvandin.",
-    "explanationTr": "Toplumun özgürlüğü, kadının özgürlük düzeyiyle ölçülür."
+    "explanationTr": "Toplumun özgürlüğü, kadının özgürlük düzeyiyle ölçülür.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "trueFalse",
@@ -6043,7 +6518,14 @@
     "correctAnswer": "Şaş",
     "explanation": "Tersine: karar aşağıdan — komün ve meclislerden — yukarı doğru gider.",
     "explanationKu": "Berevajî: biryar ji jêr — ji komun û meclîsan — ber bi jor ve diçe.",
-    "explanationTr": "Tersine: karar aşağıdan — komün ve meclislerden — yukarı doğru gider."
+    "explanationTr": "Tersine: karar aşağıdan — komün ve meclislerden — yukarı doğru gider.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -6060,7 +6542,14 @@
     "correctAnswer": "Nasname û hişmendî bi ziman tê veguhastin",
     "explanation": "Dil hem hafızayı hem kimliği taşır; bu yüzden anadilde eğitim temeldir.",
     "explanationKu": "Ziman hem bîr hem nasname diguhezîne; loma perwerdehiya zikmakî bingehîn e.",
-    "explanationTr": "Dil hem hafızayı hem kimliği taşır; bu yüzden anadilde eğitim temeldir."
+    "explanationTr": "Dil hem hafızayı hem kimliği taşır; bu yüzden anadilde eğitim temeldir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -6077,7 +6566,14 @@
     "correctAnswer": "Kapîtalîzm, pîşesaziyparêzî û dewleta netewe",
     "explanation": "Bu üç sütun, toplumsal ve ekolojik krizin kökü olarak değerlendirilir.",
     "explanationKu": "Ev sê stûn wek koka krîza civakî û ekolojîk tên nirxandin.",
-    "explanationTr": "Bu üç sütun, toplumsal ve ekolojik krizin kökü olarak değerlendirilir."
+    "explanationTr": "Bu üç sütun, toplumsal ve ekolojik krizin kökü olarak değerlendirilir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   },
   {
     "type": "multipleChoice",
@@ -6094,6 +6590,13 @@
     "correctAnswer": "Pêdiviya herêmê bi xwe tê dîtin, veguhastin kêm dibe",
     "explanation": "Yerel üretim, enerji tüketimini ve dışa bağımlılığı azaltır.",
     "explanationKu": "Hilberîna herêmî xerckirina enerjiyê û girêdana derve kêm dike.",
-    "explanationTr": "Yerel üretim, enerji tüketimini ve dışa bağımlılığı azaltır."
+    "explanationTr": "Yerel üretim, enerji tüketimini ve dışa bağımlılığı azaltır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
+      "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
+      "qualityVersion": 2
+    }
   }
 ]
