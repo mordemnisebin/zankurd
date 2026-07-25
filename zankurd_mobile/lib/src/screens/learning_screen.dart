@@ -1101,7 +1101,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
           ),
           const SizedBox(height: 16),
           _buildKuContentRow(slide, context),
-          if (slide.exampleKu != null) ...[
+          if (slide.exampleKu case final exampleKu?) ...[
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(12),
@@ -1110,7 +1110,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                slide.exampleKu!,
+                exampleKu,
                 style: AppTypography.bodyMedium.copyWith(
                   color: AppTheme.textSubColor(context),
                   fontSize: 13,
@@ -1268,21 +1268,21 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                     padding: const EdgeInsets.all(18),
                     child: Column(
                       children: [
-                        if (slide.imageUrl != null)
+                        if (slide.imageUrl case final imgUrl?)
                           Container(
                             width: double.infinity,
                             height: 200,
                             margin: const EdgeInsets.only(bottom: 16),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                              child: slide.imageUrl!.startsWith('asset://')
+                              child: imgUrl.startsWith('asset://')
                                   ? Image.asset(
-                                      slide.imageUrl!.replaceFirst('asset://', ''),
+                                      imgUrl.replaceFirst('asset://', ''),
                                       fit: BoxFit.cover,
                                       errorBuilder: (_, _, _) => const SizedBox(),
                                     )
                                   : CachedNetworkImage(
-                                      imageUrl: slide.imageUrl!,
+                                      imageUrl: imgUrl,
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) => Container(
                                         color: AppTheme.surfaceHiColor(context),
@@ -1316,17 +1316,17 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 _buildKuContentRow(slide, context),
-                                if (slide.contentTr != null &&
-                                    slide.contentTr!.isNotEmpty) ...[
+                                if (slide.contentTr case final contentTr?
+                                    when contentTr.isNotEmpty) ...[
                                   const SizedBox(height: 6),
                                   Text(
-                                    slide.contentTr!,
+                                    contentTr,
                                     style: AppTypography.bodyMedium.copyWith(
                                       color: AppTheme.textSubColor(context),
                                     ),
                                   ),
                                 ],
-                                if (slide.exampleKu != null) ...[
+                                if (slide.exampleKu case final exampleKu?) ...[
                                   const SizedBox(height: 12),
                                   Container(
                                     padding: const EdgeInsets.all(12),
@@ -1335,7 +1335,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Text(
-                                      slide.exampleKu!,
+                                      exampleKu,
                                       style: AppTypography.bodyMedium.copyWith(
                                         color: AppTheme.textSubColor(context),
                                         fontSize: 13,
