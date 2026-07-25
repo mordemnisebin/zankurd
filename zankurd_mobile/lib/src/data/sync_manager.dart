@@ -4,6 +4,7 @@ import 'dart:developer' as developer;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/utils/error_reporter.dart';
 import 'zankurd_repository.dart';
 import 'supabase_zankurd_repository.dart';
@@ -47,6 +48,7 @@ class SyncManager {
   }
 
   static const _queueKey = 'zankurd.syncQueue';
+  static const _maxRetries = 5;
   static SyncManager? _instance;
 
   final ZanKurdRepository _repository;
@@ -221,6 +223,7 @@ class SyncManager {
       'delta': resolvedDelta,
       'playerId': playerId,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'retries': 0,
     });
     unawaited(_saveQueue());
     unawaited(sync());
@@ -309,13 +312,59 @@ class SyncManager {
             );
           }
         }
+      } on PostgrestException catch (e, stack) {
+        // 42883 = function does not exist → migration henüz uygulanmamış.
+        // Sonsuz döngüyü önlemek için anında düşür ve bir kez raporla.
+        if (e.code == '42883') {
+          ErrorReporter.record(
+            e,
+            stack,
+            reason: 'SyncManager: RPC does not exist (migration missing). '
+                'Dropping item permanently.',
+          );
+          developer.log(
+            'RPC not found (42883). Dropping item: $item',
+            name: 'SyncManager',
+          );
+          continue;
+        }
+        final retries = ((item['retries'] as num?) ?? 0).toInt() + 1;
+        if (retries >= _maxRetries) {
+          ErrorReporter.record(
+            e,
+            stack,
+            reason: 'SyncManager: max retries ($_maxRetries) exceeded. '
+                'Dropping item.',
+          );
+          developer.log(
+            'Max retries reached for item ($item): $e. Dropping.',
+            name: 'SyncManager',
+          );
+        } else {
+          item['retries'] = retries;
+          failedItems.add(item);
+        }
       } catch (e, stack) {
-        ErrorReporter.record(e, stack, reason: 'SyncManager process item');
-        developer.log(
-          'Failed to sync item ($item): $e. Keeping in queue.',
-          name: 'SyncManager',
-        );
-        failedItems.add(item);
+        final retries = ((item['retries'] as num?) ?? 0).toInt() + 1;
+        if (retries >= _maxRetries) {
+          ErrorReporter.record(
+            e,
+            stack,
+            reason: 'SyncManager: max retries ($_maxRetries) exceeded. '
+                'Dropping item.',
+          );
+          developer.log(
+            'Max retries reached for item ($item): $e. Dropping.',
+            name: 'SyncManager',
+          );
+        } else {
+          item['retries'] = retries;
+          failedItems.add(item);
+          developer.log(
+            'Failed to sync item ($item): $e. Retry $retries/$_maxRetries.',
+            name: 'SyncManager',
+          );
+        }
       }
     }
 

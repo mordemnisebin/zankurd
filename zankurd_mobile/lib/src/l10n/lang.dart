@@ -24,12 +24,10 @@ enum AppLanguage {
 
 class LanguageProvider extends ChangeNotifier {
   LanguageProvider({String initialLang = 'ku', SharedPreferences? preferences})
-    : this.fromLanguage(AppLanguage.fromCode(initialLang), preferences);
+      : this.fromLanguage(AppLanguage.fromCode(initialLang), preferences);
 
-  LanguageProvider.fromLanguage(
-    AppLanguage initialLanguage, [
-    this._preferences,
-  ]) : _language = initialLanguage;
+  LanguageProvider.fromLanguage(AppLanguage initialLanguage, [this._preferences])
+      : _language = initialLanguage;
 
   static const _storageKey = 'zankurd.language';
 
@@ -80,8 +78,7 @@ extension LangContext on BuildContext {
     }
   }
 
-  AppLanguage get language =>
-      Provider.of<LanguageProvider>(this, listen: false).language;
+  AppLanguage get language => Provider.of<LanguageProvider>(this, listen: false).language;
 
   /// Returns [ku] if Kurdish is active, [tr] if Turkish.
   String s(String ku, String tr) => isKu ? ku : tr;

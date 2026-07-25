@@ -173,8 +173,7 @@ class QuizQuestion {
       prompt: json['prompt'] as String,
       answers: List<String>.from(json['answers'] as List),
       correctAnswer: json['correctAnswer'] as String,
-      explanation:
-          (json['explanation'] as String?) ??
+      explanation: (json['explanation'] as String?) ??
           (json['explanationTr'] as String?) ??
           (json['explanationKu'] as String?) ??
           '',
