@@ -78,59 +78,65 @@ class _ProfileHeroCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    InkWell(
-                      key: const ValueKey('profile-avatar-edit'),
-                      customBorder: const CircleBorder(),
-                      onTap: onEditAvatar,
-                      child: Stack(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(3),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.88),
-                                width: 2.5,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.16),
-                                  blurRadius: 14,
-                                  offset: const Offset(0, 6),
-                                  spreadRadius: -4,
-                                ),
-                              ],
-                            ),
-                            child: PlayerAvatar(
-                              radius: 34,
-                              photoUrl: avatarIdentity.photoUrl,
-                              iconId: avatarIdentity.iconId,
-                              colorHex: avatarIdentity.colorHex,
-                              frameId: avatarIdentity.frameId,
-                              displayName: displayName,
-                            ),
-                          ),
-                          Positioned(
-                            right: 0,
-                            bottom: 0,
-                            child: Container(
-                              padding: const EdgeInsets.all(6),
+                    // Ekran okuyucuda etiketsiz bir düğme olarak görünüyordu
+                    // (2026-07-25 denetimi).
+                    Semantics(
+                      button: true,
+                      label: ku ? 'Avatarê xwe biguherîne' : 'Avatarı düzenle',
+                      child: InkWell(
+                        key: const ValueKey('profile-avatar-edit'),
+                        customBorder: const CircleBorder(),
+                        onTap: onEditAvatar,
+                        child: Stack(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(3),
                               decoration: BoxDecoration(
-                                gradient: AppTheme.accentGradient,
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.92),
-                                  width: 2,
+                                  color: Colors.white.withValues(alpha: 0.88),
+                                  width: 2.5,
                                 ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.16),
+                                    blurRadius: 14,
+                                    offset: const Offset(0, 6),
+                                    spreadRadius: -4,
+                                  ),
+                                ],
                               ),
-                              child: const Icon(
-                                AppIcons.camera,
-                                size: 12,
-                                color: Colors.white,
+                              child: PlayerAvatar(
+                                radius: 34,
+                                photoUrl: avatarIdentity.photoUrl,
+                                iconId: avatarIdentity.iconId,
+                                colorHex: avatarIdentity.colorHex,
+                                frameId: avatarIdentity.frameId,
+                                displayName: displayName,
                               ),
                             ),
-                          ),
-                        ],
+                            Positioned(
+                              right: 0,
+                              bottom: 0,
+                              child: Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                  gradient: AppTheme.accentGradient,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white.withValues(alpha: 0.92),
+                                    width: 2,
+                                  ),
+                                ),
+                                child: const Icon(
+                                  AppIcons.camera,
+                                  size: 12,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.md),
@@ -476,7 +482,9 @@ class _UnifiedRewardsSection extends StatelessWidget {
                                       : AppTheme.surfaceHiColor(
                                           context,
                                         ).withValues(alpha: 0.5),
-                                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.sm,
+                                  ),
                                   border: Border.all(
                                     color: unlocked
                                         ? AppTheme.gold.withValues(alpha: 0.25)

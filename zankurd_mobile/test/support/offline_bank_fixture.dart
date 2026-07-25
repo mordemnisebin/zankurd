@@ -31,15 +31,21 @@ List<QuizQuestion> loadEditorialBankFromJson() {
 
 void ensureQuestionBankLoaderInitialized() {
   if (QuestionBankLoader.instance.isLoaded) return;
-  final offlineRaw = File('assets/data/offline_questions.json').readAsStringSync();
-  final editorialRaw = File('assets/data/editorial_questions.json').readAsStringSync();
+  final offlineRaw = File(
+    'assets/data/offline_questions.json',
+  ).readAsStringSync();
+  final editorialRaw = File(
+    'assets/data/editorial_questions.json',
+  ).readAsStringSync();
   final offlineList = json.decode(offlineRaw) as List<dynamic>;
   final editorialList = json.decode(editorialRaw) as List<dynamic>;
-  
-  final offline = offlineList
-      .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>));
-  final editorial = editorialList
-      .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>));
+
+  final offline = offlineList.map(
+    (e) => QuizQuestion.fromJson(e as Map<String, dynamic>),
+  );
+  final editorial = editorialList.map(
+    (e) => QuizQuestion.fromJson(e as Map<String, dynamic>),
+  );
 
   QuestionBankLoader.instance.setQuestionsForTest([
     ...curatedQuestionBank,

@@ -862,6 +862,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  /// DEPRECATED — bkz. `supabase/2026-07-25_xp_server_authority.sql`.
+  ///
+  /// `profiles.xp` artık trigger ile istemci yazımına kapalıdır; bu çağrı
+  /// sunucuda sessizce yok sayılır. Yalnızca eski senkronizasyon kuyruğunda
+  /// kalmış kayıtlar bu yoldan geçer ve [awardProfileXPDelta] ile telafi
+  /// edilemedikleri için kuyruktan düşürülürler.
+  @Deprecated('awardProfileXPDelta kullanın — mutlak XP yazımı güvensizdir.')
   @override
   Future<void> updateProfileXP(int xp) async {
     try {
@@ -870,6 +877,24 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       await client.from('profiles').update({'xp': xp}).eq('id', user.id);
     } catch (error, stack) {
       _recordError(error, stack, reason: 'updateProfileXP failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<int> awardProfileXPDelta(int delta) async {
+    if (delta <= 0) return 0;
+    try {
+      final user = client.auth.currentUser;
+      if (user == null) return 0;
+      final response = await client.rpc<dynamic>(
+        'award_xp_delta',
+        params: {'p_delta': delta},
+      );
+      if (response is num) return response.toInt();
+      return (_firstRow(response)?['award_xp_delta'] as num?)?.toInt() ?? 0;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'award_xp_delta failed');
       rethrow;
     }
   }
@@ -1153,6 +1178,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     return switch (value) {
       'true_false' => QuestionType.trueFalse,
       'visual' => QuestionType.visual,
+      'word_ordering' || 'wordOrdering' => QuestionType.wordOrdering,
+      'fill_in_blank' || 'fillInBlank' => QuestionType.fillInBlank,
       _ => QuestionType.multipleChoice,
     };
   }

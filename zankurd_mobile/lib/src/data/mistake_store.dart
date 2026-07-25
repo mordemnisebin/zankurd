@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:math' as math;
+
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'question_bank_loader.dart';
@@ -20,6 +22,16 @@ class MistakeStore {
   static const _storageKey = 'zankurd.mistakeQuestionIds';
   static const _metadataKey = 'zankurd.mistakeMetadata';
   static const _historyKey = 'zankurd.dailyPerformance';
+
+  /// Tekrar aralığının üst sınırı (gün). Bir yıl, dil öğreniminde makul bir
+  /// "uzun vadeli hatırlama" ufkudur.
+  static const _maxIntervalDays = 365;
+
+  /// Madde "yanlışlarım" listesinden bu eşiklerden birine ulaşınca çıkar.
+  /// Eski değerler (5 tekrar / 30 gün) uzun kuyruğu tamamen kesiyordu.
+  static const _graduationRepetitions = 8;
+  static const _graduationIntervalDays = 180;
+
   static MistakeStore? _instance;
 
   static Future<MistakeStore> load() async {
@@ -91,6 +103,11 @@ class MistakeStore {
     if (nextReview == null) return true;
     return DateTime.now().millisecondsSinceEpoch >= nextReview;
   }
+
+  /// Testlerde SRS geçmişinin korunduğunu doğrulamak için.
+  @visibleForTesting
+  double? easeFactorForTest(String id) =>
+      (_metadata[id]?['easeFactor'] as num?)?.toDouble();
 
   int get readyCount => _ids.where((id) => isReadyForReview(id)).length;
   Set<String> get readyIds => _ids.where((id) => isReadyForReview(id)).toSet();
@@ -176,22 +193,32 @@ class MistakeStore {
       repetitions += 1;
     }
 
-    // If card is mastered (repetitions >= 5 or interval >= 30 days), remove it
-    if (repetitions >= 5 || intervalDays >= 30) {
+    // Aralık üst sınırı: SM-2'nin değeri uzun aralıklardadır. Eski kod
+    // 30 günde kartı tamamen siliyordu — pratikte 3-4 doğru cevaptan sonra
+    // madde sistemden çıkıyor, uzun vadeli hatırlama hiç ölçülmüyordu.
+    intervalDays = intervalDays.clamp(1, _maxIntervalDays);
+
+    final nextMeta = <String, dynamic>{
+      'nextReview': DateTime.now()
+          .add(Duration(days: intervalDays))
+          .millisecondsSinceEpoch,
+      'intervalDays': intervalDays,
+      'repetitions': repetitions,
+      'easeFactor': easeFactor,
+      // ignore: use_null_aware_elements
+      if (meta != null && meta.containsKey('category'))
+        'category': meta['category'],
+    };
+
+    if (repetitions >= _graduationRepetitions ||
+        intervalDays >= _graduationIntervalDays) {
+      // Madde "yanlışlarım" listesinden çıkar ama SRS geçmişi SİLİNMEZ:
+      // aynı soru ileride tekrar yanlış cevaplanırsa easeFactor sıfırdan
+      // (2.5) değil, kullanıcının gerçek geçmişinden devam eder.
       _ids.remove(id);
-      _metadata.remove(id);
+      _metadata[id] = {...nextMeta, 'graduated': true};
     } else {
-      _metadata[id] = {
-        'nextReview': DateTime.now()
-            .add(Duration(days: intervalDays))
-            .millisecondsSinceEpoch,
-        'intervalDays': intervalDays,
-        'repetitions': repetitions,
-        'easeFactor': easeFactor,
-        // ignore: use_null_aware_elements
-        if (meta != null && meta.containsKey('category'))
-          'category': meta['category'],
-      };
+      _metadata[id] = nextMeta;
     }
     await _persist();
   }

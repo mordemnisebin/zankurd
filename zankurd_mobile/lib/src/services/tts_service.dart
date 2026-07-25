@@ -78,7 +78,8 @@ class TtsService {
   Future<void> _initialize() async {
     try {
       _enabled = _prefs?.getBool(_enabledKey) ?? true;
-      _rate = (_prefs?.getDouble(_rateKey) ?? _defaultRate).clamp(0.0, 1.0)
+      _rate = (_prefs?.getDouble(_rateKey) ?? _defaultRate)
+          .clamp(0.0, 1.0)
           .toDouble();
       _volume = (_prefs?.getDouble(_volumeKey) ?? _defaultVolume)
           .clamp(0.0, 1.0)
@@ -114,11 +115,18 @@ class TtsService {
       final languages = await _tts.getLanguages ?? <Object>[];
       final langStrs = languages.map((e) => '$e'.toLowerCase()).toList();
       _kurdishAvailable = langStrs.any(
-        (l) => l == 'ku' || l.startsWith('ku_') || l.startsWith('ku-') || l == 'ckb' || l.startsWith('ckb_') || l.startsWith('ckb-'),
+        (l) =>
+            l == 'ku' ||
+            l.startsWith('ku_') ||
+            l.startsWith('ku-') ||
+            l == 'ckb' ||
+            l.startsWith('ckb_') ||
+            l.startsWith('ckb-'),
       );
       // Kürtçe varsa onu, yoksa TR'yi (son çare) seç.
       if (_kurdishAvailable) {
-        _activeLanguage = _prefs?.getString(_languageKey) ?? _matchLocale(langStrs);
+        _activeLanguage =
+            _prefs?.getString(_languageKey) ?? _matchLocale(langStrs);
       } else {
         _activeLanguage = _prefs?.getString(_languageKey) ?? 'tr-TR';
       }
@@ -199,4 +207,3 @@ class TtsService {
     } catch (_) {}
   }
 }
-

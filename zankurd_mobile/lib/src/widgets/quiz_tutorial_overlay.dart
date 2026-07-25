@@ -20,6 +20,7 @@ class QuizTutorialOverlay extends StatefulWidget {
     required this.nextButtonKey,
     this.onReady,
     this.timerSeconds = 15,
+    this.timed = true,
     super.key,
   });
 
@@ -52,6 +53,10 @@ class QuizTutorialOverlay extends StatefulWidget {
 
   /// Soru başına süre (sn) — Demjimêr adımındaki açıklama metni bunu gösterir.
   final int timerSeconds;
+
+  /// Bu akışta geri sayım var mı? Öğrenme akışında sayaç çizilmediği için
+  /// ilk adım sayacı değil cevap alanını hedefler ve metni süreden söz etmez.
+  final bool timed;
 
   @override
   State<QuizTutorialOverlay> createState() => _QuizTutorialOverlayState();
@@ -126,16 +131,28 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
             // balonda; joker öğretimi ilk kullanımda contextual ipucu
             // olarak quiz içinde gösterilir (bkz. _maybeShowWildcardHint).
             steps: [
-              CoachMarkStep(
-                targetKey: widget.timerKey,
-                icon: AppIcons.stopwatch,
-                titleKu: 'Demjimêr + Bersiv',
-                titleTr: 'Süre + Cevap',
-                descriptionKu:
-                    '${widget.timerSeconds} saniyeyê de bersiva rast hilbijêre; her bersiva rast pûanan qezenc dike.',
-                descriptionTr:
-                    '${widget.timerSeconds} saniyede doğru şıkkı seç; her doğru cevap puan kazandırır.',
-              ),
+              if (widget.timed)
+                CoachMarkStep(
+                  targetKey: widget.timerKey,
+                  icon: AppIcons.stopwatch,
+                  titleKu: 'Demjimêr + Bersiv',
+                  titleTr: 'Süre + Cevap',
+                  descriptionKu:
+                      '${widget.timerSeconds} saniyeyê de bersiva rast hilbijêre; her bersiva rast pûanan qezenc dike.',
+                  descriptionTr:
+                      '${widget.timerSeconds} saniyede doğru şıkkı seç; her doğru cevap puan kazandırır.',
+                )
+              else
+                CoachMarkStep(
+                  targetKey: widget.answerAreaKey,
+                  icon: AppIcons.bullseye,
+                  titleKu: 'Bersivê hilbijêre',
+                  titleTr: 'Cevabı seç',
+                  descriptionKu:
+                      'Li vir demjimêr tune — bi rehetî bifikire û bersiva rast hilbijêre. Piştî her bersivê ravekirin tê nîşandan.',
+                  descriptionTr:
+                      'Burada süre yok — acele etmeden düşün ve doğru şıkkı seç. Her cevaptan sonra açıklama gösterilir.',
+                ),
               CoachMarkStep(
                 targetKey: widget.nextButtonKey,
                 icon: AppIcons.arrowRight,

@@ -38,7 +38,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late final Future<PlacementStore> _placementStoreFuture = PlacementStore.load();
+  late final Future<PlacementStore> _placementStoreFuture =
+      PlacementStore.load();
   final _nameController = TextEditingController();
   bool _deleting = false;
   bool _loadingName = true;

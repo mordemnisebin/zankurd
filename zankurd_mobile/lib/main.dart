@@ -30,152 +30,187 @@ import 'src/theme/app_theme.dart';
 import 'src/utils/error_reporter.dart';
 import 'src/widgets/responsive_wrapper.dart';
 
-Future<void> main() async {
-  runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
+/// Global hata ekranının dili. `ErrorWidget.builder` widget ağacının dışında
+/// çalıştığı için `LangContext`'e erişemez; dil tercihi yüklendiğinde burada
+/// güncellenir. Varsayılan Kurmancî'dir (uygulamanın varsayılan dili).
+bool errorScreenIsKu = true;
 
-    // Widget rendering hataları için şık global kurtarma UI'ı
-    ErrorWidget.builder = (FlutterErrorDetails details) {
-      ErrorReporter.record(
-        details.exception,
-        details.stack ?? StackTrace.empty,
-        reason: 'Flutter ErrorWidget render exception',
-      );
-      return const Material(
-        color: Colors.transparent,
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.error_outline_rounded,
-                  color: Color(0xFFE53935),
-                  size: 48,
-                ),
-                SizedBox(height: 12),
-                Text(
-                  'Şaşiyek çêbû',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+Future<void> main() async {
+  runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+
+      // Widget rendering hataları için şık global kurtarma UI'ı
+      ErrorWidget.builder = (FlutterErrorDetails details) {
+        ErrorReporter.record(
+          details.exception,
+          details.stack ?? StackTrace.empty,
+          reason: 'Flutter ErrorWidget render exception',
+        );
+        final ku = errorScreenIsKu;
+        return Material(
+          color: Colors.transparent,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.error_outline_rounded,
+                    color: Color(0xFFE53935),
+                    size: 48,
                   ),
-                ),
-                SizedBox(height: 6),
-                Text(
-                  'Tiştek şaş çû. Ji kerema xwe dîsa biceribîne.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
-                ),
-              ],
+                  const SizedBox(height: 12),
+                  Text(
+                    ku ? 'Şaşiyek çêbû' : 'Bir hata oluştu',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    ku
+                        ? 'Tiştek şaş çû. Ji kerema xwe dîsa biceribîne.'
+                        : 'Bir şeyler ters gitti. Lütfen tekrar dene.',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                ],
+              ),
             ),
           ),
+        );
+      };
+
+      // Web'de ekran okuyucu kullanıcıları gizli "Enable accessibility" butonuna
+      // bağımlı kalmasın: semantik ağaç uygulama açılışında otomatik kurulur.
+      if (kIsWeb) {
+        SemanticsBinding.instance.ensureSemantics();
+      }
+
+      // Crash raporlama (web'de Crashlytics desteklenmez).
+      try {
+        await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+        if (!kIsWeb) {
+          FlutterError.onError =
+              FirebaseCrashlytics.instance.recordFlutterFatalError;
+          PlatformDispatcher.instance.onError = (error, stack) {
+            FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+            return true;
+          };
+        }
+      } catch (_) {
+        // Firebase yapılandırması olmayan platformlarda sessizce devam et.
+      }
+
+      final ZanKurdRepository repository;
+      final AuthProvider authProvider;
+      if (AppConfig.hasSupabaseConfig) {
+        await Supabase.initialize(
+          url: AppConfig.supabaseUrl,
+          publishableKey: AppConfig.supabaseAnonKey,
+        );
+        repository = SupabaseZanKurdRepository(Supabase.instance.client);
+        authProvider = AuthProvider(Supabase.instance.client);
+      } else {
+        repository = MockZanKurdRepository();
+        authProvider = AuthProvider.test();
+      }
+
+      await SyncManager.initialize(repository);
+      await NotificationService.load();
+
+      // Bağımsız servis ve provider'ları paralel yükle. Sonuçlar indeksle
+      // değil kendi future'larıyla okunur: `results[3] as ThemeProvider`
+      // biçimi listeye bir eleman eklendiğinde sessizce kayar ve runtime'da
+      // cast hatasına dönerdi.
+      final languageFuture = LanguageProvider.load();
+      final themeFuture = ThemeProvider.load();
+      final soundFuture = SoundProvider.load();
+      final reducedMotionFuture = ReducedMotionProvider.load();
+      final childSafetyFuture = ChildSafetyProvider.load();
+      final premiumFuture = PremiumService.load();
+
+      await Future.wait<void>([
+        QuestionBankLoader.instance.load(),
+        AnalyticsService.instance.initialize(),
+        languageFuture,
+        themeFuture,
+        soundFuture,
+        reducedMotionFuture,
+        childSafetyFuture,
+        premiumFuture,
+      ]);
+
+      final languageProvider = await languageFuture;
+      errorScreenIsKu = languageProvider.isKu;
+      languageProvider.addListener(() {
+        errorScreenIsKu = languageProvider.isKu;
+      });
+      final themeProvider = await themeFuture;
+      final soundProvider = await soundFuture;
+      final reducedMotionProvider = await reducedMotionFuture;
+      final childSafetyProvider = await childSafetyFuture;
+      final premiumService = await premiumFuture;
+
+      runApp(
+        ZanKurdApp(
+          repository: repository,
+          authProvider: authProvider,
+          languageProvider: languageProvider,
+          themeProvider: themeProvider,
+          soundProvider: soundProvider,
+          reducedMotionProvider: reducedMotionProvider,
+          childSafetyProvider: childSafetyProvider,
+          premiumService: premiumService,
         ),
       );
-    };
-
-    // Web'de ekran okuyucu kullanıcıları gizli "Enable accessibility" butonuna
-    // bağımlı kalmasın: semantik ağaç uygulama açılışında otomatik kurulur.
-    if (kIsWeb) {
-      SemanticsBinding.instance.ensureSemantics();
-    }
-
-    // Crash raporlama (web'de Crashlytics desteklenmez).
-    try {
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
+    },
+    (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'Uncaught error in runZonedGuarded',
       );
-      if (!kIsWeb) {
-        FlutterError.onError =
-            FirebaseCrashlytics.instance.recordFlutterFatalError;
-        PlatformDispatcher.instance.onError = (error, stack) {
-          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-          return true;
-        };
-      }
-    } catch (_) {
-      // Firebase yapılandırması olmayan platformlarda sessizce devam et.
-    }
-
-    final ZanKurdRepository repository;
-    final AuthProvider authProvider;
-    if (AppConfig.hasSupabaseConfig) {
-      await Supabase.initialize(
-        url: AppConfig.supabaseUrl,
-        publishableKey: AppConfig.supabaseAnonKey,
-      );
-      repository = SupabaseZanKurdRepository(Supabase.instance.client);
-      authProvider = AuthProvider(Supabase.instance.client);
-    } else {
-      repository = MockZanKurdRepository();
-      authProvider = AuthProvider.test();
-    }
-
-    await SyncManager.initialize(repository);
-    await NotificationService.load();
-
-    // Bağımsız servis ve provider'ları Future.wait ile paralel olarak yükle
-    final results = await Future.wait([
-      QuestionBankLoader.instance.load(),
-      AnalyticsService.instance.initialize(),
-      LanguageProvider.load(),
-      ThemeProvider.load(),
-      SoundProvider.load(),
-      ReducedMotionProvider.load(),
-      ChildSafetyProvider.load(),
-      PremiumService.load(),
-    ]);
-
-    final languageProvider = results[2] as LanguageProvider;
-    final themeProvider = results[3] as ThemeProvider;
-    final soundProvider = results[4] as SoundProvider;
-    final reducedMotionProvider = results[5] as ReducedMotionProvider;
-    final childSafetyProvider = results[6] as ChildSafetyProvider;
-    final premiumService = results[7] as PremiumService;
-
-    runApp(
-      ZanKurdApp(
-        repository: repository,
-        authProvider: authProvider,
-        languageProvider: languageProvider,
-        themeProvider: themeProvider,
-        soundProvider: soundProvider,
-        reducedMotionProvider: reducedMotionProvider,
-        childSafetyProvider: childSafetyProvider,
-        premiumService: premiumService,
-      ),
-    );
-  }, (error, stack) {
-    ErrorReporter.record(
-      error,
-      stack,
-      reason: 'Uncaught error in runZonedGuarded',
-    );
-  });
+    },
+  );
 }
 
 class ZanKurdApp extends StatelessWidget {
-  const ZanKurdApp({
+  /// Verilmeyen provider'lar için yedek instance'lar burada, `build()`
+  /// içinde değil, bir kez oluşturulur. `build()` içinde `?? Provider()`
+  /// yazılırsa her yeniden çizimde yeni bir ChangeNotifier üretilir ve
+  /// eski dinleyiciler sessizce kopar.
+  ZanKurdApp({
     required this.repository,
-    this.authProvider,
-    this.languageProvider,
-    this.themeProvider,
-    this.soundProvider,
-    this.reducedMotionProvider,
-    this.childSafetyProvider,
-    this.premiumService,
+    AuthProvider? authProvider,
+    LanguageProvider? languageProvider,
+    ThemeProvider? themeProvider,
+    SoundProvider? soundProvider,
+    ReducedMotionProvider? reducedMotionProvider,
+    ChildSafetyProvider? childSafetyProvider,
+    PremiumService? premiumService,
     super.key,
-  });
+  }) : authProvider = authProvider ?? AuthProvider.test(),
+       languageProvider = languageProvider ?? LanguageProvider(),
+       themeProvider = themeProvider ?? ThemeProvider(),
+       soundProvider = soundProvider ?? SoundProvider(),
+       reducedMotionProvider = reducedMotionProvider ?? ReducedMotionProvider(),
+       childSafetyProvider = childSafetyProvider ?? ChildSafetyProvider(),
+       premiumService = premiumService ?? PremiumService.fallback();
 
   final ZanKurdRepository repository;
-  final AuthProvider? authProvider;
-  final LanguageProvider? languageProvider;
-  final ThemeProvider? themeProvider;
-  final SoundProvider? soundProvider;
-  final ReducedMotionProvider? reducedMotionProvider;
-  final ChildSafetyProvider? childSafetyProvider;
-  final PremiumService? premiumService;
+  final AuthProvider authProvider;
+  final LanguageProvider languageProvider;
+  final ThemeProvider themeProvider;
+  final SoundProvider soundProvider;
+  final ReducedMotionProvider reducedMotionProvider;
+  final ChildSafetyProvider childSafetyProvider;
+  final PremiumService premiumService;
 
   @override
   Widget build(BuildContext context) {
@@ -184,23 +219,21 @@ class ZanKurdApp extends StatelessWidget {
         // Repository tek bir immutable instance olarak paylaşılıyor —
         // ekranların constructor'ından geçirmek yerine context üzerinden okunur.
         Provider<ZanKurdRepository>.value(value: repository),
-        ChangeNotifierProvider(
-          create: (_) => languageProvider ?? LanguageProvider(),
+        // Dışarıdan verilen instance'lar `.value` ile paylaşılır. `create:`
+        // ile verilirse Provider bunların sahipliğini üstlenir ve ağaç
+        // söküldüğünde dispose eder; oysa bu nesneler main() içinde
+        // oluşturulmuş, başka yerlerden de erişilen singleton'lardır.
+        ChangeNotifierProvider<LanguageProvider>.value(value: languageProvider),
+        ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
+        ChangeNotifierProvider<ThemeProvider>.value(value: themeProvider),
+        ChangeNotifierProvider<SoundProvider>.value(value: soundProvider),
+        ChangeNotifierProvider<ReducedMotionProvider>.value(
+          value: reducedMotionProvider,
         ),
-        ChangeNotifierProvider(
-          create: (_) => authProvider ?? AuthProvider.test(),
+        ChangeNotifierProvider<ChildSafetyProvider>.value(
+          value: childSafetyProvider,
         ),
-        ChangeNotifierProvider(create: (_) => themeProvider ?? ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => soundProvider ?? SoundProvider()),
-        ChangeNotifierProvider(
-          create: (_) => reducedMotionProvider ?? ReducedMotionProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => childSafetyProvider ?? ChildSafetyProvider(),
-        ),
-        ChangeNotifierProvider.value(
-          value: premiumService ?? PremiumService.fallback(),
-        ),
+        ChangeNotifierProvider<PremiumService>.value(value: premiumService),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) => MaterialApp(

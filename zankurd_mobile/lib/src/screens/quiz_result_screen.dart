@@ -254,10 +254,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final xpStore = await XPStore.load();
     final leveledUp = await xpStore.addXP(earnedXP);
     try {
-      await repository.updateProfileXP(xpStore.totalXP);
+      await repository.awardProfileXPDelta(earnedXP);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'quiz_result_reward');
-      SyncManager.instance.queueXP(xpStore.totalXP);
+      SyncManager.instance.queueXP(xpStore.totalXP, delta: earnedXP);
     }
 
     // Doğru anda (yeterli quiz + iyi skor) bir kez mağaza değerlendirmesi iste.

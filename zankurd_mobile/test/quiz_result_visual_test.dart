@@ -46,9 +46,7 @@ QuizResultScreen buildScreen(MockZanKurdRepository repository) {
 }
 
 void main() {
-  testWidgets('light solo vitrin kimlik yeşili gradyan taşır', (
-    tester,
-  ) async {
+  testWidgets('light solo vitrin kimlik yeşili gradyan taşır', (tester) async {
     await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();

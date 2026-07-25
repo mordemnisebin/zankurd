@@ -19,64 +19,74 @@ void main() {
     expect(store.contains('q1'), isTrue);
   });
 
+  // 2026-07-25 denetim bulgusu: eski mezuniyet eşiği (5 tekrar / 30 gün)
+  // maddeyi 3-4 doğru cevaptan sonra sistemden tamamen siliyordu. SM-2'nin
+  // değeri aylar süren aralıklardadır; eşikler 8 tekrar / 180 güne çekildi
+  // ve mezun olan maddenin SRS geçmişi (easeFactor) korunuyor.
+  test('SM-2 Kolay (q = 5) aralığı büyütür ama maddeyi erken silmez', () async {
+    final store = await MistakeStore.load();
+
+    await store.markMistake('q1');
+    expect(store.count, 1);
+
+    // Reps 1 → 1 gün, Reps 2 → 6 gün, Reps 3 → ~15 gün, Reps 4 → ~39 gün.
+    for (var i = 0; i < 4; i++) {
+      await store.markResolvedSM2('q1', 5);
+      expect(
+        store.count,
+        1,
+        reason: '${i + 1}. tekrardan sonra madde silinmemeli',
+      );
+    }
+
+    // Reps 5 → ~105 gün: hâlâ 180 günün altında.
+    await store.markResolvedSM2('q1', 5);
+    expect(store.count, 1);
+
+    // Reps 6 → aralık 180 günü aşar, madde "yanlışlarım" listesinden çıkar.
+    await store.markResolvedSM2('q1', 5);
+    expect(store.count, 0);
+  });
+
   test(
-    'SM-2 Kolay (q = 5) increases ease factor and resolves after 5 reviews',
+    'SM-2 Zor (q = 3) daha yavaş ilerler ve 8 tekrarda mezun olur',
     () async {
       final store = await MistakeStore.load();
 
-      // Initial mistake: sets easeFactor to 2.3, repetitions to 0, intervalDays to 1
       await store.markMistake('q1');
-      expect(store.count, 1);
 
-      // 1st review: Kolay (q = 5). EF: 2.3 -> 2.4, Reps: 0 -> 1, Interval: 1 day
-      await store.markResolvedSM2('q1', 5);
-      expect(store.count, 1);
+      // Zor cevaplarda easeFactor düşer; aralık 180 güne ulaşmadan önce
+      // tekrar sayısı eşiği (8) devreye girer.
+      for (var i = 0; i < 7; i++) {
+        await store.markResolvedSM2('q1', 3);
+        expect(
+          store.count,
+          1,
+          reason: '${i + 1}. tekrardan sonra madde silinmemeli',
+        );
+      }
 
-      // 2nd review: Kolay (q = 5). EF: 2.4 -> 2.5, Reps: 1 -> 2, Interval: 6 days
-      await store.markResolvedSM2('q1', 5);
-      expect(store.count, 1);
-
-      // 3rd review: Kolay (q = 5). EF: 2.5 -> 2.6, Reps: 2 -> 3, Interval: (6 * 2.5).round() = 15 days
-      await store.markResolvedSM2('q1', 5);
-      expect(store.count, 1);
-
-      // 4th review: Kolay (q = 5). EF: 2.6 -> 2.7, Reps: 3 -> 4, Interval: (15 * 2.6).round() = 39 days
-      // Since interval 39 >= 30, it should be resolved and removed!
-      await store.markResolvedSM2('q1', 5);
-      expect(store.count, 0); // Removed because intervalDays >= 30
+      await store.markResolvedSM2('q1', 3);
+      expect(store.count, 0);
     },
   );
 
-  test(
-    'SM-2 Zor (q = 3) decreases ease factor and resolves on 5th repetition',
-    () async {
-      final store = await MistakeStore.load();
+  test('mezun olan maddenin SRS geçmişi silinmez', () async {
+    final store = await MistakeStore.load();
 
-      // Initial mistake: EF: 2.3, Reps: 0, Interval: 1 day
-      await store.markMistake('q1');
+    await store.markMistake('q1');
+    for (var i = 0; i < 8; i++) {
+      await store.markResolvedSM2('q1', 5);
+    }
+    expect(store.count, 0);
 
-      // 1st review: Zor (q = 3). EF: 2.3 -> 2.16, Reps: 1, Interval: 1 day
-      await store.markResolvedSM2('q1', 3);
-      expect(store.count, 1);
-
-      // 2nd review: Zor (q = 3). EF: 2.16 -> 2.02, Reps: 2, Interval: 6 days
-      await store.markResolvedSM2('q1', 3);
-      expect(store.count, 1);
-
-      // 3rd review: Zor (q = 3). EF: 2.02 -> 1.88, Reps: 3, Interval: (6 * 2.02).round() = 12 days
-      await store.markResolvedSM2('q1', 3);
-      expect(store.count, 1);
-
-      // 4th review: Zor (q = 3). EF: 1.88 -> 1.74, Reps: 4, Interval: (12 * 1.88).round() = 23 days
-      await store.markResolvedSM2('q1', 3);
-      expect(store.count, 1); // Not resolved yet (reps = 4, interval = 23 < 30)
-
-      // 5th review: Zor (q = 3). EF: 1.74 -> 1.6, Reps: 5, Interval: (23 * 1.74).round() = 40 days
-      // Resolved because reps reaches 5 (and interval >= 30)
-      await store.markResolvedSM2('q1', 3);
-      expect(store.count, 0); // Removed!
-    },
-  );
+    // Aynı soru ileride tekrar yanlış cevaplanırsa easeFactor 2.5'ten
+    // değil, kullanıcının gerçek geçmişinden devam etmeli. Geçmiş
+    // silinseydi easeFactor 2.5 - 0.2 = 2.3 olurdu.
+    await store.markMistake('q1');
+    expect(store.count, 1);
+    expect(store.easeFactorForTest('q1'), greaterThan(2.3));
+  });
 
   test('daily history counts correct and wrong answers', () async {
     final store = await MistakeStore.load();

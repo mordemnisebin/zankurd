@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../utils/percent_format.dart';
 
 /// Paylaşım için sabit boyutlu, markalı sonuç kartı. RepaintBoundary ile
 /// PNG'ye render edilip share_plus üzerinden paylaşılır.
@@ -99,7 +100,10 @@ class ShareResultCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _stat('$correctCount/$totalQuestions', isKu ? 'Rast' : 'Doğru'),
-              _stat('%$accuracy', isKu ? 'Rastî' : 'İsabet'),
+              _stat(
+                PercentFormat.value(accuracy, isKu: isKu),
+                isKu ? 'Rastî' : 'İsabet',
+              ),
               _stat('$bestStreak', isKu ? 'Rêz' : 'Seri'),
             ],
           ),

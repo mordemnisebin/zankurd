@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import '../utils/percent_format.dart';
 
 /// Kültürel Modern ilerleme dili: mercan dolgu üzerinde dokuma izi.
 class KilimProgressBar extends StatelessWidget {
@@ -21,7 +22,7 @@ class KilimProgressBar extends StatelessWidget {
     final radius = BorderRadius.circular(AppRadius.pill);
 
     return Semantics(
-      value: '${(progress * 100).round()}%',
+      value: context.percentRatio(progress),
       child: Container(
         key: const ValueKey('kilim-progress-track'),
         height: height,

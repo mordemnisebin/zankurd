@@ -54,6 +54,16 @@ class SyncManager {
   final List<Map<String, dynamic>> _queue = [];
   StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
 
+  /// Aynı anda tek bir senkronizasyon turu çalışır. İkinci bir tetikleme
+  /// (connectivity olayı, yeni XP kaydı) turu iptal etmez; tur bitince bir
+  /// kez daha çalışması için işaretlenir.
+  bool _syncing = false;
+  bool _resyncRequested = false;
+  bool _disposed = false;
+
+  @visibleForTesting
+  int get pendingCount => _queue.length;
+
   static Future<SyncManager> initialize(
     ZanKurdRepository repository, {
     ConnectivityMonitor? connectivityMonitor,
@@ -74,8 +84,31 @@ class SyncManager {
   }
 
   void dispose() {
+    _disposed = true;
     _connectivitySubscription?.cancel();
     _connectivitySubscription = null;
+  }
+
+  /// Oturum kapanışında çağrılır: bekleyen kayıtları sunucuya göndermeyi
+  /// son bir kez dener, kuyruğu temizler ve singleton'ı serbest bırakır.
+  ///
+  /// [dispose] tek başına çağrılırsa `_instance` dolu kaldığı için bir
+  /// sonraki [initialize] erken döner ve connectivity dinleyicisi bir daha
+  /// kurulmaz — çevrimdışı XP senkronizasyonu uygulama ömrü boyunca ölür.
+  /// Çıkış akışı bu yüzden [dispose] değil bu metodu kullanmalıdır.
+  static Future<void> shutdown({bool flush = true}) async {
+    final inst = _instance;
+    _instance = null;
+    if (inst == null) return;
+    if (flush) {
+      try {
+        await inst.sync();
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'SyncManager flush');
+      }
+    }
+    await inst.clearQueue();
+    inst.dispose();
   }
 
   @visibleForTesting
@@ -169,23 +202,49 @@ class SyncManager {
     }
   }
 
-  void queueXP(int xp) {
+  /// Kazanılan XP farkını senkronizasyon kuyruğuna alır.
+  ///
+  /// [delta] sunucuya yazılacak olan farktır; [totalXP] yalnızca teşhis ve
+  /// eski kayıtlarla uyumluluk için saklanır. Sunucu mutlak değeri kabul
+  /// etmez (bkz. `supabase/2026-07-25_xp_server_authority.sql`).
+  void queueXP(int totalXP, {int? delta}) {
     final playerId = _repository.currentUserId;
+    final resolvedDelta = delta ?? 0;
     developer.log(
-      'Queueing XP update offline: $xp XP for user: $playerId',
+      'Queueing XP update offline: +$resolvedDelta XP (total $totalXP) '
+      'for user: $playerId',
       name: 'SyncManager',
     );
     _queue.add({
       'type': 'sync_xp',
-      'xp': xp,
+      'xp': totalXP,
+      'delta': resolvedDelta,
       'playerId': playerId,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
     });
-    _saveQueue();
-    sync();
+    unawaited(_saveQueue());
+    unawaited(sync());
   }
 
   Future<void> sync() async {
+    // Yeniden girişe karşı koruma: iki eşzamanlı tur aynı kaydı iki kez
+    // gönderir ve tur sonundaki kuyruk yazımında birbirini ezerdi.
+    if (_syncing) {
+      _resyncRequested = true;
+      return;
+    }
+    _syncing = true;
+    try {
+      do {
+        _resyncRequested = false;
+        await _syncOnce();
+      } while (_resyncRequested && !_disposed);
+    } finally {
+      _syncing = false;
+    }
+  }
+
+  Future<void> _syncOnce() async {
     if (_queue.isEmpty) return;
     final repo = _repository;
     if (repo is! SupabaseZanKurdRepository) {
@@ -209,13 +268,17 @@ class SyncManager {
       return;
     }
 
+    // Kuyruğun anlık kopyası üzerinde dönülür: `await` sırasında gelen yeni
+    // bir queueXP() çağrısı canlı liste üzerinde iterasyonu
+    // ConcurrentModificationError ile düşürürdü.
+    final batch = List<Map<String, dynamic>>.of(_queue);
     developer.log(
-      'Syncing ${_queue.length} pending updates to Supabase...',
+      'Syncing ${batch.length} pending updates to Supabase...',
       name: 'SyncManager',
     );
     final List<Map<String, dynamic>> failedItems = [];
 
-    for (final item in _queue) {
+    for (final item in batch) {
       final type = item['type'] as String?;
       final itemPlayerId = item['playerId'] as String?;
 
@@ -230,16 +293,24 @@ class SyncManager {
 
       try {
         if (type == 'sync_xp') {
-          final xp = (item['xp'] as num?)?.toInt() ?? 0;
-          await repo.updateProfileXP(xp);
-          developer.log('Successfully synced XP: $xp', name: 'SyncManager');
+          final delta = (item['delta'] as num?)?.toInt() ?? 0;
+          if (delta > 0) {
+            final total = await repo.awardProfileXPDelta(delta);
+            developer.log(
+              'Successfully synced XP: +$delta (server total $total)',
+              name: 'SyncManager',
+            );
+          } else {
+            // Eski kayıtlarda yalnızca mutlak toplam vardı; sunucu bunu
+            // kabul etmiyor. Sonsuz yeniden denemeyi önlemek için düşürülür.
+            developer.log(
+              'Dropping legacy absolute-XP item without delta: $item',
+              name: 'SyncManager',
+            );
+          }
         }
-      } catch (e) {
-        ErrorReporter.record(
-          e,
-          StackTrace.current,
-          reason: 'SyncManager process item',
-        );
+      } catch (e, stack) {
+        ErrorReporter.record(e, stack, reason: 'SyncManager process item');
         developer.log(
           'Failed to sync item ($item): $e. Keeping in queue.',
           name: 'SyncManager',
@@ -248,8 +319,12 @@ class SyncManager {
       }
     }
 
-    _queue.clear();
-    _queue.addAll(failedItems);
+    // `clear()` yerine yalnızca bu turda işlenenler düşürülür; tur sırasında
+    // eklenen yeni kayıtlar korunur.
+    for (final item in batch) {
+      _queue.remove(item);
+    }
+    _queue.insertAll(0, failedItems);
     await _saveQueue();
   }
 

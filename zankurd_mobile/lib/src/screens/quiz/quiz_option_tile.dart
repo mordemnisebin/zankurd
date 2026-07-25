@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
 import '../../theme/app_icons.dart';
+import '../../utils/percent_format.dart';
 
 /// Tek bir cevap şıkkı kartı (A/B/C/D rozeti + cevap metni).
 ///
@@ -259,7 +260,7 @@ class QuizOptionTile extends StatelessWidget {
                             ),
                             const SizedBox(width: AppSpacing.xs),
                             Text(
-                              '${(audiencePercent! * 100).round()}%',
+                              context.percentRatio(audiencePercent!),
                               style: AppTypography.caption.copyWith(
                                 fontWeight: FontWeight.w700,
                                 color: textColor.withValues(alpha: 0.9),

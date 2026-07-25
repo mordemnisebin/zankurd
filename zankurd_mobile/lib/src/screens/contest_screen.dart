@@ -28,6 +28,13 @@ class _ContestScreenState extends State<ContestScreen> {
   late Future<Contest?> _contestFuture;
   bool _starting = false;
 
+  /// Sıralama future'ı yarışma kimliğine göre bir kez oluşturulur.
+  /// Daha önce `build()` içinde yaratılıyordu: her yeniden çizim (tema
+  /// animasyonu, setState, klavye) yeni bir RPC atıyor ve listeyi spinner'a
+  /// döndürüyordu.
+  String? _leaderboardContestId;
+  Future<List<ContestLeaderboardRow>>? _leaderboardFuture;
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +46,17 @@ class _ContestScreenState extends State<ContestScreen> {
       const Duration(seconds: 8),
       onTimeout: () => null,
     );
+  }
+
+  Future<List<ContestLeaderboardRow>> _leaderboardFor(Contest contest) {
+    if (_leaderboardContestId != contest.id || _leaderboardFuture == null) {
+      _leaderboardContestId = contest.id;
+      _leaderboardFuture = widget.repository.getContestLeaderboard(
+        contestId: contest.id,
+        limit: 10,
+      );
+    }
+    return _leaderboardFuture!;
   }
 
   Future<void> _startQuiz(Contest contest) async {
@@ -154,7 +172,7 @@ class _ContestScreenState extends State<ContestScreen> {
               }
               return _ContestContent(
                 contest: contest,
-                repository: widget.repository,
+                leaderboardFuture: _leaderboardFor(contest),
                 ku: ku,
                 starting: _starting,
                 onStart: () => _startQuiz(contest),
@@ -170,14 +188,17 @@ class _ContestScreenState extends State<ContestScreen> {
 class _ContestContent extends StatelessWidget {
   const _ContestContent({
     required this.contest,
-    required this.repository,
+    required this.leaderboardFuture,
     required this.ku,
     required this.starting,
     required this.onStart,
   });
 
   final Contest contest;
-  final ZanKurdRepository repository;
+
+  /// Üst State'te bir kez oluşturulan sıralama future'ı; burada
+  /// oluşturulursa her rebuild yeni bir ağ isteği tetikler.
+  final Future<List<ContestLeaderboardRow>> leaderboardFuture;
   final bool ku;
   final bool starting;
   final VoidCallback onStart;
@@ -379,10 +400,7 @@ class _ContestContent extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.sm),
         FutureBuilder<List<ContestLeaderboardRow>>(
-          future: repository.getContestLeaderboard(
-            contestId: contest.id,
-            limit: 10,
-          ),
+          future: leaderboardFuture,
           builder: (ctx, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
               return const Padding(

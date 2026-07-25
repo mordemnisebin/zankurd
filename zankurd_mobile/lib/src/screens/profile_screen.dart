@@ -32,6 +32,8 @@ import 'settings_screen.dart';
 import 'suggest_question_screen.dart';
 import 'shop_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../utils/percent_format.dart';
+import '../utils/player_identity.dart';
 
 part 'profile/profile_widgets.dart';
 
@@ -224,14 +226,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (changed == true && mounted) _load();
   }
 
-  /// Sunucudaki varsayılan ad Türkçedir; KU modunda görünümde çevrilir.
-  String _displayName(bool ku) {
-    final name = _currentName;
-    if (name == null || name.isEmpty || name == 'ZanKurd Oyuncusu') {
-      return ku ? 'Lîstikvanê ZanKurd' : 'ZanKurd Oyuncusu';
-    }
-    return name;
-  }
+  /// Ad çözümlemesi tek kaynaktan yapılır ([PlayerIdentity]); ekran-yerel
+  /// yedekler ana ekranla çelişen ikinci bir kimlik üretiyordu.
+  String _displayName(bool ku) =>
+      PlayerIdentity.resolveName(_currentName, isKu: ku);
 
   @override
   Widget build(BuildContext context) {
@@ -326,7 +324,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         label: ku ? 'Rastî' : 'Doğruluk',
                         value: _accuracyPercent == null
                             ? '—'
-                            : '%${_accuracyPercent!.round()}',
+                            : context.percent(_accuracyPercent!.round()),
                         color: AppTheme.cyan,
                         icon: AppIcons.bullseye,
                       ),

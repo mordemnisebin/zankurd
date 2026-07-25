@@ -48,25 +48,53 @@ class _PaywallScreenState extends State<PaywallScreen> {
     });
   }
 
+  void _showMessage(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(message)));
+  }
+
   Future<void> _buy(Package pkg) async {
     final premium = context.read<PremiumService>();
-    await premium.purchasePackage(pkg);
+    final outcome = await premium.purchasePackage(pkg);
     if (!mounted) return;
-    if (premium.isPremium) {
-      Navigator.of(context).pop();
-    } else if (premium.errorMessage != null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(premium.errorMessage!)));
+    switch (outcome) {
+      case PurchaseOutcome.success:
+        Navigator.of(context).pop();
+      case PurchaseOutcome.cancelled:
+      case PurchaseOutcome.inProgress:
+        // Kullanıcı vazgeçti ya da akış zaten sürüyor: mesaj gösterme.
+        break;
+      case PurchaseOutcome.pending:
+        _showMessage(
+          premium.infoMessage ??
+              (context.isKu
+                  ? 'Pereyê te li benda erêkirinê ye.'
+                  : 'Ödemen onay bekliyor.'),
+        );
+      case PurchaseOutcome.failed:
+        if (premium.errorMessage != null) _showMessage(premium.errorMessage!);
     }
   }
 
   Future<void> _restore() async {
     final premium = context.read<PremiumService>();
-    await premium.restorePurchases();
+    final outcome = await premium.restorePurchases();
     if (!mounted) return;
-    if (premium.isPremium) {
-      Navigator.of(context).pop();
+    switch (outcome) {
+      case RestoreOutcome.restored:
+        Navigator.of(context).pop();
+        return;
+      case RestoreOutcome.nothingFound:
+        _showMessage(
+          premium.infoMessage ??
+              (context.isKu
+                  ? 'Aboneyeke çalak nehat dîtin.'
+                  : 'Geri yüklenecek aktif abonelik bulunamadı.'),
+        );
+      case RestoreOutcome.failed:
+        if (premium.errorMessage != null) _showMessage(premium.errorMessage!);
     }
   }
 
@@ -386,12 +414,23 @@ class _PackageRow extends StatelessWidget {
 
   String _packageSubtitle() {
     if (package.packageType == PackageType.annual) {
-      return isKu ? '2 mehane xerc mesrefa' : '2 ay bedava';
+      return isKu ? '2 meh belaş' : '2 ay bedava';
     }
     if (package.packageType == PackageType.monthly) {
-      return isKu ? 'Her mehane bêpûçkirin' : 'İstediğin zaman iptal';
+      return isKu ? 'Her gav tê betalkirin' : 'İstediğin zaman iptal';
     }
     return '';
+  }
+
+  /// Fiyatın yanında gösterilen yenileme dönemi. Apple 3.1.2, fiyatın
+  /// hangi dönem için olduğunun paywall'da açıkça yazmasını ister.
+  String _pricePeriodSuffix() {
+    return switch (package.packageType) {
+      PackageType.monthly => isKu ? '/meh' : '/ay',
+      PackageType.annual => isKu ? '/sal' : '/yıl',
+      PackageType.weekly => isKu ? '/hefte' : '/hafta',
+      _ => '',
+    };
   }
 
   @override
@@ -471,7 +510,7 @@ class _PackageRow extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   price > 0
-                      ? priceString
+                      ? '$priceString${_pricePeriodSuffix()}'
                       : (isKu ? 'Biha tê' : 'Fiyat geliyor'),
                   style: AppTypography.bodyLarge.copyWith(
                     color: AppTheme.gold,
@@ -580,10 +619,19 @@ class _FooterActions extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.xs),
+        // Apple App Store Review 3.1.2 ve Google Play abonelik politikası,
+        // otomatik yenileme koşullarının satın alma ekranının KENDİSİNDE
+        // yazmasını ister: yenileme, ücretlendirme anı ve iptal yolu.
         Text(
           isKu
-              ? 'Dema kirrinan pê hatin hate vegerandin; bêpûçkirin ji bo carekê dike.'
-              : 'Ödemeler Google/Apple tarafından yönetilir; istediğiniz zaman iptal edebilirsiniz.',
+              ? 'Abone bixweber nû dibe. Heta 24 saetan berî dawiya heyamê '
+                    'neyê betalkirin, ji hesabê te yê App Store/Google Play '
+                    'dîsa tê kişandin. Tu dikarî her gav ji mîhengên hesabê '
+                    'xwe betal bikî.'
+              : 'Abonelik otomatik yenilenir. Dönem bitiminden en az 24 saat '
+                    'önce iptal edilmezse App Store/Google Play hesabından '
+                    'yenileme ücreti tahsil edilir. İstediğin zaman mağaza '
+                    'hesap ayarlarından iptal edebilirsin.',
           style: AppTypography.caption.copyWith(
             color: AppTheme.textMutedColor(context),
             height: 1.4,

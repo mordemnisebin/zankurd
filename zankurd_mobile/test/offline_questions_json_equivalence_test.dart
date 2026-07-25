@@ -50,25 +50,22 @@ void main() {
     },
   );
 
-  test(
-    'offline ve editorial JSON kimlik alanları çakışmıyor',
-    () async {
-      final offlineRaw = await File(
-        'assets/data/offline_questions.json',
-      ).readAsString();
-      final editorialRaw = await File(
-        'assets/data/editorial_questions.json',
-      ).readAsString();
+  test('offline ve editorial JSON kimlik alanları çakışmıyor', () async {
+    final offlineRaw = await File(
+      'assets/data/offline_questions.json',
+    ).readAsString();
+    final editorialRaw = await File(
+      'assets/data/editorial_questions.json',
+    ).readAsString();
 
-      final offlineIds = (jsonDecode(offlineRaw) as List)
-          .map((e) => (e as Map<String, dynamic>)['id'] as String)
-          .toSet();
-      final editorialIds = (jsonDecode(editorialRaw) as List)
-          .map((e) => (e as Map<String, dynamic>)['id'] as String)
-          .toSet();
+    final offlineIds = (jsonDecode(offlineRaw) as List)
+        .map((e) => (e as Map<String, dynamic>)['id'] as String)
+        .toSet();
+    final editorialIds = (jsonDecode(editorialRaw) as List)
+        .map((e) => (e as Map<String, dynamic>)['id'] as String)
+        .toSet();
 
-      final overlap = offlineIds.intersection(editorialIds);
-      expect(overlap, isEmpty, reason: 'Çakışan ID\'ler: $overlap');
-    },
-  );
+    final overlap = offlineIds.intersection(editorialIds);
+    expect(overlap, isEmpty, reason: 'Çakışan ID\'ler: $overlap');
+  });
 }

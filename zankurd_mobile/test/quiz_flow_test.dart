@@ -275,7 +275,6 @@ void main() {
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
-          enableTimer: false,
         ),
       ),
     );

@@ -30,11 +30,7 @@ void main() {
 
     test('her soru onaylı, Kurmancî ve kaynaklı', () {
       for (final q in editorialQuestionBank) {
-        expect(
-          q.metadata?.reviewStatus,
-          ReviewStatus.approved,
-          reason: q.id,
-        );
+        expect(q.metadata?.reviewStatus, ReviewStatus.approved, reason: q.id);
         expect(q.metadata?.dialect, 'Kurmancî', reason: q.id);
         expect(q.metadata?.sourceTitle, isNotEmpty, reason: q.id);
         expect(q.metadata?.sourceReference, isNotEmpty, reason: q.id);

@@ -111,27 +111,28 @@ void main() {
     const Size(768, 1024),
     const Size(1440, 900),
   ]) {
-    testWidgets('Ana sayfa ${size.width.toInt()}x${size.height.toInt()} taşmaz', (
-      tester,
-    ) async {
-      tester.view.physicalSize = size;
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-      await tester.pumpWidget(
-        _wrap(
-          HomeScreen(
-            repository: MockZanKurdRepository(),
-            displayName: 'Zelal',
-            scrollController: ScrollController(),
-            onOpenPlay: () {},
-            onOpenCategories: () {},
+    testWidgets(
+      'Ana sayfa ${size.width.toInt()}x${size.height.toInt()} taşmaz',
+      (tester) async {
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+        await tester.pumpWidget(
+          _wrap(
+            HomeScreen(
+              repository: MockZanKurdRepository(),
+              displayName: 'Zelal',
+              scrollController: ScrollController(),
+              onOpenPlay: () {},
+              onOpenCategories: () {},
+            ),
           ),
-        ),
-      );
-      await tester.pump(const Duration(seconds: 1));
-      expect(tester.takeException(), isNull);
-    });
+        );
+        await tester.pump(const Duration(seconds: 1));
+        expect(tester.takeException(), isNull);
+      },
+    );
   }
 
   test('eski teaser ve karo sınıfları home içinde yok', () {

@@ -4,6 +4,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz/quiz_timer_widget.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/main.dart';
@@ -185,19 +186,60 @@ void main() {
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final timerFinder = find.byKey(const ValueKey('quiz-circular-timer'));
+    expect(timerFinder, findsOneWidget);
+    // Sayaç artık odanın gerçek süresini gösterir (varsayılan 30 sn);
+    // önceden sabit 15'e kilitliydi ve lobi çipiyle çelişiyordu.
+    //
+    // Not: eskiden bu test `enableTimer: false` ile çalışıyor ve rozetin
+    // donmuş "30" metnini doğruluyordu. Sayaç kapalıyken rozetin hiç
+    // çizilmemesi gerektiği için (aşağıdaki testler) burada sayacın üst
+    // sınırı widget üzerinden okunur; anlık geri sayım değeri zamana
+    // bağlı olduğundan metin üzerinden doğrulanamaz.
+    final timer = tester.widget<QuizTimerWidget>(timerFinder);
+    expect(timer.maxSeconds, repository.createRoom().secondsPerQuestion);
+  });
+
+  // 2026-07-25 canlı denetimi: sayaç rozeti `enableTimer: false` ve öğrenme
+  // akışında da çiziliyordu. Kontrolör hiç çalışmadığı için ekranda donmuş
+  // bir "30" duruyor, kullanıcıya var olmayan bir süre baskısı gösteriyordu.
+  testWidgets('sayaç kapalıyken rozet hiç çizilmez', (tester) async {
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
           enableTimer: false,
         ),
       ),
     );
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('quiz-circular-timer')), findsOneWidget);
-    // Sayaç artık odanın gerçek süresini gösterir (varsayılan 30 sn);
-    // önceden sabit 15'e kilitliydi ve lobi çipiyle çelişiyordu.
-    expect(
-      find.text('${repository.createRoom().secondsPerQuestion}'),
-      findsOneWidget,
+    expect(find.byKey(const ValueKey('quiz-circular-timer')), findsNothing);
+  });
+
+  testWidgets('öğrenme akışında sayaç rozeti gösterilmez', (tester) async {
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+          experience: QuizExperience.learning,
+        ),
+      ),
     );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('quiz-circular-timer')), findsNothing);
   });
 
   // testWidgets('explanation box is displayed after 800ms delay', (tester) async {

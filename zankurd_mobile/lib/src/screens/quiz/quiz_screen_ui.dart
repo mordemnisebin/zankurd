@@ -320,11 +320,20 @@ extension _QuizScreenUI on _QuizScreenState {
     VoidCallback? questionVisualReady,
   }) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 280),
+      duration: const Duration(milliseconds: 220),
       switchInCurve: Curves.easeOutCubic,
       switchOutCurve: Curves.easeIn,
+      // Opaklık yalnız ikinci yarıda yükselir. AnimatedSwitcher giden
+      // çocuğu aynı animasyonu ters yönde oynatarak çizdiğinden, düz
+      // `opacity: animation` ile iki soru kartı geçiş boyunca aynı anda
+      // yarı saydam kalıyor ve metinler üst üste binip okunmuyordu
+      // (2026-07-25 canlı denetimi). Bu aralık, giden kart görünmez
+      // olduktan SONRA gelenin belirmesini sağlar.
       transitionBuilder: (child, animation) => FadeTransition(
-        opacity: animation,
+        opacity: CurvedAnimation(
+          parent: animation,
+          curve: const Interval(0.5, 1.0, curve: Curves.easeOut),
+        ),
         child: SlideTransition(
           position: Tween<Offset>(
             begin: const Offset(0.06, 0),
@@ -634,12 +643,13 @@ extension _QuizScreenUI on _QuizScreenState {
     );
 
     final xpStore = await XPStore.load();
-    final leveledUp = await xpStore.addXP(100);
+    const missionXP = 100;
+    final leveledUp = await xpStore.addXP(missionXP);
     try {
-      await widget.repository.updateProfileXP(xpStore.totalXP);
+      await widget.repository.awardProfileXPDelta(missionXP);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'quiz_queue_xp_sync');
-      SyncManager.instance.queueXP(xpStore.totalXP);
+      SyncManager.instance.queueXP(xpStore.totalXP, delta: missionXP);
     }
 
     if (!mounted) return;
@@ -903,20 +913,25 @@ extension _QuizScreenUI on _QuizScreenState {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  // Coach-mark hedefi (GlobalKey) dış sarmalayıcıda kalır ki
-                  // sabit 'quiz-circular-timer' anahtarı widget üzerinde korunsun.
-                  KeyedSubtree(
-                    key: timerKey,
-                    child: QuizTimerWidget(
-                      key: const ValueKey('quiz-circular-timer'),
-                      animation: _timerController,
-                      // Gerçek kaynak room.secondsPerQuestion'dır; sabit 15
-                      // lobi çipiyle (örn. 30 sn) çelişiyordu.
-                      maxSeconds: widget.room.secondsPerQuestion,
-                      isPaused: answered,
+                  // Sayaç yalnızca gerçekten işlediği modlarda gösterilir.
+                  // Öğrenme akışında `_usesTimer` false'tur; rozet yine de
+                  // çizildiğinde donmuş bir geri sayım görüntüsü veriyordu.
+                  if (_usesTimer) ...[
+                    const SizedBox(width: 8),
+                    // Coach-mark hedefi (GlobalKey) dış sarmalayıcıda kalır ki
+                    // sabit 'quiz-circular-timer' anahtarı widget üzerinde korunsun.
+                    KeyedSubtree(
+                      key: timerKey,
+                      child: QuizTimerWidget(
+                        key: const ValueKey('quiz-circular-timer'),
+                        animation: _timerController,
+                        // Gerçek kaynak room.secondsPerQuestion'dır; sabit 15
+                        // lobi çipiyle (örn. 30 sn) çelişiyordu.
+                        maxSeconds: widget.room.secondsPerQuestion,
+                        isPaused: answered,
+                      ),
                     ),
-                  ),
+                  ],
                 ],
               ),
               SizedBox(height: isCompact ? 8 : 14),

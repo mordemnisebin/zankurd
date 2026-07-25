@@ -688,133 +688,133 @@ class _LessonCard extends StatelessWidget {
       child: AppPanel(
         onTap: locked ? null : onTap,
         key: recommended && !completed
-              ? const ValueKey("learning-next-step")
-              : null,
-          cardType: recommended && !completed
-              ? CardType.primary
-              : CardType.secondary,
-          child: Row(
-            children: [
-              Container(
-                width: 56,
-                constraints: const BoxConstraints(minHeight: 56),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [AppTheme.playGreen, Color(0xFF16A34A)],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(14)),
+            ? const ValueKey("learning-next-step")
+            : null,
+        cardType: recommended && !completed
+            ? CardType.primary
+            : CardType.secondary,
+        child: Row(
+          children: [
+            Container(
+              width: 56,
+              constraints: const BoxConstraints(minHeight: 56),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [AppTheme.playGreen, Color(0xFF16A34A)],
                 ),
-                child: Center(
-                  child: Icon(
-                    _iconForLesson(lesson.slug),
-                    color: Colors.white,
-                    size: 26,
-                  ),
+                borderRadius: BorderRadius.all(Radius.circular(14)),
+              ),
+              child: Center(
+                child: Icon(
+                  _iconForLesson(lesson.slug),
+                  color: Colors.white,
+                  size: 26,
                 ),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      lesson.titleKu,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w700,
-                      ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    lesson.titleKu,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w700,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      lesson.descriptionKu ?? '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                      ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    lesson.descriptionKu ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textMutedColor(context),
                     ),
-                    if (recommended && !completed) ...[
-                      const SizedBox(height: 6),
-                      Container(
-                        key: const ValueKey('lesson-recommended-badge'),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 3,
+                  ),
+                  if (recommended && !completed) ...[
+                    const SizedBox(height: 6),
+                    Container(
+                      key: const ValueKey('lesson-recommended-badge'),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTheme.gold.withValues(alpha: 0.16),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: AppTheme.gold.withValues(alpha: 0.4),
                         ),
-                        decoration: BoxDecoration(
-                          color: AppTheme.gold.withValues(alpha: 0.16),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: AppTheme.gold.withValues(alpha: 0.4),
+                      ),
+                      child: Wrap(
+                        spacing: 4,
+                        runSpacing: 2,
+                        children: [
+                          const Icon(
+                            AppIcons.star,
+                            size: 12,
+                            color: AppTheme.gold,
                           ),
-                        ),
-                        child: Wrap(
-                          spacing: 4,
-                          runSpacing: 2,
-                          children: [
-                            const Icon(
-                              AppIcons.star,
-                              size: 12,
+                          Text(
+                            ku ? 'Pêşniyara te' : 'Sana önerilen',
+                            style: AppTypography.caption.copyWith(
                               color: AppTheme.gold,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 10.5,
                             ),
-                            Text(
-                              ku ? 'Pêşniyara te' : 'Sana önerilen',
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.gold,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 10.5,
-                              ),
+                          ),
+                          Text(
+                            ku ? 'Bidomîne' : 'Devam et',
+                            style: AppTypography.caption.copyWith(
+                              color: AppTheme.gold,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 10.5,
                             ),
-                            Text(
-                              ku ? 'Bidomîne' : 'Devam et',
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.gold,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 10.5,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            if (completed)
+              Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  gradient: AppTheme.correctGradient,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppTheme.correct.withValues(alpha: 0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 8),
-              if (completed)
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    gradient: AppTheme.correctGradient,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppTheme.correct.withValues(alpha: 0.3),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    AppIcons.check,
-                    color: Colors.white,
-                    size: 16,
-                  ),
-                )
-              else if (locked)
-                Icon(AppIcons.lock, color: AppTheme.textMutedColor(context))
-              else
-                Icon(
-                  AppIcons.chevronRight,
-                  color: AppTheme.textMutedColor(context),
+                child: const Icon(
+                  AppIcons.check,
+                  color: Colors.white,
+                  size: 16,
                 ),
-            ],
-          ),
+              )
+            else if (locked)
+              Icon(AppIcons.lock, color: AppTheme.textMutedColor(context))
+            else
+              Icon(
+                AppIcons.chevronRight,
+                color: AppTheme.textMutedColor(context),
+              ),
+          ],
         ),
+      ),
     );
   }
 
@@ -1277,9 +1277,13 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                               borderRadius: BorderRadius.circular(12),
                               child: slide.imageUrl!.startsWith('asset://')
                                   ? Image.asset(
-                                      slide.imageUrl!.replaceFirst('asset://', ''),
+                                      slide.imageUrl!.replaceFirst(
+                                        'asset://',
+                                        '',
+                                      ),
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, _, _) => const SizedBox(),
+                                      errorBuilder: (_, _, _) =>
+                                          const SizedBox(),
                                     )
                                   : CachedNetworkImage(
                                       imageUrl: slide.imageUrl!,
@@ -1292,19 +1296,26 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                                           height: 24,
                                           child: CircularProgressIndicator(
                                             strokeWidth: 2,
-                                            color: AppTheme.brand.withValues(alpha: 0.7),
+                                            color: AppTheme.brand.withValues(
+                                              alpha: 0.7,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      errorWidget: (context, url, error) => Container(
-                                        color: AppTheme.surfaceHiColor(context),
-                                        alignment: Alignment.center,
-                                        child: Icon(
-                                          AppIcons.image,
-                                          color: AppTheme.textMutedColor(context),
-                                          size: 32,
-                                        ),
-                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Container(
+                                            color: AppTheme.surfaceHiColor(
+                                              context,
+                                            ),
+                                            alignment: Alignment.center,
+                                            child: Icon(
+                                              AppIcons.image,
+                                              color: AppTheme.textMutedColor(
+                                                context,
+                                              ),
+                                              size: 32,
+                                            ),
+                                          ),
                                     ),
                             ),
                           ),

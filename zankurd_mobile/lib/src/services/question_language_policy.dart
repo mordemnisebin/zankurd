@@ -101,8 +101,13 @@ class QuestionLanguagePolicy {
   /// Metnin dilini tahmin eder: `'ku'`, `'tr'` veya karar verilemezse `null`.
   static String? detectLanguage(String text) {
     final lower = text.toLowerCase();
+    // `ê` karakter sınıfında eksikti: Kurmancî'nin en sık harflerinden biri
+    // kelime sınırı sayılıyor, "tê" → "t", "birêvebirina" → "bir"+"vebirina"
+    // biçiminde parçalanıyordu. Sonuç iki yönlü hataydı — `tê`, `wê`, `yê`
+    // gibi Kurmancî işaretleri hiç eşleşemiyor, buna karşılık üretilen
+    // "bir" parçası Türkçe listesine takılıyordu (2026-07-25 denetimi).
     final words = RegExp(
-      r"[a-zçğıîöşûü']+",
+      r"[a-zçêğıîöşûü']+",
     ).allMatches(lower).map((m) => m.group(0)!).toSet();
 
     var ku = words.where(_kurmanciWords.contains).length.toDouble();

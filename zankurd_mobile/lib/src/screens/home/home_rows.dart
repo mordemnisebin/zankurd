@@ -4,6 +4,7 @@ import '../../config/category_visuals.dart';
 import '../../l10n/lang.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_row_card.dart';
+import '../../utils/percent_format.dart';
 
 /// "Kaldığın yer" — oyuncunun ilerlediği kategoriler, ilerleme çubuğuyla.
 /// Hiç ilerleme yoksa ilk kategoriler "başla" davetiyle listelenir.
@@ -39,43 +40,56 @@ class ContinueSection extends StatelessWidget {
         for (final entry in entries)
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-            child: AppRowCard(
-              icon: CategoryVisuals.icon(entry.category),
-              accent: CategoryVisuals.color(entry.category),
-              title: CategoryNames.localized(entry.category, isKu),
-              subtitle: entry.ratio > 0
-                  ? (isKu
-                        ? '${entry.correct}/${entry.threshold} rast'
-                        : '${entry.correct}/${entry.threshold} doğru')
-                  : (isKu ? 'Hê nedest pê kiriye' : 'Henüz başlamadın'),
-              onTap: onOpenCategory == null
-                  ? null
-                  : () => onOpenCategory!(entry.category),
-              trailing: SizedBox(
-                width: 52,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '%${(entry.ratio * 100).round()}',
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(AppRadius.pill),
-                      child: LinearProgressIndicator(
-                        value: entry.ratio,
-                        minHeight: 4,
-                        backgroundColor: AppTheme.borderColor(context),
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          CategoryVisuals.color(entry.category),
+            // Satır dokunulabilir bir gezinme hedefidir. İçindeki
+            // LinearProgressIndicator kendi semantiğini yukarı taşıyıp
+            // satırın tamamını ekran okuyucuya "progressbar" olarak
+            // sunuyordu; ilerleme bilgisi `value` olarak korunur ama rol
+            // düğme olur (2026-07-25 denetimi).
+            child: Semantics(
+              button: true,
+              container: true,
+              label: CategoryNames.localized(entry.category, isKu),
+              value: context.percentRatio(entry.ratio),
+              child: AppRowCard(
+                icon: CategoryVisuals.icon(entry.category),
+                accent: CategoryVisuals.color(entry.category),
+                title: CategoryNames.localized(entry.category, isKu),
+                subtitle: entry.ratio > 0
+                    ? (isKu
+                          ? '${entry.correct}/${entry.threshold} rast'
+                          : '${entry.correct}/${entry.threshold} doğru')
+                    : (isKu ? 'Hê nedest pê kiriye' : 'Henüz başlamadın'),
+                onTap: onOpenCategory == null
+                    ? null
+                    : () => onOpenCategory!(entry.category),
+                trailing: ExcludeSemantics(
+                  child: SizedBox(
+                    width: 52,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          context.percentRatio(entry.ratio),
+                          style: AppTypography.caption.copyWith(
+                            color: AppTheme.textMutedColor(context),
+                          ),
                         ),
-                      ),
+                        const SizedBox(height: 4),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(AppRadius.pill),
+                          child: LinearProgressIndicator(
+                            value: entry.ratio,
+                            minHeight: 4,
+                            backgroundColor: AppTheme.borderColor(context),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              CategoryVisuals.color(entry.category),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),

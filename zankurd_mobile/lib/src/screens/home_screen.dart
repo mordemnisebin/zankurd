@@ -22,6 +22,7 @@ import 'home/daily_missions_card.dart';
 import '../data/mastery_store.dart';
 import '../widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../utils/player_identity.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -84,7 +85,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _loadAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 4000),
+      // 4000ms + geç başlayan kademeler, ana ekran gövdesinin ~2.4–3.6 sn
+      // boş kalması demekti (2026-07-25 canlı denetimi). Kademe hissi
+      // korunuyor, toplam süre insan algısına uygun aralığa çekildi.
+      duration: const Duration(milliseconds: 900),
       vsync: this,
     );
     if (isFlutterTestEnvironment) {
@@ -358,10 +362,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       }
     }
     final currentName = _displayName ?? widget.displayName;
-    final shortName = currentName?.trim().split(RegExp(r'\s+')).first;
+    // Ad çözümlemesi profil ekranıyla aynı kaynaktan gelir; aksi halde
+    // "ZanKurd" (ana ekran) ile "Lîstikvanê ZanKurd" (profil) gibi iki
+    // ayrı kimlik oluşuyordu.
+    final shortName = PlayerIdentity.resolveShortName(currentName, isKu: ku);
     final greeting = ku
-        ? '$greetingKu, ${shortName ?? 'Lîstikvan'}!'
-        : '$greetingTr, ${shortName ?? 'Oyuncu'}!';
+        ? '$greetingKu, $shortName!'
+        : '$greetingTr, $shortName!';
 
     return Container(
       key: const ValueKey('home-profile-header'),
@@ -406,7 +413,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     children: [
                       _buildHeaderQuickControls(context, ku),
                       const SizedBox(width: 12),
-                      PlayerAvatar(radius: 20, displayName: currentName ?? 'Z'),
+                      // Avatar harfi ve rengi profil ekranıyla aynı çözümlenmiş
+                      // addan türetilir; ham ad verildiğinde ana ekranda "Z",
+                      // profilde "L" görünüyordu.
+                      PlayerAvatar(
+                        radius: 20,
+                        displayName: PlayerIdentity.resolveName(
+                          currentName,
+                          isKu: ku,
+                        ),
+                      ),
                     ],
                   );
                   if (constraints.maxWidth < 300) {
@@ -591,7 +607,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       );
       await Navigator.of(context).push(
         AppRoute.to(
-          QuizScreen(repository: repo, room: room, questions: questions),
+          QuizScreen(
+            repository: repo,
+            room: room,
+            questions: questions,
+            // "Günün Dersi" bir ders akışıdır: süre baskısı yok, her
+            // cevaptan sonra açıklama gösterilir. Varsayılan `competition`
+            // bırakıldığında ana ekranın tek birincil eylemi yarışma gibi
+            // davranıyor ve açıklama paneli hiç render edilmiyordu
+            // (2026-07-25 canlı denetimi).
+            experience: QuizExperience.learning,
+            enableTimer: false,
+          ),
         ),
       );
       if (mounted) _handleRefreshSignal();

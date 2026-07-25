@@ -1049,10 +1049,7 @@ class _EmailSectionDivider extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Divider(
-              color: AppTheme.borderColor(context),
-              thickness: 1,
-            ),
+            child: Divider(color: AppTheme.borderColor(context), thickness: 1),
           ),
           Flexible(
             // Uzun çeviri metni iki Expanded çizgiyle eşit pay (flex:1)
@@ -1073,10 +1070,7 @@ class _EmailSectionDivider extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Divider(
-              color: AppTheme.borderColor(context),
-              thickness: 1,
-            ),
+            child: Divider(color: AppTheme.borderColor(context), thickness: 1),
           ),
         ],
       ),

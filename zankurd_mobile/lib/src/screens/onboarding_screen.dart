@@ -429,7 +429,8 @@ class _OnboardingPage extends StatelessWidget {
       children: [
         Expanded(
           // Görsel kimlik güçlü kalsın; metin ve madde listesi ilk bakışta
-          // daha fazla alan bulsun.
+          // daha fazla alan bulsun. (Hero yüksekliği bilinçli olarak
+          // sınırlıdır — bkz. onboarding_hierarchy_test.)
           flex: compact ? 36 : 38,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(AppRadius.card),

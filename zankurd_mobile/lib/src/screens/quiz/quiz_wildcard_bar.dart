@@ -88,52 +88,62 @@ class _WildcardButtonState extends State<WildcardButton> {
             opacity: opacity.clamp(0.0, 1.0),
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(vertical: 2),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
               // Erişilebilirlik: min 44px dokunma hedefi (WCAG).
-              constraints: const BoxConstraints(minHeight: 44),
+              constraints: const BoxConstraints(minHeight: 52),
               decoration: BoxDecoration(
                 color: bgColor ?? Colors.transparent,
                 borderRadius: BorderRadius.circular(AppRadius.sm),
                 border: Border.all(color: borderColor, width: 1.2),
               ),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 18,
-                      height: 18,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: widget.isActive
-                            ? Colors.white.withValues(alpha: 0.24)
-                            : iconColor.withValues(alpha: 0.14),
-                      ),
-                      child: Icon(
-                        widget.cantAfford ? AppIcons.lock : widget.type.icon,
-                        size: 12,
-                        color: iconColor,
-                      ),
+              // Ad ve fiyat AYRI satırlarda. Tek satıra sıkıştırılıp
+              // FittedBox ile küçültüldüğünde 375px genişlikte dört joker
+              // etiketi ~8pt'ye düşüyor ve okunmuyordu (2026-07-25 canlı
+              // denetimi).
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 18,
+                    height: 18,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: widget.isActive
+                          ? Colors.white.withValues(alpha: 0.24)
+                          : iconColor.withValues(alpha: 0.14),
                     ),
-                    const SizedBox(height: 1),
-                    // Ad + fiyat tek satırda: uzun joker adları ("Pirsê
-                    // Biguhere") iki satıra düşüp taşırıyordu.
-                    Text(
-                      '${widget.type.label(widget.isKu)} · ${widget.type.coinCost}c',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.caption.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 11,
-                        height: 1.0,
-                        color: iconColor,
-                      ),
+                    child: Icon(
+                      widget.cantAfford ? AppIcons.lock : widget.type.icon,
+                      size: 12,
+                      color: iconColor,
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    widget.type.label(widget.isKu),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: AppTypography.caption.copyWith(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 11,
+                      height: 1.05,
+                      color: iconColor,
+                    ),
+                  ),
+                  Text(
+                    '${widget.type.coinCost}c',
+                    maxLines: 1,
+                    style: AppTypography.caption.copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 10,
+                      height: 1.05,
+                      color: iconColor.withValues(alpha: 0.75),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

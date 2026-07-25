@@ -42,48 +42,54 @@ class LoadAnimationSequence {
     );
   }
 
-  /// Form field 1 fade animation: 0 → 1, interval 0.5-0.75 (1000-1500ms in 2000ms controller)
+  // 2026-07-25 canlı denetimi: kademeli aralıklar içeriği kontrolörün
+  // ikinci yarısına itiyordu. Sonuç, giriş ekranının ilk anlamlı
+  // boyamasının yarısı boş olması ("An jî bi e-peyamê" ayracı görünür,
+  // altındaki form görünmez) idi. Aralıklar öne çekildi: kademe hissi
+  // korunur ama içerik ilk karelerden itibaren belirmeye başlar.
+
+  /// Form field 1 fade animation: 0 → 1, interval 0.10-0.45
   static Animation<double> formField1FadeAnimation(
     AnimationController controller,
   ) {
     return Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,
-        curve: const Interval(0.5, 0.75, curve: Curves.easeIn),
+        curve: const Interval(0.10, 0.45, curve: Curves.easeIn),
       ),
     );
   }
 
-  /// Form field 2 fade animation: 0 → 1, interval 0.55-0.8 (1100-1600ms in 2000ms controller)
+  /// Form field 2 fade animation: 0 → 1, interval 0.18-0.55
   static Animation<double> formField2FadeAnimation(
     AnimationController controller,
   ) {
     return Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,
-        curve: const Interval(0.55, 0.8, curve: Curves.easeIn),
+        curve: const Interval(0.18, 0.55, curve: Curves.easeIn),
       ),
     );
   }
 
-  /// Button scale animation: 0.95 → 1.0, interval 0.6-0.95 (1200-1900ms in 2000ms controller)
+  /// Button scale animation: 0.95 → 1.0, interval 0.25-0.7
   static Animation<double> buttonScaleAnimation(
     AnimationController controller,
   ) {
     return Tween<double>(begin: 0.95, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,
-        curve: const Interval(0.6, 0.95, curve: Curves.easeOut),
+        curve: const Interval(0.25, 0.7, curve: Curves.easeOut),
       ),
     );
   }
 
-  /// Button fade animation: 0 → 1, interval 0.6-0.95 (1200-1900ms in 2000ms controller)
+  /// Button fade animation: 0 → 1, interval 0.25-0.7
   static Animation<double> buttonFadeAnimation(AnimationController controller) {
     return Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,
-        curve: const Interval(0.6, 0.95, curve: Curves.easeIn),
+        curve: const Interval(0.25, 0.7, curve: Curves.easeIn),
       ),
     );
   }
@@ -101,13 +107,16 @@ class LoadAnimationSequence {
   }
 
   /// Card fade animation with index-dependent stagger: 0 → 1
-  /// Start interval: 0.6 + index*0.1
+  ///
+  /// Aralıklar 0.6+ yerine 0.15+ ile başlar: ana ekran kartları eskiden
+  /// kontrolörün son üçte birinde beliriyordu ve 4 sn'lik kontrolörle
+  /// birlikte gövde saniyelerce boş kalıyordu (2026-07-25 canlı denetimi).
   static Animation<double> cardFadeAnimation(
     AnimationController controller,
     int index,
   ) {
-    final startInterval = 0.6 + (index * 0.1);
-    final endInterval = startInterval + 0.2;
+    final startInterval = (0.15 + (index * 0.07)).clamp(0.0, 0.7);
+    final endInterval = (startInterval + 0.25).clamp(0.0, 1.0);
 
     return Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
@@ -118,13 +127,12 @@ class LoadAnimationSequence {
   }
 
   /// Category grid item fade animation with index-dependent stagger: 0 → 1
-  /// Start interval: 0.8 + index*0.05
   static Animation<double> categoryGridItemFadeAnimation(
     AnimationController controller,
     int index,
   ) {
-    final startInterval = 0.8 + (index * 0.05);
-    final endInterval = startInterval + 0.15;
+    final startInterval = (0.25 + (index * 0.04)).clamp(0.0, 0.8);
+    final endInterval = (startInterval + 0.18).clamp(0.0, 1.0);
 
     return Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(

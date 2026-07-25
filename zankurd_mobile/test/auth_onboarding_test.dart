@@ -434,7 +434,12 @@ void main() {
     await tester.pumpAndSettle();
 
     // Selamda yalnız adın ilk kelimesi kullanılır (uzun ad kırpılmasın).
-    expect(find.text('Hoş geldin, ZanKurd!'), findsOneWidget);
+    //
+    // 2026-07-25 denetimi: sunucu varsayılanı "ZanKurd Oyuncusu" ana ekranda
+    // "ZanKurd", profil ekranında "Lîstikvanê ZanKurd" oluyordu — aynı
+    // oturumda iki kimlik. Artık her iki ekran da [PlayerIdentity] üzerinden
+    // tek bir yedeğe düşer.
+    expect(find.text('Hoş geldin, Oyuncu!'), findsOneWidget);
     expect(find.text('Seviye 5'), findsNothing);
     expect(find.byIcon(Icons.diamond), findsNothing);
 

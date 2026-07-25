@@ -11,6 +11,7 @@ import '../data/achievement_store.dart';
 import '../data/mastery_store.dart';
 import '../data/daily_mission_store.dart';
 import '../data/sync_manager.dart';
+import '../services/premium_service.dart';
 import '../utils/error_reporter.dart';
 
 /// Supabase tabanlı kimlik sağlayıcı.
@@ -46,8 +47,15 @@ class AuthProvider extends ChangeNotifier {
 
   AuthProvider(SupabaseClient client) : _client = client {
     _currentUser = client.auth.currentUser;
+    _syncPremiumIdentity(_currentUser);
     _authSub = client.auth.onAuthStateChange.listen((state) {
-      _currentUser = state.session?.user;
+      final next = state.session?.user;
+      final changed = next?.id != _currentUser?.id;
+      _currentUser = next;
+      // RevenueCat müşterisi Supabase kullanıcısına bağlanır: aboneliğin
+      // cihaza değil hesaba ait olmasını ve cihaz paylaşımında entitlement
+      // sızmamasını sağlar.
+      if (changed) _syncPremiumIdentity(next);
       notifyListeners();
     });
   }
@@ -56,6 +64,19 @@ class AuthProvider extends ChangeNotifier {
   AuthProvider.test({bool authenticated = false})
     : _client = null,
       _mockAuthenticated = authenticated;
+
+  void _syncPremiumIdentity(User? user) {
+    final premium = PremiumService.instance;
+    if (premium == null) return;
+    final future = user == null
+        ? premium.logOutUser()
+        : premium.logInUser(user.id);
+    unawaited(
+      future.catchError((Object error, StackTrace stack) {
+        ErrorReporter.record(error, stack, reason: 'premium identity sync');
+      }),
+    );
+  }
 
   @override
   void dispose() {
@@ -197,6 +218,25 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> signOut() async {
+    // Yerel store'lar temizlenmeden ÖNCE bekleyen çevrimdışı kayıtlar
+    // sunucuya gönderilmeye çalışılır; aksi halde çevrimdışı kazanılan XP
+    // sunucuya hiç ulaşmadan silinirdi. `shutdown` ayrıca singleton'ı
+    // serbest bırakır — yalnızca `dispose()` çağrılırsa bir sonraki giriş
+    // connectivity dinleyicisini yeniden kuramaz.
+    try {
+      await SyncManager.shutdown();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'SyncManager shutdown on signOut');
+    }
+
+    // RevenueCat kimliği de bırakılır; aksi halde aynı cihazda giriş yapan
+    // bir sonraki kullanıcı önceki kullanıcının entitlement'ını devralır.
+    try {
+      await PremiumService.instance?.logOutUser();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'PremiumService logout on signOut');
+    }
+
     try {
       final xpStore = await XPStore.load();
       await xpStore.clear();
@@ -271,13 +311,6 @@ class AuthProvider extends ChangeNotifier {
         s,
         reason: 'DailyMissionStore clear on signOut failed',
       );
-    }
-
-    try {
-      await SyncManager.instance.clearQueue();
-      SyncManager.instance.dispose();
-    } catch (e, s) {
-      ErrorReporter.record(e, s, reason: 'SyncManager clear on signOut failed');
     }
 
     final client = _client;

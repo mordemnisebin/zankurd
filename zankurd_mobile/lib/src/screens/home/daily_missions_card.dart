@@ -5,6 +5,7 @@ import '../../theme/app_theme.dart';
 import '../../widgets/app_panel.dart';
 import '../../widgets/skeleton_loader.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../../utils/percent_format.dart';
 
 class DailyMissionsCard extends StatelessWidget {
   const DailyMissionsCard({
@@ -151,7 +152,7 @@ class _MiniProgressRing extends StatelessWidget {
             strokeCap: StrokeCap.round,
           ),
           Text(
-            '${(progress * 100).round()}%',
+            context.percentRatio(progress),
             style: AppTypography.caption.copyWith(
               fontWeight: FontWeight.w800,
               color: color,

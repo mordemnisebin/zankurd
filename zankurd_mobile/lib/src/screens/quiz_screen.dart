@@ -194,6 +194,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   bool _tutorialGateReady = false;
   bool _opponentClientReady = false;
   bool _questionVisualReady = false;
+  Timer? _visualReadyFallbackTimer;
   Timer? _readyPingTimer;
   Timer? _readyTimeoutTimer;
   bool get _needsOpponentReadyGate => widget.is1v1 && _isMultiplayer;
@@ -221,6 +222,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _isKu = context.langProvider.isKu;
     _questions = List.of(widget.questions);
     _questionVisualReady = _questions.isEmpty || !_questions.first.hasImage;
+    if (!_questionVisualReady) {
+      // Görsel yükleme kapısı için emniyet supabı: ağ askıda kalır veya
+      // görsel callback'i hiç tetiklenmezse soru akışı ve sayaç sonsuza
+      // kadar beklerdi (2026-07-25 canlı denetimi: ilk soruda sayaç hiç
+      // başlamıyordu).
+      _visualReadyFallbackTimer = Timer(const Duration(seconds: 3), () {
+        if (!mounted) return;
+        _handleQuestionVisualReady();
+      });
+    }
     _loadCoinBalance();
     AnalyticsService.instance.logQuizStart(
       category: widget.room.category,
@@ -277,12 +288,17 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       if (widget.room.id != null) {
         // Real online multiplayer (1vs1 or Team Game)
         livePlayers = List.of(widget.room.players);
-        _myId = livePlayers
-            .firstWhere(
-              (p) => p.name == name,
-              orElse: () => const Player(name: '', score: 0, state: ''),
-            )
-            .id;
+        // Kimlik önce oturum kullanıcı kimliğinden çözülür. Görünen ad
+        // benzersiz değildir: aynı adı seçen iki oyuncu olduğunda ada göre
+        // eşleştirme skoru ve "hazır" sinyalini rakibe atıyordu. Ad yalnızca
+        // kimlik yoksa (eski oda kayıtları) yedek olarak kullanılır.
+        final sessionUserId = widget.repository.currentUserId;
+        final matchById = sessionUserId == null
+            ? null
+            : livePlayers.where((p) => p.id == sessionUserId).firstOrNull;
+        _myId =
+            matchById?.id ??
+            livePlayers.where((p) => p.name == name).firstOrNull?.id;
         _realtimeSub = widget.repository
             .subscribeRoomBroadcast(widget.room.id!)
             .listen((payload) {
@@ -509,6 +525,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   void _handleQuestionVisualReady() {
     if (_questionVisualReady) return;
     _questionVisualReady = true;
+    _visualReadyFallbackTimer?.cancel();
+    _visualReadyFallbackTimer = null;
     _maybeStartQuestionFlow();
   }
 
@@ -629,6 +647,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     _pollTimer?.cancel();
     _readyPingTimer?.cancel();
     _readyTimeoutTimer?.cancel();
+    _visualReadyFallbackTimer?.cancel();
     _timerController.dispose();
     _explanationController.dispose();
     // TTS: ekrandan çıkınca devam eden seslendirmeyi durdur.
@@ -677,12 +696,23 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(color: AppTheme.borderColor(context)),
         ),
-        title: Text(context.s('Ji pêşbirkê derkevî?', 'Yarıştan çıkılsın mı?')),
+        // Kopya akışa göre değişir: öğrenme akışında kullanıcı "yarış"
+        // başlatmamıştı, ders başlatmıştı.
+        title: Text(
+          _isLearningExperience
+              ? context.s('Ji dersê derkevî?', 'Dersten çıkılsın mı?')
+              : context.s('Ji pêşbirkê derkevî?', 'Yarıştan çıkılsın mı?'),
+        ),
         content: Text(
-          context.s(
-            'Pêşketina te ya vê pêşbirkê winda dibe.',
-            'Bu yarıştaki ilerlemen kaybolur.',
-          ),
+          _isLearningExperience
+              ? context.s(
+                  'Pêşketina te ya vê dersê winda dibe.',
+                  'Bu dersteki ilerlemen kaybolur.',
+                )
+              : context.s(
+                  'Pêşketina te ya vê pêşbirkê winda dibe.',
+                  'Bu yarıştaki ilerlemen kaybolur.',
+                ),
         ),
         actions: [
           TextButton(
@@ -775,6 +805,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 nextButtonKey: _nextButtonKey,
                 onReady: _handleTutorialReady,
                 timerSeconds: widget.room.secondsPerQuestion,
+                timed: _usesTimer,
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: AppTheme.backgroundGradient(context),

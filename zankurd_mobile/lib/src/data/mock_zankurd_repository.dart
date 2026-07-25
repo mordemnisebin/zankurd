@@ -542,9 +542,18 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return 200;
   }
 
+  @Deprecated('awardProfileXPDelta kullanın — mutlak XP yazımı güvensizdir.')
   @override
   Future<void> updateProfileXP(int xp) async {
     // Mock modunda yerel XPStore güncelleniyor, sunucu güncellemesine gerek yok.
+  }
+
+  int _mockXP = 0;
+
+  @override
+  Future<int> awardProfileXPDelta(int delta) async {
+    if (delta > 0) _mockXP += delta;
+    return _mockXP;
   }
 
   @override

@@ -376,6 +376,12 @@ class AppTheme {
   static const correct = Color(0xFF3DA968);
   static const wrong = Color(0xFFE5533D);
 
+  /// Form doğrulama hatası metni. Material varsayılanı açık temada
+  /// krem zemin üzerinde ~1.8:1 kontrastla okunmuyordu; bu iki ton
+  /// WCAG AA'yı her iki temada da geçer.
+  static const formErrorLight = Color(0xFFB3261E);
+  static const formErrorDark = Color(0xFFFF8A75);
+
   // Onboarding 2. slayt: ödül/yarış teması için terracotta tonu.
   static const terracotta = Color(0xFFB86A3E);
 
@@ -748,6 +754,23 @@ class AppTheme {
           borderSide: const BorderSide(color: accent, width: 2),
         ),
         hintStyle: const TextStyle(color: textMuted),
+        // Doğrulama hatası varsayılan Material stiliyle çiziliyordu ve
+        // krem/koyu yüzeyler üzerinde neredeyse okunmuyordu (2026-07-25
+        // canlı denetimi). Renk ve kalınlık açıkça sabitlenir.
+        errorStyle: const TextStyle(
+          color: formErrorDark,
+          fontWeight: FontWeight.w600,
+          fontSize: 12,
+          height: 1.3,
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppRadius.sm),
+          borderSide: const BorderSide(color: formErrorDark, width: 1.5),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppRadius.sm),
+          borderSide: const BorderSide(color: formErrorDark, width: 2),
+        ),
       ),
       textTheme: const TextTheme(
         headlineSmall: TextStyle(
@@ -904,6 +927,20 @@ class AppTheme {
           borderSide: const BorderSide(color: accent, width: 2),
         ),
         hintStyle: const TextStyle(color: lightTextMuted),
+        errorStyle: const TextStyle(
+          color: formErrorLight,
+          fontWeight: FontWeight.w600,
+          fontSize: 12,
+          height: 1.3,
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppRadius.sm),
+          borderSide: const BorderSide(color: formErrorLight, width: 1.5),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppRadius.sm),
+          borderSide: const BorderSide(color: formErrorLight, width: 2),
+        ),
       ),
       textTheme: const TextTheme(
         headlineSmall: TextStyle(

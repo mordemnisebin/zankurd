@@ -160,8 +160,13 @@ class _QuestionImage extends StatelessWidget {
               _notifyReady();
               return Image(image: imageProvider, fit: BoxFit.contain);
             },
-            errorWidget: (context, url, error) =>
-                const _QuestionImageFallback(),
+            // Görsel yüklenemezse de "hazır" sinyali verilmeli: aksi halde
+            // soru akışını bekleten kapı hiç açılmaz ve ilk sorunun sayacı
+            // hiç başlamaz (2026-07-25 canlı denetimi).
+            errorWidget: (context, url, error) {
+              _notifyReady();
+              return const _QuestionImageFallback();
+            },
           )
         : Image.asset(
             assetPath,
@@ -170,8 +175,10 @@ class _QuestionImage extends StatelessWidget {
               if (wasSynchronouslyLoaded || frame != null) _notifyReady();
               return child;
             },
-            errorBuilder: (context, error, stackTrace) =>
-                const _QuestionImageFallback(),
+            errorBuilder: (context, error, stackTrace) {
+              _notifyReady();
+              return const _QuestionImageFallback();
+            },
           );
 
     final double? forcedHeight = isCompact
@@ -209,9 +216,7 @@ class _QuestionImagePlaceholder extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context),
-      ),
+      decoration: BoxDecoration(color: AppTheme.surfaceHiColor(context)),
       alignment: Alignment.center,
       child: SizedBox(
         width: 24,
@@ -339,6 +344,10 @@ class _QuestionTextAndAnswers extends StatelessWidget {
               // grid'e girer, Piştre butonu ekranda kalır.
               if (question.type == QuestionType.wordOrdering) {
                 return WordOrderingWidget(
+                  // Soru kimliği key'e girer: aynı tipte bir sonraki soruya
+                  // geçildiğinde State yeniden kullanılıp önceki kelimeler
+                  // ekranda kalmasın.
+                  key: ValueKey('word-ordering-${question.id}'),
                   question: question,
                   disabled: answered,
                   selectedAnswer: selectedAnswer,

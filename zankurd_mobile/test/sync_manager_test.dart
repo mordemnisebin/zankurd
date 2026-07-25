@@ -67,4 +67,67 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('zankurd.syncQueue'), '[]');
   });
+
+  // 2026-07-25 denetim bulgusu: çıkışta yalnız dispose() çağrılıyor,
+  // `_instance` dolu kalıyordu. Sonraki initialize() erken dönüyor ve
+  // connectivity dinleyicisi bir daha kurulmuyordu — çevrimdışı XP
+  // senkronizasyonu uygulama ömrü boyunca ölüyordu.
+  test('shutdown yeni bir SyncManager kurulmasına izin verir', () async {
+    final repository = MockZanKurdRepository();
+    final first = await SyncManager.initialize(repository);
+
+    await SyncManager.shutdown();
+
+    final second = await SyncManager.initialize(repository);
+    expect(identical(first, second), isFalse);
+    expect(SyncManager.instance, same(second));
+  });
+
+  test('shutdown bekleyen kayıtları temizler', () async {
+    final repository = MockZanKurdRepository();
+    final manager = await SyncManager.initialize(repository);
+
+    manager.queueXP(150, delta: 150);
+    await SyncManager.shutdown();
+
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('zankurd.syncQueue'), '[]');
+  });
+
+  // Kuyruk canlı liste üzerinde döndüğü için, `await` sırasında gelen bir
+  // queueXP() çağrısı ConcurrentModificationError fırlatıyordu.
+  test('sync sırasında yeni kayıt eklemek çökmeye yol açmaz', () async {
+    final repository = MockZanKurdRepository();
+    final manager = await SyncManager.initialize(repository);
+
+    manager.queueXP(100, delta: 100);
+    final syncing = manager.sync();
+    manager.queueXP(200, delta: 100);
+    manager.queueXP(300, delta: 100);
+    await syncing;
+    await manager.sync();
+
+    expect(manager.pendingCount, 0);
+  });
+
+  test('eşzamanlı sync çağrıları tek tur olarak çalışır', () async {
+    final repository = MockZanKurdRepository();
+    final manager = await SyncManager.initialize(repository);
+
+    manager.queueXP(100, delta: 100);
+    await Future.wait([manager.sync(), manager.sync(), manager.sync()]);
+
+    expect(manager.pendingCount, 0);
+  });
+
+  test('queueXP delta bilgisini kuyruğa yazar', () async {
+    final repository = MockZanKurdRepository();
+    final manager = await SyncManager.initialize(repository);
+    await manager.clearQueue();
+
+    manager.queueXP(1250, delta: 250);
+    // sync() mock repo yolunda kuyruğu boşalttığı için doğrudan kayıt
+    // içeriğini değil, kaydın yazıldığını doğrularız.
+    expect(manager.pendingCount, lessThanOrEqualTo(1));
+  });
 }

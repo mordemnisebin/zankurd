@@ -108,7 +108,8 @@ class PlayerAvatar extends StatelessWidget {
   Widget _buildCore(Color bg) {
     final url = photoUrl;
     if (url != null && url.trim().isNotEmpty) {
-      final provider = imageProviderFactory?.call(url) ??
+      final provider =
+          imageProviderFactory?.call(url) ??
           CachedNetworkImageProvider(url) as ImageProvider;
       return Image(
         image: provider,

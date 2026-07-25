@@ -54,9 +54,15 @@ class QuestionBankLoader {
 
     final offline = await _loadJson('assets/data/offline_questions.json');
     final editorial = await _loadJson('assets/data/editorial_questions.json');
+    // Cümle kurma (wordOrdering) soruları ayrı asset'te tutulur: üretilmiş
+    // şıklı banka ile karışmasın ve editör incelemesi bağımsız yürüsün.
+    final sentences = await _loadJson(
+      'assets/data/sentence_building_questions.json',
+    );
 
     _questions = [
       ...curatedQuestionBank,
+      ...sentences,
       ...editorial,
       ...offline,
     ];
