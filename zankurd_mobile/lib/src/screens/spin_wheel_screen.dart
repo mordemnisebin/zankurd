@@ -557,26 +557,30 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       height: 56,
       child: Stack(
         children: [
-          // Glow halo behind button
+          // Düğmenin arkasındaki hâle.
+          //
+          // Genişliği 220 px sabitti, düğme ise satır boyunca uzuyor: hâle
+          // düğmenin altından taşıp kenarlarda ayrı bir sarı şerit olarak
+          // görünüyor, üstteki durum rozetinin altına giriyordu. Yoğunluk da
+          // ekranın "yumuşak" dilini bozacak kadar yüksekti (2026-07-26).
+          // Hâle artık düğmenin biçimini izler ve yalnız onu aydınlatır.
           if (enabled)
             Positioned.fill(
-              child: Center(
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 1200),
-                  width: 220,
-                  height: 56,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppRadius.pill),
                     boxShadow: [
                       BoxShadow(
-                        color: AppTheme.accent.withValues(alpha: 0.55),
-                        blurRadius: 28,
-                        spreadRadius: 2,
+                        color: AppTheme.accent.withValues(alpha: 0.30),
+                        blurRadius: 24,
+                        spreadRadius: 1,
                       ),
                       BoxShadow(
-                        color: AppTheme.gold.withValues(alpha: 0.35),
-                        blurRadius: 48,
-                        spreadRadius: 6,
+                        color: AppTheme.gold.withValues(alpha: 0.18),
+                        blurRadius: 40,
+                        spreadRadius: 2,
                       ),
                     ],
                   ),
@@ -595,7 +599,11 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                 ),
-                elevation: enabled ? 4 : 0,
+                // Material yükseltisi bu boyutta sert, siyah bir halka
+                // çiziyor ve düğmeyi kalın bir çerçeveyle sarılmış gibi
+                // gösteriyordu; ekranın yumuşak diline aykırıydı. Kaldırma
+                // hissini yukarıdaki hâle veriyor (2026-07-26).
+                elevation: 0,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 28,
                   vertical: 14,
@@ -832,6 +840,10 @@ class _WheelPainter extends CustomPainter {
         text: TextSpan(
           text: '${rewards[i]}',
           style: TextStyle(
+            // `CustomPainter` içindeki metin temayı görmez: aile yazılmazsa
+            // sistem varsayılanına düşer ve çarkın rakamları uygulamanın
+            // geri kalanından başka bir yazı tipiyle çizilir (2026-07-26).
+            fontFamily: AppTypography.fontFamily,
             color: textColor,
             fontWeight: FontWeight.w800,
             fontSize: 17,

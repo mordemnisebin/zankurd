@@ -168,6 +168,10 @@ class _ChartPainter extends CustomPainter {
       textPainter.text = TextSpan(
         text: '$labelVal',
         style: TextStyle(
+          // Boyayıcı temayı görmez; aile yazılmazsa eksen etiketleri sistem
+          // yazı tipiyle çizilir ve grafik ekranın geri kalanına yabancı
+          // görünür (2026-07-26).
+          fontFamily: AppTypography.fontFamily,
           color: labelColor,
           fontSize: 10,
           fontWeight: FontWeight.bold,
@@ -246,6 +250,10 @@ class _ChartPainter extends CustomPainter {
       textPainter.text = TextSpan(
         text: weekdayLabel,
         style: TextStyle(
+          // Boyayıcı temayı görmez; aile yazılmazsa eksen etiketleri sistem
+          // yazı tipiyle çizilir ve grafik ekranın geri kalanına yabancı
+          // görünür (2026-07-26).
+          fontFamily: AppTypography.fontFamily,
           color: labelColor,
           fontSize: 10,
           fontWeight: FontWeight.bold,

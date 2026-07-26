@@ -618,6 +618,7 @@ class Tr {
     K.online: {'ku': 'Serhêl', 'tr': 'Çevrimiçi'},
     K.offline: {'ku': 'Ne li serhêl', 'tr': 'Çevrimdışı'},
     K.playAction: {'ku': 'Bilîze', 'tr': 'Oyna'},
+    K.inviteToRoom: {'ku': 'Vexwîne', 'tr': 'Odaya çağır'},
     K.wantsToBeFriend: {
       'ku': 'Hevaltiya xwe dixwaze',
       'tr': 'Seninle arkadaş olmak istiyor',
@@ -1780,6 +1781,7 @@ class K {
   static const online = 'friends.online';
   static const offline = 'friends.offline';
   static const playAction = 'friends.play';
+  static const inviteToRoom = 'friends.inviteToRoom';
   static const wantsToBeFriend = 'friends.wantsToBeFriend';
   static const rejectAction = 'friends.reject';
   static const acceptAction = 'friends.accept';

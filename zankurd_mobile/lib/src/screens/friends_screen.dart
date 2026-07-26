@@ -409,6 +409,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   friend: friend,
                   ku: ku,
                   onPlay: () => _playWithFriend(friend),
+                  busy: _roomLoading,
                 ),
               )
               .toList(),
@@ -423,11 +424,13 @@ class _FriendCard extends StatelessWidget {
     required this.friend,
     required this.ku,
     required this.onPlay,
+    required this.busy,
   });
 
   final Friend friend;
   final bool ku;
   final VoidCallback onPlay;
+  final bool busy;
 
   @override
   Widget build(BuildContext context) {
@@ -500,14 +503,26 @@ class _FriendCard extends StatelessWidget {
                 ],
               ),
             ),
+            // Düğme "Oyna" diyordu ama oyun başlatmıyor: bir oda kurup
+            // kodunu arkadaşla paylaşmanı istiyor. Çevrimdışı bir arkadaşta
+            // bile aynı sözü veriyordu. Ad, yapılan işi anlatır — yeni
+            // kullanıcının şaşırmaması ilk ölçüt (2026-07-26).
             FilledButton.tonal(
-              key: const ValueKey('friend-primary-action'),
-              onPressed: onPlay,
+              key: ValueKey('friend-action-${friend.friendName}'),
+              onPressed: busy ? null : onPlay,
               style: FilledButton.styleFrom(
                 backgroundColor: AppTheme.cyan.withValues(alpha: 0.14),
                 foregroundColor: AppTheme.cyan,
               ),
-              child: Text(context.t(K.playAction)),
+              child: busy
+                  // Oda kurulurken düğme sessizce ölüydü: ikinci dokunuş
+                  // `_roomLoading` kontrolüne takılıp hiçbir iz bırakmıyordu.
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : Text(context.t(K.inviteToRoom)),
             ),
           ],
         ),

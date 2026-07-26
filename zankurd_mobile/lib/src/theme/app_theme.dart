@@ -54,6 +54,15 @@ class AppColors {
 class AppTypography {
   const AppTypography._();
 
+  /// Uygulamanın yazı tipi ailesi.
+  ///
+  /// Widget'lar bunu temadan alır; `CustomPainter` içinde `TextPainter` ile
+  /// çizilen metin **almaz** ve aile yazılmazsa sistem varsayılanına düşer.
+  /// Tek bir ekranda iki ayrı yazı tipi görünmesin diye o çağrı yerleri
+  /// buradan besleniyor (2026-07-26: çark rakamları ve haftalık grafik
+  /// etiketleri böyleydi).
+  static const fontFamily = 'Rubik';
+
   static const TextStyle display = TextStyle(
     fontWeight: FontWeight.w800,
     fontSize: 32,

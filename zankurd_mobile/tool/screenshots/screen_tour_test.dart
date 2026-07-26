@@ -53,8 +53,20 @@ const _outDir = 'docs/screenshots/tour';
 /// kullanılır; kök `debugLayer.toImage()` test koşucusunda kilitlenebiliyor.
 final GlobalKey _boundaryKey = GlobalKey();
 
-Widget _framed(Widget child) =>
-    RepaintBoundary(key: _boundaryKey, child: child);
+/// Ekranı yakalama sınırına ve bir `Material` katmanına sarar.
+///
+/// `Material` katmanı süs değil: `Text`, ailesi yazılmamış bir biçim
+/// aldığında ailesini en yakın `DefaultTextStyle`dan alır ve onu temadan
+/// **`Material` kurar**. Uygulamada her sekme `Scaffold` içinde açıldığı
+/// için bu katman hep vardır; tur ise bazı ekranları çıplak basıyordu.
+/// Sonuç: o ekranlarda başlıklar `DefaultTextStyle.fallback()`e düşüyor,
+/// koşucuda ölçü fontuyla — yani siyah kutu olarak — çiziliyordu
+/// (2026-07-26: oyun merkezi ve sıralama turda böyle görünüyordu).
+/// Uygulamada bir kusur değil, turun kendi kusuruydu.
+Widget _framed(Widget child) => RepaintBoundary(
+  key: _boundaryKey,
+  child: Material(type: MaterialType.transparency, child: child),
+);
 
 /// Görünüm boyutunu ayarlar.
 ///
@@ -133,22 +145,32 @@ void main() {
     // ".../font_awesome_flutter-11.0.0lib/fonts/..." gibi var olmayan bir
     // yol üretiyordu ve uyarı sessizce geçilip ikonlar kare kalıyordu.
     final root = Uri.parse(entry['rootUri'] as String).toFilePath();
-    final iconFont = File(
-      '${root.endsWith(Platform.pathSeparator) ? root : '$root${Platform.pathSeparator}'}'
-      'lib/fonts/Font-Awesome-7-Free-Solid-900.otf',
-    );
-    if (iconFont.existsSync()) {
+    final base = root.endsWith(Platform.pathSeparator)
+        ? root
+        : '$root${Platform.pathSeparator}';
+    // Solid VE Regular birlikte yüklenir. Yalnız Solid yüklenirken Regular
+    // ailesindeki ikonlar (ör. çark ekranındaki "hakkın hazır" onay
+    // işareti) kare çiziliyordu ve turda uygulama hatası gibi görünüyordu
+    // (2026-07-26).
+    const iconFamilies = {
+      'FontAwesomeSolid': 'lib/fonts/Font-Awesome-7-Free-Solid-900.otf',
+      'FontAwesomeRegular': 'lib/fonts/Font-Awesome-7-Free-Regular-400.otf',
+    };
+    for (final family in iconFamilies.keys) {
+      final iconFont = File('$base${iconFamilies[family]}');
+      if (!iconFont.existsSync()) {
+        print('UYARI: $family bulunamadı — o ikonlar kare çizilecek');
+        continue;
+      }
       // Aile adı paket önekiyle kaydedilmeli: `IconData` içindeki
       // `fontPackage` alanı, Flutter'ın çözdüğü aileyi
       // `packages/<paket>/<aile>` biçimine çevirir. Öneksiz kayıt sessizce
       // eşleşmez ve ikonlar yine kare çizilir.
       final iconLoader =
-          FontLoader('packages/font_awesome_flutter/FontAwesomeSolid')..addFont(
+          FontLoader('packages/font_awesome_flutter/$family')..addFont(
             iconFont.readAsBytes().then((bytes) => ByteData.view(bytes.buffer)),
           );
       await iconLoader.load();
-    } else {
-      print('UYARI: ikon yazı tipi bulunamadı — ikonlar kare çizilecek');
     }
   });
 

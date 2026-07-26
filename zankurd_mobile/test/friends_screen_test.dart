@@ -46,10 +46,20 @@ void main() {
         find.byKey(const ValueKey('friends-search-panel')),
         findsOneWidget,
       );
+      // Anahtar arkadaş adını taşır: tek bir sabit anahtar iki satırda da
+      // yinelendiği için hangi satırın düğmesine bakıldığı belirsizdi.
       expect(
-        find.byKey(const ValueKey('friend-primary-action')),
-        findsNWidgets(2),
+        find.byKey(const ValueKey('friend-action-ZanînBot')),
+        findsOneWidget,
       );
+      expect(
+        find.byKey(const ValueKey('friend-action-KurdBot')),
+        findsOneWidget,
+      );
+      // Düğmenin sözü ile işi aynı olmalı: oyun başlatmıyor, oda kurup
+      // kodu paylaştırıyor.
+      expect(find.text('Odaya çağır'), findsNWidgets(2));
+      expect(find.text('Oyna'), findsNothing);
     });
 
     testWidgets('çocuk modu açıkken arkadaş arama paneli gizlenir', (
