@@ -360,10 +360,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (roomQuestions.isNotEmpty) return roomQuestions;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadRoomQuestions failed');
-      // The SQL sync view/policy may not be installed yet. Use approved questions.
+      // Sunucu görünümü/politikası henüz kurulu olmayabilir; çevrimdışı
+      // bankaya düşülür.
     }
 
-    return loadQuestions(limit: room.questionCount);
+    // Yedek yol odanın kategorisini taşımıyordu: "Ziman" için kurulan bir
+    // odada, RPC hata verdiğinde ya da boş döndüğünde bütün havuzdan soru
+    // geliyordu. Oyuncu Dil turu açıp Siyaset sorusu görüyordu ve bunun
+    // sunucu tarafında bir aksaklık olduğuna dair hiçbir iz yoktu
+    // (2026-07-26). Çevrimdışı sürüm kategoriyi zaten süzüyor; yedek yol
+    // artık doğrudan onu çağırıyor.
+    return _offline.loadRoomQuestions(room);
   }
 
   @override

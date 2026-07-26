@@ -69,4 +69,31 @@ void main() {
       await expectLater(repo.createOnlineRoom(), throwsA(anything));
     },
   );
+
+  test('yedek yol odanın kategorisini korur', () async {
+    // 2026-07-26: sunucu sorgusu hata verdiğinde ya da boş döndüğünde
+    // yedek yol `loadQuestions(limit:)` çağırıyordu — kategori parametresi
+    // hiç geçmiyordu. "Ziman" için kurulmuş bir odada bütün havuzdan soru
+    // geliyor, oyuncu Dil turu açıp Siyaset sorusu görüyordu. Sessiz bir
+    // kusurdu: ne hata, ne kayıt; yalnız yanlış sorular.
+    final repo = unreachableRepo();
+
+    // Kategori bankanın başındaki 'Ziman' olmamalı: seçim havuz sırasını
+    // koruduğu için kusurlu sürüm de tesadüfen 'Ziman' döndürüyor ve
+    // bekçi hiçbir şey ölçmemiş oluyordu.
+    for (final category in ['Muzîk', 'Cografya', 'Dîrok']) {
+      // Odaya kimlik verilmeli: kimliksiz oda zaten doğrudan çevrimdışı
+      // sürüme gider ve sunucu yolu hiç denenmez — kusurlu yedek yol o
+      // hâlde çalışmaz, bekçi de bir şey ölçmemiş olur.
+      final room = repo.createRoom(category: category).copyWith(id: 'room-1');
+      final questions = await repo.loadRoomQuestions(room);
+
+      expect(questions, isNotEmpty, reason: '$category için soru gelmedi');
+      expect(
+        questions.map((q) => q.category).toSet(),
+        {category},
+        reason: 'Yedek yol $category odasına başka kategoriden soru getirdi',
+      );
+    }
+  });
 }
