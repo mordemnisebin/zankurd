@@ -633,6 +633,18 @@ class AppTheme {
   /// (mavi/mor/camgöbeği/kehribar). Renk burada hiçbir anlam taşımıyor —
   /// oyuncu "mavi şık" ile "mor şık" arasında bir fark sanıyordu. Tonlar
   /// tek bir nötr aileye indirildi; renk yalnız doğru/yanlış anında konuşur.
+  /// Şık rozetlerinin tonu (A/B/C/D) — dördü de aynı nötr.
+  ///
+  /// 2026-07-27'de bunlara marka renkleri verilmişti: ekran daha canlı
+  /// görünüyordu ama `answer_option_color_semantics_test` haklı olarak
+  /// kırdı. Karar iki ayrı canlı denetimde verilmiş: renkli şık harfleri
+  /// oyuncuya şıklar arasında bir *fark* olduğunu ima ediyor, üstelik
+  /// yeşil/kırmızıya yaklaşan tonlar cevaptan önce sahte "doğru/yanlış"
+  /// ipucu veriyor. Şık harfi yalnız bir etikettir; renk yalnız cevaptan
+  /// sonra konuşur.
+  ///
+  /// Bu ekranı canlandırmanın yolu şıkları boyamak değil — kart tonu,
+  /// kategori kimliği ve eylem düğmesi üzerinden gidilir.
   static const List<Color> answerOptionColors = [
     Color(0xFF545C63),
     Color(0xFF545C63),

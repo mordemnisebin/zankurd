@@ -344,15 +344,6 @@ class _OptionBadge extends StatelessWidget {
   // Idle durumda rozet içindeki harf rengi (şıkkın kimlik rengi).
   final Color? idleColor;
 
-  // Renk körü erişilebilirliği: her şık harf rengine ek olarak benzersiz
-  // bir şekil taşır (A=daire, B=kare, C=üçgen, D=elmas).
-  static const shapeIcons = [
-    Icons.circle_outlined,
-    Icons.square_outlined,
-    Icons.change_history, // üçgen
-    Icons.diamond_outlined,
-  ];
-
   @override
   Widget build(BuildContext context) {
     final letter = String.fromCharCode(65 + (index % 26));
@@ -379,20 +370,17 @@ class _OptionBadge extends StatelessWidget {
               ]
             : null,
       ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Text(letter, style: AppTypography.heading2.copyWith(color: badgeFg)),
-          Positioned(
-            top: 2,
-            right: 2,
-            child: Icon(
-              shapeIcons[index % shapeIcons.length],
-              size: 8,
-              color: badgeFg.withValues(alpha: 0.7),
-            ),
-          ),
-        ],
+      // Rozette bir zamanlar harfin üstüne 8 px'lik bir şekil ikonu
+      // biniyordu (renk körü ayrımı için). 34 px'lik rozette o boyut bir
+      // işaret değil bir leke: harfin tepesine oturuyor ve "A" bozuk bir
+      // karakter gibi görünüyordu (2026-07-27, canlı gezinti).
+      //
+      // Şekil kaldırıldı; ayrımı harfin kendisi taşıyor. A/B/C/D renkten
+      // bağımsızdır, evrenseldir ve ekran okuyucuya da aynı adla gider —
+      // yani erişilebilirlik kaybı yok, okunaklılık kazancı var.
+      child: Text(
+        letter,
+        style: AppTypography.heading2.copyWith(color: badgeFg),
       ),
     );
   }

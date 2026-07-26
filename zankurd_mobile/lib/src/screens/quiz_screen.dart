@@ -770,6 +770,20 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     if (leave == true && mounted) Navigator.of(context).pop();
   }
 
+  /// Başlıkta görünecek tur adı.
+  ///
+  /// Sıra: oda kodu (çevrimiçi) → turun adı → kategori → genel "yarış".
+  String _roundTitle(BuildContext context) {
+    if (widget.room.id != null) {
+      return '${context.t(K.roomWord)} ${widget.room.code}';
+    }
+    final name = widget.room.name.trim();
+    // Varsayılan oda adı bir tur adı değil, depo sabitidir.
+    if (name.isNotEmpty && name != 'Hevalên Zanînê') return name;
+    if (widget.room.category.isEmpty) return context.t(K.raceWord);
+    return CategoryNames.localized(widget.room.category, context.isKu);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_questions.isEmpty) {
@@ -801,17 +815,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          // Solo/bot oyunda oda kodu anlamsız gürültü; kategori adı göster.
-          title: Text(
-            widget.room.id == null
-                ? (widget.room.category.isEmpty
-                      ? context.t(K.raceWord)
-                      : CategoryNames.localized(
-                          widget.room.category,
-                          context.isKu,
-                        ))
-                : '${context.t(K.roomWord)} ${widget.room.code}',
-          ),
+          // Solo/bot oyunda oda kodu anlamsız gürültü; turun adı gösterilir.
+          //
+          // Kategori adı doğrudan yazılıyordu ve günün dersinde yalan
+          // oluyordu: o tur **karışık kategorilidir**, oda ise varsayılan
+          // 'Ziman' ile kurulur. Ekranın tepesinde "Ziman" yazarken ilk
+          // soru "Çand" etiketiyle geliyordu (2026-07-27, canlı gezinti).
+          //
+          // Turun kendi adı varsa (günün dersi, yarışma) o gösterilir;
+          // yoksa kategoriye düşülür.
+          title: Text(_roundTitle(context)),
           actions: [
             IconButton(
               onPressed: _toggleFavorite,

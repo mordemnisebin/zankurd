@@ -471,6 +471,17 @@ extension _QuizScreenUI on _QuizScreenState {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppTheme.brand,
                     foregroundColor: Colors.white,
+                    // Cevap beklenirken düğme Material'ın varsayılan gri
+                    // levhasına düşüyordu: ekranın en büyük öğesi ölü bir
+                    // gri blok oluyordu. Pasif hâl artık markanın kendi
+                    // renginin soluk tonu — "henüz değil" diyor, "bozuk"
+                    // demiyor (2026-07-27, canlı gezinti).
+                    disabledBackgroundColor: AppTheme.brand.withValues(
+                      alpha: 0.12,
+                    ),
+                    disabledForegroundColor: AppTheme.brand.withValues(
+                      alpha: 0.55,
+                    ),
                     padding: EdgeInsets.symmetric(
                       vertical: isCompact ? AppSpacing.xs : AppSpacing.sm,
                     ),
