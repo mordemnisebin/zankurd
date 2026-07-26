@@ -931,6 +931,10 @@ class Tr {
       'ku': 'Skora te hate tomarkirin; em li bersiva hevrikê te dinêrin.',
       'tr': 'Skorun kaydedildi; rakibinin oynamasını bekliyoruz.',
     },
+    K.championRewardGranted: {
+      'ku': 'Pîroz be! Xelata şampiyoniyê: {coins} coin',
+      'tr': 'Tebrikler! Şampiyonluk ödülün: {coins} coin',
+    },
     K.buyAction: {'ku': 'Bikire', 'tr': 'Satın Al'},
     K.buyItemForCoins: {
       'ku': '{item} bikire — {coins} coin',
@@ -1939,6 +1943,7 @@ class K {
   static const tournamentWaitingTitle = 'tournament.waitingTitle';
   static const tournamentWaitingBody = 'tournament.waitingBody';
   static const tournamentWaitingOpponent = 'tournament.waitingOpponent';
+  static const championRewardGranted = 'tournament.championReward';
   static const buyAction = 'shop.buy';
   static const buyItemForCoins = 'shop.buyItemForCoins';
   static const insufficientBalance = 'shop.insufficientBalance';

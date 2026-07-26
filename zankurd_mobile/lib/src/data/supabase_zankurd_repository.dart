@@ -1779,8 +1779,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<int> claimTournamentChampionReward() async {
     try {
+      // RPC alanı `amount`; burada `coins` okunuyordu ve şampiyon ödülü
+      // her zaman 0 dönüyordu. Aynı RPC'yi okuyan diğer yol (`claim
+      // TournamentReward`) doğru alanı kullanıyordu — iki yol aynı yanıtı
+      // iki ayrı biçimde okuyordu (2026-07-26).
       final response = await client.rpc<dynamic>('claim_tournament_reward');
-      return (_firstRow(response)?['coins'] as int?) ?? 0;
+      return _amountFromRpcResponse(response) ?? 0;
     } catch (e, s) {
       _recordError(e, s, reason: 'claimTournamentChampionReward failed');
       return _offline.claimTournamentChampionReward();

@@ -557,3 +557,59 @@ grant execute on function public.submit_tournament_match(uuid, int)
 grant execute on function public.get_tournament_bracket() to authenticated;
 grant execute on function public.resolve_expired_tournament_matches()
   to authenticated;
+
+-- ── Şampiyonluk ödülü ───────────────────────────────────────────────────
+--
+-- `claim_tournament_reward` (2026-07-03) şampiyonluğu **hiç
+-- doğrulamıyordu**: kimliği doğrulanmış herkes çağırıp günde 200 coin
+-- alabiliyordu. Turnuva bir istemci benzetimiyken sunucunun doğrulayacağı
+-- bir şey de yoktu; artık var (2026-07-26).
+--
+-- Ödül turnuva başınadır, gün başına değil: aynı gün iki kupa kazanmak iki
+-- ödül, bir kupayı iki kez talep etmek tek ödül eder.
+create or replace function public.claim_tournament_reward()
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_uid uuid := auth.uid();
+  v_tournament uuid;
+  v_reason text;
+begin
+  if v_uid is null then
+    raise exception 'Not authenticated';
+  end if;
+
+  select id into v_tournament
+    from public.tournaments
+   where status = 'finished'
+     and champion_id = v_uid
+   order by finished_at desc
+   limit 1;
+
+  -- Şampiyon değilse ödül yok. Hata değil sıfır dönülür: istemci bunu
+  -- olağan bir durum olarak karşılar ve kullanıcıya hata göstermez.
+  if v_tournament is null then
+    return jsonb_build_object('amount', 0, 'already_claimed', false);
+  end if;
+
+  v_reason := 'tournament_champion:' || v_tournament::text;
+
+  if exists (
+    select 1 from public.coin_transactions
+     where player_id = v_uid and reason = v_reason
+  ) then
+    return jsonb_build_object('amount', 0, 'already_claimed', true);
+  end if;
+
+  insert into public.coin_transactions (player_id, amount, reason)
+  values (v_uid, 200, v_reason);
+
+  return jsonb_build_object('amount', 200, 'already_claimed', false);
+end;
+$$;
+
+revoke all on function public.claim_tournament_reward() from public, anon;
+grant execute on function public.claim_tournament_reward() to authenticated;

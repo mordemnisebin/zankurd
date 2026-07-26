@@ -28,6 +28,8 @@ class _RealTournamentRepository extends MockZanKurdRepository {
   @override
   String? get currentUserId => 'me';
   int joinCalls = 0;
+  int championClaims = 0;
+  int championReward = 200;
   int submitCalls = 0;
   String? submittedMatchId;
   int? submittedScore;
@@ -41,6 +43,12 @@ class _RealTournamentRepository extends MockZanKurdRepository {
 
   @override
   Future<TournamentBracket?> loadRealTournamentBracket() async => bracket;
+
+  @override
+  Future<int> claimTournamentChampionReward() async {
+    championClaims++;
+    return championReward;
+  }
 
   @override
   Future<TournamentMatch> submitTournamentMatch({
@@ -261,5 +269,70 @@ void main() {
       find.byKey(const ValueKey('tournament-awaiting-opponent')),
       findsNothing,
     );
+  });
+
+  testWidgets('şampiyon ödülü talep edilir ve bildirilir', (tester) async {
+    // Bu çağrıyı hiçbir ekran yapmıyordu: kupayı kazanan oyuncu ödülünü
+    // hiç almıyordu. Hak edişi ve miktarı sunucu belirler; istemcinin işi
+    // yalnız istemek ve sonucu göstermek.
+    final repository = _RealTournamentRepository(
+      _bracketWith(
+        const [
+          TournamentMatch(
+            id: 'm1',
+            playerOneId: 'me',
+            playerOneName: 'Ben',
+            playerTwoId: 'p2',
+            playerTwoName: 'Rojda',
+            playerOneScore: 900,
+            playerTwoScore: 300,
+            status: 'completed',
+            winnerId: 'me',
+          ),
+        ],
+        status: 'won',
+      ),
+    );
+
+    await tester.pumpWidget(
+      testShell(child: TournamentScreen(repository: repository)),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(repository.championClaims, 1);
+    expect(find.textContaining('200 coin'), findsOneWidget);
+  });
+
+  testWidgets('şampiyon olmayan oyuncu ödül istemez', (tester) async {
+    // Karşı taraf: her açılışta istemek, sunucunun "şampiyon değilsin"
+    // yanıtını gürültüye çevirir ve ekranda yanlış bir kutlama riski
+    // doğurur.
+    final repository = _RealTournamentRepository(
+      _bracketWith(
+        const [
+          TournamentMatch(
+            id: 'm1',
+            playerOneId: 'me',
+            playerOneName: 'Ben',
+            playerTwoId: 'p2',
+            playerTwoName: 'Rojda',
+            playerOneScore: 300,
+            playerTwoScore: 900,
+            status: 'completed',
+            winnerId: 'p2',
+          ),
+        ],
+        status: 'eliminated',
+      ),
+    );
+
+    await tester.pumpWidget(
+      testShell(child: TournamentScreen(repository: repository)),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(repository.championClaims, 0);
   });
 }

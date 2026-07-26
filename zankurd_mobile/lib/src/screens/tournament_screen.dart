@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -111,6 +113,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
         _standings = standings;
         _loading = false;
       });
+      if (real != null && real.status == 'won') {
+        unawaited(_claimChampionReward());
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tournament_load');
       if (!mounted) return;
@@ -217,6 +222,28 @@ class _TournamentScreenState extends State<TournamentScreen> {
       ErrorReporter.record(error, stack, reason: 'log_tournament_started');
       return false;
     });
+  }
+
+  /// Şampiyonluk ödülünü talep eder.
+  ///
+  /// Bu çağrıyı hiçbir ekran yapmıyordu: kupayı kazanan oyuncu ödülünü
+  /// hiç almıyordu. Miktarı ve hak edişi sunucu belirler — şampiyon
+  /// olmayan çağrıda sıfır döner, aynı kupa ikinci kez talep edilemez
+  /// (2026-07-26).
+  Future<void> _claimChampionReward() async {
+    try {
+      final amount = await widget.repository.claimTournamentChampionReward();
+      if (!mounted || amount <= 0) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.t(K.championRewardGranted, {'coins': '$amount'}),
+          ),
+        ),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'tournament_champion_reward');
+    }
   }
 
   /// Kendi skorumuzu bildirdik ama maç hâlâ açık mı?
