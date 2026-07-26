@@ -416,6 +416,10 @@ declare
   v_user uuid := auth.uid();
   v_tournament public.tournaments;
   v_rounds jsonb;
+  v_current_round int;
+  v_max_round int;
+  v_eliminated boolean;
+  v_status text;
 begin
   if v_user is null then
     raise exception 'Authenticated user required';
@@ -470,14 +474,50 @@ begin
        group by m.round
     ) rounds;
 
+  -- `currentRound` istemcinin "benim maçım hangi turda" sorusunu yanıtlar
+  -- ve tur adını (Son 16 / Çeyrek / Yarı / Final) seçer. Gönderilmezse 0'a
+  -- düşer: ikinci turdaki oyuncu birinci turda aranır, maçı hiç bulunamaz
+  -- ve ekran yanlış tur adını yazar. Sıfır tabanlıdır — istemci onu dizin
+  -- olarak kullanır.
+  select min(m.round) - 1
+    into v_current_round
+    from public.tournament_matches m
+   where m.tournament_id = v_tournament.id
+     and m.status <> 'completed'
+     and v_user in (m.player_one, m.player_two);
+
+  select max(m.round) into v_max_round
+    from public.tournament_matches m
+   where m.tournament_id = v_tournament.id;
+
+  -- Açık maçı yoksa: ya elendi ya da kupa bitti. Elenmeyi turnuvanın
+  -- bitmesine bağlamak yanlıştı — birinci turda kaybeden oyuncu, kupa
+  -- sürerken hâlâ "maçın var" görüyordu.
+  v_eliminated := v_current_round is null and exists (
+    select 1 from public.tournament_matches m
+     where m.tournament_id = v_tournament.id
+       and m.status = 'completed'
+       and v_user in (m.player_one, m.player_two)
+       and coalesce(m.winner_id, '00000000-0000-0000-0000-000000000000'::uuid)
+           <> v_user
+  );
+
+  if v_tournament.champion_id = v_user then
+    v_status := 'won';
+  elsif v_eliminated then
+    v_status := 'eliminated';
+  elsif v_tournament.status = 'finished' then
+    v_status := 'eliminated';
+  else
+    v_status := 'active';
+  end if;
+
   return jsonb_build_object(
     'tournamentId', v_tournament.id,
     'userId', v_user,
-    'status', case
-      when v_tournament.status = 'finished'
-           and v_tournament.champion_id = v_user then 'won'
-      when v_tournament.status = 'finished' then 'eliminated'
-      else 'active' end,
+    'currentRound', coalesce(v_current_round,
+                             greatest(coalesce(v_max_round, 1) - 1, 0)),
+    'status', v_status,
     'createdAt', v_tournament.opened_at,
     'completedAt', v_tournament.finished_at,
     'rounds', coalesce(v_rounds, '[]'::jsonb)

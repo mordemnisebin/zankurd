@@ -66,13 +66,23 @@ class _RealTournamentRepository extends MockZanKurdRepository {
   }
 }
 
-TournamentBracket _bracketWith(List<TournamentMatch> matches) =>
-    TournamentBracket(
-      tournamentId: 't1',
-      userId: 'me',
-      rounds: [TournamentRound(roundNumber: 1, matches: matches)],
-      createdAt: DateTime(2026, 7, 26),
-    );
+TournamentBracket _bracketWith(
+  List<TournamentMatch> matches, {
+  List<TournamentMatch>? secondRound,
+  int currentRound = 0,
+  String status = 'active',
+}) => TournamentBracket(
+  tournamentId: 't1',
+  userId: 'me',
+  currentRound: currentRound,
+  status: status,
+  rounds: [
+    TournamentRound(roundNumber: 1, matches: matches),
+    if (secondRound != null)
+      TournamentRound(roundNumber: 2, matches: secondRound),
+  ],
+  createdAt: DateTime(2026, 7, 26),
+);
 
 void main() {
   setUp(() {
@@ -169,5 +179,87 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(find.byKey(const ValueKey('tournament-waiting')), findsNothing);
+  });
+
+  testWidgets('ikinci turdaki oyuncunun maçı doğru turda aranır', (
+    tester,
+  ) async {
+    // `currentRound` sunucudan gelmezse 0'a düşer: ikinci turdaki oyuncu
+    // birinci turda aranır, maçı bulunamaz ve ekran yanlış tur adını
+    // yazar. Sunucu bu alanı gönderdiği için burada da gelmeli.
+    final repository = _RealTournamentRepository(
+      _bracketWith(
+        const [
+          TournamentMatch(
+            id: 'm1',
+            playerOneId: 'me',
+            playerOneName: 'Ben',
+            playerTwoId: 'p2',
+            playerTwoName: 'Rojda',
+            playerOneScore: 700,
+            playerTwoScore: 400,
+            status: 'completed',
+            winnerId: 'me',
+          ),
+        ],
+        secondRound: const [
+          TournamentMatch(
+            id: 'm2',
+            playerOneId: 'me',
+            playerOneName: 'Ben',
+            playerTwoId: 'p3',
+            playerTwoName: 'Baran',
+            playerOneScore: 0,
+            playerTwoScore: 0,
+            status: 'pending',
+            winnerId: '',
+          ),
+        ],
+        currentRound: 1,
+      ),
+    );
+
+    await tester.pumpWidget(
+      testShell(child: TournamentScreen(repository: repository)),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(find.textContaining('Baran'), findsWidgets);
+  });
+
+  testWidgets('elenen oyuncuya yeni maç gösterilmez', (tester) async {
+    // Birinci turda kaybeden oyuncu, kupa sürerken "maçın var" görüyordu:
+    // elenme turnuvanın bitmesine bağlanmıştı. Sunucu artık açık maçı
+    // olmayan ve kaybetmiş oyuncuyu 'eliminated' bildiriyor.
+    final repository = _RealTournamentRepository(
+      _bracketWith(
+        const [
+          TournamentMatch(
+            id: 'm1',
+            playerOneId: 'me',
+            playerOneName: 'Ben',
+            playerTwoId: 'p2',
+            playerTwoName: 'Rojda',
+            playerOneScore: 300,
+            playerTwoScore: 900,
+            status: 'completed',
+            winnerId: 'p2',
+          ),
+        ],
+        status: 'eliminated',
+      ),
+    );
+
+    await tester.pumpWidget(
+      testShell(child: TournamentScreen(repository: repository)),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(
+      find.byKey(const ValueKey('tournament-awaiting-opponent')),
+      findsNothing,
+    );
   });
 }
