@@ -1066,10 +1066,10 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 AppIcons.handPointer,
                 size: 14,
-                color: AppTheme.textMuted,
+                color: AppTheme.textMutedColor(context),
               ),
               const SizedBox(width: 6),
               Text(

@@ -9,6 +9,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
@@ -114,9 +115,20 @@ String _flutterSdkRoot() {
   return '';
 }
 
-Future<void> _pump(WidgetTester tester, Widget child) async {
+Future<void> _pump(
+  WidgetTester tester,
+  Widget child, {
+  bool dark = false,
+}) async {
   _applyViewport(tester, _size);
-  await tester.pumpWidget(testShell(child: _framed(child)));
+  await tester.pumpWidget(
+    testShell(
+      child: _framed(child),
+      themeProvider: dark
+          ? (ThemeProvider(initialMode: ThemeMode.dark))
+          : null,
+    ),
+  );
   // pumpAndSettle KULLANILMAZ: yükleme göstergeleri sonsuz animasyondur ve
   // tur boyunca kilitlenmeye yol açar. Sabit süreli pump yeterlidir.
   await tester.pump();
@@ -310,6 +322,43 @@ void main() {
   testWidgets('19 mağaza', (t) async {
     await _pump(t, ShopScreen(repository: repository));
     await _shoot(t, '19_shop');
+  }, tags: ['preview']);
+
+  // ── Karanlık tema ──
+  //
+  // Tur bugüne dek yalnız açık temayı basıyordu; karanlık temada sabit
+  // kalmış renkler (`Colors.white`, sabit siyah gölge) hiç ölçülmüyordu.
+  // Aynı ekranlar ikinci kez, tema karanlıkken basılır.
+  testWidgets('20 ana ekran (karanlık)', (t) async {
+    await _pump(t, Scaffold(body: HomeScreen(repository: repository)),
+        dark: true);
+    await _shoot(t, '20_home_dark');
+  }, tags: ['preview']);
+
+  testWidgets('21 oyun merkezi (karanlık)', (t) async {
+    await _pump(t, PlayHubScreen(repository: repository), dark: true);
+    await _shoot(t, '21_play_hub_dark');
+  }, tags: ['preview']);
+
+  testWidgets('22 profil (karanlık)', (t) async {
+    await _pump(t, Scaffold(body: ProfileScreen(repository: repository)),
+        dark: true);
+    await _shoot(t, '22_profile_dark');
+  }, tags: ['preview']);
+
+  testWidgets('23 mağaza (karanlık)', (t) async {
+    await _pump(t, ShopScreen(repository: repository), dark: true);
+    await _shoot(t, '23_shop_dark');
+  }, tags: ['preview']);
+
+  testWidgets('24 yarışma (karanlık)', (t) async {
+    await _pump(t, ContestScreen(repository: repository), dark: true);
+    await _shoot(t, '24_contest_dark');
+  }, tags: ['preview']);
+
+  testWidgets('25 sıralama (karanlık)', (t) async {
+    await _pump(t, LeaderboardScreen(repository: repository), dark: true);
+    await _shoot(t, '25_leaderboard_dark');
   }, tags: ['preview']);
 
   testWidgets('14 ders akışı', (t) async {

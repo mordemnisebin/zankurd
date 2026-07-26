@@ -1203,7 +1203,11 @@ class _RaceStandings extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          Text(summary, style: const TextStyle(color: AppTheme.textMuted)),
+          // Sabit `textMuted` karanlık tema rengi; açık temada okunmuyordu.
+          Text(
+            summary,
+            style: TextStyle(color: AppTheme.textMutedColor(context)),
+          ),
           const SizedBox(height: 12),
           for (var i = 0; i < standings.length; i++)
             _RaceStandingRow(rank: i + 1, player: standings[i]),

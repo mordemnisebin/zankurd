@@ -652,7 +652,11 @@ class _UnifiedRewardsSection extends StatelessWidget {
               isKu
                   ? 'Pêşbirkekê biqedîne û destkeftiya yekem veke.'
                   : 'Bir yarış tamamla ve ilk başarımı aç.',
-              style: const TextStyle(color: AppTheme.textMuted),
+              // Sabit `textMuted` karanlık temanın rengidir; açık temada
+              // bu metin krem zemin üzerinde ~2,6:1 kontrastla çıkıyordu.
+              // Bağlama duyarlı getter iki temada da doğru rengi verir
+              // (2026-07-26).
+              style: TextStyle(color: AppTheme.textMutedColor(context)),
             )
           else
             SizedBox(
