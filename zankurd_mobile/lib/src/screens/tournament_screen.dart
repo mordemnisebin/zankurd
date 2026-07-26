@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/tournament.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/duration_format.dart';
+import '../utils/weekly_cup_schedule.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
@@ -99,7 +101,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
       ErrorReporter.record(error, stack, reason: 'tournament_action');
     }
     if (!mounted) return;
-    _userName = name.isEmpty ? context.s('Tu', 'Sen') : name;
+    _userName = name.isEmpty ? context.t(K.you) : name;
 
     final rounds = TournamentConfig.generateBracket();
     final firstRound = rounds.first;
@@ -202,9 +204,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
             ? match.playerTwoName
             : match.playerOneName;
         final roundName = _roundNames(ku)[bracket.currentRound];
-        versusBanner = ku
-            ? 'Maça Te · $roundName · Li dijî $opponentName'
-            : 'Maçın · $roundName · Rakip: $opponentName';
+        versusBanner = context.t(K.yourMatchVs, {
+          'round': roundName,
+          'opponent': opponentName,
+        });
       }
       final result = await Navigator.of(context).push(
         AppRoute.to(
@@ -365,7 +368,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(ku ? 'Kûpaya ZanKurd' : 'Turnuva')),
+      appBar: AppBar(),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
@@ -378,9 +381,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
               : _hasError
               ? Center(
                   child: AppErrorState(
-                    title: ku ? 'Barnebû' : 'Yüklenemedi',
-                    message: ku ? 'Kûpa nehat barkirin' : 'Turnuva yüklenemedi',
-                    retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
+                    title: context.t(K.loadFailedShort),
+                    message: context.t(K.tournamentLoadFail),
+                    retryLabel: context.t(K.retry),
                     onRetry: _load,
                   ),
                 )
@@ -423,10 +426,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ScreenIdentityHeader(
-                  title: ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
+                  title: context.t(K.tournamentTitle),
                   // Tur bilgisi yalnızca maç kartında gösterilir; burada tekrar
                   // edilmez (üst üste 3 kartta aynı bilgi vardı).
-                  subtitle: ku ? 'Bot turnuva' : 'Bot turnuva',
+                  subtitle: context.t(K.botTournament),
                   accent: AppTheme.gold,
                   icon: AppIcons.trophy,
                   compact: true,
@@ -453,7 +456,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
                 const SizedBox(height: AppSpacing.lg),
                 // -- Bracket visualization --
                 _TournamentSectionTitle(
-                  label: ku ? 'Şemaya Kûpayê' : 'Turnuva Şeması',
+                  label: context.t(K.bracket),
                   accent: AppTheme.gold,
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -492,7 +495,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
                 ],
                 if (_standings.isNotEmpty) ...[
                   _TournamentSectionTitle(
-                    label: ku ? 'Rêzkirin' : 'Sıralama',
+                    label: context.t(K.standings),
                     accent: AppTheme.gold,
                   ),
                   const SizedBox(height: AppSpacing.sm),
@@ -515,27 +518,15 @@ class _LobbyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Calculate time until next Saturday 20:00
+    // Bir sonraki kupa anı saf bir işlevden gelir; mantık burada gömülüyken
+    // sessiz bir hata barındırıyordu (bkz. `weekly_cup_schedule.dart`).
     final now = DateTime.now();
-    final daysUntilSaturday = (DateTime.saturday - now.weekday + 7) % 7;
-    final nextSaturday = DateTime(
-      now.year,
-      now.month,
-      now.day + (daysUntilSaturday == 0 ? 0 : daysUntilSaturday),
-      20,
-      0,
-    );
-    if (nextSaturday.isBefore(now) || nextSaturday.isAtSameMomentAs(now)) {
-      // If it's already Saturday after 20:00, next is next week
-      nextSaturday.add(const Duration(days: 7));
-    }
+    final nextSaturday = nextWeeklyCupAfter(now);
     final remaining = nextSaturday.difference(now);
     final remainingText = formatDurationHuman(remaining, ku: ku);
 
-    final scheduleText = ku ? 'Her Şemî 20:00' : 'Her Cumartesi 20:00';
-    final countdownText = ku
-        ? 'Ji kûpayê re maye: $remainingText'
-        : 'Turnuvaya kalan: $remainingText';
+    final scheduleText = context.t(K.everySaturday);
+    final countdownText = context.t(K.timeRemaining, {'time': remainingText});
 
     // 2026-07-22 canlı UX denetimi: dikey ortalama — hero kart viewport kısa
     // kaldığında alt boşluk yerine dikeyde ortalanır; içerik uzunsa scroll.
@@ -553,10 +544,8 @@ class _LobbyView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ScreenIdentityHeader(
-                  title: ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
-                  subtitle: ku
-                      ? 'Her hefte bir carekê kûpa, şanûyê û xelat'
-                      : 'Her hafta bir kez kupa, rekabet ve ödül',
+                  title: context.t(K.tournamentTitle),
+                  subtitle: context.t(K.weeklyCupSub),
                   accent: AppTheme.gold,
                   icon: AppIcons.trophy,
                   compact: true,
@@ -629,7 +618,7 @@ class _LobbyView extends StatelessWidget {
                             ),
                             const SizedBox(height: AppSpacing.md),
                             Text(
-                              ku ? 'Kûpaya ZanKurd' : 'ZanKurd Kupası',
+                              context.t(K.tournamentTitle),
                               textAlign: TextAlign.center,
                               style: AppTypography.heading1.copyWith(
                                 color: AppTheme.textPrimaryColor(context),
@@ -697,9 +686,7 @@ class _LobbyView extends StatelessWidget {
                                 ),
                               ),
                               child: Text(
-                                ku
-                                    ? 'Bot turnuva · rojane kûpa'
-                                    : 'Bot turnuva · günlük kupa',
+                                context.t(K.botDailyCup),
                                 style: AppTypography.caption.copyWith(
                                   // Altın metin + altın@0.2 zemin açık temada ~2:1
                                   // kalıyordu; aksan kimliği korunarak okunabilir
@@ -714,9 +701,10 @@ class _LobbyView extends StatelessWidget {
                             ),
                             const SizedBox(height: AppSpacing.sm),
                             Text(
-                              ku
-                                  ? '16 lîstikvan (bot) · 4 tur · ${TournamentConfig.questionsPerMatch} pirs/maç'
-                                  : '16 oyuncu (bot) · 4 tur · ${TournamentConfig.questionsPerMatch} soru/maç',
+                              context.t(K.formatSummary, {
+                                'perMatch':
+                                    '${TournamentConfig.questionsPerMatch}',
+                              }),
                               textAlign: TextAlign.center,
                               style: AppTypography.bodyMedium.copyWith(
                                 color: AppTheme.textSubColor(context),
@@ -724,9 +712,7 @@ class _LobbyView extends StatelessWidget {
                             ),
                             const SizedBox(height: AppSpacing.xxs),
                             Text(
-                              ku
-                                  ? 'Bi botan re pêş bikeve — şampiyon kûpayê digire!'
-                                  : 'Bot rakiplere karşı yarış — şampiyon kupayı alır!',
+                              context.t(K.botRaceHint),
                               textAlign: TextAlign.center,
                               style: AppTypography.caption.copyWith(
                                 color: AppTheme.textMutedColor(context),
@@ -748,7 +734,7 @@ class _LobbyView extends StatelessWidget {
                                   foregroundColor: Colors.white,
                                 ),
                                 label: Text(
-                                  ku ? 'Tevlî Kûpayê Bibe' : 'Turnuvaya Katıl',
+                                  context.t(K.joinTournament),
                                   style: AppTypography.bodyLarge.copyWith(
                                     fontWeight: FontWeight.w800,
                                   ),
@@ -816,9 +802,9 @@ class _StatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final statusLabel = switch (bracket.status) {
-      'won' => ku ? 'Şampiyon!' : 'Şampiyon!',
-      'eliminated' => ku ? 'Derket' : 'Elendi',
-      _ => ku ? 'Berdewam' : 'Devam',
+      'won' => context.t(K.champion),
+      'eliminated' => context.t(K.eliminated),
+      _ => context.t(K.ongoing),
     };
     return AppPanel(
       color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
@@ -829,7 +815,7 @@ class _StatusCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                ku ? 'Rewş' : 'Durum',
+                context.t(K.status),
                 style: AppTypography.caption.copyWith(
                   color: AppTheme.textMutedColor(context),
                   fontWeight: FontWeight.w600,
@@ -881,9 +867,7 @@ class _ChampionBanner extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              ku
-                  ? 'Pîroz be! Tu şampiyonê Kûpaya ZanKurd î!'
-                  : 'Tebrikler! ZanKurd Kupası şampiyonusun!',
+              context.t(K.championCongrats),
               style: AppTypography.heading2.copyWith(color: Colors.white),
             ),
           ),
@@ -916,7 +900,7 @@ class _UserMatchCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            ku ? 'Maça Te · $roundName' : 'Maçın · $roundName',
+            context.t(K.yourMatchRound, {'round': roundName}),
             style: TextStyle(
               color: AppTheme.textMutedColor(context),
               fontSize: 12,
@@ -985,7 +969,7 @@ class _UserMatchCard extends StatelessWidget {
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : const Icon(AppIcons.play),
-              label: Text(ku ? 'Maçê Bide Destpêkirin' : 'Maçı Başlat'),
+              label: Text(context.t(K.startMatch)),
             ),
           ),
         ],
@@ -1055,7 +1039,7 @@ class _MatchRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final isUserMatch =
         match.playerOneId == userId || match.playerTwoId == userId;
-    final placeholder = ku ? 'Nediyar' : 'Belirsiz';
+    final placeholder = context.t(K.unknown);
 
     TextStyle nameStyle(String playerId) => TextStyle(
       color: match.status == 'completed' && match.winnerId != playerId

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../models/tournament.dart';
 import '../theme/app_theme.dart';
 import 'player_avatar.dart';
@@ -321,9 +322,10 @@ class _BracketMatchCard extends StatelessWidget {
 
     return Semantics(
       button: true,
-      label: ku
-          ? 'Maça ${match.playerOneName} û ${match.playerTwoName}'
-          : '${match.playerOneName} ve ${match.playerTwoName} maçı',
+      label: Tr.forKu(K.matchSemantics, ku, {
+        'one': match.playerOneName,
+        'two': match.playerTwoName,
+      }),
       // 2026-07-23 canlı UX denetimi: _PlayerSlot içindeki oyuncu adı
       // Text'leri ayrıca kendi semantics düğümünü ekleyip çift okumaya
       // yol açıyordu (M28 devamı).
@@ -389,7 +391,7 @@ class _BracketMatchCard extends StatelessWidget {
                       ),
                       child: Text(
                         isCompleted
-                            ? (ku ? 'Bİ DAWÎ BÛ' : 'BİTTİ')
+                            ? Tr.forKu(K.matchFinished, ku)
                             : hasPlayers
                             ? 'VS'
                             : '—',
@@ -446,7 +448,7 @@ class _PlayerSlot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final placeholder = ku ? 'Nediyar' : 'Belirsiz';
+    final placeholder = Tr.forKu(K.unknownPlayer, ku);
     final displayName = name == 'TBD' || name.isEmpty ? placeholder : name;
     final isDimmed = isCompleted && !isWinner;
     final hasPlayer = name.isNotEmpty && name != 'TBD';

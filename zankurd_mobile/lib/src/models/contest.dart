@@ -7,6 +7,15 @@ class Contest {
   final DateTime dayKey;
   final String themeNameKu;
   final String? themeDescriptionKu;
+
+  /// Tema adının Türkçesi. Yoksa Kurmancî'ye düşülür.
+  ///
+  /// Alan yokken günün etkinliği Türkçe arayüzde de "Ziman Eksperi" diye
+  /// görünüyordu: kategori çipi "Dil" derken hemen üstündeki başlık
+  /// Kurmancî kalıyordu (2026-07-26 denetimi). `QuizQuestion` ile aynı
+  /// desen — çok dilli alan opsiyoneldir, eksikse dil değil içerik düşer.
+  final String? themeNameTr;
+  final String? themeDescriptionTr;
   final String category;
   final int difficultyMin;
   final int difficultyMax;
@@ -21,6 +30,8 @@ class Contest {
     required this.dayKey,
     required this.themeNameKu,
     this.themeDescriptionKu,
+    this.themeNameTr,
+    this.themeDescriptionTr,
     required this.category,
     this.difficultyMin = 1,
     this.difficultyMax = 5,
@@ -36,6 +47,8 @@ class Contest {
     DateTime? dayKey,
     String? themeNameKu,
     String? themeDescriptionKu,
+    String? themeNameTr,
+    String? themeDescriptionTr,
     String? category,
     int? difficultyMin,
     int? difficultyMax,
@@ -49,6 +62,8 @@ class Contest {
     dayKey: dayKey ?? this.dayKey,
     themeNameKu: themeNameKu ?? this.themeNameKu,
     themeDescriptionKu: themeDescriptionKu ?? this.themeDescriptionKu,
+    themeNameTr: themeNameTr ?? this.themeNameTr,
+    themeDescriptionTr: themeDescriptionTr ?? this.themeDescriptionTr,
     category: category ?? this.category,
     difficultyMin: difficultyMin ?? this.difficultyMin,
     difficultyMax: difficultyMax ?? this.difficultyMax,
@@ -64,6 +79,8 @@ class Contest {
     'day_key': dayKey.toIso8601String(),
     'theme_name_ku': themeNameKu,
     'theme_description_ku': themeDescriptionKu,
+    if (themeNameTr != null) 'theme_name_tr': themeNameTr,
+    if (themeDescriptionTr != null) 'theme_description_tr': themeDescriptionTr,
     'category': category,
     'difficulty_min': difficultyMin,
     'difficulty_max': difficultyMax,
@@ -80,6 +97,8 @@ class Contest {
         DateTime.tryParse(json['day_key'] as String? ?? '') ?? DateTime.now(),
     themeNameKu: json['theme_name_ku'] as String,
     themeDescriptionKu: json['theme_description_ku'] as String?,
+    themeNameTr: json['theme_name_tr'] as String?,
+    themeDescriptionTr: json['theme_description_tr'] as String?,
     category: json['category'] as String,
     difficultyMin: json['difficulty_min'] as int? ?? 1,
     difficultyMax: json['difficulty_max'] as int? ?? 5,
@@ -89,6 +108,20 @@ class Contest {
     rank3Reward: json['rank3_reward'] as int? ?? 100,
     questionCount: json['question_count'] as int? ?? 10,
   );
+
+  /// Arayüz diline göre tema adı; çeviri yoksa Kurmancî döner.
+  String themeNameFor({required bool isKu}) {
+    if (isKu) return themeNameKu;
+    final turkish = themeNameTr?.trim();
+    return (turkish == null || turkish.isEmpty) ? themeNameKu : turkish;
+  }
+
+  /// Arayüz diline göre tema açıklaması; çeviri yoksa Kurmancî döner.
+  String? themeDescriptionFor({required bool isKu}) {
+    if (isKu) return themeDescriptionKu;
+    final turkish = themeDescriptionTr?.trim();
+    return (turkish == null || turkish.isEmpty) ? themeDescriptionKu : turkish;
+  }
 
   @override
   String toString() =>

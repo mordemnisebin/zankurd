@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../data/placement_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../utils/app_route.dart';
 import 'level_placement_screen.dart';
 import '../providers/auth_provider.dart';
@@ -16,11 +17,13 @@ import '../services/notification_service.dart';
 import '../services/premium_service.dart';
 import '../services/tts_service.dart';
 import '../theme/app_theme.dart';
+import '../utils/percent_format.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/legal_links.dart';
 import '../widgets/screen_identity_header.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'image_credits_screen.dart';
 import 'paywall_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -38,7 +41,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late final Future<PlacementStore> _placementStoreFuture = PlacementStore.load();
+  late final Future<PlacementStore> _placementStoreFuture =
+      PlacementStore.load();
   final _nameController = TextEditingController();
   bool _deleting = false;
   bool _loadingName = true;
@@ -105,14 +109,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (mounted) {
         setState(() => _loadingName = false);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              context.s(
-                'Navê lîstikvan nehat barkirin.',
-                'Oyuncu adı yüklenemedi.',
-              ),
-            ),
-          ),
+          SnackBar(content: Text(context.t(K.playerNameLoadFailed))),
         );
       }
     }
@@ -124,10 +121,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: Text(ku ? 'Mîheng' : 'Ayarlar'),
-        backgroundColor: Colors.transparent,
-      ),
+      // Başlık [ScreenIdentityHeader]'da; AppBar yalnız geri düğmesini
+      // taşır. İkisi de başlık yazdığında ekranın tepesinde aynı sözcük
+      // iki kez görünüyordu (2026-07-25 canlı denetimi).
+      appBar: AppBar(backgroundColor: Colors.transparent),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
@@ -140,10 +137,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             children: [
               ScreenIdentityHeader(
-                title: ku ? 'Mîheng' : 'Ayarlar',
-                subtitle: ku
-                    ? 'Ziman, dîmen, deng û hesab.'
-                    : 'Dil, görünüm, ses ve hesap.',
+                title: context.t(K.settings),
+                subtitle: context.t(K.settingsSubtitle),
                 accent: AppTheme.playPurple,
                 icon: AppIcons.gear,
                 compact: true,
@@ -151,7 +146,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: AppSpacing.sm),
               // ============ HESAP / ACCOUNT ============
               ScreenSectionLabel(
-                label: ku ? 'Hesap' : 'Hesap',
+                label: context.t(K.secAccount),
                 accent: AppTheme.violet,
               ),
               AppPanel(
@@ -161,7 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _SettingsIconTitle(
                       icon: AppIcons.idBadge,
                       color: AppTheme.primaryGradientStart,
-                      title: ku ? 'Navê lîstikvanê' : 'Oyuncu Adı',
+                      title: context.t(K.playerName),
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     TextField(
@@ -172,9 +167,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         color: AppTheme.textPrimaryColor(context),
                       ),
                       decoration: InputDecoration(
-                        hintText: ku
-                            ? 'Navê xwe binivîse...'
-                            : 'Oyundaki adını gir...',
+                        hintText: context.t(K.playerNameHint),
                       ),
                       textInputAction: TextInputAction.done,
                       onSubmitted: (_) => _savePlayerName(),
@@ -209,7 +202,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // ============ ÖĞRENME / LEARNING ============
               ScreenSectionLabel(
-                label: ku ? 'Hînbûn' : 'Öğrenme',
+                label: context.t(K.secLearning),
                 accent: AppTheme.playGreen,
               ),
               AppPanel(
@@ -233,9 +226,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                ku
-                                    ? 'Asta xwe ji nû ve diyar bike'
-                                    : 'Seviyeni yeniden belirle',
+                                context.t(K.retakePlacement),
                                 style: TextStyle(
                                   color: AppTheme.textPrimaryColor(context),
                                   fontWeight: FontWeight.w700,
@@ -248,16 +239,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   final level = snap.data?.level;
                                   final String sub;
                                   if (level == null) {
-                                    sub = ku
-                                        ? 'Kurt sînavek bê tade'
-                                        : 'Kısa, baskısız bir sınav';
+                                    sub = context.t(K.retakePlacementSub);
                                   } else {
                                     final name = ku
                                         ? level.labelKu
                                         : level.labelTr;
-                                    sub = ku
-                                        ? 'Asta te ya niha: $name'
-                                        : 'Mevcut seviyen: $name';
+                                    sub = context.t(K.currentLevel, {
+                                      'name': name,
+                                    });
                                   }
                                   return Text(
                                     sub,
@@ -283,7 +272,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // ============ GÜVENLİK / SAFETY ============
               ScreenSectionLabel(
-                label: ku ? 'Ewlekarî' : 'Güvenlik',
+                label: context.t(K.secSafety),
                 accent: AppTheme.playGreen,
               ),
               AppPanel(
@@ -292,7 +281,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   builder: (context, child, _) => _SettingsToggleRow(
                     icon: AppIcons.shield,
                     color: AppTheme.playGreen,
-                    title: ku ? 'Moda zaroka ewle' : 'Güvenli çocuk modu',
+                    title: context.t(K.childSafeMode),
                     trailing: Switch(
                       key: const ValueKey('child-safe-switch'),
                       value: child.enabled,
@@ -305,7 +294,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // ============ GÖRÜNÜM / APPEARANCE ============
               ScreenSectionLabel(
-                label: ku ? 'Dîmen' : 'Görünüm',
+                label: context.t(K.secAppearance),
                 accent: AppTheme.violet,
               ),
               AppPanel(
@@ -315,7 +304,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _SettingsToggleRow(
                       icon: AppIcons.language,
                       color: AppTheme.violet,
-                      title: ku ? 'Zimanê sepanê' : 'Uygulama dili',
+                      title: context.t(K.appLanguage),
                       trailing: _LangSwitch(),
                     ),
                     Divider(
@@ -330,9 +319,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ? AppIcons.moon
                                 : AppIcons.sun,
                             color: AppTheme.violet,
-                            title: ku
-                                ? 'Modê tarî/ronahî'
-                                : 'Karanlık/Aydınlık mod',
+                            title: context.t(K.darkLightMode),
                             trailing: Switch(
                               value: themeProvider.isDark,
                               onChanged: (_) {
@@ -350,7 +337,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       builder: (context, motion, _) => _SettingsToggleRow(
                         icon: AppIcons.clapperboard,
                         color: AppTheme.violet,
-                        title: ku ? 'Tevgerê kêm bike' : 'Hareketi azalt',
+                        title: context.t(K.reduceMotion),
                         trailing: Switch(
                           key: const ValueKey('reduce-motion-switch'),
                           value: motion.userReduce,
@@ -365,7 +352,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // ============ SES & BİLDİRİM / SOUND & NOTIFICATIONS ============
               ScreenSectionLabel(
-                label: ku ? 'Deng û Agahdarî' : 'Ses & Bildirim',
+                label: context.t(K.secSoundNotif),
                 accent: AppTheme.violet,
               ),
               AppPanel(
@@ -378,7 +365,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ? AppIcons.volumeHigh
                             : AppIcons.volumeXmark,
                         color: AppTheme.primaryGradientStart,
-                        title: ku ? 'Deng û mûzîk' : 'Ses efektleri',
+                        title: context.t(K.soundEffects),
                         trailing: Switch(
                           value: sound.enabled,
                           onChanged: (_) => sound.toggle(),
@@ -395,10 +382,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ? AppIcons.bell
                           : AppIcons.bellSlash,
                       color: AppTheme.violet,
-                      title: ku ? 'Bîranîna rojane' : 'Günlük hatırlatıcı',
-                      subtitle: ku
-                          ? 'Her roj di demjimêr $_notificationTime de'
-                          : 'Her gün saat $_notificationTime',
+                      title: context.t(K.dailyReminder),
+                      subtitle: context.t(K.dailyReminderAt, {
+                        'time': _notificationTime,
+                      }),
                       trailing: Switch(
                         value: _notificationsEnabled,
                         onChanged: _toggleNotifications,
@@ -432,11 +419,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               const SizedBox(width: AppSpacing.sm),
                               Expanded(
                                 child: Text(
-                                  ku
-                                      ? 'Destûra agahdariyê nehat dayîn; ji '
-                                            'mîhengên sîstemê veke.'
-                                      : 'Bildirim izni verilmedi; sistem '
-                                            'ayarlarından açın.',
+                                  context.t(K.notifPermDeniedInline),
                                   style: AppTypography.caption.copyWith(
                                     color: AppTheme.wrong,
                                     fontWeight: FontWeight.w600,
@@ -481,9 +464,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ),
                                 const SizedBox(width: AppSpacing.xs),
                                 Text(
-                                  ku
-                                      ? 'Demê biguherîne: $_notificationTime'
-                                      : 'Saati değiştir: $_notificationTime',
+                                  context.t(K.changeTime, {
+                                    'time': _notificationTime,
+                                  }),
                                   style: AppTypography.bodyMedium.copyWith(
                                     color: AppTheme.textPrimaryColor(context),
                                   ),
@@ -501,13 +484,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // ============ SESLENDİRME (TTS) ============
               ScreenSectionLabel(
-                label: ku ? 'Deng-xwendin' : 'Seslendirme',
+                label: context.t(K.secTts),
                 accent: AppTheme.primaryGradientStart,
               ),
               const _TtsSettingsSection(),
               const SizedBox(height: AppSpacing.cardGap),
 
               // ============ PREMIUM ABONELİK ============
+              // Diğer her blok gibi premium de kendi bölüm başlığını taşır.
+              // Başlıksızken kart, bir üstteki "Seslendirme" bölümünün
+              // devamı gibi görünüyor ve para kazandıran tek giriş noktası
+              // ayarların içinde kayboluyordu (2026-07-25 canlı denetimi).
+              const ScreenSectionLabel(label: 'Premium', accent: AppTheme.gold),
               Consumer<PremiumService>(
                 builder: (context, premium, _) {
                   final isPremium = premium.isPremium;
@@ -554,10 +542,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 children: [
                                   Text(
                                     isPremium
-                                        ? (ku
-                                              ? 'ZanKurd Premium'
-                                              : 'ZanKurd Premium')
-                                        : (ku ? 'Premium bibe' : 'Premium ol'),
+                                        ? context.t(K.premiumBrand)
+                                        : context.t(K.premiumCta),
                                     style: AppTypography.bodyLarge.copyWith(
                                       color: AppTheme.textPrimaryColor(context),
                                       fontWeight: FontWeight.w800,
@@ -566,12 +552,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   const SizedBox(height: 2),
                                   Text(
                                     isPremium
-                                        ? (ku
-                                              ? 'Hemû taybetmendiyên premium vekirî ne'
-                                              : 'Tüm premium özellikler aktif')
-                                        : (ku
-                                              ? 'Xeml belaş, rozeta VIP, parastina zincîrê'
-                                              : 'Bedava kozmetik, VIP rozeti, seri koruması'),
+                                        ? (context.t(K.premiumActive))
+                                        : (context.t(K.premiumPerks)),
                                     style: AppTypography.caption.copyWith(
                                       color: AppTheme.textSubColor(context),
                                     ),
@@ -597,8 +579,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                               child: Text(
                                 isPremium
-                                    ? (ku ? 'VEKIRÎ' : 'AKTİF')
-                                    : (ku ? 'BIGIRE' : 'BAŞLA'),
+                                    ? (context.t(K.premiumBadgeOn))
+                                    : (context.t(K.premiumBadgeOff)),
                                 style: TextStyle(
                                   color: AppColors.readableAccent(
                                     context,
@@ -623,27 +605,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // ============ HAKKINDA / ABOUT ============
               ScreenSectionLabel(
-                label: ku ? 'Derbarê Sepanê' : 'Uygulama Hakkında',
+                label: context.t(K.secAbout),
                 accent: AppTheme.violet,
               ),
               // How to play
               _ExpandableSection(
                 icon: AppIcons.circleQuestion,
                 iconColor: AppTheme.correct,
-                title: ku ? 'Çawa tê lîstin?' : 'Nasıl oynanır?',
-                body: ku
-                    ? '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n'
-                          '• Pêşbirka Rojê: her roj ji bo hemû lîstikvanan heman 10 pirs.\n'
-                          '• Odeyek Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n'
-                          '• Kategorî û Ast: ji 8 kategoriyan û 5 astan hilbijêre.\n'
-                          '• Joker 50/50: du bersivên şaş radike.\n'
-                          '• Bersivên rast pûan û coin dide; rêza rast bonus zêde dike.'
-                    : '• Hızlı Yarış: hemen 10 soru cevapla.\n'
-                          '• Günün Yarışması: her gün tüm oyunculara aynı 10 soru.\n'
-                          '• Oda Kur: kodu arkadaşlarına ver, birlikte yarışın.\n'
-                          '• Kategori ve Seviye: 8 kategori, 5 seviye arasından seç.\n'
-                          '• 50/50 jokeri iki yanlış cevabı eler.\n'
-                          '• Doğru cevap puan ve coin kazandırır; seri bonusu artırır.',
+                title: context.t(K.howToPlay),
+                body: context.t(K.howToPlayBody),
               ),
               const SizedBox(height: AppSpacing.cardGap),
 
@@ -651,25 +621,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               _ExpandableSection(
                 icon: AppIcons.shieldHalved,
                 iconColor: AppTheme.violet,
-                title: ku ? 'Nepenî' : 'Gizlilik',
-                body: ku
-                    ? 'ZanKurd ev dane tomar dike: navê lîstikvan, '
-                          'navnîşana e-peyamê (heke tomar bibî), pûan û statîstîkên '
-                          'lîstikê, hejmara coinan û pirsên tomarkirî. Di xetayan de '
-                          'tomarên teknîkî yên anonîm tên berhevkirin.\n\n'
-                          'Daneyên te nayên firotin û ji bo reklamê bi kesên sêyemîn '
-                          're nayên parvekirin. Navê te tenê di tabloya pêşderçûnê de '
-                          'xuya dibe.\n\n'
-                          'Ji bo jêbirina hesabê û hemû daneyan: '
-                          'nisebinbawer47@gmail.com'
-                    : 'ZanKurd şu verileri saklar: oyuncu adı, e-posta adresi '
-                          '(kayıt olursan), oyun puanları ve istatistikleri, coin '
-                          'bakiyesi ve kaydedilen sorular. Hatalarda anonim teknik '
-                          'çökme kayıtları toplanır.\n\n'
-                          'Verilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı '
-                          'paylaşılmaz. Adın yalnızca liderlik tablosunda görünür.\n\n'
-                          'Hesabını ve tüm verilerini kalıcı sildirmek için: '
-                          'nisebinbawer47@gmail.com',
+                title: context.t(K.privacy),
+                body: context.t(K.privacyBody),
               ),
               const SizedBox(height: AppSpacing.cardGap),
 
@@ -717,7 +670,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ),
                             Text(
-                              '${ku ? 'Guherto' : 'Sürüm'} $_versionLabel',
+                              '${context.t(K.version)} $_versionLabel',
                               style: AppTypography.caption.copyWith(
                                 color: AppTheme.textMutedColor(context),
                               ),
@@ -728,11 +681,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      ku
-                          ? 'Sepana pêşbirkê ya Kurmancî — ziman, çand, dîrok, '
-                                'edebiyat, erdnîgarî û muzîka Kurdî hîn bibe û pêşbirkê bike.'
-                          : 'Kurmancî bilgi yarışması uygulaması — Kürt dili, kültürü, '
-                                'tarihi, edebiyatı, coğrafyası ve müziğini öğren, yarış.',
+                      context.t(K.aboutBody),
                       style: TextStyle(
                         color: AppTheme.textSubColor(context),
                         height: 1.45,
@@ -775,9 +724,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           const SizedBox(width: 10),
                           Expanded(
                             child: Text(
-                              ku
-                                  ? 'Her guhertin di vê amûrê de tavilê tê sepandin.'
-                                  : 'Yaptığın değişiklikler bu cihazda anında uygulanır.',
+                              context.t(K.localChangesNote),
                               style: AppTypography.caption.copyWith(
                                 color: AppTheme.textSubColor(context),
                                 fontWeight: FontWeight.w600,
@@ -791,6 +738,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const SizedBox(height: 12),
                     // Yasal bağlantılar (mağaza şartı)
                     const LegalLinksRow(),
+                    const SizedBox(height: 10),
+                    // Soru fotoğrafları CC BY lisanslıdır; atıf yasal
+                    // yükümlülüktür (bkz. image_credits_screen.dart).
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: InkWell(
+                        key: const ValueKey('settings-image-credits'),
+                        onTap: () => Navigator.of(
+                          context,
+                        ).push(AppRoute.to(const ImageCreditsScreen())),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Text(
+                            context.t(K.imageCredits),
+                            style: AppTypography.caption.copyWith(
+                              color: AppTheme.brand,
+                              fontWeight: FontWeight.w700,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -813,7 +783,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          ku ? 'Karên Hesabê' : 'Hesap İşlemleri',
+                          context.t(K.secDanger),
                           style: AppTypography.bodyLarge.copyWith(
                             color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w700,
@@ -824,9 +794,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      ku
-                          ? 'Ev kar nayên vegerandin.'
-                          : 'Bu alandaki işlemler geri alınamaz.',
+                      context.t(K.dangerNote),
                       style: AppTypography.caption.copyWith(
                         color: AppTheme.textMutedColor(context),
                       ),
@@ -874,7 +842,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    ku ? 'Hesabê Min Jê Bibe' : 'Hesabımı Sil',
+                                    context.t(K.deleteAccount),
                                     style: const TextStyle(
                                       color: AppTheme.wrong,
                                       fontWeight: FontWeight.w700,
@@ -882,9 +850,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                   const SizedBox(height: 3),
                                   Text(
-                                    ku
-                                        ? 'Profîl, coin û pirsên tomarkirî tên jêbirin.'
-                                        : 'Profil, coin ve kaydedilen soru verilerin silinir.',
+                                    context.t(K.deleteAccountSub),
                                     style: AppTypography.caption.copyWith(
                                       color: AppTheme.textMutedColor(context),
                                     ),
@@ -954,7 +920,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   /// Sistem bildirim izni reddedilmişse kullanıcıyı bilgilendirir.
   void _showSystemPermissionDialog() {
-    final ku = context.isKu;
     showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -963,21 +928,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           borderRadius: BorderRadius.circular(AppRadius.md),
           side: BorderSide(color: AppTheme.borderColor(context)),
         ),
-        title: Text(
-          ku ? 'Destûra agahdariyê tune ye' : 'Bildirim izni verilmedi',
-        ),
-        content: Text(
-          ku
-              ? 'Pergal destûra agahdariyan nade ZanKurd. Ji kerema xwe ji '
-                    'mîhengên sîstema amûrê ve agahdariyên ZanKurd veke.'
-              : 'Sistem, ZanKurd için bildirimlere izin vermiyor. Lütfen '
-                    'cihazının sistem ayarlarından ZanKurd bildirimlerini aç.',
-        ),
+        title: Text(context.t(K.notifPermDenied)),
+        content: Text(context.t(K.notifPermDeniedBody)),
         actions: [
           // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           FilledButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: ExcludeSemantics(child: Text(ku ? 'Baş e' : 'Tamam')),
+            child: ExcludeSemantics(child: Text(context.t(K.ok))),
           ),
         ],
       ),
@@ -1018,27 +975,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
           borderRadius: BorderRadius.circular(AppRadius.md),
           side: BorderSide(color: AppTheme.borderColor(context)),
         ),
-        title: Text(ku ? 'Moda zaroka ewle' : 'Güvenli çocuk modu'),
-        content: Text(
-          ku
-              ? 'Ev mod li ser vê amûrê: lêgerîna hevalan, daxwazên nû, '
-                    'sohbeta odeyê û parvekirina derve digire. Dane nayên jêbirin; '
-                    'gava tu bigirî her tişt vedigere.'
-              : 'Bu mod bu cihazda: arkadaş aramayı, yeni istekleri, oda '
-                    'sohbetini ve dış paylaşımı kapatır. Hiçbir veri silinmez; '
-                    'kapattığında her şey geri gelir.',
-        ),
+        title: Text(context.t(K.childSafeMode)),
+        content: Text(context.t(K.childSafeBody)),
         actions: [
           // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           TextButton(
             onPressed: () => Navigator.of(dialogCtx).pop(false),
-            child: ExcludeSemantics(child: Text(ku ? 'Betal' : 'Vazgeç')),
+            child: ExcludeSemantics(child: Text(context.t(K.cancel))),
           ),
           FilledButton(
             key: const ValueKey('child-safe-confirm'),
             onPressed: () => Navigator.of(dialogCtx).pop(true),
             // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-            child: ExcludeSemantics(child: Text(ku ? 'Veke' : 'Aç')),
+            child: ExcludeSemantics(child: Text(context.t(K.openSettings))),
           ),
         ],
       ),
@@ -1056,7 +1005,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _confirmDeleteAccount() async {
-    final ku = context.isKu;
     final continueDelete = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -1065,26 +1013,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
           borderRadius: BorderRadius.circular(AppRadius.md),
           side: BorderSide(color: AppTheme.borderColor(context)),
         ),
-        title: Text(
-          ku ? 'Hesabê bi dawî jê bibî?' : 'Hesabı kalıcı olarak sil?',
-        ),
-        content: Text(
-          ku
-              ? 'Ev çalakî venagere. Profîl, coin, pirsên tomarkirî û daneyên kesane yên hesabê te tên jêbirin.'
-              : 'Bu işlem geri alınamaz. Profil, coin, kaydedilen sorular ve hesabına bağlı kişisel veriler silinir.',
-        ),
+        title: Text(context.t(K.deleteConfirmTitle)),
+        content: Text(context.t(K.deleteConfirmBody)),
         actions: [
           // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           OutlinedButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: ExcludeSemantics(child: Text(ku ? 'Betal' : 'Vazgeç')),
+            child: ExcludeSemantics(child: Text(context.t(K.cancel))),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, true),
             // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-            child: ExcludeSemantics(
-              child: Text(ku ? 'Berdewam Bike' : 'Devam Et'),
-            ),
+            child: ExcludeSemantics(child: Text(context.t(K.continueAction))),
           ),
         ],
       ),
@@ -1107,16 +1047,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         _currentName = name;
         _savingName = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s(
-              'Navê lîstikvan hate nûvekirin.',
-              'Oyuncu adı güncellendi.',
-            ),
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.playerNameUpdated))));
     } catch (error, stack) {
       ErrorReporter.record(
         error,
@@ -1126,22 +1059,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (!mounted) return;
       setState(() => _savingName = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s(
-              'Navê lîstikvan nehat tomar kirin.',
-              'Oyuncu adı kaydedilemedi.',
-            ),
-          ),
-        ),
+        SnackBar(content: Text(context.t(K.playerNameSaveFailed))),
       );
     }
   }
 
   Future<bool?> _showFinalDeleteConfirmation() async {
     final controller = TextEditingController();
-    final ku = context.isKu;
-    final confirmWord = ku ? 'JÊ BIBE' : 'SIL';
+    final confirmWord = context.t(K.deleteWord);
     final result = await showDialog<bool>(
       context: context,
       builder: (dialogContext) {
@@ -1154,16 +1079,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 borderRadius: BorderRadius.circular(AppRadius.md),
                 side: BorderSide(color: AppTheme.borderColor(context)),
               ),
-              title: Text(ku ? 'Erêkirina dawî' : 'Son onay'),
+              title: Text(context.t(K.finalConfirm)),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    ku
-                        ? 'Ji bo jêbirina hesabê "$confirmWord" binivîse.'
-                        : 'Hesabını silmek için "$confirmWord" yaz.',
-                  ),
+                  Text(context.t(K.deleteTypeWord, {'word': confirmWord})),
                   const SizedBox(height: 12),
                   TextField(
                     key: const ValueKey('delete-confirm-field'),
@@ -1182,7 +1103,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                 OutlinedButton(
                   onPressed: () => Navigator.pop(dialogContext, false),
-                  child: ExcludeSemantics(child: Text(ku ? 'Betal' : 'Vazgeç')),
+                  child: ExcludeSemantics(child: Text(context.t(K.cancel))),
                 ),
                 FilledButton(
                   onPressed: canDelete
@@ -1190,7 +1111,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       : null,
                   // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                   child: ExcludeSemantics(
-                    child: Text(ku ? 'Bi Dawî Jê Bibe' : 'Kalıcı Olarak Sil'),
+                    child: Text(context.t(K.deleteForever)),
                   ),
                 ),
               ],
@@ -1214,16 +1135,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ErrorReporter.record(error, stack, reason: 'deleteAccount failed');
       if (!mounted) return;
       setState(() => _deleting = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s(
-              'Hesab nehat jêbirin. Ji kerema xwe dîsa biceribîne.',
-              'Hesap silinemedi. Lütfen tekrar deneyin.',
-            ),
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.accountDeleteFailed))));
     }
   }
 }
@@ -1538,7 +1452,6 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
 
   @override
   Widget build(BuildContext context) {
-    final ku = context.isKu;
     final tts = _tts;
 
     if (_loading) {
@@ -1551,9 +1464,7 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
     if (tts == null) {
       return AppPanel(
         child: Text(
-          ku
-              ? 'Deng-xwendin li vê amûrê nayê bikaranîn.'
-              : 'Seslendirme bu cihazda kullanılamıyor.',
+          context.t(K.ttsUnavailable),
           style: AppTypography.caption.copyWith(
             color: AppTheme.textMutedColor(context),
           ),
@@ -1569,10 +1480,8 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
           _SettingsToggleRow(
             icon: enabled ? AppIcons.volumeHigh : AppIcons.volumeXmark,
             color: AppTheme.primaryGradientStart,
-            title: ku ? 'Deng-xwendinê veke' : 'Seslendirmeyi aç',
-            subtitle: ku
-                ? 'Pirs û şîroveyan bi deng bixwîne'
-                : 'Soru ve açıklamaları sesli okut',
+            title: context.t(K.ttsEnable),
+            subtitle: context.t(K.ttsEnableSub),
             trailing: Switch(
               value: enabled,
               onChanged: (v) async {
@@ -1599,11 +1508,7 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
                   const SizedBox(width: AppSpacing.xs),
                   Expanded(
                     child: Text(
-                      ku
-                          ? 'Dengê kurdî li vê amûrê sînordar e; dibe ku dengekî '
-                                'din were bikaranîn.'
-                          : 'Bu cihazda Kürtçe ses sınırlı olabilir; yedek bir '
-                                'ses kullanılabilir.',
+                      context.t(K.ttsKurdishLimited),
                       style: AppTypography.caption.copyWith(
                         color: AppTheme.textMutedColor(context),
                         height: 1.3,
@@ -1620,7 +1525,7 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
               color: AppTheme.borderColor(context),
             ),
             _TtsSlider(
-              label: ku ? 'Leza xwendinê' : 'Konuşma hızı',
+              label: context.t(K.ttsRate),
               icon: AppIcons.bolt,
               value: tts.rate,
               onChanged: (v) async {
@@ -1634,7 +1539,7 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
               color: AppTheme.borderColor(context),
             ),
             _TtsSlider(
-              label: ku ? 'Bilindahiya deng' : 'Ses seviyesi',
+              label: context.t(K.ttsVolume),
               icon: AppIcons.volumeHigh,
               value: tts.volume,
               onChanged: (v) async {
@@ -1689,14 +1594,50 @@ class _TtsSlider extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  label,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        label,
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppTheme.textPrimaryColor(context),
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    // Sınıf belgesi "etiketleli kaydırıcı" diyordu ama
+                    // ekranda yalnız ad vardı: kullanıcı hızın ya da sesin
+                    // hangi değerde olduğunu göremiyordu (2026-07-25
+                    // denetimi). Yüzde, kaydırıcının kendisiyle aynı
+                    // satırda ve sabit genişlikte durur ki değer
+                    // değişirken etiket zıplamasın.
+                    SizedBox(
+                      width: 44,
+                      child: Text(
+                        context.percentRatio(value.clamp(0.0, 1.0)),
+                        textAlign: TextAlign.end,
+                        style: AppTypography.caption.copyWith(
+                          color: AppTheme.textMutedColor(context),
+                          fontWeight: FontWeight.w700,
+                          fontFeatures: const [
+                            // Tabular rakam: %9 → %10 geçişinde genişlik
+                            // değişmesin.
+                            FontFeature.tabularFigures(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Semantics(
+                  slider: true,
+                  label: label,
+                  value: context.percentRatio(value.clamp(0.0, 1.0)),
+                  child: Slider(
+                    value: value.clamp(0.0, 1.0),
+                    onChanged: onChanged,
                   ),
                 ),
-                Slider(value: value.clamp(0.0, 1.0), onChanged: onChanged),
               ],
             ),
           ),

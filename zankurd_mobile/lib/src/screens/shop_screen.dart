@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/avatar_identity.dart';
 import '../providers/sound_provider.dart';
 import '../services/premium_service.dart';
@@ -400,7 +401,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     const SizedBox(width: 8),
                     Text(
                       isPremium
-                          ? (ku ? 'Belaş · Premium' : 'Bedava · Premium')
+                          ? (context.t(K.freePremium))
                           : '${item.cost} coin',
                       style: TextStyle(
                         color: AppTheme.textPrimaryColor(ctx),
@@ -422,9 +423,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    ku
-                        ? 'Bakiyeya te: $_coinBalance coin'
-                        : 'Bakiyen: $_coinBalance coin',
+                    context.t(K.yourBalance, {'coins': '$_coinBalance'}),
                     style: AppTypography.caption.copyWith(
                       color: (!isPremium && _coinBalance < item.cost)
                           ? AppTheme.wrong
@@ -455,7 +454,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                     icon: const Icon(AppIcons.dice, size: 18),
                     label: ExcludeSemantics(
-                      child: Text(ku ? 'Coin qezenc bike' : 'Coin kazan'),
+                      child: Text(context.t(K.earnCoins)),
                     ),
                   ),
                 ),
@@ -468,7 +467,7 @@ class _ShopScreenState extends State<ShopScreen> {
               onPressed: () => Navigator.of(ctx).pop(false),
               child: ExcludeSemantics(
                 child: Text(
-                  ku ? 'Betal' : 'İptal',
+                  context.t(K.cancelShort),
                   style: TextStyle(color: AppTheme.textMutedColor(ctx)),
                 ),
               ),
@@ -489,8 +488,8 @@ class _ShopScreenState extends State<ShopScreen> {
               child: ExcludeSemantics(
                 child: Text(
                   isPremium
-                      ? (ku ? 'Belaş veke' : 'Bedava aç')
-                      : (ku ? 'Bikire' : 'Satın Al'),
+                      ? (context.t(K.unlockFree))
+                      : (context.t(K.buyAction)),
                 ),
               ),
             ),
@@ -505,7 +504,6 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Future<void> _purchase(ShopItem item) async {
-    final ku = context.isKu;
     // Premium: kozmetik bedava (maliyet 0). Yine satın alma kaydı oluşur ve
     // efekt uygulanır; sadece coin düşülmez. Aksi halde bakiye kontrolü.
     final isPremium = _isPremiumUser;
@@ -514,7 +512,7 @@ class _ShopScreenState extends State<ShopScreen> {
       HapticFeedback.vibrate();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(ku ? 'Bakiyeya te kêm e!' : 'Bakiye yetersiz!'),
+          content: Text(context.t(K.insufficientBalance)),
           backgroundColor: AppTheme.wrong,
         ),
       );
@@ -549,9 +547,7 @@ class _ShopScreenState extends State<ShopScreen> {
         HapticFeedback.vibrate();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              ku ? 'Kirîn bi ser neket.' : 'Satın alma başarısız oldu.',
-            ),
+            content: Text(context.t(K.purchaseFailed)),
             backgroundColor: AppTheme.wrong,
           ),
         );
@@ -559,9 +555,9 @@ class _ShopScreenState extends State<ShopScreen> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'shop_purchase');
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(ku ? 'Çewtiyek çêbû.' : 'Bir hata oluştu.')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.errorOccurred))));
     } finally {
       _loadBalance();
     }
@@ -617,7 +613,7 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
               const SizedBox(height: 12),
               Text(
-                ku ? 'Pîroz be!' : 'Tebrikler!',
+                context.t(K.congrats),
                 style: AppTypography.heading2.copyWith(
                   color: AppTheme.gold,
                   fontWeight: FontWeight.w900,
@@ -625,9 +621,7 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
               const SizedBox(height: 6),
               Text(
-                ku
-                    ? 'Te $title bi serkeftî kirî!'
-                    : '$title başarıyla satın alındı!',
+                context.t(K.purchasedItem, {'item': title}),
                 textAlign: TextAlign.center,
                 style: AppTypography.bodyMedium.copyWith(
                   color: AppTheme.textPrimaryColor(dialogContext),
@@ -647,7 +641,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     ),
                   ),
                   child: Text(
-                    ku ? 'Fêm kir' : 'Anladım',
+                    context.t(K.gotIt),
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -673,13 +667,7 @@ class _ShopScreenState extends State<ShopScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
-        title: Text(
-          ku ? 'Dukan' : 'Mağaza',
-          style: TextStyle(
-            color: AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+
         actions: [
           // Dalga 5: devasa bakiye kartı yerine kompakt coin chip'i.
           Padding(
@@ -787,9 +775,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    ku
-                        ? 'Bakiyeya te 0 e — çerxa rojane bizivire û coin qezenc bike!'
-                        : 'Bakiyen 0 — günlük çarkı çevir, coin kazan!',
+                    context.t(K.zeroBalanceHint),
                     maxLines: 2,
                     style: AppTypography.caption.copyWith(
                       color: AppTheme.textPrimaryColor(context),
@@ -815,7 +801,7 @@ class _ShopScreenState extends State<ShopScreen> {
     if (_dynamicItems.isEmpty) {
       return Center(
         child: Text(
-          ku ? 'Hîn tiştek di dukanê de tune.' : 'Mağazada henüz ürün yok.',
+          context.t(K.shopEmpty),
           style: TextStyle(color: AppTheme.textMutedColor(context)),
         ),
       );
@@ -834,7 +820,12 @@ class _ShopScreenState extends State<ShopScreen> {
     } else if (width >= 720) {
       crossAxisCount = 3;
       childAspectRatio = 0.90;
-    } else if (width >= 420) {
+    } else if (width >= 360) {
+      // Eşik 420pt idi; iPhone'ların neredeyse tamamı (SE 375, standart
+      // 390, Pro 402) bunun altında kalıp tek sütuna düşüyordu ve ekranda
+      // aynı anda ancak iki ürün görünüyordu (2026-07-25 canlı denetimi).
+      // 360pt, modern iPhone'ların tamamını iki sütuna alır; kart genişliği
+      // en dar cihazda bile ~166pt kalır.
       crossAxisCount = 2;
       childAspectRatio = 0.74;
     } else {
@@ -846,38 +837,18 @@ class _ShopScreenState extends State<ShopScreen> {
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       children: [
         ScreenIdentityHeader(
-          title: ku ? 'Dukan' : 'Mağaza',
-          subtitle: ku
-              ? 'Coinên xwe bi aqilmendî bixercîne û profîla xwe xweştir bike'
-              : 'Coinlerini akıllıca harca, profilini ve deneyimini güzelleştir',
+          title: context.t(K.shop),
+          subtitle: context.t(K.shopSubtitle),
           accent: AppTheme.gold,
           icon: AppIcons.bagShopping,
           compact: true,
         ),
         const SizedBox(height: AppSpacing.sm),
-        // 2026-07-23 M33: Roj maskotu onboarding/liderlik/günün-sözü
-        // dışında görünmüyordu — marka kimliği mağazada da tutarlı olsun.
-        Padding(
-          key: const ValueKey('shop-mascot-header'),
-          padding: const EdgeInsets.only(bottom: 12),
-          child: Row(
-            children: [
-              const RojMascot(size: 40, mood: RojMood.happy),
-              const SizedBox(width: AppSpacing.sm),
-              Expanded(
-                child: Text(
-                  ku
-                      ? 'Bi xalên xwe tiştên xweş bikire!'
-                      : 'Kazandığın coinlerle kendine güzel şeyler al!',
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        // Maskotlu karşılama şeridi kaldırıldı: AppBar başlığı, kimlik
+        // kartı ve bu satır üst üste aynı şeyi söylüyordu ("Mağaza" /
+        // "Coinlerini harca" / "Kazandığın coinlerle al") ve ilk ürün
+        // ancak ekranın yarısından sonra başlıyordu (2026-07-25 canlı
+        // denetimi). Karşılama görevini kimlik kartının alt başlığı taşır.
         if (!_loading && _coinBalance == 0) _buildEarnCoinCta(context, ku),
         _buildHeroCard(heroItem, ku, isDark),
         if (restItems.isNotEmpty) ...[
@@ -978,7 +949,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           borderRadius: BorderRadius.circular(AppRadius.pill),
                         ),
                         child: Text(
-                          ku ? 'YA HERÎ TÊ XWASTIN' : 'EN POPÜLER',
+                          context.t(K.mostWanted),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 11,
@@ -1243,7 +1214,7 @@ class _ShopScreenState extends State<ShopScreen> {
           const Icon(AppIcons.check, size: 14, color: AppTheme.correct),
           const SizedBox(width: 4),
           Text(
-            ku ? 'Yê te' : 'Sende',
+            context.t(K.ownedLabel),
             style: const TextStyle(
               color: AppTheme.correct,
               fontSize: 12,

@@ -13,6 +13,13 @@ class AppRoute<T> extends PageRouteBuilder<T> {
         // "çift pozlama" görüntüsü buradan geliyordu (2026-07-25 canlı
         // denetimi). Giden sayfa `secondaryAnimation` ile hafifçe geri
         // çekilip karartılır; derinlik hissi fade olmadan da korunur.
+        //
+        // Giden sayfa tween'lerinin yönü kritik: `secondaryAnimation` en
+        // üstteki rota için daima 0'dır, yani tween `begin` değerinde durur.
+        // `begin` sıfırdan farklı olursa sayfa, üzerine hiçbir şey
+        // push edilmemişken bile kalıcı olarak kaymış render edilir —
+        // ekranın sağında siyah bir şerit bırakır. Bu yüzden dinlenme
+        // durumu (`begin`) nötr, hareket ise `end` tarafında tanımlanır.
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           final incoming = CurvedAnimation(
             parent: animation,
@@ -24,8 +31,8 @@ class AppRoute<T> extends PageRouteBuilder<T> {
           );
           return SlideTransition(
             position: Tween<Offset>(
-              begin: const Offset(-0.03, 0),
-              end: Offset.zero,
+              begin: Offset.zero,
+              end: const Offset(-0.03, 0),
             ).animate(outgoing),
             child: FadeTransition(
               opacity: Tween<double>(begin: 1.0, end: 0.85).animate(outgoing),

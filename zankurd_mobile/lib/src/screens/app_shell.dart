@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -341,7 +342,7 @@ class _AppShellState extends State<AppShell> {
             key: _homeNavKey,
             child: const Icon(AppIcons.house),
           ),
-          label: Text(ku ? 'Fêr Bibe' : 'Öğren'),
+          label: Text(context.t(K.navLearn)),
         ),
         NavigationRailDestination(
           icon: KeyedSubtree(
@@ -349,12 +350,12 @@ class _AppShellState extends State<AppShell> {
             child: const Icon(AppIcons.gamepad),
           ),
           selectedIcon: const Icon(AppIcons.gamepad),
-          label: Text(ku ? 'Pêşbazî' : 'Yarış'),
+          label: Text(context.t(K.navPlay)),
         ),
         NavigationRailDestination(
           icon: const Icon(AppIcons.trophy),
           selectedIcon: const Icon(AppIcons.trophy),
-          label: Text(ku ? 'Rêz' : 'Liderlik'),
+          label: Text(context.t(K.navLeaderboard)),
         ),
         NavigationRailDestination(
           icon: KeyedSubtree(
@@ -362,7 +363,7 @@ class _AppShellState extends State<AppShell> {
             child: const Icon(AppIcons.user),
           ),
           selectedIcon: const Icon(AppIcons.user),
-          label: Text(ku ? 'Profîl' : 'Profil'),
+          label: Text(context.t(K.navProfile)),
         ),
       ],
     );
@@ -426,7 +427,7 @@ class _AppShellState extends State<AppShell> {
                 key: _homeNavKey,
                 child: const Icon(AppIcons.house),
               ),
-              label: ku ? 'Fêr Bibe' : 'Öğren',
+              label: context.t(K.navLearn),
             ),
             NavigationDestination(
               key: const ValueKey('nav-play'),
@@ -435,13 +436,13 @@ class _AppShellState extends State<AppShell> {
                 child: const Icon(AppIcons.gamepad),
               ),
               selectedIcon: const Icon(AppIcons.gamepad),
-              label: ku ? 'Pêşbazî' : 'Yarış',
+              label: context.t(K.navPlay),
             ),
             NavigationDestination(
               key: const ValueKey('nav-leaderboard'),
               icon: const Icon(AppIcons.trophy),
               selectedIcon: const Icon(AppIcons.trophy),
-              label: ku ? 'Rêz' : 'Liderlik',
+              label: context.t(K.navLeaderboard),
             ),
             NavigationDestination(
               key: const ValueKey('nav-profile'),
@@ -450,7 +451,7 @@ class _AppShellState extends State<AppShell> {
                 child: const Icon(AppIcons.user),
               ),
               selectedIcon: const Icon(AppIcons.user),
-              label: ku ? 'Profîl' : 'Profil',
+              label: context.t(K.navProfile),
             ),
           ],
         ),
@@ -462,17 +463,30 @@ class _AppShellState extends State<AppShell> {
     setState(() => _checkingProfileName = true);
     final preferences = await SharedPreferences.getInstance();
     final completed = preferences.getBool(_profileNameCompletedKey) == true;
+
+    // "Ad soruldu" bayrağı adın kendisinden ayrı saklanıyor. Ad kaybolur da
+    // bayrak kalırsa (yeniden kurulum, hesap sıfırlama, depo geçişi) kapı
+    // bir daha hiç açılmaz ve oyuncu kalıcı olarak "Oyuncu" olur
+    // (2026-07-25 canlı denetimi). Bu yüzden bayrak, adın gerçekten var
+    // olmasıyla doğrulanır.
+    //
+    // Arama *başarısız* olduğunda (ağ/depo hatası) ad yok sayılmaz: aksi
+    // halde geçici bir hata, adı olan kullanıcıyı kapıya geri gönderirdi.
     String? name;
+    var lookupFailed = false;
     try {
       name = await widget.repository.getProfileName();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'app_shell_preferences');
       name = null;
+      lookupFailed = true;
     }
+
+    final hasName = name != null && name.trim().isNotEmpty;
     if (!mounted) return;
     setState(() {
       _profileName = name;
-      _profileNameComplete = completed;
+      _profileNameComplete = completed && (hasName || lookupFailed);
       _checkingProfileName = false;
     });
   }

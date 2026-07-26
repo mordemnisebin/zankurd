@@ -9,6 +9,7 @@ import '../data/mastery_store.dart';
 import '../data/zankurd_repository.dart';
 import '../game/avatar_frames.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/avatar_identity.dart';
 import '../models/mastery_level.dart';
 import '../theme/app_theme.dart';
@@ -92,7 +93,10 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   }
 
   Future<void> _pickPhoto() async {
-    final ku = context.isKu;
+    // Fotoğraf seçimi asenkron: hata metinleri `context` async boşluğun
+    // ötesine taşınmasın diye burada, senkron olarak çözülür.
+    final tooLargeMessage = context.t(K.photoTooLarge);
+    final uploadFailedMessage = context.t(K.uploadFailed);
     setState(() => _uploadingPhoto = true);
     try {
       final picker = widget.imagePicker ?? ImagePicker();
@@ -105,9 +109,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       if (file == null) return;
       final bytes = await file.readAsBytes();
       if (bytes.length > _maxPhotoBytes) {
-        _showSnack(
-          ku ? 'Wêne ji 2MB mezintir e.' : 'Fotoğraf 2MB sınırını aşıyor.',
-        );
+        _showSnack(tooLargeMessage);
         return;
       }
       final contentType = file.name.toLowerCase().endsWith('.png')
@@ -122,9 +124,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'avatar photo upload failed');
       if (mounted) {
-        _showSnack(
-          context.isKu ? 'Barkirin bi ser neket.' : 'Yükleme başarısız oldu.',
-        );
+        _showSnack(uploadFailedMessage);
       }
     } finally {
       if (mounted) setState(() => _uploadingPhoto = false);
@@ -140,9 +140,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       ErrorReporter.record(error, stack, reason: 'avatar save failed');
       if (mounted) {
         setState(() => _saving = false);
-        _showSnack(
-          context.isKu ? 'Tomar nebû, dîsa biceribîne.' : 'Kaydedilemedi.',
-        );
+        _showSnack(context.t(K.saveFailed));
       }
     }
   }
@@ -158,7 +156,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(ku ? 'Rûyê Min' : 'Avatarım')),
+      appBar: AppBar(),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -180,10 +178,8 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                   children: [
                     // Profil ailesi — mor kimlik.
                     ScreenIdentityHeader(
-                      title: ku ? 'Rûyê Min' : 'Avatarım',
-                      subtitle: ku
-                          ? 'Sembol, reng û çarçove hilbijêre'
-                          : 'Simge, renk ve çerçeve seç',
+                      title: context.t(K.myAvatar),
+                      subtitle: context.t(K.myAvatarSub),
                       accent: AppTheme.violet,
                       icon: AppIcons.faceSmile,
                       compact: true,
@@ -216,7 +212,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                                   ),
                                 )
                               : const Icon(AppIcons.images),
-                          label: Text(ku ? 'Wêne bar bike' : 'Fotoğraf yükle'),
+                          label: Text(context.t(K.uploadPhoto)),
                         ),
                         if (_identity.photoUrl != null) ...[
                           const SizedBox(width: 10),
@@ -228,13 +224,13 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                               ),
                             ),
                             icon: const Icon(AppIcons.xmark),
-                            label: Text(ku ? 'Rake' : 'Kaldır'),
+                            label: Text(context.t(K.removeAction)),
                           ),
                         ],
                       ],
                     ),
                     const SizedBox(height: 18),
-                    _SectionTitle(ku ? 'Sembol' : 'Simge'),
+                    _SectionTitle(context.t(K.symbol)),
                     AppPanel(
                       child: GridView.count(
                         crossAxisCount: 4,
@@ -263,7 +259,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                       ),
                     ),
                     const SizedBox(height: 14),
-                    _SectionTitle(ku ? 'Reng' : 'Renk'),
+                    _SectionTitle(context.t(K.colorWord)),
                     AppPanel(
                       child: Wrap(
                         spacing: 6,
@@ -317,13 +313,13 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                       ),
                     ),
                     const SizedBox(height: 14),
-                    _SectionTitle(ku ? 'Çarçove' : 'Çerçeve'),
+                    _SectionTitle(context.t(K.frame)),
                     AppPanel(
                       child: Column(
                         children: [
                           _FrameRow(
                             key: const ValueKey('avatar-frame-none'),
-                            label: ku ? 'Bê çarçove' : 'Çerçevesiz',
+                            label: context.t(K.noFrame),
                             color: AppTheme.textMuted,
                             locked: false,
                             selected: _identity.frameId == null,
@@ -338,9 +334,9 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                             _FrameRow(
                               key: ValueKey('avatar-frame-${frame.name}'),
                               label: switch (frame) {
-                                AvatarFrame.bronze => ku ? 'Bronz' : 'Bronz',
-                                AvatarFrame.silver => ku ? 'Zîv' : 'Gümüş',
-                                AvatarFrame.gold => ku ? 'Zêr' : 'Altın',
+                                AvatarFrame.bronze => context.t(K.bronze),
+                                AvatarFrame.silver => context.t(K.silver),
+                                AvatarFrame.gold => context.t(K.gold),
                                 AvatarFrame.mamoste => 'Mamoste',
                               },
                               color: frameColor(frame),
@@ -350,7 +346,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                               onTap: () {
                                 if (!_unlocked.contains(frame)) {
                                   _showSnack(
-                                    '${ku ? 'Girtî' : 'Kilitli'} — '
+                                    '${context.t(K.locked)} — '
                                     '${frameRequirementLabel(frame, ku)}',
                                   );
                                   return;
@@ -366,13 +362,13 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                       ),
                     ),
                     const SizedBox(height: 14),
-                    _SectionTitle(ku ? 'Nav û Nîşan' : 'Unvan'),
+                    _SectionTitle(context.t(K.titleWord)),
                     AppPanel(
                       child: Column(
                         children: [
                           _TitleRow(
                             key: const ValueKey('avatar-title-none'),
-                            label: ku ? 'Veşêre' : 'Gizle',
+                            label: context.t(K.hideAction),
                             selected: _identity.showcaseTitle == null,
                             onTap: () => setState(
                               () => _identity = _identity.copyWith(
@@ -384,9 +380,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                             Padding(
                               padding: const EdgeInsets.all(8),
                               child: Text(
-                                ku
-                                    ? 'Hîn nav û nîşan tune — bi lîstinê bidest bixe!'
-                                    : 'Henüz unvan yok — oynayarak kazan!',
+                                context.t(K.noTitlesYet),
                                 style: TextStyle(
                                   color: AppTheme.textMutedColor(context),
                                   fontSize: 12,
@@ -421,7 +415,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                               ),
                             )
                           : const Icon(AppIcons.floppyDisk),
-                      label: Text(ku ? 'Tomar Bike' : 'Kaydet'),
+                      label: Text(context.t(K.save)),
                     ),
                   ],
                 ),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../data/placement_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/lesson.dart';
 import '../models/mini_guide.dart';
 import '../models/story.dart';
@@ -100,7 +101,7 @@ class _LearningScreenState extends State<LearningScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(ku ? 'Fêr Bibe' : 'Öğren'),
+        title: Text(context.t(K.navLearn)),
         titleTextStyle: AppTypography.heading1.copyWith(
           color: AppTheme.textPrimaryColor(context),
           fontSize: 22,
@@ -121,10 +122,8 @@ class _LearningScreenState extends State<LearningScreen> {
                   0,
                 ),
                 child: ScreenIdentityHeader(
-                  title: ku ? 'Kurmancî hîn bibe' : 'Kurmancî öğren',
-                  subtitle: ku
-                      ? 'Ders bi ders, mijar bi mijar'
-                      : 'Ders ders, konu konu ilerle',
+                  title: context.t(K.learnKurmanci),
+                  subtitle: context.t(K.learnSubtitle),
                   accent: AppTheme.playGreen,
                   icon: AppIcons.graduationCap,
                   compact: true,
@@ -138,10 +137,8 @@ class _LearningScreenState extends State<LearningScreen> {
                   0,
                 ),
                 child: _LearningSectionHeading(
-                  title: ku ? 'Armanca îro' : 'Bugünkü hedefin',
-                  subtitle: ku
-                      ? 'Dubarekirin û dersa dawî li vir in.'
-                      : 'Tekrarların ve kaldığın ders burada.',
+                  title: context.t(K.todaysGoal),
+                  subtitle: context.t(K.todaysGoalSub),
                 ),
               ),
               // Akıllı tekrar (SM-2) ürün yüzü: yalnız hazır tekrar varsa
@@ -183,7 +180,7 @@ class _LearningScreenState extends State<LearningScreen> {
                     ),
                     icon: const Icon(AppIcons.bookOpenReader, size: 18),
                     label: Text(
-                      ku ? 'Çîrok: Li Çayxanê' : 'Hikâye: Çay Evinde',
+                      context.t(K.storyTeahouse),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -197,10 +194,8 @@ class _LearningScreenState extends State<LearningScreen> {
                   0,
                 ),
                 child: _LearningSectionHeading(
-                  title: ku ? 'Rêyên hînbûnê' : 'Öğrenme yolları',
-                  subtitle: ku
-                      ? 'Mijarek hilbijêre û gav bi gav pêşve here.'
-                      : 'Bir konu seç ve adım adım ilerle.',
+                  title: context.t(K.learningPaths),
+                  subtitle: context.t(K.learningPathsSub),
                 ),
               ),
               // Kategori sekmeler
@@ -252,11 +247,9 @@ class _LearningScreenState extends State<LearningScreen> {
                     }
                     if (snap.hasError) {
                       return AppErrorState(
-                        title: ku ? 'Barnebû' : 'Yüklenemedi',
-                        message: ku
-                            ? 'Ders nehatin barkirin'
-                            : 'Dersler yüklenemedi',
-                        retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar',
+                        title: context.t(K.loadFailedShort),
+                        message: context.t(K.lessonsLoadFail),
+                        retryLabel: context.t(K.retryShort),
                         onRetry: () => setState(() => _loadLessons()),
                       );
                     }
@@ -264,10 +257,8 @@ class _LearningScreenState extends State<LearningScreen> {
                     if (lessons.isEmpty) {
                       return AppEmptyState(
                         icon: AppIcons.graduationCap,
-                        title: ku ? 'Ders tune' : 'Ders yok',
-                        message: ku
-                            ? 'Di vê kategoriyê de hîn ders tune'
-                            : 'Henüz ders yok',
+                        title: context.t(K.noLesson),
+                        message: context.t(K.noLessonInCategory),
                       );
                     }
                     final firstOpenIndex = lessons.indexWhere(
@@ -414,9 +405,10 @@ class _LearningScreenState extends State<LearningScreen> {
               // ekranda (360px) taşmasın diye Expanded + ellipsis.
               Expanded(
                 child: Text(
-                  ku
-                      ? 'Dersên qedandî: $completed / $total'
-                      : 'Tamamlanan ders: $completed / $total',
+                  context.t(K.lessonsCompleted, {
+                    'completed': '$completed',
+                    'total': '$total',
+                  }),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.caption.copyWith(
@@ -688,133 +680,133 @@ class _LessonCard extends StatelessWidget {
       child: AppPanel(
         onTap: locked ? null : onTap,
         key: recommended && !completed
-              ? const ValueKey("learning-next-step")
-              : null,
-          cardType: recommended && !completed
-              ? CardType.primary
-              : CardType.secondary,
-          child: Row(
-            children: [
-              Container(
-                width: 56,
-                constraints: const BoxConstraints(minHeight: 56),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [AppTheme.playGreen, Color(0xFF16A34A)],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(14)),
+            ? const ValueKey("learning-next-step")
+            : null,
+        cardType: recommended && !completed
+            ? CardType.primary
+            : CardType.secondary,
+        child: Row(
+          children: [
+            Container(
+              width: 56,
+              constraints: const BoxConstraints(minHeight: 56),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [AppTheme.playGreen, Color(0xFF16A34A)],
                 ),
-                child: Center(
-                  child: Icon(
-                    _iconForLesson(lesson.slug),
-                    color: Colors.white,
-                    size: 26,
-                  ),
+                borderRadius: BorderRadius.all(Radius.circular(14)),
+              ),
+              child: Center(
+                child: Icon(
+                  _iconForLesson(lesson.slug),
+                  color: Colors.white,
+                  size: 26,
                 ),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      lesson.titleKu,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w700,
-                      ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    lesson.titleKu,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w700,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      lesson.descriptionKu ?? '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                      ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    lesson.descriptionKu ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textMutedColor(context),
                     ),
-                    if (recommended && !completed) ...[
-                      const SizedBox(height: 6),
-                      Container(
-                        key: const ValueKey('lesson-recommended-badge'),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 3,
+                  ),
+                  if (recommended && !completed) ...[
+                    const SizedBox(height: 6),
+                    Container(
+                      key: const ValueKey('lesson-recommended-badge'),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTheme.gold.withValues(alpha: 0.16),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: AppTheme.gold.withValues(alpha: 0.4),
                         ),
-                        decoration: BoxDecoration(
-                          color: AppTheme.gold.withValues(alpha: 0.16),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: AppTheme.gold.withValues(alpha: 0.4),
+                      ),
+                      child: Wrap(
+                        spacing: 4,
+                        runSpacing: 2,
+                        children: [
+                          const Icon(
+                            AppIcons.star,
+                            size: 12,
+                            color: AppTheme.gold,
                           ),
-                        ),
-                        child: Wrap(
-                          spacing: 4,
-                          runSpacing: 2,
-                          children: [
-                            const Icon(
-                              AppIcons.star,
-                              size: 12,
+                          Text(
+                            context.t(K.recommendedForYou),
+                            style: AppTypography.caption.copyWith(
                               color: AppTheme.gold,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 10.5,
                             ),
-                            Text(
-                              ku ? 'Pêşniyara te' : 'Sana önerilen',
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.gold,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 10.5,
-                              ),
+                          ),
+                          Text(
+                            context.t(K.continueShort),
+                            style: AppTypography.caption.copyWith(
+                              color: AppTheme.gold,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 10.5,
                             ),
-                            Text(
-                              ku ? 'Bidomîne' : 'Devam et',
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.gold,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 10.5,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            if (completed)
+              Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  gradient: AppTheme.correctGradient,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppTheme.correct.withValues(alpha: 0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 8),
-              if (completed)
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    gradient: AppTheme.correctGradient,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppTheme.correct.withValues(alpha: 0.3),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    AppIcons.check,
-                    color: Colors.white,
-                    size: 16,
-                  ),
-                )
-              else if (locked)
-                Icon(AppIcons.lock, color: AppTheme.textMutedColor(context))
-              else
-                Icon(
-                  AppIcons.chevronRight,
-                  color: AppTheme.textMutedColor(context),
+                child: const Icon(
+                  AppIcons.check,
+                  color: Colors.white,
+                  size: 16,
                 ),
-            ],
-          ),
+              )
+            else if (locked)
+              Icon(AppIcons.lock, color: AppTheme.textMutedColor(context))
+            else
+              Icon(
+                AppIcons.chevronRight,
+                color: AppTheme.textMutedColor(context),
+              ),
+          ],
         ),
+      ),
     );
   }
 
@@ -908,7 +900,7 @@ class _MasteryGoal extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              ku ? 'Armanca mastery ya kategoriyê' : 'Kategori mastery hedefi',
+              context.t(K.categoryMasteryGoal),
               style: AppTypography.bodyLarge.copyWith(
                 color: AppTheme.textPrimaryColor(context),
               ),
@@ -984,7 +976,6 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   }
 
   Future<void> _startMiniQuiz() async {
-    final ku = context.isKu;
     try {
       final questions = await widget.repository.loadLevelQuestions(
         category: widget.lesson.category,
@@ -997,13 +988,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
 
       if (questions.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              ku
-                  ? 'Ji bo vê kategoriyê pirs nehatin dîtin'
-                  : 'Bu kategori için soru bulunamadı',
-            ),
-          ),
+          SnackBar(content: Text(context.t(K.noQuestionsForCategory))),
         );
         return;
       }
@@ -1029,11 +1014,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'learning_load_story');
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(ku ? 'Quiz nehate barkirin' : 'Quiz yüklenemedi'),
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.quizLoadFail))));
       }
     }
   }
@@ -1141,7 +1124,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
-                  ku ? 'Werger' : 'Çeviri',
+                  context.t(K.translation),
                   style: AppTypography.caption.copyWith(
                     color: Colors.white,
                     fontSize: 11,
@@ -1194,7 +1177,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
         actions: [
           IconButton(
             icon: Icon(_flashcardMode ? AppIcons.clone : AppIcons.layerGroup),
-            tooltip: ku ? 'Moda kartan' : 'Flashcard modu',
+            tooltip: context.t(K.flashcardMode),
             onPressed: _toggleFlashcard,
           ),
         ],
@@ -1212,18 +1195,16 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
             if (snap.hasError) {
               return Center(
                 child: AppErrorState(
-                  title: ku ? 'Barnebû' : 'Yüklenemedi',
-                  message: ku
-                      ? 'Slaytên dersê nehatin barkirin'
-                      : 'Slaytlar yüklenemedi',
-                  retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar',
+                  title: context.t(K.loadFailedShort),
+                  message: context.t(K.slidesLoadFail),
+                  retryLabel: context.t(K.retryShort),
                   onRetry: () => setState(() {}),
                 ),
               );
             }
             final slides = snap.data ?? [];
             if (slides.isEmpty) {
-              return Center(child: Text(ku ? 'Slayt tune' : 'Slayt yok'));
+              return Center(child: Text(context.t(K.noSlides)));
             }
             final slide = slides[_currentSlideIndex];
             final isLast = _currentSlideIndex == slides.length - 1;
@@ -1279,7 +1260,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                                   ? Image.asset(
                                       imgUrl.replaceFirst('asset://', ''),
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, _, _) => const SizedBox(),
+                                      errorBuilder: (_, _, _) =>
+                                          const SizedBox(),
                                     )
                                   : CachedNetworkImage(
                                       imageUrl: imgUrl,
@@ -1292,19 +1274,26 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                                           height: 24,
                                           child: CircularProgressIndicator(
                                             strokeWidth: 2,
-                                            color: AppTheme.brand.withValues(alpha: 0.7),
+                                            color: AppTheme.brand.withValues(
+                                              alpha: 0.7,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      errorWidget: (context, url, error) => Container(
-                                        color: AppTheme.surfaceHiColor(context),
-                                        alignment: Alignment.center,
-                                        child: Icon(
-                                          AppIcons.image,
-                                          color: AppTheme.textMutedColor(context),
-                                          size: 32,
-                                        ),
-                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Container(
+                                            color: AppTheme.surfaceHiColor(
+                                              context,
+                                            ),
+                                            alignment: Alignment.center,
+                                            child: Icon(
+                                              AppIcons.image,
+                                              color: AppTheme.textMutedColor(
+                                                context,
+                                              ),
+                                              size: 32,
+                                            ),
+                                          ),
                                     ),
                             ),
                           ),
@@ -1362,7 +1351,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                             onPressed: () {
                               setState(() => _currentSlideIndex--);
                             },
-                            child: Text(ku ? 'Paş' : 'Geri'),
+                            child: Text(context.t(K.backStep)),
                           ),
                         ),
                       if (_currentSlideIndex > 0) const SizedBox(width: 8),
@@ -1375,8 +1364,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                                 },
                           child: Text(
                             isLast
-                                ? (ku ? 'Biqedîne' : 'Tamamla')
-                                : (ku ? 'Pêş' : 'İleri'),
+                                ? (context.t(K.finish))
+                                : (context.t(K.nextStep)),
                           ),
                         ),
                       ),
@@ -1389,7 +1378,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                               foregroundColor: Colors.white,
                             ),
                             onPressed: _startMiniQuiz,
-                            child: Text(ku ? 'Quiz-a Kurt' : 'Mini Quiz'),
+                            child: Text(context.t(K.miniQuiz)),
                           ),
                         ),
                       ],

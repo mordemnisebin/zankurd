@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../services/premium_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_panel.dart';
@@ -103,6 +104,16 @@ class _PaywallScreenState extends State<PaywallScreen> {
     final ku = context.isKu;
     return Scaffold(
       backgroundColor: Colors.transparent,
+      // Bu ekranın hiçbir çıkış yolu yoktu: AppBar'ı, kapat düğmesi ve
+      // (AppRoute bir PageRouteBuilder olduğu için) kaydırarak-geri hareketi
+      // yoktu; giren kullanıcı uygulamayı öldürmeden çıkamıyordu
+      // (2026-07-25 canlı denetimi, iOS). Geri düğmesi uygulamanın geri
+      // kalanıyla aynı yerde — AppBar'da — durur.
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -111,10 +122,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
           child: Column(
             children: [
               ScreenIdentityHeader(
-                title: ku ? 'Premium' : 'Premium',
-                subtitle: ku
-                    ? 'Dersên kûrtî bê sînor, bi zanebûnê'
-                    : 'Sınırsız bilgi, daha fazlası',
+                title: 'Premium',
+                subtitle: context.t(K.paywallSubtitle),
                 accent: AppTheme.gold,
                 icon: AppIcons.gem,
               ),
@@ -132,7 +141,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       _PaywallHero(isKu: ku),
                       const SizedBox(height: AppSpacing.lg),
                       ScreenSectionLabel(
-                        label: ku ? 'Taybetmendiyên' : 'Özellikler',
+                        label: context.t(K.paywallFeatures),
                         accent: AppTheme.gold,
                       ),
                       const SizedBox(height: AppSpacing.sm),

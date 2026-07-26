@@ -82,7 +82,7 @@ class _ProfileHeroCard extends StatelessWidget {
                     // (2026-07-25 denetimi).
                     Semantics(
                       button: true,
-                      label: ku ? 'Avatarê xwe biguherîne' : 'Avatarı düzenle',
+                      label: Tr.forKu(K.editAvatar, ku),
                       child: InkWell(
                         key: const ValueKey('profile-avatar-edit'),
                         customBorder: const CircleBorder(),
@@ -158,7 +158,7 @@ class _ProfileHeroCard extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            ku ? 'Rêça xwe berdewam bike' : 'İlerlemeni sürdür',
+                            Tr.forKu(K.keepProgress, ku),
                             style: AppTypography.caption.copyWith(
                               color: Colors.white.withValues(alpha: 0.74),
                               fontWeight: FontWeight.w600,
@@ -247,7 +247,7 @@ class _ProfileHeroCard extends StatelessWidget {
                     const SizedBox(width: AppSpacing.xxs),
                     Flexible(
                       child: Text(
-                        ku ? 'Ast $level' : 'Seviye $level',
+                        Tr.forKu(K.levelWithNumber, ku, {'level': '$level'}),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyLarge.copyWith(

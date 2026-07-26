@@ -1,8 +1,11 @@
+import 'package:flutter/foundation.dart'
+    show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../animations/load_animations.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -53,30 +56,22 @@ class _SignInScreenState extends State<SignInScreen>
     // StyledInputField, TextField kullandığı için Form.validate() ile
     // tetiklenmez. Boş alan kontrolü manuel yapılır.
     if (_emailController.text.trim().isEmpty) {
-      _showAuthError(context.s('E-peyam pêwîst e', 'E-posta gerekli'));
+      _showAuthError(context.t(K.emailRequired));
       return;
     }
     if (_passwordController.text.isEmpty) {
-      _showAuthError(context.s('Şîfre pêwîst e', 'Parola gerekli'));
+      _showAuthError(context.t(K.passwordRequired));
       return;
     }
     // Kısa şifrede "pêwîst e" (gerekli) mesajı yanlış etiketti; min-length
     // durumunda doğru mesajı göster (KU+TR).
     if (_passwordController.text.length < 6) {
-      _showAuthError(
-        context.s(
-          'Şîfre divê herî kêm 6 tîp be',
-          'Parola en az 6 karakter olmalı',
-        ),
-      );
+      _showAuthError(context.t(K.passwordMin6));
       return;
     }
     if (_formKey.currentState?.validate() != true) return;
 
-    LoadingOverlay.show(
-      context,
-      message: context.s('Tê têketin...', 'Giriş yapılıyor...'),
-    );
+    LoadingOverlay.show(context, message: context.t(K.signingIn));
 
     final success = await authProvider.signInWithEmail(
       email: _emailController.text.trim(),
@@ -93,13 +88,7 @@ class _SignInScreenState extends State<SignInScreen>
   }
 
   Future<void> _signInWithGoogle(AuthProvider authProvider) async {
-    LoadingOverlay.show(
-      context,
-      message: context.s(
-        'Bi Google ve tê girêdan...',
-        'Google ile bağlanılıyor...',
-      ),
-    );
+    LoadingOverlay.show(context, message: context.t(K.connectingGoogle));
 
     final success = await authProvider.signInWithGoogle();
 
@@ -112,14 +101,22 @@ class _SignInScreenState extends State<SignInScreen>
     }
   }
 
+  Future<void> _signInWithApple(AuthProvider authProvider) async {
+    LoadingOverlay.show(context, message: context.t(K.connectingApple));
+
+    final success = await authProvider.signInWithApple();
+
+    if (mounted) {
+      LoadingOverlay.hide(context);
+
+      if (!success && authProvider.errorMessage != null) {
+        _showAuthError(authProvider.errorMessage!);
+      }
+    }
+  }
+
   Future<void> _signInAsGuest(AuthProvider authProvider) async {
-    LoadingOverlay.show(
-      context,
-      message: context.s(
-        'Wek mêvan tê têketin...',
-        'Misafir olarak giriliyor...',
-      ),
-    );
+    LoadingOverlay.show(context, message: context.t(K.signingInGuest));
 
     final success = await authProvider.signInAsGuest();
 
@@ -136,25 +133,12 @@ class _SignInScreenState extends State<SignInScreen>
     final email = _emailController.text.trim();
     if (!_isValidEmail(email)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s(
-              'Pêşî navnîşana e-peyamê ya derbasdar binivîse.',
-              'Önce geçerli e-posta adresini yaz.',
-            ),
-          ),
-        ),
+        SnackBar(content: Text(context.t(K.enterValidEmailFirst))),
       );
       return;
     }
 
-    LoadingOverlay.show(
-      context,
-      message: context.s(
-        'E-peyama vesazkirinê tê şandin...',
-        'Sıfırlama e-postası gönderiliyor...',
-      ),
-    );
+    LoadingOverlay.show(context, message: context.t(K.sendingReset));
 
     final success = await authProvider.resetPassword(email);
 
@@ -162,16 +146,10 @@ class _SignInScreenState extends State<SignInScreen>
     LoadingOverlay.hide(context);
 
     final message = success
-        ? context.s(
-            'Girêdana vesazkirina şîfreyê ji e-peyama te re hat şandin.',
-            'Parola sıfırlama bağlantısı e-postana gönderildi.',
-          )
+        ? context.t(K.resetSent)
         : (authProvider.errorMessage != null
               ? context.translateAuthError(authProvider.errorMessage!)
-              : context.s(
-                  'Vesazkirina şîfreyê bi ser neket.',
-                  'Parola sıfırlama başarısız.',
-                ));
+              : context.t(K.resetFailed));
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(message)));
@@ -359,6 +337,17 @@ class _SignInScreenState extends State<SignInScreen>
                                         ? null
                                         : () => _signInWithGoogle(authProvider),
                                   ),
+                                  if (_AppleSignInButton
+                                      .isSupportedPlatform) ...[
+                                    SizedBox(height: denseWide ? 4 : 8),
+                                    _AppleSignInButton(
+                                      dense: denseWide,
+                                      onPressed: authProvider.isLoading
+                                          ? null
+                                          : () =>
+                                                _signInWithApple(authProvider),
+                                    ),
+                                  ],
                                   SizedBox(height: denseWide ? 4 : 8),
                                   Center(
                                     child: _GuestSignInLink(
@@ -385,10 +374,7 @@ class _SignInScreenState extends State<SignInScreen>
                                             StyledInputField(
                                               autovalidateMode: AutovalidateMode
                                                   .onUserInteraction,
-                                              label: context.s(
-                                                'Navnîşana e-peyamê',
-                                                'E-posta adresi',
-                                              ),
+                                              label: context.t(K.emailAddress),
                                               labelStyle: authInputLabelStyle,
                                               inputTextStyle:
                                                   authInputTextStyle,
@@ -399,15 +385,13 @@ class _SignInScreenState extends State<SignInScreen>
                                               validator: (value) {
                                                 if (value == null ||
                                                     value.isEmpty) {
-                                                  return context.s(
-                                                    'E-peyam pêwîst e',
-                                                    'E-posta gerekli',
+                                                  return context.t(
+                                                    K.emailRequired,
                                                   );
                                                 }
                                                 if (!value.contains('@')) {
-                                                  return context.s(
-                                                    'E-peyameke derbasdar binivîse',
-                                                    'Geçerli bir e-posta gir',
+                                                  return context.t(
+                                                    K.emailInvalid2,
                                                   );
                                                 }
                                                 return null;
@@ -423,9 +407,8 @@ class _SignInScreenState extends State<SignInScreen>
                                                 autovalidateMode:
                                                     AutovalidateMode
                                                         .onUserInteraction,
-                                                label: context.s(
-                                                  'Şîfre',
-                                                  'Parola',
+                                                label: context.t(
+                                                  K.passwordLabel,
                                                 ),
                                                 labelStyle: authInputLabelStyle,
                                                 inputTextStyle:
@@ -445,15 +428,13 @@ class _SignInScreenState extends State<SignInScreen>
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
-                                                    return context.s(
-                                                      'Şîfre pêwîst e',
-                                                      'Parola gerekli',
+                                                    return context.t(
+                                                      K.passwordRequired,
                                                     );
                                                   }
                                                   if (value.length < 6) {
-                                                    return context.s(
-                                                      'Şîfre divê herî kêm 6 tîp be',
-                                                      'Parola en az 6 karakter olmalı',
+                                                    return context.t(
+                                                      K.passwordMin6,
                                                     );
                                                   }
                                                   return null;
@@ -473,10 +454,7 @@ class _SignInScreenState extends State<SignInScreen>
                                                 // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                                                 child: ExcludeSemantics(
                                                   child: Text(
-                                                    context.s(
-                                                      'Şîfre ji bîr kir?',
-                                                      'Parolayı unuttun mu?',
-                                                    ),
+                                                    context.t(K.forgotPassword),
                                                     style: AppTypography
                                                         .bodyMedium
                                                         .copyWith(
@@ -506,10 +484,7 @@ class _SignInScreenState extends State<SignInScreen>
                                               _animationController,
                                             ),
                                         child: GeometricGradientButton(
-                                          label: context.s(
-                                            'Têkeve',
-                                            'Giriş Yap',
-                                          ),
+                                          label: context.t(K.signIn),
                                           icon: AppIcons.rightToBracket,
                                           isLoading: authProvider.isLoading,
                                           onPressed: authProvider.isLoading
@@ -526,10 +501,7 @@ class _SignInScreenState extends State<SignInScreen>
                                         WrapCrossAlignment.center,
                                     children: [
                                       Text(
-                                        context.s(
-                                          'Hesabê te tune? ',
-                                          'Hesabın yok mu? ',
-                                        ),
+                                        context.t(K.noAccountPrefix),
                                         style: AppTypography.bodyMedium
                                             .copyWith(
                                               color: AppTheme.textSubColor(
@@ -547,7 +519,7 @@ class _SignInScreenState extends State<SignInScreen>
                                           AppRadius.badge,
                                         ),
                                         child: Text(
-                                          context.s('Tomar bibe', 'Kaydol'),
+                                          context.t(K.signUp),
                                           style: AppTypography.bodyMedium
                                               .copyWith(
                                                 color: AppTheme.accent,
@@ -625,6 +597,14 @@ class _SignInScreenState extends State<SignInScreen>
                                     ? null
                                     : () => _signInWithGoogle(authProvider),
                               ),
+                              if (_AppleSignInButton.isSupportedPlatform) ...[
+                                const SizedBox(height: 8),
+                                _AppleSignInButton(
+                                  onPressed: authProvider.isLoading
+                                      ? null
+                                      : () => _signInWithApple(authProvider),
+                                ),
+                              ],
                               const SizedBox(height: 8),
                               // Misafir girişi: ikincil eylem, outlined buton
                               // (tek baskın CTA = Google, altta belirgin seçenek).
@@ -654,10 +634,7 @@ class _SignInScreenState extends State<SignInScreen>
                                         StyledInputField(
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          label: context.s(
-                                            'Navnîşana e-peyamê',
-                                            'E-posta adresi',
-                                          ),
+                                          label: context.t(K.emailAddress),
                                           labelStyle: authInputLabelStyle,
                                           inputTextStyle: authInputTextStyle,
                                           controller: _emailController,
@@ -667,16 +644,10 @@ class _SignInScreenState extends State<SignInScreen>
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return context.s(
-                                                'E-peyam pêwîst e',
-                                                'E-posta gerekli',
-                                              );
+                                              return context.t(K.emailRequired);
                                             }
                                             if (!value.contains('@')) {
-                                              return context.s(
-                                                'E-peyameke derbasdar binivîse',
-                                                'Geçerli bir e-posta gir',
-                                              );
+                                              return context.t(K.emailInvalid2);
                                             }
                                             return null;
                                           },
@@ -690,7 +661,7 @@ class _SignInScreenState extends State<SignInScreen>
                                           child: StyledInputField(
                                             autovalidateMode: AutovalidateMode
                                                 .onUserInteraction,
-                                            label: context.s('Şîfre', 'Parola'),
+                                            label: context.t(K.passwordLabel),
                                             labelStyle: authInputLabelStyle,
                                             inputTextStyle: authInputTextStyle,
                                             controller: _passwordController,
@@ -708,15 +679,13 @@ class _SignInScreenState extends State<SignInScreen>
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
-                                                return context.s(
-                                                  'Şîfre pêwîst e',
-                                                  'Parola gerekli',
+                                                return context.t(
+                                                  K.passwordRequired,
                                                 );
                                               }
                                               if (value.length < 6) {
-                                                return context.s(
-                                                  'Şîfre divê herî kêm 6 tîp be',
-                                                  'Parola en az 6 karakter olmalı',
+                                                return context.t(
+                                                  K.passwordMin6,
                                                 );
                                               }
                                               return null;
@@ -735,10 +704,7 @@ class _SignInScreenState extends State<SignInScreen>
                                             // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                                             child: ExcludeSemantics(
                                               child: Text(
-                                                context.s(
-                                                  'Şîfre ji bîr kir?',
-                                                  'Parolayı unuttun mu?',
-                                                ),
+                                                context.t(K.forgotPassword),
                                                 style: TextStyle(
                                                   color: AppTheme.textSubColor(
                                                     context,
@@ -766,7 +732,7 @@ class _SignInScreenState extends State<SignInScreen>
                                           _animationController,
                                         ),
                                     child: GeometricGradientButton(
-                                      label: context.s('Têkeve', 'Giriş Yap'),
+                                      label: context.t(K.signIn),
                                       icon: AppIcons.rightToBracket,
                                       isLoading: authProvider.isLoading,
                                       onPressed: authProvider.isLoading
@@ -783,10 +749,7 @@ class _SignInScreenState extends State<SignInScreen>
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 children: [
                                   Text(
-                                    context.s(
-                                      'Hesabê te tune? ',
-                                      'Hesabın yok mu? ',
-                                    ),
+                                    context.t(K.noAccountPrefix),
                                     style: AppTypography.bodyMedium.copyWith(
                                       color: AppTheme.textSubColor(context),
                                     ),
@@ -801,7 +764,7 @@ class _SignInScreenState extends State<SignInScreen>
                                       AppRadius.badge,
                                     ),
                                     child: Text(
-                                      context.s('Tomar bibe', 'Kaydol'),
+                                      context.t(K.signUp),
                                       style: AppTypography.bodyMedium.copyWith(
                                         color: AppTheme.accent,
                                         fontWeight: FontWeight.w700,
@@ -856,7 +819,7 @@ class _SignInHeroBanner extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  context.s('Bi xêr hatî ZanKurdê', 'ZanKurd\'a Hoş Geldin'),
+                  context.t(K.welcomeTitle),
                   style: AppTypography.heading1.copyWith(
                     color: Colors.white,
                     fontSize: compact ? 22 : 26,
@@ -865,10 +828,7 @@ class _SignInHeroBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
-                  context.s(
-                    'Kurmancî hîn bibe û pêşbirkê bike',
-                    'Kurmancî öğren ve yarışmaya katıl',
-                  ),
+                  context.t(K.welcomeSubtitle),
                   style: AppTypography.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: 0.78),
                     fontSize: compact ? 13 : 14,
@@ -966,10 +926,87 @@ class _GoogleSignInButton extends StatelessWidget {
                         fit: BoxFit.scaleDown,
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          context.s('Bi Google têkeve', 'Google ile giriş yap'),
+                          context.t(K.signInGoogle),
                           maxLines: 1,
                           style: TextStyle(
                             color: AppTheme.bgDeep,
+                            fontWeight: FontWeight.w800,
+                            fontSize: dense ? 14 : 16,
+                            letterSpacing: 0.1,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// "Apple ile Giriş" düğmesi — yalnız Apple platformlarında çizilir.
+///
+/// App Store İnceleme Kılavuzu 4.8, üçüncü taraf sosyal giriş (Google)
+/// sunan uygulamalarda eşdeğer bir Apple seçeneğini zorunlu kılar; bu
+/// düğme olmadan uygulama incelemeden geçemiyordu (2026-07-25 denetimi).
+/// Görsel stil Apple'ın marka kuralına uyar: siyah zemin, beyaz logo ve
+/// metin, Google düğmesiyle aynı yükseklik.
+class _AppleSignInButton extends StatelessWidget {
+  const _AppleSignInButton({required this.onPressed, this.dense = false});
+
+  final VoidCallback? onPressed;
+  final bool dense;
+
+  /// Düğme yalnız iOS/macOS'ta anlamlıdır; diğer platformlarda kural da
+  /// geçerli değildir ve gereksiz bir seçenek eklemek istemiyoruz.
+  static bool get isSupportedPlatform =>
+      !kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.macOS);
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = onPressed != null;
+    return IgnorePointer(
+      ignoring: !enabled,
+      child: Opacity(
+        opacity: enabled ? 1 : 0.55,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(AppRadius.lg),
+              onTap: onPressed,
+              child: Container(
+                height: dense ? 48 : 54,
+                padding: EdgeInsets.symmetric(horizontal: dense ? 12 : 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.apple,
+                      color: Colors.white,
+                      size: dense ? 20 : 24,
+                    ),
+                    SizedBox(width: dense ? 8 : 12),
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          context.t(K.signInApple),
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: Colors.white,
                             fontWeight: FontWeight.w800,
                             fontSize: dense ? 14 : 16,
                             letterSpacing: 0.1,
@@ -1004,30 +1041,34 @@ class _GuestSignInLink extends StatelessWidget {
       ignoring: !enabled,
       child: Opacity(
         opacity: enabled ? 1 : 0.55,
-        child: OutlinedButton.icon(
+        // Misafir girişi bir *kaçış yolu*, üçüncü bir teklif değil. Turuncu
+        // konturlu tam boy buton olarak Google (beyaz) ve Apple (siyah)
+        // düğmeleriyle aynı ağırlıktaydı; ekranda üç birincil eylem
+        // görünüyor ve hangisinin beklenen yol olduğu belirsiz kalıyordu
+        // (2026-07-25 canlı denetimi). Metin bağlantısı hiyerarşiyi
+        // netleştirir, eylemi kaldırmadan.
+        child: TextButton.icon(
           onPressed: onPressed,
-          icon: const Icon(AppIcons.user, size: 18),
+          icon: Icon(AppIcons.user, size: 17, color: fg.withValues(alpha: 0.8)),
           label: Text(
-            context.s('Wek mêvan bidomîne', 'Misafir olarak devam et'),
+            context.t(K.continueGuest),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: fg),
+            style: TextStyle(
+              color: fg.withValues(alpha: 0.85),
+              decoration: TextDecoration.underline,
+              decorationColor: fg.withValues(alpha: 0.4),
+            ),
           ),
-          style: OutlinedButton.styleFrom(
+          style: TextButton.styleFrom(
             foregroundColor: fg,
-            minimumSize: const Size(double.infinity, 48),
+            // Dokunma hedefi iOS asgarisinin (44pt) altına inmez.
+            minimumSize: const Size(double.infinity, 46),
             padding: const EdgeInsets.symmetric(horizontal: 20),
             textStyle: const TextStyle(
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               fontSize: 14,
               letterSpacing: 0.1,
-            ),
-            side: BorderSide(
-              color: AppTheme.brand.withValues(alpha: 0.6),
-              width: 1.4,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.md),
             ),
           ),
         ),
@@ -1059,7 +1100,7 @@ class _EmailSectionDivider extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                context.s('An jî bi e-peyamê', 'Veya e-posta ile'),
+                context.t(K.orWithEmail),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

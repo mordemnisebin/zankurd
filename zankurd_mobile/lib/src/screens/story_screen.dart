@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/story_progress_store.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/mini_guide.dart';
 import '../models/story.dart';
 import '../theme/app_theme.dart';
@@ -93,13 +94,13 @@ class _StoryScreenState extends State<StoryScreen> {
           if (widget.guide != null)
             IconButton(
               key: const ValueKey('story-open-guide'),
-              tooltip: ku ? 'Rêber' : 'Rehber',
+              tooltip: context.t(K.guide),
               icon: const Icon(AppIcons.bookOpen),
               onPressed: _openGuide,
             ),
           IconButton(
             key: const ValueKey('story-restart'),
-            tooltip: ku ? 'Ji nû ve' : 'Yeniden başlat',
+            tooltip: context.t(K.restart),
             icon: const Icon(AppIcons.arrowsRotate),
             onPressed: _restart,
           ),
@@ -162,7 +163,7 @@ class _StoryScreenState extends State<StoryScreen> {
             key: const ValueKey('story-ending-restart'),
             onPressed: _restart,
             icon: const Icon(AppIcons.arrowRotateLeft),
-            label: Text(ku ? 'Dîsa bilîze' : 'Tekrar oyna'),
+            label: Text(context.t(K.playAgain)),
           )
         else
           for (final choice in node.choices)

@@ -29,10 +29,14 @@ class DailyMissionsCard extends StatelessWidget {
     final totalProgress = missions.isEmpty
         ? 0.0
         : completedCount / missions.length;
-    final visible = compact
-        ? missions.where((m) => !m.completed).take(2).toList()
-        : missions;
+    final pending = missions.where((m) => !m.completed).toList();
+    final visible = compact ? pending.take(2).toList() : missions;
     final hiddenDone = compact ? missions.where((m) => m.completed).length : 0;
+    // Compact modda yalnız 2 açık görev çizilir. Başlıktaki sayaç ise tüm
+    // görevleri sayar; üçüncü görev listede yokken başlık "0/3" diyor ve
+    // eksik satır kayıp gibi görünüyordu (2026-07-25 canlı denetimi).
+    // Kırpılan açık görevler artık sayılıp ayrıca belirtilir.
+    final hiddenPending = compact ? pending.length - visible.length : 0;
 
     return AppPanel(
       padding: EdgeInsets.all(compact ? 14 : 18),
@@ -99,13 +103,20 @@ class DailyMissionsCard extends StatelessWidget {
             ...visible.map(
               (m) => _MissionTile(mission: m, isKu: isKu, compact: compact),
             ),
-            if (hiddenDone > 0)
+            if (hiddenDone > 0 || hiddenPending > 0)
               Padding(
                 padding: const EdgeInsets.only(top: 2),
                 child: Text(
-                  isKu
-                      ? '+$hiddenDone erk temam bûn'
-                      : '+$hiddenDone görev tamam',
+                  [
+                    if (hiddenDone > 0)
+                      isKu
+                          ? '$hiddenDone erk temam bûn'
+                          : '$hiddenDone görev tamam',
+                    if (hiddenPending > 0)
+                      isKu
+                          ? '$hiddenPending erkên din'
+                          : '$hiddenPending görev daha',
+                  ].join(' · '),
                   style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
                     fontWeight: FontWeight.w600,
@@ -192,6 +203,24 @@ class _MissionTile extends StatelessWidget {
     final label = isKu ? mission.labelKu : mission.labelTr;
     final isDone = mission.completed;
 
+    // Görev karosu; ilerleme ve ödül ayrı metin düğümleriydi. Tek düğümde
+    // "görev · ilerleme · durum" olarak duyurulur (2026-07-25 denetimi).
+    return Semantics(
+      label: label,
+      value: isDone
+          ? (isKu ? 'temam' : 'tamamlandı')
+          : '${mission.progress}/${mission.target}',
+      excludeSemantics: true,
+      child: _buildTile(context, ratio, label, isDone),
+    );
+  }
+
+  Widget _buildTile(
+    BuildContext context,
+    double ratio,
+    String label,
+    bool isDone,
+  ) {
     return Container(
       margin: EdgeInsets.only(bottom: compact ? 8 : 12),
       padding: EdgeInsets.all(compact ? 10 : 14),

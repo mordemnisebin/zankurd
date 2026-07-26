@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_logo.dart';
@@ -56,16 +57,9 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
       ErrorReporter.record(error, stack, reason: 'profile name gate failed');
       if (!mounted) return;
       setState(() => _saving = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s(
-              'Navê lîstikê nehat tomar kirin. Dîsa biceribîne.',
-              'Oyuncu adı kaydedilemedi. Tekrar dene.',
-            ),
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.nameGateSaveFailed))));
     }
   }
 
@@ -79,8 +73,6 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ku = context.isKu;
-
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -122,14 +114,15 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AppLogo(width: compact ? 76 : 88, onCard: true),
+                              AppLogo(
+                                width: compact ? 64 : 72,
+                                onBrandSurface: true,
+                              ),
                               SizedBox(
                                 height: compact ? AppSpacing.sm : AppSpacing.lg,
                               ),
                               Text(
-                                ku
-                                    ? 'Xweş hatî ZanKurd!'
-                                    : 'ZanKurd\'a Hoş Geldin!',
+                                context.t(K.nameGateWelcome),
                                 style: AppTypography.heading1.copyWith(
                                   color: Colors.white,
                                   fontSize: compact ? 24 : 28,
@@ -139,9 +132,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                               ),
                               const SizedBox(height: AppSpacing.xxs),
                               Text(
-                                ku
-                                    ? 'Hîn bibe, pêş bike û bi hevalan re bêhna xwe bide.'
-                                    : 'Öğren, gelişin ve arkadaşlarınla eğlen.',
+                                context.t(K.nameGateSubtitle),
                                 style: AppTypography.bodyMedium.copyWith(
                                   color: Colors.white.withValues(alpha: 0.78),
                                   fontSize: compact ? 14 : 15,
@@ -154,26 +145,20 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                               _HeroValueRow(
                                 icon: AppIcons.trophy,
                                 color: Colors.white,
-                                text: ku
-                                    ? 'Lîstikê û serlêderan bike'
-                                    : 'Oyunları tamamla, ödül kazan',
+                                text: context.t(K.nameGateValueQuests),
                               ),
                               const SizedBox(height: AppSpacing.xxs),
                               _HeroValueRow(
                                 icon: AppIcons.peopleGroup,
                                 color: Colors.white,
-                                text: ku
-                                    ? 'Bi hevalan re pêş bikeve'
-                                    : 'Arkadaşlarınla yarış',
+                                text: context.t(K.nameGateValueFriends),
                               ),
                               if (!compact) ...[
                                 const SizedBox(height: AppSpacing.xxs),
                                 _HeroValueRow(
                                   icon: AppIcons.fire,
                                   color: Colors.white,
-                                  text: ku
-                                      ? 'Zincîra xwe biparêze'
-                                      : 'Serini koru, zincirini devam ettir',
+                                  text: context.t(K.nameGateValueStreak),
                                 ),
                               ],
                             ],
@@ -265,9 +250,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                ku
-                                                    ? 'Navê te di lîstikê de çi be?'
-                                                    : 'Oyundaki adın ne olsun?',
+                                                context.t(K.nameGateQuestion),
                                                 style: AppTypography.heading2
                                                     .copyWith(
                                                       color:
@@ -281,9 +264,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                         ),
                                         const SizedBox(height: AppSpacing.xs),
                                         Text(
-                                          ku
-                                              ? 'Ev nav di tabloya pêşderçûnê û odeyên serhêl de xuya dibe.'
-                                              : 'Bu ad liderlik tablosunda ve çevrimiçi odalarda görünecek.',
+                                          context.t(K.nameGateHelp),
                                           style: AppTypography.bodyMedium
                                               .copyWith(
                                                 color: AppTheme.textMutedColor(
@@ -316,9 +297,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                                 fontWeight: FontWeight.w600,
                                               ),
                                           decoration: InputDecoration(
-                                            hintText: ku
-                                                ? 'Mînak: Zelal'
-                                                : 'Örn: Zelal',
+                                            hintText: context.t(K.nameGateHint),
                                             prefixIcon: Icon(
                                               AppIcons.user,
                                               color: AppTheme.textMutedColor(
@@ -329,23 +308,17 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                           validator: (value) {
                                             final name = value?.trim() ?? '';
                                             if (name.length < 2) {
-                                              return ku
-                                                  ? 'Nav divê herî kêm 2 tîp be'
-                                                  : 'Ad en az 2 karakter olmalı';
+                                              return context.t(K.nameMinLength);
                                             }
                                             if (name.length > 24) {
-                                              return ku
-                                                  ? 'Nav divê herî zêde 24 tîp be'
-                                                  : 'Ad en fazla 24 karakter olmalı';
+                                              return context.t(K.nameMaxLength);
                                             }
                                             return null;
                                           },
                                         ),
                                         const SizedBox(height: AppSpacing.lg),
                                         GeometricGradientButton(
-                                          label: ku
-                                              ? 'Dest Pê Bike'
-                                              : 'Oyuna Başla',
+                                          label: context.t(K.nameGateCta),
                                           icon: AppIcons.arrowRight,
                                           isLoading: _saving,
                                           onPressed: _saving ? null : _save,
@@ -359,7 +332,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                               ? null
                                               : widget.onCompleted,
                                           child: Text(
-                                            ku ? 'Paşê bike' : 'Şimdilik geç',
+                                            context.t(K.nameGateSkip),
                                             style: AppTypography.bodyMedium
                                                 .copyWith(
                                                   color:

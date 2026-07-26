@@ -6,6 +6,7 @@ import '../data/supabase_zankurd_repository.dart';
 import '../data/xp_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/avatar_identity.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
@@ -64,7 +65,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   int _opponentLevel = 1;
   String? _profileName;
 
-  String get _myName => _profileName ?? (context.isKu ? 'Lîstikvan' : 'Oyuncu');
+  String get _myName => _profileName ?? (context.t(K.playerWord));
   bool _isCancelled = false;
   bool _cancelling = false;
   // Bot diyaloğu açıkken arka plan sayacı gizlenir (zamanlayıcı zaten durmuş
@@ -167,6 +168,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
   Future<void> _startMatchmaking(String chosenCategory) async {
     final ku = context.isKu;
+    // Eşleşme akışı asenkron: rakip adı yer tutucusu, `context` async
+    // boşluğun ötesine taşınmasın diye burada, senkron olarak çözülür.
+    final opponentPlaceholder = context.t(K.opponentWord);
     setState(() {
       _searchingStarted = true;
       _categoryName = chosenCategory;
@@ -226,7 +230,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             final roomId = entry['room_id'] as String?;
             if (roomId == null) return;
             // Fetch opponent display name
-            String matchedName = ku ? 'Lîstikvan' : 'Rakip';
+            String matchedName = opponentPlaceholder;
             var opponentIdentity = const AvatarIdentity();
             final opponent = await _loadOpponentPlayer(
               roomId: roomId,
@@ -260,7 +264,12 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             return;
           }
 
-          if (_secondsElapsed >= 30) {
+          // 30 saniye, canlı oyuncu havuzu henüz yokken yeni kullanıcıyı
+          // boş bir radar ekranında bekletiyordu (2026-07-25 canlı
+          // denetimi). Süre kısaltıldı ve durum metniyle hizalandı:
+          // 0-12sn "aranıyor", 12-20sn "henüz bulunamadı", 20sn'de bot
+          // teklifi. Havuz büyüdüğünde bu değer yeniden uzatılabilir.
+          if (_secondsElapsed >= 20) {
             timer.cancel();
             _matchmakingSub?.cancel();
             _matchmakingSub = null;
@@ -302,15 +311,17 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             }
           } else {
             setState(() {
-              if (_secondsElapsed < 10) {
+              // "Bağlantı kuruluyor..." ara evresi kaldırıldı: kurulan bir
+              // bağlantı yok, hâlâ rakip aranıyor. Üstelik alttaki geçen-süre
+              // çipi aynı anda "Rakip aranıyor… 19 sn" yazdığı için ekranda
+              // iki çelişik durum görünüyordu (2026-07-25 canlı denetimi).
+              // Durum metni yalnız gerçekten değişen şeyi söyler.
+              if (_secondsElapsed < 12) {
                 _statusTextKu = 'Lîstikvanek tê gerîn...';
                 _statusTextTr = 'Rakip aranıyor...';
-              } else if (_secondsElapsed < 20) {
-                _statusTextKu = 'Têkilî tê çêkirin...';
-                _statusTextTr = 'Bağlantı kuruluyor...';
               } else {
-                _statusTextKu = 'Lîstikvan nehat dîtin...';
-                _statusTextTr = 'Rakip bulunamadı...';
+                _statusTextKu = 'Hîn lîstikvan nehat dîtin...';
+                _statusTextTr = 'Henüz rakip bulunamadı...';
               }
             });
           }
@@ -321,19 +332,14 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       if (_isCancelled || !mounted) return;
       _matchmakingSub?.cancel();
       _statusTimer?.cancel();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            ku ? 'Li hev anîn bi ser neket.' : 'Eşleştirme başarısız oldu.',
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.matchFailed))));
       Navigator.of(context).pop();
     }
   }
 
   Future<bool?> _showBotPrompt() async {
-    final ku = context.isKu;
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -344,23 +350,21 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           side: BorderSide(color: AppTheme.borderColor(context)),
         ),
         title: Text(
-          ku ? 'Dema Gerînê Qediya' : 'Arama Süresi Doldu',
+          context.t(K.searchTimedOut),
           style: TextStyle(
             color: AppTheme.textPrimaryColor(context),
             fontWeight: FontWeight.bold,
           ),
         ),
         content: Text(
-          ku
-              ? 'Hêj lîstikvan nehate dîtin. Bila ez bi botê bilîzim?'
-              : 'Henüz rakip bulunamadı. Bot ile oynansın mı?',
+          context.t(K.playWithBotQ),
           style: TextStyle(color: AppTheme.textSubColor(context)),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
             child: Text(
-              ku ? 'Na' : 'Hayır',
+              context.t(K.no),
               style: const TextStyle(color: AppTheme.wrong),
             ),
           ),
@@ -369,7 +373,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               backgroundColor: AppTheme.primaryGradientStart,
             ),
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(ku ? 'Belê' : 'Evet'),
+            child: Text(context.t(K.yes)),
           ),
         ],
       ),
@@ -456,7 +460,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         .copyWith(
           id: roomId,
           hostId: dbHostId,
-          name: ku ? 'Şerê 1v1' : '1v1 Savaş',
+          name: context.t(K.duel1v1Short),
           // 1v1 tempolu bir düello; 20sn (2026-07-21 kullanıcı kararı).
           secondsPerQuestion: 20,
           players: [
@@ -562,7 +566,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           leading: _searchingStarted
               ? IconButton(
                   icon: const Icon(AppIcons.arrowLeft),
-                  tooltip: context.isKu ? 'Vegere' : 'Geri',
+                  tooltip: context.t(K.back),
                   onPressed: _cancelling ? null : _handleCancelAndPop,
                 )
               : null,
@@ -625,7 +629,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               ),
               const SizedBox(height: 16),
               Text(
-                ku ? 'Şerê 1vs1' : '1vs1 Düello',
+                context.t(K.duel1v1),
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
@@ -634,9 +638,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               ),
               const SizedBox(height: 8),
               Text(
-                ku
-                    ? 'Bi hevalan re an bi lîstikvanên din re bi awayekî zindî pêş bikeve.'
-                    : 'Arkadaşlarınla veya diğer oyuncularla canlı yarış.',
+                context.t(K.duel1v1Sub),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.9),
@@ -689,7 +691,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          ku ? 'Hevrikîya rastgele' : 'Rastgele eşleşme',
+                          context.t(K.randomMatch),
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w800,
@@ -700,9 +702,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          ku
-                              ? 'Bêyî hilbijartina kategoriyê rasterast bikeve rêzê.'
-                              : 'Kategori seçmeden doğrudan sıraya gir.',
+                          context.t(K.randomMatchSub),
                           style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 12,
@@ -738,7 +738,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         Padding(
           padding: const EdgeInsets.only(left: 4, bottom: 10),
           child: Text(
-            ku ? 'Li gorî kategoriyê li hev bîne' : 'Kategoriye göre eşleş',
+            context.t(K.matchByCategory),
             style: TextStyle(
               color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w800,
@@ -755,7 +755,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         else if (_categories.isEmpty)
           Center(
             child: Text(
-              ku ? 'Kategorî nehatin dîtin.' : 'Kategoriler bulunamadı.',
+              context.t(K.categoriesNotFound),
               style: TextStyle(color: AppTheme.textMutedColor(context)),
             ),
           )
@@ -882,9 +882,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 ),
               ),
               child: Text(
-                ku
-                    ? 'Kategorî: ${CategoryNames.localized(_categoryName!, true)}'
-                    : 'Kategori: ${CategoryNames.localized(_categoryName!, false)}',
+                context.t(K.categoryPrefix, {
+                  'name': CategoryNames.localized(_categoryName!, context.isKu),
+                }),
                 style: const TextStyle(
                   color: AppTheme.primaryGradientStart,
                   fontWeight: FontWeight.w700,
@@ -1006,7 +1006,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            ku ? 'Ast $_myLevel' : 'Seviye $_myLevel',
+                            context.t(K.levelPrefix, {'level': '$_myLevel'}),
                             style: TextStyle(
                               color: AppTheme.textSubColor(context),
                               fontSize: 10,
@@ -1121,9 +1121,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                           ),
                           child: Text(
                             _found
-                                ? (ku
-                                      ? 'Ast $_opponentLevel'
-                                      : 'Seviye $_opponentLevel')
+                                ? (context.t(K.levelPrefix, {
+                                    'level': '$_opponentLevel',
+                                  }))
                                 : '?',
                             style: TextStyle(
                               color: _found
@@ -1159,7 +1159,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           if (_found) ...[
             const SizedBox(height: 10),
             Text(
-              ku ? 'Dest pê dike...' : 'Başlamak üzere...',
+              context.t(K.startingSoon),
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: AppTheme.gold,
@@ -1187,8 +1187,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 ),
                 child: Text(
                   ku
-                      ? 'Lîstikvan tê gerîn… $_secondsElapsed sn'
-                      : 'Rakip aranıyor… $_secondsElapsed sn',
+                      // Çip yalnız geçen süreyi taşır; durumu üstteki
+                      // başlık söyler. İkisi de durum yazdığında biri
+                      // ötekini yalanlıyordu.
+                      ? '$_secondsElapsed çirke'
+                      : '$_secondsElapsed saniye',
                   style: TextStyle(
                     color: AppTheme.textSubColor(context),
                     fontSize: 13,
@@ -1200,9 +1203,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Text(
-                ku
-                    ? 'Hevalek tê gerîn. Heger lîstikvanek zindî neyê dîtin, tu ê bi botekê re bîyî eşleşkirin. Dikare betal bikî.'
-                    : 'Rakip aranıyor. Canlı rakip bulunamazsa botla eşleşirsin. İstediğin zaman iptal edebilirsin.',
+                context.t(K.searchingNote),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppTheme.textMutedColor(context),
@@ -1226,7 +1227,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               onPressed: _cancelling ? null : _handleCancelAndPop,
               icon: const Icon(AppIcons.xmark, size: 18),
               label: Text(
-                ku ? 'Betal bike' : 'İptal Et',
+                context.t(K.cancelAction),
                 style: const TextStyle(fontWeight: FontWeight.w700),
               ),
             ),

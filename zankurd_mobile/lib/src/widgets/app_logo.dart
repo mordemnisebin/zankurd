@@ -20,6 +20,7 @@ class AppLogo extends StatelessWidget {
     this.onCard = false,
     this.cardRadius = 24,
     this.cardPadding = const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+    this.onBrandSurface = false,
     super.key,
   });
 
@@ -27,6 +28,14 @@ class AppLogo extends StatelessWidget {
   final bool onCard;
   final double cardRadius;
   final EdgeInsets cardPadding;
+
+  /// Logo, markanın turuncusu gibi doygun bir zeminin üzerinde mi duruyor?
+  ///
+  /// Logo turuncu/altın tonlardan oluşur; turuncu hero üzerine konduğunda
+  /// zeminle aynı renge düşüp neredeyse kayboluyordu (2026-07-25 canlı
+  /// denetimi, isim ekranı). True verildiğinde logonun arkasına yumuşak
+  /// açık bir daire konur — marka rengi korunur, kontrast geri gelir.
+  final bool onBrandSurface;
 
   static const double _wordmarkThreshold = 150;
 
@@ -36,13 +45,30 @@ class AppLogo extends StatelessWidget {
         ? 'assets/zankurd_icon.webp'
         : 'assets/zankurd.webp';
     final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
-    return Image.asset(
+    final image = Image.asset(
       asset,
       width: width,
       cacheWidth: (width * devicePixelRatio).round(),
       fit: BoxFit.contain,
       filterQuality: FilterQuality.high,
       isAntiAlias: true,
+    );
+    if (!onBrandSurface) return image;
+    final pad = width * 0.14;
+    return Container(
+      padding: EdgeInsets.all(pad),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white.withValues(alpha: 0.92),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.12),
+            blurRadius: 14,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: image,
     );
   }
 }

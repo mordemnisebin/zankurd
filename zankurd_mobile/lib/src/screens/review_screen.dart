@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/answer_record.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
@@ -25,21 +26,15 @@ class ReviewScreen extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(context.s('Bersiv', 'Cevaplar'))),
+      appBar: AppBar(title: Text(context.t(K.answersTitle))),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
           child: records.isEmpty
               ? AppEmptyState(
                   icon: AppIcons.squareCheck,
-                  title: context.s(
-                    'Tu bersiv tune ne.',
-                    'Hiç cevap kaydı yok.',
-                  ),
-                  message: context.s(
-                    'Pirsên çareserkirî dê li vir xuya bibin.',
-                    'Çözülen sorular burada görünecektir.',
-                  ),
+                  title: context.t(K.answersEmptyTitle),
+                  message: context.t(K.answersEmptyBody),
                 )
               : ListView(
                   padding: const EdgeInsets.fromLTRB(
@@ -52,11 +47,12 @@ class ReviewScreen extends StatelessWidget {
                     // Xwendin ailesi — camgöbeği kimlik (cevap inceleme).
                     // AppBar "Cevaplar" taşıyor; kart başlığı özet olsun.
                     ScreenIdentityHeader(
-                      title: context.s('Xulase', 'Özet'),
-                      subtitle: context.s(
-                        '$correct rast · $wrong şaş · $empty vala',
-                        '$correct doğru · $wrong yanlış · $empty boş',
-                      ),
+                      title: context.t(K.summaryTitle),
+                      subtitle: context.t(K.reviewSummaryLine, {
+                        'correct': '$correct',
+                        'wrong': '$wrong',
+                        'empty': '$empty',
+                      }),
                       accent: AppTheme.cyan,
                       icon: AppIcons.squareCheck,
                       compact: true,
@@ -96,7 +92,7 @@ class _SummaryStrip extends StatelessWidget {
             color: AppTheme.correct,
             icon: AppIcons.circleCheck,
             value: '$correct',
-            label: context.s('Rast', 'Doğru'),
+            label: context.t(K.correct),
           ),
         ),
         const SizedBox(width: 10),
@@ -105,7 +101,7 @@ class _SummaryStrip extends StatelessWidget {
             color: AppTheme.wrong,
             icon: AppIcons.circleXmark,
             value: '$wrong',
-            label: context.s('Şaş', 'Yanlış'),
+            label: context.t(K.wrong),
           ),
         ),
         const SizedBox(width: 10),
@@ -114,7 +110,7 @@ class _SummaryStrip extends StatelessWidget {
             color: AppTheme.gold,
             icon: AppIcons.hourglass,
             value: '$empty',
-            label: context.s('Vala', 'Boş'),
+            label: context.t(K.blank),
           ),
         ),
       ],
@@ -193,15 +189,15 @@ class _ReviewCard extends StatelessWidget {
     if (isUnanswered) {
       headerColor = AppTheme.gold;
       headerIcon = AppIcons.circleQuestion;
-      headerText = context.s('Vala ma', 'BOŞ BIRAKILDI');
+      headerText = context.t(K.blankBadge);
     } else if (isCorrect) {
       headerColor = AppTheme.correct;
       headerIcon = AppIcons.circleCheck;
-      headerText = context.s('RAST', 'DOĞRU');
+      headerText = context.t(K.correctBadge);
     } else {
       headerColor = AppTheme.wrong;
       headerIcon = AppIcons.circleXmark;
-      headerText = context.s('ŞAŞ', 'YANLIŞ');
+      headerText = context.t(K.wrongBadge);
     }
 
     return AppPanel(
@@ -240,7 +236,7 @@ class _ReviewCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(99),
                   ),
                   child: Text(
-                    context.s('Pirs ${index + 1}', 'Soru ${index + 1}'),
+                    context.t(K.questionIndex, {'index': '${index + 1}'}),
                     style: TextStyle(
                       color: AppTheme.textSubColor(context),
                       fontWeight: FontWeight.w700,

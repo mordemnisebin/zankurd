@@ -5,6 +5,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/quiz_level.dart';
 import '../theme/app_theme.dart';
+import '../widgets/kilim_progress_bar.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'quiz_screen.dart';
@@ -90,6 +91,8 @@ class _LevelScreenState extends State<LevelScreen> {
                 subCategory: widget.subCategory,
                 gradient: gradient,
                 isKu: ku,
+                completedLevels: _playedLevels.length,
+                totalLevels: levels.length,
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
@@ -133,6 +136,15 @@ class _LevelScreenState extends State<LevelScreen> {
             repository: widget.repository,
             room: room,
             questions: questions,
+            // Kategori seviyeleri bir öğrenme yolunun basamaklarıdır,
+            // yarışma değil: süre baskısı olmadan her cevaptan sonra
+            // açıklama gösterilir. Varsayılan `competition` bırakıldığında
+            // "Ziman → Rêziman → Destpêk" gibi apaçık ders akışlarında
+            // kullanıcı yanlışının nedenini hiç öğrenemiyordu
+            // (2026-07-25 canlı denetimi). Ana ekranın "Günün Dersi"
+            // akışı zaten bu ayarda.
+            experience: QuizExperience.learning,
+            enableTimer: false,
           ),
         ),
       );
@@ -167,6 +179,8 @@ class _LevelScreenState extends State<LevelScreen> {
 
 class _CategoryHero extends StatelessWidget {
   const _CategoryHero({
+    required this.completedLevels,
+    required this.totalLevels,
     required this.category,
     this.subCategory,
     required this.gradient,
@@ -177,6 +191,10 @@ class _CategoryHero extends StatelessWidget {
   final String? subCategory;
   final LinearGradient gradient;
   final bool isKu;
+
+  /// Bu alt kategoride tamamlanan / toplam seviye sayısı.
+  final int completedLevels;
+  final int totalLevels;
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +232,12 @@ class _CategoryHero extends StatelessWidget {
       child: Material(
         type: MaterialType.transparency,
         child: Container(
-          height: 200 + topInset,
+          // 200pt'lik hero'nun üst ~%60'ı tamamen boştu: içerik `Spacer`
+          // ile en alta itiliyordu ve telefonun üçte biri hiçbir şey
+          // söylemiyordu (2026-07-25 canlı denetimi). Yükseklik başlığın
+          // gerçekten ihtiyaç duyduğu ölçüye çekildi; kalan yer ilerleme
+          // bilgisiyle dolduruldu.
+          height: 168 + topInset,
           decoration: BoxDecoration(
             gradient: gradient,
             boxShadow: [
@@ -226,7 +249,44 @@ class _CategoryHero extends StatelessWidget {
             ],
           ),
           child: Stack(
+            fit: StackFit.expand,
             children: [
+              // Kategori görseli — en alt katman.
+              //
+              // `assets/question_images/cat_*.webp` sekiz görsel pakete
+              // giriyor ama `CategoryVisuals.imagePath()` hiçbir yerden
+              // çağrılmıyordu: ~600K ölü yük (2026-07-25 görsel denetimi).
+              //
+              // Görseller kategori *listesine* konmadı: 2026-07-24 kararı
+              // poster kartları bilinçli olarak kaldırmıştı, çünkü sekiz
+              // görsel yan yana gözü yoruyor. Burada aynı sorun yok —
+              // ekranda tek kategori var. Görsel, gradyanın altında düşük
+              // opaklıkta bir doku olarak durur; başlığın beyaz metni
+              // üstteki gradyan perdesiyle okunur kalır.
+              Opacity(
+                opacity: 0.28,
+                child: Image.asset(
+                  CategoryVisuals.imagePath(category),
+                  fit: BoxFit.cover,
+                  // Görsel bulunamazsa hero yine çizilir; gradyan tek
+                  // başına yeterli bir zemindir.
+                  errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                ),
+              ),
+              // Görselin üstüne gradyan perdesi: metin kontrastı görselin
+              // parlaklığından bağımsız kalsın.
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      gradient.colors.first.withValues(alpha: 0.55),
+                      gradient.colors.last.withValues(alpha: 0.88),
+                    ],
+                  ),
+                ),
+              ),
               // Soft Glow 1
               Positioned(
                 right: -40,
@@ -287,10 +347,20 @@ class _CategoryHero extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       subtitle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTypography.bodyMedium.copyWith(
                         color: Colors.white.withValues(alpha: 0.8),
                       ),
                     ),
+                    if (totalLevels > 0) ...[
+                      const SizedBox(height: 10),
+                      _HeroProgress(
+                        completed: completedLevels,
+                        total: totalLevels,
+                        isKu: isKu,
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -302,10 +372,74 @@ class _CategoryHero extends StatelessWidget {
   }
 }
 
+/// Hero içindeki ince ilerleme şeridi: "2/5 seviye tamam".
+///
+/// Başlık şeridinin boş kalan alanı süs yerine gerçek bir durum bilgisiyle
+/// doldurulur; kullanıcı bu alt kategoride nerede olduğunu haritaya
+/// bakmadan görür.
+class _HeroProgress extends StatelessWidget {
+  const _HeroProgress({
+    required this.completed,
+    required this.total,
+    required this.isKu,
+  });
+
+  final int completed;
+  final int total;
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    final ratio = total <= 0 ? 0.0 : (completed / total).clamp(0.0, 1.0);
+    return Semantics(
+      label: isKu
+          ? '$completed ji $total astan temam bûn'
+          : '$total seviyeden $completed tanesi tamamlandı',
+      child: ExcludeSemantics(
+        child: Row(
+          children: [
+            // Kilim çubuğu yalnız 15'ten fazla soruluk quizlerde çiziliyordu
+            // ve hiçbir seviyede o kadar soru yok — uygulamanın kültürel
+            // görsel imzası pratikte hiç görünmüyordu (2026-07-25 görsel
+            // denetimi). Burası kullanıcının ilerlemeye gerçekten baktığı
+            // yer; motif buraya taşındı.
+            Expanded(
+              child: KilimProgressBar(
+                value: ratio,
+                height: 8,
+                color: Colors.white,
+                // Yeşil hero üzerinde iz, tema yüzeyiyle (açık) çizilirse
+                // dolgudan ayırt edilemez ve %0 ilerleme "dolu" görünür.
+                trackColor: Colors.white.withValues(alpha: 0.22),
+                borderColor: Colors.white.withValues(alpha: 0.30),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Text(
+              isKu ? '$completed/$total ast' : '$completed/$total seviye',
+              style: AppTypography.caption.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// Kademe rengi: her seviyenin yol üzerindeki kimliği.
+/// Seviye numarasından zorluk merdiveninin rengi: kolaydan zora doğru
+/// yeşil → camgöbeği → altın → turuncu → mor. Kesikli patika da aynı
+/// diziyi kullanır, böylece renk bir ilerleme ölçeği olarak okunur.
+///
+/// 2. kademe lacivert (0xFF2B5C8F) idi: marka paletinde yer almayan bu
+/// ton, yeşille altın arasında merdivenin dışından gelmiş gibi duruyor ve
+/// dizinin ölçek olduğunu gizliyordu (2026-07-25 canlı denetimi).
 Color _levelColor(int n) => switch (n) {
   1 => AppTheme.correct,
-  2 => const Color(0xFF2B5C8F),
+  2 => AppTheme.playCyan,
   3 => AppTheme.gold,
   4 => AppTheme.primaryGradientStart,
   _ => AppTheme.violet,
@@ -327,6 +461,18 @@ class _LevelPath extends StatelessWidget {
   final bool isKu;
   final Set<int> playedLevels;
   final ValueChanged<QuizLevel> onOpen;
+
+  /// Bir seviye açık mı? İlk basamak daima açıktır; sonrakiler ancak bir
+  /// önceki oynandıysa açılır.
+  ///
+  /// Kilit yokken 5. seviye ("Mamoste", zorluk 4-5) ilk günden erişilebilir
+  /// oluyordu: yol bir merdiven gibi çizilmiş ama merdiven işlevi görmüyor,
+  /// yeni kullanıcı doğrudan en zora girip başarısız oluyordu (2026-07-25
+  /// canlı denetimi). Kilit, haritanın vaat ettiği ilerlemeyi gerçek kılar.
+  bool _isUnlocked(int number) {
+    if (number <= 1) return true;
+    return playedLevels.contains(number - 1);
+  }
 
   /// Yoldaki "sıradaki" düğüm: oynanmamış ilk seviye.
   int? get _nextNumber {
@@ -380,6 +526,7 @@ class _LevelPath extends StatelessWidget {
                     isKu: isKu,
                     played: playedLevels.contains(levels[i].number),
                     isNext: levels[i].number == _nextNumber,
+                    locked: !_isUnlocked(levels[i].number),
                     onTap: () => onOpen(levels[i]),
                   ),
                 ),
@@ -399,6 +546,7 @@ class _LevelNode extends StatefulWidget {
     required this.isKu,
     required this.played,
     required this.isNext,
+    required this.locked,
     required this.onTap,
   });
 
@@ -411,6 +559,10 @@ class _LevelNode extends StatefulWidget {
 
   /// Yolda sıradaki seviye (güçlü parıltı — "buradan devam et").
   final bool isNext;
+
+  /// Bir önceki seviye henüz oynanmadı: düğüm soluk çizilir ve dokunma
+  /// quiz açmak yerine neden kilitli olduğunu anlatır.
+  final bool locked;
   final VoidCallback onTap;
 
   @override
@@ -420,159 +572,192 @@ class _LevelNode extends StatefulWidget {
 class _LevelNodeState extends State<_LevelNode> {
   bool _pressed = false;
 
+  /// Kilitli düğüme dokunulduğunda nedenini söyler. Sessizce hiçbir şey
+  /// yapmayan bir düğüm, kullanıcıya "bozuk" hissi verir.
+  void _explainLock(BuildContext context) {
+    final previous = widget.level.number - 1;
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(
+            context.isKu
+                ? 'Pêşî asta $previous. temam bike.'
+                : 'Önce $previous. seviyeyi tamamla.',
+          ),
+        ),
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     final color = _levelColor(widget.level.number);
     final isFinal = widget.level.number >= 5;
 
+    final blocked = widget.disabled || widget.locked;
+    final name = LevelNames.localized(widget.level.title, context.isKu);
+
     return Semantics(
       button: true,
-      enabled: !widget.disabled,
-      label: LevelNames.localized(widget.level.title, context.isKu),
-      child: GestureDetector(
-        onTapDown: widget.disabled
-            ? null
-            : (_) => setState(() => _pressed = true),
-        onTapUp: widget.disabled
-            ? null
-            : (_) {
-                setState(() => _pressed = false);
-                widget.onTap();
-              },
-        onTapCancel: widget.disabled
-            ? null
-            : () => setState(() => _pressed = false),
-        child: AnimatedScale(
-          scale: _pressed ? 0.93 : 1.0,
-          duration: const Duration(milliseconds: 100),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    width: 76,
-                    height: 76,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          color,
-                          Color.alphaBlend(
-                            Colors.black.withValues(alpha: 0.24),
+      enabled: !blocked,
+      label: widget.locked
+          ? (context.isKu
+                ? '$name — girtî. Berî wê astê temam bike.'
+                : '$name — kilitli. Önceki seviyeyi tamamla.')
+          : name,
+      child: Opacity(
+        // Kilitli düğüm görünür kalır (yol görünmez olmamalı) ama açıkça
+        // erişilemez okunur.
+        opacity: widget.locked ? 0.45 : 1.0,
+        child: GestureDetector(
+          onTapDown: blocked ? null : (_) => setState(() => _pressed = true),
+          onTapUp: blocked
+              ? null
+              : (_) {
+                  setState(() => _pressed = false);
+                  widget.onTap();
+                },
+          onTapCancel: blocked ? null : () => setState(() => _pressed = false),
+          // Kilitli düğüme dokunmak sessiz kalmaz: nedenini söyler.
+          onTap: widget.locked ? () => _explainLock(context) : null,
+          child: AnimatedScale(
+            scale: _pressed ? 0.93 : 1.0,
+            duration: const Duration(milliseconds: 100),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      width: 76,
+                      height: 76,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
                             color,
+                            Color.alphaBlend(
+                              Colors.black.withValues(alpha: 0.24),
+                              color,
+                            ),
+                          ],
+                        ),
+                        border: Border.all(
+                          color: widget.played
+                              ? AppTheme.gold
+                              : Colors.white.withValues(
+                                  alpha: widget.isNext ? 0.9 : 0.55,
+                                ),
+                          width: 3,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: color.withValues(
+                              alpha: widget.isNext ? 0.32 : 0.20,
+                            ),
+                            blurRadius: widget.isNext ? 16 : 10,
+                            offset: const Offset(0, 5),
+                            spreadRadius: -2,
                           ),
                         ],
                       ),
-                      border: Border.all(
-                        color: widget.played
-                            ? AppTheme.gold
-                            : Colors.white.withValues(
-                                alpha: widget.isNext ? 0.9 : 0.55,
-                              ),
-                        width: 3,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: color.withValues(
-                            alpha: widget.isNext ? 0.32 : 0.20,
-                          ),
-                          blurRadius: widget.isNext ? 16 : 10,
-                          offset: const Offset(0, 5),
-                          spreadRadius: -2,
-                        ),
-                      ],
-                    ),
-                    child: isFinal
-                        ? const Icon(
-                            AppIcons.trophy,
-                            color: Colors.white,
-                            size: 34,
-                          )
-                        : Text(
-                            '${widget.level.number}',
-                            style: AppTypography.heading1.copyWith(
+                      child: widget.locked
+                          ? const Icon(
+                              AppIcons.lock,
                               color: Colors.white,
-                              fontSize: 28,
-                              fontWeight: FontWeight.w900,
+                              size: 30,
+                            )
+                          : isFinal
+                          ? const Icon(
+                              AppIcons.trophy,
+                              color: Colors.white,
+                              size: 34,
+                            )
+                          : Text(
+                              '${widget.level.number}',
+                              style: AppTypography.heading1.copyWith(
+                                color: Colors.white,
+                                fontSize: 28,
+                                fontWeight: FontWeight.w900,
+                              ),
                             ),
+                    ),
+                    if (widget.played)
+                      Positioned(
+                        right: -2,
+                        top: -2,
+                        child: Container(
+                          width: 24,
+                          height: 24,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            gradient: AppTheme.goldGradient,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 1.5),
                           ),
-                  ),
-                  if (widget.played)
-                    Positioned(
-                      right: -2,
-                      top: -2,
-                      child: Container(
-                        width: 24,
-                        height: 24,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          gradient: AppTheme.goldGradient,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 1.5),
-                        ),
-                        child: const Icon(
-                          AppIcons.check,
-                          color: Colors.white,
-                          size: 14,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: AppTheme.surfaceColor(context),
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                  border: Border.all(color: color.withValues(alpha: 0.30)),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      LevelNames.localized(widget.level.title, context.isKu),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w800,
-                        fontSize: 13.5,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _DifficultyStars(
-                          filled: widget.level.difficultyMax.clamp(1, 5),
-                          color: color,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"}',
-                          style: AppTypography.caption.copyWith(
-                            color: AppTheme.textMutedColor(context),
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
+                          child: const Icon(
+                            AppIcons.check,
+                            color: Colors.white,
+                            size: 14,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
                   ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppTheme.surfaceColor(context),
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                    border: Border.all(color: color.withValues(alpha: 0.30)),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        LevelNames.localized(widget.level.title, context.isKu),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppTheme.textPrimaryColor(context),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 13.5,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _DifficultyStars(
+                            filled: widget.level.difficultyMax.clamp(1, 5),
+                            color: color,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"}',
+                            style: AppTypography.caption.copyWith(
+                              color: AppTheme.textMutedColor(context),
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -654,20 +839,29 @@ class _DifficultyStars extends StatelessWidget {
       child: Semantics(
         label: label,
         child: ExcludeSemantics(
+          // Zorluk yıldızla gösteriliyordu. Yıldız, quiz uygulamalarında
+          // neredeyse her yerde *kazanılmış başarıyı* anlatır; hiç
+          // oynamamış oyuncu seviye kartında "2/5 dolu yıldız" görünce
+          // bunu kendi skoru sanıyordu (2026-07-25 canlı denetimi).
+          // Yükselen çubuklar zorluğu tek anlama gelecek biçimde anlatır.
           child: Row(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               for (var i = 1; i <= 5; i++)
                 Padding(
-                  padding: const EdgeInsets.only(right: 1.5),
-                  child: Icon(
-                    AppIcons.star,
-                    size: 13,
-                    color: i <= filled
-                        ? color
-                        : AppTheme.textMutedColor(
-                            context,
-                          ).withValues(alpha: 0.45),
+                  padding: const EdgeInsets.only(right: 2),
+                  child: Container(
+                    width: 3,
+                    height: 4.0 + i * 2,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(1.5),
+                      color: i <= filled
+                          ? color
+                          : AppTheme.textMutedColor(
+                              context,
+                            ).withValues(alpha: 0.35),
+                    ),
                   ),
                 ),
             ],

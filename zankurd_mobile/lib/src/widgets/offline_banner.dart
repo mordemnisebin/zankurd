@@ -2,6 +2,7 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 
 class OfflineBanner extends StatelessWidget {
@@ -12,7 +13,6 @@ class OfflineBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ku = context.isKu;
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -48,9 +48,7 @@ class OfflineBanner extends StatelessWidget {
                       const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          ku
-                              ? 'Girêdana înternetê tuneye — Tê kontrolkirin...'
-                              : 'İnternet bağlantısı yok — Kontrol ediliyor...',
+                          context.t(K.offlineChecking),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 13,
@@ -74,7 +72,7 @@ class OfflineBanner extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
-                                ku ? 'Dîsa biceribîne' : 'Tekrar dene',
+                                context.t(K.retry),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,

@@ -5,6 +5,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -16,6 +17,7 @@ import 'src/data/supabase_zankurd_repository.dart';
 import 'src/data/sync_manager.dart';
 import 'src/data/zankurd_repository.dart';
 import 'src/l10n/lang.dart';
+import 'src/l10n/strings.dart';
 import 'src/providers/auth_provider.dart';
 import 'src/providers/child_safety_provider.dart';
 import 'src/providers/reduced_motion_provider.dart';
@@ -63,7 +65,7 @@ Future<void> main() async {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    ku ? 'Şaşiyek çêbû' : 'Bir hata oluştu',
+                    Tr.forKu(K.genericErrorTitle, ku),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -71,9 +73,7 @@ Future<void> main() async {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    ku
-                        ? 'Tiştek şaş çû. Ji kerema xwe dîsa biceribîne.'
-                        : 'Bir şeyler ters gitti. Lütfen tekrar dene.',
+                    Tr.forKu(K.genericErrorBody, ku),
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
@@ -248,10 +248,36 @@ class ZanKurdApp extends StatelessWidget {
           builder: (context, child) => MediaQuery.withClampedTextScaling(
             minScaleFactor: 0.85,
             maxScaleFactor: 2.0,
-            child: ResponsiveWrapper(child: child ?? const SizedBox.shrink()),
+            // Durum çubuğu ikonları hiçbir yerde ayarlanmamıştı; açık
+            // temada beyaz saat/pil krem zemin üzerine düşüyor ve
+            // okunmuyordu (2026-07-25 canlı denetimi, iOS). Ekranların
+            // çoğu AppBar kullanmadığı için stil uygulama kökünde,
+            // etkin parlaklığa göre verilir.
+            child: AnnotatedRegion<SystemUiOverlayStyle>(
+              value: _overlayStyleFor(context),
+              child: ResponsiveWrapper(child: child ?? const SizedBox.shrink()),
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  /// Etkin temanın parlaklığına göre durum çubuğu stili. Açık temada koyu
+  /// ikon, koyu temada açık ikon.
+  ///
+  /// Not: `statusBarBrightness` iOS'ta *zeminin* parlaklığını, Android'de
+  /// karşılığı olan `statusBarIconBrightness` ise *ikonun* parlaklığını
+  /// tanımlar — ikisi birbirinin tersidir.
+  static SystemUiOverlayStyle _overlayStyleFor(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+      statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+      systemNavigationBarIconBrightness: isDark
+          ? Brightness.light
+          : Brightness.dark,
     );
   }
 }

@@ -5,11 +5,18 @@
 /// sayılmaz. Geri açmak için id'yi listeden kaldırmak yeterli.
 ///
 /// Bağlam: 2026-07-19 canlı denetimde Teknolojî kategorisinin 23 sorusunun
-/// Türkçe meta/test içeriği taşıdığı saptandı; içerik yayına hazır olana
-/// dek gizli kalır.
+/// Türkçe meta/test içeriği taşıdığı saptandı ve kategori "içerik yayına
+/// hazır olana dek" gizlendi.
+///
+/// 2026-07-26: koşul karşılandı, kategori açıldı. Kusurlu sorular ayıklandı
+/// (23 → 12), kalan 12'si tek tek denetlendi ve 28 yeni soru yazıldı; toplam
+/// 40, her zorluk gözünde bir tur dolduracak kadar. Sorular yalnız teknoloji
+/// kavramını değil o kavramın Kurmancî karşılığını da öğretiyor — uygulamanın
+/// öğrenme amacına uygun. Liste şimdilik boş; yeni bir kategori hazır
+/// olmadan eklenirse buraya id'si yazılır.
 library;
 
-const Set<String> hiddenCategoryIds = {'Teknolojî'};
+const Set<String> hiddenCategoryIds = <String>{};
 
 /// Kategori listede/quiz seçiminde gösterilebilir mi?
 bool isCategoryVisible(String categoryId) =>

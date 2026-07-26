@@ -25,6 +25,7 @@ import 'question_bank_loader.dart';
 import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
 import '../config/subcategory_config.dart';
+import '../services/question_set_policy.dart';
 import '../services/question_content_policy.dart';
 
 class MockZanKurdRepository implements ZanKurdRepository {
@@ -45,6 +46,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
     'Muzîk',
     'Siyaset',
     'Paradigma',
+    // Topluluk katkısı soru setiyle açılan yeni kategori: Kürt sineması.
+    'Sînema',
+    // 2026-07-26: içeriği hazırlanınca açıldı (12 → 40 soru). Ürünün amacı
+    // yalnız Kürtçe değil genel dünya bilgisi de olduğu için kategori
+    // kapatılmak yerine dolduruldu; sorular kavramla birlikte kavramın
+    // Kurmancî karşılığını da öğretiyor.
+    'Teknolojî',
   ];
 
   @override
@@ -62,7 +70,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
   String? get currentUserId => 'user';
 
   String _mockName = 'ZanKurd Oyuncusu';
-  int _mockCoins = 2450;
+
+  // Mağaza kataloğunun toplamı ~4.800 coin. 2.450 ile açılan bir demo
+  // oturumu daha ilk saniyede kataloğun yarısını satın alabiliyor ve coin
+  // kazanma döngüsü hiç denenmeden anlamsızlaşıyordu (2026-07-25 canlı
+  // denetimi). Üretimde bakiye sunucudan gelir; burası yalnız demo/mock
+  // başlangıcıdır ve yeni bir oyuncuya benzemesi gerekir.
+  int _mockCoins = 120;
   int _mockExtraSpins = 0;
   int _mockUsedExtraSpins = 0;
   final Set<String> _mockPurchases = {};
@@ -233,7 +247,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
       }
     }
 
-    return _selectFresh(pool.isEmpty ? playable : pool, limit);
+    // İlk iki basamak (Destpêk / Bingeh) bir öğrenme yolunun girişidir:
+    // bankadaki `difficulty` etiketi konu zorluğunu anlatır ama okuma
+    // yükünü yansıtmaz — ölçümde zorluk 1'in şık uzunluğu medyanı tüm
+    // seviyelerin en yükseğiydi (2026-07-25). Havuz, aynı zorluk bandı
+    // içinde en hafif okunan sorular öne gelecek biçimde sıralanır.
+    final ordered = difficultyMax <= 2
+        ? QuestionSetPolicy.byReadingLoad(pool.isEmpty ? playable : pool)
+        : (pool.isEmpty ? playable : pool);
+    return _selectFresh(ordered, limit);
   }
 
   @override
@@ -279,7 +301,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
   ) async {
     if (pool.isEmpty || limit <= 0) return const [];
     final store = await SeenQuestionStore.load();
-    final selected = store.preferUnseen(pool, limit);
+    // Havuzdan limitten fazlası istenir: sızıntı süzgeci bir kısmını
+    // eleyeceği için tam limitte istemek turu eksik bırakırdı.
+    final candidates = store.preferUnseen(pool, limit * 3);
+    final clean = QuestionSetPolicy.withoutLeaks(candidates, limit: limit);
+    // Süzgeç limiti dolduramazsa (küçük havuz) elde kalanla devam edilir;
+    // eksik bir tur, kendi cevabını ele veren bir turdan iyidir ama boş
+    // bir tur ikisinden de kötüdür.
+    final selected = clean.isEmpty ? candidates.take(limit).toList() : clean;
     return _withVisualBlend(selected, pool, limit);
   }
 
@@ -903,8 +932,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return Contest(
       id: 'contest_mock_today',
       dayKey: DateTime.now(),
-      themeNameKu: 'Ziman Eksperi',
-      themeDescriptionKu: 'Dil usta ol!',
+      // "Ziman Eksperi" ne tam Kurmancî ne Türkçeydi ve iki arayüzde de aynı
+      // görünüyordu. Her dil kendi metnini alır.
+      themeNameKu: 'Pisporê Ziman',
+      themeDescriptionKu: 'Bibe hostayê ziman!',
+      themeNameTr: 'Dil Uzmanı',
+      themeDescriptionTr: 'Dilin ustası ol!',
       category: 'Ziman',
       difficultyMin: 1,
       difficultyMax: 3,

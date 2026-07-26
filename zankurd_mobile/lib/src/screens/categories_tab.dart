@@ -6,6 +6,7 @@ import '../data/mastery_store.dart';
 import '../data/zankurd_repository.dart';
 import '../models/mastery_level.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -122,12 +123,15 @@ class _CategoriesTabState extends State<CategoriesTab> {
                 ),
                 child: Row(
                   children: [
+                    // Geri, uygulamanın her yerinde Material'ın standart
+                    // `arrow_back` okudur (AppBar'lı ekranlar, seviye
+                    // haritası). Burada [AppIcons.arrowLeft] kullanılıyordu
+                    // ve ard arda gezilen üç ekranda üç farklı geri işareti
+                    // görünüyordu (2026-07-25 canlı denetimi).
                     if (canPop)
-                      IconButton(
+                      BackButton(
                         key: const ValueKey('categories-back-button'),
-                        tooltip: ku ? 'Vegere' : 'Geri',
                         onPressed: () => Navigator.of(context).pop(),
-                        icon: const Icon(AppIcons.arrowLeft),
                         color: AppTheme.textPrimaryColor(context),
                       ),
                     Container(
@@ -145,7 +149,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            ku ? 'Kategorî' : 'Kategoriler',
+                            context.t(K.categories),
                             style: AppTypography.heading1.copyWith(
                               color: AppTheme.textPrimaryColor(context),
                               fontSize: 26,
@@ -153,9 +157,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                           ),
                           const SizedBox(height: AppSpacing.xxs),
                           Text(
-                            ku
-                                ? 'Kategoriyekê hilbijêre û dest pê bike'
-                                : 'Bir kategori seç ve başla',
+                            context.t(K.categoriesSubtitle),
                             style: AppTypography.bodyMedium.copyWith(
                               color: AppTheme.textMutedColor(context),
                             ),

@@ -75,6 +75,7 @@ extension _QuizScreenUI on _QuizScreenState {
                                     answerAreaKey: index == 0
                                         ? _answerAreaKey
                                         : null,
+                                    correctAnswerKey: _correctAnswerKey,
                                     questionVisualReady: index == 0
                                         ? _handleQuestionVisualReady
                                         : null,
@@ -150,6 +151,7 @@ extension _QuizScreenUI on _QuizScreenState {
                         showExplanation: showExpl,
                         timerKey: index == 0 ? _timerTargetKey : null,
                         answerAreaKey: index == 0 ? _answerAreaKey : null,
+                        correctAnswerKey: _correctAnswerKey,
                         questionVisualReady: index == 0
                             ? _handleQuestionVisualReady
                             : null,
@@ -265,15 +267,9 @@ extension _QuizScreenUI on _QuizScreenState {
     // dolar; aktif soru vurgulu bekler. Renk anlamı tooltip + semantics
     // ile açıklanır (kırmızı segment "yanlış cevap" demektir).
     return Semantics(
-      label: context.s(
-        'Pêşkeftin: kesk rast, sor şaş',
-        'İlerleme: yeşil doğru, kırmızı yanlış',
-      ),
+      label: context.t(K.progressLegend),
       child: Tooltip(
-        message: context.s(
-          'Kesk = rast, sor = şaş',
-          'Yeşil = doğru, kırmızı = yanlış',
-        ),
+        message: context.t(K.progressLegendShort),
         child: Row(
           key: const ValueKey('quiz-wildcard-row'),
           children: [
@@ -317,6 +313,7 @@ extension _QuizScreenUI on _QuizScreenState {
     bool? showExplanation,
     GlobalKey? timerKey,
     GlobalKey? answerAreaKey,
+    GlobalKey? correctAnswerKey,
     VoidCallback? questionVisualReady,
   }) {
     return AnimatedSwitcher(
@@ -349,6 +346,7 @@ extension _QuizScreenUI on _QuizScreenState {
           showExplanation: showExplanation,
           timerKey: timerKey,
           answerAreaKey: answerAreaKey,
+          correctAnswerKey: correctAnswerKey,
           questionVisualReady: questionVisualReady,
         ),
       ),
@@ -386,10 +384,7 @@ extension _QuizScreenUI on _QuizScreenState {
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.xs),
             child: Text(
-              context.s(
-                'Bersiva ducarî: şıkka din hilbijêre',
-                'Çift cevap: bir şık daha seç',
-              ),
+              context.t(K.doubleAnswerHint),
               textAlign: TextAlign.center,
               style: AppTypography.caption.copyWith(
                 color: AppTheme.gold,
@@ -414,7 +409,7 @@ extension _QuizScreenUI on _QuizScreenState {
                       ),
                       onPressed: () => _submitPracticeRating(3),
                       child: Text(
-                        context.s('Zor', 'Zor'),
+                        context.t(K.difficultyHard),
                         style: AppTypography.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -436,7 +431,7 @@ extension _QuizScreenUI on _QuizScreenState {
                       ),
                       onPressed: () => _submitPracticeRating(4),
                       child: Text(
-                        context.s('Navîn', 'Orta'),
+                        context.t(K.difficultyMedium),
                         style: AppTypography.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -458,7 +453,7 @@ extension _QuizScreenUI on _QuizScreenState {
                       ),
                       onPressed: () => _submitPracticeRating(5),
                       child: Text(
-                        context.s('Hêsan', 'Kolay'),
+                        context.t(K.difficultyEasy),
                         style: AppTypography.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -496,10 +491,10 @@ extension _QuizScreenUI on _QuizScreenState {
                     _isMultiplayer &&
                             answered &&
                             _mpPhase != _MultiplayerPhase.reveal
-                        ? context.s('Li benda hevrik...', 'Rakip bekleniyor...')
+                        ? context.t(K.waitingOpponent)
                         : isLastQuestion
-                        ? context.s('Qediya', 'Bitir')
-                        : context.s('Piştre', 'Sonraki'),
+                        ? context.t(K.finishAction)
+                        : context.t(K.next),
                     style: AppTypography.bodyLarge.copyWith(
                       fontWeight: FontWeight.w800,
                     ),
@@ -537,10 +532,7 @@ extension _QuizScreenUI on _QuizScreenState {
           Padding(
             padding: const EdgeInsets.only(top: 6),
             child: Text(
-              context.s(
-                'Quizê biqedîne, coin qezenc bike û jokeran veke',
-                'Quizi bitir, coin kazan ve jokerleri aç',
-              ),
+              context.t(K.finishQuizHint),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTypography.caption.copyWith(
@@ -593,22 +585,10 @@ extension _QuizScreenUI on _QuizScreenState {
     await prefs.setBool(key, true);
     if (!mounted) return;
     final hint = switch (type) {
-      WildcardType.fiftyFifty => context.s(
-        'Du bersivên şaş tên jêbirin',
-        'İki yanlış şık kaldırılır',
-      ),
-      WildcardType.audience => context.s(
-        'Temaşevan bersivan dinirxînin',
-        'Seyirci oy dağılımını görürsün',
-      ),
-      WildcardType.doubleAnswer => context.s(
-        'Hêlka du bersivan: carinan şaş jî qebûl e',
-        'Çift cevap: ilk deneme yanlışsa bir hak daha',
-      ),
-      WildcardType.changeQuestion => context.s(
-        'Pirs bi pirsa nû tê guhertin',
-        'Soru yenisiyle değiştirilir',
-      ),
+      WildcardType.fiftyFifty => context.t(K.wildcardFiftyHint),
+      WildcardType.audience => context.t(K.wildcardAudienceHint),
+      WildcardType.doubleAnswer => context.t(K.wildcardDoubleHint),
+      WildcardType.changeQuestion => context.t(K.wildcardChangeHint),
     };
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -835,6 +815,7 @@ extension _QuizScreenUI on _QuizScreenState {
     bool? showExplanation,
     GlobalKey? timerKey,
     GlobalKey? answerAreaKey,
+    GlobalKey? correctAnswerKey,
     VoidCallback? questionVisualReady,
   }) {
     final promptText = question.promptText;
@@ -963,6 +944,7 @@ extension _QuizScreenUI on _QuizScreenState {
                         opponentSelectedAnswers: _opponentSelectedAnswers,
                         isCompact: isCompact,
                         answerAreaKey: answerAreaKey,
+                        correctAnswerKey: correctAnswerKey,
                         onAnswer: _answer,
                         onListen: _listenCurrentQuestion,
                         canListen: _ttsCanListen,
@@ -993,6 +975,7 @@ extension _QuizScreenUI on _QuizScreenState {
                   opponentSelectedAnswers: _opponentSelectedAnswers,
                   isCompact: isCompact,
                   answerAreaKey: answerAreaKey,
+                  correctAnswerKey: correctAnswerKey,
                   onAnswer: _answer,
                   onListen: _listenCurrentQuestion,
                   canListen: _ttsCanListen,

@@ -6,6 +6,7 @@ import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../providers/theme_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -251,22 +252,34 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               key: const ValueKey('home-review-row'),
               icon: AppIcons.arrowsRotate,
               accent: AppTheme.playPink,
-              title: ku ? 'Dema dubarekirinê' : 'Tekrar zamanı',
-              subtitle: ku
-                  ? '$_reviewReadyCount pirs li benda te ye'
-                  : '$_reviewReadyCount soru seni bekliyor',
+              title: context.t(K.homeReviewTime),
+              subtitle: context.t(K.homeReviewTimeSub, {
+                'count': '$_reviewReadyCount',
+              }),
               onTap: () => widget.onOpenLearning?.call(),
             ),
           ],
+          // Ders ağacına kalıcı giriş. Daha önce [LearningScreen]'e yalnız
+          // yukarıdaki tekrar satırından geçiliyordu; o satır ise ancak
+          // tekrara hazır soru varken görünüyor. Yeni kullanıcıda sayaç 0
+          // olduğu için ders modülüne hiçbir yerden ulaşılamıyordu
+          // (2026-07-25 canlı denetimi).
+          const SizedBox(height: AppSpacing.xs),
+          AppRowCard(
+            key: const ValueKey('home-lessons-row'),
+            icon: AppIcons.graduationCap,
+            accent: AppTheme.brand,
+            title: context.t(K.lessons),
+            subtitle: context.t(K.homeLessonsSub),
+            onTap: () => widget.onOpenLearning?.call(),
+          ),
           const SizedBox(height: AppSpacing.xs),
           AppRowCard(
             key: const ValueKey('home-duel-row'),
             icon: AppIcons.bolt,
             accent: AppTheme.playCyan,
-            title: ku ? 'Duelo bi lez' : 'Hızlı düello',
-            subtitle: ku
-                ? 'Hevrikekî bibîne · ~2 deqe'
-                : 'Rakip bul · ~2 dakika',
+            title: context.t(K.homeQuickDuel),
+            subtitle: context.t(K.homeQuickDuelSub),
             onTap: () => Navigator.of(context).push(
               AppRoute.to(MatchmakingScreen(repository: widget.repository)),
             ),
@@ -284,6 +297,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             isKu: ku,
             entries: _categoryProgress,
             onOpenCategory: (_) => widget.onOpenCategories?.call(),
+            onBrowseCategories: () => widget.onOpenCategories?.call(),
           ),
           const SizedBox(height: AppSpacing.xs),
           DailyMissionsCard(isKu: ku, missions: _missions),
@@ -366,9 +380,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // "ZanKurd" (ana ekran) ile "Lîstikvanê ZanKurd" (profil) gibi iki
     // ayrı kimlik oluşuyordu.
     final shortName = PlayerIdentity.resolveShortName(currentName, isKu: ku);
-    final greeting = ku
-        ? '$greetingKu, $shortName!'
-        : '$greetingTr, $shortName!';
+    final greeting = context.t(K.homeGreeting, {
+      'greeting': ku ? greetingKu : greetingTr,
+      'name': shortName,
+    });
 
     return Container(
       key: const ValueKey('home-profile-header'),
@@ -395,10 +410,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   final metrics = Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // Seri sıfırken rozet "🔥 0" yazıyordu: serinin amacı
+                      // motive etmek, oysa ilk gün kullanıcıyı sıfırla
+                      // karşılıyordu (2026-07-25 canlı denetimi). Sayı
+                      // yerine metin koymak ise başlık satırını dar
+                      // ekranlarda taşırıyor; seri başlayana kadar rozet
+                      // yalnız alevi gösterir — özellik görünür kalır,
+                      // sıfır vurgulanmaz.
                       _buildHeaderBadge(
                         AppIcons.fire,
                         AppTheme.brand,
-                        '$_streak',
+                        _streak > 0 ? '$_streak' : null,
                       ),
                       const SizedBox(width: 12),
                       _buildHeaderBadge(
@@ -460,9 +482,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               const SizedBox(height: 3),
               Text(
-                ku
-                    ? 'Zanîn, ronahiya tarîtiyê ye.'
-                    : 'Bilgi, karanlığın aydınlığıdır.',
+                context.t(K.homeMotto),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -478,7 +498,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildHeaderBadge(IconData icon, Color iconColor, String text) {
+  /// Başlık rozeti. [text] null ise yalnız ikon çizilir.
+  Widget _buildHeaderBadge(IconData icon, Color iconColor, String? text) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
@@ -487,18 +508,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         border: Border.all(color: Colors.white.withValues(alpha: 0.14)),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, color: iconColor, size: 18),
-          const SizedBox(width: 6),
-          Text(
-            text,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
+          if (text != null) ...[
+            const SizedBox(width: 6),
+            Text(
+              text,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );
@@ -548,10 +572,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         children: [
           control(
             key: const ValueKey('home-language-toggle'),
-            tooltip: ku ? 'Ziman' : 'Dil',
+            tooltip: context.t(K.language),
             onTap: context.langProvider.toggle,
             child: Text(
-              ku ? 'KU' : 'TR',
+              context.t(K.languageCode),
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w800,
@@ -602,7 +626,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       final questions = await repo.loadDailyQuestions(limit: 10);
       if (!mounted || questions.isEmpty) return;
       final room = repo.createRoom().copyWith(
-        name: context.isKu ? 'Dersê rojane' : 'Günün Dersi',
+        name: context.t(K.dailyLesson),
         questionCount: questions.length,
       );
       await Navigator.of(context).push(

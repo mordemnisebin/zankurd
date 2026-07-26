@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../data/mistake_store.dart';
 import '../data/zankurd_repository.dart';
 import '../models/quiz_question.dart';
@@ -88,7 +89,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
     if (!mounted) return;
     final ku = widget.isKu;
     final room = widget.repository.createRoom().copyWith(
-      name: ku ? 'Dubarekirinên Îro' : 'Bugünkü Tekrarlar',
+      name: Tr.forKu(K.todaysReviews, ku),
       questionCount: questions.length,
     );
     await Navigator.of(context).push(
@@ -179,9 +180,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
                               const SizedBox(width: 7),
                               Flexible(
                                 child: Text(
-                                  ku
-                                      ? 'Dubarekirinên Îro'
-                                      : 'Bugünkü Tekrarlar',
+                                  Tr.forKu(K.todaysReviews, ku),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTypography.caption.copyWith(
@@ -195,9 +194,9 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            ku
-                                ? '$_readyCount pirs ji bo dubarekirinê amade ne'
-                                : '$_readyCount soru tekrara hazır',
+                            Tr.forKu(K.todaysReviewsCount, ku, {
+                              'count': '$_readyCount',
+                            }),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: AppTypography.bodyLarge.copyWith(
@@ -208,7 +207,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            ku ? 'Bîranîna xwe xurt bike' : 'Hafızanı pekiştir',
+                            Tr.forKu(K.strengthenMemory, ku),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTypography.caption.copyWith(
@@ -282,7 +281,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  ku ? 'Dubarekirin temam' : 'Tekrarlar tamam',
+                  Tr.forKu(K.reviewsDone, ku),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.bodyMedium.copyWith(
@@ -292,9 +291,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  ku
-                      ? 'Îro pirsên te yên dubarekirinê tune'
-                      : 'Bugün tekrar edilecek sorun yok',
+                  Tr.forKu(K.noReviewsToday, ku),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.caption.copyWith(

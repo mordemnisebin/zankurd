@@ -123,20 +123,45 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
     // Tooltip için tahmini yükseklik: hedefin altında yer yoksa (balon
     // karartılmış alanın dışına taşıp okunamaz hale geliyorsa) üstte göster.
     const estimatedBubbleHeight = 220.0;
-    var showBelow = highlightRect.top < screenSize.height * 0.4;
-    final fitsBelow =
-        highlightRect.bottom + 16 + estimatedBubbleHeight <=
-        screenSize.height - 16;
-    final fitsAbove = highlightRect.top - 16 - estimatedBubbleHeight >= 16;
-    if (showBelow && !fitsBelow && fitsAbove) {
-      showBelow = false;
-    } else if (!showBelow && !fitsAbove && fitsBelow) {
-      showBelow = true;
+
+    // Balonu hedefe *yapıştırmak*, ekranın kenarındaki hedeflerde asıl
+    // içeriği örtüyordu: sayaç sağ üstte olduğu için "hemen altı" tam da
+    // soru metninin durduğu yerdi ve tur boyunca soru okunamıyordu; aynı
+    // şekilde en alttaki "Sonraki" butonunun "hemen üstü" şıkların üstüne
+    // düşüyordu (2026-07-25 canlı denetimi).
+    //
+    // Işık halkası (spotlight) hedefi zaten işaret ediyor; balonun bitişik
+    // olması şart değil. Kenardaki hedeflerde balon karşı kenara sabitlenir,
+    // böylece hem hedef hem içerik açıkta kalır. Ortadaki hedeflerde eski
+    // bitişik yerleşim korunur.
+    final topZone = screenSize.height / 3;
+    final bottomZone = screenSize.height * 2 / 3;
+
+    double? tooltipTop;
+    double? tooltipBottom;
+
+    if (highlightRect.bottom <= topZone) {
+      // Hedef üst şeritte → balon ekranın altına.
+      tooltipBottom = 24;
+    } else if (highlightRect.top >= bottomZone) {
+      // Hedef alt şeritte → balon ekranın üstüne.
+      tooltipTop = MediaQuery.paddingOf(context).top + 16;
+    } else {
+      var showBelow = highlightRect.top < screenSize.height * 0.4;
+      final fitsBelow =
+          highlightRect.bottom + 16 + estimatedBubbleHeight <=
+          screenSize.height - 16;
+      final fitsAbove = highlightRect.top - 16 - estimatedBubbleHeight >= 16;
+      if (showBelow && !fitsBelow && fitsAbove) {
+        showBelow = false;
+      } else if (!showBelow && !fitsAbove && fitsBelow) {
+        showBelow = true;
+      }
+      tooltipTop = showBelow ? highlightRect.bottom + 16 : null;
+      tooltipBottom = !showBelow
+          ? screenSize.height - highlightRect.top + 16
+          : null;
     }
-    final tooltipTop = showBelow ? highlightRect.bottom + 16 : null;
-    final tooltipBottom = !showBelow
-        ? screenSize.height - highlightRect.top + 16
-        : null;
 
     return Positioned.fill(
       child: Material(

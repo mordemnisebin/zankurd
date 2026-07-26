@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -11,7 +12,6 @@ import 'contest_screen.dart';
 import '../widgets/app_row_card.dart';
 import 'matchmaking_screen.dart';
 import 'room_screen.dart';
-import 'shop_screen.dart';
 import 'tournament_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -58,16 +58,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'play hub create room failed');
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s(
-              'Ode nehate vekirin. Têkiliya xwe kontrol bike.',
-              'Oda açılamadı. Bağlantını kontrol et.',
-            ),
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.roomOpenFailed))));
     } finally {
       if (mounted) setState(() => _roomActionLoading = false);
     }
@@ -77,7 +70,6 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   /// yalnızca UI'da eksikti — repository/DB katmanı zaten `secondsPerQuestion`
   /// alanını destekliyordu (2026-07-21 denetiminde bulunan boşluk).
   Future<int?> _pickRoomDuration() async {
-    final ku = context.isKu;
     // Tek kaynak modeldir: UI ayrıca 15 sn sunuyordu ama bu değer
     // GameRoom.allowedSecondsPerQuestion içinde yok ve canlı denetimde
     // görülen uzun sorular için okunamayacak kadar kısa (2026-07-22).
@@ -105,16 +97,14 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      ku ? 'Ji bo her pirsê dem' : 'Soru başına süre',
+                      context.t(K.secondsPerQuestion),
                       style: AppTypography.heading1.copyWith(
                         color: AppTheme.textPrimaryColor(context),
                       ),
                     ),
                     const SizedBox(height: AppSpacing.xs),
                     Text(
-                      ku
-                          ? 'Ev dem ji bo hemû lîstikvanên vê odeyê derbasdar e.'
-                          : 'Bu süre odadaki tüm oyuncular için geçerli olur.',
+                      context.t(K.secondsPerQuestionNote),
                       style: AppTypography.bodyMedium.copyWith(
                         color: AppTheme.textSubColor(context),
                       ),
@@ -139,7 +129,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                       width: double.infinity,
                       child: FilledButton(
                         onPressed: () => Navigator.of(sheetCtx).pop(selected),
-                        child: Text(ku ? 'Odeyê Veke' : 'Odayı Aç'),
+                        child: Text(context.t(K.openRoom)),
                       ),
                     ),
                   ],
@@ -159,7 +149,6 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   }
 
   Future<void> _showJoinSheet() async {
-    final ku = context.isKu;
     final controller = TextEditingController();
     final formKey = GlobalKey<FormState>();
     final inputTextStyle = TextStyle(
@@ -188,16 +177,14 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    ku ? 'Tevlî Odeyê Bibe' : 'Odaya Katıl',
+                    context.t(K.joinRoomTitle),
                     style: AppTypography.heading1.copyWith(
                       color: AppTheme.textPrimaryColor(context),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
-                    ku
-                        ? 'Koda odeyê binivîse û bi hevalên xwe re bilîze.'
-                        : 'Oda kodunu yaz ve arkadaşlarınla oyna.',
+                    context.t(K.joinRoomBody),
                     style: AppTypography.bodyMedium.copyWith(
                       color: AppTheme.textSubColor(context),
                     ),
@@ -209,12 +196,12 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     textCapitalization: TextCapitalization.characters,
                     style: inputTextStyle,
                     decoration: InputDecoration(
-                      labelText: ku ? 'Koda odeyê' : 'Oda kodu',
+                      labelText: context.t(K.roomCode),
                       prefixIcon: const Icon(AppIcons.doorOpen),
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return ku ? 'Kod pêwîst e' : 'Kod zorunlu';
+                        return context.t(K.roomCodeRequired);
                       }
                       return null;
                     },
@@ -242,18 +229,12 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                           Navigator.of(sheetCtx).pop();
                           if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                ku
-                                    ? 'Odeya bi vê kodê nehate dîtin.'
-                                    : 'Bu kodla oda bulunamadı.',
-                              ),
-                            ),
+                            SnackBar(content: Text(context.t(K.roomNotFound))),
                           );
                         }
                       },
                       icon: const Icon(AppIcons.rightToBracket),
-                      label: Text(ku ? 'Tevlî bibe' : 'Katıl'),
+                      label: Text(context.t(K.joinAction)),
                     ),
                   ),
                 ],
@@ -278,11 +259,13 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.page),
           children: [
+            // Ekran altı eşit ağırlıkta satırdan oluşan bir menü gibi
+            // duruyordu; yeni kullanıcı hangisinin "asıl oyun" olduğunu
+            // seçemiyordu (2026-07-25 canlı denetimi). Artık tek birincil
+            // eylem (hızlı düello) ve altında iki adlandırılmış grup var.
             _PlaySectionHeading(
-              title: ku ? 'Pêşbazî' : 'Yarış',
-              subtitle: ku
-                  ? 'Hevrikê xwe hilbijêre û dest pê bike.'
-                  : 'Rakibini seç ve başla.',
+              title: context.t(K.playTitle),
+              subtitle: context.t(K.playSubtitle),
             ),
             const SizedBox(height: AppSpacing.sm),
             _QuickDuelHero(
@@ -291,15 +274,18 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 AppRoute.to(MatchmakingScreen(repository: widget.repository)),
               ),
             ),
-            const SizedBox(height: AppSpacing.xs),
+            const SizedBox(height: AppSpacing.md),
+            _PlaySectionHeading(
+              title: context.t(K.withFriends),
+              subtitle: context.t(K.withFriendsSub),
+            ),
+            const SizedBox(height: AppSpacing.sm),
             AppRowCard(
               key: const ValueKey('play-hub-create-room'),
               icon: AppIcons.circlePlus,
               accent: AppTheme.playPurple,
-              title: ku ? 'Oda ava bike' : 'Oda Kur',
-              subtitle: ku
-                  ? 'Hevalên xwe bi kodê vexwîne'
-                  : 'Arkadaşlarını kodla çağır',
+              title: context.t(K.createRoom),
+              subtitle: context.t(K.createRoomSub),
               trailing: _roomActionLoading
                   ? const SizedBox(
                       width: 18,
@@ -314,22 +300,22 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               key: const ValueKey('play-hub-join-room'),
               icon: AppIcons.doorOpen,
               accent: AppTheme.playCyan,
-              title: ku ? 'Kodê tevlî bibe' : 'Kodla Katıl',
-              subtitle: ku ? 'Koda odeyê ya 6 tîpî' : '6 haneli oda kodu',
+              title: context.t(K.joinByCode),
+              subtitle: context.t(K.joinByCodeSub),
               onTap: _showJoinSheet,
             ),
             const SizedBox(height: AppSpacing.md),
             _PlaySectionHeading(
-              title: ku ? 'Çalakî' : 'Etkinlikler',
-              subtitle: ku ? 'Her roj nû dibe.' : 'Her gün yenilenir.',
+              title: context.t(K.events),
+              subtitle: context.t(K.eventsSub),
             ),
             const SizedBox(height: AppSpacing.sm),
             AppRowCard(
               key: const ValueKey('play-hub-daily-contest'),
               icon: AppIcons.bolt,
               accent: AppTheme.gold,
-              title: ku ? 'Pêşbirka Rojê' : 'Günün Yarışması',
-              subtitle: ku ? '10 pirs' : '10 soru',
+              title: context.t(K.dailyContest),
+              subtitle: context.t(K.tenQuestions),
               trailing: _dailyLoading
                   ? const SizedBox(
                       width: 18,
@@ -344,25 +330,16 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               key: const ValueKey('play-hub-tournament'),
               icon: AppIcons.trophy,
               accent: AppTheme.playPink,
-              title: ku ? 'Kûpa' : 'Turnuva Modu',
-              subtitle: ku ? 'Elemeya 8 kesan' : '8 kişilik eleme',
+              title: context.t(K.tournament),
+              subtitle: context.t(K.tournamentSub),
               onTap: () => Navigator.of(context).push(
                 AppRoute.to(TournamentScreen(repository: widget.repository)),
               ),
             ),
-            const SizedBox(height: AppSpacing.xs),
-            AppRowCard(
-              key: const ValueKey('play-hub-shop-card'),
-              icon: AppIcons.store,
-              accent: AppTheme.playGreen,
-              title: ku ? 'Dukan û joker' : 'Mağaza ve jokerler',
-              subtitle: ku
-                  ? 'Coin, çerx û mafên joker'
-                  : 'Coin, çark ve joker hakların',
-              onTap: () => Navigator.of(
-                context,
-              ).push(AppRoute.to(ShopScreen(repository: widget.repository))),
-            ),
+            // Mağaza satırı buradan kaldırıldı: aynı ekrana Yarış
+            // sekmesinden, profilden ve kendi rotasından olmak üzere üç
+            // ayrı giriş vardı ve "burası neresi?" hissi yaratıyordu
+            // (2026-07-25 canlı denetimi). Tek ev profildeki HESAP bölümü.
           ],
         ),
       ),
@@ -400,14 +377,12 @@ class _QuickDuelHero extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  ku ? 'Duelo bi lez' : 'Hızlı düello',
+                  context.t(K.quickDuel),
                   style: AppTypography.heading2.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  ku
-                      ? 'Hevrikekî di asta te de · ~2 deqe'
-                      : 'Seviyene yakın rakip · ~2 dakika',
+                  context.t(K.quickDuelSub),
                   style: AppTypography.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: 0.82),
                   ),
@@ -421,7 +396,7 @@ class _QuickDuelHero extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppRadius.sm),
                   ),
                   child: Text(
-                    ku ? 'Hevrik bibîne' : 'Rakip bul',
+                    context.t(K.findOpponent),
                     style: AppTypography.bodyLarge.copyWith(
                       color: AppTheme.culturalBrandBg,
                       fontWeight: FontWeight.w700,

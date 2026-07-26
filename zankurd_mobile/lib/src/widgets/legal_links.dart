@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../config/app_config.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 
@@ -51,20 +52,14 @@ class LegalLinksRow extends StatelessWidget {
       spacing: 8,
       runSpacing: 2,
       children: [
-        link(
-          context.s('Politîkaya nepenîtiyê', 'Gizlilik Politikası'),
-          AppConfig.privacyPolicyUrl,
-        ),
+        link(context.t(K.privacyPolicy), AppConfig.privacyPolicyUrl),
         Text(
           '·',
           style: AppTypography.caption.copyWith(
             color: AppTheme.textMutedColor(context),
           ),
         ),
-        link(
-          context.s('Mercên bikaranînê', 'Kullanım Koşulları'),
-          AppConfig.termsOfServiceUrl,
-        ),
+        link(context.t(K.termsOfUse), AppConfig.termsOfServiceUrl),
       ],
     );
   }

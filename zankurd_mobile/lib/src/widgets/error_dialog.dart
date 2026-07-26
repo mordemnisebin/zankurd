@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -13,10 +14,8 @@ class ErrorDialog {
     String? retryLabel,
     String? dismissLabel,
   }) {
-    final ku = context.isKu;
-    final finalRetryLabel =
-        retryLabel ?? (ku ? 'Dîsa biceribîne' : 'Tekrar Dene');
-    final finalDismissLabel = dismissLabel ?? (ku ? 'Bigire' : 'Kapat');
+    final finalRetryLabel = retryLabel ?? context.t(K.retry);
+    final finalDismissLabel = dismissLabel ?? context.t(K.close);
 
     showDialog(
       context: context,
@@ -60,11 +59,8 @@ class ErrorDialog {
   static void showOfflineMode(BuildContext context) {
     show(
       context,
-      title: context.s('Moda Ne li Serhêl', 'Çevrimdışı Mod'),
-      message: context.s(
-        'Girêdana înternetê tune. Pirs wekî ne li serhêl tên barkirin.',
-        'İnternet bağlantısı yok. Soruları çevrimdışı olarak yüklüyorum.',
-      ),
+      title: context.t(K.offlineModeTitle),
+      message: context.t(K.offlineModeBody),
     );
   }
 }

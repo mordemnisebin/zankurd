@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/mastery_store.dart';
 import '../data/mistake_store.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../services/strength_analysis.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
@@ -106,9 +107,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  ku
-                      ? 'Hêz û Cihên Pêşketinê'
-                      : 'Güçlü ve Geliştirilecek Alanlar',
+                  Tr.forKu(K.strengthMapTitle, ku),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.bodyLarge.copyWith(
@@ -126,7 +125,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
             if (result.strengths.isNotEmpty) ...[
               _buildGroupLabel(
                 context,
-                ku ? 'Xurt' : 'Güçlü',
+                Tr.forKu(K.strengthStrong, ku),
                 AppIcons.trophy,
                 AppTheme.gold,
               ),
@@ -137,7 +136,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
             if (result.improvements.isNotEmpty) ...[
               _buildGroupLabel(
                 context,
-                ku ? 'Cihên pêşketinê' : 'Geliştirilecek',
+                Tr.forKu(K.strengthToImprove, ku),
                 AppIcons.arrowTrendUp,
                 AppTheme.brand,
               ),
@@ -161,9 +160,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
         const SizedBox(width: 8),
         Expanded(
           child: Text(
-            ku
-                ? 'Ji bo analîzê hê hindik dane heye. Piçekî bêtir bilîze!'
-                : 'Analiz için henüz az veri var. Biraz daha oyna!',
+            Tr.forKu(K.strengthEmpty, ku),
             style: AppTypography.bodyMedium.copyWith(
               color: AppTheme.textMutedColor(context),
             ),
@@ -211,11 +208,11 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
     final tint = isStrength ? AppTheme.playGreen : AppTheme.brand;
     final String action;
     if (isStrength) {
-      action = ku ? 'Ji xwe bawer be' : 'Formunu koru';
+      action = Tr.forKu(K.strengthKeepForm, ku);
     } else if (insight.readyReviews > 0) {
-      action = ku ? 'Dubarekirin amade' : 'Tekrar hazır';
+      action = Tr.forKu(K.strengthReviewReady, ku);
     } else {
-      action = ku ? 'Piçek pratîk baş e' : 'Biraz pratik iyi gelir';
+      action = Tr.forKu(K.strengthPractice, ku);
     }
 
     return Padding(

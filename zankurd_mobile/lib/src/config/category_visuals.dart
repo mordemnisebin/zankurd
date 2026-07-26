@@ -25,6 +25,8 @@ class CategoryVisuals {
     'Müzik': 'Muzîk',
     'Paradîgma': 'Paradigma',
     'Teknoloji': 'Teknolojî',
+    'Sinema': 'Sînema',
+    'Film': 'Sînema',
   };
 
   static String _resolveKey(String category) {
@@ -48,7 +50,14 @@ class CategoryVisuals {
     'Muzîk': [Color(0xFF5C7A3A), Color(0xFF48602C)], // zeytin
     'Siyaset': [Color(0xFF9E5B4A), Color(0xFF80463A)], // terracotta
     'Paradigma': [Color(0xFF566B7F), Color(0xFF425364)], // arduvaz
-    'Teknolojî': [Color(0xFF566B7F), Color(0xFF425364)],
+    // Teknolojî kategori açılana kadar Paradigma'nın arduvaz tonunu
+    // paylaşıyordu; iki kart yan yana ayırt edilemiyordu (2026-07-26).
+    // Turkuaz, mevcut dokuz tonun hiçbirine yakın değil ve aynı doygunluk
+    // bandında kalıyor.
+    'Teknolojî': [Color(0xFF2E7D8A), Color(0xFF23626C)], // turkuaz
+    // Sînema: koyu bordo — mevcut sekiz tonun hiçbiriyle çakışmayan, aynı
+    // doygunluk bandında kalan bir kimlik.
+    'Sînema': [Color(0xFF8C4A5C), Color(0xFF703A49)],
   };
 
   static const List<Color> _fallbackGradient = [
@@ -88,6 +97,7 @@ class CategoryVisuals {
     'Siyaset': AppIcons.scaleBalanced,
     'Paradigma': AppIcons.brain,
     'Teknolojî': AppIcons.mobileScreen,
+    'Sînema': AppIcons.clapperboard,
   };
 
   static const Map<String, String> _imagePaths = {
@@ -102,6 +112,8 @@ class CategoryVisuals {
     // Henüz ayrı teknoloji görseli yok; mevcut soyut paradigma görseli
     // kategori kartında güvenli geçici kaynak olarak kullanılır.
     'Teknolojî': 'assets/question_images/cat_paradigma.webp',
+    // Sînema için henüz ayrı görsel yok; kültür görseli geçici kaynaktır.
+    'Sînema': 'assets/question_images/cat_cand.webp',
   };
 
   static IconData icon(String category) {

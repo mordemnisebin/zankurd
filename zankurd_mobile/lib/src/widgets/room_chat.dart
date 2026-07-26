@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/room_message.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
@@ -162,7 +163,7 @@ class _RoomChatState extends State<RoomChat> {
                 ),
                 const SizedBox(width: AppSpacing.xs),
                 Text(
-                  ku ? 'Sohbet' : 'Sohbet',
+                  context.t(K.chat),
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w800,
@@ -186,9 +187,7 @@ class _RoomChatState extends State<RoomChat> {
             child: _messages.isEmpty
                 ? Center(
                     child: Text(
-                      ku
-                          ? 'Hîn mesaj tune. Yekem bibêje!'
-                          : 'Henüz mesaj yok. İlk sen yaz!',
+                      context.t(K.chatEmpty),
                       style: TextStyle(
                         color: AppTheme.textMutedColor(context),
                         fontSize: 12,
@@ -241,7 +240,7 @@ class _RoomChatState extends State<RoomChat> {
                     onSubmitted: (_) => _sendMessage(),
                     maxLines: 1,
                     decoration: InputDecoration(
-                      hintText: ku ? 'Peyamek binivîse…' : 'Bir mesaj yaz…',
+                      hintText: context.t(K.chatHint),
                       isDense: true,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -290,7 +289,7 @@ class _RoomChatState extends State<RoomChat> {
                           AppIcons.paperPlane,
                           color: AppTheme.primaryGradientStart,
                         ),
-                  tooltip: ku ? 'Bişîne' : 'Gönder',
+                  tooltip: context.t(K.sendAction),
                 ),
               ],
             ),

@@ -15,6 +15,7 @@ class AppRowCard extends StatelessWidget {
     this.subtitle,
     this.trailing,
     this.onTap,
+    this.semanticValue,
     super.key,
   });
 
@@ -25,8 +26,30 @@ class AppRowCard extends StatelessWidget {
   final Widget? trailing;
   final VoidCallback? onTap;
 
+  /// Satırın durumunu anlatan ek değer (ör. "%40"). Ekran okuyucuya
+  /// `value` olarak verilir; görsel [trailing] içeriği zaten dışlanır.
+  final String? semanticValue;
+
   @override
   Widget build(BuildContext context) {
+    // Bu kart uygulamadaki neredeyse tüm ikincil gezinme satırlarının
+    // gövdesi. Semantiği olmadığı için ekran okuyucu başlık, alt başlık ve
+    // varsa sondaki rozeti üç ayrı, bağlamsız metin olarak okuyor; satırın
+    // dokunulabilir bir hedef olduğu hiç duyurulmuyordu (2026-07-25
+    // denetimi). Tek düğüm + button rolü, satırı kullanan her ekranı
+    // birden düzeltir.
+    return Semantics(
+      button: onTap != null,
+      enabled: onTap != null,
+      label: subtitle == null ? title : '$title. $subtitle',
+      value: semanticValue,
+      excludeSemantics: true,
+      onTap: onTap,
+      child: _buildBody(context),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
     return Material(
       color: AppTheme.surfaceColor(context),
       borderRadius: BorderRadius.circular(AppRadius.card),

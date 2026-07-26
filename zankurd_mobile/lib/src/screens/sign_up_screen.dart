@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../animations/load_animations.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/loading_overlay.dart';
@@ -102,20 +103,13 @@ class _SignUpScreenState extends State<SignUpScreen>
       // Bu durum sadece kullanıcı review adımına geri dönüp alanları
       // temizlerse oluşabilir; inline hata gösterilemez çünkü o adım
       // form değil, bu yüzden SnackBar kullanıyoruz.
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s('Hemû zelatên pêwîst in', 'Tüm alanlar gerekli'),
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.allFieldsRequired))));
       return;
     }
 
-    LoadingOverlay.show(
-      context,
-      message: context.s('Hesab tê afirandin...', 'Hesap oluşturuluyor...'),
-    );
+    LoadingOverlay.show(context, message: context.t(K.creatingAccount));
 
     final success = await authProvider.signUpWithEmail(
       email: _emailController.text.trim(),
@@ -130,12 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         if (authProvider.needsEmailConfirmation) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                context.s(
-                  'Hesab hat afirandin! Ji bo pejirandinê e-peyama xwe kontrol bike.',
-                  'Hesap oluşturuldu! Doğrulamak için e-postanı kontrol et.',
-                ),
-              ),
+              content: Text(context.t(K.accountCreated)),
               duration: const Duration(seconds: 5),
             ),
           );
@@ -285,7 +274,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                                     ),
                                     // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                                     child: ExcludeSemantics(
-                                      child: Text(context.s('Paş', 'Geri')),
+                                      child: Text(context.t(K.backStep)),
                                     ),
                                   ),
                                 ),
@@ -293,11 +282,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                                 Expanded(
                                   child: GeometricGradientButton(
                                     label: _currentStep == 2
-                                        ? context.s(
-                                            'Hesab Biafirîne',
-                                            'Hesap Oluştur',
-                                          )
-                                        : context.s('Pêş', 'İleri'),
+                                        ? context.t(K.createAccount)
+                                        : context.t(K.nextStep),
                                     icon: _currentStep == 2
                                         ? AppIcons.circleCheck
                                         : AppIcons.arrowRight,
@@ -317,10 +303,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
                                 Text(
-                                  context.s(
-                                    'Hesabê te jixwe heye? ',
-                                    'Zaten hesabın var mı? ',
-                                  ),
+                                  context.t(K.haveAccountPrefix),
                                   style: AppTypography.bodyMedium.copyWith(
                                     color: AppTheme.textSubColor(context),
                                   ),
@@ -331,7 +314,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                                     AppRadius.badge,
                                   ),
                                   child: Text(
-                                    context.s('Têkeve', 'Giriş Yap'),
+                                    context.t(K.signIn),
                                     style: AppTypography.bodyMedium.copyWith(
                                       color: AppTheme.primaryGradientStart,
                                       fontWeight: FontWeight.w700,
@@ -358,20 +341,11 @@ class _SignUpScreenState extends State<SignUpScreen>
   String _getStepSubtitle(BuildContext context) {
     switch (_currentStep) {
       case 0:
-        return context.s(
-          'E-posta û şîfreyê xwe têkeve',
-          'E-postanızı ve parolayı girin',
-        );
+        return context.t(K.stepCredentials);
       case 1:
-        return context.s(
-          'Navê bikarhênerê xwe hilbijêre',
-          'Kullanıcı adınızı seçin',
-        );
+        return context.t(K.stepUsername);
       case 2:
-        return context.s(
-          'Agahiya xwe nîqaş bikin',
-          'Bilgilerinizi inceleyiniz',
-        );
+        return context.t(K.stepReview);
       default:
         return '';
     }
@@ -388,20 +362,17 @@ class _SignUpScreenState extends State<SignUpScreen>
             children: [
               StyledInputField(
                 key: _emailFieldKey,
-                label: context.s('Navnîşana e-peyamê', 'E-posta adresi'),
+                label: context.t(K.emailAddress),
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 prefixIcon: AppIcons.envelope,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return context.s('E-peyam pêwîst e', 'E-posta gerekli');
+                    return context.t(K.emailRequired);
                   }
                   if (!value.contains('@')) {
-                    return context.s(
-                      'E-peyameke derbasdar binivîse',
-                      'Geçerli bir e-posta gir',
-                    );
+                    return context.t(K.emailInvalid2);
                   }
                   return null;
                 },
@@ -413,7 +384,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                 ),
                 child: StyledInputField(
                   key: _passwordFieldKey,
-                  label: context.s('Şîfre', 'Parola'),
+                  label: context.t(K.passwordLabel),
                   controller: _passwordController,
                   obscureText: _obscurePassword,
                   prefixIcon: AppIcons.lock,
@@ -425,16 +396,13 @@ class _SignUpScreenState extends State<SignUpScreen>
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   // Parola kuralı hint text olarak gösterilsin, hata beklemeden
-                  hintText: context.s('Herî kêm 6 tîp', 'En az 6 karakter'),
+                  hintText: context.t(K.passwordHintMin6),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return context.s('Şîfre pêwîst e', 'Parola gerekli');
+                      return context.t(K.passwordRequired);
                     }
                     if (value.length < 6) {
-                      return context.s(
-                        'Şîfre divê herî kêm 6 tîp be',
-                        'Parola en az 6 karakter olmalı',
-                      );
+                      return context.t(K.passwordMin6);
                     }
                     return null;
                   },
@@ -443,7 +411,7 @@ class _SignUpScreenState extends State<SignUpScreen>
               const SizedBox(height: 20),
               StyledInputField(
                 key: _confirmPasswordFieldKey,
-                label: context.s('Şîfreyê piştrast bike', 'Parolayı Onayla'),
+                label: context.t(K.confirmPassword),
                 controller: _confirmPasswordController,
                 obscureText: _obscureConfirmPassword,
                 prefixIcon: AppIcons.lock,
@@ -458,16 +426,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return context.s(
-                      'Piştrastkirina şîfreyê pêwîst e',
-                      'Parola onayı gerekli',
-                    );
+                    return context.t(K.confirmPasswordRequired);
                   }
                   if (value != _passwordController.text) {
-                    return context.s(
-                      'Şîfre li hev nakin',
-                      'Parolalar eşleşmiyor',
-                    );
+                    return context.t(K.passwordsMismatch);
                   }
                   return null;
                 },
@@ -484,22 +446,16 @@ class _SignUpScreenState extends State<SignUpScreen>
             children: [
               StyledInputField(
                 key: _usernameFieldKey,
-                label: context.s('Navê bikarhêner', 'Kullanıcı adı'),
+                label: context.t(K.username),
                 controller: _usernameController,
                 prefixIcon: AppIcons.user,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return context.s(
-                      'Navê bikarhêner pêwîst e',
-                      'Kullanıcı adı gerekli',
-                    );
+                    return context.t(K.usernameRequired);
                   }
                   if (value.length < 2) {
-                    return context.s(
-                      'Navê bikarhêner divê herî kêm 2 tîp be',
-                      'Kullanıcı adı en az 2 karakter olmalı',
-                    );
+                    return context.t(K.usernameMin2);
                   }
                   return null;
                 },
@@ -513,17 +469,17 @@ class _SignUpScreenState extends State<SignUpScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _ReviewItem(
-              label: context.s('E-peyam:', 'E-posta:'),
+              label: context.t(K.emailColon),
               value: _emailController.text,
             ),
             const SizedBox(height: 12),
             _ReviewItem(
-              label: context.s('Navê bikarhêner:', 'Kullanıcı adı:'),
+              label: context.t(K.usernameColon),
               value: _usernameController.text,
             ),
             const SizedBox(height: 12),
             _ReviewItem(
-              label: context.s('Şîfre:', 'Parola:'),
+              label: context.t(K.passwordColon),
               value: '*' * _passwordController.text.length,
             ),
           ],
@@ -668,7 +624,7 @@ class _SignUpHeroBanner extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  context.s('Hesabê xwe biafirîne', 'Hesabını oluştur'),
+                  context.t(K.createYourAccount),
                   style: AppTypography.heading1.copyWith(
                     color: Colors.white,
                     fontSize: 24,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/badge_service.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import '../widgets/badge_widget.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -61,7 +62,7 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
             const SizedBox(width: 8),
             Expanded(
               child: Text(
-                ku ? 'Koleksiyona Rozetên' : 'Rozet Koleksiyonu',
+                context.t(K.badgeCollection),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -106,7 +107,7 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      ku ? 'Hemû' : 'Tümü',
+                      context.t(K.allFilter),
                       style: const TextStyle(
                         color: AppTheme.primaryGradientStart,
                         fontWeight: FontWeight.w800,
@@ -198,7 +199,7 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          ku ? 'Koleksiyona Rozetên' : 'Rozet Koleksiyonu',
+                          context.t(K.badgeCollection),
                           style: TextStyle(
                             color: AppTheme.textPrimaryColor(context),
                             fontWeight: FontWeight.w700,
@@ -208,7 +209,7 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                       ),
                       IconButton(
                         onPressed: () => Navigator.pop(context),
-                        tooltip: ku ? 'Bigire' : 'Kapat',
+                        tooltip: context.t(K.close),
                         icon: const Icon(AppIcons.xmark),
                       ),
                     ],

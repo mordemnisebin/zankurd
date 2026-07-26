@@ -124,7 +124,32 @@ class _CategoryBanner extends StatelessWidget {
         ],
       ),
       child: Stack(
+        fit: StackFit.expand,
         children: [
+          // Kategori görseli — en alt katman. Seviye haritasının hero'suyla
+          // aynı dil: ekranda tek kategori olduğu için görsel yorucu değil,
+          // kimlik taşır. (Kategori *listesine* konmadı; 2026-07-24 kararı
+          // sekiz posteri bilinçli olarak kaldırmıştı.)
+          Opacity(
+            opacity: 0.28,
+            child: Image.asset(
+              CategoryVisuals.imagePath(category),
+              fit: BoxFit.cover,
+              errorBuilder: (_, _, _) => const SizedBox.shrink(),
+            ),
+          ),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  gradient.colors.first.withValues(alpha: 0.55),
+                  gradient.colors.last.withValues(alpha: 0.88),
+                ],
+              ),
+            ),
+          ),
           // Soft Glow 1 — larger, warmer
           Positioned(
             right: -50,
@@ -155,30 +180,15 @@ class _CategoryBanner extends StatelessWidget {
               ),
             ),
           ),
-          // Kilim deseni filigranı — kültürel doku
-          // Büyük filigran kategori ikonu — boşluğu dolduran görsel imza
-          Positioned(
-            right: -12,
-            bottom: -22,
-            child: Icon(
-              _bannerIcon(category),
-              size: 160,
-              color: Colors.white.withValues(alpha: 0.10),
-            ),
-          ),
-          // Decorative dots
-          Positioned(
-            left: 24,
-            top: topInset + 8,
-            child: Container(
-              width: 6,
-              height: 6,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.35),
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
+          // 160px'lik filigran ikon kaldırıldı. Üstündeki yorum "kilim
+          // deseni" diyordu ama çizilen şey büyütülmüş bir ikondu; kartın
+          // kenarından taşıp başlığın arkasına giriyor ve zemini
+          // kirletiyordu (2026-07-25 görsel denetimi). Görsel imzayı artık
+          // gerçek kategori fotoğrafı taşıyor.
+          //
+          // "Decorative dots" adlı tek bir 6px beyaz nokta da kaldırıldı:
+          // hiçbir şey anlatmıyor, ekranda açıklanamayan bir leke olarak
+          // duruyordu.
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 20, 24, 18),
             child: Column(

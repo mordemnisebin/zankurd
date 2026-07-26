@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/player.dart';
 import '../providers/child_safety_provider.dart';
 import '../models/room.dart';
@@ -188,9 +189,7 @@ class _RoomScreenState extends State<RoomScreen> {
     await Clipboard.setData(ClipboardData(text: room.code));
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${room.code} ${ku ? "hat kopîkirin" : "kopyalandı"}.'),
-      ),
+      SnackBar(content: Text(context.t(K.roomCodeCopied, {'code': room.code}))),
     );
   }
 
@@ -213,7 +212,7 @@ class _RoomScreenState extends State<RoomScreen> {
                 const CircularProgressIndicator(color: AppTheme.playCyan),
                 const SizedBox(height: 24),
                 Text(
-                  ku ? 'Tê betalkirin...' : 'İptal ediliyor...',
+                  context.t(K.cancelling),
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(context),
                     fontSize: 18,
@@ -260,9 +259,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                   children: [
                                     IconButton(
                                       onPressed: _leaving ? null : _leaveRoom,
-                                      tooltip: ku
-                                          ? 'Ji odeyê derkeve'
-                                          : 'Odadan ayrıl',
+                                      tooltip: context.t(K.leaveRoom),
                                       icon: Icon(
                                         AppIcons.arrowLeft,
                                         color: AppTheme.textSubColor(context),
@@ -288,7 +285,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                               ? AppTheme.playCyan
                                               : AppTheme.textSubColor(context),
                                         ),
-                                        tooltip: ku ? 'Sohbet' : 'Sohbet',
+                                        tooltip: context.t(K.chat),
                                       ),
                                   ],
                                 ),
@@ -315,7 +312,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              ku ? 'Odeya Taybet' : 'Özel Oda',
+                                              context.t(K.privateRoom),
                                               style: AppTypography.caption
                                                   .copyWith(
                                                     color: Colors.white
@@ -366,9 +363,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                                 ),
                                                 if (isHost)
                                                   _Pill(
-                                                    label: ku
-                                                        ? 'Mêvandar'
-                                                        : 'Ev sahibi',
+                                                    label: context.t(K.host),
                                                     icon: AppIcons.star,
                                                   ),
                                                 // Guest tarafında da mêvandar bilgisi
@@ -376,9 +371,10 @@ class _RoomScreenState extends State<RoomScreen> {
                                                 // çip kalıyordu (bilgi asimetrisi).
                                                 if (!isHost)
                                                   _Pill(
-                                                    label: ku
-                                                        ? 'Mêvandar: ${_hostName(room)}'
-                                                        : 'Ev sahibi: ${_hostName(room)}',
+                                                    label: context.t(
+                                                      K.hostNamed,
+                                                      {'name': _hostName(room)},
+                                                    ),
                                                     icon: AppIcons.star,
                                                   ),
                                               ],
@@ -436,9 +432,9 @@ class _RoomScreenState extends State<RoomScreen> {
                                                                   .start,
                                                           children: [
                                                             Text(
-                                                              ku
-                                                                  ? 'Koda odeyê — bitikîne û kopî bike'
-                                                                  : 'Oda kodu — dokun, kopyala',
+                                                              context.t(
+                                                                K.roomCodeTapCopy,
+                                                              ),
                                                               style: AppTypography
                                                                   .caption
                                                                   .copyWith(
@@ -530,7 +526,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                           ),
                                           const SizedBox(width: AppSpacing.xs),
                                           Text(
-                                            ku ? 'Lîstikvan' : 'Oyuncular',
+                                            context.t(K.playersWord),
                                             style: AppTypography.heading2
                                                 .copyWith(
                                                   color:
@@ -573,9 +569,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                ku
-                                                    ? 'Lîsteya lîstikvanan tê nûvekirin…'
-                                                    : 'Oyuncu listesi güncelleniyor…',
+                                                context.t(K.playerListUpdating),
                                                 style: AppTypography.caption
                                                     .copyWith(
                                                       color:
@@ -591,9 +585,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                       const SizedBox(height: AppSpacing.sm),
                                       if (sorted.isEmpty)
                                         Text(
-                                          ku
-                                              ? 'Hîn lîstikvan tune.'
-                                              : 'Henüz oyuncu yok.',
+                                          context.t(K.noPlayersYet),
                                           style: AppTypography.bodyMedium
                                               .copyWith(
                                                 color: AppTheme.textMutedColor(
@@ -630,9 +622,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                ku
-                                                    ? 'Hevalê xwe bi kodê vexwîne.'
-                                                    : 'Arkadaşını kodla davet et.',
+                                                context.t(K.inviteFriendByCode),
                                                 style: AppTypography.caption
                                                     .copyWith(
                                                       color:
@@ -670,7 +660,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                             );
                                           },
                                           title: Text(
-                                            ku ? 'Amade Me' : 'Hazırım',
+                                            context.t(K.imReady),
                                             style: AppTypography.bodyLarge
                                                 .copyWith(
                                                   color:
@@ -681,9 +671,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                                 ),
                                           ),
                                           subtitle: Text(
-                                            ku
-                                                ? 'Rewşa te ji lîstikvanên din re ciyê-rast nîşan dide.'
-                                                : 'Odadaki durumun diğer oyunculara canlı yansır.',
+                                            context.t(K.readyStateNote),
                                             style: AppTypography.caption
                                                 .copyWith(
                                                   color:
@@ -730,9 +718,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                               ),
                                               Expanded(
                                                 child: Text(
-                                                  ku
-                                                      ? 'Ji bo destpêkirina pêşbirkê herî kêm 2 lîstikvan divên.'
-                                                      : 'Yarışı başlatmak için en az 2 oyuncu olmalıdır.',
+                                                  context.t(K.needTwoPlayers),
                                                   style: AppTypography.caption
                                                       .copyWith(
                                                         color: AppTheme.wrong,
@@ -749,12 +735,8 @@ class _RoomScreenState extends State<RoomScreen> {
                                       if (isHost) ...[
                                         GeometricGradientButton(
                                           label: starting
-                                              ? (ku
-                                                    ? 'Tê Amadekirin'
-                                                    : 'Hazırlanıyor')
-                                              : (ku
-                                                    ? 'Pêşbirkê Dest Pê Bike'
-                                                    : 'Yarışı Başlat'),
+                                              ? (context.t(K.preparingShort))
+                                              : (context.t(K.startRace)),
                                           icon: AppIcons.play,
                                           isLoading: starting,
                                           onPressed: canStart
@@ -800,9 +782,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                               ),
                                               Expanded(
                                                 child: Text(
-                                                  ku
-                                                      ? 'Li benda mêvandar e... Lîstik dê ji aliyê damezrîner ve bê destpêkirin.'
-                                                      : 'Ev sahibi bekleniyor... Yarışma, odayı kuran kişi tarafından başlatılacaktır.',
+                                                  context.t(K.waitingHost),
                                                   style: AppTypography.caption
                                                       .copyWith(
                                                         color: AppTheme
@@ -853,15 +833,9 @@ class _RoomScreenState extends State<RoomScreen> {
       ErrorReporter.record(error, stack, reason: 'startGame failed');
       if (!mounted) return;
       setState(() => starting = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.isKu
-                ? 'Lîstik nehat destpêkirin. Dîsa biceribîne.'
-                : 'Oyun başlatılamadı. Tekrar dene.',
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.gameStartFailed))));
     }
   }
 

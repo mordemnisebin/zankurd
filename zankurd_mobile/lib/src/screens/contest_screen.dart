@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/contest.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -62,7 +63,6 @@ class _ContestScreenState extends State<ContestScreen> {
   Future<void> _startQuiz(Contest contest) async {
     if (_starting) return;
     setState(() => _starting = true);
-    final ku = context.isKu;
     try {
       // Günlük yarışma, tema/kategori etiketinden bağımsız olarak ortak
       // günlük havuzdan beslenir. Repository bu havuzu UTC gün seed'i ile
@@ -77,11 +77,9 @@ class _ContestScreenState extends State<ContestScreen> {
       }
       if (!mounted) return;
       if (questions.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(ku ? 'Pirs nehatin dîtin.' : 'Soru bulunamadı.'),
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.noQuestionsFound))));
         return;
       }
 
@@ -110,15 +108,9 @@ class _ContestScreenState extends State<ContestScreen> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'contest quiz start failed');
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            ku
-                ? 'Çalakî dest pê nekir. Dîsa biceribîne.'
-                : 'Etkinlik başlatılamadı. Tekrar dene.',
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.contestStartFailed))));
     } finally {
       if (mounted) setState(() => _starting = false);
     }
@@ -129,7 +121,7 @@ class _ContestScreenState extends State<ContestScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(ku ? 'Pêşbirka Rojê' : 'Günün Yarışması')),
+      appBar: AppBar(title: Text(context.t(K.dailyContest))),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
@@ -146,11 +138,9 @@ class _ContestScreenState extends State<ContestScreen> {
               }
               if (snapshot.hasError) {
                 return AppErrorState(
-                  title: ku ? 'Barnebû' : 'Yüklenemedi',
-                  message: ku
-                      ? 'Çalakî nehat barkirin.'
-                      : 'Etkinlik yüklenemedi.',
-                  retryLabel: ku ? 'Dîsa' : 'Tekrar',
+                  title: context.t(K.loadFailedShort),
+                  message: context.t(K.contestLoadFailed),
+                  retryLabel: context.t(K.retryTiny),
                   onRetry: () => setState(_loadContest),
                 );
               }
@@ -161,11 +151,9 @@ class _ContestScreenState extends State<ContestScreen> {
                 // kalmaz (2026-07-19 canlı denetim P1 bulgusu).
                 return AppEmptyState(
                   icon: AppIcons.champagneGlasses,
-                  title: ku ? 'Pêşbirka Rojê' : 'Günün Yarışması',
-                  message: ku
-                      ? 'Îro pêşbirka rojê venemayî. Sibê pêşbirka nû tê — paşê dîsa were!'
-                      : 'Bugünün yarışması kalmadı. Yarın yeni yarışma gelir — sonra yine gel!',
-                  actionLabel: ku ? 'Biçe Sereke' : 'Ana Sayfaya Dön',
+                  title: context.t(K.dailyContest),
+                  message: context.t(K.contestNoneToday),
+                  actionLabel: context.t(K.goHome),
                   actionIcon: AppIcons.house,
                   onAction: () => Navigator.of(context).pop(),
                 );
@@ -217,8 +205,8 @@ class _ContestContent extends StatelessWidget {
       children: [
         // Pêşbaz ailesi — altın kimlik.
         ScreenIdentityHeader(
-          title: ku ? 'Çalakiya Rojê' : 'Günün Etkinliği',
-          subtitle: ku ? 'Beşdar bibe û xelatê bigire' : 'Katıl ve ödülü kap',
+          title: context.t(K.dailyEvent),
+          subtitle: context.t(K.dailyEventSub),
           accent: AppTheme.gold,
           icon: AppIcons.champagneGlasses,
         ),
@@ -301,7 +289,7 @@ class _ContestContent extends StatelessWidget {
                         const SizedBox(width: AppSpacing.sm),
                         Expanded(
                           child: Text(
-                            contest.themeNameKu,
+                            contest.themeNameFor(isKu: context.isKu),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: AppTypography.heading2.copyWith(
@@ -311,10 +299,11 @@ class _ContestContent extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if ((contest.themeDescriptionKu ?? '').isNotEmpty) ...[
+                    if ((contest.themeDescriptionFor(isKu: context.isKu) ?? '')
+                        .isNotEmpty) ...[
                       const SizedBox(height: AppSpacing.sm),
                       Text(
-                        contest.themeDescriptionKu!,
+                        contest.themeDescriptionFor(isKu: context.isKu)!,
                         style: AppTypography.bodyMedium.copyWith(
                           color: AppTheme.textMutedColor(context),
                         ),
@@ -336,9 +325,9 @@ class _ContestContent extends StatelessWidget {
                         ),
                         _BadgeLabel(
                           icon: AppIcons.question,
-                          label: ku
-                              ? '${contest.questionCount} pirs'
-                              : '${contest.questionCount} soru',
+                          label: context.t(K.questionCount, {
+                            'count': '${contest.questionCount}',
+                          }),
                         ),
                       ],
                     ),
@@ -357,9 +346,10 @@ class _ContestContent extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        ku
-                            ? 'Xelat: beşdarî ${contest.participationReward} · 1. ${contest.rank1Reward} coin'
-                            : 'Ödül: katılım ${contest.participationReward} · 1. ${contest.rank1Reward} coin',
+                        context.t(K.contestRewards, {
+                          'join': '${contest.participationReward}',
+                          'first': '${contest.rank1Reward}',
+                        }),
                         textAlign: TextAlign.center,
                         style: AppTypography.caption.copyWith(
                           color: AppTheme.gold,
@@ -370,17 +360,15 @@ class _ContestContent extends StatelessWidget {
                     const SizedBox(height: AppSpacing.md),
                     GeometricGradientButton(
                       label: starting
-                          ? (ku ? 'Tê amadekirin…' : 'Hazırlanıyor…')
-                          : (ku ? 'Çalakiyê dest pê bike' : 'Etkinliğe başla'),
+                          ? (context.t(K.preparing))
+                          : (context.t(K.startEvent)),
                       icon: AppIcons.play,
                       isLoading: starting,
                       onPressed: starting ? null : onStart,
                     ),
                     const SizedBox(height: AppSpacing.xs),
                     Text(
-                      ku
-                          ? 'Beşdariyê bike û pêşderçûnê de cîh bigire.'
-                          : 'Katıl ve sıralamada yerini al.',
+                      context.t(K.joinAndRank),
                       textAlign: TextAlign.center,
                       style: AppTypography.caption.copyWith(
                         color: AppTheme.textMutedColor(context),
@@ -395,7 +383,7 @@ class _ContestContent extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.section - 8),
         ScreenSectionLabel(
-          label: ku ? 'Pêşderçûn' : 'Sıralama',
+          label: context.t(K.rankingWord),
           accent: AppTheme.gold,
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -416,7 +404,7 @@ class _ContestContent extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(24),
                 child: Text(
-                  ku ? 'Rêzkirin nehat barkirin.' : 'Sıralama yüklenemedi.',
+                  context.t(K.rankingLoadFailed),
                   textAlign: TextAlign.center,
                   style: TextStyle(color: AppTheme.textMutedColor(context)),
                 ),
@@ -427,9 +415,7 @@ class _ContestContent extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(24),
                 child: Text(
-                  ku
-                      ? 'Hîn beşdar tune — yekemîn tu bibe!'
-                      : 'Henüz katılım yok — ilk sen ol!',
+                  context.t(K.noParticipantsYet),
                   textAlign: TextAlign.center,
                   style: TextStyle(color: AppTheme.textMutedColor(context)),
                 ),
@@ -550,9 +536,10 @@ class _LeaderboardRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  ku
-                      ? '${row.correctCount} rast · ${row.score} pûan'
-                      : '${row.correctCount} doğru · ${row.score} puan',
+                  context.t(K.correctAndScore, {
+                    'correct': '${row.correctCount}',
+                    'score': '${row.score}',
+                  }),
                   style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
                   ),

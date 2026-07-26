@@ -8,6 +8,7 @@ import '../data/mistake_store.dart';
 import '../data/xp_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/achievement.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/league_tier.dart';
@@ -116,7 +117,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _startMistakePractice() async {
-    final ku = context.isKu;
     final store = await MistakeStore.load();
     if (!mounted) return;
     final mistakeIds = store.readyIds;
@@ -128,12 +128,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         SnackBar(
           content: Text(
             store.count > 0
-                ? (ku
-                      ? 'Hemû pirsên şaş li benda dema dubarekirinê ne. Paşê biceribîne!'
-                      : 'Tüm yanlışlarınızın tekrar süreleri bekleniyor. Daha sonra tekrar deneyin!')
-                : (ku
-                      ? 'Pirsên şaş tune. Pêşî pêşbirkekê bilîze!'
-                      : 'Tekrar edilecek yanlış yok. Önce bir yarış oyna!'),
+                ? (context.t(K.allMistakesWaiting))
+                : (context.t(K.noMistakesPlayFirst)),
           ),
         ),
       );
@@ -141,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
     setState(() => _practiceLoading = true);
     final practiceRoom = widget.repository.createRoom().copyWith(
-      name: ku ? 'Şaşiyên Min' : 'Yanlışlarım',
+      name: context.t(K.myMistakes),
       questionCount: questions.length,
     );
     await Navigator.of(context).push(
@@ -245,9 +241,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       level: _level,
       xpInLevel: _xpInLevel,
       xpNeeded: _xpNeeded,
-      rank: _stats?.roomsPlayed != null && _stats!.roomsPlayed > 0
-          ? _stats?.rank
-          : null,
+      // Lig rozeti ile sıralama karosu aynı kapıyı kullanmalı.
+      //
+      // 2026-07-25 denetimi karoları "hiç soru cevaplamamışa rakam gösterme"
+      // kuralına bağlamıştı ama rozet dışarıda kalmıştı: rozet sunucudan
+      // gelen `roomsPlayed`e, karo yerel `_answeredTotal`a bakıyordu. Sonuç
+      // aynı ekranda "Altın Lig" ile "Sıralama —"nin yan yana durmasıydı —
+      // iki rakam birbirini yalanlıyordu (2026-07-26 denetimi).
+      rank: _answeredTotal > 0 ? _stats?.rank : null,
       levelProgress: _levelProgress,
       onEditAvatar: _openAvatarEditor,
     );
@@ -264,7 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                ku ? 'Statîstîkên Min' : 'İstatistiklerim',
+                context.t(K.myStats),
                 style: AppTypography.bodyLarge.copyWith(
                   color: AppTheme.textPrimaryColor(context),
                   fontWeight: FontWeight.w700,
@@ -277,9 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      ku
-                          ? 'Hîn dîroka lîstikê ya serhêl tune.\nBi yekê re bikevin an yek çêbikin.'
-                          : 'Henüz çevrimiçi oyun geçmişin yok.\nBir odaya katıl veya oluştur.',
+                      context.t(K.noOnlineHistory),
                       style: TextStyle(color: AppTheme.textMutedColor(context)),
                     ),
                     const SizedBox(height: 12),
@@ -287,7 +286,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       key: const ValueKey('profile-stats-start-cta'),
                       onPressed: _startQuickRace,
                       icon: const Icon(AppIcons.bolt, size: 18),
-                      label: Text(ku ? 'Îro dest pê bike' : 'Bugün başla'),
+                      label: Text(context.t(K.startToday)),
                     ),
                   ],
                 )
@@ -303,29 +302,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     childAspectRatio: 1.55,
                     children: [
                       _StatTile(
-                        label: ku ? 'Rêze' : 'Sıralama',
+                        label: context.t(K.statRank),
                         value: _answeredTotal > 0 ? '#${_stats!.rank}' : '—',
                         color: AppTheme.gold,
                         icon: AppIcons.chartColumn,
                       ),
                       _StatTile(
-                        label: ku ? 'Tevayî Xal' : 'Toplam Puan',
-                        value: '${_stats!.totalScore}',
+                        label: context.t(K.statTotalScore),
+                        // Sıralama gibi puan da oynanmış tur şartına bağlı.
+                        // Hiç soru cevaplamamış oyuncuya beş bin puan
+                        // gösteriliyor, aynı ekranda "0/1000 XP · Ast 1"
+                        // yazıyordu — iki rakam birbirini yalanlıyordu
+                        // (2026-07-25 canlı denetimi).
+                        value: _answeredTotal > 0
+                            ? '${_stats!.totalScore}'
+                            : '—',
                         color: AppTheme.accent,
                         icon: AppIcons.star,
                       ),
                       _StatTile(
-                        label: ku ? 'Pirsên Bersivandî' : 'Cevaplanan Soru',
+                        label: context.t(K.statAnswered),
                         value: '$_answeredTotal',
                         color: AppTheme.correct,
                         icon: AppIcons.gamepad,
                       ),
                       _StatTile(
-                        label: ku ? 'Rastî' : 'Doğruluk',
+                        label: context.t(K.statAccuracy),
                         value: _accuracyPercent == null
                             ? '—'
                             : context.percent(_accuracyPercent!.round()),
-                        color: AppTheme.cyan,
+                        // Renk değeri temsil eder. Sabit camgöbeği bırakınca
+                        // "%0 doğruluk" da olumlu bir karo gibi görünüyordu
+                        // (2026-07-25 canlı denetimi).
+                        color: _accuracyTileColor(_accuracyPercent),
                         icon: AppIcons.bullseye,
                       ),
                     ],
@@ -347,7 +356,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 tilePadding: EdgeInsets.zero,
                 childrenPadding: const EdgeInsets.only(top: 12),
                 title: Text(
-                  ku ? 'Analîza Berfireh' : 'Detaylı İstatistik',
+                  context.t(K.detailedStats),
                   style: AppTypography.bodyLarge.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w800,
@@ -356,7 +365,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 children: [
                   Text(
-                    ku ? 'Performansa Heftane' : 'Haftalık Performans',
+                    context.t(K.weeklyPerformance),
                     style: AppTypography.bodyLarge.copyWith(
                       color: AppTheme.textPrimaryColor(context),
                       fontWeight: FontWeight.w800,
@@ -372,9 +381,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 160,
                           child: Center(
                             child: Text(
-                              ku
-                                  ? 'Performans nehat barkirin.'
-                                  : 'Performans yüklenemedi.',
+                              context.t(K.performanceLoadFail),
                               style: TextStyle(
                                 color: AppTheme.textMutedColor(context),
                               ),
@@ -439,11 +446,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ? _buildProfileSkeleton()
             : _loadFailed
             ? AppErrorState(
-                title: ku ? 'Profîl nehat barkirin' : 'Profil yüklenemedi',
-                message: ku
-                    ? 'Girêdanê kontrol bike û dîsa biceribîne.'
-                    : 'Bağlantıyı kontrol edip tekrar dene.',
-                retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
+                title: context.t(K.profileLoadFail),
+                message: context.t(K.checkConnection),
+                retryLabel: context.t(K.retry),
                 onRetry: _load,
               )
             : RefreshIndicator(
@@ -474,7 +479,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           Text(
-                            ku ? 'Profîl' : 'Profil',
+                            context.t(K.profileTitle),
                             style: AppTypography.heading1.copyWith(
                               color: AppTheme.textPrimaryColor(context),
                               fontSize: 28,
@@ -510,6 +515,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // 2026-07-22 canlı UX denetimi: profil iskelet yükleme
+  /// Doğruluk karosunun rengi: değere göre anlam taşır. Veri yokken nötr
+  /// kalır ki "henüz ölçülmedi" ile "kötü" karışmasın.
+  static Color _accuracyTileColor(double? percent) {
+    if (percent == null) return AppTheme.cyan;
+    if (percent >= 70) return AppTheme.correct;
+    if (percent >= 40) return AppTheme.gold;
+    return AppTheme.wrong;
+  }
+
   Widget _buildProfileSkeleton() {
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.page),
@@ -698,7 +712,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        sectionLabel(ku ? 'FÊRBÛN' : 'ÖĞRENME'),
+        sectionLabel(context.t(K.secLearningCaps)),
         AppPanel(
           padding: EdgeInsets.zero,
           child: Column(
@@ -710,7 +724,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   size: 20,
                 ),
                 iconColor: AppTheme.gold,
-                title: ku ? 'Pirsên Tomarkirî' : 'Kaydedilen Sorular',
+                title: context.t(K.savedQuestions),
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(AppRadius.md),
                 ),
@@ -739,14 +753,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         size: 20,
                       ),
                 iconColor: AppTheme.primaryGradientStart,
-                title: ku ? 'Şaşiyên Min' : 'Yanlışlarım',
+                title: context.t(K.myMistakes),
                 subtitle: _mistakeCount == 0
-                    ? (ku
-                          ? 'Şaşiyek tune — aferîn!'
-                          : 'Hiç yanlışın yok — aferin!')
-                    : (ku
-                          ? 'Ji bo dubarekirinê: $_readyMistakeCount / Tevavî: $_mistakeCount'
-                          : 'Tekrar Edilecek: $_readyMistakeCount / Toplam: $_mistakeCount'),
+                    ? (context.t(K.noMistakes))
+                    : (context.t(K.mistakeCounts, {
+                        'ready': '$_readyMistakeCount',
+                        'total': '$_mistakeCount',
+                      })),
                 onTap: _practiceLoading ? null : _startMistakePractice,
               ),
               divider,
@@ -757,10 +770,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   size: 20,
                 ),
                 iconColor: AppTheme.playCyan,
-                title: ku ? 'Pirs Pêşniyar Bike' : 'Soru Öner',
-                subtitle: ku
-                    ? 'Pirsa xwe pêşniyar bike, piştî pejirandinê were zêdekirin'
-                    : 'Kendi sorunu öner, onaylandıktan sonra eklensin',
+                title: context.t(K.suggestQuestion),
+                subtitle: context.t(K.suggestQuestionSub),
                 borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(AppRadius.md),
                 ),
@@ -776,7 +787,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        sectionLabel(ku ? 'HESAB' : 'HESAP'),
+        sectionLabel(context.t(K.secAccountCaps)),
         // 2026-07-22 canlı UX denetimi: misafir hesap yükseltme
         if (context.watch<AuthProvider>().isGuest) ...[
           AppPanel(
@@ -788,10 +799,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 size: 20,
               ),
               iconColor: AppTheme.correct,
-              title: ku ? 'Hesabê Xwe Tomar Bike' : 'Hesabını Kaydet',
-              subtitle: ku
-                  ? 'E-posta û şîfreyekê binivîse — hesabê te yê mêvan bibe mayînde'
-                  : 'E-posta ve şifre belirle — misafir hesabın kalıcı olsun',
+              title: context.t(K.saveAccount),
+              subtitle: context.t(K.saveAccountSub),
               borderRadius: BorderRadius.circular(AppRadius.md),
               onTap: _showGuestUpgradeDialog,
             ),
@@ -810,7 +819,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   size: 20,
                 ),
                 iconColor: AppTheme.gold,
-                title: ku ? 'Dukan' : 'Mağaza',
+                title: context.t(K.shop),
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(AppRadius.md),
                 ),
@@ -828,7 +837,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   size: 20,
                 ),
                 iconColor: AppTheme.secondaryAccent,
-                title: ku ? 'Mîheng' : 'Ayarlar',
+                title: context.t(K.settings),
                 onTap: () {
                   Navigator.of(context).push(
                     AppRoute.to(SettingsScreen(repository: widget.repository)),
@@ -843,7 +852,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   size: 20,
                 ),
                 iconColor: AppTheme.wrong,
-                title: ku ? 'Derkeve' : 'Çıkış Yap',
+                title: context.t(K.signOut),
                 titleColor: AppTheme.wrong,
                 borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(AppRadius.md),
@@ -859,7 +868,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   // 2026-07-22 canlı UX denetimi: misafir hesap yükseltme dialog'u
   Future<void> _showGuestUpgradeDialog() async {
-    final ku = context.isKu;
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
@@ -876,7 +884,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             side: BorderSide(color: AppTheme.borderColor(ctx)),
           ),
           title: Text(
-            ku ? 'Hesabê Xwe Tomar Bike' : 'Hesabını Kaydet',
+            context.t(K.saveAccount),
             style: TextStyle(
               color: AppTheme.textPrimaryColor(ctx),
               fontWeight: FontWeight.w800,
@@ -888,9 +896,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  ku
-                      ? 'E-posta û şîfreyekê binivîse da ku hesabê xwe yê mêvan bikî hesabê mayînde.'
-                      : 'Misafir hesabını kalıcı yapmak için e-posta ve şifre belirle.',
+                  context.t(K.saveAccountBody),
                   style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(ctx),
                   ),
@@ -900,14 +906,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    labelText: ku ? 'E-posta' : 'E-posta',
+                    labelText: context.t(K.email),
                     border: const OutlineInputBorder(),
                   ),
                   validator: (v) {
                     if (v == null || v.isEmpty || !v.contains('@')) {
-                      return ku
-                          ? 'E-postayek derbasdar binivîse'
-                          : 'Geçerli bir e-posta gir';
+                      return context.t(K.emailInvalid);
                     }
                     return null;
                   },
@@ -917,14 +921,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   controller: passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: ku ? 'Şîfre' : 'Şifre',
+                    labelText: context.t(K.password),
                     border: const OutlineInputBorder(),
                   ),
                   validator: (v) {
                     if (v == null || v.length < 6) {
-                      return ku
-                          ? 'Şîfre divê herî kêm 6 tîpan be'
-                          : 'Şifre en az 6 karakter olmalı';
+                      return context.t(K.passwordTooShort);
                     }
                     return null;
                   },
@@ -936,7 +938,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
-                        ku ? 'an jî' : 'veya',
+                        context.t(K.orSeparator),
                         style: AppTypography.caption.copyWith(
                           color: AppTheme.textMutedColor(ctx),
                         ),
@@ -965,9 +967,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                    label: Text(
-                      ku ? 'Bi Google ve Girêde' : 'Google ile Bağla',
-                    ),
+                    label: Text(context.t(K.linkGoogle)),
                   ),
                 ),
               ],
@@ -978,7 +978,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: submitting
                   ? null
                   : () => Navigator.pop(dialogContext, null),
-              child: Text(ku ? 'Betal' : 'Vazgeç'),
+              child: Text(context.t(K.cancel)),
             ),
             FilledButton(
               onPressed: submitting
@@ -1008,7 +1008,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: Colors.white,
                       ),
                     )
-                  : Text(ku ? 'Tomar Bike' : 'Kaydet'),
+                  : Text(context.t(K.save)),
             ),
           ],
         ),
@@ -1025,15 +1025,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (!mounted) return;
     switch (result) {
       case _GuestUpgradeAction.emailSuccess:
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              ku
-                  ? 'Hesabê te bi serkeftî hat tomarkirin!'
-                  : 'Hesabın başarıyla kaydedildi!',
-            ),
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.accountSaved))));
       case _GuestUpgradeAction.emailFailure:
         final message = context.read<AuthProvider>().errorMessage;
         if (message != null) {
@@ -1051,11 +1045,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // 2026-07-23 M18: linkIdentity anonim oturumu değiştirmez, sadece
   // tarayıcıyı açar — sonuç auth state listener üzerinden asenkron gelir.
   Future<void> _linkGoogleAccount() async {
-    final ku = context.isKu;
-    LoadingOverlay.show(
-      context,
-      message: ku ? 'Bi Google ve tê girêdan...' : 'Google ile bağlanılıyor...',
-    );
+    LoadingOverlay.show(context, message: context.t(K.connectingGoogle));
     final auth = context.read<AuthProvider>();
     final success = await auth.linkGoogleAccount();
     if (!mounted) return;
@@ -1068,7 +1058,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _confirmSignOut(BuildContext context) async {
-    final ku = context.isKu;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -1077,31 +1066,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(color: AppTheme.borderColor(context)),
         ),
-        title: Text(ku ? 'Derkeve' : 'Çıkış Yap'),
+        title: Text(context.t(K.signOut)),
         // Misafir hesabında çıkış geri dönüşsüzdür: hesap anonim olduğu
         // için XP, coin, rozet ve seri kalıcı olarak kaybolur. Önceki
         // metin bunu hiç söylemiyordu (2026-07-22 canlı UX denetimi).
         content: Text(
           context.read<AuthProvider>().isGuest
-              ? (ku
-                    ? 'Tu wek mêvan têketî yî. Heke derkevî, XP, coin, '
-                          'rozet û zincîra te bi tevahî winda dibin — '
-                          'vegerandin tune.'
-                    : 'Misafir olarak giriş yaptın. Çıkarsan XP, coin, '
-                          'rozet ve serin kalıcı olarak silinir — geri '
-                          'getirilemez.')
-              : (ku
-                    ? 'Tu dixwazî ji hesabê xwe derkevî?'
-                    : 'Hesabından çıkmak istiyor musun?'),
+              ? context.t(K.signOutGuestWarn)
+              : (context.t(K.signOutConfirm)),
         ),
         actions: [
           OutlinedButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(ku ? 'Betal' : 'Vazgeç'),
+            child: Text(context.t(K.cancel)),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(ku ? 'Derkeve' : 'Çıkış Yap'),
+            child: Text(context.t(K.signOut)),
           ),
         ],
       ),

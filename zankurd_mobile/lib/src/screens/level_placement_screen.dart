@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/placement_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/quiz_question.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_theme.dart';
@@ -86,13 +87,13 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     final ku = context.isKu;
     return Scaffold(
       appBar: AppBar(
-        title: Text(ku ? 'Asta xwe diyar bike' : 'Seviyeni belirle'),
+        title: Text(context.t(K.placementTitle)),
         actions: [
           if (_result == null)
             TextButton(
               key: const ValueKey('placement-skip'),
               onPressed: _skip,
-              child: Text(ku ? 'Niha derbas be' : 'Şimdilik geç'),
+              child: Text(context.t(K.placementSkip)),
             ),
         ],
       ),
@@ -116,9 +117,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Text(
-          ku
-              ? 'Ji bo naha pirs tune. Tu dikarî dûre biceribînî.'
-              : 'Şimdilik soru yok. Daha sonra deneyebilirsin.',
+          context.t(K.placementNoQuestions),
           textAlign: TextAlign.center,
           style: AppTypography.bodyLarge.copyWith(
             color: AppTheme.textPrimaryColor(context),
@@ -145,9 +144,10 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                ku
-                    ? 'Pirs ${_index + 1}/${_questions.length}'
-                    : 'Soru ${_index + 1}/${_questions.length}',
+                context.t(K.placementProgress, {
+                  'index': '${_index + 1}',
+                  'total': '${_questions.length}',
+                }),
                 style: AppTypography.caption.copyWith(
                   color: AppTheme.textMutedColor(context),
                   fontWeight: FontWeight.w700,
@@ -229,7 +229,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
-              ku ? 'Asta te' : 'Seviyen',
+              context.t(K.placementYourLevel),
               style: AppTypography.caption.copyWith(
                 color: AppTheme.textMutedColor(context),
                 fontWeight: FontWeight.w700,
@@ -244,9 +244,10 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              ku
-                  ? '${result.correctCount}/${result.totalCount} rast'
-                  : '${result.correctCount}/${result.totalCount} doğru',
+              context.t(K.placementScore, {
+                'correct': '${result.correctCount}',
+                'total': '${result.totalCount}',
+              }),
               style: AppTypography.bodyMedium.copyWith(
                 color: AppTheme.textMutedColor(context),
               ),
@@ -269,7 +270,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
                   widget.onFinished?.call(level);
                   Navigator.of(context).maybePop();
                 },
-                child: Text(ku ? 'Dest pê bike' : 'Başla'),
+                child: Text(context.t(K.start)),
               ),
             ),
           ],
@@ -279,20 +280,12 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
   }
 
   String _resultHint(bool ku, PlacementLevel level) {
-    return switch (level) {
-      PlacementLevel.destpek =>
-        ku
-            ? 'Em ê ji bingehê dest pê bikin. Ne xem e, gav bi gav!'
-            : 'Temellerden başlayacağız. Merak etme, adım adım!',
-      PlacementLevel.navin =>
-        ku
-            ? 'Bingeha te baş e. Em ê hînê pêş de bibin.'
-            : 'Temelin iyi. Biraz daha ileri götüreceğiz.',
-      PlacementLevel.pesketi =>
-        ku
-            ? 'Zana! Em ê rasterast mijarên pêşketî pêşniyar bikin.'
-            : 'Harika! Doğrudan ileri konuları önereceğiz.',
+    final key = switch (level) {
+      PlacementLevel.destpek => K.placementAdviceBasic,
+      PlacementLevel.navin => K.placementAdviceMid,
+      PlacementLevel.pesketi => K.placementAdviceAdvanced,
     };
+    return Tr.forKu(key, ku);
   }
 }
 

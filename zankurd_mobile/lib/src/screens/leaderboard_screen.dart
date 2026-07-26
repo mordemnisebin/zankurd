@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../config/avatar_presets.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/friend.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
@@ -93,9 +94,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       future: _myStatsFuture,
       builder: (context, snapshot) {
         final me = snapshot.data;
+        // Veri yokken hiçbir şey çizilmez — sarmalayıcı da dahil. Aksi
+        // halde listenin altında boş, kenarlıklı bir şerit kalır ve
+        // görünmez bir satır için dikey alan harcanır.
         if (me == null || me.rank <= 0) return const SizedBox.shrink();
-        return Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.xs),
+        return _PinnedMyRank(
           child: _RankRow(entry: me, isKu: ku, highlight: true),
         );
       },
@@ -200,11 +203,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         }
         if (snap.hasError && stale == null) {
           return AppErrorState(
-            title: ku ? 'Heval nehatin barkirin' : 'Arkadaşlar yüklenemedi',
-            message: ku
-                ? 'Girêdanê kontrol bike û dîsa biceribîne.'
-                : 'Bağlantıyı kontrol edip tekrar dene.',
-            retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
+            title: context.t(K.friendsLoadFail),
+            message: context.t(K.checkConnection),
+            retryLabel: context.t(K.retry),
             onRetry: _loadData,
           );
         }
@@ -212,11 +213,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         if (friends.isEmpty) {
           return AppEmptyState(
             icon: AppIcons.peopleGroup,
-            title: ku ? 'Heval tune' : 'Arkadaş yok',
-            message: ku
-                ? 'Hevalan lê zêde bike û rêza xwe bibîne!'
-                : 'Arkadaş ekleyerek sıralamanı gör!',
-            actionLabel: ku ? 'Heval lê zêde bike' : 'Arkadaş ekle',
+            title: context.t(K.noFriends),
+            message: context.t(K.noFriendsAddHint),
+            actionLabel: context.t(K.addFriend),
             actionIcon: AppIcons.userPlus,
             onAction: () {
               Navigator.of(
@@ -268,11 +267,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         }
         if (snap.hasError && stale == null) {
           return AppErrorState(
-            title: ku ? 'Tabloya barnekirî' : 'Yüklenemedi',
-            message: ku
-                ? 'Girêdanê kontrol bike û dîsa biceribîne.'
-                : 'Bağlantıyı kontrol edip tekrar dene.',
-            retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
+            title: context.t(K.boardLoadFailed),
+            message: context.t(K.checkConnection),
+            retryLabel: context.t(K.retry),
             onRetry: _loadData,
           );
         }
@@ -280,11 +277,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         if (entries.isEmpty) {
           return AppEmptyState(
             icon: AppIcons.trophy,
-            title: ku ? 'Hîn xal tune' : 'Henüz puan yok',
-            message: ku
-                ? 'Pêşbirkekê dest pê bike.'
-                : 'Bir yarış başlat; puanların burada görünür.',
-            actionLabel: ku ? 'Pêşbirkê Dest Pê Bike' : 'Yarışa Başla',
+            title: context.t(K.noScoresYet),
+            message: context.t(K.startRaceHint),
+            actionLabel: context.t(K.startRaceAction),
             actionIcon: AppIcons.bolt,
             onAction: _startQuickRace,
           );
@@ -337,13 +332,19 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                       isKu: ku,
                       colorOverride: avatarColorOverrides[e.playerId],
                     ),
-                  // Liderlik yalnız ilk 10'u getiriyor; oyuncu listede
-                  // yoksa kendi sırasını hiç göremiyordu — tablonun temel
-                  // motivasyon mekanizması eksikti (2026-07-22 UX denetimi).
-                  if (_myRank(entries) == null) _buildMyRankRow(ku),
                 ],
               ),
             ),
+            // Liderlik yalnız ilk 10'u getiriyor; oyuncu listede yoksa
+            // kendi sırasını hiç göremiyordu — tablonun temel motivasyon
+            // mekanizması eksikti (2026-07-22 UX denetimi).
+            //
+            // Satır listenin *içinde*, en altta duruyordu: podyum tek
+            // başına bir ekranı doldurduğu için kullanıcı kendi sırasını
+            // görmek üzere aşağı kaydırmak zorundaydı ve satır pratikte
+            // görünmez kalıyordu (2026-07-25 canlı denetimi). Artık
+            // listenin altına sabitlenir — her zaman ekranda.
+            if (_myRank(entries) == null) _buildMyRankRow(ku),
           ],
         );
       },
@@ -352,6 +353,40 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
 }
 
 // ─── Haftalık Lig Bandı ──────────────────────────────────────────────────────
+
+/// Liderlik listesinin altına sabitlenen "senin sıran" şeridi. Listeden
+/// ayrı bir katman olduğu için kaydırmadan bağımsız olarak hep görünür.
+class _PinnedMyRank extends StatelessWidget {
+  const _PinnedMyRank({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceColor(context),
+        border: Border(
+          top: BorderSide(
+            color: AppTheme.borderColor(context).withValues(alpha: 0.55),
+          ),
+        ),
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.page,
+            AppSpacing.xs,
+            AppSpacing.page,
+            AppSpacing.xs,
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
 
 /// Haftalık ligde oyuncunun kademesini gösterir: Zêr / Zîv / Bronz.
 /// Kademe canlı haftalık sıradan türetilir; Zêr'de Zana kutlama yapar.
@@ -466,16 +501,14 @@ class _Header extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  ku ? 'Tabloya Pêşderiyan' : 'Liderlik Tablosu',
+                  context.t(K.leaderboardTitle),
                   style: AppTypography.heading1.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xxs),
                 Text(
-                  ku
-                      ? 'Her 30 çirkeyî nûve dibe'
-                      : 'Her 30 saniyede güncellenir',
+                  context.t(K.refreshEvery30),
                   style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
                     fontWeight: FontWeight.w600,
@@ -494,13 +527,11 @@ class _Header extends StatelessWidget {
             ),
             child: Semantics(
               button: true,
-              label: ku
-                  ? 'Tabloya pêşderiyan nû bike'
-                  : 'Liderlik tablosunu yenile',
+              label: context.t(K.refreshBoardA11y),
               excludeSemantics: true,
               child: IconButton(
                 key: const ValueKey('leaderboard-refresh-button'),
-                tooltip: ku ? 'Nû bike' : 'Yenile',
+                tooltip: context.t(K.refreshAction),
                 onPressed: onRefresh,
                 icon: Icon(
                   AppIcons.arrowsRotate,
@@ -835,6 +866,23 @@ class _RankRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Satır sıra, ad, oda/zincir ve puanı ayrı metinler olarak taşıyordu;
+    // ekran okuyucu bunları bağlamsız dört parça hâlinde okuyordu. Tek
+    // düğümde birleştirilir (2026-07-25 denetimi).
+    return Semantics(
+      label: highlight
+          ? (isKu
+                ? 'Rêza te: ${entry.rank}. ${entry.displayName}, ${entry.totalScore} xal'
+                : 'Senin sıran: ${entry.rank}. ${entry.displayName}, ${entry.totalScore} puan')
+          : (isKu
+                ? '${entry.rank}. ${entry.displayName}, ${entry.totalScore} xal'
+                : '${entry.rank}. ${entry.displayName}, ${entry.totalScore} puan'),
+      excludeSemantics: true,
+      child: _buildRow(context),
+    );
+  }
+
+  Widget _buildRow(BuildContext context) {
     return Container(
       key: highlight
           ? const ValueKey('leaderboard-my-rank-row')

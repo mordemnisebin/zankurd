@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
@@ -106,16 +107,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'canSpinToday failed');
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              context.s(
-                'Rewşa çerxê nehat kontrolkirin.',
-                'Çark durumu kontrol edilemedi.',
-              ),
-            ),
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.wheelStatusFailed))));
       }
     }
     if (mounted) {
@@ -152,11 +146,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       setState(() {
         _spinning = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.s('Xelat nehat dayîn.', 'Ödül verilemedi.')),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.wheelRewardFailed))));
       return;
     }
     if (won <= 0) {
@@ -165,13 +157,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         _spinning = false;
         _canSpin = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s('Îro jixwe zivirandî.', 'Bugün zaten çevirdin.'),
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.wheelAlreadySpun))));
       return;
     }
     final winnerIndex = rewards.contains(won) ? rewards.indexOf(won) : 0;
@@ -227,7 +215,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(ku ? 'Çerxa Rojê' : 'Günün Çarkı')),
+      appBar: AppBar(title: Text(context.t(K.wheelTitle))),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -270,9 +258,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                         ],
                         const SizedBox(height: 10),
                         Text(
-                          ku
-                              ? 'Xelat rasterast li hejmara coinên te tê zêdekirin.'
-                              : 'Ödül doğrudan coin bakiyene eklenir.',
+                          context.t(K.wheelRewardNote),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppTheme.textMutedColor(context),
@@ -337,15 +323,13 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              ku ? 'Her roj carekê bizivirîne!' : 'Her gün bir kez çevir!',
+              context.t(K.wheelOncePerDay),
               textAlign: TextAlign.center,
               style: AppTypography.heading2.copyWith(color: Colors.white),
             ),
             const SizedBox(height: AppSpacing.xxs),
             Text(
-              ku
-                  ? 'Coin qezenc bike û seriyê xwe bidomîne'
-                  : 'Coin kazan ve serini sürdür',
+              context.t(K.wheelSub),
               textAlign: TextAlign.center,
               style: AppTypography.bodyMedium.copyWith(
                 color: Colors.white.withValues(alpha: 0.8),
@@ -453,7 +437,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   Widget _buildPrizeReveal(BuildContext context, bool ku, int amount) {
     return Semantics(
       liveRegion: true,
-      label: ku ? 'Te $amount coin qezenc kir!' : '$amount coin kazandın!',
+      label: context.t(K.wheelWonAmount, {'amount': '$amount'}),
       child: ScaleTransition(
         scale: _prizeScale,
         child: FadeTransition(
@@ -485,7 +469,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        ku ? 'Pîroz be!' : 'Tebrikler!',
+                        context.t(K.congrats),
                         style: const TextStyle(
                           color: AppTheme.bg,
                           fontWeight: FontWeight.w800,
@@ -494,9 +478,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        ku
-                            ? '+$amount coin qezenc kir!'
-                            : '+$amount coin kazandın!',
+                        context.t(K.wheelWonPlus, {'amount': '$amount'}),
                         style: TextStyle(
                           color: AppTheme.bg.withValues(alpha: 0.88),
                           fontWeight: FontWeight.w700,
@@ -520,10 +502,10 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   Widget _buildSpinStatusChip(BuildContext context, bool ku) {
     final hasRight = _canSpin;
     final label = hasRight
-        ? (ku ? 'Mafê te yê îro amade ye' : 'Bugünkü hakkın hazır')
-        : (ku
-              ? 'Mafê îro bi dawî bû — sibê were (${_formatDuration(_timeUntilNextSpin)})'
-              : 'Bugünkü hak bitti — yarın gel (${_formatDuration(_timeUntilNextSpin)})');
+        ? (context.t(K.wheelReady))
+        : (context.t(K.wheelUsed, {
+            'time': _formatDuration(_timeUntilNextSpin),
+          }));
     return Semantics(
       label: label,
       child: Container(
@@ -633,10 +615,10 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
               label: ExcludeSemantics(
                 child: Text(
                   _spinning
-                      ? (ku ? 'Dizivire...' : 'Dönüyor...')
+                      ? (context.t(K.wheelSpinning))
                       : enabled
-                      ? (ku ? 'Bizivirîne!' : 'Çevir!')
-                      : (ku ? 'Sibê dîsa were!' : 'Yarın tekrar gel!'),
+                      ? (context.t(K.wheelSpin))
+                      : (context.t(K.wheelComeTomorrow)),
                   style: AppTypography.bodyLarge.copyWith(
                     color: enabled
                         ? Colors.white
@@ -679,7 +661,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
               const Icon(AppIcons.clock, color: AppTheme.gold, size: 18),
               const SizedBox(width: 8),
               Text(
-                ku ? 'Dizivirîna nû di:' : 'Yeni çevirme hakkı:',
+                context.t(K.wheelNextSpinIn),
                 style: TextStyle(
                   color: AppTheme.textSubColor(context),
                   fontWeight: FontWeight.w700,
@@ -692,11 +674,11 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _countdownUnit(parts[0], ku ? 'Saet' : 'Saat', context),
+              _countdownUnit(parts[0], context.t(K.hours), context),
               _countdownSeparator(),
-              _countdownUnit(parts[1], ku ? 'Deqîqe' : 'Dakika', context),
+              _countdownUnit(parts[1], context.t(K.minutes), context),
               _countdownSeparator(),
-              _countdownUnit(parts[2], ku ? 'Saniye' : 'Saniye', context),
+              _countdownUnit(parts[2], context.t(K.seconds), context),
             ],
           ),
         ],

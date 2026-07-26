@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../config/category_visibility.dart';
+import '../config/category_visuals.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_logo.dart';
+import '../widgets/kilim_reveal.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/styled_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -172,6 +176,21 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                   ),
                                 ),
                               ),
+                              // Dil seçimi ilk ekranda görünür olmalı:
+                              // uygulama doğrudan Kurmancî açılıyor ve
+                              // Türkçe okuyan kullanıcı, tanıtımı hiç
+                              // anlamadan geçmek zorunda kalıyordu; TR
+                              // seçeneği ancak giriş ekranında beliriyordu
+                              // (2026-07-25 canlı denetimi).
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: compact ? 0 : 2,
+                                  ),
+                                  child: const _OnboardingLanguageToggle(),
+                                ),
+                              ),
                               Align(
                                 alignment: Alignment.topRight,
                                 child: Padding(
@@ -200,7 +219,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                     // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                                     child: ExcludeSemantics(
                                       child: Text(
-                                        context.s('Derbas bike', 'Atla'),
+                                        context.t(K.skip),
                                         style: AppTypography.caption.copyWith(
                                           fontWeight: FontWeight.w700,
                                           color: AppTheme.textMutedColor(
@@ -285,8 +304,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                     },
                               icon: last ? AppIcons.check : AppIcons.arrowRight,
                               label: last
-                                  ? context.s('Dest pê bike', 'Başla')
-                                  : context.s('Piştre', 'Sonraki'),
+                                  ? context.t(K.start)
+                                  // "Piştre" Kurmancî'de "sonra / daha
+                                  // sonra" demek; ileri götüren düğmede
+                                  // yanlış, üstelik sağ üstteki "Derbas
+                                  // bike" (atla) ile anlamca çakışıyordu
+                                  // (2026-07-25 canlı denetimi).
+                                  : context.t(K.next),
                             ),
                           ),
                         ),
@@ -303,7 +327,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   }
 
   List<_OnboardingData> _pages(BuildContext context) {
-    final ku = context.isKu;
+    final categoryCount = visibleCategories(
+      CategoryVisuals.colorDefinedCategories,
+    ).length;
     return [
       _OnboardingData(
         icon: AppIcons.graduationCap,
@@ -311,33 +337,66 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         // güçte turuncu kütle vardı ve göz nereye basacağını şaşırıyordu.
         // Hero kimlik rengine (Kesk) alındı; turuncu yalnız butonda kalır.
         color: AppTheme.culturalBrandBg,
-        title: context.s('Hîn bibe', 'Öğren'),
-        body: context.s(
-          'Kurmancî peyv, çand û zanînê bi pirsên kurt fêr bibe.',
-          'Kurmancî kelimeleri, kültürü ve bilgiyi kısa sorularla öğren.',
-        ),
+        title: context.t(K.onbLearnTitle),
+        body: context.t(K.onbLearnBody),
         bullets: [
-          ku
-              ? '8 kategorî — ziman, dîrok, çand…'
-              : '8 kategori — dil, tarih, kültür…',
-          ku ? 'Her roj pirsên nû' : 'Her gün yeni sorular',
+          // Sayı sabit yazılıydı ve Sînema kategorisi eklenince yanlışa
+          // düştü (2026-07-25). Görünür kategori listesinden türetilir;
+          // yeni kategori eklendiğinde metin kendiliğinden doğru kalır.
+          context.t(K.onbCategoriesBullet, {'count': '$categoryCount'}),
+          context.t(K.onbDailyBullet),
         ],
       ),
       _OnboardingData(
         showMascotAccent: true,
         icon: AppIcons.trophy,
         color: AppTheme.playCyan,
-        title: context.s('Pêşbirkê bike û bi ser keve', 'Yarış ve kazan'),
-        body: context.s(
-          '1vs1, oda an kûpa — bi hevalên xwe re bilîze.',
-          '1vs1, oda veya kupa — arkadaşlarınla oyna.',
-        ),
-        bullets: [
-          ku ? 'Şerê 1vs1 û Pêşbirka Rojê' : '1vs1 ve Günün Yarışması',
-          ku ? 'Xelat, coin û joker' : 'Ödül, coin ve joker',
-        ],
+        title: context.t(K.onbCompeteTitle),
+        body: context.t(K.onbCompeteBody),
+        bullets: [context.t(K.onbDuelBullet), context.t(K.onbRewardBullet)],
       ),
     ];
+  }
+}
+
+/// Tanıtım turunun KU/TR seçici hapı. Giriş ekranındaki denetimle aynı
+/// davranışı taşır; kullanıcı dili daha ilk ekranda değiştirebilir.
+class _OnboardingLanguageToggle extends StatelessWidget {
+  const _OnboardingLanguageToggle();
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: context.t(K.changeLanguage),
+      excludeSemantics: true,
+      child: Tooltip(
+        message: context.t(K.language),
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            key: const ValueKey('onboarding-language-toggle'),
+            onTap: context.langProvider.toggle,
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+              decoration: BoxDecoration(
+                color: AppTheme.surfaceHiColor(context),
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                border: Border.all(color: AppTheme.borderColor(context)),
+              ),
+              child: Text(
+                context.t(K.languageCode),
+                style: AppTypography.caption.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.textPrimaryColor(context),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -368,7 +427,7 @@ class _AnimatedBrandLockup extends StatelessWidget {
             if (showTagline) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(
-                context.s('Hîn bibe, pêş bike', 'Öğren, yarış, ilerle'),
+                context.t(K.onbTagline),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
@@ -459,25 +518,17 @@ class _OnboardingPage extends StatelessWidget {
               ),
               child: Stack(
                 children: [
-                  // Ölü dikey alanı dolduran, içerikle ilişkili arka plan
-                  // ikonları (dekoratif; erişilebilirlik dışı).
-                  Positioned(
-                    top: 18,
-                    left: 22,
-                    child: Icon(
-                      data.icon,
-                      size: 34,
-                      color: Colors.white.withValues(alpha: 0.16),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 16,
-                    right: 24,
-                    child: Icon(
-                      data.icon,
-                      size: 44,
-                      color: Colors.white.withValues(alpha: 0.12),
-                    ),
+                  // Kart dokusu: kilim baklavası.
+                  //
+                  // Önce aynı ikon kartın iki köşesinde soluk olarak
+                  // tekrarlanıyordu — ortadaki büyük ikonla birlikte tek
+                  // kartta aynı glif üç kez görünüyordu ve iki slayt
+                  // birbirinden yalnız renkle ayrılıyordu (2026-07-25
+                  // görsel denetimi). Doku, uygulamanın başka yerlerinde de
+                  // kullanılan marka motifidir; slaytlara tekrar hissi
+                  // vermeden derinlik katar.
+                  const Positioned.fill(
+                    child: KilimReveal(child: SizedBox.expand()),
                   ),
                   Center(
                     child: _OnboardingIcon(

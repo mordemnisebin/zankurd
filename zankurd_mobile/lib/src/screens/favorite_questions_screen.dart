@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/quiz_question.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -39,13 +40,9 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
   Future<void> _removeFavorite(QuizQuestion question) async {
     await widget.repository.toggleFavoriteQuestion(question, false);
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          context.s('Pirs hate rakirin.', 'Soru kayıtlardan çıkarıldı.'),
-        ),
-      ),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(context.t(K.questionRemoved))));
     _reload();
   }
 
@@ -54,11 +51,10 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(context.s('Tomarkirî', 'Kaydedilenler')),
         actions: [
           IconButton(
             onPressed: _reload,
-            tooltip: context.s('Nû bike', 'Yenile'),
+            tooltip: context.t(K.refreshAction),
             icon: const Icon(AppIcons.arrowsRotate),
           ),
         ],
@@ -81,15 +77,9 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
 
               if (snapshot.hasError) {
                 return AppErrorState(
-                  title: context.s(
-                    'Pirsên tomarkirî nehatin barkirin',
-                    'Kaydedilen sorular yüklenemedi',
-                  ),
-                  message: context.s(
-                    'Girêdanê kontrol bike û dîsa biceribîne.',
-                    'Bağlantıyı kontrol edip tekrar dene.',
-                  ),
-                  retryLabel: context.s('Dîsa biceribîne', 'Tekrar dene'),
+                  title: context.t(K.favoritesLoadFailed),
+                  message: context.t(K.checkConnection),
+                  retryLabel: context.t(K.retry),
                   onRetry: _reload,
                 );
               }
@@ -108,11 +98,8 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
                   child: Column(
                     children: [
                       ScreenIdentityHeader(
-                        title: context.s('Tomarkirî', 'Kaydedilenler'),
-                        subtitle: context.s(
-                          'Pirsên bijarte yên te',
-                          'Favori soruların',
-                        ),
+                        title: context.t(K.savedShort),
+                        subtitle: context.t(K.yourFavorites),
                         accent: AppTheme.gold,
                         icon: AppIcons.bookmark,
                         compact: true,
@@ -137,11 +124,10 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: AppSpacing.md),
                       child: ScreenIdentityHeader(
-                        title: context.s('Tomarkirî', 'Kaydedilenler'),
-                        subtitle: context.s(
-                          '${questions.length} pirs · dîsa bilîze',
-                          '${questions.length} soru · yeniden oyna',
-                        ),
+                        title: context.t(K.savedShort),
+                        subtitle: context.t(K.questionsReplay, {
+                          'count': '${questions.length}',
+                        }),
                         accent: AppTheme.gold,
                         icon: AppIcons.bookmark,
                         compact: true,
@@ -177,7 +163,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
     final room = widget.repository
         .createRoom(category: questions[index].category)
         .copyWith(
-          name: context.s('Pirsên Tomarkirî', 'Kaydedilen Sorular'),
+          name: context.t(K.savedQuestions),
           questionCount: selected.length,
         );
 
@@ -219,7 +205,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
           final room = widget.repository
               .createRoom(category: 'Tomarkirî')
               .copyWith(
-                name: context.s('Pirsên Tomarkirî', 'Kaydedilen Sorular'),
+                name: context.t(K.savedQuestions),
                 questionCount: questions.length,
               );
           Navigator.of(context).push(
@@ -236,7 +222,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
         // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
         label: ExcludeSemantics(
           child: Text(
-            context.s('Pirsên Tomarkirî Bilîze', 'Kaydedilen Soruları Oyna'),
+            context.t(K.playSavedQuestions),
             style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
           ),
         ),
@@ -311,7 +297,7 @@ class _FavoriteQuestionTile extends StatelessWidget {
               const SizedBox(width: 4),
               IconButton(
                 onPressed: onRemove,
-                tooltip: context.s('Rake', 'Kaldır'),
+                tooltip: context.t(K.removeAction),
                 icon: Icon(
                   AppIcons.bookmark,
                   color: AppTheme.textMutedColor(context),
@@ -359,14 +345,8 @@ class _EmptyFavorites extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppEmptyState(
       icon: AppIcons.bookmark,
-      title: context.s(
-        'Hîn pirsên tomarkirî tune.',
-        'Henüz kaydedilmiş soru yok.',
-      ),
-      message: context.s(
-        'Di dema pêşbirkê de bişkoka nîşankirinê bitikîne û pirsan li vir zêde bike.',
-        'Quiz sırasında yer imi simgesine basarak soruları buraya ekleyebilirsin.',
-      ),
+      title: context.t(K.noSavedQuestions),
+      message: context.t(K.noSavedQuestionsHint),
     );
   }
 }

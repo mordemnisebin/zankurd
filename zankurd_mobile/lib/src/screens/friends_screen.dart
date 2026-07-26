@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../models/friend.dart';
 import '../providers/child_safety_provider.dart';
 import '../theme/app_theme.dart';
@@ -61,9 +62,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
   Future<void> _search() async {
     final query = _searchController.text.trim();
     if (query.length < 2) {
-      _showMessage(
-        context.isKu ? 'Herî kêm 2 tîp binivîse' : 'En az 2 harf yazın',
-      );
+      _showMessage(context.t(K.minTwoChars));
       return;
     }
     setState(() => _searching = true);
@@ -72,17 +71,13 @@ class _FriendsScreenState extends State<FriendsScreen> {
       if (!mounted) return;
       setState(() => _searchResults = results);
       if (results.isEmpty) {
-        _showMessage(
-          context.isKu ? 'Lîstikvan nehat dîtin' : 'Oyuncu bulunamadı',
-        );
+        _showMessage(context.t(K.playerNotFound));
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'friends_load');
       if (mounted) {
         setState(() => _searching = false);
-        _showMessage(
-          context.isKu ? 'Lêgerîn bi ser neket.' : 'Arama başarısız oldu.',
-        );
+        _showMessage(context.t(K.searchFailed));
       }
       return;
     } finally {
@@ -108,11 +103,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
             );
             return false;
           });
-      _showMessage(context.isKu ? 'Daxwaz hat şandin' : 'İstek gönderildi');
+      _showMessage(context.t(K.requestSent));
     } else {
-      _showMessage(
-        context.isKu ? 'Daxwaz neçû, dîsa biceribîne' : 'İstek gönderilemedi',
-      );
+      _showMessage(context.t(K.requestFailed));
     }
   }
 
@@ -120,12 +113,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
     final success = await widget.repository.acceptFriendRequest(requestId);
     if (!mounted) return;
     if (success) {
-      _showMessage(context.isKu ? 'Daxwaz hat qebûlkirin' : 'Arkadaş eklendi');
+      _showMessage(context.t(K.requestAccepted));
       setState(_loadFriends);
     } else {
-      _showMessage(
-        context.isKu ? 'Qebûlkirin bi ser neket.' : 'Kabul işlemi başarısız.',
-      );
+      _showMessage(context.t(K.acceptFailed));
     }
   }
 
@@ -133,12 +124,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
     final success = await widget.repository.rejectFriendRequest(requestId);
     if (!mounted) return;
     if (success) {
-      _showMessage(context.isKu ? 'Daxwaz hat redkirin' : 'İstek reddedildi');
+      _showMessage(context.t(K.requestRejected));
       setState(_loadFriends);
     } else {
-      _showMessage(
-        context.isKu ? 'Redkirin bi ser neket.' : 'Red işlemi başarısız.',
-      );
+      _showMessage(context.t(K.rejectFailed));
     }
   }
 
@@ -149,11 +138,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
     try {
       final room = await widget.repository.createOnlineRoom();
       if (!mounted) return;
-      _showMessage(
-        context.isKu
-            ? 'Koda jûrê bi ${friend.friendName} re parve bike'
-            : 'Oda kodunu ${friend.friendName} ile paylaş',
-      );
+      _showMessage(context.t(K.shareRoomCodeWith, {'name': friend.friendName}));
       await Navigator.of(context).push(
         AppRoute.to(
           RoomScreen(repository: widget.repository, initialRoom: room),
@@ -162,9 +147,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'friends_action');
       if (mounted) {
-        _showMessage(
-          context.isKu ? 'Jûr nehat avakirin' : 'Oda oluşturulamadı',
-        );
+        _showMessage(context.t(K.roomCreateFailed));
       }
     } finally {
       if (mounted) setState(() => _roomLoading = false);
@@ -176,7 +159,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(ku ? 'Hevalên Min' : 'Arkadaşlarım')),
+      appBar: AppBar(),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
@@ -192,10 +175,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
               children: [
                 // Sosyal bağ — camgöbeği kimlik (Xwendin/bağlantı ailesi).
                 ScreenIdentityHeader(
-                  title: ku ? 'Hevalên Min' : 'Arkadaşlarım',
-                  subtitle: ku
-                      ? 'Bigere, daxwaz bike û bi heval re bilîze'
-                      : 'Ara, istek at ve arkadaşınla oyna',
+                  title: context.t(K.myFriends),
+                  subtitle: context.t(K.myFriendsSub),
                   accent: AppTheme.cyan,
                   icon: AppIcons.peopleGroup,
                 ),
@@ -208,7 +189,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 ],
                 _buildRequestsSection(ku),
                 ScreenSectionLabel(
-                  label: ku ? 'Hevalên Min' : 'Arkadaşlarım',
+                  label: context.t(K.myFriends),
                   accent: AppTheme.cyan,
                 ),
                 const SizedBox(height: 12),
@@ -226,7 +207,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ScreenSectionLabel(
-          label: ku ? 'Heval Bibîne' : 'Arkadaş Bul',
+          label: context.t(K.findFriend),
           accent: AppTheme.cyan,
         ),
         const SizedBox(height: 12),
@@ -246,7 +227,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   textInputAction: TextInputAction.search,
                   onSubmitted: (_) => _search(),
                   decoration: InputDecoration(
-                    hintText: ku ? 'Navê lîstikvanî...' : 'Oyuncu adı...',
+                    hintText: context.t(K.playerNameHintSearch),
                     prefixIcon: const Icon(AppIcons.magnifyingGlass),
                     isDense: true,
                   ),
@@ -269,7 +250,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                           color: AppTheme.primaryGradientStart,
                         ),
                       )
-                    : Text(ku ? 'Bigere' : 'Ara'),
+                    : Text(context.t(K.searchAction)),
               ),
             ],
           ),
@@ -304,9 +285,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                           ),
                           const SizedBox(height: 3),
                           Text(
-                            ku
-                                ? 'Hevaltiyê ji vir şandî dibe'
-                                : 'Arkadaşlık isteği buradan gönderilir',
+                            context.t(K.requestFromHere),
                             style: AppTypography.caption.copyWith(
                               color: AppTheme.textMutedColor(context),
                             ),
@@ -340,7 +319,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                               ),
                               foregroundColor: AppTheme.cyan,
                             ),
-                            child: Text(ku ? 'Zêde bike' : 'Ekle'),
+                            child: Text(context.t(K.addAction)),
                           ),
                   ],
                 ),
@@ -360,11 +339,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
           return Padding(
             padding: const EdgeInsets.all(16),
             child: AppErrorState(
-              title: ku ? 'Daxwaz nehatin barkirin' : 'İstekler yüklenemedi',
-              message: ku
-                  ? 'Daxwaz nehatin barkirin.'
-                  : 'İstekler yüklenemedi.',
-              retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar dene',
+              title: context.t(K.requestsLoadFail),
+              message: context.t(K.requestsLoadFailDot),
+              retryLabel: context.t(K.retry),
               onRetry: () => setState(() {
                 _requestsFuture = widget.repository.loadPendingFriendRequests();
               }),
@@ -379,7 +356,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ScreenSectionLabel(
-              label: ku ? 'Daxwazên Hevaltiyê' : 'Bekleyen İstekler',
+              label: context.t(K.pendingRequests),
               accent: AppTheme.cyan,
             ),
             const SizedBox(height: 12),
@@ -411,9 +388,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
         }
         if (snap.hasError) {
           return AppErrorState(
-            title: ku ? 'Barnebû' : 'Yüklenemedi',
-            message: ku ? 'Heval nehatin barkirin' : 'Arkadaşlar yüklenemedi',
-            retryLabel: ku ? 'Dîsa biceribîne' : 'Tekrar',
+            title: context.t(K.loadFailedShort),
+            message: context.t(K.friendsLoadFail),
+            retryLabel: context.t(K.retryShort),
             onRetry: () => setState(_loadFriends),
           );
         }
@@ -421,10 +398,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
         if (friends.isEmpty) {
           return AppEmptyState(
             icon: AppIcons.peopleGroup,
-            title: ku ? 'Heval tune' : 'Arkadaş yok',
-            message: ku
-                ? 'Li jorê lîstikvanan bigere û heval zêde bike'
-                : 'Yukarıdan oyuncu arayıp arkadaş ekleyebilirsin',
+            title: context.t(K.noFriends),
+            message: context.t(K.noFriendsHint),
           );
         }
         return Column(
@@ -513,9 +488,7 @@ class _FriendCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    online
-                        ? (ku ? 'Serhêl' : 'Çevrimiçi')
-                        : (ku ? 'Ne li serhêl' : 'Çevrimdışı'),
+                    online ? (context.t(K.online)) : (context.t(K.offline)),
                     style: TextStyle(
                       color: online
                           ? AppTheme.correct
@@ -534,7 +507,7 @@ class _FriendCard extends StatelessWidget {
                 backgroundColor: AppTheme.cyan.withValues(alpha: 0.14),
                 foregroundColor: AppTheme.cyan,
               ),
-              child: Text(ku ? 'Bilîze' : 'Oyna'),
+              child: Text(context.t(K.playAction)),
             ),
           ],
         ),
@@ -582,9 +555,7 @@ class _FriendRequestCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 3),
                   Text(
-                    ku
-                        ? 'Hevaltiya xwe dixwaze'
-                        : 'Seninle arkadaş olmak istiyor',
+                    context.t(K.wantsToBeFriend),
                     style: AppTypography.caption.copyWith(
                       color: AppTheme.textMutedColor(context),
                     ),
@@ -599,7 +570,7 @@ class _FriendRequestCard extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: onReject,
-                tooltip: ku ? 'Red bike' : 'Reddet',
+                tooltip: context.t(K.rejectAction),
                 icon: const Icon(AppIcons.xmark, color: AppTheme.wrong),
               ),
             ),
@@ -611,7 +582,7 @@ class _FriendRequestCard extends StatelessWidget {
                 foregroundColor: Colors.white,
                 elevation: 0,
               ),
-              child: Text(ku ? 'Qebûl' : 'Kabul'),
+              child: Text(context.t(K.acceptAction)),
             ),
           ],
         ),

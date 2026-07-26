@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
@@ -49,16 +50,9 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     if (_selectedCategory == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s(
-              'Ji kerema xwe kategoriyekê hilbijêre.',
-              'Lütfen bir kategori seç.',
-            ),
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.pleasePickCategory))));
       return;
     }
 
@@ -87,16 +81,9 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
       ErrorReporter.record(error, stack, reason: 'suggested_question_submit');
       if (mounted) {
         setState(() => _submitting = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              context.s(
-                'Şaşiyek çêbû. Ji kerema xwe dîsa biceribîne.',
-                'Bir hata oluştu. Lütfen tekrar deneyin.',
-              ),
-            ),
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.genericError))));
       }
     }
   }
@@ -112,7 +99,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(ku ? 'Pirs Pêşniyar Bike' : 'Soru Öner')),
+      appBar: AppBar(title: Text(context.t(K.suggestTitle))),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -130,9 +117,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
               children: [
                 // Başlık
                 Text(
-                  ku
-                      ? 'ZanKurd pirsên te pêşniyar dike'
-                      : 'ZanKurd\'a soru öner',
+                  context.t(K.suggestHeader),
                   style: AppTypography.heading1.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                     fontSize: 24,
@@ -141,9 +126,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  ku
-                      ? 'Ji bo dewlemendkirina pirsan, pirsa xwe ya nû ji me re bişîne.'
-                      : 'Soru havuzunu zenginleştirmek için yeni sorunu bizimle paylaş.',
+                  context.t(K.suggestIntro),
                   style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
                   ),
@@ -154,7 +137,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _SectionHeader(
                   icon: AppIcons.tableCells,
                   color: AppTheme.playCyan,
-                  title: ku ? 'Kategorî' : 'Kategori',
+                  title: context.t(K.categoryLabel),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 AppPanel(
@@ -168,9 +151,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                         vertical: AppSpacing.sm,
                       ),
                     ),
-                    hint: Text(
-                      ku ? 'Kategoriyekê hilbijêre...' : 'Bir kategori seç...',
-                    ),
+                    hint: Text(context.t(K.categoryPick)),
                     items: categories.map((cat) {
                       return DropdownMenuItem(
                         value: cat,
@@ -182,7 +163,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return ku ? 'Kategorî pêwîst e' : 'Kategori zorunlu';
+                        return context.t(K.categoryRequired);
                       }
                       return null;
                     },
@@ -194,18 +175,18 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _SectionHeader(
                   icon: AppIcons.circleQuestion,
                   color: AppTheme.playPink,
-                  title: ku ? 'Pirs (Kurmancî)' : 'Soru (Kurmancî)',
+                  title: context.t(K.questionKurmanci),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 TextFormField(
                   controller: _promptController,
                   maxLines: 3,
                   decoration: InputDecoration(
-                    hintText: ku ? 'Pirsa xwe binivîse...' : 'Soruyu yaz...',
+                    hintText: context.t(K.questionHint),
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return ku ? 'Pirs vala nabe' : 'Soru boş olamaz';
+                      return context.t(K.questionEmpty);
                     }
                     return null;
                   },
@@ -216,7 +197,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _SectionHeader(
                   icon: AppIcons.listCheck,
                   color: AppTheme.correct,
-                  title: ku ? 'Bersiv' : 'Cevaplar',
+                  title: context.t(K.answersLabel),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 _AnswerField(
@@ -256,7 +237,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _SectionHeader(
                   icon: AppIcons.circleCheck,
                   color: AppTheme.gold,
-                  title: ku ? 'Bersiva Rast Hilbijêre' : 'Doğru Cevabı Seç',
+                  title: context.t(K.pickCorrectAnswer),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 AppPanel(
@@ -315,16 +296,14 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _SectionHeader(
                   icon: AppIcons.lightbulb,
                   color: AppTheme.violet,
-                  title: ku ? 'Şîrove (Vebijarkî)' : 'Açıklama (İsteğe bağlı)',
+                  title: context.t(K.explanationOptional),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 TextFormField(
                   controller: _explanationController,
                   maxLines: 3,
                   decoration: InputDecoration(
-                    hintText: ku
-                        ? 'Çima ev bersiv rast e?'
-                        : 'Bu cevap neden doğru?',
+                    hintText: context.t(K.explanationHint),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.cardGap),
@@ -333,9 +312,9 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 _SectionHeader(
                   icon: AppIcons.gaugeHigh,
                   color: AppTheme.brand,
-                  title: ku
-                      ? 'Astê Zehmetiyê: $_difficulty'
-                      : 'Zorluk Seviyesi: $_difficulty',
+                  title: context.t(K.difficultyWithValue, {
+                    'level': '$_difficulty',
+                  }),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 AppPanel(
@@ -354,7 +333,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                       ),
                       Expanded(
                         child: Semantics(
-                          label: ku ? 'Astê Zehmetiyê' : 'Zorluk Seviyesi',
+                          label: context.t(K.difficultyLabel),
                           value: '$_difficulty / 5',
                           slider: true,
                           child: Slider(
@@ -399,7 +378,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                           )
                         : const Icon(AppIcons.paperPlane),
                     label: Text(
-                      ku ? 'Pirsê Bişîne' : 'Soruyu Gönder',
+                      context.t(K.submitQuestion),
                       style: const TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 16,
@@ -421,10 +400,9 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
   }
 
   Widget _buildSuccessView(BuildContext context) {
-    final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(ku ? 'Pirs Pêşniyar Bike' : 'Soru Öner')),
+      appBar: AppBar(title: Text(context.t(K.suggestTitle))),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -454,9 +432,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                     ),
                     const SizedBox(height: AppSpacing.lg),
                     Text(
-                      ku
-                          ? 'Spas ji bo pêşniyara te!'
-                          : 'Öneriniz için teşekkürler!',
+                      context.t(K.thanksForSuggestion),
                       textAlign: TextAlign.center,
                       style: AppTypography.heading1.copyWith(
                         color: AppTheme.textPrimaryColor(context),
@@ -465,9 +441,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     Text(
-                      ku
-                          ? 'Pêşniyara te hat hildan. Piştî pejirandinê, tu yê 50 zêr û xelata Rozeta Nivîskar qezenc bikî!'
-                          : 'Soru öneriniz alındı! Onaylandıktan sonra 50 jeton ve özel Yazar Rozeti kazanacaksınız!',
+                      context.t(K.suggestionReceived),
                       textAlign: TextAlign.center,
                       style: AppTypography.bodyMedium.copyWith(
                         color: AppTheme.textSubColor(context),
@@ -479,7 +453,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                       width: double.infinity,
                       child: FilledButton(
                         onPressed: () => Navigator.of(context).pop(),
-                        child: Text(ku ? 'Vegere' : 'Geri Dön'),
+                        child: Text(context.t(K.goBack)),
                       ),
                     ),
                   ],
@@ -553,7 +527,7 @@ class _AnswerField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
-        hintText: '$label) ${ku ? 'Bersiv' : 'Cevap'}',
+        hintText: '$label) ${context.t(K.answerLabel)}',
         prefixIcon: Container(
           width: 40,
           height: 40,
@@ -592,7 +566,7 @@ class _AnswerField extends StatelessWidget {
       ),
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
-          return '${ku ? 'Bersiv' : 'Cevap'} $label ${ku ? 'pêwîst e' : 'zorunlu'}';
+          return '${context.t(K.answerLabel)} $label ${context.t(K.requiredSuffix)}';
         }
         return null;
       },
