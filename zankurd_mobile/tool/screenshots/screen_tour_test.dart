@@ -13,11 +13,14 @@ import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
+import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
 import 'package:zankurd_mobile/src/screens/paywall_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 
@@ -251,6 +254,30 @@ void main() {
   testWidgets('13 arkadaşlar', (t) async {
     await _pump(t, FriendsScreen(repository: repository));
     await _shoot(t, '13_friends');
+  }, tags: ['preview']);
+
+  // Ara ekranlar: bekleme ve para biriminin geçtiği yerler. Yeni
+  // kullanıcının en çok "şimdi ne olacak?" diye durakladığı noktalar
+  // burasıdır, bu yüzden turda ana ekranlar kadar yer tutarlar.
+  testWidgets('17 oda', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: repository,
+        initialRoom: repository.createRoom(),
+      ),
+    );
+    await _shoot(t, '17_room');
+  }, tags: ['preview']);
+
+  testWidgets('18 rakip arama', (t) async {
+    await _pump(t, MatchmakingScreen(repository: repository));
+    await _shoot(t, '18_matchmaking');
+  }, tags: ['preview']);
+
+  testWidgets('19 mağaza', (t) async {
+    await _pump(t, ShopScreen(repository: repository));
+    await _shoot(t, '19_shop');
   }, tags: ['preview']);
 
   testWidgets('14 ders akışı', (t) async {

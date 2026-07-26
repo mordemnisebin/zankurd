@@ -933,6 +933,18 @@ class _PlayerTile extends StatelessWidget {
   final bool isKu;
   final bool isHost;
 
+  /// Yerel oyuncunun görünen adı.
+  ///
+  /// Depo katmanı yerel oyuncuyu sabit `'Tu'` adıyla üretir — bu bir i18n
+  /// değeri değil, yer tutucu. Türkçe arayüzde oyuncu kendi satırında
+  /// "Tu" yazdığını görüyor ve bunu bir kullanıcı adı sanıyordu; sonuç
+  /// ekranı aynı adı zaten gösterim anında yerelleştiriyordu, oda ekranı
+  /// unutulmuştu (2026-07-26).
+  String _displayName(BuildContext context) =>
+      player.name == 'Tu' && player.id == null
+      ? context.t(K.you)
+      : player.name;
+
   /// Depodan gelen durum metni Türkçe sabittir; KU modunda burada çevrilir.
   String _localizedState(String state) {
     if (!isKu) return state;
@@ -981,7 +993,7 @@ class _PlayerTile extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        player.name,
+                        _displayName(context),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyLarge.copyWith(

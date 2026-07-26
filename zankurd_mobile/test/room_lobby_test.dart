@@ -246,4 +246,46 @@ void main() {
       expect(find.byType(QuizScreen), findsNothing);
     },
   );
+
+  testWidgets('yerel oyuncunun adı gösterim anında yerelleştirilir', (
+    tester,
+  ) async {
+    // Depo yerel oyuncuyu sabit 'Tu' yer tutucusuyla üretir. Türkçe
+    // arayüzde oyuncu kendi satırında "Tu" görüyordu ve bunu bir kullanıcı
+    // adı sanıyordu; sonuç ekranı aynı adı zaten çeviriyordu, oda ekranı
+    // atlanmıştı (2026-07-26).
+    final repository = MockZanKurdRepository();
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.createRoom(),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(find.text('Sen'), findsOneWidget);
+    expect(find.text('Tu'), findsNothing);
+  });
+
+  testWidgets('gerçek bir oyuncunun adı "Tu" olsa bile değiştirilmez', (
+    tester,
+  ) async {
+    // Yerelleştirme yalnız kimliksiz yer tutucuya uygulanır. Sunucudan
+    // gelen, kimliği olan bir oyuncunun adı ona ait bir veridir; onu
+    // çevirmek başka birinin adını değiştirmek olurdu.
+    final repository = MockZanKurdRepository();
+    final room = repository.createRoom().copyWith(
+      players: const [
+        Player(id: 'p-1', name: 'Tu', score: 0, state: 'Hazır', streak: 0),
+      ],
+    );
+    await tester.pumpWidget(
+      testShell(child: RoomScreen(repository: repository, initialRoom: room)),
+    );
+    await tester.pump();
+
+    expect(find.text('Tu'), findsOneWidget);
+  });
 }

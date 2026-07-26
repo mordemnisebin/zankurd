@@ -1245,15 +1245,37 @@ class _ShopScreenState extends State<ShopScreen> {
             borderRadius: BorderRadius.circular(AppRadius.pill),
           ),
           elevation: canAfford ? 2 : 0,
-          textStyle: const TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+          // Aile açıkça yazılmalı: `styleFrom(textStyle:)` temadan gelen
+          // biçimi birleştirmez, **değiştirir**. Ailesiz bir biçim verince
+          // düğmenin yazısı sistem yazı tipine düşüyordu — fiyat etiketleri
+          // uygulamanın geri kalanından başka bir tiple çiziliyordu
+          // (2026-07-26).
+          textStyle: const TextStyle(
+            fontFamily: AppTypography.fontFamily,
+            fontWeight: FontWeight.w800,
+            fontSize: 12,
+          ),
         ),
         icon: Icon(
           AppIcons.cartShopping,
           size: 15,
           color: canAfford ? Colors.white : AppTheme.textMutedColor(context),
         ),
-        // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-        label: ExcludeSemantics(child: Text('${item.cost}c')),
+        // Görünen etiket kısa ("10c"), ekran okuyucuya söylenen ad tam
+        // cümle. `ExcludeSemantics` tek başına kullanıldığında düğmenin
+        // *tek* ad kaynağını gizliyor ve düğme adsız kalıyordu — okuyucu
+        // yalnız "düğme" diyor, neyi satın alacağını söylemiyordu
+        // (2026-07-26 ölçümü; bkz. `test/button_semantics_test.dart`).
+        // Düğme alt ağacındaki anlamları birleştirdiği için buradaki
+        // `Semantics` etiketi adı sağlar, `ExcludeSemantics` da görünen
+        // metnin ikinci kez okunmasını önler.
+        label: Semantics(
+          label: context.t(K.buyItemForCoins, {
+            'item': ku ? item.titleKu : item.titleTr,
+            'coins': '${item.cost}',
+          }),
+          child: ExcludeSemantics(child: Text('${item.cost}c')),
+        ),
       ),
     );
   }

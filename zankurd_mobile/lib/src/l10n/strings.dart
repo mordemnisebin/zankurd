@@ -911,6 +911,10 @@ class Tr {
     K.cancelShort: {'ku': 'Betal', 'tr': 'İptal'},
     K.unlockFree: {'ku': 'Belaş veke', 'tr': 'Bedava aç'},
     K.buyAction: {'ku': 'Bikire', 'tr': 'Satın Al'},
+    K.buyItemForCoins: {
+      'ku': '{item} bikire — {coins} coin',
+      'tr': '{item} satın al — {coins} coin',
+    },
     K.insufficientBalance: {
       'ku': 'Bakiyeya te kêm e!',
       'tr': 'Bakiye yetersiz!',
@@ -1911,6 +1915,7 @@ class K {
   static const cancelShort = 'common.cancelShort';
   static const unlockFree = 'shop.unlockFree';
   static const buyAction = 'shop.buy';
+  static const buyItemForCoins = 'shop.buyItemForCoins';
   static const insufficientBalance = 'shop.insufficientBalance';
   static const purchaseFailed = 'shop.purchaseFailed';
   static const errorOccurred = 'common.errorOccurred';

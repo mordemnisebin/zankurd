@@ -2,18 +2,68 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-/// `CustomPainter` içinde çizilen metnin yazı tipinin bekçisi.
+/// Temanın yazı tipini atlayan iki kod biçiminin bekçisi.
 ///
-/// Widget'lar aileyi temadan alır; `TextPainter` almaz. Aile yazılmayınca
-/// metin sessizce sistem varsayılanına düşer — hata vermez, log basmaz,
-/// yalnız o metin ekranın geri kalanından başka bir yazı tipiyle çizilir.
-/// 2026-07-26 ekran turunda çarkın rakamları ile haftalık grafiğin eksen
-/// etiketleri böyleydi.
+/// Metin ailesini temadan alır — ama iki yerde almaz ve ikisi de sessizce
+/// sistem yazı tipine düşer: hata yok, kayıt yok, yalnız o metin ekranın
+/// geri kalanından başka bir tiple çizilir.
 ///
-/// Bunu çalışma zamanında ölçmenin yolu yok: piksel karşılaştırması
-/// gerekirdi. Onun yerine kaynak taranıyor — `TextPainter` kullanan her
-/// dosyadaki her `TextSpan` biçiminde ailenin adı geçmeli.
+/// 1. `CustomPainter` içindeki `TextPainter` temayı hiç görmez (çarkın
+///    rakamları, haftalık grafiğin eksen etiketleri).
+/// 2. `styleFrom(textStyle: ...)` temadan gelen biçimi **birleştirmez,
+///    değiştirir**; ailesiz verilen biçim aileyi de siler (mağazadaki
+///    fiyat etiketleri, giriş ekranındaki ikincil düğme).
+///
+/// İkisi de 2026-07-26 ekran turunda görüldü. Çalışma zamanında ölçmenin
+/// yolu piksel karşılaştırmasıydı; onun yerine kaynak taranıyor.
 void main() {
+  /// [marker] ile başlayan her dengeli parantez bloğunu döndürür.
+  Iterable<({String block, int line})> blocks(String source, String marker) {
+    final found = <({String block, int line})>[];
+    var index = source.indexOf(marker);
+    while (index != -1) {
+      var depth = 0;
+      var end = source.indexOf('(', index);
+      for (var i = end; i < source.length; i++) {
+        if (source[i] == '(') depth++;
+        if (source[i] == ')') {
+          depth--;
+          if (depth == 0) {
+            end = i;
+            break;
+          }
+        }
+      }
+      found.add((
+        block: source.substring(index, end),
+        line: '\n'.allMatches(source.substring(0, index)).length + 1,
+      ));
+      index = source.indexOf(marker, end);
+    }
+    return found;
+  }
+
+  test('styleFrom(textStyle:) aileyi silmiyor', () {
+    final offenders = <String>[];
+    for (final entity in Directory('lib').listSync(recursive: true)) {
+      if (entity is! File || !entity.path.endsWith('.dart')) continue;
+      final source = entity.readAsStringSync();
+      for (final found in blocks(source, 'textStyle: const TextStyle(')) {
+        if (!found.block.contains('fontFamily')) {
+          offenders.add('${entity.path}:${found.line}');
+        }
+      }
+    }
+
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'styleFrom biçimi değiştirir: ailesiz verilirse yazı sistem '
+          'tipine düşer: ${offenders.join(", ")}',
+    );
+  });
+
   test('TextPainter kullanan her dosya yazı tipi ailesini yazıyor', () {
     final offenders = <String>[];
 

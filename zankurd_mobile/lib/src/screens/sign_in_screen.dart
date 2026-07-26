@@ -1065,7 +1065,10 @@ class _GuestSignInLink extends StatelessWidget {
             // Dokunma hedefi iOS asgarisinin (44pt) altına inmez.
             minimumSize: const Size(double.infinity, 46),
             padding: const EdgeInsets.symmetric(horizontal: 20),
+            // `styleFrom(textStyle:)` temanın biçimini değiştirir,
+            // birleştirmez; aile yazılmazsa yazı sistem tipine düşer.
             textStyle: const TextStyle(
+              fontFamily: AppTypography.fontFamily,
               fontWeight: FontWeight.w600,
               fontSize: 14,
               letterSpacing: 0.1,
