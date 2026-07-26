@@ -138,6 +138,16 @@ revoke all on function public.claim_extra_spin() from public;
 grant execute on function public.claim_extra_spin() to authenticated;
 
 -- 4) Turnuva sampiyonlugu: gunde 1 kez, sabit 200.
+-- DİKKAT — bu fonksiyonun güncel sürümü burada DEĞİL.
+--
+-- Aşağıdaki sürüm şampiyonluğu doğrulamaz: kimliği doğrulanmış herkes
+-- çağırıp günde 200 coin alabilir. 2026-07-26'da
+-- `2026-07-26_real_player_tournament.sql` içinde şampiyonluğu turnuva
+-- tablosundan doğrulayan sürümle değiştirildi.
+--
+-- Bu dosya yeniden uygulanırsa o sertleştirme geri alınır ve açık yeniden
+-- açılır. Tarihsel kayıt olarak duruyor; çalıştırılacaksa ardından
+-- turnuva dosyası da uygulanmalıdır.
 create or replace function public.claim_tournament_reward()
 returns jsonb
 language plpgsql
