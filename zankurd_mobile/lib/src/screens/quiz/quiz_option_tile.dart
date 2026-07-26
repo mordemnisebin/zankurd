@@ -43,6 +43,19 @@ class QuizOptionTile extends StatelessWidget {
   final List<String>? opponentNamesWhoSelected;
   final bool isCompact;
 
+  /// Şık düğmesinin dikey dolgusu.
+  ///
+  /// Kısa ekranda (isCompact) dar kalır — orada sorun yer darlığıdır.
+  /// Uzun ekranda kademeli açılır; 850 pt üstü cihazlarda en geniş hâlini
+  /// alır.
+  double _verticalPadding(BuildContext context) {
+    if (isCompact) return AppSpacing.xs;
+    final height = MediaQuery.sizeOf(context).height;
+    if (height >= 850) return AppSpacing.lg;
+    if (height >= 780) return AppSpacing.md;
+    return AppSpacing.sm;
+  }
+
   /// Reveal'de seçilmeyen ve doğru olmayan şıklar: %40 opaklık +
   /// disabled görünüm; renk yalnız doğru/yanlış anlamı taşsın.
   final bool dimmed;
@@ -151,9 +164,17 @@ class QuizOptionTile extends StatelessWidget {
                   duration: const Duration(milliseconds: 150),
                   curve: Curves.easeOutCubic,
                   width: double.infinity,
+                  // Dikey dolgu ekranın boyuna göre açılır.
+                  //
+                  // Sabit dolguyla kart doğal yüksekliğinde kalıyor ve uzun
+                  // ekranlarda soru + şıklar ortada yüzen küçük bir blok
+                  // gibi duruyordu; altta ve üstte geniş boş bantlar
+                  // kalıyordu (2026-07-27, canlı gezinti). Yükseklik arttıkça
+                  // şıklar da büyür: hem ekran dolar hem dokunma hedefi
+                  // genişler.
                   padding: EdgeInsets.symmetric(
                     horizontal: AppSpacing.md,
-                    vertical: isCompact ? AppSpacing.xs : AppSpacing.sm,
+                    vertical: _verticalPadding(context),
                   ),
                   decoration: BoxDecoration(
                     gradient: gradient,
