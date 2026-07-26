@@ -743,6 +743,12 @@ class AppTheme {
         style: FilledButton.styleFrom(
           backgroundColor: accent,
           foregroundColor: Colors.white,
+          // Pasif hâl Material'ın gri levhasına düşüyordu: ekranın en
+          // büyük öğesi (kaydet, sonraki, satın al) ölü bir gri blok
+          // oluyor ve arayüz bozuk görünüyordu. Marka renginin soluk tonu
+          // "henüz değil" der, "bozuk" demez (2026-07-27).
+          disabledBackgroundColor: accent.withValues(alpha: 0.12),
+          disabledForegroundColor: accent.withValues(alpha: 0.55),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
@@ -924,6 +930,12 @@ class AppTheme {
         style: FilledButton.styleFrom(
           backgroundColor: accent,
           foregroundColor: Colors.white,
+          // Pasif hâl Material'ın gri levhasına düşüyordu: ekranın en
+          // büyük öğesi (kaydet, sonraki, satın al) ölü bir gri blok
+          // oluyor ve arayüz bozuk görünüyordu. Marka renginin soluk tonu
+          // "henüz değil" der, "bozuk" demez (2026-07-27).
+          disabledBackgroundColor: accent.withValues(alpha: 0.12),
+          disabledForegroundColor: accent.withValues(alpha: 0.55),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
