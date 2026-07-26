@@ -910,6 +910,10 @@ class Tr {
     K.earnCoins: {'ku': 'Coin qezenc bike', 'tr': 'Coin kazan'},
     K.cancelShort: {'ku': 'Betal', 'tr': 'İptal'},
     K.unlockFree: {'ku': 'Belaş veke', 'tr': 'Bedava aç'},
+    K.rewardPending: {
+      'ku': 'Girêdan tune — xelata te tê tomarkirin û paşê tê dayîn.',
+      'tr': 'Bağlantı yok — ödülün kaydedildi, bağlanınca verilecek.',
+    },
     K.buyAction: {'ku': 'Bikire', 'tr': 'Satın Al'},
     K.buyItemForCoins: {
       'ku': '{item} bikire — {coins} coin',
@@ -1914,6 +1918,7 @@ class K {
   static const earnCoins = 'shop.earnCoins';
   static const cancelShort = 'common.cancelShort';
   static const unlockFree = 'shop.unlockFree';
+  static const rewardPending = 'result.rewardPending';
   static const buyAction = 'shop.buy';
   static const buyItemForCoins = 'shop.buyItemForCoins';
   static const insufficientBalance = 'shop.insufficientBalance';

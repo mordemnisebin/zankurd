@@ -50,6 +50,7 @@ class QuizResultScreen extends StatefulWidget {
     required this.answerRecords,
     required this.coinsAwarded,
     this.opponents = const [],
+    this.rewardQueued = false,
     this.practice = false,
     this.dailyQuiz = false,
     this.contestId,
@@ -68,6 +69,14 @@ class QuizResultScreen extends StatefulWidget {
 
   /// Bot yarışındaki rakiplerin son durumu; boşsa panel gizlenir.
   final List<Player> opponents;
+
+  /// Ödül sunucuya ulaşamadığı için kuyruğa alındı mı?
+  ///
+  /// Çevrimdışı bitirilen turda coin rozeti hiç görünmüyordu (rozet yalnız
+  /// miktar sıfırdan büyükse çizilir) ve oyuncu turu boşuna oynadığını
+  /// sanıyordu. Ödül artık kuyrukta beklediği için bunu söylemek doğru:
+  /// kayıp değil, gecikme (2026-07-26).
+  final bool rewardQueued;
   final bool practice;
   final bool dailyQuiz;
   final String? contestId;
@@ -798,6 +807,35 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                       ),
                                   ],
                                 ),
+                                // Ödül kuyrukta bekliyorsa bunu söyle.
+                                // Rozet yalnız miktar sıfırdan büyükse
+                                // çizildiği için çevrimdışı turda ekranda
+                                // hiçbir iz kalmıyor ve oyuncu turu boşuna
+                                // oynadığını sanıyordu (2026-07-26).
+                                if (widget.rewardQueued &&
+                                    coinsAwarded <= 0) ...[
+                                  const SizedBox(height: AppSpacing.sm),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        AppIcons.cloud,
+                                        size: 14,
+                                        color: Colors.white70,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Flexible(
+                                        child: Text(
+                                          context.t(K.rewardPending),
+                                          textAlign: TextAlign.center,
+                                          style: AppTypography.caption.copyWith(
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                                 const SizedBox(height: AppSpacing.md),
                                 Divider(
                                   color: Colors.white.withValues(alpha: 0.15),

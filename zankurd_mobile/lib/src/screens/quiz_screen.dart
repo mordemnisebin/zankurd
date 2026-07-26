@@ -1166,12 +1166,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   /// sessizce kayboluyordu — XP aynı durumda kuyruğa giriyordu, coin
   /// girmiyordu. Kuyruğa giren miktar değil turun olgularıdır; ödülü yine
   /// sunucu hesaplar (2026-07-26).
+  /// Son turda ödül kuyruğa alındı mı? Sonuç ekranı bunu oyuncuya söyler.
+  bool _rewardQueued = false;
+
   Future<int> _claimCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
   }) async {
+    _rewardQueued = false;
     if (widget.practice) return 0;
     var amount = 0;
     try {
@@ -1186,6 +1190,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       ErrorReporter.record(error, stack, reason: 'awardQuizCoins failed');
     }
     if (amount <= 0) {
+      _rewardQueued = true;
       SyncManager.instance.queueQuizReward(
         score: score,
         correctCount: correctCount,
@@ -1233,6 +1238,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           bestStreak: bestStreak,
           answerRecords: answerRecords,
           coinsAwarded: coinsAwarded,
+          rewardQueued: _rewardQueued,
           opponents: livePlayers.where((p) => p.name != _myName).toList(),
           practice: widget.practice,
           dailyQuiz: widget.dailyQuiz,
@@ -1472,6 +1478,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             bestStreak: bestStreak,
             answerRecords: answerRecords,
             coinsAwarded: coinsAwarded,
+            rewardQueued: _rewardQueued,
             opponents: widget.is1v1 && widget.room.id != null
                 ? livePlayers.where((p) => p.name != _myName).toList()
                 : (_botRace?.toPlayers() ?? const []),
