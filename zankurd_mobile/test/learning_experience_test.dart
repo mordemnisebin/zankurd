@@ -146,14 +146,21 @@ void main() {
     await tester.pump(const Duration(milliseconds: 1600));
   }
 
-  testWidgets('öğrenme akışında cevaptan sonra açıklama gösterilir', (
+  // 2026-07-26: kural tersine döndü. Açıklama artık **hiçbir modda** cevabın
+  // hemen altında gösterilmez; tur sırasında yalnız doğru cevap görünür,
+  // açıklamaların tamamı sonuç ekranında bir arada gelir. Uygulama sahibi
+  // bunu birkaç kez sorun olarak bildirdi: şık işaretlenir işaretlenmez
+  // altında paragraf açılıyor ve turun ritmi kesiliyordu.
+  testWidgets('öğrenme akışında açıklama cevabın altında açılmaz', (
     tester,
   ) async {
     await answerFirst(tester, QuizExperience.learning);
-    expect(find.text('Bu acikllamanin gorunmesi gerekir.'), findsOneWidget);
+    expect(find.text('Bu acikllamanin gorunmesi gerekir.'), findsNothing);
+    // Doğru cevap yine anında görünür.
+    expect(find.text('Doğru cevap'), findsOneWidget);
   });
 
-  testWidgets('yarışma akışında açıklama gösterilmez', (tester) async {
+  testWidgets('yarışma akışında da açıklama gösterilmez', (tester) async {
     await answerFirst(tester, QuizExperience.competition);
     expect(find.text('Bu acikllamanin gorunmesi gerekir.'), findsNothing);
   });

@@ -24,6 +24,7 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/wildcard.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../services/analytics_service.dart';
 import '../services/tts_service.dart';
 import 'quiz/word_ordering_widget.dart';
@@ -202,6 +203,37 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   // Quiz tutorial coach mark hedef anahtarları
   final GlobalKey _timerTargetKey = GlobalKey();
   final GlobalKey _answerAreaKey = GlobalKey();
+
+  /// Doğru şıkkın karosu. Cevap açıklandığında [_revealCorrectAnswer] bunu
+  /// görünür alana kaydırır.
+  final GlobalKey _correctAnswerKey = GlobalKey();
+
+  /// Cevap açıklandıktan sonra doğru şıkkı görünür alana getirir.
+  ///
+  /// Uzun şıklarda (tanım cümlesi biçiminde seçenekler) doğru cevap
+  /// aksiyon barının altında kırpılı kalıyordu; kullanıcı yanlış yaptığında
+  /// doğrusunu göremediği için tur öğretici olmaktan çıkıyordu
+  /// (2026-07-25 canlı denetimi).
+  void _revealCorrectAnswer() {
+    if (isFlutterTestEnvironment) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final target = _correctAnswerKey.currentContext;
+      if (target == null) return;
+      Scrollable.ensureVisible(
+        target,
+        duration: const Duration(milliseconds: 320),
+        curve: Curves.easeOutCubic,
+        // Öğrenme akışında doğru şıkkın hemen altında açıklama kutusu
+        // belirir ve asıl öğretici içerik odur; karo yukarı alınarak
+        // açıklama da aynı ekranda kalır. Yarışma akışında açıklama yok,
+        // bu yüzden karo daha rahat bir konumda ortalanır.
+        alignment: _isLearningExperience ? 0.12 : 0.35,
+        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
+      );
+    });
+  }
+
   final GlobalKey _comboKey = GlobalKey();
   final GlobalKey _wildcardKey = GlobalKey();
   final GlobalKey _nextButtonKey = GlobalKey();
@@ -220,7 +252,15 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _isKu = context.langProvider.isKu;
-    _questions = List.of(widget.questions);
+    // Sorular tura girerken bir kez seçili dile yansıtılır. Yansıtma tur
+    // başında yapılır, her karede değil: dil tur ortasında değişirse
+    // soruların yarısı bir dilde yarısı ötekinde kalırdı.
+    //
+    // Çevirisi olmayan sorular Kurmancî kalır — banka kademeli çevriliyor
+    // ve eksik çeviri, boş ekrandan iyidir (bkz. QuizQuestion.localized).
+    _questions = [
+      for (final question in widget.questions) question.localized(isKu: _isKu),
+    ];
     _questionVisualReady = _questions.isEmpty || !_questions.first.hasImage;
     if (!_questionVisualReady) {
       // Görsel yükleme kapısı için emniyet supabı: ağ askıda kalır veya
@@ -700,28 +740,29 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         // başlatmamıştı, ders başlatmıştı.
         title: Text(
           _isLearningExperience
-              ? context.s('Ji dersê derkevî?', 'Dersten çıkılsın mı?')
-              : context.s('Ji pêşbirkê derkevî?', 'Yarıştan çıkılsın mı?'),
+              ? context.t(K.leaveLessonQ)
+              : context.t(K.leaveRaceQ),
         ),
         content: Text(
           _isLearningExperience
-              ? context.s(
-                  'Pêşketina te ya vê dersê winda dibe.',
-                  'Bu dersteki ilerlemen kaybolur.',
-                )
-              : context.s(
-                  'Pêşketina te ya vê pêşbirkê winda dibe.',
-                  'Bu yarıştaki ilerlemen kaybolur.',
-                ),
+              ? context.t(K.leaveLessonBody)
+              : context.t(K.leaveRaceBody),
         ),
+        // Vurgu güvenli eylemdedir. Önceden "Çık" dolgulu birincil buton,
+        // "Devam Et" ise düz metindi: ilerlemeyi silen yıkıcı eylem, göz
+        // en çok oraya gittiği için varsayılan gibi duruyordu
+        // (2026-07-25 canlı denetimi).
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(context.s('Bidomîne', 'Devam Et')),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+            ),
+            child: Text(context.t(K.leaveAction)),
           ),
           FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(context.s('Derkeve', 'Çık')),
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(context.t(K.continueAction)),
           ),
         ],
       ),
@@ -742,10 +783,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             child: Padding(
               padding: const EdgeInsets.all(24),
               child: Text(
-                context.s(
-                  'Pirs nehatin barkirin. Ji kerema xwe dîsa biceribîne.',
-                  'Sorular yüklenemedi. Lütfen tekrar dene.',
-                ),
+                context.t(K.questionsLoadFailed),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -767,22 +805,22 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           title: Text(
             widget.room.id == null
                 ? (widget.room.category.isEmpty
-                      ? context.s('Pêşbirk', 'Yarışma')
+                      ? context.t(K.raceWord)
                       : CategoryNames.localized(
                           widget.room.category,
                           context.isKu,
                         ))
-                : '${context.s('Ode', 'Oda')} ${widget.room.code}',
+                : '${context.t(K.roomWord)} ${widget.room.code}',
           ),
           actions: [
             IconButton(
               onPressed: _toggleFavorite,
-              tooltip: context.s('Tomar bike', 'Kaydet'),
+              tooltip: context.t(K.save),
               icon: Icon(favorite ? AppIcons.bookmark : AppIcons.bookmark),
             ),
             IconButton(
               onPressed: _reportQuestion,
-              tooltip: context.s('Raporte bike', 'Bildir'),
+              tooltip: context.t(K.reportAction),
               icon: const Icon(AppIcons.triangleExclamation),
             ),
           ],
@@ -1307,6 +1345,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           _startOpponentWaitTimer();
         }
       });
+      _revealCorrectAnswer();
       _checkMultiplayerSync();
       // Altın kademe anı: ×10 seriye özel kutlama sesi (yeni asset yok).
       if (isCorrect && streak == 10 && mounted) {
@@ -1321,15 +1360,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           _suspense = false;
         });
         _timerController.forward();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              _isKu
-                  ? 'Bersiv nehat şandin. Ji kerema xwe dîsa biceribîne.'
-                  : 'Cevap gönderilemedi. Lütfen yeniden deneyin.',
-            ),
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.answerSendFailed))));
         return;
       }
       // Fallback local logic if network fails during answer submit
@@ -1374,6 +1407,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           _startOpponentWaitTimer();
         }
       });
+      _revealCorrectAnswer();
       _checkMultiplayerSync();
       if (correct && streak == 10 && mounted) {
         context.read<SoundProvider>().playWin();
@@ -1521,9 +1555,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            saved
-                ? context.s('Pirs hat tomarkirin.', 'Soru kaydedildi.')
-                : context.s('Tomar hate rakirin.', 'Kayıt kaldırıldı.'),
+            saved ? context.t(K.questionSaved) : context.t(K.saveRemoved),
           ),
         ),
       );
@@ -1531,19 +1563,15 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       ErrorReporter.record(error, stack, reason: 'toggleFavorite failed');
       if (!mounted) return;
       setState(() => favorite = !nextFavorite);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s('Pirs nehate tomarkirin.', 'Soru kaydedilemedi.'),
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.questionSaveFailed))));
     }
   }
 
   Future<void> _reportQuestion() async {
     final controller = TextEditingController(
-      text: context.s('Şaşiya bersiv an naverokê', 'Cevap veya içerik hatası'),
+      text: context.t(K.reportReasonDefault),
     );
     final reason = await showDialog<String>(
       context: context,
@@ -1554,24 +1582,24 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             borderRadius: BorderRadius.circular(16),
             side: BorderSide(color: AppTheme.borderColor(context)),
           ),
-          title: Text(context.s('Pirsê ragihîne', 'Soruyu bildir')),
+          title: Text(context.t(K.reportQuestion)),
           content: TextField(
             controller: controller,
             minLines: 2,
             maxLines: 4,
             decoration: InputDecoration(
-              labelText: context.s('Sedem', 'Neden'),
+              labelText: context.t(K.reasonLabel),
               border: const OutlineInputBorder(),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(context.s('Betal bike', 'Vazgeç')),
+              child: Text(context.t(K.cancel)),
             ),
             FilledButton(
               onPressed: () => Navigator.of(dialogContext).pop(controller.text),
-              child: Text(context.s('Bişîne', 'Gönder')),
+              child: Text(context.t(K.sendAction)),
             ),
           ],
         );
@@ -1583,23 +1611,15 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     try {
       await widget.repository.reportQuestion(question, reason);
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s('Rapor hat şandin.', 'Soru raporu gönderildi.'),
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.reportSent))));
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'reportQuestion failed');
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.s('Rapor nehat şandin.', 'Rapor gönderilemedi.'),
-          ),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.reportFailed))));
     }
   }
 }

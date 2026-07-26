@@ -200,7 +200,6 @@ void main() {
           room: repository.createRoom(),
           questions: [question],
           enableTimer: false,
-          // Tur içi açıklama artık yalnız Öğrenme Bölgesi'nde gösterilir.
           experience: QuizExperience.learning,
         ),
       ),
@@ -211,6 +210,10 @@ void main() {
     await tester.pump(const Duration(seconds: 3));
     await tester.pumpAndSettle();
 
-    expect(find.text('Açıklama · Zana'), findsOneWidget);
+    // 2026-07-26: açıklama başlığı tur içinden kaldırıldı; cevaptan hemen
+    // sonra yalnız doğru cevap gösterilir. Açıklamalar sonuç ekranında
+    // toplanır (bkz. `_AllExplanationsCard`).
+    expect(find.text('Açıklama · Zana'), findsNothing);
+    expect(find.text('Doğru cevap'), findsOneWidget);
   });
 }

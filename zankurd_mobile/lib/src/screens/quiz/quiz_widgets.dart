@@ -31,7 +31,7 @@ class _LiveScoreboard extends StatelessWidget {
               const Icon(AppIcons.chartColumn, color: AppTheme.gold),
               const SizedBox(width: AppSpacing.xs),
               Text(
-                context.s('Skora zindî', 'Canlı skor'),
+                context.t(K.liveScore),
                 style: AppTypography.heading2.copyWith(
                   color: AppTheme.textPrimaryColor(context),
                 ),
@@ -255,7 +255,7 @@ class _QuestionImageFallback extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            context.s('Wêne nehat barkirin', 'Görsel yüklenemedi'),
+            context.t(K.imageLoadFailed),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTypography.caption.copyWith(
@@ -284,6 +284,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     this.opponentSelectedAnswers,
     this.isCompact = false,
     this.answerAreaKey,
+    this.correctAnswerKey,
     this.onListen,
     this.canListen = false,
   });
@@ -302,6 +303,12 @@ class _QuestionTextAndAnswers extends StatelessWidget {
 
   /// Quiz turu için cevap alanını hedef gösteren GlobalKey.
   final GlobalKey? answerAreaKey;
+
+  /// Doğru şıkkın karosuna takılan GlobalKey. Cevap açıklandıktan sonra
+  /// quiz ekranı bu karoyu görünür alana kaydırır: uzun şıklarda doğru
+  /// cevap ekranın altında kırpılı kalıyor ve kullanıcı yanlış yaptığında
+  /// doğrusunu hiç göremiyordu (2026-07-25 canlı denetimi).
+  final GlobalKey? correctAnswerKey;
 
   /// Gerilim tutuşu: cevap seçildi ama sonuç henüz açıklanmadı.
   /// True iken doğru/yanlış renkleri gizlenir; seçilen şık "kontrol
@@ -328,7 +335,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                 promptText,
                 style: AppTypography.heading2.copyWith(
                   color: AppTheme.textPrimaryColor(context),
-                  fontSize: promptFontSize,
+                  fontSize: _adaptivePromptSize(promptText, promptFontSize),
                 ),
               ),
             ),
@@ -368,6 +375,15 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                   child: IgnorePointer(
                     ignoring: hiddenAnswers.contains(answer),
                     child: Padding(
+                      // Anahtar yalnız cevap verilmiş sorunun doğru şıkkına
+                      // takılır. [AnimatedSwitcher] geçiş boyunca eski ve
+                      // yeni paneli birlikte yaşatır; `answered` koşulu
+                      // olmadan iki panelde aynı GlobalKey bulunur ve
+                      // duplicate-GlobalKey hatası oluşur. Gelen soruda
+                      // `answered` daima false olduğu için çakışma olmaz.
+                      key: answered && answer == question.correctAnswer
+                          ? correctAnswerKey
+                          : null,
                       padding: EdgeInsets.only(
                         bottom: isCompact ? AppSpacing.xxs : AppSpacing.xs,
                       ),
@@ -405,6 +421,21 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  /// Soru metninin uzunluğuna göre punto.
+  ///
+  /// Sabit 25pt, uzun sorularda ekranın yarısını yiyordu: tanım biçimli
+  /// sorular 5-6 satıra çıkıyor, şıklarla birlikte ekrana sığmıyor ve
+  /// kullanıcı cevap vermek için kaydırmak zorunda kalıyordu (2026-07-25
+  /// canlı denetimi). Kısa sorular vurgulu puntosunu korur; uzunlar
+  /// okunabilirliğin altına inmeden küçülür.
+  static double _adaptivePromptSize(String prompt, double base) {
+    final length = prompt.characters.length;
+    if (length <= 60) return base;
+    if (length <= 110) return base - 3;
+    if (length <= 160) return base - 5;
+    return base - 6;
   }
 
   /// Tek bir şık butonu üretir; gerilim tutuşu sırasında doğru/yanlış
@@ -475,7 +506,7 @@ class _ScoreHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _ScoreChip(
-            tooltip: context.s('Pûan', 'Puan'),
+            tooltip: context.t(K.scoreWord),
             icon: AppIcons.trophy,
             iconColor: AppTheme.gold,
             value: '$score',
@@ -491,7 +522,7 @@ class _ScoreHeader extends StatelessWidget {
             builder: (context, scale, child) =>
                 Transform.scale(scale: scale, child: child),
             child: _ScoreChip(
-              tooltip: context.s('Rêz', 'Seri'),
+              tooltip: context.t(K.streakWord),
               icon: streak >= 2 ? AppIcons.fire : AppIcons.fire,
               iconColor: streak >= 2
                   ? AppTheme.gold
@@ -501,7 +532,7 @@ class _ScoreHeader extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.xs),
           _ScoreChip(
-            tooltip: context.s('Coin', 'Kredi'),
+            tooltip: context.t(K.coinWord),
             icon: AppIcons.coins,
             iconColor: AppTheme.gold,
             value: '$coinBalance',
@@ -826,6 +857,16 @@ class _TinyTag extends StatelessWidget {
 
 // ─── Cevap Açıklama Kutusu (Explanation Box) ──────────────────────────────────
 
+/// Cevaptan hemen sonra **yalnız doğru cevabı** gösteren kutu.
+///
+/// Burada bir zamanlar açıklama metni de duruyordu. Uygulama sahibinin
+/// tekrarlanan geri bildirimi (2026-07-26): şık işaretlenir işaretlenmez
+/// altında bir paragraf açılıyor, tur duruyor ve okuma yükü akışı kesiyordu.
+/// Karar net: tur sırasında yalnız doğru cevap görünür; açıklamaların
+/// tamamı sorular bittikten sonra sonuç ekranında bir arada gelir
+/// (bkz. `_AllExplanationsCard`).
+///
+/// Şablon/boş açıklamada kutu yine hiç açılmaz.
 class _ExplanationBox extends StatelessWidget {
   const _ExplanationBox({
     required this.question,
@@ -839,10 +880,7 @@ class _ExplanationBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Şablon/boş açıklamada kutu hiç açılmaz (getLocalizedExplanation '' döner).
     final explanationText = question.getLocalizedExplanation(isKu);
-    final tts = TtsService.instance;
-    final showListenButton = tts != null && tts.isKurdishAvailable;
     return AnimatedSize(
       duration: const Duration(milliseconds: 350),
       curve: Curves.easeOutCubic,
@@ -877,87 +915,39 @@ class _ExplanationBox extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxHeight: 200),
-                  child: SingleChildScrollView(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          AppIcons.lightbulb,
-                          color: AppTheme.correct,
-                          size: 22,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    isKu ? 'Bersivên rast' : 'Doğru cevap',
-                                    style: AppTypography.caption.copyWith(
-                                      color: AppTheme.correct,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                  if (showListenButton)
-                                    _ExplanationListenButton(
-                                      text: explanationText,
-                                      tts: tts,
-                                    ),
-                                ],
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                question.correctAnswer,
-                                style: AppTypography.bodyLarge.copyWith(
-                                  color: AppTheme.textPrimaryColor(context),
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                              const SizedBox(height: AppSpacing.sm),
-                              Row(
-                                children: [
-                                  Icon(
-                                    AppIcons.bookOpen,
-                                    size: 14,
-                                    color: AppTheme.textSubColor(context),
-                                  ),
-                                  const SizedBox(width: 6),
-                                  Flexible(
-                                    child: Text(
-                                      isKu
-                                          ? 'Şîrove · Zana'
-                                          : 'Açıklama · Zana',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AppTypography.caption.copyWith(
-                                        color: AppTheme.textSubColor(context),
-                                        fontWeight: FontWeight.w800,
-                                        letterSpacing: 0.3,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                explanationText,
-                                style: AppTypography.bodyMedium.copyWith(
-                                  color: AppTheme.textSubColor(context),
-                                  height: 1.4,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      AppIcons.lightbulb,
+                      color: AppTheme.correct,
+                      size: 22,
                     ),
-                  ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            isKu ? 'Bersiva rast' : 'Doğru cevap',
+                            style: AppTypography.caption.copyWith(
+                              color: AppTheme.correct,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            question.correctAnswer,
+                            style: AppTypography.bodyLarge.copyWith(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             )
@@ -965,63 +955,6 @@ class _ExplanationBox extends StatelessWidget {
     );
   }
 }
-
-/// Şirove (açıklama) metnini TTS ile seslendiren küçük buton.
-/// TTS servisinin `speakingNotifier` değerini dinleyerek ikon durumunu
-/// günceller. Bu metni konuşuyorsa altın renk + `volumeXmark`, aksi
-/// halde `volumeHigh` ikonu gösterilir.
-class _ExplanationListenButton extends StatelessWidget {
-  const _ExplanationListenButton({required this.text, required this.tts});
-
-  final String text;
-  final TtsService tts;
-
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<bool>(
-      valueListenable: tts.speakingNotifier,
-      builder: (context, speaking, _) {
-        // Sadece bu açıklama seslendiriliyorsa "aktif" göstermek için
-        // basit bir referans tutulamaz (singleton); bu yüzden konuşma
-        // aktifken buton genel olarak "durdur" durumunda görünür.
-        return Semantics(
-          button: true,
-          label: speaking
-              ? context.s('Rawestîne', 'Durdur')
-              : context.s('Şîroveyê bibe', 'Açıklamayı dinle'),
-          excludeSemantics: true,
-          child: Tooltip(
-            message: speaking
-                ? context.s('Rawestîne', 'Durdur')
-                : context.s('Şîroveyê bibe', 'Açıklamayı dinle'),
-            child: InkWell(
-              onTap: () {
-                if (speaking) {
-                  tts.stop();
-                } else {
-                  tts.speak(text);
-                }
-              },
-              borderRadius: BorderRadius.circular(16),
-              child: Padding(
-                padding: const EdgeInsets.all(4),
-                child: Icon(
-                  speaking ? AppIcons.volumeXmark : AppIcons.volumeHigh,
-                  size: 18,
-                  color: speaking
-                      ? AppTheme.gold
-                      : AppTheme.textSubColor(context),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-// ─── Multiplayer Bekleme Overlay ────────────────────────────────────────────
 
 class _MultiplayerWaitingOverlay extends StatelessWidget {
   const _MultiplayerWaitingOverlay({required this.isKu});
@@ -1196,10 +1129,10 @@ class _ListenButton extends StatelessWidget {
       builder: (context, isListening, _) {
         return Semantics(
           button: true,
-          label: context.s('Sorê bixwîne', 'Soruyu dinle'),
+          label: context.t(K.listenQuestion),
           excludeSemantics: true,
           child: Tooltip(
-            message: context.s('Sorê bixwîne', 'Soruyu dinle'),
+            message: context.t(K.listenQuestion),
             child: InkWell(
               onTap: onTap,
               borderRadius: BorderRadius.circular(20),

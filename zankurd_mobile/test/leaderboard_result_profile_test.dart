@@ -379,10 +379,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Doğru cevap'), findsOneWidget);
-    // UI override haritasını kullanır (şablon explanation değil).
+    // 2026-07-26: açıklama metni tur içinde gösterilmez; sonuç ekranında
+    // hepsi bir arada gelir.
     expect(
       find.textContaining(question.getLocalizedExplanation(false)),
-      findsOneWidget,
+      findsNothing,
     );
   });
 

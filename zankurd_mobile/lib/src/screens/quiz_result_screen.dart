@@ -12,12 +12,16 @@ import '../data/zankurd_repository.dart';
 import '../data/sync_manager.dart';
 import '../utils/error_reporter.dart';
 import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../providers/child_safety_provider.dart';
 import '../services/premium_service.dart';
 import '../models/achievement.dart';
 import '../models/answer_record.dart';
+import '../models/quiz_question.dart';
 import '../models/player.dart';
 import '../models/room.dart';
+import '../providers/reduced_motion_provider.dart';
+import '../widgets/kilim_reveal.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
@@ -137,27 +141,22 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       return null;
     }
     if (!mounted || balance < _streakFreezeCost) return null;
-    final ku = context.isKu;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(ku ? 'Zincîra te dişkê!' : 'Serin kırılıyor!'),
+        title: Text(context.t(K.streakBreaking)),
         content: Text(
-          ku
-              ? 'Zincîra te ya rojane dê sifir bibe. Bi $_streakFreezeCost coin biparêze?'
-              : 'Günlük serin sıfırlanacak. $_streakFreezeCost coin ile koru?',
+          context.t(K.streakFreezeAsk, {'cost': '$_streakFreezeCost'}),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(ku ? 'Na, bila here' : 'Hayır, sıfırlansın'),
+            child: Text(context.t(K.streakLetGo)),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
             child: Text(
-              ku
-                  ? 'Biparêze ($_streakFreezeCost)'
-                  : 'Koru ($_streakFreezeCost)',
+              context.t(K.streakFreezeAction, {'cost': '$_streakFreezeCost'}),
             ),
           ),
         ],
@@ -515,11 +514,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     final headerTitle = is1v1
         ? (isWinner
-              ? context.s('Tu bi ser ketî!', 'Kazandın!')
+              ? context.t(K.youWon)
               : isDraw
-              ? context.s('Beramberî!', 'Berabere!')
-              : context.s('Te winda kir...', 'Kaybettin...'))
-        : context.s('Pêşbirk qediya', 'Yarış tamamlandı');
+              ? context.t(K.draw)
+              : context.t(K.youLost))
+        : context.t(K.raceFinished);
 
     final headerIcon = is1v1
         ? (isWinner
@@ -554,7 +553,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             ),
           ),
         ),
-        title: Text(context.s('Encam', 'Sonuç')),
+        title: Text(context.t(K.resultTitle)),
       ),
       body: Container(
         color: AppTheme.bgOf(context),
@@ -571,246 +570,273 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(AppRadius.card),
-                    child: Container(
-                      key: const ValueKey('result-score-header'),
-                      decoration: BoxDecoration(
-                        gradient: headerGradient,
-                        borderRadius: BorderRadius.circular(AppRadius.card),
-                        border: Border.all(
-                          color: borderColor.withValues(alpha: 0.35),
-                          width: 1.0,
+                    // Kutlama katmanı: kilim dokusu başlığın arkasında
+                    // merkezden dışa açılır.
+                    //
+                    // Tek kutlama kanalı konfetiydi; konfeti her uygulamada
+                    // aynıdır ve ZanKurd'a ait bir şey söylemez (2026-07-25
+                    // görsel denetimi). Marka dili zaten kilim motifine
+                    // dayanıyor — kutlama da aynı dili konuşur.
+                    //
+                    // Yalnız kutlanacak bir sonuç varken çizilir: 1v1'de
+                    // galibiyet, solo turda en az yarısı doğru. Kaybedilen
+                    // turda kutlama deseni açmak, sonucu yanlış okur.
+                    child: KilimReveal(
+                      active: is1v1
+                          ? isWinner
+                          : (totalQuestions > 0 &&
+                                correctCount * 2 >= totalQuestions),
+                      // Sağlayıcı yoksa (ör. bu ekranı izole eden widget
+                      // testleri) kutlama sessizce animasyonsuz çizilir.
+                      // Dekoratif bir katman, barındırıldığı ağaç eksik
+                      // diye ekranı çökertmemeli.
+                      reducedMotion:
+                          context
+                              .watch<ReducedMotionProvider?>()
+                              ?.reduceMotion ??
+                          false,
+                      color: kilimRevealColorFor(context, onBrand: !isDraw),
+                      child: Container(
+                        key: const ValueKey('result-score-header'),
+                        decoration: BoxDecoration(
+                          gradient: headerGradient,
+                          borderRadius: BorderRadius.circular(AppRadius.card),
+                          border: Border.all(
+                            color: borderColor.withValues(alpha: 0.35),
+                            width: 1.0,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.08),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.08),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      padding: const EdgeInsets.fromLTRB(
-                        AppSpacing.lg,
-                        AppSpacing.lg,
-                        AppSpacing.lg,
-                        AppSpacing.md,
-                      ),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Positioned(
-                            right: -8,
-                            top: -38,
-                            child: IgnorePointer(
-                              child: Icon(
-                                headerIcon,
-                                size: 130,
-                                color: Colors.white.withValues(alpha: 0.06),
-                              ),
-                            ),
-                          ),
-                          // 2026-07-23 M33: Roj maskotu sonuç ekranında hiç
-                          // yoktu — marka kimliği en duygusal andan
-                          // (skoru görme) eksikti. Skora göre ruh hâli
-                          // değişir; yoğun bilgi sütununu bozmasın diye
-                          // sol üst köşede küçük bir rozet olarak durur.
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: IgnorePointer(
-                              child: Opacity(
-                                opacity: 0.85,
-                                child: RojMascot(
-                                  size: 36,
-                                  mood: accuracy >= 80
-                                      ? RojMood.celebrate
-                                      : accuracy >= 40
-                                      ? RojMood.happy
-                                      : RojMood.thinking,
+                        padding: const EdgeInsets.fromLTRB(
+                          AppSpacing.lg,
+                          AppSpacing.lg,
+                          AppSpacing.lg,
+                          AppSpacing.md,
+                        ),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Positioned(
+                              right: -8,
+                              top: -38,
+                              child: IgnorePointer(
+                                child: Icon(
+                                  headerIcon,
+                                  size: 130,
+                                  color: Colors.white.withValues(alpha: 0.06),
                                 ),
                               ),
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              // Header row: icon + title
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 32,
-                                    height: 32,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white.withValues(
-                                        alpha: 0.14,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                        AppRadius.xs,
-                                      ),
-                                      border: Border.all(
-                                        color: Colors.white.withValues(
-                                          alpha: 0.22,
-                                        ),
-                                      ),
-                                    ),
-                                    child: Icon(
-                                      headerIcon,
-                                      color: Colors.white,
-                                      size: 16,
-                                    ),
+                            // 2026-07-23 M33: Roj maskotu sonuç ekranında hiç
+                            // yoktu — marka kimliği en duygusal andan
+                            // (skoru görme) eksikti. Skora göre ruh hâli
+                            // değişir; yoğun bilgi sütununu bozmasın diye
+                            // sol üst köşede küçük bir rozet olarak durur.
+                            Positioned(
+                              left: 0,
+                              top: 0,
+                              child: IgnorePointer(
+                                child: Opacity(
+                                  opacity: 0.85,
+                                  child: RojMascot(
+                                    size: 36,
+                                    mood: accuracy >= 80
+                                        ? RojMood.celebrate
+                                        : accuracy >= 40
+                                        ? RojMood.happy
+                                        : RojMood.thinking,
                                   ),
-                                  const SizedBox(width: AppSpacing.xs),
-                                  Expanded(
-                                    child: Text(
-                                      headerTitle.toUpperCase(),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AppTypography.caption.copyWith(
-                                        color: Colors.white.withValues(
-                                          alpha: 0.82,
-                                        ),
-                                        letterSpacing: 1.4,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                              const SizedBox(height: AppSpacing.sm),
-                              // Mockup 8: doğruluk kademesine göre 3 yıldız
-                              // (bu boşluk daha önce boştu, net yükseklik
-                              // artışı yok — ~450px doğrulanmış).
-                              // Yıldızlar turuncu hero üzerinde duruyor:
-                              // altın (#E7B53C) turuncuda ~1.3:1, boş yıldız
-                              // beyaz@0.18 ile görünmez haldeydi — skorun en
-                              // özet göstergesi okunmuyordu (2026-07-22 UX
-                              // denetimi). Koyu yarı saydam bir hap zemin
-                              // hem doluyu hem boşu ayrıştırıyor.
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.heroScrim(),
-                                  borderRadius: BorderRadius.circular(
-                                    AppRadius.pill,
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // Header row: icon + title
+                                Row(
                                   children: [
-                                    for (var i = 0; i < 3; i++)
-                                      Icon(
-                                        AppIcons.star,
-                                        size: i == 1 ? 30 : 22,
-                                        color:
-                                            i <
-                                                (accuracy >= 80
-                                                    ? 3
-                                                    : accuracy >= 50
-                                                    ? 2
-                                                    : 1)
-                                            ? AppTheme.gold
-                                            : Colors.white.withValues(
-                                                alpha: 0.32,
-                                              ),
+                                    Container(
+                                      width: 32,
+                                      height: 32,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.14,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          AppRadius.xs,
+                                        ),
+                                        border: Border.all(
+                                          color: Colors.white.withValues(
+                                            alpha: 0.22,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        headerIcon,
+                                        color: Colors.white,
+                                        size: 16,
+                                      ),
+                                    ),
+                                    const SizedBox(width: AppSpacing.xs),
+                                    Expanded(
+                                      child: Text(
+                                        headerTitle.toUpperCase(),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTypography.caption.copyWith(
+                                          color: Colors.white.withValues(
+                                            alpha: 0.82,
+                                          ),
+                                          letterSpacing: 1.4,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: AppSpacing.sm),
+                                // Mockup 8: doğruluk kademesine göre 3 yıldız
+                                // (bu boşluk daha önce boştu, net yükseklik
+                                // artışı yok — ~450px doğrulanmış).
+                                // Yıldızlar turuncu hero üzerinde duruyor:
+                                // altın (#E7B53C) turuncuda ~1.3:1, boş yıldız
+                                // beyaz@0.18 ile görünmez haldeydi — skorun en
+                                // özet göstergesi okunmuyordu (2026-07-22 UX
+                                // denetimi). Koyu yarı saydam bir hap zemin
+                                // hem doluyu hem boşu ayrıştırıyor.
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.heroScrim(),
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadius.pill,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      for (var i = 0; i < 3; i++)
+                                        Icon(
+                                          AppIcons.star,
+                                          size: i == 1 ? 30 : 22,
+                                          color:
+                                              i <
+                                                  (accuracy >= 80
+                                                      ? 3
+                                                      : accuracy >= 50
+                                                      ? 2
+                                                      : 1)
+                                              ? AppTheme.gold
+                                              : Colors.white.withValues(
+                                                  alpha: 0.32,
+                                                ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: AppSpacing.xxs),
+                                // BIG score number
+                                Text(
+                                  '$score',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.display.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 72,
+                                    height: 0.95,
+                                  ),
+                                ),
+                                const SizedBox(height: AppSpacing.xxs),
+                                // Category & accuracy on one line
+                                Text(
+                                  '${CategoryNames.localized(room.category, context.isKu)} · %$accuracy ${context.t(K.accuracyLower)}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.bodyMedium.copyWith(
+                                    color: Colors.white.withValues(alpha: 0.72),
+                                    fontSize: 13,
+                                  ),
+                                ),
+                                const SizedBox(height: AppSpacing.md),
+                                // Reward chips row
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    if (coinsAwarded > 0)
+                                      _ResultRewardChip(
+                                        icon: AppIcons.coins,
+                                        label: '+${coinsAwarded}c',
+                                        color: AppTheme.gold,
+                                      ),
+                                    if (coinsAwarded > 0 && _earnedXP > 0)
+                                      const SizedBox(width: 8),
+                                    if (_earnedXP > 0)
+                                      _ResultRewardChip(
+                                        icon: AppIcons.bolt,
+                                        label: '+$_earnedXP XP',
+                                        // Koyu sonuç kartında accent (koyu
+                                        // yeşil) soluk kalıyordu; kazanım
+                                        // hissi için aydınlatılmış yeşil.
+                                        color: Color.alphaBlend(
+                                          Colors.white.withValues(alpha: 0.35),
+                                          AppTheme.accent,
+                                        ),
                                       ),
                                   ],
                                 ),
-                              ),
-                              const SizedBox(height: AppSpacing.xxs),
-                              // BIG score number
-                              Text(
-                                '$score',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTypography.display.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 72,
-                                  height: 0.95,
+                                const SizedBox(height: AppSpacing.md),
+                                Divider(
+                                  color: Colors.white.withValues(alpha: 0.15),
+                                  height: 1,
                                 ),
-                              ),
-                              const SizedBox(height: AppSpacing.xxs),
-                              // Category & accuracy on one line
-                              Text(
-                                '${CategoryNames.localized(room.category, context.isKu)} · %$accuracy ${context.s('rastbûn', 'doğruluk')}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTypography.bodyMedium.copyWith(
-                                  color: Colors.white.withValues(alpha: 0.72),
-                                  fontSize: 13,
-                                ),
-                              ),
-                              const SizedBox(height: AppSpacing.md),
-                              // Reward chips row
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  if (coinsAwarded > 0)
-                                    _ResultRewardChip(
-                                      icon: AppIcons.coins,
-                                      label: '+${coinsAwarded}c',
-                                      color: AppTheme.gold,
+                                const SizedBox(height: AppSpacing.sm),
+                                // Compact stats row: ✅ 17  ❌ 3  ⏱ 0  🔥 12
+                                Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: AppSpacing.sm,
+                                  runSpacing: AppSpacing.xs,
+                                  children: [
+                                    _StatPill(
+                                      icon: AppIcons.circleCheck,
+                                      value: '$correctCount',
+                                      label: context.t(K.correct),
+                                      color: AppTheme.correct,
                                     ),
-                                  if (coinsAwarded > 0 && _earnedXP > 0)
-                                    const SizedBox(width: 8),
-                                  if (_earnedXP > 0)
-                                    _ResultRewardChip(
-                                      icon: AppIcons.bolt,
-                                      label: '+$_earnedXP XP',
-                                      // Koyu sonuç kartında accent (koyu
-                                      // yeşil) soluk kalıyordu; kazanım
-                                      // hissi için aydınlatılmış yeşil.
-                                      color: Color.alphaBlend(
-                                        Colors.white.withValues(alpha: 0.35),
-                                        AppTheme.accent,
+                                    _StatPill(
+                                      icon: AppIcons.circleXmark,
+                                      value: '$wrongCount',
+                                      label: context.t(K.wrong),
+                                      color: AppTheme.wrong,
+                                    ),
+                                    if (unanswered > 0)
+                                      _StatPill(
+                                        icon: AppIcons.hourglass,
+                                        value: '$unanswered',
+                                        label: context.t(K.blank),
+                                        color: AppTheme.textMutedColor(context),
                                       ),
-                                    ),
-                                ],
-                              ),
-                              const SizedBox(height: AppSpacing.md),
-                              Divider(
-                                color: Colors.white.withValues(alpha: 0.15),
-                                height: 1,
-                              ),
-                              const SizedBox(height: AppSpacing.sm),
-                              // Compact stats row: ✅ 17  ❌ 3  ⏱ 0  🔥 12
-                              Wrap(
-                                alignment: WrapAlignment.center,
-                                spacing: AppSpacing.sm,
-                                runSpacing: AppSpacing.xs,
-                                children: [
-                                  _StatPill(
-                                    icon: AppIcons.circleCheck,
-                                    value: '$correctCount',
-                                    label: context.s('Rast', 'Doğru'),
-                                    color: AppTheme.correct,
-                                  ),
-                                  _StatPill(
-                                    icon: AppIcons.circleXmark,
-                                    value: '$wrongCount',
-                                    label: context.s('Şaş', 'Yanlış'),
-                                    color: AppTheme.wrong,
-                                  ),
-                                  if (unanswered > 0)
-                                    _StatPill(
-                                      icon: AppIcons.hourglass,
-                                      value: '$unanswered',
-                                      label: context.s('Vala', 'Boş'),
-                                      color: AppTheme.textMutedColor(context),
-                                    ),
-                                  if (bestStreak > 0)
-                                    _StatPill(
-                                      icon: AppIcons.fire,
-                                      value: '$bestStreak',
-                                      label: context.s('Serî', 'Seri'),
-                                      color: AppTheme.gold,
-                                    ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
+                                    if (bestStreak > 0)
+                                      _StatPill(
+                                        icon: AppIcons.fire,
+                                        value: '$bestStreak',
+                                        label: context.t(K.streakLabel),
+                                        color: AppTheme.gold,
+                                      ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -850,10 +876,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  context.s(
-                                    'Seriya rojane: $_dailyStreak roj',
-                                    'Günlük seri: $_dailyStreak gün',
-                                  ),
+                                  context.t(K.dailyStreakDays, {
+                                    'days': '$_dailyStreak',
+                                  }),
                                   style: TextStyle(
                                     color: AppTheme.textPrimaryColor(context),
                                     fontWeight: FontWeight.w700,
@@ -862,10 +887,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  context.s(
-                                    'Sibê jî bilîze û seriyê bidomîne!',
-                                    'Yarın da oyna, seriyi sürdür!',
-                                  ),
+                                  context.t(K.keepStreakTomorrow),
                                   style: TextStyle(
                                     color: AppTheme.textMutedColor(context),
                                     fontSize: 12,
@@ -941,7 +963,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       _ResultSideAction(
                         key: const ValueKey('result-review-button'),
                         icon: AppIcons.squareCheck,
-                        label: context.s('Vekolîn', 'İncele'),
+                        label: context.t(K.review),
                         onTap: answerRecords.isEmpty
                             ? null
                             : () => Navigator.of(context).push(
@@ -959,7 +981,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         _ResultSideAction(
                           key: const ValueKey('result-share-button'),
                           icon: AppIcons.shareNodes,
-                          label: context.s('Parve bike', 'Paylaş'),
+                          label: context.t(K.share),
                           onTap: () => ResultSharer.share(
                             context,
                             isKu: context.isKu,
@@ -993,7 +1015,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             context,
                           ).popUntil((route) => route.isFirst),
                           child: Text(
-                            context.s('Sereke', 'Ana Sayfa'),
+                            context.t(K.home),
                             style: TextStyle(
                               fontSize: 13,
                               color: AppTheme.textSubColor(context),
@@ -1028,10 +1050,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 ),
                           child: Text(
-                            context.s(
-                              'Tenê şaşiyan bibîne',
-                              'Sadece yanlışlar',
-                            ),
+                            context.t(K.onlyWrong),
                             style: TextStyle(
                               fontSize: 12,
                               color: AppTheme.textMutedColor(context),
@@ -1063,7 +1082,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             );
                           },
                           child: Text(
-                            context.s('Tabloya pêşderçûnê', 'Liderlik tablosu'),
+                            context.t(K.leaderboardLink),
                             style: TextStyle(
                               fontSize: 12,
                               color: AppTheme.textMutedColor(context),
@@ -1092,7 +1111,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           ),
                           onPressed: () => ReviewService.openStoreListing(),
                           child: Text(
-                            context.s('Binirxîne', 'Değerlendir'),
+                            context.t(K.rate),
                             style: TextStyle(
                               fontSize: 12,
                               color: AppTheme.textMutedColor(context),
@@ -1103,6 +1122,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       ],
                     ),
                   ),
+                  // Turun bütün açıklamaları en sonda, bir arada.
+                  //
+                  // Eskiden her şıkkın altında tek tek açılıyordu; şık
+                  // işaretlenir işaretlenmez paragraf beliriyor ve turun
+                  // ritmi kesiliyordu (uygulama sahibinin tekrarlanan geri
+                  // bildirimi, 2026-07-26). Kart birincil butonların
+                  // *altında* durur: "Tekrar oyna" uzun bir okuma listesinin
+                  // arkasında kalmamalı.
+                  const SizedBox(height: 20),
+                  _AllExplanationsCard(records: answerRecords),
                 ],
               ),
               if (_showConfetti)
@@ -1138,29 +1167,19 @@ class _RaceStandings extends StatelessWidget {
     // katmanı değil); bu widget "sen" etiketini burada, gösterim anında
     // yerelleştirir — userIdentity'nin ham adı görmezden gelinir.
     final user = (userIdentity ?? const Player(name: '', score: 0, state: ''))
-        .copyWith(
-          name: context.s('Tu', 'Sen'),
-          score: userScore,
-          state: 'Player',
-        );
+        .copyWith(name: context.t(K.you), score: userScore, state: 'Player');
     final standings = [user, ...opponents]
       ..sort((a, b) => b.score.compareTo(a.score));
     final userRank =
         standings.indexWhere((player) => player.state == 'Player') + 1;
     final leader = standings.first;
-    final title = context.s(
-      'Bi reqîban re beramber bike',
-      'Rakiplerle Karşılaştırma',
-    );
+    final title = context.t(K.compareRivals);
     final summary = leader.state == 'Player'
-        ? context.s(
-            'Te yarış di rêza $userRank. de qedand.',
-            'Yarışı $userRank. sırada tamamladın.',
-          )
-        : context.s(
-            '${leader.name} pêşî qediya; tu di rêza $userRank. de yî.',
-            '${leader.name} önde bitirdi; sen $userRank. sıradasın.',
-          );
+        ? context.t(K.finishedAtRank, {'rank': '$userRank'})
+        : context.t(K.leaderFinishedFirst, {
+            'leader': leader.name,
+            'rank': '$userRank',
+          });
 
     return AppPanel(
       color: AppTheme.surfaceHiColor(context),
@@ -1230,7 +1249,7 @@ class _AchievementUnlocks extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  context.s('Rozeta Nû', 'Yeni Rozet'),
+                  context.t(K.newBadge),
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w700,
@@ -1326,6 +1345,13 @@ class _MasteryPromotions extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
+                          // Anahtar tabanlı kayda taşınmadı ve taşınmamalı:
+                          // iki dal yalnız *metin* değil, iki farklı veri
+                          // araması yapıyor — `CategoryNames.localized`
+                          // farklı argümanla, unvan da farklı alandan
+                          // (`titleKu` / `titleTr`) okunuyor. Bu bir çeviri
+                          // değil, dile göre kaynak seçimidir; kayıt defteri
+                          // bunu ifade edemez.
                           ku
                               ? '${CategoryNames.localized(entry.key, true)} — ${entry.value.titleKu}!'
                               : '${CategoryNames.localized(entry.key, false)} — ${entry.value.titleTr}!',
@@ -1336,7 +1362,7 @@ class _MasteryPromotions extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          ku ? 'Unvana nû stend!' : 'Yeni unvan kazandın!',
+                          context.t(K.newTitleEarned),
                           style: TextStyle(
                             color: AppTheme.textMutedColor(context),
                             fontSize: 12,
@@ -1584,6 +1610,146 @@ class _StatPill extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.92),
               fontSize: 11,
               fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Turun bütün açıklamalarını tek kartta toplayan bölüm.
+///
+/// Açıklama eskiden cevaptan hemen sonra sorunun altında açılıyordu.
+/// Uygulama sahibi bunu birkaç kez sorun olarak bildirdi: şık işaretlenir
+/// işaretlenmez altında bir paragraf beliriyor, tur duruyor ve okuma yükü
+/// oyunun ritmini kesiyordu. Karar: tur sırasında yalnız doğru cevap
+/// görünür, açıklamaların tamamı sorular bittiğinde burada bir arada gelir.
+///
+/// Boş ya da şablon açıklamalar hiç listelenmez — `getLocalizedExplanation`
+/// onlar için boş döner ve boş bir satır göstermek, açıklama olmamasından
+/// kötüdür.
+class _AllExplanationsCard extends StatelessWidget {
+  const _AllExplanationsCard({required this.records});
+
+  final List<AnswerRecord> records;
+
+  @override
+  Widget build(BuildContext context) {
+    final isKu = context.isKu;
+    final entries = <({int index, AnswerRecord record, String explanation})>[];
+    for (var i = 0; i < records.length; i++) {
+      final text = resolveRawExplanation(
+        id: records[i].id,
+        explanation: records[i].explanation,
+        isKu: isKu,
+      );
+      if (text.trim().isEmpty) continue;
+      entries.add((index: i + 1, record: records[i], explanation: text));
+    }
+    if (entries.isEmpty) return const SizedBox.shrink();
+
+    return AppPanel(
+      key: const ValueKey('result-all-explanations'),
+      cardType: CardType.secondary,
+      color: AppTheme.surfaceHiColor(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(AppIcons.bookOpen, color: AppTheme.correct, size: 22),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  context.t(K.allExplanations),
+                  style: AppTypography.heading2.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                  ),
+                ),
+              ),
+              Text(
+                '${entries.length}',
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.textMutedColor(context),
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            context.t(K.allExplanationsHint),
+            style: AppTypography.caption.copyWith(
+              color: AppTheme.textMutedColor(context),
+            ),
+          ),
+          for (final entry in entries) ...[
+            const SizedBox(height: 14),
+            _ExplanationEntry(
+              index: entry.index,
+              record: entry.record,
+              explanation: entry.explanation,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _ExplanationEntry extends StatelessWidget {
+  const _ExplanationEntry({
+    required this.index,
+    required this.record,
+    required this.explanation,
+  });
+
+  final int index;
+  final AnswerRecord record;
+  final String explanation;
+
+  @override
+  Widget build(BuildContext context) {
+    // Doğru/yanlış ayrımı renkle verilir: oyuncu hangi soruda takıldığını
+    // listeyi okumadan bulabilsin.
+    final tone = record.isUnanswered
+        ? AppTheme.gold
+        : (record.isCorrect ? AppTheme.correct : AppTheme.wrong);
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.sm),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceColor(context).withValues(alpha: 0.6),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        border: Border(left: BorderSide(color: tone, width: 3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$index. ${record.prompt}',
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: AppTypography.bodyMedium.copyWith(
+              color: AppTheme.textPrimaryColor(context),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            '${context.t(K.correctAnswerLabel)}: ${record.correctAnswer}',
+            style: AppTypography.caption.copyWith(
+              color: tone,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            explanation,
+            style: AppTypography.bodyMedium.copyWith(
+              color: AppTheme.textSubColor(context),
+              height: 1.45,
             ),
           ),
         ],
