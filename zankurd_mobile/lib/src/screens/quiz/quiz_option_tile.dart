@@ -290,12 +290,26 @@ class QuizOptionTile extends StatelessWidget {
                                       AppRadius.xs,
                                     ),
                                   ),
-                                  child: Text(
-                                    '$name 👀',
-                                    style: AppTypography.caption.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800,
-                                    ),
+                                  // Göz emojisi ikonla değişti: Rubik emoji
+                                  // taşımıyor, o karakter sistem yazı tipine
+                                  // düşüyordu (2026-07-26).
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        name,
+                                        style: AppTypography.caption.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      const Icon(
+                                        AppIcons.eye,
+                                        size: 10,
+                                        color: Colors.white,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               )

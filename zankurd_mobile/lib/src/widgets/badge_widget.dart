@@ -114,13 +114,27 @@ class BadgeWidget extends StatelessWidget {
                 color: AppTheme.correct.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: Text(
-                isKu ? '✓ Vekirî' : '✓ Kazanıldı',
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.correct,
-                ),
+              // Onay işareti metin değil ikon: Rubik'te U+2713 yok, o
+              // karakter sistem yazı tipine düşüyor ve rozetin yanında
+              // apayrı bir tipte çiziliyordu (2026-07-26).
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    AppIcons.check,
+                    size: 9,
+                    color: AppTheme.correct,
+                  ),
+                  const SizedBox(width: 3),
+                  Text(
+                    isKu ? 'Vekirî' : 'Kazanıldı',
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.correct,
+                    ),
+                  ),
+                ],
               ),
             )
           else

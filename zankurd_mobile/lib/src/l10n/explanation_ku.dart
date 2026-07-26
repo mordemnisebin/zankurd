@@ -46,7 +46,12 @@ final List<_Rule> _rules = [
     (m) => '"${m[1]}" tê wateya ${m[2]}, "${m[3]}" jî tê wateya ${m[4]}.',
   ),
   // ''güzel/iyi' → xweş.'
-  _Rule(RegExp(r"^'([^']+)' → ([^.]+)\.$"), (m) => '\'${m[1]}\' → ${m[2]}.'),
+  _Rule(
+    RegExp(r"^'([^']+)' → ([^.]+)\.$"),
+    // Ok işareti çıkarıldı: Rubik U+2192 taşımıyor, ok sistem yazı tipine
+    // düşüyor ve cümlenin ortasında tip değişiyordu (2026-07-26).
+    (m) => '\'${m[1]}\' tê wateya ${m[2]}.',
+  ),
   // 'Görsel 'av' kavramını gösterir; doğru yanıt: su.'
   _Rule(
     RegExp(r"^Görsel '([^']+)' kavramını gösterir; doğru yanıt: ([^.]+)\.$"),
@@ -55,12 +60,12 @@ final List<_Rule> _rules = [
   // 'Doğru anlam: "pirtûk" → "kitap".'
   _Rule(
     RegExp(r'^Doğru anlam: "([^"]+)" → "([^"]+)"\.$'),
-    (m) => 'Wateya rast: "${m[1]}" → "${m[2]}".',
+    (m) => 'Wateya rast a "${m[1]}" ev e: "${m[2]}".',
   ),
   // 'Doğru eşleştirme: "teşekkür" → "spas".'
   _Rule(
     RegExp(r'^Doğru eşleştirme: "([^"]+)" → "([^"]+)"\.$'),
-    (m) => 'Hevdûkirina rast: "${m[1]}" → "${m[2]}".',
+    (m) => 'Hevdûkirina rast: "${m[1]}" bi "${m[2]}" re ye.',
   ),
   // '"av" kelimesi "su" anlamına gelir.'
   _Rule(

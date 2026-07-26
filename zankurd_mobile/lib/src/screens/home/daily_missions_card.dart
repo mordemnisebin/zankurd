@@ -125,12 +125,25 @@ class DailyMissionsCard extends StatelessWidget {
               ),
           ] else if (missions.isNotEmpty) ...[
             const SizedBox(height: 10),
-            Text(
-              isKu ? 'Hemû erk temam bûn! 🎉' : 'Tüm görevler tamam! 🎉',
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.correct,
-                fontWeight: FontWeight.w700,
-              ),
+            // Kutlama emojisi ikonla değişti: Rubik emoji taşımıyor, o
+            // karakter sistem yazı tipiyle çiziliyor ve cümlenin ortasında
+            // başka bir tip beliriyordu (2026-07-26).
+            Row(
+              children: [
+                const Icon(
+                  AppIcons.circleCheck,
+                  size: 14,
+                  color: AppTheme.correct,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  isKu ? 'Hemû erk temam bûn!' : 'Tüm görevler tamam!',
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppTheme.correct,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
             ),
           ],
         ],

@@ -478,13 +478,41 @@ class _LeaderboardRow extends StatelessWidget {
   final int index;
   final bool ku;
 
-  String _rankEmoji(int? rank) {
-    return switch (rank) {
-      1 => '🥇',
-      2 => '🥈',
-      3 => '🥉',
-      _ => '${rank ?? (index + 1)}.',
+  /// İlk üç sıranın rozeti.
+  ///
+  /// Burada emoji kullanılıyordu (🥇🥈🥉); liderlik tablosu ise aynı işi
+  /// `AppIcons.trophy`/`AppIcons.medal` ile yapıyor. İki ekran aynı şeyi
+  /// iki ayrı görsel dilde anlatıyordu: emoji sistem fontundan gelir,
+  /// cihazdan cihaza değişir ve uygulamanın ikon ailesine hiç benzemez
+  /// (2026-07-26). Rozet artık iki ekranda da aynı.
+  Widget _rankBadge(BuildContext context, int? rank) {
+    final place = rank ?? (index + 1);
+    if (place > 3) {
+      return SizedBox(
+        width: 24,
+        child: Text(
+          '$place.',
+          textAlign: TextAlign.center,
+          style: AppTypography.bodyLarge.copyWith(
+            color: AppTheme.textMutedColor(context),
+          ),
+        ),
+      );
+    }
+    final isLight = AppTheme.isLight(context);
+    final color = switch (place) {
+      1 => AppTheme.gold,
+      2 => isLight ? AppTheme.silverLight : AppTheme.silver,
+      _ => isLight ? AppTheme.bronzeLight : AppTheme.bronze,
     };
+    return SizedBox(
+      width: 24,
+      child: Icon(
+        place == 1 ? AppIcons.trophy : AppIcons.medal,
+        color: color,
+        size: 20,
+      ),
+    );
   }
 
   @override
@@ -519,7 +547,7 @@ class _LeaderboardRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(_rankEmoji(row.rank), style: AppTypography.bodyLarge),
+          _rankBadge(context, row.rank),
           const SizedBox(width: 12),
           Expanded(
             child: Column(

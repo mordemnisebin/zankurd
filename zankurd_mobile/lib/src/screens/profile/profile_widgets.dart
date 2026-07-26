@@ -849,13 +849,22 @@ class _MasteryRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 2),
-                Text(
-                  isMamoste ? '✓' : '$count/$threshold',
-                  style: AppTypography.caption.copyWith(
+                // Rubik U+2713 taşımıyor; onay işareti metin olarak
+                // yazıldığında sistem yazı tipine düşüyordu.
+                if (isMamoste)
+                  Icon(
+                    AppIcons.check,
+                    size: 10,
                     color: AppTheme.textMutedColor(context),
-                    fontSize: 10,
+                  )
+                else
+                  Text(
+                    '$count/$threshold',
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textMutedColor(context),
+                      fontSize: 10,
+                    ),
                   ),
-                ),
               ],
             ),
           ),

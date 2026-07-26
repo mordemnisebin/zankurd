@@ -29,10 +29,10 @@ class ResultSharer {
     final text = isKu
         ? 'Min di ZanKurd de $score pûan girt! '
               'Rast: $correctCount/$totalQuestions (%$accuracy). '
-              'Tu jî bilîze: Play Store → "ZanKurd"'
+              'Tu jî bilîze: Play Store: "ZanKurd"'
         : 'ZanKurd\'te $score puan aldım! '
               'Doğru: $correctCount/$totalQuestions (%$accuracy). '
-              'Sen de oyna: Play Store → "ZanKurd"';
+              'Sen de oyna: Play Store: "ZanKurd"';
 
     final overlay = Overlay.maybeOf(context);
     Uint8List? bytes;

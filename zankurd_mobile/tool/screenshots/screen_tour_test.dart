@@ -101,6 +101,19 @@ Future<void> _shoot(WidgetTester tester, String name) async {
   print('✓ $name');
 }
 
+/// Flutter SDK kökü — `which flutter` yerine `dart` çalıştırılabilirinden
+/// türetilir; koşucu her zaman SDK'nın içindeki dart'ı kullanır.
+String _flutterSdkRoot() {
+  var dir = File(Platform.resolvedExecutable).parent;
+  while (dir.path != dir.parent.path) {
+    if (Directory('${dir.path}/bin/cache/artifacts/material_fonts').existsSync()) {
+      return dir.path;
+    }
+    dir = dir.parent;
+  }
+  return '';
+}
+
 Future<void> _pump(WidgetTester tester, Widget child) async {
   _applyViewport(tester, _size);
   await tester.pumpWidget(testShell(child: _framed(child)));
@@ -133,6 +146,25 @@ void main() {
       );
     }
     await loader.load();
+
+    // Material'in kendi ikonları (ör. `ExpansionTile`in ok işareti) ayrı
+    // bir aileden gelir ve o da yüklenmezse kare çizilir; turda profil
+    // ekranındaki "Detaylı İstatistik" satırı böyle görünüyordu. Yazı tipi
+    // Flutter SDK'sının önbelleğinde durur; yol `flutter` çalıştırılabilirinden
+    // çözülür, sabit yazılmaz.
+    final materialIcons = File(
+      '${_flutterSdkRoot()}/bin/cache/artifacts/material_fonts/'
+      'MaterialIcons-Regular.otf',
+    );
+    if (materialIcons.existsSync()) {
+      final materialLoader = FontLoader('MaterialIcons')
+        ..addFont(
+          materialIcons.readAsBytes().then((b) => ByteData.view(b.buffer)),
+        );
+      await materialLoader.load();
+    } else {
+      print('UYARI: MaterialIcons bulunamadı — o ikonlar kare çizilecek');
+    }
 
     // İkon yazı tipi paket içinden gelir; o da yüklenmezse her ikon küçük
     // bir kare olarak çizilir ve ekranın yarısı okunmaz kalır. Yol
