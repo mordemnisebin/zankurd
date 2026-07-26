@@ -229,6 +229,41 @@ class SyncManager {
     unawaited(sync());
   }
 
+  /// Sunucuya ulaşamadığı için verilemeyen tur ödülünü kuyruğa alır.
+  ///
+  /// Çevrimdışı bitirilen bir turda `claim_quiz_reward` çağrısı düşüyor ve
+  /// coin **sessizce kayboluyordu**: ne yeniden deneme, ne bir ileti. XP
+  /// aynı durumda kuyruğa giriyordu; coin girmiyordu (2026-07-26).
+  ///
+  /// Kuyruğa giren şey miktar değil, **turun olguları**. Ödülü yine sunucu
+  /// hesaplar; istemci hiçbir zaman "şu kadar coin ver" demez. Yani
+  /// bekletmek, çağrının o an yapılmasından fazla bir güven istemez.
+  ///
+  /// Oda turlarında sunucu aynı odanın ödülünü ikinci kez vermez
+  /// (`coin_transactions` içinde oda kimliğine göre arar), bu yüzden
+  /// yeniden gönderim güvenlidir.
+  void queueQuizReward({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+    String? roomId,
+  }) {
+    _queue.add({
+      'type': 'sync_quiz_reward',
+      'score': score,
+      'correctCount': correctCount,
+      'bestStreak': bestStreak,
+      'totalQuestions': totalQuestions,
+      'roomId': roomId,
+      'playerId': _repository.currentUserId,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'retries': 0,
+    });
+    unawaited(_saveQueue());
+    unawaited(sync());
+  }
+
   Future<void> sync() async {
     // Yeniden girişe karşı koruma: iki eşzamanlı tur aynı kaydı iki kez
     // gönderir ve tur sonundaki kuyruk yazımında birbirini ezerdi.
@@ -295,7 +330,30 @@ class SyncManager {
       }
 
       try {
-        if (type == 'sync_xp') {
+        if (type == 'sync_quiz_reward') {
+          final amount = await repo.awardQuizCoins(
+            score: (item['score'] as num?)?.toInt() ?? 0,
+            correctCount: (item['correctCount'] as num?)?.toInt() ?? 0,
+            bestStreak: (item['bestStreak'] as num?)?.toInt() ?? 0,
+            totalQuestions: (item['totalQuestions'] as num?)?.toInt() ?? 0,
+            room: (item['roomId'] as String?) == null
+                ? null
+                : repo.createRoom().copyWith(id: item['roomId'] as String?),
+          );
+          // `awardQuizCoins` başarısızlıkta da 0 döner (istisna sızdırmaz),
+          // dolayısıyla 0 "verildi" sayılamaz: öyle sayılsaydı kayıt
+          // kuyruktan düşer ve ödül yine sessizce kaybolurdu — düzeltilen
+          // kusurun ta kendisi. Sunucunun "bu tur zaten ödendi" yanıtı da
+          // 0'dır; o durumda kayıt boşuna birkaç kez denenip düşürülür.
+          // Boş yere deneme, kaybolmuş coinden ucuzdur.
+          if (amount <= 0) {
+            throw StateError('quiz reward not granted yet (amount 0)');
+          }
+          developer.log(
+            'Successfully synced quiz reward: +$amount coin',
+            name: 'SyncManager',
+          );
+        } else if (type == 'sync_xp') {
           final delta = (item['delta'] as num?)?.toInt() ?? 0;
           if (delta > 0) {
             final total = await repo.awardProfileXPDelta(delta);

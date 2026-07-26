@@ -1160,6 +1160,43 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     }
   }
 
+  /// Tur ödülünü ister; verilemezse kuyruğa alır.
+  ///
+  /// Çevrimdışı bitirilen turda `claim_quiz_reward` düşüyor ve coin
+  /// sessizce kayboluyordu — XP aynı durumda kuyruğa giriyordu, coin
+  /// girmiyordu. Kuyruğa giren miktar değil turun olgularıdır; ödülü yine
+  /// sunucu hesaplar (2026-07-26).
+  Future<int> _claimCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+  }) async {
+    if (widget.practice) return 0;
+    var amount = 0;
+    try {
+      amount = await widget.repository.awardQuizCoins(
+        score: score,
+        correctCount: correctCount,
+        bestStreak: bestStreak,
+        totalQuestions: totalQuestions,
+        room: widget.room,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'awardQuizCoins failed');
+    }
+    if (amount <= 0) {
+      SyncManager.instance.queueQuizReward(
+        score: score,
+        correctCount: correctCount,
+        bestStreak: bestStreak,
+        totalQuestions: totalQuestions,
+        roomId: widget.room.id,
+      );
+    }
+    return amount;
+  }
+
   Future<void> _finishGameMultiplayer() async {
     if (completing) return;
     setState(() => completing = true);
@@ -1172,24 +1209,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
     _syncMyDuelState(answeredNow: true, finished: true);
 
-    final coinsAwarded = widget.practice
-        ? 0
-        : await widget.repository
-              .awardQuizCoins(
-                score: score,
-                correctCount: correctCount,
-                bestStreak: bestStreak,
-                totalQuestions: widget.questions.length,
-                room: widget.room,
-              )
-              .catchError((error, stack) {
-                ErrorReporter.record(
-                  error,
-                  stack,
-                  reason: 'awardQuizCoins solo failed',
-                );
-                return 0;
-              });
+    final coinsAwarded = await _claimCoins(
+      score: score,
+      correctCount: correctCount,
+      bestStreak: bestStreak,
+      totalQuestions: widget.questions.length,
+    );
 
     if (!mounted) return;
     context.read<SoundProvider>().playWin();
@@ -1427,24 +1452,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         ErrorReporter.record(error, stack, reason: 'quiz finish game failed');
       });
       _syncMyDuelState(answeredNow: true, finished: true);
-      final coinsAwarded = widget.practice
-          ? 0
-          : await widget.repository
-                .awardQuizCoins(
-                  score: score,
-                  correctCount: correctCount,
-                  bestStreak: bestStreak,
-                  totalQuestions: widget.questions.length,
-                  room: widget.room,
-                )
-                .catchError((error, stack) {
-                  ErrorReporter.record(
-                    error,
-                    stack,
-                    reason: 'awardQuizCoins multiplayer failed',
-                  );
-                  return 0;
-                });
+      final coinsAwarded = await _claimCoins(
+        score: score,
+        correctCount: correctCount,
+        bestStreak: bestStreak,
+        totalQuestions: widget.questions.length,
+      );
       if (!mounted) return;
       context.read<SoundProvider>().playWin();
       Navigator.of(context).pushReplacement(

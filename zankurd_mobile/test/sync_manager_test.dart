@@ -2,7 +2,30 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
+import 'package:http/http.dart' as http;
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
+
+/// Her isteği anında reddeden HTTP client — gerçek soket açılmaz.
+class _AlwaysFailingHttpClient extends http.BaseClient {
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) {
+    throw Exception('injected: ağ erişilemez');
+  }
+}
+
+/// Cihaz çevrimdışı: `sync()` kuyruğa dokunmadan döner.
+class _OfflineConnectivityMonitor implements ConnectivityMonitor {
+  @override
+  Stream<List<ConnectivityResult>> get onConnectivityChanged =>
+      const Stream.empty();
+
+  @override
+  Future<List<ConnectivityResult>> checkConnectivity() async => const [
+    ConnectivityResult.none,
+  ];
+}
 
 class _ThrowingConnectivityMonitor implements ConnectivityMonitor {
   @override
@@ -129,5 +152,49 @@ void main() {
     // sync() mock repo yolunda kuyruğu boşalttığı için doğrudan kayıt
     // içeriğini değil, kaydın yazıldığını doğrularız.
     expect(manager.pendingCount, lessThanOrEqualTo(1));
+  });
+
+  test('çevrimdışı bitirilen turun ödülü kuyrukta kalır', () async {
+    // 2026-07-26: çevrimdışı bitirilen turda `claim_quiz_reward` düşüyor,
+    // coin sessizce kayboluyordu. XP aynı durumda kuyruğa giriyordu; coin
+    // girmiyordu. Kuyruğa giren şey miktar değil turun olgularıdır — ödülü
+    // yine sunucu hesaplar.
+    //
+    // Sahte depo yolunda `sync()` kuyruğu boşalttığı için gerçek Supabase
+    // deposu ve çevrimdışı bir bağlantı gözlemcisi kullanılır: kaydın
+    // *kalıcı* olduğu ancak böyle ölçülür.
+    final manager = await SyncManager.initialize(
+      SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _AlwaysFailingHttpClient(),
+        ),
+      ),
+      connectivityMonitor: _OfflineConnectivityMonitor(),
+    );
+    await manager.clearQueue();
+
+    manager.queueQuizReward(
+      score: 720,
+      correctCount: 8,
+      bestStreak: 5,
+      totalQuestions: 10,
+      roomId: 'room-42',
+    );
+    await manager.sync();
+
+    expect(manager.pendingCount, 1, reason: 'ödül kuyruktan düştü');
+
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString('zankurd.syncQueue') ?? '[]';
+    expect(raw.contains('sync_quiz_reward'), isTrue);
+    expect(raw.contains('room-42'), isTrue);
+
+    // Kayıt yalnız turun olgularını taşımalı: içine bir miktar alanı
+    // girerse ödülü istemci söylüyor demektir ve sunucu yetkisi orada
+    // biter.
+    expect(raw.contains('"amount"'), isFalse);
+    expect(raw.contains('"coins"'), isFalse);
   });
 }
