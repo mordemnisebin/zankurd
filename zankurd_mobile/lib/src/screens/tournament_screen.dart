@@ -423,7 +423,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
             constraints: BoxConstraints(minHeight: minH),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+              // Dikey ortalama, kimlik başlığını ekranın üçte birine
+              // itiyordu: turnuva, başlığı yukarıda duran diğer bütün
+              // ekranlardan farklı görünüyor ve yarım yüklenmiş gibi
+              // duruyordu (2026-07-26).
               children: [
                 ScreenIdentityHeader(
                   title: context.t(K.tournamentTitle),
@@ -541,7 +544,6 @@ class _LobbyView extends StatelessWidget {
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: minH),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ScreenIdentityHeader(
                   title: context.t(K.tournamentTitle),

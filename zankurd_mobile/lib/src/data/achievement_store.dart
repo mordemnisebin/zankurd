@@ -96,7 +96,7 @@ class AchievementStore {
     const Achievement(
       id: AchievementIds.botWinner,
       titleKu: 'Bot Têk Bir',
-      titleTr: 'Bot’u Yendi',
+      titleTr: "Bot'u Yendi",
       descriptionKu: 'Di pêşbirka botan de serket.',
       descriptionTr: 'Bot yarışını birinci bitirdin.',
       icon: AppIcons.robot,

@@ -106,4 +106,25 @@ void main() {
           '${offenders.join(", ")}',
     );
   });
+
+  test('metin kayıt defteri tek tür kesme işareti kullanır', () {
+    // Paywall ekranında başlıkta "ZanKurd’u", hemen altındaki kartta
+    // "ZanKurd'a" yazıyordu: aynı ekranda iki ayrı kesme işareti. Rubik
+    // ikisini de taşır, yani bu bir glif kusuru değil, tipografi
+    // tutarsızlığıdır — ama aynı gözle görülür (2026-07-26).
+    //
+    // Kapsam yalnız kayıt defteri: soru bankalarındaki alıntılar ve kaynak
+    // künyeleri özgün yazımlarını korumalı, onları düzeltmek içeriği
+    // değiştirmek olur.
+    final source = File('lib/src/l10n/strings.dart').readAsStringSync();
+    final curly = '\u2019'.allMatches(source).length;
+
+    expect(
+      curly,
+      0,
+      reason:
+          'Kayıt defterinde eğri kesme işareti (U+2019) var; ekranlarda '
+          'düz kesme ile karışıyor.',
+    );
+  });
 }

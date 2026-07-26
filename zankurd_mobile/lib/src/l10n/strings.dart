@@ -1231,7 +1231,7 @@ class Tr {
     // atar (2026-07-26 denetimi).
     K.paywallSubtitle: {
       'ku': 'Piştgirî bide ZanKurdê, xemlan veke',
-      'tr': 'ZanKurd’u destekle, kozmetikleri aç',
+      'tr': "ZanKurd'u destekle, kozmetikleri aç",
     },
     K.paywallFeatures: {'ku': 'Taybetmendiyên', 'tr': 'Özellikler'},
 
