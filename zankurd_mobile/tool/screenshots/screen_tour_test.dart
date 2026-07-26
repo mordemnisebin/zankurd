@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print, invalid_use_of_visible_for_testing_member
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -33,6 +34,18 @@ import '../../test/support/widget_test_helpers.dart';
 /// ```bash
 /// flutter test tool/screenshots/screen_tour_test.dart
 /// ```
+///
+/// ## Görüntülerin sınırı
+///
+/// Test koşucusunda yalnız burada yüklenen yazı tipleri çizilir. İkisi
+/// kaçınılmaz olarak kutu görünür ve **uygulama hatası değildir**:
+///
+/// * emoji (ör. sıralama madalyaları 🥇🥈🥉) — sistem emoji fontu yok;
+/// * `CustomPainter` içinde `TextPainter` ile çizilen metin (ör. çark
+///   dilimlerinin etiketleri) — aile belirtilmediği için varsayılan ölçü
+///   fontuna düşer, widget'lardaki gibi temadan Rubik almaz.
+///
+/// Bu ikisini doğrulamak için simülatör gerekir.
 const _size = Size(390, 844);
 const _outDir = 'docs/screenshots/tour';
 
@@ -84,6 +97,60 @@ Future<void> _pump(WidgetTester tester, Widget child) async {
 
 void main() {
   late MockZanKurdRepository repository;
+
+  setUpAll(() async {
+    // Yazı tipleri elle yüklenmezse test koşucusu her metni siyah bir kutu
+    // olarak çizer: `flutter test` pubspec'teki font ailelerini kendiliğinden
+    // yüklemez, bilinmeyen aileyi ölçü fontuna düşürür. Turun tek işi
+    // ekranların *görünüşünü* değerlendirmek olduğu için bu, aracı işe
+    // yaramaz kılıyordu — 13 ekran görüntüsünün hepsi okunmuyordu
+    // (2026-07-26 denetimi).
+    const faces = {
+      'assets/fonts/Rubik-Regular.ttf': FontWeight.normal,
+      'assets/fonts/Rubik-Medium.ttf': FontWeight.w500,
+      'assets/fonts/Rubik-Bold.ttf': FontWeight.w700,
+      'assets/fonts/Rubik-Black.ttf': FontWeight.w900,
+    };
+    final loader = FontLoader('Rubik');
+    for (final path in faces.keys) {
+      loader.addFont(
+        File(path).readAsBytes().then((bytes) => ByteData.view(bytes.buffer)),
+      );
+    }
+    await loader.load();
+
+    // İkon yazı tipi paket içinden gelir; o da yüklenmezse her ikon küçük
+    // bir kare olarak çizilir ve ekranın yarısı okunmaz kalır. Yol
+    // `package_config.json`dan çözülür, sabit yazılmaz — pub önbelleği
+    // makineden makineye değişir.
+    final packageConfig =
+        jsonDecode(File('.dart_tool/package_config.json').readAsStringSync())
+            as Map<String, dynamic>;
+    final entry = (packageConfig['packages'] as List)
+        .cast<Map<String, dynamic>>()
+        .firstWhere((p) => p['name'] == 'font_awesome_flutter');
+    // `rootUri` sonunda eğik çizgi yok; doğrudan birleştirmek
+    // ".../font_awesome_flutter-11.0.0lib/fonts/..." gibi var olmayan bir
+    // yol üretiyordu ve uyarı sessizce geçilip ikonlar kare kalıyordu.
+    final root = Uri.parse(entry['rootUri'] as String).toFilePath();
+    final iconFont = File(
+      '${root.endsWith(Platform.pathSeparator) ? root : '$root${Platform.pathSeparator}'}'
+      'lib/fonts/Font-Awesome-7-Free-Solid-900.otf',
+    );
+    if (iconFont.existsSync()) {
+      // Aile adı paket önekiyle kaydedilmeli: `IconData` içindeki
+      // `fontPackage` alanı, Flutter'ın çözdüğü aileyi
+      // `packages/<paket>/<aile>` biçimine çevirir. Öneksiz kayıt sessizce
+      // eşleşmez ve ikonlar yine kare çizilir.
+      final iconLoader =
+          FontLoader('packages/font_awesome_flutter/FontAwesomeSolid')..addFont(
+            iconFont.readAsBytes().then((bytes) => ByteData.view(bytes.buffer)),
+          );
+      await iconLoader.load();
+    } else {
+      print('UYARI: ikon yazı tipi bulunamadı — ikonlar kare çizilecek');
+    }
+  });
 
   setUp(() {
     // connectivity_plus test ortamında kayıtlı değil; MissingPluginException
@@ -178,9 +245,17 @@ void main() {
     await _shoot(t, '14_lesson_question');
 
     // Bir şık işaretle: geri bildirim + açıklama paneli.
+    //
+    // Açıklama 800 ms'lik bir denetleyicinin bitişinde açılır, üstüne
+    // 350+400 ms'lik boyut/opaklık geçişleri biner. Önceki 1600 ms'lik tek
+    // pump yetmiyordu ve ekran görüntüsü paneli hiç göstermiyordu — panel
+    // çalışmıyor sanılmasına yol açan bir tur kusuru
+    // (bkz. `test/lesson_explanation_test.dart`).
     await t.tap(find.text(repository.questions.first.answers.first));
     await t.pump();
-    await t.pump(const Duration(milliseconds: 1600));
+    for (var i = 0; i < 12; i++) {
+      await t.pump(const Duration(milliseconds: 300));
+    }
     await _shoot(t, '15_lesson_answered');
   }, tags: ['preview']);
 
