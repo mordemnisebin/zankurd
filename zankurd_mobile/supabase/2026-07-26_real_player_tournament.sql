@@ -44,6 +44,26 @@ create table if not exists public.tournaments (
   champion_id uuid references auth.users(id) on delete set null
 );
 
+-- Dosya birden çok kez uygulanabilir olmalı.
+--
+-- `create table if not exists` var olan bir tabloya **sütun eklemez**:
+-- dosyanın erken bir sürümü uygulandıysa `min_size` ve `fill_hours` eksik
+-- kalır ve `start_due_tournaments` çalışmaz. Bu yüzden sütunlar ayrıca ve
+-- koşullu olarak eklenir; ilk kurulumda bu ifadeler etkisizdir.
+alter table public.tournaments
+  add column if not exists min_size int not null default 2;
+alter table public.tournaments
+  add column if not exists fill_hours int not null default 24;
+alter table public.tournaments
+  add column if not exists round_hours int not null default 24;
+alter table public.tournaments
+  add column if not exists champion_id uuid references auth.users(id)
+    on delete set null;
+
+-- Kontenjan yalnız **yeni** turnuvalar için düşürülür; süren bir kupanın
+-- hedefini değiştirmek eşleşmeleri ortasından bozardı.
+alter table public.tournaments alter column size set default 4;
+
 create table if not exists public.tournament_entries (
   tournament_id uuid not null references public.tournaments(id)
     on delete cascade,
