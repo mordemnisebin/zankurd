@@ -921,10 +921,11 @@ class Tr {
     K.tournamentWaitingBody: {
       'ku':
           'Kûpa bi lîstikvanên rastî tê lîstin. Gava hejmar temam bibe '
-          'hevrik tên diyarkirin — tu dikarî paşê vegerî.',
+          'hevrik tên diyarkirin; herî dereng piştî 24 saetan bi yên '
+          'amade dest pê dike.',
       'tr':
           'Turnuva gerçek oyuncularla oynanır. Kontenjan dolunca eşleşmeler '
-          'kurulur — daha sonra tekrar bakabilirsin.',
+          'kurulur; en geç 24 saat içinde eldeki oyuncularla başlar.',
     },
     K.tournamentWaitingOpponent: {
       'ku': 'Skora te hate tomarkirin; em li bersiva hevrikê te dinêrin.',

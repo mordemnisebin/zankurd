@@ -24,7 +24,18 @@
 
 create table if not exists public.tournaments (
   id uuid primary key default gen_random_uuid(),
-  size int not null default 8,
+  -- Hedef kontenjan. Dolunca turnuva hemen başlar.
+  --
+  -- Başlangıç için 4 seçildi: az oyuncuyla bir kupa iki turda biter ve
+  -- turnuva gerçekten *tamamlanır*. Kitle büyüyünce bu değeri yükseltmek
+  -- yeter; kod hiçbir yerde dört sayısına bağlı değil.
+  size int not null default 4,
+  -- Kontenjan dolmasa da turnuva başlayabilir: `fill_hours` dolduğunda
+  -- en az `min_size` oyuncuyla başlar. Bu olmasaydı tek bir eksik oyuncu
+  -- turnuvayı süresiz bekletirdi — "gerçek oyuncular" sözünün en sık
+  -- kırıldığı yer budur.
+  min_size int not null default 2,
+  fill_hours int not null default 24,
   status text not null default 'open',   -- open | running | finished
   round_hours int not null default 24,   -- bir turun süresi
   opened_at timestamptz not null default now(),
@@ -203,6 +214,29 @@ begin
   update public.tournaments
      set status = 'running', started_at = now()
    where id = p_tournament_id;
+end;
+$$;
+
+-- Süresi dolan açık turnuvalar, eldeki oyuncularla başlar.
+create or replace function public.start_due_tournaments()
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_id uuid;
+begin
+  for v_id in
+    select t.id
+      from public.tournaments t
+     where t.status = 'open'
+       and t.opened_at + make_interval(hours => t.fill_hours) < now()
+       and (select count(*) from public.tournament_entries e
+             where e.tournament_id = t.id) >= t.min_size
+  loop
+    perform public.start_tournament(v_id);
+  end loop;
 end;
 $$;
 
@@ -387,7 +421,11 @@ begin
     raise exception 'Authenticated user required';
   end if;
 
+  -- Ekran her açıldığında zamanı gelmiş işler yürütülür: süresi dolan
+  -- maçlar hükmen kapanır, dolmayı bekleyen turnuvalar eldeki oyuncularla
+  -- başlar. Ayrı bir zamanlayıcı gerekmez.
   perform public.resolve_expired_tournament_matches();
+  perform public.start_due_tournaments();
 
   select t.* into v_tournament
     from public.tournaments t
@@ -450,6 +488,8 @@ $$;
 revoke all on function public.start_tournament(uuid) from public, anon,
   authenticated;
 revoke all on function public.advance_tournament(uuid) from public, anon,
+  authenticated;
+revoke all on function public.start_due_tournaments() from public, anon,
   authenticated;
 grant execute on function public.join_tournament() to authenticated;
 grant execute on function public.submit_tournament_match(uuid, int)
