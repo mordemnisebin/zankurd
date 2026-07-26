@@ -59,10 +59,14 @@ class QuestionBankLoader {
     final sentences = await _loadJson(
       'assets/data/sentence_building_questions.json',
     );
+    // Topluluk katkısı sorular ayrı asset'te: kaynağı ve inceleme akışı
+    // üretilmiş bankadan bağımsız yürüsün.
+    final community = await _loadJson('assets/data/community_questions.json');
 
     _questions = [
       ...curatedQuestionBank,
       ...sentences,
+      ...community,
       ...editorial,
       ...offline,
     ];

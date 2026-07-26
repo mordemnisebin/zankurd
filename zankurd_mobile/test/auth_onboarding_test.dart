@@ -77,8 +77,15 @@ void main() {
         );
         expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
 
-        // Misafir butonu context yüzeyi kullanır: light'ta koyu metin,
-        // dark'ta beyaz metin.
+        // Misafir bağlantısı context yüzeyi kullanır: light'ta koyu metin,
+        // dark'ta açık metin.
+        //
+        // 2026-07-25: misafir eylemi tam boy konturlu butondan metin
+        // bağlantısına indirildi (Google beyaz + Apple siyah + misafir
+        // turuncu = ekranda üç birincil eylem görünüyordu). Bağlantı rengi
+        // artık hafif saydam olduğu için `== Colors.white` kimlik
+        // karşılaştırması kırılıyordu; testin asıl iddiası okunabilirlik,
+        // o yüzden parlaklıkla ölçülür.
         final guestLabel = tester.widget<Text>(
           find.text('Misafir olarak devam et'),
         );
@@ -86,7 +93,7 @@ void main() {
         if (mode == ThemeMode.light) {
           expect(guestLuminance, lessThan(0.4));
         } else {
-          expect(guestLabel.style?.color, equals(Colors.white));
+          expect(guestLuminance, greaterThan(0.6));
         }
       }
     },

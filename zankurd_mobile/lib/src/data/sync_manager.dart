@@ -319,7 +319,8 @@ class SyncManager {
           ErrorReporter.record(
             e,
             stack,
-            reason: 'SyncManager: RPC does not exist (migration missing). '
+            reason:
+                'SyncManager: RPC does not exist (migration missing). '
                 'Dropping item permanently.',
           );
           developer.log(
@@ -333,7 +334,8 @@ class SyncManager {
           ErrorReporter.record(
             e,
             stack,
-            reason: 'SyncManager: max retries ($_maxRetries) exceeded. '
+            reason:
+                'SyncManager: max retries ($_maxRetries) exceeded. '
                 'Dropping item.',
           );
           developer.log(
@@ -350,7 +352,8 @@ class SyncManager {
           ErrorReporter.record(
             e,
             stack,
-            reason: 'SyncManager: max retries ($_maxRetries) exceeded. '
+            reason:
+                'SyncManager: max retries ($_maxRetries) exceeded. '
                 'Dropping item.',
           );
           developer.log(

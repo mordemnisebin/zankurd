@@ -8,7 +8,6 @@ import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 
 /// Bakiye ve satın alma durumunu deterministik kontrol eden sahte depo.
 class _ShopRepository extends MockZanKurdRepository {
@@ -207,14 +206,19 @@ void main() {
     expect(actualCosts, expectedCosts);
   });
 
-  // 2026-07-23 M33: marka kimliği (Roj maskotu) mağazada da görünsün.
-  testWidgets('mağaza başlığında Roj maskotu görünür', (tester) async {
+  // 2026-07-23 M33 marka kimliği için başlığa bir Roj maskotu şeridi
+  // eklemişti. 2026-07-25 canlı denetiminde bu şerit, AppBar başlığı ve
+  // kimlik kartıyla birlikte üst üste üçüncü kez "mağaza / coinlerini
+  // harca" diyordu ve ilk ürün ancak ekranın yarısından sonra başlıyordu.
+  // Şerit kaldırıldı; karşılamayı kimlik kartının alt başlığı taşır.
+  // Maskot onboarding, liderlik ve boş durumlarda görünmeye devam eder.
+  testWidgets('mağaza başlığı tek karşılama gösterir', (tester) async {
     final repository = _ShopRepository(coins: 500);
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('shop-mascot-header')), findsOneWidget);
-    expect(find.byType(RojMascot), findsOneWidget);
+    expect(find.byKey(const ValueKey('shop-mascot-header')), findsNothing);
+    expect(find.text('Mağaza'), findsOneWidget);
   });
 
   testWidgets('bakiye 0 iken earn-coin CTA 390x844 ekranda taşmadan çizilir', (

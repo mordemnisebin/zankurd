@@ -20,6 +20,9 @@ class QuizQuestion {
     required this.explanation,
     this.explanationKu,
     this.explanationTr,
+    this.promptTr,
+    this.answersTr,
+    this.correctAnswerTr,
     this.hintKu,
     this.hintTr,
     this.audioUrl,
@@ -37,6 +40,25 @@ class QuizQuestion {
   final String explanation;
   final String? explanationKu;
   final String? explanationTr;
+
+  /// Sorunun Türkçe karşılığı. Yoksa [prompt] (Kurmancî) kullanılır.
+  ///
+  /// 2026-07-25 denetimi: arayüz TR seçilebiliyor ama soruların %100'ü
+  /// Kurmancî. TR seçen kullanıcı Türkçe menülerde gezip Kurmancî soruyla
+  /// karşılaşıyordu. Model tek bir `prompt` alanı taşıdığı için bu bir
+  /// içerik eksiği değil, *şema* eksiğiydi: çeviri yazılacak yer yoktu.
+  ///
+  /// Alanlar bilinçli olarak nullable: banka kademeli çevrilecek, çevirisi
+  /// olmayan soru Kurmancî gösterilir — eksik çeviri, boş ekrandan iyidir.
+  final String? promptTr;
+
+  /// Şıkların Türkçe karşılıkları. [answers] ile aynı uzunlukta olmalı;
+  /// değilse yok sayılır (bkz. [answersFor]).
+  final List<String>? answersTr;
+
+  /// Doğru cevabın Türkçe karşılığı — [answersTr] içinde yer almalı.
+  final String? correctAnswerTr;
+
   final String? hintKu;
   final String? hintTr;
   final String? audioUrl;
@@ -56,6 +78,106 @@ class QuizQuestion {
       (hintTr != null && hintTr!.trim().isNotEmpty);
 
   String get promptText => prompt;
+
+  /// Seçili dile göre soru metni. Çeviri yoksa Kurmancî'ye düşer.
+  String promptFor({required bool isKu}) {
+    if (isKu) return prompt;
+    final translated = promptTr?.trim();
+    return (translated == null || translated.isEmpty) ? prompt : translated;
+  }
+
+  /// Türkçe şık çevirisi *bütün olarak* tutarlı mı?
+  ///
+  /// Tutarlılık tek tek alanlarda değil, küme olarak değerlendirilir:
+  /// şıklar çevrilip doğru cevap çevrilmezse (ya da çevrilen doğru cevap
+  /// şıklar arasında bulunmazsa) hiçbir şık doğru işaretlenmez ve tur
+  /// sessizce bozulur. Bu yüzden "kısmen çevrilmiş" diye bir durum yok:
+  /// ya hepsi Türkçe, ya hepsi Kurmancî.
+  bool get _hasConsistentTurkishAnswers {
+    final translated = answersTr;
+    if (translated == null || translated.length != answers.length) return false;
+    if (translated.any((option) => option.trim().isEmpty)) return false;
+    final translatedCorrect = correctAnswerTr?.trim();
+    if (translatedCorrect == null || translatedCorrect.isEmpty) return false;
+    return translated.map((o) => o.trim()).contains(translatedCorrect);
+  }
+
+  /// Seçili dile göre şıklar. Çeviri kümesi tutarlı değilse tamamı
+  /// Kurmancî döner — yarısı çevrilmiş bir şık listesi, hiç çevrilmemiş
+  /// olandan daha kafa karıştırıcıdır.
+  List<String> answersFor({required bool isKu}) {
+    if (isKu || !_hasConsistentTurkishAnswers) return answers;
+    return answersTr!;
+  }
+
+  /// Seçili dile göre doğru cevap. [answersFor] ile daima aynı kümeden
+  /// gelir; ikisi birlikte düşer ya da birlikte çevrilir.
+  String correctAnswerFor({required bool isKu}) {
+    if (isKu || !_hasConsistentTurkishAnswers) return correctAnswer;
+    return correctAnswerTr!.trim();
+  }
+
+  /// Alanların bir bölümünü değiştirerek kopya üretir. Yalnız [localized]
+  /// yansıtması için gereken alanlar parametreleşmiştir; gerisi taşınır.
+  QuizQuestion copyWith({
+    String? prompt,
+    List<String>? answers,
+    String? correctAnswer,
+  }) {
+    return QuizQuestion(
+      id: id,
+      category: category,
+      prompt: prompt ?? this.prompt,
+      answers: answers ?? this.answers,
+      correctAnswer: correctAnswer ?? this.correctAnswer,
+      explanation: explanation,
+      explanationKu: explanationKu,
+      explanationTr: explanationTr,
+      promptTr: promptTr,
+      answersTr: answersTr,
+      correctAnswerTr: correctAnswerTr,
+      hintKu: hintKu,
+      hintTr: hintTr,
+      audioUrl: audioUrl,
+      type: type,
+      imageUrl: imageUrl,
+      difficulty: difficulty,
+      metadata: metadata,
+    );
+  }
+
+  /// Soruyu seçili dile *yansıtır*: `prompt`, `answers` ve `correctAnswer`
+  /// alanları hedef dilde doldurulmuş yeni bir kopya döner.
+  ///
+  /// Dili çağrı yerine taşımak yerine tek noktada yansıtmak bilinçli bir
+  /// tercih: quiz ekranı doğru/yanlış kararını onlarca yerde `answer ==
+  /// question.correctAnswer` karşılaştırmasıyla veriyor. Bu karşılaştırmalara
+  /// dil parametresi eklemek, birinin unutulması hâlinde sessizce yanlış
+  /// puanlamaya yol açardı. Yansıtma ile aşağı akıştaki tüm mantık
+  /// değişmeden doğru kalır.
+  ///
+  /// Çevirisi eksik sorularda alanlar Kurmancî kalır (bkz. [answersFor]).
+  QuizQuestion localized({required bool isKu}) {
+    if (isKu) return this;
+    final localizedAnswers = answersFor(isKu: false);
+    if (identical(localizedAnswers, answers) &&
+        promptFor(isKu: false) == prompt) {
+      return this;
+    }
+    return copyWith(
+      prompt: promptFor(isKu: false),
+      answers: localizedAnswers,
+      correctAnswer: correctAnswerFor(isKu: false),
+    );
+  }
+
+  /// Bu soru [isKu] olmayan dilde tam olarak gösterilebiliyor mu?
+  /// Çeviri kapsamını ölçen testler bunu kullanır.
+  bool get hasTurkishTranslation {
+    final translatedPrompt = promptTr?.trim();
+    if (translatedPrompt == null || translatedPrompt.isEmpty) return false;
+    return _hasConsistentTurkishAnswers;
+  }
 
   List<String> get displayAnswers {
     if (type == QuestionType.trueFalse || answers.length < 3) {
@@ -173,12 +295,17 @@ class QuizQuestion {
       prompt: json['prompt'] as String,
       answers: List<String>.from(json['answers'] as List),
       correctAnswer: json['correctAnswer'] as String,
-      explanation: (json['explanation'] as String?) ??
+      explanation:
+          (json['explanation'] as String?) ??
           (json['explanationTr'] as String?) ??
           (json['explanationKu'] as String?) ??
           '',
       explanationKu: json['explanationKu'] as String?,
       explanationTr: json['explanationTr'] as String?,
+      // Çok dilli alanlar opsiyoneldir; eski kayıtlarda hiç bulunmaz.
+      promptTr: json['promptTr'] as String?,
+      answersTr: (json['answersTr'] as List?)?.cast<String>(),
+      correctAnswerTr: json['correctAnswerTr'] as String?,
       hintKu: json['hintKu'] as String?,
       hintTr: json['hintTr'] as String?,
       audioUrl: json['audioUrl'] as String?,
@@ -202,6 +329,9 @@ class QuizQuestion {
     'explanation': explanation,
     if (explanationKu != null) 'explanationKu': explanationKu,
     if (explanationTr != null) 'explanationTr': explanationTr,
+    if (promptTr != null) 'promptTr': promptTr,
+    if (answersTr != null) 'answersTr': answersTr,
+    if (correctAnswerTr != null) 'correctAnswerTr': correctAnswerTr,
     if (hintKu != null) 'hintKu': hintKu,
     if (hintTr != null) 'hintTr': hintTr,
     if (audioUrl != null) 'audioUrl': audioUrl,

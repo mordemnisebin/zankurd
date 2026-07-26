@@ -87,7 +87,9 @@ void main() {
     expect(find.byType(QuizScreen), findsOneWidget);
   });
 
-  testWidgets('play hub routes rewards through the shop card', (tester) async {
+  testWidgets('play hub does not duplicate the shop entry point', (
+    tester,
+  ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -103,9 +105,12 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
-    // Çark bir ödüldür: yarışma grid'inden çıkarıldı, mağaza kartından erişilir.
-    expect(find.byKey(const ValueKey('play-hub-shop-card')), findsOneWidget);
+    // Çark bir ödüldür: yarışma grid'inden çıkarıldı.
     expect(find.byKey(const ValueKey('quick-play-wheel')), findsNothing);
+    // Mağazaya Yarış sekmesinden, profilden ve kendi rotasından olmak üzere
+    // üç ayrı giriş vardı; "burası neresi?" hissini kırmak için tek ev
+    // profildeki HESAP bölümü oldu (2026-07-25 canlı denetimi).
+    expect(find.byKey(const ValueKey('play-hub-shop-card')), findsNothing);
   });
 
   testWidgets('kurdish home room join action uses compact label', (

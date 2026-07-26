@@ -175,6 +175,44 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
+  /// Apple ile giriş, Supabase OAuth üzerinden.
+  ///
+  /// App Store İnceleme Kılavuzu 4.8: üçüncü taraf bir sosyal giriş
+  /// (burada Google) sunan uygulama, Apple platformlarında eşdeğer bir
+  /// "Apple ile Giriş" seçeneği de sunmak zorundadır. Bu seçenek yokken
+  /// uygulama incelemeden geçemez (2026-07-25 denetimi).
+  ///
+  /// Çalışması için Supabase Dashboard'da Apple sağlayıcısının ve Apple
+  /// Developer tarafında bir Services ID + Sign in with Apple yetkisinin
+  /// tanımlı olması gerekir; bunlar uygulama kodunun dışındadır.
+  Future<bool> signInWithApple() {
+    return _run((client) async {
+      final launched = await client.auth.signInWithOAuth(
+        OAuthProvider.apple,
+        redirectTo: authRedirectUri,
+        authScreenLaunchMode: LaunchMode.externalApplication,
+      );
+      if (!launched) {
+        throw const AuthException('Apple girişi başlatılamadı.');
+      }
+    });
+  }
+
+  /// Misafir (anonim) hesabı Apple ile bağlar — mevcut oturumu korur.
+  /// [linkGoogleAccount] ile aynı gerekçe: misafir ilerlemesi kaybolmasın.
+  Future<bool> linkAppleAccount() {
+    return _run((client) async {
+      final launched = await client.auth.linkIdentity(
+        OAuthProvider.apple,
+        redirectTo: authRedirectUri,
+        authScreenLaunchMode: LaunchMode.externalApplication,
+      );
+      if (!launched) {
+        throw const AuthException('Apple bağlantısı başlatılamadı.');
+      }
+    });
+  }
+
   // 2026-07-22 canlı UX denetimi: misafir hesap yükseltme
   /// Misafir (anonim) hesabı e-posta/şifre ile kalıcı hesaba yükseltir.
   ///

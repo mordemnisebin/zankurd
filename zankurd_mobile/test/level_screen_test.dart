@@ -22,7 +22,7 @@ void main() {
     LevelProgressStore.resetInstance();
   });
 
-  testWidgets('seviye yolu 5 düğümü ve final kupasını gösterir', (
+  testWidgets('seviye yolu 5 düğümü gösterir; ilki açık, gerisi kilitli', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -34,9 +34,32 @@ void main() {
     // (2026-07-22 UX denetimi — LevelNames).
     expect(find.text('Başlangıç'), findsOneWidget);
     expect(find.text('Destpêk'), findsNothing);
+
+    // Yol bir merdivendir: kilit yokken 5. seviye (zorluk 4-5) ilk günden
+    // açıktı ve harita vaat ettiği ilerlemeyi sağlamıyordu (2026-07-25
+    // canlı denetimi). Temiz ilerlemede yalnız ilk düğüm açık olmalı.
     expect(find.text('1'), findsOneWidget);
-    expect(find.text('4'), findsOneWidget);
-    expect(find.byIcon(AppIcons.trophy), findsOneWidget);
+    // 2-5 arası düğümler numara yerine kilit ikonu taşır; final kupası da
+    // kilitli olduğu için görünmez.
+    expect(find.text('4'), findsNothing);
+    expect(find.byIcon(AppIcons.lock), findsNWidgets(4));
+    expect(find.byIcon(AppIcons.trophy), findsNothing);
+
+    // Beş satır da çizilir — kilitli olmak görünmez olmak değildir.
+    expect(find.text('Başlangıç'), findsOneWidget);
+    expect(find.text('Usta'), findsOneWidget);
+  });
+
+  testWidgets('kilitli düğüme dokunmak nedenini söyler', (tester) async {
+    await tester.pumpWidget(
+      wrap(LevelScreen(repository: MockZanKurdRepository(), category: 'Ziman')),
+    );
+    await tester.pumpAndSettle();
+
+    // Sessizce hiçbir şey yapmayan düğüm "bozuk" hissi verir.
+    await tester.tap(find.byIcon(AppIcons.lock).first);
+    await tester.pump();
+    expect(find.textContaining('seviyeyi tamamla'), findsOneWidget);
   });
 
   testWidgets('düğüm numarası heading1 ağırlığı ve yumuşak gölge taşır', (

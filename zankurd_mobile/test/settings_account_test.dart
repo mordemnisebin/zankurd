@@ -226,7 +226,11 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(repository.deleteCalls, 1);
-    expect(find.text('Ayarlar'), findsOneWidget);
+    // Silme başarısızsa ekrandan çıkılmamalı. Bu, "Ayarlar" metnini arayarak
+    // doğrulanıyordu; başlık AppBar'dan kimlik kartına taşınınca (çift
+    // başlık düzeltmesi) metin, listeyle birlikte kaydırılıp ağaçtan
+    // düşebiliyor. Asıl iddia gezinme: ekran hâlâ yerinde mi?
+    expect(find.byType(SettingsScreen), findsOneWidget);
     expect(
       find.text('Hesap silinemedi. Lütfen tekrar deneyin.'),
       findsOneWidget,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppColors {
   const AppColors._();
@@ -687,6 +688,16 @@ class AppTheme {
           letterSpacing: -0.2,
         ),
         iconTheme: IconThemeData(color: textPrimary),
+        // AppBar, kendi `systemOverlayStyle`ını uygulama kökündeki
+        // AnnotatedRegion'ın üzerine yazar. Belirtilmezse Material bunu
+        // AppBar zemininden türetir; zemin saydam olduğu için yanlış
+        // parlaklık seçilip saat/pil okunmaz hale geliyordu (2026-07-25
+        // canlı denetimi). Değer temayla birlikte açıkça sabitlenir.
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+        ),
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: surface,
@@ -860,6 +871,14 @@ class AppTheme {
           letterSpacing: -0.2,
         ),
         iconTheme: IconThemeData(color: lightTextPrimary),
+        // Bkz. koyu temadaki aynı alan: saydam AppBar zemininden türetilen
+        // varsayılan, açık temada beyaz ikon seçip krem zeminde saati
+        // görünmez kılıyordu.
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+        ),
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: lightSurface,
