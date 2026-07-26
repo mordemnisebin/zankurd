@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/category_visibility.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
@@ -18,6 +21,42 @@ void main() {
     expect(hiddenCategoryIds, isEmpty);
     expect(isCategoryVisible('Teknolojî'), isTrue);
     expect(isCategoryVisible('Ziman'), isTrue);
+  });
+
+  test('görünür her kategori bir turu taşıyacak kadar dolu', () {
+    // Bir düello 10 soruluk. 21 soruluk bir kategoride havuz iki turda
+    // tükeniyor ve sorular tekrar etmeye başlıyor — kategori "açık"
+    // görünüyor ama oynanmıyor. Sînema tam olarak bu durumdaydı
+    // (2026-07-26: 21 → 45).
+    //
+    // Taban 40: dört ayrı tur demek. Teknolojî de kapatılmak yerine bu
+    // sayıya kadar doldurulmuştu; ölçüt oradan alındı. Bu bir mandal —
+    // yeni bir kategori açmak, onu doldurmadan mümkün olmasın.
+    const floor = 40;
+    final counts = <String, int>{};
+    for (final source in [
+      'assets/data/offline_questions.json',
+      'assets/data/community_questions.json',
+      'assets/data/editorial_questions.json',
+    ]) {
+      final file = File(source);
+      if (!file.existsSync()) continue;
+      for (final raw in jsonDecode(file.readAsStringSync()) as List) {
+        final category = (raw as Map<String, dynamic>)['category'] as String;
+        counts[category] = (counts[category] ?? 0) + 1;
+      }
+    }
+
+    final thin = counts.entries
+        .where((e) => isCategoryVisible(e.key) && e.value < floor)
+        .map((e) => '${e.key}: ${e.value}')
+        .toList();
+
+    expect(
+      thin,
+      isEmpty,
+      reason: 'Görünür ama tek tur bile taşımayan kategori: ${thin.join(", ")}',
+    );
   });
 
   test('visibleCategories sırayı korur', () {
