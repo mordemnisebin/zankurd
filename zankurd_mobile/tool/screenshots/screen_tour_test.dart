@@ -9,6 +9,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
+import 'package:zankurd_mobile/src/models/friend.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
+import 'package:zankurd_mobile/src/models/contest.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
@@ -135,6 +140,32 @@ Future<void> _pump(
   // tur boyunca kilitlenmeye yol açar. Sabit süreli pump yeterlidir.
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 900));
+}
+
+/// Yeni kullanıcının gerçekten gördüğü depo.
+///
+/// `MockZanKurdRepository` arkadaş, sıralama ve yarışma satırlarıyla dolu
+/// gelir; tur bu yüzden hep "kalabalık" bir uygulamayı gösteriyordu. Oysa
+/// ilk açılışta hiçbiri yok. Ürünün en önemli ölçütü ilk kullanımda
+/// şaşırmamak olduğu için o hâl de basılmalı (2026-07-26).
+class _EmptyStateRepository extends MockZanKurdRepository {
+  @override
+  Future<List<Friend>> loadFriends() async => const [];
+
+  @override
+  Future<List<FriendRequest>> loadPendingFriendRequests() async => const [];
+
+  @override
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+    int limit = 20,
+  }) async => const [];
+
+  @override
+  Future<List<ContestLeaderboardRow>> getContestLeaderboard({
+    required String contestId,
+    int limit = 10,
+  }) async => const [];
 }
 
 void main() {
@@ -398,6 +429,25 @@ void main() {
   testWidgets('31 yarışma (Kurmancî)', (t) async {
     await _pump(t, ContestScreen(repository: repository), ku: true);
     await _shoot(t, '31_contest_ku');
+  }, tags: ['preview']);
+
+  // ── Boş durumlar ──
+  //
+  // İlk açılışta arkadaş yok, sıralama boş, yarışmaya kimse katılmamış.
+  // Bu ekranlar turda hiç görünmüyordu.
+  testWidgets('32 sıralama (boş)', (t) async {
+    await _pump(t, LeaderboardScreen(repository: _EmptyStateRepository()));
+    await _shoot(t, '32_leaderboard_empty');
+  }, tags: ['preview']);
+
+  testWidgets('33 arkadaşlar (boş)', (t) async {
+    await _pump(t, FriendsScreen(repository: _EmptyStateRepository()));
+    await _shoot(t, '33_friends_empty');
+  }, tags: ['preview']);
+
+  testWidgets('34 yarışma (boş)', (t) async {
+    await _pump(t, ContestScreen(repository: _EmptyStateRepository()));
+    await _shoot(t, '34_contest_empty');
   }, tags: ['preview']);
 
   testWidgets('14 ders akışı', (t) async {

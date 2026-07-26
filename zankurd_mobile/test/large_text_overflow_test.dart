@@ -42,15 +42,26 @@ void main() {
     repository = freshMockRepository();
   });
 
-  Future<void> expectNoOverflow(WidgetTester tester, Widget screen) async {
+  /// [screen]'i verilen ölçekte ve boyutta açıp taşma arar.
+  ///
+  /// Varsayılan 390x844 (iPhone 14) ve %200 yazı. Dar ekran geçişi aynı
+  /// koşumu 320x568 ile (iPhone SE, hâlâ desteklenen en dar cihaz) ve
+  /// normal yazıyla tekrarlar: iki kusur türü ayrı ayrı yakalanmalı,
+  /// birleştirmek hangisinin taşırdığını belirsiz bırakır.
+  Future<void> expectNoOverflow(
+    WidgetTester tester,
+    Widget screen, {
+    Size size = const Size(390, 844),
+    double textScale = 2.0,
+  }) async {
     tester.view.devicePixelRatio = 3.0;
-    tester.view.physicalSize = const Size(390 * 3, 844 * 3);
+    tester.view.physicalSize = size * 3;
     addTearDown(tester.view.reset);
 
     await tester.pumpWidget(
       testShell(
         child: MediaQuery(
-          data: const MediaQueryData(textScaler: TextScaler.linear(2.0)),
+          data: MediaQueryData(textScaler: TextScaler.linear(textScale)),
           child: screen,
         ),
       ),
@@ -141,6 +152,89 @@ void main() {
           ),
         ],
       ),
+    );
+  });
+
+  // ── Dar ekran (iPhone SE, 320x568) ──
+  //
+  // Ölçek normal; ölçülen şey yazı boyutu değil, genişlik. Uygulama en dar
+  // desteklenen cihazda da taşmamalı.
+  const se = Size(320, 568);
+
+  testWidgets('dar ekran — ana ekran', (t) async {
+    await expectNoOverflow(
+      t,
+      Scaffold(body: HomeScreen(repository: repository)),
+      size: se,
+      textScale: 1.0,
+    );
+  });
+
+  testWidgets('dar ekran — oyun merkezi', (t) async {
+    await expectNoOverflow(
+      t,
+      PlayHubScreen(repository: repository),
+      size: se,
+      textScale: 1.0,
+    );
+  });
+
+  testWidgets('dar ekran — profil', (t) async {
+    await expectNoOverflow(
+      t,
+      Scaffold(body: ProfileScreen(repository: repository)),
+      size: se,
+      textScale: 1.0,
+    );
+  });
+
+  testWidgets('dar ekran — mağaza', (t) async {
+    await expectNoOverflow(
+      t,
+      ShopScreen(repository: repository),
+      size: se,
+      textScale: 1.0,
+    );
+  });
+
+  testWidgets('dar ekran — sıralama', (t) async {
+    await expectNoOverflow(
+      t,
+      LeaderboardScreen(repository: repository),
+      size: se,
+      textScale: 1.0,
+    );
+  });
+
+  testWidgets('dar ekran — yarışma', (t) async {
+    await expectNoOverflow(
+      t,
+      ContestScreen(repository: repository),
+      size: se,
+      textScale: 1.0,
+    );
+  });
+
+  testWidgets('dar ekran — turnuva', (t) async {
+    await expectNoOverflow(
+      t,
+      TournamentScreen(repository: repository),
+      size: se,
+      textScale: 1.0,
+    );
+  });
+
+  testWidgets('dar ekran — soru ekranı', (t) async {
+    await expectNoOverflow(
+      t,
+      QuizScreen(
+        repository: repository,
+        room: repository.createRoom(),
+        questions: repository.questions.take(5).toList(),
+        enableTimer: false,
+      ),
+      size: se,
+      textScale: 1.0,
     );
   });
 }
