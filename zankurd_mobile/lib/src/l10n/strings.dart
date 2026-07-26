@@ -443,7 +443,7 @@ class Tr {
     // Kurmancî karşılık "Kûpa"dır; iki dil için aynı metin ("Bot turnuva")
     // yazılmıştı ve Türkçe sözcük Kurmancî arayüze sızıyordu. Terim
     // tutarlılığı testi bunu göç sırasında yakaladı (2026-07-25).
-    K.botTournament: {'ku': 'Kûpaya botan', 'tr': 'Bot turnuva'},
+    K.botTournament: {'ku': 'Kûpa', 'tr': 'Turnuva'},
     K.bracket: {'ku': 'Şemaya Kûpayê', 'tr': 'Turnuva Şeması'},
     K.standings: {'ku': 'Rêzkirin', 'tr': 'Sıralama'},
     K.everySaturday: {'ku': 'Her Şemî 20:00', 'tr': 'Her Cumartesi 20:00'},
@@ -460,16 +460,16 @@ class Tr {
     // ilk kullanıcı için tam da kaçınılması gereken karışıklık
     // (2026-07-26 denetimi).
     K.botDailyCup: {
-      'ku': 'Kûpaya botan · heftane',
-      'tr': 'Bot turnuva · haftalık kupa',
+      'ku': 'Kûpa · heftane',
+      'tr': 'Haftalık kupa',
     },
     K.formatSummary: {
-      'ku': '16 lîstikvan (bot) · 4 tur · {perMatch} pirs/maç',
-      'tr': '16 oyuncu (bot) · 4 tur · {perMatch} soru/maç',
+      'ku': '{perMatch} pirs/maç · lîstikvanên rastî',
+      'tr': '{perMatch} soru/maç · gerçek oyuncular',
     },
     K.botRaceHint: {
-      'ku': 'Bi botan re pêş bikeve — şampiyon kûpayê digire!',
-      'tr': 'Bot rakiplere karşı yarış — şampiyon kupayı alır!',
+      'ku': 'Bi lîstikvanên rastî re pêş bikeve — şampiyon kûpayê digire!',
+      'tr': 'Gerçek oyuncularla yarış — şampiyon kupayı alır!',
     },
     K.joinTournament: {'ku': 'Tevlî Kûpayê Bibe', 'tr': 'Turnuvaya Katıl'},
     K.champion: {'ku': 'Şampiyon!', 'tr': 'Şampiyon!'},
@@ -913,6 +913,22 @@ class Tr {
     K.rewardPending: {
       'ku': 'Girêdan tune — xelata te tê tomarkirin û paşê tê dayîn.',
       'tr': 'Bağlantı yok — ödülün kaydedildi, bağlanınca verilecek.',
+    },
+    K.tournamentWaitingTitle: {
+      'ku': 'Em li lîstikvanan digerin',
+      'tr': 'Oyuncular bekleniyor',
+    },
+    K.tournamentWaitingBody: {
+      'ku':
+          'Kûpa bi lîstikvanên rastî tê lîstin. Gava hejmar temam bibe '
+          'hevrik tên diyarkirin — tu dikarî paşê vegerî.',
+      'tr':
+          'Turnuva gerçek oyuncularla oynanır. Kontenjan dolunca eşleşmeler '
+          'kurulur — daha sonra tekrar bakabilirsin.',
+    },
+    K.tournamentWaitingOpponent: {
+      'ku': 'Skora te hate tomarkirin; em li bersiva hevrikê te dinêrin.',
+      'tr': 'Skorun kaydedildi; rakibinin oynamasını bekliyoruz.',
     },
     K.buyAction: {'ku': 'Bikire', 'tr': 'Satın Al'},
     K.buyItemForCoins: {
@@ -1919,6 +1935,9 @@ class K {
   static const cancelShort = 'common.cancelShort';
   static const unlockFree = 'shop.unlockFree';
   static const rewardPending = 'result.rewardPending';
+  static const tournamentWaitingTitle = 'tournament.waitingTitle';
+  static const tournamentWaitingBody = 'tournament.waitingBody';
+  static const tournamentWaitingOpponent = 'tournament.waitingOpponent';
   static const buyAction = 'shop.buy';
   static const buyItemForCoins = 'shop.buyItemForCoins';
   static const insufficientBalance = 'shop.insufficientBalance';

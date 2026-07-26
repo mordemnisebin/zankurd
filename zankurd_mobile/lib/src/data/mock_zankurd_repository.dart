@@ -1639,6 +1639,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
   ) async => true;
 
   @override
+  /// Sahte depoda gerçek turnuva yoktur: `null` döner ve ekran bot
+  /// benzetimine düşer.
+  @override
+  Future<TournamentBracket?> joinRealTournament() async => null;
+
+  @override
+  Future<TournamentBracket?> loadRealTournamentBracket() async => null;
+
+  @override
   Future<TournamentBracket> joinTournament() async {
     final rounds = TournamentConfig.generateBracket();
     final bracket = TournamentBracket(

@@ -228,6 +228,18 @@ abstract class ZanKurdRepository {
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId);
   Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload);
 
+  /// Gerçek oyunculu turnuvaya katıl.
+  ///
+  /// `null` dönerse sunucu tarafı kullanılamıyor demektir: migration henüz
+  /// uygulanmamış ya da cihaz çevrimdışı. O durumda ekran eski bot
+  /// benzetimine düşer. Bunu bir bayrakla değil dönüş değeriyle söylemek
+  /// önemli: "sunucu mu, benzetim mi" sorusunu tahmin etmek (oda kimliğine
+  /// bakmak gibi) sahte depoyu sunucu sanmaya yol açıyordu (2026-07-26).
+  Future<TournamentBracket?> joinRealTournament();
+
+  /// Gerçek turnuvanın güncel şeması; yoksa `null`.
+  Future<TournamentBracket?> loadRealTournamentBracket();
+
   /// Turnuvaya katıl: bracket oluştur ve ilk rakip belirle.
   Future<TournamentBracket> joinTournament();
 

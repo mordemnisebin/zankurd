@@ -1633,24 +1633,62 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  // ── Turnuva ────────────────────────────────────────────────────────
+  //
+  // Bu üç yöntem sunucuya bağlanana kadar sahte depoya yönleniyordu: yani
+  // Supabase deposunda bile turnuva bir bot benzetimiydi ve oyuncular hiç
+  // karşılaşmıyordu (2026-07-26). Artık gerçek eşleşme sunucuda kurulur;
+  // eşleştirmeyi, kazananı ve ilerlemeyi `2026-07-26_real_player_tournament
+  // .sql` içindeki fonksiyonlar belirler.
+  //
+  // Migration henüz uygulanmamışsa PostgREST 42883 ("function does not
+  // exist") döner. O durumda ekran boş kalmasın diye eski bot benzetimine
+  // düşülür — bu bir yedek yol, hedef değil.
+
+  bool _isMissingFunction(Object error) =>
+      error is PostgrestException && error.code == '42883';
+
   @override
-  Future<TournamentBracket> joinTournament() async {
+  Future<TournamentBracket?> joinRealTournament() async {
     try {
-      return _offline.joinTournament();
+      client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      await client.rpc('join_tournament');
+      return await loadRealTournamentBracket();
     } catch (e, s) {
-      _recordError(e, s, reason: 'joinTournament failed');
-      return _offline.joinTournament();
+      if (!_isMissingFunction(e)) {
+        _recordError(e, s, reason: 'joinRealTournament failed');
+      }
+      return null;
     }
   }
 
   @override
-  Future<TournamentBracket?> loadTournamentBracket() async {
+  Future<TournamentBracket?> loadRealTournamentBracket() async {
     try {
-      return _offline.loadTournamentBracket();
+      final response = await client.rpc('get_tournament_bracket');
+      if (response == null) return null;
+      return TournamentBracket.fromJson(
+        Map<String, dynamic>.from(response as Map),
+      );
     } catch (e, s) {
-      _recordError(e, s, reason: 'loadTournamentBracket failed');
-      return _offline.loadTournamentBracket();
+      if (!_isMissingFunction(e)) {
+        _recordError(e, s, reason: 'loadRealTournamentBracket failed');
+      }
+      return null;
     }
+  }
+
+  @override
+  Future<TournamentBracket> joinTournament() async {
+    final real = await joinRealTournament();
+    return real ?? await _offline.joinTournament();
+  }
+
+  @override
+  Future<TournamentBracket?> loadTournamentBracket() async {
+    final real = await loadRealTournamentBracket();
+    return real ?? await _offline.loadTournamentBracket();
   }
 
   @override
@@ -1660,13 +1698,40 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     required int opponentScore,
   }) async {
     try {
+      // Rakibin skoru gönderilmez: onu rakip kendi bildirir. İstemcinin
+      // karşı tarafın skorunu yazabilmesi, maçı tek başına kazanabilmesi
+      // demekti.
+      await client.rpc(
+        'submit_tournament_match',
+        params: {'p_match_id': matchId, 'p_score': playerScore},
+      );
+      final bracket = await loadTournamentBracket();
+      final match = bracket?.rounds
+          .expand((round) => round.matches)
+          .firstWhere(
+            (m) => m.id == matchId,
+            orElse: () => const TournamentMatch(
+              id: '',
+              playerOneId: '',
+              playerOneName: '',
+              playerTwoId: '',
+              playerTwoName: '',
+              playerOneScore: 0,
+              playerTwoScore: 0,
+              status: 'pending',
+              winnerId: '',
+            ),
+          );
+      if (match != null && match.id.isNotEmpty) return match;
       return _offline.submitTournamentMatch(
         matchId: matchId,
         playerScore: playerScore,
         opponentScore: opponentScore,
       );
     } catch (e, s) {
-      _recordError(e, s, reason: 'submitTournamentMatch failed');
+      if (!_isMissingFunction(e)) {
+        _recordError(e, s, reason: 'submitTournamentMatch failed');
+      }
       return _offline.submitTournamentMatch(
         matchId: matchId,
         playerScore: playerScore,

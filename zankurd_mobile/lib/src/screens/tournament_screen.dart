@@ -51,12 +51,37 @@ class _TournamentScreenState extends State<TournamentScreen> {
   static List<String> get _botNames => BotNames.pool;
 
   TournamentBracket? _bracket;
+
+  /// Şema sunucudan mı geldi?
+  ///
+  /// Geldiyse eşleştirmeyi, kazananı ve ilerlemeyi sunucu belirler; istemci
+  /// yalnız kendi skorunu bildirir. Gelmediyse (migration uygulanmamış ya da
+  /// cihaz çevrimdışı) eski bot benzetimi yedek olarak sürer — turnuva
+  /// ekranı hiç açılmaz olmasın diye (2026-07-26).
+  bool _serverBracket = false;
+
+  /// Turnuva doldu mu bekliyoruz?
+  bool _waitingForPlayers = false;
   List<TournamentStandings> _standings = const [];
   bool _loading = true;
   bool _hasError = false;
   bool _matchLoading = false;
   String _userName = '';
-  static const _userId = 'user';
+
+  /// Bot benzetimindeki yerel oyuncu kimliği.
+  ///
+  /// Benzetimde şemayı istemci kurduğu için sabit bir kimlik yeterliydi.
+  /// Gerçek turnuvada kimlikler sunucudan gelen UUID'lerdir; sabit değeri
+  /// kullanmak "benim maçım"ın hiç bulunamaması demekti (2026-07-26).
+  static const _simulatedUserId = 'user';
+
+  /// Şemadaki kimliğimiz: sunucu yolunda gerçek kullanıcı, benzetimde
+  /// sabit değer.
+  String get _userId => _serverBracket
+      ? (_bracket?.userId ??
+            widget.repository.currentUserId ??
+            _simulatedUserId)
+      : _simulatedUserId;
 
   @override
   void initState() {
@@ -70,12 +95,19 @@ class _TournamentScreenState extends State<TournamentScreen> {
       _hasError = false;
     });
     try {
-      final bracket = await widget.repository.loadTournamentBracket();
+      // Önce gerçek turnuva sorulur. `null` dönmesi "sunucu tarafı yok"
+      // demektir; şemanın kimliğine bakarak tahmin etmek sahte depoyu
+      // sunucu sanmaya yol açıyordu.
+      final real = await widget.repository.loadRealTournamentBracket();
+      final bracket = real ?? await widget.repository.loadTournamentBracket();
       final standings = await widget.repository.loadTournamentStandings();
       if (!mounted) return;
       setState(() {
         // Oyuncu yerleştirilmemiş (boş) şema lobi sayılır.
-        _bracket = (bracket != null && _isSeeded(bracket)) ? bracket : null;
+        final seeded = bracket != null && _isSeeded(bracket);
+        _bracket = seeded ? bracket : null;
+        _serverBracket = seeded && real != null;
+        _waitingForPlayers = real != null && !_isSeeded(real);
         _standings = standings;
         _loading = false;
       });
@@ -102,6 +134,28 @@ class _TournamentScreenState extends State<TournamentScreen> {
     }
     if (!mounted) return;
     _userName = name.isEmpty ? context.t(K.you) : name;
+
+    // Önce gerçek turnuva: sunucu bizi açık turnuvaya yazar ve kontenjan
+    // dolduğunda eşleşmeleri kurar. Henüz dolmadıysa şema boş döner; o
+    // zaman beklenir — bot uydurmak, "gerçek insanlar" sözünü bozardı.
+    try {
+      final joined = await widget.repository.joinRealTournament();
+      if (!mounted) return;
+      if (joined != null) {
+        setState(() {
+          final seeded = _isSeeded(joined);
+          _bracket = seeded ? joined : null;
+          _serverBracket = seeded;
+          // Kontenjan dolmadıysa beklenir; bot uydurmak "gerçek insanlar"
+          // sözünü bozardı.
+          _waitingForPlayers = !seeded;
+        });
+        return;
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'tournament_join');
+    }
+    if (!mounted) return;
 
     final rounds = TournamentConfig.generateBracket();
     final firstRound = rounds.first;
@@ -165,6 +219,20 @@ class _TournamentScreenState extends State<TournamentScreen> {
     });
   }
 
+  /// Kendi skorumuzu bildirdik ama maç hâlâ açık mı?
+  ///
+  /// Şemada "kim gönderdi" alanı yok; skorun sıfırdan büyük olması
+  /// gönderdiğimizin işaretidir. Sunucu skoru tek sefer kabul ettiği için
+  /// bu çıkarım güvenli: bir kez yazıldıysa bizim skorumuzdur.
+  bool get _awaitingOpponent {
+    final match = _userMatch;
+    if (match == null || match.status == 'completed') return false;
+    final myScore = match.playerOneId == _userId
+        ? match.playerOneScore
+        : match.playerTwoScore;
+    return myScore > 0;
+  }
+
   TournamentMatch? get _userMatch {
     final bracket = _bracket;
     if (bracket == null || bracket.status != 'active') return null;
@@ -222,10 +290,32 @@ class _TournamentScreenState extends State<TournamentScreen> {
       );
       if (!mounted) return;
       if (tournamentMatchCompleted(result)) {
-        _advanceRound(
-          userScore: tournamentMatchScore(result),
-          opponentScore: tournamentOpponentScore(result),
-        );
+        if (_serverBracket && match != null) {
+          // Gerçek turnuvada sonucu istemci belirlemez: skorumuzu bildirip
+          // şemayı sunucudan yeniden okuruz. Rakip henüz oynamadıysa maç
+          // 'completed' olmaz ve ekran bekleme durumunu gösterir.
+          await widget.repository
+              .submitTournamentMatch(
+                matchId: match.id,
+                playerScore: tournamentMatchScore(result),
+                opponentScore: 0,
+              )
+              .catchError((error, stack) {
+                ErrorReporter.record(
+                  error,
+                  stack,
+                  reason: 'tournament_submit_match',
+                );
+                return match;
+              });
+          if (!mounted) return;
+          await _load();
+        } else {
+          _advanceRound(
+            userScore: tournamentMatchScore(result),
+            opponentScore: tournamentOpponentScore(result),
+          );
+        }
       }
     } finally {
       if (mounted) setState(() => _matchLoading = false);
@@ -387,6 +477,21 @@ class _TournamentScreenState extends State<TournamentScreen> {
                     onRetry: _load,
                   ),
                 )
+              : _waitingForPlayers
+              // Gerçek oyunculu turnuvanın kaçınılmaz hâli: kontenjan
+              // dolana dek beklenir. Burada bot uydurmak "gerçek insanlar"
+              // sözünü bozardı (2026-07-26).
+              ? Center(
+                  child: AppEmptyState(
+                    key: const ValueKey('tournament-waiting'),
+                    icon: AppIcons.hourglass,
+                    title: context.t(K.tournamentWaitingTitle),
+                    message: context.t(K.tournamentWaitingBody),
+                    actionLabel: context.t(K.retry),
+                    actionIcon: AppIcons.arrowsRotate,
+                    onAction: _load,
+                  ),
+                )
               : _bracket == null
               ? _LobbyView(ku: ku, onStart: _startTournament)
               : _buildBracket(context, ku),
@@ -446,7 +551,38 @@ class _TournamentScreenState extends State<TournamentScreen> {
                   const SizedBox(height: AppSpacing.md),
                   _ChampionBanner(ku: ku),
                 ],
-                if (userMatch != null) ...[
+                // Skorumuzu bildirdik ama maç kapanmadı: rakip henüz
+                // oynamamış. Gerçek oyunculu turnuvada bu normal bir
+                // durumdur ve söylenmezse oyuncu bir şeyin bozulduğunu
+                // sanır (2026-07-26).
+                if (_serverBracket && _awaitingOpponent) ...[
+                  const SizedBox(height: AppSpacing.md),
+                  Container(
+                    key: const ValueKey('tournament-awaiting-opponent'),
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    decoration: AppTheme.cardDecoration(context),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          AppIcons.hourglass,
+                          size: 16,
+                          color: AppTheme.gold,
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
+                        Expanded(
+                          child: Text(
+                            context.t(K.tournamentWaitingOpponent),
+                            style: AppTypography.bodyMedium.copyWith(
+                              color: AppTheme.textSubColor(context),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                if (userMatch != null && !_awaitingOpponent) ...[
                   const SizedBox(height: AppSpacing.md),
                   _UserMatchCard(
                     match: userMatch,

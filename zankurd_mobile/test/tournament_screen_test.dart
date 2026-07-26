@@ -53,7 +53,10 @@ void main() {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      expect(find.text('Bot turnuva · haftalık kupa'), findsOneWidget);
+      // 2026-07-26: turnuva gerçek oyunculara çevrildi; ekran artık
+      // kendini "bot turnuva" diye tanıtmıyor.
+      expect(find.text('Haftalık kupa'), findsOneWidget);
+      expect(find.textContaining('bot'), findsNothing);
       expect(find.text('Turnuvaya Katıl'), findsOneWidget);
       final startButton = tester.widget<FilledButton>(
         find.byKey(const ValueKey('tournament-primary-cta')),
