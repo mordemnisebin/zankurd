@@ -220,12 +220,18 @@ class _ProfileHeroCard extends StatelessWidget {
                                       size: 14,
                                     ),
                                     const SizedBox(width: 5),
-                                    Text(
-                                      tier.label(ku),
-                                      style: AppTypography.caption.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 11,
+                                    // Rozet metni büyük yazıda kartın dışına
+                                    // taşıyordu (2026-07-26).
+                                    Flexible(
+                                      child: Text(
+                                        tier.label(ku),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTypography.caption.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 11,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -606,15 +612,18 @@ class _UnifiedRewardsSection extends StatelessWidget {
             children: [
               const Icon(AppIcons.medal, color: AppTheme.gold),
               const SizedBox(width: 8),
-              Text(
-                isKu ? 'Destkeftî' : 'Başarılar',
-                style: AppTypography.bodyLarge.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 17,
+              // Başlık + sayaç + düğme büyük yazıda satırı taşırıyordu;
+              // başlık artık kalan genişliği alır (2026-07-26).
+              Expanded(
+                child: Text(
+                  isKu ? 'Destkeftî' : 'Başarılar',
+                  style: AppTypography.bodyLarge.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 17,
+                  ),
                 ),
               ),
-              const Spacer(),
               // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
               TextButton(
                 onPressed: () => _showAllSheet(context),

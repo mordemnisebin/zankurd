@@ -507,22 +507,30 @@ class _FriendCard extends StatelessWidget {
             // kodunu arkadaşla paylaşmanı istiyor. Çevrimdışı bir arkadaşta
             // bile aynı sözü veriyordu. Ad, yapılan işi anlatır — yeni
             // kullanıcının şaşırmaması ilk ölçüt (2026-07-26).
-            FilledButton.tonal(
-              key: ValueKey('friend-action-${friend.friendName}'),
-              onPressed: busy ? null : onPlay,
-              style: FilledButton.styleFrom(
-                backgroundColor: AppTheme.cyan.withValues(alpha: 0.14),
-                foregroundColor: AppTheme.cyan,
+            // Düğme büyük yazıda satırı taşırıyordu; genişliği sınırlanıp
+            // etiketi kısalabilir hâle getirildi (2026-07-26).
+            Flexible(
+              child: FilledButton.tonal(
+                key: ValueKey('friend-action-${friend.friendName}'),
+                onPressed: busy ? null : onPlay,
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppTheme.cyan.withValues(alpha: 0.14),
+                  foregroundColor: AppTheme.cyan,
+                ),
+                child: busy
+                    // Oda kurulurken düğme sessizce ölüydü: ikinci dokunuş
+                    // `_roomLoading` kontrolüne takılıp hiçbir iz bırakmıyordu.
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : Text(
+                        context.t(K.inviteToRoom),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
               ),
-              child: busy
-                  // Oda kurulurken düğme sessizce ölüydü: ikinci dokunuş
-                  // `_roomLoading` kontrolüne takılıp hiçbir iz bırakmıyordu.
-                  ? const SizedBox(
-                      width: 16,
-                      height: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : Text(context.t(K.inviteToRoom)),
             ),
           ],
         ),

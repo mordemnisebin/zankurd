@@ -649,11 +649,18 @@ class _LobbyView extends StatelessWidget {
                                     color: AppTheme.textSubColor(context),
                                   ),
                                   const SizedBox(width: 6),
-                                  Text(
-                                    scheduleText,
-                                    style: AppTypography.caption.copyWith(
-                                      color: AppTheme.textPrimaryColor(context),
-                                      fontWeight: FontWeight.w700,
+                                  // Sistem yazısı büyütüldüğünde bu satır
+                                  // rozetin dışına taşıyordu; metin artık
+                                  // kalan genişliğe sığar (2026-07-26).
+                                  Flexible(
+                                    child: Text(
+                                      scheduleText,
+                                      style: AppTypography.caption.copyWith(
+                                        color: AppTheme.textPrimaryColor(
+                                          context,
+                                        ),
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
                                 ],

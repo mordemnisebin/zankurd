@@ -767,9 +767,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.md),
-                                // Reward chips row
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                // Ödül rozetleri.
+                                //
+                                // `Row` idi: sistem yazısı büyütüldüğünde iki
+                                // rozet yan yana sığmıyor ve kartın dışına
+                                // taşıyordu. `Wrap` sığmayanı alt satıra alır
+                                // (2026-07-26).
+                                Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: 8,
+                                  runSpacing: 8,
                                   children: [
                                     if (coinsAwarded > 0)
                                       _ResultRewardChip(
@@ -777,8 +784,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                         label: '+${coinsAwarded}c',
                                         color: AppTheme.gold,
                                       ),
-                                    if (coinsAwarded > 0 && _earnedXP > 0)
-                                      const SizedBox(width: 8),
                                     if (_earnedXP > 0)
                                       _ResultRewardChip(
                                         icon: AppIcons.bolt,

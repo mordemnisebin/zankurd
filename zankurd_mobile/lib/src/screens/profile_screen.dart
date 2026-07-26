@@ -478,12 +478,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               gradient: AppTheme.accentGradient,
                             ),
                           ),
-                          Text(
-                            context.t(K.profileTitle),
-                            style: AppTypography.heading1.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontSize: 28,
-                              letterSpacing: -0.5,
+                          // Büyük sistem yazısında başlık satırı taşıyordu.
+                          Expanded(
+                            child: Text(
+                              context.t(K.profileTitle),
+                              style: AppTypography.heading1.copyWith(
+                                color: AppTheme.textPrimaryColor(context),
+                                fontSize: 28,
+                                letterSpacing: -0.5,
+                              ),
                             ),
                           ),
                         ],
