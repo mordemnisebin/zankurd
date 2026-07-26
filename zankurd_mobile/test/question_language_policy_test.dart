@@ -104,6 +104,75 @@ void main() {
     });
   });
 
+  /// Yukarıdaki taban gövde ile şıkları karşılaştırır ve çeviri
+  /// alıştırmalarını muaf tutar. Asıl zarar ise tam orada duruyordu:
+  /// "Wêneya 'pirtûk' tê çi wateyê?" sorusunun doğru cevabı `kitap`,
+  /// çeldiricilerinden biri `zanîn`. Kurmancî çeldirici, sorunun ne
+  /// istediğini bilen herkes için tek bakışta elenir — soru bilgiyi değil
+  /// biçimi ölçmeye başlar.
+  ///
+  /// 2026-07-26 denetimi: 159 soruda bu vardı, 25'inde doğru cevap dil
+  /// bakımından tek olan şıktı. Tamamı çeviriyle giderildi
+  /// (`tool/fix_option_languages.py`), bu yüzden taban doğrudan sıfırdır.
+  group('şık dili doğru cevapla aynı', () {
+    test('hiçbir soruda yabancı dilde çeldirici yok', () {
+      final offenders = {
+        for (final question in offlineQuestionBank)
+          if (policy.offLanguageDistractors(question).isNotEmpty)
+            question.id: policy.offLanguageDistractors(question),
+      };
+
+      expect(
+        offenders,
+        isEmpty,
+        reason:
+            'Doğru cevaptan farklı dilde çeldirici eklendi: '
+            '${offenders.entries.take(5).map((e) => "${e.key} → ${e.value}").join("; ")}',
+      );
+    });
+
+    test('hiçbir soruda doğru cevabı dil ele vermiyor', () {
+      final leaks = offlineQuestionBank
+          .where(policy.answerIsGivenAwayByLanguage)
+          .map((q) => q.id)
+          .toList();
+
+      expect(
+        leaks,
+        isEmpty,
+        reason:
+            'Doğru cevap dil bakımından tek olan şık; soru konudan bağımsız '
+            'çözülebilir: ${leaks.take(5).join(", ")}',
+      );
+    });
+
+    test('özel adlar ihlal sayılmaz', () {
+      // Yanlış pozitif koruması: kişi/yer adları Türkçe bir şık listesinde de
+      // Kurmancî imlasıyla yazılır. Bu muafiyet olmadan denetim, düzeltilecek
+      // bir şey yokken 14 soruyu suçluyordu.
+      expect(QuestionLanguagePolicy.looksLikeProperName('Şêro Hindê'), isTrue);
+      expect(
+        QuestionLanguagePolicy.looksLikeProperName('Mazlum Doğan'),
+        isTrue,
+      );
+      // Küçük harfli `û` bağlacı adı cümleye çevirir: Türkçe listede
+      // "Dicle ve Fırat" yazmak gerekir.
+      expect(
+        QuestionLanguagePolicy.looksLikeProperName('Dîcle û Ferat'),
+        isFalse,
+      );
+      // Ayraçlı açıklama taşıyan şık ad değildir.
+      expect(
+        QuestionLanguagePolicy.looksLikeProperName('Şerefxan (mîrê Bidlîsê)'),
+        isFalse,
+      );
+      expect(
+        QuestionLanguagePolicy.looksLikeProperName('geleneksel erkek giysisi'),
+        isFalse,
+      );
+    });
+  });
+
   // 2026-07-22 canlı UX denetimi: şablon çeşitlilik koruması
   group('şablon çeşitlilik koruması', () {
     test('no single 4-word prefix accounts for more than 20% of bank', () {

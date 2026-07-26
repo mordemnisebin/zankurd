@@ -119,7 +119,7 @@ void main() {
     test('loadTodayContest returns today contest', () async {
       final contest = await repo.loadTodayContest();
       expect(contest, isNotNull);
-      expect(contest?.themeNameKu, 'Ziman Eksperi');
+      expect(contest?.themeNameKu, 'Pisporê Ziman');
       expect(contest?.category, 'Ziman');
     });
 
@@ -228,6 +228,45 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.byType(ContestScreen), findsOneWidget);
+    });
+  });
+
+  group('Contest tema dili', () {
+    // 2026-07-26 denetimi: Türkçe arayüzde günün etkinliği "Ziman Eksperi"
+    // diye görünüyordu — kategori çipi "Dil" derken başlık Kurmancî
+    // kalıyordu. Modele Türkçe alanlar eklendi; eksikse Kurmancî'ye düşer,
+    // çünkü çevrilmemiş metin boş metinden iyidir.
+    final bilingual = Contest(
+      id: 'c1',
+      dayKey: DateTime(2026, 7, 26),
+      themeNameKu: 'Pisporê Ziman',
+      themeDescriptionKu: 'Bibe hostayê ziman!',
+      themeNameTr: 'Dil Uzmanı',
+      themeDescriptionTr: 'Dilin ustası ol!',
+      category: 'Ziman',
+    );
+
+    test('Türkçe arayüz Türkçe metni alır', () {
+      expect(bilingual.themeNameFor(isKu: false), 'Dil Uzmanı');
+      expect(bilingual.themeDescriptionFor(isKu: false), 'Dilin ustası ol!');
+    });
+
+    test('Kurmancî arayüz Kurmancî metni alır', () {
+      expect(bilingual.themeNameFor(isKu: true), 'Pisporê Ziman');
+      expect(bilingual.themeDescriptionFor(isKu: true), 'Bibe hostayê ziman!');
+    });
+
+    test('Türkçe alan yoksa Kurmancî’ye düşülür', () {
+      final onlyKurmanci = bilingual.copyWith();
+      final stripped = Contest(
+        id: onlyKurmanci.id,
+        dayKey: onlyKurmanci.dayKey,
+        themeNameKu: onlyKurmanci.themeNameKu,
+        themeDescriptionKu: onlyKurmanci.themeDescriptionKu,
+        category: onlyKurmanci.category,
+      );
+      expect(stripped.themeNameFor(isKu: false), 'Pisporê Ziman');
+      expect(stripped.themeDescriptionFor(isKu: false), 'Bibe hostayê ziman!');
     });
   });
 }

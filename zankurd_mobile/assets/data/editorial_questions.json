@@ -792,12 +792,12 @@
     "category": "Çand",
     "prompt": "Di çanda kurdî de \"gotinên pêşiyan\" çi ne?",
     "answers": [
-      "Atasözleri",
-      "Stranên dînî",
-      "Navên gundan",
-      "Rêzikên rêzimanî"
+      "gotinên kurt ên ku ezmûna nifşan digihînin hev",
+      "stranên olî yên ku di dua û ayînan de tên gotin",
+      "navên gundên kevn ên ku di nexşeyan de dijîn",
+      "rêzikên rêzimanî yên ku hevoksaziyê diyar dikin"
     ],
-    "correctAnswer": "Atasözleri",
+    "correctAnswer": "gotinên kurt ên ku ezmûna nifşan digihînin hev",
     "explanation": "Gotinên pêşiyan, halkın deneyimini kısa cümlelerle aktaran atasözleridir.",
     "explanationKu": "Gotinên pêşiyan ezmûna gel a bi hevokên kurt tê veguhastin.",
     "explanationTr": "Gotinên pêşiyan, halkın deneyimini kısa cümlelerle aktaran atasözleridir.",

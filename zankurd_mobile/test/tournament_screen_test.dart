@@ -53,7 +53,7 @@ void main() {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      expect(find.text('Bot turnuva · günlük kupa'), findsOneWidget);
+      expect(find.text('Bot turnuva · haftalık kupa'), findsOneWidget);
       expect(find.text('Turnuvaya Katıl'), findsOneWidget);
       final startButton = tester.widget<FilledButton>(
         find.byKey(const ValueKey('tournament-primary-cta')),

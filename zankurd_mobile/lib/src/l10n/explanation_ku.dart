@@ -16,6 +16,13 @@ final List<_Rule> _rules = [
     RegExp(r'^Kurmancî "([^"]+)" ≈ "([^"]+)"\.$'),
     (m) => 'Kurmancî "${m[1]}" ≈ "${m[2]}".',
   ),
+  // '"aile" kelimesinin karşılığı "malbat"dir.' — 20 sözlük açıklaması bu
+  // kalıptaydı ve kural olmadığı için Kurmancî arayüzde Türkçe kalıyordu
+  // (2026-07-26 denetimi).
+  _Rule(
+    RegExp(r'^"([^"]+)" kelimesinin karşılığı "([^"]+)"[\wıüö]*\.$'),
+    (m) => 'Berambera peyva "${m[1]}" ev e: "${m[2]}".',
+  ),
   // '"kevin" kelimesi "eski" demektir.'
   _Rule(
     RegExp(r'^"([^"]+)" kelimesi "([^"]+)" demektir\.$'),

@@ -118,7 +118,18 @@ class NotificationService {
       const InitializationSettings initializationSettings =
           InitializationSettings(
             android: initializationSettingsAndroid,
-            iOS: DarwinInitializationSettings(),
+            // Darwin varsayılanları izinleri *başlatma anında* ister; bu,
+            // uygulama daha ilk kez çizilmeden sistem bildirim iznini
+            // gösteriyordu (2026-07-25 canlı denetimi, iOS). Kullanıcı ne
+            // istendiğini görmeden reddettiği için izin oranı düşüyor ve
+            // iOS aynı istemi bir daha göstermiyor. İzin artık yalnız
+            // "Günlük hatırlatıcı" açıldığında, [_requestPermissions]
+            // üzerinden istenir.
+            iOS: DarwinInitializationSettings(
+              requestAlertPermission: false,
+              requestBadgePermission: false,
+              requestSoundPermission: false,
+            ),
           );
 
       await _localNotificationsPlugin.initialize(

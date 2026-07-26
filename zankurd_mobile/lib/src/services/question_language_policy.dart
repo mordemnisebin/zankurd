@@ -123,6 +123,30 @@ class QuestionLanguagePolicy {
     return null;
   }
 
+  /// Tırnak içindeki terimleri atarak **cümlenin** dilini belirler.
+  ///
+  /// Açıklama metinleri konuları gereği yabancı terim taşır: `"mal" "ev"
+  /// demektir` cümlesi Türkçedir, ama `detectLanguage` içindeki `mal`ı değil
+  /// `î/ê/û` harflerini sayar ve Kurmancî der. Terim cümlenin dili değil
+  /// konusudur; ölçmeden önce çıkarılır (2026-07-26 denetimi: bu yüzden 546
+  /// açıklama yanlış dilde sayılmıştı).
+  static String? detectSentenceLanguage(String text) {
+    final stripped = text
+        .replaceAll(RegExp('«[^»]*»'), ' ')
+        .replaceAll(RegExp('"[^"]*"'), ' ')
+        .replaceAll(RegExp("'[^']*'"), ' ')
+        .trim();
+    // Terimler çıkınca geriye kalan "Kurmancî ≈ ." gibi kırıntılar karar
+    // vermeye yetmez; `Kurmancî` sözcüğündeki `î` tek başına cümleyi
+    // Kurmancî ilan ediyordu. En az üç sözcük aranır.
+    final words = stripped
+        .split(RegExp(r'[^\wçğıöşüîêû]+'))
+        .where((w) => w.length > 1)
+        .toList();
+    if (words.length < 3) return null;
+    return detectLanguage(words.join(' '));
+  }
+
   /// Soru bir çeviri alıştırması mı? Öyleyse dil karışımı beklenen durumdur.
   bool isTranslationExercise(QuizQuestion question) {
     if (translationCategories.contains(question.category)) return true;
@@ -156,4 +180,99 @@ class QuestionLanguagePolicy {
   }
 
   bool isConsistent(QuizQuestion question) => validate(question).isEmpty;
+
+  /// Doğru cevaptan **farklı dilde** olan çeldiriciler.
+  ///
+  /// [validate] gövde ile şıkları karşılaştırır ve çeviri alıştırmalarını
+  /// muaf tutar; bu ölçüt ise gövdeye hiç bakmaz, dolayısıyla çeviri
+  /// alıştırmalarında da geçerlidir ve orada asıl zararı yakalar:
+  ///
+  ///     "Wêneya 'pirtûk' tê çi wateyê?"
+  ///       kitap   ← doğru (Türkçe karşılık; sorunun istediği şey)
+  ///       Beyaz   ← meşru çeldirici
+  ///       soğuk   ← meşru çeldirici
+  ///       zanîn   ← Kurmancî: soruyu hiç bilmeyen biri bunu tek bakışta eler
+  ///
+  /// Çeldirici havuzu dilden bağımsız üretildiği için 2026-07-26 denetiminde
+  /// 173 soruda bu görüldü; 21'inde doğru cevap dil bakımından tek olan
+  /// şıktı, yani soru bilgi değil biçim ölçüyordu
+  /// ([answerIsGivenAwayByLanguage]).
+  ///
+  /// Dili belirlenemeyen metinler (özel ad, tarih, tek sözcük) sessizce
+  /// geçilir: yanlış pozitif, gerçek bulguyu gölgeleyecek kadar pahalıdır.
+  /// Dil kararı için gereken en az uzunluk.
+  ///
+  /// Tek sözcüklük şıklarda sınıflandırıcı güvenilmez: `ev`, `su`, `yol`
+  /// hiçbir işaret taşımaz ve `dağ` yalnız `ğ` yüzünden Türkçe sayılır.
+  /// "Peyva «mal» bi Tirkî çi tê wateyê?" sorusunun dört şıkkı da Türkçeyken
+  /// yalnız `dağ` ihlal bildiriliyordu — düzeltilecek bir şey yokken
+  /// (2026-07-26 denetimi). Sözlük sorularının şıkları hep kısa olduğu için
+  /// bu eşik, kuralı asıl işine — uzun tanım şıklarına — bırakır.
+  static const _minLengthForLanguageCall = 8;
+
+  List<String> offLanguageDistractors(QuizQuestion question) {
+    if (question.correctAnswer.length < _minLengthForLanguageCall) {
+      return const [];
+    }
+    final target = detectLanguage(question.correctAnswer);
+    if (target == null) return const [];
+    return [
+      for (final answer in question.answers)
+        if (answer != question.correctAnswer &&
+            answer.length >= _minLengthForLanguageCall &&
+            !looksLikeProperName(answer) &&
+            detectLanguage(answer) != null &&
+            detectLanguage(answer) != target)
+          answer,
+    ];
+  }
+
+  /// [text] bir özel ad mı (kişi, yer, eser adı)?
+  ///
+  /// Özel adların "dili" yoktur: "Şêro Hindê" Türkçe bir şık listesinde de
+  /// aynen yazılır, çünkü kişinin adı odur. Sınıflandırıcı bunları `î/ê/û`
+  /// harfleri yüzünden Kurmancî sayıyor ve gerçek bir kusur yokken ihlal
+  /// bildiriyordu (2026-07-26'da 173 bulgunun 14'ü bu türdendi). Kural,
+  /// yanlış pozitifi kesip gerçek olanı elde bırakacak kadar dar:
+  ///
+  /// * en çok üç sözcük — daha uzunu artık bir tanım cümlesidir;
+  /// * her sözcük büyük harfle başlar — `Dîcle û Ferat`'taki küçük harfli
+  ///   `û` bunu bozar ve haklı olarak bozar, çünkü Türkçe listede `Dicle ve
+  ///   Fırat` yazmak gerekir;
+  /// * ayraç ya da eğik çizgi yok — `Şerefxan (mîrê Bidlîsê)` ad değil,
+  ///   içinde açıklama taşıyan bir şıktır.
+  static bool looksLikeProperName(String text) {
+    final trimmed = text.trim();
+    if (trimmed.isEmpty) return false;
+    if (RegExp(r'[/(),?!:;]').hasMatch(trimmed)) return false;
+    final tokens = trimmed.split(RegExp(r'\s+'));
+    if (tokens.isEmpty || tokens.length > 3) return false;
+    return tokens.every((token) {
+      final first = String.fromCharCode(token.runes.first);
+      return first.toUpperCase() == first && first.toLowerCase() != first;
+    });
+  }
+
+  /// Doğru cevap, dil bakımından tek olan şık mı?
+  ///
+  /// Bu durumda soru konudan tamamen bağımsız olarak çözülebilir; cevap
+  /// sızıntısının (bkz. `QuestionSetPolicy`) tek soru içindeki kardeşidir.
+  bool answerIsGivenAwayByLanguage(QuizQuestion question) {
+    if (question.correctAnswer.length < _minLengthForLanguageCall) return false;
+    final target = detectLanguage(question.correctAnswer);
+    if (target == null) return false;
+    final others = question.answers
+        .where(
+          (a) =>
+              a != question.correctAnswer &&
+              a.length >= _minLengthForLanguageCall &&
+              !looksLikeProperName(a),
+        )
+        .toList();
+    if (others.isEmpty) return false;
+    return others.every((a) {
+      final language = detectLanguage(a);
+      return language != null && language != target;
+    });
+  }
 }
