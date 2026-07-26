@@ -60,7 +60,7 @@ class Tr {
       'ku': 'Ziman, dîmen, deng û hesab.',
       'tr': 'Dil, görünüm, ses ve hesap.',
     },
-    K.secAccount: {'ku': 'Hesap', 'tr': 'Hesap'},
+    K.secAccount: {'ku': 'Hesab', 'tr': 'Hesap'},
     K.playerName: {'ku': 'Navê lîstikvanê', 'tr': 'Oyuncu Adı'},
     K.playerNameHint: {
       'ku': 'Navê xwe binivîse...',

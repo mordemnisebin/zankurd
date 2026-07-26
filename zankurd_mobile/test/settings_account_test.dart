@@ -236,4 +236,36 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('Kurmancî arayüzde oyuncu adı yer tutucusu çevrilir', (
+    tester,
+  ) async {
+    // Depo, gerçek bir seçim olmayan `ZanKurd Oyuncusu` yer tutucusunu
+    // döndürür. Diğer ekranlar bunu `PlayerIdentity` üzerinden dile
+    // çevirir; ayarlar ekranı ham değeri kutuya yazıyor ve Kurmancî
+    // arayüzde oyuncu kendi adını Türkçe görüyordu (2026-07-26).
+    await tester.pumpWidget(
+      testShell(
+        child: SettingsScreen(repository: MockZanKurdRepository()),
+        languageProvider: kurmanciLang(),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(find.text('ZanKurd Oyuncusu'), findsNothing);
+    expect(find.text('Lîstikvan'), findsOneWidget);
+  });
+
+  testWidgets('Türkçe arayüzde yer tutucu Türkçe karşılığını alır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(find.text('Oyuncu'), findsOneWidget);
+  });
 }

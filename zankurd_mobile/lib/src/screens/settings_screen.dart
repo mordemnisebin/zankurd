@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../data/placement_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
+import '../utils/player_identity.dart';
 import '../l10n/strings.dart';
 import '../utils/app_route.dart';
 import 'level_placement_screen.dart';
@@ -93,8 +94,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _loadPlayerName() async {
     try {
-      final name = await widget.repository.getProfileName();
+      final raw = await widget.repository.getProfileName();
       if (!mounted) return;
+      // Sunucu/mock, gerçek bir seçim olmayan `ZanKurd Oyuncusu` yer
+      // tutucusunu döndürür. Diğer ekranlar bunu `PlayerIdentity` üzerinden
+      // dile çevirir; ayarlar ekranı ham değeri kutuya yazıyordu ve
+      // Kurmancî arayüzde oyuncu adını Türkçe görüyordu (2026-07-26).
+      final name = PlayerIdentity.resolveName(raw, isKu: context.isKu);
       setState(() {
         _currentName = name;
         _nameController.text = name;

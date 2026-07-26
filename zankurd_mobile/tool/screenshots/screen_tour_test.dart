@@ -119,6 +119,7 @@ Future<void> _pump(
   WidgetTester tester,
   Widget child, {
   bool dark = false,
+  bool ku = false,
 }) async {
   _applyViewport(tester, _size);
   await tester.pumpWidget(
@@ -127,6 +128,7 @@ Future<void> _pump(
       themeProvider: dark
           ? (ThemeProvider(initialMode: ThemeMode.dark))
           : null,
+      languageProvider: ku ? kurmanciLang() : null,
     ),
   );
   // pumpAndSettle KULLANILMAZ: yükleme göstergeleri sonsuz animasyondur ve
@@ -359,6 +361,43 @@ void main() {
   testWidgets('25 sıralama (karanlık)', (t) async {
     await _pump(t, LeaderboardScreen(repository: repository), dark: true);
     await _shoot(t, '25_leaderboard_dark');
+  }, tags: ['preview']);
+
+  // ── Kurmancî arayüz ──
+  //
+  // Ürünün asıl dili Kurmancî; tur ise bugüne dek yalnız Türkçe basıyordu.
+  // Çevrilmemiş kalmış bir metin ya da uzun Kurmancî sözcüklerin taşırdığı
+  // bir düzen bu yüzden hiç görünmüyordu.
+  testWidgets('26 ana ekran (Kurmancî)', (t) async {
+    await _pump(t, Scaffold(body: HomeScreen(repository: repository)),
+        ku: true);
+    await _shoot(t, '26_home_ku');
+  }, tags: ['preview']);
+
+  testWidgets('27 oyun merkezi (Kurmancî)', (t) async {
+    await _pump(t, PlayHubScreen(repository: repository), ku: true);
+    await _shoot(t, '27_play_hub_ku');
+  }, tags: ['preview']);
+
+  testWidgets('28 profil (Kurmancî)', (t) async {
+    await _pump(t, Scaffold(body: ProfileScreen(repository: repository)),
+        ku: true);
+    await _shoot(t, '28_profile_ku');
+  }, tags: ['preview']);
+
+  testWidgets('29 mağaza (Kurmancî)', (t) async {
+    await _pump(t, ShopScreen(repository: repository), ku: true);
+    await _shoot(t, '29_shop_ku');
+  }, tags: ['preview']);
+
+  testWidgets('30 ayarlar (Kurmancî)', (t) async {
+    await _pump(t, SettingsScreen(repository: repository), ku: true);
+    await _shoot(t, '30_settings_ku');
+  }, tags: ['preview']);
+
+  testWidgets('31 yarışma (Kurmancî)', (t) async {
+    await _pump(t, ContestScreen(repository: repository), ku: true);
+    await _shoot(t, '31_contest_ku');
   }, tags: ['preview']);
 
   testWidgets('14 ders akışı', (t) async {

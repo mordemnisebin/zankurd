@@ -114,7 +114,11 @@ class DailyMissionsCard extends StatelessWidget {
                           : '$hiddenDone görev tamam',
                     if (hiddenPending > 0)
                       isKu
-                          ? '$hiddenPending erkên din'
+                          // Kurmancî'de sayı tekilse ad da tekil olur:
+                          // "1 erkên din" yanlış, "1 erkê din" doğru.
+                          ? (hiddenPending == 1
+                                ? '1 erkê din'
+                                : '$hiddenPending erkên din')
                           : '$hiddenPending görev daha',
                   ].join(' · '),
                   style: AppTypography.caption.copyWith(

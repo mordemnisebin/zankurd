@@ -69,6 +69,10 @@ class NeedsNameRepository extends MockZanKurdRepository {
 
 LanguageProvider turkishLang() => LanguageProvider()..setLang('tr');
 
+/// Kurmancî arayüz. Ürünün asıl dili bu; testlerin çoğu Türkçe koştuğu
+/// için Kurmancî tarafı uzun süre hiç ölçülmemişti (2026-07-26).
+LanguageProvider kurmanciLang() => LanguageProvider()..setLang('ku');
+
 Widget testShell({
   required Widget child,
   AuthProvider? authProvider,

@@ -358,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final String greetingKu;
     final String greetingTr;
     if (isTest) {
-      greetingKu = 'Salam';
+      greetingKu = 'Silav';
       greetingTr = 'Hoş geldin';
     } else {
       if (hour >= 5 && hour < 12) {
