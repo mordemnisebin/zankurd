@@ -1,1428 +1,1429 @@
 [
-  {
-    "type": "multipleChoice",
-    "difficulty": 1,
-    "id": "comm_cog_0001",
-    "category": "Cografya",
-    "prompt": "Amed li kîjan parçeyê Kurdistanê ye?",
-    "promptTr": "Amed Kürdistan'ın neresindedir?",
-    "answers": [
-      "Bakûrê Kurdistan",
-      "Rojhilatê Kurdistan",
-      "Rojavayê Kurdistan",
-      "Başûrê Kurdistan"
-    ],
-    "answersTr": [
-      "Bakûrê Kurdistan",
-      "Rojhilatê Kurdistan",
-      "Rojavayê Kurdistan",
-      "Başûrê Kurdistan"
-    ],
-    "correctAnswer": "Bakûrê Kurdistan",
-    "correctAnswerTr": "Bakûrê Kurdistan",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_cog_0002",
-    "category": "Cografya",
-    "prompt": "Ava Spî (Serê Avê) bi kîjan navçeyê ve girêdayî ye?",
-    "promptTr": "Ava Spî (Serê Avê) nereye bağlıdır?",
-    "answers": [
-      "Nisêbîn",
-      "Qoser",
-      "Artuklu",
-      "Mîdyat"
-    ],
-    "answersTr": [
-      "Nisêbîn",
-      "Qoser",
-      "Artuklu",
-      "Mîdyat"
-    ],
-    "correctAnswer": "Nisêbîn",
-    "correctAnswerTr": "Nisêbîn",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 1,
-    "id": "comm_cog_0003",
-    "category": "Cografya",
-    "prompt": "Nisêbîn navçeya kîjan bajarî ye?",
-    "promptTr": "Nisêbîn (Nusaybin) hangi ile bağlı bir ilçedir?",
-    "answers": [
-      "Mardin",
-      "Diyarbakır",
-      "Şırnak",
-      "Batman"
-    ],
-    "answersTr": [
-      "Mardin",
-      "Diyarbakır",
-      "Şırnak",
-      "Batman"
-    ],
-    "correctAnswer": "Mardin",
-    "correctAnswerTr": "Mardin",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 1,
-    "id": "comm_cog_0004",
-    "category": "Cografya",
-    "prompt": "Behra Wanê li kîjan bajarî ye?",
-    "promptTr": "Behra Wanê (Van Gölü) nereye bağlı bir göldür?",
-    "answers": [
-      "Van",
-      "Diyarbakır",
-      "Batman",
-      "Şırnak"
-    ],
-    "answersTr": [
-      "Van",
-      "Diyarbakır",
-      "Batman",
-      "Şırnak"
-    ],
-    "correctAnswer": "Van",
-    "correctAnswerTr": "Van",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "comm_cog_0005",
-    "category": "Cografya",
-    "prompt": "Pîr Seyîd Riza xelkê ku derê ye?",
-    "promptTr": "Pîr Seyîd Rıza nerelidir?",
-    "answers": [
-      "Dêrsim",
-      "Amed",
-      "Wan",
-      "Şîrnex"
-    ],
-    "answersTr": [
-      "Dêrsim",
-      "Amed",
-      "Wan",
-      "Şîrnex"
-    ],
-    "correctAnswer": "Dêrsim",
-    "correctAnswerTr": "Dêrsim",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_muz_0001",
-    "category": "Muzîk",
-    "prompt": "Koma rockê ya kurdî ya yekem kîjan e?",
-    "promptTr": "İlk Kürt Rock müzik grubu hangisidir?",
-    "answers": [
-      "Koma Wetan",
-      "Agirê Jiyan",
-      "Siya Şevê",
-      "Koma Amed"
-    ],
-    "answersTr": [
-      "Koma Wetan",
-      "Agirê Jiyan",
-      "Siya Şevê",
-      "Koma Amed"
-    ],
-    "correctAnswer": "Koma Wetan",
-    "correctAnswerTr": "Koma Wetan",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "comm_muz_0002",
-    "category": "Muzîk",
-    "prompt": "Mihemmed Şêxo li ku derê ji dayîk bûye?",
-    "promptTr": "Mihemmed Şêxo nerede doğmuştur?",
-    "answers": [
-      "Qamişlo",
-      "Amed",
-      "Hewlêr",
-      "Sînê"
-    ],
-    "answersTr": [
-      "Qamişlo",
-      "Amed",
-      "Hewlêr",
-      "Sînê"
-    ],
-    "correctAnswer": "Qamişlo",
-    "correctAnswerTr": "Qamişlo",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "comm_muz_0003",
-    "category": "Muzîk",
-    "prompt": "Kîjan hunermend gotiye: hemû çek, tank û topan bihelînin em cumbûşê çêkin?",
-    "promptTr": "Bütün silahları, tankları ve topları eritip cümbüş yapalım diyen sanatçımız kimdir?",
-    "answers": [
-      "Aram Tigran",
-      "Ahmet Kaya",
-      "Xerapetê Xaço",
-      "Seîd Ûsiv"
-    ],
-    "answersTr": [
-      "Aram Tigran",
-      "Ahmet Kaya",
-      "Xerapetê Xaço",
-      "Seîd Ûsiv"
-    ],
-    "correctAnswer": "Aram Tigran",
-    "correctAnswerTr": "Aram Tigran",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "comm_muz_0004",
-    "category": "Muzîk",
-    "prompt": "Di rapa kurdî de bi stranê 'Ax' tê nasîn — kîjan hunermend e?",
-    "promptTr": "Kürt rapinde 'Ax' şarkısıyla bilinen sanatçı kimdir?",
-    "answers": [
-      "Serhado",
-      "Şerifê Omerî",
-      "Simyager",
-      "Kimyager"
-    ],
-    "answersTr": [
-      "Serhado",
-      "Şerifê Omerî",
-      "Simyager",
-      "Kimyager"
-    ],
-    "correctAnswer": "Serhado",
-    "correctAnswerTr": "Serhado",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_muz_0005",
-    "category": "Muzîk",
-    "prompt": "Kîjan hunermend bi rapên xwe yên li Rojava tê nasîn?",
-    "promptTr": "Rojava'da yaptığı raplerle tanınan sanatçı kimdir?",
-    "answers": [
-      "Şerifê Omerî",
-      "Serhado",
-      "Simyager",
-      "Kimyager"
-    ],
-    "answersTr": [
-      "Şerifê Omerî",
-      "Serhado",
-      "Simyager",
-      "Kimyager"
-    ],
-    "correctAnswer": "Şerifê Omerî",
-    "correctAnswerTr": "Şerifê Omerî",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_ede_0001",
-    "category": "Edebiyat",
-    "prompt": "Baba Tahirê Uryan di kîjan sedsalê de jiyaye?",
-    "promptTr": "Baba Tahirê Uryan kaçıncı yüzyılda yaşamıştır?",
-    "answers": [
-      "11",
-      "10",
-      "15",
-      "20"
-    ],
-    "answersTr": [
-      "11",
-      "10",
-      "15",
-      "20"
-    ],
-    "correctAnswer": "11",
-    "correctAnswerTr": "11",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "comm_ede_0002",
-    "category": "Edebiyat",
-    "prompt": "Kîjan roman ji hêla Erebê Şemo ve hatiye nivîsandin?",
-    "promptTr": "Hangisi Erebê Şemo'nun yazdığı bir romandır?",
-    "answers": [
-      "Şivanê Kurd",
-      "Mem û Zîn",
-      "Stêrka Bakûr",
-      "Bîra Qederê"
-    ],
-    "answersTr": [
-      "Şivanê Kurd",
-      "Mem û Zîn",
-      "Stêrka Bakûr",
-      "Bîra Qederê"
-    ],
-    "correctAnswer": "Şivanê Kurd",
-    "correctAnswerTr": "Şivanê Kurd",
-    "explanation": "Erebê Şemo'nun 1935'te yayımlanan 'Şivanê Kurd' (Kürt Çoban) romanı, Kurmancî'de yazılmış ilk romanlardan sayılır.",
-    "explanationKu": "Romana Erebê Şemo ya bi navê 'Şivanê Kurd' (1935) yek ji romanên pêşîn ên bi kurmancî tê hesibandin.",
-    "explanationTr": "Erebê Şemo'nun 1935'te yayımlanan 'Şivanê Kurd' (Kürt Çoban) romanı, Kurmancî'de yazılmış ilk romanlardan sayılır.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_ede_0003",
-    "category": "Edebiyat",
-    "prompt": "Gotina 'Xwîn bi xwînê nayê şûştin' ya kîjan nivîskarî ye?",
-    "promptTr": "'Xwîn bi xwînê nayê şûştin' sözü hangi yazarımıza aittir?",
-    "answers": [
-      "Mehmed Uzun",
-      "Yaşar Kemal",
-      "Ahmed Arîf",
-      "Cegerxwîn"
-    ],
-    "answersTr": [
-      "Mehmed Uzun",
-      "Yaşar Kemal",
-      "Ahmed Arîf",
-      "Cegerxwîn"
-    ],
-    "correctAnswer": "Mehmed Uzun",
-    "correctAnswerTr": "Mehmed Uzun",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "comm_ede_0004",
-    "category": "Edebiyat",
-    "prompt": "Nivîskarê pirtûka 'Bîra Qederê' kî ye?",
-    "promptTr": "'Bîra Qederê' kitabının yazarı kimdir?",
-    "answers": [
-      "Mehmed Uzun",
-      "Yaşar Kemal",
-      "Ahmedê Xanî",
-      "Ali Haydar Kaytan"
-    ],
-    "answersTr": [
-      "Mehmed Uzun",
-      "Yaşar Kemal",
-      "Ahmedê Xanî",
-      "Ali Haydar Kaytan"
-    ],
-    "correctAnswer": "Mehmed Uzun",
-    "correctAnswerTr": "Mehmed Uzun",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0001",
-    "category": "Sînema",
-    "prompt": "Muzîka fîlmê Kobanê ji hêla kê ve hatiye çêkirin?",
-    "promptTr": "Kobanê filminin müziklerini kim yapmıştır?",
-    "answers": [
-      "Mehmûd Berazî",
-      "Şivan Perwer",
-      "Seyidxanê Boyaxçî",
-      "Şakiro"
-    ],
-    "answersTr": [
-      "Mehmûd Berazî",
-      "Şivan Perwer",
-      "Seyidxanê Boyaxçî",
-      "Şakiro"
-    ],
-    "correctAnswer": "Mehmûd Berazî",
-    "correctAnswerTr": "Mehmûd Berazî",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "comm_sin_0002",
-    "category": "Sînema",
-    "prompt": "Derhênerê fîlmê Kobanê kî ye?",
-    "promptTr": "Kobanê filminin yönetmeni kimdir?",
-    "answers": [
-      "Özlem Yaşar",
-      "Şêro Hindê",
-      "Mehmûd Berazî",
-      "Kazim Öz"
-    ],
-    "answersTr": [
-      "Özlem Yaşar",
-      "Şêro Hindê",
-      "Mehmûd Berazî",
-      "Kazim Öz"
-    ],
-    "correctAnswer": "Özlem Yaşar",
-    "correctAnswerTr": "Özlem Yaşar",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0003",
-    "category": "Sînema",
-    "prompt": "Di fîlmê Kobanê de rola 'Memoyê Amedî' kê lîstiye?",
-    "promptTr": "Kobanê filminde 'Amedli Memo' karakterini oynayan kimdir?",
-    "answers": [
-      "Fırat Mordem",
-      "Amed Malazgirt",
-      "Mazlum Kobanê",
-      "Gelhat Gever"
-    ],
-    "answersTr": [
-      "Fırat Mordem",
-      "Amed Malazgirt",
-      "Mazlum Kobanê",
-      "Gelhat Gever"
-    ],
-    "correctAnswer": "Fırat Mordem",
-    "correctAnswerTr": "Fırat Mordem",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0004",
-    "category": "Sînema",
-    "prompt": "Muzîka fîlmê '14 Tîrmeh' ji hêla kê ve hatiye çêkirin?",
-    "promptTr": "14 Temmuz filminin müziklerini kim yapmıştır?",
-    "answers": [
-      "Mehmûd Berazî",
-      "Awazê Çiya",
-      "Koma Hevra",
-      "TEV-ÇAND"
-    ],
-    "answersTr": [
-      "Mehmûd Berazî",
-      "Awazê Çiya",
-      "Koma Hevra",
-      "TEV-ÇAND"
-    ],
-    "correctAnswer": "Mehmûd Berazî",
-    "correctAnswerTr": "Mehmûd Berazî",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0005",
-    "category": "Sînema",
-    "prompt": "Fîlmê '14 Tîrmeh' kengî derket ser ekranan?",
-    "promptTr": "14 Temmuz filmi ne zaman gösterime girmiştir?",
-    "answers": [
-      "2017",
-      "2012",
-      "2014",
-      "2020"
-    ],
-    "answersTr": [
-      "2017",
-      "2012",
-      "2014",
-      "2020"
-    ],
-    "correctAnswer": "2017",
-    "correctAnswerTr": "2017",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0006",
-    "category": "Sînema",
-    "prompt": "Fîlmê 'Ji bo Azadîyê' kengî derket ser ekranan?",
-    "promptTr": "'Ji bo Azadîyê' filmi ne zaman gösterime girmiştir?",
-    "answers": [
-      "2019",
-      "2014",
-      "2016",
-      "2023"
-    ],
-    "answersTr": [
-      "2019",
-      "2014",
-      "2016",
-      "2023"
-    ],
-    "correctAnswer": "2019",
-    "correctAnswerTr": "2019",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 4,
-    "id": "comm_sin_0007",
-    "category": "Sînema",
-    "prompt": "Fîlmê 'Ji bo Azadîyê' li ku derê hatiye kişandin?",
-    "promptTr": "'Ji bo Azadîyê' filmi nerede çekilmiştir?",
-    "answers": [
-      "Kobanê",
-      "Amed (Sûr)",
-      "Hewlêr",
-      "Qamişlo"
-    ],
-    "answersTr": [
-      "Kobanê",
-      "Amed (Sûr)",
-      "Hewlêr",
-      "Qamişlo"
-    ],
-    "correctAnswer": "Kobanê",
-    "correctAnswerTr": "Kobanê",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0008",
-    "category": "Sînema",
-    "prompt": "Derhênerê fîlmê 'Ji bo Azadîyê' kî ye?",
-    "promptTr": "'Ji bo Azadîyê' filminin yönetmeni kimdir?",
-    "answers": [
-      "Ersin Çelik",
-      "Şêro Hindê",
-      "Özlem Yaşar",
-      "Kazim Öz"
-    ],
-    "answersTr": [
-      "Ersin Çelik",
-      "Şêro Hindê",
-      "Özlem Yaşar",
-      "Kazim Öz"
-    ],
-    "correctAnswer": "Ersin Çelik",
-    "correctAnswerTr": "Ersin Çelik",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0009",
-    "category": "Sînema",
-    "prompt": "Muzîka fîlmê 'Ji bo Azadîyê' ji hêla kê ve hatiye çêkirin?",
-    "promptTr": "'Ji bo Azadîyê' filminin müziklerini kim yapmıştır?",
-    "answers": [
-      "Mehmûd Berazî",
-      "Hozan Aydin",
-      "Hekîm Sefqan",
-      "Awazê Çiya"
-    ],
-    "answersTr": [
-      "Mehmûd Berazî",
-      "Hozan Aydin",
-      "Hekîm Sefqan",
-      "Awazê Çiya"
-    ],
-    "correctAnswer": "Mehmûd Berazî",
-    "correctAnswerTr": "Mehmûd Berazî",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 4,
-    "id": "comm_dir_0001",
-    "category": "Dîrok",
-    "prompt": "Şehîdê ku wek 'Şêrê Efrînê' tê nasîn kî ye?",
-    "promptTr": "Efrîn'deki direnişin sembol ismi 'Şêrê Efrînê' olarak bilinen şehidimiz kimdir?",
-    "answers": [
-      "Karker Tolhildan",
-      "Gelhat Gever",
-      "Çiyager Hêvî",
-      "Hakî Karer"
-    ],
-    "answersTr": [
-      "Karker Tolhildan",
-      "Gelhat Gever",
-      "Çiyager Hêvî",
-      "Hakî Karer"
-    ],
-    "correctAnswer": "Karker Tolhildan",
-    "correctAnswerTr": "Karker Tolhildan",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 4,
-    "id": "comm_dir_0002",
-    "category": "Dîrok",
-    "prompt": "Kîjan şehîd bi berxwedana Sûra Amedê re bûye yek?",
-    "promptTr": "Amed Sur direnişiyle bütünleşen şehit arkadaş kimdir?",
-    "answers": [
-      "Çiyager Hêvî",
-      "Gelhat Gever",
-      "Karker Tolhildan",
-      "Riza Altun"
-    ],
-    "answersTr": [
-      "Çiyager Hêvî",
-      "Gelhat Gever",
-      "Karker Tolhildan",
-      "Riza Altun"
-    ],
-    "correctAnswer": "Çiyager Hêvî",
-    "correctAnswerTr": "Çiyager Hêvî",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_dir_0003",
-    "category": "Dîrok",
-    "prompt": "Şehîda fedaî ya ku bi ruhê Kobanê re bûye yek kî ye?",
-    "promptTr": "Kobanê ruhuyla bütünleşen fedai şehidimiz kimdir?",
-    "answers": [
-      "Arîn Mirkan",
-      "Viyan Peyman",
-      "Zehra Penaber",
-      "Gelhat Gever"
-    ],
-    "answersTr": [
-      "Arîn Mirkan",
-      "Viyan Peyman",
-      "Zehra Penaber",
-      "Gelhat Gever"
-    ],
-    "correctAnswer": "Arîn Mirkan",
-    "correctAnswerTr": "Arîn Mirkan",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_dir_0004",
-    "category": "Dîrok",
-    "prompt": "Kîjan şehîd bi klamên xwe yên berxwedana Kobanê tê bîranîn?",
-    "promptTr": "Kobanê direnişinde söylediği klamlarla hafızalarda kalan şehidimiz kimdir?",
-    "answers": [
-      "Viyan Peyman",
-      "Arîn Mirkan",
-      "Kasım Engin",
-      "Atakan Mahir"
-    ],
-    "answersTr": [
-      "Viyan Peyman",
-      "Arîn Mirkan",
-      "Kasım Engin",
-      "Atakan Mahir"
-    ],
-    "correctAnswer": "Viyan Peyman",
-    "correctAnswerTr": "Viyan Peyman",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 4,
-    "id": "comm_dir_0005",
-    "category": "Dîrok",
-    "prompt": "Fermandarê pêşeng ê berxwedana Kobanê kî bû?",
-    "promptTr": "Kobanê direnişinde büyük fedakârlıklar yapan öncü komutan kimdi?",
-    "answers": [
-      "Gelhat Gever",
-      "Mazlum Kobanê",
-      "Murat Karayılan",
-      "Mustafa Karasu"
-    ],
-    "answersTr": [
-      "Gelhat Gever",
-      "Mazlum Kobanê",
-      "Murat Karayılan",
-      "Mustafa Karasu"
-    ],
-    "correctAnswer": "Gelhat Gever",
-    "correctAnswerTr": "Gelhat Gever",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_dir_0006",
-    "category": "Dîrok",
-    "prompt": "Kemal Pir, yê ku wek 'Laz Kemal' tê nasîn, xelkê ku derê ye?",
-    "promptTr": "'Laz Kemal' olarak bilinen Kemal Pir nerelidir?",
-    "answers": [
-      "Gümüşhane",
-      "Amed",
-      "Qamişlo",
-      "Hewraman"
-    ],
-    "answersTr": [
-      "Gümüşhane",
-      "Amed",
-      "Qamişlo",
-      "Hewraman"
-    ],
-    "correctAnswer": "Gümüşhane",
-    "correctAnswerTr": "Gümüşhane",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 4,
-    "id": "comm_dir_0007",
-    "category": "Dîrok",
-    "prompt": "Hakî Karer xelkê ku derê ye?",
-    "promptTr": "Haki Karer nerelidir?",
-    "answers": [
-      "Ordu",
-      "Giresun",
-      "Rize",
-      "Gümüşhane"
-    ],
-    "answersTr": [
-      "Ordu",
-      "Giresun",
-      "Rize",
-      "Gümüşhane"
-    ],
-    "correctAnswer": "Ordu",
-    "correctAnswerTr": "Ordu",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_dir_0008",
-    "category": "Dîrok",
-    "prompt": "Kîjan heval wek 'cêwiyê ruhê min' tê bilêvkirin?",
-    "promptTr": "Öcalan'ın 'ruh ikizim' olarak tanımladığı arkadaş kimdir?",
-    "answers": [
-      "Hakî Karer",
-      "Kemal Pir",
-      "Mazlum Doğan",
-      "Mehmet Karasungur"
-    ],
-    "answersTr": [
-      "Hakî Karer",
-      "Kemal Pir",
-      "Mazlum Doğan",
-      "Mehmet Karasungur"
-    ],
-    "correctAnswer": "Hakî Karer",
-    "correctAnswerTr": "Hakî Karer",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 4,
-    "id": "comm_dir_0009",
-    "category": "Dîrok",
-    "prompt": "Şanogerê ku di berxwedana benda Tişrînê de şehîd ket kî ye?",
-    "promptTr": "Tişrin barajındaki direniş sırasında şehit olan tiyatrocu kimdir?",
-    "answers": [
-      "Bavê Teyar",
-      "Nazmi Karaman",
-      "Mirza Metin",
-      "Aydın Orak"
-    ],
-    "answersTr": [
-      "Bavê Teyar",
-      "Nazmi Karaman",
-      "Mirza Metin",
-      "Aydın Orak"
-    ],
-    "correctAnswer": "Bavê Teyar",
-    "correctAnswerTr": "Bavê Teyar",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_siy_0001",
-    "category": "Siyaset",
-    "prompt": "Siyasetmedarê ku wek 'Bavê Welat' tê nasîn kî ye?",
-    "promptTr": "Rojava direnişiyle bütünleşen ve 'Bavê Welat' olarak tanınan siyasetçi kimdir?",
-    "answers": [
-      "Salih Mislim",
-      "Aldar Xelîl",
-      "Mazlum Kobanê",
-      "Bavê Teyar"
-    ],
-    "answersTr": [
-      "Salih Mislim",
-      "Aldar Xelîl",
-      "Mazlum Kobanê",
-      "Bavê Teyar"
-    ],
-    "correctAnswer": "Salih Mislim",
-    "correctAnswerTr": "Salih Mislim",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 1,
-    "id": "comm_siy_0002",
-    "category": "Siyaset",
-    "prompt": "Yekîneya şervanên jin a li Rojava kîjan e?",
-    "promptTr": "Rojava'daki kadın savaşçı birliği hangisidir?",
-    "answers": [
-      "YPJ",
-      "YJA-Star",
-      "YPG",
-      "HPJ"
-    ],
-    "answersTr": [
-      "YPJ",
-      "YJA-Star",
-      "YPG",
-      "HPJ"
-    ],
-    "correctAnswer": "YPJ",
-    "correctAnswerTr": "YPJ",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "comm_sin_0101",
-    "category": "Sînema",
-    "prompt": "Fîlmê 'Yol' di sala 1982'an de li Cannesê kîjan xelat wergirt?",
-    "promptTr": "'Yol' filmi 1982'de Cannes'da hangi ödülü kazandı?",
-    "answers": [
-      "Altın Palmiye",
-      "Jüri Özel Ödülü",
-      "En İyi Yönetmen",
-      "Altın Ayı"
-    ],
-    "answersTr": [
-      "Altın Palmiye",
-      "Jüri Özel Ödülü",
-      "En İyi Yönetmen",
-      "Altın Ayı"
-    ],
-    "correctAnswer": "Altın Palmiye",
-    "correctAnswerTr": "Altın Palmiye",
-    "explanation": "Yılmaz Güney'in senaryosunu yazdığı 'Yol', 1982 Cannes Film Festivali'nde Altın Palmiye'yi kazandı.",
-    "explanationKu": "'Yol', ku senaryoya wê ji hêla Yilmaz Guney ve hatibû nivîsandin, di Festîvala Cannesê ya 1982'an de Palmiya Zêrîn wergirt.",
-    "explanationTr": "Yılmaz Güney'in senaryosunu yazdığı 'Yol', 1982 Cannes Film Festivali'nde Altın Palmiye'yi kazandı.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0102",
-    "category": "Sînema",
-    "prompt": "Ji ber ku Yilmaz Guney di girtîgehê de bû, derhêneriya fîlmê 'Yol' kê kir?",
-    "promptTr": "Yılmaz Güney cezaevinde olduğu için 'Yol' filminin yönetmenliğini kim üstlendi?",
-    "answers": [
-      "Şerif Gören",
-      "Zeki Ökten",
-      "Atıf Yılmaz",
-      "Ömer Lütfi Akad"
-    ],
-    "answersTr": [
-      "Şerif Gören",
-      "Zeki Ökten",
-      "Atıf Yılmaz",
-      "Ömer Lütfi Akad"
-    ],
-    "correctAnswer": "Şerif Gören",
-    "correctAnswerTr": "Şerif Gören",
-    "explanation": "Güney senaryoyu cezaevinden yazdı; çekimleri Şerif Gören yönetti, kurguyu Güney Fransa'da yaptı.",
-    "explanationKu": "Guney senaryo ji girtîgehê nivîsî; kişandin ji hêla Şerif Gören ve hat kirin.",
-    "explanationTr": "Güney senaryoyu cezaevinden yazdı; çekimleri Şerif Gören yönetti, kurguyu Güney Fransa'da yaptı.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0103",
-    "category": "Sînema",
-    "prompt": "Fîlmê 'Sûrû' (1978) senaryoya wê ya kê ye?",
-    "promptTr": "'Sürü' (1978) filminin senaryosu kime aittir?",
-    "answers": [
-      "Yılmaz Güney",
-      "Zeki Ökten",
-      "Kazım Öz",
-      "Hiner Saleem"
-    ],
-    "answersTr": [
-      "Yılmaz Güney",
-      "Zeki Ökten",
-      "Kazım Öz",
-      "Hiner Saleem"
-    ],
-    "correctAnswer": "Yılmaz Güney",
-    "correctAnswerTr": "Yılmaz Güney",
-    "explanation": "'Sürü'nün senaryosunu Yılmaz Güney yazdı, filmi Zeki Ökten yönetti.",
-    "explanationKu": "Senaryoya 'Sûrû' ji hêla Yilmaz Guney ve hat nivîsandin, fîlm ji hêla Zeki Ökten ve hat derhênan.",
-    "explanationTr": "'Sürü'nün senaryosunu Yılmaz Güney yazdı, filmi Zeki Ökten yönetti.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0104",
-    "category": "Sînema",
-    "prompt": "Derhênerê fîlmê 'Dema Hespên Serxweş' kî ye?",
-    "promptTr": "'Sarhoş Atlar Zamanı' filminin yönetmeni kimdir?",
-    "answers": [
-      "Bahman Ghobadi",
-      "Hiner Saleem",
-      "Kazım Öz",
-      "Yılmaz Güney"
-    ],
-    "answersTr": [
-      "Bahman Ghobadi",
-      "Hiner Saleem",
-      "Kazım Öz",
-      "Yılmaz Güney"
-    ],
-    "correctAnswer": "Bahman Ghobadi",
-    "correctAnswerTr": "Bahman Ghobadi",
-    "explanation": "Bahman Ghobadi'nin ilk uzun metrajı, 2000 Cannes'da Altın Kamera ödülünü kazandı.",
-    "explanationKu": "Fîlmê yekem ê dirêj ê Bahman Ghobadi, di Cannesa 2000'î de Kamera Zêrîn wergirt.",
-    "explanationTr": "Bahman Ghobadi'nin ilk uzun metrajı, 2000 Cannes'da Altın Kamera ödülünü kazandı.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0105",
-    "category": "Sînema",
-    "prompt": "Fîlmê 'Kûsî jî Difirin' derhênerê wî kî ye?",
-    "promptTr": "'Kaplumbağalar da Uçar' filminin yönetmeni kimdir?",
-    "answers": [
-      "Bahman Ghobadi",
-      "Hiner Saleem",
-      "Erol Mintaş",
-      "Hüseyin Karabey"
-    ],
-    "answersTr": [
-      "Bahman Ghobadi",
-      "Hiner Saleem",
-      "Erol Mintaş",
-      "Hüseyin Karabey"
-    ],
-    "correctAnswer": "Bahman Ghobadi",
-    "correctAnswerTr": "Bahman Ghobadi",
-    "explanation": "Bahman Ghobadi'nin 2004 yapımı filmi, ABD işgali öncesinde Irak-Türkiye sınırındaki bir mülteci kampında geçer; Berlin'den San Sebastián'a birçok ödül kazandı.",
-    "explanationKu": "Fîlmê Bahman Ghobadi ê 2004'an li kampeke penaberan a li ser sînorê Iraq-Tirkiyê diqewime û gelek xelat wergirtine.",
-    "explanationTr": "Bahman Ghobadi'nin 2004 yapımı filmi, ABD işgali öncesinde Irak-Türkiye sınırındaki bir mülteci kampında geçer; Berlin'den San Sebastián'a birçok ödül kazandı.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 4,
-    "id": "comm_sin_0106",
-    "category": "Sînema",
-    "prompt": "Derhênerê fîlmê 'Vodka Lemon' kî ye?",
-    "promptTr": "'Vodka Lemon' filminin yönetmeni kimdir?",
-    "answers": [
-      "Hiner Saleem",
-      "Bahman Ghobadi",
-      "Kazım Öz",
-      "Şerif Gören"
-    ],
-    "answersTr": [
-      "Hiner Saleem",
-      "Bahman Ghobadi",
-      "Kazım Öz",
-      "Şerif Gören"
-    ],
-    "correctAnswer": "Hiner Saleem",
-    "correctAnswerTr": "Hiner Saleem",
-    "explanation": "Hiner Saleem'in 2003 yapımı filmi Venedik Film Festivali'nde ödül aldı.",
-    "explanationKu": "Fîlmê Hiner Saleem ê 2003'yan li Festîvala Venedîkê xelat wergirt.",
-    "explanationTr": "Hiner Saleem'in 2003 yapımı filmi Venedik Film Festivali'nde ödül aldı.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0107",
-    "category": "Sînema",
-    "prompt": "Fîlmên 'Fotoğraf', 'Bahoz' û 'Zer' ji hêla kîjan derhêner ve hatine çêkirin?",
-    "promptTr": "'Fotoğraf', 'Bahoz' ve 'Zer' filmleri hangi yönetmene aittir?",
-    "answers": [
-      "Kazım Öz",
-      "Erol Mintaş",
-      "Hüseyin Karabey",
-      "Ersin Çelik"
-    ],
-    "answersTr": [
-      "Kazım Öz",
-      "Erol Mintaş",
-      "Hüseyin Karabey",
-      "Ersin Çelik"
-    ],
-    "correctAnswer": "Kazım Öz",
-    "correctAnswerTr": "Kazım Öz",
-    "explanation": "Kazım Öz, Kürt sinemasının üretken yönetmenlerinden; belgesel ve kurmaca alanında çalışır.",
-    "explanationKu": "Kazim Öz yek ji derhênerên hilberîner ên sînemaya kurdî ye.",
-    "explanationTr": "Kazım Öz, Kürt sinemasının üretken yönetmenlerinden; belgesel ve kurmaca alanında çalışır.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0108",
-    "category": "Sînema",
-    "prompt": "Yilmaz Guney di sala kîjan de li Parîsê koça dawî kir?",
-    "promptTr": "Yılmaz Güney hangi yıl Paris'te hayatını kaybetti?",
-    "answers": [
-      "1984",
-      "1980",
-      "1988",
-      "1992"
-    ],
-    "answersTr": [
-      "1984",
-      "1980",
-      "1988",
-      "1992"
-    ],
-    "correctAnswer": "1984",
-    "correctAnswerTr": "1984",
-    "explanation": "Yılmaz Güney 9 Eylül 1984'te Paris'te yaşamını yitirdi.",
-    "explanationKu": "Yilmaz Guney di 9'ê îlona 1984'an de li Parîsê koça dawî kir.",
-    "explanationTr": "Yılmaz Güney 9 Eylül 1984'te Paris'te yaşamını yitirdi.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 4,
-    "id": "comm_sin_0109",
-    "category": "Sînema",
-    "prompt": "Fîlmê dawî yê Yilmaz Guney kîjan e?",
-    "promptTr": "Yılmaz Güney'in son filmi hangisidir?",
-    "answers": [
-      "Duvar",
-      "Yol",
-      "Sürü",
-      "Umut"
-    ],
-    "answersTr": [
-      "Duvar",
-      "Yol",
-      "Sürü",
-      "Umut"
-    ],
-    "correctAnswer": "Duvar",
-    "correctAnswerTr": "Duvar",
-    "explanation": "'Duvar' (1983), Güney'in Fransa'da çektiği son filmidir.",
-    "explanationKu": "'Duvar' (1983) fîlmê dawî yê Guney e ku li Fransayê hat kişandin.",
-    "explanationTr": "'Duvar' (1983), Güney'in Fransa'da çektiği son filmidir.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 4,
-    "id": "comm_sin_0110",
-    "category": "Sînema",
-    "prompt": "Derhênerê fîlmê 'Klama Dayîka Min' kî ye?",
-    "promptTr": "'Annemin Şarkısı' (Klama Dayîka Min) filminin yönetmeni kimdir?",
-    "answers": [
-      "Erol Mintaş",
-      "Kazım Öz",
-      "Hüseyin Karabey",
-      "Ersin Çelik"
-    ],
-    "answersTr": [
-      "Erol Mintaş",
-      "Kazım Öz",
-      "Hüseyin Karabey",
-      "Ersin Çelik"
-    ],
-    "correctAnswer": "Erol Mintaş",
-    "correctAnswerTr": "Erol Mintaş",
-    "explanation": "Erol Mintaş'ın 2014 yapımı filmi Antalya Altın Portakal'da En İyi İlk Film, Saraybosna Film Festivali'nde En İyi Film ödülünü kazandı.",
-    "explanationKu": "Fîlmê Erol Mintaş ê 2014'an li Antalyayê xelata Fîlmê Yekem ê Herî Baş û li Sarayevoyê xelata Fîlmê Herî Baş wergirt.",
-    "explanationTr": "Erol Mintaş'ın 2014 yapımı filmi Antalya Altın Portakal'da En İyi İlk Film, Saraybosna Film Festivali'nde En İyi Film ödülünü kazandı.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0111",
-    "category": "Sînema",
-    "prompt": "Fîlmê 'Umut' (1970) derhênerê wî kî ye?",
-    "promptTr": "'Umut' (1970) filminin yönetmeni kimdir?",
-    "answers": [
-      "Yılmaz Güney",
-      "Zeki Ökten",
-      "Şerif Gören",
-      "Atıf Yılmaz"
-    ],
-    "answersTr": [
-      "Yılmaz Güney",
-      "Zeki Ökten",
-      "Şerif Gören",
-      "Atıf Yılmaz"
-    ],
-    "correctAnswer": "Yılmaz Güney",
-    "correctAnswerTr": "Yılmaz Güney",
-    "explanation": "'Umut', Güney'in yönetmen olarak dönüm noktası sayılan filmidir.",
-    "explanationKu": "'Umut' fîlmê guhertinê ye di karîyera Guney a derhêneriyê de.",
-    "explanationTr": "'Umut', Güney'in yönetmen olarak dönüm noktası sayılan filmidir.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 3,
-    "id": "comm_sin_0112",
-    "category": "Sînema",
-    "prompt": "Bahman Ghobadi bi eslê xwe ji kîjan welatî ye?",
-    "promptTr": "Bahman Ghobadi asıl olarak hangi ülkedendir?",
-    "answers": [
-      "Îran",
-      "Iraq",
-      "Sûriye",
-      "Ermenistan"
-    ],
-    "answersTr": [
-      "Îran",
-      "Iraq",
-      "Sûriye",
-      "Ermenistan"
-    ],
-    "correctAnswer": "Îran",
-    "correctAnswerTr": "Îran",
-    "explanation": "Bahman Ghobadi, İran'ın Bane kentinde doğmuş Kürt yönetmendir.",
-    "explanationKu": "Bahman Ghobadi derhênerekî kurd e ku li Baneyê, li Îranê ji dayîk bûye.",
-    "explanationTr": "Bahman Ghobadi, İran'ın Bane kentinde doğmuş Kürt yönetmendir.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
-      "qualityVersion": 2
-    }
+ {
+  "type": "multipleChoice",
+  "difficulty": 1,
+  "id": "comm_cog_0001",
+  "category": "Cografya",
+  "prompt": "Amed li kîjan parçeyê Kurdistanê ye?",
+  "promptTr": "Amed Kürdistan'ın neresindedir?",
+  "answers": [
+   "Bakûrê Kurdistan",
+   "Rojhilatê Kurdistan",
+   "Rojavayê Kurdistan",
+   "Başûrê Kurdistan"
+  ],
+  "answersTr": [
+   "Bakûrê Kurdistan",
+   "Rojhilatê Kurdistan",
+   "Rojavayê Kurdistan",
+   "Başûrê Kurdistan"
+  ],
+  "correctAnswer": "Bakûrê Kurdistan",
+  "correctAnswerTr": "Bakûrê Kurdistan",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
   }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_cog_0002",
+  "category": "Cografya",
+  "prompt": "Ava Spî (Serê Avê) bi kîjan navçeyê ve girêdayî ye?",
+  "promptTr": "Ava Spî (Serê Avê) nereye bağlıdır?",
+  "answers": [
+   "Nisêbîn",
+   "Qoser",
+   "Artuklu",
+   "Mîdyat"
+  ],
+  "answersTr": [
+   "Nisêbîn",
+   "Qoser",
+   "Artuklu",
+   "Mîdyat"
+  ],
+  "correctAnswer": "Nisêbîn",
+  "correctAnswerTr": "Nisêbîn",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 1,
+  "id": "comm_cog_0003",
+  "category": "Cografya",
+  "prompt": "Nisêbîn navçeya kîjan bajarî ye?",
+  "promptTr": "Nisêbîn (Nusaybin) hangi ile bağlı bir ilçedir?",
+  "answers": [
+   "Mardin",
+   "Diyarbakır",
+   "Şırnak",
+   "Batman"
+  ],
+  "answersTr": [
+   "Mardin",
+   "Diyarbakır",
+   "Şırnak",
+   "Batman"
+  ],
+  "correctAnswer": "Mardin",
+  "correctAnswerTr": "Mardin",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 1,
+  "id": "comm_cog_0004",
+  "category": "Cografya",
+  "prompt": "Behra Wanê li kîjan bajarî ye?",
+  "promptTr": "Behra Wanê (Van Gölü) nereye bağlı bir göldür?",
+  "answers": [
+   "Van",
+   "Diyarbakır",
+   "Batman",
+   "Şırnak"
+  ],
+  "answersTr": [
+   "Van",
+   "Diyarbakır",
+   "Batman",
+   "Şırnak"
+  ],
+  "correctAnswer": "Van",
+  "correctAnswerTr": "Van",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 2,
+  "id": "comm_cog_0005",
+  "category": "Cografya",
+  "prompt": "Pîr Seyîd Riza xelkê ku derê ye?",
+  "promptTr": "Pîr Seyîd Rıza nerelidir?",
+  "answers": [
+   "Dêrsim",
+   "Amed",
+   "Wan",
+   "Şîrnex"
+  ],
+  "answersTr": [
+   "Dêrsim",
+   "Amed",
+   "Wan",
+   "Şîrnex"
+  ],
+  "correctAnswer": "Dêrsim",
+  "correctAnswerTr": "Dêrsim",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_muz_0001",
+  "category": "Muzîk",
+  "prompt": "Koma rockê ya kurdî ya yekem kîjan e?",
+  "promptTr": "İlk Kürt Rock müzik grubu hangisidir?",
+  "answers": [
+   "Koma Wetan",
+   "Agirê Jiyan",
+   "Siya Şevê",
+   "Koma Amed"
+  ],
+  "answersTr": [
+   "Koma Wetan",
+   "Agirê Jiyan",
+   "Siya Şevê",
+   "Koma Amed"
+  ],
+  "correctAnswer": "Koma Wetan",
+  "correctAnswerTr": "Koma Wetan",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 2,
+  "id": "comm_muz_0002",
+  "category": "Muzîk",
+  "prompt": "Mihemmed Şêxo li ku derê ji dayîk bûye?",
+  "promptTr": "Mihemmed Şêxo nerede doğmuştur?",
+  "answers": [
+   "Qamişlo",
+   "Amed",
+   "Hewlêr",
+   "Sînê"
+  ],
+  "answersTr": [
+   "Qamişlo",
+   "Amed",
+   "Hewlêr",
+   "Sînê"
+  ],
+  "correctAnswer": "Qamişlo",
+  "correctAnswerTr": "Qamişlo",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 2,
+  "id": "comm_muz_0003",
+  "category": "Muzîk",
+  "prompt": "Kîjan hunermend gotiye: hemû çek, tank û topan bihelînin em cumbûşê çêkin?",
+  "promptTr": "Bütün silahları, tankları ve topları eritip cümbüş yapalım diyen sanatçımız kimdir?",
+  "answers": [
+   "Aram Tigran",
+   "Ahmet Kaya",
+   "Xerapetê Xaço",
+   "Seîd Ûsiv"
+  ],
+  "answersTr": [
+   "Aram Tigran",
+   "Ahmet Kaya",
+   "Xerapetê Xaço",
+   "Seîd Ûsiv"
+  ],
+  "correctAnswer": "Aram Tigran",
+  "correctAnswerTr": "Aram Tigran",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 2,
+  "id": "comm_muz_0004",
+  "category": "Muzîk",
+  "prompt": "Di rapa kurdî de bi stranê 'Ax' tê nasîn — kîjan hunermend e?",
+  "promptTr": "Kürt rapinde 'Ax' şarkısıyla bilinen sanatçı kimdir?",
+  "answers": [
+   "Serhado",
+   "Şerifê Omerî",
+   "Simyager",
+   "Kimyager"
+  ],
+  "answersTr": [
+   "Serhado",
+   "Şerifê Omerî",
+   "Simyager",
+   "Kimyager"
+  ],
+  "correctAnswer": "Serhado",
+  "correctAnswerTr": "Serhado",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_muz_0005",
+  "category": "Muzîk",
+  "prompt": "Kîjan hunermend bi rapên xwe yên li Rojava tê nasîn?",
+  "promptTr": "Rojava'da yaptığı raplerle tanınan sanatçı kimdir?",
+  "answers": [
+   "Şerifê Omerî",
+   "Serhado",
+   "Simyager",
+   "Kimyager"
+  ],
+  "answersTr": [
+   "Şerifê Omerî",
+   "Serhado",
+   "Simyager",
+   "Kimyager"
+  ],
+  "correctAnswer": "Şerifê Omerî",
+  "correctAnswerTr": "Şerifê Omerî",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_ede_0001",
+  "category": "Edebiyat",
+  "prompt": "Baba Tahirê Uryan di kîjan sedsalê de jiyaye?",
+  "promptTr": "Baba Tahirê Uryan kaçıncı yüzyılda yaşamıştır?",
+  "answers": [
+   "11",
+   "10",
+   "15",
+   "20"
+  ],
+  "answersTr": [
+   "11",
+   "10",
+   "15",
+   "20"
+  ],
+  "correctAnswer": "11",
+  "correctAnswerTr": "11",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 2,
+  "id": "comm_ede_0002",
+  "category": "Edebiyat",
+  "prompt": "Kîjan roman ji hêla Erebê Şemo ve hatiye nivîsandin?",
+  "promptTr": "Hangisi Erebê Şemo'nun yazdığı bir romandır?",
+  "answers": [
+   "Şivanê Kurd",
+   "Mem û Zîn",
+   "Stêrka Bakûr",
+   "Bîra Qederê"
+  ],
+  "answersTr": [
+   "Şivanê Kurd",
+   "Mem û Zîn",
+   "Stêrka Bakûr",
+   "Bîra Qederê"
+  ],
+  "correctAnswer": "Şivanê Kurd",
+  "correctAnswerTr": "Şivanê Kurd",
+  "explanation": "Erebê Şemo'nun 1935'te yayımlanan 'Şivanê Kurd' (Kürt Çoban) romanı, Kurmancî'de yazılmış ilk romanlardan sayılır.",
+  "explanationKu": "Romana Erebê Şemo ya bi navê 'Şivanê Kurd' (1935) yek ji romanên pêşîn ên bi kurmancî tê hesibandin.",
+  "explanationTr": "Erebê Şemo'nun 1935'te yayımlanan 'Şivanê Kurd' (Kürt Çoban) romanı, Kurmancî'de yazılmış ilk romanlardan sayılır.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_ede_0003",
+  "category": "Edebiyat",
+  "prompt": "Gotina 'Xwîn bi xwînê nayê şûştin' ya kîjan nivîskarî ye?",
+  "promptTr": "'Xwîn bi xwînê nayê şûştin' sözü hangi yazarımıza aittir?",
+  "answers": [
+   "Mehmed Uzun",
+   "Yaşar Kemal",
+   "Ahmed Arîf",
+   "Cegerxwîn"
+  ],
+  "answersTr": [
+   "Mehmed Uzun",
+   "Yaşar Kemal",
+   "Ahmed Arîf",
+   "Cegerxwîn"
+  ],
+  "correctAnswer": "Mehmed Uzun",
+  "correctAnswerTr": "Mehmed Uzun",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 2,
+  "id": "comm_ede_0004",
+  "category": "Edebiyat",
+  "prompt": "Nivîskarê pirtûka 'Bîra Qederê' kî ye?",
+  "promptTr": "'Bîra Qederê' kitabının yazarı kimdir?",
+  "answers": [
+   "Mehmed Uzun",
+   "Yaşar Kemal",
+   "Ahmedê Xanî",
+   "Ali Haydar Kaytan"
+  ],
+  "answersTr": [
+   "Mehmed Uzun",
+   "Yaşar Kemal",
+   "Ahmedê Xanî",
+   "Ali Haydar Kaytan"
+  ],
+  "correctAnswer": "Mehmed Uzun",
+  "correctAnswerTr": "Mehmed Uzun",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0001",
+  "category": "Sînema",
+  "prompt": "Muzîka fîlmê Kobanê ji hêla kê ve hatiye çêkirin?",
+  "promptTr": "Kobanê filminin müziklerini kim yapmıştır?",
+  "answers": [
+   "Mehmûd Berazî",
+   "Şivan Perwer",
+   "Seyidxanê Boyaxçî",
+   "Şakiro"
+  ],
+  "answersTr": [
+   "Mehmûd Berazî",
+   "Şivan Perwer",
+   "Seyidxanê Boyaxçî",
+   "Şakiro"
+  ],
+  "correctAnswer": "Mehmûd Berazî",
+  "correctAnswerTr": "Mehmûd Berazî",
+  "explanation": "Rojava Film Komünü yapımı Kobanê (2022) filminin müziğini Mehmûd Berazî yaptı; aynı çevrenin başka birkaç filminin müziği de ona aittir.",
+  "explanationKu": "Muzîka fîlmê Kobanê (2022) ya Komîna Fîlma Rojava ji hêla Mehmûd Berazî ve hatiye çêkirin; ew muzîka çend fîlmên din ên heman derdorê jî nivîsandiye.",
+  "explanationTr": "Rojava Film Komünü yapımı Kobanê (2022) filminin müziğini Mehmûd Berazî yaptı; aynı çevrenin başka birkaç filminin müziği de ona aittir.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 2,
+  "id": "comm_sin_0002",
+  "category": "Sînema",
+  "prompt": "Derhênerê fîlmê Kobanê kî ye?",
+  "promptTr": "Kobanê filminin yönetmeni kimdir?",
+  "answers": [
+   "Özlem Yaşar",
+   "Şêro Hindê",
+   "Mehmûd Berazî",
+   "Kazim Öz"
+  ],
+  "answersTr": [
+   "Özlem Yaşar",
+   "Şêro Hindê",
+   "Mehmûd Berazî",
+   "Kazim Öz"
+  ],
+  "correctAnswer": "Özlem Yaşar",
+  "correctAnswerTr": "Özlem Yaşar",
+  "explanation": "Film 2022'de gösterime girdi ve 2014-2015 Kobanê kuşatmasını anlatır; senaryo yüzlerce tanık ve savaşçıyla yapılan görüşmelere dayanır.",
+  "explanationKu": "Fîlm di sala 2022'yan de derket û dorpêça Kobanê ya 2014-2015'an vedibêje; senaryo li ser bingeha hevpeyvînên bi bi sedan şahid û şervanan hatiye nivîsandin.",
+  "explanationTr": "Film 2022'de gösterime girdi ve 2014-2015 Kobanê kuşatmasını anlatır; senaryo yüzlerce tanık ve savaşçıyla yapılan görüşmelere dayanır.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0003",
+  "category": "Sînema",
+  "prompt": "Di fîlmê Kobanê de lîstikvan bi piranî kî ne?",
+  "promptTr": "Kobanê filminde oyuncular çoğunlukla kimlerdir?",
+  "answers": [
+   "Kesên ku bi xwe beşdarî berxwedanê bûne",
+   "Lîstikvanên şanoya Şamê",
+   "Xwendekarên dibistana fîlman a Duhokê",
+   "Lîstikvanên navdar ên Hollywoodê"
+  ],
+  "answersTr": [
+   "Direnişe bizzat katılmış kişiler",
+   "Şam tiyatrosunun oyuncuları",
+   "Duhok film okulunun öğrencileri",
+   "Hollywood'un ünlü oyuncuları"
+  ],
+  "correctAnswer": "Kesên ku bi xwe beşdarî berxwedanê bûne",
+  "correctAnswerTr": "Direnişe bizzat katılmış kişiler",
+  "explanation": "Film Kobanê ve Tabqa'da çekildi; oyuncuların büyük bölümü profesyonel değil, direnişe bizzat katılmış kişilerdi.",
+  "explanationKu": "Fîlm li Kobanê û Tabqayê hate kişandin; beşek mezin ji lîstikvanan ne pîşeyî bûn, ew bi xwe beşdarî berxwedanê bûbûn.",
+  "explanationTr": "Film Kobanê ve Tabqa'da çekildi; oyuncuların büyük bölümü profesyonel değil, direnişe bizzat katılmış kişilerdi.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Editoryal düzeltme — Kobanê (2022) künyesi",
+   "qualityVersion": 2,
+   "sourceReference": "Komîna Fîlma Rojava, Kobanê (2022) — dosyaya çapemeniyê û hevpeyvînên derhêner"
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0004",
+  "category": "Sînema",
+  "prompt": "Muzîka fîlmê '14 Tîrmeh' ji hêla kê ve hatiye çêkirin?",
+  "promptTr": "14 Temmuz filminin müziklerini kim yapmıştır?",
+  "answers": [
+   "Mehmûd Berazî",
+   "Awazê Çiya",
+   "Koma Hevra",
+   "TEV-ÇAND"
+  ],
+  "answersTr": [
+   "Mehmûd Berazî",
+   "Awazê Çiya",
+   "Koma Hevra",
+   "TEV-ÇAND"
+  ],
+  "correctAnswer": "Mehmûd Berazî",
+  "correctAnswerTr": "Mehmûd Berazî",
+  "explanation": "14 Tîrmeh filminin müziği de Mehmûd Berazî'ye aittir.",
+  "explanationKu": "Muzîka fîlmê 14 Tîrmeh jî ji hêla Mehmûd Berazî ve hatiye çêkirin.",
+  "explanationTr": "14 Tîrmeh filminin müziği de Mehmûd Berazî'ye aittir.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0005",
+  "category": "Sînema",
+  "prompt": "Fîlmê '14 Tîrmeh' kengî derket ser ekranan?",
+  "promptTr": "14 Temmuz filmi ne zaman gösterime girmiştir?",
+  "answers": [
+   "2017",
+   "2012",
+   "2014",
+   "2020"
+  ],
+  "answersTr": [
+   "2017",
+   "2012",
+   "2014",
+   "2020"
+  ],
+  "correctAnswer": "2017",
+  "correctAnswerTr": "2017",
+  "explanation": "Yönetmen Haşim Aydemir'in filmi 2017'de gösterime girdi; 14 Temmuz 1982'de Amed cezaevinde başlayan ölüm orucunu anlatır.",
+  "explanationKu": "Fîlmê derhêner Haşim Aydemir di sala 2017'an de derket; ew grewa birçîbûnê ya 14'ê Tîrmeha 1982'yan a li girtîgeha Amedê vedibêje.",
+  "explanationTr": "Yönetmen Haşim Aydemir'in filmi 2017'de gösterime girdi; 14 Temmuz 1982'de Amed cezaevinde başlayan ölüm orucunu anlatır.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0006",
+  "category": "Sînema",
+  "prompt": "Fîlmê 'Ji bo Azadîyê' kengî derket ser ekranan?",
+  "promptTr": "'Ji bo Azadîyê' filmi ne zaman gösterime girmiştir?",
+  "answers": [
+   "2019",
+   "2014",
+   "2016",
+   "2023"
+  ],
+  "answersTr": [
+   "2019",
+   "2014",
+   "2016",
+   "2023"
+  ],
+  "correctAnswer": "2019",
+  "correctAnswerTr": "2019",
+  "explanation": "Film 2019'da gösterime girdi ve Sur'daki 103 günlük direnişi anlatır.",
+  "explanationKu": "Fîlm di sala 2019'an de derket û berxwedana 103 rojan a li Sûrê vedibêje.",
+  "explanationTr": "Film 2019'da gösterime girdi ve Sur'daki 103 günlük direnişi anlatır.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "comm_sin_0007",
+  "category": "Sînema",
+  "prompt": "Fîlmê 'Ji bo Azadîyê' li ku derê hatiye kişandin?",
+  "promptTr": "'Ji bo Azadîyê' filmi nerede çekilmiştir?",
+  "answers": [
+   "Kobanê",
+   "Amed (Sûr)",
+   "Hewlêr",
+   "Qamişlo"
+  ],
+  "answersTr": [
+   "Kobanê",
+   "Amed (Sûr)",
+   "Hewlêr",
+   "Qamişlo"
+  ],
+  "correctAnswer": "Kobanê",
+  "correctAnswerTr": "Kobanê",
+  "explanation": "Film Amed'in Sur ilçesindeki olayları anlatır ama koşullar nedeniyle Kobanê'de çekildi; bazı sahneler Qamişlo'da alındı.",
+  "explanationKu": "Fîlm bûyerên li Sûra Amedê vedibêje, lê ji ber şert û mercan li Kobanê hate kişandin; hin dîmen li Qamişloyê hatin girtin.",
+  "explanationTr": "Film Amed'in Sur ilçesindeki olayları anlatır ama koşullar nedeniyle Kobanê'de çekildi; bazı sahneler Qamişlo'da alındı.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0008",
+  "category": "Sînema",
+  "prompt": "Derhênerê fîlmê 'Ji bo Azadîyê' kî ye?",
+  "promptTr": "'Ji bo Azadîyê' filminin yönetmeni kimdir?",
+  "answers": [
+   "Ersin Çelik",
+   "Şêro Hindê",
+   "Özlem Yaşar",
+   "Kazim Öz"
+  ],
+  "answersTr": [
+   "Ersin Çelik",
+   "Şêro Hindê",
+   "Özlem Yaşar",
+   "Kazim Öz"
+  ],
+  "correctAnswer": "Ersin Çelik",
+  "correctAnswerTr": "Ersin Çelik",
+  "explanation": "Yönetmen Ersin Çelik'tir; senaryo savaşanların günlüklerine ve hayatta kalanların tanıklığına dayanır.",
+  "explanationKu": "Derhêner Ersin Çelik e; senaryo li ser bingeha rojnivîskên şervanan û şahidiya kesên ku sax man hatiye nivîsandin.",
+  "explanationTr": "Yönetmen Ersin Çelik'tir; senaryo savaşanların günlüklerine ve hayatta kalanların tanıklığına dayanır.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0009",
+  "category": "Sînema",
+  "prompt": "Muzîka fîlmê 'Ji bo Azadîyê' ji hêla kê ve hatiye çêkirin?",
+  "promptTr": "'Ji bo Azadîyê' filminin müziklerini kim yapmıştır?",
+  "answers": [
+   "Mehmûd Berazî",
+   "Hozan Aydin",
+   "Hekîm Sefqan",
+   "Awazê Çiya"
+  ],
+  "answersTr": [
+   "Mehmûd Berazî",
+   "Hozan Aydin",
+   "Hekîm Sefqan",
+   "Awazê Çiya"
+  ],
+  "correctAnswer": "Mehmûd Berazî",
+  "correctAnswerTr": "Mehmûd Berazî",
+  "explanation": "Filmin müziği Mehmûd Berazî'ye aittir; 'Rûbarê Min' parçası Mizgîn Tahir'in sesinden filmde yer alır.",
+  "explanationKu": "Muzîka fîlm a Mehmûd Berazî ye; stranê 'Rûbarê Min' bi dengê Mizgîn Tahir di fîlm de derbas dibe.",
+  "explanationTr": "Filmin müziği Mehmûd Berazî'ye aittir; 'Rûbarê Min' parçası Mizgîn Tahir'in sesinden filmde yer alır.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "comm_dir_0001",
+  "category": "Dîrok",
+  "prompt": "Şehîdê ku wek 'Şêrê Efrînê' tê nasîn kî ye?",
+  "promptTr": "Efrîn'deki direnişin sembol ismi 'Şêrê Efrînê' olarak bilinen şehidimiz kimdir?",
+  "answers": [
+   "Karker Tolhildan",
+   "Gelhat Gever",
+   "Çiyager Hêvî",
+   "Hakî Karer"
+  ],
+  "answersTr": [
+   "Karker Tolhildan",
+   "Gelhat Gever",
+   "Çiyager Hêvî",
+   "Hakî Karer"
+  ],
+  "correctAnswer": "Karker Tolhildan",
+  "correctAnswerTr": "Karker Tolhildan",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "comm_dir_0002",
+  "category": "Dîrok",
+  "prompt": "Kîjan şehîd bi berxwedana Sûra Amedê re bûye yek?",
+  "promptTr": "Amed Sur direnişiyle bütünleşen şehit arkadaş kimdir?",
+  "answers": [
+   "Çiyager Hêvî",
+   "Gelhat Gever",
+   "Karker Tolhildan",
+   "Riza Altun"
+  ],
+  "answersTr": [
+   "Çiyager Hêvî",
+   "Gelhat Gever",
+   "Karker Tolhildan",
+   "Riza Altun"
+  ],
+  "correctAnswer": "Çiyager Hêvî",
+  "correctAnswerTr": "Çiyager Hêvî",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_dir_0003",
+  "category": "Dîrok",
+  "prompt": "Şehîda fedaî ya ku bi ruhê Kobanê re bûye yek kî ye?",
+  "promptTr": "Kobanê ruhuyla bütünleşen fedai şehidimiz kimdir?",
+  "answers": [
+   "Arîn Mirkan",
+   "Viyan Peyman",
+   "Zehra Penaber",
+   "Gelhat Gever"
+  ],
+  "answersTr": [
+   "Arîn Mirkan",
+   "Viyan Peyman",
+   "Zehra Penaber",
+   "Gelhat Gever"
+  ],
+  "correctAnswer": "Arîn Mirkan",
+  "correctAnswerTr": "Arîn Mirkan",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_dir_0004",
+  "category": "Dîrok",
+  "prompt": "Kîjan şehîd bi klamên xwe yên berxwedana Kobanê tê bîranîn?",
+  "promptTr": "Kobanê direnişinde söylediği klamlarla hafızalarda kalan şehidimiz kimdir?",
+  "answers": [
+   "Viyan Peyman",
+   "Arîn Mirkan",
+   "Kasım Engin",
+   "Atakan Mahir"
+  ],
+  "answersTr": [
+   "Viyan Peyman",
+   "Arîn Mirkan",
+   "Kasım Engin",
+   "Atakan Mahir"
+  ],
+  "correctAnswer": "Viyan Peyman",
+  "correctAnswerTr": "Viyan Peyman",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "comm_dir_0005",
+  "category": "Dîrok",
+  "prompt": "Fermandarê pêşeng ê berxwedana Kobanê kî bû?",
+  "promptTr": "Kobanê direnişinde büyük fedakârlıklar yapan öncü komutan kimdi?",
+  "answers": [
+   "Gelhat Gever",
+   "Mazlum Kobanê",
+   "Murat Karayılan",
+   "Mustafa Karasu"
+  ],
+  "answersTr": [
+   "Gelhat Gever",
+   "Mazlum Kobanê",
+   "Murat Karayılan",
+   "Mustafa Karasu"
+  ],
+  "correctAnswer": "Gelhat Gever",
+  "correctAnswerTr": "Gelhat Gever",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_dir_0006",
+  "category": "Dîrok",
+  "prompt": "Kemal Pir, yê ku wek 'Laz Kemal' tê nasîn, xelkê ku derê ye?",
+  "promptTr": "'Laz Kemal' olarak bilinen Kemal Pir nerelidir?",
+  "answers": [
+   "Gümüşhane",
+   "Amed",
+   "Qamişlo",
+   "Hewraman"
+  ],
+  "answersTr": [
+   "Gümüşhane",
+   "Amed",
+   "Qamişlo",
+   "Hewraman"
+  ],
+  "correctAnswer": "Gümüşhane",
+  "correctAnswerTr": "Gümüşhane",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "comm_dir_0007",
+  "category": "Dîrok",
+  "prompt": "Hakî Karer xelkê ku derê ye?",
+  "promptTr": "Haki Karer nerelidir?",
+  "answers": [
+   "Ordu",
+   "Giresun",
+   "Rize",
+   "Gümüşhane"
+  ],
+  "answersTr": [
+   "Ordu",
+   "Giresun",
+   "Rize",
+   "Gümüşhane"
+  ],
+  "correctAnswer": "Ordu",
+  "correctAnswerTr": "Ordu",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_dir_0008",
+  "category": "Dîrok",
+  "prompt": "Kîjan heval wek 'cêwiyê ruhê min' tê bilêvkirin?",
+  "promptTr": "Öcalan'ın 'ruh ikizim' olarak tanımladığı arkadaş kimdir?",
+  "answers": [
+   "Hakî Karer",
+   "Kemal Pir",
+   "Mazlum Doğan",
+   "Mehmet Karasungur"
+  ],
+  "answersTr": [
+   "Hakî Karer",
+   "Kemal Pir",
+   "Mazlum Doğan",
+   "Mehmet Karasungur"
+  ],
+  "correctAnswer": "Hakî Karer",
+  "correctAnswerTr": "Hakî Karer",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "comm_dir_0009",
+  "category": "Dîrok",
+  "prompt": "Şanogerê ku di berxwedana benda Tişrînê de şehîd ket kî ye?",
+  "promptTr": "Tişrin barajındaki direniş sırasında şehit olan tiyatrocu kimdir?",
+  "answers": [
+   "Bavê Teyar",
+   "Nazmi Karaman",
+   "Mirza Metin",
+   "Aydın Orak"
+  ],
+  "answersTr": [
+   "Bavê Teyar",
+   "Nazmi Karaman",
+   "Mirza Metin",
+   "Aydın Orak"
+  ],
+  "correctAnswer": "Bavê Teyar",
+  "correctAnswerTr": "Bavê Teyar",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_siy_0001",
+  "category": "Siyaset",
+  "prompt": "Siyasetmedarê ku wek 'Bavê Welat' tê nasîn kî ye?",
+  "promptTr": "Rojava direnişiyle bütünleşen ve 'Bavê Welat' olarak tanınan siyasetçi kimdir?",
+  "answers": [
+   "Salih Mislim",
+   "Aldar Xelîl",
+   "Mazlum Kobanê",
+   "Bavê Teyar"
+  ],
+  "answersTr": [
+   "Salih Mislim",
+   "Aldar Xelîl",
+   "Mazlum Kobanê",
+   "Bavê Teyar"
+  ],
+  "correctAnswer": "Salih Mislim",
+  "correctAnswerTr": "Salih Mislim",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 1,
+  "id": "comm_siy_0002",
+  "category": "Siyaset",
+  "prompt": "Yekîneya şervanên jin a li Rojava kîjan e?",
+  "promptTr": "Rojava'daki kadın savaşçı birliği hangisidir?",
+  "answers": [
+   "YPJ",
+   "YJA-Star",
+   "YPG",
+   "HPJ"
+  ],
+  "answersTr": [
+   "YPJ",
+   "YJA-Star",
+   "YPG",
+   "HPJ"
+  ],
+  "correctAnswer": "YPJ",
+  "correctAnswerTr": "YPJ",
+  "explanation": "",
+  "explanationKu": "",
+  "explanationTr": "",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Topluluk katkısı",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 2,
+  "id": "comm_sin_0101",
+  "category": "Sînema",
+  "prompt": "Fîlmê 'Yol' di sala 1982'an de li Cannesê kîjan xelat wergirt?",
+  "promptTr": "'Yol' filmi 1982'de Cannes'da hangi ödülü kazandı?",
+  "answers": [
+   "Altın Palmiye",
+   "Jüri Özel Ödülü",
+   "En İyi Yönetmen",
+   "Altın Ayı"
+  ],
+  "answersTr": [
+   "Altın Palmiye",
+   "Jüri Özel Ödülü",
+   "En İyi Yönetmen",
+   "Altın Ayı"
+  ],
+  "correctAnswer": "Altın Palmiye",
+  "correctAnswerTr": "Altın Palmiye",
+  "explanation": "Yılmaz Güney'in senaryosunu yazdığı 'Yol', 1982 Cannes Film Festivali'nde Altın Palmiye'yi kazandı.",
+  "explanationKu": "'Yol', ku senaryoya wê ji hêla Yilmaz Guney ve hatibû nivîsandin, di Festîvala Cannesê ya 1982'an de Palmiya Zêrîn wergirt.",
+  "explanationTr": "Yılmaz Güney'in senaryosunu yazdığı 'Yol', 1982 Cannes Film Festivali'nde Altın Palmiye'yi kazandı.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0102",
+  "category": "Sînema",
+  "prompt": "Ji ber ku Yilmaz Guney di girtîgehê de bû, derhêneriya fîlmê 'Yol' kê kir?",
+  "promptTr": "Yılmaz Güney cezaevinde olduğu için 'Yol' filminin yönetmenliğini kim üstlendi?",
+  "answers": [
+   "Şerif Gören",
+   "Zeki Ökten",
+   "Atıf Yılmaz",
+   "Ömer Lütfi Akad"
+  ],
+  "answersTr": [
+   "Şerif Gören",
+   "Zeki Ökten",
+   "Atıf Yılmaz",
+   "Ömer Lütfi Akad"
+  ],
+  "correctAnswer": "Şerif Gören",
+  "correctAnswerTr": "Şerif Gören",
+  "explanation": "Güney senaryoyu cezaevinden yazdı; çekimleri Şerif Gören yönetti, kurguyu Güney Fransa'da yaptı.",
+  "explanationKu": "Guney senaryo ji girtîgehê nivîsî; kişandin ji hêla Şerif Gören ve hat kirin.",
+  "explanationTr": "Güney senaryoyu cezaevinden yazdı; çekimleri Şerif Gören yönetti, kurguyu Güney Fransa'da yaptı.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0103",
+  "category": "Sînema",
+  "prompt": "Fîlmê 'Sûrû' (1978) senaryoya wê ya kê ye?",
+  "promptTr": "'Sürü' (1978) filminin senaryosu kime aittir?",
+  "answers": [
+   "Yılmaz Güney",
+   "Zeki Ökten",
+   "Kazım Öz",
+   "Hiner Saleem"
+  ],
+  "answersTr": [
+   "Yılmaz Güney",
+   "Zeki Ökten",
+   "Kazım Öz",
+   "Hiner Saleem"
+  ],
+  "correctAnswer": "Yılmaz Güney",
+  "correctAnswerTr": "Yılmaz Güney",
+  "explanation": "'Sürü'nün senaryosunu Yılmaz Güney yazdı, filmi Zeki Ökten yönetti.",
+  "explanationKu": "Senaryoya 'Sûrû' ji hêla Yilmaz Guney ve hat nivîsandin, fîlm ji hêla Zeki Ökten ve hat derhênan.",
+  "explanationTr": "'Sürü'nün senaryosunu Yılmaz Güney yazdı, filmi Zeki Ökten yönetti.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0104",
+  "category": "Sînema",
+  "prompt": "Derhênerê fîlmê 'Dema Hespên Serxweş' kî ye?",
+  "promptTr": "'Sarhoş Atlar Zamanı' filminin yönetmeni kimdir?",
+  "answers": [
+   "Bahman Ghobadi",
+   "Hiner Saleem",
+   "Kazım Öz",
+   "Yılmaz Güney"
+  ],
+  "answersTr": [
+   "Bahman Ghobadi",
+   "Hiner Saleem",
+   "Kazım Öz",
+   "Yılmaz Güney"
+  ],
+  "correctAnswer": "Bahman Ghobadi",
+  "correctAnswerTr": "Bahman Ghobadi",
+  "explanation": "Bahman Ghobadi'nin ilk uzun metrajı, 2000 Cannes'da Altın Kamera ödülünü kazandı.",
+  "explanationKu": "Fîlmê yekem ê dirêj ê Bahman Ghobadi, di Cannesa 2000'î de Kamera Zêrîn wergirt.",
+  "explanationTr": "Bahman Ghobadi'nin ilk uzun metrajı, 2000 Cannes'da Altın Kamera ödülünü kazandı.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0105",
+  "category": "Sînema",
+  "prompt": "Fîlmê 'Kûsî jî Difirin' derhênerê wî kî ye?",
+  "promptTr": "'Kaplumbağalar da Uçar' filminin yönetmeni kimdir?",
+  "answers": [
+   "Bahman Ghobadi",
+   "Hiner Saleem",
+   "Erol Mintaş",
+   "Hüseyin Karabey"
+  ],
+  "answersTr": [
+   "Bahman Ghobadi",
+   "Hiner Saleem",
+   "Erol Mintaş",
+   "Hüseyin Karabey"
+  ],
+  "correctAnswer": "Bahman Ghobadi",
+  "correctAnswerTr": "Bahman Ghobadi",
+  "explanation": "Bahman Ghobadi'nin 2004 yapımı filmi, ABD işgali öncesinde Irak-Türkiye sınırındaki bir mülteci kampında geçer; Berlin'den San Sebastián'a birçok ödül kazandı.",
+  "explanationKu": "Fîlmê Bahman Ghobadi ê 2004'an li kampeke penaberan a li ser sînorê Iraq-Tirkiyê diqewime û gelek xelat wergirtine.",
+  "explanationTr": "Bahman Ghobadi'nin 2004 yapımı filmi, ABD işgali öncesinde Irak-Türkiye sınırındaki bir mülteci kampında geçer; Berlin'den San Sebastián'a birçok ödül kazandı.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "comm_sin_0106",
+  "category": "Sînema",
+  "prompt": "Derhênerê fîlmê 'Vodka Lemon' kî ye?",
+  "promptTr": "'Vodka Lemon' filminin yönetmeni kimdir?",
+  "answers": [
+   "Hiner Saleem",
+   "Bahman Ghobadi",
+   "Kazım Öz",
+   "Şerif Gören"
+  ],
+  "answersTr": [
+   "Hiner Saleem",
+   "Bahman Ghobadi",
+   "Kazım Öz",
+   "Şerif Gören"
+  ],
+  "correctAnswer": "Hiner Saleem",
+  "correctAnswerTr": "Hiner Saleem",
+  "explanation": "Hiner Saleem'in 2003 yapımı filmi Venedik Film Festivali'nde ödül aldı.",
+  "explanationKu": "Fîlmê Hiner Saleem ê 2003'yan li Festîvala Venedîkê xelat wergirt.",
+  "explanationTr": "Hiner Saleem'in 2003 yapımı filmi Venedik Film Festivali'nde ödül aldı.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0107",
+  "category": "Sînema",
+  "prompt": "Fîlmên 'Fotoğraf', 'Bahoz' û 'Zer' ji hêla kîjan derhêner ve hatine çêkirin?",
+  "promptTr": "'Fotoğraf', 'Bahoz' ve 'Zer' filmleri hangi yönetmene aittir?",
+  "answers": [
+   "Kazım Öz",
+   "Erol Mintaş",
+   "Hüseyin Karabey",
+   "Ersin Çelik"
+  ],
+  "answersTr": [
+   "Kazım Öz",
+   "Erol Mintaş",
+   "Hüseyin Karabey",
+   "Ersin Çelik"
+  ],
+  "correctAnswer": "Kazım Öz",
+  "correctAnswerTr": "Kazım Öz",
+  "explanation": "Kazım Öz, Kürt sinemasının üretken yönetmenlerinden; belgesel ve kurmaca alanında çalışır.",
+  "explanationKu": "Kazim Öz yek ji derhênerên hilberîner ên sînemaya kurdî ye.",
+  "explanationTr": "Kazım Öz, Kürt sinemasının üretken yönetmenlerinden; belgesel ve kurmaca alanında çalışır.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0108",
+  "category": "Sînema",
+  "prompt": "Yilmaz Guney di sala kîjan de li Parîsê koça dawî kir?",
+  "promptTr": "Yılmaz Güney hangi yıl Paris'te hayatını kaybetti?",
+  "answers": [
+   "1984",
+   "1980",
+   "1988",
+   "1992"
+  ],
+  "answersTr": [
+   "1984",
+   "1980",
+   "1988",
+   "1992"
+  ],
+  "correctAnswer": "1984",
+  "correctAnswerTr": "1984",
+  "explanation": "Yılmaz Güney 9 Eylül 1984'te Paris'te yaşamını yitirdi.",
+  "explanationKu": "Yilmaz Guney di 9'ê îlona 1984'an de li Parîsê koça dawî kir.",
+  "explanationTr": "Yılmaz Güney 9 Eylül 1984'te Paris'te yaşamını yitirdi.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "comm_sin_0109",
+  "category": "Sînema",
+  "prompt": "Fîlmê dawî yê Yilmaz Guney kîjan e?",
+  "promptTr": "Yılmaz Güney'in son filmi hangisidir?",
+  "answers": [
+   "Duvar",
+   "Yol",
+   "Sürü",
+   "Umut"
+  ],
+  "answersTr": [
+   "Duvar",
+   "Yol",
+   "Sürü",
+   "Umut"
+  ],
+  "correctAnswer": "Duvar",
+  "correctAnswerTr": "Duvar",
+  "explanation": "'Duvar' (1983), Güney'in Fransa'da çektiği son filmidir.",
+  "explanationKu": "'Duvar' (1983) fîlmê dawî yê Guney e ku li Fransayê hat kişandin.",
+  "explanationTr": "'Duvar' (1983), Güney'in Fransa'da çektiği son filmidir.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "comm_sin_0110",
+  "category": "Sînema",
+  "prompt": "Derhênerê fîlmê 'Klama Dayîka Min' kî ye?",
+  "promptTr": "'Annemin Şarkısı' (Klama Dayîka Min) filminin yönetmeni kimdir?",
+  "answers": [
+   "Erol Mintaş",
+   "Kazım Öz",
+   "Hüseyin Karabey",
+   "Ersin Çelik"
+  ],
+  "answersTr": [
+   "Erol Mintaş",
+   "Kazım Öz",
+   "Hüseyin Karabey",
+   "Ersin Çelik"
+  ],
+  "correctAnswer": "Erol Mintaş",
+  "correctAnswerTr": "Erol Mintaş",
+  "explanation": "Erol Mintaş'ın 2014 yapımı filmi Antalya Altın Portakal'da En İyi İlk Film, Saraybosna Film Festivali'nde En İyi Film ödülünü kazandı.",
+  "explanationKu": "Fîlmê Erol Mintaş ê 2014'an li Antalyayê xelata Fîlmê Yekem ê Herî Baş û li Sarayevoyê xelata Fîlmê Herî Baş wergirt.",
+  "explanationTr": "Erol Mintaş'ın 2014 yapımı filmi Antalya Altın Portakal'da En İyi İlk Film, Saraybosna Film Festivali'nde En İyi Film ödülünü kazandı.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0111",
+  "category": "Sînema",
+  "prompt": "Fîlmê 'Umut' (1970) derhênerê wî kî ye?",
+  "promptTr": "'Umut' (1970) filminin yönetmeni kimdir?",
+  "answers": [
+   "Yılmaz Güney",
+   "Zeki Ökten",
+   "Şerif Gören",
+   "Atıf Yılmaz"
+  ],
+  "answersTr": [
+   "Yılmaz Güney",
+   "Zeki Ökten",
+   "Şerif Gören",
+   "Atıf Yılmaz"
+  ],
+  "correctAnswer": "Yılmaz Güney",
+  "correctAnswerTr": "Yılmaz Güney",
+  "explanation": "'Umut', Güney'in yönetmen olarak dönüm noktası sayılan filmidir.",
+  "explanationKu": "'Umut' fîlmê guhertinê ye di karîyera Guney a derhêneriyê de.",
+  "explanationTr": "'Umut', Güney'in yönetmen olarak dönüm noktası sayılan filmidir.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 3,
+  "id": "comm_sin_0112",
+  "category": "Sînema",
+  "prompt": "Bahman Ghobadi bi eslê xwe ji kîjan welatî ye?",
+  "promptTr": "Bahman Ghobadi asıl olarak hangi ülkedendir?",
+  "answers": [
+   "Îran",
+   "Iraq",
+   "Sûriye",
+   "Ermenistan"
+  ],
+  "answersTr": [
+   "Îran",
+   "Iraq",
+   "Sûriye",
+   "Ermenistan"
+  ],
+  "correctAnswer": "Îran",
+  "correctAnswerTr": "Îran",
+  "explanation": "Bahman Ghobadi, İran'ın Bane kentinde doğmuş Kürt yönetmendir.",
+  "explanationKu": "Bahman Ghobadi derhênerekî kurd e ku li Baneyê, li Îranê ji dayîk bûye.",
+  "explanationTr": "Bahman Ghobadi, İran'ın Bane kentinde doğmuş Kürt yönetmendir.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
+   "qualityVersion": 2
+  }
+ }
 ]
