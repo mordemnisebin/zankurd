@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/analytics_service.dart';
+import 'strings.dart';
 
 /// Supported application languages.
 enum AppLanguage {
@@ -24,10 +25,12 @@ enum AppLanguage {
 
 class LanguageProvider extends ChangeNotifier {
   LanguageProvider({String initialLang = 'ku', SharedPreferences? preferences})
-      : this.fromLanguage(AppLanguage.fromCode(initialLang), preferences);
+    : this.fromLanguage(AppLanguage.fromCode(initialLang), preferences);
 
-  LanguageProvider.fromLanguage(AppLanguage initialLanguage, [this._preferences])
-      : _language = initialLanguage;
+  LanguageProvider.fromLanguage(
+    AppLanguage initialLanguage, [
+    this._preferences,
+  ]) : _language = initialLanguage;
 
   static const _storageKey = 'zankurd.language';
 
@@ -78,10 +81,30 @@ extension LangContext on BuildContext {
     }
   }
 
-  AppLanguage get language => Provider.of<LanguageProvider>(this, listen: false).language;
+  AppLanguage get language =>
+      Provider.of<LanguageProvider>(this, listen: false).language;
 
   /// Returns [ku] if Kurdish is active, [tr] if Turkish.
   String s(String ku, String tr) => isKu ? ku : tr;
+
+  /// Anahtar tabanlı metin erişimi — [Tr] kayıt defterinden okur.
+  ///
+  /// [s] ile arasındaki fark, çağrı yerinin dil sayısından bağımsız
+  /// olmasıdır: üçüncü bir dil eklendiğinde `t(...)` kullanan hiçbir satır
+  /// değişmez, `s(ku, tr)` kullanan her satır değişmek zorundadır. Yeni kod
+  /// [t] kullanmalı; [s] göç tamamlanana kadar duran bir köprüdür
+  /// (bkz. `lib/src/l10n/strings.dart` göç yolu).
+  ///
+  /// Dil, [isKu] ile aynı biçimde *dinleyerek* okunur. İlk yazımında
+  /// `langProvider` (listen: false) kullanılmıştı; bu yüzden dil
+  /// değiştiğinde `t()` kullanan widget'lar yeniden çizilmiyor ve ekran
+  /// eski dilde kalıyordu (2026-07-25, göç sırasında testlerin yakaladığı
+  /// regresyon). Abone olmayan okuma yalnız event handler / async kodda
+  /// doğrudur; orada [isKu] zaten kendiliğinden dinlemesiz okumaya düşer.
+  String t(String key, [Map<String, String>? params]) {
+    final language = isKu ? AppLanguage.ku : AppLanguage.tr;
+    return Tr.of(key, language, params);
+  }
 
   /// Translates Supabase Auth Turkish error messages to Kurdish if active.
   String translateAuthError(String turkishMessage) {
@@ -130,6 +153,7 @@ class CategoryNames {
     'Siyaset': 'Siyaset',
     'Paradigma': 'Paradigma',
     'Teknolojî': 'Teknoloji',
+    'Sînema': 'Sinema',
   };
 
   /// Optional Kurmanci display labels (ID stays the map key).
