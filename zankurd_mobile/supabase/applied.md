@@ -28,6 +28,6 @@
 | 2026-07-21_room_cleanup_cron.sql | ✅ | 2026-07-21, kullanıcı tarafından uygulandı — `cleanup-stale-rooms` işi saatlik (`17 * * * *`) çalışıyor |
 | 2026-07-21_strip_asta_prompt_prefix.sql | ✅ | 2026-07-21, kullanıcı tarafından Supabase SQL Editor'den elle uygulandı — canlı questions.prompt artık offline bankayla eşleşmeli |
 | 2026-07-22_multiplayer_integrity_hardening.sql | ✅ | 2026-07-22, Management API ile uygulandı; izinler, RPC'ler, politikalar ve TIMEOUT kısıtı canlı sorguyla doğrulandı |
-| 2026-07-26_real_player_tournament.sql | ✅ | 2026-07-26, kullanıcı tarafından Supabase SQL Editor'den elle uygulandı (iki turda: önce şema+RPC'ler, sonra `claim_tournament_reward` sertleştirmesi). Dosya yeniden uygulanabilir; sütunlar koşullu eklenir. Sağlık raporu: `2026-07-26_tournament_verify.sql` |
+| 2026-07-26_real_player_tournament.sql | ✅ | 2026-07-26, kullanıcı tarafından Supabase SQL Editor'den elle uygulandı (iki turda: önce şema+RPC'ler, sonra `claim_tournament_reward` sertleştirmesi). **2026-07-27'de canlı sorguyla doğrulandı:** 3 tablo var, üçünde de RLS açık ve politika yalnız `r` (yazma yolu yok), 8 fonksiyonun 8'i var, `claim_tournament_reward` şampiyonluğu `champion_id` üzerinden doğrulayan sürüm. Dosya yeniden uygulanabilir; sütunlar koşullu eklenir. Sağlık raporu: `2026-07-26_tournament_verify.sql` |
 | 2026-07-26_tournament_verify.sql | — | Salt okunur doğrulama betiği; şema değiştirmez |
 
