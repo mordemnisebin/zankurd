@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -72,4 +73,48 @@ void main() {
     // Rozet ile karo aynı kapıdan geçer: ikisi de boş kalmalı.
     expect(find.text('#1'), findsNothing);
   });
+
+  testWidgets('sunucuda puanı olmayan oyuncuya sıralama gösterilmez', (
+    tester,
+  ) async {
+    // Canlı denetim (2026-07-27): profil "#85" derken toplam puan 0'dı ve
+    // haftalık tablo bomboştu. Sıralama, herkesin sıfırda eşitlendiği bir
+    // listedeki gelişigüzel bir yerdi; oyuncuya "85. sıradasın" demek
+    // yanlıştı. Yerel olarak soru cevaplamış olmak yetmiyor — sunucuda
+    // puanı da olmalı.
+    MistakeStore.resetInstance();
+    SharedPreferences.setMockInitialValues({});
+    final store = await MistakeStore.load();
+    // Bir yanlış + bir doğru: yerel olarak soru cevaplanmış sayılır.
+    await store.markMistake('zero-q1', category: 'Ziman');
+    await store.markResolved('zero-q1');
+
+    await tester.pumpWidget(
+      testShell(
+        child: Scaffold(
+          body: ProfileScreen(repository: _ZeroScoreRepository()),
+        ),
+      ),
+    );
+    await tester.pump();
+    for (var i = 0; i < 40 && find.text('Sıralama').evaluate().isEmpty; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+
+    expect(find.text('#85'), findsNothing);
+    expect(find.text('Altın Lig'), findsNothing);
+  });
+}
+
+/// Sunucuda kaydı olan ama puanı sıfır olan oyuncu.
+class _ZeroScoreRepository extends MockZanKurdRepository {
+  @override
+  Future<LeaderboardEntry?> getPlayerStats() async => const LeaderboardEntry(
+    rank: 85,
+    playerId: 'me',
+    displayName: 'Lîstikvan',
+    totalScore: 0,
+    bestStreak: 0,
+    roomsPlayed: 0,
+  );
 }

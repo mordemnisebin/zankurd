@@ -227,6 +227,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _displayName(bool ku) =>
       PlayerIdentity.resolveName(_currentName, isKu: ku);
 
+  /// Sıralama ve lig rozeti için ortak kapı.
+  ///
+  /// İki koşul da gerekli. Yalnız yerel "kaç soru cevapladın" yetmiyordu:
+  /// canlı denetimde profil "#85" derken toplam puan 0'dı ve haftalık tablo
+  /// bomboştu. Sıralama, herkesin sıfırda eşitlendiği bir listedeki gelişigüzel
+  /// bir yer gösteriyordu; oyuncuya "85. sıradasın" demek yanlıştı.
+  ///
+  /// Yalnız sunucu puanına bakmak da yetmez: sahte depo "benim
+  /// istatistiğim" olarak tablonun birincisini döndürür ve hiç oynamamış
+  /// oyuncu yine altın rozet görürdü — 2026-07-26'da kapatılan kusurun
+  /// aynısı. İki kapı birlikte durmalı (2026-07-27).
+  bool get _hasServerScore =>
+      _answeredTotal > 0 && (_stats?.totalScore ?? 0) > 0;
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
@@ -248,7 +262,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // gelen `roomsPlayed`e, karo yerel `_answeredTotal`a bakıyordu. Sonuç
       // aynı ekranda "Altın Lig" ile "Sıralama —"nin yan yana durmasıydı —
       // iki rakam birbirini yalanlıyordu (2026-07-26 denetimi).
-      rank: _answeredTotal > 0 ? _stats?.rank : null,
+      rank: _hasServerScore ? _stats?.rank : null,
       levelProgress: _levelProgress,
       onEditAvatar: _openAvatarEditor,
     );
@@ -303,7 +317,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       _StatTile(
                         label: context.t(K.statRank),
-                        value: _answeredTotal > 0 ? '#${_stats!.rank}' : '—',
+                        value: _hasServerScore ? '#${_stats!.rank}' : '—',
                         color: AppTheme.gold,
                         icon: AppIcons.chartColumn,
                       ),
@@ -314,9 +328,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         // gösteriliyor, aynı ekranda "0/1000 XP · Ast 1"
                         // yazıyordu — iki rakam birbirini yalanlıyordu
                         // (2026-07-25 canlı denetimi).
-                        value: _answeredTotal > 0
-                            ? '${_stats!.totalScore}'
-                            : '—',
+                        value: _hasServerScore ? '${_stats!.totalScore}' : '—',
                         color: AppTheme.accent,
                         icon: AppIcons.star,
                       ),
