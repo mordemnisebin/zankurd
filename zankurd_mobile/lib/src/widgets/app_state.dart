@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
-import 'app_panel.dart';
 import 'roj_mascot.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -112,7 +111,13 @@ class _AppStateScaffold extends StatelessWidget {
           padding: const EdgeInsets.all(24),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: constraints.maxHeight - 48),
-            child: Center(child: _panel(context, actionLabel)),
+            // Tam ortalama, üstteki sekmelerle panel arasında ~250pt boş
+            // bırakıyordu; ekran yarım yüklenmiş gibi duruyordu. Panel
+            // üst üçte bire çekildi: içerikle bağı kopmuyor (2026-07-27).
+            child: Align(
+              alignment: const Alignment(0, -0.45),
+              child: _panel(context, actionLabel),
+            ),
           ),
         );
       },
@@ -125,7 +130,42 @@ class _AppStateScaffold extends StatelessWidget {
   /// kapsayıcının, sınırsızda düz bir dolgunun içinde. Gövdeyi tek yerde
   /// tutmak, iki dalın zamanla ayrışmasını engeller.
   Widget _panel(BuildContext context, String? actionLabel) {
-    return AppPanel(
+    // Panel bir zamanlar düz beyaz bir kutuydu: krem zeminde beyaz kart,
+    // gri metin, soluk çerçeveli düğme. Boş ekranlarda **ekranın tamamı**
+    // bu kutudan ibaret olduğu için uygulama orada cansız görünüyordu
+    // (2026-07-27, canlı gezinti). Panel artık ekranın vurgu rengini
+    // taşıyor: yumuşak bir gradyan, ikonun arkasında renk halkası ve
+    // dolgulu bir eylem düğmesi.
+    final tint = iconColor;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 26),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color.alphaBlend(
+              tint.withValues(alpha: 0.10),
+              AppTheme.surfaceColor(context),
+            ),
+            Color.alphaBlend(
+              tint.withValues(alpha: 0.02),
+              AppTheme.surfaceColor(context),
+            ),
+          ],
+        ),
+        border: Border.all(color: tint.withValues(alpha: 0.22)),
+        boxShadow: [
+          BoxShadow(
+            color: tint.withValues(alpha: 0.10),
+            blurRadius: 24,
+            offset: const Offset(0, 10),
+            spreadRadius: -8,
+          ),
+        ],
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -200,10 +240,28 @@ class _AppStateScaffold extends StatelessWidget {
             ),
           ),
           if (actionLabel != null && onAction != null) ...[
-            const SizedBox(height: 18),
-            OutlinedButton.icon(
+            const SizedBox(height: 20),
+            // Boş ekranda tek eylem budur; çerçeveli düğme onu ikincil
+            // gösteriyordu. Dolgulu düğme hem çağrıyı hem rengi taşır.
+            FilledButton.icon(
               onPressed: onAction,
-              icon: Icon(actionIcon ?? AppIcons.arrowsRotate),
+              style: FilledButton.styleFrom(
+                backgroundColor: tint,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 22,
+                  vertical: 14,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                ),
+                textStyle: const TextStyle(
+                  fontFamily: AppTypography.fontFamily,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 14,
+                ),
+              ),
+              icon: Icon(actionIcon ?? AppIcons.arrowsRotate, size: 16),
               label: Text(actionLabel),
             ),
           ],
