@@ -127,4 +127,23 @@ void main() {
           'düz kesme ile karışıyor.',
     );
   });
+
+  test('kayıt defteri turnuva kontenjanını sayıyla yazmıyor', () {
+    // Kontenjan sunucuda ayarlanır (`tournaments.size`). Metne sayı yazmak
+    // onu ilk değişiklikte yalan yapar: 8'den 4'e düşürüldüğünde oyun
+    // merkezi "8 kişilik eleme" demeye devam ediyordu ve bunu ancak
+    // uygulamayı elle gezerken gördüm (2026-07-27).
+    final source = File('lib/src/l10n/strings.dart').readAsStringSync();
+    final offenders = RegExp(
+      r"'[^']*\b(4|8|16)\s*(kişilik|kesan|oyuncu|lîstikvan)[^']*'",
+    ).allMatches(source).map((m) => m.group(0)!).toList();
+
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'Turnuva kontenjanı metne sabitlenmiş; sunucudaki değer '
+          'değişince yanlış olur: ${offenders.join(", ")}',
+    );
+  });
 }

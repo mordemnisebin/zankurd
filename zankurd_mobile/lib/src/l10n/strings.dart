@@ -321,7 +321,13 @@ class Tr {
     K.dailyContest: {'ku': 'Pêşbirka Rojê', 'tr': 'Günün Yarışması'},
     K.tenQuestions: {'ku': '10 pirs', 'tr': '10 soru'},
     K.tournament: {'ku': 'Kûpa', 'tr': 'Turnuva Modu'},
-    K.tournamentSub: {'ku': 'Elemeya 8 kesan', 'tr': '8 kişilik eleme'},
+    // Kontenjan sunucu tarafında ayarlanır (`tournaments.size`); metne sayı
+    // yazmak onu ilk değişiklikte yalan yapar — nitekim 8'den 4'e
+    // düşürüldüğünde bu satır eskimişti (2026-07-27).
+    K.tournamentSub: {
+      'ku': 'Elemeya bi lîstikvanên rastî',
+      'tr': 'Gerçek oyuncularla eleme',
+    },
     K.quickDuel: {'ku': 'Duelo bi lez', 'tr': 'Hızlı düello'},
     K.quickDuelSub: {
       'ku': 'Hevrikekî di asta te de · ~2 deqe',
