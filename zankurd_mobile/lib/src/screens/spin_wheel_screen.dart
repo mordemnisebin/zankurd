@@ -847,9 +847,14 @@ class _WheelPainter extends CustomPainter {
             color: textColor,
             fontWeight: FontWeight.w800,
             fontSize: 17,
+            // Gölge beyaz rakamı koyu dilimden ayırmak için; koyu rakamın
+            // altında ise kendi rengini bulandırıp okunurluğu düşürüyordu
+            // — altın dilimlerdeki 20 ve 25 lekeli görünüyordu
+            // (2026-07-27). Gölge de yazı rengi gibi zemine bağlı.
             shadows: [
               Shadow(
-                color: Colors.black.withValues(alpha: 0.6),
+                color: (textColor == Colors.white ? Colors.black : Colors.white)
+                    .withValues(alpha: 0.6),
                 blurRadius: 6,
                 offset: const Offset(0, 2),
               ),
