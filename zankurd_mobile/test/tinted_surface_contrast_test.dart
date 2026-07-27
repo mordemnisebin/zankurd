@@ -38,7 +38,47 @@ Color _tintedCard(Color surface) {
   return _over(AppTheme.gold.withValues(alpha: 0.07), color);
 }
 
+/// Tonal düğmenin zemini: aksan@0.14 yüzeyin üstünde.
+Color _tonalButton(Color accent, Color surface) =>
+    _over(accent.withValues(alpha: 0.14), surface);
+
 void main() {
+  testWidgets('tonal düğme etiketi kendi zemininde okunur', (tester) async {
+    // 2026-07-27: arkadaş kartındaki "Odaya çağır" düğmesi ham aksanı
+    // (#2F6F62) yazı rengi olarak kullanıyordu; koyu temada kendi tonlu
+    // zemininde 2.49:1 ölçüldü. Düğme etkin olduğu hâlde kapalı görünüyordu
+    // — sessiz bir kusur: kod doğru, renk kararı yanlıştı.
+    for (final (label, theme, surface) in [
+      ('koyu', AppTheme.dark(), AppTheme.surface),
+      ('açık', AppTheme.light(), AppTheme.lightSurface),
+    ]) {
+      final labels = <String, Color>{};
+      for (final (name, accent) in [
+        ('cyan', AppTheme.cyan),
+        ('altın', AppTheme.gold),
+        ('marka', AppTheme.brand),
+      ]) {
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: theme,
+            home: Builder(
+              builder: (c) {
+                labels[name] = AppColors.onAccentTint(c, accent);
+                return const SizedBox();
+              },
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(
+          _contrast(labels[name]!, _tonalButton(accent, surface)),
+          greaterThanOrEqualTo(4.5),
+          reason: '$label temada $name tonal düğmenin etiketi okunmuyor',
+        );
+      }
+    }
+  });
+
   testWidgets('tonlu kart üzerindeki metinler AA eşiğini geçer', (tester) async {
     for (final (label, theme, surface) in [
       ('koyu', AppTheme.dark(), AppTheme.surface),

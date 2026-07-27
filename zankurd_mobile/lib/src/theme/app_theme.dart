@@ -43,6 +43,47 @@ class AppColors {
     return hsl.withLightness(0.30).toColor();
   }
 
+  /// Kendi %14'lük tonu üzerine yazılan aksan metnin okunur hâli
+  /// (tonal düğmeler: "Odaya çağır", ödül çipleri).
+  ///
+  /// [readableAccent] düz yüzeye göre ayarlanmıştır. Tonal düğmede zemin
+  /// aksanın kendi tonudur: koyu temada yüzey açılır, açık temada beyaz
+  /// koyulaşır — her iki yönde de metinle zemin birbirine yaklaşır.
+  /// Ölçüm (2026-07-27): arkadaş kartındaki "Odaya çağır" koyu temada
+  /// 2.49:1, marka turuncusu açık temada 3.77:1. Düğmeler etkin oldukları
+  /// hâlde kapalı görünüyordu.
+  ///
+  /// Renk kimliği (ton ve doygunluk) korunur; yalnız açıklık, AA eşiği
+  /// geçilene dek adım adım zeminden uzaklaştırılır. Sabit bir sayı yerine
+  /// arama kullanılır ki yeni bir aksan eklendiğinde de doğru kalsın.
+  static Color onAccentTint(BuildContext context, Color accent) {
+    final surface = AppTheme.isLight(context)
+        ? AppTheme.lightSurface
+        : AppTheme.surface;
+    final background = Color.alphaBlend(
+      accent.withValues(alpha: 0.14),
+      surface,
+    );
+    final darken = background.computeLuminance() > 0.4;
+    var hsl = HSLColor.fromColor(readableAccent(context, accent));
+    for (var i = 0; i < 24; i++) {
+      final candidate = hsl.toColor();
+      if (_contrast(candidate, background) >= 4.5) return candidate;
+      final next = hsl.lightness + (darken ? -0.03 : 0.03);
+      if (next < 0 || next > 1) return candidate;
+      hsl = hsl.withLightness(next);
+    }
+    return hsl.toColor();
+  }
+
+  static double _contrast(Color a, Color b) {
+    final l1 = a.computeLuminance();
+    final l2 = b.computeLuminance();
+    final hi = l1 > l2 ? l1 : l2;
+    final lo = l1 > l2 ? l2 : l1;
+    return (hi + 0.05) / (lo + 0.05);
+  }
+
   /// Renk tonuyla boyanmış kart üzerinde ikincil metin rengi.
   ///
   /// [AppTheme.textSubColor] ve [AppTheme.textMutedColor] düz yüzeye göre

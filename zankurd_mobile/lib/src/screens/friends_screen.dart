@@ -317,7 +317,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
                               backgroundColor: AppTheme.cyan.withValues(
                                 alpha: 0.14,
                               ),
-                              foregroundColor: AppTheme.cyan,
+                              foregroundColor: AppColors.onAccentTint(
+                                context,
+                                AppTheme.cyan,
+                              ),
                             ),
                             child: Text(context.t(K.addAction)),
                           ),
@@ -515,7 +518,13 @@ class _FriendCard extends StatelessWidget {
                 onPressed: busy ? null : onPlay,
                 style: FilledButton.styleFrom(
                   backgroundColor: AppTheme.cyan.withValues(alpha: 0.14),
-                  foregroundColor: AppTheme.cyan,
+                  // Ham aksan, kendi tonlu zemininde boğuluyordu: koyu
+                  // temada ölçümde 2.49:1 — etiket sönük çıkıyor ve düğme
+                  // kapalıymış gibi okunuyordu (2026-07-27).
+                  foregroundColor: AppColors.onAccentTint(
+                    context,
+                    AppTheme.cyan,
+                  ),
                 ),
                 child: busy
                     // Oda kurulurken düğme sessizce ölüydü: ikinci dokunuş
