@@ -28,6 +28,7 @@ import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
+import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
@@ -543,6 +544,93 @@ void main() {
       ),
     );
     await _shoot(t, '44_review');
+  }, tags: ['preview']);
+
+  // ── Kalan ekranların karanlık tema taraması ──
+  //
+  // Karanlık tema yalnız altı ekranda ölçülmüştü ve orada gerçek bir
+  // kontrast kusuru çıkmıştı (öğrenme kartı). Kalan ekranlar da basılır:
+  // ölçülmeyen yerde kusur görünmez.
+  testWidgets('45 ayarlar (karanlık)', (t) async {
+    await _pump(t, SettingsScreen(repository: repository), dark: true);
+    await _shoot(t, '45_settings_dark');
+  }, tags: ['preview']);
+
+  testWidgets('46 arkadaşlar (karanlık)', (t) async {
+    await _pump(t, FriendsScreen(repository: repository), dark: true);
+    await _shoot(t, '46_friends_dark');
+  }, tags: ['preview']);
+
+  testWidgets('47 çark (karanlık)', (t) async {
+    await _pump(t, SpinWheelScreen(repository: repository), dark: true);
+    await _shoot(t, '47_spin_dark');
+  }, tags: ['preview']);
+
+  testWidgets('48 turnuva (karanlık)', (t) async {
+    await _pump(t, TournamentScreen(repository: repository), dark: true);
+    await _shoot(t, '48_tournament_dark');
+  }, tags: ['preview']);
+
+  testWidgets('49 oda (karanlık)', (t) async {
+    await _pump(
+      t,
+      RoomScreen(repository: repository, initialRoom: repository.createRoom()),
+      dark: true,
+    );
+    await _shoot(t, '49_room_dark');
+  }, tags: ['preview']);
+
+  testWidgets('50 rakip arama (karanlık)', (t) async {
+    await _pump(t, MatchmakingScreen(repository: repository), dark: true);
+    await _shoot(t, '50_matchmaking_dark');
+  }, tags: ['preview']);
+
+  testWidgets('51 ders akışı (karanlık)', (t) async {
+    await _pump(
+      t,
+      QuizScreen(
+        repository: repository,
+        room: repository.createRoom(),
+        questions: repository.questions.take(5).toList(),
+        experience: QuizExperience.learning,
+        enableTimer: false,
+      ),
+      dark: true,
+    );
+    await _shoot(t, '51_lesson_dark');
+  }, tags: ['preview']);
+
+  testWidgets('52 kategoriler (karanlık)', (t) async {
+    await _pump(
+      t,
+      Scaffold(body: CategoriesTab(repository: repository)),
+      dark: true,
+    );
+    await _shoot(t, '52_categories_dark');
+  }, tags: ['preview']);
+
+  testWidgets('53 seviyeler (karanlık)', (t) async {
+    await _pump(
+      t,
+      LevelScreen(repository: repository, category: 'Ziman'),
+      dark: true,
+    );
+    await _shoot(t, '53_levels_dark');
+  }, tags: ['preview']);
+
+  testWidgets('54 soru öner (karanlık)', (t) async {
+    await _pump(t, SuggestQuestionScreen(repository: repository), dark: true);
+    await _shoot(t, '54_suggest_dark');
+  }, tags: ['preview']);
+
+  testWidgets('55 öğrenme (karanlık)', (t) async {
+    await _pump(t, LearningScreen(repository: repository), dark: true);
+    await _shoot(t, '55_learning_dark');
+  }, tags: ['preview']);
+
+  testWidgets('56 öğrenme', (t) async {
+    await _pump(t, LearningScreen(repository: repository));
+    await _shoot(t, '56_learning');
   }, tags: ['preview']);
 
   testWidgets('14 ders akışı', (t) async {

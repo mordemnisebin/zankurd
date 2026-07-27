@@ -727,7 +727,12 @@ class _LessonCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    lesson.titleKu,
+                    // Ders adının Türkçesi modelde var (`titleTr`) ve depo
+                    // onu dolduruyor, ama kart her zaman Kurmancî adı
+                    // yazıyordu: Türkçe arayüzde ders listesi
+                    // "Silavkirin / Nasandin" diye görünüyordu
+                    // (2026-07-27, karanlık tema taraması).
+                    ku ? lesson.titleKu : (lesson.titleTr ?? lesson.titleKu),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.bodyMedium.copyWith(
@@ -1185,7 +1190,12 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     final ku = context.isKu;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.lesson.titleKu),
+        // Ders başlığı arayüz diline uyar; Kurmancî adı yedek kalır.
+        title: Text(
+          ku
+              ? widget.lesson.titleKu
+              : (widget.lesson.titleTr ?? widget.lesson.titleKu),
+        ),
         actions: [
           IconButton(
             icon: Icon(_flashcardMode ? AppIcons.clone : AppIcons.layerGroup),
