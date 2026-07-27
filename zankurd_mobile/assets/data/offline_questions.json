@@ -470,18 +470,20 @@
  {
   "id": "offline_0115",
   "category": "Ziman",
-  "prompt": "Ev wêne kîjan têgihê tîne bîra we: \"rast\" — wateya rast hilbijêrin.",
+  "prompt": "Peyva «rast» bi Tirkî çi tê gotin?",
   "answers": [
-   "zarok",
    "doğru",
-   "Siyah",
-   "gel!"
+   "yanlış",
+   "yavaş",
+   "sessiz"
   ],
   "correctAnswer": "doğru",
-  "explanation": "\"rast\" \"doğru\" demektir.",
+  "explanation": "«rast» Türkçede «doğru» demektir.",
   "type": "visual",
   "imageUrl": "asset://assets/question_images/rast.webp",
-  "difficulty": 3
+  "difficulty": 3,
+  "explanationKu": "«rast» bi Tirkî dibe «doğru».",
+  "explanationTr": "«rast» Türkçede «doğru» demektir."
  },
  {
   "id": "offline_0116",
@@ -1033,16 +1035,20 @@
  {
   "id": "offline_0670",
   "category": "Edebiyat",
-  "prompt": "Mecaz têgihek e ku bi edebiyata Kurdî re têkildar e.",
+  "prompt": "«Mecaz» di edebiyatê de çi ye?",
   "answers": [
-   "Rast",
-   "Şaş"
+   "bikaranîna peyvê li derveyî wateya wê ya rasterast",
+   "dubarekirina dengên destpêkê di rêzê de",
+   "rêza peyvan a ku kêş û qafiyeyê datîne",
+   "vegotina bûyerekê bi rêza dem a berevajî"
   ],
-  "correctAnswer": "Rast",
-  "explanation": "mecaz edebi metinleri anlamada kullanılan bir kavramdır.",
-  "type": "visual",
+  "correctAnswer": "bikaranîna peyvê li derveyî wateya wê ya rasterast",
+  "explanation": "Mecazda kelime, gerçek anlamının dışında kullanılır.",
+  "type": "multipleChoice",
   "difficulty": 2,
-  "imageUrl": "asset://assets/question_images/mecaz.webp"
+  "imageUrl": "asset://assets/question_images/mecaz.webp",
+  "explanationKu": "Di mecazê de peyv li derveyî wateya xwe ya rasterast tê bikaranîn.",
+  "explanationTr": "Mecazda kelime, gerçek anlamının dışında kullanılır."
  },
  {
   "id": "offline_0674",
