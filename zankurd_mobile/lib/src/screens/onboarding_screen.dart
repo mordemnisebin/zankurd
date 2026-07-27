@@ -552,60 +552,75 @@ class _OnboardingPage extends StatelessWidget {
         SizedBox(height: compact ? AppSpacing.md : AppSpacing.lg),
         Expanded(
           flex: compact ? 64 : 62,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          // Metin bloğu kendi bandının tepesine yapışıyordu: madde
+          // listesinden sonra sayfa noktalarına kadar ~350 pt boş kalıyor,
+          // uygulamayı ilk açan kişi yarım yüklenmiş bir ekran görüyordu.
+          // Kısa içerik artık bandın ortasında durur; uzun içerikte
+          // (büyük yazı, uzun çeviri) kaydırma davranışı korunur.
+          // Hero'nun payı değişmedi — yüksekliği `onboarding_hierarchy_test`
+          // tarafından bilerek sınırlanmıştır (2026-07-27).
+          child: LayoutBuilder(
+            builder: (context, textBandConstraints) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: textBandConstraints.maxHeight,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 4,
-                      height: 22,
-                      margin: const EdgeInsets.only(right: AppSpacing.sm),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            data.color,
-                            data.color.withValues(alpha: 0.5),
-                          ],
+                    Row(
+                      children: [
+                        Container(
+                          width: 4,
+                          height: 22,
+                          margin: const EdgeInsets.only(right: AppSpacing.sm),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                data.color,
+                                data.color.withValues(alpha: 0.5),
+                              ],
+                            ),
+                          ),
                         ),
+                        Expanded(
+                          child: Text(
+                            data.title,
+                            style: AppTypography.heading1.copyWith(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontSize: titleSize,
+                              letterSpacing: -0.5,
+                              height: 1.15,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: compact ? AppSpacing.xs : AppSpacing.xs),
+                    Text(
+                      data.body,
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: AppTheme.textSubColor(context),
+                        fontSize: bodySize,
+                        height: 1.5,
                       ),
                     ),
-                    Expanded(
-                      child: Text(
-                        data.title,
-                        style: AppTypography.heading1.copyWith(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontSize: titleSize,
-                          letterSpacing: -0.5,
-                          height: 1.15,
-                        ),
+                    if (data.bullets.isNotEmpty) ...[
+                      SizedBox(
+                        height: compact ? AppSpacing.cardGap : AppSpacing.md,
                       ),
-                    ),
+                      for (final bullet in data.bullets) ...[
+                        _BulletRow(text: bullet, color: data.color),
+                        const SizedBox(height: AppSpacing.xs),
+                      ],
+                    ],
                   ],
                 ),
-                SizedBox(height: compact ? AppSpacing.xs : AppSpacing.xs),
-                Text(
-                  data.body,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textSubColor(context),
-                    fontSize: bodySize,
-                    height: 1.5,
-                  ),
-                ),
-                if (data.bullets.isNotEmpty) ...[
-                  SizedBox(
-                    height: compact ? AppSpacing.cardGap : AppSpacing.md,
-                  ),
-                  for (final bullet in data.bullets) ...[
-                    _BulletRow(text: bullet, color: data.color),
-                    const SizedBox(height: AppSpacing.xs),
-                  ],
-                ],
-              ],
+              ),
             ),
           ),
         ),
